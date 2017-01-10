@@ -1,5 +1,7 @@
-![alt text](http://i.imgur.com/K9pgeKE.png)
+![Pokemon Unity](http://i.imgur.com/K9pgeKE.png)
+
 # Pokemon Unity
+
 Pokémon Unity Source Code by IIcolour Spectrum
 
   This is the source of Pokémon Unity.
@@ -44,4 +46,5 @@ Creator is [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
 ## Contact
 
 Reddit: https://www.reddit.com/r/PokemonUnity/
+
 YouTube: https://www.youtube.com/c/IIcolourSpectrum
