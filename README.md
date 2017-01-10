@@ -36,7 +36,12 @@ development of Pokémon Unity.
 
 There is a demo WebGL for testing available here: [https://developer.cloud.unity3d.com/share/WJnQnh1_nZ/webgl/](https://developer.cloud.unity3d.com/share/WJnQnh1_nZ/webgl/)
 
-There are also demos for Windows, Linux, and Ma zipped in Downloads! Please report any bugs if found.
+There are also demos for Windows, Linux, and Mac zipped in Downloads! Please report any bugs if found.
 
 ## Creator & Credits
 Creator is [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
+
+## Contact
+
+Reddit: https://www.reddit.com/r/PokemonUnity/
+YouTube: https://www.youtube.com/c/IIcolourSpectrum
