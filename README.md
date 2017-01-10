@@ -34,15 +34,6 @@ when I'll see it or how much I can help.
 development of Pokémon Unity. 
   I hope this source is useful.
 
-## Cloning
-**Please use Git LFS to clone** our .pdb files are huge and cannot be easily kept in a plain git repo. Learn why [here](https://blog.bitbucket.org/2016/07/18/git-large-file-storage-now-in-bitbucket-cloud/)
-
-*This requires git and git lfs **install them in order*** 
-
-**Set up your SSH too if you want to clone locally (How to [here](https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html))**
-
-Simply do `git lfs clone git@bitbucket.org:lucasone/pokemonunity.git`
-
 ## Demo
 
 There is a demo WebGL for testing available here: [https://developer.cloud.unity3d.com/share/WJnQnh1_nZ/webgl/](https://developer.cloud.unity3d.com/share/WJnQnh1_nZ/webgl/)
@@ -51,5 +42,3 @@ There are also demos for Windows, Linux, and Ma zipped in Downloads! Please repo
 
 ## Creator & Credits
 Creator is [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
-
-Git LFS is managed by LucasOne
