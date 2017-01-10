@@ -20,7 +20,6 @@ rather poorly.
 will be able to continue my work and eventually get this
 project into a fully functional state.
 
----------------------------------------------------------
 
   If you need to contact me regarding the project for 
 any reason, you can reach me via my YouTube channel, or
@@ -28,7 +27,6 @@ the subreddit /r/PokemonUnity although I can't guarantee
 when I'll see it or how much I can help.
   I will try though.
 
----------------------------------------------------------
 
   Thank you to everyone who supported me during the 
 development of Pokémon Unity. 
