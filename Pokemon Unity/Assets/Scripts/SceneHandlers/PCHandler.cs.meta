@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 00c447bbd736d9641933da98b9b1c467
+timeCreated: 1432819927
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - offClip: {fileID: 8300000, guid: 9de0581b16edc6942b28d85dba53a31c, type: 3}
+  - openClip: {fileID: 8300000, guid: 8d6f822eca4eef34388bf98f099fe2fa, type: 3}
+  - selectClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
+  - pickUpClip: {fileID: 8300000, guid: 3f521e1742dd5374ab1fe43724d0b11a, type: 3}
+  - putDownClip: {fileID: 8300000, guid: 8a78b3be4fa748c4091ada841db8912d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

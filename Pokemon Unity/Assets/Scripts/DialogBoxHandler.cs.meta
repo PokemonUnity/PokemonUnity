@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 75464183102fe804ca4c5df8c8836725
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - selectClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

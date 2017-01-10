@@ -1,0 +1,232 @@
+fileFormatVersion: 2
+guid: 3e19c56673c5ce04c86797cc6dcbc4d5
+timeCreated: 1447133779
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: npcLinda_0
+    21300002: npcLinda_1
+    21300004: npcLinda_2
+    21300006: npcLinda_3
+    21300008: npcLinda_4
+    21300010: npcLinda_5
+    21300012: npcLinda_6
+    21300014: npcLinda_7
+    21300016: npcLinda_8
+    21300018: npcLinda_9
+    21300020: npcLinda_10
+    21300022: npcLinda_11
+    21300024: npcLinda_12
+    21300026: npcLinda_13
+    21300028: npcLinda_14
+    21300030: npcLinda_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -2
+  maxTextureSize: 128
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 16
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: npcLinda_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 96
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_2
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 96
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_3
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 96
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 64
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_6
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 64
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_7
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 64
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_9
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 32
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_10
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 32
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_11
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 32
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_13
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 0
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_14
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 0
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: npcLinda_15
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 0
+        width: 22
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

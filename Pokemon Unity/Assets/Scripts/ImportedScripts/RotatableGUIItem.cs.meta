@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 605656be6398858449a40bd1311e74d1
+timeCreated: 1433055578
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - texture: {instanceID: 0}
+  - material: {instanceID: 0}
+  - m_TargetTexture: {fileID: 8400000, guid: b9a4c44f180103548beec89aeb674776, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

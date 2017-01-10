@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 61e86230377bcf74081cbf219889042b
+timeCreated: 1453511159
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - walkClip: {fileID: 8300000, guid: 51beb954c45aff446a51aeeff1faee72, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

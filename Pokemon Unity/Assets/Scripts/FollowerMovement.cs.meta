@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 28ffbf827ca3fa4449ef1f592b3fe005
+timeCreated: 1431500285
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - pawn: {instanceID: 0}
+  - pawnReflection: {instanceID: 0}
+  - pawnLightReflection: {instanceID: 0}
+  - pokeBall: {fileID: 21300000, guid: aef6460b10cef1c4b91fd8b35cf81e18, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
