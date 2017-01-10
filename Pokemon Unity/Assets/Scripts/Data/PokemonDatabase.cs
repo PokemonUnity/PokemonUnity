@@ -1,4 +1,4 @@
-﻿//Original Scripts by IIColour (IIColour_Spectrum)
+//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
 using System.Collections;
@@ -1346,5 +1346,4 @@ public static class PokemonDatabase {
 
 
 }
-
 
