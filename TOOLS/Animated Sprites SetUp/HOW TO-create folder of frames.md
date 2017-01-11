@@ -8,11 +8,8 @@ Check the subreddit and other documentation for details.
 
 ### open in GIMP
 
-increase canvas size to 128x128, centre, anchored to the bottom
-by increasing Y offset to maximum
-"Layer to Image Size" on the first frame/bottom later
-export to Resized (Ctrl+e) as animation, loop forever, 
-unspecified frame disposal set to "replace", 100 milliseconds
+* increase canvas size to 128x128, centre, anchored to the bottom by increasing Y offset to maximum
+* "Layer to Image Size" on the first frame/bottom later export to Resized (Ctrl+e) as animation, loop forever, unspecified frame disposal set to "replace", 100 milliseconds
 
 
 ### open in gifsplitter
