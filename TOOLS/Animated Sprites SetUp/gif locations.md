@@ -1,0 +1,8 @@
+# GIF Locations
+
+* http://sprites.pokecheck.org/
+
+## High Quality
+
+* http://www.silver-islands.com/bw-back-ani?
+* http://www.silver-islands.com/bw-shiny-back-ani?
