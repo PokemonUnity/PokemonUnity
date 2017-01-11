@@ -26,15 +26,15 @@ Open PKU_HS_Map_Editor with Blender
 - Left Click and drag on an object to rotate
 - Press SPACE to change from move mode to rotate mode
 - Press I to select blend files from which to import objects
-- Press B to select an object from the blends you've imported.*
-    * Please note, if you do not import a blend first, you cannot close this menu.
+- Press B to select an object from the blends you've imported.
+    - Please note, if you do not import a blend first, you cannot close this menu.
 - Press A to add an object in the current cell
 - Press D to delete an object in the current cell.
 - Press W to increase Z layer
 - Press S to decrease Z layer
 
 - Press O to export the .obj file
-	(USE THIS FREQUENTLY LIKE A SAVE BUTTON)
+	- (USE THIS FREQUENTLY LIKE A SAVE BUTTON)
 
 ```
 Camera Controls: (keypad)
