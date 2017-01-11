@@ -2,6 +2,8 @@
 
 # Pokemon Unity
 
+![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+
 Pokémon Unity Source Code by IIcolour Spectrum
 
   This is the source of Pokémon Unity.
