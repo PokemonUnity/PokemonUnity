@@ -2,7 +2,7 @@
 
 I apologise that this process isn't completely automated.
 Hopefully in future all Pokémon sprites will be processed and available.
-Check the subreddit for processed files. There may be something there.
+Check the subreddit and other documentation for processed files. There may be something there.
 
 ## How to use
 
@@ -18,14 +18,11 @@ Check the subreddit for processed files. There may be something there.
 * tick Autofill directory
 * tick single background color
 * set background color to pure green (#00ff00 / R:0, G:255, B:0) 
-
 * Split Now
-
 * copy the folder "_output" into the gif's split-up folder (or create an empty folder called "_output")
 * open the split-up folder
 * right click "_output" and open propeties
 * copy the Location string
-
 
 ### open cmd (WITH IMAGEMAGICK INSTALLED)
 
