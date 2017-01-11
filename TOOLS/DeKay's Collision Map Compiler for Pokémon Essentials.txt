@@ -1,14 +1,14 @@
-DeKay's Pokémon Unity Collision Map String Compiler Extension for Pokémon Essentials.
+DeKay's PokÃ©mon Unity Collision Map String Compiler Extension for PokÃ©mon Essentials.
 
         This takes two coordinates on an essentials map and outputs the 
          Terrain Tags that are within the given rect to a notepad file.
 
 
 
-To use this extension, run the game in Essentials, and open Debug in the Start Menu.
+To use this extension, run the game in Essentials, and open `Debug` in the Start Menu.
 
 
-  Open Pokémon Essentials (v13 confirmed to work) and add 
+  Open PokÃ©mon Essentials (v13 confirmed to work) and add 
     the following into the PokemonDebug script.
 
 
