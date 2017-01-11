@@ -1,3 +1,7 @@
+# Credits & Controls
+
+## Credits
+
 Original tool:   HostileStudios
 
 http://blenderartists.org/forum/showthread.php?229156-In-game-Map-Editor
