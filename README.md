@@ -36,7 +36,7 @@ when I'll see it or how much I can help.
 development of Pokémon Unity. 
   I hope this source is useful.
 
-## Demo
+## Demo and Downloads
 
 There is a demo WebGL for testing available here: [https://developer.cloud.unity3d.com/share/Zy2Q7Ndlgf/](https://developer.cloud.unity3d.com/share/Zy2Q7Ndlgf/)
 
