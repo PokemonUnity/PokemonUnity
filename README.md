@@ -2,7 +2,7 @@
 
 # Pokemon Unity
 
-![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 Pokémon Unity Source Code by IIcolour Spectrum
 
