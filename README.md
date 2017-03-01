@@ -50,3 +50,5 @@ Creator is [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
 Reddit: https://www.reddit.com/r/PokemonUnity/
 
 YouTube: https://www.youtube.com/c/IIcolourSpectrum
+
+Discord server: https://discord.gg/SggHcXP
