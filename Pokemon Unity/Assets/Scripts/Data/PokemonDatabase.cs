@@ -1,15 +1,394 @@
 //Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
+using Assets.Scripts.ImportedScripts;//.ColorExtensions;
 using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using Mono.Data.Sqlite;
+//using System.Data.SQLite;
+using System.IO;
+using System;
 
-//The Database is incomplete. Many Pokémon have not been programmed in. If you wish to add a Pokémon's data
-//  to the database, ensure that it is placed in the correct position for it's ID.
-//  E.G. Pikachu (025) would go after Arbok (024) or the closest ID below if Arbok isn't there (i.e. Fearow (022))
-//         and before Raichu (026) or the closest ID above if Raichu isn't there (i.e. Nidoran♂ (032))
+/// <summary>
+/// all of the values are hard coded
+/// first index value is null
+/// returns [0,1,2...] as order in pokedex
+/// </summary>
+public static class PokemonDatabase
+{
+	/// <summary>
+	/// Supports multiple languages
+	/// </summary>
+	private static PokemonData[] pokedex(int language = 9) {//Default language is English
+		Debug.Log("Fetch Pokedex");
+		List<PokemonData> pokedexArray = new List<PokemonData>();
+		pokedexArray.Add(null); //pokedex index 0 is null value
 
-public static class PokemonDatabase {
-	private static PokemonData[] pokedex = new PokemonData[] {
+		//might need to make a new enum in PokemonData, type = x.Color...
+		Dictionary<string,Color> StringToColor = new Dictionary<string,Color>() {
+			{"Black",Color.black },//dark
+			{"Blue",Color.blue },//water
+			{"Clear",Color.clear },
+			{"Cyan",Color.cyan },
+			{"Gray",Color.gray },
+			{"Green",Color.green },//grass
+			{"Grey",Color.grey },
+			{"Magenta",Color.magenta },
+			{"Red",Color.red },//fire
+			{"White",Color.white },//normals
+			{"Yellow",Color.yellow },//electric
+			{"Purple", new Color() },//ghost
+			{"Brown", new Color() },//fighting
+			{"Pink", new Color() }//,//fairy
+			//{"", new Color() },//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
+			//{"", new Color() },
+			//{"", new Color() },
+			//{"", new Color() },
+			//{"", new Color() },
+			//{"", new Color() }
+		};
+
+		try
+		{
+			//Step 1: Get Provider
+			//DbProviderFactory f = SQLiteFactory.Instance;
+			//Step 2: Create a connection
+			Debug.Log("Creating Connection to Pokemon DB");
+			Debug.Log(Application.dataPath);
+			//IDbConnection con;// = f.CreateConnection();
+			//SqliteConnectionStringBuilder builder = new SqliteConnectionStringBuilder();
+			//builder.FailIfMissing = true;
+			//builder.Version = 3;
+			//builder.LegacyFormat = true;
+			//builder.Pooling = true;
+			string ConnectionString = "URI=file:" //"Data Source="//"Driver=SQLite3 ODBC Driver; Database="
+			//builder.Uri = "file:"
+			//builder.DataSource = "Data Source="
+			//builder.ConnectionString = "Driver=SQLite3 ODBC Driver; Database="
+				//+ System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase),"veekun-pokedex.sqlite");
+				//+ @"C:\Users\Username\Documents\Pokemon\Pokemon Unity\"//Assets\Resources\Databases"
+				+ Application.dataPath + Path.DirectorySeparatorChar
+				//+ "Assets" + Path.DirectorySeparatorChar//Standard
+				//+ "Scripts" + Path.DirectorySeparatorChar
+				+ "Resources" + Path.DirectorySeparatorChar
+				+ "Databases" + Path.DirectorySeparatorChar
+				+ "veekun-pokedex.sqlite;Version=3;";// "Data Source=C:\\folder\
+				//+ "new_pokedex.db;Version=3;";// "Data Source=C:\\folder\\HelloWorld.sqlite;Version=3;New=False;Compress=True";
+			SqliteConnection con = new SqliteConnection(ConnectionString);//ConnectionString
+			Debug.Log("Opening Pokemon DB");
+			con.Open();
+			Debug.Log("Opened Pokemon DB");
+
+			//int n = 1;
+			//int pokedexCount = 1000;
+			//bool isNull = false;
+			string sqlQuery;
+			using(con)
+			{
+				#region Variables
+				int ID = 0;
+				string NAME = "";
+				PokemonData.Type TYPE1 = PokemonData.Type.NONE;
+				PokemonData.Type TYPE2 = PokemonData.Type.NONE;
+				int? Ability1 = null;
+				int? Ability2 = null;
+				int? HiddenAbility = null;
+				float maleRatio = 0;
+				int catchRate = 0;
+				PokemonData.EggGroup eggGroup1 = PokemonData.EggGroup.NONE;
+				PokemonData.EggGroup eggGroup2 = PokemonData.EggGroup.NONE;
+				int hatchTime = 0;
+				float height = 0;
+				float weight = 0;
+				int baseExpYield = 0;
+				PokemonData.LevelingRate levelingRate = 0;
+				int evYieldHP = 0;
+				int evYieldATK = 0;
+				int evYieldDEF = 0;
+				int evYieldSPA = 0;
+				int evYieldSPD = 0;
+				int evYieldSPE = 0;
+				PokemonData.PokedexColor pokedexColor = PokemonData.PokedexColor.WHITE;
+				int baseFriendship = 0;
+
+				int species = 0;
+				string pokedexEntry = "";
+
+				int baseStatsHP = 0;
+				int baseStatsATK = 0;
+				int baseStatsDEF = 0;
+				int baseStatsSPA = 0;
+				int baseStatsSPD = 0;
+				int baseStatsSPE = 0;
+
+				float luminance = 0;
+				Color lightColor = Color.clear; 
+				int[][] heldItem;
+				int[] movesetLevels;
+				int[] movesetMoves;
+				int[] tmList;
+
+				int[] evolutionID;
+				string[] evolutionRequirements;
+				//				EXPYield, PokemonData.LevelingRate.LEVELINGRATE, evYieldHP,ATK,DEF,SPA,SPD,SPE, PokemonData.PokedexColor.COLOR, BaseFriendship,
+				//				Species, PokedexEntry (choose your favourite)
+				//				baseStatsHP,ATK,DEF,SPA,SPD,SPE, Luminance (0 if unknown), LightColor (Color.clear if unknown)
+				//				new int[]{ level, level, level, etc...}
+				//				new string[]{ "move", "move", "move", etc...} ),
+				//				new int[]{pokemonID}, new string[]{"Method,Parameter"}),
+				#endregion
+				for(int n=1; n<721;n++)//couldnt figure out a way to automate the loop, so i did it manually ("end at 721"... the db has 800...)
+				{ 
+				//Step 3: Running a Command
+				IDbCommand stmt = con.CreateCommand();
+
+					#region DataReader
+					sqlQuery = string.Format("select * from pokemonDB where id={0} order by id ASC",n);//[order] = {0} order by [order] ASC",n);//for the sake of debugging
+					stmt.CommandText = sqlQuery;//"select * --pokemon.*,abilities_view.ability1,abilities_view.ability2,abilities_view.hidden, egg_group_view.egg_group1, egg_group_view.egg_group2" +
+					//	"from pokemon" +
+					//	"join abilities_view on pokemon.id = abilities_view.pokemon_id"+
+					//	"join egg_group_view on egg_group_view.species_id = pokemon.id"+
+					//	"join pokemon_species on pokemon_species.id = pokemon.id"+
+					//	"join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.id AND pokemon_species_names.local_language_id = 9"+
+					//	"join pokemon_species_flavor_text on pokemon_species_flavor_text.species_id = pokemon.id AND pokemon_species_flavor_text.version_id = 26 AND pokemon_species_flavor_text.language_id = 9 ";
+					//"SELECT * FROM StoredProcedure/View ORDER BY ID ASC";
+					Debug.Log("Establishing Reader for Pokemon DB");
+					IDataReader reader = stmt.ExecuteReader();
+					//if(!((System.Data.Common.DbDataReader)reader).HasRows) { Debug.Log("DB is Empty"); }//break for-loop
+
+					//Step 4: Read the results
+					using(reader)
+					{
+						Debug.Log("Reading Pokemon DB");
+						while(reader.Read())
+						{
+							Debug.Log("Pokemon DB Test Value:" + reader["name"] as string);
+							ID = System.Convert.ToInt16(reader["id"]);// is int ? (int)reader["id"] : -1;// as System.UInt16;
+							//pokemonOrder = (System.UInt16)reader["order"];// numerical order of pokemon evolution
+							NAME = reader["name"] as string;
+							TYPE1 = reader["type1"] is DBNull ? PokemonData.Type.NONE : (PokemonData.Type)Convert.ToInt16(reader["type1"]);//if correct this should convert int to enum string 
+							TYPE2 = reader["type2"] is DBNull ? PokemonData.Type.NONE : (PokemonData.Type)Convert.ToInt16(reader["type2"]);
+							Ability1 = reader["ability1"] is DBNull ? (int?)null : (System.UInt16)Convert.ToInt16(reader["ability1"]);
+							Ability2 = reader["ability2"] is DBNull ? (int?)null : (System.Int16)Convert.ToInt16(reader["ability2"]);//if null, needs to be a number... possibly -1 or 0
+							HiddenAbility = reader["hidden"] is DBNull ? (int?)null : (System.Int16)Convert.ToInt16(reader["hidden"]);//if null, needs to be a number... possibly -1 or 0
+							maleRatio = (float)Convert.ToInt16(reader["gender_rate"]);
+							catchRate = (System.UInt16)Convert.ToInt16(reader["capture_rate"]);
+							eggGroup1 = reader["egg_group1"] is DBNull ? PokemonData.EggGroup.NONE : (PokemonData.EggGroup)Convert.ToInt16(reader["egg_group1"]);
+							eggGroup2 = reader["egg_group1"] is DBNull ? PokemonData.EggGroup.NONE : (PokemonData.EggGroup)Convert.ToInt16(reader["egg_group2"]);
+							hatchTime = (System.UInt16)Convert.ToInt16(reader["hatch_counter"]);
+							height = (System.Int32)Convert.ToInt32(reader["height"]);
+							weight = (System.Int32)Convert.ToInt32(reader["weight"]);
+							baseExpYield = (System.UInt16)Convert.ToInt16(reader["base_experience"]);
+							levelingRate = (PokemonData.LevelingRate)Convert.ToInt16(reader["growth_rate_id"]);
+							//evYieldHP = (System.UInt16)reader["evhp"];
+							//evYieldATK = (System.UInt16)reader["evatk"];
+							//evYieldDEF = (System.UInt16)reader["evdef"];
+							//evYieldSPA = (System.UInt16)reader["evspa"];
+							//evYieldSPD = (System.UInt16)reader["evspd"];
+							//evYieldSPE = (System.UInt16)reader["evspd"];
+							species = (System.UInt16)Convert.ToInt16(reader["species_id"]);//pokedex-id
+							pokedexEntry = reader["flavor_text"] as string;
+							baseStatsHP = (System.UInt16)Convert.ToInt16(reader["bhp"]);
+							baseStatsATK = (System.UInt16)Convert.ToInt16(reader["batk"]);
+							baseStatsDEF = (System.UInt16)Convert.ToInt16(reader["bdef"]);
+							baseStatsSPA = (System.UInt16)Convert.ToInt16(reader["bspa"]);
+							baseStatsSPD = (System.UInt16)Convert.ToInt16(reader["bspd"]);
+							baseStatsSPE = (System.UInt16)Convert.ToInt16(reader["bspe"]);
+							luminance = 0;//(float)reader["lumi"]; //i dontknow what this is...
+							lightColor = !string.IsNullOrEmpty((string)reader["color"]) ? (Color)StringToColor[Convert.ToString(reader["color"])] : Color.clear;
+							//pokedexColor = (PokemonData.PokedexColor)Convert.ToInt16(reader["color"]); //lightColor; no db on pokedex-colers per pokemon...
+							baseFriendship = (System.UInt16)Convert.ToInt16(reader["base_happiness"]);
+							//shape id
+						}
+					}
+					//Step 5: Closing up
+					reader.Close();
+                    reader.Dispose();
+					#endregion
+
+					#region DataReader
+					//Step 3: Running a Command
+					sqlQuery = string.Format(@"SELECT distinct a.move_id, a.pokemon_id as idA, a.pokemon_move_method_id as methodA, c.pLv FROM pokemon_moves as a 
+						join(SELECT distinct[level] as pLv,move_id,pokemon_id as id,pokemon_move_method_id as methodB FROM pokemon_moves as b WHERE ID = {0} AND methodB = 1 ORDER BY[move_id] ASC, [level] ASC) as c 
+						on a.move_id = c.move_id AND idA = c.id AND c.id = {1} AND c.methodB = 1 AND methodA = methodB 
+						group by a.move_id 
+						--ORDER BY c.[pLv] ASC,a.[move_id] ASC",n,n);//(System.UInt16)Convert.ToInt16(reader["id"]));//select distinct move_id, pokemon_id, [level] from pokemon_moves where pokemon_id={0} ORDER BY [move_id] ASC, [level] DESC
+					stmt.CommandText = sqlQuery;
+					//select * from openquery(veekun, 'select distinct move_id, pokemon_id, [level] from pokemon_moves where pokemon_id=1 ORDER BY pokemon_id ASC, [level] ASC--, [order] ASC')
+					Debug.Log("Opening Pokemon MoveArray DB");
+					IDataReader reader2 = stmt.ExecuteReader();
+					Debug.Log("Opened Pokemon MoveArray DB");
+
+					List<int> lvArray = new List<int>();
+					List<int> moveArray = new List<int>();
+
+					//Step 4: Read the results
+					using(reader2)
+					{
+						Debug.Log("Reading Pokemon MoveArrary DB");
+						while(reader2.Read())
+						{
+							Debug.Log("Pokemon Level:"+reader2["pLv"] as string);
+							lvArray.Add((System.UInt16)Convert.ToInt16(reader2["pLv"])); //level where pokemon learns move
+							Debug.Log("Pokemon Move ID:" + reader2["move_id"] as string);
+							moveArray.Add((System.UInt16)Convert.ToInt16(reader2["move_id"])); //move_id
+							//strictly added moves that can be learned thru leveling-up.
+							//methodArray.Add((System.UInt16)reader["methodA"]); //method on how pokemon learns move (tm, tutor, lvl-up...)
+						}
+						//reader2.NextResult();
+					}
+					//Step 5: Closing up
+					reader2.Close();
+					#endregion
+
+					#region DataReader
+					//Step 3: Running a Command
+					sqlQuery = string.Format("select t1.*, t1.id as pokemon, t2.id as ParamID from pokemon_species as t1 inner Join pokemon_evolution as t2 on t1.id=t2.evolved_species_id where t1.evolves_from_species_id = {0}",n);//(System.UInt16)Convert.ToInt16(reader["id"]));
+					stmt.CommandText = sqlQuery;//"SELECT evolutionID, evoRequirements FROM Table WHERE ID = @0 ORDER BY evolutionID ASC";
+											    //select * from openquery(veekun, 'select t1.*, t1.id as pokemon, t2.id as ParamID from pokemon_species as t1 inner Join pokemon_evolution as t2 on t1.id=t2.evolved_species_id where t1.evolves_from_species_id = @')
+					Debug.Log("Opening Pokemon EvolutionArray DB");
+					IDataReader reader3 = stmt.ExecuteReader();
+					Debug.Log("Opened Pokemon EvolutionArray DB");
+
+					List<int> evoIDarray = new List<int>();
+					List<string> evoReqArray = new List<string>();
+
+					//Step 4: Read the results
+					using(reader3)
+					{
+						Debug.Log("Reading Pokemon EvArray DB");
+						while(reader3.Read())
+						{//not all pokemons evolve... wasnt sure how to null a int[], but we'll see on debug
+							if(!reader3.IsDBNull(1/*colum index*/))
+							{ //if not null, add value, else skip it..
+								//null;
+								//else { 
+								evoIDarray.Add((System.UInt16)Convert.ToInt16(reader3["id"])); //pokemon id
+								evoReqArray.Add(reader3["paramid"] as string); //requirements id
+							}
+						}
+					}
+					//Step 5: Closing up
+					reader3.Close();
+					#endregion
+
+					#region DataReader
+					//Step 3: Running a Command
+					sqlQuery = string.Format("select distinct pokemon_id, item_id, rarity from pokemon_items where pokemon_id = {0}",n);// (System.UInt16)reader["id"]);
+					stmt.CommandText = sqlQuery;//
+					Debug.Log("Opening Pokemon HeldItemArray DB");
+					IDataReader reader5 = stmt.ExecuteReader();
+					Debug.Log("Opened Pokemon HeldItemArray DB");
+
+					//List<List<int>> holdArray = new List<List<int>>();
+					List<int[]> holdArray = new List<int[]>();// works better with unknown size
+					//holdArray.Add(new List<int>());
+
+					//Step 4: Read the results
+					using(reader5)
+					{
+						Debug.Log("Reading Pokemon Item DB");
+						while(reader5.Read())
+						{//not all pokemons evolve... wasnt sure how to null a int[], but we'll see on debug
+							List<int> itemList = new List<int>();
+							if(reader5.IsDBNull(1/*colum index*/))
+							{ //if not null, add value, else skip it..
+								holdArray.Add(new int[2] { -1,100 });//null held item, with value of 100%;;
+								//holdArray[0].Add(100);//value of 100%;
+							} else
+							{
+								holdArray.Add(new int[2] { (System.UInt16)Convert.ToInt16(reader5["item_id"]),(System.UInt16)Convert.ToInt16(reader5["rarity"]) }); //pokemon id
+																																									//rarityArray.Add((System.UInt16)Convert.ToInt16(reader["rarity"])); //requirements id
+							}
+						}
+					}
+					//Step 5: Closing up
+					reader5.Close();
+					#endregion
+
+					#region DataReader
+					//Step 3: Running a Command
+					sqlQuery = string.Format("select distinct tm_views.move_id, tm_views.itemNo, pokemon_moves.pokemon_id, pokemon_moves.pokemon_move_method_id " +
+						"from tm_views " +
+						"join pokemon_moves on tm_views.move_id = pokemon_moves.move_id " +
+						"where pokemon_moves.pokemon_move_method_id = 4 AND pokemon_moves.pokemon_id = {0} " +
+						"order by pokemon_moves.pokemon_id ASC,tm_views.move_id Asc",n);// (System.UInt16)Convert.ToInt16(reader["id"]));
+					stmt.CommandText = sqlQuery;//"SELECT tmID FROM Table WHERE ID = @0 ORDER BY tmID ASC";
+					Debug.Log("Opening Pokemon Technical Machine DB");
+					IDataReader reader4 = stmt.ExecuteReader();
+					Debug.Log("Opened Pokemon TM DB");
+
+					List<int> tmArray = new List<int>();
+
+					//Step 4: Read the results
+					using(reader4)
+					{
+						Debug.Log("Reading Pokemon Machine DB");
+						while(reader4.Read())
+						{
+							tmArray.Add((System.UInt16)Convert.ToInt16(reader4["itemNo"]));
+						}
+					}
+					//Step 5: Closing up
+					reader4.Close();
+					#endregion
+
+					movesetLevels = new int[lvArray.Count];
+					movesetMoves = new int[moveArray.Count];
+					evolutionID = new int[evoIDarray.Count];
+					evolutionRequirements = new string[evoReqArray.Count];
+					tmList = new int[tmArray.Count];
+					heldItem = new int[holdArray.Count][];
+					lvArray.CopyTo(movesetLevels);
+					moveArray.CopyTo(movesetMoves);
+					evoIDarray.CopyTo(evolutionID);
+					evoReqArray.CopyTo(evolutionRequirements);
+					tmArray.CopyTo(tmList);
+					holdArray.CopyTo(heldItem);
+
+					pokedexArray.Add(new PokemonData(ID,NAME,TYPE1,TYPE2,Ability1,Ability2,HiddenAbility,
+						maleRatio,catchRate,eggGroup1,eggGroup2,hatchTime,height,weight,
+						baseExpYield,levelingRate,evYieldHP,evYieldATK,evYieldDEF,evYieldSPA,evYieldSPD,evYieldSPE,pokedexColor,baseFriendship,
+						species,pokedexEntry,baseStatsHP,baseStatsATK,baseStatsDEF,baseStatsSPA,baseStatsSPD,baseStatsSPE,luminance,lightColor,
+						movesetLevels,movesetMoves,tmList,evolutionID,evolutionRequirements,-1, /*int[] =  null = -1 */heldItem));
+					Debug.Log("For Variable: "+n.ToString());
+				}
+				}
+				con.Close();
+				Debug.Log("Closed all Pokemon DB Connections");
+
+				PokemonData[] pokedex = new PokemonData[pokedexArray.Count];
+				pokedexArray.CopyTo(pokedex);
+				//{//null, first index is null, because pokedex starts at 0 not 1
+				//  PokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE1, Ability1, Ability2, HiddenAbility,
+				//				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
+				//				EXPYield, PokemonData.LevelingRate.LEVELINGRATE, evYieldHP,ATK,DEF,SPA,SPD,SPE, PokemonData.PokedexColor.COLOR, BaseFriendship,
+				//				Species, PokedexEntry (choose your favourite)
+				//				baseStatsHP,ATK,DEF,SPA,SPD,SPE, Luminance (0 if unknown), LightColor (Color.clear if unknown)
+				//				new int[]{ level, level, level, etc...}
+				//				new string[]{ "move", "move", "move", etc...} ),
+				//				new int[]{pokemonID}, new string[]{"Method,Parameter"}),
+				//};
+				Debug.Log("Returning Pokedex");
+				return pokedex;
+		} catch (SqliteException e) {
+			Debug.Log("SQL Exception Message:" + e.Message);
+			Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+			Debug.Log("SQL Exception Help:" + e.HelpLink);
+			return null;
+		}
+	}
+
+	#region Debug
+	/// <summary>
+	/// The Database is incomplete. Many Pokémon have not been programmed in. If you wish to add a Pokémon's data
+	/// to the database, ensure that it is placed in the correct position for it's ID.
+	/// E.G. Pikachu (025) would go after Arbok (024) or the closest ID below if Arbok isn't there (i.e. Fearow (022))
+	/// and before Raichu (026) or the closest ID above if Raichu isn't there (i.e. Nidoran♂ (032))
+	/// </summary>
+	private static PokemonData[] debug_pokedex = new PokemonData[] {
 		null,
 		//  PokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE1, Ability1, Ability2, HiddenAbility,
 		//				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
@@ -19,7 +398,7 @@ public static class PokemonDatabase {
 		//				new int[]{ level, level, level, etc...}
 		//				new string[]{ "move", "move", "move", etc...} ),
 		//				new int[]{pokemonID}, new string[]{"Method,Parameter"}),
-		new PokemonData(1, "Bulbasaur", PokemonData.Type.GRASS, PokemonData.Type.POISON, "Overgrow", null, "Chlorophyll",
+	new PokemonData(1, "Bulbasaur", PokemonData.Type.GRASS, PokemonData.Type.POISON, "Overgrow", null, "Chlorophyll",
 		                87.5f, 45, PokemonData.EggGroup.MONSTER, PokemonData.EggGroup.GRASS, 5355, 0.7f, 6.9f,
 		                64, PokemonData.LevelingRate.MEDIUMSLOW, 0,0,0,1,0,0, PokemonData.PokedexColor.GREEN, 70,
 		                "Seed", "For some time after its birth, it grows by gaining nourishment from the seed on its back.",
@@ -1227,8 +1606,9 @@ public static class PokemonDatabase {
 						new int[]{}, new string[]{})
 
 	};
+	#endregion
 
-
+	#region expTable
 	private static int[] expTableErratic = new int[]{
 		0,15,52,122,237,406,637,942,1326,1800,
 		2369,3041,3822,4719,5737,6881,8155,9564,11111,12800,
@@ -1300,16 +1680,20 @@ public static class PokemonDatabase {
 		479600,507617,529063,559209,582187,614566,639146,673863,700115,737280,
 		765275,804997,834809,877201,908905,954084,987754,1035837,1071552,1122660,
 		1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000};
+	#endregion
 
 	public static PokemonData getPokemon(int ID){
+		Debug.Log("Get Pokemons");
 		PokemonData result = null;
 		int i = 1;
 		while(result == null){
-			if(pokedex[i].getID() == ID){
-				result = pokedex[i];
+			if(pokedex()[i].getID() == ID){
+				Debug.Log("Pokemon DB Success");
+				result = pokedex()[i];
 			}
 			i += 1;
-			if(i >= pokedex.Length){
+			if(i >= pokedex().Length){
+				Debug.Log("Pokemon DB Fail");
 				return null;}
 		}
 		return result;
@@ -1321,29 +1705,39 @@ public static class PokemonDatabase {
 			currentLevel = 100;
 		}
 		if(levelingRate == PokemonData.LevelingRate.ERRATIC){
-			exp = expTableErratic[currentLevel-1]; //Because the array starts at 0, not 1.
+			if(currentLevel > 100){
+				exp = (int)Mathf.Floor((Mathf.Pow(currentLevel,3))*(160-currentLevel)/100);
+			} else exp = expTableErratic[currentLevel-1]; //Because the array starts at 0, not 1.
 		}
 		else if(levelingRate == PokemonData.LevelingRate.FAST){
-			exp = expTableFast[currentLevel-1];
+			if(currentLevel > 100){
+				exp = (int)Mathf.Floor(Mathf.Pow(currentLevel,3)*(4/5));
+			} else	exp = expTableFast[currentLevel-1];
 		}
 		else if(levelingRate == PokemonData.LevelingRate.MEDIUMFAST){
-			exp = expTableMediumFast[currentLevel-1];
+			if(currentLevel > 100){
+				exp = (int)Mathf.Floor(Mathf.Pow(currentLevel,3));
+			} else exp = expTableMediumFast[currentLevel-1];
 		}
 		else if(levelingRate == PokemonData.LevelingRate.MEDIUMSLOW){
-			exp = expTableMediumSlow[currentLevel-1];
+			if(currentLevel > 100){
+				exp = (int)Mathf.Floor(((6/5)*Mathf.Pow(currentLevel-1,3))-(15 * Mathf.Pow(currentLevel - 1,3))+(100*(currentLevel-1))-140);
+			} else exp = expTableMediumSlow[currentLevel-1];
 		}
 		else if(levelingRate == PokemonData.LevelingRate.SLOW){
-			exp = expTableSlow[currentLevel-1];
+			if(currentLevel > 100){
+				exp = (int)Mathf.Floor(Mathf.Pow(currentLevel,3)*(5/4));
+			} else exp = expTableSlow[currentLevel-1];
 		}
 		else if(levelingRate == PokemonData.LevelingRate.FLUCTUATING){
-			exp = expTableFluctuating[currentLevel-1];
+			if(currentLevel > 100){
+				exp = (int)Mathf.Floor(Mathf.Pow(currentLevel,3)*((Mathf.Floor(Mathf.Pow(currentLevel,3)/2)+32)/50));
+			} else exp = expTableFluctuating[currentLevel-1];
 		}
 
 		return exp;
 
 
 	}
-
-
+	
 }
-
