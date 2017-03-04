@@ -27,11 +27,9 @@ public class GUIParticleHandler : MonoBehaviour
 
         for (int i = 0; i < 32; i++)
         {
-            if (!particleActive[i])
-            {
-                targetParticle = i;
-                i = 32;
-            }
+            if (particleActive[i]) continue;
+            targetParticle = i;
+            i = 32;
         }
 
         return targetParticle;
@@ -82,13 +80,10 @@ public class GUIParticleHandler : MonoBehaviour
         Vector2 destinationPosition, float rotationsPerSec, float finalSize)
     {
         int targetParticle = getFirstInactiveParticle();
-        if (targetParticle > -1)
-        {
-            particleActive[targetParticle] = true;
-            return setUpParticle(targetParticle, particleSprite, position, size, angle, duration, destinationPosition,
-                rotationsPerSec, finalSize);
-        }
-        return null;
+        if (targetParticle <= -1) return null;
+        particleActive[targetParticle] = true;
+        return setUpParticle(targetParticle, particleSprite, position, size, angle, duration, destinationPosition,
+            rotationsPerSec, finalSize);
     }
 
 

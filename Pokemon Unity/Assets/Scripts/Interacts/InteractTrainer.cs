@@ -107,14 +107,10 @@ public class InteractTrainer : MonoBehaviour
         {
             for (int i = 0; i < hitRays.Length; i++)
             {
-                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    if (hitRays[i].distance < closestDistance)
-                    {
-                        closestDistance = hitRays[i].distance;
-                        closestIndex = i;
-                    }
-                }
+                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                if (!(hitRays[i].distance < closestDistance)) continue;
+                closestDistance = hitRays[i].distance;
+                closestIndex = i;
             }
         }
         if (closestIndex != -1)
@@ -195,19 +191,15 @@ public class InteractTrainer : MonoBehaviour
             sightCollider[i].size = new Vector3(0, 0, 0);
             if (trainerBehaviour == TrainerBehaviour.Turn)
             {
-                if (turnableDirections[i] && sightRange > 0)
-                {
-                    sightCollider[i].center = centers[i];
-                    sightCollider[i].size = sizes[i];
-                }
+                if (!turnableDirections[i] || sightRange <= 0) continue;
+                sightCollider[i].center = centers[i];
+                sightCollider[i].size = sizes[i];
             }
             else if (i == direction)
             {
-                if (sightRange > 0)
-                {
-                    sightCollider[i].center = centers[i];
-                    sightCollider[i].size = sizes[i];
-                }
+                if (sightRange <= 0) continue;
+                sightCollider[i].center = centers[i];
+                sightCollider[i].size = sizes[i];
             }
         }
     }
@@ -403,12 +395,10 @@ public class InteractTrainer : MonoBehaviour
             for (int i = 0; i < mapHitColliders.Length; i++)
             {
                 //if a collision's gameObject has a mapCollider, it is a map. set it to be the destination map.
-                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    mapHit = mapHitColliders[i];
-                    destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
-                    i = mapHitColliders.Length;
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                mapHit = mapHitColliders[i];
+                destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
+                i = mapHitColliders.Length;
             }
         }
 
@@ -433,57 +423,55 @@ public class InteractTrainer : MonoBehaviour
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
         //if either slope is greater than 1 it is too steep.
-        if (currentSlope <= 1 && destinationSlope <= 1)
+        if (!(currentSlope <= 1) || !(destinationSlope <= 1)) return Vector3.zero;
         {
             //if yDistance is greater than both slopes there is a vertical wall between them
-            if (yDistance <= currentSlope || yDistance <= destinationSlope)
+            if (!(yDistance <= currentSlope) && !(yDistance <= destinationSlope)) return Vector3.zero;
+            //check destination tileTag for impassibles
+            int destinationTileTag = destinationMap.getTileTag(position + movement);
+            if (destinationTileTag == 1)
             {
-                //check destination tileTag for impassibles
-                int destinationTileTag = destinationMap.getTileTag(position + movement);
-                if (destinationTileTag == 1)
+                return Vector3.zero;
+            }
+            else
+            {
+                if (trainerSurfing)
                 {
-                    return Vector3.zero;
+                    //if a surf trainer, normal tiles are impassible
+                    if (destinationTileTag != 2)
+                    {
+                        return Vector3.zero;
+                    }
                 }
                 else
                 {
-                    if (trainerSurfing)
+                    //if not a surf trainer, surf tiles are impassible
+                    if (destinationTileTag == 2)
                     {
-                        //if a surf trainer, normal tiles are impassible
-                        if (destinationTileTag != 2)
-                        {
-                            return Vector3.zero;
-                        }
-                    }
-                    else
-                    {
-                        //if not a surf trainer, surf tiles are impassible
-                        if (destinationTileTag == 2)
-                        {
-                            return Vector3.zero;
-                        }
+                        return Vector3.zero;
                     }
                 }
+            }
 
-                //check destination for objects/player/follower
-                bool destinationPassable = true;
-                Collider[] hitColliders = Physics.OverlapSphere(position + movement, 0.4f);
-                if (hitColliders.Length > 0)
+            //check destination for objects/player/follower
+            bool destinationPassable = true;
+            Collider[] hitColliders = Physics.OverlapSphere(position + movement, 0.4f);
+            if (hitColliders.Length > 0)
+            {
+                for (int i = 0; i < hitColliders.Length; i++)
                 {
-                    for (int i = 0; i < hitColliders.Length; i++)
+                    if (hitColliders[i].name == "Player_Transparent" ||
+                        hitColliders[i].name == "Follower_Transparent" ||
+                        hitColliders[i].name.ToLowerInvariant().Contains("_object"))
                     {
-                        if (hitColliders[i].name == "Player_Transparent" ||
-                            hitColliders[i].name == "Follower_Transparent" ||
-                            hitColliders[i].name.ToLowerInvariant().Contains("_object"))
-                        {
-                            destinationPassable = false;
-                        }
+                        destinationPassable = false;
                     }
                 }
+            }
 
-                if (destinationPassable)
-                {
-                    return movement;
-                }
+            if (destinationPassable)
+            {
+                return movement;
             }
         }
         return Vector3.zero;
@@ -520,134 +508,114 @@ public class InteractTrainer : MonoBehaviour
 
     public IEnumerator spotPlayer()
     {
-        if (!defeated && !busy)
+        if (defeated || busy) yield break;
+        //if the player isn't busy with any other object
+        if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+        busy = true;
+        BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
+        //DISPLAY "!"
+        yield return StartCoroutine(exclaimAnimation());
+        yield return new WaitForSeconds(1.2f);
+
+        //approach player
+        Vector3 movement = getForwardsVector();
+        while (movement != new Vector3(0, 0, 0))
         {
-            //if the player isn't busy with any other object
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
-            {
-                busy = true;
-                BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
-                //DISPLAY "!"
-                yield return StartCoroutine(exclaimAnimation());
-                yield return new WaitForSeconds(1.2f);
-
-                //approach player
-                Vector3 movement = getForwardsVector();
-                while (movement != new Vector3(0, 0, 0))
-                {
-                    yield return StartCoroutine(move(movement));
-                    movement = getForwardsVector();
-                }
-
-                int flippedDirection = direction + 2;
-                if (flippedDirection > 3)
-                {
-                    flippedDirection -= 4;
-                }
-                PlayerMovement.player.direction = flippedDirection;
-
-                StartCoroutine(interact());
-            }
+            yield return StartCoroutine(move(movement));
+            movement = getForwardsVector();
         }
+
+        int flippedDirection = direction + 2;
+        if (flippedDirection > 3)
+        {
+            flippedDirection -= 4;
+        }
+        PlayerMovement.player.direction = flippedDirection;
+
+        StartCoroutine(interact());
     }
 
 
     private IEnumerator interact()
     {
-        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+        if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+        busy = true;
+
+        //calculate Player's position relative to target object's and set direction accordingly.
+        float xDistance = this.transform.position.x - PlayerMovement.player.transform.position.x;
+        float zDistance = this.transform.position.z - PlayerMovement.player.transform.position.z;
+        if (xDistance >= Mathf.Abs(zDistance))
         {
-            busy = true;
+            //Mathf.Abs() converts zDistance to a positive always.
+            updateDirection(3);
+        } //this allows for better accuracy when checking orientation.
+        else if (xDistance <= Mathf.Abs(zDistance) * -1)
+        {
+            updateDirection(1);
+        }
+        else if (zDistance >= Mathf.Abs(xDistance))
+        {
+            updateDirection(2);
+        }
+        else
+        {
+            updateDirection(0);
+        }
 
-            //calculate Player's position relative to target object's and set direction accordingly.
-            float xDistance = this.transform.position.x - PlayerMovement.player.transform.position.x;
-            float zDistance = this.transform.position.z - PlayerMovement.player.transform.position.z;
-            if (xDistance >= Mathf.Abs(zDistance))
+        if (!defeated)
+        {
+            //Play INTRO BGM
+            BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
+
+            //Display all of the confrontation Dialog.
+            for (int i = 0; i < trainerConfrontDialog.Length; i++)
             {
-                //Mathf.Abs() converts zDistance to a positive always.
-                updateDirection(3);
-            } //this allows for better accuracy when checking orientation.
-            else if (xDistance <= Mathf.Abs(zDistance) * -1)
-            {
-                updateDirection(1);
-            }
-            else if (zDistance >= Mathf.Abs(xDistance))
-            {
-                updateDirection(2);
-            }
-            else
-            {
-                updateDirection(0);
-            }
-
-            if (!defeated)
-            {
-                //Play INTRO BGM
-                BgmHandler.main.PlayOverlay(introBGM, samplesLoopStart);
-
-                //Display all of the confrontation Dialog.
-                for (int i = 0; i < trainerConfrontDialog.Length; i++)
-                {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", trainerConfrontDialog[i]);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.undrawDialogBox();
-                }
-
-                //custom cutouts not yet implemented
-                StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
-
-                //Automatic LoopStart usage not yet implemented
-                Scene.main.Battle.gameObject.SetActive(true);
-                if (trainer.battleBGM != null)
-                {
-                    BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
-                }
-                else
-                {
-                    BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
-                        Scene.main.Battle.defaultTrainerBGMLoopStart);
-                }
-                Scene.main.Battle.gameObject.SetActive(false);
-                yield return new WaitForSeconds(1.6f);
-
-                Scene.main.Battle.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Battle.control(trainer));
-
-                while (Scene.main.Battle.gameObject.activeSelf)
+                Dialog.drawDialogBox();
+                yield return Dialog.StartCoroutine("drawText", trainerConfrontDialog[i]);
+                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
                 }
+                Dialog.undrawDialogBox();
+            }
 
-                //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+            //custom cutouts not yet implemented
+            StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
 
-                if (Scene.main.Battle.victor == 0)
-                {
-                    defeated = true;
-                    recentlyDefeated = true;
-                    //Display all of the defeated Dialog. (if any)
-                    for (int i = 0; i < trainerDefeatDialog.Length; i++)
-                    {
-                        Dialog.drawDialogBox();
-                        yield return Dialog.StartCoroutine("drawText", trainerDefeatDialog[i]);
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                        Dialog.undrawDialogBox();
-                    }
-                }
+            //Automatic LoopStart usage not yet implemented
+            Scene.main.Battle.gameObject.SetActive(true);
+            if (trainer.battleBGM != null)
+            {
+                BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
             }
             else
             {
-                //Display all of the post defeat Dialog.
-                for (int i = 0; i < trainerPostDefeatDialog.Length; i++)
+                BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
+                    Scene.main.Battle.defaultTrainerBGMLoopStart);
+            }
+            Scene.main.Battle.gameObject.SetActive(false);
+            yield return new WaitForSeconds(1.6f);
+
+            Scene.main.Battle.gameObject.SetActive(true);
+            StartCoroutine(Scene.main.Battle.control(trainer));
+
+            while (Scene.main.Battle.gameObject.activeSelf)
+            {
+                yield return null;
+            }
+
+            //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
+            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+
+            if (Scene.main.Battle.victor == 0)
+            {
+                defeated = true;
+                recentlyDefeated = true;
+                //Display all of the defeated Dialog. (if any)
+                for (int i = 0; i < trainerDefeatDialog.Length; i++)
                 {
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", trainerPostDefeatDialog[i]);
+                    yield return Dialog.StartCoroutine("drawText", trainerDefeatDialog[i]);
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -655,9 +623,23 @@ public class InteractTrainer : MonoBehaviour
                     Dialog.undrawDialogBox();
                 }
             }
-
-            busy = false;
-            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }
+        else
+        {
+            //Display all of the post defeat Dialog.
+            for (int i = 0; i < trainerPostDefeatDialog.Length; i++)
+            {
+                Dialog.drawDialogBox();
+                yield return Dialog.StartCoroutine("drawText", trainerPostDefeatDialog[i]);
+                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                {
+                    yield return null;
+                }
+                Dialog.undrawDialogBox();
+            }
+        }
+
+        busy = false;
+        PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
     }
 }

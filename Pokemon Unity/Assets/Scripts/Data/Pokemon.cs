@@ -223,11 +223,9 @@ public class Pokemon
         this.PP = new int[4];
         for (int i = 0; i < 4; i++)
         {
-            if (!string.IsNullOrEmpty(moveset[i]))
-            {
-                this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP() * ((this.PPups[i] * 0.2f) + 1));
-                this.PP[i] = this.maxPP[i];
-            }
+            if (string.IsNullOrEmpty(moveset[i])) continue;
+            this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP() * ((this.PPups[i] * 0.2f) + 1));
+            this.PP[i] = this.maxPP[i];
         }
         packMoveset();
     }
@@ -359,11 +357,9 @@ public class Pokemon
         this.PP = new int[4];
         for (int i = 0; i < 4; i++)
         {
-            if (!string.IsNullOrEmpty(this.moveset[i]))
-            {
-                this.maxPP[i] = MoveDatabase.getMove(this.moveset[i]).getPP();
-                this.PP[i] = this.maxPP[i];
-            }
+            if (string.IsNullOrEmpty(this.moveset[i])) continue;
+            this.maxPP[i] = MoveDatabase.getMove(this.moveset[i]).getPP();
+            this.PP[i] = this.maxPP[i];
         }
         packMoveset();
     }
@@ -439,11 +435,9 @@ public class Pokemon
         this.PP = new int[4];
         for (int i = 0; i < 4; i++)
         {
-            if (!string.IsNullOrEmpty(moveset[i]))
-            {
-                this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP() * ((this.PPups[i] * 0.2f) + 1));
-                this.PP[i] = this.maxPP[i];
-            }
+            if (string.IsNullOrEmpty(moveset[i])) continue;
+            this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP() * ((this.PPups[i] * 0.2f) + 1));
+            this.PP[i] = this.maxPP[i];
         }
         packMoveset();
     }
@@ -532,19 +526,17 @@ public class Pokemon
 
     public void addExp(int expAdded)
     {
-        if (level < 100)
+        if (level >= 100) return;
+        this.exp += expAdded;
+        while (exp >= nextLevelExp)
         {
-            this.exp += expAdded;
-            while (exp >= nextLevelExp)
+            this.level += 1;
+            this.nextLevelExp = PokemonDatabase.getLevelExp(
+                PokemonDatabase.getPokemon(pokemonID).getLevelingRate(), level + 1);
+            calculateStats();
+            if (this.HP > 0 && this.status == Status.FAINTED)
             {
-                this.level += 1;
-                this.nextLevelExp = PokemonDatabase.getLevelExp(
-                    PokemonDatabase.getPokemon(pokemonID).getLevelingRate(), level + 1);
-                calculateStats();
-                if (this.HP > 0 && this.status == Status.FAINTED)
-                {
-                    this.status = Status.NONE;
-                }
+                this.status = Status.NONE;
             }
         }
     }
@@ -553,104 +545,90 @@ public class Pokemon
     {
         int intAmount = Mathf.FloorToInt(amount);
         int evTotal = EV_HP + EV_ATK + EV_DEF + EV_SPA + EV_SPD + EV_SPE;
-        if (evTotal < 510)
+        if (evTotal >= 510) return false; //returns false if total or relevant EV cap was reached before running.
+        //if total EV cap is already reached.
+        if (evTotal + intAmount > 510)
         {
-            //if total EV cap is already reached.
-            if (evTotal + intAmount > 510)
+            //if this addition will pass the total EV cap.
+            intAmount = 510 - evTotal; //set intAmount to be the remaining points before cap is reached.
+        }
+        if (stat == "HP")
+        {
+            //if adding to HP.
+            if (EV_HP >= 252) return false; //returns false if total or relevant EV cap was reached before running.
+            //if HP is not full.
+            EV_HP += intAmount;
+            if (EV_HP > 252)
             {
-                //if this addition will pass the total EV cap.
-                intAmount = 510 - evTotal; //set intAmount to be the remaining points before cap is reached.
-            }
-            if (stat == "HP")
+                //if single stat EV cap is passed.
+                EV_HP = 252;
+            } //set stat back to the cap.
+            return true;
+        }
+        else if (stat == "ATK")
+        {
+            //if adding to ATK.
+            if (EV_ATK >= 252) return false; //returns false if total or relevant EV cap was reached before running.
+            //if ATK is not full.
+            EV_ATK += intAmount;
+            if (EV_ATK > 252)
             {
-                //if adding to HP.
-                if (EV_HP < 252)
-                {
-                    //if HP is not full.
-                    EV_HP += intAmount;
-                    if (EV_HP > 252)
-                    {
-                        //if single stat EV cap is passed.
-                        EV_HP = 252;
-                    } //set stat back to the cap.
-                    return true;
-                }
-            }
-            else if (stat == "ATK")
+                //if single stat EV cap is passed.
+                EV_ATK = 252;
+            } //set stat back to the cap.
+            return true;
+        }
+        else if (stat == "DEF")
+        {
+            //if adding to DEF.
+            if (EV_DEF >= 252) return false; //returns false if total or relevant EV cap was reached before running.
+            //if DEF is not full.
+            EV_DEF += intAmount;
+            if (EV_DEF > 252)
             {
-                //if adding to ATK.
-                if (EV_ATK < 252)
-                {
-                    //if ATK is not full.
-                    EV_ATK += intAmount;
-                    if (EV_ATK > 252)
-                    {
-                        //if single stat EV cap is passed.
-                        EV_ATK = 252;
-                    } //set stat back to the cap.
-                    return true;
-                }
-            }
-            else if (stat == "DEF")
+                //if single stat EV cap is passed.
+                EV_DEF = 252;
+            } //set stat back to the cap.
+            return true;
+        }
+        else if (stat == "SPA")
+        {
+            //if adding to SPA.
+            if (EV_SPA >= 252) return false; //returns false if total or relevant EV cap was reached before running.
+            //if SPA is not full.
+            EV_SPA += intAmount;
+            if (EV_SPA > 252)
             {
-                //if adding to DEF.
-                if (EV_DEF < 252)
-                {
-                    //if DEF is not full.
-                    EV_DEF += intAmount;
-                    if (EV_DEF > 252)
-                    {
-                        //if single stat EV cap is passed.
-                        EV_DEF = 252;
-                    } //set stat back to the cap.
-                    return true;
-                }
-            }
-            else if (stat == "SPA")
+                //if single stat EV cap is passed.
+                EV_SPA = 252;
+            } //set stat back to the cap.
+            return true;
+        }
+        else if (stat == "SPD")
+        {
+            //if adding to SPD.
+            if (EV_SPD >= 252) return false; //returns false if total or relevant EV cap was reached before running.
+            EV_SPD += intAmount;
+            if (EV_SPD > 252)
             {
-                //if adding to SPA.
-                if (EV_SPA < 252)
-                {
-                    //if SPA is not full.
-                    EV_SPA += intAmount;
-                    if (EV_SPA > 252)
-                    {
-                        //if single stat EV cap is passed.
-                        EV_SPA = 252;
-                    } //set stat back to the cap.
-                    return true;
-                }
-            }
-            else if (stat == "SPD")
+                //if single stat EV cap is passed.
+                EV_SPD = 252;
+            } //set stat back to the cap.
+            return true;
+            //if SPD is not full.
+        }
+        else if (stat == "SPE")
+        {
+            //if adding to SPE.
+            if (EV_SPE >= 252) return false; //returns false if total or relevant EV cap was reached before running.
+            //if SPE is not full.
+            EV_SPE += intAmount;
+            if (EV_SPE > 252)
             {
-                //if adding to SPD.
-                if (EV_SPD < 252)
-                {
-                    //if SPD is not full.
-                    EV_SPD += intAmount;
-                    if (EV_SPD > 252)
-                    {
-                        //if single stat EV cap is passed.
-                        EV_SPD = 252;
-                    } //set stat back to the cap.
-                    return true;
-                }
-            }
-            else if (stat == "SPE")
-            {
-                //if adding to SPE.
-                if (EV_SPE < 252)
-                {
-                    //if SPE is not full.
-                    EV_SPE += intAmount;
-                    if (EV_SPE > 252)
-                    {
-                        //if single stat EV cap is passed.
-                        EV_SPE = 252;
-                    } //set stat back to the cap.
-                    return true;
-                }
-            }
+                //if single stat EV cap is passed.
+                EV_SPE = 252;
+            } //set stat back to the cap.
+            return true;
         }
         return false; //returns false if total or relevant EV cap was reached before running.
     }
@@ -693,11 +671,9 @@ public class Pokemon
         for (int i = 0; i < evolutions.Length; i++)
         {
             //if an evolution method was satisfied, return true
-            if (checkEvolutionMethods(currentMethod, evolutionRequirements[i]))
-            {
-                Debug.Log("Relevant ID[" + i + "] = " + evolutions[i]);
-                return evolutions[i];
-            }
+            if (!checkEvolutionMethods(currentMethod, evolutionRequirements[i])) continue;
+            Debug.Log("Relevant ID[" + i + "] = " + evolutions[i]);
+            return evolutions[i];
         }
         return -1;
     }
@@ -860,15 +836,13 @@ public class Pokemon
         string[] evolutionRequirements = PokemonDatabase.getPokemon(pokemonID).getEvolutionRequirements();
         for (int i = 0; i < evolutions.Length; i++)
         {
-            if (checkEvolutionMethods(currentMethod, evolutionRequirements[i]))
-            {
-                float hpPercent = ((float) this.currentHP / (float) this.HP);
-                this.pokemonID = evolutions[i];
-                calculateStats();
-                i = evolutions.Length;
-                currentHP = Mathf.RoundToInt(HP * hpPercent);
-                return true;
-            }
+            if (!checkEvolutionMethods(currentMethod, evolutionRequirements[i])) continue;
+            float hpPercent = ((float) this.currentHP / (float) this.HP);
+            this.pokemonID = evolutions[i];
+            calculateStats();
+            i = evolutions.Length;
+            currentHP = Mathf.RoundToInt(HP * hpPercent);
+            return true;
         }
         return false;
     }
@@ -936,11 +910,9 @@ public class Pokemon
         int excess = 0;
         int intAmount = Mathf.RoundToInt(amount);
         this.PP[move] += intAmount;
-        if (this.PP[move] > this.maxPP[move])
-        {
-            excess = this.PP[move] - this.maxPP[move];
-            this.PP[move] = this.maxPP[move];
-        }
+        if (this.PP[move] <= this.maxPP[move]) return intAmount - excess;
+        excess = this.PP[move] - this.maxPP[move];
+        this.PP[move] = this.maxPP[move];
         return intAmount - excess;
     }
 
@@ -953,11 +925,9 @@ public class Pokemon
     {
         int intAmount = Mathf.RoundToInt(amount);
         this.currentHP -= intAmount;
-        if (this.currentHP <= 0)
-        {
-            this.currentHP = 0;
-            this.status = Status.FAINTED;
-        }
+        if (this.currentHP > 0) return;
+        this.currentHP = 0;
+        this.status = Status.FAINTED;
     }
 
 
@@ -968,14 +938,12 @@ public class Pokemon
 
     public void removePP(int move, float amount)
     {
-        if (move >= 0)
+        if (move < 0) return;
+        int intAmount = Mathf.RoundToInt(amount);
+        this.PP[move] -= intAmount;
+        if (this.PP[move] < 0)
         {
-            int intAmount = Mathf.RoundToInt(amount);
-            this.PP[move] -= intAmount;
-            if (this.PP[move] < 0)
-            {
-                this.PP[move] = 0;
-            }
+            this.PP[move] = 0;
         }
     }
 
@@ -994,12 +962,10 @@ public class Pokemon
         }
         else
         {
-            if (status == Status.NONE || status == Status.FAINTED)
-            {
-                this.status = status;
-                sleepTurns = 0;
-                return true;
-            }
+            if (status != Status.NONE && status != Status.FAINTED) return false;
+            this.status = status;
+            sleepTurns = 0;
+            return true;
         }
         return false;
     }
@@ -1007,13 +973,11 @@ public class Pokemon
 
     public void removeSleepTurn()
     {
-        if (status == Status.ASLEEP)
+        if (status != Status.ASLEEP) return;
+        sleepTurns -= 1;
+        if (sleepTurns <= 0)
         {
-            sleepTurns -= 1;
-            if (sleepTurns <= 0)
-            {
-                setStatus(Status.NONE);
-            }
+            setStatus(Status.NONE);
         }
     }
 
@@ -1237,11 +1201,9 @@ public class Pokemon
             highestIVIndex = 4;
             highestIV = IV_SPD;
         }
-        if (IV_SPE > highestIV || (IV_SPE == highestIV && rareValue > 54610))
-        {
-            highestIVIndex = 5;
-            highestIV = IV_SPE;
-        }
+        if (IV_SPE <= highestIV && (IV_SPE != highestIV || rareValue <= 54610)) return highestIVIndex;
+        highestIVIndex = 5;
+        highestIV = IV_SPE;
         return highestIVIndex;
     }
 
@@ -1330,12 +1292,10 @@ public class Pokemon
     {
         for (int i = 0; i < moveset.Length; i++)
         {
-            if (!string.IsNullOrEmpty(moveset[i]))
+            if (string.IsNullOrEmpty(moveset[i])) continue;
+            if (moveset[i] == move)
             {
-                if (moveset[i] == move)
-                {
-                    return i;
-                }
+                return i;
             }
         }
         return -1;
@@ -1370,36 +1330,28 @@ public class Pokemon
     /// Returns false if no room to add the new move OR move already is learned.
     public bool addMove(string newMove)
     {
-        if (!HasMove(newMove) && string.IsNullOrEmpty(moveset[3]))
-        {
-            moveset[3] = newMove;
-            ResetPP(3);
-            packMoveset();
-            return true;
-        }
-        return false;
+        if (HasMove(newMove) || !string.IsNullOrEmpty(moveset[3])) return false;
+        moveset[3] = newMove;
+        ResetPP(3);
+        packMoveset();
+        return true;
     }
 
     public void replaceMove(int index, string newMove)
     {
-        if (index >= 0 && index < 4)
-        {
-            moveset[index] = newMove;
-            addMoveToHistory(newMove);
-            ResetPP(index);
-        }
+        if (index < 0 || index >= 4) return;
+        moveset[index] = newMove;
+        addMoveToHistory(newMove);
+        ResetPP(index);
     }
 
     /// Returns false if only one move is left in the moveset.
     public bool forgetMove(int index)
     {
-        if (getMoveCount() > 1)
-        {
-            moveset[index] = null;
-            packMoveset();
-            return true;
-        }
-        return false;
+        if (getMoveCount() <= 1) return false;
+        moveset[index] = null;
+        packMoveset();
+        return true;
     }
 
     public int getMoveCount()
@@ -1425,15 +1377,13 @@ public class Pokemon
         int i2 = 0; //counter for packed array
         for (int i = 0; i < 4; i++)
         {
-            if (!string.IsNullOrEmpty(moveset[i]))
-            {
-                //if next move in moveset is not null
-                packedMoveset[i2] = moveset[i]; //add to packed moveset
-                packedPP[i2] = PP[i];
-                packedMaxPP[i2] = maxPP[i];
-                packedPPups[i2] = PPups[i];
-                i2 += 1;
-            } //ready packed moveset's next position
+            if (string.IsNullOrEmpty(moveset[i])) continue;
+            //if next move in moveset is not null
+            packedMoveset[i2] = moveset[i]; //add to packed moveset
+            packedPP[i2] = PP[i];
+            packedMaxPP[i2] = maxPP[i];
+            packedPPups[i2] = PPups[i];
+            i2 += 1;
         }
         moveset = packedMoveset;
         PP = packedPP;
@@ -1443,16 +1393,14 @@ public class Pokemon
 
     private void addMoveToHistory(string move)
     {
-        if (!HasMoveInHistory(move))
+        if (HasMoveInHistory(move)) return;
+        string[] newHistory = new string[moveHistory.Length + 1];
+        for (int i = 0; i < moveHistory.Length; i++)
         {
-            string[] newHistory = new string[moveHistory.Length + 1];
-            for (int i = 0; i < moveHistory.Length; i++)
-            {
-                newHistory[i] = moveHistory[i];
-            }
-            newHistory[moveHistory.Length] = move;
-            moveHistory = newHistory;
+            newHistory[i] = moveHistory[i];
         }
+        newHistory[moveHistory.Length] = move;
+        moveHistory = newHistory;
     }
 
     public bool HasMove(string move)
@@ -1585,12 +1533,10 @@ public class Pokemon
             //Attempt to load Base Variant (possibly Shiny)
             animation = Resources.LoadAll<Sprite>(folder + "/" + convertLongID(ID) + shiny + "/");
         }
-        if (animation.Length == 0 && isShiny)
-        {
-            Debug.LogWarning("Shiny Variant NOT Found");
-            //No Shiny Variant exists, Attempt to load Regular Variant
-            animation = Resources.LoadAll<Sprite>(folder + "/" + convertLongID(ID) + "/");
-        }
+        if (animation.Length != 0 || !isShiny) return animation;
+        Debug.LogWarning("Shiny Variant NOT Found");
+        //No Shiny Variant exists, Attempt to load Regular Variant
+        animation = Resources.LoadAll<Sprite>(folder + "/" + convertLongID(ID) + "/");
         return animation;
     }
 
@@ -1604,11 +1550,9 @@ public class Pokemon
     {
         string shiny = (isShiny) ? "s" : "";
         Sprite[] icons = Resources.LoadAll<Sprite>("PokemonIcons/icon" + convertLongID(ID) + shiny);
-        if (icons == null)
-        {
-            Debug.LogWarning("Shiny Variant NOT Found");
-            icons = Resources.LoadAll<Sprite>("PokemonIcons/icon" + convertLongID(ID));
-        }
+        if (icons != null) return icons;
+        Debug.LogWarning("Shiny Variant NOT Found");
+        icons = Resources.LoadAll<Sprite>("PokemonIcons/icon" + convertLongID(ID));
         return icons;
     }
 
@@ -1680,12 +1624,10 @@ public class Pokemon
             //Attempt to load Base Variant (possibly Shiny)
             animation = Resources.LoadAll<Texture>(folder + "/" + convertLongID(ID) + shiny + "/");
         }
-        if (animation.Length == 0 && isShiny)
-        {
-            Debug.LogWarning("Shiny Variant NOT Found");
-            //No Shiny Variant exists, Attempt to load Regular Variant
-            animation = Resources.LoadAll<Texture>(folder + "/" + convertLongID(ID) + "/");
-        }
+        if (animation.Length != 0 || !isShiny) return animation;
+        Debug.LogWarning("Shiny Variant NOT Found");
+        //No Shiny Variant exists, Attempt to load Regular Variant
+        animation = Resources.LoadAll<Texture>(folder + "/" + convertLongID(ID) + "/");
         return animation;
     }
 
@@ -1693,11 +1635,9 @@ public class Pokemon
     {
         string shiny = (isShiny) ? "s" : "";
         Texture icons = Resources.Load<Texture>("PokemonIcons/icon" + convertLongID(ID) + shiny);
-        if (icons == null)
-        {
-            Debug.LogWarning("Shiny Variant NOT Found");
-            icons = Resources.Load<Texture>("PokemonIcons/icon" + convertLongID(ID));
-        }
+        if (icons != null) return icons;
+        Debug.LogWarning("Shiny Variant NOT Found");
+        icons = Resources.Load<Texture>("PokemonIcons/icon" + convertLongID(ID));
         return icons;
     }
 
@@ -1712,30 +1652,13 @@ public class Pokemon
             //No Light found AND/OR No Shiny found, load non-shiny
             if (isShiny)
             {
-                if (getLight)
-                {
-                    Debug.LogWarning("Shiny Light NOT Found (may not be required)");
-                }
-                else
-                {
-                    Debug.LogWarning("Shiny Variant NOT Found");
-                }
+                Debug.LogWarning(getLight ? "Shiny Light NOT Found (may not be required)" : "Shiny Variant NOT Found");
             }
             spriteSheet = Resources.LoadAll<Sprite>("OverworldPokemonSprites/" + light + convertLongID(ID));
         }
-        if (spriteSheet.Length == 0)
-        {
-            //No Light found OR No Sprite found, return 8 blank sprites
-            if (!getLight)
-            {
-                Debug.LogWarning("Sprite NOT Found");
-            }
-            else
-            {
-                Debug.LogWarning("Light NOT Found (may not be required)");
-            }
-            return new Sprite[8];
-        }
-        return spriteSheet;
+        if (spriteSheet.Length != 0) return spriteSheet;
+        //No Light found OR No Sprite found, return 8 blank sprites
+        Debug.LogWarning(!getLight ? "Sprite NOT Found" : "Light NOT Found (may not be required)");
+        return new Sprite[8];
     }
 }

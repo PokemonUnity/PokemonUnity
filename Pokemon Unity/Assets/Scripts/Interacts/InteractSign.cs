@@ -19,31 +19,29 @@ public class InteractSign : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+        if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+        StartCoroutine(Dialog.drawSignBox(signTint));
+        if (printTextMethod == DialogBoxHandler.PrintTextMethod.Typewriter)
         {
-            StartCoroutine(Dialog.drawSignBox(signTint));
-            if (printTextMethod == DialogBoxHandler.PrintTextMethod.Typewriter)
-            {
-                StartCoroutine(Dialog.drawTextSilent(signText));
-            }
-            else if (printTextMethod == DialogBoxHandler.PrintTextMethod.Instant)
-            {
-                Dialog.drawTextInstant(signText);
-            }
-
-            yield return null;
-
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
-                   Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") >= 0)
-            {
-                yield return null;
-            }
-
-            StartCoroutine(Dialog.undrawSignBox());
-
-            yield return null;
-            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+            StartCoroutine(Dialog.drawTextSilent(signText));
         }
+        else if (printTextMethod == DialogBoxHandler.PrintTextMethod.Instant)
+        {
+            Dialog.drawTextInstant(signText);
+        }
+
+        yield return null;
+
+        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back") &&
+               Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") >= 0)
+        {
+            yield return null;
+        }
+
+        StartCoroutine(Dialog.undrawSignBox());
+
+        yield return null;
+        PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
     }
 
     public IEnumerator bump()

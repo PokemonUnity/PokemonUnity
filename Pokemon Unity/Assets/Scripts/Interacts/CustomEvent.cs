@@ -47,34 +47,32 @@ public class CustomEvent : MonoBehaviour
 
     private IEnumerator runEventTrees(CustomEventTree[] treesArray)
     {
-        if (treesArray.Length > 0)
+        if (treesArray.Length <= 0) yield break;
+        eventTreeIndex = 0;
+        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
         {
-            eventTreeIndex = 0;
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
-            {
-                setThisNPCHandlerBusy(true);
+            setThisNPCHandlerBusy(true);
 
-                for (currentEventIndex = 0;
-                    currentEventIndex < treesArray[eventTreeIndex].events.Length;
-                    currentEventIndex++)
+            for (currentEventIndex = 0;
+                currentEventIndex < treesArray[eventTreeIndex].events.Length;
+                currentEventIndex++)
+            {
+                if (!treesArray[eventTreeIndex].events[currentEventIndex].runSimultaneously)
                 {
-                    if (!treesArray[eventTreeIndex].events[currentEventIndex].runSimultaneously)
-                    {
-                        yield return StartCoroutine(runEvent(treesArray, currentEventIndex));
-                    }
-                    else
-                    {
-                        StartCoroutine(runEvent(treesArray, currentEventIndex));
-                    }
+                    yield return StartCoroutine(runEvent(treesArray, currentEventIndex));
                 }
+                else
+                {
+                    StartCoroutine(runEvent(treesArray, currentEventIndex));
+                }
+            }
 
-                setThisNPCHandlerBusy(false);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-            }
-            if (deactivateOnFinish)
-            {
-                this.gameObject.SetActive(false);
-            }
+            setThisNPCHandlerBusy(false);
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+        }
+        if (deactivateOnFinish)
+        {
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -216,12 +214,10 @@ public class CustomEvent : MonoBehaviour
                     Dialog.drawDialogBox();
                     yield return StartCoroutine(Dialog.drawText(currentEvent.strings[i]));
 
-                    if (i < currentEvent.strings.Length - 1)
+                    if (i >= currentEvent.strings.Length - 1) continue;
+                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
+                        yield return null;
                     }
                 }
                 if (nextEvent != null)
@@ -567,15 +563,11 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.PokemonIDIsInParty:
                         for (int pi = 0; pi < 6; pi++)
                         {
-                            if (SaveData.currentSave.PC.boxes[0][pi] != null)
-                            {
-                                if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
-                                    Mathf.FloorToInt(currentEvent.float0))
-                                {
-                                    passedCheck = true;
-                                    pi = 6;
-                                }
-                            }
+                            if (SaveData.currentSave.PC.boxes[0][pi] == null) continue;
+                            if (SaveData.currentSave.PC.boxes[0][pi].getID() != Mathf.FloorToInt(currentEvent.float0))
+                                continue;
+                            passedCheck = true;
+                            pi = 6;
                         }
                         break;
                     case CustomEventDetails.Logic.SpaceInParty:

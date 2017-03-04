@@ -105,17 +105,13 @@ public class MapCollider : MonoBehaviour
         RaycastHit[] bridgeHitColliders = Physics.RaycastAll(position, Vector3.down, 3f);
         RaycastHit bridgeHit = new RaycastHit();
         //cycle through each of the collisions
-        if (bridgeHitColliders.Length > 0)
+        if (bridgeHitColliders.Length <= 0) return bridgeHit;
+        for (int i = 0; i < bridgeHitColliders.Length; i++)
         {
-            for (int i = 0; i < bridgeHitColliders.Length; i++)
-            {
-                //if a collision's gameObject has a bridgeHandler, it is a bridge.
-                if (bridgeHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
-                {
-                    bridgeHit = bridgeHitColliders[i];
-                    i = bridgeHitColliders.Length;
-                }
-            }
+            //if a collision's gameObject has a bridgeHandler, it is a bridge.
+            if (bridgeHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() == null) continue;
+            bridgeHit = bridgeHitColliders[i];
+            i = bridgeHitColliders.Length;
         }
 
         return bridgeHit;
@@ -161,28 +157,20 @@ public class MapCollider : MonoBehaviour
             //if a collision's gameObject has a MapCollider or a BridgeHandler, it is a valid tile.
             if (checkForBridge)
             {
-                if (mapHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null ||
-                    mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    //check if distance is shorter than last recorded shortest
-                    if (mapHitColliders[i].distance < shortestHit)
-                    {
-                        shortestHit = mapHitColliders[i].distance;
-                        shortestHitIndex = i;
-                    }
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() == null &&
+                    mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                //check if distance is shorter than last recorded shortest
+                if (!(mapHitColliders[i].distance < shortestHit)) continue;
+                shortestHit = mapHitColliders[i].distance;
+                shortestHitIndex = i;
             }
             else
             {
-                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    //check if distance is shorter than last recorded shortest
-                    if (mapHitColliders[i].distance < shortestHit)
-                    {
-                        shortestHit = mapHitColliders[i].distance;
-                        shortestHitIndex = i;
-                    }
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                //check if distance is shorter than last recorded shortest
+                if (!(mapHitColliders[i].distance < shortestHit)) continue;
+                shortestHit = mapHitColliders[i].distance;
+                shortestHitIndex = i;
             }
         }
         //if index is not -1, a map/bridge was found
@@ -204,28 +192,20 @@ public class MapCollider : MonoBehaviour
             //if a collision's gameObject has a MapCollider or a BridgeHandler, it is a valid tile.
             if (checkForBridge)
             {
-                if (mapHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null ||
-                    mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    //check if distance is shorter than last recorded shortest
-                    if (mapHitColliders[i].distance < shortestHit)
-                    {
-                        shortestHit = mapHitColliders[i].distance;
-                        shortestHitIndex = i;
-                    }
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() == null &&
+                    mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                //check if distance is shorter than last recorded shortest
+                if (!(mapHitColliders[i].distance < shortestHit)) continue;
+                shortestHit = mapHitColliders[i].distance;
+                shortestHitIndex = i;
             }
             else
             {
-                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    //check if distance is shorter than last recorded shortest
-                    if (mapHitColliders[i].distance < shortestHit)
-                    {
-                        shortestHit = mapHitColliders[i].distance;
-                        shortestHitIndex = i;
-                    }
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                //check if distance is shorter than last recorded shortest
+                if (!(mapHitColliders[i].distance < shortestHit)) continue;
+                shortestHit = mapHitColliders[i].distance;
+                shortestHitIndex = i;
             }
         }
         //if index is not -1, a map/bridge was found

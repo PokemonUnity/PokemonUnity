@@ -222,132 +222,74 @@ public class PartyHandler : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
-            if (selectedPokemon != null)
+            if (selectedPokemon == null) continue;
+            if (i == swapPosition)
             {
-                if (i == swapPosition)
+                if (i == 0)
+                {
+                    slot[i].texture = i == currentPosition ? panelRoundSwapSel : panelRoundSwap;
+                }
+                else
+                {
+                    slot[i].texture = i == currentPosition ? panelRectSwapSel : panelRectSwap;
+                }
+            }
+            else
+            {
+                if (selectedPokemon.getCurrentHP() == 0)
                 {
                     if (i == 0)
                     {
                         if (i == currentPosition)
                         {
-                            slot[i].texture = panelRoundSwapSel;
+                            slot[i].texture = switching ? panelRoundSwapSel : panelRoundFaintSel;
                         }
                         else
                         {
-                            slot[i].texture = panelRoundSwap;
+                            slot[i].texture = panelRoundFaint;
                         }
                     }
                     else
                     {
                         if (i == currentPosition)
                         {
-                            slot[i].texture = panelRectSwapSel;
+                            slot[i].texture = switching ? panelRectSwapSel : panelRectFaintSel;
                         }
                         else
                         {
-                            slot[i].texture = panelRectSwap;
+                            slot[i].texture = panelRectFaint;
                         }
                     }
                 }
                 else
                 {
-                    if (selectedPokemon.getCurrentHP() == 0)
+                    if (i == 0)
                     {
-                        if (i == 0)
+                        if (i == currentPosition)
                         {
-                            if (i == currentPosition)
-                            {
-                                if (switching)
-                                {
-                                    slot[i].texture = panelRoundSwapSel;
-                                }
-                                else
-                                {
-                                    slot[i].texture = panelRoundFaintSel;
-                                }
-                            }
-                            else
-                            {
-                                slot[i].texture = panelRoundFaint;
-                            }
+                            slot[i].texture = switching ? panelRoundSwapSel : panelRoundSel;
                         }
                         else
                         {
-                            if (i == currentPosition)
-                            {
-                                if (switching)
-                                {
-                                    slot[i].texture = panelRectSwapSel;
-                                }
-                                else
-                                {
-                                    slot[i].texture = panelRectFaintSel;
-                                }
-                            }
-                            else
-                            {
-                                slot[i].texture = panelRectFaint;
-                            }
+                            slot[i].texture = panelRound;
                         }
                     }
                     else
                     {
-                        if (i == 0)
+                        if (i == currentPosition)
                         {
-                            if (i == currentPosition)
-                            {
-                                if (switching)
-                                {
-                                    slot[i].texture = panelRoundSwapSel;
-                                }
-                                else
-                                {
-                                    slot[i].texture = panelRoundSel;
-                                }
-                            }
-                            else
-                            {
-                                slot[i].texture = panelRound;
-                            }
+                            slot[i].texture = switching ? panelRectSwapSel : panelRectSel;
                         }
                         else
                         {
-                            if (i == currentPosition)
-                            {
-                                if (switching)
-                                {
-                                    slot[i].texture = panelRectSwapSel;
-                                }
-                                else
-                                {
-                                    slot[i].texture = panelRectSel;
-                                }
-                            }
-                            else
-                            {
-                                slot[i].texture = panelRect;
-                            }
+                            slot[i].texture = panelRect;
                         }
                     }
                 }
-                if (i == currentPosition)
-                {
-                    selectBall[i].texture = selectBallOpen;
-                }
-                else
-                {
-                    selectBall[i].texture = selectBallClosed;
-                }
             }
+            selectBall[i].texture = i == currentPosition ? selectBallOpen : selectBallClosed;
         }
-        if (currentPosition == 6)
-        {
-            cancel.texture = cancelHighlightTex;
-        }
-        else
-        {
-            cancel.texture = cancelTex;
-        }
+        cancel.texture = currentPosition == 6 ? cancelHighlightTex : cancelTex;
     }
 
     private IEnumerator switchPokemon(int position1, int position2)
@@ -356,71 +298,51 @@ public class PartyHandler : MonoBehaviour
         float moveSpeed = 0.4f;
         Transform slot1 = slot[position1].transform;
         Transform slot2 = slot[position2].transform;
-        if (position1 != position2 && position1 >= 0 && position2 >= 0 && position1 < 6 && position2 < 6)
+        if (position1 == position2 || position1 < 0 || position2 < 0 || position1 >= 6 || position2 >= 6) yield break;
+        while (increment < 1)
         {
-            while (increment < 1)
+            increment += (1 / moveSpeed) * Time.deltaTime;
+            if (increment > 1)
             {
-                increment += (1 / moveSpeed) * Time.deltaTime;
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-                if (position1 % 2 == 0)
-                {
-                    //left side
-                    slot1.position = (new Vector3(-0.5f * increment, 0, slot1.position.z));
-                }
-                else
-                {
-                    //right side
-                    slot1.position = (new Vector3(0.5f * increment, 0, slot1.position.z));
-                }
-                if (position2 % 2 == 0)
-                {
-                    //left side
-                    slot2.position = (new Vector3(-0.5f * increment, 0, slot2.position.z));
-                }
-                else
-                {
-                    //right side
-                    slot2.position = (new Vector3(0.5f * increment, 0, slot2.position.z));
-                }
-                yield return null;
+                increment = 1;
             }
+            slot1.position = position1 % 2 == 0 ? (new Vector3(-0.5f * increment, 0, slot1.position.z)) : (new Vector3(0.5f * increment, 0, slot1.position.z));
+            slot2.position = position2 % 2 == 0 ? (new Vector3(-0.5f * increment, 0, slot2.position.z)) : (new Vector3(0.5f * increment, 0, slot2.position.z));
+            yield return null;
+        }
 
-            SaveData.currentSave.PC.swapPokemon(0, position1, 0, position2);
-            updateParty();
+        SaveData.currentSave.PC.swapPokemon(0, position1, 0, position2);
+        updateParty();
 
-            increment = 0;
-            while (increment < 1)
+        increment = 0;
+        while (increment < 1)
+        {
+            increment += (1 / moveSpeed) * Time.deltaTime;
+            if (increment > 1)
             {
-                increment += (1 / moveSpeed) * Time.deltaTime;
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-                if (position1 % 2 == 0)
-                {
-                    //left side
-                    slot1.position = (new Vector3(-0.5f + (0.5f * increment), 0, slot1.position.z));
-                }
-                else
-                {
-                    //right side
-                    slot1.position = (new Vector3(0.5f - (0.5f * increment), 0, slot1.position.z));
-                }
-                if (position2 % 2 == 0)
-                {
-                    //left side
-                    slot2.position = (new Vector3(-0.5f + (0.5f * increment), 0, slot2.position.z));
-                }
-                else
-                {
-                    //right side
-                    slot2.position = (new Vector3(0.5f - (0.5f * increment), 0, slot2.position.z));
-                }
-                yield return null;
+                increment = 1;
             }
+            if (position1 % 2 == 0)
+            {
+                //left side
+                slot1.position = (new Vector3(-0.5f + (0.5f * increment), 0, slot1.position.z));
+            }
+            else
+            {
+                //right side
+                slot1.position = (new Vector3(0.5f - (0.5f * increment), 0, slot1.position.z));
+            }
+            if (position2 % 2 == 0)
+            {
+                //left side
+                slot2.position = (new Vector3(-0.5f + (0.5f * increment), 0, slot2.position.z));
+            }
+            else
+            {
+                //right side
+                slot2.position = (new Vector3(0.5f - (0.5f * increment), 0, slot2.position.z));
+            }
+            yield return null;
         }
     }
 

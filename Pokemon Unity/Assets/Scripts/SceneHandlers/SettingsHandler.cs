@@ -144,22 +144,20 @@ public class SettingsHandler : MonoBehaviour
             else
             {
                 i += 1;
-                if (i < textLine.Length)
+                if (i >= textLine.Length) continue;
+                //if not at the end, repeat and wait double time
+                if (chars[i].Equals('\\'))
                 {
-                    //if not at the end, repeat and wait double time
-                    if (chars[i].Equals('\\'))
-                    {
-                        //   \ is used to designate line breaks
-                        DialogBoxText.text += "\n";
-                        DialogBoxTextShadow.text = DialogBoxText.text;
-                    }
-                    else
-                    {
-                        DialogBoxText.text += chars[i].ToString();
-                        DialogBoxTextShadow.text = DialogBoxText.text;
-                    }
-                    yield return new WaitForSeconds(secPerChar * 2);
+                    //   \ is used to designate line breaks
+                    DialogBoxText.text += "\n";
+                    DialogBoxTextShadow.text = DialogBoxText.text;
                 }
+                else
+                {
+                    DialogBoxText.text += chars[i].ToString();
+                    DialogBoxTextShadow.text = DialogBoxText.text;
+                }
+                yield return new WaitForSeconds(secPerChar * 2);
             }
         }
     }

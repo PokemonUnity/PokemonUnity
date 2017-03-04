@@ -49,11 +49,9 @@ public class Bag
                     packedOrder[packedIndex] = temp;
                     packedIndex += 1;
                 }
-                if (order[i] != null)
-                {
-                    packedOrder[packedIndex] = order[i];
-                    packedIndex += 1;
-                }
+                if (order[i] == null) continue;
+                packedOrder[packedIndex] = order[i];
+                packedIndex += 1;
             }
             order = packedOrder;
         }
@@ -79,11 +77,9 @@ public class Bag
         int packedIndex = 0;
         for (int i = 0; i < order.Length; i++)
         {
-            if (order[i] != null)
-            {
-                packedOrder[packedIndex] = order[i];
-                packedIndex += 1;
-            }
+            if (order[i] == null) continue;
+            packedOrder[packedIndex] = order[i];
+            packedIndex += 1;
         }
         order = packedOrder;
     }
@@ -91,11 +87,7 @@ public class Bag
     public int getQuantity(string itemName)
     {
         int index = ItemDatabase.getIndexOf(itemName);
-        if (index != -1)
-        {
-            return quantity[index];
-        }
-        return 0;
+        return index != -1 ? quantity[index] : 0;
     }
 
     public bool addItem(string itemName, int amount)
@@ -136,11 +128,9 @@ public class Bag
             return false;
         }
         quantity[index] -= amount;
-        if (quantity[index] == 0)
-        {
-            order[getIndexOf(name)] = null;
-            packOrder();
-        }
+        if (quantity[index] != 0) return true;
+        order[getIndexOf(name)] = null;
+        packOrder();
         return true;
     }
 
@@ -166,23 +156,19 @@ public class Bag
         {
             if (!allSellables)
             {
-                if (ItemDatabase.getItem(order[i]).getItemType() == itemType)
-                {
-                    //if correct ItemType
-                    result[resultPos] = order[i];
-                    resultPos += 1;
-                }
+                if (ItemDatabase.getItem(order[i]).getItemType() != itemType) continue;
+                //if correct ItemType
+                result[resultPos] = order[i];
+                resultPos += 1;
             }
             else
             {
-                if (ItemDatabase.getItem(order[i]).getItemType() == ItemData.ItemType.ITEM ||
-                    ItemDatabase.getItem(order[i]).getItemType() == ItemData.ItemType.MEDICINE ||
-                    ItemDatabase.getItem(order[i]).getItemType() == ItemData.ItemType.BERRY)
-                {
-                    //if correct ItemType
-                    result[resultPos] = order[i];
-                    resultPos += 1;
-                }
+                if (ItemDatabase.getItem(order[i]).getItemType() != ItemData.ItemType.ITEM &&
+                    ItemDatabase.getItem(order[i]).getItemType() != ItemData.ItemType.MEDICINE &&
+                    ItemDatabase.getItem(order[i]).getItemType() != ItemData.ItemType.BERRY) continue;
+                //if correct ItemType
+                result[resultPos] = order[i];
+                resultPos += 1;
             }
         }
         string[] cleanedResult = new string[resultPos];
@@ -203,12 +189,10 @@ public class Bag
         //cycle through order, adding all correct ItemTypes to result
         for (int i = 0; i < length; i++)
         {
-            if (ItemDatabase.getItem(order[i]).getBattleType() == battleType)
-            {
-                //if correct ItemType
-                result[resultPos] = order[i];
-                resultPos += 1;
-            }
+            if (ItemDatabase.getItem(order[i]).getBattleType() != battleType) continue;
+            //if correct ItemType
+            result[resultPos] = order[i];
+            resultPos += 1;
         }
         string[] cleanedResult = new string[resultPos];
         for (int i = 0; i < cleanedResult.Length; i++)

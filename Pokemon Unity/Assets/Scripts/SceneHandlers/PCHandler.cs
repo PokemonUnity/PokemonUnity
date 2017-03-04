@@ -352,76 +352,74 @@ public class PCHandler : MonoBehaviour
 
     private void updateSelectedInfo(Pokemon selectedPokemon)
     {
-        if (!carrying)
+        if (carrying) return;
+        if (selectedPokemon == null)
         {
-            if (selectedPokemon == null)
+            selectedName.text = null;
+            selectedNameShadow.text = null;
+            selectedGender.text = null;
+            selectedGenderShadow.text = null;
+            selectedSpriteAnimation = new Texture[] {};
+            selectedSprite.texture = null;
+            selectedType1.texture = null;
+            selectedType2.texture = null;
+            selectedLevel.text = null;
+            selectedLevelShadow.text = null;
+            selectedAbility.text = null;
+            selectedAbilityShadow.text = null;
+            selectedItem.text = null;
+            selectedItemShadow.text = null;
+            selectedStatus.texture = null;
+        }
+        else
+        {
+            selectedName.text = selectedPokemon.getName();
+            selectedNameShadow.text = selectedName.text;
+            if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
             {
-                selectedName.text = null;
-                selectedNameShadow.text = null;
-                selectedGender.text = null;
-                selectedGenderShadow.text = null;
-                selectedSpriteAnimation = new Texture[] {};
-                selectedSprite.texture = null;
-                selectedType1.texture = null;
-                selectedType2.texture = null;
-                selectedLevel.text = null;
-                selectedLevelShadow.text = null;
-                selectedAbility.text = null;
-                selectedAbilityShadow.text = null;
-                selectedItem.text = null;
-                selectedItemShadow.text = null;
-                selectedStatus.texture = null;
+                selectedGender.text = "♀";
+                selectedGender.color = new Color(1, 0.2f, 0.2f, 1);
+            }
+            else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
+            {
+                selectedGender.text = "♂";
+                selectedGender.color = new Color(0.2f, 0.4f, 1, 1);
             }
             else
             {
-                selectedName.text = selectedPokemon.getName();
-                selectedNameShadow.text = selectedName.text;
-                if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
-                {
-                    selectedGender.text = "♀";
-                    selectedGender.color = new Color(1, 0.2f, 0.2f, 1);
-                }
-                else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
-                {
-                    selectedGender.text = "♂";
-                    selectedGender.color = new Color(0.2f, 0.4f, 1, 1);
-                }
-                else
-                {
-                    selectedGender.text = null;
-                }
-                selectedGenderShadow.text = selectedGender.text;
-                selectedSpriteAnimation = selectedPokemon.GetFrontAnim();
-                selectedSprite.texture = selectedSpriteAnimation[0];
-                string type1 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
-                string type2 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
-                selectedType1.texture = null;
-                selectedType2.texture = null;
-                if (type1 != "NONE")
-                {
-                    selectedType1.texture = Resources.Load<Texture>("PCSprites/type" + type1);
-                }
-                if (type2 != "NONE")
-                {
-                    selectedType2.texture = Resources.Load<Texture>("PCSprites/type" + type2);
-                }
-                selectedLevel.text = "Level " + selectedPokemon.getLevel();
-                selectedLevelShadow.text = selectedLevel.text;
-                selectedAbility.text =
-                    PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
-                selectedAbilityShadow.text = selectedAbility.text;
-                selectedItem.text = "None";
-                if (selectedPokemon.getHeldItem() != null)
-                {
-                    selectedItem.text = selectedPokemon.getHeldItem();
-                }
-                selectedItemShadow.text = selectedItem.text;
-                selectedStatus.texture = null;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
-                {
-                    selectedStatus.texture =
-                        Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString());
-                }
+                selectedGender.text = null;
+            }
+            selectedGenderShadow.text = selectedGender.text;
+            selectedSpriteAnimation = selectedPokemon.GetFrontAnim();
+            selectedSprite.texture = selectedSpriteAnimation[0];
+            string type1 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
+            string type2 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
+            selectedType1.texture = null;
+            selectedType2.texture = null;
+            if (type1 != "NONE")
+            {
+                selectedType1.texture = Resources.Load<Texture>("PCSprites/type" + type1);
+            }
+            if (type2 != "NONE")
+            {
+                selectedType2.texture = Resources.Load<Texture>("PCSprites/type" + type2);
+            }
+            selectedLevel.text = "Level " + selectedPokemon.getLevel();
+            selectedLevelShadow.text = selectedLevel.text;
+            selectedAbility.text =
+                PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+            selectedAbilityShadow.text = selectedAbility.text;
+            selectedItem.text = "None";
+            if (selectedPokemon.getHeldItem() != null)
+            {
+                selectedItem.text = selectedPokemon.getHeldItem();
+            }
+            selectedItemShadow.text = selectedItem.text;
+            selectedStatus.texture = null;
+            if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+            {
+                selectedStatus.texture =
+                    Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString());
             }
         }
     }
@@ -670,11 +668,9 @@ public class PCHandler : MonoBehaviour
             {
                 cursor.border = new RectOffset(32, 0, 32, 0);
                 yield return new WaitForSeconds(0.4f);
-                if (!carrying)
-                {
-                    cursor.border = new RectOffset(0, 32, 32, 0);
-                    yield return new WaitForSeconds(0.4f);
-                }
+                if (carrying) continue;
+                cursor.border = new RectOffset(0, 32, 32, 0);
+                yield return new WaitForSeconds(0.4f);
             }
             yield return null;
         }
@@ -683,45 +679,43 @@ public class PCHandler : MonoBehaviour
     private IEnumerator packParty(int currentPosition)
     {
         int hole = currentPosition;
-        if (hole < 5)
+        if (hole >= 5) yield break;
+        Vector2[] partyPositions = new Vector2[]
         {
-            Vector2[] partyPositions = new Vector2[]
-            {
-                new Vector2(partyIcons[0].pixelInset.x, partyIcons[0].pixelInset.y),
-                new Vector2(partyIcons[1].pixelInset.x, partyIcons[1].pixelInset.y),
-                new Vector2(partyIcons[2].pixelInset.x, partyIcons[2].pixelInset.y),
-                new Vector2(partyIcons[3].pixelInset.x, partyIcons[3].pixelInset.y),
-                new Vector2(partyIcons[4].pixelInset.x, partyIcons[4].pixelInset.y),
-                new Vector2(partyIcons[5].pixelInset.x, partyIcons[5].pixelInset.y)
-            };
-            while (hole < 4)
-            {
-                //until the hole is either at the end of the party, or not there.
-                SaveData.currentSave.PC.swapPokemon(0, hole, 0, hole + 1);
-                StartCoroutine(moveIcon(partyIcons[hole + 1], partyPositions[hole]));
-                hole += 1;
-            }
+            new Vector2(partyIcons[0].pixelInset.x, partyIcons[0].pixelInset.y),
+            new Vector2(partyIcons[1].pixelInset.x, partyIcons[1].pixelInset.y),
+            new Vector2(partyIcons[2].pixelInset.x, partyIcons[2].pixelInset.y),
+            new Vector2(partyIcons[3].pixelInset.x, partyIcons[3].pixelInset.y),
+            new Vector2(partyIcons[4].pixelInset.x, partyIcons[4].pixelInset.y),
+            new Vector2(partyIcons[5].pixelInset.x, partyIcons[5].pixelInset.y)
+        };
+        while (hole < 4)
+        {
+            //until the hole is either at the end of the party, or not there.
             SaveData.currentSave.PC.swapPokemon(0, hole, 0, hole + 1);
-            yield return StartCoroutine(moveIcon(partyIcons[hole + 1], partyPositions[hole]));
-            hole = currentPosition;
-            while (hole < 5)
-            {
-                partyIcons[hole].texture = partyIcons[hole + 1].texture;
-                partyItems[hole].enabled = partyItems[hole + 1].enabled;
-                partyIcons[hole].pixelInset = new Rect(partyPositions[hole].x, partyPositions[hole].y,
-                    partyIcons[hole].pixelInset.width, partyIcons[hole].pixelInset.height);
-                partyItems[hole].pixelInset = new Rect(partyPositions[hole].x + 17, partyPositions[hole].y + 2,
-                    partyItems[hole].pixelInset.width, partyItems[hole].pixelInset.height);
-                hole += 1;
-            }
-            partyIcons[5].texture = null;
-            partyItems[5].enabled = false;
-            partyIcons[5].pixelInset = new Rect(partyPositions[5].x, partyPositions[5].y, partyIcons[5].pixelInset.width,
-                partyIcons[5].pixelInset.height);
-            partyItems[5].pixelInset = new Rect(partyPositions[5].x + 17, partyPositions[5].y + 2,
-                partyItems[5].pixelInset.width, partyItems[5].pixelInset.height);
-            selectedIndex = hole;
+            StartCoroutine(moveIcon(partyIcons[hole + 1], partyPositions[hole]));
+            hole += 1;
         }
+        SaveData.currentSave.PC.swapPokemon(0, hole, 0, hole + 1);
+        yield return StartCoroutine(moveIcon(partyIcons[hole + 1], partyPositions[hole]));
+        hole = currentPosition;
+        while (hole < 5)
+        {
+            partyIcons[hole].texture = partyIcons[hole + 1].texture;
+            partyItems[hole].enabled = partyItems[hole + 1].enabled;
+            partyIcons[hole].pixelInset = new Rect(partyPositions[hole].x, partyPositions[hole].y,
+                partyIcons[hole].pixelInset.width, partyIcons[hole].pixelInset.height);
+            partyItems[hole].pixelInset = new Rect(partyPositions[hole].x + 17, partyPositions[hole].y + 2,
+                partyItems[hole].pixelInset.width, partyItems[hole].pixelInset.height);
+            hole += 1;
+        }
+        partyIcons[5].texture = null;
+        partyItems[5].enabled = false;
+        partyIcons[5].pixelInset = new Rect(partyPositions[5].x, partyPositions[5].y, partyIcons[5].pixelInset.width,
+            partyIcons[5].pixelInset.height);
+        partyItems[5].pixelInset = new Rect(partyPositions[5].x + 17, partyPositions[5].y + 2,
+            partyItems[5].pixelInset.width, partyItems[5].pixelInset.height);
+        selectedIndex = hole;
     }
 
     private IEnumerator endOfParty(int currentPosition)
@@ -736,40 +730,38 @@ public class PCHandler : MonoBehaviour
             new Vector2(partyIcons[4].pixelInset.x, partyIcons[4].pixelInset.y),
             new Vector2(partyIcons[5].pixelInset.x, partyIcons[5].pixelInset.y)
         };
-        if (icon > 0)
+        if (icon <= 0) yield break;
+        while (SaveData.currentSave.PC.boxes[0][icon - 1] == null && icon > 1)
         {
-            while (SaveData.currentSave.PC.boxes[0][icon - 1] == null && icon > 1)
-            {
-                //if the previous spot is free, and is not first spot
-                yield return StartCoroutine(moveIcon(partyIcons[icon], partyPositions[icon - 1]));
-                partyIcons[icon - 1].texture = partyIcons[icon].texture;
-                partyIcons[icon].texture = null;
-                partyIcons[icon].pixelInset = new Rect(partyPositions[icon].x, partyPositions[icon].y,
-                    partyIcons[icon].pixelInset.width, partyIcons[icon].pixelInset.height);
-                partyItems[icon - 1].enabled = partyItems[icon].enabled;
-                partyItems[icon].enabled = false;
-                partyItems[icon].pixelInset = new Rect(partyPositions[icon].x + 17, partyPositions[icon].y + 2,
-                    partyItems[icon].pixelInset.width, partyItems[icon].pixelInset.height);
-                SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
-                icon -= 1;
-                updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition]);
-            }
-            if (SaveData.currentSave.PC.boxes[0][icon - 1] == null)
-            {
-                yield return StartCoroutine(moveIcon(partyIcons[icon], partyPositions[icon - 1]));
-                partyIcons[icon - 1].texture = partyIcons[icon].texture;
-                partyIcons[icon].texture = null;
-                partyIcons[icon].pixelInset = new Rect(partyPositions[icon].x, partyPositions[icon].y,
-                    partyIcons[icon].pixelInset.width, partyIcons[icon].pixelInset.height);
-                partyItems[icon - 1].enabled = partyItems[icon].enabled;
-                partyItems[icon].enabled = false;
-                partyItems[icon].pixelInset = new Rect(partyPositions[icon].x + 17, partyPositions[icon].y + 2,
-                    partyItems[icon].pixelInset.width, partyItems[icon].pixelInset.height);
-                SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
-                updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition]);
-            }
-            icon = 0;
+            //if the previous spot is free, and is not first spot
+            yield return StartCoroutine(moveIcon(partyIcons[icon], partyPositions[icon - 1]));
+            partyIcons[icon - 1].texture = partyIcons[icon].texture;
+            partyIcons[icon].texture = null;
+            partyIcons[icon].pixelInset = new Rect(partyPositions[icon].x, partyPositions[icon].y,
+                partyIcons[icon].pixelInset.width, partyIcons[icon].pixelInset.height);
+            partyItems[icon - 1].enabled = partyItems[icon].enabled;
+            partyItems[icon].enabled = false;
+            partyItems[icon].pixelInset = new Rect(partyPositions[icon].x + 17, partyPositions[icon].y + 2,
+                partyItems[icon].pixelInset.width, partyItems[icon].pixelInset.height);
+            SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
+            icon -= 1;
+            updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition]);
         }
+        if (SaveData.currentSave.PC.boxes[0][icon - 1] == null)
+        {
+            yield return StartCoroutine(moveIcon(partyIcons[icon], partyPositions[icon - 1]));
+            partyIcons[icon - 1].texture = partyIcons[icon].texture;
+            partyIcons[icon].texture = null;
+            partyIcons[icon].pixelInset = new Rect(partyPositions[icon].x, partyPositions[icon].y,
+                partyIcons[icon].pixelInset.width, partyIcons[icon].pixelInset.height);
+            partyItems[icon - 1].enabled = partyItems[icon].enabled;
+            partyItems[icon].enabled = false;
+            partyItems[icon].pixelInset = new Rect(partyPositions[icon].x + 17, partyPositions[icon].y + 2,
+                partyItems[icon].pixelInset.width, partyItems[icon].pixelInset.height);
+            SaveData.currentSave.PC.swapPokemon(0, icon - 1, 0, icon);
+            updateSelectedInfo(SaveData.currentSave.PC.boxes[0][currentPosition]);
+        }
+        icon = 0;
     }
 
     private IEnumerator moveIcon(GUITexture icon, Vector2 destination)
@@ -839,117 +831,104 @@ public class PCHandler : MonoBehaviour
         {
             originalSpot = true;
         }
-        if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] == null || originalSpot)
+        if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] != null && !originalSpot) yield break;
+        SfxHandler.Play(putDownClip);
+        yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y - 10)));
+        if (currentBoxID == 0)
         {
-            SfxHandler.Play(putDownClip);
-            yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y - 10)));
-            if (currentBoxID == 0)
-            {
-                partyIcons[currentPosition].texture = grabbedPokemon.texture;
-                partyItems[currentPosition].enabled = grabbedPokemonItem.enabled;
-                StartCoroutine(endOfParty(currentPosition));
-            }
-            else
-            {
-                currentBoxIconsArray[currentPosition].texture = grabbedPokemon.texture;
-                currentBoxItemsArray[currentPosition].enabled = grabbedPokemonItem.enabled;
-            }
-            if (selectedBoxID == 0)
-            {
-                SaveData.currentSave.PC.swapPokemon(selectedBoxID, 5, currentBoxID, currentPosition);
-            }
-            else
-            {
-                SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
-            }
-            grabbedPokemon.texture = null;
-            grabbedPokemonItem.enabled = false;
-            cursor.border = new RectOffset(32, 0, 0, 32);
-            yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y + 10)));
-            carrying = false;
-            if (currentBoxID != 0)
-            {
-                //fully heal if depositing into PC
-                SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
-                updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition]);
-            }
+            partyIcons[currentPosition].texture = grabbedPokemon.texture;
+            partyItems[currentPosition].enabled = grabbedPokemonItem.enabled;
+            StartCoroutine(endOfParty(currentPosition));
         }
+        else
+        {
+            currentBoxIconsArray[currentPosition].texture = grabbedPokemon.texture;
+            currentBoxItemsArray[currentPosition].enabled = grabbedPokemonItem.enabled;
+        }
+        if (selectedBoxID == 0)
+        {
+            SaveData.currentSave.PC.swapPokemon(selectedBoxID, 5, currentBoxID, currentPosition);
+        }
+        else
+        {
+            SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
+        }
+        grabbedPokemon.texture = null;
+        grabbedPokemonItem.enabled = false;
+        cursor.border = new RectOffset(32, 0, 0, 32);
+        yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y + 10)));
+        carrying = false;
+        if (currentBoxID == 0) yield break;
+        //fully heal if depositing into PC
+        SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
+        updateSelectedInfo(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition]);
     }
 
     private IEnumerator switchPokemon(int currentBoxID, int currentPosition)
     {
-        if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] != null)
+        if (SaveData.currentSave.PC.boxes[currentBoxID][currentPosition] == null) yield break;
+        GUITexture targetIcon = null;
+        GUITexture targetItem = null;
+        if (currentBoxID == 0)
         {
-            GUITexture targetIcon = null;
-            GUITexture targetItem = null;
-            if (currentBoxID == 0)
-            {
-                targetIcon = partyIcons[currentPosition];
-                targetItem = partyItems[currentPosition];
-            }
-            else
-            {
-                targetIcon = currentBoxIconsArray[currentPosition];
-                targetItem = currentBoxItemsArray[currentPosition];
-            }
-            cursor.border = new RectOffset(32, 0, 0, 32);
-            SfxHandler.Play(putDownClip);
-            StartCoroutine(moveIcon(grabbedPokemon,
-                new Vector2(grabbedPokemon.pixelInset.x + 5, grabbedPokemon.pixelInset.y - 5)));
-            yield return
-                StartCoroutine(moveIcon(targetIcon,
-                    new Vector2(targetIcon.pixelInset.x - 5, targetIcon.pixelInset.y + 5)));
+            targetIcon = partyIcons[currentPosition];
+            targetItem = partyItems[currentPosition];
+        }
+        else
+        {
+            targetIcon = currentBoxIconsArray[currentPosition];
+            targetItem = currentBoxItemsArray[currentPosition];
+        }
+        cursor.border = new RectOffset(32, 0, 0, 32);
+        SfxHandler.Play(putDownClip);
+        StartCoroutine(moveIcon(grabbedPokemon,
+            new Vector2(grabbedPokemon.pixelInset.x + 5, grabbedPokemon.pixelInset.y - 5)));
+        yield return
+            StartCoroutine(moveIcon(targetIcon,
+                new Vector2(targetIcon.pixelInset.x - 5, targetIcon.pixelInset.y + 5)));
 
-            Texture temp = targetIcon.texture;
-            bool itemTemp = targetItem.enabled;
-            //swap target icon's position and grabbedPokemon's position, and update their new textures
-            targetIcon.pixelInset = new Rect(targetIcon.pixelInset.x + 10, targetIcon.pixelInset.y,
-                targetIcon.pixelInset.width, targetIcon.pixelInset.height);
-            targetItem.pixelInset = new Rect(targetItem.pixelInset.x + 10, targetItem.pixelInset.y,
-                targetItem.pixelInset.width, targetItem.pixelInset.height);
-            targetIcon.texture = grabbedPokemon.texture;
-            targetItem.enabled = grabbedPokemonItem.enabled;
-            grabbedPokemon.pixelInset = new Rect(grabbedPokemon.pixelInset.x - 10, grabbedPokemon.pixelInset.y,
-                grabbedPokemon.pixelInset.width, grabbedPokemon.pixelInset.height);
-            grabbedPokemonItem.pixelInset = new Rect(grabbedPokemonItem.pixelInset.x - 10,
-                grabbedPokemonItem.pixelInset.y, grabbedPokemonItem.pixelInset.width,
-                grabbedPokemonItem.pixelInset.height);
-            grabbedPokemon.texture = temp;
-            grabbedPokemonItem.enabled = itemTemp;
+        Texture temp = targetIcon.texture;
+        bool itemTemp = targetItem.enabled;
+        //swap target icon's position and grabbedPokemon's position, and update their new textures
+        targetIcon.pixelInset = new Rect(targetIcon.pixelInset.x + 10, targetIcon.pixelInset.y,
+            targetIcon.pixelInset.width, targetIcon.pixelInset.height);
+        targetItem.pixelInset = new Rect(targetItem.pixelInset.x + 10, targetItem.pixelInset.y,
+            targetItem.pixelInset.width, targetItem.pixelInset.height);
+        targetIcon.texture = grabbedPokemon.texture;
+        targetItem.enabled = grabbedPokemonItem.enabled;
+        grabbedPokemon.pixelInset = new Rect(grabbedPokemon.pixelInset.x - 10, grabbedPokemon.pixelInset.y,
+            grabbedPokemon.pixelInset.width, grabbedPokemon.pixelInset.height);
+        grabbedPokemonItem.pixelInset = new Rect(grabbedPokemonItem.pixelInset.x - 10,
+            grabbedPokemonItem.pixelInset.y, grabbedPokemonItem.pixelInset.width,
+            grabbedPokemonItem.pixelInset.height);
+        grabbedPokemon.texture = temp;
+        grabbedPokemonItem.enabled = itemTemp;
 
-            //update selected info
-            updateSelectedInfoOverride(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition]);
-            //swap pokemon
-            SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
+        //update selected info
+        updateSelectedInfoOverride(SaveData.currentSave.PC.boxes[currentBoxID][currentPosition]);
+        //swap pokemon
+        SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
 
-            SfxHandler.Play(pickUpClip);
-            StartCoroutine(moveIcon(grabbedPokemon,
-                new Vector2(grabbedPokemon.pixelInset.x + 5, grabbedPokemon.pixelInset.y + 5)));
-            yield return
-                StartCoroutine(moveIcon(targetIcon,
-                    new Vector2(targetIcon.pixelInset.x - 5, targetIcon.pixelInset.y - 5)));
+        SfxHandler.Play(pickUpClip);
+        StartCoroutine(moveIcon(grabbedPokemon,
+            new Vector2(grabbedPokemon.pixelInset.x + 5, grabbedPokemon.pixelInset.y + 5)));
+        yield return
+            StartCoroutine(moveIcon(targetIcon,
+                new Vector2(targetIcon.pixelInset.x - 5, targetIcon.pixelInset.y - 5)));
 
-            cursor.border = new RectOffset(0, 32, 0, 32);
+        cursor.border = new RectOffset(0, 32, 0, 32);
 
-            if (currentBoxID != 0)
-            {
-                //fully heal if depositing into PC
-                SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
-            }
+        if (currentBoxID != 0)
+        {
+            //fully heal if depositing into PC
+            SaveData.currentSave.PC.boxes[currentBoxID][currentPosition].healFull();
         }
     }
 
     private IEnumerator releasePokemon(int currentBoxID, int currentPosition)
     {
         GUITexture targetIcon = null;
-        if (currentBoxID == 0)
-        {
-            targetIcon = partyIcons[currentPosition];
-        }
-        else
-        {
-            targetIcon = currentBoxIconsArray[currentPosition];
-        }
+        targetIcon = currentBoxID == 0 ? partyIcons[currentPosition] : currentBoxIconsArray[currentPosition];
         float increment = 0;
         float moveSpeedSlow = 0.4f;
         float startY = targetIcon.pixelInset.y;
@@ -974,40 +953,34 @@ public class PCHandler : MonoBehaviour
         int targetPosition = 6;
         for (int i = 1; i < 6; i++)
         {
-            if (SaveData.currentSave.PC.boxes[0][i] == null)
-            {
-                targetPosition = i;
-                i = 6;
-            }
+            if (SaveData.currentSave.PC.boxes[0][i] != null) continue;
+            targetPosition = i;
+            i = 6;
         }
-        if (targetPosition < 6)
-        {
-            yield return StartCoroutine(pickUpPokemon(currentBoxID, currentPosition));
-            float startX = cursor.pixelInset.x;
-            float startY = cursor.pixelInset.y;
-            yield return
-                StartCoroutine(
-                    moveCursor(new Vector2(partyIcons[targetPosition].pixelInset.x + 267,
-                        partyIcons[targetPosition].pixelInset.y + 20)));
-            yield return StartCoroutine(putDownPokemon(0, targetPosition));
-            yield return StartCoroutine(moveCursor(new Vector2(startX, startY)));
-        }
+        if (targetPosition >= 6) yield break;
+        yield return StartCoroutine(pickUpPokemon(currentBoxID, currentPosition));
+        float startX = cursor.pixelInset.x;
+        float startY = cursor.pixelInset.y;
+        yield return
+            StartCoroutine(
+                moveCursor(new Vector2(partyIcons[targetPosition].pixelInset.x + 267,
+                    partyIcons[targetPosition].pixelInset.y + 20)));
+        yield return StartCoroutine(putDownPokemon(0, targetPosition));
+        yield return StartCoroutine(moveCursor(new Vector2(startX, startY)));
     }
 
     private IEnumerator depositPokemon(int currentPosition, int targetPosition)
     {
-        if (targetPosition < 30)
-        {
-            yield return StartCoroutine(pickUpPokemon(0, currentPosition));
-            float startX = cursor.pixelInset.x;
-            float startY = cursor.pixelInset.y;
-            yield return
-                StartCoroutine(
-                    moveCursor(new Vector2(currentBoxIconsArray[targetPosition].pixelInset.x + 92,
-                        currentBoxIconsArray[targetPosition].pixelInset.y + 58)));
-            yield return StartCoroutine(putDownPokemon(currentBoxID, targetPosition));
-            yield return StartCoroutine(moveCursor(new Vector2(startX, startY)));
-        }
+        if (targetPosition >= 30) yield break;
+        yield return StartCoroutine(pickUpPokemon(0, currentPosition));
+        float startX = cursor.pixelInset.x;
+        float startY = cursor.pixelInset.y;
+        yield return
+            StartCoroutine(
+                moveCursor(new Vector2(currentBoxIconsArray[targetPosition].pixelInset.x + 92,
+                    currentBoxIconsArray[targetPosition].pixelInset.y + 58)));
+        yield return StartCoroutine(putDownPokemon(currentBoxID, targetPosition));
+        yield return StartCoroutine(moveCursor(new Vector2(startX, startY)));
     }
 
     private IEnumerator animatePokemon()
@@ -2016,11 +1989,9 @@ public class PCHandler : MonoBehaviour
                                             int targetPosition = 30;
                                             for (int i = 0; i < 30; i++)
                                             {
-                                                if (SaveData.currentSave.PC.boxes[currentBoxID][i] == null)
-                                                {
-                                                    targetPosition = i;
-                                                    i = 30;
-                                                }
+                                                if (SaveData.currentSave.PC.boxes[currentBoxID][i] != null) continue;
+                                                targetPosition = i;
+                                                i = 30;
                                             }
                                             if (targetPosition >= 30)
                                             {
@@ -2073,33 +2044,31 @@ public class PCHandler : MonoBehaviour
                                                 yield return StartCoroutine(Dialog.choiceNavigateNo());
                                                 Dialog.undrawChoiceBox();
                                                 releaseIndex = Dialog.chosenIndex;
-                                                if (releaseIndex == 1)
+                                                if (releaseIndex != 1) continue;
+                                                yield return StartCoroutine(releasePokemon(0, currentPosition - 33))
+                                                    ;
+                                                Dialog.drawDialogBox();
+                                                Dialog.drawTextInstant(pokemonName + " was released.");
+                                                yield return new WaitForSeconds(0.2f);
+                                                while (!Input.GetButtonDown("Select") &&
+                                                       !Input.GetButtonDown("Back"))
                                                 {
-                                                    yield return StartCoroutine(releasePokemon(0, currentPosition - 33))
-                                                        ;
-                                                    Dialog.drawDialogBox();
-                                                    Dialog.drawTextInstant(pokemonName + " was released.");
-                                                    yield return new WaitForSeconds(0.2f);
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
-                                                    {
-                                                        yield return null;
-                                                    }
-                                                    Dialog.drawDialogBox();
-                                                    Dialog.drawTextInstant("Bye bye, " + pokemonName + "!");
-                                                    yield return new WaitForSeconds(0.2f);
-                                                    while (!Input.GetButtonDown("Select") &&
-                                                           !Input.GetButtonDown("Back"))
-                                                    {
-                                                        yield return null;
-                                                    }
-                                                    releaseIndex = 0;
-                                                    chosenIndex = 0;
-                                                    updateSelectedInfo(
-                                                        SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
-                                                    Dialog.undrawDialogBox();
-                                                    StartCoroutine(packParty(currentPosition - 33));
+                                                    yield return null;
                                                 }
+                                                Dialog.drawDialogBox();
+                                                Dialog.drawTextInstant("Bye bye, " + pokemonName + "!");
+                                                yield return new WaitForSeconds(0.2f);
+                                                while (!Input.GetButtonDown("Select") &&
+                                                       !Input.GetButtonDown("Back"))
+                                                {
+                                                    yield return null;
+                                                }
+                                                releaseIndex = 0;
+                                                chosenIndex = 0;
+                                                updateSelectedInfo(
+                                                    SaveData.currentSave.PC.boxes[0][currentPosition - 33]);
+                                                Dialog.undrawDialogBox();
+                                                StartCoroutine(packParty(currentPosition - 33));
                                             }
                                         }
                                         else
@@ -2167,11 +2136,9 @@ public class PCHandler : MonoBehaviour
                                 int targetPosition = 30;
                                 for (int i = 0; i < 30; i++)
                                 {
-                                    if (SaveData.currentSave.PC.boxes[currentBoxID][i] == null)
-                                    {
-                                        targetPosition = i;
-                                        i = 30;
-                                    }
+                                    if (SaveData.currentSave.PC.boxes[currentBoxID][i] != null) continue;
+                                    targetPosition = i;
+                                    i = 30;
                                 }
                                 if (targetPosition >= 30)
                                 {

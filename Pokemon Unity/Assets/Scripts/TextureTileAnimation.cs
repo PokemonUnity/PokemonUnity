@@ -44,11 +44,9 @@ public class TextureTileAnimation : MonoBehaviour
         {
             for (int i = 0; i < mesh.materials.Length && i < applyToMaterials.Length; i++)
             {
-                if (applyToMaterials[i])
-                {
-                    mesh.materials[i].SetTextureOffset("_MainTex", new Vector2(0, 0));
-                    mesh.materials[i].SetTextureScale("_MainTex", new Vector2(xScale, yScale));
-                }
+                if (!applyToMaterials[i]) continue;
+                mesh.materials[i].SetTextureOffset("_MainTex", new Vector2(0, 0));
+                mesh.materials[i].SetTextureScale("_MainTex", new Vector2(xScale, yScale));
             }
         }
         else

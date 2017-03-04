@@ -231,40 +231,36 @@ public class GlobalVariables : MonoBehaviour
 
     void OnLevelWasLoaded()
     {
-        if (Application.loadedLevelName != "startup")
+        if (Application.loadedLevelName == "startup") return;
+        if (global != this) return;
+        Player = GameObject.Find("Player");
+        FollowerSettings = Player.GetComponentInChildren<FollowerMovement>();
+        if (global.fadeIn)
         {
-            if (global == this)
-            {
-                Player = GameObject.Find("Player");
-                FollowerSettings = Player.GetComponentInChildren<FollowerMovement>();
-                if (global.fadeIn)
-                {
-                    StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+            StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
 
-                    //if fading in to the scene.
-                    Player.transform.position = global.playerPosition;
-                    PlayerMovement.player.direction = global.playerDirection;
-                    if (!respawning)
-                    {
-                        PlayerMovement.player.pauseInput(0.6f);
-                    }
-                    else
-                    {
-                        PlayerMovement.player.pauseInput(0.4f);
-                    }
-                    if (playerForwardOnLoad)
-                    {
-                        PlayerMovement.player.forceMoveForward();
-                        playerForwardOnLoad = false;
-                    }
-                }
-                else
-                {
-                    ScreenFade.main.SetToFadedIn();
-                }
-                FollowerSettings.changeFollower(followerIndex);
+            //if fading in to the scene.
+            Player.transform.position = global.playerPosition;
+            PlayerMovement.player.direction = global.playerDirection;
+            if (!respawning)
+            {
+                PlayerMovement.player.pauseInput(0.6f);
+            }
+            else
+            {
+                PlayerMovement.player.pauseInput(0.4f);
+            }
+            if (playerForwardOnLoad)
+            {
+                PlayerMovement.player.forceMoveForward();
+                playerForwardOnLoad = false;
             }
         }
+        else
+        {
+            ScreenFade.main.SetToFadedIn();
+        }
+        FollowerSettings.changeFollower(followerIndex);
     }
 
     /// Loads the new scene, placing the player in the correct position.
@@ -303,14 +299,10 @@ public class GlobalVariables : MonoBehaviour
         }
         for (int i = 0; i < 6; i++)
         {
-            if (SaveData.currentSave.PC.boxes[0][i] != null)
-            {
-                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != Pokemon.Status.FAINTED)
-                {
-                    FollowerSettings.changeFollower(i);
-                    i = 6;
-                }
-            }
+            if (SaveData.currentSave.PC.boxes[0][i] == null) continue;
+            if (SaveData.currentSave.PC.boxes[0][i].getStatus() == Pokemon.Status.FAINTED) continue;
+            FollowerSettings.changeFollower(i);
+            i = 6;
         }
     }
 

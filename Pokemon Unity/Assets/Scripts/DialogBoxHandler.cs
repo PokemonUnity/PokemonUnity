@@ -196,11 +196,9 @@ public class DialogBoxHandler : MonoBehaviour
         {
             ChoiceBoxText.text += choices[i];
             ChoiceBoxTextShadow.text = ChoiceBoxText.text;
-            if (i != choices.Length - 1)
-            {
-                ChoiceBoxText.text += "\n";
-                ChoiceBoxTextShadow.text = ChoiceBoxText.text;
-            }
+            if (i == choices.Length - 1) continue;
+            ChoiceBoxText.text += "\n";
+            ChoiceBoxTextShadow.text = ChoiceBoxText.text;
         }
     }
 
@@ -221,11 +219,9 @@ public class DialogBoxHandler : MonoBehaviour
         {
             ChoiceBoxText.text += choices[i];
             ChoiceBoxTextShadow.text = ChoiceBoxText.text;
-            if (i != choices.Length - 1)
-            {
-                ChoiceBoxText.text += "\n";
-                ChoiceBoxTextShadow.text = ChoiceBoxText.text;
-            }
+            if (i == choices.Length - 1) continue;
+            ChoiceBoxText.text += "\n";
+            ChoiceBoxTextShadow.text = ChoiceBoxText.text;
         }
     }
 
@@ -286,15 +282,13 @@ public class DialogBoxHandler : MonoBehaviour
             if (chars[i] == '{')
             {
                 //extended operator
-                if (chars[i + 1] == 'p' || chars[i + 1] == 'P')
+                if (chars[i + 1] != 'p' && chars[i + 1] != 'P') continue;
+                //player name
+                i += 1; //adjust for the extra character in the operator (e.g. "{P" )
+                char[] pChars = SaveData.currentSave.playerName.ToCharArray();
+                for (int i2 = 0; i2 < pChars.Length; i2++)
                 {
-                    //player name
-                    i += 1; //adjust for the extra character in the operator (e.g. "{P" )
-                    char[] pChars = SaveData.currentSave.playerName.ToCharArray();
-                    for (int i2 = 0; i2 < pChars.Length; i2++)
-                    {
-                        yield return StartCoroutine(drawChar(pChars[i2], secPerChar));
-                    }
+                    yield return StartCoroutine(drawChar(pChars[i2], secPerChar));
                 }
             }
             else
@@ -331,22 +325,20 @@ public class DialogBoxHandler : MonoBehaviour
             else
             {
                 i += 1;
-                if (i < textLine.Length)
+                if (i >= textLine.Length) continue;
+                //if not at the end, repeat and wait double time
+                if (chars[i].Equals('\\'))
                 {
-                    //if not at the end, repeat and wait double time
-                    if (chars[i].Equals('\\'))
-                    {
-                        //   \ is used to designate line breaks
-                        DialogBoxText.text += "\n";
-                        DialogBoxTextShadow.text = DialogBoxText.text;
-                    }
-                    else
-                    {
-                        DialogBoxText.text += chars[i].ToString();
-                        DialogBoxTextShadow.text = DialogBoxText.text;
-                    }
-                    yield return new WaitForSeconds(secPerChar * 2);
+                    //   \ is used to designate line breaks
+                    DialogBoxText.text += "\n";
+                    DialogBoxTextShadow.text = DialogBoxText.text;
                 }
+                else
+                {
+                    DialogBoxText.text += chars[i].ToString();
+                    DialogBoxTextShadow.text = DialogBoxText.text;
+                }
+                yield return new WaitForSeconds(secPerChar * 2);
             }
         }
     }

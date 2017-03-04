@@ -341,12 +341,10 @@ public class MoveData
     {
         for (int i = 0; i < moveEffects.Length; i++)
         {
-            if (moveParameters.Length > i)
+            if (moveParameters.Length <= i) continue;
+            if (moveEffects[i] == effect)
             {
-                if (moveEffects[i] == effect)
-                {
-                    return moveParameters[i];
-                }
+                return moveParameters[i];
             }
         }
         return 0f;
