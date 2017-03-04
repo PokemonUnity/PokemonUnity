@@ -27,14 +27,7 @@ public class SceneTransition : MonoBehaviour
         }
 
         screenFader = transform.FindChild("ScreenFader").GetComponent<GUITexture>();
-        if (screenFader != null)
-        {
-            RotatableGUI = false;
-        }
-        else
-        {
-            RotatableGUI = true;
-        }
+        RotatableGUI = screenFader == null;
         if (!RotatableGUI)
         {
             screenFader.pixelInset = new Rect(0, 0, 342, 192);

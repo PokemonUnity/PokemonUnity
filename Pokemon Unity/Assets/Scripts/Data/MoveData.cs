@@ -117,23 +117,9 @@ public class MoveData
         this.moveEffects = new Effect[0];
         this.moveParameters = new float[0];
         this.target = Target.ADJACENT;
-        if (category == Category.PHYSICAL)
-        {
-            this.contact = true;
-        }
-        else
-        {
-            this.contact = false;
-        }
+        this.contact = category == Category.PHYSICAL;
         this.protectable = true;
-        if (category == Category.STATUS)
-        {
-            this.magicCoatable = true;
-        }
-        else
-        {
-            this.magicCoatable = false;
-        }
+        this.magicCoatable = category == Category.STATUS;
     }
 
     public MoveData(string name, PokemonData.Type type, Category category, int power, float accuracy,
@@ -156,23 +142,9 @@ public class MoveData
         this.moveEffects = new Effect[0];
         this.moveParameters = new float[0];
         this.target = Target.ADJACENT;
-        if (category == Category.PHYSICAL)
-        {
-            this.contact = true;
-        }
-        else
-        {
-            this.contact = false;
-        }
+        this.contact = category == Category.PHYSICAL;
         this.protectable = true;
-        if (category == Category.STATUS)
-        {
-            this.magicCoatable = true;
-        }
-        else
-        {
-            this.magicCoatable = false;
-        }
+        this.magicCoatable = category == Category.STATUS;
     }
 
 

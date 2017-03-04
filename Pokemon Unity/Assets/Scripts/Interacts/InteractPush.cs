@@ -225,14 +225,7 @@ public class InteractPush : MonoBehaviour
                     closestIndex = i;
                 }
             }
-            if (closestIndex != -1)
-            {
-                destinationMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
-            }
-            else
-            {
-                destinationMap = currentMap;
-            }
+            destinationMap = closestIndex != -1 ? hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>() : currentMap;
 
 
             //check destination for objects

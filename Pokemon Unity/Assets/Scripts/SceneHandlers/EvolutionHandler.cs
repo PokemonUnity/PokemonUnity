@@ -396,14 +396,7 @@ public class EvolutionHandler : MonoBehaviour
                 }
                 yield return null;
             }
-            if (glowShrunk)
-            {
-                glowShrunk = false;
-            }
-            else
-            {
-                glowShrunk = true;
-            }
+            glowShrunk = !glowShrunk;
         }
     }
 
@@ -452,14 +445,7 @@ public class EvolutionHandler : MonoBehaviour
                 }
                 yield return null;
             }
-            if (originalPokemonShrunk)
-            {
-                originalPokemonShrunk = false;
-            }
-            else
-            {
-                originalPokemonShrunk = true;
-            }
+            originalPokemonShrunk = !originalPokemonShrunk;
         }
         pokemonSprite.transform.localPosition = originalPosition;
         evolutionSprite.transform.localPosition = originalPosition;

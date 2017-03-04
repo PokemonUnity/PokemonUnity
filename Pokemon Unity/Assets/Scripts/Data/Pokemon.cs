@@ -165,26 +165,12 @@ public class Pokemon
         this.heldItem = heldItem;
 
         this.OT = (string.IsNullOrEmpty(OT)) ? SaveData.currentSave.playerName : OT;
-        if (this.OT != SaveData.currentSave.playerName)
-        {
-            this.IDno = Random.Range(0, 65536); //if owned by another trainer, assign a random number. 
-        } //this way if they trade it to you, it will have a different number to the player's.
-        else
-        {
-            this.IDno = SaveData.currentSave.playerID;
-        }
+        this.IDno = this.OT != SaveData.currentSave.playerName ? Random.Range(0, 65536) : SaveData.currentSave.playerID;
 
         this.metLevel = level;
         if (PlayerMovement.player != null)
         {
-            if (PlayerMovement.player.accessedMapSettings != null)
-            {
-                this.metMap = PlayerMovement.player.accessedMapSettings.mapName;
-            }
-            else
-            {
-                this.metMap = "Somewhere";
-            }
+            this.metMap = PlayerMovement.player.accessedMapSettings != null ? PlayerMovement.player.accessedMapSettings.mapName : "Somewhere";
         }
         else
         {
@@ -287,14 +273,7 @@ public class Pokemon
         this.metLevel = level;
         if (PlayerMovement.player != null)
         {
-            if (PlayerMovement.player.accessedMapSettings != null)
-            {
-                this.metMap = PlayerMovement.player.accessedMapSettings.mapName;
-            }
-            else
-            {
-                this.metMap = "Somewhere";
-            }
+            this.metMap = PlayerMovement.player.accessedMapSettings != null ? PlayerMovement.player.accessedMapSettings.mapName : "Somewhere";
         }
         else
         {
@@ -303,14 +282,7 @@ public class Pokemon
         this.metDate = System.DateTime.Today.Day + "/" + System.DateTime.Today.Month + "/" + System.DateTime.Today.Year;
 
         this.OT = (string.IsNullOrEmpty(OT)) ? SaveData.currentSave.playerName : OT;
-        if (this.OT != SaveData.currentSave.playerName)
-        {
-            this.IDno = Random.Range(0, 65536); //if owned by another trainer, assign a random number. 
-        } //this way if they trade it to you, it will have a different number to the player's.
-        else
-        {
-            this.IDno = SaveData.currentSave.playerID;
-        }
+        this.IDno = this.OT != SaveData.currentSave.playerName ? Random.Range(0, 65536) : SaveData.currentSave.playerID;
 
         //Set IVs randomly between 0 and 32 (32 is exlcuded)
         this.IV_HP = Random.Range(0, 32);
@@ -394,14 +366,7 @@ public class Pokemon
         this.IDno = SaveData.currentSave.playerID;
 
         this.metLevel = level;
-        if (PlayerMovement.player.accessedMapSettings != null)
-        {
-            this.metMap = PlayerMovement.player.accessedMapSettings.mapName;
-        }
-        else
-        {
-            this.metMap = "Somewhere";
-        }
+        this.metMap = PlayerMovement.player.accessedMapSettings != null ? PlayerMovement.player.accessedMapSettings.mapName : "Somewhere";
         this.metDate = System.DateTime.Today.Day + "/" + System.DateTime.Today.Month + "/" + System.DateTime.Today.Year;
 
         //Set IVs 

@@ -31,14 +31,7 @@ public class InteractItem : MonoBehaviour
     {
         if (!hidden)
         {
-            if (TM)
-            {
-                itemSprite.sprite = tmBall;
-            }
-            else
-            {
-                itemSprite.sprite = itemBall;
-            }
+            itemSprite.sprite = TM ? tmBall : itemBall;
         }
         else
         {

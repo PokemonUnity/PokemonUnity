@@ -152,23 +152,8 @@ public class PartyHandler : MonoBehaviour
                 currentHPShadow[i].text = currentHP[i].text;
                 maxHp[i].text = "" + selectedPokemon.getHP();
                 maxHPShadow[i].text = maxHp[i].text;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
-                {
-                    status[i].texture =
-                        Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString());
-                }
-                else
-                {
-                    status[i].texture = null;
-                }
-                if (!string.IsNullOrEmpty(selectedPokemon.getHeldItem()))
-                {
-                    item[i].enabled = true;
-                }
-                else
-                {
-                    item[i].enabled = false;
-                }
+                status[i].texture = selectedPokemon.getStatus() != Pokemon.Status.NONE ? Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString()) : null;
+                item[i].enabled = !string.IsNullOrEmpty(selectedPokemon.getHeldItem());
             }
         }
     }
@@ -322,26 +307,8 @@ public class PartyHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            if (position1 % 2 == 0)
-            {
-                //left side
-                slot1.position = (new Vector3(-0.5f + (0.5f * increment), 0, slot1.position.z));
-            }
-            else
-            {
-                //right side
-                slot1.position = (new Vector3(0.5f - (0.5f * increment), 0, slot1.position.z));
-            }
-            if (position2 % 2 == 0)
-            {
-                //left side
-                slot2.position = (new Vector3(-0.5f + (0.5f * increment), 0, slot2.position.z));
-            }
-            else
-            {
-                //right side
-                slot2.position = (new Vector3(0.5f - (0.5f * increment), 0, slot2.position.z));
-            }
+            slot1.position = position1 % 2 == 0 ? (new Vector3(-0.5f + (0.5f * increment), 0, slot1.position.z)) : (new Vector3(0.5f - (0.5f * increment), 0, slot1.position.z));
+            slot2.position = position2 % 2 == 0 ? (new Vector3(-0.5f + (0.5f * increment), 0, slot2.position.z)) : (new Vector3(0.5f - (0.5f * increment), 0, slot2.position.z));
             yield return null;
         }
     }

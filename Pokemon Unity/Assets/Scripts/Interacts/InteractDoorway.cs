@@ -56,14 +56,7 @@ public class InteractDoorway : MonoBehaviour
         objectLight = this.GetComponentInChildren<Light>();
         if (objectLight != null)
         {
-            if (!hasLight)
-            {
-                objectLight.enabled = false;
-            }
-            else
-            {
-                objectLight.enabled = true;
-            }
+            objectLight.enabled = hasLight;
         }
 
         enterSound = this.gameObject.GetComponent<AudioSource>();

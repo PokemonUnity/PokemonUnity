@@ -242,14 +242,7 @@ public class GlobalVariables : MonoBehaviour
             //if fading in to the scene.
             Player.transform.position = global.playerPosition;
             PlayerMovement.player.direction = global.playerDirection;
-            if (!respawning)
-            {
-                PlayerMovement.player.pauseInput(0.6f);
-            }
-            else
-            {
-                PlayerMovement.player.pauseInput(0.4f);
-            }
+            PlayerMovement.player.pauseInput(!respawning ? 0.6f : 0.4f);
             if (playerForwardOnLoad)
             {
                 PlayerMovement.player.forceMoveForward();

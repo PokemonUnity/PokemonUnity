@@ -305,32 +305,11 @@ public class SummaryHandler : MonoBehaviour
         {
             selectedSprite.sprite = selectedSpriteAnimation[0];
         }
-        if (string.IsNullOrEmpty(selectedPokemon.getHeldItem()))
-        {
-            selectedHeldItem.text = "None";
-        }
-        else
-        {
-            selectedHeldItem.text = selectedPokemon.getHeldItem();
-        }
+        selectedHeldItem.text = string.IsNullOrEmpty(selectedPokemon.getHeldItem()) ? "None" : selectedPokemon.getHeldItem();
         selectedHeldItemShadow.text = selectedHeldItem.text;
-        if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
-        {
-            selectedStatus.sprite = Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.getStatus().ToString());
-        }
-        else
-        {
-            selectedStatus.sprite = Resources.Load<Sprite>("null");
-        }
+        selectedStatus.sprite = selectedPokemon.getStatus() != Pokemon.Status.NONE ? Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.getStatus().ToString()) : Resources.Load<Sprite>("null");
 
-        if (selectedPokemon.getIsShiny())
-        {
-            selectedShiny.sprite = Resources.Load<Sprite>("PCSprites/shiny");
-        }
-        else
-        {
-            selectedShiny.sprite = Resources.Load<Sprite>("null");
-        }
+        selectedShiny.sprite = Resources.Load<Sprite>(selectedPokemon.getIsShiny() ? "PCSprites/shiny" : "null");
 
         dexNo.text = selectedPokemon.getLongID();
         dexNoShadow.text = dexNo.text;
@@ -919,14 +898,7 @@ public class SummaryHandler : MonoBehaviour
                 {
                     if (currentMoveNumber == 4)
                     {
-                        if (!string.IsNullOrEmpty(moveset[2]))
-                        {
-                            currentMoveNumber = 2;
-                        }
-                        else
-                        {
-                            currentMoveNumber = 0;
-                        }
+                        currentMoveNumber = !string.IsNullOrEmpty(moveset[2]) ? 2 : 0;
                         updateSelectedMove(moveset[currentMoveNumber]);
                         SfxHandler.Play(scrollClip);
                         yield return StartCoroutine(moveMoveSelector(positions[currentMoveNumber] + positionMod));

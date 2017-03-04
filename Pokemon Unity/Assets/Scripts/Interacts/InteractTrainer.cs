@@ -145,14 +145,9 @@ public class InteractTrainer : MonoBehaviour
     public void updateDirection(int newDirection)
     {
         direction = newDirection;
-        if (trainerBehaviour == TrainerBehaviour.Turn)
-        {
-            StartCoroutine(updateSightColliders(true));
-        }
-        else
-        {
-            StartCoroutine(updateSightColliders(false));
-        }
+        StartCoroutine(trainerBehaviour == TrainerBehaviour.Turn
+            ? updateSightColliders(true)
+            : updateSightColliders(false));
     }
 
     private IEnumerator updateSightColliders(bool refire)

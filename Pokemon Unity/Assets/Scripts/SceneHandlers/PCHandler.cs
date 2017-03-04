@@ -200,14 +200,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 currentBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[currentBoxID][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[currentBoxID][i].getHeldItem()))
-                {
-                    currentBoxItemsArray[i].enabled = true;
-                }
-                else
-                {
-                    currentBoxItemsArray[i].enabled = false;
-                }
+                currentBoxItemsArray[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[currentBoxID][i].getHeldItem());
             }
         }
         for (int i = 0; i < 30; i++)
@@ -220,14 +213,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 nextBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[nextBoxID][i].getHeldItem()))
-                {
-                    nextBoxItemsArray[i].enabled = true;
-                }
-                else
-                {
-                    nextBoxItemsArray[i].enabled = false;
-                }
+                nextBoxItemsArray[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[nextBoxID][i].getHeldItem());
             }
         }
         for (int i = 0; i < 30; i++)
@@ -240,14 +226,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 previousBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[previousBoxID][i].getHeldItem()))
-                {
-                    previousBoxItemsArray[i].enabled = true;
-                }
-                else
-                {
-                    previousBoxItemsArray[i].enabled = false;
-                }
+                previousBoxItemsArray[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[previousBoxID][i].getHeldItem());
             }
         }
 
@@ -262,14 +241,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 partyIcons[i].texture = SaveData.currentSave.PC.boxes[0][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[0][i].getHeldItem()))
-                {
-                    partyItems[i].enabled = true;
-                }
-                else
-                {
-                    partyItems[i].enabled = false;
-                }
+                partyItems[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[0][i].getHeldItem());
             }
         }
 
@@ -303,33 +275,9 @@ public class PCHandler : MonoBehaviour
         previousBoxHeaderShadow.text = previousBoxHeader.text;
 
         //update box textures
-        if (SaveData.currentSave.PC.boxTexture[currentBoxID] == 0)
-        {
-            currentBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + currentBoxID);
-        }
-        else
-        {
-            currentBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
-        }
-        if (SaveData.currentSave.PC.boxTexture[nextBoxID] == 0)
-        {
-            nextBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + nextBoxID);
-        }
-        else
-        {
-            nextBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
-        }
-        if (SaveData.currentSave.PC.boxTexture[previousBoxID] == 0)
-        {
-            previousBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + previousBoxID);
-        }
-        else
-        {
-            previousBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
-        }
+        currentBoxTexture.texture = SaveData.currentSave.PC.boxTexture[currentBoxID] == 0 ? Resources.Load<Texture>("PCSprites/box" + currentBoxID) : Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
+        nextBoxTexture.texture = SaveData.currentSave.PC.boxTexture[nextBoxID] == 0 ? Resources.Load<Texture>("PCSprites/box" + nextBoxID) : Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
+        previousBoxTexture.texture = SaveData.currentSave.PC.boxTexture[previousBoxID] == 0 ? Resources.Load<Texture>("PCSprites/box" + previousBoxID) : Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
 
         //set Selected Info to null because nothing is selected by default
         selectedName.text = null;
@@ -449,14 +397,7 @@ public class PCHandler : MonoBehaviour
             //update destination box's icons incase something has been changed 
             for (int i = 0; i < 30; i++)
             {
-                if (SaveData.currentSave.PC.boxes[nextBoxID][i] == null)
-                {
-                    nextBoxIconsArray[i].texture = null;
-                }
-                else
-                {
-                    nextBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
-                }
+                nextBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[nextBoxID][i] == null ? null : SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
             }
             Vector3 destinationPosition = startPosition + new Vector3(-0.537f, 0, 0);
             while (increment <= 1)
@@ -471,14 +412,7 @@ public class PCHandler : MonoBehaviour
             //update destination box's icons incase something has been changed 
             for (int i = 0; i < 30; i++)
             {
-                if (SaveData.currentSave.PC.boxes[previousBoxID][i] == null)
-                {
-                    previousBoxIconsArray[i].texture = null;
-                }
-                else
-                {
-                    previousBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
-                }
+                previousBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[previousBoxID][i] == null ? null : SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
             }
             Vector3 destinationPosition = startPosition + new Vector3(0.537f, 0, 0);
             while (increment <= 1)
@@ -541,33 +475,9 @@ public class PCHandler : MonoBehaviour
         previousBoxHeaderShadow.text = previousBoxHeader.text;
 
         //update box textures
-        if (SaveData.currentSave.PC.boxTexture[currentBoxID] == 0)
-        {
-            currentBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + currentBoxID);
-        }
-        else
-        {
-            currentBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
-        }
-        if (SaveData.currentSave.PC.boxTexture[nextBoxID] == 0)
-        {
-            nextBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + nextBoxID);
-        }
-        else
-        {
-            nextBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
-        }
-        if (SaveData.currentSave.PC.boxTexture[previousBoxID] == 0)
-        {
-            previousBoxTexture.texture = Resources.Load<Texture>("PCSprites/box" + previousBoxID);
-        }
-        else
-        {
-            previousBoxTexture.texture =
-                Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
-        }
+        currentBoxTexture.texture = SaveData.currentSave.PC.boxTexture[currentBoxID] == 0 ? Resources.Load<Texture>("PCSprites/box" + currentBoxID) : Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[currentBoxID]);
+        nextBoxTexture.texture = SaveData.currentSave.PC.boxTexture[nextBoxID] == 0 ? Resources.Load<Texture>("PCSprites/box" + nextBoxID) : Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[nextBoxID]);
+        previousBoxTexture.texture = SaveData.currentSave.PC.boxTexture[previousBoxID] == 0 ? Resources.Load<Texture>("PCSprites/box" + previousBoxID) : Resources.Load<Texture>("PCSprites/box" + SaveData.currentSave.PC.boxTexture[previousBoxID]);
 
         //update box icons
         for (int i = 0; i < 30; i++)
@@ -580,14 +490,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 currentBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[currentBoxID][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[currentBoxID][i].getHeldItem()))
-                {
-                    currentBoxItemsArray[i].enabled = true;
-                }
-                else
-                {
-                    currentBoxItemsArray[i].enabled = false;
-                }
+                currentBoxItemsArray[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[currentBoxID][i].getHeldItem());
             }
         }
         for (int i = 0; i < 30; i++)
@@ -600,14 +503,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 nextBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[nextBoxID][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[nextBoxID][i].getHeldItem()))
-                {
-                    nextBoxItemsArray[i].enabled = true;
-                }
-                else
-                {
-                    nextBoxItemsArray[i].enabled = false;
-                }
+                nextBoxItemsArray[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[nextBoxID][i].getHeldItem());
             }
         }
         for (int i = 0; i < 30; i++)
@@ -620,14 +516,7 @@ public class PCHandler : MonoBehaviour
             else
             {
                 previousBoxIconsArray[i].texture = SaveData.currentSave.PC.boxes[previousBoxID][i].GetIcons();
-                if (!string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[previousBoxID][i].getHeldItem()))
-                {
-                    previousBoxItemsArray[i].enabled = true;
-                }
-                else
-                {
-                    previousBoxItemsArray[i].enabled = false;
-                }
+                previousBoxItemsArray[i].enabled = !string.IsNullOrEmpty(SaveData.currentSave.PC.boxes[previousBoxID][i].getHeldItem());
             }
         }
 
@@ -801,14 +690,7 @@ public class PCHandler : MonoBehaviour
         SfxHandler.Play(pickUpClip);
         yield return StartCoroutine(moveCursor(new Vector2(cursor.pixelInset.x, cursor.pixelInset.y - 10)));
         grabbedPokemon.texture = selectedPokemon.GetIcons();
-        if (!string.IsNullOrEmpty(selectedPokemon.getHeldItem()))
-        {
-            grabbedPokemonItem.enabled = true;
-        }
-        else
-        {
-            grabbedPokemonItem.enabled = false;
-        }
+        grabbedPokemonItem.enabled = !string.IsNullOrEmpty(selectedPokemon.getHeldItem());
         if (currentBoxID == 0)
         {
             partyIcons[currentPosition].texture = null;
@@ -845,14 +727,8 @@ public class PCHandler : MonoBehaviour
             currentBoxIconsArray[currentPosition].texture = grabbedPokemon.texture;
             currentBoxItemsArray[currentPosition].enabled = grabbedPokemonItem.enabled;
         }
-        if (selectedBoxID == 0)
-        {
-            SaveData.currentSave.PC.swapPokemon(selectedBoxID, 5, currentBoxID, currentPosition);
-        }
-        else
-        {
-            SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedIndex, currentBoxID, currentPosition);
-        }
+        SaveData.currentSave.PC.swapPokemon(selectedBoxID, selectedBoxID == 0 ? 5 : selectedIndex, currentBoxID,
+            currentPosition);
         grabbedPokemon.texture = null;
         grabbedPokemonItem.enabled = false;
         cursor.border = new RectOffset(32, 0, 0, 32);

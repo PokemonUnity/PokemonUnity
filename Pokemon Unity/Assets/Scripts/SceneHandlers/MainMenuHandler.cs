@@ -125,14 +125,7 @@ public class MainMenuHandler : MonoBehaviour
 
         for (int i = 0; i < 6; i++)
         {
-            if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
-            {
-                pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons();
-            }
-            else
-            {
-                pokemon[i].texture = null;
-            }
+            pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null ? SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons() : null;
         }
     }
 

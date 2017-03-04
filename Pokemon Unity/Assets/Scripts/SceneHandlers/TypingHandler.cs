@@ -663,14 +663,7 @@ public class TypingHandler : MonoBehaviour
 
         while (running)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                caps = true;
-            }
-            else
-            {
-                caps = false;
-            }
+            caps = Input.GetKey(KeyCode.LeftShift);
 
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {

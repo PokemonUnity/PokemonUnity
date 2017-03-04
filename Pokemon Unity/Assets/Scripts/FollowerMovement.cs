@@ -71,14 +71,7 @@ public class FollowerMovement : MonoBehaviour
         startPosition = transform.position;
 
         followerLight.color = lightColor;
-        if (hasLight)
-        {
-            followerLight.intensity = lightIntensity;
-        }
-        else
-        {
-            followerLight.intensity = 0;
-        }
+        followerLight.intensity = hasLight ? lightIntensity : 0;
 
         transform.position = Player.transform.position;
         direction = Player.direction;

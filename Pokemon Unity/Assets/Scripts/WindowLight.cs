@@ -32,14 +32,7 @@ public class WindowLight : MonoBehaviour
         {
             lightObject.SetActive(activate);
         }
-        if (activate)
-        {
-            mesh.material = lightOnMat;
-        }
-        else
-        {
-            mesh.material = lightOffMat;
-        }
+        mesh.material = activate ? lightOnMat : lightOffMat;
     }
 
     private IEnumerator CheckActivation()
