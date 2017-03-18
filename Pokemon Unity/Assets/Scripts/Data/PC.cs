@@ -65,12 +65,10 @@ public class PC
         int i2 = 0; //counter for packed array
         for (int i = 0; i < 6; i++)
         {
-            if (boxes[0][i] != null)
-            {
-                //if next object in box has a value
-                packedArray[i2] = boxes[0][i]; //add to packed array
-                i2 += 1; //ready packed array's next position
-            }
+            if (boxes[0][i] == null) continue;
+            //if next object in box has a value
+            packedArray[i2] = boxes[0][i]; //add to packed array
+            i2 += 1; //ready packed array's next position
         }
         boxes[0] = packedArray;
     }
@@ -91,16 +89,12 @@ public class PC
         {
             for (int i = 1; i < boxes.Length; i++)
             {
-                if (hasSpace(i))
+                if (!hasSpace(i)) continue;
+                for (int i2 = 0; i2 < boxes[i].Length; i2++)
                 {
-                    for (int i2 = 0; i2 < boxes[i].Length; i2++)
-                    {
-                        if (boxes[i][i2] == null)
-                        {
-                            boxes[i][i2] = acquiredPokemon;
-                            return true;
-                        }
-                    }
+                    if (boxes[i][i2] != null) continue;
+                    boxes[i][i2] = acquiredPokemon;
+                    return true;
                 }
             }
         }
@@ -157,18 +151,14 @@ public class PC
     {
         for (int i = 0; i < 6; i++)
         {
-            if (boxes[0][i] != null)
+            if (boxes[0][i] == null) continue;
+            string[] moveset = boxes[0][i].getMoveset();
+            for (int i2 = 0; i2 < moveset.Length; i2++)
             {
-                string[] moveset = boxes[0][i].getMoveset();
-                for (int i2 = 0; i2 < moveset.Length; i2++)
+                if (moveset[i2] == null) continue;
+                if (MoveDatabase.getMove(moveset[i2]).getFieldEffect() == moveName)
                 {
-                    if (moveset[i2] != null)
-                    {
-                        if (MoveDatabase.getMove(moveset[i2]).getFieldEffect() == moveName)
-                        {
-                            return boxes[0][i];
-                        }
-                    }
+                    return boxes[0][i];
                 }
             }
         }

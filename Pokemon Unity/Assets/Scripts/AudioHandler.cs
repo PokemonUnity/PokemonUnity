@@ -93,35 +93,27 @@ public class AudioHandler : MonoBehaviour
             source.volume = PlayerPrefs.GetFloat("musicVolume");
         }
 
-        if (source.clip != null)
-        {
-            //Every looping clip contains 5000 samples on the end of the clip that is simply 
-            //a buffer for the program to start looping again.
-            if (loop)
-            {
-                if (source.timeSamples >= source.clip.samples - 5000)
-                {
-                    //jump back the relative amount so that the least audio possible is skipped
-                    source.timeSamples -= source.clip.samples - 5000 - currentLoopStartTimeSamples;
-                    source.Play();
-                }
-            }
-        }
+        if (source.clip == null) return;
+        //Every looping clip contains 5000 samples on the end of the clip that is simply 
+        //a buffer for the program to start looping again.
+        if (!loop) return;
+        if (source.timeSamples < source.clip.samples - 5000) return;
+        //jump back the relative amount so that the least audio possible is skipped
+        source.timeSamples -= source.clip.samples - 5000 - currentLoopStartTimeSamples;
+        source.Play();
     }
 
     private IEnumerator Fade(float fadeTime)
     {
         float increment = 0;
-        if (increment < 1)
+        if (!(increment < 1)) yield break;
+        increment += (1 / fadeTime) * Time.deltaTime; //volume is measured 0-1
+        if (increment > 1)
         {
-            increment += (1 / fadeTime) * Time.deltaTime; //volume is measured 0-1
-            if (increment > 1)
-            {
-                increment = 1;
-            }
-            source.volume = (1f - increment * 1.2f) * PlayerPrefs.GetFloat("musicVolume");
-            yield return null;
+            increment = 1;
         }
+        source.volume = (1f - increment * 1.2f) * PlayerPrefs.GetFloat("musicVolume");
+        yield return null;
     }
 
     public void playBGM(AudioClip BGM)
@@ -163,24 +155,20 @@ public class AudioHandler : MonoBehaviour
     {
         nextClip = BGM; //set up the nextClip to play
         fadeSpeed = sentFadeSpeed;
-        if (!fading)
-        {
-            //if fading is off, then begin to fade
-            increment = 0;
-            fading = true;
-            nextLoopStartTimeSamples = loopStartTimeSamples;
-        }
+        if (fading) return;
+        //if fading is off, then begin to fade
+        increment = 0;
+        fading = true;
+        nextLoopStartTimeSamples = loopStartTimeSamples;
     }
 
     public void fadeBGM(float sentFadeSpeed)
     {
         fadeSpeed = sentFadeSpeed;
-        if (!fading)
-        {
-            increment = 0;
-            fading = true;
-            nextClip = null;
-        }
+        if (fading) return;
+        increment = 0;
+        fading = true;
+        nextClip = null;
     }
 
     public void pauseBGM()
@@ -201,22 +189,18 @@ public class AudioHandler : MonoBehaviour
     {
         nextClip = pausedClip;
         fadeSpeed = 0.5f;
-        if (!fading)
-        {
-            increment = 0;
-            fading = true;
-        }
+        if (fading) return;
+        increment = 0;
+        fading = true;
     }
 
     public void unpauseFadeBGM(float sentFadeSpeed)
     {
         nextClip = pausedClip;
         fadeSpeed = sentFadeSpeed;
-        if (!fading)
-        {
-            increment = 0;
-            fading = true;
-        }
+        if (fading) return;
+        increment = 0;
+        fading = true;
     }
 
     public void emptyPausedClip()

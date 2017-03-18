@@ -10,27 +10,25 @@ public class BumpLedge : MonoBehaviour
 
     private IEnumerator bump()
     {
-        if (PlayerMovement.player.direction == movementDirection)
+        if (PlayerMovement.player.direction != movementDirection) yield break;
+        PlayerMovement.player.pauseInput();
+
+        PlayerMovement.player.forceMoveForward(2);
+        PlayerMovement.player.followerScript.canMove = false;
+        if (!PlayerMovement.player.running)
         {
-            PlayerMovement.player.pauseInput();
-
-            PlayerMovement.player.forceMoveForward(2);
-            PlayerMovement.player.followerScript.canMove = false;
-            if (!PlayerMovement.player.running)
-            {
-                yield return new WaitForSeconds(PlayerMovement.player.speed * 0.5f);
-                StartCoroutine(PlayerMovement.player.jump());
-                yield return new WaitForSeconds(PlayerMovement.player.speed * 0.5f);
-            }
-            else
-            {
-                StartCoroutine(PlayerMovement.player.jump());
-                yield return new WaitForSeconds(PlayerMovement.player.speed);
-            }
-            yield return new WaitForSeconds(PlayerMovement.player.speed);
-
-            PlayerMovement.player.followerScript.canMove = true;
-            PlayerMovement.player.unpauseInput();
+            yield return new WaitForSeconds(PlayerMovement.player.speed * 0.5f);
+            StartCoroutine(PlayerMovement.player.jump());
+            yield return new WaitForSeconds(PlayerMovement.player.speed * 0.5f);
         }
+        else
+        {
+            StartCoroutine(PlayerMovement.player.jump());
+            yield return new WaitForSeconds(PlayerMovement.player.speed);
+        }
+        yield return new WaitForSeconds(PlayerMovement.player.speed);
+
+        PlayerMovement.player.followerScript.canMove = true;
+        PlayerMovement.player.unpauseInput();
     }
 }

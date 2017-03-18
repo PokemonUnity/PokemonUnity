@@ -47,12 +47,10 @@ public class ReflectiveWaterHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Application.isEditor)
+        if (!Application.isEditor) return;
+        if (autoSize)
         {
-            if (autoSize)
-            {
-                UpdateSettings();
-            }
+            UpdateSettings();
         }
     }
 

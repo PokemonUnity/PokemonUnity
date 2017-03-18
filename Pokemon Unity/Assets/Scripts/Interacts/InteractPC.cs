@@ -57,89 +57,83 @@ public class InteractPC : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.player.direction == 0)
+        if (PlayerMovement.player.direction != 0) yield break;
+        if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+        spriteLight.enabled = true;
+        PClight.enabled = true;
+        SfxHandler.Play(onClip);
+        yield return StartCoroutine("onAnim");
+        Dialog.drawDialogBox();
+        yield return Dialog.StartCoroutine("drawTextSilent", "Gold turned on the PC!");
+        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
         {
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            yield return null;
+        }
+        int accessedPC = -1;
+        while (accessedPC != 0)
+        {
+            Dialog.drawDialogBox();
+            yield return Dialog.StartCoroutine("drawText", "Which PC should be accessed?");
+            Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
+            yield return Dialog.StartCoroutine("choiceNavigate");
+            Dialog.undrawChoiceBox();
+            accessedPC = Dialog.chosenIndex;
+            int accessedBox = -1;
+            if (accessedPC == 0) continue;
+            //if not turning off computer
+            Dialog.drawDialogBox();
+            SfxHandler.Play(openClip);
+            yield return
+                Dialog.StartCoroutine("drawTextSilent", "The Pokémon Storage System \\was accessed.");
+            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
-                spriteLight.enabled = true;
-                PClight.enabled = true;
-                SfxHandler.Play(onClip);
-                yield return StartCoroutine("onAnim");
+                yield return null;
+            }
+            while (accessedBox != 0 && accessedPC != 0)
+            {
+                //if not turning off computer
+                string[] choices = new string[] {"Move", "Log off"};
+                string[] choicesFlavour = new string[]
+                {
+                    "You may rearrange Pokémon in and \\between your party and Boxes.",
+                    "Log out of the Pokémon Storage \\System."
+                };
+                Dialog.drawChoiceBox(choices);
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawTextSilent", "Gold turned on the PC!");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                int accessedPC = -1;
-                while (accessedPC != 0)
-                {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", "Which PC should be accessed?");
-                    Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
-                    yield return Dialog.StartCoroutine("choiceNavigate");
-                    Dialog.undrawChoiceBox();
-                    accessedPC = Dialog.chosenIndex;
-                    int accessedBox = -1;
-                    if (accessedPC != 0)
-                    {
-                        //if not turning off computer
-                        Dialog.drawDialogBox();
-                        SfxHandler.Play(openClip);
-                        yield return
-                            Dialog.StartCoroutine("drawTextSilent", "The Pokémon Storage System \\was accessed.");
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                        while (accessedBox != 0 && accessedPC != 0)
-                        {
-                            //if not turning off computer
-                            string[] choices = new string[] {"Move", "Log off"};
-                            string[] choicesFlavour = new string[]
-                            {
-                                "You may rearrange Pokémon in and \\between your party and Boxes.",
-                                "Log out of the Pokémon Storage \\System."
-                            };
-                            Dialog.drawChoiceBox(choices);
-                            Dialog.drawDialogBox();
-                            Dialog.drawTextInstant(choicesFlavour[0]);
-                            yield return new WaitForSeconds(0.2f);
-                            yield return StartCoroutine(Dialog.choiceNavigate(choices, choicesFlavour));
-                            accessedBox = Dialog.chosenIndex;
-                            //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
-
-                            if (accessedBox == 1)
-                            {
-                                //access Move
-                                SfxHandler.Play(selectClip);
-                                StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-                                yield return new WaitForSeconds(ScreenFade.defaultSpeed + 0.4f);
-                                //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f) + 0.4f);
-                                SfxHandler.Play(openClip);
-                                //Set ScenePC to be active so that it appears
-                                Scene.main.PC.gameObject.SetActive(true);
-                                StartCoroutine(Scene.main.PC.control());
-                                //Start an empty loop that will only stop when ScenePC is no longer active (is closed)
-                                while (Scene.main.PC.gameObject.activeSelf)
-                                {
-                                    yield return null;
-                                }
-                                yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-                                //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
-                            }
-
-                            Dialog.undrawChoiceBox();
-                        }
-                    }
-                }
-                Dialog.undrawDialogBox();
-                spriteLight.enabled = false;
-                PClight.enabled = false;
-                SfxHandler.Play(offClip);
+                Dialog.drawTextInstant(choicesFlavour[0]);
                 yield return new WaitForSeconds(0.2f);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                yield return StartCoroutine(Dialog.choiceNavigate(choices, choicesFlavour));
+                accessedBox = Dialog.chosenIndex;
+                //SceneTransition sceneTransition = Dialog.transform.GetComponent<SceneTransition>();
+
+                if (accessedBox == 1)
+                {
+                    //access Move
+                    SfxHandler.Play(selectClip);
+                    StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+                    yield return new WaitForSeconds(ScreenFade.defaultSpeed + 0.4f);
+                    //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f) + 0.4f);
+                    SfxHandler.Play(openClip);
+                    //Set ScenePC to be active so that it appears
+                    Scene.main.PC.gameObject.SetActive(true);
+                    StartCoroutine(Scene.main.PC.control());
+                    //Start an empty loop that will only stop when ScenePC is no longer active (is closed)
+                    while (Scene.main.PC.gameObject.activeSelf)
+                    {
+                        yield return null;
+                    }
+                    yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                    //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
+                }
+
+                Dialog.undrawChoiceBox();
             }
         }
+        Dialog.undrawDialogBox();
+        spriteLight.enabled = false;
+        PClight.enabled = false;
+        SfxHandler.Play(offClip);
+        yield return new WaitForSeconds(0.2f);
+        PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
     }
 }

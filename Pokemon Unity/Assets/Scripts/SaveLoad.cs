@@ -16,31 +16,24 @@ public static class SaveLoad
 
     public static void Save()
     {
-        if (SaveData.currentSave != null)
-        {
-            if (SaveData.currentSave.getFileIndex() >= 0 && SaveData.currentSave.getFileIndex() < savedGames.Length)
-            {
-                savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
-                bf.Serialize(file, SaveLoad.savedGames);
-                file.Close();
-            }
-        }
+        if (SaveData.currentSave == null) return;
+        if (SaveData.currentSave.getFileIndex() < 0 || SaveData.currentSave.getFileIndex() >= savedGames.Length) return;
+        savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
+        bf.Serialize(file, SaveLoad.savedGames);
+        file.Close();
     }
 
     public static bool Load()
     {
         Debug.Log(Application.persistentDataPath);
-        if (File.Exists(Application.persistentDataPath + "/playerData.pkud"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerData.pkud", FileMode.Open);
-            SaveLoad.savedGames = (SaveData[]) bf.Deserialize(file);
-            file.Close();
-            return true;
-        }
-        return false;
+        if (!File.Exists(Application.persistentDataPath + "/playerData.pkud")) return false;
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/playerData.pkud", FileMode.Open);
+        SaveLoad.savedGames = (SaveData[]) bf.Deserialize(file);
+        file.Close();
+        return true;
     }
 
     public static int getSavedGamesCount()

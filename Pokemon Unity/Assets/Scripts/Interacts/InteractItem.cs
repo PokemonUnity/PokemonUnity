@@ -31,14 +31,7 @@ public class InteractItem : MonoBehaviour
     {
         if (!hidden)
         {
-            if (TM)
-            {
-                itemSprite.sprite = tmBall;
-            }
-            else
-            {
-                itemSprite.sprite = itemBall;
-            }
+            itemSprite.sprite = TM ? tmBall : itemBall;
         }
         else
         {
@@ -50,91 +43,89 @@ public class InteractItem : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
-        {
-            AudioClip itemGetMFX = (TM)
-                ? Resources.Load<AudioClip>("Audio/mfx/GetGood")
-                : Resources.Load<AudioClip>("Audio/mfx/GetDecent");
-            BgmHandler.main.PlayMFX(itemGetMFX);
+        if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+        AudioClip itemGetMFX = (TM)
+            ? Resources.Load<AudioClip>("Audio/mfx/GetGood")
+            : Resources.Load<AudioClip>("Audio/mfx/GetDecent");
+        BgmHandler.main.PlayMFX(itemGetMFX);
 
-            string firstLetter = item.Substring(0, 1).ToLowerInvariant();
-            Dialog.drawDialogBox();
+        string firstLetter = item.Substring(0, 1).ToLowerInvariant();
+        Dialog.drawDialogBox();
+        if (TM)
+        {
+            Dialog.StartCoroutine("drawText",
+                SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
+                "!");
+        }
+        else
+        {
+            if (quantity > 1)
+            {
+                Dialog.StartCoroutine("drawText", SaveData.currentSave.playerName + " found " + item + "s!");
+            }
+            else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
+                     firstLetter == "u")
+            {
+                Dialog.StartCoroutine("drawText", SaveData.currentSave.playerName + " found an " + item + "!");
+            }
+            else
+            {
+                Dialog.StartCoroutine("drawText", SaveData.currentSave.playerName + " found a " + item + "!");
+            }
+        }
+        yield return new WaitForSeconds(itemGetMFX.length);
+
+        bool itemAdd = SaveData.currentSave.Bag.addItem(item, quantity);
+
+        Dialog.drawDialogBox();
+        if (itemAdd)
+        {
+            itemSprite.enabled = false;
+            itemShadow.enabled = false;
+            transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
             if (TM)
             {
-                Dialog.StartCoroutine("drawText",
-                    SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
-                    "!");
+                yield return
+                    Dialog.StartCoroutine("drawTextSilent",
+                        SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
+                        " \\away into the bag.");
             }
             else
             {
                 if (quantity > 1)
                 {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.playerName + " found " + item + "s!");
-                }
-                else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
-                         firstLetter == "u")
-                {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.playerName + " found an " + item + "!");
+                    yield return
+                        Dialog.StartCoroutine("drawTextSilent",
+                            SaveData.currentSave.playerName + " put the " + item + "s \\away into the bag.");
                 }
                 else
-                {
-                    Dialog.StartCoroutine("drawText", SaveData.currentSave.playerName + " found a " + item + "!");
-                }
-            }
-            yield return new WaitForSeconds(itemGetMFX.length);
-
-            bool itemAdd = SaveData.currentSave.Bag.addItem(item, quantity);
-
-            Dialog.drawDialogBox();
-            if (itemAdd)
-            {
-                itemSprite.enabled = false;
-                itemShadow.enabled = false;
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
-                transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-                if (TM)
                 {
                     yield return
                         Dialog.StartCoroutine("drawTextSilent",
-                            SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
-                            " \\away into the bag.");
+                            SaveData.currentSave.playerName + " put the " + item + " \\away into the bag.");
                 }
-                else
-                {
-                    if (quantity > 1)
-                    {
-                        yield return
-                            Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.playerName + " put the " + item + "s \\away into the bag.");
-                    }
-                    else
-                    {
-                        yield return
-                            Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.playerName + " put the " + item + " \\away into the bag.");
-                    }
-                }
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                Dialog.undrawDialogBox();
-
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-                gameObject.SetActive(false);
             }
-            else
+            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
-                yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                Dialog.undrawDialogBox();
-
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                yield return null;
             }
+            Dialog.undrawDialogBox();
+
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
+            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+            {
+                yield return null;
+            }
+            Dialog.undrawDialogBox();
+
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }
     }
 

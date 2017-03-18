@@ -68,23 +68,17 @@ public class BgmHandler : MonoBehaviour
             }
         }
 
-        if (source.clip != null)
-        {
-            //Every looping clip contains some samples on the end of the clip that is simply 
-            //a buffer for the program to start looping again.
-            if (loop)
-            {
-                if (source.timeSamples >= source.clip.samples - samplesEndBuffer)
-                {
-                    //jump back the relative amount so that the least audio possible is skipped
-                    int loopStartSamples = (currentTrack == Track.Main)
-                        ? mainTrack.loopStartSamples
-                        : overlayTrack.loopStartSamples;
-                    source.timeSamples -= source.clip.samples - samplesEndBuffer - loopStartSamples;
-                    source.Play();
-                }
-            }
-        }
+        if (source.clip == null) return;
+        //Every looping clip contains some samples on the end of the clip that is simply 
+        //a buffer for the program to start looping again.
+        if (!loop) return;
+        if (source.timeSamples < source.clip.samples - samplesEndBuffer) return;
+        //jump back the relative amount so that the least audio possible is skipped
+        int loopStartSamples = (currentTrack == Track.Main)
+            ? mainTrack.loopStartSamples
+            : overlayTrack.loopStartSamples;
+        source.timeSamples -= source.clip.samples - samplesEndBuffer - loopStartSamples;
+        source.Play();
     }
 
 
@@ -309,11 +303,9 @@ public class BgmHandler : MonoBehaviour
     {
         mainTrackNext = resumedTrack;
         //Fade out current track, THEN resume main track
-        if (fading == null)
-        {
-            yield return fading = StartCoroutine(Fade(time));
-            Play(Track.Main);
-        }
+        if (fading != null) yield break;
+        yield return fading = StartCoroutine(Fade(time));
+        Play(Track.Main);
     }
 
     public void Mute(float time)

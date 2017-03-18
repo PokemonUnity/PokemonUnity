@@ -334,14 +334,7 @@ public class TrainerHandler : MonoBehaviour
 
         for (int i = 0; i < 12; i++)
         {
-            if (SaveData.currentSave.gymsBeaten[i])
-            {
-                badges[i].enabled = true;
-            }
-            else
-            {
-                badges[i].enabled = false;
-            }
+            badges[i].enabled = SaveData.currentSave.gymsBeaten[i];
         }
     }
 

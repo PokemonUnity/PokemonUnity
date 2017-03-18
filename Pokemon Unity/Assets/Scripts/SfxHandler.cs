@@ -37,11 +37,9 @@ public class SfxHandler : MonoBehaviour
         AudioSource source = null;
         for (int i = 0; i < sfxHandler.sources.Length; i++)
         {
-            if (!sfxHandler.sources[i].isPlaying)
-            {
-                source = sfxHandler.sources[i];
-                i = sfxHandler.sources.Length;
-            }
+            if (sfxHandler.sources[i].isPlaying) continue;
+            source = sfxHandler.sources[i];
+            i = sfxHandler.sources.Length;
         }
         if (source == null)
         {
@@ -50,17 +48,11 @@ public class SfxHandler : MonoBehaviour
             //Find the source closest to finishing playing it's clip
             for (int i = 0; i < sfxHandler.sources.Length; i++)
             {
-                if (sfxHandler.sources[i].clip != null)
-                {
-                    if (sfxHandler.sources[i].clip.length != 0)
-                    {
-                        if ((sfxHandler.sources[i].timeSamples / sfxHandler.sources[i].clip.length) > mostFinished)
-                        {
-                            mostFinished = sfxHandler.sources[i].timeSamples / sfxHandler.sources[i].clip.length;
-                            mostFinishedIndex = i;
-                        }
-                    }
-                }
+                if (sfxHandler.sources[i].clip == null) continue;
+                if (sfxHandler.sources[i].clip.length == 0) continue;
+                if (!((sfxHandler.sources[i].timeSamples / sfxHandler.sources[i].clip.length) > mostFinished)) continue;
+                mostFinished = sfxHandler.sources[i].timeSamples / sfxHandler.sources[i].clip.length;
+                mostFinishedIndex = i;
             }
             //play the new clip on the source with the highest played percentage
             source = sfxHandler.sources[mostFinishedIndex];

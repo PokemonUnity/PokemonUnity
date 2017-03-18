@@ -100,14 +100,10 @@ public class NPCHandler : MonoBehaviour
         {
             for (int i = 0; i < hitRays.Length; i++)
             {
-                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    if (hitRays[i].distance < closestDistance)
-                    {
-                        closestDistance = hitRays[i].distance;
-                        closestIndex = i;
-                    }
-                }
+                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                if (!(hitRays[i].distance < closestDistance)) continue;
+                closestDistance = hitRays[i].distance;
+                closestIndex = i;
             }
         }
         if (closestIndex != -1)
@@ -181,13 +177,11 @@ public class NPCHandler : MonoBehaviour
                     pawnReflectionSprite.sprite = pawnSprite.sprite;
                     yield return new WaitForSeconds(secPerFrame / 4f);
                 }
-                if (!animPause)
+                if (animPause) continue;
+                frame += 1;
+                if (frame >= frames)
                 {
-                    frame += 1;
-                    if (frame >= frames)
-                    {
-                        frame = 0;
-                    }
+                    frame = 0;
                 }
             }
         }
@@ -298,13 +292,11 @@ public class NPCHandler : MonoBehaviour
                         }
                     }
 
-                    if (!atEdge)
+                    if (atEdge) continue;
+                    Vector3 movement = getForwardsVector();
+                    if (movement != new Vector3(0, 0, 0))
                     {
-                        Vector3 movement = getForwardsVector();
-                        if (movement != new Vector3(0, 0, 0))
-                        {
-                            yield return StartCoroutine(move(movement));
-                        }
+                        yield return StartCoroutine(move(movement));
                     }
                 }
 
@@ -395,12 +387,10 @@ public class NPCHandler : MonoBehaviour
             for (int i = 0; i < mapHitColliders.Length; i++)
             {
                 //if a collision's gameObject has a mapCollider, it is a map. set it to be the destination map.
-                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    mapHit = mapHitColliders[i];
-                    destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
-                    i = mapHitColliders.Length;
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                mapHit = mapHitColliders[i];
+                destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
+                i = mapHitColliders.Length;
             }
         }
 
@@ -427,63 +417,61 @@ public class NPCHandler : MonoBehaviour
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
         //if either slope is greater than 1 it is too steep.
-        if (currentSlope <= 1 && destinationSlope <= 1)
+        if (!(currentSlope <= 1) || !(destinationSlope <= 1)) return Vector3.zero;
         {
             //if yDistance is greater than both slopes there is a vertical wall between them
-            if (yDistance <= currentSlope || yDistance <= destinationSlope)
+            if (!(yDistance <= currentSlope) && !(yDistance <= destinationSlope)) return Vector3.zero;
+            //check destination tileTag for impassibles unless NoClipping
+            if (!noClip)
             {
-                //check destination tileTag for impassibles unless NoClipping
-                if (!noClip)
+                int destinationTileTag = destinationMap.getTileTag(transform.position + movement);
+                if (destinationTileTag == 1)
                 {
-                    int destinationTileTag = destinationMap.getTileTag(transform.position + movement);
-                    if (destinationTileTag == 1)
+                    return Vector3.zero;
+                }
+                else
+                {
+                    if (trainerSurfing)
                     {
-                        return Vector3.zero;
+                        //if a surf trainer, normal tiles are impassible
+                        if (destinationTileTag != 2)
+                        {
+                            return Vector3.zero;
+                        }
                     }
                     else
                     {
-                        if (trainerSurfing)
+                        //if not a surf trainer, surf tiles are impassible
+                        if (destinationTileTag == 2)
                         {
-                            //if a surf trainer, normal tiles are impassible
-                            if (destinationTileTag != 2)
-                            {
-                                return Vector3.zero;
-                            }
-                        }
-                        else
-                        {
-                            //if not a surf trainer, surf tiles are impassible
-                            if (destinationTileTag == 2)
-                            {
-                                return Vector3.zero;
-                            }
+                            return Vector3.zero;
                         }
                     }
                 }
+            }
 
-                bool destinationPassable = true;
-                if (!noClip)
+            bool destinationPassable = true;
+            if (!noClip)
+            {
+                //check destination for objects/player/follower
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement, 0.4f);
+                if (hitColliders.Length > 0)
                 {
-                    //check destination for objects/player/follower
-                    Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement, 0.4f);
-                    if (hitColliders.Length > 0)
+                    for (int i = 0; i < hitColliders.Length; i++)
                     {
-                        for (int i = 0; i < hitColliders.Length; i++)
+                        if (hitColliders[i].name == "Player_Transparent" ||
+                            hitColliders[i].name == "Follower_Transparent" ||
+                            hitColliders[i].name.ToLowerInvariant().Contains("_object"))
                         {
-                            if (hitColliders[i].name == "Player_Transparent" ||
-                                hitColliders[i].name == "Follower_Transparent" ||
-                                hitColliders[i].name.ToLowerInvariant().Contains("_object"))
-                            {
-                                destinationPassable = false;
-                            }
+                            destinationPassable = false;
                         }
                     }
                 }
+            }
 
-                if (destinationPassable)
-                {
-                    return movement;
-                }
+            if (destinationPassable)
+            {
+                return movement;
             }
         }
         return Vector3.zero;

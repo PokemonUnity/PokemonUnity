@@ -396,14 +396,7 @@ public class EvolutionHandler : MonoBehaviour
                 }
                 yield return null;
             }
-            if (glowShrunk)
-            {
-                glowShrunk = false;
-            }
-            else
-            {
-                glowShrunk = true;
-            }
+            glowShrunk = !glowShrunk;
         }
     }
 
@@ -452,14 +445,7 @@ public class EvolutionHandler : MonoBehaviour
                 }
                 yield return null;
             }
-            if (originalPokemonShrunk)
-            {
-                originalPokemonShrunk = false;
-            }
-            else
-            {
-                originalPokemonShrunk = true;
-            }
+            originalPokemonShrunk = !originalPokemonShrunk;
         }
         pokemonSprite.transform.localPosition = originalPosition;
         evolutionSprite.transform.localPosition = originalPosition;
@@ -716,21 +702,17 @@ public class EvolutionHandler : MonoBehaviour
                             chosenIndex = 0;
                         }
                     }
-                    if (chosenIndex == 0)
-                    {
-                        //NOT ELSE because this may need to run after (chosenIndex == 1) runs
-                        dialog.DrawDialogBox();
-                        yield return StartCoroutine(dialog.DrawText("Give up on learning the move \n" + move + "?"));
+                    if (chosenIndex != 0) continue;
+                    //NOT ELSE because this may need to run after (chosenIndex == 1) runs
+                    dialog.DrawDialogBox();
+                    yield return StartCoroutine(dialog.DrawText("Give up on learning the move \n" + move + "?"));
 
-                        yield return StartCoroutine(dialog.DrawChoiceBox());
-                        chosenIndex = dialog.chosenIndex;
-                        dialog.UndrawChoiceBox();
-                        if (chosenIndex == 1)
-                        {
-                            learning = false;
-                            chosenIndex = 0;
-                        }
-                    }
+                    yield return StartCoroutine(dialog.DrawChoiceBox());
+                    chosenIndex = dialog.chosenIndex;
+                    dialog.UndrawChoiceBox();
+                    if (chosenIndex != 1) continue;
+                    learning = false;
+                    chosenIndex = 0;
                 }
                 //Moveset is not full, can fit the new move easily
                 else
@@ -751,16 +733,14 @@ public class EvolutionHandler : MonoBehaviour
                 }
             }
         }
-        if (chosenIndex == 0)
+        if (chosenIndex != 0) yield break;
+        //NOT ELSE because this may need to run after (chosenIndex == 1) runs
+        //cancel learning loop
+        dialog.DrawDialogBox();
+        yield return StartCoroutine(dialog.DrawText(selectedPokemon.getName() + " did not learn \n" + move + "."));
+        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
         {
-            //NOT ELSE because this may need to run after (chosenIndex == 1) runs
-            //cancel learning loop
-            dialog.DrawDialogBox();
-            yield return StartCoroutine(dialog.DrawText(selectedPokemon.getName() + " did not learn \n" + move + "."));
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-            {
-                yield return null;
-            }
+            yield return null;
         }
     }
 }

@@ -99,42 +99,33 @@ public class MainMenuHandler : MonoBehaviour
         fileSelected.pixelOffset = highlightPositions[selectedFile];
         fileSelected.text = "" + (selectedFile + 1);
 
-        if (SaveLoad.savedGames[selectedFile] != null)
+        if (SaveLoad.savedGames[selectedFile] == null) return;
+        int badgeTotal = 0;
+        for (int i = 0; i < 12; i++)
         {
-            int badgeTotal = 0;
-            for (int i = 0; i < 12; i++)
+            if (SaveLoad.savedGames[selectedFile].gymsBeaten[i])
             {
-                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i])
-                {
-                    badgeTotal += 1;
-                }
+                badgeTotal += 1;
             }
-            string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
-            if (playerTime.Length == 1)
-            {
-                playerTime = "0" + playerTime;
-            }
-            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
+        }
+        string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
+        if (playerTime.Length == 1)
+        {
+            playerTime = "0" + playerTime;
+        }
+        playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
 
-            mapNameText.text = SaveLoad.savedGames[selectedFile].mapName;
-            mapNameTextShadow.text = mapNameText.text;
-            dataText.text = SaveLoad.savedGames[selectedFile].playerName
-                            + "\n" + badgeTotal
-                            + "\n" + "0" //Pokedex not yet implemented
-                            + "\n" + playerTime;
-            dataTextShadow.text = dataText.text;
+        mapNameText.text = SaveLoad.savedGames[selectedFile].mapName;
+        mapNameTextShadow.text = mapNameText.text;
+        dataText.text = SaveLoad.savedGames[selectedFile].playerName
+                        + "\n" + badgeTotal
+                        + "\n" + "0" //Pokedex not yet implemented
+                        + "\n" + playerTime;
+        dataTextShadow.text = dataText.text;
 
-            for (int i = 0; i < 6; i++)
-            {
-                if (SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null)
-                {
-                    pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons();
-                }
-                else
-                {
-                    pokemon[i].texture = null;
-                }
-            }
+        for (int i = 0; i < 6; i++)
+        {
+            pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null ? SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons() : null;
         }
     }
 

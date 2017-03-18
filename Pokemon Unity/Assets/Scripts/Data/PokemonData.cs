@@ -405,19 +405,17 @@ public class PokemonData
         }
         i = 0;
         int i2 = 0; //if the first move is null, then the array will need to be packed down
-        if (moveset[0] == null)
+        if (moveset[0] != null) return moveset;
+        //(nulls moved to the end of the array)
+        while (i < 3)
         {
-            //(nulls moved to the end of the array)
-            while (i < 3)
+            while (moveset[i] == null)
             {
-                while (moveset[i] == null)
-                {
-                    i += 1;
-                }
-                moveset[i2] = moveset[i];
-                moveset[i] = null;
-                i2 += 1;
+                i += 1;
             }
+            moveset[i2] = moveset[i];
+            moveset[i] = null;
+            i2 += 1;
         }
         return moveset;
     }

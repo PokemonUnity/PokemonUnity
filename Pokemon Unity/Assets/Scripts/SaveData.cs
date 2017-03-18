@@ -89,12 +89,10 @@ public class SaveData
 
         for (int i = 0; i < nrlArray.Length; i++)
         {
-            if (nrlArray[i] != null)
+            if (nrlArray[i] == null) continue;
+            if (nrlArray[i].sceneName == sceneName)
             {
-                if (nrlArray[i].sceneName == sceneName)
-                {
-                    return i;
-                }
+                return i;
             }
         }
         return -1;

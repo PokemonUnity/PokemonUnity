@@ -31,14 +31,12 @@ public class MapNameBoxHandler : MonoBehaviour
     public void display(Texture boxTexture, string name, Color textColor)
     {
         //do not display when on a map of the same name
-        if (mapNameText.text != name)
+        if (mapNameText.text == name) return;
+        if (mainDisplay != null)
         {
-            if (mainDisplay != null)
-            {
-                StopCoroutine(mainDisplay);
-            }
-            mainDisplay = StartCoroutine(displayCoroutine(boxTexture, name, textColor));
+            StopCoroutine(mainDisplay);
         }
+        mainDisplay = StartCoroutine(displayCoroutine(boxTexture, name, textColor));
     }
 
     private IEnumerator displayCoroutine(Texture boxTexture, string name, Color textColor)

@@ -82,19 +82,13 @@ public class RotatableGUIItem : MonoBehaviour
 
     protected void BeginRenderTextureGUI(RenderTexture targetTexture)
     {
-        if (Event.current.type == EventType.Repaint)
-        {
-            m_PreviousActiveTexture = RenderTexture.active;
-            if (targetTexture != null)
-            {
-                RenderTexture.active = targetTexture;
-                if (!textureCleared)
-                {
-                    textureCleared = true;
-                    GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
-                }
-            }
-        }
+        if (Event.current.type != EventType.Repaint) return;
+        m_PreviousActiveTexture = RenderTexture.active;
+        if (targetTexture == null) return;
+        RenderTexture.active = targetTexture;
+        if (textureCleared) return;
+        textureCleared = true;
+        GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
     }
 
     protected void EndRenderTextureGUI()

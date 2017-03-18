@@ -53,45 +53,43 @@ public class NonResettingHandler : MonoBehaviour
         int sceneNonResettingListIndex = SaveData.currentSave.getNonResettingListIndex(Application.loadedLevelName);
 
         //if entry is already in global, update everything to match
-        if (sceneNonResettingListIndex >= 0)
-        {
-            NonResettingList sceneNonResettingList = SaveData.currentSave.nonResettingLists[sceneNonResettingListIndex];
+        if (sceneNonResettingListIndex < 0) return;
+        NonResettingList sceneNonResettingList = SaveData.currentSave.nonResettingLists[sceneNonResettingListIndex];
 
-            for (int i = 0; i < trainers.Length; i++)
+        for (int i = 0; i < trainers.Length; i++)
+        {
+            if (i < sceneNonResettingList.sceneTrainers.Length)
             {
-                if (i < sceneNonResettingList.sceneTrainers.Length)
+                trainers[i].defeated = sceneNonResettingList.sceneTrainers[i];
+            }
+            else
+            {
+                Debug.Log("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
+            }
+        }
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (i < sceneNonResettingList.sceneItems.Length)
+            {
+                if (!sceneNonResettingList.sceneItems[i])
                 {
-                    trainers[i].defeated = sceneNonResettingList.sceneTrainers[i];
-                }
-                else
-                {
-                    Debug.Log("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
+                    items[i].disableItem();
                 }
             }
-            for (int i = 0; i < items.Length; i++)
+            else
             {
-                if (i < sceneNonResettingList.sceneItems.Length)
-                {
-                    if (!sceneNonResettingList.sceneItems[i])
-                    {
-                        items[i].disableItem();
-                    }
-                }
-                else
-                {
-                    Debug.Log("NonResettingList Inconsistancy for" + items[i].name);
-                }
+                Debug.Log("NonResettingList Inconsistancy for" + items[i].name);
             }
-            for (int i = 0; i < events.Length; i++)
+        }
+        for (int i = 0; i < events.Length; i++)
+        {
+            if (i < sceneNonResettingList.sceneEvents.Length)
             {
-                if (i < sceneNonResettingList.sceneEvents.Length)
-                {
-                    events[i].SetActive(sceneNonResettingList.sceneEvents[i]);
-                }
-                else
-                {
-                    Debug.Log("NonResettingList Inconsistancy for" + events[i].name);
-                }
+                events[i].SetActive(sceneNonResettingList.sceneEvents[i]);
+            }
+            else
+            {
+                Debug.Log("NonResettingList Inconsistancy for" + events[i].name);
             }
         }
     }
@@ -124,27 +122,21 @@ public class NonResettingHandler : MonoBehaviour
 
     public static void saveDataToGlobal()
     {
-        if (currentActive != null)
-        {
-            NonResettingList thisNonResettingList = currentActive.compileListOfNonResetters();
+        if (currentActive == null) return;
+        NonResettingList thisNonResettingList = currentActive.compileListOfNonResetters();
 
-            if (thisNonResettingList != null)
-            {
-                bool listUpdated = false;
-                for (int i = 0; i < SaveData.currentSave.nonResettingLists.Count; i++)
-                {
-                    if (SaveData.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
-                    {
-                        SaveData.currentSave.nonResettingLists[i] = thisNonResettingList;
-                        listUpdated = true;
-                        i = SaveData.currentSave.nonResettingLists.Count;
-                    }
-                }
-                if (!listUpdated)
-                {
-                    SaveData.currentSave.nonResettingLists.Add(thisNonResettingList);
-                }
-            }
+        if (thisNonResettingList == null) return;
+        bool listUpdated = false;
+        for (int i = 0; i < SaveData.currentSave.nonResettingLists.Count; i++)
+        {
+            if (SaveData.currentSave.nonResettingLists[i].sceneName != thisNonResettingList.sceneName) continue;
+            SaveData.currentSave.nonResettingLists[i] = thisNonResettingList;
+            listUpdated = true;
+            i = SaveData.currentSave.nonResettingLists.Count;
+        }
+        if (!listUpdated)
+        {
+            SaveData.currentSave.nonResettingLists.Add(thisNonResettingList);
         }
     }
 }

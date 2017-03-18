@@ -117,39 +117,35 @@ public class InteractPush : MonoBehaviour
 
     public IEnumerator bump()
     {
-        if (Player.strength)
+        if (!Player.strength) yield break;
+        if (!Player.setCheckBusyWith(this.gameObject)) yield break;
+        Vector3 movement = new Vector3(0, 0, 0);
+
+        if (Player.direction == 0)
         {
-            if (Player.setCheckBusyWith(this.gameObject))
-            {
-                Vector3 movement = new Vector3(0, 0, 0);
-
-                if (Player.direction == 0)
-                {
-                    movement = new Vector3(0, 0, 2);
-                }
-                else if (Player.direction == 1)
-                {
-                    movement = new Vector3(2, 0, 0);
-                }
-                else if (Player.direction == 2)
-                {
-                    movement = new Vector3(0, 0, -1);
-                }
-                else if (Player.direction == 3)
-                {
-                    movement = new Vector3(-1, 0, 0);
-                }
-
-                if (checkDestination(movement))
-                {
-                    //if destination is clear
-                    pushSound.volume = PlayerPrefs.GetFloat("sfxVolume");
-                    pushSound.Play();
-                    yield return StartCoroutine(move());
-                }
-                Player.unsetCheckBusyWith(this.gameObject);
-            }
+            movement = new Vector3(0, 0, 2);
         }
+        else if (Player.direction == 1)
+        {
+            movement = new Vector3(2, 0, 0);
+        }
+        else if (Player.direction == 2)
+        {
+            movement = new Vector3(0, 0, -1);
+        }
+        else if (Player.direction == 3)
+        {
+            movement = new Vector3(-1, 0, 0);
+        }
+
+        if (checkDestination(movement))
+        {
+            //if destination is clear
+            pushSound.volume = PlayerPrefs.GetFloat("sfxVolume");
+            pushSound.Play();
+            yield return StartCoroutine(move());
+        }
+        Player.unsetCheckBusyWith(this.gameObject);
     }
 
     private IEnumerator move()
@@ -204,17 +200,13 @@ public class InteractPush : MonoBehaviour
         {
             for (int i = 0; i < hitRays.Length; i++)
             {
-                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    if (hitRays[i].distance < closestDistance)
-                    {
-                        closestDistance = hitRays[i].distance;
-                        closestIndex = i;
-                    }
-                }
+                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                if (!(hitRays[i].distance < closestDistance)) continue;
+                closestDistance = hitRays[i].distance;
+                closestIndex = i;
             }
         }
-        if (closestIndex != -1)
+        if (closestIndex == -1) return false;
         {
             currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
 
@@ -227,24 +219,13 @@ public class InteractPush : MonoBehaviour
             {
                 for (int i = 0; i < hitRays.Length; i++)
                 {
-                    if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                    {
-                        if (hitRays[i].distance < closestDistance)
-                        {
-                            closestDistance = hitRays[i].distance;
-                            closestIndex = i;
-                        }
-                    }
+                    if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                    if (!(hitRays[i].distance < closestDistance)) continue;
+                    closestDistance = hitRays[i].distance;
+                    closestIndex = i;
                 }
             }
-            if (closestIndex != -1)
-            {
-                destinationMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
-            }
-            else
-            {
-                destinationMap = currentMap;
-            }
+            destinationMap = closestIndex != -1 ? hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>() : currentMap;
 
 
             //check destination for objects
@@ -276,31 +257,27 @@ public class InteractPush : MonoBehaviour
                     }
                 }
             }
-            if (currentObjectCollider == null)
+            if (currentObjectCollider != null) return false;
+            //if both positions are free
+            //ensure the slopes of the destination are both 0
+            float slope1 = MapCollider.getSlopeOfPosition(destinationPosition1, direction);
+            float slope2 = MapCollider.getSlopeOfPosition(destinationPosition2, direction);
+
+            //Make sure that destination Position is at most a single square away from start.
+            //this way we can ensure that the movement of the object will be one square at most
+            movement = new Vector3(Mathf.Clamp(movement.x, -1, 1), Mathf.Clamp(movement.y, -1, 1),
+                Mathf.Clamp(movement.z, -1, 1));
+            destinationPosition1 = startPosition + movement;
+
+            if (slope1 != 0 || slope2 != 0) return false;
+            //if both squares in the destination are not impassable tiles
+            //Debug.Log (destinationPosition1);
+            if (destinationMap.getTileTag(destinationPosition1) != 1 &&
+                destinationMap.getTileTag(destinationPosition1) != 2 &&
+                destinationMap.getTileTag(destinationPosition2) != 1 &&
+                destinationMap.getTileTag(destinationPosition2) != 2)
             {
-                //if both positions are free
-                //ensure the slopes of the destination are both 0
-                float slope1 = MapCollider.getSlopeOfPosition(destinationPosition1, direction);
-                float slope2 = MapCollider.getSlopeOfPosition(destinationPosition2, direction);
-
-                //Make sure that destination Position is at most a single square away from start.
-                //this way we can ensure that the movement of the object will be one square at most
-                movement = new Vector3(Mathf.Clamp(movement.x, -1, 1), Mathf.Clamp(movement.y, -1, 1),
-                    Mathf.Clamp(movement.z, -1, 1));
-                destinationPosition1 = startPosition + movement;
-
-                if (slope1 == 0 && slope2 == 0)
-                {
-                    //if both squares in the destination are not impassable tiles
-                    //Debug.Log (destinationPosition1);
-                    if (destinationMap.getTileTag(destinationPosition1) != 1 &&
-                        destinationMap.getTileTag(destinationPosition1) != 2 &&
-                        destinationMap.getTileTag(destinationPosition2) != 1 &&
-                        destinationMap.getTileTag(destinationPosition2) != 2)
-                    {
-                        return true;
-                    }
-                }
+                return true;
             }
         }
         return false;

@@ -17,79 +17,57 @@ public class InteractTrainerSight : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player_Transparent")
+        if (other.name != "Player_Transparent") return;
+        if (PlayerMovement.player.busyWith == trainer.gameObject) return;
+        int playerLocation = -1;
+
+        float playerX = Mathf.Round(PlayerMovement.player.hitBox.position.x);
+        float playerZ = Mathf.Round(PlayerMovement.player.hitBox.position.z);
+
+        if (playerX == Mathf.Round(transform.position.x))
         {
-            if (PlayerMovement.player.busyWith != trainer.gameObject)
-            {
-                int playerLocation = -1;
-
-                float playerX = Mathf.Round(PlayerMovement.player.hitBox.position.x);
-                float playerZ = Mathf.Round(PlayerMovement.player.hitBox.position.z);
-
-                if (playerX == Mathf.Round(transform.position.x))
-                {
-                    //player is up or down from
-                    if (playerZ > transform.position.z)
-                    {
-                        //up
-                        playerLocation = 0;
-                    }
-                    else
-                    {
-                        //down
-                        playerLocation = 2;
-                    }
-                }
-                else if (playerZ == Mathf.Round(transform.position.z))
-                {
+            //player is up or down from
+            playerLocation = playerZ > transform.position.z ? 0 : 2;
+        }
+        else if (playerZ == Mathf.Round(transform.position.z))
+        {
 //player is right or left of
-                    if (playerX > transform.position.x)
-                    {
-                        //right
-                        playerLocation = 1;
-                    }
-                    else
-                    {
-                        //left
-                        playerLocation = 3;
-                    }
-                }
+            playerLocation = playerX > transform.position.x ? 1 : 3;
+        }
 
-                //if running past a random turner
-                if (PlayerMovement.player.running && playerLocation != -1 &&
-                    trainer.trainerBehaviour == InteractTrainer.TrainerBehaviour.Turn)
+        //if running past a random turner
+        if (PlayerMovement.player.running && playerLocation != -1 &&
+            trainer.trainerBehaviour == InteractTrainer.TrainerBehaviour.Turn)
+        {
+            trainer.direction = playerLocation;
+            Vector3 checkPositionVector = trainer.hitBox.position;
+            for (int i = 0; i < trainer.sightRange; i++)
+            {
+                checkPositionVector = checkPosition(checkPositionVector);
+                if (positionIsBlocked || playerAtPosition)
                 {
-                    trainer.direction = playerLocation;
-                    Vector3 checkPositionVector = trainer.hitBox.position;
-                    for (int i = 0; i < trainer.sightRange; i++)
-                    {
-                        checkPositionVector = checkPosition(checkPositionVector);
-                        if (positionIsBlocked || playerAtPosition)
-                        {
-                            i = trainer.sightRange;
-                        }
-                    }
-                    if (playerAtPosition)
-                    {
-                        StartCoroutine(trainer.spotPlayer());
-                    }
+                    i = trainer.sightRange;
                 }
-                else if (trainer.direction == playerLocation)
+            }
+            if (playerAtPosition)
+            {
+                StartCoroutine(trainer.spotPlayer());
+            }
+        }
+        else if (trainer.direction == playerLocation)
+        {
+            Vector3 checkPositionVector = trainer.hitBox.position;
+            for (int i = 0; i < trainer.sightRange; i++)
+            {
+                checkPositionVector = checkPosition(checkPositionVector);
+                if (positionIsBlocked || playerAtPosition)
                 {
-                    Vector3 checkPositionVector = trainer.hitBox.position;
-                    for (int i = 0; i < trainer.sightRange; i++)
-                    {
-                        checkPositionVector = checkPosition(checkPositionVector);
-                        if (positionIsBlocked || playerAtPosition)
-                        {
-                            i = trainer.sightRange;
-                        }
-                    }
-                    if (playerAtPosition)
-                    {
-                        StartCoroutine(trainer.spotPlayer());
-                    }
+                    i = trainer.sightRange;
                 }
+            }
+            if (playerAtPosition)
+            {
+                StartCoroutine(trainer.spotPlayer());
             }
         }
     }
@@ -208,12 +186,10 @@ public class InteractTrainerSight : MonoBehaviour
             for (int i = 0; i < mapHitColliders.Length; i++)
             {
                 //if a collision's gameObject has a mapCollider, it is a map. set it to be the destination map.
-                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    mapHit = mapHitColliders[i];
-                    destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
-                    i = mapHitColliders.Length;
-                }
+                if (mapHitColliders[i].collider.gameObject.GetComponent<MapCollider>() == null) continue;
+                mapHit = mapHitColliders[i];
+                destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
+                i = mapHitColliders.Length;
             }
         }
 
@@ -238,53 +214,49 @@ public class InteractTrainerSight : MonoBehaviour
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
         //if either slope is greater than 1 it is too steep.
-        if (currentSlope <= 1 && destinationSlope <= 1)
+        if (!(currentSlope <= 1) || !(destinationSlope <= 1)) return position + movement;
         {
             //if yDistance is greater than both slopes there is a vertical wall between them
-            if (yDistance <= currentSlope || yDistance <= destinationSlope)
+            if (!(yDistance <= currentSlope) && !(yDistance <= destinationSlope)) return position + movement;
+            //check destination tileTag for impassibles
+            int destinationTileTag = destinationMap.getTileTag(position + movement);
+            if (destinationTileTag == 1)
             {
-                //check destination tileTag for impassibles
-                int destinationTileTag = destinationMap.getTileTag(position + movement);
-                if (destinationTileTag == 1)
+                positionIsBlocked = true;
+            }
+            else
+            {
+                if (trainer.trainerSurfing)
                 {
-                    positionIsBlocked = true;
+                    //if a surf trainer, normal tiles are impassible
+                    if (destinationTileTag != 2)
+                    {
+                        positionIsBlocked = true;
+                    }
                 }
                 else
                 {
-                    if (trainer.trainerSurfing)
+                    //if not a surf trainer, surf tiles are impassible
+                    if (destinationTileTag == 2)
                     {
-                        //if a surf trainer, normal tiles are impassible
-                        if (destinationTileTag != 2)
-                        {
-                            positionIsBlocked = true;
-                        }
-                    }
-                    else
-                    {
-                        //if not a surf trainer, surf tiles are impassible
-                        if (destinationTileTag == 2)
-                        {
-                            positionIsBlocked = true;
-                        }
+                        positionIsBlocked = true;
                     }
                 }
+            }
 
-                //check destination for objects/player/follower
-                Collider[] hitColliders = Physics.OverlapSphere(position + movement, 0.4f);
-                if (hitColliders.Length > 0)
+            //check destination for objects/player/follower
+            Collider[] hitColliders = Physics.OverlapSphere(position + movement, 0.4f);
+            if (hitColliders.Length <= 0) return position + movement;
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].name == "Player_Transparent")
                 {
-                    for (int i = 0; i < hitColliders.Length; i++)
-                    {
-                        if (hitColliders[i].name == "Player_Transparent")
-                        {
-                            playerAtPosition = true;
-                        }
-                        else if (hitColliders[i].name == "Follower_Transparent" ||
-                                 hitColliders[i].name.ToLowerInvariant().Contains("_object"))
-                        {
-                            positionIsBlocked = true;
-                        }
-                    }
+                    playerAtPosition = true;
+                }
+                else if (hitColliders[i].name == "Follower_Transparent" ||
+                         hitColliders[i].name.ToLowerInvariant().Contains("_object"))
+                {
+                    positionIsBlocked = true;
                 }
             }
         }

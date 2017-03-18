@@ -71,14 +71,7 @@ public class FollowerMovement : MonoBehaviour
         startPosition = transform.position;
 
         followerLight.color = lightColor;
-        if (hasLight)
-        {
-            followerLight.intensity = lightIntensity;
-        }
-        else
-        {
-            followerLight.intensity = 0;
-        }
+        followerLight.intensity = hasLight ? lightIntensity : 0;
 
         transform.position = Player.transform.position;
         direction = Player.direction;
@@ -265,44 +258,40 @@ public class FollowerMovement : MonoBehaviour
 
     public IEnumerator interact()
     {
-        if (!hide)
+        if (hide) yield break;
+        if (!Player.setCheckBusyWith(this.gameObject)) yield break;
+        //calculate Player's position relative to target object's and set direction accordingly. (Face the player)
+        float xDistance = this.transform.position.x - Player.gameObject.transform.position.x;
+        float zDistance = this.transform.position.z - Player.gameObject.transform.position.z;
+        if (xDistance >= Mathf.Abs(zDistance))
         {
-            if (Player.setCheckBusyWith(this.gameObject))
-            {
-                //calculate Player's position relative to target object's and set direction accordingly. (Face the player)
-                float xDistance = this.transform.position.x - Player.gameObject.transform.position.x;
-                float zDistance = this.transform.position.z - Player.gameObject.transform.position.z;
-                if (xDistance >= Mathf.Abs(zDistance))
-                {
-                    //Mathf.Abs() converts zDistance to a positive always.
-                    direction = 3; //this allows for better accuracy when checking orientation.
-                }
-                else if (xDistance <= Mathf.Abs(zDistance) * -1)
-                {
-                    direction = 1;
-                }
-                else if (zDistance >= Mathf.Abs(xDistance))
-                {
-                    direction = 2;
-                }
-                else
-                {
-                    direction = 0;
-                }
-
-                Dialog.drawDialogBox();
-                yield return
-                    Dialog.StartCoroutine("drawText",
-                        SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
-                        " is enjoying walking around \\out of their ball.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                Dialog.undrawDialogBox();
-                yield return new WaitForSeconds(0.2f);
-                Player.unsetCheckBusyWith(this.gameObject);
-            }
+            //Mathf.Abs() converts zDistance to a positive always.
+            direction = 3; //this allows for better accuracy when checking orientation.
         }
+        else if (xDistance <= Mathf.Abs(zDistance) * -1)
+        {
+            direction = 1;
+        }
+        else if (zDistance >= Mathf.Abs(xDistance))
+        {
+            direction = 2;
+        }
+        else
+        {
+            direction = 0;
+        }
+
+        Dialog.drawDialogBox();
+        yield return
+            Dialog.StartCoroutine("drawText",
+                SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
+                " is enjoying walking around \\out of their ball.");
+        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+        {
+            yield return null;
+        }
+        Dialog.undrawDialogBox();
+        yield return new WaitForSeconds(0.2f);
+        Player.unsetCheckBusyWith(this.gameObject);
     }
 }

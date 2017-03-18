@@ -133,11 +133,9 @@ public static class ItemDatabase
         int resultPos = 0;
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i].getItemType() == itemType)
-            {
-                result[resultPos] = items[i];
-                resultPos += 1;
-            }
+            if (items[i].getItemType() != itemType) continue;
+            result[resultPos] = items[i];
+            resultPos += 1;
         }
         ItemData[] cleanedResult = new ItemData[resultPos];
         for (int i = 0; i < cleanedResult.Length; i++)
@@ -160,11 +158,9 @@ public static class ItemDatabase
         int resultPos = 0;
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i].getBattleType() == battleType)
-            {
-                result[resultPos] = items[i];
-                resultPos += 1;
-            }
+            if (items[i].getBattleType() != battleType) continue;
+            result[resultPos] = items[i];
+            resultPos += 1;
         }
         ItemData[] cleanedResult = new ItemData[resultPos];
         for (int i = 0; i < cleanedResult.Length; i++)

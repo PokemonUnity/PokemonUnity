@@ -89,15 +89,7 @@ public class DayNightCycle : MonoBehaviour
                 minute = Mathf.FloorToInt((customTime - hour) * 60);
             }
             currentLight = skyLight[hour]; //set the currentLight and nextLight appropriately
-            if (hour < 23)
-            {
-                //loop back to 0
-                nextLight = skyLight[hour + 1];
-            }
-            else
-            {
-                nextLight = skyLight[0];
-            } //find the relative 60th fraction between current and next light
+            nextLight = hour < 23 ? skyLight[hour + 1] : skyLight[0];
             r = currentLight.r - (((currentLight.r - nextLight.r) / 60) * minute);
             g = currentLight.g - (((currentLight.g - nextLight.g) / 60) * minute);
             b = currentLight.b - (((currentLight.b - nextLight.b) / 60) * minute);

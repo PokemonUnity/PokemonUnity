@@ -46,28 +46,24 @@ public class MapSettings : MonoBehaviour
     // returns the BGM to an external script
     public AudioClip getBGM()
     {
-        if (mapBGMNightClip != null)
+        if (mapBGMNightClip == null) return mapBGMClip;
+        float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
+        if (time >= 20 || time < 3.5f)
         {
-            float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
-            if (time >= 20 || time < 3.5f)
-            {
-                //night
-                return mapBGMNightClip;
-            }
+            //night
+            return mapBGMNightClip;
         }
         return mapBGMClip;
     }
 
     public int getBGMLoopStartSamples()
     {
-        if (mapBGMNightClip != null)
+        if (mapBGMNightClip == null) return mapBGMLoopStartSamples;
+        float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
+        if (time >= 20 || time < 3.5f)
         {
-            float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
-            if (time >= 20 || time < 3.5f)
-            {
-                //night
-                return mapBGMNightLoopStartSamples;
-            }
+            //night
+            return mapBGMNightLoopStartSamples;
         }
         return mapBGMLoopStartSamples;
     }
@@ -112,11 +108,9 @@ public class MapSettings : MonoBehaviour
             for (int i = 0; i < hitColliders.Length && bridge == null; i++)
             {
                 //if a collision's gameObject has a BridgeHandler, it is a bridge.
-                if (hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
-                {
-                    bridge = hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>();
-                    i = hitColliders.Length; //stop iterating after bridge found
-                }
+                if (hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() == null) continue;
+                bridge = hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>();
+                i = hitColliders.Length; //stop iterating after bridge found
             }
         }
         if (bridge != null)
@@ -126,20 +120,17 @@ public class MapSettings : MonoBehaviour
         }
 
         //if outdoor environment
-        if (check == Environment.Field || check == Environment.Mountain ||
-            check == Environment.Forest || check == Environment.Snow)
+        if (check != Environment.Field && check != Environment.Mountain && check != Environment.Forest &&
+            check != Environment.Snow) return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString);
+        if (currentTag == 2)
         {
-            if (currentTag == 2)
-            {
-                checkString = "Water";
-            }
-            //return with timestring attached
-            return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString + timeString);
+            checkString = "Water";
         }
+        //return with timestring attached
+        return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString + timeString);
 
         //if (currentTag == 2) { checkString = "Water"; } //re-enable this line if you want the Water background to appear in inside environments
         //else return without timestring
-        return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString);
     }
 
     public Sprite getBattleBase()
@@ -183,11 +174,9 @@ public class MapSettings : MonoBehaviour
             for (int i = 0; i < hitColliders.Length && bridge == null; i++)
             {
                 //if a collision's gameObject has a BridgeHandler, it is a bridge.
-                if (hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
-                {
-                    bridge = hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>();
-                    i = hitColliders.Length; //stop iterating after bridge found
-                }
+                if (hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() == null) continue;
+                bridge = hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>();
+                i = hitColliders.Length; //stop iterating after bridge found
             }
         }
         if (bridge != null)
@@ -240,35 +229,27 @@ public class MapSettings : MonoBehaviour
 
         for (int i = 0; i < encounters.Length; i++)
         {
-            if (encounters[i].encounterLocation == location)
+            if (encounters[i].encounterLocation != location) continue;
+            if (time >= 20 || time < 3.5f)
             {
-                if (time >= 20 || time < 3.5f)
-                {
-                    //night
-                    if (encounters[i].encounterNight)
-                    {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
-                    }
-                }
-                else if (time < 10f)
-                {
-                    //morning
-                    if (encounters[i].encounterMorning)
-                    {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
-                    }
-                }
-                else
-                {
-                    //day
-                    if (encounters[i].encounterDay)
-                    {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
-                    }
-                }
+                //night
+                if (!encounters[i].encounterNight) continue;
+                list[listIndex] = encounters[i];
+                listIndex += 1;
+            }
+            else if (time < 10f)
+            {
+                //morning
+                if (!encounters[i].encounterMorning) continue;
+                list[listIndex] = encounters[i];
+                listIndex += 1;
+            }
+            else
+            {
+                //day
+                if (!encounters[i].encounterDay) continue;
+                list[listIndex] = encounters[i];
+                listIndex += 1;
             }
         }
 

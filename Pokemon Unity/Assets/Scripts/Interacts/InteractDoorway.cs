@@ -56,14 +56,7 @@ public class InteractDoorway : MonoBehaviour
         objectLight = this.GetComponentInChildren<Light>();
         if (objectLight != null)
         {
-            if (!hasLight)
-            {
-                objectLight.enabled = false;
-            }
-            else
-            {
-                objectLight.enabled = true;
-            }
+            objectLight.enabled = hasLight;
         }
 
         enterSound = this.gameObject.GetComponent<AudioSource>();
@@ -85,176 +78,164 @@ public class InteractDoorway : MonoBehaviour
     {
         if (isLocked)
         {
-            if (lockedExamineText.Length > 0)
+            if (lockedExamineText.Length <= 0) yield break;
+            if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+            Dialog.drawDialogBox();
+            //yield return StartCoroutine blocks the next code from running until coroutine is done.
+            yield return Dialog.StartCoroutine("drawText", lockedExamineText);
+            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
-                if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
-                {
-                    Dialog.drawDialogBox();
-                        //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", lockedExamineText);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        //these 3 lines stop the next bit from running until space is pressed.
-                        yield return null;
-                    }
-                    Dialog.undrawDialogBox();
-                    yield return new WaitForSeconds(0.2f);
-                    PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-                }
+                //these 3 lines stop the next bit from running until space is pressed.
+                yield return null;
             }
+            Dialog.undrawDialogBox();
+            yield return new WaitForSeconds(0.2f);
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }
         else
         {
-            if (examineText.Length > 0)
+            if (examineText.Length <= 0) yield break;
+            if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+            Dialog.drawDialogBox();
+            //yield return StartCoroutine blocks the next code from running until coroutine is done.
+            yield return Dialog.StartCoroutine("drawText", examineText);
+            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
             {
-                if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
-                {
-                    Dialog.drawDialogBox();
-                        //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", examineText);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        //these 3 lines stop the next bit from running until space is pressed.
-                        yield return null;
-                    }
-                    Dialog.undrawDialogBox();
-                    yield return new WaitForSeconds(0.2f);
-                    PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-                }
+                //these 3 lines stop the next bit from running until space is pressed.
+                yield return null;
             }
+            Dialog.undrawDialogBox();
+            yield return new WaitForSeconds(0.2f);
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
         }
     }
 
     public IEnumerator bump()
     {
-        if (!isLocked && !PlayerMovement.player.isInputPaused())
+        if (isLocked || PlayerMovement.player.isInputPaused()) yield break;
+        if (!PlayerMovement.player.setCheckBusyWith(this.gameObject)) yield break;
+        if (enterSound != null)
         {
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            if (!enterSound.isPlaying)
             {
-                if (enterSound != null)
-                {
-                    if (!enterSound.isPlaying)
-                    {
-                        enterSound.volume = PlayerPrefs.GetFloat("sfxVolume");
-                        enterSound.Play();
-                    }
-                }
-
-                if (entranceStyle == EntranceStyle.SWINGRIGHT)
-                {
-                    PlayerMovement.player.running = false;
-                    PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
-                    PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
-
-                    float increment = 0f;
-                    float speed = 0.25f;
-                    float yRotation = transform.localEulerAngles.y;
-                    while (increment < 1)
-                    {
-                        increment += (1f / speed) * Time.deltaTime;
-                        if (increment > 1)
-                        {
-                            increment = 1;
-                        }
-                        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
-                            yRotation + (90f * increment), transform.localEulerAngles.z);
-                        PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV -
-                                                                       ((PlayerMovement.player.mainCameraDefaultFOV /
-                                                                         10f) * increment);
-                        yield return null;
-                    }
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-                else if (entranceStyle == EntranceStyle.SLIDE)
-                {
-                    PlayerMovement.player.running = false;
-                    PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
-                    PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
-
-                    float increment = 0f;
-                    float speed = 0.25f;
-                    while (increment < 1)
-                    {
-                        increment += (1 / speed) * Time.deltaTime;
-                        if (increment > 1)
-                        {
-                            increment = 1;
-                        }
-                        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
-                            1f - (0.92f * increment));
-                        PlayerMovement.player.mainCamera.fieldOfView = 20f - (2f * increment);
-                        yield return null;
-                    }
-                    yield return new WaitForSeconds(0.2f);
-                }
-
-
-                if (entranceStyle != EntranceStyle.STANDSTILL)
-                {
-                    if (entranceStyle != EntranceStyle.OPEN)
-                    {
-                        StartCoroutine(lockCameraPosition());
-                        yield return new WaitForSeconds(0.1f);
-                    }
-                    PlayerMovement.player.forceMoveForward();
-                }
-
-                //fade out the scene and load a new scene
-                GlobalVariables.global.fadeTex = fadeTex;
-                //float fadeTime = sceneTransition.FadeOut() + 0.4f;
-                float fadeTime = ScreenFade.slowedSpeed + 0.4f;
-                //fadeCutouts for doorways not yet implemented
-                StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
-                if (!dontFadeMusic)
-                {
-                    BgmHandler.main.PlayMain(null, 0);
-                }
-                yield return new WaitForSeconds(fadeTime);
-
-
-                //reset camera and doorway transforms
-                PlayerMovement.player.mainCamera.transform.localPosition =
-                    PlayerMovement.player.mainCameraDefaultPosition;
-                PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV;
-                transform.localPosition = initPosition;
-                transform.localRotation = initRotation;
-                transform.localScale = initScale;
-
-                if (!string.IsNullOrEmpty(transferScene))
-                {
-                    NonResettingHandler.saveDataToGlobal();
-
-                    GlobalVariables.global.playerPosition = transferPosition;
-                    GlobalVariables.global.playerDirection = transferDirection;
-                    GlobalVariables.global.playerForwardOnLoad = movesForward;
-                    GlobalVariables.global.fadeIn = true;
-                    Application.LoadLevel(transferScene);
-                }
-                else
-                {
-                    //uncheck busy with to ensure events at destination can be run.
-                    PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-
-                    //transfer to current scene, no saving/loading nessecary
-                    PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
-                    PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
-
-                    PlayerMovement.player.transform.position = transferPosition;
-                    PlayerMovement.player.updateDirection(transferDirection);
-                    if (movesForward)
-                    {
-                        PlayerMovement.player.forceMoveForward();
-                    }
-
-                    GlobalVariables.global.fadeIn = true;
-                    //SceneTransition.gameScene.FadeIn();
-                    StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
-
-                    yield return new WaitForSeconds(0.1f);
-                    PlayerMovement.player.pauseInput(0.2f);
-                }
+                enterSound.volume = PlayerPrefs.GetFloat("sfxVolume");
+                enterSound.Play();
             }
+        }
+
+        if (entranceStyle == EntranceStyle.SWINGRIGHT)
+        {
+            PlayerMovement.player.running = false;
+            PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
+            PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
+
+            float increment = 0f;
+            float speed = 0.25f;
+            float yRotation = transform.localEulerAngles.y;
+            while (increment < 1)
+            {
+                increment += (1f / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
+                    yRotation + (90f * increment), transform.localEulerAngles.z);
+                PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV -
+                                                               ((PlayerMovement.player.mainCameraDefaultFOV /
+                                                                 10f) * increment);
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.2f);
+        }
+        else if (entranceStyle == EntranceStyle.SLIDE)
+        {
+            PlayerMovement.player.running = false;
+            PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
+            PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
+
+            float increment = 0f;
+            float speed = 0.25f;
+            while (increment < 1)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
+                    1f - (0.92f * increment));
+                PlayerMovement.player.mainCamera.fieldOfView = 20f - (2f * increment);
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+
+
+        if (entranceStyle != EntranceStyle.STANDSTILL)
+        {
+            if (entranceStyle != EntranceStyle.OPEN)
+            {
+                StartCoroutine(lockCameraPosition());
+                yield return new WaitForSeconds(0.1f);
+            }
+            PlayerMovement.player.forceMoveForward();
+        }
+
+        //fade out the scene and load a new scene
+        GlobalVariables.global.fadeTex = fadeTex;
+        //float fadeTime = sceneTransition.FadeOut() + 0.4f;
+        float fadeTime = ScreenFade.slowedSpeed + 0.4f;
+        //fadeCutouts for doorways not yet implemented
+        StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
+        if (!dontFadeMusic)
+        {
+            BgmHandler.main.PlayMain(null, 0);
+        }
+        yield return new WaitForSeconds(fadeTime);
+
+
+        //reset camera and doorway transforms
+        PlayerMovement.player.mainCamera.transform.localPosition =
+            PlayerMovement.player.mainCameraDefaultPosition;
+        PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV;
+        transform.localPosition = initPosition;
+        transform.localRotation = initRotation;
+        transform.localScale = initScale;
+
+        if (!string.IsNullOrEmpty(transferScene))
+        {
+            NonResettingHandler.saveDataToGlobal();
+
+            GlobalVariables.global.playerPosition = transferPosition;
+            GlobalVariables.global.playerDirection = transferDirection;
+            GlobalVariables.global.playerForwardOnLoad = movesForward;
+            GlobalVariables.global.fadeIn = true;
+            Application.LoadLevel(transferScene);
+        }
+        else
+        {
+            //uncheck busy with to ensure events at destination can be run.
+            PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+
+            //transfer to current scene, no saving/loading nessecary
+            PlayerMovement.player.updateAnimation("walk", PlayerMovement.player.walkFPS);
+            PlayerMovement.player.speed = PlayerMovement.player.walkSpeed;
+
+            PlayerMovement.player.transform.position = transferPosition;
+            PlayerMovement.player.updateDirection(transferDirection);
+            if (movesForward)
+            {
+                PlayerMovement.player.forceMoveForward();
+            }
+
+            GlobalVariables.global.fadeIn = true;
+            //SceneTransition.gameScene.FadeIn();
+            StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
+
+            yield return new WaitForSeconds(0.1f);
+            PlayerMovement.player.pauseInput(0.2f);
         }
     }
 

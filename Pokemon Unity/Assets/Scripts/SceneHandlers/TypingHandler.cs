@@ -107,13 +107,11 @@ public class TypingHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            int newHeirIndex = page[0].GetSiblingIndex();
-            int oldHeirIndex = page[2].GetSiblingIndex();
-            page[0].SetSiblingIndex(oldHeirIndex);
-            page[2].SetSiblingIndex(newHeirIndex);
-        }
+        if (!Input.GetKeyDown(KeyCode.Y)) return;
+        int newHeirIndex = page[0].GetSiblingIndex();
+        int oldHeirIndex = page[2].GetSiblingIndex();
+        page[0].SetSiblingIndex(oldHeirIndex);
+        page[2].SetSiblingIndex(newHeirIndex);
     }
 
 
@@ -246,44 +244,42 @@ public class TypingHandler : MonoBehaviour
 
     private IEnumerator swapPages(int newPageIndex)
     {
-        if (newPageIndex >= 0 && newPageIndex < 4 && newPageIndex != pageIndex)
+        if (newPageIndex < 0 || newPageIndex >= 4 || newPageIndex == pageIndex) yield break;
+        float speed = 0.5f;
+        float increment = 0f;
+
+        //set all buttons except newlyActive to inactive
+        for (int i = 0; i < 4; i++)
         {
-            float speed = 0.5f;
-            float increment = 0f;
-
-            //set all buttons except newlyActive to inactive
-            for (int i = 0; i < 4; i++)
-            {
-                panelButton[i].enabled = (i == newPageIndex);
-            }
-
-            //render new page in front of the old one
-            int newHeirIndex = page[newPageIndex].GetSiblingIndex();
-            int oldHeirIndex = page[pageIndex].GetSiblingIndex();
-            page[newPageIndex].SetSiblingIndex(oldHeirIndex);
-            page[pageIndex].SetSiblingIndex(newHeirIndex);
-
-            //move new page in from left, move old page away to bottom
-            while (increment < 1f)
-            {
-                increment += (1f / speed) * Time.deltaTime;
-                if (increment > 1f)
-                {
-                    increment = 1f;
-                }
-
-                page[newPageIndex].localPosition = new Vector3(-300f * (1 - increment), -31, 0);
-                page[pageIndex].localPosition = new Vector3(0, -31 - 140f * increment, 0);
-
-                yield return null;
-            }
-
-            //render pages in original positions
-            page[newPageIndex].SetSiblingIndex(newHeirIndex);
-            page[pageIndex].SetSiblingIndex(oldHeirIndex);
-
-            pageIndex = newPageIndex;
+            panelButton[i].enabled = (i == newPageIndex);
         }
+
+        //render new page in front of the old one
+        int newHeirIndex = page[newPageIndex].GetSiblingIndex();
+        int oldHeirIndex = page[pageIndex].GetSiblingIndex();
+        page[newPageIndex].SetSiblingIndex(oldHeirIndex);
+        page[pageIndex].SetSiblingIndex(newHeirIndex);
+
+        //move new page in from left, move old page away to bottom
+        while (increment < 1f)
+        {
+            increment += (1f / speed) * Time.deltaTime;
+            if (increment > 1f)
+            {
+                increment = 1f;
+            }
+
+            page[newPageIndex].localPosition = new Vector3(-300f * (1 - increment), -31, 0);
+            page[pageIndex].localPosition = new Vector3(0, -31 - 140f * increment, 0);
+
+            yield return null;
+        }
+
+        //render pages in original positions
+        page[newPageIndex].SetSiblingIndex(newHeirIndex);
+        page[pageIndex].SetSiblingIndex(oldHeirIndex);
+
+        pageIndex = newPageIndex;
     }
 
     private void setSelectorPosition(int newPosition)
@@ -345,48 +341,31 @@ public class TypingHandler : MonoBehaviour
 
     private void addCurrentKeyToString()
     {
-        if (pageIndex < 3 && pageIndex >= 0)
-        {
-            if (typeSpaceIndex < typeSpaceCount)
-            {
-                typeSpaceText[typeSpaceIndex].text = key[pageIndex][selectorIndex - 6].text;
-                typeSpaceTextShadow[typeSpaceIndex].text = typeSpaceText[typeSpaceIndex].text;
-                typeSpaceIndex += 1;
-            }
-        }
+        if (pageIndex >= 3 || pageIndex < 0) return;
+        if (typeSpaceIndex >= typeSpaceCount) return;
+        typeSpaceText[typeSpaceIndex].text = key[pageIndex][selectorIndex - 6].text;
+        typeSpaceTextShadow[typeSpaceIndex].text = typeSpaceText[typeSpaceIndex].text;
+        typeSpaceIndex += 1;
     }
 
     private void addCharacterToString(bool caps, string character, string capsCharacter)
     {
-        if (pageIndex == 3)
-        {
-            if (typeSpaceIndex < typeSpaceCount)
-            {
-                if (!caps)
-                {
-                    typeSpaceText[typeSpaceIndex].text = character;
-                }
-                else
-                {
-                    typeSpaceText[typeSpaceIndex].text = capsCharacter;
-                }
-                typeSpaceTextShadow[typeSpaceIndex].text = typeSpaceText[typeSpaceIndex].text;
-                typeSpaceIndex += 1;
-            }
-        }
+        if (pageIndex != 3) return;
+        if (typeSpaceIndex >= typeSpaceCount) return;
+        typeSpaceText[typeSpaceIndex].text = !caps ? character : capsCharacter;
+        typeSpaceTextShadow[typeSpaceIndex].text = typeSpaceText[typeSpaceIndex].text;
+        typeSpaceIndex += 1;
     }
 
     private IEnumerator backspace()
     {
-        if (typeSpaceIndex > 0)
-        {
-            typeSpaceText[typeSpaceIndex - 1].text = "";
-            typeSpaceTextShadow[typeSpaceIndex - 1].text = typeSpaceText[typeSpaceIndex - 1].text;
-            typeSpaceIndex -= 1;
-            panelButton[4].enabled = true;
-            yield return new WaitForSeconds(0.1f);
-            panelButton[4].enabled = false;
-        }
+        if (typeSpaceIndex <= 0) yield break;
+        typeSpaceText[typeSpaceIndex - 1].text = "";
+        typeSpaceTextShadow[typeSpaceIndex - 1].text = typeSpaceText[typeSpaceIndex - 1].text;
+        typeSpaceIndex -= 1;
+        panelButton[4].enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        panelButton[4].enabled = false;
     }
 
     private void compileString()
@@ -684,14 +663,7 @@ public class TypingHandler : MonoBehaviour
 
         while (running)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                caps = true;
-            }
-            else
-            {
-                caps = false;
-            }
+            caps = Input.GetKey(KeyCode.LeftShift);
 
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {
