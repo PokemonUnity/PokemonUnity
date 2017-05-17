@@ -55,49 +55,49 @@ public class TypingHandler : MonoBehaviour
 
     void Awake()
     {
-        Transform typeFrame = transform.FindChild("typeFrame");
-        icon = typeFrame.FindChild("icon").GetComponent<Image>();
-        iconShadow = typeFrame.FindChild("iconShadow").GetComponent<Image>();
+        Transform typeFrame = transform.Find("typeFrame");
+        icon = typeFrame.Find("icon").GetComponent<Image>();
+        iconShadow = typeFrame.Find("iconShadow").GetComponent<Image>();
 
-        genderTextShadow = typeFrame.FindChild("gender").GetComponent<Text>();
-        genderText = genderTextShadow.transform.FindChild("Text").GetComponent<Text>();
+        genderTextShadow = typeFrame.Find("gender").GetComponent<Text>();
+        genderText = genderTextShadow.transform.Find("Text").GetComponent<Text>();
 
         for (int i = 0; i < 12; i++)
         {
-            typeSpace[i] = typeFrame.FindChild("space" + i).GetComponent<Image>();
-            typeSpaceTextShadow[i] = typeFrame.FindChild("letter" + i).GetComponent<Text>();
-            typeSpaceText[i] = typeSpaceTextShadow[i].transform.FindChild("Text").GetComponent<Text>();
+            typeSpace[i] = typeFrame.Find("space" + i).GetComponent<Image>();
+            typeSpaceTextShadow[i] = typeFrame.Find("letter" + i).GetComponent<Text>();
+            typeSpaceText[i] = typeSpaceTextShadow[i].transform.Find("Text").GetComponent<Text>();
         }
 
-        controlPanel = transform.FindChild("controlPanel");
+        controlPanel = transform.Find("controlPanel");
         for (int i = 0; i < 6; i++)
         {
-            panelButton[i] = controlPanel.FindChild("button" + i).GetComponent<Image>();
+            panelButton[i] = controlPanel.Find("button" + i).GetComponent<Image>();
         }
 
-        panelSelector = controlPanel.FindChild("Selector").GetComponent<Image>();
-        keySelector = transform.FindChild("keySelector").GetComponent<Image>();
+        panelSelector = controlPanel.Find("Selector").GetComponent<Image>();
+        keySelector = transform.Find("keySelector").GetComponent<Image>();
 
         for (int i = 0; i < 4; i++)
         {
-            page[i] = transform.FindChild("page" + i).GetComponent<RectTransform>();
+            page[i] = transform.Find("page" + i).GetComponent<RectTransform>();
         }
 
         for (int i = 0; i < 3; i++)
         {
             for (int i2 = 0; i2 < 5; i2++)
             {
-                Transform row = page[i].FindChild("row" + i2);
+                Transform row = page[i].Find("row" + i2);
                 for (int i3 = 0; i3 < 13; i3++)
                 {
-                    keyShadow[i][(i2 * 13) + i3] = row.FindChild("key" + i3).GetComponent<Text>();
+                    keyShadow[i][(i2 * 13) + i3] = row.Find("key" + i3).GetComponent<Text>();
                     key[i][(i2 * 13) + i3] =
-                        keyShadow[i][(i2 * 13) + i3].transform.FindChild("Text").GetComponent<Text>();
+                        keyShadow[i][(i2 * 13) + i3].transform.Find("Text").GetComponent<Text>();
                 }
             }
         }
-        keyboardTextShadow = page[3].FindChild("keyboard").GetComponent<Text>();
-        keyboardText = keyboardTextShadow.transform.FindChild("Text").GetComponent<Text>();
+        keyboardTextShadow = page[3].Find("keyboard").GetComponent<Text>();
+        keyboardText = keyboardTextShadow.transform.Find("Text").GetComponent<Text>();
     }
 
     void Start()

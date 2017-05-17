@@ -93,23 +93,23 @@ public class PlayerMovement : MonoBehaviour
         canInput = true;
         speed = walkSpeed;
 
-        follower = transform.FindChild("Follower").gameObject;
+        follower = transform.Find("Follower").gameObject;
         followerScript = follower.GetComponent<FollowerMovement>();
 
-        mainCamera = transform.FindChild("Camera").GetComponent<Camera>();
+        mainCamera = transform.Find("Camera").GetComponent<Camera>();
         mainCameraDefaultPosition = mainCamera.transform.localPosition;
         mainCameraDefaultFOV = mainCamera.fieldOfView;
 
-        pawn = transform.FindChild("Pawn");
-        pawnReflection = transform.FindChild("PawnReflection");
+        pawn = transform.Find("Pawn");
+        pawnReflection = transform.Find("PawnReflection");
         pawnSprite = pawn.GetComponent<SpriteRenderer>();
         pawnReflectionSprite = pawnReflection.GetComponent<SpriteRenderer>();
 
         //pawnReflectionSprite = transform.FindChild("PawnReflection").GetComponent<MeshRenderer>().material;
 
-        hitBox = transform.FindChild("Player_Transparent");
+        hitBox = transform.Find("Player_Transparent");
 
-        mount = transform.FindChild("Mount").GetComponent<SpriteRenderer>();
+        mount = transform.Find("Mount").GetComponent<SpriteRenderer>();
         mountPosition = mount.transform.localPosition;
     }
 

@@ -13,10 +13,10 @@ public class GUIParticleHandler : MonoBehaviour
 
     void Awake()
     {
-        particles = transform.FindChild("Particles").gameObject;
+        particles = transform.Find("Particles").gameObject;
         for (int i = 0; i < 32; i++)
         {
-            particle[i] = particles.transform.FindChild("Particle" + i).GetComponent<Image>();
+            particle[i] = particles.transform.Find("Particle" + i).GetComponent<Image>();
             particle[i].enabled = false;
         }
     }

@@ -77,14 +77,14 @@ public class InteractTrainer : MonoBehaviour
 
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
-        sight = transform.FindChild("Sight");
+        sight = transform.Find("Sight");
         sightCollider = sight.GetComponents<BoxCollider>();
 
-        exclaim = transform.FindChild("Exclaim").gameObject;
+        exclaim = transform.Find("Exclaim").gameObject;
 
-        pawnSprite = transform.FindChild("Pawn").GetComponent<SpriteRenderer>();
-        pawnReflectionSprite = transform.FindChild("PawnReflection").GetComponent<SpriteRenderer>();
-        hitBox = transform.FindChild("NPC_Object");
+        pawnSprite = transform.Find("Pawn").GetComponent<SpriteRenderer>();
+        pawnReflectionSprite = transform.Find("PawnReflection").GetComponent<SpriteRenderer>();
+        hitBox = transform.Find("NPC_Object");
 
         spriteSheet = Resources.LoadAll<Sprite>("OverworldNPCSprites/" + trainerSpriteName);
     }

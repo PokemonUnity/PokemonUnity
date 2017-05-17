@@ -471,194 +471,194 @@ public class BattleHandler : MonoBehaviour
 
         BattleAudio = transform.GetComponent<AudioSource>();
 
-        playerBase = transform.FindChild("player0").GetComponent<Image>();
-        opponentBase = transform.FindChild("opponent0").GetComponent<Image>();
-        background = transform.FindChild("Background").GetComponent<Image>();
+        playerBase = transform.Find("player0").GetComponent<Image>();
+        opponentBase = transform.Find("opponent0").GetComponent<Image>();
+        background = transform.Find("Background").GetComponent<Image>();
 
-        trainerSprite1 = opponentBase.transform.FindChild("Trainer").GetComponent<Image>();
-        playerTrainerSprite1 = playerBase.transform.FindChild("Trainer").GetComponent<Image>();
+        trainerSprite1 = opponentBase.transform.Find("Trainer").GetComponent<Image>();
+        playerTrainerSprite1 = playerBase.transform.Find("Trainer").GetComponent<Image>();
 
-        player1 = playerBase.transform.FindChild("Pokemon").FindChild("Mask").FindChild("Sprite").GetComponent<Image>();
+        player1 = playerBase.transform.Find("Pokemon").Find("Mask").Find("Sprite").GetComponent<Image>();
         opponent1 =
-            opponentBase.transform.FindChild("Pokemon").FindChild("Mask").FindChild("Sprite").GetComponent<Image>();
-        player1Overlay = player1.transform.FindChild("Overlay").GetComponent<RawImage>();
-        opponent1Overlay = opponent1.transform.FindChild("Overlay").GetComponent<RawImage>();
+            opponentBase.transform.Find("Pokemon").Find("Mask").Find("Sprite").GetComponent<Image>();
+        player1Overlay = player1.transform.Find("Overlay").GetComponent<RawImage>();
+        opponent1Overlay = opponent1.transform.Find("Overlay").GetComponent<RawImage>();
 
-        Transform playerPartyBarTrn = transform.FindChild("playerParty");
-        Transform opponentPartyBarTrn = transform.FindChild("opponentParty");
-        playerPartyBar = playerPartyBarTrn.FindChild("bar").GetComponent<Image>();
-        opponentPartyBar = opponentPartyBarTrn.FindChild("bar").GetComponent<Image>();
+        Transform playerPartyBarTrn = transform.Find("playerParty");
+        Transform opponentPartyBarTrn = transform.Find("opponentParty");
+        playerPartyBar = playerPartyBarTrn.Find("bar").GetComponent<Image>();
+        opponentPartyBar = opponentPartyBarTrn.Find("bar").GetComponent<Image>();
         for (int i = 0; i < 6; i++)
         {
-            playerPartyBarSpace[i] = playerPartyBarTrn.FindChild("space" + i).GetComponent<Image>();
+            playerPartyBarSpace[i] = playerPartyBarTrn.Find("space" + i).GetComponent<Image>();
         }
         for (int i = 0; i < 6; i++)
         {
-            opponentPartyBarSpace[i] = opponentPartyBarTrn.FindChild("space" + i).GetComponent<Image>();
+            opponentPartyBarSpace[i] = opponentPartyBarTrn.Find("space" + i).GetComponent<Image>();
         }
 
-        pokemonStatsDisplay[0] = transform.FindChild("playerStats0").GetComponent<Image>();
-        statsNameShadow[0] = pokemonStatsDisplay[0].transform.FindChild("Name").GetComponent<Text>();
-        statsName[0] = statsNameShadow[0].transform.FindChild("Text").GetComponent<Text>();
-        statsGenderShadow[0] = pokemonStatsDisplay[0].transform.FindChild("Gender").GetComponent<Text>();
-        statsGender[0] = statsGenderShadow[0].transform.FindChild("Text").GetComponent<Text>();
-        statsLevelShadow[0] = pokemonStatsDisplay[0].transform.FindChild("Level").GetComponent<Text>();
-        statsLevel[0] = statsLevelShadow[0].transform.FindChild("Text").GetComponent<Text>();
-        statsHPBar[0] = pokemonStatsDisplay[0].transform.FindChild("HPBar").GetComponent<Image>();
-        statsStatus[0] = pokemonStatsDisplay[0].transform.FindChild("Status").GetComponent<Image>();
-        pokemon0CurrentHPShadow = pokemonStatsDisplay[0].transform.FindChild("CurrentHP").GetComponent<Text>();
-        pokemon0CurrentHP = pokemon0CurrentHPShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemon0MaxHPShadow = pokemonStatsDisplay[0].transform.FindChild("MaxHP").GetComponent<Text>();
-        pokemon0MaxHP = pokemon0MaxHPShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemon0ExpBar = pokemonStatsDisplay[0].transform.FindChild("ExpBar").GetComponent<Image>();
+        pokemonStatsDisplay[0] = transform.Find("playerStats0").GetComponent<Image>();
+        statsNameShadow[0] = pokemonStatsDisplay[0].transform.Find("Name").GetComponent<Text>();
+        statsName[0] = statsNameShadow[0].transform.Find("Text").GetComponent<Text>();
+        statsGenderShadow[0] = pokemonStatsDisplay[0].transform.Find("Gender").GetComponent<Text>();
+        statsGender[0] = statsGenderShadow[0].transform.Find("Text").GetComponent<Text>();
+        statsLevelShadow[0] = pokemonStatsDisplay[0].transform.Find("Level").GetComponent<Text>();
+        statsLevel[0] = statsLevelShadow[0].transform.Find("Text").GetComponent<Text>();
+        statsHPBar[0] = pokemonStatsDisplay[0].transform.Find("HPBar").GetComponent<Image>();
+        statsStatus[0] = pokemonStatsDisplay[0].transform.Find("Status").GetComponent<Image>();
+        pokemon0CurrentHPShadow = pokemonStatsDisplay[0].transform.Find("CurrentHP").GetComponent<Text>();
+        pokemon0CurrentHP = pokemon0CurrentHPShadow.transform.Find("Text").GetComponent<Text>();
+        pokemon0MaxHPShadow = pokemonStatsDisplay[0].transform.Find("MaxHP").GetComponent<Text>();
+        pokemon0MaxHP = pokemon0MaxHPShadow.transform.Find("Text").GetComponent<Text>();
+        pokemon0ExpBar = pokemonStatsDisplay[0].transform.Find("ExpBar").GetComponent<Image>();
 
-        pokemonStatsDisplay[3] = transform.FindChild("opponentStats0").GetComponent<Image>();
-        statsNameShadow[3] = pokemonStatsDisplay[3].transform.FindChild("Name").GetComponent<Text>();
-        statsName[3] = statsNameShadow[3].transform.FindChild("Text").GetComponent<Text>();
-        statsGenderShadow[3] = pokemonStatsDisplay[3].transform.FindChild("Gender").GetComponent<Text>();
-        statsGender[3] = statsGenderShadow[3].transform.FindChild("Text").GetComponent<Text>();
-        statsLevelShadow[3] = pokemonStatsDisplay[3].transform.FindChild("Level").GetComponent<Text>();
-        statsLevel[3] = statsLevelShadow[3].transform.FindChild("Text").GetComponent<Text>();
-        statsHPBar[3] = pokemonStatsDisplay[3].transform.FindChild("HPBar").GetComponent<Image>();
-        statsStatus[3] = pokemonStatsDisplay[3].transform.FindChild("Status").GetComponent<Image>();
+        pokemonStatsDisplay[3] = transform.Find("opponentStats0").GetComponent<Image>();
+        statsNameShadow[3] = pokemonStatsDisplay[3].transform.Find("Name").GetComponent<Text>();
+        statsName[3] = statsNameShadow[3].transform.Find("Text").GetComponent<Text>();
+        statsGenderShadow[3] = pokemonStatsDisplay[3].transform.Find("Gender").GetComponent<Text>();
+        statsGender[3] = statsGenderShadow[3].transform.Find("Text").GetComponent<Text>();
+        statsLevelShadow[3] = pokemonStatsDisplay[3].transform.Find("Level").GetComponent<Text>();
+        statsLevel[3] = statsLevelShadow[3].transform.Find("Text").GetComponent<Text>();
+        statsHPBar[3] = pokemonStatsDisplay[3].transform.Find("HPBar").GetComponent<Image>();
+        statsStatus[3] = pokemonStatsDisplay[3].transform.Find("Status").GetComponent<Image>();
 
-        Transform optionBox = transform.FindChild("OptionBox");
-        buttonFight = optionBox.FindChild("ButtonFight").GetComponent<Image>();
-        buttonBag = optionBox.FindChild("ButtonBag").GetComponent<Image>();
-        buttonPoke = optionBox.FindChild("ButtonPoke").GetComponent<Image>();
-        buttonRun = optionBox.FindChild("ButtonRun").GetComponent<Image>();
+        Transform optionBox = transform.Find("OptionBox");
+        buttonFight = optionBox.Find("ButtonFight").GetComponent<Image>();
+        buttonBag = optionBox.Find("ButtonBag").GetComponent<Image>();
+        buttonPoke = optionBox.Find("ButtonPoke").GetComponent<Image>();
+        buttonRun = optionBox.Find("ButtonRun").GetComponent<Image>();
 
         for (int i = 0; i < 4; i++)
         {
-            buttonMove[i] = optionBox.FindChild("Move" + (i + 1)).GetComponent<Image>();
-            buttonMoveType[i] = buttonMove[i].transform.FindChild("Type").GetComponent<Image>();
-            buttonMoveNameShadow[i] = buttonMove[i].transform.FindChild("Name").GetComponent<Text>();
-            buttonMoveName[i] = buttonMoveNameShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            buttonMovePPShadow[i] = buttonMove[i].transform.FindChild("PP").GetComponent<Text>();
-            buttonMovePP[i] = buttonMovePPShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            buttonMoveCover[i] = buttonMove[i].transform.FindChild("Cover").GetComponent<Image>();
+            buttonMove[i] = optionBox.Find("Move" + (i + 1)).GetComponent<Image>();
+            buttonMoveType[i] = buttonMove[i].transform.Find("Type").GetComponent<Image>();
+            buttonMoveNameShadow[i] = buttonMove[i].transform.Find("Name").GetComponent<Text>();
+            buttonMoveName[i] = buttonMoveNameShadow[i].transform.Find("Text").GetComponent<Text>();
+            buttonMovePPShadow[i] = buttonMove[i].transform.Find("PP").GetComponent<Text>();
+            buttonMovePP[i] = buttonMovePPShadow[i].transform.Find("Text").GetComponent<Text>();
+            buttonMoveCover[i] = buttonMove[i].transform.Find("Cover").GetComponent<Image>();
         }
-        buttonMoveReturn = optionBox.FindChild("MoveReturn").GetComponent<Image>();
-        buttonMegaEvolution = optionBox.FindChild("MoveMegaEvolution").GetComponent<Image>();
+        buttonMoveReturn = optionBox.Find("MoveReturn").GetComponent<Image>();
+        buttonMegaEvolution = optionBox.Find("MoveMegaEvolution").GetComponent<Image>();
 
-        bagObject = optionBox.FindChild("Bag").gameObject;
-        pokeObject = optionBox.FindChild("Poke").gameObject;
-        pokemonPartyObject = optionBox.FindChild("Party").gameObject;
+        bagObject = optionBox.Find("Bag").gameObject;
+        pokeObject = optionBox.Find("Poke").gameObject;
+        pokemonPartyObject = optionBox.Find("Party").gameObject;
 
-        buttonBackBag = bagObject.transform.FindChild("ButtonBack").GetComponent<Image>();
-        buttonBackPoke = pokeObject.transform.FindChild("ButtonBack").GetComponent<Image>();
+        buttonBackBag = bagObject.transform.Find("ButtonBack").GetComponent<Image>();
+        buttonBackPoke = pokeObject.transform.Find("ButtonBack").GetComponent<Image>();
 
-        buttonItemCategory[0] = bagObject.transform.FindChild("ButtonHPPPRestore").GetComponent<Image>();
-        buttonItemCategory[1] = bagObject.transform.FindChild("ButtonPokeBalls").GetComponent<Image>();
-        buttonItemCategory[2] = bagObject.transform.FindChild("ButtonStatusHealers").GetComponent<Image>();
-        buttonItemCategory[3] = bagObject.transform.FindChild("ButtonBattleItems").GetComponent<Image>();
-        buttonItemLastUsed = bagObject.transform.FindChild("ButtonItemUsedLast").GetComponent<Image>();
+        buttonItemCategory[0] = bagObject.transform.Find("ButtonHPPPRestore").GetComponent<Image>();
+        buttonItemCategory[1] = bagObject.transform.Find("ButtonPokeBalls").GetComponent<Image>();
+        buttonItemCategory[2] = bagObject.transform.Find("ButtonStatusHealers").GetComponent<Image>();
+        buttonItemCategory[3] = bagObject.transform.Find("ButtonBattleItems").GetComponent<Image>();
+        buttonItemLastUsed = bagObject.transform.Find("ButtonItemUsedLast").GetComponent<Image>();
 
-        itemList = bagObject.transform.FindChild("Items").gameObject;
+        itemList = bagObject.transform.Find("Items").gameObject;
         for (int i = 0; i < 8; i++)
         {
-            buttonItemList[i] = itemList.transform.FindChild("Item" + i).GetComponent<Image>();
-            itemListIcon[i] = buttonItemList[i].transform.FindChild("Icon").GetComponent<Image>();
-            itemListNameShadow[i] = buttonItemList[i].transform.FindChild("Item").GetComponent<Text>();
-            itemListName[i] = itemListNameShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            itemListQuantityShadow[i] = buttonItemList[i].transform.FindChild("Quantity").GetComponent<Text>();
-            itemListQuantity[i] = itemListQuantityShadow[i].transform.FindChild("Text").GetComponent<Text>();
+            buttonItemList[i] = itemList.transform.Find("Item" + i).GetComponent<Image>();
+            itemListIcon[i] = buttonItemList[i].transform.Find("Icon").GetComponent<Image>();
+            itemListNameShadow[i] = buttonItemList[i].transform.Find("Item").GetComponent<Text>();
+            itemListName[i] = itemListNameShadow[i].transform.Find("Text").GetComponent<Text>();
+            itemListQuantityShadow[i] = buttonItemList[i].transform.Find("Quantity").GetComponent<Text>();
+            itemListQuantity[i] = itemListQuantityShadow[i].transform.Find("Text").GetComponent<Text>();
         }
 
         for (int i = 0; i < 6; i++)
         {
-            buttonPokemonSlot[i] = pokemonPartyObject.transform.FindChild("Slot" + i).GetComponent<Image>();
-            pokemonSlotIcon[i] = buttonPokemonSlot[i].transform.FindChild("Icon").GetComponent<Image>();
-            pokemonSlotNameShadow[i] = buttonPokemonSlot[i].transform.FindChild("Name").GetComponent<Text>();
-            pokemonSlotName[i] = pokemonSlotNameShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            pokemonSlotGenderShadow[i] = buttonPokemonSlot[i].transform.FindChild("Gender").GetComponent<Text>();
-            pokemonSlotGender[i] = pokemonSlotGenderShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            pokemonSlotLevelShadow[i] = buttonPokemonSlot[i].transform.FindChild("Level").GetComponent<Text>();
-            pokemonSlotLevel[i] = pokemonSlotLevelShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            pokemonSlotCurrentHPShadow[i] = buttonPokemonSlot[i].transform.FindChild("CurrentHP").GetComponent<Text>();
-            pokemonSlotCurrentHP[i] = pokemonSlotCurrentHPShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            pokemonSlotMaxHPShadow[i] = buttonPokemonSlot[i].transform.FindChild("MaxHP").GetComponent<Text>();
-            pokemonSlotMaxHP[i] = pokemonSlotMaxHPShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            pokemonSlotHPBar[i] = buttonPokemonSlot[i].transform.FindChild("HPBar").GetComponent<Image>();
-            pokemonSlotStatus[i] = buttonPokemonSlot[i].transform.FindChild("Status").GetComponent<Image>();
-            pokemonSlotItem[i] = buttonPokemonSlot[i].transform.FindChild("Item").GetComponent<Image>();
+            buttonPokemonSlot[i] = pokemonPartyObject.transform.Find("Slot" + i).GetComponent<Image>();
+            pokemonSlotIcon[i] = buttonPokemonSlot[i].transform.Find("Icon").GetComponent<Image>();
+            pokemonSlotNameShadow[i] = buttonPokemonSlot[i].transform.Find("Name").GetComponent<Text>();
+            pokemonSlotName[i] = pokemonSlotNameShadow[i].transform.Find("Text").GetComponent<Text>();
+            pokemonSlotGenderShadow[i] = buttonPokemonSlot[i].transform.Find("Gender").GetComponent<Text>();
+            pokemonSlotGender[i] = pokemonSlotGenderShadow[i].transform.Find("Text").GetComponent<Text>();
+            pokemonSlotLevelShadow[i] = buttonPokemonSlot[i].transform.Find("Level").GetComponent<Text>();
+            pokemonSlotLevel[i] = pokemonSlotLevelShadow[i].transform.Find("Text").GetComponent<Text>();
+            pokemonSlotCurrentHPShadow[i] = buttonPokemonSlot[i].transform.Find("CurrentHP").GetComponent<Text>();
+            pokemonSlotCurrentHP[i] = pokemonSlotCurrentHPShadow[i].transform.Find("Text").GetComponent<Text>();
+            pokemonSlotMaxHPShadow[i] = buttonPokemonSlot[i].transform.Find("MaxHP").GetComponent<Text>();
+            pokemonSlotMaxHP[i] = pokemonSlotMaxHPShadow[i].transform.Find("Text").GetComponent<Text>();
+            pokemonSlotHPBar[i] = buttonPokemonSlot[i].transform.Find("HPBar").GetComponent<Image>();
+            pokemonSlotStatus[i] = buttonPokemonSlot[i].transform.Find("Status").GetComponent<Image>();
+            pokemonSlotItem[i] = buttonPokemonSlot[i].transform.Find("Item").GetComponent<Image>();
         }
 
-        buttonSwitch = pokeObject.transform.FindChild("ButtonSwitch").GetComponent<Image>();
-        buttonCheck = pokeObject.transform.FindChild("ButtonCheck").GetComponent<Image>();
-        buttonCheckTextShadow = buttonCheck.transform.FindChild("Text").GetComponent<Text>();
-        buttonCheckText = buttonCheckTextShadow.transform.FindChild("Text").GetComponent<Text>();
+        buttonSwitch = pokeObject.transform.Find("ButtonSwitch").GetComponent<Image>();
+        buttonCheck = pokeObject.transform.Find("ButtonCheck").GetComponent<Image>();
+        buttonCheckTextShadow = buttonCheck.transform.Find("Text").GetComponent<Text>();
+        buttonCheckText = buttonCheckTextShadow.transform.Find("Text").GetComponent<Text>();
 
         //ITEM LIST DETAILS
-        itemListCategoryTextShadow = itemList.transform.FindChild("Category").GetComponent<Text>();
-        itemListCategoryText = itemListCategoryTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        itemListPageNumberShadow = itemList.transform.FindChild("Page").GetComponent<Text>();
-        itemListPageNumber = itemListPageNumberShadow.transform.FindChild("Text").GetComponent<Text>();
-        itemListArrowPrev = itemList.transform.FindChild("PageArrowPrev").gameObject;
-        itemListArrowNext = itemList.transform.FindChild("PageArrowNext").gameObject;
-        itemListDescriptionShadow = itemList.transform.FindChild("ItemDescription").GetComponent<Text>();
-        itemListDescription = itemListDescriptionShadow.transform.FindChild("Text").GetComponent<Text>();
+        itemListCategoryTextShadow = itemList.transform.Find("Category").GetComponent<Text>();
+        itemListCategoryText = itemListCategoryTextShadow.transform.Find("Text").GetComponent<Text>();
+        itemListPageNumberShadow = itemList.transform.Find("Page").GetComponent<Text>();
+        itemListPageNumber = itemListPageNumberShadow.transform.Find("Text").GetComponent<Text>();
+        itemListArrowPrev = itemList.transform.Find("PageArrowPrev").gameObject;
+        itemListArrowNext = itemList.transform.Find("PageArrowNext").gameObject;
+        itemListDescriptionShadow = itemList.transform.Find("ItemDescription").GetComponent<Text>();
+        itemListDescription = itemListDescriptionShadow.transform.Find("Text").GetComponent<Text>();
 
         //POKE SELECTED DETAILS
-        pokemonSelectedPokemon = pokeObject.transform.FindChild("SelectedPokemon").gameObject;
-        pokemonSelectedIcon = pokemonSelectedPokemon.transform.FindChild("Icon").GetComponent<Image>();
-        pokemonSelectedNameShadow = pokemonSelectedPokemon.transform.FindChild("Name").GetComponent<Text>();
-        pokemonSelectedName = pokemonSelectedNameShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSelectedGenderShadow = pokemonSelectedPokemon.transform.FindChild("Gender").GetComponent<Text>();
-        pokemonSelectedGender = pokemonSelectedGenderShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSelectedLevelShadow = pokemonSelectedPokemon.transform.FindChild("Level").GetComponent<Text>();
-        pokemonSelectedLevel = pokemonSelectedLevelShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSelectedStatus = pokemonSelectedPokemon.transform.FindChild("Status").GetComponent<Image>();
-        pokemonSelectedType1 = pokemonSelectedPokemon.transform.FindChild("Type1").GetComponent<Image>();
-        pokemonSelectedType2 = pokemonSelectedPokemon.transform.FindChild("Type2").GetComponent<Image>();
+        pokemonSelectedPokemon = pokeObject.transform.Find("SelectedPokemon").gameObject;
+        pokemonSelectedIcon = pokemonSelectedPokemon.transform.Find("Icon").GetComponent<Image>();
+        pokemonSelectedNameShadow = pokemonSelectedPokemon.transform.Find("Name").GetComponent<Text>();
+        pokemonSelectedName = pokemonSelectedNameShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSelectedGenderShadow = pokemonSelectedPokemon.transform.Find("Gender").GetComponent<Text>();
+        pokemonSelectedGender = pokemonSelectedGenderShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSelectedLevelShadow = pokemonSelectedPokemon.transform.Find("Level").GetComponent<Text>();
+        pokemonSelectedLevel = pokemonSelectedLevelShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSelectedStatus = pokemonSelectedPokemon.transform.Find("Status").GetComponent<Image>();
+        pokemonSelectedType1 = pokemonSelectedPokemon.transform.Find("Type1").GetComponent<Image>();
+        pokemonSelectedType2 = pokemonSelectedPokemon.transform.Find("Type2").GetComponent<Image>();
 
         //POKE SUMMARY DETAILS
-        pokemonSummary = pokeObject.transform.FindChild("Summary").gameObject;
-        pokemonSummaryHPShadow = pokemonSummary.transform.FindChild("HP").GetComponent<Text>();
-        pokemonSummaryHP = pokemonSummaryHPShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSummaryHPBar = pokemonSummary.transform.FindChild("HPBar").GetComponent<Image>();
-        pokemonSummaryStatsTextShadow = pokemonSummary.transform.FindChild("StatsText").GetComponent<Text>();
-        pokemonSummaryStatsShadow = pokemonSummary.transform.FindChild("Stats").GetComponent<Text>();
-        pokemonSummaryStats = pokemonSummaryStatsShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSummaryNextLevelEXPShadow = pokemonSummary.transform.FindChild("ToNextLevel").GetComponent<Text>();
-        pokemonSummaryNextLevelEXP = pokemonSummaryNextLevelEXPShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSummaryEXPBar = pokemonSummary.transform.FindChild("ExpBar").GetComponent<Image>();
-        pokemonSummaryItemIcon = pokemonSummary.transform.FindChild("ItemIcon").GetComponent<Image>();
-        pokemonSummaryItemNameShadow = pokemonSummary.transform.FindChild("Item").GetComponent<Text>();
-        pokemonSummaryItemName = pokemonSummaryItemNameShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonSummaryAbilityNameShadow = pokemonSummary.transform.FindChild("Ability").GetComponent<Text>();
-        pokemonSummaryAbilityName = pokemonSummaryAbilityNameShadow.transform.FindChild("Text").GetComponent<Text>();
+        pokemonSummary = pokeObject.transform.Find("Summary").gameObject;
+        pokemonSummaryHPShadow = pokemonSummary.transform.Find("HP").GetComponent<Text>();
+        pokemonSummaryHP = pokemonSummaryHPShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSummaryHPBar = pokemonSummary.transform.Find("HPBar").GetComponent<Image>();
+        pokemonSummaryStatsTextShadow = pokemonSummary.transform.Find("StatsText").GetComponent<Text>();
+        pokemonSummaryStatsShadow = pokemonSummary.transform.Find("Stats").GetComponent<Text>();
+        pokemonSummaryStats = pokemonSummaryStatsShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSummaryNextLevelEXPShadow = pokemonSummary.transform.Find("ToNextLevel").GetComponent<Text>();
+        pokemonSummaryNextLevelEXP = pokemonSummaryNextLevelEXPShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSummaryEXPBar = pokemonSummary.transform.Find("ExpBar").GetComponent<Image>();
+        pokemonSummaryItemIcon = pokemonSummary.transform.Find("ItemIcon").GetComponent<Image>();
+        pokemonSummaryItemNameShadow = pokemonSummary.transform.Find("Item").GetComponent<Text>();
+        pokemonSummaryItemName = pokemonSummaryItemNameShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonSummaryAbilityNameShadow = pokemonSummary.transform.Find("Ability").GetComponent<Text>();
+        pokemonSummaryAbilityName = pokemonSummaryAbilityNameShadow.transform.Find("Text").GetComponent<Text>();
         pokemonSummaryAbilityDescriptionShadow =
-            pokemonSummary.transform.FindChild("AbilityDescription").GetComponent<Text>();
+            pokemonSummary.transform.Find("AbilityDescription").GetComponent<Text>();
         pokemonSummaryAbilityDescription =
-            pokemonSummaryAbilityDescriptionShadow.transform.FindChild("Text").GetComponent<Text>();
+            pokemonSummaryAbilityDescriptionShadow.transform.Find("Text").GetComponent<Text>();
 
         //POKE MOVES DETAILS
-        pokemonMoves = pokeObject.transform.FindChild("Moves").gameObject;
+        pokemonMoves = pokeObject.transform.Find("Moves").gameObject;
         for (int i = 0; i < 4; i++)
         {
-            pokemonMovesNameShadow[i] = pokemonMoves.transform.FindChild("Move" + (i + 1)).GetComponent<Text>();
-            pokemonMovesName[i] = pokemonMovesNameShadow[i].transform.FindChild("Text").GetComponent<Text>();
-            pokemonMovesType[i] = pokemonMoves.transform.FindChild("Move" + (i + 1) + "Type").GetComponent<Image>();
-            pokemonMovesPPShadow[i] = pokemonMoves.transform.FindChild("Move" + (i + 1) + "PP").GetComponent<Text>();
-            pokemonMovesPP[i] = pokemonMovesPPShadow[i].transform.FindChild("Text").GetComponent<Text>();
+            pokemonMovesNameShadow[i] = pokemonMoves.transform.Find("Move" + (i + 1)).GetComponent<Text>();
+            pokemonMovesName[i] = pokemonMovesNameShadow[i].transform.Find("Text").GetComponent<Text>();
+            pokemonMovesType[i] = pokemonMoves.transform.Find("Move" + (i + 1) + "Type").GetComponent<Image>();
+            pokemonMovesPPShadow[i] = pokemonMoves.transform.Find("Move" + (i + 1) + "PP").GetComponent<Text>();
+            pokemonMovesPP[i] = pokemonMovesPPShadow[i].transform.Find("Text").GetComponent<Text>();
             pokemonMovesPPTextShadow[i] =
-                pokemonMoves.transform.FindChild("Move" + (i + 1) + "PPText").GetComponent<Text>();
-            pokemonMovesPPText[i] = pokemonMovesPPTextShadow[i].transform.FindChild("Text").GetComponent<Text>();
+                pokemonMoves.transform.Find("Move" + (i + 1) + "PPText").GetComponent<Text>();
+            pokemonMovesPPText[i] = pokemonMovesPPTextShadow[i].transform.Find("Text").GetComponent<Text>();
         }
 
-        pokemonMovesSelectedCategory = pokemonMoves.transform.FindChild("SelectedCategory").GetComponent<Image>();
-        pokemonMovesSelectedPowerShadow = pokemonMoves.transform.FindChild("SelectedPower").GetComponent<Text>();
-        pokemonMovesSelectedPower = pokemonMovesSelectedPowerShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonMovesSelectedAccuracyShadow = pokemonMoves.transform.FindChild("SelectedAccuracy").GetComponent<Text>();
+        pokemonMovesSelectedCategory = pokemonMoves.transform.Find("SelectedCategory").GetComponent<Image>();
+        pokemonMovesSelectedPowerShadow = pokemonMoves.transform.Find("SelectedPower").GetComponent<Text>();
+        pokemonMovesSelectedPower = pokemonMovesSelectedPowerShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonMovesSelectedAccuracyShadow = pokemonMoves.transform.Find("SelectedAccuracy").GetComponent<Text>();
         pokemonMovesSelectedAccuracy =
-            pokemonMovesSelectedAccuracyShadow.transform.FindChild("Text").GetComponent<Text>();
+            pokemonMovesSelectedAccuracyShadow.transform.Find("Text").GetComponent<Text>();
         pokemonMovesSelectedDescriptionShadow =
-            pokemonMoves.transform.FindChild("SelectedDescription").GetComponent<Text>();
+            pokemonMoves.transform.Find("SelectedDescription").GetComponent<Text>();
         pokemonMovesSelectedDescription =
-            pokemonMovesSelectedDescriptionShadow.transform.FindChild("Text").GetComponent<Text>();
-        pokemonMovesSelector = pokemonMoves.transform.FindChild("MoveSelector").GetComponent<Image>();
-        pokemonMovesSelectedMove = pokemonMoves.transform.FindChild("SelectedMove").GetComponent<Image>();
+            pokemonMovesSelectedDescriptionShadow.transform.Find("Text").GetComponent<Text>();
+        pokemonMovesSelector = pokemonMoves.transform.Find("MoveSelector").GetComponent<Image>();
+        pokemonMovesSelectedMove = pokemonMoves.transform.Find("SelectedMove").GetComponent<Image>();
     }
 
     void Start()

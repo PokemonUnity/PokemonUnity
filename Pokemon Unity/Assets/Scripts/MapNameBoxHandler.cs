@@ -17,10 +17,10 @@ public class MapNameBoxHandler : MonoBehaviour
 
     void Awake()
     {
-        mapName = transform.FindChild("MapName");
+        mapName = transform.Find("MapName");
         mapNameBox = mapName.GetComponent<GUITexture>();
-        mapNameText = mapName.FindChild("BoxText").GetComponent<GUIText>();
-        mapNameTextShadow = mapName.FindChild("BoxTextShadow").GetComponent<GUIText>();
+        mapNameText = mapName.Find("BoxText").GetComponent<GUIText>();
+        mapNameTextShadow = mapName.Find("BoxTextShadow").GetComponent<GUIText>();
     }
 
     void Start()

@@ -133,81 +133,81 @@ public class BagHandler : MonoBehaviour
         Dialog = transform.GetComponent<DialogBoxHandler>();
         BagAudio = transform.GetComponent<AudioSource>();
 
-        party = transform.FindChild("Party");
+        party = transform.Find("Party");
         for (int i = 0; i < 6; i++)
         {
-            partySlot[i] = party.FindChild("Slot" + i).GetComponent<GUITexture>();
-            partyIcon[i] = partySlot[i].transform.FindChild("Icon").GetComponent<GUITexture>();
-            partyName[i] = partySlot[i].transform.FindChild("Name").GetComponent<GUIText>();
-            partyNameShadow[i] = partyName[i].transform.FindChild("NameShadow").GetComponent<GUIText>();
-            partyGender[i] = partySlot[i].transform.FindChild("Gender").GetComponent<GUIText>();
-            partyGenderShadow[i] = partyGender[i].transform.FindChild("GenderShadow").GetComponent<GUIText>();
-            partyStandardDisplay[i] = partySlot[i].transform.FindChild("StandardDisplay").gameObject;
-            partyHPBarBack[i] = partyStandardDisplay[i].transform.FindChild("HPBarBack").GetComponent<GUITexture>();
-            partyHPBar[i] = partyStandardDisplay[i].transform.FindChild("HPBar").GetComponent<GUITexture>();
-            partyLv[i] = partyStandardDisplay[i].transform.FindChild("Lv").GetComponent<GUITexture>();
-            partyLevel[i] = partyStandardDisplay[i].transform.FindChild("Level").GetComponent<GUIText>();
-            partyLevelShadow[i] = partyLevel[i].transform.FindChild("LevelShadow").GetComponent<GUIText>();
-            partyTextDisplay[i] = partySlot[i].transform.FindChild("TextDisplay").GetComponent<GUIText>();
+            partySlot[i] = party.Find("Slot" + i).GetComponent<GUITexture>();
+            partyIcon[i] = partySlot[i].transform.Find("Icon").GetComponent<GUITexture>();
+            partyName[i] = partySlot[i].transform.Find("Name").GetComponent<GUIText>();
+            partyNameShadow[i] = partyName[i].transform.Find("NameShadow").GetComponent<GUIText>();
+            partyGender[i] = partySlot[i].transform.Find("Gender").GetComponent<GUIText>();
+            partyGenderShadow[i] = partyGender[i].transform.Find("GenderShadow").GetComponent<GUIText>();
+            partyStandardDisplay[i] = partySlot[i].transform.Find("StandardDisplay").gameObject;
+            partyHPBarBack[i] = partyStandardDisplay[i].transform.Find("HPBarBack").GetComponent<GUITexture>();
+            partyHPBar[i] = partyStandardDisplay[i].transform.Find("HPBar").GetComponent<GUITexture>();
+            partyLv[i] = partyStandardDisplay[i].transform.Find("Lv").GetComponent<GUITexture>();
+            partyLevel[i] = partyStandardDisplay[i].transform.Find("Level").GetComponent<GUIText>();
+            partyLevelShadow[i] = partyLevel[i].transform.Find("LevelShadow").GetComponent<GUIText>();
+            partyTextDisplay[i] = partySlot[i].transform.Find("TextDisplay").GetComponent<GUIText>();
             partyTextDisplayShadow[i] =
-                partyTextDisplay[i].transform.FindChild("TextDisplayShadow").GetComponent<GUIText>();
-            partyStatus[i] = partySlot[i].transform.FindChild("Status").GetComponent<GUITexture>();
-            partyItem[i] = partySlot[i].transform.FindChild("Item").GetComponent<GUITexture>();
+                partyTextDisplay[i].transform.Find("TextDisplayShadow").GetComponent<GUIText>();
+            partyStatus[i] = partySlot[i].transform.Find("Status").GetComponent<GUITexture>();
+            partyItem[i] = partySlot[i].transform.Find("Item").GetComponent<GUITexture>();
         }
-        scrollBar = transform.FindChild("ScrollBar").GetComponent<GUITexture>();
+        scrollBar = transform.Find("ScrollBar").GetComponent<GUITexture>();
 
-        itemList = transform.FindChild("ItemList");
+        itemList = transform.Find("ItemList");
         for (int i = 0; i < 8; i++)
         {
-            itemSlot[i] = itemList.FindChild("Item" + i).GetComponent<GUITexture>();
-            itemName[i] = itemSlot[i].transform.FindChild("Name").GetComponent<GUIText>();
-            itemNameShadow[i] = itemSlot[i].transform.FindChild("NameShadow").GetComponent<GUIText>();
-            itemIcon[i] = itemSlot[i].transform.FindChild("Icon").GetComponent<GUITexture>();
-            itemX[i] = itemSlot[i].transform.FindChild("x").GetComponent<GUIText>();
-            itemXShadow[i] = itemX[i].transform.FindChild("xShadow").GetComponent<GUIText>();
-            itemQuantity[i] = itemSlot[i].transform.FindChild("Quantity").GetComponent<GUIText>();
-            itemQuantityShadow[i] = itemSlot[i].transform.FindChild("QuantityShadow").GetComponent<GUIText>();
+            itemSlot[i] = itemList.Find("Item" + i).GetComponent<GUITexture>();
+            itemName[i] = itemSlot[i].transform.Find("Name").GetComponent<GUIText>();
+            itemNameShadow[i] = itemSlot[i].transform.Find("NameShadow").GetComponent<GUIText>();
+            itemIcon[i] = itemSlot[i].transform.Find("Icon").GetComponent<GUITexture>();
+            itemX[i] = itemSlot[i].transform.Find("x").GetComponent<GUIText>();
+            itemXShadow[i] = itemX[i].transform.Find("xShadow").GetComponent<GUIText>();
+            itemQuantity[i] = itemSlot[i].transform.Find("Quantity").GetComponent<GUIText>();
+            itemQuantityShadow[i] = itemSlot[i].transform.Find("QuantityShadow").GetComponent<GUIText>();
         }
 
-        itemDescription = transform.FindChild("ItemDescription").GetComponent<GUIText>();
-        itemDescriptionShadow = itemDescription.transform.FindChild("ItemDescriptionShadow").GetComponent<GUIText>();
+        itemDescription = transform.Find("ItemDescription").GetComponent<GUIText>();
+        itemDescriptionShadow = itemDescription.transform.Find("ItemDescriptionShadow").GetComponent<GUIText>();
 
         for (int i = 1; i < 6; i++)
         {
-            screens[i] = transform.FindChild("bag" + i).gameObject;
-            shopScreens[i] = transform.FindChild("shop" + i).gameObject;
+            screens[i] = transform.Find("bag" + i).gameObject;
+            shopScreens[i] = transform.Find("shop" + i).gameObject;
         }
 
-        numbersBox = transform.FindChild("NumbersBox").gameObject;
+        numbersBox = transform.Find("NumbersBox").gameObject;
         numbersBoxBorder = numbersBox.transform.GetComponent<GUITexture>();
-        numbersBoxText = numbersBox.transform.FindChild("NumberText").GetComponent<GUIText>();
-        numbersBoxTextShadow = numbersBox.transform.FindChild("NumberTextShadow").GetComponent<GUIText>();
-        numbersBoxSelector = numbersBox.transform.FindChild("Selector").GetComponent<GUIText>();
-        numbersBoxSelectorShadow = numbersBox.transform.FindChild("SelectorShadow").GetComponent<GUIText>();
+        numbersBoxText = numbersBox.transform.Find("NumberText").GetComponent<GUIText>();
+        numbersBoxTextShadow = numbersBox.transform.Find("NumberTextShadow").GetComponent<GUIText>();
+        numbersBoxSelector = numbersBox.transform.Find("Selector").GetComponent<GUIText>();
+        numbersBoxSelectorShadow = numbersBox.transform.Find("SelectorShadow").GetComponent<GUIText>();
 
-        shopName = transform.FindChild("ShopName").GetComponent<GUIText>();
-        shopNameShadow = shopName.transform.FindChild("ShopNameShadow").GetComponent<GUIText>();
+        shopName = transform.Find("ShopName").GetComponent<GUIText>();
+        shopNameShadow = shopName.transform.Find("ShopNameShadow").GetComponent<GUIText>();
 
-        moneyBox = transform.FindChild("MoneyBox").gameObject;
-        moneyBoxBorder = moneyBox.transform.FindChild("BoxBorder").GetComponent<GUITexture>();
-        moneyValueText = moneyBox.transform.FindChild("Money").GetComponent<GUIText>();
-        moneyValueTextShadow = moneyBox.transform.FindChild("MoneyShadow").GetComponent<GUIText>();
+        moneyBox = transform.Find("MoneyBox").gameObject;
+        moneyBoxBorder = moneyBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
+        moneyValueText = moneyBox.transform.Find("Money").GetComponent<GUIText>();
+        moneyValueTextShadow = moneyBox.transform.Find("MoneyShadow").GetComponent<GUIText>();
 
-        dataBox = transform.FindChild("DataBox").gameObject;
-        dataBoxBorder = dataBox.transform.FindChild("BoxBorder").GetComponent<GUITexture>();
-        dataText = dataBox.transform.FindChild("DataText").GetComponent<GUIText>();
-        dataTextShadow = dataBox.transform.FindChild("DataTextShadow").GetComponent<GUIText>();
-        dataValueText = dataBox.transform.FindChild("Data").GetComponent<GUIText>();
-        dataValueTextShadow = dataBox.transform.FindChild("DataShadow").GetComponent<GUIText>();
+        dataBox = transform.Find("DataBox").gameObject;
+        dataBoxBorder = dataBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
+        dataText = dataBox.transform.Find("DataText").GetComponent<GUIText>();
+        dataTextShadow = dataBox.transform.Find("DataTextShadow").GetComponent<GUIText>();
+        dataValueText = dataBox.transform.Find("Data").GetComponent<GUIText>();
+        dataValueTextShadow = dataBox.transform.Find("DataShadow").GetComponent<GUIText>();
 
-        tmType = screens[4].transform.FindChild("TMType").GetComponent<GUITexture>();
-        tmCategory = screens[4].transform.FindChild("TMCategory").GetComponent<GUITexture>();
-        tmPower = screens[4].transform.FindChild("TMPower").GetComponent<GUIText>();
-        tmPowerShadow = tmPower.transform.FindChild("TMPowerShadow").GetComponent<GUIText>();
-        tmAccuracy = screens[4].transform.FindChild("TMAccuracy").GetComponent<GUIText>();
-        tmAccuracyShadow = tmAccuracy.transform.FindChild("TMAccuracyShadow").GetComponent<GUIText>();
-        tmDescription = screens[4].transform.FindChild("TMDescription").GetComponent<GUIText>();
-        tmDescriptionShadow = tmDescription.transform.FindChild("TMDescriptionShadow").GetComponent<GUIText>();
+        tmType = screens[4].transform.Find("TMType").GetComponent<GUITexture>();
+        tmCategory = screens[4].transform.Find("TMCategory").GetComponent<GUITexture>();
+        tmPower = screens[4].transform.Find("TMPower").GetComponent<GUIText>();
+        tmPowerShadow = tmPower.transform.Find("TMPowerShadow").GetComponent<GUIText>();
+        tmAccuracy = screens[4].transform.Find("TMAccuracy").GetComponent<GUIText>();
+        tmAccuracyShadow = tmAccuracy.transform.Find("TMAccuracyShadow").GetComponent<GUIText>();
+        tmDescription = screens[4].transform.Find("TMDescription").GetComponent<GUIText>();
+        tmDescriptionShadow = tmDescription.transform.Find("TMDescriptionShadow").GetComponent<GUIText>();
     }
 
     void Start()

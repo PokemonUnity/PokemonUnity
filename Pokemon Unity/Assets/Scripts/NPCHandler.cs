@@ -54,17 +54,17 @@ public class NPCHandler : MonoBehaviour
 
     void Awake()
     {
-        pawnSprite = transform.FindChild("Pawn").GetComponent<SpriteRenderer>();
-        pawnReflectionSprite = transform.FindChild("PawnReflection").GetComponent<SpriteRenderer>();
+        pawnSprite = transform.Find("Pawn").GetComponent<SpriteRenderer>();
+        pawnReflectionSprite = transform.Find("PawnReflection").GetComponent<SpriteRenderer>();
 
         if (pokemonID != 0)
         {
-            pawnLightSprite = transform.FindChild("PawnLight").GetComponent<SpriteRenderer>();
-            pawnLightReflectionSprite = transform.FindChild("PawnLightReflection").GetComponent<SpriteRenderer>();
-            npcLight = transform.FindChild("Point light").GetComponent<Light>();
+            pawnLightSprite = transform.Find("PawnLight").GetComponent<SpriteRenderer>();
+            pawnLightReflectionSprite = transform.Find("PawnLightReflection").GetComponent<SpriteRenderer>();
+            npcLight = transform.Find("Point light").GetComponent<Light>();
         }
 
-        hitBox = transform.FindChild("NPC_Object");
+        hitBox = transform.Find("NPC_Object");
         if (pokemonID == 0)
         {
             spriteSheet = Resources.LoadAll<Sprite>("OverworldNPCSprites/" + npcSpriteName);
@@ -78,7 +78,7 @@ public class NPCHandler : MonoBehaviour
             lightSheet = Pokemon.GetSpriteFromID(pokemonID, false, true);
         }
 
-        exclaim = transform.FindChild("Exclaim").gameObject;
+        exclaim = transform.Find("Exclaim").gameObject;
     }
 
     void Start()

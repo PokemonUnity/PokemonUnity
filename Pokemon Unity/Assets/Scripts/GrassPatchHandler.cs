@@ -14,7 +14,7 @@ public class GrassPatchHandler : MonoBehaviour
 
     void Awake()
     {
-        overlay = transform.FindChild("Overlay").gameObject;
+        overlay = transform.Find("Overlay").gameObject;
         walkSound = transform.GetComponent<AudioSource>();
     }
 

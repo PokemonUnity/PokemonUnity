@@ -23,14 +23,14 @@ public class InteractPokemonCenter : MonoBehaviour
     {
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
-        nurse = transform.FindChild("NPC_nurse").GetComponent<NPCHandler>();
+        nurse = transform.Find("NPC_nurse").GetComponent<NPCHandler>();
         screenSprite =
-            transform.FindChild("PokeCenterScreen").FindChild("Screen_SpriteLight").GetComponent<SpriteRenderer>();
-        screenLight = transform.FindChild("PokeCenterScreen").FindChild("Screen_Light").GetComponent<Light>();
-        Transform healMachine = transform.FindChild("healMachine").transform;
+            transform.Find("PokeCenterScreen").Find("Screen_SpriteLight").GetComponent<SpriteRenderer>();
+        screenLight = transform.Find("PokeCenterScreen").Find("Screen_Light").GetComponent<Light>();
+        Transform healMachine = transform.Find("healMachine").transform;
         for (int i = 0; i < 6; i++)
         {
-            pokeBalls[i] = healMachine.FindChild("Ball" + i).GetComponent<SpriteRenderer>();
+            pokeBalls[i] = healMachine.Find("Ball" + i).GetComponent<SpriteRenderer>();
         }
 
         PokemonCenterAudio = transform.GetComponent<AudioSource>();

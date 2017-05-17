@@ -46,8 +46,8 @@ public class GlobalVariables : MonoBehaviour
         {
             global = this;
 
-            debugText = this.transform.FindChild("DEBUG").GetComponent<GUIText>();
-            debugTextShadow = debugText.transform.FindChild("DEBUGShadow").GetComponent<GUIText>();
+            debugText = this.transform.Find("DEBUG").GetComponent<GUIText>();
+            debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<GUIText>();
 
             Object.DontDestroyOnLoad(this.gameObject);
 

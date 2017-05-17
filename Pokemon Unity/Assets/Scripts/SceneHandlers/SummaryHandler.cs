@@ -144,127 +144,127 @@ public class SummaryHandler : MonoBehaviour
 
     void Awake()
     {
-        Transform selectedInfo = transform.FindChild("SelectedInfo");
+        Transform selectedInfo = transform.Find("SelectedInfo");
 
-        selectedCaughtBall = selectedInfo.FindChild("SelectedCaughtBall").GetComponent<Image>();
-        selectedNameShadow = selectedInfo.FindChild("SelectedName").GetComponent<Text>();
-        selectedName = selectedNameShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedGenderShadow = selectedInfo.FindChild("SelectedGender").GetComponent<Text>();
-        selectedGender = selectedGenderShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedLevelShadow = selectedInfo.FindChild("SelectedLevel").GetComponent<Text>();
-        selectedLevel = selectedLevelShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedSprite = selectedInfo.FindChild("SelectedSprite").GetComponent<Image>();
-        selectedHeldItemShadow = selectedInfo.FindChild("SelectedHeldItem").GetComponent<Text>();
-        selectedHeldItem = selectedHeldItemShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedStatus = selectedInfo.FindChild("SelectedStatus").GetComponent<Image>();
-        selectedShiny = selectedInfo.FindChild("SelectedShiny").GetComponent<Image>();
+        selectedCaughtBall = selectedInfo.Find("SelectedCaughtBall").GetComponent<Image>();
+        selectedNameShadow = selectedInfo.Find("SelectedName").GetComponent<Text>();
+        selectedName = selectedNameShadow.transform.Find("Text").GetComponent<Text>();
+        selectedGenderShadow = selectedInfo.Find("SelectedGender").GetComponent<Text>();
+        selectedGender = selectedGenderShadow.transform.Find("Text").GetComponent<Text>();
+        selectedLevelShadow = selectedInfo.Find("SelectedLevel").GetComponent<Text>();
+        selectedLevel = selectedLevelShadow.transform.Find("Text").GetComponent<Text>();
+        selectedSprite = selectedInfo.Find("SelectedSprite").GetComponent<Image>();
+        selectedHeldItemShadow = selectedInfo.Find("SelectedHeldItem").GetComponent<Text>();
+        selectedHeldItem = selectedHeldItemShadow.transform.Find("Text").GetComponent<Text>();
+        selectedStatus = selectedInfo.Find("SelectedStatus").GetComponent<Image>();
+        selectedShiny = selectedInfo.Find("SelectedShiny").GetComponent<Image>();
 
-        pages[1] = transform.FindChild("1").gameObject;
+        pages[1] = transform.Find("1").gameObject;
 
-        dexNoShadow = pages[1].transform.FindChild("DexNo").GetComponent<Text>();
-        dexNo = dexNoShadow.transform.FindChild("Text").GetComponent<Text>();
-        speciesShadow = pages[1].transform.FindChild("Species").GetComponent<Text>();
-        species = speciesShadow.transform.FindChild("Text").GetComponent<Text>();
-        type1 = pages[1].transform.FindChild("Type1").GetComponent<Image>();
-        type2 = pages[1].transform.FindChild("Type2").GetComponent<Image>();
-        OTShadow = pages[1].transform.FindChild("OT").GetComponent<Text>();
-        OT = OTShadow.transform.FindChild("Text").GetComponent<Text>();
-        IDNoShadow = pages[1].transform.FindChild("IDNo").GetComponent<Text>();
-        IDNo = IDNoShadow.transform.FindChild("Text").GetComponent<Text>();
-        expPointsShadow = pages[1].transform.FindChild("ExpPoints").GetComponent<Text>();
-        expPoints = expPointsShadow.transform.FindChild("Text").GetComponent<Text>();
-        toNextLevelShadow = pages[1].transform.FindChild("ToNextLevel").GetComponent<Text>();
-        toNextLevel = toNextLevelShadow.transform.FindChild("Text").GetComponent<Text>();
-        expBar = pages[1].transform.FindChild("ExpBar").GetComponent<Image>();
+        dexNoShadow = pages[1].transform.Find("DexNo").GetComponent<Text>();
+        dexNo = dexNoShadow.transform.Find("Text").GetComponent<Text>();
+        speciesShadow = pages[1].transform.Find("Species").GetComponent<Text>();
+        species = speciesShadow.transform.Find("Text").GetComponent<Text>();
+        type1 = pages[1].transform.Find("Type1").GetComponent<Image>();
+        type2 = pages[1].transform.Find("Type2").GetComponent<Image>();
+        OTShadow = pages[1].transform.Find("OT").GetComponent<Text>();
+        OT = OTShadow.transform.Find("Text").GetComponent<Text>();
+        IDNoShadow = pages[1].transform.Find("IDNo").GetComponent<Text>();
+        IDNo = IDNoShadow.transform.Find("Text").GetComponent<Text>();
+        expPointsShadow = pages[1].transform.Find("ExpPoints").GetComponent<Text>();
+        expPoints = expPointsShadow.transform.Find("Text").GetComponent<Text>();
+        toNextLevelShadow = pages[1].transform.Find("ToNextLevel").GetComponent<Text>();
+        toNextLevel = toNextLevelShadow.transform.Find("Text").GetComponent<Text>();
+        expBar = pages[1].transform.Find("ExpBar").GetComponent<Image>();
 
-        pages[2] = transform.FindChild("2").gameObject;
+        pages[2] = transform.Find("2").gameObject;
 
-        natureShadow = pages[2].transform.FindChild("Nature").GetComponent<Text>();
-        nature = natureShadow.transform.FindChild("Text").GetComponent<Text>();
-        metDateShadow = pages[2].transform.FindChild("MetDate").GetComponent<Text>();
-        metDate = metDateShadow.transform.FindChild("Text").GetComponent<Text>();
-        metMapShadow = pages[2].transform.FindChild("MetMap").GetComponent<Text>();
-        metMap = metMapShadow.transform.FindChild("Text").GetComponent<Text>();
-        metLevelShadow = pages[2].transform.FindChild("MetLevel").GetComponent<Text>();
-        metLevel = metLevelShadow.transform.FindChild("Text").GetComponent<Text>();
-        characteristicShadow = pages[2].transform.FindChild("Characteristic").GetComponent<Text>();
-        characteristic = characteristicShadow.transform.FindChild("Text").GetComponent<Text>();
+        natureShadow = pages[2].transform.Find("Nature").GetComponent<Text>();
+        nature = natureShadow.transform.Find("Text").GetComponent<Text>();
+        metDateShadow = pages[2].transform.Find("MetDate").GetComponent<Text>();
+        metDate = metDateShadow.transform.Find("Text").GetComponent<Text>();
+        metMapShadow = pages[2].transform.Find("MetMap").GetComponent<Text>();
+        metMap = metMapShadow.transform.Find("Text").GetComponent<Text>();
+        metLevelShadow = pages[2].transform.Find("MetLevel").GetComponent<Text>();
+        metLevel = metLevelShadow.transform.Find("Text").GetComponent<Text>();
+        characteristicShadow = pages[2].transform.Find("Characteristic").GetComponent<Text>();
+        characteristic = characteristicShadow.transform.Find("Text").GetComponent<Text>();
 
-        pages[3] = transform.FindChild("3").gameObject;
+        pages[3] = transform.Find("3").gameObject;
 
-        HPTextShadow = pages[3].transform.FindChild("HPText").GetComponent<Text>();
-        HPText = HPTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        HPShadow = pages[3].transform.FindChild("HP").GetComponent<Text>();
-        HP = HPShadow.transform.FindChild("Text").GetComponent<Text>();
-        HPBar = pages[3].transform.FindChild("HPBar").GetComponent<Image>();
-        StatsShadow = pages[3].transform.FindChild("Stats").GetComponent<Text>();
-        Stats = StatsShadow.transform.FindChild("Text").GetComponent<Text>();
-        StatsTextShadow = pages[3].transform.FindChild("StatsText").GetComponent<Text>();
-        abilityNameShadow = pages[3].transform.FindChild("AbilityName").GetComponent<Text>();
-        abilityName = abilityNameShadow.transform.FindChild("Text").GetComponent<Text>();
-        abilityDescriptionShadow = pages[3].transform.FindChild("AbilityDescription").GetComponent<Text>();
-        abilityDescription = abilityDescriptionShadow.transform.FindChild("Text").GetComponent<Text>();
+        HPTextShadow = pages[3].transform.Find("HPText").GetComponent<Text>();
+        HPText = HPTextShadow.transform.Find("Text").GetComponent<Text>();
+        HPShadow = pages[3].transform.Find("HP").GetComponent<Text>();
+        HP = HPShadow.transform.Find("Text").GetComponent<Text>();
+        HPBar = pages[3].transform.Find("HPBar").GetComponent<Image>();
+        StatsShadow = pages[3].transform.Find("Stats").GetComponent<Text>();
+        Stats = StatsShadow.transform.Find("Text").GetComponent<Text>();
+        StatsTextShadow = pages[3].transform.Find("StatsText").GetComponent<Text>();
+        abilityNameShadow = pages[3].transform.Find("AbilityName").GetComponent<Text>();
+        abilityName = abilityNameShadow.transform.Find("Text").GetComponent<Text>();
+        abilityDescriptionShadow = pages[3].transform.Find("AbilityDescription").GetComponent<Text>();
+        abilityDescription = abilityDescriptionShadow.transform.Find("Text").GetComponent<Text>();
 
-        pages[4] = transform.FindChild("4").gameObject;
+        pages[4] = transform.Find("4").gameObject;
 
-        moves = pages[4].transform.FindChild("Moves").GetComponent<RectTransform>();
+        moves = pages[4].transform.Find("Moves").GetComponent<RectTransform>();
 
-        moveSelector = pages[4].transform.FindChild("MoveSelector").GetComponent<Image>();
-        selectedMove = pages[4].transform.FindChild("SelectedMove").GetComponent<Image>();
+        moveSelector = pages[4].transform.Find("MoveSelector").GetComponent<Image>();
+        selectedMove = pages[4].transform.Find("SelectedMove").GetComponent<Image>();
 
-        move1NameShadow = moves.FindChild("Move1").GetComponent<Text>();
-        move1Name = move1NameShadow.transform.FindChild("Text").GetComponent<Text>();
-        move1Type = moves.FindChild("Move1Type").GetComponent<Image>();
-        move1PPTextShadow = moves.FindChild("Move1PPText").GetComponent<Text>();
-        move1PPText = move1PPTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        move1PPShadow = moves.FindChild("Move1PP").GetComponent<Text>();
-        move1PP = move1PPShadow.transform.FindChild("Text").GetComponent<Text>();
-        move2NameShadow = moves.FindChild("Move2").GetComponent<Text>();
-        move2Name = move2NameShadow.transform.FindChild("Text").GetComponent<Text>();
-        move2Type = moves.FindChild("Move2Type").GetComponent<Image>();
-        move2PPTextShadow = moves.FindChild("Move2PPText").GetComponent<Text>();
-        move2PPText = move2PPTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        move2PPShadow = moves.FindChild("Move2PP").GetComponent<Text>();
-        move2PP = move2PPShadow.transform.FindChild("Text").GetComponent<Text>();
-        move3NameShadow = moves.FindChild("Move3").GetComponent<Text>();
-        move3Name = move3NameShadow.transform.FindChild("Text").GetComponent<Text>();
-        move3Type = moves.FindChild("Move3Type").GetComponent<Image>();
-        move3PPTextShadow = moves.FindChild("Move3PPText").GetComponent<Text>();
-        move3PPText = move3PPTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        move3PPShadow = moves.FindChild("Move3PP").GetComponent<Text>();
-        move3PP = move3PPShadow.transform.FindChild("Text").GetComponent<Text>();
-        move4NameShadow = moves.FindChild("Move4").GetComponent<Text>();
-        move4Name = move4NameShadow.transform.FindChild("Text").GetComponent<Text>();
-        move4Type = moves.FindChild("Move4Type").GetComponent<Image>();
-        move4PPTextShadow = moves.FindChild("Move4PPText").GetComponent<Text>();
-        move4PPText = move4PPTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        move4PPShadow = moves.FindChild("Move4PP").GetComponent<Text>();
-        move4PP = move4PPShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedCategory = pages[4].transform.FindChild("SelectedCategory").GetComponent<Image>();
-        selectedPowerShadow = pages[4].transform.FindChild("SelectedPower").GetComponent<Text>();
-        selectedPower = selectedPowerShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedAccuracyShadow = pages[4].transform.FindChild("SelectedAccuracy").GetComponent<Text>();
-        selectedAccuracy = selectedAccuracyShadow.transform.FindChild("Text").GetComponent<Text>();
-        selectedDescriptionShadow = pages[4].transform.FindChild("SelectedDescription").GetComponent<Text>();
-        selectedDescription = selectedDescriptionShadow.transform.FindChild("Text").GetComponent<Text>();
+        move1NameShadow = moves.Find("Move1").GetComponent<Text>();
+        move1Name = move1NameShadow.transform.Find("Text").GetComponent<Text>();
+        move1Type = moves.Find("Move1Type").GetComponent<Image>();
+        move1PPTextShadow = moves.Find("Move1PPText").GetComponent<Text>();
+        move1PPText = move1PPTextShadow.transform.Find("Text").GetComponent<Text>();
+        move1PPShadow = moves.Find("Move1PP").GetComponent<Text>();
+        move1PP = move1PPShadow.transform.Find("Text").GetComponent<Text>();
+        move2NameShadow = moves.Find("Move2").GetComponent<Text>();
+        move2Name = move2NameShadow.transform.Find("Text").GetComponent<Text>();
+        move2Type = moves.Find("Move2Type").GetComponent<Image>();
+        move2PPTextShadow = moves.Find("Move2PPText").GetComponent<Text>();
+        move2PPText = move2PPTextShadow.transform.Find("Text").GetComponent<Text>();
+        move2PPShadow = moves.Find("Move2PP").GetComponent<Text>();
+        move2PP = move2PPShadow.transform.Find("Text").GetComponent<Text>();
+        move3NameShadow = moves.Find("Move3").GetComponent<Text>();
+        move3Name = move3NameShadow.transform.Find("Text").GetComponent<Text>();
+        move3Type = moves.Find("Move3Type").GetComponent<Image>();
+        move3PPTextShadow = moves.Find("Move3PPText").GetComponent<Text>();
+        move3PPText = move3PPTextShadow.transform.Find("Text").GetComponent<Text>();
+        move3PPShadow = moves.Find("Move3PP").GetComponent<Text>();
+        move3PP = move3PPShadow.transform.Find("Text").GetComponent<Text>();
+        move4NameShadow = moves.Find("Move4").GetComponent<Text>();
+        move4Name = move4NameShadow.transform.Find("Text").GetComponent<Text>();
+        move4Type = moves.Find("Move4Type").GetComponent<Image>();
+        move4PPTextShadow = moves.Find("Move4PPText").GetComponent<Text>();
+        move4PPText = move4PPTextShadow.transform.Find("Text").GetComponent<Text>();
+        move4PPShadow = moves.Find("Move4PP").GetComponent<Text>();
+        move4PP = move4PPShadow.transform.Find("Text").GetComponent<Text>();
+        selectedCategory = pages[4].transform.Find("SelectedCategory").GetComponent<Image>();
+        selectedPowerShadow = pages[4].transform.Find("SelectedPower").GetComponent<Text>();
+        selectedPower = selectedPowerShadow.transform.Find("Text").GetComponent<Text>();
+        selectedAccuracyShadow = pages[4].transform.Find("SelectedAccuracy").GetComponent<Text>();
+        selectedAccuracy = selectedAccuracyShadow.transform.Find("Text").GetComponent<Text>();
+        selectedDescriptionShadow = pages[4].transform.Find("SelectedDescription").GetComponent<Text>();
+        selectedDescription = selectedDescriptionShadow.transform.Find("Text").GetComponent<Text>();
 
-        learnScreen = pages[4].transform.FindChild("Learn").gameObject;
+        learnScreen = pages[4].transform.Find("Learn").gameObject;
 
-        newMove = pages[4].transform.FindChild("NewMove").GetComponent<RectTransform>();
+        newMove = pages[4].transform.Find("NewMove").GetComponent<RectTransform>();
 
-        moveNewNameShadow = newMove.FindChild("MoveNew").GetComponent<Text>();
-        moveNewName = moveNewNameShadow.transform.FindChild("Text").GetComponent<Text>();
-        moveNewType = newMove.FindChild("MoveNewType").GetComponent<Image>();
-        moveNewPPTextShadow = newMove.FindChild("MoveNewPPText").GetComponent<Text>();
-        moveNewPPText = moveNewPPTextShadow.transform.FindChild("Text").GetComponent<Text>();
-        moveNewPPShadow = newMove.FindChild("MoveNewPP").GetComponent<Text>();
-        moveNewPP = moveNewPPShadow.transform.FindChild("Text").GetComponent<Text>();
-        forget = newMove.FindChild("Forget").gameObject;
+        moveNewNameShadow = newMove.Find("MoveNew").GetComponent<Text>();
+        moveNewName = moveNewNameShadow.transform.Find("Text").GetComponent<Text>();
+        moveNewType = newMove.Find("MoveNewType").GetComponent<Image>();
+        moveNewPPTextShadow = newMove.Find("MoveNewPPText").GetComponent<Text>();
+        moveNewPPText = moveNewPPTextShadow.transform.Find("Text").GetComponent<Text>();
+        moveNewPPShadow = newMove.Find("MoveNewPP").GetComponent<Text>();
+        moveNewPP = moveNewPPShadow.transform.Find("Text").GetComponent<Text>();
+        forget = newMove.Find("Forget").gameObject;
 
 
-        pages[5] = transform.FindChild("5").gameObject;
+        pages[5] = transform.Find("5").gameObject;
 
-        pages[6] = transform.FindChild("6").gameObject;
+        pages[6] = transform.Find("6").gameObject;
     }
 
     void Start()

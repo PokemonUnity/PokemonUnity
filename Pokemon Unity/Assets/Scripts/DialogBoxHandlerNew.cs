@@ -35,17 +35,17 @@ public class DialogBoxHandlerNew : MonoBehaviour
 
     void Awake()
     {
-        Transform dialogBoxTrn = transform.FindChild("DialogBox");
+        Transform dialogBoxTrn = transform.Find("DialogBox");
         dialogBox = dialogBoxTrn.GetComponent<Image>();
-        dialogBoxText = dialogBoxTrn.FindChild("BoxText").GetComponent<Text>();
-        dialogBoxTextShadow = dialogBoxTrn.FindChild("BoxTextShadow").GetComponent<Text>();
-        dialogBoxBorder = dialogBoxTrn.FindChild("BoxBorder").GetComponent<Image>();
+        dialogBoxText = dialogBoxTrn.Find("BoxText").GetComponent<Text>();
+        dialogBoxTextShadow = dialogBoxTrn.Find("BoxTextShadow").GetComponent<Text>();
+        dialogBoxBorder = dialogBoxTrn.Find("BoxBorder").GetComponent<Image>();
 
-        Transform choiceBoxTrn = transform.FindChild("ChoiceBox");
+        Transform choiceBoxTrn = transform.Find("ChoiceBox");
         choiceBox = choiceBoxTrn.GetComponent<Image>();
-        choiceBoxText = choiceBoxTrn.FindChild("BoxText").GetComponent<Text>();
-        choiceBoxTextShadow = choiceBoxTrn.FindChild("BoxTextShadow").GetComponent<Text>();
-        choiceBoxSelect = choiceBoxTrn.FindChild("BoxSelect").GetComponent<Image>();
+        choiceBoxText = choiceBoxTrn.Find("BoxText").GetComponent<Text>();
+        choiceBoxTextShadow = choiceBoxTrn.Find("BoxTextShadow").GetComponent<Text>();
+        choiceBoxSelect = choiceBoxTrn.Find("BoxSelect").GetComponent<Image>();
 
         defaultDialogLines = Mathf.RoundToInt((dialogBoxBorder.rectTransform.sizeDelta.y - 16f) / 14f);
         defaultChoiceY = Mathf.FloorToInt(choiceBox.rectTransform.localPosition.y);

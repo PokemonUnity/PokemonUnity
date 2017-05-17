@@ -105,80 +105,80 @@ public class PCHandler : MonoBehaviour
     {
         Dialog = this.gameObject.GetComponent<DialogBoxHandler>();
 
-        dialogBox = this.transform.FindChild("DialogBox").gameObject;
-        choiceBox = this.transform.FindChild("ChoiceBox").gameObject;
+        dialogBox = this.transform.Find("DialogBox").gameObject;
+        choiceBox = this.transform.Find("ChoiceBox").gameObject;
 
         PCaudio = this.gameObject.GetComponent<AudioSource>();
 
         //sceneTransition = this.gameObject.GetComponent<SceneTransition>();
 
-        dialogText = dialogBox.transform.FindChild("BoxText").GetComponent<GUIText>();
-        dialogTextShadow = choiceBox.transform.FindChild("BoxTextShadow").GetComponent<GUIText>();
-        choiceText = choiceBox.transform.FindChild("BoxText").GetComponent<GUIText>();
-        choiceTextShadow = choiceBox.transform.FindChild("BoxTextShadow").GetComponent<GUIText>();
+        dialogText = dialogBox.transform.Find("BoxText").GetComponent<GUIText>();
+        dialogTextShadow = choiceBox.transform.Find("BoxTextShadow").GetComponent<GUIText>();
+        choiceText = choiceBox.transform.Find("BoxText").GetComponent<GUIText>();
+        choiceTextShadow = choiceBox.transform.Find("BoxTextShadow").GetComponent<GUIText>();
 
         selectedPokemon = null;
 
-        selectedInfo = this.transform.FindChild("SelectedInfo");
+        selectedInfo = this.transform.Find("SelectedInfo");
 
-        selectedName = selectedInfo.FindChild("SelectedName").GetComponent<GUIText>();
-        selectedNameShadow = selectedName.transform.FindChild("SelectedNameShadow").GetComponent<GUIText>();
-        selectedGender = selectedInfo.FindChild("SelectedGender").GetComponent<GUIText>();
-        selectedGenderShadow = selectedGender.transform.FindChild("SelectedGenderShadow").GetComponent<GUIText>();
-        selectedSprite = selectedInfo.FindChild("SelectedSprite").GetComponent<GUITexture>();
-        selectedType1 = selectedInfo.FindChild("SelectedType1").GetComponent<GUITexture>();
-        selectedType2 = selectedInfo.FindChild("SelectedType2").GetComponent<GUITexture>();
-        selectedLevel = selectedInfo.FindChild("SelectedLevel").GetComponent<GUIText>();
-        selectedLevelShadow = selectedLevel.transform.FindChild("SelectedLevelShadow").GetComponent<GUIText>();
-        selectedAbility = selectedInfo.FindChild("SelectedAbility").GetComponent<GUIText>();
-        selectedAbilityShadow = selectedAbility.transform.FindChild("SelectedAbilityShadow").GetComponent<GUIText>();
-        selectedItem = selectedInfo.FindChild("SelectedItem").GetComponent<GUIText>();
-        selectedItemShadow = selectedItem.transform.FindChild("SelectedItemShadow").GetComponent<GUIText>();
-        selectedStatus = selectedInfo.FindChild("SelectedStatus").GetComponent<GUITexture>();
+        selectedName = selectedInfo.Find("SelectedName").GetComponent<GUIText>();
+        selectedNameShadow = selectedName.transform.Find("SelectedNameShadow").GetComponent<GUIText>();
+        selectedGender = selectedInfo.Find("SelectedGender").GetComponent<GUIText>();
+        selectedGenderShadow = selectedGender.transform.Find("SelectedGenderShadow").GetComponent<GUIText>();
+        selectedSprite = selectedInfo.Find("SelectedSprite").GetComponent<GUITexture>();
+        selectedType1 = selectedInfo.Find("SelectedType1").GetComponent<GUITexture>();
+        selectedType2 = selectedInfo.Find("SelectedType2").GetComponent<GUITexture>();
+        selectedLevel = selectedInfo.Find("SelectedLevel").GetComponent<GUIText>();
+        selectedLevelShadow = selectedLevel.transform.Find("SelectedLevelShadow").GetComponent<GUIText>();
+        selectedAbility = selectedInfo.Find("SelectedAbility").GetComponent<GUIText>();
+        selectedAbilityShadow = selectedAbility.transform.Find("SelectedAbilityShadow").GetComponent<GUIText>();
+        selectedItem = selectedInfo.Find("SelectedItem").GetComponent<GUIText>();
+        selectedItemShadow = selectedItem.transform.Find("SelectedItemShadow").GetComponent<GUIText>();
+        selectedStatus = selectedInfo.Find("SelectedStatus").GetComponent<GUITexture>();
 
-        cursor = this.transform.FindChild("Cursor").GetComponent<GUITexture>();
-        grabbedPokemon = cursor.transform.FindChild("GrabbedPokemon").GetComponent<GUITexture>();
-        grabbedPokemonItem = grabbedPokemon.transform.FindChild("Item").GetComponent<GUITexture>();
+        cursor = this.transform.Find("Cursor").GetComponent<GUITexture>();
+        grabbedPokemon = cursor.transform.Find("GrabbedPokemon").GetComponent<GUITexture>();
+        grabbedPokemonItem = grabbedPokemon.transform.Find("Item").GetComponent<GUITexture>();
 
         for (int i = 0; i < 6; i++)
         {
-            partyIcons[i] = transform.FindChild("Party").FindChild("Pokemon" + i).GetComponent<GUITexture>();
-            partyItems[i] = partyIcons[i].transform.FindChild("Item").GetComponent<GUITexture>();
+            partyIcons[i] = transform.Find("Party").Find("Pokemon" + i).GetComponent<GUITexture>();
+            partyItems[i] = partyIcons[i].transform.Find("Item").GetComponent<GUITexture>();
         }
 
-        currentBox = this.transform.FindChild("CurrentBox").gameObject;
-        nextBox = currentBox.transform.FindChild("NextBox").gameObject;
-        previousBox = currentBox.transform.FindChild("PreviousBox").gameObject;
+        currentBox = this.transform.Find("CurrentBox").gameObject;
+        nextBox = currentBox.transform.Find("NextBox").gameObject;
+        previousBox = currentBox.transform.Find("PreviousBox").gameObject;
 
         currentBoxTexture = currentBox.GetComponent<GUITexture>();
-        nextBoxTexture = currentBox.transform.FindChild("NextBox").GetComponent<GUITexture>();
-        previousBoxTexture = currentBox.transform.FindChild("PreviousBox").GetComponent<GUITexture>();
-        currentBoxHeader = currentBox.transform.FindChild("BoxHeader").GetComponent<GUIText>();
-        nextBoxHeader = currentBox.transform.FindChild("NextBox").FindChild("BoxHeader").GetComponent<GUIText>();
-        previousBoxHeader = currentBox.transform.FindChild("PreviousBox").FindChild("BoxHeader").GetComponent<GUIText>();
-        currentBoxHeaderShadow = currentBoxHeader.transform.FindChild("BoxHeaderShadow").GetComponent<GUIText>();
-        nextBoxHeaderShadow = nextBoxHeader.transform.FindChild("BoxHeaderShadow").GetComponent<GUIText>();
-        previousBoxHeaderShadow = previousBoxHeader.transform.FindChild("BoxHeaderShadow").GetComponent<GUIText>();
+        nextBoxTexture = currentBox.transform.Find("NextBox").GetComponent<GUITexture>();
+        previousBoxTexture = currentBox.transform.Find("PreviousBox").GetComponent<GUITexture>();
+        currentBoxHeader = currentBox.transform.Find("BoxHeader").GetComponent<GUIText>();
+        nextBoxHeader = currentBox.transform.Find("NextBox").Find("BoxHeader").GetComponent<GUIText>();
+        previousBoxHeader = currentBox.transform.Find("PreviousBox").Find("BoxHeader").GetComponent<GUIText>();
+        currentBoxHeaderShadow = currentBoxHeader.transform.Find("BoxHeaderShadow").GetComponent<GUIText>();
+        nextBoxHeaderShadow = nextBoxHeader.transform.Find("BoxHeaderShadow").GetComponent<GUIText>();
+        previousBoxHeaderShadow = previousBoxHeader.transform.Find("BoxHeaderShadow").GetComponent<GUIText>();
 
-        currentBoxIcons = currentBox.transform.FindChild("BoxIcons").transform;
+        currentBoxIcons = currentBox.transform.Find("BoxIcons").transform;
         for (int i = 0; i < 30; i++)
         {
-            currentBoxIconsArray[i] = currentBoxIcons.FindChild("Pokemon" + i).GetComponent<GUITexture>();
-            currentBoxItemsArray[i] = currentBoxIconsArray[i].transform.FindChild("Item").GetComponent<GUITexture>();
+            currentBoxIconsArray[i] = currentBoxIcons.Find("Pokemon" + i).GetComponent<GUITexture>();
+            currentBoxItemsArray[i] = currentBoxIconsArray[i].transform.Find("Item").GetComponent<GUITexture>();
         }
 
-        nextBoxIcons = nextBox.transform.FindChild("BoxIcons").transform;
+        nextBoxIcons = nextBox.transform.Find("BoxIcons").transform;
         for (int i = 0; i < 30; i++)
         {
-            nextBoxIconsArray[i] = nextBoxIcons.FindChild("Pokemon" + i).GetComponent<GUITexture>();
-            nextBoxItemsArray[i] = nextBoxIconsArray[i].transform.FindChild("Item").GetComponent<GUITexture>();
+            nextBoxIconsArray[i] = nextBoxIcons.Find("Pokemon" + i).GetComponent<GUITexture>();
+            nextBoxItemsArray[i] = nextBoxIconsArray[i].transform.Find("Item").GetComponent<GUITexture>();
         }
 
-        previousBoxIcons = previousBox.transform.FindChild("BoxIcons").transform;
+        previousBoxIcons = previousBox.transform.Find("BoxIcons").transform;
         for (int i = 0; i < 30; i++)
         {
-            previousBoxIconsArray[i] = previousBoxIcons.FindChild("Pokemon" + i).GetComponent<GUITexture>();
-            previousBoxItemsArray[i] = previousBoxIconsArray[i].transform.FindChild("Item").GetComponent<GUITexture>();
+            previousBoxIconsArray[i] = previousBoxIcons.Find("Pokemon" + i).GetComponent<GUITexture>();
+            previousBoxItemsArray[i] = previousBoxIconsArray[i].transform.Find("Item").GetComponent<GUITexture>();
         }
     }
 
@@ -774,7 +774,7 @@ public class PCHandler : MonoBehaviour
 
     private IEnumerator moveIcon(GUITexture icon, Vector2 destination)
     {
-        GUITexture item = icon.transform.FindChild("Item").GetComponent<GUITexture>();
+        GUITexture item = icon.transform.Find("Item").GetComponent<GUITexture>();
 
         float startX = icon.pixelInset.x;
         float startY = icon.pixelInset.y;

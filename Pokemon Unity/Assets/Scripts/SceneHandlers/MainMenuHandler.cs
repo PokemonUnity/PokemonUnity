@@ -33,11 +33,11 @@ public class MainMenuHandler : MonoBehaviour
     {
         SaveLoad.Load();
 
-        fileDataPanel = transform.FindChild("FileData").gameObject;
-        continueButton = transform.FindChild("Continue").gameObject;
+        fileDataPanel = transform.Find("FileData").gameObject;
+        continueButton = transform.Find("Continue").gameObject;
 
-        Transform newGameButton = transform.FindChild("NewGame");
-        Transform settingsButton = transform.FindChild("Settings");
+        Transform newGameButton = transform.Find("NewGame");
+        Transform settingsButton = transform.Find("Settings");
 
         Transform[] buttonTransforms = new Transform[]
         {
@@ -47,24 +47,24 @@ public class MainMenuHandler : MonoBehaviour
         };
         for (int i = 0; i < 3; i++)
         {
-            button[i] = buttonTransforms[i].FindChild("ButtonTexture").GetComponent<GUITexture>();
-            buttonHighlight[i] = buttonTransforms[i].FindChild("ButtonHighlight").GetComponent<GUITexture>();
-            buttonText[i] = buttonTransforms[i].FindChild("Text").GetComponent<GUIText>();
-            buttonTextShadow[i] = buttonText[i].transform.FindChild("TextShadow").GetComponent<GUIText>();
+            button[i] = buttonTransforms[i].Find("ButtonTexture").GetComponent<GUITexture>();
+            buttonHighlight[i] = buttonTransforms[i].Find("ButtonHighlight").GetComponent<GUITexture>();
+            buttonText[i] = buttonTransforms[i].Find("Text").GetComponent<GUIText>();
+            buttonTextShadow[i] = buttonText[i].transform.Find("TextShadow").GetComponent<GUIText>();
         }
 
-        fileNumbersText = continueButton.transform.FindChild("FileNumbers").GetComponent<GUIText>();
-        fileNumbersTextShadow = fileNumbersText.transform.FindChild("FileNumbersShadow").GetComponent<GUIText>();
-        fileSelected = fileNumbersText.transform.FindChild("FileSelected").GetComponent<GUIText>();
+        fileNumbersText = continueButton.transform.Find("FileNumbers").GetComponent<GUIText>();
+        fileNumbersTextShadow = fileNumbersText.transform.Find("FileNumbersShadow").GetComponent<GUIText>();
+        fileSelected = fileNumbersText.transform.Find("FileSelected").GetComponent<GUIText>();
 
-        mapNameText = fileDataPanel.transform.FindChild("MapName").GetComponent<GUIText>();
-        mapNameTextShadow = mapNameText.transform.FindChild("MapNameShadow").GetComponent<GUIText>();
-        dataText = fileDataPanel.transform.FindChild("DataText").GetComponent<GUIText>();
-        dataTextShadow = dataText.transform.FindChild("DataTextShadow").GetComponent<GUIText>();
+        mapNameText = fileDataPanel.transform.Find("MapName").GetComponent<GUIText>();
+        mapNameTextShadow = mapNameText.transform.Find("MapNameShadow").GetComponent<GUIText>();
+        dataText = fileDataPanel.transform.Find("DataText").GetComponent<GUIText>();
+        dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<GUIText>();
 
         for (int i = 0; i < 6; i++)
         {
-            pokemon[i] = fileDataPanel.transform.FindChild("Pokemon" + i).GetComponent<GUITexture>();
+            pokemon[i] = fileDataPanel.transform.Find("Pokemon" + i).GetComponent<GUITexture>();
         }
     }
 

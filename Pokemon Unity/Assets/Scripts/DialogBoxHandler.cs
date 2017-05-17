@@ -47,26 +47,26 @@ public class DialogBoxHandler : MonoBehaviour
     void Awake()
     {
         //link the DialogBox variable to the Object
-        DialogBox = gameObject.transform.FindChild("DialogBox").gameObject;
+        DialogBox = gameObject.transform.Find("DialogBox").gameObject;
         //link the ChoiceBoxTexture variable to the Object's texture
         DialogBoxTexture = DialogBox.GetComponent<GUITexture>();
         //link the DialogBoxText variable to the Text Component
-        DialogBoxText = DialogBox.transform.FindChild("BoxText").GetComponent<GUIText>();
+        DialogBoxText = DialogBox.transform.Find("BoxText").GetComponent<GUIText>();
         //link the DialogBoxTextShadow variable to the Text Component
-        DialogBoxTextShadow = DialogBox.transform.FindChild("BoxTextShadow").GetComponent<GUIText>();
+        DialogBoxTextShadow = DialogBox.transform.Find("BoxTextShadow").GetComponent<GUIText>();
         //link the DialogBoxBorder variable to the Texture Component
-        DialogBoxBorder = DialogBox.transform.FindChild("BoxBorder").GetComponent<GUITexture>();
+        DialogBoxBorder = DialogBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
 
         //link the ChoiceBox variable to the Object
-        ChoiceBox = gameObject.transform.FindChild("ChoiceBox").gameObject;
+        ChoiceBox = gameObject.transform.Find("ChoiceBox").gameObject;
         //link the ChoiceBoxTexture variable to the Object's texture
         ChoiceBoxTexture = ChoiceBox.GetComponent<GUITexture>();
         //link the ChoiceBoxText variable to the Text Component
-        ChoiceBoxText = ChoiceBox.transform.FindChild("BoxText").GetComponent<GUIText>();
+        ChoiceBoxText = ChoiceBox.transform.Find("BoxText").GetComponent<GUIText>();
         //link the ChoiceBoxTextShadow variable to the TextShadow Component
-        ChoiceBoxTextShadow = ChoiceBox.transform.FindChild("BoxTextShadow").GetComponent<GUIText>();
+        ChoiceBoxTextShadow = ChoiceBox.transform.Find("BoxTextShadow").GetComponent<GUIText>();
         //link the ChoiceBoxSelect variable to the Texture Component
-        ChoiceBoxSelect = ChoiceBox.transform.FindChild("BoxSelect").GetComponent<GUITexture>();
+        ChoiceBoxSelect = ChoiceBox.transform.Find("BoxSelect").GetComponent<GUITexture>();
 
         DialogAudio = this.gameObject.GetComponent<AudioSource>();
 

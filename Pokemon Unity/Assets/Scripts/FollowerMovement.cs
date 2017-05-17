@@ -48,19 +48,19 @@ public class FollowerMovement : MonoBehaviour
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
         Player = PlayerMovement.player;
 
-        pawn = transform.FindChild("Pawn");
-        pawnLight = transform.FindChild("PawnLight");
-        pawnReflection = transform.FindChild("PawnReflection");
-        pawnLightReflection = transform.FindChild("PawnLightReflection");
+        pawn = transform.Find("Pawn");
+        pawnLight = transform.Find("PawnLight");
+        pawnReflection = transform.Find("PawnReflection");
+        pawnLightReflection = transform.Find("PawnLightReflection");
 
-        hitBox = transform.FindChild("Follower_Transparent");
+        hitBox = transform.Find("Follower_Transparent");
 
         sRenderer = pawn.GetComponent<SpriteRenderer>();
         sLRenderer = pawnLight.GetComponent<SpriteRenderer>();
         sReflectionRenderer = pawnReflection.GetComponent<SpriteRenderer>();
         sLReflectionRenderer = pawnLightReflection.GetComponent<SpriteRenderer>();
 
-        pawnShadow = transform.FindChild("PawnShadow").GetComponent<SpriteRenderer>();
+        pawnShadow = transform.Find("PawnShadow").GetComponent<SpriteRenderer>();
 
         followerLight = GetComponentInChildren<Light>();
     }

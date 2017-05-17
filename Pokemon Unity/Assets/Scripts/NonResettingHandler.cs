@@ -26,9 +26,9 @@ public class NonResettingHandler : MonoBehaviour
             this.enabled = false;
         }
 
-        Transform trainersList = transform.FindChild("Trainers");
-        Transform itemsList = transform.FindChild("Items");
-        Transform eventsList = transform.FindChild("Events");
+        Transform trainersList = transform.Find("Trainers");
+        Transform itemsList = transform.Find("Items");
+        Transform eventsList = transform.Find("Events");
 
         trainers = new InteractTrainer[trainersList.childCount];
         items = new InteractItem[itemsList.childCount];

@@ -26,7 +26,7 @@ public class SceneTransition : MonoBehaviour
             gameScene = this;
         }
 
-        screenFader = transform.FindChild("ScreenFader").GetComponent<GUITexture>();
+        screenFader = transform.Find("ScreenFader").GetComponent<GUITexture>();
         if (screenFader != null)
         {
             RotatableGUI = false;
@@ -41,7 +41,7 @@ public class SceneTransition : MonoBehaviour
         }
         else
         {
-            screenFaderOnGUI = transform.FindChild("ScreenFader").GetComponent<RotatableGUIItem>();
+            screenFaderOnGUI = transform.Find("ScreenFader").GetComponent<RotatableGUIItem>();
             screenFaderOnGUI.size = new Vector2(342, 192);
         }
     }

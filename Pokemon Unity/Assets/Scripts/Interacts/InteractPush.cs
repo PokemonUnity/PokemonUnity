@@ -36,7 +36,7 @@ public class InteractPush : MonoBehaviour
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
         pushSound = gameObject.GetComponent<AudioSource>();
-        hitBox = transform.FindChild("Boulder_Object");
+        hitBox = transform.Find("Boulder_Object");
     }
 
     void Start()

@@ -21,7 +21,7 @@ public class InteractPC : MonoBehaviour
     void Awake()
     {
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
-        spriteLight = transform.FindChild(gameObject.name + "_SpriteLight").GetComponent<SpriteRenderer>();
+        spriteLight = transform.Find(gameObject.name + "_SpriteLight").GetComponent<SpriteRenderer>();
         PCaudio = GetComponent<AudioSource>();
         PClight = GetComponentInChildren<Light>();
     }

@@ -23,8 +23,8 @@ public class InteractItem : MonoBehaviour
     {
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
-        itemSprite = transform.FindChild("ItemSprite").GetComponent<SpriteRenderer>();
-        itemShadow = transform.FindChild("ItemShadow").GetComponent<SpriteRenderer>();
+        itemSprite = transform.Find("ItemSprite").GetComponent<SpriteRenderer>();
+        itemShadow = transform.Find("ItemShadow").GetComponent<SpriteRenderer>();
     }
 
     void Start()

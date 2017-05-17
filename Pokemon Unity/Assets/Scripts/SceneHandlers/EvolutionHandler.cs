@@ -51,12 +51,12 @@ public class EvolutionHandler : MonoBehaviour
         dialog = transform.GetComponent<DialogBoxHandlerNew>();
         particles = transform.GetComponent<GUIParticleHandler>();
 
-        pokemonSprite = transform.FindChild("PokemonSprite").GetComponent<Image>();
-        evolutionSprite = transform.FindChild("EvolutionSprite").GetComponent<Image>();
+        pokemonSprite = transform.Find("PokemonSprite").GetComponent<Image>();
+        evolutionSprite = transform.Find("EvolutionSprite").GetComponent<Image>();
 
-        topBorder = transform.FindChild("TopBorder").GetComponent<Image>();
-        bottomBorder = transform.FindChild("BottomBorder").GetComponent<Image>();
-        glow = transform.FindChild("Glow").GetComponent<Image>();
+        topBorder = transform.Find("TopBorder").GetComponent<Image>();
+        bottomBorder = transform.Find("BottomBorder").GetComponent<Image>();
+        glow = transform.Find("Glow").GetComponent<Image>();
     }
 
     void Start()

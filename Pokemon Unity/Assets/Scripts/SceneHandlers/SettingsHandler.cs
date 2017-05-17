@@ -72,36 +72,36 @@ public class SettingsHandler : MonoBehaviour
         SettingsAudio = transform.GetComponent<AudioSource>();
         Dialog = gameObject.GetComponent<DialogBoxHandler>();
 
-        selectRow = transform.FindChild("selectRow").GetComponent<GUITexture>();
+        selectRow = transform.Find("selectRow").GetComponent<GUITexture>();
 
-        textSpeed = transform.FindChild("TextSpeed").GetComponent<GUIText>();
-        textSpeedShadow = textSpeed.transform.FindChild("TextSpeedShadow").GetComponent<GUIText>();
-        textSpeedHighlight = textSpeed.transform.FindChild("TextSpeedHighlight").GetComponent<GUIText>();
-        musicVolume = transform.FindChild("MusicVolume").GetComponent<GUIText>();
-        musicVolumeShadow = musicVolume.transform.FindChild("MusicVolumeShadow").GetComponent<GUIText>();
-        musicVolumeHighlight = musicVolume.transform.FindChild("MusicVolumeHighlight").GetComponent<GUIText>();
-        sfxVolume = transform.FindChild("SFXVolume").GetComponent<GUIText>();
-        sfxVolumeShadow = sfxVolume.transform.FindChild("SFXVolumeShadow").GetComponent<GUIText>();
-        sfxVolumeHighlight = sfxVolume.transform.FindChild("SFXVolumeHighlight").GetComponent<GUIText>();
-        frameStyle = transform.FindChild("FrameStyle").GetComponent<GUIText>();
-        frameStyleShadow = frameStyle.transform.FindChild("FrameStyleShadow").GetComponent<GUIText>();
-        battleScene = transform.FindChild("BattleScene").GetComponent<GUIText>();
-        battleSceneShadow = battleScene.transform.FindChild("BattleSceneShadow").GetComponent<GUIText>();
-        battleSceneHighlight = battleScene.transform.FindChild("BattleSceneHighlight").GetComponent<GUIText>();
-        battleStyle = transform.FindChild("BattleStyle").GetComponent<GUIText>();
-        battleStyleShadow = battleStyle.transform.FindChild("BattleStyleShadow").GetComponent<GUIText>();
-        battleStyleHighlight = battleStyle.transform.FindChild("BattleStyleHighlight").GetComponent<GUIText>();
-        screenSize = transform.FindChild("ScreenSize").GetComponent<GUIText>();
-        screenSizeShadow = screenSize.transform.FindChild("ScreenSizeShadow").GetComponent<GUIText>();
-        screenSizeHighlight = screenSize.transform.FindChild("ScreenSizeHighlight").GetComponent<GUIText>();
-        fullscreen = transform.FindChild("Fullscreen").GetComponent<GUIText>();
-        fullscreenShadow = fullscreen.transform.FindChild("FullscreenShadow").GetComponent<GUIText>();
-        fullscreenHighlight = fullscreen.transform.FindChild("FullscreenHighlight").GetComponent<GUIText>();
+        textSpeed = transform.Find("TextSpeed").GetComponent<GUIText>();
+        textSpeedShadow = textSpeed.transform.Find("TextSpeedShadow").GetComponent<GUIText>();
+        textSpeedHighlight = textSpeed.transform.Find("TextSpeedHighlight").GetComponent<GUIText>();
+        musicVolume = transform.Find("MusicVolume").GetComponent<GUIText>();
+        musicVolumeShadow = musicVolume.transform.Find("MusicVolumeShadow").GetComponent<GUIText>();
+        musicVolumeHighlight = musicVolume.transform.Find("MusicVolumeHighlight").GetComponent<GUIText>();
+        sfxVolume = transform.Find("SFXVolume").GetComponent<GUIText>();
+        sfxVolumeShadow = sfxVolume.transform.Find("SFXVolumeShadow").GetComponent<GUIText>();
+        sfxVolumeHighlight = sfxVolume.transform.Find("SFXVolumeHighlight").GetComponent<GUIText>();
+        frameStyle = transform.Find("FrameStyle").GetComponent<GUIText>();
+        frameStyleShadow = frameStyle.transform.Find("FrameStyleShadow").GetComponent<GUIText>();
+        battleScene = transform.Find("BattleScene").GetComponent<GUIText>();
+        battleSceneShadow = battleScene.transform.Find("BattleSceneShadow").GetComponent<GUIText>();
+        battleSceneHighlight = battleScene.transform.Find("BattleSceneHighlight").GetComponent<GUIText>();
+        battleStyle = transform.Find("BattleStyle").GetComponent<GUIText>();
+        battleStyleShadow = battleStyle.transform.Find("BattleStyleShadow").GetComponent<GUIText>();
+        battleStyleHighlight = battleStyle.transform.Find("BattleStyleHighlight").GetComponent<GUIText>();
+        screenSize = transform.Find("ScreenSize").GetComponent<GUIText>();
+        screenSizeShadow = screenSize.transform.Find("ScreenSizeShadow").GetComponent<GUIText>();
+        screenSizeHighlight = screenSize.transform.Find("ScreenSizeHighlight").GetComponent<GUIText>();
+        fullscreen = transform.Find("Fullscreen").GetComponent<GUIText>();
+        fullscreenShadow = fullscreen.transform.Find("FullscreenShadow").GetComponent<GUIText>();
+        fullscreenHighlight = fullscreen.transform.Find("FullscreenHighlight").GetComponent<GUIText>();
 
-        DialogBox = transform.FindChild("Description").gameObject;
-        DialogBoxText = DialogBox.transform.FindChild("DescriptionText").GetComponent<GUIText>();
-        DialogBoxTextShadow = DialogBox.transform.FindChild("DescriptionTextShadow").GetComponent<GUIText>();
-        DialogBoxBorder = DialogBox.transform.FindChild("DescriptionBorder").GetComponent<GUITexture>();
+        DialogBox = transform.Find("Description").gameObject;
+        DialogBoxText = DialogBox.transform.Find("DescriptionText").GetComponent<GUIText>();
+        DialogBoxTextShadow = DialogBox.transform.Find("DescriptionTextShadow").GetComponent<GUIText>();
+        DialogBoxBorder = DialogBox.transform.Find("DescriptionBorder").GetComponent<GUITexture>();
     }
 
     void Start()

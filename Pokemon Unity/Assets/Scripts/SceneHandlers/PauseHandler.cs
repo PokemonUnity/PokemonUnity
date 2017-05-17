@@ -48,24 +48,24 @@ public class PauseHandler : MonoBehaviour
 
         PauseAudio = transform.GetComponent<AudioSource>();
 
-        pauseTop = transform.FindChild("PauseTop").GetComponent<GUITexture>();
-        pauseBottom = transform.FindChild("PauseBottom").GetComponent<GUITexture>();
+        pauseTop = transform.Find("PauseTop").GetComponent<GUITexture>();
+        pauseBottom = transform.Find("PauseBottom").GetComponent<GUITexture>();
 
-        selectedText = transform.FindChild("SelectedText").GetComponent<GUIText>();
-        selectedTextShadow = selectedText.transform.FindChild("SelectedTextShadow").GetComponent<GUIText>();
+        selectedText = transform.Find("SelectedText").GetComponent<GUIText>();
+        selectedTextShadow = selectedText.transform.Find("SelectedTextShadow").GetComponent<GUIText>();
 
-        iconPokedex = transform.FindChild("IconPokedex").GetComponent<RotatableGUIItem>();
-        iconParty = transform.FindChild("IconParty").GetComponent<RotatableGUIItem>();
-        iconBag = transform.FindChild("IconBag").GetComponent<RotatableGUIItem>();
-        iconTrainer = transform.FindChild("IconTrainer").GetComponent<RotatableGUIItem>();
-        iconSave = transform.FindChild("IconSave").GetComponent<RotatableGUIItem>();
-        iconSettings = transform.FindChild("IconSettings").GetComponent<RotatableGUIItem>();
+        iconPokedex = transform.Find("IconPokedex").GetComponent<RotatableGUIItem>();
+        iconParty = transform.Find("IconParty").GetComponent<RotatableGUIItem>();
+        iconBag = transform.Find("IconBag").GetComponent<RotatableGUIItem>();
+        iconTrainer = transform.Find("IconTrainer").GetComponent<RotatableGUIItem>();
+        iconSave = transform.Find("IconSave").GetComponent<RotatableGUIItem>();
+        iconSettings = transform.Find("IconSettings").GetComponent<RotatableGUIItem>();
 
-        saveDataDisplay = transform.FindChild("SaveDataDisplay").GetComponent<GUITexture>();
-        mapName = saveDataDisplay.transform.FindChild("MapName").GetComponent<GUIText>();
-        mapNameShadow = mapName.transform.FindChild("MapNameShadow").GetComponent<GUIText>();
-        dataText = saveDataDisplay.transform.FindChild("DataText").GetComponent<GUIText>();
-        dataTextShadow = dataText.transform.FindChild("DataTextShadow").GetComponent<GUIText>();
+        saveDataDisplay = transform.Find("SaveDataDisplay").GetComponent<GUITexture>();
+        mapName = saveDataDisplay.transform.Find("MapName").GetComponent<GUIText>();
+        mapNameShadow = mapName.transform.Find("MapNameShadow").GetComponent<GUIText>();
+        dataText = saveDataDisplay.transform.Find("DataText").GetComponent<GUIText>();
+        dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<GUIText>();
     }
 
     void Start()

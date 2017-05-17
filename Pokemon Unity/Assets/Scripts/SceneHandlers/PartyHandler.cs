@@ -64,31 +64,31 @@ public class PartyHandler : MonoBehaviour
         //sceneTransition = transform.GetComponent<SceneTransition>();
         PartyAudio = transform.GetComponent<AudioSource>();
 
-        cancel = transform.FindChild("Cancel").GetComponent<GUITexture>();
+        cancel = transform.Find("Cancel").GetComponent<GUITexture>();
 
         for (int i = 0; i < 6; i++)
         {
-            slot[i] = transform.FindChild("Slot" + i).GetComponent<GUITexture>();
+            slot[i] = transform.Find("Slot" + i).GetComponent<GUITexture>();
 
-            selectBall[i] = slot[i].transform.FindChild("SelectBall").GetComponent<GUITexture>();
-            icon[i] = slot[i].transform.FindChild("Icon").GetComponent<GUITexture>();
-            pokemonName[i] = slot[i].transform.FindChild("Name").GetComponent<GUIText>();
-            pokemonNameShadow[i] = pokemonName[i].transform.FindChild("NameShadow").GetComponent<GUIText>();
-            gender[i] = slot[i].transform.FindChild("Gender").GetComponent<GUIText>();
-            genderShadow[i] = gender[i].transform.FindChild("GenderShadow").GetComponent<GUIText>();
-            HPBarBack[i] = slot[i].transform.FindChild("HPBarBack").GetComponent<GUITexture>();
-            HPBar[i] = slot[i].transform.FindChild("HPBar").GetComponent<GUITexture>();
-            lv[i] = slot[i].transform.FindChild("Lv.").GetComponent<GUITexture>();
-            level[i] = slot[i].transform.FindChild("Level").GetComponent<GUIText>();
-            levelShadow[i] = level[i].transform.FindChild("LevelShadow").GetComponent<GUIText>();
-            currentHP[i] = slot[i].transform.FindChild("CurrentHP").GetComponent<GUIText>();
-            currentHPShadow[i] = currentHP[i].transform.FindChild("CurrentHPShadow").GetComponent<GUIText>();
-            slash[i] = slot[i].transform.FindChild("Slash").GetComponent<GUIText>();
-            slashShadow[i] = slash[i].transform.FindChild("SlashShadow").GetComponent<GUIText>();
-            maxHp[i] = slot[i].transform.FindChild("MaxHP").GetComponent<GUIText>();
-            maxHPShadow[i] = maxHp[i].transform.FindChild("MaxHPShadow").GetComponent<GUIText>();
-            status[i] = slot[i].transform.FindChild("Status").GetComponent<GUITexture>();
-            item[i] = slot[i].transform.FindChild("Item").GetComponent<GUITexture>();
+            selectBall[i] = slot[i].transform.Find("SelectBall").GetComponent<GUITexture>();
+            icon[i] = slot[i].transform.Find("Icon").GetComponent<GUITexture>();
+            pokemonName[i] = slot[i].transform.Find("Name").GetComponent<GUIText>();
+            pokemonNameShadow[i] = pokemonName[i].transform.Find("NameShadow").GetComponent<GUIText>();
+            gender[i] = slot[i].transform.Find("Gender").GetComponent<GUIText>();
+            genderShadow[i] = gender[i].transform.Find("GenderShadow").GetComponent<GUIText>();
+            HPBarBack[i] = slot[i].transform.Find("HPBarBack").GetComponent<GUITexture>();
+            HPBar[i] = slot[i].transform.Find("HPBar").GetComponent<GUITexture>();
+            lv[i] = slot[i].transform.Find("Lv.").GetComponent<GUITexture>();
+            level[i] = slot[i].transform.Find("Level").GetComponent<GUIText>();
+            levelShadow[i] = level[i].transform.Find("LevelShadow").GetComponent<GUIText>();
+            currentHP[i] = slot[i].transform.Find("CurrentHP").GetComponent<GUIText>();
+            currentHPShadow[i] = currentHP[i].transform.Find("CurrentHPShadow").GetComponent<GUIText>();
+            slash[i] = slot[i].transform.Find("Slash").GetComponent<GUIText>();
+            slashShadow[i] = slash[i].transform.Find("SlashShadow").GetComponent<GUIText>();
+            maxHp[i] = slot[i].transform.Find("MaxHP").GetComponent<GUIText>();
+            maxHPShadow[i] = maxHp[i].transform.Find("MaxHPShadow").GetComponent<GUIText>();
+            status[i] = slot[i].transform.Find("Status").GetComponent<GUITexture>();
+            item[i] = slot[i].transform.Find("Item").GetComponent<GUITexture>();
         }
     }
 
