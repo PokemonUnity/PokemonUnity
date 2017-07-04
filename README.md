@@ -42,12 +42,11 @@ There is a demo WebGL for testing available here: [https://developer.cloud.unity
 There are also demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! Please report any bugs if found.
 
 ## Creator & Credits
+
 Creator is [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
 
 ## Contact
 
-Reddit: https://www.reddit.com/r/PokemonUnity/
-
-YouTube: https://www.youtube.com/c/IIcolourSpectrum
-
-Discord server: https://discord.gg/SggHcXP
+* Reddit: https://www.reddit.com/r/PokemonUnity/
+* YouTube: https://www.youtube.com/c/IIcolourSpectrum
+* Discord server: https://discord.gg/SggHcXP
