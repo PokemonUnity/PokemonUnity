@@ -1,6 +1,7 @@
-![Pokemon Unity](https://i.imgur.com/K9pgeKE.png)
-
-# Pokemon Unity by IIcolour Spectrum
+<p align="center">
+  <img alt="Pokemon Unity Logo" src="https://i.imgur.com/kYOXps1.png" height="250" />
+  <h1 align="center">Pokemon Unity by IIcolour Spectrum</h3>
+</p>
 
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Discord Server](https://img.shields.io/badge/join%20us%20on-discord-7289DA.svg)](https://discord.gg/SggHcXP)
