@@ -30,9 +30,11 @@ There is a demo WebGL for testing available here: [https://developer.cloud.unity
 
 There are also demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! Please report any bugs if found.
 
-## Creator & Credits
+## Credits
 
-Creator is [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
+* Project author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
+* Project maintainer: [superusercode](https://www.reddit.com/user/Lucas_One/)
+* Logo author: [Kaihatsu](https://twitter.com/KaihatsuYT)
 
 ## Contact
 
