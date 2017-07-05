@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Pokemon Unity Logo" src="https://i.imgur.com/rbCXVxW.png" />
+  <img alt="Pokemon Unity Logo" src="https://i.imgur.com/E3necpp.png" />
   <h1 align="center">Pokemon Unity by IIcolour Spectrum</h3>
 </p>
 
