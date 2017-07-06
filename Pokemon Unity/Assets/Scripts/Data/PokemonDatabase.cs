@@ -1816,7 +1816,6 @@ public static class PokemonDatabase
 			new string[] { },
 			new int[] { }, new string[] { })
 	};
-	#endregion
 
 	private static void InitializePokedex ()
 	{
@@ -1831,7 +1830,7 @@ public static class PokemonDatabase
 		Array.Clear (pokedex, 0, pokedex.Length);
 		pokedex = null;
 	}
-				
+
 	/// <summary>
 	/// Gets the pokemon data of the pokemon with id = ID
 	/// </summary>
@@ -1945,6 +1944,4 @@ public static class PokemonDatabase
 	}
 
 	#endregion
-}
-	
 }
