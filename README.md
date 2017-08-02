@@ -26,7 +26,7 @@ Thank you to everyone who supported me during the development of Pokémon Unity.
 
 ## Demo and Downloads
 
-There is a demo WebGL for testing available here: [https://developer.cloud.unity3d.com/share/ZJcLqS46-z/](https://developer.cloud.unity3d.com/share/ZJcLqS46-z/)
+There is a demo WebGL for testing available here: [https://developer.cloud.unity3d.com/share/-1r-ml4tFf/](https://developer.cloud.unity3d.com/share/ZJcLqS46-z/)
 
 There are also demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! Please report any bugs if found.
 
