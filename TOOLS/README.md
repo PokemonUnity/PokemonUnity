@@ -1,7 +1,9 @@
 # Pokemon Unity Tools
+
 These tools are included to provide ease of use when using the framework.
 
-## List of tools included:
+## List of tools included
+
 * Animated Sprites Setup - Create animated sprites for use in battles and summary pages.
 * Map Creation Tutorials - Learn how to create maps
 * Poke Map Editor - Create maps using Blender quickly and easily
