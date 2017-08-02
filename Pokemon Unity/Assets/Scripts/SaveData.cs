@@ -37,7 +37,7 @@ public class SaveData
 
     public int playerScore;
     public int playerMoney;
-
+    public int pokeDex; //pokedex not implemented
     public int playerHours;
     public int playerMinutes;
     public int playerSeconds;

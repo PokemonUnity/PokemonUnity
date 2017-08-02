@@ -77,7 +77,7 @@ public class GlobalVariables : MonoBehaviour
             RenderTexture.active = GUIDisplay;
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
 
-            SetDEBUGFileData();
+            CreateFileData("Gold",true);
         }
         else if (global != this)
         {
@@ -85,35 +85,40 @@ public class GlobalVariables : MonoBehaviour
         }
     }
 
-    public void SetDEBUGFileData()
+    public void CreateFileData(string name, bool isMale)
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        SaveData.currentSave.playerName = "Gold";
+        SaveData.currentSave.playerName = name;
         SaveData.currentSave.playerID = 29482;
-        SaveData.currentSave.isMale = true;
-
+        SaveData.currentSave.isMale = isMale;
+        SaveData.currentSave.playerMoney = 2481; 
         SaveData.currentSave.playerOutfit = "hgss";
+        if(isMale == true){
+            SaveData.currentSave.setCVariable("male",1); //custom events can check if the player is male of female, 1 meaning male, 0 meaning female
+        } else {
+            SaveData.currentSave.setCVariable("male",0);
+        }
 
         //PC test
         SaveData.currentSave.PC.addPokemon(new Pokemon(006, null, Pokemon.Gender.CALCULATE, 3, true, "Poké Ball", "",
-            "Gold",
+            name,
             Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabase.getPokemon(6).GenerateMoveset(42), new int[4]));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", "Gold", 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", "Gold", 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", "Gold", -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", "Gold", -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", "Gold", 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", name, -1));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", name, -1));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", "Gold", 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", name, 0));
         SaveData.currentSave.PC.addPokemon(new Pokemon(607, Pokemon.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
         SaveData.currentSave.PC.boxes[1][1].addExp(7100);
-        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", "Gold", 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", "Gold", 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball",
-            "", "Gold",
+            "", name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));
 
@@ -151,7 +156,7 @@ public class GlobalVariables : MonoBehaviour
 
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
-            "Gold",
+            name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
 
@@ -194,16 +199,44 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.Bag.addItem("Hyper Potion", 1);
 
 
+        /*
         //debug code to test custom box names/textures
-        //	PC.boxName[1] = "Grassy Box";
-        //	PC.boxTexture[2] = 12;
+        PC.boxName[1] = "Grassy Box";
+        PC.boxTexture[2] = 12;
+        */
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //set file creation date
+        string day = "";
+        string month = "";
+        if(System.DateTime.Now.Day == 1){day = "1st, ";}
+        else if(System.DateTime.Now.Day == 2){day = "2nd, ";}
+        else if(System.DateTime.Now.Day == 3){day = "3rd, ";}
+        else{day = System.DateTime.Now.Day.ToString("D") + "th, ";}
+
+        if(System.DateTime.Now.Month == 1){month = "Jan. ";}
+        else if(System.DateTime.Now.Month == 2){month = "Feb. ";}
+        else if(System.DateTime.Now.Month == 3){month = "Mar. ";}
+        else if(System.DateTime.Now.Month == 4){month = "Apr. ";}
+        else if(System.DateTime.Now.Month == 5){month = "May ";}
+        else if(System.DateTime.Now.Month == 6){month = "June ";}
+        else if(System.DateTime.Now.Month == 7){month = "July ";}
+        else if(System.DateTime.Now.Month == 8){month = "Aug. ";}
+        else if(System.DateTime.Now.Month == 9){month = "Sep. ";}
+        else if(System.DateTime.Now.Month == 10){month = "Oct. ";}
+        else if(System.DateTime.Now.Month == 11){month = "Nov. ";}
+        else if(System.DateTime.Now.Month == 12){month = "Dec. ";} //probably the worst way to do this but I have no idea why ToString("MMM") doesn't work
+
+        string date = month + day + System.DateTime.Now.Year;
+
+        //SaveData.currentSave.fileCreationDate = "Aug. 2nd, 2017";
+        SaveData.currentSave.fileCreationDate = date;
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = "Feb. 14th, 2015";
-        SaveData.currentSave.playerMoney = 2481;
         SaveData.currentSave.playerScore = 481;
-
+        SaveData.currentSave.pokeDex = 0;
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;
         SaveData.currentSave.playerSeconds = 12;
@@ -223,7 +256,7 @@ public class GlobalVariables : MonoBehaviour
         };
         SaveData.currentSave.gymsBeatTime = new string[]
         {
-            "Apr. 27th, 2015", "Apr. 30th, 2015", null, null, null, "May. 1st, 2015",
+            "Apr. 27th, 2017", "Apr. 30th, 2017", null, null, null, date,
             null, null, null, null, null, null
         };
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,7 +264,7 @@ public class GlobalVariables : MonoBehaviour
 
     void OnLevelWasLoaded()
     {
-        if (Application.loadedLevelName != "startup")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "startup")
         {
             if (global == this)
             {
@@ -280,11 +313,11 @@ public class GlobalVariables : MonoBehaviour
         if (string.IsNullOrEmpty(SaveData.currentSave.respawnSceneName))
         {
             respawning = false;
-            Application.LoadLevel("overworldS");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("overworldS");
         }
         else
         {
-            Application.LoadLevel(SaveData.currentSave.respawnSceneName);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(SaveData.currentSave.respawnSceneName);
         }
     }
 
