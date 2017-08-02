@@ -1041,6 +1041,7 @@ public class PlayerMovement : MonoBehaviour
             pawn.position = new Vector3(pawn.position.x, startPosition.y + parabola, pawn.position.z);
             yield return null;
         }
+        pawn.position = new Vector3(pawn.position.x, startPosition.y, pawn.position.z);
 
         playClip(landClip);
 
