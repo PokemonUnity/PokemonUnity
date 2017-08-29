@@ -212,6 +212,10 @@ public class GlobalVariables : MonoBehaviour
         if(System.DateTime.Now.Day == 1){day = "1st, ";}
         else if(System.DateTime.Now.Day == 2){day = "2nd, ";}
         else if(System.DateTime.Now.Day == 3){day = "3rd, ";}
+        else if(System.DateTime.Now.Day == 21){day = "21st, ";}
+        else if(System.DateTime.Now.Day == 22){day = "22nd, ";}
+        else if(System.DateTime.Now.Day == 23){day = "23rd, ";}
+        else if(System.DateTime.Now.Day == 31){day = "31st, ";}
         else{day = System.DateTime.Now.Day.ToString("D") + "th, ";}
 
         if(System.DateTime.Now.Month == 1){month = "Jan. ";}

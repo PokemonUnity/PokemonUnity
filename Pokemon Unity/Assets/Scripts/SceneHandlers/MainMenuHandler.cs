@@ -310,14 +310,22 @@ public class MainMenuHandler : MonoBehaviour {
 		bool introup = true;
 		StartCoroutine("animBG");
 		if(introup == true) {
-			yield return StartCoroutine(ScreenFade.main.Fade(false, 0f));
-			yield return new WaitForSeconds(0.5f);
-			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-			yield return new WaitForSeconds(4.5f);
-			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+			yield return new WaitForSeconds(3.2f);
+			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
+			yield return new WaitForSeconds(0.2f);
+			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.2f));
+			yield return new WaitForSeconds(3.2f);
+			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
+			yield return new WaitForSeconds(0.2f);
+			introBackground.color = new UnityEngine.Color(0.5f,0.5f,0.5f);
+			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.2f));
+			yield return new WaitForSeconds(15.5f);
+			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
+			yield return new WaitForSeconds(0.2f);
 			introup = false;
 			intro.SetActive(false);
-			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.2f));
+			//yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 		}
 		while(running){
 			if(Input.GetButtonDown("Select")){

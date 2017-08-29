@@ -229,7 +229,7 @@ public class InteractDoorway : MonoBehaviour
                     GlobalVariables.global.playerDirection = transferDirection;
                     GlobalVariables.global.playerForwardOnLoad = movesForward;
                     GlobalVariables.global.fadeIn = true;
-                    Application.LoadLevel(transferScene);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(transferScene);
                 }
                 else
                 {
