@@ -42,3 +42,8 @@ sysinfo.txt
 # Image databases
 Thumbs.db
 Thumbs.db.meta
+
+# Git Journal Files
+_git-journal
+git-journal.bash-completion
+git-journal.fish
