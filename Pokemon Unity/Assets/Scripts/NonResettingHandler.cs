@@ -50,7 +50,7 @@ public class NonResettingHandler : MonoBehaviour
 
     void Start()
     {
-        int sceneNonResettingListIndex = SaveData.currentSave.getNonResettingListIndex(Application.loadedLevelName);
+        int sceneNonResettingListIndex = SaveData.currentSave.getNonResettingListIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
         //if entry is already in global, update everything to match
         if (sceneNonResettingListIndex >= 0)
@@ -119,7 +119,7 @@ public class NonResettingHandler : MonoBehaviour
         {
             return null;
         } //return null when there actually isn't anything in any of the arrays
-        return new NonResettingList(Application.loadedLevelName, sceneTrainers, sceneItems, sceneEvents);
+        return new NonResettingList(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, sceneTrainers, sceneItems, sceneEvents);
     }
 
     public static void saveDataToGlobal()

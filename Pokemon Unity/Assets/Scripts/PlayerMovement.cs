@@ -948,7 +948,6 @@ public class PlayerMovement : MonoBehaviour
             Vector3 movement = getForwardVector();
 
             //check destination for transparents
-            Collider objectCollider = null;
             Collider transparentCollider = null;
             Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0),
                 0.4f);
