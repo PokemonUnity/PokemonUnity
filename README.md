@@ -1,6 +1,6 @@
 <p align="center">
-  <img alt="Pokemon Unity Logo" src="https://i.imgur.com/E3necpp.png" />
-  <h1 align="center">Pokemon Unity by IIcolour Spectrum</h3>
+  <img alt="Pokémon Unity Logo" src="https://i.imgur.com/E3necpp.png" />
+  <h1 align="center">Pokémon Unity by IIcolour Spectrum</h3>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"></a>
     <a href="https://discord.gg/SggHcXP"><img alt="Discord Server" src="https://img.shields.io/badge/join%20us%20on-discord-7289DA.svg"></a>
@@ -8,7 +8,7 @@
   </p>
 </p>
 
-Pokemon Unity was in development for about a year before I could not continue working on the project. Rather than let it
+Pokémon Unity was in development for about a year before I could not continue working on the project. Rather than let it
 die, I released the source as is.
 
 Naturally this leaves it in a fairly incomplete state, albeit functional.
