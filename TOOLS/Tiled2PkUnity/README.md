@@ -1,7 +1,7 @@
 # How to use Tiled2PkUnity
 This tool is meant to replace the Pokemon Essentials part of creating a map in Pokemon Unity.
 It creates a collision map out of a tilemap made with Tiled, using a tileset with specific variables.
-To use this tool, you must first install the [*Tiled Map Editor*](www.mapeditor.org) and the LTS version of [*Node.js*](www.nodejs.org).
+To use this tool, you must first install the [*Tiled Map Editor*](http://www.mapeditor.org/) and the LTS version of [*Node.js*](https://nodejs.org/en/).
 
 ## Tiled
 In order to use this application, you need a tileset with specific booleans to specify what tiles do what.
