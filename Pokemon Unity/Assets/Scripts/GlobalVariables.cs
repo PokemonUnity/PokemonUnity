@@ -42,6 +42,7 @@ public class GlobalVariables : MonoBehaviour
     
     void Awake()
     {
+        SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
