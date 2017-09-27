@@ -80,7 +80,7 @@ public class MapCollider : MonoBehaviour
             }
             else
             {
-                for (int i2 = 0; i2 < int.Parse(contains2[1]); i2++)
+                for (int i2 = 0; i2 < int.Parse(contains2[0]); i2++)
                 {
                     //repeat for multiplier amount of times
                     if (x >= this.width)
