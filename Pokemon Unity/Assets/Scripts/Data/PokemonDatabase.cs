@@ -2078,4 +2078,12 @@ public static class PokemonDatabase
 
         return exp;
     }
+
+	public static int getPokedexLength(){
+		return pokedex.Length;
+	}
+
+	public static PokemonData getPokemonbyID(int id){
+		return pokedex [id];
+	}
 }

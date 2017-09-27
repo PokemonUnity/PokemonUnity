@@ -6,7 +6,6 @@ using System.Collections;
 public class GlobalVariables : MonoBehaviour
 {
     public static GlobalVariables global;
-
     public Vector3 playerPosition;
     public int playerDirection;
     public bool playerForwardOnLoad;
@@ -15,6 +14,7 @@ public class GlobalVariables : MonoBehaviour
 
     public int followerIndex = 0;
 
+    private double buildNum = 0.17;
     private GameObject Player;
     private FollowerMovement FollowerSettings;
 
@@ -48,14 +48,15 @@ public class GlobalVariables : MonoBehaviour
 
             debugText = this.transform.Find("DEBUG").GetComponent<GUIText>();
             debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<GUIText>();
-
+            //debugText.text = "build " + buildNum;
+            //debugTextShadow.text = debugText.text;
             Object.DontDestroyOnLoad(this.gameObject);
 
 
             if (!PlayerPrefs.HasKey("textSpeed") || !PlayerPrefs.HasKey("musicVolume") ||
                 !PlayerPrefs.HasKey("sfxVolume") ||
                 !PlayerPrefs.HasKey("frameStyle") || !PlayerPrefs.HasKey("battleScene") ||
-                !PlayerPrefs.HasKey("battleStyle") ||
+                !PlayerPrefs.HasKey("customSprites") ||
                 !PlayerPrefs.HasKey("screenSize") || !PlayerPrefs.HasKey("fullscreen"))
             {
                 //if a playerpref isn't set
@@ -67,7 +68,7 @@ public class GlobalVariables : MonoBehaviour
                 PlayerPrefs.SetFloat("sfxVolume", sVol);
                 PlayerPrefs.SetInt("frameStyle", 1);
                 PlayerPrefs.SetInt("battleScene", 1);
-                PlayerPrefs.SetInt("battleStyle", 0);
+                PlayerPrefs.SetInt("customSprites", 0);
                 PlayerPrefs.SetInt("screenSize", 1);
                 PlayerPrefs.SetInt("fullscreen", 0);
                 PlayerPrefs.Save();
@@ -77,24 +78,37 @@ public class GlobalVariables : MonoBehaviour
             RenderTexture.active = GUIDisplay;
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
 
-            CreateFileData("Gold",true);
+            CreateFileData("Ethan",true);
+            //CreateFileData("Lyra",false);
         }
         else if (global != this)
         {
             Destroy(gameObject);
         }
     }
-
+    public void EnableDebugMode()
+    {
+        SaveData.currentSave.debugMode = true;
+        debugText.text = "build " + buildNum + "\nDebugging Mode Enabled";
+        debugTextShadow.text = debugText.text;
+    }
     public void CreateFileData(string name, bool isMale)
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //EnableDebugMode();
         SaveData.currentSave.playerName = name;
-        SaveData.currentSave.playerID = 29482;
+        SaveData.currentSave.playerID = 29482; //not implemented
         SaveData.currentSave.isMale = isMale;
         SaveData.currentSave.playerMoney = 2481; 
         SaveData.currentSave.playerOutfit = "hgss";
+
+        SaveData.currentSave.playerShirt = "Ethan's Shirt";
+        SaveData.currentSave.playerMisc = null;
+        SaveData.currentSave.playerHat = "Ethan's Hat";
+        //customizables not implemented
+
         if(isMale == true){
-            SaveData.currentSave.setCVariable("male",1); //custom events can check if the player is male of female, 1 meaning male, 0 meaning female
+            SaveData.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
         } else {
             SaveData.currentSave.setCVariable("male",0);
         }
@@ -117,7 +131,7 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
         SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball",
+        SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball", //starters not implemented
             "", name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));

@@ -21,6 +21,7 @@ public class SaveData
 
     //Important player data
     public string playerName;
+    public bool debugMode = false;
     public bool isMale;
     public int playerID;
     public string fileCreationDate;
@@ -36,6 +37,12 @@ public class SaveData
     public string playerOutfit;
 
     public int playerScore;
+
+    public string playerShirt;
+    public string playerMisc;
+    public string playerHat;
+    //customizables not implemented
+
     public int playerMoney;
     public int pokeDex; //pokedex not implemented
     public int playerHours;

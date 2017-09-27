@@ -29,7 +29,8 @@ public class Pokemon
     }
 
     //Used only for a few pokemon to specify what form is in. by default is null/0
-    private int form; //Unown = letter of the alphabet.
+    private int form; //unused
+    //Unown = letter of the alphabet. 
     //Deoxys = which of the four forms.
     //Burmy/Wormadam = cloak type. Does not change for Wormadam.
     //Shellos/Gastrodon = west/east alt colours.
@@ -371,7 +372,7 @@ public class Pokemon
     //adding a caught pokemon (only a few customizable details)
     public Pokemon(Pokemon pokemon, string nickname, string caughtBall)
     {
-        PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
+        //PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
 
         this.pokemonID = pokemon.pokemonID;
         this.nickname = nickname;
@@ -1591,6 +1592,13 @@ public class Pokemon
             //No Shiny Variant exists, Attempt to load Regular Variant
             animation = Resources.LoadAll<Sprite>(folder + "/" + convertLongID(ID) + "/");
         }
+
+		if (animation.Length == 0)
+		{
+			Debug.LogWarning("Pokemonsprites not found");
+			//No Sprite exists, Attempt to load Charizard
+			animation = Resources.LoadAll<Sprite>(folder + "/" + "006" + "/");
+		} 
         return animation;
     }
 

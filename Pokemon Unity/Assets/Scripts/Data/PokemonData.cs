@@ -83,28 +83,28 @@ public class PokemonData
 
     private float maleRatio; //-1f is interpreted as genderless
     private int catchRate;
-    private EggGroup eggGroup1;
-    private EggGroup eggGroup2;
-    private int hatchTime;
+    private EggGroup eggGroup1; //unused
+    private EggGroup eggGroup2; //unused
+    private int hatchTime; //unused
 
-    private float height;
-    private float weight;
+    private float height; //unused
+    private float weight; //unused
 
     private int baseExpYield;
     private LevelingRate levelingRate;
 
-    private int evYieldHP;
-    private int evYieldATK;
-    private int evYieldDEF;
-    private int evYieldSPA;
-    private int evYieldSPD;
-    private int evYieldSPE;
+    private int evYieldHP; //unused
+    private int evYieldATK; //unused
+    private int evYieldDEF; //unused
+    private int evYieldSPA; //unused
+    private int evYieldSPD; //unused
+    private int evYieldSPE; //unused
 
-    private PokedexColor pokedexColor;
+    private PokedexColor pokedexColor; //unused
     private int baseFriendship;
 
-    private string species;
-    private string pokedexEntry;
+    private string species; //unused
+    private string pokedexEntry; //unused
 
     private int baseStatsHP;
     private int baseStatsATK;

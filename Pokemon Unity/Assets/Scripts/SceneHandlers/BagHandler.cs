@@ -120,7 +120,7 @@ public class BagHandler : MonoBehaviour
     private string[] shopItemList;
     private int shopSelectedQuantity;
 
-    private AudioSource BagAudio;
+    //private AudioSource BagAudio;
 
     public AudioClip selectClip;
     public AudioClip healClip;
@@ -131,7 +131,7 @@ public class BagHandler : MonoBehaviour
     void Awake()
     {
         Dialog = transform.GetComponent<DialogBoxHandler>();
-        BagAudio = transform.GetComponent<AudioSource>();
+        //BagAudio = transform.GetComponent<AudioSource>();
 
         party = transform.Find("Party");
         for (int i = 0; i < 6; i++)
@@ -1116,6 +1116,7 @@ public class BagHandler : MonoBehaviour
             shopItemList = shopStock;
             party.gameObject.SetActive(false);
             shopName.gameObject.SetActive(true);
+            shopNameShadow.gameObject.SetActive(true);
             //sceneTransition.FadeIn(0);
             ScreenFade.main.SetToFadedIn();
         }
@@ -1125,6 +1126,7 @@ public class BagHandler : MonoBehaviour
             moneyBox.SetActive(false);
             dataBox.SetActive(false);
             shopName.gameObject.SetActive(false);
+            shopNameShadow.gameObject.SetActive(false);
             //sceneTransition.FadeIn();
             StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
         }

@@ -302,7 +302,11 @@ public class TrainerHandler : MonoBehaviour
         IDnoDataShadow.text = IDnoData.text;
         nameData.text = SaveData.currentSave.playerName;
         nameDataShadow.text = nameData.text;
-        //picture.texture = null; //player sprites not yet implemented.
+        if(SaveData.currentSave.playerOutfit != "custom") {
+            picture.texture = Resources.Load<Texture>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + "front");
+        } else {
+            picture.texture = null; //custom sprites not implemented
+        }
         string playerMoney = "" + SaveData.currentSave.playerMoney;
         char[] playerMoneyChars = playerMoney.ToCharArray();
         playerMoney = "";
@@ -317,7 +321,7 @@ public class TrainerHandler : MonoBehaviour
         }
         moneyData.text = "$" + playerMoney;
         moneyDataShadow.text = moneyData.text;
-        pokedexData.text = "0"; //pokedex not yet implemented.
+        pokedexData.text = SaveData.currentSave.pokeDex.ToString(); //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
         scoreData.text = "" + SaveData.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;

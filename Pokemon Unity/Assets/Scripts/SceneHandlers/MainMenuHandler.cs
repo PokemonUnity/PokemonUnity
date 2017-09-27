@@ -7,15 +7,16 @@ public class MainMenuHandler : MonoBehaviour {
 
 	public int selectedButton = 0;
 	public int selectedFile = 0;
-	public Sprite johnSprite;
-	public Sprite janeSprite;
+	public bool newGame = false;
+	public Sprite playerSprite;
+	public Pokemon.Gender playerGender;
 	public Texture buttonSelected;
 	public Texture buttonDimmed;
 
 	private GameObject fileDataPanel;
 	private GameObject continueButton;
 	private GameObject intro;
-
+	private GameObject importantThings;
 	private GUITexture[] button = new GUITexture[3];
 	private GUITexture[] buttonHighlight = new GUITexture[3];
 	private GUIText[] buttonText = new GUIText[3];
@@ -33,13 +34,13 @@ public class MainMenuHandler : MonoBehaviour {
 	private GUITexture background;
 	private GUITexture introBackground;
 	public AudioClip selectClip; 
-	public AudioClip futabaTown; 
-	public AudioClip introMusic; 
+	public AudioClip menuBGM; 
+	public AudioClip professorMusic; 
 	private DialogBoxHandler Dialog;
 
 	private bool running;
-	private bool introFinished = false;
-	private string playername;
+	//private bool introFinished = false; //I wonder what I did differently, this is used in Code: Celestial Binary but unsued after I ported it
+	private string playerName;
 	private bool gender;
 
 	void Awake(){
@@ -48,7 +49,8 @@ public class MainMenuHandler : MonoBehaviour {
 		
 		fileDataPanel = transform.Find("FileData").gameObject;
 		continueButton = transform.Find("Continue").gameObject;
-		intro = transform.Find("Intro").gameObject;
+		intro = transform.Find("Intro(unfinished)").gameObject;
+		importantThings = transform.Find("ImportantThings").gameObject;
 		Transform newGameButton = transform.Find("NewGame");
 		Transform settingsButton = transform.Find("Settings");
 
@@ -72,7 +74,7 @@ public class MainMenuHandler : MonoBehaviour {
 		dataText = fileDataPanel.transform.Find("DataText").GetComponent<GUIText>();
 		dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<GUIText>();
 		background = transform.Find("Background").GetComponent<GUITexture>();
-		introBackground = transform.Find("Intro").Find("Background").GetComponent<GUITexture>();
+		introBackground = transform.Find("Intro(unfinished)").Find("Background").GetComponent<GUITexture>();
 		Dialog = gameObject.GetComponent<DialogBoxHandler>();
 		
 		for(int i = 0; i < 6; i++){
@@ -148,7 +150,7 @@ public class MainMenuHandler : MonoBehaviour {
 
 	private IEnumerator animBG(){
 		float scrollSpeed = 1.2f;
-		while(running){
+		while(running || newGame){
 			float increment = 0;
 			while (increment < 1){
 				increment += (1/scrollSpeed)*Time.deltaTime;
@@ -161,82 +163,200 @@ public class MainMenuHandler : MonoBehaviour {
 		}
 	}
 
+	private IEnumerator gotoGender(){
+		Dialog.drawDialogBox();
+		yield return Dialog.StartCoroutine("drawText","Are you a boy?\nOr are you a girl?");
+		while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+		yield return Dialog.StartCoroutine("scrollText",0.2f);
+		yield return Dialog.StartCoroutine("drawTextSilent","Won't you please tell me?");
+		Dialog.drawChoiceBox(new string[]{"Boy","Girl"});
+		yield return new WaitForSeconds(0.2f);
+		yield return StartCoroutine(Dialog.choiceNavigate());
+		int chosenIndexa = Dialog.chosenIndex;
+		if(chosenIndexa == 1){ //boy
+			playerName = "Ethan"; //john
+			gender = true;
+			Dialog.undrawChoiceBox();	
+		} else if(chosenIndexa == 0) { //girl
+			playerName = "Lyra"; //jane
+			gender = false;
+			Dialog.undrawChoiceBox();
+		}
+		if(gender){
+			Dialog.drawDialogBox();
+			yield return Dialog.StartCoroutine("drawText","So, you're a boy then?");
+			Dialog.drawChoiceBox(new string[]{"Yes","No"});
+			yield return new WaitForSeconds(0.2f);
+			yield return StartCoroutine(Dialog.choiceNavigate());
+			int chosenIndexb = Dialog.chosenIndex;
+			if(chosenIndexb == 1){ //yes
+				Dialog.undrawChoiceBox();
+			} else if(chosenIndexb == 0) { //no
+				Dialog.undrawChoiceBox();
+				yield return StartCoroutine("gotoGender");
+			}
+		}
+		else {
+			Dialog.drawDialogBox();
+			yield return Dialog.StartCoroutine("drawText","So, you're a girl then?");
+			Dialog.drawChoiceBox(new string[]{"Yes","No"});
+			yield return new WaitForSeconds(0.2f);
+			yield return StartCoroutine(Dialog.choiceNavigate());
+			int chosenIndexc = Dialog.chosenIndex;
+			if(chosenIndexc == 1){ //yes
+				Dialog.undrawChoiceBox();
+			} else if(chosenIndexc == 0) { //no
+				Dialog.undrawChoiceBox();
+				yield return StartCoroutine("gotoGender");
+			}
+		}
+
+		Dialog.drawDialogBox();
+		yield return Dialog.StartCoroutine("drawText","Please tell me your name.");
+		while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+		Dialog.undrawDialogBox();
+		yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+		Scene.main.Typing.gameObject.SetActive(true);
+		if(gender){
+			playerGender = Pokemon.Gender.MALE;
+			playerSprite = null;
+		}
+		else {
+			playerGender = Pokemon.Gender.FEMALE;
+			playerSprite = null;
+		}
+		StartCoroutine(Scene.main.Typing.control(7,playerName,playerGender,new Sprite[]{playerSprite}));
+		while(Scene.main.Typing.gameObject.activeSelf){yield return null;}
+		if(Scene.main.Typing.typedString.Length > 0){playerName = Scene.main.Typing.typedString;}
+		yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+		Dialog.drawDialogBox();
+		yield return Dialog.StartCoroutine("drawText","Your name is " + playerName + "?");
+		Dialog.drawChoiceBox(new string[]{"Yes","No"});
+		yield return new WaitForSeconds(0.2f);
+		yield return StartCoroutine(Dialog.choiceNavigate());
+		int chosenIndexd = Dialog.chosenIndex;
+		if(chosenIndexd == 1){ //yes
+			Dialog.undrawChoiceBox();
+		} else if(chosenIndexd == 0) { //no
+			Dialog.undrawChoiceBox();
+			yield return StartCoroutine("gotoGender");
+		}
+	}
 	private IEnumerator openAnimNewGame(){
-		BgmHandler.main.PlayMain(null, 0);
-		BgmHandler.main.PlayMain(introMusic, 0);
 		float scrollSpeed = 0.5f;
 		float increment = 0;
 		while (increment < 1){
-			increment += (1/scrollSpeed)*Time.deltaTime;
-			if (increment > 1){
-				increment = 1;}
-			transform.Find("FileData").position = new Vector3(0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
-			transform.Find("Continue").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
-			transform.Find("NewGame").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
-			transform.Find("Settings").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
-			if(transform.Find("FileData").position == new Vector3(0.5f, transform.Find("FileData").position.y, transform.Find("FileData").position.z)) {
-
-				//intro script stuff here and then
-				Dialog.drawDialogBox();
-				yield return Dialog.StartCoroutine("drawText","So, are you a boy or a girl?");
-				Dialog.drawChoiceBox(new string[]{"Boy","Girl"});
-				yield return new WaitForSeconds(0.2f);
-				yield return StartCoroutine(Dialog.choiceNavigate());
-				int chosenIndex = Dialog.chosenIndex;
-				if(chosenIndex == 1){ //boy
-					playername = "Gold"; //john
-					gender = true;
-					Dialog.undrawDialogBox();
-					Dialog.undrawChoiceBox();
-					Dialog.drawDialogBox();
-					yield return Dialog.StartCoroutine("drawText","What is your name?");
-					while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){
-						yield return null;}
-					Dialog.undrawDialogBox();
-					yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-						
-					Scene.main.Typing.gameObject.SetActive(true);
-					StartCoroutine(Scene.main.Typing.control(8,playername,Pokemon.Gender.MALE,new Sprite[]{johnSprite}));
-					while(Scene.main.Typing.gameObject.activeSelf){
-						yield return null;
-					}
-					if(Scene.main.Typing.typedString.Length > 0){
-						playername = Scene.main.Typing.typedString;}
-
-				} else if(chosenIndex == 0) { //girl
-					playername = "Gold"; //jane
-					gender = false;
-					Dialog.undrawDialogBox();
-					Dialog.undrawChoiceBox();
-					Dialog.drawDialogBox();
-					yield return Dialog.StartCoroutine("drawText","What is your name?");
-					while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){
-						yield return null;}
-					Dialog.undrawDialogBox();
-					yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-						
-					Scene.main.Typing.gameObject.SetActive(true);
-					StartCoroutine(Scene.main.Typing.control(8,playername,Pokemon.Gender.FEMALE,new Sprite[]{janeSprite}));
-					while(Scene.main.Typing.gameObject.activeSelf){
-						yield return null;
-					}
-					if(Scene.main.Typing.typedString.Length > 0){
-						playername = Scene.main.Typing.typedString;}
+			if(!newGame) {
+				increment += (1/scrollSpeed)*Time.deltaTime;
+				if (increment > 1){
+					increment = 1;}
+				transform.Find("FileData").position = new Vector3(0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
+				transform.Find("Continue").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
+				transform.Find("NewGame").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
+				transform.Find("Settings").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
+				
+			}
+			if(transform.Find("FileData").position == new Vector3(0.5f, transform.Find("").position.y, transform.Find("FileData").position.z) || newGame == true) {
+				if(!newGame) {
+					yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
+					transform.Find("OpeningLecture").gameObject.SetActive(true);
+					yield return StartCoroutine(ScreenFade.main.Fade(true, 0f));
 				}
+				Dialog.drawDialogBox();
+				yield return Dialog.StartCoroutine("drawText","...\n...");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Hmm... Intresting...\n...");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Huh? Oh! Excuse me, sorry!\nI was just reading this book here.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.undrawDialogBox();
+				
+				yield return StartCoroutine(ScreenFade.main.Fade(false, 0f));
+				transform.Find("OpeningLecture").Find("Background").GetComponent<GUITexture>().color = new UnityEngine.Color(0.5f,0.5f,0.5f);
+				transform.Find("OpeningLecture").Find("Professor").gameObject.SetActive(true);
+				BgmHandler.main.PlayMain(null, 0);
+				BgmHandler.main.PlayMain(professorMusic, 0);
 				yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 				Dialog.drawDialogBox();
-				yield return Dialog.StartCoroutine("drawText","Hello " + playername + "!");
-				while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){
-					yield return null;}
-				Dialog.undrawDialogBox();
 
-				BgmHandler.main.PlayMain(null, 0);
+				yield return Dialog.StartCoroutine("drawText","Sorry to keep you waiting!");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Welcome to the world of Pokémon!");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","My name is Professor Oak.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","But everyone calls me the Pokémon\nProfessor.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Before we go any further, I'd like to \ntell you a few things you should");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				yield return Dialog.StartCoroutine("scrollText",0.2f);
+				yield return Dialog.StartCoroutine("drawTextSilent","know about this world!");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","This world is widely inhabited by\ncreatures known as Pokémon.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","We humans live alongside Pokemon\nas friends.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","At times we play together, and at\nother times we work together.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Some people use their Pokemon to\nbattle and develop closer bonds");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				yield return Dialog.StartCoroutine("scrollText",0.2f);
+				yield return Dialog.StartCoroutine("drawTextSilent","with them.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+				
+				yield return Dialog.StartCoroutine("drawText","Now, why don't you tell me a little bit\nabout yourself?");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				yield return gotoGender();
+
+				Dialog.drawDialogBox();
+				yield return Dialog.StartCoroutine("drawText",playerName + "!\nAre you ready?");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Your very own tale of grand adventure\nis about to unfold.");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Fun experiences, difficult experiences,\nthere's so much waiting for you!");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","Dreams! Adventure!\nLet's go to the world of Pokemon!");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
+
+				yield return Dialog.StartCoroutine("drawText","I'll see you later!");
+				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				Dialog.drawDialogBox();
 				yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+				
+				BgmHandler.main.PlayMain(null, 0);
 				SaveData.currentSave = new SaveData(SaveLoad.getSavedGamesCount());
 
-				GlobalVariables.global.CreateFileData(playername, gender); 
+				GlobalVariables.global.CreateFileData(playerName, gender); 
 
-				GlobalVariables.global.playerPosition = new Vector3(82,0,33);
+				GlobalVariables.global.playerPosition = new Vector3(79,0,31);
 				GlobalVariables.global.playerDirection = 2;
 				GlobalVariables.global.fadeIn = true;
 				UnityEngine.SceneManagement.SceneManager.LoadScene("indoorsNW");
@@ -269,18 +389,19 @@ public class MainMenuHandler : MonoBehaviour {
 				GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
 					
 				UnityEngine.SceneManagement.SceneManager.LoadScene(SaveData.currentSave.levelName);
-				yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+				//yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 			}
 			yield return null;
 		}
 	}
 
 	public IEnumerator control(){
-		BgmHandler.main.PlayMain(futabaTown, 0);
 		int fileCount = SaveLoad.getSavedGamesCount();
 
 		if(fileCount == 0){
-
+			BgmHandler.main.PlayMain(menuBGM, 0);
+			newGame = true;
+			importantThings.SetActive(true);
 			updateButton(1);
 			continueButton.SetActive(false);
 			fileDataPanel.SetActive(false);
@@ -290,26 +411,38 @@ public class MainMenuHandler : MonoBehaviour {
 				buttonText[i].pixelOffset = new Vector2(buttonText[i].pixelOffset.x, buttonText[i].pixelOffset.y + 64f);
 				buttonTextShadow[i].pixelOffset = new Vector2(buttonTextShadow[i].pixelOffset.x, buttonTextShadow[i].pixelOffset.y + 64f);
 			}
-
+			transform.Find("NewGame").gameObject.SetActive(false);
+			transform.Find("Settings").gameObject.SetActive(false);
+			StartCoroutine("animBG");
+			yield return new WaitForSeconds(2f);
+			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+			importantThings.SetActive(false);
+			transform.Find("OpeningLecture").gameObject.SetActive(true);
+			yield return StartCoroutine(ScreenFade.main.Fade(true, 0f));
+			yield return StartCoroutine("openAnimNewGame");
 		}
 		else{
+			BgmHandler.main.PlayMain(menuBGM, 0);
 			updateButton(0);
 			updateFile(0);
 
 			StartCoroutine(animateIcons());
 
 			if(fileCount == 1){
-				fileNumbersText.text = "File     1";}
+				fileNumbersText.text = "File     1";
+				fileNumbersTextShadow.text = "File     1";}
 			else if(fileCount == 2){
-				fileNumbersText.text = "File     1   2";}
+				fileNumbersText.text = "File     1   2";
+				fileNumbersTextShadow.text = "File     1   2";}
 			else if(fileCount == 3){
-				fileNumbersText.text = "File     1   2   3";}
+				fileNumbersText.text = "File     1   2   3";
+				fileNumbersTextShadow.text = "File     1   2";}
 		}
 
 		running = true;
-		bool introup = true;
+		//bool introup = true;
 		StartCoroutine("animBG");
-		if(introup == true) {
+		/*if(introup == true) {
 			yield return new WaitForSeconds(3.2f);
 			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
 			yield return new WaitForSeconds(0.2f);
@@ -326,7 +459,7 @@ public class MainMenuHandler : MonoBehaviour {
 			intro.SetActive(false);
 			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.2f));
 			//yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-		}
+		}*/
 		while(running){
 			if(Input.GetButtonDown("Select")){
 				if(selectedButton == 0){		//CONTINUE

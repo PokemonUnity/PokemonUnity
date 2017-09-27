@@ -17,6 +17,7 @@ public class Scene : MonoBehaviour
     public SummaryHandler Summary;
     public TrainerHandler Trainer;
     public TypingHandler Typing;
+    //public PokedexHandler Pokedex;
 
 
     void Awake()
@@ -36,5 +37,6 @@ public class Scene : MonoBehaviour
         Summary.gameObject.SetActive(true);
         Trainer.gameObject.SetActive(true);
         Typing.gameObject.SetActive(true);
+        //Pokedex.gameObject.SetActive(true);
     }
 }

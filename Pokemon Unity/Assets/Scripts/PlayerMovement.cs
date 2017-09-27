@@ -475,10 +475,53 @@ public class PlayerMovement : MonoBehaviour
         if (animationName != newAnimationName)
         {
             animationName = newAnimationName;
-            spriteSheet =
-                Resources.LoadAll<Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() +
-                                          newAnimationName);
-            //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
+            if(SaveData.currentSave.getPlayerSpritePrefix().Contains("custom")) {
+                WWW www = new WWW("file://" + System.IO.Path.Combine(Application.streamingAssetsPath, SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName));
+ 
+                if (!string.IsNullOrEmpty(www.error)) {
+                    Debug.Log (www.error);
+                    SaveData.currentSave.playerOutfit = "hgss";
+                    PlayerPrefs.SetInt("customSprites", 0);
+                    if(SaveData.currentSave.getCVariable("male") == 1) {
+                        spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
+                    }
+                    else {
+                        spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/f_hgss_" + newAnimationName);
+                    }
+                } 
+                else {
+                    /*Sprite custom1 = Sprite.Create(www.texture, new Rect(0f, 96f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom2 = Sprite.Create(www.texture, new Rect(32f, 96f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom3 = Sprite.Create(www.texture, new Rect(64f, 96f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom4 = Sprite.Create(www.texture, new Rect(96f, 96f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom5 = Sprite.Create(www.texture, new Rect(0f, 64f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom6 = Sprite.Create(www.texture, new Rect(32f, 64f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom7 = Sprite.Create(www.texture, new Rect(64f, 64f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom8 = Sprite.Create(www.texture, new Rect(96f, 64f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom9 = Sprite.Create(www.texture, new Rect(0f, 32f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom10 = Sprite.Create(www.texture, new Rect(32f, 32f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom11 = Sprite.Create(www.texture, new Rect(64f, 32f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom12 = Sprite.Create(www.texture, new Rect(96f, 32f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom13 = Sprite.Create(www.texture, new Rect(0f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom14 = Sprite.Create(www.texture, new Rect(32f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom15 = Sprite.Create(www.texture, new Rect(64f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
+                    Sprite custom16 = Sprite.Create(www.texture, new Rect(96f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
+                    spriteSheet = new Sprite[] {custom1,custom2,custom3,custom4,custom5,custom6,custom7,custom8,custom9,custom10,custom11,custom12,custom13,custom14,custom15,custom16};*/
+                    //I highly doubt this is the correct way to do it
+                    Debug.Log("Not implemented");
+                    if(SaveData.currentSave.getCVariable("male") == 1) {
+                        spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
+                    }
+                    else {
+                        spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/f_hgss_" + newAnimationName);
+                    }
+                }
+            }
+            else {
+                spriteSheet =
+                    Resources.LoadAll<Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
+                //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
+            }
             framesPerSec = fps;
             secPerFrame = 1f / (float) framesPerSec;
             frames = Mathf.RoundToInt((float) spriteSheet.Length / 4f);

@@ -467,7 +467,7 @@ public class CustomEventEditor : Editor
 			    break;
 
 		    case CustomEventDetails.CustomEventType.MoveCamera:
-			    eventDescription = "Move camera to "+ints_Prop.GetArrayElementAtIndex(0).intValue+", "+ints_Prop.GetArrayElementAtIndex(1).intValue+", "+ints_Prop.GetArrayElementAtIndex(1).intValue+"";;
+			    eventDescription = "Move camera to "+ints_Prop.GetArrayElementAtIndex(0).intValue+", "+ints_Prop.GetArrayElementAtIndex(1).intValue+", "+ints_Prop.GetArrayElementAtIndex(2).intValue+"";;
 			    break;
         }
 
@@ -726,6 +726,7 @@ public class CustomEventEditor : Editor
 
 		    case CustomEventDetails.CustomEventType.MoveCamera:
 			    ints_Prop.arraySize = 4;
+                EditorGUILayout.PropertyField(runSimul_Prop, new GUIContent("Run Simultaneously"));
 			    EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(0), new GUIContent("X"));
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(1), new GUIContent("Y"));
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(2), new GUIContent("Z"));

@@ -5,7 +5,7 @@ using System.Collections;
 
 public class InteractDoorway : MonoBehaviour
 {
-    private GameObject Player;
+    //private GameObject Player;
     private DialogBoxHandler Dialog;
 
     private Animator myAnimator;
@@ -50,7 +50,7 @@ public class InteractDoorway : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Player = PlayerMovement.player.gameObject;
+        //Player = PlayerMovement.player.gameObject;
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
         objectLight = this.GetComponentInChildren<Light>();
