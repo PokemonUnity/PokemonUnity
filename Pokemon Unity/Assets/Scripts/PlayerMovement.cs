@@ -421,7 +421,7 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-                else if (Input.GetKeyDown("g"))
+                else if (Input.GetKeyDown("g") && SaveData.currentSave.debugMode == true)
                 {
                     //DEBUG
                     Debug.Log(currentMap.getTileTag(transform.position));
@@ -434,6 +434,20 @@ public class PlayerMovement : MonoBehaviour
                         followerScript.canMove = true;
                     }
                 }
+                /*else if (Input.GetKeyDown(",") && SaveData.currentSave.debugMode == true+)
+                {
+                    //GlobalVariables.debug(GlobalVariables.GetDebugText());
+                    //DEBUG
+                    Debug.Log(currentMap.getTileTag(transform.position));
+                    if (followerScript.canMove)
+                    {
+                        followerScript.StartCoroutine("withdrawToBall");
+                    }
+                    else
+                    {
+                        followerScript.canMove = true;
+                    }
+                }*/
             }
             if (still)
             {

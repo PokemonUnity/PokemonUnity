@@ -2406,6 +2406,54 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1455294057655724, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4996791602362346, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955756798980618, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660192341511328, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281246964867956, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498423188807652, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627957804119514, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648896113736492, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722178651301850, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087051883974524, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875678940710614, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840289208456834, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
+      propertyPath: m_TagString
+      value: Pokedex
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 2}
   m_IsPrefabParent: 0

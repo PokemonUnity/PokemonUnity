@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GlobalVariables : MonoBehaviour
 {
@@ -34,9 +35,13 @@ public class GlobalVariables : MonoBehaviour
     //Important gameplay data
     public bool respawning = false;
 
-
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= CheckLevelLoaded;
+    }
     void Awake()
     {
+        SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
@@ -85,6 +90,10 @@ public class GlobalVariables : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public IEnumerator GetDebugText()
+    {
+        yield return debugText.text;
     }
     public void EnableDebugMode()
     {
@@ -280,7 +289,7 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    void OnLevelWasLoaded()
+    void CheckLevelLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode) //thanks GMR#3847
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "startup")
         {

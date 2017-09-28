@@ -32,7 +32,8 @@ public class PokedexHandler : MonoBehaviour {
 	private GUIText ability1shadow;
 	private GUIText ability2shadow;
 
-
+	[SerializeField]
+	private float moveSpeed = 0.16f;
 
 	// Ressource vars
 	public Texture[] types;
@@ -118,13 +119,14 @@ public class PokedexHandler : MonoBehaviour {
 			// Cursor Position
 			if (screen2 != true){
 				if (cursorPosition.y == -1) {
-					cursor.transform.position = new Vector3(200, 307, 13);
+					//cursor.transform.position = new Vector3(200, 307, 13);
 				} else if (cursorPosition.y == 5) {
 				} else {
 				
 					float y = 5f - cursorPosition.y;
 					float x = cursorPosition.x;
-					cursor.transform.position = new Vector3(64 + x * 42f, 128 - 38 + y * 38, 13);
+					//cursor.transform.position = new Vector3(64 + x * 42f, 128 - 38 + y * 38, 13);
+					yield return StartCoroutine(moveCursor(new Vector2(25 + x * 24, 25 + y * 24)));
 					y = cursorPosition.y;
 					pokemonNum = boxNum * 45f + y * 9f + x + 1;
 					updatePreview ((int) pokemonNum,(int)( y * 9 + x));
@@ -150,25 +152,31 @@ public class PokedexHandler : MonoBehaviour {
 
 
 	public IEnumerator informationScreen(){
-		screen2 = true;
-		bool running = true;
-		for (int i = 0; i < 71; i++) {
-			background.gameObject.transform.position -= new Vector3 (6, 0, 0);
+		float increment = 0;
+		float startX = background.pixelInset.x;
+		float startY = background.pixelInset.y;
+		float distanceX = -200;
+
+		while (increment < 1)
+		{
+			increment += (1 / moveSpeed) * Time.deltaTime;
+			if (increment > 1)
+			{
+				increment = 1;
+			}
+
+			GameObject[] pokedexUI = GameObject.FindGameObjectsWithTag ("Pokedex");
+
+			for (int x = 0; x < pokedexUI.Length; x++) {
+				
+				pokedexUI [x].GetComponent<GUITexture> ().pixelInset = new Rect (startX + (distanceX * increment), startY, pokedexUI [x].GetComponent<GUITexture> ().pixelInset.width, pokedexUI [x].GetComponent<GUITexture> ().pixelInset.height);
+				
+				
+			}
+		
+
 			yield return null;
 		}
-
-
-		while (running) {
-			running = false;
-			yield return null;
-		}
-
-		for (int i = 0; i < 71; i++) {
-			background.gameObject.transform.position += new Vector3 (6, 0, 0);
-			yield return null;
-		}
-
-		screen2 = false;
 	}
 
 	// Usability Functions
@@ -223,6 +231,26 @@ public class PokedexHandler : MonoBehaviour {
 			}
 		}
 	
+	}
+
+	private IEnumerator moveCursor(Vector2 destination)
+	{
+		float increment = 0;
+		float startX = cursor.pixelInset.x;
+		float startY = cursor.pixelInset.y;
+		float distanceX = destination.x - startX;
+		float distanceY = destination.y - startY;
+		while (increment < 1)
+		{
+			increment += (1 / moveSpeed) * Time.deltaTime;
+			if (increment > 1)
+			{
+				increment = 1;
+			}
+			cursor.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor.pixelInset.width, cursor.pixelInset.height);
+			
+			yield return null;
+		}
 	}
 
 	private void setText(int i){
