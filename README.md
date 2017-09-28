@@ -17,7 +17,7 @@ I strongly recommend that you use the master branch as a base rather than the de
 
 ## Demo and Downloads
 
-There will not be any demos released for PKUE until the branches merge.
+There will not be any demos released for PKUE until it is proven to be stable (with currently added features working without problem)
 
 ## Credits
 
