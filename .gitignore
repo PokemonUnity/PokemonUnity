@@ -42,3 +42,9 @@ sysinfo.txt
 # Image databases
 Thumbs.db
 Thumbs.db.meta
+
+# Magix Vegas files
+*.sfk
+*.sfl
+
+# *.pdn
