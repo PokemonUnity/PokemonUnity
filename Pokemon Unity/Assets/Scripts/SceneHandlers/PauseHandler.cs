@@ -418,6 +418,7 @@ public class PauseHandler : MonoBehaviour
 						//StartCoroutine(fadeIcons(0.4f));
 						//yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
 						yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                        hideIcons();
 
 						pokedex.gameObject.SetActive (true);
 						yield return StartCoroutine(runSceneUntilDeactivated(pokedex.gameObject));

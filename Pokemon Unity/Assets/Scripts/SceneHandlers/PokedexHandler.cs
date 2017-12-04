@@ -72,72 +72,83 @@ public class PokedexHandler : MonoBehaviour {
 		updateBox ((int) boxNum);
 		StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
 		bool running = true;
+		bool cursorAnim;
 		while (running) {
 			// Input
+			cursorAnim = false;
+			Debug.Log("cursorPosition.x: " + cursorPosition.x + ", cursorPosition.y: " + cursorPosition.y + ", boxNum: " + boxNum);
 
-
-			if (cursorPosition.y == -1 && screen2 != true) {
-				if (Input.GetAxis ("Horizontal") > 0 && boxNum != 18) {
-					
-					boxNum += 1;
-					updateBox ((int)boxNum);
-					SfxHandler.Play (selectClip);
-					yield return new WaitForSeconds (0.2f);
-				} else if (Input.GetAxis ("Horizontal") < 0 && boxNum != 0) {
-					
-					boxNum -= 1;
-					updateBox ((int)boxNum);
-					SfxHandler.Play (selectClip);
-					yield return new WaitForSeconds (0.2f);
+            if (Input.GetAxis("Horizontal") < 0 && cursorPosition.x == 0 && boxNum != 0)
+            { //user wanted to go back a page
+                cursorPosition.x = 8;
+                boxNum -= 1;
+                updateBox((int)boxNum);
+                // SfxHandler.Play(selectClip);
+                yield return new WaitForSeconds(0.2f);
+				cursorAnim = true;
+            }
+            else if (Input.GetAxis("Horizontal") > 0 && cursorPosition.x == 8 && boxNum != 18)
+            { //user wanted to go forward a page
+                cursorPosition.x = 0;
+                boxNum += 1;
+                updateBox((int)boxNum);
+                // SfxHandler.Play(selectClip);
+                yield return new WaitForSeconds(0.2f);
+				cursorAnim = true;
+            }
+            else if (Input.GetAxis("Horizontal") > 0)
+            { //user wanted to navigate to right
+                if (cursorPosition.x == 8 && boxNum == 18) { } //prevent going offscreen
+                else {                
+                    cursorPosition += new Vector2(1, 0);
+                    SfxHandler.Play(selectClip);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            { //user wanted to navigate to left
+                if (cursorPosition.x == 0 && boxNum == 0){} //prevent going offscreen
+				else {
+					cursorPosition -= new Vector2(1, 0);
+                    SfxHandler.Play(selectClip);
+                    yield return new WaitForSeconds(0.2f);
 				}
-			} else {
-				if (Input.GetAxis ("Horizontal") > 0 && cursorPosition.x != 8 && cursorPosition.y != -1 && cursorPosition.y != 6  && screen2 != true) {
-					cursorPosition += new Vector2 (1, 0);
-					SfxHandler.Play (selectClip);
-					yield return new WaitForSeconds (0.2f);
-				} else if (Input.GetAxis ("Horizontal") < 0 && cursorPosition.x != 0 && cursorPosition.y != -1 && cursorPosition.y != 6 && screen2 != true) {
-					cursorPosition -= new Vector2 (1, 0);
-					SfxHandler.Play (selectClip);
-					yield return new WaitForSeconds (0.2f);
-				} 
+            }
 
-				if (Input.GetButton ("Select")) {
-					yield return StartCoroutine (informationScreen ());
-				}
+            if (Input.GetAxis("Vertical") > 0 && cursorPosition.y != 0)
+            {
+                cursorPosition -= new Vector2(0, 1);
+                SfxHandler.Play(selectClip);
+                yield return new WaitForSeconds(0.2f);
+            }
+            else if (Input.GetAxis("Vertical") < 0 && cursorPosition.y != 4)
+            {
+                cursorPosition += new Vector2(0, 1);
+                SfxHandler.Play(selectClip);
+                yield return new WaitForSeconds(0.2f);
+            }
+            
+            // Cursor Position, consuming a lot of processing
+            if (cursorPosition.y == -1) {
+			} else if (cursorPosition.y == 5) {					
+			} else {				
+				float y = 5f - cursorPosition.y;
+				float x = cursorPosition.x;
+				yield return StartCoroutine(moveCursor(new Vector2(25 + x * 24, 25 + y * 24), cursorAnim));
+				y = cursorPosition.y;
+				pokemonNum = boxNum * 45f + y * 9f + x + 1;
+				updatePreview ((int) pokemonNum,(int)( y * 9 + x));						
 			}
 
-			if (Input.GetAxis ("Vertical") > 0 && cursorPosition.y != -1 && screen2 != true) {
-				cursorPosition -= new Vector2 (0, 1);
-				SfxHandler.Play (selectClip);
-				yield return new WaitForSeconds (0.2f);
-			} else if (Input.GetAxis ("Vertical") < 0 && cursorPosition.y != 5 && screen2 != true) {
-				cursorPosition += new Vector2 (0, 1);
-				SfxHandler.Play (selectClip);
-				yield return new WaitForSeconds (0.2f);
-			}
+			if (Input.GetButton("Select"))
+            {
+                yield return StartCoroutine(informationScreen());
+            }
 
-			// Cursor Position
-			if (screen2 != true){
-				if (cursorPosition.y == -1) {
-					//cursor.transform.position = new Vector3(200, 307, 13);
-				} else if (cursorPosition.y == 5) {
-				} else {
-				
-					float y = 5f - cursorPosition.y;
-					float x = cursorPosition.x;
-					//cursor.transform.position = new Vector3(64 + x * 42f, 128 - 38 + y * 38, 13);
-					yield return StartCoroutine(moveCursor(new Vector2(25 + x * 24, 25 + y * 24)));
-					y = cursorPosition.y;
-					pokemonNum = boxNum * 45f + y * 9f + x + 1;
-					updatePreview ((int) pokemonNum,(int)( y * 9 + x));
-						
-				}
-			}
-
-		
-
-
-
+			if (Input.GetButton("Start") || Input.GetButton("Back"))
+            {
+                running = false;
+            }
 
 			yield return null;
 		}
@@ -233,24 +244,30 @@ public class PokedexHandler : MonoBehaviour {
 	
 	}
 
-	private IEnumerator moveCursor(Vector2 destination)
+	private IEnumerator moveCursor(Vector2 destination, bool anim)
 	{
 		float increment = 0;
 		float startX = cursor.pixelInset.x;
 		float startY = cursor.pixelInset.y;
 		float distanceX = destination.x - startX;
 		float distanceY = destination.y - startY;
-		while (increment < 1)
-		{
-			increment += (1 / moveSpeed) * Time.deltaTime;
-			if (increment > 1)
-			{
-				increment = 1;
-			}
-			cursor.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor.pixelInset.width, cursor.pixelInset.height);
-			
-			yield return null;
-		}
+
+		if (anim) {
+            while (increment < 1) {
+                increment += (1 / moveSpeed) * Time.deltaTime;
+                if (increment > 1) {
+                    increment = 1;
+                }
+                cursor.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor.pixelInset.width, cursor.pixelInset.height);
+                yield return null;
+            }
+        }
+        else
+        {
+			increment = 1;
+            cursor.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor.pixelInset.width, cursor.pixelInset.height);
+            yield return null;
+        }
 	}
 
 	private void setText(int i){
@@ -287,9 +304,8 @@ public class PokedexHandler : MonoBehaviour {
 
 		Texture[] icons = Resources.LoadAll<Texture>("PokemonIcons/icon" + toNum(id));
 		if (icons.Length == 0)
-		{
-			
-			icons = Resources.LoadAll<Texture>("PokemonIcons/icon006");
+		{			
+			icons = Resources.LoadAll<Texture>("PCSprites/pokedexBall"); // change to a more proper icon
 		}
 
 		return icons[0];
@@ -302,13 +318,13 @@ public class PokedexHandler : MonoBehaviour {
 		boxLabelShadow.text = label;
 
 		for (int i = 0; i < 45; i++) {
-			pokePreview [i].texture = getIcon (boxNum * 45 + i + 1);
+			pokePreview [i].texture = getIcon (boxNum * 45 + i + 1); //small pokedex icon
 
 		}
 
 		for (int i = 0; i < 45; i++) {
 			
-			pokeSprites [i] = getSprite (boxNum * 45 + i + 1);
+			pokeSprites [i] = getSprite (boxNum * 45 + i + 1); //pokedex sidebar image
 		}
 	}
 
