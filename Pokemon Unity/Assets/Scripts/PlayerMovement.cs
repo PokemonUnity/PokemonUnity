@@ -238,6 +238,10 @@ public class PlayerMovement : MonoBehaviour
                 namez += PokemonDatabase.getPokemon(encounterList[i].ID).getName() + ", ";
             }
             Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
+            for (int i = 0; i < encounterList.Length; i++)
+            {
+                Debug.Log("Encounter List by ID: " + encounterList[i].ID.ToString());
+            }
         }
         //
 
@@ -1213,8 +1217,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
         {
-            if (Random.value <= accessedMapSettings.getEncounterProbability())
+            if (Random.value <= accessedMapSettings.getTotalEncounterChance(encounterLocation))
             {
+                //Debug.Log(accessedMapSettings.getEncounterProbability().ToString());
                 if (setCheckBusyWith(Scene.main.Battle.gameObject))
                 {
                     BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultWildBGM,
