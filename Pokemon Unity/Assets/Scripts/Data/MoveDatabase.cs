@@ -762,4 +762,9 @@ public static class MoveDatabase
         }
         return result;
     }
+
+    public static MoveData getMove(int MoveId)
+    {
+        return getMove("PlaceHolder"); //just doing this until i can fix it later
+    }
 }
