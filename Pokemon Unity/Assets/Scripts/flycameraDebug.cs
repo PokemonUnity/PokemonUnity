@@ -3,23 +3,23 @@
 using UnityEngine;
 using System.Collections;
 
-public class flycameraDebug : MonoBehaviour {
-
+public class flycameraDebug : MonoBehaviour
+{
     //Flies a camera between given nodes in order at constant speed.
     //Used to record camera panning trailer footage.
     //Currently no in-game application.
 
-	public GameObject target;
+    public GameObject target;
 
-	public float speed;
-	public float initialDelay;
+    public float speed;
+    public float initialDelay;
 
     public Transform[] nodes;
     public Vector3[] addedRotation;
 
     void Awake()
     {
-        for(int i = 0; i < nodes.Length; i++)
+        for (int i = 0; i < nodes.Length; i++)
         {
             if (nodes[i].GetComponent<MeshRenderer>() != null)
             {
@@ -28,47 +28,52 @@ public class flycameraDebug : MonoBehaviour {
         }
     }
 
-    void Start(){
+    void Start()
+    {
+        target.transform.position = nodes[0].position;
+        StartCoroutine(flyToEachPosition());
+    }
 
-		target.transform.position = nodes[0].position;
-		StartCoroutine(flyToEachPosition());
+    private IEnumerator flyToEachPosition()
+    {
+        yield return new WaitForSeconds(initialDelay);
 
-	}
-
-	private IEnumerator flyToEachPosition(){
-		yield return new WaitForSeconds(initialDelay);
-
-		for(int i = 0; i < nodes.Length; i++){
-            if(addedRotation.Length <= i)
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            if (addedRotation.Length <= i)
             {
-			    yield return StartCoroutine(flyToPosition(nodes[i].position, Vector3.zero));
+                yield return StartCoroutine(flyToPosition(nodes[i].position, Vector3.zero));
             }
             else
             {
                 yield return StartCoroutine(flyToPosition(nodes[i].position, addedRotation[i]));
             }
         }
-	}
+    }
 
-	private IEnumerator flyToPosition(Vector3 destinationPosition, Vector3 additiveRotation)
+    private IEnumerator flyToPosition(Vector3 destinationPosition, Vector3 additiveRotation)
     {
-		Vector3 startPosition = target.transform.position;
-		Vector3 distance = destinationPosition - startPosition;
+        Vector3 startPosition = target.transform.position;
+        Vector3 distance = destinationPosition - startPosition;
 
-        float time = Vector3.Distance(startPosition,destinationPosition) / speed;
+        float time = Vector3.Distance(startPosition, destinationPosition) / speed;
 
         StartCoroutine(RotateCamera(additiveRotation, time));
 
-		float increment = 0;
-		while(increment < 1){
-			increment += (1/time)*Time.deltaTime;
-            if (increment > 1) { increment = 1; }
+        float increment = 0;
+        while (increment < 1)
+        {
+            increment += (1 / time) * Time.deltaTime;
+            if (increment > 1)
+            {
+                increment = 1;
+            }
 
-            target.transform.position = startPosition + (distance*increment);
+            target.transform.position = startPosition + (distance * increment);
 
-			yield return null;	
-		}
-	}
+            yield return null;
+        }
+    }
 
     private IEnumerator RotateCamera(Vector3 additiveRotation, float time)
     {
@@ -78,12 +83,14 @@ public class flycameraDebug : MonoBehaviour {
         while (increment < 1)
         {
             increment += (1 / time) * Time.deltaTime;
-            if (increment > 1){ increment = 1; }
+            if (increment > 1)
+            {
+                increment = 1;
+            }
 
             target.transform.rotation = Quaternion.Euler(startRotation + (additiveRotation * increment));
 
             yield return null;
         }
     }
-
 }

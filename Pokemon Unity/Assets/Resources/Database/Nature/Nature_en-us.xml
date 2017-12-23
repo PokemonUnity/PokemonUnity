@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Language name="English" id="9" identifier="en" iso639="en" iso3166="us">
+    <!-- 
+    select id, identifier, [name], local_language_id 
+from natures a
+left join nature_names b on a.id=b.nature_id
+where local_language_id=9
+    -->
+  <Natures>
+    <!-- "^"(\d*)"\t"([\w\S.\- ]*)"\t"([\w '’,-]*)"\t"(\d*)"" | <Nature id="$1" language="$4" identifier="$2">$3</Nature> -->
+    <Nature id="1" language="9" identifier="hardy">Hardy</Nature>
+    <Nature id="2" language="9" identifier="bold">Bold</Nature>
+    <Nature id="3" language="9" identifier="modest">Modest</Nature>
+    <Nature id="4" language="9" identifier="calm">Calm</Nature>
+    <Nature id="5" language="9" identifier="timid">Timid</Nature>
+    <Nature id="6" language="9" identifier="lonely">Lonely</Nature>
+    <Nature id="7" language="9" identifier="docile">Docile</Nature>
+    <Nature id="8" language="9" identifier="mild">Mild</Nature>
+    <Nature id="9" language="9" identifier="gentle">Gentle</Nature>
+    <Nature id="10" language="9" identifier="hasty">Hasty</Nature>
+    <Nature id="11" language="9" identifier="adamant">Adamant</Nature>
+    <Nature id="12" language="9" identifier="impish">Impish</Nature>
+    <Nature id="13" language="9" identifier="bashful">Bashful</Nature>
+    <Nature id="14" language="9" identifier="careful">Careful</Nature>
+    <Nature id="15" language="9" identifier="rash">Rash</Nature>
+    <Nature id="16" language="9" identifier="jolly">Jolly</Nature>
+    <Nature id="17" language="9" identifier="naughty">Naughty</Nature>
+    <Nature id="18" language="9" identifier="lax">Lax</Nature>
+    <Nature id="19" language="9" identifier="quirky">Quirky</Nature>
+    <Nature id="20" language="9" identifier="naive">Naive</Nature>
+    <Nature id="21" language="9" identifier="brave">Brave</Nature>
+    <Nature id="22" language="9" identifier="relaxed">Relaxed</Nature>
+    <Nature id="23" language="9" identifier="quiet">Quiet</Nature>
+    <Nature id="24" language="9" identifier="sassy">Sassy</Nature>
+    <Nature id="25" language="9" identifier="serious">Serious</Nature>
+  </Natures>
+</Language>

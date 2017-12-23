@@ -1,0 +1,2163 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Language name="English" id="9" identifier="en" iso639="en" iso3166="us">
+  <Species>
+    <!-- "^"(\d*)"\t"(\d*)"\t"([\w\S.\- ]*)"\t"([\w ’,-]*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"([\w\s\d.’,\-—“”!/():♀♂]*|[\r])"" | <Pokemon id="$1" language="$2" name="$3" genus="$4">$8</Pokemon> -->
+<Pokemon id="1" language="9" name="Bulbasaur" genus="Seed">Bulbasaur can be seen napping in bright sunlight.
+There is a seed on its back. By soaking up the sun’s rays,
+the seed grows progressively larger.</Pokemon>
+<Pokemon id="2" language="9" name="Ivysaur" genus="Seed">There is a bud on this Pokémon’s back. To support its weight,
+Ivysaur’s legs and trunk grow thick and strong.
+If it starts spending more time lying in the sunlight,
+it’s a sign that the bud will bloom into a large flower soon.</Pokemon>
+<Pokemon id="3" language="9" name="Venusaur" genus="Seed">There is a large flower on Venusaur’s back. The flower is said
+to take on vivid colors if it gets plenty of nutrition and sunlight.
+The flower’s aroma soothes the emotions of people.</Pokemon>
+<Pokemon id="4" language="9" name="Charmander" genus="Lizard">The flame that burns at the tip of its tail is an indication
+of its emotions. The flame wavers when Charmander
+is enjoying itself. If the Pokémon becomes enraged,
+the flame burns fiercely.</Pokemon>
+<Pokemon id="5" language="9" name="Charmeleon" genus="Flame">Charmeleon mercilessly destroys its foes using its sharp
+claws. If it encounters a strong foe, it turns aggressive.
+In this excited state, the flame at the tip of its tail flares with
+a bluish white color.</Pokemon>
+<Pokemon id="6" language="9" name="Charizard" genus="Flame">Charizard flies around the sky in search of powerful opponents.
+It breathes fire of such great heat that it melts anything.
+However, it never turns its fiery breath on any opponent
+weaker than itself.</Pokemon>
+<Pokemon id="7" language="9" name="Squirtle" genus="Tiny Turtle">Squirtle’s shell is not merely used for protection.
+The shell’s rounded shape and the grooves on its
+surface help minimize resistance in water,
+enabling this Pokémon to swim at high speeds.</Pokemon>
+<Pokemon id="8" language="9" name="Wartortle" genus="Turtle">Its tail is large and covered with a rich, thick fur. The tail
+becomes increasingly deeper in color as Wartortle ages.
+The scratches on its shell are evidence of this Pokémon’s
+toughness as a battler.</Pokemon>
+<Pokemon id="9" language="9" name="Blastoise" genus="Shellfish">Blastoise has water spouts that protrude from its shell.
+The water spouts are very accurate.
+They can shoot bullets of water with enough accuracy
+to strike empty cans from a distance of over 160 feet.</Pokemon>
+<Pokemon id="10" language="9" name="Caterpie" genus="Worm">Caterpie has a voracious appetite. It can devour leaves
+bigger than its body right before your eyes. From its antenna,
+this Pokémon releases a terrifically strong odor.</Pokemon>
+<Pokemon id="11" language="9" name="Metapod" genus="Cocoon">The shell covering this Pokémon’s body is as hard as an
+iron slab. Metapod does not move very much.
+It stays still because it is preparing its soft innards for
+evolution inside the hard shell.</Pokemon>
+<Pokemon id="12" language="9" name="Butterfree" genus="Butterfly">Butterfree has a superior ability to search for delicious honey
+from flowers. It can even search out, extract, and carry honey
+from flowers that are blooming over six miles from its nest.</Pokemon>
+<Pokemon id="13" language="9" name="Weedle" genus="Hairy Bug">Weedle has an extremely acute sense of smell. It is capable
+of distinguishing its favorite kinds of leaves from those it
+dislikes just by sniffing with its big red proboscis (nose).</Pokemon>
+<Pokemon id="14" language="9" name="Kakuna" genus="Cocoon">Kakuna remains virtually immobile as it clings to a tree.
+However, on the inside, it is extremely busy as it prepares
+for its coming evolution.
+This is evident from how hot the shell becomes to the touch.</Pokemon>
+<Pokemon id="15" language="9" name="Beedrill" genus="Poison Bee">Beedrill is extremely territorial. No one should ever approach
+its nest—this is for their own safety. If angered, they will attack
+in a furious swarm.</Pokemon>
+<Pokemon id="16" language="9" name="Pidgey" genus="Tiny Bird">Pidgey has an extremely sharp sense of direction.
+It is capable of unerringly returning home to its nest,
+however far it may be removed from its familiar surroundings.</Pokemon>
+<Pokemon id="17" language="9" name="Pidgeotto" genus="Bird">Pidgeotto claims a large area as its own territory. This
+Pokémon flies around, patrolling its living space. If its territory
+is violated, it shows no mercy in thoroughly punishing the foe
+with its sharp claws.</Pokemon>
+<Pokemon id="18" language="9" name="Pidgeot" genus="Bird">This Pokémon has a dazzling plumage of beautifully
+glossy feathers. Many Trainers are captivated by the
+striking beauty of the feathers on its head, compelling
+them to choose Pidgeot as their Pokémon.</Pokemon>
+<Pokemon id="19" language="9" name="Rattata" genus="Mouse">Rattata is cautious in the extreme. Even while it is asleep,
+it constantly listens by moving its ears around. It is not
+picky about where it lives—it will make its nest anywhere.</Pokemon>
+<Pokemon id="20" language="9" name="Raticate" genus="Mouse">Raticate’s sturdy fangs grow steadily. To keep them
+ground down, it gnaws on rocks and logs. It may
+even chew on the walls of houses.</Pokemon>
+<Pokemon id="21" language="9" name="Spearow" genus="Tiny Bird">Spearow has a very loud cry that can be heard over
+half a mile away. If its high, keening cry is heard echoing all
+around, it is a sign that they are warning each other of danger.</Pokemon>
+<Pokemon id="22" language="9" name="Fearow" genus="Beak">Fearow is recognized by its long neck and elongated beak.
+They are conveniently shaped for catching prey in soil or
+water. It deftly moves its long and skinny beak to pluck prey.</Pokemon>
+<Pokemon id="23" language="9" name="Ekans" genus="Snake">Ekans curls itself up in a spiral while it rests. Assuming this
+position allows it to quickly respond to a threat from any
+direction with a glare from its upraised head.</Pokemon>
+<Pokemon id="24" language="9" name="Arbok" genus="Cobra">This Pokémon is terrifically strong in order to constrict things
+with its body. It can even flatten steel oil drums. Once Arbok
+wraps its body around its foe, escaping its crunching embrace
+is impossible.</Pokemon>
+<Pokemon id="25" language="9" name="Pikachu" genus="Mouse">This Pokémon has electricity-storing pouches on its cheeks.
+These appear to become electrically charged during the night
+while Pikachu sleeps. It occasionally discharges electricity
+when it is dozy after waking up.</Pokemon>
+<Pokemon id="26" language="9" name="Raichu" genus="Mouse">This Pokémon exudes a weak electrical charge from all over
+its body that makes it take on a slight glow in darkness.
+Raichu plants its tail in the ground to discharge electricity.</Pokemon>
+<Pokemon id="27" language="9" name="Sandshrew" genus="Mouse">Sandshrew has a very dry hide that is extremely tough.
+The Pokémon can roll into a ball that repels any attack.
+At night, it burrows into the desert sand to sleep.</Pokemon>
+<Pokemon id="28" language="9" name="Sandslash" genus="Mouse">Sandslash can roll up its body as if it were a ball covered
+with large spikes. In battle, this Pokémon will try to make
+the foe flinch by jabbing it with its spines. It then leaps at
+the stunned foe to tear wildly with its sharp claws.</Pokemon>
+<Pokemon id="29" language="9" name="Nidoran♀" genus="Poison Pin">Nidoran♀ has barbs that secrete a powerful poison.
+They are thought to have developed as protection for
+this small-bodied Pokémon. When enraged, it releases
+a horrible toxin from its horn.</Pokemon>
+<Pokemon id="30" language="9" name="Nidorina" genus="Poison Pin">When Nidorina are with their friends or family, they keep
+their barbs tucked away to prevent hurting each other.
+This Pokémon appears to become nervous if separated
+from the others.</Pokemon>
+<Pokemon id="31" language="9" name="Nidoqueen" genus="Drill">Nidoqueen’s body is encased in extremely hard scales.
+It is adept at sending foes flying with harsh tackles. This
+Pokémon is at its strongest when it is defending its young.</Pokemon>
+<Pokemon id="32" language="9" name="Nidoran♂" genus="Poison Pin">Nidoran♂ has developed muscles for moving its ears. Thanks
+to them, the ears can be freely moved in any direction. Even
+the slightest sound does not escape this Pokémon’s notice.</Pokemon>
+<Pokemon id="33" language="9" name="Nidorino" genus="Poison Pin">Nidorino has a horn that is harder than a diamond. If it senses
+a hostile presence, all the barbs on its back bristle up at once,
+and it challenges the foe with all its might.</Pokemon>
+<Pokemon id="34" language="9" name="Nidoking" genus="Drill">Nidoking’s thick tail packs enormously destructive power.
+With one swing, it can topple a metal transmission tower. Once
+this Pokémon goes on a rampage, there is no stopping it.</Pokemon>
+<Pokemon id="35" language="9" name="Clefairy" genus="Fairy">On every night of a full moon, groups of this Pokémon
+come out to play. When dawn arrives, the tired Clefairy
+return to their quiet mountain retreats and go to sleep
+nestled up against each other.</Pokemon>
+<Pokemon id="36" language="9" name="Clefable" genus="Fairy">Clefable moves by skipping lightly as if it were flying using
+its wings. Its bouncy step lets it even walk on water.
+It is known to take strolls on lakes on quiet, moonlit nights.</Pokemon>
+<Pokemon id="37" language="9" name="Vulpix" genus="Fox">Inside Vulpix’s body burns a flame that never goes out.
+During the daytime, when the temperatures rise, this
+Pokémon releases flames from its mouth to prevent its
+body from growing too hot.</Pokemon>
+<Pokemon id="38" language="9" name="Ninetales" genus="Fox">Legend has it that Ninetales came into being when
+nine wizards possessing sacred powers merged into one.
+This Pokémon is highly intelligent—it can understand
+human speech.</Pokemon>
+<Pokemon id="39" language="9" name="Jigglypuff" genus="Balloon">When this Pokémon sings, it never pauses to breathe.
+If it is in a battle against an opponent that does not easily
+fall asleep, Jigglypuff cannot breathe, endangering its life.</Pokemon>
+<Pokemon id="40" language="9" name="Wigglytuff" genus="Balloon">Wigglytuff’s body is very flexible. By inhaling deeply,
+this Pokémon can inflate itself seemingly without end.
+Once inflated, Wigglytuff bounces along lightly like a balloon.</Pokemon>
+<Pokemon id="41" language="9" name="Zubat" genus="Bat">Zubat avoids sunlight because exposure causes it to become
+unhealthy. During the daytime, it stays in caves or under
+the eaves of old houses, sleeping while hanging upside down.</Pokemon>
+<Pokemon id="42" language="9" name="Golbat" genus="Bat">Golbat bites down on prey with its four fangs and drinks
+the victim’s blood. It becomes active on inky dark
+moonless nights, flying around to attack people and Pokémon.</Pokemon>
+<Pokemon id="43" language="9" name="Oddish" genus="Weed">Oddish searches for fertile, nutrient-rich soil, then plants itself.
+During the daytime, while it is planted, this Pokémon’s feet
+are thought to change shape and become similar to the roots
+of trees.</Pokemon>
+<Pokemon id="44" language="9" name="Gloom" genus="Weed">From its mouth Gloom drips honey that smells absolutely
+horrible. Apparently, it loves the horrid stench. It sniffs the
+noxious fumes and then drools even more of its honey.</Pokemon>
+<Pokemon id="45" language="9" name="Vileplume" genus="Flower">Vileplume has the world’s largest petals. They are used to
+attract prey that are then doused with toxic spores. Once the
+prey are immobilized, this Pokémon catches and devours them.</Pokemon>
+<Pokemon id="46" language="9" name="Paras" genus="Mushroom">Paras has parasitic mushrooms growing on its back called
+tochukaso. They grow large by drawing nutrients from this
+Bug Pokémon host. They are highly valued as a medicine
+for extending life.</Pokemon>
+<Pokemon id="47" language="9" name="Parasect" genus="Mushroom">Parasect is known to infest large trees en masse and drain
+nutrients from the lower trunk and roots. When an infested
+tree dies, they move onto another tree all at once.</Pokemon>
+<Pokemon id="48" language="9" name="Venonat" genus="Insect">Venonat is said to have evolved with a coat of thin, stiff hair
+that covers its entire body for protection. It possesses large
+eyes that never fail to spot even minuscule prey.</Pokemon>
+<Pokemon id="49" language="9" name="Venomoth" genus="Poison Moth">Venomoth is nocturnal—it is a Pokémon that only becomes
+active at night. Its favorite prey are small insects that gather
+around streetlights, attracted by the light in the darkness.</Pokemon>
+<Pokemon id="50" language="9" name="Diglett" genus="Mole">Diglett are raised in most farms. The reason is simple—
+wherever this Pokémon burrows, the soil is left perfectly tilled
+for planting crops. This soil is made ideal for growing
+delicious vegetables.</Pokemon>
+<Pokemon id="51" language="9" name="Dugtrio" genus="Mole">Dugtrio are actually triplets that emerged from one body.
+As a result, each triplet thinks exactly like the other two
+triplets. They work cooperatively to burrow endlessly.</Pokemon>
+<Pokemon id="52" language="9" name="Meowth" genus="Scratch Cat">Meowth withdraws its sharp claws into its paws to slinkily sneak
+about without making any incriminating footsteps. For some
+reason, this Pokémon loves shiny coins that glitter with light.</Pokemon>
+<Pokemon id="53" language="9" name="Persian" genus="Classy Cat">Persian has six bold whiskers that give it a look of toughness.
+The whiskers sense air movements to determine what is in the
+Pokémon’s surrounding vicinity. It becomes docile if grabbed
+by the whiskers.</Pokemon>
+<Pokemon id="54" language="9" name="Psyduck" genus="Duck">If it uses its mysterious power, Psyduck can’t remember
+having done so. It apparently can’t form a memory of such
+an event because it goes into an altered state that is much
+like deep sleep.</Pokemon>
+<Pokemon id="55" language="9" name="Golduck" genus="Duck">Golduck is the fastest swimmer among all Pokémon. It swims
+effortlessly, even in a rough, stormy sea. It sometimes rescues
+people from wrecked ships floundering in high seas.</Pokemon>
+<Pokemon id="56" language="9" name="Mankey" genus="Pig Monkey">When Mankey starts shaking and its nasal breathing turns
+rough, it’s a sure sign that it is becoming angry. However,
+because it goes into a towering rage almost instantly,
+it is impossible for anyone to flee its wrath.</Pokemon>
+<Pokemon id="57" language="9" name="Primeape" genus="Pig Monkey">When Primeape becomes furious, its blood circulation
+is boosted. In turn, its muscles are made even stronger.
+However, it also becomes much less intelligent at the
+same time.</Pokemon>
+<Pokemon id="58" language="9" name="Growlithe" genus="Puppy">Growlithe has a superb sense of smell. Once it smells anything,
+this Pokémon won’t forget the scent, no matter what. It uses
+its advanced olfactory sense to determine the emotions of
+other living things.</Pokemon>
+<Pokemon id="59" language="9" name="Arcanine" genus="Legendary">Arcanine is known for its high speed. It is said to be capable
+of running over 6,200 miles in a single day and night. The
+fire that blazes wildly within this Pokémon’s body is its source
+of power.</Pokemon>
+<Pokemon id="60" language="9" name="Poliwag" genus="Tadpole">Poliwag has a very thin skin. It is possible to see the
+Pokémon’s spiral innards right through the skin. Despite its
+thinness, however, the skin is also very flexible. Even sharp
+fangs bounce right off it.</Pokemon>
+<Pokemon id="61" language="9" name="Poliwhirl" genus="Tadpole">The surface of Poliwhirl’s body is always wet and slick with
+a slimy fluid. Because of this slippery covering, it can easily
+slip and slide out of the clutches of any enemy in battle.</Pokemon>
+<Pokemon id="62" language="9" name="Poliwrath" genus="Tadpole">Poliwrath’s highly developed, brawny muscles never grow
+fatigued, however much it exercises. It is so tirelessly strong,
+this Pokémon can swim back and forth across the ocean
+without effort.</Pokemon>
+<Pokemon id="63" language="9" name="Abra" genus="Psi">Abra needs to sleep for eighteen hours a day. If it doesn’t,
+this Pokémon loses its ability to use telekinetic powers. If it is
+attacked, Abra escapes using Teleport while it is still sleeping.</Pokemon>
+<Pokemon id="64" language="9" name="Kadabra" genus="Psi">Kadabra holds a silver spoon in its hand. The spoon is used
+to amplify the alpha waves in its brain. Without the spoon, the
+Pokémon is said to be limited to half the usual amount of its
+telekinetic powers.</Pokemon>
+<Pokemon id="65" language="9" name="Alakazam" genus="Psi">Alakazam’s brain continually grows, infinitely multiplying
+brain cells. This amazing brain gives this Pokémon an
+astoundingly high IQ of 5,000. It has a thorough memory
+of everything that has occurred in the world.</Pokemon>
+<Pokemon id="66" language="9" name="Machop" genus="Superpower">Machop exercises by hefting around a Graveler as if it were
+a barbell. There are some Machop that travel the world in a
+quest to master all kinds of martial arts.</Pokemon>
+<Pokemon id="67" language="9" name="Machoke" genus="Superpower">Machoke undertakes bodybuilding every day even as
+it helps people with tough, physically demanding labor.
+On its days off, this Pokémon heads to the fields and
+mountains to exercise and train.</Pokemon>
+<Pokemon id="68" language="9" name="Machamp" genus="Superpower">Machamp is known as the Pokémon that has mastered
+every kind of martial arts. If it grabs hold of the foe with its
+four arms, the battle is all but over. The hapless foe is thrown
+far over the horizon.</Pokemon>
+<Pokemon id="69" language="9" name="Bellsprout" genus="Flower">Bellsprout’s thin and flexible body lets it bend and sway
+to avoid any attack, however strong it may be. From its mouth,
+this Pokémon spits a corrosive fluid that melts even iron.</Pokemon>
+<Pokemon id="70" language="9" name="Weepinbell" genus="Flycatcher">Weepinbell has a large hook on its rear end. At night, the
+Pokémon hooks on to a tree branch and goes to sleep.
+If it moves around in its sleep, it may wake up to find itself
+on the ground.</Pokemon>
+<Pokemon id="71" language="9" name="Victreebel" genus="Flycatcher">Victreebel has a long vine that extends from its head.
+This vine is waved and flicked about as if it were an animal
+to attract prey. When an unsuspecting prey draws near,
+this Pokémon swallows it whole.</Pokemon>
+<Pokemon id="72" language="9" name="Tentacool" genus="Jellyfish">Tentacool absorbs sunlight and refracts it using water inside
+its body to convert it into beam energy. This Pokémon shoots
+beams from the small round organ above its eyes.</Pokemon>
+<Pokemon id="73" language="9" name="Tentacruel" genus="Jellyfish">Tentacruel has tentacles that can be freely elongated
+and shortened at will. It ensnares prey with its tentacles
+and weakens the prey by dosing it with a harsh toxin.
+It can catch up to 80 prey at the same time.</Pokemon>
+<Pokemon id="74" language="9" name="Geodude" genus="Rock">When Geodude sleeps deeply, it buries itself halfway into the
+ground. It will not awaken even if hikers step on it unwittingly.
+In the morning, this Pokémon rolls downhill in search of food.</Pokemon>
+<Pokemon id="75" language="9" name="Graveler" genus="Rock">Rocks are Graveler’s favorite food. This Pokémon will climb a
+mountain from the base to the summit, crunchingly feasting on
+rocks all the while. Upon reaching the peak, it rolls back down
+to the bottom.</Pokemon>
+<Pokemon id="76" language="9" name="Golem" genus="Megaton">Golem is known for rolling down from mountains. To prevent
+them from rolling into the homes of people downhill, grooves
+have been dug into the sides of mountains to serve as
+guideways for diverting this Pokémon’s course.</Pokemon>
+<Pokemon id="77" language="9" name="Ponyta" genus="Fire Horse">Ponyta is very weak at birth. It can barely stand up.
+This Pokémon becomes stronger by stumbling and
+falling to keep up with its parent.</Pokemon>
+<Pokemon id="78" language="9" name="Rapidash" genus="Fire Horse">Rapidash usually can be seen casually cantering in the fields
+and plains. However, when this Pokémon turns serious, its
+fiery manes flare and blaze as it gallops its way up to 150 mph.</Pokemon>
+<Pokemon id="79" language="9" name="Slowpoke" genus="Dopey">Slowpoke uses its tail to catch prey by dipping it in water
+at the side of a river. However, this Pokémon often forgets
+what it’s doing and often spends entire days just loafing
+at water’s edge.</Pokemon>
+<Pokemon id="80" language="9" name="Slowbro" genus="Hermit Crab">Slowbro’s tail has a Shellder firmly attached with a bite.
+As a result, the tail can’t be used for fishing anymore. This
+causes Slowbro to grudgingly swim and catch prey instead.</Pokemon>
+<Pokemon id="81" language="9" name="Magnemite" genus="Magnet">Magnemite floats in the air by emitting electromagnetic waves
+from the units at its sides. These waves block gravity. This
+Pokémon becomes incapable of flight if its internal electrical
+supply is depleted.</Pokemon>
+<Pokemon id="82" language="9" name="Magneton" genus="Magnet">Magneton emits a powerful magnetic force that is fatal to
+electronics and precision instruments. Because of this, it is
+said that some towns warn people to keep this Pokémon
+inside a Poké Ball.</Pokemon>
+<Pokemon id="83" language="9" name="Farfetch’d" genus="Wild Duck">Farfetch’d is always seen with a stalk from a plant of some
+sort. Apparently, there are good stalks and bad stalks. This
+Pokémon has been known to fight with others over stalks.</Pokemon>
+<Pokemon id="84" language="9" name="Doduo" genus="Twin Bird">Doduo’s two heads contain completely identical brains. A
+scientific study reported that on rare occasions, there will be
+examples of this Pokémon possessing different sets of brains.</Pokemon>
+<Pokemon id="85" language="9" name="Dodrio" genus="Triple Bird">Apparently, the heads aren’t the only parts of the body that
+Dodrio has three of. It has three sets of hearts and lungs as
+well, so it is capable of running long distances without rest.</Pokemon>
+<Pokemon id="86" language="9" name="Seel" genus="Sea Lion">Seel hunts for prey in the frigid sea underneath sheets of ice.
+When it needs to breathe, it punches a hole through the ice
+with the sharply protruding section of its head.</Pokemon>
+<Pokemon id="87" language="9" name="Dewgong" genus="Sea Lion">Dewgong loves to snooze on bitterly cold ice. The sight of
+this Pokémon sleeping on a glacier was mistakenly thought
+to be a mermaid by a mariner long ago.</Pokemon>
+<Pokemon id="88" language="9" name="Grimer" genus="Sludge">Grimer emerged from the sludge that settled on a polluted
+seabed. This Pokémon loves anything filthy. It constantly
+leaks a horribly germ-infested fluid from all over its body.</Pokemon>
+<Pokemon id="89" language="9" name="Muk" genus="Sludge">This Pokémon’s favorite food is anything that is repugnantly
+filthy. In dirty towns where people think nothing of throwing
+away litter on the streets, Muk are certain to gather.</Pokemon>
+<Pokemon id="90" language="9" name="Shellder" genus="Bivalve">At night, this Pokémon uses its broad tongue to burrow a hole
+in the seafloor sand and then sleep in it. While it is sleeping,
+Shellder closes its shell, but leaves its tongue hanging out.</Pokemon>
+<Pokemon id="91" language="9" name="Cloyster" genus="Bivalve">Cloyster is capable of swimming in the sea. It does so by
+swallowing water, then jetting it out toward the rear. This
+Pokémon shoots spikes from its shell using the same system.</Pokemon>
+<Pokemon id="92" language="9" name="Gastly" genus="Gas">Gastly is largely composed of gaseous matter. When exposed
+to a strong wind, the gaseous body quickly dwindles away.
+Groups of this Pokémon cluster under the eaves of houses to
+escape the ravages of wind.</Pokemon>
+<Pokemon id="93" language="9" name="Haunter" genus="Gas">Haunter is a dangerous Pokémon. If one beckons you while
+floating in darkness, you must never approach it. This Pokémon
+will try to lick you with its tongue and steal your life away.</Pokemon>
+<Pokemon id="94" language="9" name="Gengar" genus="Shadow">Sometimes, on a dark night, your shadow thrown by a
+streetlight will suddenly and startlingly overtake you.
+It is actually a Gengar running past you, pretending to be
+your shadow.</Pokemon>
+<Pokemon id="95" language="9" name="Onix" genus="Rock Snake">Onix has a magnet in its brain. It acts as a compass so that
+this Pokémon does not lose direction while it is tunneling.
+As it grows older, its body becomes increasingly rounder
+and smoother.</Pokemon>
+<Pokemon id="96" language="9" name="Drowzee" genus="Hypnosis">If your nose becomes itchy while you are sleeping, it’s a sure
+sign that one of these Pokémon is standing above your pillow
+and trying to eat your dream through your nostrils.</Pokemon>
+<Pokemon id="97" language="9" name="Hypno" genus="Hypnosis">Hypno holds a pendulum in its hand. The arcing movement and
+glitter of the pendulum lull the foe into a deep state of
+hypnosis. While this Pokémon searches for prey, it polishes
+the pendulum.</Pokemon>
+<Pokemon id="98" language="9" name="Krabby" genus="River Crab">Krabby live on beaches, burrowed inside holes dug into
+the sand. On sandy beaches with little in the way of food,
+these Pokémon can be seen squabbling with each other
+over territory.</Pokemon>
+<Pokemon id="99" language="9" name="Kingler" genus="Pincer">Kingler has an enormous, oversized claw. It waves this huge
+claw in the air to communicate with others. However, because
+the claw is so heavy, the Pokémon quickly tires.</Pokemon>
+<Pokemon id="100" language="9" name="Voltorb" genus="Ball">Voltorb is extremely sensitive—it explodes at the slightest
+of shocks. It is rumored that it was first created when a
+Poké Ball was exposed to a powerful pulse of energy.</Pokemon>
+<Pokemon id="101" language="9" name="Electrode" genus="Ball">One of Electrode’s characteristics is its attraction to electricity.
+It is a problematical Pokémon that congregates mostly at
+electrical power plants to feed on electricity that has just
+been generated.</Pokemon>
+<Pokemon id="102" language="9" name="Exeggcute" genus="Egg">This Pokémon consists of six eggs that form a closely knit
+cluster. The six eggs attract each other and spin around.
+When cracks increasingly appear on the eggs, Exeggcute is
+close to evolution.</Pokemon>
+<Pokemon id="103" language="9" name="Exeggutor" genus="Coconut">Exeggutor originally came from the tropics. Its heads
+steadily grow larger from exposure to strong sunlight. It is
+said that when the heads fall off, they group together to
+form Exeggcute.</Pokemon>
+<Pokemon id="104" language="9" name="Cubone" genus="Lonely">Cubone pines for the mother it will never see again. Seeing a
+likeness of its mother in the full moon, it cries. The stains on
+the skull the Pokémon wears are made by the tears it sheds.</Pokemon>
+<Pokemon id="105" language="9" name="Marowak" genus="Bone Keeper">Marowak is the evolved form of a Cubone that has overcome
+its sadness at the loss of its mother and grown tough. This
+Pokémon’s tempered and hardened spirit is not easily broken.</Pokemon>
+<Pokemon id="106" language="9" name="Hitmonlee" genus="Kicking">Hitmonlee’s legs freely contract and stretch. Using these
+springlike legs, it bowls over foes with devastating kicks.
+After battle, it rubs down its legs and loosens the muscles
+to overcome fatigue.</Pokemon>
+<Pokemon id="107" language="9" name="Hitmonchan" genus="Punching">Hitmonchan is said to possess the spirit of a boxer who had
+been working toward a world championship. This Pokémon
+has an indomitable spirit and will never give up in the face
+of adversity.</Pokemon>
+<Pokemon id="108" language="9" name="Lickitung" genus="Licking">Whenever Lickitung comes across something new, it will
+unfailingly give it a lick. It does so because it memorizes things
+by texture and by taste. It is somewhat put off by sour things.</Pokemon>
+<Pokemon id="109" language="9" name="Koffing" genus="Poison Gas">Koffing embodies toxic substances. It mixes the toxins with raw
+garbage to set off a chemical reaction that results in a terribly
+powerful poison gas. The higher the temperature, the more gas
+is concocted by this Pokémon.</Pokemon>
+<Pokemon id="110" language="9" name="Weezing" genus="Poison Gas">Weezing alternately shrinks and inflates its twin bodies to mix
+together toxic gases inside. The more the gases are mixed,
+the more powerful the toxins become. The Pokémon also
+becomes more putrid.</Pokemon>
+<Pokemon id="111" language="9" name="Rhyhorn" genus="Spikes">Rhyhorn’s brain is very small. It is so dense, while on a run
+it forgets why it started running in the first place. It apparently
+remembers sometimes if it demolishes something.</Pokemon>
+<Pokemon id="112" language="9" name="Rhydon" genus="Drill">Rhydon has a horn that serves as a drill. It is used for
+destroying rocks and boulders. This Pokémon occasionally
+rams into streams of magma, but the armor-like hide prevents
+it from feeling the heat.</Pokemon>
+<Pokemon id="113" language="9" name="Chansey" genus="Egg">Chansey lays nutritionally excellent eggs on an everyday basis.
+The eggs are so delicious, they are easily and eagerly
+devoured by even those people who have lost their appetite.</Pokemon>
+<Pokemon id="114" language="9" name="Tangela" genus="Vine">Tangela’s vines snap off easily if they are grabbed. This
+happens without pain, allowing it to make a quick getaway.
+The lost vines are replaced by newly grown vines the very
+next day.</Pokemon>
+<Pokemon id="115" language="9" name="Kangaskhan" genus="Parent">If you come across a young Kangaskhan playing by itself,
+you must never disturb it or attempt to catch it. The baby
+Pokémon’s parent is sure to be in the area, and it will
+become violently enraged at you.</Pokemon>
+<Pokemon id="116" language="9" name="Horsea" genus="Dragon">If Horsea senses danger, it will reflexively spray a dense
+black ink from its mouth and try to escape. This Pokémon
+swims by cleverly flapping the fin on its back.</Pokemon>
+<Pokemon id="117" language="9" name="Seadra" genus="Dragon">Seadra generates whirlpools by spinning its body.
+The whirlpools are strong enough to swallow even
+fishing boats. This Pokémon weakens prey with
+these currents, then swallows it whole.</Pokemon>
+<Pokemon id="118" language="9" name="Goldeen" genus="Goldfish">Goldeen loves swimming wild and free in rivers and ponds.
+If one of these Pokémon is placed in an aquarium, it will
+shatter even the thickest glass with one ram of its horn
+and make its escape.</Pokemon>
+<Pokemon id="119" language="9" name="Seaking" genus="Goldfish">Seaking is very protective of its eggs. The male and female
+will take turns patrolling around their nest and eggs. The
+guarding of eggs by these Pokémon goes on for over a month.</Pokemon>
+<Pokemon id="120" language="9" name="Staryu" genus="Star Shape">Staryu apparently communicates with the stars in the night sky
+by flashing the red core at the center of its body. If parts of its
+body are torn, this Pokémon simply regenerates the missing
+pieces and limbs.</Pokemon>
+<Pokemon id="121" language="9" name="Starmie" genus="Mysterious">Starmie swims through water by spinning its star-shaped
+body as if it were a propeller on a ship. The core at the
+center of this Pokémon’s body glows in seven colors.</Pokemon>
+<Pokemon id="122" language="9" name="Mr. Mime" genus="Barrier">Mr. Mime is a master of pantomime. Its gestures and motions
+convince watchers that something unseeable actually exists.
+Once the watchers are convinced, the unseeable thing exists
+as if it were real.</Pokemon>
+<Pokemon id="123" language="9" name="Scyther" genus="Mantis">Scyther is blindingly fast. Its blazing speed enhances the
+effectiveness of the twin scythes on its forearms. This
+Pokémon’s scythes are so effective, they can slice through
+thick logs in one wicked stroke.</Pokemon>
+<Pokemon id="124" language="9" name="Jynx" genus="Human Shape">Jynx walks rhythmically, swaying and shaking its hips
+as if it were dancing. Its motions are so bouncingly alluring,
+people seeing it are compelled to shake their hips without
+giving any thought to what they are doing.</Pokemon>
+<Pokemon id="125" language="9" name="Electabuzz" genus="Electric">When a storm arrives, gangs of this Pokémon compete with
+each other to scale heights that are likely to be stricken by
+lightning bolts. Some towns use Electabuzz in place of
+lightning rods.</Pokemon>
+<Pokemon id="126" language="9" name="Magmar" genus="Spitfire">In battle, Magmar blows out intensely hot flames from
+all over its body to intimidate its opponent. This Pokémon’s
+fiery bursts create heat waves that ignite grass and trees in
+its surroundings.</Pokemon>
+<Pokemon id="127" language="9" name="Pinsir" genus="Stag Beetle">Pinsir has a pair of massive horns. Protruding from the surface
+of these horns are thorns. These thorns are driven deeply into
+the foe’s body when the pincer closes, making it tough for the
+foe to escape.</Pokemon>
+<Pokemon id="128" language="9" name="Tauros" genus="Wild Bull">This Pokémon is not satisfied unless it is rampaging at all
+times. If there is no opponent for Tauros to battle, it will
+charge at thick trees and knock them down to calm itself.</Pokemon>
+<Pokemon id="129" language="9" name="Magikarp" genus="Fish">Magikarp is virtually useless in battle as it can only splash
+around. As a result, it is considered to be weak. However,
+it is actually a very hardy Pokémon that can survive in any
+body of water no matter how polluted it is.</Pokemon>
+<Pokemon id="130" language="9" name="Gyarados" genus="Atrocious">Once Gyarados goes on a rampage, its ferociously violent
+blood doesn’t calm until it has burned everything down.
+There are records of this Pokémon’s rampages lasting a
+whole month.</Pokemon>
+<Pokemon id="131" language="9" name="Lapras" genus="Transport">People have driven Lapras almost to the point of extinction.
+In the evenings, this Pokémon is said to sing plaintively as
+it seeks what few others of its kind still remain.</Pokemon>
+<Pokemon id="132" language="9" name="Ditto" genus="Transform">Ditto rearranges its cell structure to transform itself into other
+shapes. However, if it tries to transform itself into something
+by relying on its memory, this Pokémon manages to get
+details wrong.</Pokemon>
+<Pokemon id="133" language="9" name="Eevee" genus="Evolution">Eevee has an unstable genetic makeup that suddenly mutates
+due to the environment in which it lives. Radiation from various
+stones causes this Pokémon to evolve.</Pokemon>
+<Pokemon id="134" language="9" name="Vaporeon" genus="Bubble Jet">Vaporeon underwent a spontaneous mutation and grew fins
+and gills that allow it to live underwater. This Pokémon has
+the ability to freely control water.</Pokemon>
+<Pokemon id="135" language="9" name="Jolteon" genus="Lightning">Jolteon’s cells generate a low level of electricity. This power
+is amplified by the static electricity of its fur, enabling the
+Pokémon to drop thunderbolts. The bristling fur is made of
+electrically charged needles.</Pokemon>
+<Pokemon id="136" language="9" name="Flareon" genus="Flame">Flareon’s fluffy fur has a functional purpose—it releases heat
+into the air so that its body does not get excessively hot.
+This Pokémon’s body temperature can rise to a maximum of
+1,650 degrees Fahrenheit.</Pokemon>
+<Pokemon id="137" language="9" name="Porygon" genus="Virtual">Porygon is capable of reverting itself entirely back to program
+data and entering cyberspace. This Pokémon is copy protected
+so it cannot be duplicated by copying.</Pokemon>
+<Pokemon id="138" language="9" name="Omanyte" genus="Spiral">Omanyte is one of the ancient and long-since-extinct Pokémon
+that have been regenerated from fossils by people. If attacked
+by an enemy, it withdraws itself inside its hard shell.</Pokemon>
+<Pokemon id="139" language="9" name="Omastar" genus="Spiral">Omastar uses its tentacles to capture its prey. It is
+believed to have become extinct because its shell grew too
+large and heavy, causing its movements to become too slow
+and ponderous.</Pokemon>
+<Pokemon id="140" language="9" name="Kabuto" genus="Shellfish">Kabuto is a Pokémon that has been regenerated from a fossil.
+However, in extremely rare cases, living examples have
+been discovered. The Pokémon has not changed at all for
+300 million years.</Pokemon>
+<Pokemon id="141" language="9" name="Kabutops" genus="Shellfish">Kabutops swam underwater to hunt for its prey in ancient
+times. The Pokémon was apparently evolving from being a
+water dweller to living on land as evident from the beginnings
+of change in its gills and legs.</Pokemon>
+<Pokemon id="142" language="9" name="Aerodactyl" genus="Fossil">Aerodactyl is a Pokémon from the age of dinosaurs. It was
+regenerated from genetic material extracted from amber. It is
+imagined to have been the king of the skies in ancient times.</Pokemon>
+<Pokemon id="143" language="9" name="Snorlax" genus="Sleeping">Snorlax’s typical day consists of nothing more than eating and
+sleeping. It is such a docile Pokémon that there are children
+who use its expansive belly as a place to play.</Pokemon>
+<Pokemon id="144" language="9" name="Articuno" genus="Freeze">Articuno is a legendary bird Pokémon that can control ice.
+The flapping of its wings chills the air. As a result, it is said
+that when this Pokémon flies, snow will fall.</Pokemon>
+<Pokemon id="145" language="9" name="Zapdos" genus="Electric">Zapdos is a legendary bird Pokémon that has the ability
+to control electricity. It usually lives in thunderclouds.
+The Pokémon gains power if it is stricken by lightning bolts.</Pokemon>
+<Pokemon id="146" language="9" name="Moltres" genus="Flame">Moltres is a legendary bird Pokémon that has the ability
+to control fire. If this Pokémon is injured, it is said to dip its
+body in the molten magma of a volcano to burn and heal itself.</Pokemon>
+<Pokemon id="147" language="9" name="Dratini" genus="Dragon">Dratini continually molts and sloughs off its old skin. It does so
+because the life energy within its body steadily builds to reach
+uncontrollable levels.</Pokemon>
+<Pokemon id="148" language="9" name="Dragonair" genus="Dragon">Dragonair stores an enormous amount of energy inside
+its body. It is said to alter weather conditions in its vicinity
+by discharging energy from the crystals on its neck and tail.</Pokemon>
+<Pokemon id="149" language="9" name="Dragonite" genus="Dragon">Dragonite is capable of circling the globe in just 16 hours.
+It is a kindhearted Pokémon that leads lost and foundering
+ships in a storm to the safety of land.</Pokemon>
+<Pokemon id="150" language="9" name="Mewtwo" genus="Genetic">Mewtwo is a Pokémon that was created by genetic
+manipulation. However, even though the scientific power
+of humans created this Pokémon’s body, they failed to
+endow Mewtwo with a compassionate heart.</Pokemon>
+<Pokemon id="151" language="9" name="Mew" genus="New Species">Mew is said to possess the genetic composition of all
+Pokémon. It is capable of making itself invisible at will,
+so it entirely avoids notice even if it approaches people.</Pokemon>
+<Pokemon id="152" language="9" name="Chikorita" genus="Leaf">In battle, Chikorita waves its leaf around to keep the foe at
+bay. However, a sweet fragrance also wafts from the leaf,
+becalming the battling Pokémon and creating a cozy,
+friendly atmosphere all around.</Pokemon>
+<Pokemon id="153" language="9" name="Bayleef" genus="Leaf">Bayleef’s neck is ringed by curled-up leaves. Inside each
+tubular leaf is a small shoot of a tree. The fragrance of this
+shoot makes people peppy.</Pokemon>
+<Pokemon id="154" language="9" name="Meganium" genus="Herb">The fragrance of Meganium’s flower soothes and calms
+emotions. In battle, this Pokémon gives off more of its
+becalming scent to blunt the foe’s fighting spirit.</Pokemon>
+<Pokemon id="155" language="9" name="Cyndaquil" genus="Fire Mouse">Cyndaquil protects itself by flaring up the flames on its back.
+The flames are vigorous if the Pokémon is angry. However, if it
+is tired, the flames splutter fitfully with incomplete combustion.</Pokemon>
+<Pokemon id="156" language="9" name="Quilava" genus="Volcano">Quilava keeps its foes at bay with the intensity of its flames
+and gusts of superheated air. This Pokémon applies its
+outstanding nimbleness to dodge attacks even while scorching
+the foe with flames.</Pokemon>
+<Pokemon id="157" language="9" name="Typhlosion" genus="Volcano">Typhlosion obscures itself behind a shimmering heat haze that
+it creates using its intensely hot flames. This Pokémon creates
+blazing explosive blasts that burn everything to cinders.</Pokemon>
+<Pokemon id="158" language="9" name="Totodile" genus="Big Jaw">Despite the smallness of its body, Totodile’s jaws are very
+powerful. While the Pokémon may think it is just playfully
+nipping, its bite has enough power to cause serious injury.</Pokemon>
+<Pokemon id="159" language="9" name="Croconaw" genus="Big Jaw">Once Croconaw has clamped its jaws on its foe, it will
+absolutely not let go. Because the tips of its fangs are
+forked back like barbed fishhooks, they become impossible
+to remove when they have sunk in.</Pokemon>
+<Pokemon id="160" language="9" name="Feraligatr" genus="Big Jaw">Feraligatr intimidates its foes by opening its huge mouth.
+In battle, it will kick the ground hard with its thick and powerful
+hind legs to charge at the foe at an incredible speed.</Pokemon>
+<Pokemon id="161" language="9" name="Sentret" genus="Scout">When Sentret sleeps, it does so while another stands guard.
+The sentry wakes the others at the first sign of danger. When
+this Pokémon becomes separated from its pack, it becomes
+incapable of sleep due to fear.</Pokemon>
+<Pokemon id="162" language="9" name="Furret" genus="Long Body">Furret has a very slim build. When under attack, it can slickly
+squirm through narrow spaces and get away. In spite of its
+short limbs, this Pokémon is very nimble and fleet.</Pokemon>
+<Pokemon id="163" language="9" name="Hoothoot" genus="Owl">Hoothoot has an internal organ that senses and tracks the
+earth’s rotation. Using this special organ, this Pokémon
+begins hooting at precisely the same time every day.</Pokemon>
+<Pokemon id="164" language="9" name="Noctowl" genus="Owl">Noctowl never fails at catching prey in darkness. This Pokémon
+owes its success to its superior vision that allows it to see in
+minimal light, and to its soft, supple wings that make no sound
+in flight.</Pokemon>
+<Pokemon id="165" language="9" name="Ledyba" genus="Five Star">Ledyba secretes an aromatic fluid from where its legs join its
+body. This fluid is used for communicating with others.
+This Pokémon conveys its feelings to others by altering the
+fluid’s scent.</Pokemon>
+<Pokemon id="166" language="9" name="Ledian" genus="Five Star">It is said that in lands with clean air, where the stars fill the
+sky, there live Ledian in countless numbers. There is a good
+reason for this—the Pokémon uses the light of the stars as
+its energy.</Pokemon>
+<Pokemon id="167" language="9" name="Spinarak" genus="String Spit">The web spun by Spinarak can be considered its second
+nervous system. It is said that this Pokémon can determine
+what kind of prey is touching its web just by the tiny vibrations
+it feels through the web’s strands.</Pokemon>
+<Pokemon id="168" language="9" name="Ariados" genus="Long Leg">Ariados’s feet are tipped with tiny hooked claws that enable it
+to scuttle on ceilings and vertical walls. This Pokémon
+constricts the foe with thin and strong silk webbing.</Pokemon>
+<Pokemon id="169" language="9" name="Crobat" genus="Bat">Crobat sneaks up on its intended prey using wings that barely
+make a sound. This Pokémon rests by hanging on a tree
+branch with its rear legs that serve as wings.</Pokemon>
+<Pokemon id="170" language="9" name="Chinchou" genus="Angler">Chinchou’s two antennas are filled with cells that generate
+strong electricity. This Pokémon’s cells create so much
+electrical power, it even makes itself tingle slightly.</Pokemon>
+<Pokemon id="171" language="9" name="Lanturn" genus="Light">Lanturn is known to emit light. If you peer down into the dark
+sea from a ship at night, you can sometimes see this
+Pokémon’s light rising from the depths where it swims. It gives
+the sea an appearance of a starlit night.</Pokemon>
+<Pokemon id="172" language="9" name="Pichu" genus="Tiny Mouse">When Pichu plays with others, it may short out electricity with
+another Pichu, creating a shower of sparks. In that event, this
+Pokémon will begin crying, startled by the flash of sparks.</Pokemon>
+<Pokemon id="173" language="9" name="Cleffa" genus="Star Shape">On nights with many shooting stars, Cleffa can be seen
+dancing in a ring. They dance through the night and stop only
+at the break of day, when these Pokémon quench their thirst
+with the morning dew.</Pokemon>
+<Pokemon id="174" language="9" name="Igglybuff" genus="Balloon">Igglybuff has a soft and plushy body that feels very much like
+a marshmallow. From this body wafts a gently sweet fragrance
+that soothes and calms the emotions of its foes.</Pokemon>
+<Pokemon id="175" language="9" name="Togepi" genus="Spike Ball">As its energy, Togepi uses the positive emotions of
+compassion and pleasure exuded by people and Pokémon.
+This Pokémon stores up feelings of happiness inside its shell,
+then shares them with others.</Pokemon>
+<Pokemon id="176" language="9" name="Togetic" genus="Happiness">Togetic is said to be a Pokémon that brings good fortune.
+When the Pokémon spots someone who is pure of heart,
+it is said to appear and share its happiness with that person.</Pokemon>
+<Pokemon id="177" language="9" name="Natu" genus="Tiny Bird">Natu has a highly developed jumping ability. The Pokémon
+flaps and leaps onto tree branches that are taller than
+grown-up people to pick at the tree’s new shoots.</Pokemon>
+<Pokemon id="178" language="9" name="Xatu" genus="Mystic">Xatu is known to stand motionless while staring at the sun all
+day long. Some people revere it as a mystical Pokémon out of
+their belief that Xatu is in possession of the power to see into
+the future.</Pokemon>
+<Pokemon id="179" language="9" name="Mareep" genus="Wool">Mareep’s fluffy coat of wool rubs together and builds a static
+charge. The more static electricity is charged, the more brightly
+the lightbulb at the tip of its tail glows.</Pokemon>
+<Pokemon id="180" language="9" name="Flaaffy" genus="Wool">Flaaffy’s wool quality changes so that it can generate
+a high amount of static electricity with a small amount of
+wool. The bare and slick parts of its hide are shielded
+against electricity.</Pokemon>
+<Pokemon id="181" language="9" name="Ampharos" genus="Light">Ampharos gives off so much light that it can be seen even from
+space. People in the old days used the light of this Pokémon
+to send signals back and forth with others far away.</Pokemon>
+<Pokemon id="182" language="9" name="Bellossom" genus="Flower">A Bellossom grows flowers more beautifully if it has evolved
+from a smelly Gloom—the more stinky the better. At night, this
+Pokémon closes its petals and goes to sleep.</Pokemon>
+<Pokemon id="183" language="9" name="Marill" genus="Aqua Mouse">When fishing for food at the edge of a fast-running stream,
+Marill wraps its tail around the trunk of a tree. This Pokémon’s
+tail is flexible and configured to stretch.</Pokemon>
+<Pokemon id="184" language="9" name="Azumarill" genus="Aqua Rabbit">Azumarill can make balloons out of air. It makes these air
+balloons if it spots a drowning Pokémon. The air balloons
+enable the Pokémon in trouble to breathe.</Pokemon>
+<Pokemon id="185" language="9" name="Sudowoodo" genus="Imitation">Sudowoodo camouflages itself as a tree to avoid being
+attacked by enemies. However, because its hands remain
+green throughout the year, the Pokémon is easily identified
+as a fake during the winter.</Pokemon>
+<Pokemon id="186" language="9" name="Politoed" genus="Frog">The curled hair on Politoed’s head is proof of its status as a
+king. It is said that the longer and more curled the hair, the
+more respect this Pokémon earns from its peers.</Pokemon>
+<Pokemon id="187" language="9" name="Hoppip" genus="Cottonweed">This Pokémon drifts and floats with the wind. If it senses the
+approach of strong winds, Hoppip links its leaves with other
+Hoppip to prepare against being blown away.</Pokemon>
+<Pokemon id="188" language="9" name="Skiploom" genus="Cottonweed">Skiploom’s flower blossoms when the temperature rises
+above 64 degrees Fahrenheit. How much the flower opens
+depends on the temperature. For that reason, this Pokémon
+is sometimes used as a thermometer.</Pokemon>
+<Pokemon id="189" language="9" name="Jumpluff" genus="Cottonweed">Jumpluff rides warm southern winds to cross the sea and fly to
+foreign lands. The Pokémon descends to the ground when it
+encounters cold air while it is floating.</Pokemon>
+<Pokemon id="190" language="9" name="Aipom" genus="Long Tail">Aipom’s tail ends in a hand-like appendage that can be cleverly
+manipulated. However, because the Pokémon uses its tail so
+much, its real hands have become rather clumsy.</Pokemon>
+<Pokemon id="191" language="9" name="Sunkern" genus="Seed">Sunkern tries to move as little as it possibly can. It does so
+because it tries to conserve all the nutrients it has stored in its
+body for its evolution. It will not eat a thing, subsisting only on
+morning dew.</Pokemon>
+<Pokemon id="192" language="9" name="Sunflora" genus="Sun">Sunflora converts solar energy into nutrition. It moves around
+actively in the daytime when it is warm. It stops moving as
+soon as the sun goes down for the night.</Pokemon>
+<Pokemon id="193" language="9" name="Yanma" genus="Clear Wing">Yanma is capable of seeing 360 degrees without having to
+move its eyes. It is a great flier that is adept at making sudden
+stops and turning midair. This Pokémon uses its flying ability
+to quickly chase down targeted prey.</Pokemon>
+<Pokemon id="194" language="9" name="Wooper" genus="Water Fish">Wooper usually lives in water. However, it occasionally comes
+out onto land in search of food. On land, it coats its body with
+a gooey, toxic film.</Pokemon>
+<Pokemon id="195" language="9" name="Quagsire" genus="Water Fish">Quagsire hunts for food by leaving its mouth wide open in
+water and waiting for its prey to blunder in unaware. Because
+the Pokémon does not move, it does not get very hungry.</Pokemon>
+<Pokemon id="196" language="9" name="Espeon" genus="Sun">Espeon is extremely loyal to any Trainer it considers to
+be worthy. It is said that this Pokémon developed its
+precognitive powers to protect its Trainer from harm.</Pokemon>
+<Pokemon id="197" language="9" name="Umbreon" genus="Moonlight">Umbreon evolved as a result of exposure to the moon’s waves.
+It hides silently in darkness and waits for its foes to make a
+move. The rings on its body glow when it leaps to attack.</Pokemon>
+<Pokemon id="198" language="9" name="Murkrow" genus="Darkness">Murkrow was feared and loathed as the alleged bearer of ill
+fortune. This Pokémon shows strong interest in anything that
+sparkles or glitters. It will even try to steal rings from women.</Pokemon>
+<Pokemon id="199" language="9" name="Slowking" genus="Royal">Slowking undertakes research every day in an effort to solve
+the mysteries of the world. However, this Pokémon apparently
+forgets everything it has learned if the Shellder on its head
+comes off.</Pokemon>
+<Pokemon id="200" language="9" name="Misdreavus" genus="Screech">Misdreavus frightens people with a creepy, sobbing cry.
+The Pokémon apparently uses its red spheres to absorb the
+fearful feelings of foes and turn them into nutrition.</Pokemon>
+<Pokemon id="201" language="9" name="Unown" genus="Symbol">This Pokémon is shaped like ancient writing. It is a mystery as
+to which came first, the ancient writings or the various Unown.
+Research into this topic is ongoing but nothing is known.</Pokemon>
+<Pokemon id="202" language="9" name="Wobbuffet" genus="Patient">Wobbuffet does nothing but endure attacks—it won’t attack on
+its own. However, it won’t endure an attack on its tail. When
+that happens, the Pokémon will try to take the foe with it using
+Destiny Bond.</Pokemon>
+<Pokemon id="203" language="9" name="Girafarig" genus="Long Neck">Girafarig’s rear head contains a tiny brain that is too small for
+thinking. However, the rear head doesn’t need to sleep, so it
+can keep watch over its surroundings 24 hours a day.</Pokemon>
+<Pokemon id="204" language="9" name="Pineco" genus="Bagworm">Pineco hangs from a tree branch and patiently waits for prey to
+come along. If the Pokémon is disturbed while eating by
+someone shaking its tree, it drops down to the ground and
+explodes with no warning.</Pokemon>
+<Pokemon id="205" language="9" name="Forretress" genus="Bagworm">Forretress conceals itself inside its hardened steel shell.
+The shell is opened when the Pokémon is catching prey,
+but it does so at such a quick pace that the shell’s inside
+cannot be seen.</Pokemon>
+<Pokemon id="206" language="9" name="Dunsparce" genus="Land Snake">Dunsparce has a drill for its tail. It uses this tail to burrow into
+the ground backward. This Pokémon is known to make its
+nest in complex shapes deep under the ground.</Pokemon>
+<Pokemon id="207" language="9" name="Gligar" genus="Fly Scorpion">Gligar glides through the air without a sound as if it were
+sliding. This Pokémon hangs on to the face of its foe using
+its clawed hind legs and the large pincers on its forelegs, then
+injects the prey with its poison barb.</Pokemon>
+<Pokemon id="208" language="9" name="Steelix" genus="Iron Snake">Steelix lives even further underground than Onix.
+This Pokémon is known to dig toward the earth’s core.
+There are records of this Pokémon reaching a depth of
+over six-tenths of a mile underground.</Pokemon>
+<Pokemon id="209" language="9" name="Snubbull" genus="Fairy">By baring its fangs and making a scary face, Snubbull sends
+smaller Pokémon scurrying away in terror. However, this
+Pokémon seems a little sad at making its foes flee.</Pokemon>
+<Pokemon id="210" language="9" name="Granbull" genus="Fairy">Granbull has a particularly well-developed lower jaw.
+The enormous fangs are heavy, causing the Pokémon to tip
+its head back for balance. Unless it is startled, it will not try to
+bite indiscriminately.</Pokemon>
+<Pokemon id="211" language="9" name="Qwilfish" genus="Balloon">Qwilfish sucks in water, inflating itself. This Pokémon
+uses the pressure of the water it swallowed to shoot toxic
+quills all at once from all over its body. It finds swimming
+somewhat challenging.</Pokemon>
+<Pokemon id="212" language="9" name="Scizor" genus="Pincer">Scizor has a body with the hardness of steel. It is not easily
+fazed by ordinary sorts of attacks. This Pokémon flaps its
+wings to regulate its body temperature.</Pokemon>
+<Pokemon id="213" language="9" name="Shuckle" genus="Mold">Shuckle quietly hides itself under rocks, keeping its body
+concealed inside its hard shell while eating berries it has
+stored away. The berries mix with its body fluids to become
+a juice.</Pokemon>
+<Pokemon id="214" language="9" name="Heracross" genus="Single Horn">Heracross has sharp claws on its feet. These are planted
+firmly into the ground or the bark of a tree, giving the
+Pokémon a secure and solid footing to forcefully fling away
+foes with its proud horn.</Pokemon>
+<Pokemon id="215" language="9" name="Sneasel" genus="Sharp Claw">Sneasel scales trees by punching its hooked claws into the
+bark. This Pokémon seeks out unguarded nests and steals
+eggs for food while the parents are away.</Pokemon>
+<Pokemon id="216" language="9" name="Teddiursa" genus="Little Bear">This Pokémon likes to lick its palms that are sweetened by
+being soaked in honey. Teddiursa concocts its own honey
+by blending fruits and pollen collected by Beedrill.</Pokemon>
+<Pokemon id="217" language="9" name="Ursaring" genus="Hibernator">In the forests inhabited by Ursaring, it is said that there are
+many streams and towering trees where they gather food. This
+Pokémon walks through its forest gathering food every day.</Pokemon>
+<Pokemon id="218" language="9" name="Slugma" genus="Lava">Slugma does not have any blood in its body. Instead, intensely
+hot magma circulates throughout this Pokémon’s body,
+carrying essential nutrients and oxygen to its organs.</Pokemon>
+<Pokemon id="219" language="9" name="Magcargo" genus="Lava">Magcargo’s body temperature is approximately
+18,000 degrees Fahrenheit. Water is vaporized on contact.
+If this Pokémon is caught in the rain, the raindrops instantly
+turn into steam, cloaking the area in a thick fog.</Pokemon>
+<Pokemon id="220" language="9" name="Swinub" genus="Pig">Swinub roots for food by rubbing its snout against the ground.
+Its favorite food is a mushroom that grows under the cover of
+dead grass. This Pokémon occasionally roots out hot springs.</Pokemon>
+<Pokemon id="221" language="9" name="Piloswine" genus="Swine">Piloswine is covered by a thick coat of long hair that enables
+it to endure the freezing cold. This Pokémon uses its tusks to
+dig up food that has been buried under ice.</Pokemon>
+<Pokemon id="222" language="9" name="Corsola" genus="Coral">Clusters of Corsola congregate in warm seas where they serve
+as ideal hiding places for smaller Pokémon. When the water
+temperature falls, this Pokémon migrates to the southern seas.</Pokemon>
+<Pokemon id="223" language="9" name="Remoraid" genus="Jet">Remoraid sucks in water, then expels it at high velocity using
+its abdominal muscles to shoot down flying prey. When
+evolution draws near, this Pokémon travels downstream
+from rivers.</Pokemon>
+<Pokemon id="224" language="9" name="Octillery" genus="Jet">Octillery grabs onto its foe using its tentacles. This Pokémon
+tries to immobilize it before delivering the finishing blow. If the
+foe turns out to be too strong, Octillery spews ink to escape.</Pokemon>
+<Pokemon id="225" language="9" name="Delibird" genus="Delivery">Delibird carries its food bundled up in its tail. There once was
+a famous explorer who managed to reach the peak of the
+world’s highest mountain, thanks to one of these Pokémon
+sharing its food.</Pokemon>
+<Pokemon id="226" language="9" name="Mantine" genus="Kite">On sunny days, schools of Mantine can be seen elegantly
+leaping over the sea’s waves. This Pokémon is not bothered
+by the Remoraid that hitches rides.</Pokemon>
+<Pokemon id="227" language="9" name="Skarmory" genus="Armor Bird">Skarmory’s steel wings become tattered and bashed in from
+repeated battles. Once a year, the battered wings grow back
+completely, restoring the cutting edges to their pristine state.</Pokemon>
+<Pokemon id="228" language="9" name="Houndour" genus="Dark">Houndour hunt as a coordinated pack. They communicate
+with each other using a variety of cries to corner their prey.
+This Pokémon’s remarkable teamwork is unparalleled.</Pokemon>
+<Pokemon id="229" language="9" name="Houndoom" genus="Dark">In a Houndoom pack, the one with its horns raked sharply
+toward the back serves a leadership role. These Pokémon
+choose their leader by fighting among themselves.</Pokemon>
+<Pokemon id="230" language="9" name="Kingdra" genus="Dragon">Kingdra sleeps on the seafloor where it is otherwise devoid
+of life. When a storm arrives, the Pokémon is said to awaken
+and wander about in search of prey.</Pokemon>
+<Pokemon id="231" language="9" name="Phanpy" genus="Long Nose">Phanpy uses its long nose to shower itself. When others
+gather around, they thoroughly douse each other with water.
+These Pokémon can be seen drying their soaking-wet
+bodies at the edge of water.</Pokemon>
+<Pokemon id="232" language="9" name="Donphan" genus="Armor">If Donphan were to tackle with its hard body, even a house
+could be destroyed. Using its massive strength, the Pokémon
+helps clear rock and mud slides that block mountain trails.</Pokemon>
+<Pokemon id="233" language="9" name="Porygon2" genus="Virtual">Porygon2 was created by humans using the power of science.
+The man-made Pokémon has been endowed with artificial
+intelligence that enables it to learn new gestures and emotions
+on its own.</Pokemon>
+<Pokemon id="234" language="9" name="Stantler" genus="Big Horn">Stantler’s magnificent antlers were traded at high prices as
+works of art. As a result, this Pokémon was hunted close to
+extinction by those who were after the priceless antlers.</Pokemon>
+<Pokemon id="235" language="9" name="Smeargle" genus="Painter">Smeargle marks the boundaries of its territory using a body
+fluid that leaks out from the tip of its tail. Over 5,000 different
+marks left by this Pokémon have been found.</Pokemon>
+<Pokemon id="236" language="9" name="Tyrogue" genus="Scuffle">Tyrogue becomes stressed out if it does not get to train every
+day. When raising this Pokémon, the Trainer must establish
+and uphold various training methods.</Pokemon>
+<Pokemon id="237" language="9" name="Hitmontop" genus="Handstand">Hitmontop spins on its head at high speed, all the while
+delivering kicks. This technique is a remarkable mix of both
+offense and defense at the same time. The Pokémon travels
+faster spinning than it does walking.</Pokemon>
+<Pokemon id="238" language="9" name="Smoochum" genus="Kiss">Smoochum actively runs about, but also falls quite often.
+Whenever the chance arrives, it will look for its reflection to
+make sure its face hasn’t become dirty.</Pokemon>
+<Pokemon id="239" language="9" name="Elekid" genus="Electric">Elekid stores electricity in its body. If it touches metal and
+accidentally discharges all its built-up electricity, this Pokémon
+begins swinging its arms in circles to recharge itself.</Pokemon>
+<Pokemon id="240" language="9" name="Magby" genus="Live Coal">Magby’s state of health is determined by observing the fire it
+breathes. If the Pokémon is spouting yellow flames from its
+mouth, it is in good health. When it is fatigued, black smoke
+will be mixed in with the flames.</Pokemon>
+<Pokemon id="241" language="9" name="Miltank" genus="Milk Cow">Miltank gives over five gallons of milk on a daily basis. Its
+sweet milk is enjoyed by children and grown-ups alike. People
+who can’t drink milk turn it into yogurt and eat it instead.</Pokemon>
+<Pokemon id="242" language="9" name="Blissey" genus="Happiness">Blissey senses sadness with its fluffy coat of fur. If it does so,
+this Pokémon will rush over to a sad person, no matter how far
+away, to share a Lucky Egg that brings a smile to any face.</Pokemon>
+<Pokemon id="243" language="9" name="Raikou" genus="Thunder">Raikou embodies the speed of lightning. The roars of
+this Pokémon send shock waves shuddering through the
+air and shake the ground as if lightning bolts had come
+crashing down.</Pokemon>
+<Pokemon id="244" language="9" name="Entei" genus="Volcano">Entei embodies the passion of magma. This Pokémon is
+thought to have been born in the eruption of a volcano.
+It sends up massive bursts of fire that utterly consume all
+that they touch.</Pokemon>
+<Pokemon id="245" language="9" name="Suicune" genus="Aurora">Suicune embodies the compassion of a pure spring of water.
+It runs across the land with gracefulness. This Pokémon has
+the power to purify dirty water.</Pokemon>
+<Pokemon id="246" language="9" name="Larvitar" genus="Rock Skin">Larvitar is born deep under the ground. To come up to the
+surface, this Pokémon must eat its way through the soil above.
+Until it does so, Larvitar cannot see its parents.</Pokemon>
+<Pokemon id="247" language="9" name="Pupitar" genus="Hard Shell">Pupitar creates a gas inside its body that it compresses and
+forcefully ejects to propel itself like a jet. The body is very
+durable—it avoids damage even if it hits solid steel.</Pokemon>
+<Pokemon id="248" language="9" name="Tyranitar" genus="Armor">Tyranitar is so overwhelmingly powerful, it can bring down a
+whole mountain to make its nest. This Pokémon wanders about
+in mountains seeking new opponents to fight.</Pokemon>
+<Pokemon id="249" language="9" name="Lugia" genus="Diving">Lugia’s wings pack devastating power—a light fluttering of its
+wings can blow apart regular houses. As a result, this
+Pokémon chooses to live out of sight deep under the sea.</Pokemon>
+<Pokemon id="250" language="9" name="Ho-Oh" genus="Rainbow">Ho-Oh’s feathers glow in seven colors depending on the angle
+at which they are struck by light. These feathers are said to
+bring happiness to the bearers. This Pokémon is said to live at
+the foot of a rainbow.</Pokemon>
+<Pokemon id="251" language="9" name="Celebi" genus="Time Travel">This Pokémon came from the future by crossing over time.
+It is thought that so long as Celebi appears, a bright and
+shining future awaits us.</Pokemon>
+<Pokemon id="252" language="9" name="Treecko" genus="Wood Gecko">Treecko is cool, calm, and collected—it never panics under
+any situation. If a bigger foe were to glare at this Pokémon,
+it would glare right back without conceding an inch of ground.</Pokemon>
+<Pokemon id="253" language="9" name="Grovyle" genus="Wood Gecko">This Pokémon adeptly flies from branch to branch in trees.
+In a forest, no Pokémon can ever hope to catch a fleeing
+Grovyle however fast they may be.</Pokemon>
+<Pokemon id="254" language="9" name="Sceptile" genus="Forest">Sceptile has seeds growing on its back. They are said to be
+bursting with nutrients that revitalize trees. This Pokémon
+raises the trees in a forest with loving care.</Pokemon>
+<Pokemon id="255" language="9" name="Torchic" genus="Chick">Torchic has a place inside its body where it keeps its flame.
+Give it a hug—it will be glowing with warmth. This Pokémon is
+covered all over by a fluffy coat of down.</Pokemon>
+<Pokemon id="256" language="9" name="Combusken" genus="Young Fowl">Combusken battles with the intensely hot flames it spews from
+its beak and with outstandingly destructive kicks. This
+Pokémon’s cry is very loud and distracting.</Pokemon>
+<Pokemon id="257" language="9" name="Blaziken" genus="Blaze">Blaziken has incredibly strong legs—it can easily clear a
+30-story building in one leap. This Pokémon’s blazing punches
+leave its foes scorched and blackened.</Pokemon>
+<Pokemon id="258" language="9" name="Mudkip" genus="Mud Fish">In water, Mudkip breathes using the gills on its cheeks. If it is
+faced with a tight situation in battle, this Pokémon will unleash
+its amazing power—it can crush rocks bigger than itself.</Pokemon>
+<Pokemon id="259" language="9" name="Marshtomp" genus="Mud Fish">Marshtomp is much faster at traveling through mud than it is at
+swimming. This Pokémon’s hindquarters exhibit obvious
+development, giving it the ability to walk on just its hind legs.</Pokemon>
+<Pokemon id="260" language="9" name="Swampert" genus="Mud Fish">Swampert predicts storms by sensing subtle differences in the
+sounds of waves and tidal winds with its fins. If a storm is
+approaching, it piles up boulders to protect itself.</Pokemon>
+<Pokemon id="261" language="9" name="Poochyena" genus="Bite">Poochyena is an omnivore—it will eat anything. A distinguishing
+feature is how large its fangs are compared to its body. This
+Pokémon tries to intimidate its foes by making the hair on its
+tail bristle out.</Pokemon>
+<Pokemon id="262" language="9" name="Mightyena" genus="Bite">Mightyena travel and act as a pack in the wild. The memory
+of its life in the wild compels the Pokémon to obey only
+those Trainers that it recognizes to possess superior skill.</Pokemon>
+<Pokemon id="263" language="9" name="Zigzagoon" genus="Tiny Raccoon">The hair on Zigzagoon’s back is bristly. It rubs the hard back
+hair against trees to leave its territorial markings. This Pokémon
+may play dead to fool foes in battle.</Pokemon>
+<Pokemon id="264" language="9" name="Linoone" genus="Rushing">When hunting, Linoone will make a beeline straight for the
+prey at a full run. While this Pokémon is capable of topping
+60 mph, it has to come to a screeching halt before it can turn.</Pokemon>
+<Pokemon id="265" language="9" name="Wurmple" genus="Worm">Wurmple is targeted by Swellow as prey. This Pokémon
+will try to resist by pointing the spikes on its rear at the
+attacking predator. It will weaken the foe by leaking poison
+from the spikes.</Pokemon>
+<Pokemon id="266" language="9" name="Silcoon" genus="Cocoon">Silcoon was thought to endure hunger and not consume
+anything before its evolution. However, it is now thought
+that this Pokémon slakes its thirst by drinking rainwater
+that collects on its silk.</Pokemon>
+<Pokemon id="267" language="9" name="Beautifly" genus="Butterfly">Beautifly has a long mouth like a coiled needle, which is very
+convenient for collecting pollen from flowers. This Pokémon
+rides the spring winds as it flits around gathering pollen.</Pokemon>
+<Pokemon id="268" language="9" name="Cascoon" genus="Cocoon">If it is attacked, Cascoon remains motionless however badly it
+may be hurt. It does so because if it were to move, its body
+would be weak upon evolution. This Pokémon will also not
+forget the pain it endured.</Pokemon>
+<Pokemon id="269" language="9" name="Dustox" genus="Poison Moth">When Dustox flaps its wings, a fine dust is scattered all over.
+This dust is actually a powerful poison that will even make a
+pro wrestler sick. This Pokémon searches for food using its
+antennae like radar.</Pokemon>
+<Pokemon id="270" language="9" name="Lotad" genus="Water Weed">Lotad is said to have dwelled on land before. However, this
+Pokémon is thought to have returned to water because the
+leaf on its head grew large and heavy. It now lives by floating
+atop the water.</Pokemon>
+<Pokemon id="271" language="9" name="Lombre" genus="Jolly">Lombre’s entire body is covered by a slippery, slimy film.
+It feels horribly unpleasant to be touched by this Pokémon’s
+hands. Lombre is often mistaken for a human child.</Pokemon>
+<Pokemon id="272" language="9" name="Ludicolo" genus="Carefree">Upon hearing an upbeat and cheerful rhythm, the cells in
+Ludicolo’s body become very energetic and active. Even
+in battle, this Pokémon will exhibit an amazing amount
+of power.</Pokemon>
+<Pokemon id="273" language="9" name="Seedot" genus="Acorn">Seedot looks exactly like an acorn when it is dangling from a
+tree branch. It startles other Pokémon by suddenly moving.
+This Pokémon polishes its body once a day using leaves.</Pokemon>
+<Pokemon id="274" language="9" name="Nuzleaf" genus="Wily">This Pokémon pulls out the leaf on its head and makes a flute
+with it. The sound of Nuzleaf’s flute strikes fear and uncertainty
+in the hearts of people lost in a forest.</Pokemon>
+<Pokemon id="275" language="9" name="Shiftry" genus="Wicked">Shiftry’s large fans generate awesome gusts of wind at a
+speed close to 100 feet per second. The whipped-up wind
+blows anything away. This Pokémon chooses to live quietly
+deep in forests.</Pokemon>
+<Pokemon id="276" language="9" name="Taillow" genus="Tiny Swallow">Taillow is young—it has only just left its nest. As a result,
+it sometimes becomes lonesome and cries at night.
+This Pokémon feeds on Wurmple that live in forests.</Pokemon>
+<Pokemon id="277" language="9" name="Swellow" genus="Swallow">Swellow is very conscientious about the upkeep of its glossy
+wings. Once two Swellow are gathered, they diligently take
+care of cleaning each other’s wings.</Pokemon>
+<Pokemon id="278" language="9" name="Wingull" genus="Seagull">Wingull rides updrafts rising from the sea by extending its long
+and narrow wings to glide. This Pokémon’s long beak is useful
+for catching prey.</Pokemon>
+<Pokemon id="279" language="9" name="Pelipper" genus="Water Bird">Pelipper searches for food while in flight by skimming the wave
+tops. This Pokémon dips its large bill in the sea to scoop up
+food, then swallows everything in one big gulp.</Pokemon>
+<Pokemon id="280" language="9" name="Ralts" genus="Feeling">Ralts has the ability to sense the emotions of people. If its
+Trainer is in a cheerful mood, this Pokémon grows cheerful
+and joyous in the same way.</Pokemon>
+<Pokemon id="281" language="9" name="Kirlia" genus="Emotion">Kirlia uses the horns on its head to amplify its psychokinetic
+power. When the Pokémon uses its power, the air around it
+becomes distorted, creating mirages of nonexistent scenery.</Pokemon>
+<Pokemon id="282" language="9" name="Gardevoir" genus="Embrace">Gardevoir has the psychokinetic power to distort the
+dimensions and create a small black hole. This Pokémon
+will try to protect its Trainer even at the risk of its own life.</Pokemon>
+<Pokemon id="283" language="9" name="Surskit" genus="Pond Skater">If Surskit senses danger, it secretes a thick, sugary syrup from
+the tip of its head. There are some Pokémon that love eating
+this syrup.</Pokemon>
+<Pokemon id="284" language="9" name="Masquerain" genus="Eyeball">Masquerain’s antennas have eyelike patterns that usually
+give it an angry look. If the “eyes” are droopy and appear sad,
+it is said to be a sign that a heavy rainfall is on its way.</Pokemon>
+<Pokemon id="285" language="9" name="Shroomish" genus="Mushroom">If Shroomish senses danger, it shakes its body and scatters
+spores from the top of its head. This Pokémon’s spores are
+so toxic, they make trees and weeds wilt.</Pokemon>
+<Pokemon id="286" language="9" name="Breloom" genus="Mushroom">The seeds ringing Breloom’s tail are made of hardened toxic
+spores. It is horrible to eat the seeds. Just taking a bite of this
+Pokémon’s seed will cause your stomach to rumble.</Pokemon>
+<Pokemon id="287" language="9" name="Slakoth" genus="Slacker">Slakoth’s heart beats just once a minute. Whatever happens,
+it is content to loaf around motionless. It is rare to see this
+Pokémon in motion.</Pokemon>
+<Pokemon id="288" language="9" name="Vigoroth" genus="Wild Monkey">Vigoroth is simply incapable of remaining still. Even when it
+tries to sleep, the blood in its veins grows agitated, compelling
+this Pokémon to run wild throughout the jungle before it can
+settle down.</Pokemon>
+<Pokemon id="289" language="9" name="Slaking" genus="Lazy">Wherever Slaking live, rings of over a yard in diameter appear
+in grassy fields. They are made by the Pokémon as it eats all
+the grass within reach while lying prone on the ground.</Pokemon>
+<Pokemon id="290" language="9" name="Nincada" genus="Trainee">Nincada lives underground. It uses its sharp claws to carve the
+roots of trees and absorb moisture and nutrients.
+This Pokémon can’t withstand bright sunlight so avoids it.</Pokemon>
+<Pokemon id="291" language="9" name="Ninjask" genus="Ninja">If Ninjask is not trained properly, it will refuse to obey
+the Trainer and cry loudly continuously. Because of this
+quality, this Pokémon is said to be one that puts the
+Trainer’s abilities to the test.</Pokemon>
+<Pokemon id="292" language="9" name="Shedinja" genus="Shed">Shedinja is a peculiar Pokémon. It seems to appear unsought
+in a Poké Ball after a Nincada evolves. This bizarre Pokémon
+is entirely immobile—it doesn’t even breathe.</Pokemon>
+<Pokemon id="293" language="9" name="Whismur" genus="Whisper">Whismur is very timid. If it starts to cry loudly, it becomes
+startled by its own crying and cries even harder. When it finally
+stops crying, the Pokémon goes to sleep, all tired out.</Pokemon>
+<Pokemon id="294" language="9" name="Loudred" genus="Big Voice">Loudred shouts while stamping its feet. After it finishes
+shouting, this Pokémon becomes incapable of hearing
+anything for a while. This is considered to be a weak point.</Pokemon>
+<Pokemon id="295" language="9" name="Exploud" genus="Loud Noise">Exploud communicates its feelings to the others by emitting
+whistle-like sounds from the tubes on its body. This Pokémon
+only raises its voice when it is in battle.</Pokemon>
+<Pokemon id="296" language="9" name="Makuhita" genus="Guts">Makuhita has a tireless spirit—it will never give up hope.
+It eats a lot of food, gets plenty of sleep, and it trains very
+rigorously. By living that way, this Pokémon packs its body
+with energy.</Pokemon>
+<Pokemon id="297" language="9" name="Hariyama" genus="Arm Thrust">Hariyama’s thick body may appear fat, but it is actually a hunk
+of solid muscle. If this Pokémon bears down and tightens all its
+muscles, its body becomes as hard as a rock.</Pokemon>
+<Pokemon id="298" language="9" name="Azurill" genus="Polka Dot">Azurill’s tail is large and bouncy. It is packed full of the
+nutrients this Pokémon needs to grow. Azurill can be seen
+bouncing and playing on its big, rubbery tail.</Pokemon>
+<Pokemon id="299" language="9" name="Nosepass" genus="Compass">Nosepass had been said to be completely unmoving, with its
+magnetic nose pointed due north. However, close observation
+has revealed that the Pokémon actually moves by a little over
+3/8 of an inch every year.</Pokemon>
+<Pokemon id="300" language="9" name="Skitty" genus="Kitten">Skitty is known to chase around playfully after its own tail.
+In the wild, this Pokémon lives in holes in the trees of forests.
+It is very popular as a pet because of its adorable looks.</Pokemon>
+<Pokemon id="301" language="9" name="Delcatty" genus="Prim">Delcatty sleeps anywhere it wants without keeping a permanent
+nest. If other Pokémon approach it as it sleeps, this Pokémon
+will never fight—it will just move away somewhere else.</Pokemon>
+<Pokemon id="302" language="9" name="Sableye" genus="Darkness">Sableye digs the ground with sharpened claws to find rocks
+that it eats. Substances in the eaten rocks crystallize and rise
+up to the Pokémon’s body surface.</Pokemon>
+<Pokemon id="303" language="9" name="Mawile" genus="Deceiver">Don’t be taken in by this Pokémon’s cute face—it’s very
+dangerous. Mawile fools the foe into letting down its guard,
+then chomps down with its massive jaws. The steel jaws are
+really horns that have been transformed.</Pokemon>
+<Pokemon id="304" language="9" name="Aron" genus="Iron Armor">Aron has a body of steel. With one all-out charge, this
+Pokémon can demolish even a heavy dump truck.
+The destroyed dump truck then becomes a handy meal
+for the Pokémon.</Pokemon>
+<Pokemon id="305" language="9" name="Lairon" genus="Iron Armor">Lairon feeds on iron contained in rocks and water. It makes
+its nest on mountains where iron ore is buried. As a result,
+the Pokémon often clashes with humans mining the iron ore.</Pokemon>
+<Pokemon id="306" language="9" name="Aggron" genus="Iron Armor">Aggron is protective of its environment. If its mountain is
+ravaged by a landslide or a fire, this Pokémon will haul
+topsoil to the area, plant trees, and beautifully restore its
+own territory.</Pokemon>
+<Pokemon id="307" language="9" name="Meditite" genus="Meditate">Meditite heightens its inner energy through meditation.
+It survives on just one berry a day. Minimal eating is another
+aspect of this Pokémon’s training.</Pokemon>
+<Pokemon id="308" language="9" name="Medicham" genus="Meditate">Through the power of meditation, Medicham developed its
+sixth sense. It gained the ability to use psychokinetic powers.
+This Pokémon is known to meditate for a whole month
+without eating.</Pokemon>
+<Pokemon id="309" language="9" name="Electrike" genus="Lightning">Electrike runs faster than the human eye can follow.
+The friction from running is converted into electricity,
+which is then stored in this Pokémon’s fur.</Pokemon>
+<Pokemon id="310" language="9" name="Manectric" genus="Discharge">Manectric discharges strong electricity from its mane.
+The mane is used for collecting electricity in the atmosphere.
+This Pokémon creates thunderclouds above its head.</Pokemon>
+<Pokemon id="311" language="9" name="Plusle" genus="Cheering">When Plusle is cheering on its partner, it flashes with electric
+sparks from all over its body. If its partner loses, this Pokémon
+cries loudly.</Pokemon>
+<Pokemon id="312" language="9" name="Minun" genus="Cheering">Minun loves to cheer on its partner in battle. It gives off sparks
+from its body while it is doing so. If its partner is in trouble,
+this Pokémon gives off increasing amounts of sparks.</Pokemon>
+<Pokemon id="313" language="9" name="Volbeat" genus="Firefly">Volbeat’s tail glows like a lightbulb. With other Volbeat,
+it uses its tail to draw geometric shapes in the night sky.
+This Pokémon loves the sweet aroma given off by Illumise.</Pokemon>
+<Pokemon id="314" language="9" name="Illumise" genus="Firefly">Illumise leads a flight of illuminated Volbeat to draw signs in
+the night sky. This Pokémon is said to earn greater respect
+from its peers by composing more complex designs in the sky.</Pokemon>
+<Pokemon id="315" language="9" name="Roselia" genus="Thorn">On extremely rare occasions, a Roselia is said to appear with
+its flowers in unusual colors. The thorns on this Pokémon’s
+head contain a vicious poison.</Pokemon>
+<Pokemon id="316" language="9" name="Gulpin" genus="Stomach">Most of Gulpin’s body is made up of its stomach—its heart and
+brain are very small in comparison. This Pokémon’s stomach
+contains special enzymes that dissolve anything.</Pokemon>
+<Pokemon id="317" language="9" name="Swalot" genus="Poison Bag">Swalot has no teeth, so what it eats, it swallows whole, no
+matter what. Its cavernous mouth yawns widely. An automobile
+tire could easily fit inside this Pokémon’s mouth.</Pokemon>
+<Pokemon id="318" language="9" name="Carvanha" genus="Savage">If anything invades Carvanha’s territory, it will swarm and tear
+at the intruder with its pointed fangs. On its own, however, this
+Pokémon turns suddenly timid.</Pokemon>
+<Pokemon id="319" language="9" name="Sharpedo" genus="Brutal">Sharpedo can swim at speeds of up to 75 mph by jetting
+seawater out of its backside. This Pokémon’s drawback is its
+inability to swim long distances.</Pokemon>
+<Pokemon id="320" language="9" name="Wailmer" genus="Ball Whale">Wailmer can store water inside its body to transform itself
+into a ball for bouncing around on the ground. By filling itself
+up with more water, this Pokémon can elevate the height of
+its bounces.</Pokemon>
+<Pokemon id="321" language="9" name="Wailord" genus="Float Whale">When chasing prey, Wailord herds them by leaping out of the
+water and making a humongous splash. It is breathtaking to
+see this Pokémon leaping out of the sea with others in its pod.</Pokemon>
+<Pokemon id="322" language="9" name="Numel" genus="Numb">Numel stores magma of almost 2,200 degrees Fahrenheit
+within its body. If it gets wet, the magma cools and hardens.
+In that event, the Pokémon’s body grows heavy and its
+movements become sluggish.</Pokemon>
+<Pokemon id="323" language="9" name="Camerupt" genus="Eruption">The humps on Camerupt’s back are formed by a transformation
+of its bones. They sometimes blast out molten magma.
+This Pokémon apparently erupts often when it is enraged.</Pokemon>
+<Pokemon id="324" language="9" name="Torkoal" genus="Coal">Torkoal generates energy by burning coal. It grows weaker
+as the fire dies down. When it is preparing for battle, this
+Pokémon burns more coal.</Pokemon>
+<Pokemon id="325" language="9" name="Spoink" genus="Bounce">Spoink keeps a pearl on top of its head. The pearl functions to
+amplify this Pokémon’s psychokinetic powers. It is therefore on
+a constant search for a bigger pearl.</Pokemon>
+<Pokemon id="326" language="9" name="Grumpig" genus="Manipulate">Grumpig uses the black pearls on its body to wield
+its fantastic powers. When it is doing so, it dances bizarrely.
+This Pokémon’s black pearls are valuable as works of art.</Pokemon>
+<Pokemon id="327" language="9" name="Spinda" genus="Spot Panda">No two Spinda are said to have identical spot patterns on their
+hides. This Pokémon moves in a curious manner as if it is
+stumbling in dizziness. Its lurching movements can cause the
+opponent to become confused.</Pokemon>
+<Pokemon id="328" language="9" name="Trapinch" genus="Ant Pit">Trapinch is a patient hunter. It digs an inescapable pit in a
+desert and waits for its prey to come tumbling down. This
+Pokémon can go a whole week without access to any water.</Pokemon>
+<Pokemon id="329" language="9" name="Vibrava" genus="Vibration">Vibrava’s wings have not yet completed the process of
+growing. Rather than flying long distances, they are more
+useful for generating ultrasonic waves by vibrating.</Pokemon>
+<Pokemon id="330" language="9" name="Flygon" genus="Mystic">Flygon whips up a sandstorm by flapping its wings. The wings
+create a series of notes that sound like singing. Because the
+“singing” is the only thing that can be heard in a sandstorm,
+this Pokémon is said to be the desert spirit.</Pokemon>
+<Pokemon id="331" language="9" name="Cacnea" genus="Cactus">The more arid and harsh the environment, the more pretty and
+fragrant a flower Cacnea grows. This Pokémon battles by
+wildly swinging its thorny arms.</Pokemon>
+<Pokemon id="332" language="9" name="Cacturne" genus="Scarecrow">If a traveler is going through a desert in the thick of night,
+Cacturne will follow in a ragtag group. The Pokémon are
+biding their time, waiting for the traveler to tire and become
+incapable of moving.</Pokemon>
+<Pokemon id="333" language="9" name="Swablu" genus="Cotton Bird">Swablu loves to make things clean. If it spots something dirty,
+it will wipe and polish it with its cottony wings. If its wings
+become dirty, this Pokémon finds a stream and showers itself.</Pokemon>
+<Pokemon id="334" language="9" name="Altaria" genus="Humming">Altaria sings in a gorgeous soprano. Its wings are like cotton
+clouds. This Pokémon catches updrafts with its buoyant wings
+and soars way up into the wild blue yonder.</Pokemon>
+<Pokemon id="335" language="9" name="Zangoose" genus="Cat Ferret">Zangoose usually stays on all fours, but when angered, it gets
+up on its hind legs and extends its claws. This Pokémon shares
+a bitter rivalry with Seviper that dates back over generations.</Pokemon>
+<Pokemon id="336" language="9" name="Seviper" genus="Fang Snake">Seviper’s swordlike tail serves two purposes—it slashes foes
+and douses them with secreted poison. This Pokémon will not
+give up its long-running blood feud with Zangoose.</Pokemon>
+<Pokemon id="337" language="9" name="Lunatone" genus="Meteorite">Lunatone becomes active around the time of the full moon.
+Instead of walking, it moves by floating in midair.
+The Pokémon’s intimidating red eyes cause all those who
+see it to become transfixed with fear.</Pokemon>
+<Pokemon id="338" language="9" name="Solrock" genus="Meteorite">Sunlight is the source of Solrock’s power. It is said to possess
+the ability to read the emotions of others. This Pokémon gives
+off intense heat while rotating its body.</Pokemon>
+<Pokemon id="339" language="9" name="Barboach" genus="Whiskers">Barboach’s body is covered with a slimy film. If a foe grabs it,
+this Pokémon just slips out of the enemy’s grip. This Pokémon
+grows weak if the slimy coating dries up.</Pokemon>
+<Pokemon id="340" language="9" name="Whiscash" genus="Whiskers">If Whiscash goes on a wild rampage, it sets off a quake-like
+tremor with a radius of over three miles. This Pokémon has
+the ability to predict real earthquakes.</Pokemon>
+<Pokemon id="341" language="9" name="Corphish" genus="Ruffian">Corphish catches prey with its sharp claws. It has no
+likes or dislikes when it comes to food—it will eat anything.
+This Pokémon has no trouble living in filthy water.</Pokemon>
+<Pokemon id="342" language="9" name="Crawdaunt" genus="Rogue">Crawdaunt molts (sheds) its shell regularly. Immediately after
+molting, its shell is soft and tender. Until the shell hardens,
+this Pokémon hides in its streambed burrow to avoid attack
+from its foes.</Pokemon>
+<Pokemon id="343" language="9" name="Baltoy" genus="Clay Doll">As soon as it spots others of its kind, Baltoy congregates with
+them and then begins crying noisily in unison. This Pokémon
+sleeps while cleverly balancing itself on its one foot.</Pokemon>
+<Pokemon id="344" language="9" name="Claydol" genus="Clay Doll">Claydol is an enigma that appeared from a clay statue made by
+an ancient civilization dating back 20,000 years. This Pokémon
+shoots beams from both its hands.</Pokemon>
+<Pokemon id="345" language="9" name="Lileep" genus="Sea Lily">Lileep is an ancient Pokémon that was regenerated from a
+fossil. It remains permanently anchored to a rock. From its
+immobile perch, this Pokémon intently scans for prey with its
+two eyes.</Pokemon>
+<Pokemon id="346" language="9" name="Cradily" genus="Barnacle">Cradily’s body serves as an anchor, preventing it from being
+washed away in rough seas. This Pokémon secretes a strong
+digestive fluid from its tentacles.</Pokemon>
+<Pokemon id="347" language="9" name="Anorith" genus="Old Shrimp">Anorith is said to be a type of Pokémon predecessor, with
+eight wings at the sides of its body. This Pokémon swam in the
+primordial sea by undulating these eight wings.</Pokemon>
+<Pokemon id="348" language="9" name="Armaldo" genus="Plate">Armaldo is a Pokémon species that became extinct in
+prehistoric times. This Pokémon is said to have walked
+on its hind legs, which would have been more convenient
+for life on land.</Pokemon>
+<Pokemon id="349" language="9" name="Feebas" genus="Fish">While Feebas’s body is in tatters, it has a hardy and tenacious
+life force that enables it to live anywhere. However, this
+Pokémon is also slow and dimwitted, making it an easy catch.</Pokemon>
+<Pokemon id="350" language="9" name="Milotic" genus="Tender">Milotic live at the bottom of large lakes. When this
+Pokémon’s body glows a vivid pink, it releases a pulsing
+wave of energy that brings soothing calm to troubled hearts.</Pokemon>
+<Pokemon id="351" language="9" name="Castform" genus="Weather">Castform borrows the power of nature to transform itself
+into the guises of the sun, rain, and snow-clouds.
+This Pokémon’s feelings change with the weather.</Pokemon>
+<Pokemon id="352" language="9" name="Kecleon" genus="Color Swap">Kecleon alters its body coloration to blend in with its
+surroundings, allowing it to sneak up on its prey unnoticed.
+Then it lashes out with its long, stretchy tongue to instantly
+ensnare the unsuspecting target.</Pokemon>
+<Pokemon id="353" language="9" name="Shuppet" genus="Puppet">Shuppet grows by feeding on dark emotions, such as
+vengefulness and envy, in the hearts of people. It roams
+through cities in search of grudges that taint people.</Pokemon>
+<Pokemon id="354" language="9" name="Banette" genus="Marionette">A cursed energy permeated the stuffing of a discarded and
+forgotten plush doll, giving it new life as Banette.
+The Pokémon’s energy would escape if it were to ever open
+its mouth.</Pokemon>
+<Pokemon id="355" language="9" name="Duskull" genus="Requiem">Duskull wanders lost among the deep darkness of midnight.
+There is an oft-told admonishment given to misbehaving
+children that this Pokémon will spirit away bad children who
+earn scoldings from their mothers.</Pokemon>
+<Pokemon id="356" language="9" name="Dusclops" genus="Beckon">Dusclops absorbs anything, however large the object may be.
+This Pokémon hypnotizes its foe by waving its hands in a
+macabre manner and by bringing its single eye to bear.
+The hypnotized foe is made to do Dusclops’s bidding.</Pokemon>
+<Pokemon id="357" language="9" name="Tropius" genus="Fruit">Children of the southern tropics eat as snacks the fruit that
+grows in bunches around the neck of Tropius. This Pokémon
+flies by flapping the leaves on its back as if they were wings.</Pokemon>
+<Pokemon id="358" language="9" name="Chimecho" genus="Wind Chime">In high winds, Chimecho cries as it hangs from a tree branch or
+the eaves of a building using a suction cup on its head. This
+Pokémon plucks berries with its long tail and eats them.</Pokemon>
+<Pokemon id="359" language="9" name="Absol" genus="Disaster">Absol has the ability to foretell the coming of natural disasters.
+It lives in a harsh, rugged mountain environment. This
+Pokémon very rarely ventures down from the mountains.</Pokemon>
+<Pokemon id="360" language="9" name="Wynaut" genus="Bright">Wynaut gather on moonlit nights to play by squeezing up
+against each other. By being squeezed, this Pokémon gains
+endurance and is trained to dole out powerful counterattacks.</Pokemon>
+<Pokemon id="361" language="9" name="Snorunt" genus="Snow Hat">Snorunt survives by eating only snow and ice. Old folklore
+claims that a house visited by this Pokémon is sure to prosper
+for many generations to come.</Pokemon>
+<Pokemon id="362" language="9" name="Glalie" genus="Face">Glalie has the ability to freely control ice. For example, it can
+instantly freeze its prey solid. After immobilizing its prey in ice,
+this Pokémon enjoys eating it in leisurely fashion.</Pokemon>
+<Pokemon id="363" language="9" name="Spheal" genus="Clap">Spheal always travels by rolling around on its ball-like body.
+When the season for ice floes arrives, this Pokémon can be
+seen rolling about on ice and crossing the sea.</Pokemon>
+<Pokemon id="364" language="9" name="Sealeo" genus="Ball Roll">Sealeo often balances and rolls things on the tip of its
+nose. While the Pokémon is rolling something, it checks
+the object’s aroma and texture to determine whether it likes
+the object or not.</Pokemon>
+<Pokemon id="365" language="9" name="Walrein" genus="Ice Break">Walrein swims all over in frigid seawater while crushing
+icebergs with its grand, imposing tusks. Its thick layer of
+blubber makes enemy attacks bounce off harmlessly.</Pokemon>
+<Pokemon id="366" language="9" name="Clamperl" genus="Bivalve">Clamperl grows while being protected by its rock-hard shell.
+When its body becomes too large to fit inside the shell, it is
+sure evidence that this Pokémon is getting close to evolution.</Pokemon>
+<Pokemon id="367" language="9" name="Huntail" genus="Deep Sea">Huntail’s tail is shaped like a fish. It uses the tail to attract
+prey, then swallows the prey whole with its large, gaping
+mouth. This Pokémon swims by wiggling its slender body
+like a snake.</Pokemon>
+<Pokemon id="368" language="9" name="Gorebyss" genus="South Sea">Although Gorebyss is the very picture of elegance and beauty
+while swimming, it is also cruel. When it spots prey, this
+Pokémon inserts its thin mouth into the prey’s body and drains
+the prey of its body fluids.</Pokemon>
+<Pokemon id="369" language="9" name="Relicanth" genus="Longevity">Relicanth is a rare species that was discovered in deep-sea
+explorations. This Pokémon’s body withstands the enormous
+water pressure of the ocean depths. Its body is covered in
+tough scales that are like craggy rocks.</Pokemon>
+<Pokemon id="370" language="9" name="Luvdisc" genus="Rendezvous">Luvdisc’s heart-shaped body is a symbol of love and romance.
+It is said that any couple meeting this Pokémon is promised a
+loving relationship that never ends.</Pokemon>
+<Pokemon id="371" language="9" name="Bagon" genus="Rock Head">Bagon harbors a never-ending dream of one day soaring high
+among the clouds. As if trying to dispel its frustration over its
+inability to fly, this Pokémon slams its hard head against huge
+rocks and shatters them into pebbles.</Pokemon>
+<Pokemon id="372" language="9" name="Shelgon" genus="Endurance">Covering Shelgon’s body are outgrowths much like bones.
+The shell is very hard and bounces off enemy attacks.
+When awaiting evolution, this Pokémon hides away in a cavern.</Pokemon>
+<Pokemon id="373" language="9" name="Salamence" genus="Dragon">By evolving into Salamence, this Pokémon finally
+realizes its long-held dream of growing wings. To express
+its joy, it flies and wheels all over the sky while spouting
+flames from its mouth.</Pokemon>
+<Pokemon id="374" language="9" name="Beldum" genus="Iron Ball">Beldum keeps itself floating by generating a magnetic force
+that repels earth’s natural magnetism. When it sleeps, this
+Pokémon anchors itself to a cliff using the hooks on its rear.</Pokemon>
+<Pokemon id="375" language="9" name="Metang" genus="Iron Claw">When two Beldum fuse together, Metang is formed.
+The brains of the Beldum are joined by a magnetic
+nervous system. This Pokémon turns its arms to the
+rear for traveling at high speed.</Pokemon>
+<Pokemon id="376" language="9" name="Metagross" genus="Iron Leg">Metagross is the result of two Metang achieving fusion.
+When hunting, this Pokémon pins the prey to the ground under
+its massive body. It then eats the helpless victim using the
+large mouth on its stomach.</Pokemon>
+<Pokemon id="377" language="9" name="Regirock" genus="Rock Peak">Regirock’s body is composed entirely of rocks. Recently,
+a study made the startling discovery that the rocks were all
+unearthed from different locations.</Pokemon>
+<Pokemon id="378" language="9" name="Regice" genus="Iceberg">Regice cloaks itself with frigid air of -328 degrees Fahrenheit.
+Things will freeze solid just by going near this Pokémon.
+Its icy body is so cold, it will not melt even if it is immersed
+in magma.</Pokemon>
+<Pokemon id="379" language="9" name="Registeel" genus="Iron">Registeel was imprisoned by people in ancient times.
+The metal composing its body is thought to be a curious
+substance that is not of this earth.</Pokemon>
+<Pokemon id="380" language="9" name="Latias" genus="Eon">Latias is highly intelligent and capable of understanding
+human speech. It is covered with a glass-like down.
+The Pokémon enfolds its body with its down and refracts
+light to alter its appearance.</Pokemon>
+<Pokemon id="381" language="9" name="Latios" genus="Eon">Latios will only open its heart to a Trainer with a
+compassionate spirit. This Pokémon can fly faster than a
+jet plane by folding its forelegs to minimize air resistance.</Pokemon>
+<Pokemon id="382" language="9" name="Kyogre" genus="Sea Basin">Kyogre is said to be the personification of the sea itself.
+Legends tell of its many clashes against Groudon,
+as each sought to gain the power of nature.</Pokemon>
+<Pokemon id="383" language="9" name="Groudon" genus="Continent">Through Primal Reversion and with nature’s full power,
+it will take back its true form. It can cause magma to
+erupt and expand the landmass of the world.</Pokemon>
+<Pokemon id="384" language="9" name="Rayquaza" genus="Sky High">It flies forever through the ozone layer, consuming
+meteoroids for sustenance. The many meteoroids
+in its body provide the energy it needs to Mega Evolve.</Pokemon>
+<Pokemon id="385" language="9" name="Jirachi" genus="Wish">Jirachi will awaken from its sleep of a thousand years if you
+sing to it in a voice of purity. It is said to make true any wish
+that people desire.</Pokemon>
+<Pokemon id="386" language="9" name="Deoxys" genus="DNA">Deoxys emerged from a virus that came from space. It is highly
+intelligent and wields psychokinetic powers. This Pokémon
+shoots lasers from the crystalline organ on its chest.</Pokemon>
+<Pokemon id="387" language="9" name="Turtwig" genus="Tiny Leaf">It undertakes photosynthesis with its body, making
+oxygen. The leaf on its head wilts if it is thirsty.</Pokemon>
+<Pokemon id="388" language="9" name="Grotle" genus="Grove">It knows where pure water wells up. It carries fellow
+Pokémon there on its back.</Pokemon>
+<Pokemon id="389" language="9" name="Torterra" genus="Continent">Small Pokémon occasionally gather on its unmoving
+back to begin building their nests.</Pokemon>
+<Pokemon id="390" language="9" name="Chimchar" genus="Chimp">The gas made in its belly burns from its rear end.
+The fire burns weakly when it feels sick.</Pokemon>
+<Pokemon id="391" language="9" name="Monferno" genus="Playful">It uses ceilings and walls to launch aerial attacks.
+Its fiery tail is but one weapon.</Pokemon>
+<Pokemon id="392" language="9" name="Infernape" genus="Flame">It tosses its enemies around with agility. It uses all
+its limbs to fight in its own unique style.</Pokemon>
+<Pokemon id="393" language="9" name="Piplup" genus="Penguin">Because it is very proud, it hates accepting food
+from people. Its thick down guards it from cold.</Pokemon>
+<Pokemon id="394" language="9" name="Prinplup" genus="Penguin">It lives a solitary life. Its wings deliver wicked blows
+that can snap even the thickest of trees.</Pokemon>
+<Pokemon id="395" language="9" name="Empoleon" genus="Emperor">The three horns that extend from its beak attest to
+its power. The leader has the biggest horns.</Pokemon>
+<Pokemon id="396" language="9" name="Starly" genus="Starling">They flock around mountains and fields, chasing
+after bug Pokémon. Their singing is noisy
+and annoying.</Pokemon>
+<Pokemon id="397" language="9" name="Staravia" genus="Starling">It lives in forests and fields. Squabbles over
+territory occur when flocks collide.</Pokemon>
+<Pokemon id="398" language="9" name="Staraptor" genus="Predator">When Staravia evolve into Staraptor, they leave the
+flock to live alone. They have sturdy wings.</Pokemon>
+<Pokemon id="399" language="9" name="Bidoof" genus="Plump Mouse">It constantly gnaws on logs and rocks to whittle
+down its front teeth. It nests alongside water.</Pokemon>
+<Pokemon id="400" language="9" name="Bibarel" genus="Beaver">It makes its nest by damming streams with bark and
+mud. It is known as an industrious worker.</Pokemon>
+<Pokemon id="401" language="9" name="Kricketot" genus="Cricket">When its antennae hit each other, it sounds like the
+music of a xylophone.</Pokemon>
+<Pokemon id="402" language="9" name="Kricketune" genus="Cricket">It signals its emotions with its melodies. Scientists
+are studying these melodic patterns.</Pokemon>
+<Pokemon id="403" language="9" name="Shinx" genus="Flash">All of its fur dazzles if danger is sensed. It flees
+while the foe is momentarily blinded.</Pokemon>
+<Pokemon id="404" language="9" name="Luxio" genus="Spark">Strong electricity courses through the tips of its
+sharp claws. A light scratch causes fainting in foes.</Pokemon>
+<Pokemon id="405" language="9" name="Luxray" genus="Gleam Eyes">Luxray’s ability to see through objects comes in
+handy when it’s scouting for danger.</Pokemon>
+<Pokemon id="406" language="9" name="Budew" genus="Bud">Over the winter, it closes its bud and endures the
+cold. In spring, the bud opens and releases pollen.</Pokemon>
+<Pokemon id="407" language="9" name="Roserade" genus="Bouquet">With the movements of a dancer, it strikes with
+whips that are densely lined with poison thorns.</Pokemon>
+<Pokemon id="408" language="9" name="Cranidos" genus="Head Butt">A lifelong jungle dweller from 100 million years
+ago, it would snap obstructing trees with headbutts.</Pokemon>
+<Pokemon id="409" language="9" name="Rampardos" genus="Head Butt">Its skull is as hard as iron. It is a brute that tears
+down jungle trees while catching prey.</Pokemon>
+<Pokemon id="410" language="9" name="Shieldon" genus="Shield">It was generated from a fossil dug out of a layer of
+clay that was older than anyone knows. It has a
+sturdy face.</Pokemon>
+<Pokemon id="411" language="9" name="Bastiodon" genus="Shield">Any frontal attack is repulsed. It is a docile
+Pokémon that feeds on grass and berries.</Pokemon>
+<Pokemon id="412" language="9" name="Burmy" genus="Bagworm">If its cloak is broken in battle, it quickly remakes
+the cloak with materials nearby.</Pokemon>
+<Pokemon id="413" language="9" name="Wormadam" genus="Bagworm">When Burmy evolved, its cloak became a part of
+this Pokémon’s body. The cloak is never shed.</Pokemon>
+<Pokemon id="414" language="9" name="Mothim" genus="Moth">It flutters around at night and steals honey from
+the Combee hive.</Pokemon>
+<Pokemon id="415" language="9" name="Combee" genus="Tiny Bee">It collects and delivers honey to its colony.
+At night, they cluster to form a beehive and sleep.</Pokemon>
+<Pokemon id="416" language="9" name="Vespiquen" genus="Beehive">Its abdomen is a honeycomb for grubs. It raises its
+grubs on honey collected by Combee.</Pokemon>
+<Pokemon id="417" language="9" name="Pachirisu" genus="EleSquirrel">A pair may be seen rubbing their cheek pouches
+together in an effort to share stored electricity.</Pokemon>
+<Pokemon id="418" language="9" name="Buizel" genus="Sea Weasel">It inflates the flotation sac around its neck and
+pokes its head out of the water to see what is
+going on.</Pokemon>
+<Pokemon id="419" language="9" name="Floatzel" genus="Sea Weasel">Its flotation sac developed as a result of pursuing
+aquatic prey. It can double as a rubber raft.</Pokemon>
+<Pokemon id="420" language="9" name="Cherubi" genus="Cherry">It evolves by sucking the energy out of the small
+ball where it had been storing nutrients.</Pokemon>
+<Pokemon id="421" language="9" name="Cherrim" genus="Blossom">If it senses strong sunlight, it opens its folded
+petals to absorb the sun’s rays with its whole body.</Pokemon>
+<Pokemon id="422" language="9" name="Shellos" genus="Sea Slug">Its shape and coloration vary, depending on
+its habitat.</Pokemon>
+<Pokemon id="423" language="9" name="Gastrodon" genus="Sea Slug">It apparently had a huge shell for protection in
+ancient times. It lives in shallow tidal pools.</Pokemon>
+<Pokemon id="424" language="9" name="Ambipom" genus="Long Tail">To eat, it deftly shucks nuts with its two tails.
+It rarely uses its arms now.</Pokemon>
+<Pokemon id="425" language="9" name="Drifloon" genus="Balloon">These Pokémon are called the “Signpost for
+Wandering Spirits.” Children holding them
+sometimes vanish.</Pokemon>
+<Pokemon id="426" language="9" name="Drifblim" genus="Blimp">It’s drowsy in daytime, but flies off in the evening in
+big groups. No one knows where they go.</Pokemon>
+<Pokemon id="427" language="9" name="Buneary" genus="Rabbit">When it senses danger, it perks up its ears.
+On cold nights, it sleeps with its head tucked into
+its fur.</Pokemon>
+<Pokemon id="428" language="9" name="Lopunny" genus="Rabbit">The ears appear to be delicate. If they are touched
+roughly, it kicks with its graceful legs.</Pokemon>
+<Pokemon id="429" language="9" name="Mismagius" genus="Magical">Its cries sound like incantations to torment the foe.
+It appears where you least expect it.</Pokemon>
+<Pokemon id="430" language="9" name="Honchkrow" genus="Big Boss">Becoming active at night, it is known to swarm with
+numerous Murkrow in tow.</Pokemon>
+<Pokemon id="431" language="9" name="Glameow" genus="Catty">When it’s happy, Glameow demonstrates beautiful
+movements of its tail, like a dancing ribbon.</Pokemon>
+<Pokemon id="432" language="9" name="Purugly" genus="Tiger Cat">To make itself appear intimidatingly beefy, it tightly
+cinches its waist with its twin tails.</Pokemon>
+<Pokemon id="433" language="9" name="Chingling" genus="Bell">There is an orb inside its mouth. When it hops,
+the orb bounces all over and makes a
+ringing sound.</Pokemon>
+<Pokemon id="434" language="9" name="Stunky" genus="Skunk">It protects itself by spraying a noxious fluid from its
+rear. The stench lingers for 24 hours.</Pokemon>
+<Pokemon id="435" language="9" name="Skuntank" genus="Skunk">It sprays a stinky fluid from its tail. The fluid smells
+worse the longer it is allowed to fester.</Pokemon>
+<Pokemon id="436" language="9" name="Bronzor" genus="Bronze">Implements shaped like it were discovered in
+ancient tombs. It is unknown if they are related.</Pokemon>
+<Pokemon id="437" language="9" name="Bronzong" genus="Bronze Bell">Ancient people believed that petitioning Bronzong
+for rain was the way to make crops grow.</Pokemon>
+<Pokemon id="438" language="9" name="Bonsly" genus="Bonsai">It prefers an arid atmosphere. It leaks water that
+looks like tears when adjusting its moisture level.</Pokemon>
+<Pokemon id="439" language="9" name="Mime Jr." genus="Mime">It habitually mimics foes. Once mimicked, the foe
+cannot take its eyes off this Pokémon.</Pokemon>
+<Pokemon id="440" language="9" name="Happiny" genus="Playhouse">It carefully carries a round, white rock that it thinks
+is an egg. It’s bothered by how curly its hair looks.</Pokemon>
+<Pokemon id="441" language="9" name="Chatot" genus="Music Note">It can learn and speak human words. If they gather,
+they all learn the same saying.</Pokemon>
+<Pokemon id="442" language="9" name="Spiritomb" genus="Forbidden">It was bound to a fissure in an odd keystone as
+punishment for misdeeds 500 years ago.</Pokemon>
+<Pokemon id="443" language="9" name="Gible" genus="Land Shark">It nests in small, horizontal holes in cave walls.
+It pounces to catch prey that stray too close.</Pokemon>
+<Pokemon id="444" language="9" name="Gabite" genus="Cave">As it digs to expand its nest, it habitually digs up
+gems that it then hoards in its nest.</Pokemon>
+<Pokemon id="445" language="9" name="Garchomp" genus="Mach">It flies at speeds equal to a jet fighter plane.
+It never allows its prey to escape.</Pokemon>
+<Pokemon id="446" language="9" name="Munchlax" genus="Big Eater">It conceals food under the long fur on its body.
+It carts around this food stash and swallows it
+without chewing.</Pokemon>
+<Pokemon id="447" language="9" name="Riolu" genus="Emanation">The aura that emanates from its body intensifies to
+alert others if it is afraid or sad.</Pokemon>
+<Pokemon id="448" language="9" name="Lucario" genus="Aura">By reading the auras of all things, it can tell how
+others are feeling from over half a mile away.</Pokemon>
+<Pokemon id="449" language="9" name="Hippopotas" genus="Hippo">It enshrouds itself with sand to protect itself from
+germs. It does not enjoy getting wet.</Pokemon>
+<Pokemon id="450" language="9" name="Hippowdon" genus="Heavyweight">It blasts internally stored sand from ports on its
+body to create a towering twister for attack.</Pokemon>
+<Pokemon id="451" language="9" name="Skorupi" genus="Scorpion">It burrows under the sand to lie in wait for prey.
+Its tail claws can inject its prey with a
+savage poison.</Pokemon>
+<Pokemon id="452" language="9" name="Drapion" genus="Ogre Scorpion">It has the power in its clawed arms to make scrap
+of a car. The tips of its claws release poison.</Pokemon>
+<Pokemon id="453" language="9" name="Croagunk" genus="Toxic Mouth">Inflating its poison sacs, it fills the area with an odd
+sound and hits flinching opponents with a
+poison jab.</Pokemon>
+<Pokemon id="454" language="9" name="Toxicroak" genus="Toxic Mouth">Its knuckle claws secrete a toxin so vile that even a
+scratch could prove fatal.</Pokemon>
+<Pokemon id="455" language="9" name="Carnivine" genus="Bug Catcher">It binds itself to trees in marshes. It attracts prey
+with its sweet-smelling drool and gulps them down.</Pokemon>
+<Pokemon id="456" language="9" name="Finneon" genus="Wing Fish">After long exposure to sunlight, the patterns on its
+tail fins shine vividly when darkness arrives.</Pokemon>
+<Pokemon id="457" language="9" name="Lumineon" genus="Neon">To avoid detection by predators, it crawls along the
+seafloor using the two fins on its chest.</Pokemon>
+<Pokemon id="458" language="9" name="Mantyke" genus="Kite">When it swims close to the surface of the ocean,
+people aboard ships are able to observe the pattern
+on its back.</Pokemon>
+<Pokemon id="459" language="9" name="Snover" genus="Frost Tree">In the spring, it grows berries with the texture of
+frozen treats around its belly.</Pokemon>
+<Pokemon id="460" language="9" name="Abomasnow" genus="Frost Tree">It lives a quiet life on mountains that are perpetually
+covered in snow. It hides itself by whipping
+up blizzards.</Pokemon>
+<Pokemon id="461" language="9" name="Weavile" genus="Sharp Claw">They live in cold regions, forming groups of four or
+five that hunt prey with impressive coordination.</Pokemon>
+<Pokemon id="462" language="9" name="Magnezone" genus="Magnet Area">It evolved from exposure to a special magnetic
+field. Three units generate magnetism.</Pokemon>
+<Pokemon id="463" language="9" name="Lickilicky" genus="Licking">Their saliva contains lots of components that can
+dissolve anything. The numbness caused by their
+lick does not dissipate.</Pokemon>
+<Pokemon id="464" language="9" name="Rhyperior" genus="Drill">It puts rocks in holes in its palms and uses its
+muscles to shoot them. Geodude are shot at
+rare times.</Pokemon>
+<Pokemon id="465" language="9" name="Tangrowth" genus="Vine">Its vines grow so profusely that, in the warm
+season, you can’t even see its eyes.</Pokemon>
+<Pokemon id="466" language="9" name="Electivire" genus="Thunderbolt">It pushes the tips of its two tails against the foe,
+then lets loose with over 20,000 volts of power.</Pokemon>
+<Pokemon id="467" language="9" name="Magmortar" genus="Blast">It blasts fireballs of over 3,600 degrees Fahrenheit
+out of its arms. Its breath also sears and sizzles.</Pokemon>
+<Pokemon id="468" language="9" name="Togekiss" genus="Jubilee">It shares many blessings with people who respect
+one another’s rights and avoid needless strife.</Pokemon>
+<Pokemon id="469" language="9" name="Yanmega" genus="Ogre Darner">This six-legged Pokémon is easily capable of
+transporting an adult in flight. The wings on its tail
+help it stay balanced.</Pokemon>
+<Pokemon id="470" language="9" name="Leafeon" genus="Verdant">Just like a plant, it uses photosynthesis. As a result,
+it is always enveloped in clear air.</Pokemon>
+<Pokemon id="471" language="9" name="Glaceon" genus="Fresh Snow">It lowers its body heat to freeze its fur. The hairs
+then become like needles it can fire.</Pokemon>
+<Pokemon id="472" language="9" name="Gliscor" genus="Fang Scorpion">Its flight is soundless. It uses its lengthy tail to
+carry off its prey... Then its elongated fangs do
+the rest.</Pokemon>
+<Pokemon id="473" language="9" name="Mamoswine" genus="Twin Tusk">Its impressive tusks are made of ice. The population
+thinned when it turned warm after the ice age.</Pokemon>
+<Pokemon id="474" language="9" name="Porygon-Z" genus="Virtual">Its programming was modified to enable it to travel
+through alien dimensions. Seems there might have
+been an error...</Pokemon>
+<Pokemon id="475" language="9" name="Gallade" genus="Blade">A master of courtesy and swordsmanship, it fights
+using extending swords on its elbows.</Pokemon>
+<Pokemon id="476" language="9" name="Probopass" genus="Compass">It freely controls three small units called Mini-Noses
+using magnetic force.</Pokemon>
+<Pokemon id="477" language="9" name="Dusknoir" genus="Gripper">The antenna on its head captures radio waves from
+the world of spirits that command it to take
+people there.</Pokemon>
+<Pokemon id="478" language="9" name="Froslass" genus="Snow Land">Legends in snowy regions say that a woman who
+was lost on an icy mountain was reborn as Froslass.</Pokemon>
+<Pokemon id="479" language="9" name="Rotom" genus="Plasma">Its body is composed of plasma. It is known to
+infiltrate electronic devices and wreak havoc.</Pokemon>
+<Pokemon id="480" language="9" name="Uxie" genus="Knowledge">It is said that its emergence gave humans the
+intelligence to improve their quality of life.</Pokemon>
+<Pokemon id="481" language="9" name="Mesprit" genus="Emotion">It sleeps at the bottom of a lake. Its spirit is said to
+leave its body to fly on the lake’s surface.</Pokemon>
+<Pokemon id="482" language="9" name="Azelf" genus="Willpower">It is thought that Uxie, Mesprit, and Azelf all came
+from the same egg.</Pokemon>
+<Pokemon id="483" language="9" name="Dialga" genus="Temporal">It has the power to control time. It appears in
+Sinnoh-region myths as an ancient deity.</Pokemon>
+<Pokemon id="484" language="9" name="Palkia" genus="Spatial">It has the ability to distort space. It is described as
+a deity in Sinnoh-region mythology.</Pokemon>
+<Pokemon id="485" language="9" name="Heatran" genus="Lava Dome">Boiling blood, like magma, circulates through its
+body. It makes its dwelling place in volcanic caves.</Pokemon>
+<Pokemon id="486" language="9" name="Regigigas" genus="Colossal">There is an enduring legend that states this
+Pokémon towed continents with ropes.</Pokemon>
+<Pokemon id="487" language="9" name="Giratina" genus="Renegade">It was banished for its violence. It silently gazed
+upon the old world from the Distortion World.</Pokemon>
+<Pokemon id="488" language="9" name="Cresselia" genus="Lunar">Those who sleep holding Cresselia’s feather are
+assured of joyful dreams. It is said to represent
+the crescent moon.</Pokemon>
+<Pokemon id="489" language="9" name="Phione" genus="Sea Drifter">It drifts in warm seas. It always returns to where it
+was born, no matter how far it may have drifted.</Pokemon>
+<Pokemon id="490" language="9" name="Manaphy" genus="Seafaring">It starts its life with a wondrous power that permits
+it to bond with any kind of Pokémon.</Pokemon>
+<Pokemon id="491" language="9" name="Darkrai" genus="Pitch-Black">It can lull people to sleep and make them dream.
+It is active during nights of the new moon.</Pokemon>
+<Pokemon id="492" language="9" name="Shaymin" genus="Gratitude">The blooming of Gracidea flowers confers the
+power of flight upon it. Feelings of gratitude are
+the message it delivers.</Pokemon>
+<Pokemon id="493" language="9" name="Arceus" genus="Alpha">It is told in mythology that this Pokémon was born
+before the universe even existed.</Pokemon>
+<Pokemon id="494" language="9" name="Victini" genus="Victory">When it shares the infinite energy it creates,
+that being’s entire body will be overflowing
+with power.</Pokemon>
+<Pokemon id="495" language="9" name="Snivy" genus="Grass Snake">They photosynthesize by bathing their tails in
+sunlight. When they are not feeling well, their
+tails droop.</Pokemon>
+<Pokemon id="496" language="9" name="Servine" genus="Grass Snake">When it gets dirty, its leaves can’t be used in
+photosynthesis, so it always keeps itself clean.</Pokemon>
+<Pokemon id="497" language="9" name="Serperior" genus="Regal">It can stop its opponents’ movements with just a
+glare. It takes in solar energy and boosts
+it internally.</Pokemon>
+<Pokemon id="498" language="9" name="Tepig" genus="Fire Pig">It loves to eat roasted berries, but sometimes it
+gets too excited and burns them to a crisp.</Pokemon>
+<Pokemon id="499" language="9" name="Pignite" genus="Fire Pig">When its internal fire flares up, its movements grow
+sharper and faster. When in trouble, it emits smoke.</Pokemon>
+<Pokemon id="500" language="9" name="Emboar" genus="Mega Fire Pig">It has mastered fast and powerful fighting moves.
+It grows a beard of fire.</Pokemon>
+<Pokemon id="501" language="9" name="Oshawott" genus="Sea Otter">It fights using the scalchop on its stomach.
+In response to an attack, it retaliates immediately
+by slashing.</Pokemon>
+<Pokemon id="502" language="9" name="Dewott" genus="Discipline">As a result of strict training, each Dewott learns
+different forms for using the scalchops.</Pokemon>
+<Pokemon id="503" language="9" name="Samurott" genus="Formidable">One swing of the sword incorporated in its armor
+can fell an opponent. A simple glare from one of
+them quiets everybody.</Pokemon>
+<Pokemon id="504" language="9" name="Patrat" genus="Scout">Extremely cautious, one of them will always be on
+the lookout, but it won’t notice a foe coming
+from behind.</Pokemon>
+<Pokemon id="505" language="9" name="Watchog" genus="Lookout">When they see an enemy, their tails stand high,
+and they spit the seeds of berries stored in their
+cheek pouches.</Pokemon>
+<Pokemon id="506" language="9" name="Lillipup" genus="Puppy">Though it is a very brave Pokémon, it’s also smart
+enough to check its foe’s strength and avoid battle.</Pokemon>
+<Pokemon id="507" language="9" name="Herdier" genus="Loyal Dog">It has black, cape-like fur that is very hard and
+decreases the amount of damage it receives.</Pokemon>
+<Pokemon id="508" language="9" name="Stoutland" genus="Big-Hearted">Being wrapped in its long fur is so comfortable
+that a person would be fine even overnight on a
+wintry mountain.</Pokemon>
+<Pokemon id="509" language="9" name="Purrloin" genus="Devious">They steal from people for fun, but their victims
+can’t help but forgive them. Their deceptively cute
+act is perfect.</Pokemon>
+<Pokemon id="510" language="9" name="Liepard" genus="Cruel">Stealthily, it sneaks up on its target, striking from
+behind before its victim has a chance to react.</Pokemon>
+<Pokemon id="511" language="9" name="Pansage" genus="Grass Monkey">It’s good at finding berries and gathers them from
+all over. It’s kind enough to share them
+with friends.</Pokemon>
+<Pokemon id="512" language="9" name="Simisage" genus="Thorn Monkey">Ill tempered, it fights by swinging its barbed tail
+around wildly. The leaf growing on its head is
+very bitter.</Pokemon>
+<Pokemon id="513" language="9" name="Pansear" genus="High Temp">This Pokémon lives in caves in volcanoes.
+The fire within the tuft on its head can reach
+600 degrees Fahrenheit.</Pokemon>
+<Pokemon id="514" language="9" name="Simisear" genus="Ember">When it gets excited, embers rise from its head
+and tail and it gets hot. For some reason, it
+loves sweets.</Pokemon>
+<Pokemon id="515" language="9" name="Panpour" genus="Spray">The water stored inside the tuft on its head is full of
+nutrients. Plants that receive its water grow large.</Pokemon>
+<Pokemon id="516" language="9" name="Simipour" genus="Geyser">It prefers places with clean water. When its tuft runs
+low, it replenishes it by siphoning up water with
+its tail.</Pokemon>
+<Pokemon id="517" language="9" name="Munna" genus="Dream Eater">It eats the dreams of people and Pokémon. When it
+eats a pleasant dream, it expels pink-colored mist.</Pokemon>
+<Pokemon id="518" language="9" name="Musharna" genus="Drowsing">The dream mist coming from its forehead changes
+into many different colors depending on the dream
+that was eaten.</Pokemon>
+<Pokemon id="519" language="9" name="Pidove" genus="Tiny Pigeon">These Pokémon live in cities. They are accustomed
+to people. Flocks often gather in parks and plazas.</Pokemon>
+<Pokemon id="520" language="9" name="Tranquill" genus="Wild Pigeon">No matter where in the world it goes, it knows
+where its nest is, so it never gets separated from
+its Trainer.</Pokemon>
+<Pokemon id="521" language="9" name="Unfezant" genus="Proud">Males have plumage on their heads. They will never
+let themselves feel close to anyone other than
+their Trainers.</Pokemon>
+<Pokemon id="522" language="9" name="Blitzle" genus="Electrified">Its mane shines when it discharges electricity.
+They use the frequency and rhythm of these flashes
+to communicate.</Pokemon>
+<Pokemon id="523" language="9" name="Zebstrika" genus="Thunderbolt">They have lightning-like movements.
+When Zebstrika run at full speed, the sound of
+thunder reverberates.</Pokemon>
+<Pokemon id="524" language="9" name="Roggenrola" genus="Mantle">They were discovered a hundred years ago in an
+earthquake fissure. Inside each one is an
+energy core.</Pokemon>
+<Pokemon id="525" language="9" name="Boldore" genus="Ore">When it is healthy, its core sticks out. Always facing
+the same way, it swiftly moves front to back and left
+to right.</Pokemon>
+<Pokemon id="526" language="9" name="Gigalith" genus="Compressed">Compressing the energy from its internal core
+lets it fire off an attack capable of blowing away
+a mountain.</Pokemon>
+<Pokemon id="527" language="9" name="Woobat" genus="Bat">The heart-shaped mark left on a body after a
+Woobat has been attached to it is said to bring
+good fortune.</Pokemon>
+<Pokemon id="528" language="9" name="Swoobat" genus="Courting">Anyone who comes into contact with the ultrasonic
+waves emitted by a courting male experiences a
+positive mood shift.</Pokemon>
+<Pokemon id="529" language="9" name="Drilbur" genus="Mole">By spinning its body, it can dig straight through the
+ground at a speed of 30 mph.</Pokemon>
+<Pokemon id="530" language="9" name="Excadrill" genus="Subterrene">More than 300 feet below the surface, they build
+mazelike nests. Their activity can be destructive to
+subway tunnels.</Pokemon>
+<Pokemon id="531" language="9" name="Audino" genus="Hearing">It touches others with the feelers on its ears, using
+the sound of their heartbeats to tell how they
+are feeling.</Pokemon>
+<Pokemon id="532" language="9" name="Timburr" genus="Muscular">Always carrying squared logs, they help out with
+construction. As they grow, they carry bigger logs.</Pokemon>
+<Pokemon id="533" language="9" name="Gurdurr" genus="Muscular">This Pokémon is so muscular and strongly built that
+even a group of wrestlers could not make it budge
+an inch.</Pokemon>
+<Pokemon id="534" language="9" name="Conkeldurr" genus="Muscular">Rather than rely on force, they master moves that
+utilize the centrifugal force of spinning concrete.</Pokemon>
+<Pokemon id="535" language="9" name="Tympole" genus="Tadpole">By vibrating its cheeks, it emits sound waves
+imperceptible to humans. It uses the rhythm of
+these sounds to talk.</Pokemon>
+<Pokemon id="536" language="9" name="Palpitoad" genus="Vibration">It lives in the water and on land. It uses its long,
+sticky tongue to immobilize its opponents.</Pokemon>
+<Pokemon id="537" language="9" name="Seismitoad" genus="Vibration">They shoot paralyzing liquid from their head bumps.
+They use vibration to hurt their opponents.</Pokemon>
+<Pokemon id="538" language="9" name="Throh" genus="Judo">When it encounters a foe bigger than itself, it wants
+to throw it. It changes belts as it gets stronger.</Pokemon>
+<Pokemon id="539" language="9" name="Sawk" genus="Karate">Tying their belts gets them pumped and makes their
+punches more destructive. Disturbing their training
+angers them.</Pokemon>
+<Pokemon id="540" language="9" name="Sewaddle" genus="Sewing">Since this Pokémon makes its own clothes out of
+leaves, it is a popular mascot for fashion designers.</Pokemon>
+<Pokemon id="541" language="9" name="Swadloon" genus="Leaf-Wrapped">It protects itself from the cold by wrapping up in
+leaves. It stays on the move, eating leaves
+in forests.</Pokemon>
+<Pokemon id="542" language="9" name="Leavanny" genus="Nurturing">It keeps its eggs warm with heat from fermenting
+leaves. It also uses leaves to make warm wrappings
+for Sewaddle.</Pokemon>
+<Pokemon id="543" language="9" name="Venipede" genus="Centipede">Its bite injects a potent poison, enough to paralyze
+large bird Pokémon that try to prey on it.</Pokemon>
+<Pokemon id="544" language="9" name="Whirlipede" genus="Curlipede">It is usually motionless, but when attacked,
+it rotates at high speed and then crashes into
+its opponent.</Pokemon>
+<Pokemon id="545" language="9" name="Scolipede" genus="Megapede">With quick movements, it chases down its foes,
+attacking relentlessly with its horns until it prevails.</Pokemon>
+<Pokemon id="546" language="9" name="Cottonee" genus="Cotton Puff">Perhaps because they feel more at ease in a group,
+they stick to others they find. They end up looking
+like a cloud.</Pokemon>
+<Pokemon id="547" language="9" name="Whimsicott" genus="Windveiled">Like the wind, it can slip through any gap,
+no matter how small. It leaves balls of white
+fluff behind.</Pokemon>
+<Pokemon id="548" language="9" name="Petilil" genus="Bulb">Since they prefer moist, nutrient-rich soil, the areas
+where Petilil live are known to be good for
+growing plants.</Pokemon>
+<Pokemon id="549" language="9" name="Lilligant" genus="Flowering">Even veteran Trainers face a challenge in getting its
+beautiful flower to bloom. This Pokémon is popular
+with celebrities.</Pokemon>
+<Pokemon id="550" language="9" name="Basculin" genus="Hostile">Red and blue Basculin usually do not get along,
+but sometimes members of one school mingle with
+the other’s school.</Pokemon>
+<Pokemon id="551" language="9" name="Sandile" genus="Desert Croc">They live buried in the sands of the desert.
+The sun-warmed sands prevent their body
+temperature from dropping.</Pokemon>
+<Pokemon id="552" language="9" name="Krokorok" genus="Desert Croc">The special membrane covering its eyes can sense
+the heat of objects, so it can see its surroundings
+even in darkness.</Pokemon>
+<Pokemon id="553" language="9" name="Krookodile" genus="Intimidation">They never allow prey to escape. Their jaws
+are so powerful, they can crush the body of
+an automobile.</Pokemon>
+<Pokemon id="554" language="9" name="Darumaka" genus="Zen Charm">When it sleeps, it pulls its limbs into its
+body and its internal fire goes down to
+1,100 degrees Fahrenheit.</Pokemon>
+<Pokemon id="555" language="9" name="Darmanitan" genus="Blazing">Its internal fire burns at 2,500 degrees Fahrenheit,
+making enough power that it can destroy a dump
+truck with one punch.</Pokemon>
+<Pokemon id="556" language="9" name="Maractus" genus="Cactus">Arid regions are their habitat. They move
+rhythmically, making a sound similar to maracas.</Pokemon>
+<Pokemon id="557" language="9" name="Dwebble" genus="Rock Inn">When it finds a stone of a suitable size, it secretes
+a liquid from its mouth to open up a hole to
+crawl into.</Pokemon>
+<Pokemon id="558" language="9" name="Crustle" genus="Stone Home">Competing for territory, Crustle fight viciously.
+The one whose boulder is broken is the loser of
+the battle.</Pokemon>
+<Pokemon id="559" language="9" name="Scraggy" genus="Shedding">Proud of its sturdy skull, it suddenly headbutts
+everything, but its weight makes it unstable, too.</Pokemon>
+<Pokemon id="560" language="9" name="Scrafty" genus="Hoodlum">It can smash concrete blocks with its kicking
+attacks. The one with the biggest crest is the
+group leader.</Pokemon>
+<Pokemon id="561" language="9" name="Sigilyph" genus="Avianoid">The guardians of an ancient city, they always fly
+the same route while keeping watch for invaders.</Pokemon>
+<Pokemon id="562" language="9" name="Yamask" genus="Spirit">Each of them carries a mask that used to be its face
+when it was human. Sometimes they look at it
+and cry.</Pokemon>
+<Pokemon id="563" language="9" name="Cofagrigus" genus="Coffin">Grave robbers who mistake them for real coffins and
+get too close end up trapped inside their bodies.</Pokemon>
+<Pokemon id="564" language="9" name="Tirtouga" genus="Prototurtle">Restored from a fossil, this Pokémon can dive to
+depths beyond half a mile.</Pokemon>
+<Pokemon id="565" language="9" name="Carracosta" genus="Prototurtle">It could knock out a foe with a slap from one of its
+developed front appendages and chew it up, shell
+or bones and all.</Pokemon>
+<Pokemon id="566" language="9" name="Archen" genus="First Bird">Said to be an ancestor of bird Pokémon, they were
+unable to fly and moved about by hopping from one
+branch to another.</Pokemon>
+<Pokemon id="567" language="9" name="Archeops" genus="First Bird">It runs better than it flies. It takes off into the sky
+by running at a speed of 25 mph.</Pokemon>
+<Pokemon id="568" language="9" name="Trubbish" genus="Trash Bag">Inhaling the gas they belch will make you sleep for
+a week. They prefer unsanitary places.</Pokemon>
+<Pokemon id="569" language="9" name="Garbodor" genus="Trash Heap">Consuming garbage makes new kinds of poison
+gases and liquids inside their bodies.</Pokemon>
+<Pokemon id="570" language="9" name="Zorua" genus="Tricky Fox">To protect themselves from danger, they hide their
+true identities by transforming into people
+and Pokémon.</Pokemon>
+<Pokemon id="571" language="9" name="Zoroark" genus="Illusion Fox">Bonds between these Pokémon are very strong.
+It protects the safety of its pack by tricking
+its opponents.</Pokemon>
+<Pokemon id="572" language="9" name="Minccino" genus="Chinchilla">These Pokémon prefer a tidy habitat. They are
+always sweeping and dusting, using their tails
+as brooms.</Pokemon>
+<Pokemon id="573" language="9" name="Cinccino" genus="Scarf">Cinccino’s body is coated in a special oil that helps
+it deflect attacks, such as punches.</Pokemon>
+<Pokemon id="574" language="9" name="Gothita" genus="Fixation">They intently observe both Trainers and Pokémon.
+Apparently, they are looking at something that only
+Gothita can see.</Pokemon>
+<Pokemon id="575" language="9" name="Gothorita" genus="Manipulate">According to many old tales, it creates friends for
+itself by controlling sleeping children on
+starry nights.</Pokemon>
+<Pokemon id="576" language="9" name="Gothitelle" genus="Astral Body">They can predict the future from the placement and
+movement of the stars. They can see Trainers’
+life spans.</Pokemon>
+<Pokemon id="577" language="9" name="Solosis" genus="Cell">They drive away attackers by unleashing psychic
+power. They can use telepathy to talk with others.</Pokemon>
+<Pokemon id="578" language="9" name="Duosion" genus="Mitosis">When their two divided brains think the same
+thoughts, their psychic power is maximized.</Pokemon>
+<Pokemon id="579" language="9" name="Reuniclus" genus="Multiplying">When Reuniclus shake hands, a network forms
+between their brains, increasing their
+psychic power.</Pokemon>
+<Pokemon id="580" language="9" name="Ducklett" genus="Water Bird">They are better at swimming than flying, and they
+happily eat their favorite food, peat moss, as they
+dive underwater.</Pokemon>
+<Pokemon id="581" language="9" name="Swanna" genus="White Bird">Swanna start to dance at dusk. The one dancing in
+the middle is the leader of the flock.</Pokemon>
+<Pokemon id="582" language="9" name="Vanillite" genus="Fresh Snow">This Pokémon formed from icicles bathed in energy
+from the morning sun. It sleeps buried in snow.</Pokemon>
+<Pokemon id="583" language="9" name="Vanillish" genus="Icy Snow">Snowy mountains are this Pokémon’s habitat.
+During an ancient ice age, they moved to
+southern areas.</Pokemon>
+<Pokemon id="584" language="9" name="Vanilluxe" genus="Snowstorm">Swallowing large amounts of water, they make
+snow clouds inside their bodies and, when angry,
+cause violent blizzards.</Pokemon>
+<Pokemon id="585" language="9" name="Deerling" genus="Season">The turning of the seasons changes the color and
+scent of this Pokémon’s fur. People use it to mark
+the seasons.</Pokemon>
+<Pokemon id="586" language="9" name="Sawsbuck" genus="Season">They migrate according to the seasons, so some
+people call Sawsbuck the harbingers of spring.</Pokemon>
+<Pokemon id="587" language="9" name="Emolga" genus="Sky Squirrel">The energy made in its cheeks’ electric pouches is
+stored inside its membrane and released while it
+is gliding.</Pokemon>
+<Pokemon id="588" language="9" name="Karrablast" genus="Clamping">For some reason they evolve when they receive
+electrical energy while they are attacking Shelmet.</Pokemon>
+<Pokemon id="589" language="9" name="Escavalier" genus="Cavalry">These Pokémon evolve by wearing the shell
+covering of a Shelmet. The steel armor protects
+their whole body.</Pokemon>
+<Pokemon id="590" language="9" name="Foongus" genus="Mushroom">It lures Pokémon with its pattern that looks just like
+a Poké Ball, then releases poison spores.</Pokemon>
+<Pokemon id="591" language="9" name="Amoonguss" genus="Mushroom">It lures prey close by dancing and waving its
+arm caps, which resemble Poké Balls, in a
+swaying motion.</Pokemon>
+<Pokemon id="592" language="9" name="Frillish" genus="Floating">If its veil-like arms stun and wrap a foe, that foe will
+be dragged miles below the surface, never
+to return.</Pokemon>
+<Pokemon id="593" language="9" name="Jellicent" genus="Floating">The fate of the ships and crew that wander into
+Jellicent’s habitat: all sunken, all lost, all vanished.</Pokemon>
+<Pokemon id="594" language="9" name="Alomomola" genus="Caring">It gently holds injured and weak Pokémon in its
+fins. Its special membrane heals their wounds.</Pokemon>
+<Pokemon id="595" language="9" name="Joltik" genus="Attaching">They attach themselves to large-bodied Pokémon
+and absorb static electricity, which they store in an
+electric pouch.</Pokemon>
+<Pokemon id="596" language="9" name="Galvantula" genus="EleSpider">When attacked, they create an electric barrier by
+spitting out many electrically charged threads.</Pokemon>
+<Pokemon id="597" language="9" name="Ferroseed" genus="Thorn Seed">It absorbs the iron it finds in the rock while clinging
+to the ceiling. It shoots spikes when in danger.</Pokemon>
+<Pokemon id="598" language="9" name="Ferrothorn" genus="Thorn Pod">They attach themselves to cave ceilings, firing steel
+spikes at targets passing beneath them.</Pokemon>
+<Pokemon id="599" language="9" name="Klink" genus="Gear">The two minigears that mesh together are
+predetermined. Each will rebound from other
+minigears without meshing.</Pokemon>
+<Pokemon id="600" language="9" name="Klang" genus="Gear">A minigear and big gear comprise its body. If the
+minigear it launches at a foe doesn’t return, it
+will die.</Pokemon>
+<Pokemon id="601" language="9" name="Klinklang" genus="Gear">Its red core functions as an energy tank. It fires the
+charged energy through its spikes into an area.</Pokemon>
+<Pokemon id="602" language="9" name="Tynamo" genus="EleFish">One alone can emit only a trickle of electricity,
+so a group of them gathers to unleash a powerful
+electric shock.</Pokemon>
+<Pokemon id="603" language="9" name="Eelektrik" genus="EleFish">These Pokémon have a big appetite. When they
+spot their prey, they attack it and paralyze it
+with electricity.</Pokemon>
+<Pokemon id="604" language="9" name="Eelektross" genus="EleFish">They crawl out of the ocean using their arms.
+They will attack prey on shore and immediately drag
+it into the ocean.</Pokemon>
+<Pokemon id="605" language="9" name="Elgyem" genus="Cerebral">Rumors of its origin are linked to a UFO crash site
+in the desert 50 years ago.</Pokemon>
+<Pokemon id="606" language="9" name="Beheeyem" genus="Cerebral">It uses psychic power to control an opponent’s
+brain and tamper with its memories.</Pokemon>
+<Pokemon id="607" language="9" name="Litwick" genus="Candle">Litwick shines a light that absorbs the life energy of
+people and Pokémon, which becomes the fuel that
+it burns.</Pokemon>
+<Pokemon id="608" language="9" name="Lampent" genus="Lamp">It arrives near the moment of death and steals spirit
+from the body.</Pokemon>
+<Pokemon id="609" language="9" name="Chandelure" genus="Luring">The spirits burned up in its ominous flame lose their
+way and wander this world forever.</Pokemon>
+<Pokemon id="610" language="9" name="Axew" genus="Tusk">They mark their territory by leaving gashes in trees
+with their tusks. If a tusk breaks, a new one grows
+in quickly.</Pokemon>
+<Pokemon id="611" language="9" name="Fraxure" genus="Axe Jaw">A broken tusk will not grow back, so it diligently
+sharpens its tusks on river rocks after the end of
+a battle.</Pokemon>
+<Pokemon id="612" language="9" name="Haxorus" genus="Axe Jaw">Their sturdy tusks will stay sharp even if used to cut
+steel beams. These Pokémon are covered in
+hard armor.</Pokemon>
+<Pokemon id="613" language="9" name="Cubchoo" genus="Chill">Their snot is a barometer of health. When healthy,
+their snot is sticky and the power of their ice
+moves increases.</Pokemon>
+<Pokemon id="614" language="9" name="Beartic" genus="Freezing">It freezes its breath to create fangs and claws of ice
+to fight with. Cold northern areas are its habitat.</Pokemon>
+<Pokemon id="615" language="9" name="Cryogonal" genus="Crystallizing">They are composed of ice crystals. They capture
+prey with chains of ice, freezing the prey at
+-148 degrees Fahrenheit.</Pokemon>
+<Pokemon id="616" language="9" name="Shelmet" genus="Snail">It evolves when bathed in an electric-like energy
+along with Karrablast. The reason is still unknown.</Pokemon>
+<Pokemon id="617" language="9" name="Accelgor" genus="Shell Out">When its body dries out, it weakens. So, to prevent
+dehydration, it wraps itself in many layers of
+thin membrane.</Pokemon>
+<Pokemon id="618" language="9" name="Stunfisk" genus="Trap">It conceals itself in the mud of the seashore.
+Then it waits. When prey touch it, it delivers a jolt
+of electricity.</Pokemon>
+<Pokemon id="619" language="9" name="Mienfoo" genus="Martial Arts">In fights, they dominate with onslaughts of flowing,
+continuous attacks. With their sharp claws, they
+cut enemies.</Pokemon>
+<Pokemon id="620" language="9" name="Mienshao" genus="Martial Arts">Using the long fur on its arms like whips, it
+launches into combo attacks that, once started,
+no one can stop.</Pokemon>
+<Pokemon id="621" language="9" name="Druddigon" genus="Cave">It warms its body by absorbing sunlight with its
+wings. When its body temperature falls, it can no
+longer move.</Pokemon>
+<Pokemon id="622" language="9" name="Golett" genus="Automaton">Ancient science fashioned this Pokémon from clay.
+It’s been active for thousands of years.</Pokemon>
+<Pokemon id="623" language="9" name="Golurk" genus="Automaton">It flies across the sky at Mach speeds. Removing
+the seal on its chest makes its internal energy go
+out of control.</Pokemon>
+<Pokemon id="624" language="9" name="Pawniard" genus="Sharp Blade">Ignoring their injuries, groups attack by sinking
+the blades that cover their bodies into their prey.</Pokemon>
+<Pokemon id="625" language="9" name="Bisharp" genus="Sword Blade">Bisharp pursues prey in the company of a large
+group of Pawniard. Then Bisharp finishes off
+the prey.</Pokemon>
+<Pokemon id="626" language="9" name="Bouffalant" genus="Bash Buffalo">Their fluffy fur absorbs damage, even if they strike
+foes with a fierce headbutt.</Pokemon>
+<Pokemon id="627" language="9" name="Rufflet" genus="Eaglet">They will challenge anything, even strong
+opponents, without fear. Their frequent fights help
+them become stronger.</Pokemon>
+<Pokemon id="628" language="9" name="Braviary" genus="Valiant">They fight for their friends without any thought
+about danger to themselves. One can carry a car
+while flying.</Pokemon>
+<Pokemon id="629" language="9" name="Vullaby" genus="Diapered">Their wings are too tiny to allow them to fly.
+They guard their posteriors with bones that were
+gathered by Mandibuzz.</Pokemon>
+<Pokemon id="630" language="9" name="Mandibuzz" genus="Bone Vulture">Watching from the sky, they swoop to strike
+weakened Pokémon on the ground. They decorate
+themselves with bones.</Pokemon>
+<Pokemon id="631" language="9" name="Heatmor" genus="Anteater">It draws in air through its tail, transforms it into fire,
+and uses it like a tongue. It melts Durant and
+eats them.</Pokemon>
+<Pokemon id="632" language="9" name="Durant" genus="Iron Ant">They attack in groups, covering themselves in steel
+armor to protect themselves from Heatmor.</Pokemon>
+<Pokemon id="633" language="9" name="Deino" genus="Irate">Lacking sight, it’s unaware of its surroundings,
+so it bumps into things and eats anything
+that moves.</Pokemon>
+<Pokemon id="634" language="9" name="Zweilous" genus="Hostile">After it has eaten up all the food in its territory,
+it moves to another area. Its two heads do not
+get along.</Pokemon>
+<Pokemon id="635" language="9" name="Hydreigon" genus="Brutal">It responds to movement by attacking. This scary,
+three-headed Pokémon devours everything in
+its path!</Pokemon>
+<Pokemon id="636" language="9" name="Larvesta" genus="Torch">The base of volcanoes is where they make their
+homes. They shoot fire from their five horns to repel
+attacking enemies.</Pokemon>
+<Pokemon id="637" language="9" name="Volcarona" genus="Sun">When volcanic ash darkened the atmosphere, it is
+said that Volcarona’s fire provided a replacement
+for the sun.</Pokemon>
+<Pokemon id="638" language="9" name="Cobalion" genus="Iron Will">It has a body and heart of steel. It worked with its
+allies to punish people when they hurt Pokémon.</Pokemon>
+<Pokemon id="639" language="9" name="Terrakion" genus="Cavern">Spoken of in legend, this Pokémon used its
+phenomenal power to destroy a castle in its effort
+to protect Pokémon.</Pokemon>
+<Pokemon id="640" language="9" name="Virizion" genus="Grassland">Legends say this Pokémon confounded opponents
+with its swift movements.</Pokemon>
+<Pokemon id="641" language="9" name="Tornadus" genus="Cyclone">Tornadus expels massive energy from its tail,
+causing severe storms. Its power is great enough
+to blow houses away.</Pokemon>
+<Pokemon id="642" language="9" name="Thundurus" genus="Bolt Strike">As it flies around, it shoots lightning all over
+the place and causes forest fires. It is
+therefore disliked.</Pokemon>
+<Pokemon id="643" language="9" name="Reshiram" genus="Vast White">When Reshiram’s tail flares, the heat energy moves
+the atmosphere and changes the world’s weather.</Pokemon>
+<Pokemon id="644" language="9" name="Zekrom" genus="Deep Black">Concealing itself in lightning clouds, it flies
+throughout the Unova region. It creates electricity
+in its tail.</Pokemon>
+<Pokemon id="645" language="9" name="Landorus" genus="Abundance">From the forces of lightning and wind, it creates
+energy to give nutrients to the soil and make the
+land abundant.</Pokemon>
+<Pokemon id="646" language="9" name="Kyurem" genus="Boundary">It generates a powerful, freezing energy inside
+itself, but its body became frozen when the energy
+leaked out.</Pokemon>
+<Pokemon id="647" language="9" name="Keldeo" genus="Colt">When it is resolute, its body fills with power and it
+becomes swifter. Its jumps are then too fast
+to follow.</Pokemon>
+<Pokemon id="648" language="9" name="Meloetta" genus="Melody">Its melodies are sung with a special vocalization
+method that can control the feelings of those who
+hear it.</Pokemon>
+<Pokemon id="649" language="9" name="Genesect" genus="Paleozoic">This Pokémon existed 300 million years ago. Team
+Plasma altered it and attached a cannon to its back.</Pokemon>
+<Pokemon id="650" language="9" name="Chespin" genus="Spiny Nut">Such a thick shell of wood covers its head and back
+that even a direct hit from a truck wouldn’t faze it.</Pokemon>
+<Pokemon id="651" language="9" name="Quilladin" genus="Spiny Armor">They strengthen their lower bodies by
+running into one another. They are very
+kind and won’t start fights.</Pokemon>
+<Pokemon id="652" language="9" name="Chesnaught" genus="Spiny Armor">When it takes a defensive posture with its fists
+guarding its face, it could withstand a bomb blast.</Pokemon>
+<Pokemon id="653" language="9" name="Fennekin" genus="Fox">As it walks, it munches on a twig in place
+of a snack. It intimidates opponents
+by puffing hot air out of its ears.</Pokemon>
+<Pokemon id="654" language="9" name="Braixen" genus="Fox">When the twig is plucked from its tail,
+friction sets the twig alight. The flame
+is used to send signals to its allies.</Pokemon>
+<Pokemon id="655" language="9" name="Delphox" genus="Fox">Using psychic power, it generates a
+fiery vortex of 5,400 degrees Fahrenheit,
+incinerating foes swept into this whirl of flame.</Pokemon>
+<Pokemon id="656" language="9" name="Froakie" genus="Bubble Frog">It protects its skin by covering its body in
+delicate bubbles. Beneath its happy-go-lucky air,
+it keeps a watchful eye on its surroundings.</Pokemon>
+<Pokemon id="657" language="9" name="Frogadier" genus="Bubble Frog">Its swiftness is unparalleled.
+It can scale a tower of more
+than 2,000 feet in a minute’s time.</Pokemon>
+<Pokemon id="658" language="9" name="Greninja" genus="Ninja">It appears and vanishes with a ninja’s grace.
+It toys with its enemies using swift movements, while
+slicing them with throwing stars of sharpest water.</Pokemon>
+<Pokemon id="659" language="9" name="Bunnelby" genus="Digging">It has ears like shovels. Digging holes
+strengthens its ears so much that they
+can sever thick roots effortlessly.</Pokemon>
+<Pokemon id="660" language="9" name="Diggersby" genus="Digging">As powerful as an excavator, its ears
+can reduce dense bedrock to rubble.
+When it’s finished digging, it lounges lazily.</Pokemon>
+<Pokemon id="661" language="9" name="Fletchling" genus="Tiny Robin">Despite the beauty of its lilting voice, it’s
+merciless to intruders that enter its territory.</Pokemon>
+<Pokemon id="662" language="9" name="Fletchinder" genus="Ember">The hotter the flame sac on its belly,
+the faster it can fly, but it takes some
+time to get the fire going.</Pokemon>
+<Pokemon id="663" language="9" name="Talonflame" genus="Scorching">When attacking prey, it can reach speeds
+of up to 310 mph. It finishes its prey off
+with a colossal kick.</Pokemon>
+<Pokemon id="664" language="9" name="Scatterbug" genus="Scatterdust">The powder that covers its body
+regulates its temperature, so it
+can live in any region or climate.</Pokemon>
+<Pokemon id="665" language="9" name="Spewpa" genus="Scatterdust">The beaks of bird Pokémon can’t begin
+to scratch its stalwart body.
+To defend itself, it spews powder.</Pokemon>
+<Pokemon id="666" language="9" name="Vivillon" genus="Scale">The patterns on this Pokémon’s wings
+depend on the climate and topography
+of its habitat. It scatters colorful scales.</Pokemon>
+<Pokemon id="667" language="9" name="Litleo" genus="Lion Cub">They set off on their own from their pride
+and live by themselves to become stronger.
+These hot-blooded Pokémon are quick to fight.</Pokemon>
+<Pokemon id="668" language="9" name="Pyroar" genus="Royal">With fiery breath of more than 10,000 degrees
+Fahrenheit, they viciously threaten any challenger.
+The females protect the pride’s cubs.</Pokemon>
+<Pokemon id="669" language="9" name="Flabébé" genus="Single Bloom">When it finds a flower it likes, it dwells on
+that flower its whole life long. It floats in the
+wind’s embrace with an untroubled heart.</Pokemon>
+<Pokemon id="670" language="9" name="Floette" genus="Single Bloom">When the flowers of a well-tended flower bed bloom,
+it appears and celebrates with an elegant dance.</Pokemon>
+<Pokemon id="671" language="9" name="Florges" genus="Garden">In times long past, governors of castles
+would invite Florges to create flower gardens
+to embellish the castle domains.</Pokemon>
+<Pokemon id="672" language="9" name="Skiddo" genus="Mount">If it has sunshine and water, it doesn’t
+need to eat, because it can generate
+energy from the leaves on its back.</Pokemon>
+<Pokemon id="673" language="9" name="Gogoat" genus="Mount">They inhabit mountainous regions.
+The leader of the herd is decided by
+a battle of clashing horns.</Pokemon>
+<Pokemon id="674" language="9" name="Pancham" genus="Playful">It does its level best to glare and pull a scary face,
+but it can’t help grinning if anyone pats its head.</Pokemon>
+<Pokemon id="675" language="9" name="Pangoro" genus="Daunting">It charges ahead and bashes its opponents like
+a berserker, uncaring about any hits it might take.
+Its arms are mighty enough to snap a telephone pole.</Pokemon>
+<Pokemon id="676" language="9" name="Furfrou" genus="Poodle">Historically, in the Kalos region, these Pokémon
+were the designated guardians of the king.</Pokemon>
+<Pokemon id="677" language="9" name="Espurr" genus="Restraint">It has enough psychic energy to blast
+everything within 300 feet of itself,
+but it has no control over its power.</Pokemon>
+<Pokemon id="678" language="9" name="Meowstic" genus="Constraint">The eyeball patterns on the interior of its ears
+emit psychic energy. It keeps the patterns tightly
+covered because that power is too immense.</Pokemon>
+<Pokemon id="679" language="9" name="Honedge" genus="Sword">If anyone dares to grab its hilt, it wraps
+a blue cloth around that person’s arm and
+drains that person’s life energy completely.</Pokemon>
+<Pokemon id="680" language="9" name="Doublade" genus="Sword">The complex attack patterns of its two swords
+are unstoppable, even for an opponent
+greatly accomplished at swordplay.</Pokemon>
+<Pokemon id="681" language="9" name="Aegislash" genus="Royal Sword">Apparently, it can detect the innate qualities
+of leadership. According to legend, whoever it
+recognizes is destined to become king.</Pokemon>
+<Pokemon id="682" language="9" name="Spritzee" genus="Perfume">In the past, rather than using perfume,
+royal ladies carried a Spritzee
+that would waft a fragrance they liked.</Pokemon>
+<Pokemon id="683" language="9" name="Aromatisse" genus="Fragrance">Its scent is so overpowering that, unless a Trainer
+happens to really enjoy the smell, he or she will
+have a hard time walking alongside it.</Pokemon>
+<Pokemon id="684" language="9" name="Swirlix" genus="Cotton Candy">Because it eats nothing but sweets,
+its fur is as sticky sweet as cotton candy.</Pokemon>
+<Pokemon id="685" language="9" name="Slurpuff" genus="Meringue">Its sense of smell is 100 million times better than
+a human’s, so even the faintest scent tells it about
+everything in the area. It’s like it can see with its nose!</Pokemon>
+<Pokemon id="686" language="9" name="Inkay" genus="Revolving">It flashes the light-emitting spots on its body,
+which drains its opponent’s will to fight.
+It takes the opportunity to scuttle away and hide.</Pokemon>
+<Pokemon id="687" language="9" name="Malamar" genus="Overturning">It lures its prey close with hypnotic motions,
+then wraps its tentacles around it before
+finishing it off with digestive fluids.</Pokemon>
+<Pokemon id="688" language="9" name="Binacle" genus="Two-Handed">They stretch and then contract, yanking their
+rocks along with them in bold hops. They eat
+seaweed that washes up on the shoreline.</Pokemon>
+<Pokemon id="689" language="9" name="Barbaracle" genus="Collective">Barbaracle’s legs and hands have minds
+of their own, and they will move independently.
+But they usually follow the head’s orders.</Pokemon>
+<Pokemon id="690" language="9" name="Skrelp" genus="Mock Kelp">It looks just like rotten kelp. It hides from foes
+while storing up power for its evolution.</Pokemon>
+<Pokemon id="691" language="9" name="Dragalge" genus="Mock Kelp">Tales are told of ships that wander into
+seas where Dragalge live, never to return.</Pokemon>
+<Pokemon id="692" language="9" name="Clauncher" genus="Water Gun">Through controlled explosions of internal gas,
+it can expel water like a pistol shot.
+At close distances, it can shatter rock.</Pokemon>
+<Pokemon id="693" language="9" name="Clawitzer" genus="Howitzer">By expelling water from the nozzle in the back
+of its claw, it can move at a speed of 60 knots.</Pokemon>
+<Pokemon id="694" language="9" name="Helioptile" genus="Generator">The frills on either side of its head have cells
+that generate electricity when exposed to sunlight.</Pokemon>
+<Pokemon id="695" language="9" name="Heliolisk" genus="Generator">It stimulates its muscles with electricity,
+boosting the strength in its legs and enabling
+it to run 100 yards in five seconds.</Pokemon>
+<Pokemon id="696" language="9" name="Tyrunt" genus="Royal Heir">Its immense jaws have enough destructive
+force that it can chew up an automobile.
+It lived 100 million years ago.</Pokemon>
+<Pokemon id="697" language="9" name="Tyrantrum" genus="Despot">Nothing could stop this Pokémon
+100 million years ago,
+so it behaved like a king.</Pokemon>
+<Pokemon id="698" language="9" name="Amaura" genus="Tundra">This calm Pokémon lived in a cold land where
+there were no violent predators like Tyrantrum.</Pokemon>
+<Pokemon id="699" language="9" name="Aurorus" genus="Tundra">Using its diamond-shaped crystals,
+it can instantly create a wall of
+ice to block an opponent’s attack.</Pokemon>
+<Pokemon id="700" language="9" name="Sylveon" genus="Intertwining">It wraps its ribbonlike feelers around
+the arm of its beloved Trainer
+and walks with him or her.</Pokemon>
+<Pokemon id="701" language="9" name="Hawlucha" genus="Wrestling">With its wings, it controls its position in the air.
+It likes to attack from above, a maneuver that
+is difficult to defend against.</Pokemon>
+<Pokemon id="702" language="9" name="Dedenne" genus="Antenna">It uses its tail to absorb electricity from
+power plants or from outlets in houses,
+and then it fires the electricity from its whiskers.</Pokemon>
+<Pokemon id="703" language="9" name="Carbink" genus="Jewel">It has slept underground for hundreds of millions
+of years since its birth. It’s occasionally found
+during the excavation of caves.</Pokemon>
+<Pokemon id="704" language="9" name="Goomy" genus="Soft Tissue">It’s covered in a slimy membrane that makes
+any punches or kicks slide off it harmlessly.</Pokemon>
+<Pokemon id="705" language="9" name="Sliggoo" genus="Soft Tissue">Its four horns are a high-performance radar system.
+It uses them to sense sounds and smells,
+rather than using ears or a nose.</Pokemon>
+<Pokemon id="706" language="9" name="Goodra" genus="Dragon">It attacks with retractable horns.
+It throws a punch that’s the equivalent
+of the force of a hundred pro boxers.</Pokemon>
+<Pokemon id="707" language="9" name="Klefki" genus="Key Ring">It never lets go of a key that it likes,
+so people give it the keys to vaults and
+safes as a way to prevent crime.</Pokemon>
+<Pokemon id="708" language="9" name="Phantump" genus="Stump">According to old tales, these Pokémon are
+stumps possessed by the spirits of
+children who died while lost in the forest.</Pokemon>
+<Pokemon id="709" language="9" name="Trevenant" genus="Elder Tree">Using its roots as a nervous system,
+it controls the trees in the forest.
+It’s kind to the Pokémon that reside in its body.</Pokemon>
+<Pokemon id="710" language="9" name="Pumpkaboo" genus="Pumpkin">It is said to carry wandering spirits
+to the place where they belong
+so they can move on.</Pokemon>
+<Pokemon id="711" language="9" name="Gourgeist" genus="Pumpkin">It enwraps its prey in its hairlike arms.
+It sings joyfully as it observes the
+suffering of its prey.</Pokemon>
+<Pokemon id="712" language="9" name="Bergmite" genus="Ice Chunk">Using air of -150 degrees Fahrenheit, they
+freeze opponents solid. They live in herds
+above the snow line on mountains.</Pokemon>
+<Pokemon id="713" language="9" name="Avalugg" genus="Iceberg">The way several Bergmite huddle
+on its back makes it look like
+an aircraft carrier made of ice.</Pokemon>
+<Pokemon id="714" language="9" name="Noibat" genus="Sound Wave">Even a robust wrestler will become
+dizzy and unable to stand when exposed
+to its 200,000-hertz ultrasonic waves.</Pokemon>
+<Pokemon id="715" language="9" name="Noivern" genus="Sound Wave">The ultrasonic waves it emits from its ears
+can reduce a large boulder to pebbles.
+It swoops out of the dark to attack.</Pokemon>
+<Pokemon id="716" language="9" name="Xerneas" genus="Life">When the horns on its head shine
+in seven colors, it is said to be
+sharing everlasting life.</Pokemon>
+<Pokemon id="717" language="9" name="Yveltal" genus="Destruction">When its life comes to an end, it absorbs
+the life energy of every living thing
+and turns into a cocoon once more.</Pokemon>
+<Pokemon id="718" language="9" name="Zygarde" genus="Order">It’s hypothesized that it’s monitoring
+those who destroy the ecosystem
+from deep in the cave where it lives.</Pokemon>
+<Pokemon id="719" language="9" name="Diancie" genus="Jewel">It can instantly create many diamonds
+by compressing the carbon in the air
+between its hands.</Pokemon>
+<Pokemon id="720" language="9" name="Hoopa" genus="Mischief">It is said to be able to seize anything it desires
+with its six rings and six huge arms. With its power
+sealed, it is transformed into a much smaller form.</Pokemon>
+<Pokemon id="721" language="9" name="Volcanion" genus="Steam">It expels its internal steam from the
+arms on its back. It has enough
+power to blow away a mountain.</Pokemon>
+  </Species>
+</Language>

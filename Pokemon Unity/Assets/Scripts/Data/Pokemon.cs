@@ -2,10 +2,19 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Data;
+using System.Data.Common;
+using Mono.Data.Sqlite;
+//using System.Data.SQLite;
+//using DataEnums;
 
 [System.Serializable]
 public class Pokemon {
 
+	/// <summary>
+	/// Pokemon <see cref="PokemonData.ID"/>
+	/// <seealso cref="PokemonData.ID"/>
+	/// </summary>
 	private int pokemonID;
 	private string nickname;
 	public enum Status{
@@ -23,34 +32,61 @@ public class Pokemon {
 		FEMALE,
 		CALCULATE
 	}
-	//Used only for a few pokemon to specify what form is in. by default is null/0
-	private int form; 	//Unown = letter of the alphabet.
-						//Deoxys = which of the four forms.
-						//Burmy/Wormadam = cloak type. Does not change for Wormadam.
-						//Shellos/Gastrodon = west/east alt colours.
-						//Rotom = different possesed appliance forms.
-						//Giratina = Origin/Altered form.
-						//Shaymin = Land/Sky form.
-						//Arceus = Type.
-						//Basculin = appearance.
-						//Deerling/Sawsbuck = appearance.
-						//Tornadus/Thundurus/Landorus = Incarnate/Therian forms.
-						//Kyurem = Normal/White/Black forms.
-						//Keldeo = Ordinary/Resolute forms.
-						//Meloetta = Aria/Pirouette forms.
-						//Genesect = different Drives.
-						//Vivillon = different Patterns.
-						//Flabebe/Floette/Florges = Flower colour.
-						//Furfrou = haircut.
-						//Pumpkaboo/Gourgeist = small/average/large/super sizes. 
-						//Hoopa = Confined/Unbound forms.
+	
+	/// <summary>
+	///	Used only for a few pokemon to specify what form it's in. 
+	/// <seealso cref="PokemonData.Form"/>
+	/// <returns>by default is null/0</returns>
+	/// </summary>
+	/// <remarks>
+	///	Unown = letter of the alphabet.
+	///	Deoxys = which of the four forms.
+	///	Burmy/Wormadam = cloak type. Does not change for Wormadam.
+	///	Shellos/Gastrodon = west/east alt colours.
+	///	Rotom = different possesed appliance forms.
+	///	Giratina = Origin/Altered form.
+	///	Shaymin = Land/Sky form.
+	///	Arceus = Type.
+	///	Basculin = appearance.
+	///	Deerling/Sawsbuck = appearance.
+	///	Tornadus/Thundurus/Landorus = Incarnate/Therian forms.
+	///	Kyurem = Normal/White/Black forms.
+	///	Keldeo = Ordinary/Resolute forms.
+	///	Meloetta = Aria/Pirouette forms.
+	///	Genesect = different Drives.
+	///	Vivillon = different Patterns.
+	///	Flabebe/Floette/Florges = Flower colour.
+	///	Furfrou = haircut.
+	///	Pumpkaboo/Gourgeist = small/average/large/super sizes. 
+	///	Hoopa = Confined/Unbound forms.
+	///	Castform? = different weather forms
+	/// </remarks>
+	private int form; // select pokemon_id from pokemon_forms where is_battle_only=0 ORDER BY [order] --form_identifier!=null | form_order!=1
+						
 
 	private Gender gender;
 	private int level;
-	private int exp;
-	private int nextLevelExp;
+	/// <summary>
+	/// Pokemon experience points
+	/// <example>
+	/// lv1->lv2=5xp
+	/// lv2->lv3=10xp
+	/// if pokemon is lvl 3 and 0xp, it should have a total of 15xp
+	/// but display counter should still say 0
+	/// </example>
+	/// </summary>
+	/// <remarks>
+	/// experience should accumulate accross past levels.
+	/// Should also rename to "currentExp"?
+	/// </remarks>
+	private int exp; 
+	/// <summary>
+	/// Should be a method
+	/// </summary>
+	/// <remarks>should perform math equation to access this value</remarks>
+	private int nextLevelExp; 
 
-	private int friendship;
+	private int friendship; //This isnt the samething as happiness, right?
 
 	private bool pokerus;
 	private int rareValue;
@@ -59,15 +95,40 @@ public class Pokemon {
 	private Status status;
 	private int sleepTurns;
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <remarks>This should be an enum value</remarks>
 	private string caughtBall;
+	/// <summary>
+	/// The held item.
+	/// <returns>Int item value</returns>
+	/// </summary>
 	private string heldItem;
 
+	/// <summary>
+	/// The met date.
+	/// <returns>DateTimeOffset</returns>
+	/// </summary>
 	private string metDate;
+	/// <summary>
+	/// This value should be the unity map value.
+	/// The database will convert unity value into string name
+	/// </summary>
 	private string metMap;
 	private int metLevel;
 
-	//if OT = null, pokemon may be caught.
+	/// <summary>
+	/// if OriginalTrainer = null, pokemon may be caught.
+	/// </summary>
+	/// <remarks>Why? That's such a weird rule...</remarks>
 	private string OT;
+	/// <summary>
+	/// Pokemon Serial number
+	/// <para>only last 6 digits are visible; unsigned 16bit int</para>
+	/// <value>last6(finalId) = trainerid+secretId*65536</value>
+	/// </summary>
+	/// <remarks>Missing other values, like secretId</remarks>
 	private int IDno;
 
 	private int IV_HP;
@@ -84,16 +145,26 @@ public class Pokemon {
 	private int EV_SPD;
 	private int EV_SPE;
 
+	/// <summary>
+	/// The nature.
+	/// </summary>
+	/// <remarks>Should be an enum</remarks>
 	private string nature;
-
-	private int HP;
+		
 	private int currentHP;
+	private int HP;
 	private int ATK;
 	private int DEF;
 	private int SPA;
 	private int SPD;
 	private int SPE;
 
+	/// <summary>
+	/// The ability.
+	/// </summary>
+	///	<remarks>
+	/// Should be [int? a1,int? a2,int? a3]
+	/// </remarks> 
 	private int ability;	//(0/1/2(hiddenability)) if higher than number of abilites, rounds down to nearest ability.
 							// if is 2, but pokemon only has 1 ability and no hidden, will use the one ability it does have.
 
@@ -397,6 +468,142 @@ public class Pokemon {
 
 	}
 
+	//New Pokemon with: every specific detail, from database
+	/*public Pokemon(int PokemonTrainerID){
+		DataTable t = new DataTable();
+		// Open connection
+		using(IDbConnection dbcon = new System.Data.SqlClient.SqlConnection(connectionString))
+		{
+			using(IDbCommand dbcmd = dbcon.CreateCommand())
+			{
+				dbcmd.CommandType = CommandType.StoredProcedure;
+				dbcmd.CommandText = "getTrainerPokemon";//procedureName;
+				foreach(SqlParameter parameter in parameters)
+				{
+					dbcmd.Parameters.Add(parameter);
+				}
+				dbcon.Open();
+				result = dbcmd.ExecuteScalar();
+				dbcon.Close();
+			}
+			using(SqlConnection c = new System.Data.SqlClient.SqlConnection(ConnectionString))
+		{
+			c.Open();
+			// 2
+			// Create new DataAdapter
+			using(SqlDataAdapter a = new SqlDataAdapter(
+				"SELECT * FROM EmployeeIDs",c))
+			{
+				// 3
+				// Use DataAdapter to fill DataTable
+				a.Fill(t);
+
+				// 4
+				// Render data onto the screen
+				// dataGridView1.DataSource = t; // <-- From your designer
+			}
+		}
+		int pokemonID; string nickname; Gender gender; int level;
+		bool isShiny; string caughtBall; string heldItem; string OT;
+		int IV_HP; int IV_ATK; int IV_DEF; int IV_SPA; int IV_SPD; int IV_SPE;
+		int EV_HP; int EV_ATK; int EV_DEF; int EV_SPA; int EV_SPD; int EV_SPE;
+		string nature; int ability; string[] moveset; int[] PPups;
+
+		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+
+		this.pokemonID = pokemonID;
+		this.nickname = nickname;
+		//SET UP FORMS LATER #####################################################################################
+		this.form = 0;
+		this.gender = gender;
+		//if gender is CALCULATE, then calculate gender using maleRatio
+		if(gender == Gender.CALCULATE){
+			if(thisPokemonData.getMaleRatio() < 0){
+				this.gender = Gender.NONE;}
+			else if(Random.Range(0f,100f) <= thisPokemonData.getMaleRatio()){
+				this.gender = Gender.MALE;}
+			else{
+				this.gender = Gender.FEMALE;}
+		}
+		this.level = level;
+		//Find exp for current level, and next level.
+		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
+		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
+		this.friendship = thisPokemonData.getBaseFriendship();
+
+		this.isShiny = isShiny;
+		if(isShiny){
+			this.rareValue = Random.Range(0,16);
+		}
+		else{
+			this.rareValue = Random.Range(16,65536);
+			if(this.rareValue < 19){
+				this.pokerus = true;
+			}
+		}
+	
+		this.status = Status.NONE;
+		this.sleepTurns = 0;
+		this.caughtBall = caughtBall;
+		this.heldItem = heldItem;
+
+		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
+		if (this.OT != SaveData.currentSave.playerName){
+			this.IDno = Random.Range (0,65536); //if owned by another trainer, assign a random number. 
+		}										//this way if they trade it to you, it will have a different number to the player's.
+		else{
+			this.IDno = SaveData.currentSave.playerID;
+		}
+
+		this.metLevel = level;
+		if(PlayerMovement.player != null){
+			if(PlayerMovement.player.accessedMapSettings != null){
+				this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
+			else{
+				this.metMap = "Somewhere";}
+		}
+		else{
+			this.metMap = "Somewhere";}
+		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
+
+		//Set IVs 
+		this.IV_HP = IV_HP; 
+		this.IV_ATK = IV_ATK; 
+		this.IV_DEF = IV_DEF; 
+		this.IV_SPA = IV_SPA; 
+		this.IV_SPD = IV_SPD; 
+		this.IV_SPE = IV_SPE;
+		//set EVs
+		this.EV_HP = EV_HP;
+		this.EV_ATK = EV_ATK;
+		this.EV_DEF = EV_DEF;
+		this.EV_SPA = EV_SPA;
+		this.EV_SPD = EV_SPD;
+		this.EV_SPE = EV_SPE;
+		//set nature
+		this.nature = nature;
+		//calculate stats
+		this.calculateStats();
+		//set currentHP to HP, as a new pokemon will be undamaged.
+		this.currentHP = HP;
+		this.ability = ability;
+
+		this.moveset = moveset;
+		this.moveHistory = moveset;
+
+		this.PPups = PPups;
+		//set maxPP and PP to be the regular PP defined by the move in the database.
+		this.maxPP = new int[4];
+		this.PP = new int[4];
+		for(int i = 0; i < 4; i++){
+			if(!string.IsNullOrEmpty(moveset[i])){
+				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP()*((this.PPups[i]*0.2f)+1));
+				this.PP[i] = this.maxPP[i];
+			}
+		}
+		packMoveset();
+
+	}*/
 
 
 

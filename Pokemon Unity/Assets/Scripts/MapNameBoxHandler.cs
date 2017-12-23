@@ -3,72 +3,89 @@
 using UnityEngine;
 using System.Collections;
 
-public class MapNameBoxHandler : MonoBehaviour {
+public class MapNameBoxHandler : MonoBehaviour
+{
+    private Transform mapName;
+    private GUITexture mapNameBox;
+    private GUIText mapNameText;
+    private GUIText mapNameTextShadow;
 
-	private Transform mapName;
-	private GUITexture mapNameBox;
-	private GUIText mapNameText;
-	private GUIText mapNameTextShadow;
+    private Coroutine mainDisplay;
 
-	private Coroutine mainDisplay;
+    public float speed;
+    private float increment;
 
-	public float speed;
-	private float increment;
+    void Awake()
+    {
+        mapName = transform.Find("MapName");
+        mapNameBox = mapName.GetComponent<GUITexture>();
+        mapNameText = mapName.Find("BoxText").GetComponent<GUIText>();
+        mapNameTextShadow = mapName.Find("BoxTextShadow").GetComponent<GUIText>();
+    }
 
-	void Awake () {
-		mapName = transform.FindChild("MapName");
-		mapNameBox = mapName.GetComponent<GUITexture>();
-		mapNameText = mapName.FindChild("BoxText").GetComponent<GUIText>();
-		mapNameTextShadow = mapName.FindChild("BoxTextShadow").GetComponent<GUIText>();
-	}
+    void Start()
+    {
+        mapName.position = new Vector3(0, 0.17f, mapName.position.z);
+    }
 
-	void Start () {
-		mapName.position = new Vector3(0, 0.17f, mapName.position.z);
-	}
+    public void display(Texture boxTexture, string name, Color textColor)
+    {
+        //do not display when on a map of the same name
+        if (mapNameText.text != name)
+        {
+            if (mainDisplay != null)
+            {
+                StopCoroutine(mainDisplay);
+            }
+            mainDisplay = StartCoroutine(displayCoroutine(boxTexture, name, textColor));
+        }
+    }
 
-	public void display(Texture boxTexture, string name, Color textColor){
-		//do not display when on a map of the same name
-		if(mapNameText.text != name){
-			if(mainDisplay != null){
-				StopCoroutine(mainDisplay);}
-			mainDisplay = StartCoroutine(displayCoroutine(boxTexture, name, textColor));
-		}
-	}
+    private IEnumerator displayCoroutine(Texture boxTexture, string name, Color textColor)
+    {
+        if (mapName.position.y != 0.17f)
+        {
+            increment = mapName.position.y / 0.17f;
+            while (increment < 1)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                mapName.position = new Vector3(0, 0.17f * increment, mapName.position.z);
+                yield return null;
+            }
+        }
+        mapNameBox.texture = boxTexture;
+        mapNameText.text = name;
+        mapNameTextShadow.text = name;
+        mapNameText.color = textColor;
 
-	private IEnumerator displayCoroutine(Texture boxTexture, string name, Color textColor){
-		if(mapName.position.y != 0.17f){
-			increment = mapName.position.y/0.17f;
-			while(increment < 1){
-				increment += (1/speed)*Time.deltaTime;
-				if(increment > 1){
-					increment = 1;}
-				mapName.position = new Vector3(0, 0.17f*increment, mapName.position.z);
-				yield return null;
-			}
-		}
-		mapNameBox.texture = boxTexture;
-		mapNameText.text = name;
-		mapNameTextShadow.text = name;
-		mapNameText.color = textColor;
+        increment = 0f;
+        while (increment < 1)
+        {
+            increment += (1 / speed) * Time.deltaTime;
+            if (increment > 1)
+            {
+                increment = 1;
+            }
+            mapName.position = new Vector3(0, 0.17f - (0.17f * increment), mapName.position.z);
+            yield return null;
+        }
 
-		increment = 0f;
-		while(increment < 1){
-			increment += (1/speed)*Time.deltaTime;
-			if(increment > 1){
-				increment = 1;}
-			mapName.position = new Vector3(0, 0.17f-(0.17f*increment), mapName.position.z);
-			yield return null;
-		}
+        yield return new WaitForSeconds(2f);
 
-		yield return new WaitForSeconds(2f);
-
-		increment = 0f;
-		while(increment < 1){
-			increment += (1/speed)*Time.deltaTime;
-			if(increment > 1){
-				increment = 1;}
-			mapName.position = new Vector3(0, 0.17f*increment, mapName.position.z);
-			yield return null;
-		}
-	}
+        increment = 0f;
+        while (increment < 1)
+        {
+            increment += (1 / speed) * Time.deltaTime;
+            if (increment > 1)
+            {
+                increment = 1;
+            }
+            mapName.position = new Vector3(0, 0.17f * increment, mapName.position.z);
+            yield return null;
+        }
+    }
 }
