@@ -152,7 +152,7 @@ public class Pokemon {
 	private string nature;
 		
 	private int currentHP;
-	private int HP;
+	private int HP; //is this the same as the maxHP.value?
 	private int ATK;
 	private int DEF;
 	private int SPA;
@@ -469,6 +469,7 @@ public class Pokemon {
 	}
 
 	//New Pokemon with: every specific detail, from database
+    //commented out because sql connection inside pokemon class is bad idea
 	/*public Pokemon(int PokemonTrainerID){
 		DataTable t = new DataTable();
 		// Open connection
@@ -607,10 +608,6 @@ public class Pokemon {
 
 
 
-
-
-
-
 	//Recalculate the pokemon's Stats.
 	public void calculateStats(){
 		int[] baseStats = PokemonDatabase.getPokemon(pokemonID).getBaseStats();
@@ -719,7 +716,7 @@ public class Pokemon {
 		}
 		return false; //returns false if total or relevant EV cap was reached before running.
 	}
-	/*/
+	/*/idk y this is commented out...
 	public int getEvolutionID(string currentMethod){
 		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
 		int[] evolutions = thisPokemonData.getEvolutions();
