@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &177650
 GameObject:
   m_ObjectHideFlags: 1
@@ -595,7 +595,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -619,7 +619,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!114 &11422930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -710,7 +710,10 @@ MonoBehaviour:
   iconSaveTex: {fileID: 2800000, guid: d17fa7afdb6435840b864d559c247086, type: 3}
   iconSettingsTex: {fileID: 2800000, guid: 850d537b18622cf44a1d43e74cfb2445, type: 3}
   selectClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
+  pauseSelect: {fileID: 8300000, guid: 010e46ebcbba892469bd5d054212768c, type: 3}
+  returnClip: {fileID: 8300000, guid: a882da1bb53e5c343954cd392e1e0fbc, type: 3}
   openClip: {fileID: 8300000, guid: ffef4ae12c71bfd45a087b3eb6ec2798, type: 3}
+  pokedex: {fileID: 0}
 --- !u!114 &11486098
 MonoBehaviour:
   m_ObjectHideFlags: 1

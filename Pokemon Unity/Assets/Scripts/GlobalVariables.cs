@@ -6,6 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class GlobalVariables : MonoBehaviour
 {
+    DiscordRpc.EventHandlers handlers;
+    public DiscordRpc.RichPresence presence;
+    public string applicationId; //change this application id when you're testing discord rpc
+    public string optionalSteamId;
+    public int callbackCalls;
+    public UnityEngine.Events.UnityEvent onConnect;
+    public UnityEngine.Events.UnityEvent onDisconnect;
+
+
     public static GlobalVariables global;
     public Vector3 playerPosition;
     public int playerDirection;
@@ -39,8 +48,20 @@ public class GlobalVariables : MonoBehaviour
     {
         SceneManager.sceneLoaded -= CheckLevelLoaded;
     }
+    void Update()
+    {
+        DiscordRpc.RunCallbacks();
+    }
     void Awake()
     {
+        Debug.Log("Discord: init");
+        callbackCalls = 0;
+        handlers = new DiscordRpc.EventHandlers();
+        handlers.readyCallback = ReadyCallback;
+        handlers.disconnectedCallback += DisconnectedCallback;
+        handlers.errorCallback += ErrorCallback;
+        DiscordRpc.Initialize(applicationId, ref handlers, true, optionalSteamId);
+
         SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
@@ -91,6 +112,7 @@ public class GlobalVariables : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public IEnumerator GetDebugText()
     {
         yield return debugText.text;
@@ -99,7 +121,7 @@ public class GlobalVariables : MonoBehaviour
     {
         SaveData.currentSave.debugMode = true;
         debugText.text = "build " + buildNum + "\nDebugging Mode Enabled";
-        debugTextShadow.text = debugText.text;
+        //debugTextShadow.text = debugText.text;
     }
     public void CreateFileData(string name, bool isMale)
     {
@@ -368,10 +390,18 @@ public class GlobalVariables : MonoBehaviour
                 if (SaveData.currentSave.PC.boxes[0][i].getStatus() != Pokemon.Status.FAINTED)
                 {
                     FollowerSettings.changeFollower(i);
+                    if(SaveData.currentSave.PC.boxes[0][i].getName() != PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][i].getID()).getName())
+                    {
+                        SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][i].getName() +  " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][i].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][i].getLevel() + ")");  
+                    }
+                    else {
+                        SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][i].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][i].getLevel() + ")");
+                    }
                     i = 6;
                 }
             }
         }
+        Debug.Log("follower: " + PokemonDatabase.getPokemon(FollowerSettings.pokemonID).getName());
     }
 
     public void updateResolution()
@@ -417,5 +447,58 @@ public class GlobalVariables : MonoBehaviour
     public AudioClip getSurfBGM()
     {
         return surfBGM;
+    }
+    
+    //Discord RPC Support
+    public void SetRPCState(string state)
+    {
+        presence.state = state;
+        Debug.Log("Discord: state set to \"" + state + "\"");
+        UpdatePresence();
+    }
+    public void SetRPCDetails(string details)
+    {
+        presence.details = details;
+        Debug.Log("Discord: details set to \"" + details + "\"");
+        UpdatePresence();
+    }
+    public void SetRPCLargeImageKey(string key, string text)
+    {
+        presence.largeImageKey = key;
+        presence.largeImageText = text;
+        Debug.Log("Discord: large image set to \"" + key + "\", \"" + text + "\"");
+        UpdatePresence();
+    }
+    public void SetRPCSmallImageKey(string key, string text)
+    {
+        presence.smallImageKey = key;
+        presence.smallImageText = text;
+        Debug.Log("Discord: small image set to \"" + key + "\", \"" + text + "\"");
+        UpdatePresence();
+    }
+    public void UpdatePresence()
+    {
+        DiscordRpc.UpdatePresence(ref presence);
+        Debug.Log("Discord: updating presence");
+    }
+    public void ReadyCallback()
+    {
+        ++callbackCalls;
+        Debug.Log("Discord: ready");
+        debug("Discord: ready");
+        onConnect.Invoke();
+        UpdatePresence();
+    }
+    public void DisconnectedCallback(int errorCode, string message)
+    {
+        ++callbackCalls;
+        Debug.Log(string.Format("Discord: disconnect {0}: {1}", errorCode, message));
+        onDisconnect.Invoke();
+    }
+
+    public void ErrorCallback(int errorCode, string message)
+    {
+        ++callbackCalls;
+        Debug.Log(string.Format("Discord: error {0}: {1}", errorCode, message));
     }
 }

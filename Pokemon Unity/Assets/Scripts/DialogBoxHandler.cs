@@ -1,6 +1,4 @@
-﻿//Original Scripts by IIColour (IIColour_Spectrum)
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -406,7 +404,7 @@ public class DialogBoxHandler : MonoBehaviour
     }
     
 
-    public IEnumerator scrollText(float scrollSpeed) //is this broken or some shit? commenting out since it's not used and freezes the game.
+    public IEnumerator scrollText(float scrollSpeed) 
     {
         SfxHandler.Play(selectClip);
         float textPosDestination = DialogBoxText.pixelOffset.y + 14f; //the box must be scrolled up 14

@@ -35,6 +35,8 @@ public class PauseHandler : MonoBehaviour
 
     //private AudioSource PauseAudio; //possible "set bgm in pause menu" option? I need to implement it
     public AudioClip selectClip;
+    public AudioClip pauseSelect;
+    public AudioClip returnClip;
     public AudioClip openClip;
 
     private int selectedIcon;
@@ -126,6 +128,7 @@ public class PauseHandler : MonoBehaviour
 
     private IEnumerator closeAnim()
     {
+        SfxHandler.Play(returnClip);
         float increment = 0;
         setSelectedText("");
         while (increment < 1)
@@ -346,25 +349,25 @@ public class PauseHandler : MonoBehaviour
                 {
                     selectedIcon = 2;
                     StartCoroutine("updateIcon", selectedIcon);
-                    SfxHandler.Play(selectClip);
+                    SfxHandler.Play(pauseSelect);
                 }
                 else if (Input.GetAxisRaw("Horizontal") < 0)
                 {
                     selectedIcon = 1;
                     StartCoroutine("updateIcon", selectedIcon);
-                    SfxHandler.Play(selectClip);
+                    SfxHandler.Play(pauseSelect);
                 }
                 else if (Input.GetAxisRaw("Vertical") < 0)
                 {
                     selectedIcon = 5;
                     StartCoroutine("updateIcon", selectedIcon);
-                    SfxHandler.Play(selectClip);
+                    SfxHandler.Play(pauseSelect);
                 }
                 else if (Input.GetAxisRaw("Horizontal") > 0)
                 {
                     selectedIcon = 3;
                     StartCoroutine("updateIcon", selectedIcon);
-                    SfxHandler.Play(selectClip);
+                    SfxHandler.Play(pauseSelect);
                 }
             }
             else
@@ -375,7 +378,7 @@ public class PauseHandler : MonoBehaviour
                     {
                         selectedIcon -= 3;
                         StartCoroutine("updateIcon", selectedIcon);
-                        SfxHandler.Play(selectClip);
+                        SfxHandler.Play(pauseSelect);
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
@@ -385,7 +388,7 @@ public class PauseHandler : MonoBehaviour
                     {
                         selectedIcon += 1;
                         StartCoroutine("updateIcon", selectedIcon);
-                        SfxHandler.Play(selectClip);
+                        SfxHandler.Play(pauseSelect);
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
@@ -395,7 +398,7 @@ public class PauseHandler : MonoBehaviour
                     {
                         selectedIcon += 3;
                         StartCoroutine("updateIcon", selectedIcon);
-                        SfxHandler.Play(selectClip);
+                        SfxHandler.Play(pauseSelect);
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
@@ -405,7 +408,7 @@ public class PauseHandler : MonoBehaviour
                     {
                         selectedIcon -= 1;
                         StartCoroutine("updateIcon", selectedIcon);
-                        SfxHandler.Play(selectClip);
+                        SfxHandler.Play(pauseSelect);
                         yield return new WaitForSeconds(0.2f);
                     }
                 }
@@ -418,9 +421,10 @@ public class PauseHandler : MonoBehaviour
 						//StartCoroutine(fadeIcons(0.4f));
 						//yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
 						yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+                        hideIcons();
 
-						pokedex.gameObject.SetActive (true);
-						yield return StartCoroutine(runSceneUntilDeactivated(pokedex.gameObject));
+						//yield return StartCoroutine(runSceneUntilDeactivated(Scene.main.Pokedex.gameObject));
+
 						unhideIcons();
 						//StartCoroutine(unfadeIcons(0.4f));
 						//yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));

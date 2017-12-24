@@ -121,6 +121,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         updateAnimation("walk", walkFPS);
+        if(SaveData.currentSave.getCVariable("male") == 1) {
+            GlobalVariables.global.SetRPCSmallImageKey("m_"+SaveData.currentSave.playerOutfit,SaveData.currentSave.playerName);
+        }
+        else {
+            GlobalVariables.global.SetRPCSmallImageKey("f_"+SaveData.currentSave.playerOutfit,SaveData.currentSave.playerName);
+        }
         StartCoroutine("animateSprite");
         animPause = true;
 
@@ -195,6 +201,7 @@ public class PlayerMovement : MonoBehaviour
                 accessedAudio = accessedMapSettings.getBGM();
                 accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
                 BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+
             }
             if (accessedMapSettings.mapNameBoxTexture != null)
             {
@@ -238,13 +245,18 @@ public class PlayerMovement : MonoBehaviour
                 namez += PokemonDatabase.getPokemon(encounterList[i].ID).getName() + ", ";
             }
             Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
+<<<<<<< HEAD
             for (int i = 0; i < encounterList.Length; i++)
             {
                 Debug.Log("Encounter List by ID: " + encounterList[i].ID.ToString());
+=======
+            GlobalVariables.global.SetRPCLargeImageKey(accessedMapSettings.discordImageKey, accessedMapSettings.name);
+            if(accessedMapSettings.discordDetails != null && accessedMapSettings.discordDetails != "") {
+                GlobalVariables.global.SetRPCDetails(accessedMapSettings.discordDetails);
+>>>>>>> b53e0aae12e087a0e1a5fce1b3f1e02f9ec53950
             }
         }
         //
-
         GlobalVariables.global.resetFollower();
     }
 
