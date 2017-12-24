@@ -37,8 +37,7 @@ public class CustomEventEditor : Editor
         object0_Prop,
         object1_Prop,
         sound_Prop,
-        runSimul_Prop,
-        sprite_Prop;
+        runSimul_Prop;
 
     private bool interactUnfold = false;
     private bool[] interactTreesUnfold = new bool[1];
@@ -282,7 +281,6 @@ public class CustomEventEditor : Editor
         object1_Prop = currentSEvent.FindPropertyRelative("object1");
         sound_Prop = currentSEvent.FindPropertyRelative("sound");
         runSimul_Prop = currentSEvent.FindPropertyRelative("runSimultaneously");
-        sprite_Prop = currentSEvent.FindPropertyRelative("sprite");
     }
 
     private string GetEventDescription(SerializedProperty currentSEvent)
@@ -494,8 +492,6 @@ public class CustomEventEditor : Editor
         {
             case CustomEventDetails.CustomEventType.Dialog:
                 strings_Prop.arraySize = EditorGUILayout.IntField(new GUIContent("Lines"), strings_Prop.arraySize);
-                EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Scroll lines?"));
-                EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Scroll speed"));
                 EditorGUILayout.Space();
                 for (int i = 0; i < strings_Prop.arraySize; i++)
                 {
@@ -735,14 +731,6 @@ public class CustomEventEditor : Editor
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(1), new GUIContent("Y"));
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(2), new GUIContent("Z"));
                 EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Speed"));
-			    break;
-            case CustomEventDetails.CustomEventType.Exclaim:
-                EditorGUILayout.PropertyField(runSimul_Prop, new GUIContent("Run Simultaneously"));
-                EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Wait For Seconds"));
-                EditorGUILayout.PropertyField(object0_Prop, new GUIContent("Character"));
-                EditorGUILayout.PropertyField(sprite_Prop, new GUIContent("Exclaim Sprite"));
-                EditorGUILayout.PropertyField(sound_Prop, new GUIContent("Exclaim SFX"));
-
 			    break;
         }
 

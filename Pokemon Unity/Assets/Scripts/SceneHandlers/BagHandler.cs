@@ -2570,13 +2570,7 @@ public class BagHandler : MonoBehaviour
                     currentPokemon.addExp(currentPokemon.getExpNext() - currentPokemon.getExp());
                     SfxHandler.Play(healClip);
                     updateParty();
-                    if(currentPokemon.getName() != PokemonDatabase.getPokemon(currentPokemon.getID()).getName())
-                    {
-                        GlobalVariables.global.SetRPCState("Follower: " + currentPokemon.getName() +  " (" + PokemonDatabase.getPokemon(currentPokemon.getID()).getName() + ", Level " + currentPokemon.getLevel() + ")");  
-                    }
-                    else {
-                        GlobalVariables.global.SetRPCState("Follower: " + currentPokemon.getName() + " (Level " + currentPokemon.getLevel() + ")");
-                    } //update rpc state because the pokemon leveled up
+
                     removeItem(selectedItem.getName(), 1); //remove item
                     updateSelectedItem();
 
