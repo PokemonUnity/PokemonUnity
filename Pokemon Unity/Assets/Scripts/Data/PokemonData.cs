@@ -421,4 +421,16 @@ public class PokemonData
         }
         return moveset;
     }
+
+	public string getPokedexEntry(){
+		return pokedexEntry;
+	}
+
+	public float getWeight(){
+		return weight;
+	}
+
+	public float getHeight(){
+		return height;
+	}
 }

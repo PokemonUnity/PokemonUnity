@@ -103,6 +103,10 @@ public class FollowerMovement : MonoBehaviour
         StartCoroutine("animateSprite");
     }
 
+    public void setDirection(int newDirection)
+    {
+        direction = newDirection;
+    }
     public IEnumerator move(Vector3 destination, float sentSpeed)
     {
         if (canMove)

@@ -10,7 +10,7 @@ using System.Collections;
 
 public static class PokemonDatabase
 {
-    private static PokemonData[] pokedex = new PokemonData[]
+    public static PokemonData[] pokedex = new PokemonData[]
     {
         null,
         //  PokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE1, Ability1, Ability2, HiddenAbility,
@@ -2079,11 +2079,15 @@ public static class PokemonDatabase
         return exp;
     }
 
+
+
 	public static int getPokedexLength(){
 		return pokedex.Length;
 	}
 
-	public static PokemonData getPokemonbyID(int id){
-		return pokedex [id];
+	public static PokemonData[] getPokedex (){
+		return pokedex;
 	}
+
+
 }

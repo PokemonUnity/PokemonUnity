@@ -10,6 +10,8 @@ public class MapSettings : MonoBehaviour
     public AudioClip mapBGMNightClip = null;
     public int mapBGMNightLoopStartSamples = 0;
     public string mapName;
+    public string discordImageKey;
+    public string discordDetails;
     public Texture mapNameBoxTexture;
     public Color mapNameColor = new Color(0.066f, 0.066f, 0.066f, 1);
 
