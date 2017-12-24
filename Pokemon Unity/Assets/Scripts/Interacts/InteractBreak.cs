@@ -3,116 +3,133 @@
 using UnityEngine;
 using System.Collections;
 
-public class InteractBreak: MonoBehaviour {
+public class InteractBreak : MonoBehaviour
+{
+    private DialogBoxHandler Dialog;
 
-	private DialogBoxHandler Dialog;
+    private Animator myAnimator;
+    private SpriteRenderer objectSprite;
+    private Collider hitBox;
+    private Light objectLight;
 
-	private Animator myAnimator;
-	private SpriteRenderer objectSprite;
-	private Collider hitBox;
-	private Light objectLight;
+    private bool breaking = false;
 
-	private bool breaking = false;
+    private AudioSource breakSound;
 
-	private AudioSource breakSound;
+    public string examineText;
+    public string interactText;
+    public string fieldEffect;
 
-	public string examineText;
-	public string interactText;
-	public string fieldEffect;
+    // Use this for initialization
+    void Start()
+    {
+        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
-	// Use this for initialization
-	void Start () {
-	
-		Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        myAnimator = (Animator) this.GetComponentInChildren<Animator>();
+        objectSprite = this.GetComponentInChildren<SpriteRenderer>();
+        hitBox = this.GetComponentInChildren<BoxCollider>();
 
-		myAnimator = (Animator) this.GetComponentInChildren<Animator>();
-		objectSprite = this.GetComponentInChildren<SpriteRenderer>();
-		hitBox = this.GetComponentInChildren<BoxCollider>();
+        objectLight = this.GetComponentInChildren<Light>();
 
-		objectLight = this.GetComponentInChildren<Light>();
+        breakSound = this.gameObject.GetComponent<AudioSource>();
+    }
 
-		breakSound = this.gameObject.GetComponent<AudioSource>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName ("breakEnd")){
-			objectSprite.enabled = false;
-			objectLight.enabled = false;
-		}
-		else if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName ("finished")){
-			myAnimator.SetBool("break", false);
-			objectSprite.enabled = false;
-			hitBox.enabled = false;
-			breaking = false;
-		}
-	}
-	
-	public IEnumerator interact(){
-		Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
-		if(targetPokemon != null){
-			if(PlayerMovement.player.setCheckBusyWith(this.gameObject)){
-				Dialog.drawDialogBox();		//yield return StartCoroutine blocks the next code from running until coroutine is done.
-				yield return Dialog.StartCoroutine("drawText", interactText);
-			/* 			//This inactive code is used to print a third line of text.
-				while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){	//these 3 lines stop the next bit from running until space is pressed.
-					yield return null;
-				}
-				Dialog.StartCoroutine("scrollText");
-				yield return Dialog.StartCoroutine("drawText", "\\That'd be neat.");
-		*/
-				Dialog.drawChoiceBox();
+    // Update is called once per frame
+    void Update()
+    {
+        if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("breakEnd"))
+        {
+            objectSprite.enabled = false;
+            objectLight.enabled = false;
+        }
+        else if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("finished"))
+        {
+            myAnimator.SetBool("break", false);
+            objectSprite.enabled = false;
+            hitBox.enabled = false;
+            breaking = false;
+        }
+    }
 
-				//You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
-				yield return Dialog.StartCoroutine(Dialog.choiceNavigate()); //it then assigns a value to that int
-				Dialog.undrawChoiceBox();
-				if (Dialog.chosenIndex == 1){ //check that int's value
-			
-					Dialog.drawDialogBox();
-					yield return Dialog.StartCoroutine("drawText", targetPokemon.getName()+" used "+targetPokemon.getFirstFEInstance(fieldEffect)+"!");
-					while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){
-						yield return null;
-					}
-					Dialog.undrawDialogBox();
+    public IEnumerator interact()
+    {
+        Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty(fieldEffect);
+        if (targetPokemon != null)
+        {
+            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            {
+                Dialog.drawDialogBox();
+                    //yield return StartCoroutine blocks the next code from running until coroutine is done.
+                yield return Dialog.StartCoroutine("drawText", interactText);
+                /* 			//This inactive code is used to print a third line of text.
+                    while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){	//these 3 lines stop the next bit from running until space is pressed.
+                        yield return null;
+                    }
+                    Dialog.StartCoroutine("scrollText");
+                    yield return Dialog.StartCoroutine("drawText", "\\That'd be neat.");
+            */
+                Dialog.drawChoiceBox();
 
-					yield return new WaitForSeconds(0.5f);
+                //You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
+                yield return Dialog.StartCoroutine(Dialog.choiceNavigate()); //it then assigns a value to that int
+                Dialog.undrawChoiceBox();
+                if (Dialog.chosenIndex == 1)
+                {
+                    //check that int's value
 
-					//Run the animation and remove the tree
-					objectLight.enabled = true;
-					if(!breakSound.isPlaying && !breaking){
-						breakSound.volume = PlayerPrefs.GetFloat("sfxVolume");
-						breakSound.Play();
-					}
-					myAnimator.SetBool("break", true);
-					myAnimator.SetBool("rewind", false);
-					breaking = true;
+                    Dialog.drawDialogBox();
+                    yield return
+                        Dialog.StartCoroutine("drawText",
+                            targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance(fieldEffect) + "!");
+                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                    {
+                        yield return null;
+                    }
+                    Dialog.undrawDialogBox();
 
-					yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.5f);
 
-				}
-				Dialog.undrawDialogBox();
-				yield return new WaitForSeconds(0.2f);
-				PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-			}
-		}
-		else{
-			if(PlayerMovement.player.setCheckBusyWith(this.gameObject)){
-				Dialog.drawDialogBox();		//yield return StartCoroutine blocks the next code from running until coroutine is done.
-				yield return Dialog.StartCoroutine("drawText", examineText);
-				while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){
-					yield return null;
-				}
-				Dialog.undrawDialogBox();
-				yield return new WaitForSeconds(0.2f);
-				PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-			}
-		}
-	}
+                    //Run the animation and remove the tree
+                    objectLight.enabled = true;
+                    if (!breakSound.isPlaying && !breaking)
+                    {
+                        breakSound.volume = PlayerPrefs.GetFloat("sfxVolume");
+                        breakSound.Play();
+                    }
+                    myAnimator.SetBool("break", true);
+                    myAnimator.SetBool("rewind", false);
+                    breaking = true;
 
-	public void repair(){
-		myAnimator.SetBool("rewind", true);
-		objectSprite.enabled = true;
-		hitBox.enabled = true;
-		breaking = false;
-	}
+                    yield return new WaitForSeconds(1f);
+                }
+                Dialog.undrawDialogBox();
+                yield return new WaitForSeconds(0.2f);
+                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+            }
+        }
+        else
+        {
+            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            {
+                Dialog.drawDialogBox();
+                    //yield return StartCoroutine blocks the next code from running until coroutine is done.
+                yield return Dialog.StartCoroutine("drawText", examineText);
+                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                {
+                    yield return null;
+                }
+                Dialog.undrawDialogBox();
+                yield return new WaitForSeconds(0.2f);
+                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+            }
+        }
+    }
+
+    public void repair()
+    {
+        myAnimator.SetBool("rewind", true);
+        objectSprite.enabled = true;
+        hitBox.enabled = true;
+        breaking = false;
+    }
 }

@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Language name="English" id="9" identifier="en" iso639="en" iso3166="us">
+  <!--
+  select * 
+from abilities a
+left join ability_names b on a.id=b.ability_id
+left join ability_flavor_text c on a.id=c.ability_id AND b.local_language_id=c.language_id
+where language_id=9 and version_group_id=16
+  -->
+  <Abilities>
+    <!-- "^"(\d*)"\t"([\w\s-]*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"([\w\s’,-]*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"([\w\s.,’“”\-]*|[\r])"" | <Ability id="$1" language="$6" name="$7" identifier="$2" generationid="$3" versionid="$9">$11</Ability> -->
+    <Ability id="1" language="9" name="Stench" identifier="stench" generationid="3" versionid="16">The stench may cause
+    the target to flinch.</Ability>
+    <Ability id="2" language="9" name="Drizzle" identifier="drizzle" generationid="3" versionid="16">The Pokémon makes it rain
+    when it enters a battle.</Ability>
+    <Ability id="3" language="9" name="Speed Boost" identifier="speed-boost" generationid="3" versionid="16">Its Speed stat is
+    gradually boosted.</Ability>
+    <Ability id="4" language="9" name="Battle Armor" identifier="battle-armor" generationid="3" versionid="16">Protects the Pokémon
+    from critical hits.</Ability>
+    <Ability id="5" language="9" name="Sturdy" identifier="sturdy" generationid="3" versionid="16">It cannot be knocked
+    out with one hit.</Ability>
+    <Ability id="6" language="9" name="Damp" identifier="damp" generationid="3" versionid="16">Prevents the use of
+    self-destructing moves.</Ability>
+    <Ability id="7" language="9" name="Limber" identifier="limber" generationid="3" versionid="16">Protects the Pokémon
+    from paralysis.</Ability>
+    <Ability id="8" language="9" name="Sand Veil" identifier="sand-veil" generationid="3" versionid="16">Boosts the Pokémon’s
+    evasion in a sandstorm.</Ability>
+    <Ability id="9" language="9" name="Static" identifier="static" generationid="3" versionid="16">Contact with the Pokémon
+    may cause paralysis.</Ability>
+    <Ability id="10" language="9" name="Volt Absorb" identifier="volt-absorb" generationid="3" versionid="16">Restores HP if hit by an
+    Electric-type move.</Ability>
+    <Ability id="11" language="9" name="Water Absorb" identifier="water-absorb" generationid="3" versionid="16">Restores HP if hit by a
+    Water-type move.</Ability>
+    <Ability id="12" language="9" name="Oblivious" identifier="oblivious" generationid="3" versionid="16">Keeps the Pokémon from being
+    infatuated or falling for taunts.</Ability>
+    <Ability id="13" language="9" name="Cloud Nine" identifier="cloud-nine" generationid="3" versionid="16">Eliminates the effects of weather.</Ability>
+    <Ability id="14" language="9" name="Compound Eyes" identifier="compound-eyes" generationid="3" versionid="16">Boosts the Pokémon’s accuracy.</Ability>
+    <Ability id="15" language="9" name="Insomnia" identifier="insomnia" generationid="3" versionid="16">Prevents the Pokémon
+    from falling asleep.</Ability>
+    <Ability id="16" language="9" name="Color Change" identifier="color-change" generationid="3" versionid="16">The Pokémon’s type becomes
+    the type of the move used on it.</Ability>
+    <Ability id="17" language="9" name="Immunity" identifier="immunity" generationid="3" versionid="16">Prevents the Pokémon
+    from getting poisoned.</Ability>
+    <Ability id="18" language="9" name="Flash Fire" identifier="flash-fire" generationid="3" versionid="16">Powers up the Pokémon’s
+    Fire-type moves if it’s hit by one.</Ability>
+    <Ability id="19" language="9" name="Shield Dust" identifier="shield-dust" generationid="3" versionid="16">Blocks the additional effects
+    of attacks taken.</Ability>
+    <Ability id="20" language="9" name="Own Tempo" identifier="own-tempo" generationid="3" versionid="16">Prevents the Pokémon
+    from becoming confused.</Ability>
+    <Ability id="21" language="9" name="Suction Cups" identifier="suction-cups" generationid="3" versionid="16">Negates all moves and items
+    that force switching out.</Ability>
+    <Ability id="22" language="9" name="Intimidate" identifier="intimidate" generationid="3" versionid="16">Lowers the opposing Pokémon’s
+    Attack stat.</Ability>
+    <Ability id="23" language="9" name="Shadow Tag" identifier="shadow-tag" generationid="3" versionid="16">Prevents opposing Pokémon
+    from escaping.</Ability>
+    <Ability id="24" language="9" name="Rough Skin" identifier="rough-skin" generationid="3" versionid="16">Inflicts damage to the
+    attacker on contact.</Ability>
+    <Ability id="25" language="9" name="Wonder Guard" identifier="wonder-guard" generationid="3" versionid="16">Only supereffective
+    moves will hit.</Ability>
+    <Ability id="26" language="9" name="Levitate" identifier="levitate" generationid="3" versionid="16">Gives full immunity to all
+    Ground-type moves.</Ability>
+    <Ability id="27" language="9" name="Effect Spore" identifier="effect-spore" generationid="3" versionid="16">Contact may poison or
+    cause paralysis or sleep.</Ability>
+    <Ability id="28" language="9" name="Synchronize" identifier="synchronize" generationid="3" versionid="16">Passes poison, paralyze, or burn
+    to the Pokémon that inflicted it.</Ability>
+    <Ability id="29" language="9" name="Clear Body" identifier="clear-body" generationid="3" versionid="16">Prevents other Pokémon
+    from lowering its stats.</Ability>
+    <Ability id="30" language="9" name="Natural Cure" identifier="natural-cure" generationid="3" versionid="16">All status conditions heal when
+    the Pokémon switches out.</Ability>
+    <Ability id="31" language="9" name="Lightning Rod" identifier="lightning-rod" generationid="3" versionid="16">Draws in all Electric-type moves
+    to boost its Sp. Atk stat.</Ability>
+    <Ability id="32" language="9" name="Serene Grace" identifier="serene-grace" generationid="3" versionid="16">Boosts the likelihood of
+    additional effects occurring.</Ability>
+    <Ability id="33" language="9" name="Swift Swim" identifier="swift-swim" generationid="3" versionid="16">Boosts the Pokémon’s
+    Speed stat in rain.</Ability>
+    <Ability id="34" language="9" name="Chlorophyll" identifier="chlorophyll" generationid="3" versionid="16">Boosts the Pokémon’s
+    Speed stat in sunshine.</Ability>
+    <Ability id="35" language="9" name="Illuminate" identifier="illuminate" generationid="3" versionid="16">Raises the likelihood of
+    meeting wild Pokémon.</Ability>
+    <Ability id="36" language="9" name="Trace" identifier="trace" generationid="3" versionid="16">The Pokémon copies an
+    opposing Pokémon’s Ability.</Ability>
+    <Ability id="37" language="9" name="Huge Power" identifier="huge-power" generationid="3" versionid="16">Boosts the Pokémon’s
+    Attack stat.</Ability>
+    <Ability id="38" language="9" name="Poison Point" identifier="poison-point" generationid="3" versionid="16">Contact with the Pokémon
+    may poison the attacker.</Ability>
+    <Ability id="39" language="9" name="Inner Focus" identifier="inner-focus" generationid="3" versionid="16">Protects the Pokémon
+    from flinching.</Ability>
+    <Ability id="40" language="9" name="Magma Armor" identifier="magma-armor" generationid="3" versionid="16">Prevents the Pokémon
+    from becoming frozen.</Ability>
+    <Ability id="41" language="9" name="Water Veil" identifier="water-veil" generationid="3" versionid="16">Prevents the Pokémon
+    from getting a burn.</Ability>
+    <Ability id="42" language="9" name="Magnet Pull" identifier="magnet-pull" generationid="3" versionid="16">Prevents Steel-type
+    Pokémon from escaping.</Ability>
+    <Ability id="43" language="9" name="Soundproof" identifier="soundproof" generationid="3" versionid="16">Gives full immunity to all
+    sound-based moves.</Ability>
+    <Ability id="44" language="9" name="Rain Dish" identifier="rain-dish" generationid="3" versionid="16">The Pokémon gradually
+    regains HP in rain.</Ability>
+    <Ability id="45" language="9" name="Sand Stream" identifier="sand-stream" generationid="3" versionid="16">The Pokémon summons a
+    sandstorm in battle.</Ability>
+    <Ability id="46" language="9" name="Pressure" identifier="pressure" generationid="3" versionid="16">The Pokémon raises opposing
+    Pokémon’s PP usage.</Ability>
+    <Ability id="47" language="9" name="Thick Fat" identifier="thick-fat" generationid="3" versionid="16">Boosts resistance to Fire-
+    and Ice-type moves.</Ability>
+    <Ability id="48" language="9" name="Early Bird" identifier="early-bird" generationid="3" versionid="16">The Pokémon awakens
+    quickly from sleep.</Ability>
+    <Ability id="49" language="9" name="Flame Body" identifier="flame-body" generationid="3" versionid="16">Contact with the Pokémon
+    may burn the attacker.</Ability>
+    <Ability id="50" language="9" name="Run Away" identifier="run-away" generationid="3" versionid="16">Enables a sure getaway
+    from wild Pokémon.</Ability>
+    <Ability id="51" language="9" name="Keen Eye" identifier="keen-eye" generationid="3" versionid="16">Prevents other Pokémon
+    from lowering accuracy.</Ability>
+    <Ability id="52" language="9" name="Hyper Cutter" identifier="hyper-cutter" generationid="3" versionid="16">Prevents other Pokémon
+    from lowering its Attack stat.</Ability>
+    <Ability id="53" language="9" name="Pickup" identifier="pickup" generationid="3" versionid="16">The Pokémon may
+    pick up items.</Ability>
+    <Ability id="54" language="9" name="Truant" identifier="truant" generationid="3" versionid="16">The Pokémon can’t attack
+    on consecutive turns.</Ability>
+    <Ability id="55" language="9" name="Hustle" identifier="hustle" generationid="3" versionid="16">Boosts the Attack stat,
+    but lowers accuracy.</Ability>
+    <Ability id="56" language="9" name="Cute Charm" identifier="cute-charm" generationid="3" versionid="16">Contact with the Pokémon
+    may cause infatuation.</Ability>
+    <Ability id="57" language="9" name="Plus" identifier="plus" generationid="3" versionid="16">Boosts the Sp. Atk stat if another
+    Pokémon has Plus or Minus.</Ability>
+    <Ability id="58" language="9" name="Minus" identifier="minus" generationid="3" versionid="16">Boosts the Sp. Atk stat if another
+    Pokémon has Plus or Minus.</Ability>
+    <Ability id="59" language="9" name="Forecast" identifier="forecast" generationid="3" versionid="16">Castform transforms with
+    the weather.</Ability>
+    <Ability id="60" language="9" name="Sticky Hold" identifier="sticky-hold" generationid="3" versionid="16">Protects the Pokémon
+    from item theft.</Ability>
+    <Ability id="61" language="9" name="Shed Skin" identifier="shed-skin" generationid="3" versionid="16">The Pokémon may heal its
+    own status conditions.</Ability>
+    <Ability id="62" language="9" name="Guts" identifier="guts" generationid="3" versionid="16">Boosts the Attack stat if the
+    Pokémon has a status condition.</Ability>
+    <Ability id="63" language="9" name="Marvel Scale" identifier="marvel-scale" generationid="3" versionid="16">Boosts the Defense stat if the
+    Pokémon has a status condition.</Ability>
+    <Ability id="64" language="9" name="Liquid Ooze" identifier="liquid-ooze" generationid="3" versionid="16">Damages attackers
+    using any draining move.</Ability>
+    <Ability id="65" language="9" name="Overgrow" identifier="overgrow" generationid="3" versionid="16">Powers up Grass-type moves
+    when the Pokémon is in trouble.</Ability>
+    <Ability id="66" language="9" name="Blaze" identifier="blaze" generationid="3" versionid="16">Powers up Fire-type moves when
+    the Pokémon is in trouble.</Ability>
+    <Ability id="67" language="9" name="Torrent" identifier="torrent" generationid="3" versionid="16">Powers up Water-type moves
+    when the Pokémon is in trouble.</Ability>
+    <Ability id="68" language="9" name="Swarm" identifier="swarm" generationid="3" versionid="16">Powers up Bug-type moves when
+    the Pokémon is in trouble.</Ability>
+    <Ability id="69" language="9" name="Rock Head" identifier="rock-head" generationid="3" versionid="16">Protects the Pokémon
+    from recoil damage.</Ability>
+    <Ability id="70" language="9" name="Drought" identifier="drought" generationid="3" versionid="16">Turns the sunlight harsh when
+    the Pokémon enters a battle.</Ability>
+    <Ability id="71" language="9" name="Arena Trap" identifier="arena-trap" generationid="3" versionid="16">Prevents opposing Pokémon
+    from fleeing.</Ability>
+    <Ability id="72" language="9" name="Vital Spirit" identifier="vital-spirit" generationid="3" versionid="16">Prevents the Pokémon
+    from falling asleep.</Ability>
+    <Ability id="73" language="9" name="White Smoke" identifier="white-smoke" generationid="3" versionid="16">Prevents other Pokémon
+    from lowering its stats.</Ability>
+    <Ability id="74" language="9" name="Pure Power" identifier="pure-power" generationid="3" versionid="16">Boosts the Pokémon’s
+    Attack stat.</Ability>
+    <Ability id="75" language="9" name="Shell Armor" identifier="shell-armor" generationid="3" versionid="16">Protects the Pokémon
+    from critical hits.</Ability>
+    <Ability id="76" language="9" name="Air Lock" identifier="air-lock" generationid="3" versionid="16">Eliminates the effects of weather.</Ability>
+    <Ability id="77" language="9" name="Tangled Feet" identifier="tangled-feet" generationid="4" versionid="16">Raises evasion if the
+    Pokémon is confused.</Ability>
+    <Ability id="78" language="9" name="Motor Drive" identifier="motor-drive" generationid="4" versionid="16">Boosts the Speed stat when it’s
+    hit by an Electric-type move.</Ability>
+    <Ability id="79" language="9" name="Rivalry" identifier="rivalry" generationid="4" versionid="16">Deals more damage to Pokémon
+    of the same gender.</Ability>
+    <Ability id="80" language="9" name="Steadfast" identifier="steadfast" generationid="4" versionid="16">Boosts the Speed stat each time
+    the Pokémon flinches.</Ability>
+    <Ability id="81" language="9" name="Snow Cloak" identifier="snow-cloak" generationid="4" versionid="16">Boosts evasion in a hailstorm.</Ability>
+    <Ability id="82" language="9" name="Gluttony" identifier="gluttony" generationid="4" versionid="16">Makes the Pokémon use a held
+    Berry earlier than usual.</Ability>
+    <Ability id="83" language="9" name="Anger Point" identifier="anger-point" generationid="4" versionid="16">Maxes the Attack stat after
+    the Pokémon takes a critical hit.</Ability>
+    <Ability id="84" language="9" name="Unburden" identifier="unburden" generationid="4" versionid="16">Boosts the Speed stat if its
+    held item is used or lost.</Ability>
+    <Ability id="85" language="9" name="Heatproof" identifier="heatproof" generationid="4" versionid="16">Weakens the power of
+    Fire-type moves.</Ability>
+    <Ability id="86" language="9" name="Simple" identifier="simple" generationid="4" versionid="16">The Pokémon is prone to
+    wild stat changes.</Ability>
+    <Ability id="87" language="9" name="Dry Skin" identifier="dry-skin" generationid="4" versionid="16">Reduces HP if it’s hot.
+    Water restores HP.</Ability>
+    <Ability id="88" language="9" name="Download" identifier="download" generationid="4" versionid="16">Adjusts power based on an
+    opposing Pokémon’s stats.</Ability>
+    <Ability id="89" language="9" name="Iron Fist" identifier="iron-fist" generationid="4" versionid="16">Powers up punching moves.</Ability>
+    <Ability id="90" language="9" name="Poison Heal" identifier="poison-heal" generationid="4" versionid="16">Restores HP if the
+    Pokémon is poisoned.</Ability>
+    <Ability id="91" language="9" name="Adaptability" identifier="adaptability" generationid="4" versionid="16">Powers up moves of the
+    same type as the Pokémon.</Ability>
+    <Ability id="92" language="9" name="Skill Link" identifier="skill-link" generationid="4" versionid="16">Increases the number of times
+    multi-strike moves hit.</Ability>
+    <Ability id="93" language="9" name="Hydration" identifier="hydration" generationid="4" versionid="16">Heals status conditions if
+    it’s raining.</Ability>
+    <Ability id="94" language="9" name="Solar Power" identifier="solar-power" generationid="4" versionid="16">Boosts the Sp. Atk stat in sunny
+    weather, but HP decreases.</Ability>
+    <Ability id="95" language="9" name="Quick Feet" identifier="quick-feet" generationid="4" versionid="16">Boosts the Speed stat if the
+    Pokémon has a status condition.</Ability>
+    <Ability id="96" language="9" name="Normalize" identifier="normalize" generationid="4" versionid="16">All the Pokémon’s moves
+    become Normal type.</Ability>
+    <Ability id="97" language="9" name="Sniper" identifier="sniper" generationid="4" versionid="16">Powers up moves if they
+    become critical hits.</Ability>
+    <Ability id="98" language="9" name="Magic Guard" identifier="magic-guard" generationid="4" versionid="16">The Pokémon only takes
+    damage from attacks.</Ability>
+    <Ability id="99" language="9" name="No Guard" identifier="no-guard" generationid="4" versionid="16">Ensures that attacks by or
+    against the Pokémon will land.</Ability>
+    <Ability id="100" language="9" name="Stall" identifier="stall" generationid="4" versionid="16">The Pokémon moves after
+    all other Pokémon do.</Ability>
+    <Ability id="101" language="9" name="Technician" identifier="technician" generationid="4" versionid="16">Powers up the Pokémon’s
+    weaker moves.</Ability>
+    <Ability id="102" language="9" name="Leaf Guard" identifier="leaf-guard" generationid="4" versionid="16">Prevents status conditions
+    in sunny weather.</Ability>
+    <Ability id="103" language="9" name="Klutz" identifier="klutz" generationid="4" versionid="16">The Pokémon can’t use
+    any held items.</Ability>
+    <Ability id="104" language="9" name="Mold Breaker" identifier="mold-breaker" generationid="4" versionid="16">Moves can be used on the target
+    regardless of its Abilities.</Ability>
+    <Ability id="105" language="9" name="Super Luck" identifier="super-luck" generationid="4" versionid="16">Boosts the critical-hit
+    ratios of moves.</Ability>
+    <Ability id="106" language="9" name="Aftermath" identifier="aftermath" generationid="4" versionid="16">Damages the attacker
+    landing the finishing hit.</Ability>
+    <Ability id="107" language="9" name="Anticipation" identifier="anticipation" generationid="4" versionid="16">Senses an opposing Pokémon’s
+    dangerous moves.</Ability>
+    <Ability id="108" language="9" name="Forewarn" identifier="forewarn" generationid="4" versionid="16">Determines what moves
+    an opposing Pokémon has.</Ability>
+    <Ability id="109" language="9" name="Unaware" identifier="unaware" generationid="4" versionid="16">Ignores the opposing
+    Pokémon’s stat changes.</Ability>
+    <Ability id="110" language="9" name="Tinted Lens" identifier="tinted-lens" generationid="4" versionid="16">Powers up “not very
+    effective” moves.</Ability>
+    <Ability id="111" language="9" name="Filter" identifier="filter" generationid="4" versionid="16">Reduces damage from
+    supereffective attacks.</Ability>
+    <Ability id="112" language="9" name="Slow Start" identifier="slow-start" generationid="4" versionid="16">Temporarily halves the Pokémon’s
+    Attack and Speed stats.</Ability>
+    <Ability id="113" language="9" name="Scrappy" identifier="scrappy" generationid="4" versionid="16">Makes Normal- and Fighting-type
+    moves hit Ghost-type Pokémon.</Ability>
+    <Ability id="114" language="9" name="Storm Drain" identifier="storm-drain" generationid="4" versionid="16">Draws in all Water-type moves
+    to boost its Sp. Atk stat.</Ability>
+    <Ability id="115" language="9" name="Ice Body" identifier="ice-body" generationid="4" versionid="16">The Pokémon gradually
+    regains HP in a hailstorm.</Ability>
+    <Ability id="116" language="9" name="Solid Rock" identifier="solid-rock" generationid="4" versionid="16">Reduces damage from
+    supereffective attacks.</Ability>
+    <Ability id="117" language="9" name="Snow Warning" identifier="snow-warning" generationid="4" versionid="16">The Pokémon summons a
+    hailstorm when it enters a battle.</Ability>
+    <Ability id="118" language="9" name="Honey Gather" identifier="honey-gather" generationid="4" versionid="16">The Pokémon may gather
+    Honey from somewhere.</Ability>
+    <Ability id="119" language="9" name="Frisk" identifier="frisk" generationid="4" versionid="16">The Pokémon can check an
+    opposing Pokémon’s held item.</Ability>
+    <Ability id="120" language="9" name="Reckless" identifier="reckless" generationid="4" versionid="16">Powers up moves that
+    have recoil damage.</Ability>
+    <Ability id="121" language="9" name="Multitype" identifier="multitype" generationid="4" versionid="16">Changes the Pokémon’s type
+    to match the Plate it holds.</Ability>
+    <Ability id="122" language="9" name="Flower Gift" identifier="flower-gift" generationid="4" versionid="16">Powers up party Pokémon
+    when it is sunny.</Ability>
+    <Ability id="123" language="9" name="Bad Dreams" identifier="bad-dreams" generationid="4" versionid="16">Reduces the HP of sleeping
+    opposing Pokémon.</Ability>
+    <Ability id="124" language="9" name="Pickpocket" identifier="pickpocket" generationid="5" versionid="16">Steals an item from an attacker
+    that made direct contact.</Ability>
+    <Ability id="125" language="9" name="Sheer Force" identifier="sheer-force" generationid="5" versionid="16">Removes additional effects to
+    increase move damage.</Ability>
+    <Ability id="126" language="9" name="Contrary" identifier="contrary" generationid="5" versionid="16">Makes stat changes have
+    an opposite effect.</Ability>
+    <Ability id="127" language="9" name="Unnerve" identifier="unnerve" generationid="5" versionid="16">Unnerves opposing Pokémon and
+    makes them unable to eat Berries.</Ability>
+    <Ability id="128" language="9" name="Defiant" identifier="defiant" generationid="5" versionid="16">Boosts the Pokémon’s Attack stat
+    when its stats are lowered.</Ability>
+    <Ability id="129" language="9" name="Defeatist" identifier="defeatist" generationid="5" versionid="16">Lowers stats when HP
+    becomes half or less.</Ability>
+    <Ability id="130" language="9" name="Cursed Body" identifier="cursed-body" generationid="5" versionid="16">May disable a move used
+    on the Pokémon.</Ability>
+    <Ability id="131" language="9" name="Healer" identifier="healer" generationid="5" versionid="16">Sometimes heals an
+    ally’s status condition.</Ability>
+    <Ability id="132" language="9" name="Friend Guard" identifier="friend-guard" generationid="5" versionid="16">Reduces damage done to allies.</Ability>
+    <Ability id="133" language="9" name="Weak Armor" identifier="weak-armor" generationid="5" versionid="16">Physical attacks lower its Defense
+    stat and raise its Speed stat.</Ability>
+    <Ability id="134" language="9" name="Heavy Metal" identifier="heavy-metal" generationid="5" versionid="16">Doubles the Pokémon’s weight.</Ability>
+    <Ability id="135" language="9" name="Light Metal" identifier="light-metal" generationid="5" versionid="16">Halves the Pokémon’s weight.</Ability>
+    <Ability id="136" language="9" name="Multiscale" identifier="multiscale" generationid="5" versionid="16">Reduces the damage taken by the
+    Pokémon when its HP is full.</Ability>
+    <Ability id="137" language="9" name="Toxic Boost" identifier="toxic-boost" generationid="5" versionid="16">Powers up physical attacks when
+    the Pokémon is poisoned.</Ability>
+    <Ability id="138" language="9" name="Flare Boost" identifier="flare-boost" generationid="5" versionid="16">Powers up special attacks when
+    the Pokémon is burned.</Ability>
+    <Ability id="139" language="9" name="Harvest" identifier="harvest" generationid="5" versionid="16">May create another
+    Berry after one is used.</Ability>
+    <Ability id="140" language="9" name="Telepathy" identifier="telepathy" generationid="5" versionid="16">Anticipates an ally’s
+    attack and dodges it.</Ability>
+    <Ability id="141" language="9" name="Moody" identifier="moody" generationid="5" versionid="16">Raises one stat and
+    lowers another.</Ability>
+    <Ability id="142" language="9" name="Overcoat" identifier="overcoat" generationid="5" versionid="16">Protects the Pokémon from things
+    like sand, hail, and powder.</Ability>
+    <Ability id="143" language="9" name="Poison Touch" identifier="poison-touch" generationid="5" versionid="16">May poison a target when the
+    Pokémon makes contact.</Ability>
+    <Ability id="144" language="9" name="Regenerator" identifier="regenerator" generationid="5" versionid="16">Restores a little HP when
+    withdrawn from battle.</Ability>
+    <Ability id="145" language="9" name="Big Pecks" identifier="big-pecks" generationid="5" versionid="16">Protects the Pokémon from
+    Defense-lowering attacks.</Ability>
+    <Ability id="146" language="9" name="Sand Rush" identifier="sand-rush" generationid="5" versionid="16">Boosts the Pokémon’s
+    Speed stat in a sandstorm.</Ability>
+    <Ability id="147" language="9" name="Wonder Skin" identifier="wonder-skin" generationid="5" versionid="16">Makes status moves
+    more likely to miss.</Ability>
+    <Ability id="148" language="9" name="Analytic" identifier="analytic" generationid="5" versionid="16">Boosts move power when the
+    Pokémon moves after the target.</Ability>
+    <Ability id="149" language="9" name="Illusion" identifier="illusion" generationid="5" versionid="16">Comes out disguised as the
+    Pokémon in the party’s last spot.</Ability>
+    <Ability id="150" language="9" name="Imposter" identifier="imposter" generationid="5" versionid="16">The Pokémon transforms itself
+    into the Pokémon it’s facing.</Ability>
+    <Ability id="151" language="9" name="Infiltrator" identifier="infiltrator" generationid="5" versionid="16">Passes through the opposing
+    Pokémon’s barrier and strikes.</Ability>
+    <Ability id="152" language="9" name="Mummy" identifier="mummy" generationid="5" versionid="16">Contact with the Pokémon
+    spreads this Ability.</Ability>
+    <Ability id="153" language="9" name="Moxie" identifier="moxie" generationid="5" versionid="16">Boosts the Attack stat after
+    knocking out any Pokémon.</Ability>
+    <Ability id="154" language="9" name="Justified" identifier="justified" generationid="5" versionid="16">Boosts the Attack stat when
+    it’s hit by a Dark-type move.</Ability>
+    <Ability id="155" language="9" name="Rattled" identifier="rattled" generationid="5" versionid="16">Some move types scare
+    it and boost its Speed stat.</Ability>
+    <Ability id="156" language="9" name="Magic Bounce" identifier="magic-bounce" generationid="5" versionid="16">Reflects status moves.</Ability>
+    <Ability id="157" language="9" name="Sap Sipper" identifier="sap-sipper" generationid="5" versionid="16">Boosts the Attack stat when hit
+    by a Grass-type move.</Ability>
+    <Ability id="158" language="9" name="Prankster" identifier="prankster" generationid="5" versionid="16">Gives priority to a status move.</Ability>
+    <Ability id="159" language="9" name="Sand Force" identifier="sand-force" generationid="5" versionid="16">Boosts certain moves’
+    power in a sandstorm.</Ability>
+    <Ability id="160" language="9" name="Iron Barbs" identifier="iron-barbs" generationid="5" versionid="16">Inflicts damage to the
+    attacker on contact.</Ability>
+    <Ability id="161" language="9" name="Zen Mode" identifier="zen-mode" generationid="5" versionid="16">Changes the Pokémon’s
+    shape when HP is half or less.</Ability>
+    <Ability id="162" language="9" name="Victory Star" identifier="victory-star" generationid="5" versionid="16">Boosts the accuracy of its
+    allies and itself.</Ability>
+    <Ability id="163" language="9" name="Turboblaze" identifier="turboblaze" generationid="5" versionid="16">Moves can be used on the target
+    regardless of its Abilities.</Ability>
+    <Ability id="164" language="9" name="Teravolt" identifier="teravolt" generationid="5" versionid="16">Moves can be used on the target
+    regardless of its Abilities.</Ability>
+    <Ability id="165" language="9" name="Aroma Veil" identifier="aroma-veil" generationid="6" versionid="16">Protects allies from attacks that
+    limit their move choices.</Ability>
+    <Ability id="166" language="9" name="Flower Veil" identifier="flower-veil" generationid="6" versionid="16">Prevents lowering of ally
+    Grass-type Pokémon’s stats.</Ability>
+    <Ability id="167" language="9" name="Cheek Pouch" identifier="cheek-pouch" generationid="6" versionid="16">Restores HP as well when
+    the Pokémon eats a Berry.</Ability>
+    <Ability id="168" language="9" name="Protean" identifier="protean" generationid="6" versionid="16">Changes the Pokémon’s type to
+    the type of the move it’s using.</Ability>
+    <Ability id="169" language="9" name="Fur Coat" identifier="fur-coat" generationid="6" versionid="16">Halves damage from
+    physical moves.</Ability>
+    <Ability id="170" language="9" name="Magician" identifier="magician" generationid="6" versionid="16">The Pokémon steals the held item
+    of a Pokémon it hits with a move.</Ability>
+    <Ability id="171" language="9" name="Bulletproof" identifier="bulletproof" generationid="6" versionid="16">Protects the Pokémon from
+    some ball and bomb moves.</Ability>
+    <Ability id="172" language="9" name="Competitive" identifier="competitive" generationid="6" versionid="16">Boosts the Sp. Atk stat when
+    a stat is lowered.</Ability>
+    <Ability id="173" language="9" name="Strong Jaw" identifier="strong-jaw" generationid="6" versionid="16">The Pokémon’s strong jaw gives
+    it tremendous biting power.</Ability>
+    <Ability id="174" language="9" name="Refrigerate" identifier="refrigerate" generationid="6" versionid="16">Normal-type moves become
+    Ice-type moves.</Ability>
+    <Ability id="175" language="9" name="Sweet Veil" identifier="sweet-veil" generationid="6" versionid="16">Prevents itself and ally Pokémon
+    from falling asleep.</Ability>
+    <Ability id="176" language="9" name="Stance Change" identifier="stance-change" generationid="6" versionid="16">The Pokémon changes form
+    depending on how it battles.</Ability>
+    <Ability id="177" language="9" name="Gale Wings" identifier="gale-wings" generationid="6" versionid="16">Gives priority to
+    Flying-type moves.</Ability>
+    <Ability id="178" language="9" name="Mega Launcher" identifier="mega-launcher" generationid="6" versionid="16">Powers up aura and pulse moves.</Ability>
+    <Ability id="179" language="9" name="Grass Pelt" identifier="grass-pelt" generationid="6" versionid="16">Boosts the Defense stat
+    in Grassy Terrain.</Ability>
+    <Ability id="180" language="9" name="Symbiosis" identifier="symbiosis" generationid="6" versionid="16">The Pokémon can pass
+    an item to an ally.</Ability>
+    <Ability id="181" language="9" name="Tough Claws" identifier="tough-claws" generationid="6" versionid="16">Powers up moves that
+    make direct contact.</Ability>
+    <Ability id="182" language="9" name="Pixilate" identifier="pixilate" generationid="6" versionid="16">Normal-type moves become
+    Fairy-type moves.</Ability>
+    <Ability id="183" language="9" name="Gooey" identifier="gooey" generationid="6" versionid="16">Contact with the Pokémon
+    lowers the attacker’s Speed stat.</Ability>
+    <Ability id="184" language="9" name="Aerilate" identifier="aerilate" generationid="6" versionid="16">Normal-type moves become
+    Flying-type moves.</Ability>
+    <Ability id="185" language="9" name="Parental Bond" identifier="parental-bond" generationid="6" versionid="16">Parent and child attack together.</Ability>
+    <Ability id="186" language="9" name="Dark Aura" identifier="dark-aura" generationid="6" versionid="16">Powers up each Pokémon’s
+    Dark-type moves.</Ability>
+    <Ability id="187" language="9" name="Fairy Aura" identifier="fairy-aura" generationid="6" versionid="16">Powers up each Pokémon’s
+    Fairy-type moves.</Ability>
+    <Ability id="188" language="9" name="Aura Break" identifier="aura-break" generationid="6" versionid="16">The effects of “Aura” Abilities
+    are reversed.</Ability>
+    <Ability id="189" language="9" name="Primordial Sea" identifier="primordial-sea" generationid="6" versionid="16">Affects weather and nullifies any
+    Fire-type attacks.</Ability>
+    <Ability id="190" language="9" name="Desolate Land" identifier="desolate-land" generationid="6" versionid="16">Affects weather and nullifies any
+    Water-type attacks.</Ability>
+    <Ability id="191" language="9" name="Delta Stream" identifier="delta-stream" generationid="6" versionid="16">Affects weather and eliminates all
+    of the Flying type’s weaknesses.</Ability>
+  </Abilities>
+</Language>

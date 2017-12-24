@@ -3,11 +3,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class SetResolution : MonoBehaviour {
+public class SetResolution : MonoBehaviour
+{
+    public bool fullscreen = false;
 
-	public bool fullscreen = false;
-
-	// Use this for initialization
-	void Awake () {
-	}
+    // Use this for initialization
+    void Awake()
+    {
+    }
 }

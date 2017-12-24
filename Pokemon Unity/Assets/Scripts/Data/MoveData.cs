@@ -12,7 +12,7 @@ public class MoveData {
 		Burn, Freeze, Paralyze, Poison, Sleep, Toxic, Flinch, //(chance)
 		ATK,     DEF,     SPA,     SPD,     SPE,     ACC,     EVA,
 		ATKself, DEFself, SPAself, SPDself, SPEself, ACCself, EVAself,
-		xHits,            Heal,         HPDrain,      SetDamage,
+		xHits,				Heal,         HPDrain,      SetDamage,
 		//(x=set, 0=2-5)    (amount)      (amount)      (x=set, 0=level)
 		Critical,	Recoil,		RecoilMax //based off of user's maxHp
 	};
@@ -63,7 +63,8 @@ public class MoveData {
 	private int jamming;
 	private string description;
 	private string fieldEffect;
-	
+
+	public MoveData() { return; }
 
 	public MoveData(string name, PokemonData.Type type, Category category, int power, float accuracy, 
 	                int PP, Contest contest, int appeal, int jamming, string description){
