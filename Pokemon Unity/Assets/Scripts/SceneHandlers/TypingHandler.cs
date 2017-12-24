@@ -12,9 +12,6 @@ public class TypingHandler : MonoBehaviour
     public int typeSpaceIndex = 0;
     public int pageIndex = 0;
     public int typeSpaceCount = 12;
-    public AudioClip swapClip;
-    public AudioClip typingDone;
-    public AudioClip typeClip;
 
     private Sprite[] iconAnim;
 
@@ -251,7 +248,6 @@ public class TypingHandler : MonoBehaviour
     {
         if (newPageIndex >= 0 && newPageIndex < 4 && newPageIndex != pageIndex)
         {
-            SfxHandler.Play(swapClip);
             float speed = 0.5f;
             float increment = 0f;
 
@@ -647,7 +643,6 @@ public class TypingHandler : MonoBehaviour
                 else if (selectorIndex == 5)
                 {
                     //OK
-                    SfxHandler.Play(typingDone);
                     panelButton[5].enabled = true;
                     yield return new WaitForSeconds(0.1f);
                     panelButton[5].enabled = false;
@@ -663,7 +658,6 @@ public class TypingHandler : MonoBehaviour
                     }
                     else
                     {
-                        SfxHandler.Play(typeClip);
                         //Keys
                         addCurrentKeyToString();
                     }

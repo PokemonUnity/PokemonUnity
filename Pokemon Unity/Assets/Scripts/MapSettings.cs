@@ -10,18 +10,16 @@ public class MapSettings : MonoBehaviour
     public AudioClip mapBGMNightClip = null;
     public int mapBGMNightLoopStartSamples = 0;
     public string mapName;
-    public string discordImageKey;
-    public string discordDetails;
     public Texture mapNameBoxTexture;
     public Color mapNameColor = new Color(0.066f, 0.066f, 0.066f, 1);
 
     public enum PokemonRarity
     {
-        VeryCommon,
-        Common,
-        Uncommon,
-        Rare,
-        VeryRare
+        VeryCommon, // ~5.33% encounter chance
+        Common,     // ~4.53% encounter chance
+        Uncommon,   // ~3.60% encounter chance
+        Rare,       // ~1.77% encounter chance
+        VeryRare    // ~0.66% encounter chance
     }
 
     public enum Environment
@@ -40,8 +38,6 @@ public class MapSettings : MonoBehaviour
 
     public Environment environment;
     public Environment environment2;
-
-    public PokemonRarity pokemonRarity = PokemonRarity.Uncommon;
 
     public WildPokemonInitialiser[] encounters = new WildPokemonInitialiser[0];
 
@@ -164,7 +160,7 @@ public class MapSettings : MonoBehaviour
             timeString = "Eve";
         }
 
-        Environment check = (currentTag == 3) ? environment2 : environment;
+        Environment check = (currentTag == 3) ? environment2 : environment; //If Tag=3, check = env2; else check=env
         string checkString = check.ToString();
 
         if (currentTag == 2)
@@ -210,25 +206,29 @@ public class MapSettings : MonoBehaviour
         return Resources.Load<Sprite>("BattleBackgrounds/Bases/" + checkString);
     }
 
-    // returns the probability of encounter
-    public float getEncounterProbability()
+    // returns the probability of encounter for individual Pokemon
+    public float getEncounterProbability(PokemonRarity pokemonRarity)
     {
-        float x = 1.25f;
-        if (pokemonRarity == PokemonRarity.VeryCommon)
+        float x = 1.25f;       // Default value if none specified
+        switch (pokemonRarity)
         {
-            x = 10f;
-        }
-        else if (pokemonRarity == PokemonRarity.Common)
-        {
-            x = 8.5f;
-        }
-        else if (pokemonRarity == PokemonRarity.Uncommon)
-        {
-            x = 6.75f;
-        }
-        else if (pokemonRarity == PokemonRarity.Rare)
-        {
-            x = 3.33f;
+            case PokemonRarity.VeryCommon:
+                x = 10f;    
+                break;
+            case PokemonRarity.Common:
+                x = 8.5f;
+                break;
+            case PokemonRarity.Uncommon:
+                x = 6.75f;
+                break;
+            case PokemonRarity.Rare:
+                x = 3.33f;
+                break;
+            case PokemonRarity.VeryRare:
+                x = 1.25f;
+                break;
+            default:
+                break;
         }
         return x / 187.5f;
     }
@@ -241,8 +241,8 @@ public class MapSettings : MonoBehaviour
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
 
         for (int i = 0; i < encounters.Length; i++)
-        {
-            if (encounters[i].encounterLocation == location)
+        {   //If Pokemon is meant to be found in current location, create list based on time of day
+            if (encounters[i].encounterLocation == location)    
             {
                 if (time >= 20 || time < 3.5f)
                 {
@@ -284,42 +284,61 @@ public class MapSettings : MonoBehaviour
         return packedList;
     }
 
-    public Pokemon getRandomEncounter(WildPokemonInitialiser.Location location)
+    public float getTotalEncounterChance(WildPokemonInitialiser.Location location)
     {
         WildPokemonInitialiser[] list = getEncounterList(location);
 
-        int totalEncounterLikelihood = 0; //add up the total Likelihood
+        float totalEncounterLikelihood = 0f; //add up the total Likelihood
         for (int i = 0; i < list.Length; i++)
         {
-            totalEncounterLikelihood += list[i].encounterLikelihood;
+            totalEncounterLikelihood += getEncounterProbability(list[i].pokemonRarity);
         }
+        return totalEncounterLikelihood;
+    }
 
-        WildPokemonInitialiser[] chanceSplitList = new WildPokemonInitialiser[totalEncounterLikelihood];
-        int listIndex = 0;
-        for (int i = 0; i < list.Length; i++)
+    // After successful encounter, determine who shows up
+    public Pokemon getRandomEncounter(WildPokemonInitialiser.Location location)
+    {
+        WildPokemonInitialiser[] list = getEncounterList(location);
+        float totalEncounterLikelihood = getTotalEncounterChance(location);
+        float randomEncounterNumber = Random.Range(0, totalEncounterLikelihood);
+
+        float[] splitChancesList = new float[list.Length];
+        int encounterNumber = 0;
+        
+        float runningTally = 0.0f;
+        for (int i = 0; i < list.Length; i++) 
         {
-            //loop through each position of list
-            for (int i2 = 0; i2 < list[i].encounterLikelihood; i2++)
+            // Assign each Pokemon encounter chance a section
+            runningTally += getEncounterProbability(list[i].pokemonRarity);
+            splitChancesList[i] += runningTally;   
+        }   // An array with probability boundaries is made ex: {.3,.7} means 0->.3 = Pokemon One on the list.
+        for (int i = 0; i < list.Length; i++) //Compare random number to array
+        {
+            if (splitChancesList[i] >= randomEncounterNumber)
             {
-                //add encounter once for every Likelihood
-                chanceSplitList[listIndex] = list[i];
-                listIndex += 1;
+                encounterNumber = i;
+                break;
             }
         }
-        //randomly pick a number from the list's length
-        int encounterIndex = Random.Range(0, chanceSplitList.Length);
 
-        /*/		DEBUG
+        /*		DEBUG
+        Debug.Log("Total chance: " + totalEncounterLikelihood.ToString() + " Random: " + randomEncounterNumber.ToString());
+        for (int i=0; i < list.Length; i++)
+        {
+            Debug.Log("Pokemon ID in List: " +list[i].ID.ToString());
+        }
+        //
             string debugtext = "";
             for(int i = 0; i < chanceSplitList.Length; i++){
                 debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
             Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
             //*/
 
-
-        return new Pokemon(chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
-            Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
+        return new Pokemon(list[encounterNumber].ID, Pokemon.Gender.CALCULATE,
+            Random.Range(list[encounterNumber].minLevel, list[encounterNumber].maxLevel + 1),
             null, null, null, -1);
+        
     }
 }
 
@@ -341,7 +360,8 @@ public class WildPokemonInitialiser
     public int minLevel;
     public int maxLevel;
 
-    public int encounterLikelihood;
+    //public int encounterLikelihood;
+    public MapSettings.PokemonRarity pokemonRarity = MapSettings.PokemonRarity.Uncommon;
 
     public Location encounterLocation;
 

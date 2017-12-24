@@ -166,7 +166,7 @@ public class CustomEvent : MonoBehaviour
                 if (currentEvent.object0.GetComponent<NPCHandler>() != null)
                 {
                     targetNPC = currentEvent.object0.GetComponent<NPCHandler>();
-                } 
+                }
                 if (targetNPC != null)
                 {
                     if (currentEvent.object1 != null)
@@ -212,14 +212,9 @@ public class CustomEvent : MonoBehaviour
             case (CustomEventDetails.CustomEventType.Dialog):
                 for (int i = 0; i < currentEvent.strings.Length; i++)
                 {
-                    if (currentEvent.bool0 && i != 0)
-                    {
-                        yield return Dialog.StartCoroutine("scrollText",currentEvent.float0);
-                        yield return StartCoroutine(Dialog.drawTextSilent(currentEvent.strings[i]));
-                    } else {
-                        Dialog.drawDialogBox();
-                        yield return StartCoroutine(Dialog.drawText(currentEvent.strings[i]));
-                    }
+                    Dialog.drawDialogBox();
+                    yield return StartCoroutine(Dialog.drawText(currentEvent.strings[i]));
+
                     if (i < currentEvent.strings.Length - 1)
                     {
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
@@ -669,40 +664,6 @@ public class CustomEvent : MonoBehaviour
             case CustomEventDetails.CustomEventType.MoveCamera:
                 yield return StartCoroutine(PlayerMovement.player.moveCameraTo(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]), currentEvent.float0));
                 break;
-            case CustomEventDetails.CustomEventType.Exclaim:
-                GameObject exclaim = currentEvent.object0.transform.Find("Exclaim").gameObject;
-                AudioClip exclaimAudio = currentEvent.sound;
-                if(exclaim != null) {
-                    float increment = -1f;
-                    float speed = 0.15f;
-                    if(currentEvent.sprite != null){
-                        exclaim.GetComponent<SpriteRenderer>().sprite = currentEvent.sprite;
-                    }
-                    exclaim.SetActive(true);
-                    SfxHandler.Play(exclaimAudio);
-                    while (increment < 0.3f)
-                    {
-                        increment += (1 / speed) * Time.deltaTime;
-                        if (increment > 0.3f)
-                        {
-                            increment = 0.3f;
-                        }
-                        exclaim.transform.localScale = new Vector3(1, 1.3f + (-1.3f * increment * increment), 1);
-                        yield return null;
-                    }
-
-                    exclaim.transform.localScale = new Vector3(1, 1, 1);
-                    if(currentEvent.float0 != 0f) {
-                        yield return new WaitForSeconds(currentEvent.float0);
-                    } else {
-                        yield return new WaitForSeconds(1.2f);
-                    }
-                    exclaim.SetActive(false);
-                } else {
-                    Debug.Log("Unsupported character for Exclaim event");
-                }
-
-                break;
         }
     }
 
@@ -753,10 +714,9 @@ public class CustomEventDetails
         SetCVariable, //string0: CVariable name | float0: new value
         LogicCheck, //logic | float0: check value | string0: CVariable name
         TrainerBattle, //object0: trainer script | bool0: allowed to lose | int0: tree to jump to on loss
-        ReturnToTitle,	//no input
-		JumpTo,			//int0: tree to jump to
-		MoveCamera,     //ints[0]: x co-ordinate | ints[1]: y co-ordinate | ints[2]: z co-ordinate | 
-        Exclaim
+        ReturnToTitle,	//none: brings you to startup file
+		JumpTo,			//none: jump to tree without input | int0: tree to jump to
+		MoveCamera			//none: moves the player's camera to the specified location
     }
 
     public enum Direction
@@ -801,8 +761,6 @@ public class CustomEventDetails
 
 
     public bool runSimultaneously;
-
-    public Sprite sprite;
 }
 
 [System.Serializable]

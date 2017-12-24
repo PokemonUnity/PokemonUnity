@@ -2873,7 +2873,7 @@ public class BattleHandler : MonoBehaviour
                 Dialog.UndrawDialogBox();
                 yield return new WaitForSeconds(1f);
             }
-            else //pokemon can level up
+            else
             {
                 pokemon[position].addExp(expPool);
                 expPool = 0;

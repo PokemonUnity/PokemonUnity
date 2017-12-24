@@ -83,8 +83,6 @@ public class MainMenuHandler : MonoBehaviour {
 	}
 
 	void Start(){
-		GlobalVariables.global.SetRPCDetails("In the Main Menu");
-		GlobalVariables.global.SetRPCLargeImageKey("main_menu","Main Menu");
 		StartCoroutine(control());
 	}
 
@@ -264,7 +262,6 @@ public class MainMenuHandler : MonoBehaviour {
 					transform.Find("OpeningLecture").gameObject.SetActive(true);
 					yield return StartCoroutine(ScreenFade.main.Fade(true, 0f));
 				}
-				GlobalVariables.global.SetRPCDetails("Starting a new game...");
 				Dialog.drawDialogBox();
 				yield return Dialog.StartCoroutine("drawText","...\n...");
 				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
@@ -363,13 +360,6 @@ public class MainMenuHandler : MonoBehaviour {
 				GlobalVariables.global.playerDirection = 2;
 				GlobalVariables.global.fadeIn = true;
 				UnityEngine.SceneManagement.SceneManager.LoadScene("indoorsNW");
-				
-				if(PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() == SaveData.currentSave.PC.boxes[0][0].getName()){
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
-				}
-				else {
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
-				}
 			}
 			yield return null;
 		}
@@ -397,12 +387,6 @@ public class MainMenuHandler : MonoBehaviour {
 				Debug.Log(SaveLoad.savedGames[2]);
 				GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
 				GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
-				if(PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() == SaveData.currentSave.PC.boxes[0][0].getName()){
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
-				}
-				else {
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
-				}
 					
 				UnityEngine.SceneManagement.SceneManager.LoadScene(SaveData.currentSave.levelName);
 				//yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
@@ -415,7 +399,6 @@ public class MainMenuHandler : MonoBehaviour {
 		int fileCount = SaveLoad.getSavedGamesCount();
 
 		if(fileCount == 0){
-			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 			BgmHandler.main.PlayMain(menuBGM, 0);
 			newGame = true;
 			importantThings.SetActive(true);
@@ -432,13 +415,13 @@ public class MainMenuHandler : MonoBehaviour {
 			transform.Find("Settings").gameObject.SetActive(false);
 			StartCoroutine("animBG");
 			yield return new WaitForSeconds(2f);
+			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 			importantThings.SetActive(false);
 			transform.Find("OpeningLecture").gameObject.SetActive(true);
 			yield return StartCoroutine(ScreenFade.main.Fade(true, 0f));
 			yield return StartCoroutine("openAnimNewGame");
 		}
 		else{
-			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 			BgmHandler.main.PlayMain(menuBGM, 0);
 			updateButton(0);
 			updateFile(0);
