@@ -99,12 +99,21 @@ public class Pokemon {
 	/// 
 	/// </summary>
 	/// <remarks>This should be an enum value</remarks>
-	private string caughtBall;
+	private string caughtBallString;
+    /// <summary>
+    /// <seealso cref="ItemData.ItemCategory.STANDARD_BALLS"/>
+    /// <seealso cref="ItemData.ItemCategory.SPECIAL_BALLS"/>
+    /// </summary>
+    /// <remarks>
+    /// Does a check against <see cref="ItemData.ItemCategory"/> to confirm if valid
+    /// or returns null
+    /// </remarks>
+    private eItems.Item caughtBall;
 	/// <summary>
 	/// The held item.
 	/// <returns>Int item value</returns>
 	/// </summary>
-	private string heldItem;
+	private eItems.Item heldItem;
 
 	/// <summary>
 	/// The met date.
@@ -149,7 +158,7 @@ public class Pokemon {
 	/// The nature.
 	/// </summary>
 	/// <remarks>Should be an enum</remarks>
-	private string nature;
+	private string natureString;
 		
 	private int currentHP;
 	private int HP; //is this the same as the maxHP.value?
@@ -216,8 +225,8 @@ public class Pokemon {
 	
 		this.status = Status.NONE;
 		this.sleepTurns = 0;
-		this.caughtBall = caughtBall;
-		this.heldItem = heldItem;
+		this.caughtBallString = caughtBall;
+		//this.heldItem = heldItem;
 
 		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
 		if (this.OT != SaveData.currentSave.playerName){
@@ -253,7 +262,7 @@ public class Pokemon {
 		this.EV_SPD = EV_SPD;
 		this.EV_SPE = EV_SPE;
 		//set nature
-		this.nature = nature;
+		this.natureString = nature;
 		//calculate stats
 		this.calculateStats();
 		//set currentHP to HP, as a new pokemon will be undamaged.
@@ -276,8 +285,7 @@ public class Pokemon {
 		packMoveset();
 
 	}
-
-
+    
 
 	//New Pokemon with: random IVS, and Shininess 
 	//					default moveset, and EVS (0)
@@ -322,8 +330,8 @@ public class Pokemon {
 		this.status = Status.NONE;
 		this.sleepTurns = 0;
 
-		this.caughtBall = caughtBall;
-		this.heldItem = heldItem;
+		this.caughtBallString = caughtBall;
+		//this.heldItem = heldItem;
 
 		this.metLevel = level;
 		if(PlayerMovement.player != null){
@@ -361,7 +369,7 @@ public class Pokemon {
 		this.EV_SPE = 0;
 
 		//Randomize nature
-		this.nature = NatureDatabase.getRandomNature().getName();
+		this.natureString = NatureDatabase.getRandomNature().getName();
 
 		//calculate stats
 		this.calculateStats();
@@ -416,7 +424,7 @@ public class Pokemon {
 
 		this.status = pokemon.status;
 		this.sleepTurns = pokemon.sleepTurns;
-		this.caughtBall = caughtBall;
+		this.caughtBallString = caughtBall;
 		this.heldItem = pokemon.heldItem;
 
 		this.OT = SaveData.currentSave.playerName;
@@ -444,7 +452,7 @@ public class Pokemon {
 		this.EV_SPD = pokemon.EV_SPD;
 		this.EV_SPE = pokemon.EV_SPE;
 		//set nature
-		this.nature = pokemon.nature;
+		this.natureString = pokemon.natureString;
 		//calculate stats
 		this.calculateStats();
 		this.currentHP = pokemon.currentHP;
@@ -607,7 +615,6 @@ public class Pokemon {
 	}*/
 
 
-
 	//Recalculate the pokemon's Stats.
 	public void calculateStats(){
 		int[] baseStats = PokemonDatabase.getPokemon(pokemonID).getBaseStats();
@@ -621,23 +628,23 @@ public class Pokemon {
 		if(baseStats[1] == 1){
 			this.ATK = 1;}
 		else{
-			this.ATK = Mathf.FloorToInt(Mathf.FloorToInt(((IV_ATK+(2*baseStats[1])+(EV_ATK/4))*level)/100+5)*NatureDatabase.getNature(nature).getATK());}
+			this.ATK = Mathf.FloorToInt(Mathf.FloorToInt(((IV_ATK+(2*baseStats[1])+(EV_ATK/4))*level)/100+5)*NatureDatabase.getNature(natureString).getATK());}
 		if(baseStats[2] == 1){
 			this.DEF = 1;}
 		else{
-			this.DEF = Mathf.FloorToInt(Mathf.FloorToInt(((IV_DEF+(2*baseStats[2])+(EV_DEF/4))*level)/100+5)*NatureDatabase.getNature(nature).getDEF());}
+			this.DEF = Mathf.FloorToInt(Mathf.FloorToInt(((IV_DEF+(2*baseStats[2])+(EV_DEF/4))*level)/100+5)*NatureDatabase.getNature(natureString).getDEF());}
 		if(baseStats[3] == 1){
 			this.SPA = 1;}
 		else{
-			this.SPA = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPA+(2*baseStats[3])+(EV_SPA/4))*level)/100+5)*NatureDatabase.getNature(nature).getSPA());}
+			this.SPA = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPA+(2*baseStats[3])+(EV_SPA/4))*level)/100+5)*NatureDatabase.getNature(natureString).getSPA());}
 		if(baseStats[4] == 1){
 			this.SPD = 1;}
 		else{
-			this.SPD = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPD+(2*baseStats[4])+(EV_SPD/4))*level)/100+5)*NatureDatabase.getNature(nature).getSPD());}
+			this.SPD = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPD+(2*baseStats[4])+(EV_SPD/4))*level)/100+5)*NatureDatabase.getNature(natureString).getSPD());}
 		if(baseStats[5] == 1){
 			this.SPE = 1;}
 		else{
-			this.SPE = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPE+(2*baseStats[5])+(EV_SPE/4))*level)/100+5)*NatureDatabase.getNature(nature).getSPE());}
+			this.SPE = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPE+(2*baseStats[5])+(EV_SPE/4))*level)/100+5)*NatureDatabase.getNature(natureString).getSPE());}
 	}
 
 	//set Nickname
@@ -645,8 +652,19 @@ public class Pokemon {
 		this.nickname = nickname;
 	}
 
+    /// <summary>
+    /// Deprecated. Please use <see cref="swapHeldItem(eItems.Item)"/>
+    /// </summary>
+    /// <param name="newItem"></param>
+    /// <returns>returns empty string value</returns>
 	public string swapHeldItem(string newItem){
-		string oldItem = this.heldItem;
+        string oldItem = "";// this.heldItem;
+		//this.heldItem = newItem;
+		return oldItem;
+	}
+
+	public eItems.Item swapHeldItem(eItems.Item newItem){
+		eItems.Item oldItem = this.heldItem;
 		this.heldItem = newItem;
 		return oldItem;
 	}
@@ -774,7 +792,14 @@ public class Pokemon {
 		//Debug.Log("Check Failed");
 		return false;
 	}
-	//check that the evolution can be 
+	
+    /// <summary>
+    /// check that the evolution can be 
+    /// <para>Deprecated... broke at held item</para>
+    /// </summary>
+    /// <param name="currentMethod"></param>
+    /// <param name="evolutionRequirements"></param>
+    /// <returns></returns>
 	public bool checkEvolutionMethods(string currentMethod, string evolutionRequirements){
 		string[] evolutionSplit = evolutionRequirements.Split(',');
 		string[] methods = evolutionSplit[0].Split('\\');
@@ -816,9 +841,9 @@ public class Pokemon {
 				}
 			}
 			else if(methods[i] == "Item"){ //if method contains an Item requirement
-				if(this.heldItem == parameters[i]){ //and pokemon's Held Item is not the specified Item
+				/*if(this.heldItem == parameters[i]){ //and pokemon's Held Item is not the specified Item
 					return false; //cannot evolve. return false and stop checking.
-				}
+				}*/
 			}
 			else if(methods[i] == "Gender"){ //if method contains a Gender requirement
 				if(this.gender.ToString() != parameters[i]){ //and pokemon's gender is not the required gender to evolve,
@@ -874,13 +899,13 @@ public class Pokemon {
 		string result = pokemonID +": "+ this.getName() +"("+ PokemonDatabase.getPokemon(pokemonID).getName() +"), "+
 				gender.ToString() +", Level "+ level +", EXP: "+ exp +", To next: "+ (nextLevelExp - exp) +
 				", Friendship: "+ friendship +", RareValue="+ rareValue +", Pokerus="+ pokerus.ToString() +", Shiny="+ isShiny.ToString() +
-				", Status: "+  status +", Ball: "+ caughtBall +", Item: "+ heldItem +
+				", Status: "+  status +", Ball: "+ caughtBallString +", Item: "+ heldItem +
 				", met at Level " + metLevel +" on "+ metDate +" at "+ metMap +
 				", OT: "+ OT +", ID: "+ IDno +
 				", IVs: "+ IV_HP +","+ IV_ATK +","+ IV_DEF +","+ IV_SPA +","+ IV_SPD +","+ IV_SPE +
 				", EVs: "+ EV_HP +","+ EV_ATK +","+ EV_DEF +","+ EV_SPA +","+ EV_SPD +","+ EV_SPE +
 				", Stats: "+ currentHP +"/"+ HP +","+ ATK +","+ DEF +","+ SPA +","+ SPD +","+ SPE +
-				", Nature: "+ nature +", "+PokemonDatabase.getPokemon(pokemonID).getAbility(ability);
+				", Nature: "+ natureString +", "+PokemonDatabase.getPokemon(pokemonID).getAbility(ability);
 		result += ", [";
 		for(int i = 0; i < 4; i++){
 			if(!string.IsNullOrEmpty(moveset[i])){
@@ -903,7 +928,9 @@ public class Pokemon {
 		status = Status.NONE;
 	}
 
-	///returns the excess hp
+    /// <summary>
+	/// returns the excess hp
+    /// </summary>
 	public int healHP(float amount){
 		int excess = 0; 
 		int intAmount = Mathf.RoundToInt(amount);
@@ -953,8 +980,7 @@ public class Pokemon {
 			}
 		}
 	}
-
-
+    
 
 	public bool setStatus(Status status){
 		if(this.status == Status.NONE){
@@ -972,7 +998,6 @@ public class Pokemon {
 		}
 		return false;
 	}
-
 
 
 	public void removeSleepTurn(){
@@ -1044,9 +1069,14 @@ public class Pokemon {
 		return status;}
 	
 	public string getCaughtBall(){
-		return caughtBall;}
-	public string getHeldItem(){
-		return heldItem;}
+		return caughtBallString;}
+    /// <summary>
+    /// Deprecated...
+    /// </summary>
+    /// <returns>Returns an <see cref="eItems.Item"/></returns>
+    /// <remarks>Needs to be corrected...</remarks>
+    public string getHeldItem(){
+		return heldItem.ToString();}
 	
 	public string getMetDate(){
 		return metDate;}
@@ -1108,9 +1138,12 @@ public class Pokemon {
 		return EV_SPE;}
 	
 	public string getNature(){
-		return nature;}
+		return natureString;}
 
 	public int getHP(){
+        //changed Return types must be float. And then rounded up to int when displaying
+	    //public float TotalHP(){
+		//return (Pokemon_BaseStats.Health((Pokemon_Names)number)+50)*level/50 + 10;
 		return HP;}
 	public int getCurrentHP(){
 		return currentHP;}
@@ -1129,9 +1162,6 @@ public class Pokemon {
 
 	public int getAbility(){
 		return ability;}
-
-
-
 
 
 	public int getMoveIndex(string move){
@@ -1157,13 +1187,11 @@ public class Pokemon {
 		this.moveset[target2] = temp;
 	}
 
-
 	private void ResetPP(int index){
 		PPups[index] = 0;
 		maxPP[index] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[index]).getPP()*((PPups[index]*0.2f)+1));
 		PP[index] = maxPP[index];
 	}
-
 
 	/// Returns false if no room to add the new move OR move already is learned.
 	public bool addMove(string newMove){
@@ -1274,10 +1302,6 @@ public class Pokemon {
 	}
 
 
-
-
-
-
 	public int[] getPPups(){
 		return PPups;}
 	public int[] getMaxPP(){
@@ -1288,17 +1312,11 @@ public class Pokemon {
 		return PP[index];}
 
 
-
-
-
-
-
 	public Sprite[] GetFrontAnim_(){
 		return GetAnimFromID_("PokemonSprites", pokemonID, gender, isShiny);}
 	
 	public Sprite[] GetBackAnim_(){
 		return GetAnimFromID_("PokemonBackSprites", pokemonID, gender, isShiny);}
-
 	
 	public static Sprite[] GetFrontAnimFromID_(int ID, Gender gender, bool isShiny){
 		return GetAnimFromID_("PokemonSprites", ID, gender, isShiny);}
@@ -1328,8 +1346,6 @@ public class Pokemon {
 		return animation;
 	}
 
-
-
 	public Sprite[] GetIcons_(){
 		return GetIconsFromID_(pokemonID, isShiny);}
 
@@ -1347,9 +1363,9 @@ public class Pokemon {
 
 	public AudioClip GetCry(){
 		return GetCryFromID(pokemonID);}
+
 	public static AudioClip GetCryFromID(int ID){
 		return Resources.Load<AudioClip>("Audio/cry/"+convertLongID(ID));}
-
 
 	public Texture[] GetFrontAnim(){
 		return GetAnimFromID("PokemonSprites", pokemonID, gender, isShiny);}
@@ -1362,7 +1378,6 @@ public class Pokemon {
 
 	public Sprite[] GetSprite(bool getLight){
 		return GetSpriteFromID(pokemonID, isShiny, getLight);}
-
 
 	public static Texture[] GetFrontAnimFromID(int ID, Gender gender, bool isShiny){
 		return GetAnimFromID("PokemonSprites", ID, gender, isShiny);}
@@ -1400,11 +1415,7 @@ public class Pokemon {
 			icons = Resources.Load<Texture>("PokemonIcons/icon"+convertLongID(ID));}
 		return icons;
 	}
-
-
-
-
-
+    
 	public static Sprite[] GetSpriteFromID(int ID, bool isShiny, bool getLight){
 		string shiny = (isShiny)? "s" : "";
 		string light = (getLight)? "Lights/" : "";
@@ -1424,9 +1435,5 @@ public class Pokemon {
 			return new Sprite[8];
 		}
 		return spriteSheet;
-	}
-	
-
+	}	
 }
-
-

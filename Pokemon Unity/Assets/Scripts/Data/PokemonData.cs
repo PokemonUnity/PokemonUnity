@@ -227,6 +227,9 @@ public class PokemonData {
 	private int evYieldSPE;
 
 	private PokedexColor pokedexColor;
+    /// <summary>
+    /// Friendship levels is the same as pokemon Happiness.
+    /// </summary>
 	private int baseFriendship;
 	
 	private int baseStatsHP;

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : MonoBehaviour
 {
@@ -216,7 +217,7 @@ public class MainMenuHandler : MonoBehaviour
                     GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
                     GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
 
-                    Application.LoadLevel(SaveData.currentSave.levelName);
+                    SceneManager.LoadScene(SaveData.currentSave.levelName);
                 }
                 else if (selectedButton == 1)
                 {
