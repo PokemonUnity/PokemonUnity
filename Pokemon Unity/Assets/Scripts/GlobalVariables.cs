@@ -224,6 +224,7 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;
         SaveData.currentSave.playerSeconds = 12;
+        SaveData.currentSave.playerTime = new System.TimeSpan(0,7,12);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 

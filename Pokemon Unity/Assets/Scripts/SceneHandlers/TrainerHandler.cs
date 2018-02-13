@@ -317,15 +317,16 @@ public class TrainerHandler : MonoBehaviour
                 playerMoney = "," + playerMoney;
             }
         }
-        moneyData.text = "$" + playerMoney;
+        moneyData.text = "$" + playerMoney;//¥
         moneyDataShadow.text = moneyData.text;
         pokedexData.text = "0"; //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
         scoreData.text = "" + SaveData.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;
-        timeHour.text = SaveData.currentSave.playerTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;
+        System.TimeSpan playTime = SaveData.currentSave.playerTime + SaveData.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+        timeHour.text = "";//playTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;
         timeHourShadow.text = timeHour.text;
-        timeMinute.text = SaveData.currentSave.playerTime.Minutes.ToString("00");//"" + SaveData.currentSave.playerMinutes;
+        timeMinute.text = System.String.Format("{0}   {1:00}", playTime.Hours, playTime.Minutes); //playTime.Minutes.ToString("00");//"" + SaveData.currentSave.playerMinutes;
         /*if (timeMinute.text.Length == 1)
         {
             timeMinute.text = "0" + timeMinute.text;

@@ -105,24 +105,24 @@ public class MainMenuHandler : MonoBehaviour
             int badgeTotal = 0;
             for (int i = 0; i < 12; i++)
             {
-                if (SaveLoad.savedGames[selectedFile].gymsBeaten[i])
+                if (SaveLoad.savedGames[selectedFile].gymsBeatTime[i] != null)//SaveLoad.savedGames[selectedFile].gymsBeaten[i]
                 {
                     badgeTotal += 1;
                 }
             }
-            string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
+            /*string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
             if (playerTime.Length == 1)
             {
                 playerTime = "0" + playerTime;
             }
-            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;
+            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;*/
 
             mapNameText.text = SaveLoad.savedGames[selectedFile].mapName;
             mapNameTextShadow.text = mapNameText.text;
             dataText.text = SaveLoad.savedGames[selectedFile].playerName
                             + "\n" + badgeTotal
                             + "\n" + "0" //Pokedex not yet implemented
-                            + "\n" + playerTime;
+                            + "\n" + System.String.Format("{0} : {1:00}",SaveLoad.savedGames[selectedFile].playerTime.Hours, SaveLoad.savedGames[selectedFile].playerTime.Minutes);
             dataTextShadow.text = dataText.text;
 
             for (int i = 0; i < 6; i++)
