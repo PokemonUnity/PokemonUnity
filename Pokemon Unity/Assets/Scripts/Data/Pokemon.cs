@@ -1,10 +1,7 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
 
 using UnityEngine;
-using System.Collections;
-using System.Data;
-using System.Data.Common;
-using Mono.Data.Sqlite;
+using System.Collections; 
 //using System.Data.SQLite;
 //using DataEnums;
 

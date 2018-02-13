@@ -1,0 +1,51 @@
+{
+    "ID": 63,
+    "PokedexNumber": 0,
+    "Species": "Psi",
+    "pokedexEntry": "Abra needs to sleep for eighteen hours a day. If it doesn’t,\nthis Pokémon loses its ability to use telekinetic powers. If it is\nattacked, Abra escapes using Teleport while it is still sleeping.",
+    "Name": "Abra",
+    "type1": 14,
+    "type2": 0,
+    "ability1": "",
+    "ability2": "",
+    "hiddenAbility": "",
+    "maleRatio": 0.0,
+    "catchRate": 200,
+    "eggGroup1": 8,
+    "eggGroup2": 0,
+    "hatchTime": 20,
+    "height": 9.0,
+    "weight": 195.0,
+    "baseExpYield": 62,
+    "levelingRate": 4,
+    "evYieldHP": 0,
+    "evYieldATK": 0,
+    "evYieldDEF": 0,
+    "evYieldSPA": 0,
+    "evYieldSPD": 0,
+    "evYieldSPE": 0,
+    "pokedexColor": 3,
+    "baseFriendship": 0,
+    "baseStatsHP": 25,
+    "baseStatsATK": 20,
+    "baseStatsDEF": 15,
+    "baseStatsSPA": 105,
+    "baseStatsSPD": 55,
+    "baseStatsSPE": 90,
+    "luminance": 0.0,
+    "lightColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "movesetLevels": [
+        1
+    ],
+    "movesetMoves": [],
+    "tmList": [],
+    "evolutionID": [
+        64
+    ],
+    "evolutionRequirements": []
+}

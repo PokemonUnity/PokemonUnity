@@ -1,0 +1,52 @@
+{
+    "ID": 268,
+    "PokedexNumber": 0,
+    "Species": "Cocoon",
+    "pokedexEntry": "If it is attacked, Cascoon remains motionless however badly it\nmay be hurt. It does so because if it were to move, its body\nwould be weak upon evolution. This Pokémon will also not\nforget the pain it endured.",
+    "Name": "Cascoon",
+    "type1": 7,
+    "type2": 0,
+    "ability1": "",
+    "ability2": "",
+    "hiddenAbility": "",
+    "maleRatio": 0.0,
+    "catchRate": 120,
+    "eggGroup1": 3,
+    "eggGroup2": 0,
+    "hatchTime": 15,
+    "height": 7.0,
+    "weight": 115.0,
+    "baseExpYield": 41,
+    "levelingRate": 2,
+    "evYieldHP": 0,
+    "evYieldATK": 0,
+    "evYieldDEF": 0,
+    "evYieldSPA": 0,
+    "evYieldSPD": 0,
+    "evYieldSPE": 0,
+    "pokedexColor": 7,
+    "baseFriendship": 0,
+    "baseStatsHP": 50,
+    "baseStatsATK": 35,
+    "baseStatsDEF": 55,
+    "baseStatsSPA": 25,
+    "baseStatsSPD": 25,
+    "baseStatsSPE": 15,
+    "luminance": 0.0,
+    "lightColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "movesetLevels": [
+        1,
+        7
+    ],
+    "movesetMoves": [],
+    "tmList": [],
+    "evolutionID": [
+        269
+    ],
+    "evolutionRequirements": []
+}

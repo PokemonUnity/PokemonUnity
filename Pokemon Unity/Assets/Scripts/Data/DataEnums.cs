@@ -11,6 +11,7 @@ using System.Text;
 		/// <remarks>Can now code with strings or int and
 		/// access the same value.</remarks>
 		public enum Ability{
+            NONE = 0,
 			STENCH = 1,
 			DRIZZLE = 2,
 			SPEED_BOOST = 3,

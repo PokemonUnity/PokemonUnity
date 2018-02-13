@@ -1,0 +1,52 @@
+{
+    "ID": 14,
+    "PokedexNumber": 0,
+    "Species": "Cocoon",
+    "pokedexEntry": "Kakuna remains virtually immobile as it clings to a tree.\nHowever, on the inside, it is extremely busy as it prepares\nfor its coming evolution.\nThis is evident from how hot the shell becomes to the touch.",
+    "Name": "Kakuna",
+    "type1": 7,
+    "type2": 4,
+    "ability1": "",
+    "ability2": "",
+    "hiddenAbility": "",
+    "maleRatio": 0.0,
+    "catchRate": 120,
+    "eggGroup1": 3,
+    "eggGroup2": 0,
+    "hatchTime": 15,
+    "height": 6.0,
+    "weight": 100.0,
+    "baseExpYield": 72,
+    "levelingRate": 2,
+    "evYieldHP": 0,
+    "evYieldATK": 0,
+    "evYieldDEF": 0,
+    "evYieldSPA": 0,
+    "evYieldSPD": 0,
+    "evYieldSPE": 0,
+    "pokedexColor": 10,
+    "baseFriendship": 0,
+    "baseStatsHP": 45,
+    "baseStatsATK": 25,
+    "baseStatsDEF": 50,
+    "baseStatsSPA": 25,
+    "baseStatsSPD": 25,
+    "baseStatsSPE": 35,
+    "luminance": 0.0,
+    "lightColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "movesetLevels": [
+        1,
+        7
+    ],
+    "movesetMoves": [],
+    "tmList": [],
+    "evolutionID": [
+        15
+    ],
+    "evolutionRequirements": []
+}

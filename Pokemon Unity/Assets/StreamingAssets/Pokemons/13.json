@@ -1,0 +1,53 @@
+{
+    "ID": 13,
+    "PokedexNumber": 0,
+    "Species": "Hairy Bug",
+    "pokedexEntry": "Weedle has an extremely acute sense of smell. It is capable\nof distinguishing its favorite kinds of leaves from those it\ndislikes just by sniffing with its big red proboscis (nose).",
+    "Name": "Weedle",
+    "type1": 7,
+    "type2": 4,
+    "ability1": "",
+    "ability2": "",
+    "hiddenAbility": "",
+    "maleRatio": 0.0,
+    "catchRate": 255,
+    "eggGroup1": 3,
+    "eggGroup2": 0,
+    "hatchTime": 15,
+    "height": 3.0,
+    "weight": 32.0,
+    "baseExpYield": 39,
+    "levelingRate": 2,
+    "evYieldHP": 0,
+    "evYieldATK": 0,
+    "evYieldDEF": 0,
+    "evYieldSPA": 0,
+    "evYieldSPD": 0,
+    "evYieldSPE": 0,
+    "pokedexColor": 3,
+    "baseFriendship": 0,
+    "baseStatsHP": 40,
+    "baseStatsATK": 35,
+    "baseStatsDEF": 30,
+    "baseStatsSPA": 20,
+    "baseStatsSPD": 20,
+    "baseStatsSPE": 50,
+    "luminance": 0.0,
+    "lightColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "movesetLevels": [
+        1,
+        1,
+        15
+    ],
+    "movesetMoves": [],
+    "tmList": [],
+    "evolutionID": [
+        14
+    ],
+    "evolutionRequirements": []
+}

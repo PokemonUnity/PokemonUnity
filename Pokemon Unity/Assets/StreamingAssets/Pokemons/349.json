@@ -1,0 +1,53 @@
+{
+    "ID": 349,
+    "PokedexNumber": 0,
+    "Species": "Fish",
+    "pokedexEntry": "While Feebas’s body is in tatters, it has a hardy and tenacious\nlife force that enables it to live anywhere. However, this\nPokémon is also slow and dimwitted, making it an easy catch.",
+    "Name": "Feebas",
+    "type1": 11,
+    "type2": 0,
+    "ability1": "",
+    "ability2": "",
+    "hiddenAbility": "",
+    "maleRatio": 0.0,
+    "catchRate": 255,
+    "eggGroup1": 2,
+    "eggGroup2": 14,
+    "hatchTime": 20,
+    "height": 6.0,
+    "weight": 74.0,
+    "baseExpYield": 40,
+    "levelingRate": 5,
+    "evYieldHP": 0,
+    "evYieldATK": 0,
+    "evYieldDEF": 0,
+    "evYieldSPA": 0,
+    "evYieldSPD": 0,
+    "evYieldSPE": 0,
+    "pokedexColor": 3,
+    "baseFriendship": 0,
+    "baseStatsHP": 20,
+    "baseStatsATK": 15,
+    "baseStatsDEF": 20,
+    "baseStatsSPA": 10,
+    "baseStatsSPD": 55,
+    "baseStatsSPE": 80,
+    "luminance": 0.0,
+    "lightColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "movesetLevels": [
+        1,
+        15,
+        30
+    ],
+    "movesetMoves": [],
+    "tmList": [],
+    "evolutionID": [
+        350
+    ],
+    "evolutionRequirements": []
+}

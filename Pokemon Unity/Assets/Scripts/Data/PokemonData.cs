@@ -3,16 +3,17 @@
 using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class PokemonData {
 	#region Variables
 	/// <summary>
 	/// Id is the database value for specific pokemon+form
 	/// </summary>
 	/// <example>
-	/// Deoxys pokedex# can be 1,
+	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
-	private int ID;
+	public int ID;
 	/// <summary>
 	/// Pokedex number is the species identifier number
 	/// <para>Charizard is a Species. 
@@ -20,10 +21,10 @@ public class PokemonData {
 	/// </para>
 	/// </summary>
 	/// <example>
-	/// Deoxys pokedex# can be 1,
+	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
-	private int PokedexNumber;
+	public int PokedexNumber;
 	/// <summary>
 	/// Species is the pokemon breed/genus
 	/// <para>Charizard is a Species. 
@@ -35,8 +36,8 @@ public class PokemonData {
 	/// are all part of the same species.
 	/// </example>
 	/// <remarks>Should be an int, not a string</remarks>
-	private string Species;
-	private string pokedexEntry; //not needed, make into a method that calls from xml text
+	public string Species;
+	public string pokedexEntry; //not needed, make into a method that calls from xml text
 	/// <summary>
 	/// Name of the specific pokemon+form
 	/// for given Id in database
@@ -45,11 +46,11 @@ public class PokemonData {
 	/// </para>
 	/// </summary>
 	/// <example>
-	/// Deoxys pokedex# can be 1,
+	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
-	private string Name;
-	//private int Form; //Not sure if this is needed here
+	public string Name;
+	//public int Form; //Not sure if this is needed here
 	//public enum Ability : int? { } //made a class, dont think i need this or below
 	//public System.Collections.Generic.Dictionary<int?, string> Ability = new System.Collections.Generic.Dictionary<int?, string>(); //{ };
 	public enum Type{
@@ -121,7 +122,7 @@ public class PokemonData {
 	/// <seealso cref="StringToColor"/>
 	/// </summary>
 	/// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
-	private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
+	public System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
 		//http://www.epidemicjohto.com/t882-type-colors-hex-colors
 		//Normal Type: A8A77A
 		//Fire Type:  EE8130
@@ -184,14 +185,14 @@ public class PokemonData {
 		//{"", new Color() },
 		//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
 	};
-	private Type type1;
-	private Type type2;
-		private eAbility.Ability? ability1Id;
-		private eAbility.Ability? ability2Id;
-		private eAbility.Ability? hiddenAbilityId;
-	private string ability1;
-	private string ability2;
-	private string hiddenAbility;
+	public Type type1;
+	public Type type2;
+		public eAbility.Ability? ability1Id;
+		public eAbility.Ability? ability2Id;
+		public eAbility.Ability? hiddenAbilityId;
+	public string ability1;
+	public string ability2;
+	public string hiddenAbility;
 		/// <summary>
 		/// All three pokemon abilities 
 		/// (Abiltiy1, Ability2, HiddenAbility).
@@ -200,47 +201,47 @@ public class PokemonData {
 		/// Should be [int? a1,int? a2,int? a3]
 		/// instead of above...
 		/// </remarks> 
-		private eAbility.Ability?[,] abilities;
+		public eAbility.Ability?[,] abilities;
 	
 	/// <summary>
 	/// The male ratio.
 	/// <value>-1f is interpreted as genderless</value>
 	/// </summary>
-	private float maleRatio; 
-	private int catchRate;
-	private EggGroup eggGroup1;
-	private EggGroup eggGroup2;
-	private int hatchTime;
+	public float maleRatio; 
+	public int catchRate;
+	public EggGroup eggGroup1;
+	public EggGroup eggGroup2;
+	public int hatchTime;
 
-	//private float hitboxWidth; //used for 3d battles; just use collision detection from models
-	private float height;
-	private float weight;
+	//public float hitboxWidth; //used for 3d battles; just use collision detection from models
+	public float height;
+	public float weight;
 
-	private int baseExpYield;
-	private LevelingRate levelingRate;
+	public int baseExpYield;
+	public LevelingRate levelingRate;
 
-    private int evYieldHP;
-    private int evYieldATK;
-    private int evYieldDEF;
-    private int evYieldSPA;
-    private int evYieldSPD;
-    private int evYieldSPE;
+    public int evYieldHP;
+    public int evYieldATK;
+    public int evYieldDEF;
+    public int evYieldSPA;
+    public int evYieldSPD;
+    public int evYieldSPE;
 
-    private PokedexColor pokedexColor;
+    public PokedexColor pokedexColor;
     /// <summary>
     /// Friendship levels is the same as pokemon Happiness.
     /// </summary>
-	private int baseFriendship;
+	public int baseFriendship;
 	
-	private int baseStatsHP;
-	private int baseStatsATK;
-	private int baseStatsDEF;
-	private int baseStatsSPA;
-	private int baseStatsSPD;
-	private int baseStatsSPE;
+	public int baseStatsHP;
+	public int baseStatsATK;
+	public int baseStatsDEF;
+	public int baseStatsSPA;
+	public int baseStatsSPD;
+	public int baseStatsSPE;
 
-	private float luminance;
-	private Color lightColor;
+	public float luminance;
+	public Color lightColor;
 
 	/// <summary>
 	/// [item id,% chance]
@@ -249,21 +250,21 @@ public class PokemonData {
 	/// <para>heldItems[1,0] == 4 as int</para>
 	/// </example>
 	/// <remarks>Or maybe...[item id,% chance,generationId/regionId]</remarks>
-	private int[,] heldItem;
-	//private System.Collections.Generic.Dictionary<int, float> heldItem = new System.Collections.Generic.Dictionary<int, float>();
+	public int[,] heldItem;
+	//public System.Collections.Generic.Dictionary<int, float> heldItem = new System.Collections.Generic.Dictionary<int, float>();
 
-	private int[] movesetLevels;
+	public int[] movesetLevels;
     /// <summary>
     /// 
     /// </summary>
     /// <remarks>
     /// This should be an enum...
     /// </remarks>
-	private string[] movesetMoves;
+	public string[] movesetMoves;
 
-	private string[] tmList;
+	public string[] tmList;
 
-	private int[] evolutionID;
+	public int[] evolutionID;
 	/// <summary>
 	/// <example>
 	/// E.G.	Poliwhirl(61)
@@ -349,12 +350,15 @@ public class PokemonData {
 	/// </item>
 	/// </list>
 	/// </summary>
-	private string[] evolutionRequirements;
+	public string[] evolutionRequirements;
 	#endregion
 
-	
 
 
+    public PokemonData()
+    {
+        
+    }
 	public PokemonData (int ID, string name, Type type1, Type type2, string ability1, string ability2, string hiddenAbility,
 	                    float maleRatio, int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
 	                    float height, float weight, int baseExpYield, LevelingRate levelingRate,
@@ -479,7 +483,7 @@ public class PokemonData {
 		this.evolutionRequirements = evolutionRequirements;
 	}
 
-	public PokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
 						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
 						float height, float weight, int baseExpYield, int levelingRate,
 						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -488,13 +492,30 @@ public class PokemonData {
 						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
 						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
 	{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-		new PokemonData(Id, PokeId, (PokemonData.Type)type1, type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE, (eAbility.Ability)ability1, (eAbility.Ability)ability2, (eAbility.Ability)hiddenAbility, catchRate,
-            eggGroup1 == null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, eggGroup2 == null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, hatchTime, height, weight, baseExpYield, levelingRate, pokedexColor | PokemonData.PokedexColor.NONE,
+		var pokeData = new PokemonData(
+            Id, 
+            PokeId,  
+            type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
+            type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
+            ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
+            ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
+            hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE, 
+            catchRate,
+            eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, 
+            eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, 
+            hatchTime, 
+            height, 
+            weight, 
+            baseExpYield, 
+            levelingRate, 
+            pokedexColor | PokemonData.PokedexColor.NONE,
             baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
+
+	    return pokeData;
 	}
 
     public PokemonData(int Id, int PokeId/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
-                        /*float maleRatio,*/ int catchRate, EggGroup? eggGroup1, EggGroup? eggGroup2, int hatchTime,
+                        /*float maleRatio,*/ int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         PokedexColor pokedexColor, /*int baseFriendship,* / string species, string pokedexEntry,*/
@@ -502,18 +523,20 @@ public class PokemonData {
                         float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+
+        PokedexTranslation translation = PokemonDatabase.GetPokedexTranslation(Id);
         this.ID = Id;
-        this.Name = PokemonDatabase.LoadPokedexLanguageText(SaveData.currentSave.playerLanguage)[Id, 0];//name;
-        this.type1 = (PokemonData.Type)type1;
-        this.type2 = type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
+        this.Name = translation.Name;
+        this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
+        this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
         this.ability1Id = (eAbility.Ability)ability1;
         this.ability2Id = (eAbility.Ability)ability2;
         this.hiddenAbilityId = (eAbility.Ability)hiddenAbility;
 
         //this.maleRatio = maleRatio;
         this.catchRate = catchRate;
-        this.eggGroup1 = eggGroup1 == null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE;
-        this.eggGroup2 = eggGroup2 == null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE;
+        this.eggGroup1 = eggGroup1;
+        this.eggGroup2 = eggGroup2;
         this.hatchTime = hatchTime;
 
         this.height = height;
@@ -532,8 +555,8 @@ public class PokemonData {
         this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
         //this.baseFriendship = baseFriendship; //forgot to implement when transfering database
 
-        this.Species = PokemonDatabase.LoadPokedexLanguageText(SaveData.currentSave.playerLanguage)[Id,1];//species;
-        this.pokedexEntry = PokemonDatabase.LoadPokedexLanguageText(SaveData.currentSave.playerLanguage)[Id,2];//pokedexEntry;
+        this.Species = translation.Species;
+        this.pokedexEntry = translation.PokedexEntry;
 
         this.baseStatsHP = baseStatsHP;
         this.baseStatsATK = baseStatsATK;
