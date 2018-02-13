@@ -7,6 +7,14 @@ using UnityEngine.SceneManagement;
 public class GlobalVariables : MonoBehaviour
 {
     public static GlobalVariables global;
+    //public static UnityEngine.SceneManagement.Scene SceneLoaded = SceneManager.GetActiveScene();
+    public enum Language
+    {
+        /// <summary>
+        /// US English
+        /// </summary>
+        English = 9
+    }
 
     public Vector3 playerPosition;
     public int playerDirection;
@@ -35,13 +43,17 @@ public class GlobalVariables : MonoBehaviour
     //Important gameplay data
     public bool respawning = false;
 
+    void CheckSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode) {
+        Debug.Log(scene.name + " : " + mode.ToString());
+    }
+
     private void OnDestroy()
     {
-        //SceneManager.sceneLoaded -= CheckSceneLoaded;
+        SceneManager.sceneLoaded -= CheckSceneLoaded;
     }
     void Awake()
     {
-        //SceneManager.sceneLoaded += CheckSceneLoaded;
+        SceneManager.sceneLoaded += CheckSceneLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
@@ -96,6 +108,7 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.playerName = "Gold";
         SaveData.currentSave.playerID = 29482;
         SaveData.currentSave.isMale = true;
+        SaveData.currentSave.playerLanguage = Language.English;
 
         SaveData.currentSave.playerOutfit = "hgss";
 
@@ -205,7 +218,7 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = "Feb. 14th, 2015";
+        SaveData.currentSave.fileCreationDate = new System.DateTime(2015, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerMoney = 2481;
         SaveData.currentSave.playerScore = 481;
 
@@ -226,9 +239,9 @@ public class GlobalVariables : MonoBehaviour
             true, true, false, false, false, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.gymsBeatTime = new string[]
+        SaveData.currentSave.gymsBeatTime = new System.DateTime?[]
         {
-            "Apr. 27th, 2015", "Apr. 30th, 2015", null, null, null, "May. 1st, 2015",
+            new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
             null, null, null, null, null, null
         };
         ////////////////////////////////////////////////////////////////////////////////////////////////////

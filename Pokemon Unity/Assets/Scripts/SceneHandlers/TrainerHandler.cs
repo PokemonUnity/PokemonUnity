@@ -5,6 +5,7 @@ using System.Collections;
 
 public class TrainerHandler : MonoBehaviour
 {
+    #region Variables
     private DialogBoxHandler Dialog;
 
     private GUITexture cancel;
@@ -85,6 +86,7 @@ public class TrainerHandler : MonoBehaviour
     private bool interactingScreen;
     private int currentBadge;
     private bool cancelSelected;
+    #endregion
 
     void Awake()
     {
@@ -321,15 +323,15 @@ public class TrainerHandler : MonoBehaviour
         pokedexDataShadow.text = pokedexData.text;
         scoreData.text = "" + SaveData.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;
-        timeHour.text = "" + SaveData.currentSave.playerHours;
+        timeHour.text = SaveData.currentSave.playerTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;
         timeHourShadow.text = timeHour.text;
-        timeMinute.text = "" + SaveData.currentSave.playerMinutes;
-        if (timeMinute.text.Length == 1)
+        timeMinute.text = SaveData.currentSave.playerTime.Minutes.ToString("00");//"" + SaveData.currentSave.playerMinutes;
+        /*if (timeMinute.text.Length == 1)
         {
             timeMinute.text = "0" + timeMinute.text;
-        }
+        }*/
         timeMinuteShadow.text = timeMinute.text;
-        adventureData.text = SaveData.currentSave.fileCreationDate;
+        adventureData.text = SaveData.currentSave.fileCreationDate.ToString("MMM d, yyyy");
         adventureDataShadow.text = adventureData.text;
 
         for (int i = 0; i < 12; i++)
@@ -354,6 +356,20 @@ public class TrainerHandler : MonoBehaviour
             GLTypeBox.gameObject.SetActive(true);
             if (SaveData.currentSave.gymsEncountered[currentBadge])
             {
+                /* There isnt a difference, but i just feel like it's visually cleaner on the eyes. Less confusing...
+                switch (currentBadge) 
+                {
+                    case 0:
+                        GLPicture.texture = null;
+                        GLNameData.text = "Jade";
+                        GLType.texture = Resources.Load<Texture>("PCSprites/typeROCK");
+                        break;
+                    default:
+                        GLPicture.texture = null;
+                        GLNameData.text = "???";
+                        GLType.texture = null;//Resources.Load<Texture>("PCSprites/typeNONE")? Isnt there a '???' Type?
+                        break;
+                }*/
                 if (currentBadge == 0)
                 {
                     GLPicture.texture = null;
@@ -427,10 +443,10 @@ public class TrainerHandler : MonoBehaviour
                     GLType.texture = Resources.Load<Texture>("PCSprites/typeDARK");
                 }
 
-                if (SaveData.currentSave.gymsBeaten[currentBadge])
+                if (SaveData.currentSave.gymsBeatTime[currentBadge] != null)//(SaveData.currentSave.gymsBeaten[currentBadge])
                 {
                     GLBeatenBox.gameObject.SetActive(true);
-                    GLBeatenData.text = SaveData.currentSave.gymsBeatTime[currentBadge];
+                    GLBeatenData.text = SaveData.currentSave.gymsBeatTime[currentBadge].Value.ToString("MMM d, yyyy");
                 }
                 else
                 {
@@ -527,7 +543,6 @@ public class TrainerHandler : MonoBehaviour
             }
         }
     }
-
 
     public IEnumerator control()
     {

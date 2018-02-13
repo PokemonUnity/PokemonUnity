@@ -206,6 +206,7 @@ public class MainMenuHandler : MonoBehaviour
                 if (selectedButton == 0)
                 {
                     //CONTINUE
+                    #region CONTINUE
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 
@@ -214,18 +215,22 @@ public class MainMenuHandler : MonoBehaviour
                     Debug.Log(SaveLoad.savedGames[0]);
                     Debug.Log(SaveLoad.savedGames[1]);
                     Debug.Log(SaveLoad.savedGames[2]);
+                    SaveData.currentSave.startTime = System.DateTime.UtcNow;
                     GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
                     GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
 
                     SceneManager.LoadScene(SaveData.currentSave.levelName);
+                    #endregion
                 }
                 else if (selectedButton == 1)
                 {
                     //NEW GAME
+                    #region NEW GAME
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
                     yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 
                     SaveData.currentSave = new SaveData(fileCount);
+                    SaveData.currentSave.startTime = System.DateTime.UtcNow;
 
                     GlobalVariables.global.SetDEBUGFileData();
 
@@ -233,6 +238,7 @@ public class MainMenuHandler : MonoBehaviour
                     GlobalVariables.global.playerDirection = 2;
                     GlobalVariables.global.fadeIn = true;
                     Application.LoadLevel("indoorsNW");
+                    #endregion
                 }
                 else if (selectedButton == 2)
                 {
