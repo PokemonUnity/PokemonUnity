@@ -1,9 +1,8 @@
 ﻿//Original Scripts by IIColour (IIColour_Spectrum)
-
+ 
 using UnityEngine; 
 using System.Collections;
-using System.Collections.Generic; 
-//using System.Data.SQLite;
+using System.Collections.Generic;   
 using System.IO;
 using System;
 using System.Text;
@@ -148,7 +147,7 @@ public class PokemonDatabase
 		return exp;
 
 
-	}
+	} 
      
     public static Dictionary<int, PokemonData> Pokedex = LoadPokedex();
 
@@ -162,40 +161,7 @@ public class PokemonDatabase
             string dataAsJson = File.ReadAllText(fileName, Encoding.UTF8); 
             PokemonData pokemonData = new PokemonData();
             JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
-            data.Add(pokemonData.ID, pokemonData);  
-        }
-
-        return data;
-    }
-
-    private static Dictionary<int, PokedexTranslation> _pokeTranslations = LoadPokedexTranslations();
-     
-    public static Dictionary<int, PokedexTranslation> LoadPokedexTranslations(GlobalVariables.Language language = GlobalVariables.Language.English)
-    {
-        var data = new Dictionary<int, PokedexTranslation>();
-
-        string fileLanguage = "en_us";
-        switch (language)
-        {
-            case GlobalVariables.Language.English:
-                fileLanguage = "en-us";
-                break; 
-        }
-        System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-        string file = Application.dataPath + "/Resources/Database/PokemonTranslations/Pokemon_" + fileLanguage + ".xml";
-        FileStream fs = new FileStream(file, FileMode.Open);
-        xmlDoc.Load(fs);
-
-        if (xmlDoc.HasChildNodes)
-        {
-            foreach (System.Xml.XmlNode node in xmlDoc.GetElementsByTagName("Pokemon"))
-            { 
-                var translation = new PokedexTranslation();
-                translation.Name = node.Attributes["name"].Value;
-                translation.Species = node.Attributes["genus"].Value;
-                translation.PokedexEntry = node.InnerText;
-                data.Add(int.Parse(node.Attributes["id"].Value), translation);
-            }
+            data.Add(pokemonData.ID, pokemonData);   
         }
 
         return data;

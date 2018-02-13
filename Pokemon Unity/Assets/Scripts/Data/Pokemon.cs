@@ -2,8 +2,6 @@
 
 using UnityEngine;
 using System.Collections; 
-//using System.Data.SQLite;
-//using DataEnums;
 
 [System.Serializable]
 public class Pokemon {

@@ -55,10 +55,10 @@ public class SaveData
     /// </para>
     /// <code>playerPokedex[1] == true; means pokemonId #1 has been captured</code>
     /// </summary>
-    /// <remarks>if null, has not been seen or captured</remarks>
-    public bool?[] playerPokedex = new bool?[PokemonDatabase.Pokedex.Count];
-    internal int pokedexCaught = (from caught in SaveData.currentSave.playerPokedex where caught == true select caught).Count();
-    internal int pokedexSeen = (from seen in SaveData.currentSave.playerPokedex where seen != null select seen).Count();
+    /// <remarks>if null, has not been seen or captured</remarks> 
+    public bool?[] playerPokedex = new bool?[PokemonDatabase.Pokedex.Count]; 
+    public int pokedexCaught = (from caught in SaveData.currentSave.playerPokedex where caught == true select caught).Count();
+    public int pokedexSeen = (from seen in SaveData.currentSave.playerPokedex where seen != null select seen).Count(); 
 
     public System.TimeSpan playerTime;
     public int playerHours;

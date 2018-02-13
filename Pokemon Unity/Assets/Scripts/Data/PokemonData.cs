@@ -482,7 +482,7 @@ public class PokemonData {
 		this.evolutionID = evolutionID;
 		this.evolutionRequirements = evolutionRequirements;
 	}
-
+ 
 	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
 						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
 						float height, float weight, int baseExpYield, int levelingRate,
@@ -512,8 +512,8 @@ public class PokemonData {
             baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
 
 	    return pokeData;
-	}
-
+	} 
+  
     public PokemonData(int Id, int PokeId/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
                         /*float maleRatio,*/ int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
@@ -578,7 +578,7 @@ public class PokemonData {
         this.evolutionID = evolutionID;
         //this.evolutionRequirements = evolutionRequirements;
         //return this.PokemonData();
-    }
+    } 
 
     #region Methods
     public override string ToString(){
