@@ -119,6 +119,8 @@ public class MainMenuHandler : MonoBehaviour
 
             mapNameText.text = SaveLoad.savedGames[selectedFile].mapName;
             mapNameTextShadow.text = mapNameText.text;
+            Debug.Log(PokemonDatabase.LoadPokedex().Length);
+            Debug.Log(SaveLoad.savedGames[selectedFile].pokedexCaught + "/" + SaveLoad.savedGames[selectedFile].pokedexSeen);
             dataText.text = SaveLoad.savedGames[selectedFile].playerName
                             + "\n" + badgeTotal
                             + "\n" + SaveLoad.savedGames[selectedFile].pokedexCaught +"/"+SaveLoad.savedGames[selectedFile].pokedexSeen //Pokedex not yet implemented

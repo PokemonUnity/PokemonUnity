@@ -2,9 +2,9 @@
 
 using UnityEngine;
 using System.Collections;
-using System.Data;
-using System.Data.Common;
-using Mono.Data.Sqlite;
+//using System.Data;
+//using System.Data.Common;
+//using Mono.Data.Sqlite;
 //using System.Data.SQLite;
 //using DataEnums;
 

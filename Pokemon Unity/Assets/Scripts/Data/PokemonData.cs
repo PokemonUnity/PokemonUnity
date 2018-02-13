@@ -479,20 +479,6 @@ public class PokemonData {
 		this.evolutionRequirements = evolutionRequirements;
 	}
 
-	public PokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
-						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
-						float height, float weight, int baseExpYield, int levelingRate,
-						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
-						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
-						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
-	{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-		new PokemonData(Id, PokeId, (PokemonData.Type)type1, type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE, (eAbility.Ability)ability1, (eAbility.Ability)ability2, (eAbility.Ability)hiddenAbility, catchRate,
-            eggGroup1 == null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, eggGroup2 == null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, hatchTime, height, weight, baseExpYield, levelingRate, pokedexColor | PokemonData.PokedexColor.NONE,
-            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
-	}
-
     public PokemonData(int Id, int PokeId/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
                         /*float maleRatio,*/ int catchRate, EggGroup? eggGroup1, EggGroup? eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
@@ -556,6 +542,20 @@ public class PokemonData {
         //this.evolutionRequirements = evolutionRequirements;
         //return this.PokemonData();
     }
+
+	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
+						float height, float weight, int baseExpYield, int levelingRate,
+						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
+						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
+						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
+						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
+	{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+		return new PokemonData(Id, PokeId, (PokemonData.Type)type1, type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE, (eAbility.Ability)ability1, (eAbility.Ability)ability2, (eAbility.Ability)hiddenAbility, catchRate,
+            eggGroup1 == null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, eggGroup2 == null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, hatchTime, height, weight, baseExpYield, levelingRate, pokedexColor | PokemonData.PokedexColor.NONE,
+            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
+	}
 
     #region Methods
     public override string ToString(){
