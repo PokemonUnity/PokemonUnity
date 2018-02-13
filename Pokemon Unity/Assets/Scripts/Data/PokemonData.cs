@@ -455,7 +455,7 @@ public class PokemonData {
 		this.pokedexColor = pokedexColor;
 		this.baseFriendship = baseFriendship;
 
-		this.Species = species;
+		//this.Species = species;
 		this.pokedexEntry = pokedexEntry;
 
 		this.baseStatsHP = baseStatsHP;
@@ -503,7 +503,7 @@ public class PokemonData {
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
         this.ID = Id;
-        this.name = PokemonDatabase.LoadPokedexEntry(SaveData.currentSave.playerLanguage)[Id, 0];//name;
+        this.Name = PokemonDatabase.LoadPokedexEntry(SaveData.currentSave.playerLanguage)[Id, 0];//name;
         this.type1 = (PokemonData.Type)type1;
         this.type2 = type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
         this.ability1Id = (eAbility.Ability)ability1;
