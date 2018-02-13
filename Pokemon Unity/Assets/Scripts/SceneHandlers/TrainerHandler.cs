@@ -331,7 +331,7 @@ public class TrainerHandler : MonoBehaviour
             timeMinute.text = "0" + timeMinute.text;
         }*/
         timeMinuteShadow.text = timeMinute.text;
-        adventureData.text = SaveData.currentSave.fileCreationDate.ToString("MMM d, yyyy");
+        adventureData.text = SaveData.currentSave.fileCreationDate.Value.ToString("MMM d, yyyy");
         adventureDataShadow.text = adventureData.text;
 
         for (int i = 0; i < 12; i++)

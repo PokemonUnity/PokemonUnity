@@ -121,7 +121,7 @@ public class MainMenuHandler : MonoBehaviour
             mapNameTextShadow.text = mapNameText.text;
             dataText.text = SaveLoad.savedGames[selectedFile].playerName
                             + "\n" + badgeTotal
-                            + "\n" + "0" //Pokedex not yet implemented
+                            + "\n" + SaveLoad.savedGames[selectedFile].pokedexCaught +"/"+SaveLoad.savedGames[selectedFile].pokedexSeen //Pokedex not yet implemented
                             + "\n" + playerTime;
             dataTextShadow.text = dataText.text;
 
