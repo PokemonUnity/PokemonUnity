@@ -42,17 +42,13 @@ public class GlobalVariables : MonoBehaviour
     //Important gameplay data
     public bool respawning = false;
 
-    void CheckSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode) {
-        Debug.Log(scene.name + " : " + mode.ToString());
-    }
-
-    private void OnDestroy()
+    void OnDestroy()
     {
-        SceneManager.sceneLoaded -= CheckSceneLoaded;
+        SceneManager.sceneLoaded -= CheckLevelLoaded;
     }
     void Awake()
     {
-        SceneManager.sceneLoaded += CheckSceneLoaded;
+        SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
@@ -130,7 +126,7 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", SaveData.currentSave.playerName, 0));
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball",
-            "", "Gold",
+            "", SaveData.currentSave.playerName,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));
 
@@ -168,7 +164,7 @@ public class GlobalVariables : MonoBehaviour
 
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
-            "Gold",
+            SaveData.currentSave.playerName,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
 
@@ -254,8 +250,9 @@ public class GlobalVariables : MonoBehaviour
     /// Replace with 
     /// void CheckLevelLoaded(Scene scene, LoadSceneMode mode)
     /// </remarks>
-    void OnLevelWasLoaded()
+    void CheckLevelLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
+        Debug.Log(scene.name + " : " + mode.ToString());
         if (SceneManager.GetActiveScene().name != "startup")
         {
             if (global == this)
