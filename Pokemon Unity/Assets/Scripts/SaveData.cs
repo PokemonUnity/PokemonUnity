@@ -17,13 +17,16 @@ public class SaveData
     public string levelName;
     public SeriV3 playerPosition;
     public int playerDirection;
+    public GlobalVariables.Language playerLanguage;
 
 
     //Important player data
     public string playerName;
     public bool isMale;
     public int playerID;
-    public string fileCreationDate;
+    public System.DateTime? fileCreationDate;
+    public System.DateTime? lastSave;
+    public System.DateTime startTime = new System.DateTime();
 
     public string mapName;
 
@@ -38,13 +41,18 @@ public class SaveData
     public int playerScore;
     public int playerMoney;
 
+    public System.TimeSpan playerTime;
     public int playerHours;
     public int playerMinutes;
     public int playerSeconds;
 
     public bool[] gymsEncountered = new bool[12];
+    /// <summary>
+    /// if <see cref="gymsBeatTime"/> is null, then value is false.
+    /// </summary>
+    /// <remarks>This isnt needed...</remarks>
     public bool[] gymsBeaten = new bool[12];
-    public string[] gymsBeatTime = new string[12];
+    public System.DateTime?[] gymsBeatTime = new System.DateTime?[12];
 
 
     //Important gameplay data
