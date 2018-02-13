@@ -35,9 +35,8 @@ public class PokemonData {
 	/// are all part of the same species.
 	/// </example>
 	/// <remarks>Should be an int, not a string</remarks>
-	internal string Species;
-	private int species; //Should fix above, and remove this...
-	internal string pokedexEntry; //not needed, make into a method that calls from xml text
+	private string Species;
+	private string pokedexEntry; //not needed, make into a method that calls from xml text
 	/// <summary>
 	/// Name of the specific pokemon+form
 	/// for given Id in database
@@ -49,7 +48,7 @@ public class PokemonData {
 	/// Deoxys pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
-	internal string Name;
+	private string Name;
 	//private int Form; //Not sure if this is needed here
 	//public enum Ability : int? { } //made a class, dont think i need this or below
 	//public System.Collections.Generic.Dictionary<int?, string> Ability = new System.Collections.Generic.Dictionary<int?, string>(); //{ };
@@ -220,7 +219,14 @@ public class PokemonData {
 	private int baseExpYield;
 	private LevelingRate levelingRate;
 
-	private PokedexColor pokedexColor;
+    private int evYieldHP;
+    private int evYieldATK;
+    private int evYieldDEF;
+    private int evYieldSPA;
+    private int evYieldSPD;
+    private int evYieldSPE;
+
+    private PokedexColor pokedexColor;
     /// <summary>
     /// Friendship levels is the same as pokemon Happiness.
     /// </summary>
@@ -240,13 +246,19 @@ public class PokemonData {
 	/// [item id,% chance]
 	/// </summary>
 	/// <example>int[,] heldItems = { {1,2,3},{4,5,6} }
-	/// <para>int 4 = heldItems[1,0]</para>
+	/// <para>heldItems[1,0] == 4 as int</para>
 	/// </example>
 	/// <remarks>Or maybe...[item id,% chance,generationId/regionId]</remarks>
 	private int[,] heldItem;
 	//private System.Collections.Generic.Dictionary<int, float> heldItem = new System.Collections.Generic.Dictionary<int, float>();
 
 	private int[] movesetLevels;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// This should be an enum...
+    /// </remarks>
 	private string[] movesetMoves;
 
 	private string[] tmList;
@@ -325,17 +337,16 @@ public class PokemonData {
 	/// </item>
 	///	<item>
 	///	<term>Hitmontop</term>
-	///  <description>if pokemon's ATK is equal to DEF</description>
+	/// <description>if pokemon's ATK is equal to DEF</description>
 	/// </item>
 	///	<item>
 	///	<term>Silcoon</term>
-	///  if pokemon's shinyValue divided by 2's remainder is equal to 0</description>
+	/// <description>if pokemon's shinyValue divided by 2's remainder is equal to 0</description>
 	/// </item>
 	///	<item>
-	///Cascoon
-	///	if pokemon's shinyValue divided by 2's remainder is equal to 1</description>
+	///	<term>Cascoon</term>
+	///	<description>if pokemon's shinyValue divided by 2's remainder is equal to 1</description>
 	/// </item>
-	///	<item>
 	/// </list>
 	/// </summary>
 	private string[] evolutionRequirements;
@@ -444,7 +455,7 @@ public class PokemonData {
 		this.pokedexColor = pokedexColor;
 		this.baseFriendship = baseFriendship;
 
-		this.species = species;
+		this.Species = species;
 		this.pokedexEntry = pokedexEntry;
 
 		this.baseStatsHP = baseStatsHP;
@@ -492,7 +503,7 @@ public class PokemonData {
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
         this.ID = Id;
-        //this.name = name;
+        this.name = PokemonDatabase.LoadPokedexEntry(SaveData.currentSave.playerLanguage)[Id, 0];//name;
         this.type1 = (PokemonData.Type)type1;
         this.type2 = type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
         this.ability1Id = (eAbility.Ability)ability1;
@@ -510,11 +521,19 @@ public class PokemonData {
         this.baseExpYield = baseExpYield;
         this.levelingRate = (LevelingRate)levelingRate; //== null ? (PokemonData.LevelingRate)levelingRate : PokemonData.LevelingRate.NONE;
 
-        this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
-        //this.baseFriendship = baseFriendship;
+        /* Not sure what kind of value goes here...
+        this.evYieldHP = evYieldHP;
+		this.evYieldATK = evYieldATK;
+		this.evYieldDEF = evYieldDEF;
+		this.evYieldSPA = evYieldSPA;
+		this.evYieldSPD = evYieldSPD;
+		this.evYieldSPE = evYieldSPE;*/
 
-        //this.species = species;
-        this.pokedexEntry = pokedexEntry;//SaveData.currentSave.playerLanguage
+        this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
+        //this.baseFriendship = baseFriendship; //forgot to implement when transfering database
+
+        this.Species = PokemonDatabase.LoadPokedexEntry(SaveData.currentSave.playerLanguage)[Id,1];//species;
+        this.pokedexEntry = PokemonDatabase.LoadPokedexEntry(SaveData.currentSave.playerLanguage)[Id,2];//pokedexEntry;
 
         this.baseStatsHP = baseStatsHP;
         this.baseStatsATK = baseStatsATK;

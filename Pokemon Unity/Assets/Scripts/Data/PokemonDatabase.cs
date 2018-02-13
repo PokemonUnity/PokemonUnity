@@ -2592,41 +2592,53 @@ new PokemonData(10089,373,null,16,3,184,null,null,null,null,null,null,18f,1126f,
 new PokemonData(10090,15,null,7,4,91,null,null,null,null,null,null,14f,405f,223,null,null,null,null,65,150,40,15,80,145,0f,new int[]{1,10,13,16,19,22,25,28,31,34,37,40,45},new int[]{31,31,116,41,99,228,390,42,97,372,398,283,565},new int[]{14,15,63,76,92,104,148,156,164,168,182,188,206,207,213,214,216,218,237,241,249,263,280,290,332,355,369,371,398,404,416,474,496,512,522,590,611},null,null,null)*/
 	};
 
-	private static PokemonData[] SetPokedexEntry(int language = 9) {
-		PokemonData[] Loadpokedex = pokedex;//PreloadPokedex;
+	public static string[,] LoadPokedexEntry(GlobalVariables.Language language = GlobalVariables.Language.English) {
+        //PokemonData[] Loadpokedex = pokedex;//PreloadPokedex;
+        string[,] Loadpokedex = new string[pokedex.Length,3];
+        string fileLanguage;
+        switch (language)
+        {
+            case GlobalVariables.Language.English:
+                fileLanguage = "_en-us";
+                break;
+            default:
+                fileLanguage = "_en-us";
+                break;
+        }
 		System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-		FileStream fs = new FileStream(Application.dataPath + "/Resources/Databases/Data.xml", FileMode.Open);
+		FileStream fs = new FileStream(Application.dataPath + "/Resources/Databases/Pokemon/Pokemon"+fileLanguage+".xml", FileMode.Open);
 		xmlDoc.Load(fs); // load the file.
 		//System.Xml.XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
 		for (int i = 0; i < Loadpokedex.Length; i++) {
 
 			foreach (System.Xml.XmlNode pokemon in xmlDoc.GetElementsByTagName("Pokemon")) // levels items nodes.
 			{
-				if (pokemon.Attributes["language"].Value == language.ToString())//(levelsItems.Name == "Pokemon")
+				if (pokemon.Attributes["language"].Value == ((int)language).ToString())//(levelsItems.Name == "Pokemon")
 				{
 					//pokedex[i]
 					//pokedex[i].getID == int.Parse(pokemon.Attributes["id"].Value)
-					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value)].Species = pokemon.Attributes["name"].Value;
-					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value)].pokedexEntry = pokemon.InnerText;
+					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value),0] = pokemon.Attributes["name"].Value; 
+					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value),1] = pokemon.Attributes["genus"].Value;//Species
+					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value),2] = pokemon.InnerText;//pokedexEntry
 					//obj.Add("name", levelsItems.InnerText); // put this in the dictionary.
 				}
 			}
 
-			foreach (System.Xml.XmlNode levelInfo in xmlDoc.GetElementsByTagName("Species"))
+			/*foreach (System.Xml.XmlNode levelInfo in xmlDoc.GetElementsByTagName("Species"))
 			{
 				System.Xml.XmlNodeList levelcontent = levelInfo.ChildNodes;
 				//obj = new Dictionary<string, string>(); // Create a object(Dictionary) to colect the both nodes inside the level node and then put into levels[] array.
 
 				foreach (System.Xml.XmlNode levelsItems in levelcontent) // levels items nodes.
 				{
-					if (levelsItems.Attributes["language"].Value == language.ToString())//(levelsItems.Name == "Pokemon")
+					if (levelsItems.Attributes["language"].Value == ((int)language).ToString())//(levelsItems.Name == "Pokemon")
 					{
 						//pokedex[i]
 						Loadpokedex[int.Parse(levelsItems.Attributes["id"].Value)].Species = levelsItems.Attributes["name"].Value;
 						Loadpokedex[int.Parse(levelsItems.Attributes["id"].Value)].pokedexEntry = levelsItems.InnerText;
 					}
 				}
-			}
+			}*/
 		}
 
 		fs.Close();
