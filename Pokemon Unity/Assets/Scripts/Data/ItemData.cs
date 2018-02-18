@@ -6,21 +6,28 @@ using System.Collections;
 public class ItemData
 {
     private string name;
+    private string description;
 
     public enum ItemPockets
     {
         MISC = 1,
         MEDICINE = 2,
         POKEBALL = 3,
-        MACHINE = 4, //TMs
+        /// <summary>
+        /// TMs
+        /// </summary>
+        MACHINE = 4, 
         BERRY = 5,
         MAIL = 6,
         BATTLE = 7,
+        /// <summary>
+        /// Items that are not 'stackable' and therefore should take up 1 individual item spot per (if multiples)
+        /// Or possibly limit and restrict to one per user
+        /// </summary>
         KEY = 8
     }
 
     /// <summary>
-    /// 
     /// </summary>
     public enum ItemFlags
     {
@@ -190,25 +197,32 @@ public class ItemData
         STATBOOST,
         TM
     }
+    
+    /// <summary>
+    /// Use <see cref="ItemCategory.ALL_MACHINES"/> or <see cref="ItemPockets.MACHINE"/> and make a "GetTMnum()"
+    /// </summary>
+    private int tmNo;
+    private string stringParameter;
+    private float floatParameter;
+    private BattleType battleType;
+    private ItemEffect itemEffect;
 #endregion
 
     private ItemType itemType;
-    private BattleType battleType;
-    private string description;
     private int price;
 
-    private int tmNo;
 
-    private ItemEffect itemEffect;
-    private string stringParameter;
-    private float floatParameter;
-
-    private int itemId;
+    /// <summary>
+    /// Deprecated; Use <see cref="itemId"/>
+    /// </summary>
+    private int itemIdInt;
+    private eItems.Item itemId;
     private ItemFlags[] itemFlags;
     private ItemCategory itemCategory;
-    //private ItemPockets itemPocket;
+    private ItemPockets itemPocket;
+    private ItemFlingEffect itemFlingEffect;
 
-    public ItemData(int itemId, ItemCategory itemType, /*BattleType battleType, string description,*/ int price, int? flingPower,
+    public ItemData(eItems.Item itemId, ItemCategory itemCategory, /*BattleType battleType, string description,*/ int price, int? flingPower,
         ItemFlingEffect? itemEffect, /*string stringParameter, float floatParameter,*/ ItemFlags[] flags = null)
     {
         //this.name = name;
@@ -221,11 +235,11 @@ public class ItemData
         //this.floatParameter = floatParameter;
     }
 
-    public ItemData(int itemId, int itemType, /*BattleType battleType, string description,*/ int price, int? flingPower,
+    public ItemData(int itemId, int itemCategory, /*BattleType battleType, string description,*/ int price, int? flingPower,
         int? itemEffect, /*string stringParameter, float floatParameter,*/ int[] flags = null)
     {
         //return 
-        new ItemData(itemId, (ItemCategory)itemType, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item));
+        new ItemData((eItems.Item)itemId, (ItemCategory)itemType, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item));
     }
 
     #region oldItemData-to be removed...
@@ -342,6 +356,89 @@ public class ItemData
     public ItemEffect getItemEffect()
     {
         return itemEffect;
+    }
+
+    public ItemCategory getItemCategory()
+    {
+        return itemCategory;
+    }
+
+    public ItemFlags[] getItemFlags()
+    {
+        return itemFlags;
+    }
+
+    public eItems.Item getItemId()
+    {
+        return itemId;
+    }
+
+    public ItemPockets getItemPocket()
+    {
+        return itemPocket;
+    }
+
+    public ItemPockets? getItemPocket(ItemCategory item)
+    {
+        ItemPockets? itemPocket;
+        switch (item)
+        {//([\w]*) = [\d]*, //PocketId = ([\d]*)
+            case ItemCategory.COLLECTIBLES: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.EVOLUTION: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.SPELUNKING: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.HELD_ITEMS: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.CHOICE: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.EFFORT_TRAINING: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.BAD_HELD_ITEMS: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.TRAINING: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.PLATES: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.SPECIES_SPECIFIC: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.TYPE_ENHANCEMENT: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.LOOT: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.MULCH: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.DEX_COMPLETION: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.SCARVES: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.JEWELS: itemPocket = (ItemPockets)1; break;
+		    case ItemCategory.MEGA_STONES: itemPocket = (ItemPockets)1; break;
+
+		    case ItemCategory.VITAMINS: itemPocket = (ItemPockets)2; break;
+		    case ItemCategory.HEALING: itemPocket = (ItemPockets)2; break;
+		    case ItemCategory.PP_RECOVERY: itemPocket = (ItemPockets)2; break;
+		    case ItemCategory.REVIVAL: itemPocket = (ItemPockets)2; break;
+		    case ItemCategory.STATUS_CURES: itemPocket = (ItemPockets)2; break;
+
+		    case ItemCategory.SPECIAL_BALLS: itemPocket = (ItemPockets)3; break;
+		    case ItemCategory.STANDARD_BALLS: itemPocket = (ItemPockets)3; break;
+		    case ItemCategory.APRICORN_BALLS: itemPocket = (ItemPockets)3; break;
+
+		    case ItemCategory.ALL_MACHINES: itemPocket = (ItemPockets)4; break;
+
+		    case ItemCategory.EFFORT_DROP: itemPocket = (ItemPockets)5; break;
+		    case ItemCategory.MEDICINE: itemPocket = (ItemPockets)5; break;
+		    case ItemCategory.OTHER: itemPocket = (ItemPockets)5; break;
+		    case ItemCategory.IN_A_PINCH: itemPocket = (ItemPockets)5; break;
+		    case ItemCategory.PICKY_HEALING: itemPocket = (ItemPockets)5; break;
+		    case ItemCategory.TYPE_PROTECTION: itemPocket = (ItemPockets)5; break;
+		    case ItemCategory.BAKING_ONLY: itemPocket = (ItemPockets)5; break;
+
+		    case ItemCategory.ALL_MAIL: itemPocket = (ItemPockets)6; break;
+
+		    case ItemCategory.STAT_BOOSTS: itemPocket = (ItemPockets)7; break;
+		    case ItemCategory.FLUTES: itemPocket = (ItemPockets)7; break;
+		    case ItemCategory.MIRACLE_SHOOTER: itemPocket = (ItemPockets)7; break;
+
+		    case ItemCategory.EVENT_ITEMS: itemPocket = (ItemPockets)8; break;
+		    case ItemCategory.GAMEPLAY: itemPocket = (ItemPockets)8; break;
+		    case ItemCategory.PLOT_ADVANCEMENT: itemPocket = (ItemPockets)8; break;
+		    case ItemCategory.UNUSED: itemPocket = (ItemPockets)8; break;
+		    case ItemCategory.APRICORN_BOX: itemPocket = (ItemPockets)8; break;
+		    case ItemCategory.DATA_CARDS: itemPocket = (ItemPockets)8; break;
+		    case ItemCategory.XY_UNKNOWN: itemPocket = (ItemPockets)8; break;
+            default:
+                itemPocket = null;
+                break;
+        }
+        return itemPocket;
     }
 
     public string getStringParameter()

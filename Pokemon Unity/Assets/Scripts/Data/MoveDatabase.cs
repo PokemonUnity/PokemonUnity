@@ -10,6 +10,7 @@ public static class MoveDatabase
 
     private static MoveData[] moves = new MoveData[]
     {
+        //null,
         new MoveData("Absorb", PokemonData.Type.GRASS, MoveData.Category.SPECIAL, 20, 1f, 25, MoveData.Target.ADJACENT,
             0, false, true, false, false, new MoveData.Effect[] {MoveData.Effect.HPDrain}, new float[] {1},
             MoveData.Contest.CLEVER, 4, 0, ""),

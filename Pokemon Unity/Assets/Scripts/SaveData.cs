@@ -24,7 +24,13 @@ public class SaveData
     //Important player data
     public string playerName;
     public bool isMale;
+    /// <summary>
+    /// IDfinal = IDtrainer + IDsecret × 65536
+    /// </summary>
+    /// <remarks>only the last six digits are used so the Trainer Card will display an ID No.</remarks>
     public int playerID;
+    int TrainerID;
+    int SecretID;
     public System.DateTime? fileCreationDate;
     public System.DateTime? lastSave;
     public System.DateTime startTime = new System.DateTime();
@@ -39,7 +45,7 @@ public class SaveData
 
     public string playerOutfit;
 
-    public int playerScore;
+    public string playerScore;
     public int playerMoney;
     /// <summary>
     /// Usage:<para>

@@ -947,6 +947,20 @@ new ItemData(749, 37, 0, null, null, null    )
         return null;
     }
 
+    /// <summary>
+    /// Fetches the <seealso cref="ItemData"/> from Database Array
+    /// </summary>
+    /// <param name="index">ItemId is Index value in array</param>
+    /// <returns></returns>
+    public static ItemData getItem(eItems.Item index)
+    {
+        /*if (index < items.Length)
+        {
+            return items[index];
+        }*/
+        return items[(int)index];
+    }
+
     public static ItemData getItem(string name)
     {
         for (int i = 0; i < items.Length; i++)
@@ -959,11 +973,40 @@ new ItemData(749, 37, 0, null, null, null    )
         return null;
     }
 
+    /// <summary>
+    /// deprecated
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static int getIndexOf(string name)
     {
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].getName() == name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(ItemData name)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(eItems.Item name)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].getItemId() == name)
             {
                 return i;
             }

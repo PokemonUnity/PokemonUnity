@@ -89,8 +89,11 @@ public class Pokemon {
 	private int friendship; //This isnt the samething as happiness, right?
 
 	private bool pokerus;
-	private int rareValue;
 	private bool isShiny;
+    /// <summary>
+    /// </summary>
+    /// <remarks>what is this and why do we need it?</remarks>
+	private int rareValue;
 
 	private Status status;
 	private int sleepTurns;
@@ -119,26 +122,28 @@ public class Pokemon {
 	/// The met date.
 	/// <returns>DateTimeOffset</returns>
 	/// </summary>
+    /// <remarks>this should be a <see cref="System.DateTimeOffset.UtcDateTime"/></remarks>
 	private string metDate;
 	/// <summary>
 	/// This value should be the unity map value.
 	/// The database will convert unity value into string name
 	/// </summary>
+    /// <remarks>Maybe an {int mapId, int x, int y, int z}?</remarks>
 	private string metMap;
 	private int metLevel;
 
 	/// <summary>
-	/// if OriginalTrainer = null, pokemon may be caught.
+	/// if OriginalTrainer = null, pokemon can be caught.
 	/// </summary>
-	/// <remarks>Why? That's such a weird rule...</remarks>
+	/// <remarks>this should be a <see cref="System.Guid"/>, int, or hash (for multiplayer)</remarks>
 	private string OT;
 	/// <summary>
 	/// Pokemon Serial number
-	/// <para>only last 6 digits are visible; unsigned 16bit int</para>
-	/// <value>last6(finalId) = trainerid+secretId*65536</value>
+	/// <para>only last 6 digits are visible; string value incorporates leading 0s</para>
+	/// <value>(last6 of) finalId = trainerid+secretId*65536</value>
 	/// </summary>
 	/// <remarks>Missing other values, like secretId</remarks>
-	private int IDno;
+	private string IDno;
 
 	private int IV_HP;
 	private int IV_ATK;
@@ -159,6 +164,7 @@ public class Pokemon {
 	/// </summary>
 	/// <remarks>Should be an enum</remarks>
 	private string natureString;
+	private NatureDatabase.Nature nature;
 		
 	private int currentHP;
 	private int HP; //is this the same as the maxHP.value?
@@ -169,22 +175,62 @@ public class Pokemon {
 	private int SPE;
 
 	/// <summary>
-	/// The ability.
+	/// Pokemon abilities 1 and 2 are visible in pokemon's Summary card
+    /// the 3rd is hidden but still remains active.
+    /// Multiples of same abilities count as 1. 
+    /// (Shouldnt contain multiples of same abilities)
 	/// </summary>
 	///	<remarks>
 	/// Should be [int? a1,int? a2,int? a3]
+    /// <code>int?[] ability = new int?[3]</code>
 	/// </remarks> 
 	private int ability;	//(0/1/2(hiddenability)) if higher than number of abilites, rounds down to nearest ability.
 							// if is 2, but pokemon only has 1 ability and no hidden, will use the one ability it does have.
 
-	private string[] moveset;
-	private string [] moveHistory;
+    /// <summary>
+    /// deprecated
+    /// </summary>
+    /// <remarks>This should also be an enum...</remarks>
+	private string[] movesetString;
+    ///	<remarks>
+    /// Should be [eMoves.Move? m1,eMoves.Move? m2,eMoves.Move? m3,eMoves.Move? m4]
+    /// <code>eMoves.Move?[] moveset = new eMoves.Move?[4]</code>
+    /// </remarks> 
+    private eMoves.Move?[] moveset;
+	private string [] moveHistoryString;
+	private eMoves.Move[] moveHistory;
 	private int[] PPups;
 	private int[] maxPP;
 	private int[] PP;
 
 
-	//New Pokemon with: every specific detail
+    /// <summary>
+	/// New Pokemon with: every specific detail
+    /// </summary>
+    /// <param name="pokemonID"></param>
+    /// <param name="nickname"></param>
+    /// <param name="gender"></param>
+    /// <param name="level"></param>
+    /// <param name="isShiny"></param>
+    /// <param name="caughtBall"></param>
+    /// <param name="heldItem"></param>
+    /// <param name="OT"></param>
+    /// <param name="IV_HP"></param>
+    /// <param name="IV_ATK"></param>
+    /// <param name="IV_DEF"></param>
+    /// <param name="IV_SPA"></param>
+    /// <param name="IV_SPD"></param>
+    /// <param name="IV_SPE"></param>
+    /// <param name="EV_HP"></param>
+    /// <param name="EV_ATK"></param>
+    /// <param name="EV_DEF"></param>
+    /// <param name="EV_SPA"></param>
+    /// <param name="EV_SPD"></param>
+    /// <param name="EV_SPE"></param>
+    /// <param name="nature"></param>
+    /// <param name="ability"></param>
+    /// <param name="moveset"></param>
+    /// <param name="PPups"></param>
 	public Pokemon(int pokemonID, string nickname, Gender gender, int level, 
 	               bool isShiny, string caughtBall, string heldItem, string OT,
 	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
@@ -228,12 +274,12 @@ public class Pokemon {
 		this.caughtBallString = caughtBall;
 		//this.heldItem = heldItem;
 
-		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
+		this.OT = string.IsNullOrEmpty(OT)? SaveData.currentSave.playerName : OT;
 		if (this.OT != SaveData.currentSave.playerName){
-			this.IDno = Random.Range (0,65536); //if owned by another trainer, assign a random number. 
+			this.IDno = Random.Range (0,65536).ToString().PadLeft(6,'0'); //if owned by another trainer, assign a random number. 
 		}										//this way if they trade it to you, it will have a different number to the player's.
 		else{
-			this.IDno = SaveData.currentSave.playerID;
+			this.IDno = SaveData.currentSave.playerID.ToString().Substring(SaveData.currentSave.playerID.ToString().Length-6,6);
 		}
 
 		this.metLevel = level;
@@ -269,8 +315,108 @@ public class Pokemon {
 		this.currentHP = HP;
 		this.ability = ability;
 
-		this.moveset = moveset;
-		this.moveHistory = moveset;
+		this.movesetString = moveset;
+		this.moveHistoryString = moveset;
+
+		this.PPups = PPups;
+		//set maxPP and PP to be the regular PP defined by the move in the database.
+		this.maxPP = new int[4];
+		this.PP = new int[4];
+		for(int i = 0; i < 4; i++){
+			if(!string.IsNullOrEmpty(moveset[i])){
+				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP()*((this.PPups[i]*0.2f)+1));
+				this.PP[i] = this.maxPP[i];
+			}
+		}
+		packMoveset();
+
+	}
+	public Pokemon(int pokemonID, string nickname, Gender gender, int level, 
+	               bool isShiny, eItems.Item caughtBall, eItems.Item heldItem, string OT,
+	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
+	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
+	               NatureDatabase.Nature nature, int ability, string[] moveset, int[] PPups){
+		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+
+		this.pokemonID = pokemonID;
+		this.nickname = nickname;
+		//SET UP FORMS LATER #####################################################################################
+		this.form = 0;
+		this.gender = gender;
+		//if gender is CALCULATE, then calculate gender using maleRatio
+		if(gender == Gender.CALCULATE){
+			if(thisPokemonData.getMaleRatio() < 0){
+				this.gender = Gender.NONE;}
+			else if(Random.Range(0f,100f) <= thisPokemonData.getMaleRatio()){
+				this.gender = Gender.MALE;}
+			else{
+				this.gender = Gender.FEMALE;}
+		}
+		this.level = level;
+		//Find exp for current level, and next level.
+		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
+		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
+		this.friendship = thisPokemonData.getBaseFriendship();
+
+		this.isShiny = isShiny;
+		if(isShiny){
+			this.rareValue = Random.Range(0,16);
+		}
+		else{
+			this.rareValue = Random.Range(16,65536);
+			if(this.rareValue < 19){
+				this.pokerus = true;
+			}
+		}
+	
+		this.status = Status.NONE;
+		this.sleepTurns = 0;
+		this.caughtBall = caughtBall;
+		this.heldItem = heldItem;
+
+		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
+		if (this.OT != SaveData.currentSave.playerName){
+			this.IDno = Random.Range (0,65536); //if owned by another trainer, assign a random number. 
+		}										//this way if they trade it to you, it will have a different number to the player's.
+		else{
+			this.IDno = SaveData.currentSave.playerID;
+		}
+
+		this.metLevel = level;
+		if(PlayerMovement.player != null){
+			if(PlayerMovement.player.accessedMapSettings != null){
+				this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
+			else{
+				this.metMap = "Somewhere";}
+		}
+		else{
+			this.metMap = "Somewhere";}
+		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
+
+		//Set IVs 
+		this.IV_HP = IV_HP; 
+		this.IV_ATK = IV_ATK; 
+		this.IV_DEF = IV_DEF; 
+		this.IV_SPA = IV_SPA; 
+		this.IV_SPD = IV_SPD; 
+		this.IV_SPE = IV_SPE;
+		//set EVs
+		this.EV_HP = EV_HP;
+		this.EV_ATK = EV_ATK;
+		this.EV_DEF = EV_DEF;
+		this.EV_SPA = EV_SPA;
+		this.EV_SPD = EV_SPD;
+		this.EV_SPE = EV_SPE;
+		//set nature
+		this.nature = nature;
+		//calculate stats
+		this.calculateStats();
+		//set currentHP to HP, as a new pokemon will be undamaged.
+		this.currentHP = HP;
+		this.ability = ability;
+
+		this.movesetString = moveset;
+		this.moveHistoryString = moveset;
 
 		this.PPups = PPups;
 		//set maxPP and PP to be the regular PP defined by the move in the database.
@@ -385,16 +531,16 @@ public class Pokemon {
 		}
 
 		//Set moveset based off of the highest level moves possible.
-		this.moveset = thisPokemonData.GenerateMoveset(this.level);
-		this.moveHistory = this.moveset;
+		this.movesetString = thisPokemonData.GenerateMoveset(this.level);
+		this.moveHistoryString = this.movesetString;
 
 		//set maxPP and PP to be the regular PP defined by the move in the database.
 		this.PPups = new int[4];
 		this.maxPP = new int[4];
 		this.PP = new int[4];
 		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(this.moveset[i])){
-				this.maxPP[i] = MoveDatabase.getMove(this.moveset[i]).getPP();
+			if(!string.IsNullOrEmpty(this.movesetString[i])){
+				this.maxPP[i] = MoveDatabase.getMove(this.movesetString[i]).getPP();
 				this.PP[i] = this.maxPP[i];
 			}
 		}
@@ -459,16 +605,16 @@ public class Pokemon {
 
 		this.ability = pokemon.ability;
 		
-		this.moveset = pokemon.moveset;
-		this.moveHistory = pokemon.moveHistory;
+		this.movesetString = pokemon.movesetString;
+		this.moveHistoryString = pokemon.moveHistoryString;
 		
 		this.PPups = pokemon.PPups;
 		//set maxPP and PP to be the regular PP defined by the move in the database.
 		this.maxPP = new int[4];
 		this.PP = new int[4];
 		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
-				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP()*((this.PPups[i]*0.2f)+1));
+			if(!string.IsNullOrEmpty(movesetString[i])){
+				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(movesetString[i]).getPP()*((this.PPups[i]*0.2f)+1));
 				this.PP[i] = this.maxPP[i];
 			}
 		}
@@ -908,8 +1054,8 @@ public class Pokemon {
 				", Nature: "+ natureString +", "+PokemonDatabase.getPokemon(pokemonID).getAbility(ability);
 		result += ", [";
 		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
-				result += moveset[i] +": "+PP[i]+"/"+maxPP[i]+", ";
+			if(!string.IsNullOrEmpty(movesetString[i])){
+				result += movesetString[i] +": "+PP[i]+"/"+maxPP[i]+", ";
 			}
 		}
 		result = result.Remove(result.Length-2,2);
@@ -1012,9 +1158,9 @@ public class Pokemon {
 
 
 	public string getFirstFEInstance(string moveName){
-		for(int i = 0; i < moveset.Length; i++){
-			if(MoveDatabase.getMove(moveset[i]).getFieldEffect() == moveName){
-				return moveset[i];
+		for(int i = 0; i < movesetString.Length; i++){
+			if(MoveDatabase.getMove(movesetString[i]).getFieldEffect() == moveName){
+				return movesetString[i];
 			}
 		}
 		return null;
@@ -1031,9 +1177,8 @@ public class Pokemon {
 	
 	public static string convertLongID(int ID){
 		string result = ID.ToString();
-		while(result.Length < 3){
-			result = "0" + result;}
-		return result;}
+		//while(result.Length < 3){result = "0" + result;}
+		return result.PadLeft(3,'0');}
 
 	//Get the pokemon's nickname, or regular name if it has none.
 	public string getName(){
@@ -1165,9 +1310,9 @@ public class Pokemon {
 
 
 	public int getMoveIndex(string move){
-		for(int i = 0; i < moveset.Length; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
-				if(moveset[i] == move){
+		for(int i = 0; i < movesetString.Length; i++){
+			if(!string.IsNullOrEmpty(movesetString[i])){
+				if(movesetString[i] == move){
 					return i;}
 			}
 		}
@@ -1177,26 +1322,26 @@ public class Pokemon {
 	public string[] getMoveset(){
 		string[] result = new string[4];
 		for(int i = 0; i < 4; i++){
-			result[i] = moveset[i];
+			result[i] = movesetString[i];
 		}
 		return result;}
 
 	public void swapMoves(int target1, int target2){
-		string temp = moveset[target1];
-		this.moveset[target1] = moveset[target2];
-		this.moveset[target2] = temp;
+		string temp = movesetString[target1];
+		this.movesetString[target1] = movesetString[target2];
+		this.movesetString[target2] = temp;
 	}
 
 	private void ResetPP(int index){
 		PPups[index] = 0;
-		maxPP[index] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[index]).getPP()*((PPups[index]*0.2f)+1));
+		maxPP[index] = Mathf.FloorToInt(MoveDatabase.getMove(movesetString[index]).getPP()*((PPups[index]*0.2f)+1));
 		PP[index] = maxPP[index];
 	}
 
 	/// Returns false if no room to add the new move OR move already is learned.
 	public bool addMove(string newMove){
-		if(!HasMove(newMove) && string.IsNullOrEmpty(moveset[3])){
-			moveset[3] = newMove;
+		if(!HasMove(newMove) && string.IsNullOrEmpty(movesetString[3])){
+			movesetString[3] = newMove;
 			ResetPP(3);
 			packMoveset();
 			return true;}
@@ -1205,7 +1350,7 @@ public class Pokemon {
 
 	public void replaceMove(int index, string newMove){
 		if(index >= 0 && index < 4){
-			moveset[index] = newMove;
+			movesetString[index] = newMove;
 			addMoveToHistory(newMove);
 			ResetPP(index);}
 	}
@@ -1213,7 +1358,7 @@ public class Pokemon {
 	/// Returns false if only one move is left in the moveset.
 	public bool forgetMove(int index){
 		if(getMoveCount() > 1){
-			moveset[index] = null;
+			movesetString[index] = null;
 			packMoveset();
 			return true;}
 		return false;
@@ -1222,7 +1367,7 @@ public class Pokemon {
 	public int getMoveCount(){
 		int count = 0;
 		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
+			if(!string.IsNullOrEmpty(movesetString[i])){
 				count += 1;}
 		}
 		return count;
@@ -1236,14 +1381,14 @@ public class Pokemon {
 
 		int i2 = 0; //counter for packed array
 		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){ //if next move in moveset is not null
-				packedMoveset[i2] = moveset[i]; //add to packed moveset
+			if(!string.IsNullOrEmpty(movesetString[i])){ //if next move in moveset is not null
+				packedMoveset[i2] = movesetString[i]; //add to packed moveset
 				packedPP[i2] = PP[i];
 				packedMaxPP[i2] = maxPP[i];
 				packedPPups[i2] = PPups[i];
 				i2 += 1;}				//ready packed moveset's next position
 		}
-		moveset = packedMoveset;
+		movesetString = packedMoveset;
 		PP = packedPP;
 		maxPP = packedMaxPP;
 		PPups = packedPPups;
@@ -1251,26 +1396,26 @@ public class Pokemon {
 
 	private void addMoveToHistory(string move){
 		if(!HasMoveInHistory(move)){
-			string[] newHistory = new string[moveHistory.Length+1];
-			for(int i = 0; i < moveHistory.Length; i++){
-				newHistory[i] = moveHistory[i];}
-			newHistory[moveHistory.Length] = move;
-			moveHistory = newHistory;
+			string[] newHistory = new string[moveHistoryString.Length+1];
+			for(int i = 0; i < moveHistoryString.Length; i++){
+				newHistory[i] = moveHistoryString[i];}
+			newHistory[moveHistoryString.Length] = move;
+			moveHistoryString = newHistory;
 		}
 	}
 
 	public bool HasMove(string move){
 		if(string.IsNullOrEmpty(move)){ return false; }
-		for(int i = 0; i < moveset.Length; i++){
-			if(moveset[i] == move){
+		for(int i = 0; i < movesetString.Length; i++){
+			if(movesetString[i] == move){
 				return true;}
 		}
 		return false;
 	}
 
 	public bool HasMoveInHistory(string move){
-		for(int i = 0; i < moveset.Length; i++){
-			if(moveset[i] == move){
+		for(int i = 0; i < movesetString.Length; i++){
+			if(movesetString[i] == move){
 				return true;}
 		}
 		return false;

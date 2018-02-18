@@ -488,7 +488,7 @@ public class PauseHandler : MonoBehaviour
                         mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
                         dataText.text = SaveData.currentSave.playerName + "\n" +
                                         badgeTotal + "\n" +
-                                        "0" + "\n" + //pokedex not yet implemented
+                                        SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen + "\n" + //pokedex not yet implemented
                                         playerTime;
                         mapNameShadow.text = mapName.text;
                         dataTextShadow.text = dataText.text;

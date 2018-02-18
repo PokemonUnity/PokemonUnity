@@ -218,9 +218,9 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = new System.DateTime(2015, 2, 14); //"Feb. 14th, 2015";
+        SaveData.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerMoney = 2481;
-        SaveData.currentSave.playerScore = 481;
+        SaveData.currentSave.playerScore = SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
 
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;

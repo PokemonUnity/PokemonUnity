@@ -965,4 +965,14 @@ using System.Text;
             /// <summary>The user tells the target a secret, and the target loses its ability to concentrate. This lowers the target’s Sp. Atk stat.</summary>			TM100 = 749,
         }
     }
+	public class eMoves{
+        /// <summary>
+        /// Move ids are connected to XML file.
+        /// </summary>
+        /// <remarks>Can now code with strings or int and
+        /// access the same value.</remarks>
+        public enum Move {
+
+        }
+	}
 //}
