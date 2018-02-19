@@ -3,13 +3,14 @@
 using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class PokemonData {
 	#region Variables
 	/// <summary>
 	/// Id is the database value for specific pokemon+form
 	/// </summary>
 	/// <example>
-	/// Deoxys pokedex# can be 1,
+	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
 	private int ID;
@@ -25,7 +26,7 @@ public class PokemonData {
 	/// </para>
 	/// </summary>
 	/// <example>
-	/// Deoxys pokedex# can be 1,
+	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
 	private int PokedexNumber;
@@ -50,7 +51,7 @@ public class PokemonData {
 	/// </para>
 	/// </summary>
 	/// <example>
-	/// Deoxys pokedex# can be 1,
+	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
 	private string Name;
@@ -361,7 +362,10 @@ public class PokemonData {
 
 	
 
-
+    public PokemonData()
+    {
+        
+    }
 	public PokemonData (int ID, string name, Type type1, Type type2, string ability1, string ability2, string hiddenAbility,
 	                    float maleRatio, int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
 	                    float height, float weight, int baseExpYield, LevelingRate levelingRate,
@@ -485,9 +489,40 @@ public class PokemonData {
 		this.evolutionID = evolutionID;
 		this.evolutionRequirements = evolutionRequirements;
 	}
+ 
+	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
+						float height, float weight, int baseExpYield, int levelingRate,
+						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
+						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
+						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
+						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
+	{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+		var pokeData = new PokemonData(
+            Id, 
+            PokeId,  
+            type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
+            type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
+            ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
+            ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
+            hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE, 
+            catchRate,
+            eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, 
+            eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, 
+            hatchTime, 
+            height, 
+            weight, 
+            baseExpYield, 
+            levelingRate, 
+            pokedexColor | PokemonData.PokedexColor.NONE,
+            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
 
+	    return pokeData;
+	} 
+  
     public PokemonData(int Id, int PokeId/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
-                        /*float maleRatio,*/ int catchRate, EggGroup? eggGroup1, EggGroup? eggGroup2, int hatchTime,
+                        /*float maleRatio,*/ int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         PokedexColor pokedexColor, /*int baseFriendship,* / string species, string pokedexEntry,*/
@@ -495,18 +530,20 @@ public class PokemonData {
                         float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+
+        PokedexTranslation translation = PokemonDatabase.GetPokedexTranslation(Id);
         this.ID = Id;
-        this.Name = PokemonDatabase.LoadPokedexLanguageText(SaveData.currentSave.playerLanguage)[Id, 0];//name;
-        this.type1 = (PokemonData.Type)type1;
-        this.type2 = type2 == null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
+        this.Name = translation.Name;
+        this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
+        this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
         this.ability1Id = (eAbility.Ability)ability1;
         this.ability2Id = (eAbility.Ability)ability2;
         this.hiddenAbilityId = (eAbility.Ability)hiddenAbility;
 
         //this.maleRatio = maleRatio;
         this.catchRate = catchRate;
-        this.eggGroup1 = eggGroup1 == null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE;
-        this.eggGroup2 = eggGroup2 == null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE;
+        this.eggGroup1 = eggGroup1;
+        this.eggGroup2 = eggGroup2;
         this.hatchTime = hatchTime;
 
         this.height = height;
@@ -525,8 +562,8 @@ public class PokemonData {
         this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
         //this.baseFriendship = baseFriendship; //forgot to implement when transfering database
 
-        this.Species = PokemonDatabase.LoadPokedexLanguageText(SaveData.currentSave.playerLanguage)[Id,1];//species;
-        this.pokedexEntry = PokemonDatabase.LoadPokedexLanguageText(SaveData.currentSave.playerLanguage)[Id,2];//pokedexEntry;
+        this.Species = translation.Species;
+        this.pokedexEntry = translation.PokedexEntry;
 
         this.baseStatsHP = baseStatsHP;
         this.baseStatsATK = baseStatsATK;
@@ -548,21 +585,7 @@ public class PokemonData {
         this.evolutionID = evolutionID;
         //this.evolutionRequirements = evolutionRequirements;
         //return this.PokemonData();
-    }
-
-	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
-						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
-						float height, float weight, int baseExpYield, int levelingRate,
-						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
-						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
-						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
-	{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-		return new PokemonData(Id, PokeId, (PokemonData.Type)type1, type2 == type2. ? (PokemonData.Type)type2 : PokemonData.Type.NONE, (eAbility.Ability)ability1, (eAbility.Ability)ability2, (eAbility.Ability)hiddenAbility, catchRate,
-            eggGroup1 == null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, eggGroup2 == null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, hatchTime, height, weight, baseExpYield, levelingRate, pokedexColor | PokemonData.PokedexColor.NONE,
-            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
-	}
+    } 
 
     #region Methods
     public override string ToString(){
