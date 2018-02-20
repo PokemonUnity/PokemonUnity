@@ -8,18 +8,22 @@ public class PokemonData {
 	#region Variables
 	/// <summary>
 	/// Id is the database value for specific pokemon+form
+    /// Different Pokemon forms share the same Pokedex number. 
+    /// Values are loaded from <see cref="ePokemons.Pokemon"/>, where each form is registered to an Id.
 	/// </summary>
 	/// <example>
 	/// Deoxys Pokedex# can be 1,
 	/// but Deoxys-Power id# can be 32
 	/// </example>
+    /// <remarks>If game event/gm wants to "give" player Deoxys-Power form and not Speed form</remarks>
 	private int ID;
     /// <summary>
     /// Different Gens assign different pokedex num
     /// </summary>
     /// <remarks>Think there is 3 pokedex</remarks>
-    private int[] regionalDex;
+    private int[] regionalPokedex;
 	/// <summary>
+    /// Deprecated; use <see cref="regionalPokedex"/>
 	/// Pokedex number is the species identifier number
 	/// <para>Charizard is a Species. 
 	/// But megaCharizard is a Form.
@@ -42,7 +46,9 @@ public class PokemonData {
 	/// </example>
 	/// <remarks>Should be an int, not a string</remarks>
 	private string Species;
-	private string pokedexEntry; //not needed, make into a method that calls from xml text
+    /// <summary>
+    /// </summary>
+	private string pokedexEntry; 
 	/// <summary>
 	/// Name of the specific pokemon+form
 	/// for given Id in database
@@ -121,75 +127,6 @@ public class PokemonData {
         NONE = 0
     };
 
-	/// <summary>
-	/// Couldnt decide if best to use as a Collection or as a Method
-	/// <para>Could work as both...</para>
-	/// <seealso cref="StringToColor"/>
-	/// </summary>
-	/// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
-	private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
-		//http://www.epidemicjohto.com/t882-type-colors-hex-colors
-		//Normal Type: A8A77A
-		//Fire Type:  EE8130
-		//Water Type: 6390F0
-		//Electric Type:  F7D02C
-		//Grass Type: 7AC74C
-		//Ice Type: 96D9D6
-		//Fighting Type:  C22E28
-		//Poison Type: A33EA1
-		//Ground Type: E2BF65
-		//Flying Type: A98FF3
-		//Psychic Type: F95587
-		//Bug Type: A6B91A
-		//Rock Type: B6A136
-		//Ghost Type: 735797
-		//Dragon Type:  6F35FC
-		//Dark Type: 705746
-		//Steel Type:  B7B7CE
-		//Fairy Type: D685AD
-			
-		//http://www.serebiiforums.com/showthread.php?289595-Pokemon-type-color-associations
-		//Normal -white
-		//Fire - red
-		//Water -blue
-		//Electric -yellow
-		//Grass - green
-		//Ice - cyan
-		//Poison -purple
-		//Psychic - magenta
-		//Fighting - dark red
-		//Ground - brown
-		//Rock - gray
-		//Bug - yellow green
-		//Flying - light blue
-		//Dragon - orange
-		//Ghost - light purple
-		//Steel - dark gray
-		//Dark - black
-
-		//{"Black",Color.black },//dark
-		//{"", new Color() },//dark blue -> dark, 
-		{"Blue",Color.blue },//water
-		{"Clear",Color.clear },
-		{"Cyan",Color.cyan },
-		{"Gray",Color.gray },//grAy-American
-		//{"Grey",Color.grey },//grEy-European
-		//{"Grey",Color.grey },//dark grey -> rock,
-		{"Green",Color.green },//grass
-		//{"", new Color() },//dark green -> bug,
-		{"Magenta",Color.magenta },//magenta, purple -> poison
-		{"Red",Color.red },//orange, dark red -> fire
-		{"White",Color.white },//normals
-		{"Yellow",Color.yellow },//electric
-		{"Purple", new Color() },//ghost
-		{"Brown", new Color() },//fighting
-		{"Pink", new Color() }//,//fairy
-		//{"", new Color() },//pink, lavender -> psychic, 
-		//{"", new Color() },//ocre, brown -> ground
-		//{"", new Color() },
-		//{"", new Color() },
-		//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
-	};
 	private Type type1;
 	private Type type2;
 		private eAbility.Ability? ability1Id;
@@ -489,39 +426,8 @@ public class PokemonData {
 		this.evolutionID = evolutionID;
 		this.evolutionRequirements = evolutionRequirements;
 	}
- 
-	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
-						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
-						float height, float weight, int baseExpYield, int levelingRate,
-						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
-						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
-						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
-	{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-		var pokeData = new PokemonData(
-            Id, 
-            PokeId,  
-            type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-            type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-            ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
-            ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
-            hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE, 
-            catchRate,
-            eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, 
-            eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, 
-            hatchTime, 
-            height, 
-            weight, 
-            baseExpYield, 
-            levelingRate, 
-            pokedexColor | PokemonData.PokedexColor.NONE,
-            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
-
-	    return pokeData;
-	} 
   
-    public PokemonData(int Id, int PokeId/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+    public PokemonData(int Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
                         /*float maleRatio,*/ int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -533,6 +439,7 @@ public class PokemonData {
 
         PokedexTranslation translation = PokemonDatabase.GetPokedexTranslation(Id);
         this.ID = Id;
+        this.regionalPokedex = regionalDex;
         this.Name = translation.Name;
         this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
         this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
@@ -550,14 +457,6 @@ public class PokemonData {
         this.weight = weight;
         this.baseExpYield = baseExpYield;
         this.levelingRate = (LevelingRate)levelingRate; //== null ? (PokemonData.LevelingRate)levelingRate : PokemonData.LevelingRate.NONE;
-
-        /* Not sure what kind of value goes here...
-        this.evYieldHP = evYieldHP;
-		this.evYieldATK = evYieldATK;
-		this.evYieldDEF = evYieldDEF;
-		this.evYieldSPA = evYieldSPA;
-		this.evYieldSPD = evYieldSPD;
-		this.evYieldSPE = evYieldSPE;*/
 
         this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
         //this.baseFriendship = baseFriendship; //forgot to implement when transfering database
@@ -586,6 +485,35 @@ public class PokemonData {
         //this.evolutionRequirements = evolutionRequirements;
         //return this.PokemonData();
     } 
+ 
+	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
+						float height, float weight, int baseExpYield, int levelingRate,
+						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
+						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
+						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
+						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
+    {//PokemonData(ePokemons.Pokemon.BULBASAUR,1,12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,SEED,45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+        return new PokemonData(
+            Id, 
+            null,//PokeId,
+            type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
+            type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
+            ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
+            ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
+            hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE, 
+            catchRate,
+            eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, 
+            eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, 
+            hatchTime, 
+            height, 
+            weight, 
+            baseExpYield, 
+            levelingRate, 
+            pokedexColor | PokemonData.PokedexColor.NONE,
+            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
+	} 
 
     #region Methods
     public override string ToString(){
@@ -742,15 +670,81 @@ public class PokemonData {
 		}
 		return moveset;
 	}
-	/// <summary>
-	/// Converts the string of a Pokemon Type to a Color in Unity. 
-	/// </summary>
-	/// <param name="PokemonType">string of pokemon type or name of a color</param>
-	/// <returns>return a Unity.Color</returns>
-	/// <example>StringToColor(Electric)</example>
-	/// <example>StringToColor(Yellow)</example>
-	public Color StringToColor(string PokemonType) {
-		return StringToColorDic[PokemonType];
+
+    /// <summary>
+    /// Converts the string of a Pokemon Type to a Color in Unity. 
+    /// </summary>
+    /// <param name="PokemonType">string of pokemon type or name of a color</param>
+    /// <returns>return a Unity.Color</returns>
+    /// <example>StringToColor(Electric)</example>
+    /// <example>StringToColor(Yellow)</example>
+    /// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
+    public Color StringToColor(string PokemonType) {
+        //private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
+        //http://www.epidemicjohto.com/t882-type-colors-hex-colors
+        //Normal Type: A8A77A
+        //Fire Type:  EE8130
+        //Water Type: 6390F0
+        //Electric Type:  F7D02C
+        //Grass Type: 7AC74C
+        //Ice Type: 96D9D6
+        //Fighting Type:  C22E28
+        //Poison Type: A33EA1
+        //Ground Type: E2BF65
+        //Flying Type: A98FF3
+        //Psychic Type: F95587
+        //Bug Type: A6B91A
+        //Rock Type: B6A136
+        //Ghost Type: 735797
+        //Dragon Type:  6F35FC
+        //Dark Type: 705746
+        //Steel Type:  B7B7CE
+        //Fairy Type: D685AD
+
+        //http://www.serebiiforums.com/showthread.php?289595-Pokemon-type-color-associations
+        //Normal -white
+        //Fire - red
+        //Water -blue
+        //Electric -yellow
+        //Grass - green
+        //Ice - cyan
+        //Poison -purple
+        //Psychic - magenta
+        //Fighting - dark red
+        //Ground - brown
+        //Rock - gray
+        //Bug - yellow green
+        //Flying - light blue
+        //Dragon - orange
+        //Ghost - light purple
+        //Steel - dark gray
+        //Dark - black
+
+        /*
+        //{"Black",Color.black },//dark
+        //{"", new Color() },//dark blue -> dark, 
+        { "Blue",Color.blue },//water
+		{ "Clear",Color.clear },
+		{ "Cyan",Color.cyan },
+		{ "Gray",Color.gray },//grAy-American
+		//{"Grey",Color.grey },//grEy-European
+		//{"Grey",Color.grey },//dark grey -> rock,
+		{ "Green",Color.green },//grass
+		//{"", new Color() },//dark green -> bug,
+		{ "Magenta",Color.magenta },//magenta, purple -> poison
+		{ "Red",Color.red },//orange, dark red -> fire
+		{ "White",Color.white },//normals
+		{ "Yellow",Color.yellow },//electric
+		{ "Purple", new Color() },//ghost
+		{ "Brown", new Color() },//fighting
+		{ "Pink", new Color() }//,//fairy
+        //{"", new Color() },//pink, lavender -> psychic, 
+        //{"", new Color() },//ocre, brown -> ground
+        //{"", new Color() },
+        //{"", new Color() },
+        //{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
+        */
+        return new Color();//StringToColorDic[PokemonType];
 	}
 	/// <summary>
 	/// Converts the Pokemon Type to a Color in Unity. 
@@ -759,7 +753,7 @@ public class PokemonData {
 	/// <returns>return a Unity.Color</returns>
 	/// <example>StringToColor(Electric)</example>
 	public Color StringToColor(PokemonData.Type PokemonType) {
-		return StringToColorDic[PokemonType.ToString()]; //Will fix later
+		return StringToColor(PokemonType.ToString()); //Will fix later
 	}
 	/// <summary>
 	/// Only an example. Do not use, will  not work.
@@ -776,7 +770,7 @@ public class PokemonData {
 			//case 1:
 			//	return StringToColorDic["text"];
 			default:
-				return StringToColorDic[color.ToString()];
+				return StringToColor(color.ToString());
 		}
 	}
 	#endregion

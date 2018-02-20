@@ -1320,21 +1320,27 @@ public static class PokemonDatabase
 		1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000};
 	#endregion
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    /// <remarks>Should rely on <see cref="ePokemons.Pokemon"/> for this</remarks>
 	public static PokemonData getPokemon(int ID){
 		Debug.Log("Get Pokemons");
-		PokemonData result = null;
+		/*PokemonData result = null;
 		int i = 1;
 		while(result == null){
-			if(pokedex[i].getID() == ID){
+			if(Pokedex[i].getID() == ID){
 				Debug.Log("Pokemon DB Success");
-				result = pokedex[i];
+				result = Pokedex[i];
 			}
 			i += 1;
-			if(i >= pokedex.Length){
+			if(i >= Pokedex.Length){
 				Debug.Log("Pokemon DB Fail");
 				return null;}
-		}
-		return result;
+		}*/
+        return Pokedex[ID];// result;
 	}
 
 	public static int getLevelExp(PokemonData.LevelingRate levelingRate, int currentLevel){
@@ -1378,11 +1384,11 @@ public static class PokemonDatabase
 
 	}
 
-	#region DatabaseQueries
-	/// <summary>
-	/// Supports multiple languages
-	/// </summary>
-	/*private static PokemonData[] pokedexDB(int language = 9) {//Default language is English
+    #region DatabaseQueries
+    /// <summary>
+    /// Supports multiple languages
+    /// </summary>
+    /*private static PokemonData[] pokedexDB(int language = 9) {//Default language is English
 		Debug.Log("Fetch Pokedex");
 		List<PokemonData> pokedexArray = new List<PokemonData>();
 		pokedexArray.Add(null); //pokedex index 0 is null value
@@ -1735,9 +1741,9 @@ public static class PokemonDatabase
 			return null;
 		}
 	}*/
-	#endregion
+    #endregion
 
-	/*public async Task<int> MergeOneDataTableAsync()
+    /*public async Task<int> MergeOneDataTableAsync()
 	{
 		// Merge One procedure
 		using (SqlCommand cmd = new SqlCommand("MergeOneProcedure", dbc))
@@ -1766,9 +1772,9 @@ public static class PokemonDatabase
 		}
 	}*/
 
-	#region InitializePokedex
-	/// <summary>PreloadPokedex</summary>
-	private static PokemonData[] pokedex = new PokemonData[] {
+    #region InitializePokedex
+    /// <summary>PreloadPokedex</summary>
+    private static PokemonData[] Pokedex = new PokemonData[] {
 		null,
 		//  PokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE2, Ability1, Ability2, HiddenAbility,
 		//				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
@@ -2592,6 +2598,24 @@ PokemonData.CreatePokemonData(10089,373,null,16,3,184,null,null,null,null,null,n
 PokemonData.CreatePokemonData(10090,15,null,7,4,91,null,null,null,null,null,null,14f,405f,223,null,null,null,null,65,150,40,15,80,145,0f,new int[]{1,10,13,16,19,22,25,28,31,34,37,40,45},new int[]{31,31,116,41,99,228,390,42,97,372,398,283,565},new int[]{14,15,63,76,92,104,148,156,164,168,182,188,206,207,213,214,216,218,237,241,249,263,280,290,332,355,369,371,398,404,416,474,496,512,522,590,611},null,null,null)*/
 	};
 
+    /*public static Dictionary<int, PokemonData> Pokedex = LoadPokedex();
+
+    private static Dictionary<int, PokemonData> LoadPokedex()
+    {
+        var data = new Dictionary<int, PokemonData>(); //Why not convert dictionary to Array? It's faster, more streamlined, and simpler to work with
+
+        string[] fileEntries = Directory.GetFiles(Application.streamingAssetsPath + "/Pokemons", "*.json");  // Filter on only json files, otherwise you can also get other files (.meta)
+        foreach (string fileName in fileEntries)
+        {
+            string dataAsJson = File.ReadAllText(fileName, Encoding.UTF8);
+            PokemonData pokemonData = new PokemonData();
+            JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
+            data.Add(pokemonData.ID, pokemonData);
+        }
+
+        return data; //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
+    }*/
+
 	public static PokemonData[] LoadPokedex () {
         //PokemonData[] Loadpokedex = pokedex;//PreloadPokedex;
         /*System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
@@ -2618,12 +2642,76 @@ PokemonData.CreatePokemonData(10090,15,null,7,4,91,null,null,null,null,null,null
         }
 
         fs.Close();*/
-        return pokedex;//Loadpokedex;
-	}
+        return Pokedex;//Loadpokedex;
+    }
 
-	public static string[,] LoadPokedexLanguageText (GlobalVariables.Language language = GlobalVariables.Language.English) {
+    private static Dictionary<int, PokedexTranslation> _pokeTranslations = LoadPokedexTranslations(SaveData.currentSave.playerLanguage);
+
+    public static Dictionary<int, PokedexTranslation> LoadPokedexTranslations(GlobalVariables.Language language)
+    {
+        var data = new Dictionary<int, PokedexTranslation>();
+
+        string fileLanguage;
+        switch (language)
+        {
+            case GlobalVariables.Language.English:
+                fileLanguage = "en-us";
+                break;
+            default: //Default in case new language is added to game but not programmed ahead of time here...
+                fileLanguage = "en-us";
+                break;
+        }
+        System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
+        string file = Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //"/Resources/Database/PokemonTranslations/Pokemon_"
+        FileStream fs = new FileStream(file, FileMode.Open);
+        xmlDoc.Load(fs);
+
+        if (xmlDoc.HasChildNodes)
+        {
+            foreach (System.Xml.XmlNode node in xmlDoc.GetElementsByTagName("Pokemon"))
+            {
+                var translation = new PokedexTranslation();
+                translation.Name = node.Attributes["name"].Value;
+                translation.Species = node.Attributes["genus"].Value;
+                translation.PokedexEntry = node.InnerText;
+                data.Add(int.Parse(node.Attributes["id"].Value), translation); //Is this safe? Possible overwritting of values with bad entries
+            }
+        }
+
+        return data;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="language"></param>
+    /// <returns></returns>
+    /// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
+    public static PokedexTranslation GetPokedexTranslation(int id, GlobalVariables.Language language = GlobalVariables.Language.English)
+    {
+        if (_pokeTranslations == null) //should return english if player's default language is null
+        {
+            LoadPokedexTranslations(language);
+        }
+
+        if (!_pokeTranslations.ContainsKey(id))
+        {
+            Debug.LogError("Failed to load pokedex translation for pokemon with id: " + id);
+            return new PokedexTranslation();
+        }
+
+        return _pokeTranslations[id];
+    }
+
+    /// <summary>
+    /// Deprecated; use <see cref="LoadPokedexTranslations(GlobalVariables.Language)"/>
+    /// </summary>
+    /// <param name="language"></param>
+    /// <returns></returns>
+    public static string[,] LoadPokedexLanguageText (GlobalVariables.Language language = GlobalVariables.Language.English) {
         //PokemonData[] Loadpokedex = pokedex;//PreloadPokedex;
-        string[,] Loadpokedex = new string[pokedex.Length,3];
+        string[,] Loadpokedex = new string[Pokedex.Length,3];
         string fileLanguage;
         switch (language)
         {
@@ -2635,7 +2723,7 @@ PokemonData.CreatePokemonData(10090,15,null,7,4,91,null,null,null,null,null,null
                 break;
         }
 		System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-		FileStream fs = new FileStream(Application.dataPath + "/Resources/Databases/Pokemon/Pokemon"+fileLanguage+".xml", FileMode.Open);
+		FileStream fs = new FileStream(Application.dataPath + "/Resources/Database/Pokemon/Pokemon"+fileLanguage+".xml", FileMode.Open);
 		xmlDoc.Load(fs); // load the file.
 		//System.Xml.XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
 		for (int i = 0; i < Loadpokedex.Length; i++) {
@@ -2649,7 +2737,6 @@ PokemonData.CreatePokemonData(10090,15,null,7,4,91,null,null,null,null,null,null
 					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value),0] = pokemon.Attributes["name"].Value; 
 					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value),1] = pokemon.Attributes["genus"].Value;//Species
 					Loadpokedex[int.Parse(pokemon.Attributes["id"].Value),2] = pokemon.InnerText;//pokedexEntry
-					//obj.Add("name", levelsItems.InnerText); // put this in the dictionary.
 				}
 			}
 
@@ -2665,6 +2752,7 @@ PokemonData.CreatePokemonData(10090,15,null,7,4,91,null,null,null,null,null,null
 						//pokedex[i]
 						Loadpokedex[int.Parse(levelsItems.Attributes["id"].Value)].Species = levelsItems.Attributes["name"].Value;
 						Loadpokedex[int.Parse(levelsItems.Attributes["id"].Value)].pokedexEntry = levelsItems.InnerText;
+					    //obj.Add("name", levelsItems.InnerText); // put this in the dictionary.
 					}
 				}
 			}*/
