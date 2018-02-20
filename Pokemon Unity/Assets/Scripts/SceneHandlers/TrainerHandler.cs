@@ -304,6 +304,11 @@ public class TrainerHandler : MonoBehaviour
         IDnoDataShadow.text = IDnoData.text;
         nameData.text = SaveData.currentSave.playerName;
         nameDataShadow.text = nameData.text;
+        if(SaveData.currentSave.playerOutfit != "custom") {
+            picture.texture = Resources.Load<Texture>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + "front");
+        } else {
+            picture.texture = null; //custom sprites not implemented
+        }
         //picture.texture = null; //player sprites not yet implemented.
         string playerMoney = string.Empty;
         char[] playerMoneyChars = SaveData.currentSave.playerMoney.ToString().ToCharArray();

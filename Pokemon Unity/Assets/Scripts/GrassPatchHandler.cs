@@ -6,7 +6,7 @@ using System.Collections;
 public class GrassPatchHandler : MonoBehaviour
 {
     private GameObject overlay;
-    private AudioSource walkSound;
+    //private AudioSource walkSound;
     public AudioClip walkClip;
 
     /*/    DEBUG
@@ -15,7 +15,7 @@ public class GrassPatchHandler : MonoBehaviour
     void Awake()
     {
         overlay = transform.Find("Overlay").gameObject;
-        walkSound = transform.GetComponent<AudioSource>();
+        //walkSound = transform.GetComponent<AudioSource>();
     }
 
     void Start()

@@ -33,7 +33,7 @@ public class PauseHandler : MonoBehaviour
 
     private DialogBoxHandler Dialog;
 
-    private AudioSource PauseAudio;
+    //private AudioSource PauseAudio; //possible "set bgm in pause menu" option? I need to implement it
     public AudioClip selectClip;
     public AudioClip openClip;
 
@@ -42,11 +42,13 @@ public class PauseHandler : MonoBehaviour
 
     private bool running;
 
+	[SerializeField]
+	private GameObject pokedex;
     void Awake()
     {
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
-        PauseAudio = transform.GetComponent<AudioSource>();
+        //PauseAudio = transform.GetComponent<AudioSource>();
 
         pauseTop = transform.Find("PauseTop").GetComponent<GUITexture>();
         pauseBottom = transform.Find("PauseBottom").GetComponent<GUITexture>();
@@ -411,9 +413,18 @@ public class PauseHandler : MonoBehaviour
                 {
                     if (selectedIcon == 1)
                     {
-                        //Pokedex
-                        Debug.Log("Pokédex not yet implemented");
-                        yield return new WaitForSeconds(0.2f);
+						//Pokedex
+						SfxHandler.Play(selectClip);
+						//StartCoroutine(fadeIcons(0.4f));
+						//yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f));
+						yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+
+						pokedex.gameObject.SetActive (true);
+						yield return StartCoroutine(runSceneUntilDeactivated(pokedex.gameObject));
+						unhideIcons();
+						//StartCoroutine(unfadeIcons(0.4f));
+						//yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
+						yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
                     }
                     else if (selectedIcon == 2)
                     {
@@ -494,39 +505,46 @@ public class PauseHandler : MonoBehaviour
                         mapNameShadow.text = mapName.text;
                         dataTextShadow.text = dataText.text;
 
-                        Dialog.drawDialogBox();
-                        yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
-                        Dialog.drawChoiceBoxNo();
-                        yield return new WaitForSeconds(0.2f);
-                        yield return StartCoroutine(Dialog.choiceNavigateNo());
-                        int chosenIndex = Dialog.chosenIndex;
-                        if (chosenIndex == 1)
-                        {
-                            //update save file
-                            Dialog.undrawChoiceBox();
                             Dialog.drawDialogBox();
-
-                            SaveData.currentSave.levelName = Application.loadedLevelName;
-                            SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
-                            SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
-                            SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
-
-                            NonResettingHandler.saveDataToGlobal();
-
-                            SaveLoad.Save();
-
-                            yield return
-                                StartCoroutine(Dialog.drawText(SaveData.currentSave.playerName + " saved the game!"));
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
+                            Dialog.drawChoiceBoxNo();
+                            yield return new WaitForSeconds(0.2f);
+                            yield return StartCoroutine(Dialog.choiceNavigateNo());
+                            int chosenIndex = Dialog.chosenIndex;
+                            if (chosenIndex == 1)
                             {
-                                yield return null;
+                                //update save file
+                                Dialog.undrawChoiceBox();
+                                Dialog.drawDialogBox();
+
+                                SaveData.currentSave.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                                SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
+                                SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
+                                SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+
+                                NonResettingHandler.saveDataToGlobal();
+
+                                SaveLoad.Save();
+
+                                yield return
+                                    StartCoroutine(Dialog.drawText(SaveData.currentSave.playerName + " saved the game!"));
+                                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                                {
+                                    yield return null;
+                                }
                             }
+                            Dialog.undrawDialogBox();
+                            Dialog.undrawChoiceBox();
+                            iconPokedex.hide = false;
+                            saveDataDisplay.gameObject.SetActive(false);
+                            yield return new WaitForSeconds(0.2f);
                         }
-                        Dialog.undrawDialogBox();
-                        Dialog.undrawChoiceBox();
-                        iconPokedex.hide = false;
-                        saveDataDisplay.gameObject.SetActive(false);
-                        yield return new WaitForSeconds(0.2f);
+                        else {
+                            Dialog.drawDialogBox();
+							yield return StartCoroutine(Dialog.drawText("Saving is currently disabled."));
+							yield return new WaitForSeconds(2f); //added
+							Dialog.undrawDialogBox();
+                        }
                     }
                     else if (selectedIcon == 6)
                     {

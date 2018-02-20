@@ -23,6 +23,7 @@ public class SaveData
 
     //Important player data
     public string playerName;
+    public bool debugMode = false;
     public bool isMale;
     /// <summary>
     /// IDfinal = IDtrainer + IDsecret × 65536
@@ -45,7 +46,13 @@ public class SaveData
 
     public string playerOutfit;
 
-    public string playerScore;
+    public int playerScore;
+
+    public string playerShirt;
+    public string playerMisc;
+    public string playerHat;
+    //customizables not implemented
+
     public int playerMoney;
     /// <summary>
     /// Usage:<para>

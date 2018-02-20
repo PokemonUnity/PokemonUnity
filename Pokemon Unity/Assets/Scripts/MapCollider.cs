@@ -254,8 +254,8 @@ public class MapCollider : MonoBehaviour
         }
 
         //flatten the hit.point along the y, so that the distance between them will only calculate using x and z
-        Vector3 flatHitPoint1 = new Vector3(map1Hit.point.x, 0, map1Hit.point.z);
-        Vector3 flatHitPoint2 = new Vector3(map2Hit.point.x, 0, map2Hit.point.z);
+        //Vector3 flatHitPoint1 = new Vector3(map1Hit.point.x, 0, map1Hit.point.z);
+        //Vector3 flatHitPoint2 = new Vector3(map2Hit.point.x, 0, map2Hit.point.z);
 
         float rise = Mathf.Abs(map2Hit.point.y - map1Hit.point.y);
         float run = 0.9f;

@@ -9,7 +9,7 @@ public class InteractPC : MonoBehaviour
 
     private SpriteRenderer spriteLight;
 
-    private AudioSource PCaudio;
+    //private AudioSource PCaudio;
 
     public AudioClip offClip;
     public AudioClip onClip;
@@ -22,7 +22,7 @@ public class InteractPC : MonoBehaviour
     {
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
         spriteLight = transform.Find(gameObject.name + "_SpriteLight").GetComponent<SpriteRenderer>();
-        PCaudio = GetComponent<AudioSource>();
+        //PCaudio = GetComponent<AudioSource>();
         PClight = GetComponentInChildren<Light>();
     }
 
@@ -76,7 +76,11 @@ public class InteractPC : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                     yield return Dialog.StartCoroutine("drawText", "Which PC should be accessed?");
-                    Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
+                    if(SaveData.currentSave.getCVariable("meetBill") != 1) { //for use in fangames possibly?
+                        Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
+                    } else {
+                        Dialog.drawChoiceBox(new string[] {"Bill's", "Switch off"});
+                    }
                     yield return Dialog.StartCoroutine("choiceNavigate");
                     Dialog.undrawChoiceBox();
                     accessedPC = Dialog.chosenIndex;

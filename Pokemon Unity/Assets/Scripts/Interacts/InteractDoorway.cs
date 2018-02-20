@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class InteractDoorway : MonoBehaviour
 {
-    private GameObject Player;
+    //private GameObject Player;
     private DialogBoxHandler Dialog;
 
     private Animator myAnimator;
@@ -51,7 +51,7 @@ public class InteractDoorway : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Player = PlayerMovement.player.gameObject;
+        //Player = PlayerMovement.player.gameObject;
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
         objectLight = this.GetComponentInChildren<Light>();
@@ -230,7 +230,7 @@ public class InteractDoorway : MonoBehaviour
                     GlobalVariables.global.playerDirection = transferDirection;
                     GlobalVariables.global.playerForwardOnLoad = movesForward;
                     GlobalVariables.global.fadeIn = true;
-                    SceneManager.LoadScene(transferScene);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(transferScene);
                 }
                 else
                 {

@@ -174,7 +174,7 @@ public class InteractTrainerSight : MonoBehaviour
         playerAtPosition = false;
         positionIsBlocked = false;
 
-        Vector3 nextPosition = position;
+        //Vector3 nextPosition = position;
 
         Vector3 forwardsVector = new Vector3(0, 0, 0);
         if (trainer.direction == 0)

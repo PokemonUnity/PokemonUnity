@@ -17,7 +17,7 @@ public class InteractPokemonCenter : MonoBehaviour
     private Light screenLight;
     private SpriteRenderer[] pokeBalls = new SpriteRenderer[6];
 
-    private AudioSource PokemonCenterAudio;
+    //private AudioSource PokemonCenterAudio;
 
     void Awake()
     {
@@ -33,7 +33,7 @@ public class InteractPokemonCenter : MonoBehaviour
             pokeBalls[i] = healMachine.Find("Ball" + i).GetComponent<SpriteRenderer>();
         }
 
-        PokemonCenterAudio = transform.GetComponent<AudioSource>();
+        //PokemonCenterAudio = transform.GetComponent<AudioSource>();
     }
 
 

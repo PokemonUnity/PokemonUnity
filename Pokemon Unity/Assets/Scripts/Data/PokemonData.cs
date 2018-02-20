@@ -164,12 +164,12 @@ public class PokemonData {
 	private int baseExpYield;
 	private LevelingRate levelingRate;
 
-    private int evYieldHP;
-    private int evYieldATK;
-    private int evYieldDEF;
-    private int evYieldSPA;
-    private int evYieldSPD;
-    private int evYieldSPE;
+    private int evYieldHP; //unused
+    private int evYieldATK; //unused
+    private int evYieldDEF; //unused
+    private int evYieldSPA; //unused
+    private int evYieldSPD; //unused
+    private int evYieldSPE; //unused
 
     private PokedexColor pokedexColor;
     /// <summary>
