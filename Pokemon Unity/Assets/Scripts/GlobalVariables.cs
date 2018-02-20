@@ -2,10 +2,18 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GlobalVariables : MonoBehaviour
 {
     public static GlobalVariables global;
+    public enum Language
+    {
+        /// <summary>
+        /// US English
+        /// </summary>
+        English = 9
+    }
 
     public Vector3 playerPosition;
     public int playerDirection;
@@ -34,9 +42,13 @@ public class GlobalVariables : MonoBehaviour
     //Important gameplay data
     public bool respawning = false;
 
-
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= CheckLevelLoaded;
+    }
     void Awake()
     {
+        SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
@@ -91,6 +103,7 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.playerName = "Gold";
         SaveData.currentSave.playerID = 29482;
         SaveData.currentSave.isMale = true;
+        SaveData.currentSave.playerLanguage = Language.English;
 
         SaveData.currentSave.playerOutfit = "hgss";
 
@@ -100,20 +113,20 @@ public class GlobalVariables : MonoBehaviour
             Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabase.getPokemon(6).GenerateMoveset(42), new int[4]));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", "Gold", 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", "Gold", 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", "Gold", -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", "Gold", -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", "Gold", 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", SaveData.currentSave.playerName, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", SaveData.currentSave.playerName, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", SaveData.currentSave.playerName, -1));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", SaveData.currentSave.playerName, -1));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", SaveData.currentSave.playerName, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", "Gold", 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", SaveData.currentSave.playerName, 0));
         SaveData.currentSave.PC.addPokemon(new Pokemon(607, Pokemon.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
         SaveData.currentSave.PC.boxes[1][1].addExp(7100);
-        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", "Gold", 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", "Gold", 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", SaveData.currentSave.playerName, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", SaveData.currentSave.playerName, 0));
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball",
-            "", "Gold",
+            "", SaveData.currentSave.playerName,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));
 
@@ -151,7 +164,7 @@ public class GlobalVariables : MonoBehaviour
 
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
-            "Gold",
+            SaveData.currentSave.playerName,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
 
@@ -200,13 +213,14 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = "Feb. 14th, 2015";
+        SaveData.currentSave.fileCreationDate = new System.DateTime(2015, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerMoney = 2481;
         SaveData.currentSave.playerScore = 481;
 
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;
         SaveData.currentSave.playerSeconds = 12;
+        SaveData.currentSave.playerTime = new System.TimeSpan(0,7,12);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -221,17 +235,25 @@ public class GlobalVariables : MonoBehaviour
             true, true, false, false, false, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.gymsBeatTime = new string[]
+        SaveData.currentSave.gymsBeatTime = new System.DateTime?[]
         {
-            "Apr. 27th, 2015", "Apr. 30th, 2015", null, null, null, "May. 1st, 2015",
+            new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
             null, null, null, null, null, null
         };
         ////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    void OnLevelWasLoaded()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Replace with 
+    /// void CheckLevelLoaded(Scene scene, LoadSceneMode mode)
+    /// </remarks>
+    void CheckLevelLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
-        if (Application.loadedLevelName != "startup")
+        Debug.Log(scene.name + " : " + mode.ToString());
+        if (SceneManager.GetActiveScene().name != "startup")
         {
             if (global == this)
             {
@@ -280,11 +302,11 @@ public class GlobalVariables : MonoBehaviour
         if (string.IsNullOrEmpty(SaveData.currentSave.respawnSceneName))
         {
             respawning = false;
-            Application.LoadLevel("overworldS");
+            SceneManager.LoadScene("overworldS");
         }
         else
         {
-            Application.LoadLevel(SaveData.currentSave.respawnSceneName);
+            SceneManager.LoadScene(SaveData.currentSave.respawnSceneName);
         }
     }
 

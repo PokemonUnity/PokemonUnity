@@ -66,7 +66,7 @@ public class InteractPC : MonoBehaviour
                 SfxHandler.Play(onClip);
                 yield return StartCoroutine("onAnim");
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawTextSilent", "Gold turned on the PC!");
+                yield return Dialog.StartCoroutine("drawTextSilent", SaveData.currentSave.playerName + " turned on the PC!");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;

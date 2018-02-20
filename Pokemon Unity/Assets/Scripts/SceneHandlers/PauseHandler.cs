@@ -478,18 +478,19 @@ public class PauseHandler : MonoBehaviour
                                 badgeTotal += 1;
                             }
                         }
-                        string playerTime = "" + SaveData.currentSave.playerMinutes;
+                        /*string playerTime = "" + SaveData.currentSave.playerMinutes;
                         if (playerTime.Length == 1)
                         {
                             playerTime = "0" + playerTime;
                         }
-                        playerTime = SaveData.currentSave.playerHours + " : " + playerTime;
+                        playerTime = SaveData.currentSave.playerHours + " : " + playerTime;*/
+                        System.TimeSpan playTime = SaveData.currentSave.playerTime + SaveData.currentSave.startTime.Subtract(System.DateTime.UtcNow);
 
                         mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
                         dataText.text = SaveData.currentSave.playerName + "\n" +
                                         badgeTotal + "\n" +
                                         "0" + "\n" + //pokedex not yet implemented
-                                        playerTime;
+                                        System.String.Format("{0} : {1:00}", playTime.Hours, playTime.Minutes); //playerTime
                         mapNameShadow.text = mapName.text;
                         dataTextShadow.text = dataText.text;
 

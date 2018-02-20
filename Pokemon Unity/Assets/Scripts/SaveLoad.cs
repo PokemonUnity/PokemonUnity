@@ -20,6 +20,8 @@ public static class SaveLoad
         {
             if (SaveData.currentSave.getFileIndex() >= 0 && SaveData.currentSave.getFileIndex() < savedGames.Length)
             {
+                SaveData.currentSave.playerTime += SaveData.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+                SaveData.currentSave.lastSave = System.DateTime.UtcNow;// new System.DateTime(,System.DateTimeKind.Utc);
                 savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
