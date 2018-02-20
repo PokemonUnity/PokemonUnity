@@ -12,7 +12,7 @@ using System.Collections;
 public class Pokemon {
 
 	/// <summary>
-	/// Pokemon <see cref="PokemonData.ID"/>
+	/// Set value using Pokemon's <see cref="PokemonData.ID"/>
 	/// <seealso cref="PokemonData.ID"/>
 	/// </summary>
 	private int pokemonID;
@@ -86,8 +86,32 @@ public class Pokemon {
 	/// <remarks>should perform math equation to access this value</remarks>
 	private int nextLevelExp; 
 
-	private int friendship; //This isnt the samething as happiness, right?
+    /// <summary>
+    /// This is the samething as "friendship";
+    /// Max value of 255 -- i think.
+    /// </summary>
+	private int happiness; 
+    public enum HappinessMethods
+    {
+        WALKING,
+        LEVELUP,
+        GROOM,
+        FAINT,
+        VITAMIN,
+        EVBERRY,
+        POWDER,
+        ENERGYROOT,
+        REVIVALHERB
+    }
 
+    /// <summary>
+    /// 3 Values; Not Infected, Cured, Infected.
+    /// </summary>
+    /// <remarks>
+    /// Can be a enum, for 1 of 3 values
+    /// or if null, not infected; 
+    /// true infected, and false cured?
+    /// </remarks>
 	private bool pokerus;
 	private bool isShiny;
     /// <summary>
@@ -99,7 +123,6 @@ public class Pokemon {
 	private int sleepTurns;
 
 	/// <summary>
-	/// 
 	/// </summary>
 	/// <remarks>This should be an enum value</remarks>
 	private string caughtBallString;
@@ -179,12 +202,13 @@ public class Pokemon {
     /// the 3rd is hidden but still remains active.
     /// Multiples of same abilities count as 1. 
     /// (Shouldnt contain multiples of same abilities)
+    ///	<seealso cref="PokemonData.Abilities"/>
 	/// </summary>
 	///	<remarks>
 	/// Should be [int? a1,int? a2,int? a3]
     /// <code>int?[] ability = new int?[3]</code>
 	/// </remarks> 
-	private int ability;	//(0/1/2(hiddenability)) if higher than number of abilites, rounds down to nearest ability.
+	private int ability;	// (0/1/2(hiddenability)) if higher than number of abilites, rounds down to nearest ability.
 							// if is 2, but pokemon only has 1 ability and no hidden, will use the one ability it does have.
 
     /// <summary>
@@ -195,11 +219,12 @@ public class Pokemon {
     ///	<remarks>
     /// Should be [eMoves.Move? m1,eMoves.Move? m2,eMoves.Move? m3,eMoves.Move? m4]
     /// <code>eMoves.Move?[] moveset = new eMoves.Move?[4]</code>
+    /// or add "eMoves.Move.NONE" as default null value.
     /// </remarks> 
     private eMoves.Move?[] moveset;
 	private string [] moveHistoryString;
 	private eMoves.Move[] moveHistory;
-	private int[] PPups;
+	private int[] PPups;//Also need log for "RareCandy" and "Vitamins"
 	private int[] maxPP;
 	private int[] PP;
 
@@ -256,7 +281,7 @@ public class Pokemon {
 		//Find exp for current level, and next level.
 		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
 		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
-		this.friendship = thisPokemonData.getBaseFriendship();
+		this.happiness = thisPokemonData.getBaseFriendship();
 
 		this.isShiny = isShiny;
 		if(isShiny){
@@ -356,7 +381,7 @@ public class Pokemon {
 		//Find exp for current level, and next level.
 		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
 		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
-		this.friendship = thisPokemonData.getBaseFriendship();
+		this.happiness = thisPokemonData.getBaseFriendship();
 
 		this.isShiny = isShiny;
 		if(isShiny){
@@ -376,10 +401,10 @@ public class Pokemon {
 
 		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
 		if (this.OT != SaveData.currentSave.playerName){
-			this.IDno = Random.Range (0,65536); //if owned by another trainer, assign a random number. 
-		}										//this way if they trade it to you, it will have a different number to the player's.
+			this.IDno = Random.Range (0,65536).ToString(); //if owned by another trainer, assign a random number. 
+		}										            //this way if they trade it to you, it will have a different number to the player's.
 		else{
-			this.IDno = SaveData.currentSave.playerID;
+			this.IDno = SaveData.currentSave.playerID.ToString();
 		}
 
 		this.metLevel = level;
@@ -462,7 +487,7 @@ public class Pokemon {
 		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
 		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
 
-		this.friendship = thisPokemonData.getBaseFriendship();
+		this.happiness = thisPokemonData.getBaseFriendship();
 
 		//Set Shininess randomly. 16/65535 if not shiny, then pokerus. 3/65535
 		this.rareValue = Random.Range(0,65536);
@@ -492,10 +517,10 @@ public class Pokemon {
 
 		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
 		if(this.OT != SaveData.currentSave.playerName){
-			this.IDno = Random.Range (0,65536); //if owned by another trainer, assign a random number. 
+			this.IDno = Random.Range (0,65536).ToString(); //if owned by another trainer, assign a random number. 
 		}										//this way if they trade it to you, it will have a different number to the player's.
 		else{
-			this.IDno = SaveData.currentSave.playerID;
+			this.IDno = SaveData.currentSave.playerID.ToString();
 		}
 
 		//Set IVs randomly between 0 and 32 (32 is exlcuded)
@@ -562,7 +587,7 @@ public class Pokemon {
 		//Find exp for current level, and next level.
 		this.exp = pokemon.exp;
 		this.nextLevelExp = pokemon.nextLevelExp;
-		this.friendship = pokemon.friendship;
+		this.happiness = pokemon.happiness;
 		
 		this.isShiny = pokemon.isShiny;
 		this.rareValue = pokemon.rareValue;
@@ -574,7 +599,7 @@ public class Pokemon {
 		this.heldItem = pokemon.heldItem;
 
 		this.OT = SaveData.currentSave.playerName;
-		this.IDno = SaveData.currentSave.playerID;
+		this.IDno = SaveData.currentSave.playerID.ToString(); //Only need last 6 digits...
 		
 		this.metLevel = level;
 		if(PlayerMovement.player.accessedMapSettings != null){
@@ -622,9 +647,9 @@ public class Pokemon {
 
 	}
 
-	//New Pokemon with: every specific detail, from database
+    //New Pokemon with: every specific detail, from database
     //commented out because sql connection inside pokemon class is bad idea
-	/*public Pokemon(int PokemonTrainerID){
+    /*public Pokemon(int PokemonTrainerID){
 		DataTable t = new DataTable();
 		// Open connection
 		using(IDbConnection dbcon = new System.Data.SqlClient.SqlConnection(connectionString))
@@ -760,9 +785,64 @@ public class Pokemon {
 
 	}*/
 
+    public void ChangeHappiness(HappinessMethods method) {
+        int gain = 0; bool luxury = false;
+        switch (method)
+        {
+            case HappinessMethods.WALKING:
+                gain = 1;
+                gain += happiness < 200 ? 1 : 0;
+                //gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
+                break;
+            case HappinessMethods.LEVELUP:
+                gain = 2;
+                if (happiness < 200) gain = 3;
+                if (happiness < 100) gain = 5;
+                luxury = true;
+                break;
+            case HappinessMethods.GROOM:
+                gain = 4;
+                if (happiness < 200) gain = 10;
+                luxury = true;
+                break;
+            case HappinessMethods.FAINT:
+                gain = -1;
+                break;
+            case HappinessMethods.VITAMIN:
+                gain = 2;
+                if (happiness < 200) gain = 3;
+                if (happiness < 100) gain = 5;
+                break;
+            case HappinessMethods.EVBERRY:
+                gain = 2;
+                if (happiness < 200) gain = 5;
+                if (happiness < 100) gain = 10;
+                break;
+            case HappinessMethods.POWDER:
+                gain = -10;
+                if (happiness < 200) gain = -5;
+                break;
+            case HappinessMethods.ENERGYROOT:
+                gain = -15;
+                if (happiness < 200) gain = -10;
+                break;
+            case HappinessMethods.REVIVALHERB:
+                gain = -20;
+                if (happiness < 200) gain = -15;
+                break;
+            default:
+                break;
+        }
+        gain += luxury && this.caughtBall == eItems.Item.LUXURY_BALL ? 1 : 0;
+        if (this.heldItem == eItems.Item.SOOTHE_BELL && gain > 0)
+            gain = (int)Mathf.Floor(gain * 1.5f);
+        happiness += gain;
+        happiness = happiness > 255 ? 255 : happiness < 0 ? 0 : happiness; //Max 255, Min 0
+    }
 
-	//Recalculate the pokemon's Stats.
-	public void calculateStats(){
+    #region Methods
+    //Recalculate the pokemon's Stats.
+    public void calculateStats(){
 		int[] baseStats = PokemonDatabase.getPokemon(pokemonID).getBaseStats();
 		if(baseStats[0] == 1){
 			this.HP = 1;}
@@ -982,7 +1062,7 @@ public class Pokemon {
 				}
 			}
 			else if(methods[i] == "Friendship"){ //if method contains a Friendship requirement
-				if(this.friendship < 220){ //and pokemon's friendship is less than 220
+				if(this.happiness < 220){ //and pokemon's friendship is less than 220
 					return false; //cannot evolve. return false and stop checking.
 				}
 			}
@@ -1044,7 +1124,7 @@ public class Pokemon {
 	public override string ToString(){
 		string result = pokemonID +": "+ this.getName() +"("+ PokemonDatabase.getPokemon(pokemonID).getName() +"), "+
 				gender.ToString() +", Level "+ level +", EXP: "+ exp +", To next: "+ (nextLevelExp - exp) +
-				", Friendship: "+ friendship +", RareValue="+ rareValue +", Pokerus="+ pokerus.ToString() +", Shiny="+ isShiny.ToString() +
+				", Friendship: "+ happiness +", RareValue="+ rareValue +", Pokerus="+ pokerus.ToString() +", Shiny="+ isShiny.ToString() +
 				", Status: "+  status +", Ball: "+ caughtBallString +", Item: "+ heldItem +
 				", met at Level " + metLevel +" on "+ metDate +" at "+ metMap +
 				", OT: "+ OT +", ID: "+ IDno +
@@ -1201,7 +1281,7 @@ public class Pokemon {
 		return nextLevelExp;}
 
 	public int getFriendship(){
-		return friendship;}
+		return happiness;}
 	
 	public bool getPokerus(){
 		return pokerus;}
@@ -1232,7 +1312,11 @@ public class Pokemon {
 	
 	public string getOT(){
 		return OT;}
-	public int getIDno(){
+    /// <summary>
+    /// Last six of trainer's hashId is pokemon's Id
+    /// </summary>
+    /// <returns>returns pokemons 6 digit ID number</returns>
+	public string getIDno(){ 
 		return IDno;}
 	
 	public int GetIV(int index){
@@ -1580,5 +1664,6 @@ public class Pokemon {
 			return new Sprite[8];
 		}
 		return spriteSheet;
-	}	
+	}
+    #endregion
 }

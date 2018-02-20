@@ -8,44 +8,18 @@ using System.Collections;
 
 public class PokemonHealth : MonoBehaviour
 {
-	
-	/*private string _conString = @"server=.\SQLEXPRESS;
-uid=PokemonServerU;
-pwd=******;
-database=PokemonServer;";
-/*"@"Data Source = 127.0.0.1; 
-     user id = Username;
-     password = Password;
-     Initial Catalog = DatabaseName;";*
-  
- public string SimpleQuery ( string _query ) {
-     using (SqlConnection dbCon = new SqlConnection(_conString)) {
-         SqlCommand cmd = new SqlCommand(_query, dbCon);
-         try {
-             dbCon.Open();
-             string _returnQuery = (string) cmd.ExecuteScalar();
-             return _returnQuery;
-         }
-         catch (SqlException _exception) {
-             Debug.LogWarning(_exception.ToString());
-             return null;
-         }
-     }
- }*/
-	
-	
 	//public static PokemonHealth instance;
 	
-	public int maxHealth = 100;                                 // The max amount of health the pokemon can gain.
-	private int currentHealth;                                   // The current health the pokemon has.
-	public Text displayCurrentHealth;                                   // The visual health for pokemon HUD.
+	//public int maxHealth = 100;                                     // The max amount of health the pokemon can gain.
+	private int currentHealth;                                      // The current health the pokemon has.
+	public Text displayCurrentHealth;                               // The visual health for pokemon HUD.
 	public Text displayMaxHealth;                                   // The visual health for pokemon HUD.
-	public Slider healthSlider;                                 // Reference to the UI's health bar.
-	//public Slider fadeHealthSlider;                             // Reference to the UI's 2nd health bar.
-	//public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
-	//public AudioClip deathClip;                                 // The audio clip to play when the pokemon dies.
-	//public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
-	//public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
+	public Slider healthSlider;                                     // Reference to the UI's health bar.
+	//public Slider fadeHealthSlider;                               // Reference to the UI's 2nd health bar.
+	//public Image damageImage;                                     // Reference to an image to flash on the screen on being hurt.
+	//public AudioClip deathClip;                                   // The audio clip to play when the pokemon dies.
+	//public float flashSpeed = 5f;                                 // The speed the damageImage will fade at.
+	//public Color flashColour = new Color(1f, 0f, 0f, 0.1f);       // The colour the damageImage is set to, to flash.
 	
 	public Image Fill;
 	//public int StartValue; //animate current hp between startvalue and endvalue
@@ -178,36 +152,19 @@ database=PokemonServer;";
 		//Text = healthSlider.value; //Set text under hp to match slider currentHealth
 	}
 	
-	public void SliderChangeValue(Slider slider){
+	public void HPChangeValue(this Slider slider){
 		Debug.Log("slider change:"+slider.value);
+		//GoodSlider(this.GetComponent<Slider>().value);
+		//images =     gameObject.GetComponentsInChildren<Image>();
 		Fill.color = hpzone0;
-		if (slider.value <= (slider.normalizedValue.CompareTo(0.5f))){ //  / 2)) {
+		if (slider.value <= (slider.normalizedValue.CompareTo(0.5f))){ // (maxHealth/2)) {
 			//Change color of hp bar
-				Fill.color = hpzone1;
+            Fill.color = hpzone1;
 			//Change background image for health slider
 		}
-		if (slider.value<=(maxHealth/4)){Fill.color = hpzone2;}
+		if (slider.value <= (slider.normalizedValue.CompareTo(0.25f)))// (maxHealth/4))
+        { Fill.color = hpzone2;}
 	}
-	
-void Death()
-	{
-		// Set the death flag so this function won't be called again.
-		isDead = true;/*
-		
-		// Turn off any remaining shooting effects.
-		pokemonShooting.DisableEffects ();
-		
-		// Tell the animator that the pokemon is dead.
-		anim.SetTrigger ("Die");
-		
-		// Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
-		pokemonAudio.clip = deathClip;
-		pokemonAudio.Play ();
-		
-		// Turn off the movement and shooting scripts.
-		pokemonMovement.enabled = false;
-		pokemonShooting.enabled = false;*/
-	}       
 	
 public void changeColor(){}
 

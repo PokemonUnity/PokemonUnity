@@ -129,21 +129,39 @@ public class PokemonData {
 
 	private Type type1;
 	private Type type2;
-		private eAbility.Ability? ability1Id;
-		private eAbility.Ability? ability2Id;
-		private eAbility.Ability? hiddenAbilityId;
+    /// <summary>
+    /// Deprecated; <see cref="Abilities"/>
+    /// </summary>
+	private eAbility.Ability? ability1Id;
+    /// <summary>
+    /// Deprecated; <see cref="Abilities"/>
+    /// </summary>
+	private eAbility.Ability? ability2Id;
+    /// <summary>
+    /// Deprecated; <see cref="Abilities"/>
+    /// </summary>
+	private eAbility.Ability? hiddenAbilityId;
+    /// <summary>
+    /// Deprecated; <see cref="Abilities"/>
+    /// </summary>
 	private string ability1;
+    /// <summary>
+    /// Deprecated; <see cref="Abilities"/>
+    /// </summary>
 	private string ability2;
+    /// <summary>
+    /// Deprecated; <see cref="Abilities"/>
+    /// </summary>
 	private string hiddenAbility;
-		/// <summary>
-		/// All three pokemon abilities 
-		/// (Abiltiy1, Ability2, HiddenAbility).
-		/// </summary>
-		///	<remarks>
-		/// Should be [int? a1,int? a2,int? a3]
-		/// instead of above...
-		/// </remarks> 
-		private eAbility.Ability?[,] abilities;
+	/// <summary>
+	/// All three pokemon abilities 
+	/// (Abiltiy1, Ability2, HiddenAbility).
+	/// </summary>
+	///	<remarks>
+	/// Should be [int? a1,int? a2,int? a3]
+	/// instead of above...
+	/// </remarks> 
+	private eAbility.Ability[] Abilities = new eAbility.Ability[3];
 	
 	/// <summary>
 	/// The male ratio.
@@ -193,7 +211,10 @@ public class PokemonData {
 	/// <example>int[,] heldItems = { {1,2,3},{4,5,6} }
 	/// <para>heldItems[1,0] == 4 as int</para>
 	/// </example>
-	/// <remarks>Or maybe...[item id,% chance,generationId/regionId]</remarks>
+	/// <remarks>
+    /// Or maybe...[item id,% chance,generationId/regionId]
+    /// Custom Class needed here... <see cref="eItems.Item"/> as itemId
+    /// </remarks>
 	private int[,] heldItem;
 	//private System.Collections.Generic.Dictionary<int, float> heldItem = new System.Collections.Generic.Dictionary<int, float>();
 
@@ -204,7 +225,8 @@ public class PokemonData {
     /// <remarks>
     /// This should be an enum...
     /// </remarks>
-	private string[] movesetMoves;
+	private string[] movesetMovesStrings;
+	private eMoves.Move[] movesetMoves;
 
 	private string[] tmList;
 
@@ -296,7 +318,6 @@ public class PokemonData {
 	/// </summary>
 	private string[] evolutionRequirements;
 	#endregion
-
 	
 
     public PokemonData()
@@ -359,7 +380,7 @@ public class PokemonData {
 		//this.heldItem = heldItem;
 
 		this.movesetLevels = movesetLevels;
-		this.movesetMoves = movesetMoves;
+		this.movesetMovesStrings = movesetMoves;
 		this.tmList = tmList;
 
 		this.evolutionID = evolutionID;
@@ -427,13 +448,13 @@ public class PokemonData {
 		this.evolutionRequirements = evolutionRequirements;
 	}
   
-    public PokemonData(int Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+    public PokemonData(int Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
                         /*float maleRatio,*/ int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         PokedexColor pokedexColor, /*int baseFriendship,* / string species, string pokedexEntry,*/
                         int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-                        float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
+                        float luminance, /*Color lightColor,*/ int[] movesetLevels, eMoves.Move[] movesetMoves, int[] tmList,
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
 
@@ -441,13 +462,18 @@ public class PokemonData {
         this.ID = Id;
         this.regionalPokedex = regionalDex;
         this.Name = translation.Name;
+        this.Species = translation.Species;
+        this.pokedexEntry = translation.PokedexEntry;
+        //this.forms = forms; //ToDo: need new mechanic for how this should work
+
         this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
         this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
-        this.ability1Id = (eAbility.Ability)ability1;
-        this.ability2Id = (eAbility.Ability)ability2;
-        this.hiddenAbilityId = (eAbility.Ability)hiddenAbility;
+        this.Abilities = abilities;
+        //this.ability1Id = (eAbility.Ability)ability1;
+        //this.ability2Id = (eAbility.Ability)ability2;
+        //this.hiddenAbilityId = (eAbility.Ability)hiddenAbility;
 
-        //this.maleRatio = maleRatio;
+        //this.maleRatio = maleRatio; //ToDo
         this.catchRate = catchRate;
         this.eggGroup1 = eggGroup1;
         this.eggGroup2 = eggGroup2;
@@ -457,52 +483,49 @@ public class PokemonData {
         this.weight = weight;
         this.baseExpYield = baseExpYield;
         this.levelingRate = (LevelingRate)levelingRate; //== null ? (PokemonData.LevelingRate)levelingRate : PokemonData.LevelingRate.NONE;
-
-        this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
-        //this.baseFriendship = baseFriendship; //forgot to implement when transfering database
-
-        this.Species = translation.Species;
-        this.pokedexEntry = translation.PokedexEntry;
-
+        
         this.baseStatsHP = baseStatsHP;
         this.baseStatsATK = baseStatsATK;
         this.baseStatsDEF = baseStatsDEF;
         this.baseStatsSPA = baseStatsSPA;
         this.baseStatsSPD = baseStatsSPD;
         this.baseStatsSPE = baseStatsSPE;
+        //this.baseFriendship = baseFriendship; //ToDo: forgot to implement when transfering database
 
         this.luminance = luminance;
         //this.lightColor = lightColor;
+        this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
 
-        //wild pokemon held items not yet implemented
+        //ToDo: wild pokemon held items not yet implemented
         this.heldItem = heldItem; //[item id,% chance]
 
         this.movesetLevels = movesetLevels;
-        //this.movesetMoves = movesetMoves;
-        //this.tmList = tmList;
+        this.movesetMoves = movesetMoves; //ToDo: Array Cast conversion
+        //this.tmList = tmList; //ToDo: Need new item database array/enum for this; one that's regional/generation dependant
 
         this.evolutionID = evolutionID;
         //this.evolutionRequirements = evolutionRequirements;
-        //return this.PokemonData();
-    } 
- 
-	public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
-						/*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
-						float height, float weight, int baseExpYield, int levelingRate,
-						/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-						PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
-						int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-						float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
-						int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
+    }
+
+    public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+                        /*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
+                        float height, float weight, int baseExpYield, int levelingRate,
+                        /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+                        PokedexColor pokedexColor, /*int baseFriendship,*/ string species, string pokedexEntry,
+                        int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
+                        float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
+                        int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//PokemonData(ePokemons.Pokemon.BULBASAUR,1,12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,SEED,45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
         return new PokemonData(
-            Id, 
+            Id,
             null,//PokeId,
             type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
             type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-            ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
-            ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
-            hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE, 
+            new eAbility.Ability[] { 
+                ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
+                ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
+                hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE
+            }, 
             catchRate,
             eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, 
             eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, 
@@ -512,7 +535,8 @@ public class PokemonData {
             baseExpYield, 
             levelingRate, 
             pokedexColor | PokemonData.PokedexColor.NONE,
-            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, luminance, movesetLevels, movesetMoves, tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
+            baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, 
+            luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (eMoves.Move)move), tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
 	} 
 
     #region Methods
@@ -611,7 +635,7 @@ public class PokemonData {
 	}
 
 	public string[] getMovesetMoves(){
-		return movesetMoves;
+		return movesetMovesStrings;
 	}
 
 	public string[] getTmList(){
@@ -640,18 +664,18 @@ public class PokemonData {
 		int i = movesetLevels.Length-1; //work backwards so that the highest level move possible is grabbed first
 		while(moveset[3] == null){
 			if(movesetLevels[i] <= level){
-				moveset[3] = movesetMoves[i];
+				moveset[3] = movesetMovesStrings[i];
 			}
 			i -= 1;
 		}
 		if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
-			moveset[2] = movesetMoves[i];
+			moveset[2] = movesetMovesStrings[i];
 			i -= 1;
 			if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
-				moveset[1] = movesetMoves[i];
+				moveset[1] = movesetMovesStrings[i];
 				i -= 1;
 				if(i >= 0){ //if i is at least 0 still, then you can grab the last move down.
-					moveset[0] = movesetMoves[i];
+					moveset[0] = movesetMovesStrings[i];
 					i -= 1;
 				}
 			}

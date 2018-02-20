@@ -18,6 +18,22 @@ public class PlayerMovement : MonoBehaviour
     public bool running = false;
     public bool surfing = false;
     public bool bike = false;
+    /// <summary>
+    /// Replaces <see cref="moving"/>, <see cref="still"/>, <see cref="running"/>, <see cref="surfing"/>, <see cref="bike"/> 
+    /// </summary>
+    private playerMoveMethod playerMoveAction = playerMoveMethod.Idle;
+    private enum playerMoveMethod
+    {
+        Idle,
+        Walking,
+        Running,
+        Biking,
+        Surfing,
+        /// <summary>
+        /// Could just be "surfing" but on "underwater" map...
+        /// </summary>
+        Diving 
+    }
     public bool strength = false;
     public float walkSpeed = 0.3f; //time in seconds taken to walk 1 square.
     public float runSpeed = 0.15f;
@@ -115,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        if (!surfing)
+        if (!surfing)//playerMoveAction != playerMoveMethod.Surfing
         {
             updateMount(false);
         }
@@ -298,13 +314,13 @@ public class PlayerMovement : MonoBehaviour
         return directionHeld;
     }
 
-    private IEnumerator control()
+    private IEnumerator control() //ToDo: replace with enum
     {
-        bool still;
+        bool still;//replace with playerMoveAction
         while (true)
         {
             still = true;
-                //the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
+            //the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
             if (canInput)
             {
                 if (!surfing && !bike)
