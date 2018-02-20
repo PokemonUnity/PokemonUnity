@@ -14,7 +14,7 @@ public class BumpRespawnSet : MonoBehaviour
         SaveData.currentSave.respawnScenePosition = new SeriV3(transform.position + respawnPositionOffset);
         SaveData.currentSave.respawnSceneDirection = respawnDirection;
         SaveData.currentSave.respawnText = respawnText;
-        SaveData.currentSave.respawnSceneName = Application.loadedLevelName;
+        SaveData.currentSave.respawnSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         yield return null;
     }
 }

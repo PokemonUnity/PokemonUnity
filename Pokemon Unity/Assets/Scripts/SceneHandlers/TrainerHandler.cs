@@ -305,9 +305,8 @@ public class TrainerHandler : MonoBehaviour
         nameData.text = SaveData.currentSave.playerName;
         nameDataShadow.text = nameData.text;
         //picture.texture = null; //player sprites not yet implemented.
-        string playerMoney = "" + SaveData.currentSave.playerMoney;
-        char[] playerMoneyChars = playerMoney.ToCharArray();
-        playerMoney = "";
+        string playerMoney = string.Empty;
+        char[] playerMoneyChars = SaveData.currentSave.playerMoney.ToString().ToCharArray();
         //format playerMoney into a currency style (e.g. $1,000,000)
         for (int i = 0; i < playerMoneyChars.Length; i++)
         {
@@ -319,9 +318,9 @@ public class TrainerHandler : MonoBehaviour
         }
         moneyData.text = "$" + playerMoney;//¥
         moneyDataShadow.text = moneyData.text;
-        pokedexData.text = "0"; //pokedex not yet implemented.
+        pokedexData.text = SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen;//"0"; //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
-        scoreData.text = "" + SaveData.currentSave.playerScore;
+        scoreData.text = SaveData.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;
         System.TimeSpan playTime = SaveData.currentSave.playerTime + SaveData.currentSave.startTime.Subtract(System.DateTime.UtcNow);
         timeHour.text = "";//playTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;

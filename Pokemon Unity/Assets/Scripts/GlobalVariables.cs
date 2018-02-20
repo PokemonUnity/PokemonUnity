@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GlobalVariables : MonoBehaviour
 {
     public static GlobalVariables global;
+    //public static UnityEngine.SceneManagement.Scene SceneLoaded = SceneManager.GetActiveScene();
     public enum Language
     {
         /// <summary>
@@ -42,13 +43,17 @@ public class GlobalVariables : MonoBehaviour
     //Important gameplay data
     public bool respawning = false;
 
-    void OnDestroy()
+    void CheckSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode) {
+        Debug.Log(scene.name + " : " + mode.ToString());
+    }
+
+    private void OnDestroy()
     {
-        SceneManager.sceneLoaded -= CheckLevelLoaded;
+        SceneManager.sceneLoaded -= CheckSceneLoaded;
     }
     void Awake()
     {
-        SceneManager.sceneLoaded += CheckLevelLoaded;
+        SceneManager.sceneLoaded += CheckSceneLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
@@ -213,9 +218,9 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = new System.DateTime(2015, 2, 14); //"Feb. 14th, 2015";
+        SaveData.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerMoney = 2481;
-        SaveData.currentSave.playerScore = 481;
+        SaveData.currentSave.playerScore = SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
 
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;

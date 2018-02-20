@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class InteractDoorway : MonoBehaviour
 {
@@ -229,7 +230,7 @@ public class InteractDoorway : MonoBehaviour
                     GlobalVariables.global.playerDirection = transferDirection;
                     GlobalVariables.global.playerForwardOnLoad = movesForward;
                     GlobalVariables.global.fadeIn = true;
-                    Application.LoadLevel(transferScene);
+                    SceneManager.LoadScene(transferScene);
                 }
                 else
                 {
