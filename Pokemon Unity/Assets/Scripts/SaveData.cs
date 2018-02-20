@@ -28,10 +28,13 @@ public class SaveData
     /// <summary>
     /// IDfinal = IDtrainer + IDsecret × 65536
     /// </summary>
-    /// <remarks>only the last six digits are used so the Trainer Card will display an ID No.</remarks>
+    /// <remarks>
+    /// Should be private, use "get()" and perform math
+    /// only the last six digits are used so the Trainer Card will display an ID No.
+    /// </remarks>
     public int playerID;
-    int TrainerID;
-    int SecretID;
+    private int TrainerID;
+    private int SecretID;
     public System.DateTime? fileCreationDate;
     public System.DateTime? lastSave;
     public System.DateTime startTime = new System.DateTime();
@@ -78,6 +81,12 @@ public class SaveData
     public int playerMinutes;
     public int playerSeconds;
 
+    /// <summary>
+    /// Multiple Gens/Regions can be looked-up using
+    /// <code>Array[Region,GymBadge]</code> or
+    /// <code>gymsEncountered[1,5]</code> 2nd gen/region, 6th gym badge
+    /// </summary>
+    /// <remarks>I thought there were only 8 badges?</remarks>
     public bool[] gymsEncountered = new bool[12];
     /// <summary>
     /// if <see cref="gymsBeatTime"/> is null, then value is false.
