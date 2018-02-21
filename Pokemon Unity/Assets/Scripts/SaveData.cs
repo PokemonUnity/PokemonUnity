@@ -49,7 +49,7 @@ public class SaveData
 
     public string playerOutfit;
 
-    public int playerScore;
+    public string playerScore;
 
     public string playerShirt;
     public string playerMisc;

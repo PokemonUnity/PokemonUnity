@@ -122,7 +122,6 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.playerID = 29482; //not implemented
         SaveData.currentSave.isMale = isMale;
         SaveData.currentSave.playerMoney = 2481; 
-        SaveData.currentSave.playerName = "Gold";
         SaveData.currentSave.playerLanguage = Language.English;
 
         SaveData.currentSave.playerOutfit = "hgss";
@@ -245,6 +244,7 @@ public class GlobalVariables : MonoBehaviour
         */
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        /* None of this is needed...
         //set file creation date
         string day = "";
         string month = "";
@@ -273,7 +273,7 @@ public class GlobalVariables : MonoBehaviour
         string date = month + day + System.DateTime.Now.Year;
 
         //SaveData.currentSave.fileCreationDate = "Aug. 2nd, 2017";
-        SaveData.currentSave.fileCreationDate = date;
+        SaveData.currentSave.fileCreationDate = date;*/
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -281,9 +281,8 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerMoney = 2481;
         SaveData.currentSave.playerScore = SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
-
-        SaveData.currentSave.playerScore = 481;
-        SaveData.currentSave.pokeDex = 0;
+        //SaveData.currentSave.pokeDex = 0;
+        
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;
         SaveData.currentSave.playerSeconds = 12;
