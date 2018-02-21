@@ -7,6 +7,14 @@ using UnityEngine.SceneManagement;
 public class GlobalVariables : MonoBehaviour
 {
     public static GlobalVariables global;
+    //public static UnityEngine.SceneManagement.Scene SceneLoaded = SceneManager.GetActiveScene();
+    public enum Language
+    {
+        /// <summary>
+        /// US English
+        /// </summary>
+        English = 9
+    }
 
     public Vector3 playerPosition;
     public int playerDirection;
@@ -16,6 +24,7 @@ public class GlobalVariables : MonoBehaviour
 
     public int followerIndex = 0;
 
+    private double buildNum = 0.17;
     private GameObject Player;
     private FollowerMovement FollowerSettings;
 
@@ -35,14 +44,17 @@ public class GlobalVariables : MonoBehaviour
     //Important gameplay data
     public bool respawning = false;
 
-    void OnDestroy()
+    void CheckSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode) {
+        Debug.Log(scene.name + " : " + mode.ToString());
+    }
+
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= CheckSceneLoaded;
     }
-    
     void Awake()
     {
-        SceneManager.sceneLoaded += CheckLevelLoaded;
+        SceneManager.sceneLoaded += CheckSceneLoaded;
         if (SaveData.currentSave == null)
         {
             Debug.Log("save file created");
@@ -54,14 +66,15 @@ public class GlobalVariables : MonoBehaviour
 
             debugText = this.transform.Find("DEBUG").GetComponent<GUIText>();
             debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<GUIText>();
-
+            //debugText.text = "build " + buildNum;
+            //debugTextShadow.text = debugText.text;
             Object.DontDestroyOnLoad(this.gameObject);
 
 
             if (!PlayerPrefs.HasKey("textSpeed") || !PlayerPrefs.HasKey("musicVolume") ||
                 !PlayerPrefs.HasKey("sfxVolume") ||
                 !PlayerPrefs.HasKey("frameStyle") || !PlayerPrefs.HasKey("battleScene") ||
-                !PlayerPrefs.HasKey("battleStyle") ||
+                !PlayerPrefs.HasKey("customSprites") ||
                 !PlayerPrefs.HasKey("screenSize") || !PlayerPrefs.HasKey("fullscreen"))
             {
                 //if a playerpref isn't set
@@ -73,7 +86,7 @@ public class GlobalVariables : MonoBehaviour
                 PlayerPrefs.SetFloat("sfxVolume", sVol);
                 PlayerPrefs.SetInt("frameStyle", 1);
                 PlayerPrefs.SetInt("battleScene", 1);
-                PlayerPrefs.SetInt("battleStyle", 0);
+                PlayerPrefs.SetInt("customSprites", 0);
                 PlayerPrefs.SetInt("screenSize", 1);
                 PlayerPrefs.SetInt("fullscreen", 0);
                 PlayerPrefs.Save();
@@ -83,43 +96,67 @@ public class GlobalVariables : MonoBehaviour
             RenderTexture.active = GUIDisplay;
             GL.Clear(false, true, new Color(0.0f, 0.0f, 0.0f, 0.0f));
 
-            SetDEBUGFileData();
+            CreateFileData("Ethan",true);
+            //CreateFileData("Lyra",false);
         }
         else if (global != this)
         {
             Destroy(gameObject);
         }
     }
-
-    public void SetDEBUGFileData()
+    public IEnumerator GetDebugText()
+    {
+        yield return debugText.text;
+    }
+    public void EnableDebugMode()
+    {
+        SaveData.currentSave.debugMode = true;
+        debugText.text = "build " + buildNum + "\nDebugging Mode Enabled";
+        debugTextShadow.text = debugText.text;
+    }
+    public void CreateFileData(string name, bool isMale)
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        SaveData.currentSave.playerName = "Ethan";
-        SaveData.currentSave.playerID = 29482;
-        SaveData.currentSave.isMale = true;
+        //EnableDebugMode();
+        SaveData.currentSave.playerName = name;
+        SaveData.currentSave.playerID = 29482; //not implemented
+        SaveData.currentSave.isMale = isMale;
+        SaveData.currentSave.playerMoney = 2481; 
+        SaveData.currentSave.playerLanguage = Language.English;
 
         SaveData.currentSave.playerOutfit = "hgss";
 
+        SaveData.currentSave.playerShirt = "Ethan's Shirt";
+        SaveData.currentSave.playerMisc = null;
+        SaveData.currentSave.playerHat = "Ethan's Hat";
+        //customizables not implemented
+
+        if(isMale == true){
+            SaveData.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
+        } else {
+            SaveData.currentSave.setCVariable("male",0);
+        }
+
         //PC test
         SaveData.currentSave.PC.addPokemon(new Pokemon(006, null, Pokemon.Gender.CALCULATE, 3, true, "Poké Ball", "",
-            "Gold",
+            name,
             Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabase.getPokemon(6).GenerateMoveset(42), new int[4]));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", SaveData.currentSave.playerName, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", SaveData.currentSave.playerName, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", SaveData.currentSave.playerName, -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", SaveData.currentSave.playerName, -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", SaveData.currentSave.playerName, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", name, -1));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", name, -1));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", SaveData.currentSave.playerName, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", name, 0));
         SaveData.currentSave.PC.addPokemon(new Pokemon(607, Pokemon.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
         SaveData.currentSave.PC.boxes[1][1].addExp(7100);
-        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", SaveData.currentSave.playerName, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", SaveData.currentSave.playerName, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball",
-            "", SaveData.currentSave.playerName,
+        SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball", //starters not implemented
+            "", name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));
 
@@ -157,7 +194,7 @@ public class GlobalVariables : MonoBehaviour
 
 
         SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
-            SaveData.currentSave.playerName,
+            name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
 
@@ -200,19 +237,56 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.Bag.addItem("Hyper Potion", 1);
 
 
+        /*
         //debug code to test custom box names/textures
-        //	PC.boxName[1] = "Grassy Box";
-        //	PC.boxTexture[2] = 12;
+        PC.boxName[1] = "Grassy Box";
+        PC.boxTexture[2] = 12;
+        */
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /* None of this is needed...
+        //set file creation date
+        string day = "";
+        string month = "";
+        if(System.DateTime.Now.Day == 1){day = "1st, ";}
+        else if(System.DateTime.Now.Day == 2){day = "2nd, ";}
+        else if(System.DateTime.Now.Day == 3){day = "3rd, ";}
+        else if(System.DateTime.Now.Day == 21){day = "21st, ";}
+        else if(System.DateTime.Now.Day == 22){day = "22nd, ";}
+        else if(System.DateTime.Now.Day == 23){day = "23rd, ";}
+        else if(System.DateTime.Now.Day == 31){day = "31st, ";}
+        else{day = System.DateTime.Now.Day.ToString("D") + "th, ";}
+
+        if(System.DateTime.Now.Month == 1){month = "Jan. ";}
+        else if(System.DateTime.Now.Month == 2){month = "Feb. ";}
+        else if(System.DateTime.Now.Month == 3){month = "Mar. ";}
+        else if(System.DateTime.Now.Month == 4){month = "Apr. ";}
+        else if(System.DateTime.Now.Month == 5){month = "May ";}
+        else if(System.DateTime.Now.Month == 6){month = "June ";}
+        else if(System.DateTime.Now.Month == 7){month = "July ";}
+        else if(System.DateTime.Now.Month == 8){month = "Aug. ";}
+        else if(System.DateTime.Now.Month == 9){month = "Sep. ";}
+        else if(System.DateTime.Now.Month == 10){month = "Oct. ";}
+        else if(System.DateTime.Now.Month == 11){month = "Nov. ";}
+        else if(System.DateTime.Now.Month == 12){month = "Dec. ";} //probably the worst way to do this but I have no idea why ToString("MMM") doesn't work
+
+        string date = month + day + System.DateTime.Now.Year;
+
+        //SaveData.currentSave.fileCreationDate = "Aug. 2nd, 2017";
+        SaveData.currentSave.fileCreationDate = date;*/
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = "Feb. 14th, 2015";
+        SaveData.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerMoney = 2481;
-        SaveData.currentSave.playerScore = 481;
-
+        SaveData.currentSave.playerScore = SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
+        //SaveData.currentSave.pokeDex = 0;
+        
         SaveData.currentSave.playerHours = 0;
         SaveData.currentSave.playerMinutes = 7;
         SaveData.currentSave.playerSeconds = 12;
+        SaveData.currentSave.playerTime = new System.TimeSpan(0,7,12);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -227,17 +301,25 @@ public class GlobalVariables : MonoBehaviour
             true, true, false, false, false, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.gymsBeatTime = new string[]
+        SaveData.currentSave.gymsBeatTime = new System.DateTime?[]
         {
-            "Apr. 27th, 2015", "Apr. 30th, 2015", null, null, null, "May. 1st, 2015",
+            new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
             null, null, null, null, null, null
         };
         ////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Replace with 
+    /// void CheckLevelLoaded(Scene scene, LoadSceneMode mode)
+    /// </remarks>
     void CheckLevelLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "startup")
+        Debug.Log(scene.name + " : " + mode.ToString());
+        if (SceneManager.GetActiveScene().name != "startup")
         {
             if (global == this)
             {

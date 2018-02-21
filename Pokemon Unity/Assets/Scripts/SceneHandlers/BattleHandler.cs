@@ -11,7 +11,7 @@ public class BattleHandler : MonoBehaviour
 
     private DialogBoxHandlerNew Dialog;
 
-    private AudioSource BattleAudio;
+    //private AudioSource BattleAudio;
     public AudioClip defaultTrainerBGM;
     public int defaultTrainerBGMLoopStart = 577000;
 
@@ -144,7 +144,7 @@ public class BattleHandler : MonoBehaviour
         itemListArrowPrev,
         itemListArrowNext;
 
-    private GameObject[] itemListButton = new GameObject[8];
+    //private GameObject[] itemListButton = new GameObject[8]; //unused?
     private Image[] itemListIcon = new Image[8];
 
     private Text[]
@@ -430,18 +430,18 @@ public class BattleHandler : MonoBehaviour
         MISTY
     }
 
-    private WeatherEffect weather = WeatherEffect.NONE;
-    private int weatherTurns = 0;
-    private TerrainEffect terrain = TerrainEffect.NONE;
-    private int terrainTurns = 0;
-    private int gravityTurns = 0;
-    private int[] reflectTurns = new int[2];
-    private int[] lightScreenTurns = new int[2];
-    private int[] tailwindTurns = new int[2];
-    private bool[] stealthRocks = new bool[2];
-    private bool[] stickyWeb = new bool[2];
-    private int[] spikesLayers = new int[2];
-    private int[] toxicSpikesLayers = new int[2];
+    private WeatherEffect weather = WeatherEffect.NONE; //unused
+    private int weatherTurns = 0; //unused
+    private TerrainEffect terrain = TerrainEffect.NONE; //unused
+    private int terrainTurns = 0; //unused
+    private int gravityTurns = 0; //unused
+    private int[] reflectTurns = new int[2]; //unused
+    private int[] lightScreenTurns = new int[2]; //unused
+    private int[] tailwindTurns = new int[2]; //unused
+    private bool[] stealthRocks = new bool[2]; //unused
+    private bool[] stickyWeb = new bool[2]; //unused
+    private int[] spikesLayers = new int[2]; //unused
+    private int[] toxicSpikesLayers = new int[2]; //unused
 
     //Pokemon Effects
     private bool[] confused = new bool[6];
@@ -463,13 +463,13 @@ public class BattleHandler : MonoBehaviour
 
     //Turn Feedback Data
     private bool[] pokemonHasMoved = new bool[6];
-    private string[] previousMove = new string[6];
+    private string[] previousMove = new string[6]; //why is this unused
 
     void Awake()
     {
         Dialog = transform.GetComponent<DialogBoxHandlerNew>();
 
-        BattleAudio = transform.GetComponent<AudioSource>();
+        //BattleAudio = transform.GetComponent<AudioSource>();
 
         playerBase = transform.Find("player0").GetComponent<Image>();
         opponentBase = transform.Find("opponent0").GetComponent<Image>();
@@ -5121,7 +5121,7 @@ public class BattleHandler : MonoBehaviour
                                                 pokemonType3[targetIndex]);
                                         damageToDeal *= superEffectiveModifier;
                                         //apply offense/defense boosts.
-                                        float damageBeforeMods = damageToDeal;
+                                        //float damageBeforeMods = damageToDeal;
                                         if (commandMove[movingPokemon].getCategory() == MoveData.Category.PHYSICAL)
                                         {
                                             if (applyCritical)

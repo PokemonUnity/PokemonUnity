@@ -17,7 +17,7 @@ node_modules/
 ExportedObj/
 *.csproj
 *.unityproj
-*.sln
+#*.sln
 *.suo
 *.tmp
 *.user
@@ -44,6 +44,11 @@ sysinfo.txt
 Thumbs.db
 Thumbs.db.meta
 
+# Magix Vegas files
+*.sfk
+*.sfl
+
+# *.pdn
 # Git Journal Files
 _git-journal
 git-journal.bash-completion

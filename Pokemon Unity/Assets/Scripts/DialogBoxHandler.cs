@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DialogBoxHandler : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class DialogBoxHandler : MonoBehaviour
     }
 
     public string DialogBoxString;
-    private string[] DialogBoxStringArray;
+    //private string[] DialogBoxStringArray;
 
     private GameObject DialogBox;
     private GUITexture DialogBoxTexture;
@@ -32,7 +33,6 @@ public class DialogBoxHandler : MonoBehaviour
     private AudioSource DialogAudio;
 
     private float charPerSec = 60f;
-    public float scrollSpeed = 0.1f;
 
     public int chosenIndex;
 
@@ -68,9 +68,9 @@ public class DialogBoxHandler : MonoBehaviour
         //link the ChoiceBoxSelect variable to the Texture Component
         ChoiceBoxSelect = ChoiceBox.transform.Find("BoxSelect").GetComponent<GUITexture>();
 
-        DialogAudio = this.gameObject.GetComponent<AudioSource>();
+        //DialogAudio = this.gameObject.GetComponent<AudioSource>();
 
-        DialogBoxStringArray = DialogBoxString.Split('\\');
+        //DialogBoxStringArray = DialogBoxString.Split('\\');
 
         defaultDialogLines = Mathf.RoundToInt((DialogBoxBorder.pixelInset.height - 16f) / 14f);
         defaultChoiceY = Mathf.FloorToInt(ChoiceBoxTexture.pixelInset.y);
@@ -87,7 +87,41 @@ public class DialogBoxHandler : MonoBehaviour
             ChoiceBox.SetActive(false);
         }
     }
-
+    /*public void scrollDialogText(string scrollText)
+    {
+        scrollDialogText(scrollText, 1);
+    }*/
+    /*public IEnumerator scrollDialogText(string scrollText) //my failed attempt at making scrolling text
+    {
+        //var newDialog = new List<string>();
+        string[] text = DialogBoxText.text.Split("\n".ToCharArray());
+        string original = DialogBoxText.text;
+        int distance = 14; //* lines;
+        int disableRender = 10; //* lines;
+        float originalValue = DialogBoxText.pixelOffset.y;
+        float scrollSpeed = 0.5f;
+		float increment = 0;
+		while (increment < 1){
+			increment += (1/scrollSpeed)*Time.deltaTime;
+			if (increment > 1){
+				increment = 1;}
+			DialogBoxText.pixelOffset = new Vector2(14, (DialogBoxText.pixelOffset.y+distance)*increment);
+            if(DialogBoxText.pixelOffset.y == originalValue+disableRender){
+                Debug.Log(text);
+                text[0] = " ";
+                DialogBoxText.text = string.Join("\n", text);
+            }
+            else if(DialogBoxText.pixelOffset.y == originalValue+distance){
+                //newDialog.Add(text[1]);
+                text[0] = text[1]; //there should never be more than 2 lines, as this is intended for event dialogue.
+                DialogBoxText.text = string.Join("\n", text);
+                DialogBoxText.pixelOffset = new Vector2(14, originalValue);
+                drawText("\n" + scrollText);
+                yield return null;
+                break;
+            }
+        }
+    }*/
     public void drawDialogBox()
     {
         drawDialogBox(defaultDialogLines);
@@ -370,9 +404,11 @@ public class DialogBoxHandler : MonoBehaviour
             }
         }
     }
+    
 
-    public IEnumerator scrollText()
+    public IEnumerator scrollText(float scrollSpeed) //is this broken or some shit? commenting out since it's not used and freezes the game.
     {
+        SfxHandler.Play(selectClip);
         float textPosDestination = DialogBoxText.pixelOffset.y + 14f; //the box must be scrolled up 14
         while (DialogBoxText.pixelOffset.y < textPosDestination)
         {
@@ -380,8 +416,8 @@ public class DialogBoxHandler : MonoBehaviour
             {
                 //if text is about to spill over the top
                 string[] textMod = DialogBoxText.text.Split("\n"[0]); //remove the top line of text.
-                DialogBoxText.text = textMod[1] + "\n" + textMod[2];
-                    //this involves splitting the string by it's line breaks
+                DialogBoxText.text = textMod[1] + "\n"; //new line for using drawTextSilent
+                Debug.Log("scrolling text");
                 DialogBoxTextShadow.text = DialogBoxText.text;
                 textPosDestination -= 14f; //reduce destination and position by 14 to account for the removed line. 
                 DialogBoxText.pixelOffset = new Vector2(DialogBoxText.pixelOffset.x, DialogBoxText.pixelOffset.y - 14f);

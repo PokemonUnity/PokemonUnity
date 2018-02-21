@@ -457,6 +457,18 @@ public class CustomEventEditor : Editor
                     eventDescription += ", Jump To " + int0_Prop.intValue + " on Loss";
                 }
                 break;
+
+            case CustomEventDetails.CustomEventType.ReturnToTitle:
+			    eventDescription = "Return to Title Screen";
+			    break;
+
+		    case CustomEventDetails.CustomEventType.JumpTo:
+			    eventDescription = "Jump To "+int0_Prop.intValue;;
+			    break;
+
+		    case CustomEventDetails.CustomEventType.MoveCamera:
+			    eventDescription = "Move camera to "+ints_Prop.GetArrayElementAtIndex(0).intValue+", "+ints_Prop.GetArrayElementAtIndex(1).intValue+", "+ints_Prop.GetArrayElementAtIndex(2).intValue+"";;
+			    break;
         }
 
 
@@ -707,6 +719,19 @@ public class CustomEventEditor : Editor
                     int0_Prop.intValue = EditorGUILayout.IntField(new GUIContent("Jump To on Loss"), int0_Prop.intValue);
                 }
                 break;
+
+            case CustomEventDetails.CustomEventType.JumpTo:
+			    EditorGUILayout.PropertyField( int0_Prop, new GUIContent("Jump to Tree:") );
+			    break;
+
+		    case CustomEventDetails.CustomEventType.MoveCamera:
+			    ints_Prop.arraySize = 4;
+                EditorGUILayout.PropertyField(runSimul_Prop, new GUIContent("Run Simultaneously"));
+			    EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(0), new GUIContent("X"));
+                EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(1), new GUIContent("Y"));
+                EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(2), new GUIContent("Z"));
+                EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Speed"));
+			    break;
         }
 
         /* Draw a line */

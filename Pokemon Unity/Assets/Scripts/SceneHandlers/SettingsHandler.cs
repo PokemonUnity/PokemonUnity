@@ -24,9 +24,9 @@ public class SettingsHandler : MonoBehaviour
         battleScene,
         battleSceneShadow,
         battleSceneHighlight,
-        battleStyle,
-        battleStyleShadow,
-        battleStyleHighlight,
+        customSprites,
+        customSpritesShadow,
+        customSpritesHighlight,
         screenSize,
         screenSizeShadow,
         screenSizeHighlight,
@@ -54,7 +54,7 @@ public class SettingsHandler : MonoBehaviour
         "Adjust the volume of the sound effects.",
         "Change the appearance of the text boxes.",
         "Display animations during battles.",
-        "Switch before opponent's next Pokemon?",
+        "Use custom sprites in StreamingAssets.",
         "Adjust the resolution of the screen.",
         "Set the fullscreen mode."
     };
@@ -88,9 +88,9 @@ public class SettingsHandler : MonoBehaviour
         battleScene = transform.Find("BattleScene").GetComponent<GUIText>();
         battleSceneShadow = battleScene.transform.Find("BattleSceneShadow").GetComponent<GUIText>();
         battleSceneHighlight = battleScene.transform.Find("BattleSceneHighlight").GetComponent<GUIText>();
-        battleStyle = transform.Find("BattleStyle").GetComponent<GUIText>();
-        battleStyleShadow = battleStyle.transform.Find("BattleStyleShadow").GetComponent<GUIText>();
-        battleStyleHighlight = battleStyle.transform.Find("BattleStyleHighlight").GetComponent<GUIText>();
+        customSprites = transform.Find("CustomSprites").GetComponent<GUIText>();
+        customSpritesShadow = customSprites.transform.Find("CustomSpritesShadow").GetComponent<GUIText>();
+        customSpritesHighlight = customSprites.transform.Find("CustomSpritesHighlight").GetComponent<GUIText>();
         screenSize = transform.Find("ScreenSize").GetComponent<GUIText>();
         screenSizeShadow = screenSize.transform.Find("ScreenSizeShadow").GetComponent<GUIText>();
         screenSizeHighlight = screenSize.transform.Find("ScreenSizeHighlight").GetComponent<GUIText>();
@@ -302,13 +302,20 @@ public class SettingsHandler : MonoBehaviour
         {
             if (selectedOptionIndex[selectedOption] == 0)
             {
-                battleStyleHighlight.text = "Switch";
-                battleStyleHighlight.pixelOffset = new Vector2(171, 79);
+                customSpritesHighlight.text = "Off";
+                customSpritesHighlight.pixelOffset = new Vector2(186, 79);
+                PlayerPrefs.SetInt("customSprites", selectedOptionIndex[5]);
+                SaveData.currentSave.playerOutfit = "hgss";
+                PlayerMovement.player.updateAnimation("walk", 7);
+                Debug.Log("Disabled custom sprites");
             }
             else
             {
-                battleStyleHighlight.text = "Set";
-                battleStyleHighlight.pixelOffset = new Vector2(217, 79);
+                customSpritesHighlight.text = "On";
+                SaveData.currentSave.playerOutfit = "custom";
+                PlayerMovement.player.updateAnimation("walk", 7);
+                customSpritesHighlight.pixelOffset = new Vector2(217, 79);
+                Debug.Log("Enabled custom sprites");
             }
         }
         else if (selectedOption == 6)
@@ -394,7 +401,7 @@ public class SettingsHandler : MonoBehaviour
             PlayerPrefs.SetFloat("sfxVolume", sVol);
             PlayerPrefs.SetInt("frameStyle", selectedOptionIndex[3] + 1);
             PlayerPrefs.SetInt("battleScene", selectedOptionIndex[4]);
-            PlayerPrefs.SetInt("battleStyle", selectedOptionIndex[5]);
+            PlayerPrefs.SetInt("customSprites", selectedOptionIndex[5]);
             PlayerPrefs.SetInt("screenSize", selectedOptionIndex[6] + 1);
             PlayerPrefs.SetInt("fullscreen", selectedOptionIndex[7]);
         }
@@ -405,7 +412,7 @@ public class SettingsHandler : MonoBehaviour
             selectedOptionIndex[2] = Mathf.RoundToInt(Mathf.Sqrt(PlayerPrefs.GetFloat("sfxVolume")) * 20f);
             selectedOptionIndex[3] = PlayerPrefs.GetInt("frameStyle") - 1;
             selectedOptionIndex[4] = PlayerPrefs.GetInt("battleScene");
-            selectedOptionIndex[5] = PlayerPrefs.GetInt("battleStyle");
+            selectedOptionIndex[5] = PlayerPrefs.GetInt("customSprites");
             selectedOptionIndex[6] = PlayerPrefs.GetInt("screenSize") - 1;
             selectedOptionIndex[7] = PlayerPrefs.GetInt("fullscreen");
         }
@@ -426,7 +433,7 @@ public class SettingsHandler : MonoBehaviour
         PlayerPrefs.SetFloat("sfxVolume", sVol);
         PlayerPrefs.SetInt("frameStyle", selectedOptionIndex[3] + 1);
         PlayerPrefs.SetInt("battleScene", selectedOptionIndex[4]);
-        PlayerPrefs.SetInt("battleStyle", selectedOptionIndex[5]);
+        PlayerPrefs.SetInt("customSprites", selectedOptionIndex[5]);
         PlayerPrefs.SetInt("screenSize", selectedOptionIndex[6] + 1);
         PlayerPrefs.SetInt("fullscreen", selectedOptionIndex[7]);
         PlayerPrefs.Save();

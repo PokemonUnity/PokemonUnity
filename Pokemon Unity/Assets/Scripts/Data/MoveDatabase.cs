@@ -10,6 +10,7 @@ public static class MoveDatabase
 
     private static MoveData[] moves = new MoveData[]
     {
+        //null,
         new MoveData("Absorb", PokemonData.Type.GRASS, MoveData.Category.SPECIAL, 20, 1f, 25, MoveData.Target.ADJACENT,
             0, false, true, false, false, new MoveData.Effect[] {MoveData.Effect.HPDrain}, new float[] {1},
             MoveData.Contest.CLEVER, 4, 0, ""),
@@ -761,5 +762,10 @@ public static class MoveDatabase
             i += 1;
         }
         return result;
+    }
+
+    public static MoveData getMove(int MoveId)
+    {
+        return getMove("PlaceHolder"); //just doing this until i can fix it later
     }
 }

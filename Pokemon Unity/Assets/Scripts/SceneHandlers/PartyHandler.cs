@@ -50,7 +50,7 @@ public class PartyHandler : MonoBehaviour
     private GUITexture[] status = new GUITexture[6];
     private GUITexture[] item = new GUITexture[6];
 
-    private AudioSource PartyAudio;
+    //private AudioSource PartyAudio;
     public AudioClip selectClip;
 
     private int currentPosition;
@@ -62,7 +62,7 @@ public class PartyHandler : MonoBehaviour
     {
         Dialog = transform.GetComponent<DialogBoxHandler>();
         //sceneTransition = transform.GetComponent<SceneTransition>();
-        PartyAudio = transform.GetComponent<AudioSource>();
+        //PartyAudio = transform.GetComponent<AudioSource>();
 
         cancel = transform.Find("Cancel").GetComponent<GUITexture>();
 

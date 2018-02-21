@@ -6,7 +6,7 @@ using System.Collections;
 public class GrassPatchHandler : MonoBehaviour
 {
     private GameObject overlay;
-    private AudioSource walkSound;
+    //private AudioSource walkSound;
     public AudioClip walkClip;
 
     /*/    DEBUG
@@ -15,7 +15,7 @@ public class GrassPatchHandler : MonoBehaviour
     void Awake()
     {
         overlay = transform.Find("Overlay").gameObject;
-        walkSound = transform.GetComponent<AudioSource>();
+        //walkSound = transform.GetComponent<AudioSource>();
     }
 
     void Start()
@@ -33,7 +33,7 @@ public class GrassPatchHandler : MonoBehaviour
             if (other.transform.parent.name == "Player")
             {
                 SfxHandler.Play(walkClip, Random.Range(0.85f, 1.1f));
-                StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Grass));
+                StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Method.WALK));//"Grass"?
             }
         }
     }

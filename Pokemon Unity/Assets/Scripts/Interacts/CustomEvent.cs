@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using System.Collections;
-
 public class CustomEvent : MonoBehaviour
 {
     public CustomEventTree[] interactEventTrees;
@@ -513,7 +512,6 @@ public class CustomEvent : MonoBehaviour
             case CustomEventDetails.CustomEventType.SetCVariable:
                 SaveData.currentSave.setCVariable(currentEvent.string0, currentEvent.float0);
                 break;
-
             case (CustomEventDetails.CustomEventType.LogicCheck):
                 bool passedCheck = false;
 
@@ -655,6 +653,17 @@ public class CustomEvent : MonoBehaviour
                 }
 
                 break;
+            case CustomEventDetails.CustomEventType.ReturnToTitle:
+			    UnityEngine.SceneManagement.SceneManager.LoadScene("startup");
+			    break;
+
+		    case CustomEventDetails.CustomEventType.JumpTo:
+			    JumpToTree(currentEvent.int0);
+			    break;
+
+            case CustomEventDetails.CustomEventType.MoveCamera:
+                yield return StartCoroutine(PlayerMovement.player.moveCameraTo(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]), currentEvent.float0));
+                break;
         }
     }
 
@@ -704,7 +713,10 @@ public class CustomEventDetails
         SetActive, //object0: game object to activate
         SetCVariable, //string0: CVariable name | float0: new value
         LogicCheck, //logic | float0: check value | string0: CVariable name
-        TrainerBattle //object0: trainer script | bool0: allowed to lose | int0: tree to jump to on loss
+        TrainerBattle, //object0: trainer script | bool0: allowed to lose | int0: tree to jump to on loss
+        ReturnToTitle,	//none: brings you to startup file
+		JumpTo,			//none: jump to tree without input | int0: tree to jump to
+		MoveCamera			//none: moves the player's camera to the specified location
     }
 
     public enum Direction
