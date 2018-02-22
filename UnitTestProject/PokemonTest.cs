@@ -25,7 +25,12 @@ namespace UnitTestProject
         public void Pokemon_MakeFainted() { Assert.Fail(); }
 
         [TestMethod]
-        public void Pokemon_SetPokerus_To_Infected() { Assert.Fail(); }
+        public void Pokemon_SetPokerus_To_Infected()
+        {
+            Pokemon pokemon = new Pokemon();
+            pokemon.GivePokerus();
+            Assert.AreEqual(true, pokemon.PokerusStage().Value);
+        }
         #endregion
 
         #region Level/stats...

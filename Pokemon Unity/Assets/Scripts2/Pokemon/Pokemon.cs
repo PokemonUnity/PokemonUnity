@@ -63,78 +63,77 @@ public class Pokemon //: ePokemons //PokemonData
     /// <remarks>
     /// ToDo: Custom class?
     /// 3 Values; Not Infected, Cured, Infected.
-    /// Can be a enum, for 1 of 3 values
-    /// or if null, not infected; 
-    /// true infected, and false cured?
+    /// [0] = Pokerus Strain; [1] = Days until cured.
+    /// if ([0] && [1] == 0) => Not Infected
     /// </remarks>
-    private int Pokerus;
+    private int[] pokerus = new int[] { 0, 0 };
     /// <summary>
     /// Held item
     /// </summary>
-    private eItems.Item Item;
+    private eItems.Item item;
     /// <summary>
     /// Consumed held item (used in battle only)
     /// </summary>
-    private bool ItemRecycle;
+    private bool itemRecycle;
     /// <summary>
     /// Resulting held item (used in battle only)
     /// </summary>
-    private bool ItemInitial;
+    private bool itemInitial;
     /// <summary>
     /// Where Pokemon can use Belch (used in battle only)
     /// </summary>
-    private bool Belch;
+    private bool belch;
     /// <summary>
     /// Mail?...
     /// </summary>
-    private bool Mail;
+    private bool mail;
     /// <summary>
     /// The pokemon fused into this one.
     /// </summary>
-    private int Fused;
+    private int fused;
     /// <summary>
     /// Nickname
     /// </summary>
-    private string Name;
+    private string name;
     /// <summary>
     /// Current experience points
     /// </summary>
-    private int Exp;
+    private int exp;
     /// <summary>
     /// Current happiness
     /// </summary>
-    private int Happiness;
+    private int happiness;
     /// <summary>
     /// Status problem (PBStatuses)
     /// </summary>
     /// ToDo: Status Class
-    private int Status;
+    private int status;
     /// <summary>
     /// Sleep count/Toxic flag
     /// </summary>
     /// ToDo: Add to Status Class
-    private int StatusCount;
+    private int statusCount;
     /// <summary>
     /// Steps to hatch egg, 0 if Pokemon is not an egg
     /// </summary>
-    private int EggSteps;
+    private int eggSteps;
     /// <summary>
     /// Moves (PBMove)
     /// </summary>
     /// ToDo Move class, not enum
-    private eMoves.Move[] Moves = new eMoves.Move[] { eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
+    private eMoves.Move[] moves = new eMoves.Move[] { eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
     /// <summary>
     /// The moves known when this Pokemon was obtained
     /// </summary>
-    private eMoves.Move[] FirstMoves = new eMoves.Move[4];
+    private eMoves.Move[] firstMoves = new eMoves.Move[4];
     /// <summary>
     /// Ball used
     /// </summary>
-    private eItems.Item BallUsed;
+    private eItems.Item ballUsed;
     /// <summary>
     /// Markings
     /// </summary>
-    private bool[] Markings;
+    private bool[] markings;
     /// <summary>
     /// Manner Obtained:
     /// </summary>
@@ -156,11 +155,11 @@ public class Pokemon //: ePokemons //PokemonData
     /// Doubles as "HatchedMap"
     /// ToDo: Make this an enum
     /// </remarks>
-    private int ObtainMap;
+    private int obtainMap;
     /// <summary>
     /// Replaces the obtain map's name if not null
     /// </summary>
-    private string ObtainString;
+    private string obtainString;
     /// <remarks>
     /// Wouldnt this change again when traded to another trainer?
     /// </remarks>
@@ -177,33 +176,33 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Forces the first/second/hidden (0/1/2) ability
     /// </summary>
-    private eAbility.Ability[] AbilityFlag;
+    private eAbility.Ability[] abilityFlag;
     /// <summary>
     /// </summary>
     /// <remarks>
     /// isMale; null = genderless?
     /// </remarks>
-    private bool GenderFlag;
+    private bool genderFlag;
     /// <summary>
     /// Forces a particular nature
     /// </summary>
     /// ToDo: Redo NatureDatabase Class
-    private NatureDatabase.Nature NatureFlag;
+    private NatureDatabase.Nature natureFlag;
     /// <summary>
     /// Forces the shininess
     /// </summary>
-    private bool ShinyFlag;
+    private bool shinyFlag;
     /// <summary>
     /// Array of ribbons
     /// </summary>
     /// <remarks>
     /// Make 2d Array (Array[,]) separated by regions/Gens
     /// </remarks>
-    private bool[] Ribbons;
+    private bool[] ribbons;
     /// <summary>
     /// Contest stats
     /// </summary>
-    private int Cool, Beauty, Cute, Smart, Tough, Sheen;
+    private int cool, beauty, cute, smart, tough, sheen;
     /// <summary>
     /// Max total EVs
     /// </summary>
@@ -304,4 +303,89 @@ public class Pokemon //: ePokemons //PokemonData
     }
     #endregion
 
+    #region Level
+    #endregion
+
+    #region Gender
+    #endregion
+
+    #region Ability
+    #endregion
+
+    #region Nature
+    #endregion
+
+    #region Shininess
+    #endregion
+
+    #region Pokerus
+    /// <summary>
+    /// Returns the full value of this Pokemon's Pokerus
+    /// </summary>
+    /// <returns>
+    /// 3 Values; Not Infected, Cured, Infected.
+    /// [0] = Pokerus Strain; [1] = Days until cured.
+    /// if ([0] && [1] == 0) => Not Infected
+    /// </returns>
+    public int[] Pokerus()
+    {
+        return this.pokerus;
+    }
+
+    /// <summary>
+    /// Returns the Pokerus infection stage for this Pokemon
+    /// </summary>
+    /// <returns></returns>
+    public int PokerusStrain()
+    {
+        return this.pokerus[0] / 16;
+    }
+
+    /// <summary>
+    /// Returns the Pokerus infection stage for this Pokemon
+    /// </summary>
+    /// <returns>
+    /// if null, not infected; 
+    /// true infected, and false cured?
+    /// </returns>
+    public bool? PokerusStage()
+    {
+        if (pokerus[0] == 0 && pokerus[1] == 0) return null;        // Not Infected
+        if (pokerus[0] > 0 && pokerus[1] == 0) return false;        // Cured; (pokerus[0] % 16) == 0
+        return true;                                                // Infected
+    }
+
+    /// <summary>
+    /// Gives this Pokemon Pokerus (either the specified strain or a random one)
+    /// </summary>
+    /// <param name="strain"></param>
+    public void GivePokerus(int strain = 0)
+    {
+        if (this.PokerusStage().HasValue ? !this.PokerusStage().Value : false) return; // Cant re-infect a cured Pokemon
+        if (strain <= 0 || strain >= 16) strain = new Random().Next(1, 16);
+        pokerus[1] = 1 + (strain % 4);
+        pokerus[0] |= strain; //strain << 4
+    }
+
+    /// <summary>
+    /// Resets the infection time for this Pokemon's Pokerus (even if cured)
+    /// </summary>
+    public void ResetPokerusTime()
+    {
+        if (pokerus[0] == 0) return;
+        pokerus[1] = 1 + (pokerus[0] % 4);
+    }
+
+    /// <summary>
+    /// Reduces the time remaining for this Pokemon's Pokerus (if infected)
+    /// </summary>
+    public void LowerPokerusCount()
+    {
+        if (this.PokerusStage().HasValue ? !this.PokerusStage().Value : true) return;
+        pokerus[1] -= 1;
+    }
+    #endregion
+
+    #region 
+    #endregion
 }
