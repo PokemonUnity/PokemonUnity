@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-    class Pokemon //: ePokemons //PokemonData
+public class Pokemon //: ePokemons //PokemonData
 {
     #region Variables
     /// <summary>
@@ -55,6 +55,7 @@ using System.Text;
     /// Deprecated
     /// </summary>
     /// ToDo: Remove this, and fetch from Trainer Class?
+    /// Can also store hexadecimal/binary values in int
     private int TrainerId;
     /// <summary>
     /// Pokerus strain and infection time
@@ -219,14 +220,14 @@ using System.Text;
     static readonly int NAMELIMIT = 10;
     #endregion
 
-    Pokemon() { }
+    public Pokemon() { }
 
     /// <summary>
     /// Uses PokemonData to initialize a Pokemon from base stats
     /// </summary>
     /// <param name="pokemon"></param>
     /// ToDo: Inherit PokemonData 
-    Pokemon(ePokemons.Pokemon pokemon) //: base(pokemon)
+    public Pokemon(ePokemons.Pokemon pokemon) //: base(pokemon)
     { }
 
     #region Ownership, obtained information
