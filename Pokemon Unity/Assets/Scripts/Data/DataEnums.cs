@@ -974,7 +974,7 @@ using System.Text;
         /// <remarks>Can now code with strings or int and
         /// access the same value.</remarks>
         public enum Move {
-
+            NONE = 0
         }
 	}
 
