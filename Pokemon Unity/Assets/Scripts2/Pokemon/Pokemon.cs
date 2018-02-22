@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-    class Pokemon
+    class Pokemon //: PokemonData
 {
     #region Variables
     /// <summary>
@@ -41,7 +41,7 @@ using System.Text;
     /// <summary>
     /// Effort Values
     /// </summary>
-    private int EV;
+    private int[] EV = new int[6];
     /// <summary>
     /// Species (National Pokedex number)
     /// </summary>
@@ -122,7 +122,7 @@ using System.Text;
     /// <summary>
     /// The moves known when this Pokemon was obtained
     /// </summary>
-    private eMoves.Move[] FirstMoves;
+    private eMoves.Move[] FirstMoves = new eMoves.Move[4];
     /// <summary>
     /// Ball used
     /// </summary>
@@ -141,7 +141,7 @@ using System.Text;
         EGG = 1,
         TRADED = 2,
         /// <summary>
-        /// NPC?
+        /// NPC-Event?
         /// </summary>
         FATEFUL_ENCOUNTER = 4
     }
@@ -183,8 +183,8 @@ using System.Text;
     /// <summary>
     /// Forces a particular nature
     /// </summary>
-    /// ToDo: enum
-    private int NatureFlag;
+    /// ToDo: Redo NatureDatabase Class
+    private NatureDatabase.Nature NatureFlag;
     /// <summary>
     /// Forces the shininess
     /// </summary>
@@ -200,10 +200,31 @@ using System.Text;
     /// Contest stats
     /// </summary>
     private int Cool, Beauty, Cute, Smart, Tough, Sheen;
-    //readonly const int EVLIMIT = 510; //Max total EVs
-    //readonly const int EVSTATLIMIT = 252; //Max EVs that a single stat can have
-    //readonly const int NAMELIMIT = 10; // Maximum length a Pokemon's nickname can be
+    /// <summary>
+    /// Max total EVs
+    /// </summary>
+    static readonly int EVLIMIT = 510; 
+    /// <summary>
+    /// Max EVs that a single stat can have
+    /// </summary>
+    /// ToDo: use const instead?
+    /// Can be referenced as [Attribute] if is a const value
+    static readonly int EVSTATLIMIT = 252; 
+    /// <summary>
+    /// Maximum length a Pokemon's nickname can be
+    /// </summary>
+    static readonly int NAMELIMIT = 10;
     #endregion
+
+    Pokemon() { }
+
+    /// <summary>
+    /// Uses PokemonData to initialize a Pokemon from base stats
+    /// </summary>
+    /// <param name="pokemon"></param>
+    /// ToDo: Inherit PokemonData 
+    Pokemon(ePokemons.Pokemon pokemon) //: base(pokemon)
+    { }
 
     #region Ownership, obtained information
     /// <summary>
