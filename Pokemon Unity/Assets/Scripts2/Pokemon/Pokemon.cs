@@ -9,51 +9,53 @@ using System.Text;
     /// <summary>
     /// Current Total HP
     /// </summary>
-    public int TotalHP; 
+    private int TotalHP; 
     /// <summary>
     /// Current HP
     /// </summary>
-    public int HP;
+    private int HP;
     /// <summary>
     /// Current Attack Stat
     /// </summary>
-    public int ATK;
+    private int ATK;
     /// <summary>
     /// Current Defense stat
     /// </summary>
-    public int DEF;
+    private int DEF;
     /// <summary>
     /// Current Special Attack Stat
     /// </summary>
-    public int SPA;
+    private int SPA;
     /// <summary>
     /// Current Special Defense Stat
     /// </summary>
-    public int SPD;
+    private int SPD;
     /// <summary>
     /// Current Speed Stat
     /// </summary>
-    public int SPE;
+    private int SPE;
     /// <summary>
     /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
     /// </summary>
-    public int[] IV = new int[6];
+    private int[] IV = new int[6];
     /// <summary>
     /// Effort Values
     /// </summary>
-    public int EV;
+    private int EV;
     /// <summary>
     /// Species (National Pokedex number)
     /// </summary>
-    public int Species;
+    private int Species;
     /// <summary>
     /// Personal ID
     /// </summary>
-    public int PersonalId;
+    private int PersonalId;
     /// <summary>
-    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits)
+    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
+    /// Deprecated
     /// </summary>
-    public int TrainerId;
+    /// ToDo: Remove this, and fetch from Trainer Class?
+    private int TrainerId;
     /// <summary>
     /// Pokerus strain and infection time
     /// </summary>
@@ -64,75 +66,75 @@ using System.Text;
     /// or if null, not infected; 
     /// true infected, and false cured?
     /// </remarks>
-    public int Pokerus;
+    private int Pokerus;
     /// <summary>
     /// Held item
     /// </summary>
-    public eItems.Item Item;
+    private eItems.Item Item;
     /// <summary>
     /// Consumed held item (used in battle only)
     /// </summary>
-    public bool ItemRecycle;
+    private bool ItemRecycle;
     /// <summary>
     /// Resulting held item (used in battle only)
     /// </summary>
-    public bool ItemInitial;
+    private bool ItemInitial;
     /// <summary>
     /// Where Pokemon can use Belch (used in battle only)
     /// </summary>
-    public bool Belch;
+    private bool Belch;
     /// <summary>
     /// Mail?...
     /// </summary>
-    public bool Mail;
+    private bool Mail;
     /// <summary>
     /// The pokemon fused into this one.
     /// </summary>
-    public int Fused;
+    private int Fused;
     /// <summary>
     /// Nickname
     /// </summary>
-    public string Name;
+    private string Name;
     /// <summary>
     /// Current experience points
     /// </summary>
-    public int Exp;
+    private int Exp;
     /// <summary>
     /// Current happiness
     /// </summary>
-    public int Happiness;
+    private int Happiness;
     /// <summary>
     /// Status problem (PBStatuses)
     /// </summary>
-    public int Status;
+    private int Status;
     /// <summary>
     /// Sleep count/Toxic flag
     /// </summary>
-    public int StatusCount;
+    private int StatusCount;
     /// <summary>
     /// Steps to hatch egg, 0 if Pokemon is not an egg
     /// </summary>
-    public int EggSteps;
+    private int EggSteps;
     /// <summary>
     /// Moves (PBMove)
     /// </summary>
-    public eMoves.Move[] Moves = new eMoves.Move[] { eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
+    private eMoves.Move[] Moves = new eMoves.Move[] { eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
     /// <summary>
     /// The moves known when this Pokemon was obtained
     /// </summary>
-    public eMoves.Move[] FirstMoves;
+    private eMoves.Move[] FirstMoves;
     /// <summary>
     /// Ball used
     /// </summary>
-    public eItems.Item BallUsed;
+    private eItems.Item BallUsed;
     /// <summary>
     /// Markings
     /// </summary>
-    public bool[] Markings;
+    private bool[] Markings;
     /// <summary>
     /// Manner Obtained:
     /// </summary>
-    public ObtainedMethod ObtainedMode;
+    private ObtainedMethod ObtainedMode;
     public enum ObtainedMethod
     {
         MET = 0,
@@ -148,56 +150,133 @@ using System.Text;
     /// </summary>
     /// <remarks>
     /// Doubles as "HatchedMap"
+    /// ToDo: Make this an enum
     /// </remarks>
-    public int ObtainMap;
+    private int ObtainMap;
     /// <summary>
     /// Replaces the obtain map's name if not null
     /// </summary>
-    public string ObtainString;
-    public int ObtainLevel;
+    private string ObtainString;
+    /// <remarks>
+    /// Wouldnt this change again when traded to another trainer?
+    /// </remarks>
+    private int obtainLevel = 0;
+    private System.DateTimeOffset obtainWhen;
+    private System.DateTimeOffset hatchedWhen;
     /// <summary>
     /// Original Trainer's Name
     /// </summary>
     /// <remarks>
     /// ToDo: PlayerTrainer Class here
     /// </remarks>
-    public int OT;
+    private Trainer OT;
     /// <summary>
     /// Forces the first/second/hidden (0/1/2) ability
     /// </summary>
-    public eAbility.Ability[] AbilityFlag;
+    private eAbility.Ability[] AbilityFlag;
     /// <summary>
     /// </summary>
     /// <remarks>
     /// isMale; null = genderless?
     /// </remarks>
-    public bool GenderFlag;
+    private bool GenderFlag;
     /// <summary>
     /// Forces a particular nature
     /// </summary>
     /// ToDo: enum
-    public int NatureFlag;
+    private int NatureFlag;
     /// <summary>
     /// Forces the shininess
     /// </summary>
-    public bool ShinyFlag;
+    private bool ShinyFlag;
     /// <summary>
     /// Array of ribbons
     /// </summary>
     /// <remarks>
     /// Make 2d Array (Array[,]) separated by regions/Gens
     /// </remarks>
-    public bool[] Ribbons;
+    private bool[] Ribbons;
     /// <summary>
     /// Contest stats
     /// </summary>
-    public int Cool, Beauty, Cute, Smart, Tough, Sheen;
+    private int Cool, Beauty, Cute, Smart, Tough, Sheen;
     //readonly const int EVLIMIT = 510; //Max total EVs
     //readonly const int EVSTATLIMIT = 252; //Max EVs that a single stat can have
     //readonly const int NAMELIMIT = 10; // Maximum length a Pokemon's nickname can be
     #endregion
 
     #region Ownership, obtained information
+    /// <summary>
+    /// Returns whether or not the specified Trainer is the NOT this Pokemon's original trainer
+    /// </summary>
+    /// <param name="trainer"></param>
+    /// <returns></returns>
+    public bool isForeign(Trainer trainer) {
+        return trainer != this.OT; //ToDo: Match HashId 
+    }
+
+    /// <summary>
+    /// Returns the public portion of the original trainer's ID
+    /// </summary>
+    /// <returns></returns>
+    public string PublicId()
+    {
+        //return TrainerId.ToString();
+        return OT.ToString(); //ToDo: TrainerId fix here
+    }
+
+    /// <summary>
+    /// Returns this Pokemon's level when this Pokemon was obtained
+    /// </summary>
+    /// <returns></returns>
+    public int ObtainLevel()
+    {
+        //int level = 0; int.TryParse(this.obtainLevel, out level);
+        return this.obtainLevel;
+    }
+
+    /// <summary>
+    /// Returns the time when this Pokemon was obtained
+    /// </summary>
+    /// <returns></returns>
+    public System.DateTimeOffset TimeReceived()
+    {
+        if (obtainWhen == null) TimeReceived(DateTimeOffset.UtcNow); //ToDo: Global DateTime Variable
+        return obtainWhen;
+    }
+
+    /// <summary>
+    /// Set the time when this Pokemon was obtained
+    /// </summary>
+    /// <param name="UTCdate"></param>
+    public void TimeReceived(DateTimeOffset UTCdate)
+    {
+        obtainWhen = UTCdate;
+    }
+
+    /// <summary>
+    /// Returns the time when this Pokemon hatched
+    /// </summary>
+    /// <returns></returns>
+    public DateTimeOffset TimeEggHatched()
+    {
+        if (this.ObtainedMode == ObtainedMethod.EGG)
+        {
+            if (hatchedWhen == null) TimeEggHatched(DateTimeOffset.UtcNow);
+            return hatchedWhen;
+        }
+        else
+            return DateTimeOffset.UtcNow; //ToDo: Something else?
+    }
+
+    /// <summary>
+    /// Set the time when this Pokemon hatched
+    /// </summary>
+    /// <param name="UTCdate"></param>
+    public void TimeEggHatched (DateTimeOffset UTCdate)
+    {
+        hatchedWhen = UTCdate;
+    }
     #endregion
 
 }
