@@ -214,7 +214,7 @@ using System.Text;
         /// Running off of genVI. 
         /// Be sure to overwrite both if modifying.
         /// Replace "[HP]{mechanic:hp}" in summary-tags with
-        /// "<see cref="Pokemon.HP"/>" or "<see cref="Pokemon.currentHP"/>"
+        /// "<see cref="PokemonOld.HP"/>" or "<see cref="PokemonOld.currentHP"/>"
         /// </remarks>
         public enum Item
         {

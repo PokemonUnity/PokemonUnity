@@ -297,7 +297,7 @@ public class MapSettings : MonoBehaviour
         return packedList;
     }
 
-    public Pokemon getRandomEncounter(WildPokemonInitialiser.Method location)
+    public PokemonOld getRandomEncounter(WildPokemonInitialiser.Method location)
     {
         WildPokemonInitialiser[] list = getEncounterList(location);
 
@@ -329,7 +329,7 @@ public class MapSettings : MonoBehaviour
             Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
 #endif
         
-        return new Pokemon(chanceSplitList[encounterIndex].ID, Pokemon.Gender.CALCULATE,
+        return new PokemonOld(chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,
             Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
             null, null, null, -1);
     }
@@ -339,7 +339,7 @@ public class MapSettings : MonoBehaviour
     /// </summary>
     /// <param name="location"></param>
     /// <returns></returns>
-    public Pokemon getRandomEncounter(WildPokemonInitialiser.Method location, string placeholder)
+    public PokemonOld getRandomEncounter(WildPokemonInitialiser.Method location, string placeholder)
     {
         //Get list of 100 pokemons for given (specific to this) encounter...
         WildPokemonInitialiser[] list = getEncounterList(location);
@@ -375,7 +375,7 @@ public class MapSettings : MonoBehaviour
             Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
 #endif
         */
-        return new Pokemon(list[randomPokemon].ID, Pokemon.Gender.CALCULATE,
+        return new PokemonOld(list[randomPokemon].ID, PokemonOld.Gender.CALCULATE,
             Random.Range(list[randomPokemon].minLevel, list[randomPokemon].maxLevel + 1),
             null, null, null, -1);
     }

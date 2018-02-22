@@ -102,7 +102,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
             if (selectedPokemon == null)
             {
                 slot[i].gameObject.SetActive(false);
@@ -114,12 +114,12 @@ public class PartyHandler : MonoBehaviour
                 icon[i].texture = selectedPokemon.GetIcons();
                 pokemonName[i].text = selectedPokemon.getName();
                 pokemonNameShadow[i].text = pokemonName[i].text;
-                if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
+                if (selectedPokemon.getGender() == PokemonOld.Gender.FEMALE)
                 {
                     gender[i].text = "♀";
                     gender[i].color = new Color(1, 0.2f, 0.2f, 1);
                 }
-                else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
+                else if (selectedPokemon.getGender() == PokemonOld.Gender.MALE)
                 {
                     gender[i].text = "♂";
                     gender[i].color = new Color(0.2f, 0.4f, 1, 1);
@@ -152,7 +152,7 @@ public class PartyHandler : MonoBehaviour
                 currentHPShadow[i].text = currentHP[i].text;
                 maxHp[i].text = "" + selectedPokemon.getHP();
                 maxHPShadow[i].text = maxHp[i].text;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+                if (selectedPokemon.getStatus() != PokemonOld.Status.NONE)
                 {
                     status[i].texture =
                         Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString());
@@ -221,7 +221,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
             if (selectedPokemon != null)
             {
                 if (i == swapPosition)
@@ -575,7 +575,7 @@ public class PartyHandler : MonoBehaviour
                 }
                 else
                 {
-                    Pokemon selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
+                    PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
                     int chosenIndex = -1;
                     while (chosenIndex != 0)
                     {

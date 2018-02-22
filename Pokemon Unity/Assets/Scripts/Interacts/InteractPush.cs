@@ -48,7 +48,7 @@ public class InteractPush : MonoBehaviour
     {
         if (!Player.strength)
         {
-            Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Strength");
+            PokemonOld targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Strength");
             if (targetPokemon != null)
             {
                 if (Player.setCheckBusyWith(this.gameObject))

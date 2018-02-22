@@ -20,7 +20,7 @@ public class EvolutionHandler : MonoBehaviour
     private Image bottomBorder;
     private Image glow;
 
-    private Pokemon selectedPokemon;
+    private PokemonOld selectedPokemon;
     private string evolutionMethod;
     private int evolutionID;
 
@@ -100,7 +100,7 @@ public class EvolutionHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(Pokemon pokemonToEvolve, string methodOfEvolution)
+    public IEnumerator control(PokemonOld pokemonToEvolve, string methodOfEvolution)
     {
         selectedPokemon = pokemonToEvolve;
         evolutionMethod = methodOfEvolution;
@@ -108,7 +108,7 @@ public class EvolutionHandler : MonoBehaviour
         string selectedPokemonName = selectedPokemon.getName();
 
         pokemonSpriteAnimation = selectedPokemon.GetFrontAnim_();
-        evolutionSpriteAnimation = Pokemon.GetFrontAnimFromID_(evolutionID, selectedPokemon.getGender(),
+        evolutionSpriteAnimation = PokemonOld.GetFrontAnimFromID_(evolutionID, selectedPokemon.getGender(),
             selectedPokemon.getIsShiny());
         pokemonSprite.sprite = pokemonSpriteAnimation[0];
         evolutionSprite.sprite = evolutionSpriteAnimation[0];
@@ -605,7 +605,7 @@ public class EvolutionHandler : MonoBehaviour
     }
 
 
-    private IEnumerator LearnMove(Pokemon selectedPokemon, string move)
+    private IEnumerator LearnMove(PokemonOld selectedPokemon, string move)
     {
         int chosenIndex = 1;
         if (chosenIndex == 1)

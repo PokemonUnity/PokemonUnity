@@ -9,7 +9,7 @@ using System.Collections;
 //using DataEnums;
 
 [System.Serializable]
-public class Pokemon {
+public class PokemonOld {
 
 	/// <summary>
 	/// Set value using Pokemon's <see cref="PokemonData.ID"/>
@@ -256,7 +256,7 @@ public class Pokemon {
     /// <param name="ability"></param>
     /// <param name="moveset"></param>
     /// <param name="PPups"></param>
-	public Pokemon(int pokemonID, string nickname, Gender gender, int level, 
+	public PokemonOld(int pokemonID, string nickname, Gender gender, int level, 
 	               bool isShiny, string caughtBall, string heldItem, string OT,
 	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
 	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
@@ -356,7 +356,7 @@ public class Pokemon {
 		packMoveset();
 
 	}
-	public Pokemon(int pokemonID, string nickname, Gender gender, int level, 
+	public PokemonOld(int pokemonID, string nickname, Gender gender, int level, 
 	               bool isShiny, eItems.Item caughtBall, eItems.Item heldItem, string OT,
 	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
 	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
@@ -460,7 +460,7 @@ public class Pokemon {
 
 	//New Pokemon with: random IVS, and Shininess 
 	//					default moveset, and EVS (0)
-	public Pokemon(int pokemonID, Gender gender, int level, string caughtBall, string heldItem, string OT, int ability){
+	public PokemonOld(int pokemonID, Gender gender, int level, string caughtBall, string heldItem, string OT, int ability){
 		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
 
 		this.pokemonID = pokemonID;
@@ -573,7 +573,7 @@ public class Pokemon {
 	}
 
 	//adding a caught pokemon (only a few customizable details)
-	public Pokemon(Pokemon pokemon, string nickname, string caughtBall){
+	public PokemonOld(PokemonOld pokemon, string nickname, string caughtBall){
 
 		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
 		
@@ -1588,7 +1588,7 @@ public class Pokemon {
 	}
 
 	public float GetCryPitch(){
-		return (status == Pokemon.Status.FAINTED)? 0.9f : 1f-(0.06f*(1-getPercentHP()));}
+		return (status == PokemonOld.Status.FAINTED)? 0.9f : 1f-(0.06f*(1-getPercentHP()));}
 
 	public AudioClip GetCry(){
 		return GetCryFromID(pokemonID);}

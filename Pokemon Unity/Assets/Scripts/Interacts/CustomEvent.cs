@@ -367,30 +367,30 @@ public class CustomEvent : MonoBehaviour
                     PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
 
                     string pkName = pkd.getName();
-                    Pokemon.Gender pkGender = Pokemon.Gender.CALCULATE;
+                    PokemonOld.Gender pkGender = PokemonOld.Gender.CALCULATE;
 
                     if (pkd.getMaleRatio() == -1)
                     {
-                        pkGender = Pokemon.Gender.NONE;
+                        pkGender = PokemonOld.Gender.NONE;
                     }
                     else if (pkd.getMaleRatio() == 0)
                     {
-                        pkGender = Pokemon.Gender.FEMALE;
+                        pkGender = PokemonOld.Gender.FEMALE;
                     }
                     else if (pkd.getMaleRatio() == 100)
                     {
-                        pkGender = Pokemon.Gender.MALE;
+                        pkGender = PokemonOld.Gender.MALE;
                     }
                     else
                     {
 //if not a set gender
                         if (currentEvent.ints[2] == 0)
                         {
-                            pkGender = Pokemon.Gender.MALE;
+                            pkGender = PokemonOld.Gender.MALE;
                         }
                         else if (currentEvent.ints[2] == 1)
                         {
-                            pkGender = Pokemon.Gender.FEMALE;
+                            pkGender = PokemonOld.Gender.FEMALE;
                         }
                     }
 
@@ -425,7 +425,7 @@ public class CustomEvent : MonoBehaviour
 
                             Scene.main.Typing.gameObject.SetActive(true);
                             StartCoroutine(Scene.main.Typing.control(10, "", pkGender,
-                                Pokemon.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
+                                PokemonOld.GetIconsFromID_(currentEvent.ints[0], currentEvent.bool0)));
                             while (Scene.main.Typing.gameObject.activeSelf)
                             {
                                 yield return null;
@@ -475,7 +475,7 @@ public class CustomEvent : MonoBehaviour
                     Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
 
 
-                    Pokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
+                    PokemonOld pk = new PokemonOld(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
                         currentEvent.bool0, currentEvent.strings[2], currentEvent.strings[3],
                         currentEvent.strings[1], IVs[0], IVs[1], IVs[2], IVs[3], IVs[4], IVs[5], 0, 0, 0, 0, 0, 0,
                         pkNature, currentEvent.ints[4],

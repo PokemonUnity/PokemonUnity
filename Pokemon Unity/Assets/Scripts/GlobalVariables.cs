@@ -138,24 +138,24 @@ public class GlobalVariables : MonoBehaviour
         }
 
         //PC test
-        SaveData.currentSave.PC.addPokemon(new Pokemon(006, null, Pokemon.Gender.CALCULATE, 3, true, "Poké Ball", "",
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
             name,
             Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabase.getPokemon(6).GenerateMoveset(42), new int[4]));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 34, "Great Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, Pokemon.Gender.CALCULATE, 6, "Poké Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(197, Pokemon.Gender.CALCULATE, 28, "Great Ball", "", name, -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(68, Pokemon.Gender.CALCULATE, 37, "Ultra Ball", "", name, -1));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(448, Pokemon.Gender.CALCULATE, 56, "Great Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(197, PokemonOld.Gender.CALCULATE, 34, "Great Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(393, PokemonOld.Gender.CALCULATE, 6, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(197, PokemonOld.Gender.CALCULATE, 28, "Great Ball", "", name, -1));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(68, PokemonOld.Gender.CALCULATE, 37, "Ultra Ball", "", name, -1));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(448, PokemonOld.Gender.CALCULATE, 56, "Great Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(006, Pokemon.Gender.CALCULATE, 37, "Poké Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(607, Pokemon.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(006, PokemonOld.Gender.CALCULATE, 37, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(607, PokemonOld.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
         SaveData.currentSave.PC.boxes[1][1].addExp(7100);
-        SaveData.currentSave.PC.addPokemon(new Pokemon(157, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new Pokemon(300, Pokemon.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(157, PokemonOld.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(300, PokemonOld.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(393, "Surf Bloke", Pokemon.Gender.MALE, 15, false, "Ultra Ball", //starters not implemented
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(393, "Surf Bloke", PokemonOld.Gender.MALE, 15, false, "Ultra Ball", //starters not implemented
             "", name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));
@@ -170,7 +170,7 @@ public class GlobalVariables : MonoBehaviour
 
         SaveData.currentSave.PC.swapPokemon(0, 2, 1, 4);
 
-        SaveData.currentSave.PC.boxes[0][1].setStatus(Pokemon.Status.POISONED);
+        SaveData.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
         SaveData.currentSave.PC.boxes[0][1].addExp(420);
 
         SaveData.currentSave.PC.packParty();
@@ -188,12 +188,12 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.PC.boxes[0][0].removePP(2, 11);
 
         //PC.boxes[0][0].setStatus(Pokemon.Status.FROZEN);
-        SaveData.currentSave.PC.boxes[0][2].setStatus(Pokemon.Status.PARALYZED);
-        SaveData.currentSave.PC.boxes[0][3].setStatus(Pokemon.Status.BURNED);
-        SaveData.currentSave.PC.boxes[0][4].setStatus(Pokemon.Status.ASLEEP);
+        SaveData.currentSave.PC.boxes[0][2].setStatus(PokemonOld.Status.PARALYZED);
+        SaveData.currentSave.PC.boxes[0][3].setStatus(PokemonOld.Status.BURNED);
+        SaveData.currentSave.PC.boxes[0][4].setStatus(PokemonOld.Status.ASLEEP);
 
 
-        SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
+        SaveData.currentSave.PC.addPokemon(new PokemonOld(012, null, PokemonOld.Gender.CALCULATE, 35, false, "Great Ball", "",
             name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
@@ -393,7 +393,7 @@ public class GlobalVariables : MonoBehaviour
         {
             if (SaveData.currentSave.PC.boxes[0][i] != null)
             {
-                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != Pokemon.Status.FAINTED)
+                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
                 {
                     FollowerSettings.changeFollower(i);
                     i = 6;

@@ -10,7 +10,7 @@ public class MainMenuHandler : MonoBehaviour {
 	public int selectedFile = 0;
 	public bool newGame = false;
 	public Sprite playerSprite;
-	public Pokemon.Gender playerGender;
+	public PokemonOld.Gender playerGender;
 	public Texture buttonSelected;
 	public Texture buttonDimmed;
 
@@ -227,11 +227,11 @@ public class MainMenuHandler : MonoBehaviour {
 		yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 		Scene.main.Typing.gameObject.SetActive(true);
 		if(gender){
-			playerGender = Pokemon.Gender.MALE;
+			playerGender = PokemonOld.Gender.MALE;
 			playerSprite = null;
 		}
 		else {
-			playerGender = Pokemon.Gender.FEMALE;
+			playerGender = PokemonOld.Gender.FEMALE;
 			playerSprite = null;
 		}
 		StartCoroutine(Scene.main.Typing.control(7,playerName,playerGender,new Sprite[]{playerSprite}));
