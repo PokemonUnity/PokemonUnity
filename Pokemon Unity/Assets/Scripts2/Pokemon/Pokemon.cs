@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-    class Pokemon //: PokemonData
+    class Pokemon //: ePokemons //PokemonData
 {
     #region Variables
     /// <summary>
@@ -106,10 +106,12 @@ using System.Text;
     /// <summary>
     /// Status problem (PBStatuses)
     /// </summary>
+    /// ToDo: Status Class
     private int Status;
     /// <summary>
     /// Sleep count/Toxic flag
     /// </summary>
+    /// ToDo: Add to Status Class
     private int StatusCount;
     /// <summary>
     /// Steps to hatch egg, 0 if Pokemon is not an egg
@@ -118,6 +120,7 @@ using System.Text;
     /// <summary>
     /// Moves (PBMove)
     /// </summary>
+    /// ToDo Move class, not enum
     private eMoves.Move[] Moves = new eMoves.Move[] { eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
     /// <summary>
     /// The moves known when this Pokemon was obtained
