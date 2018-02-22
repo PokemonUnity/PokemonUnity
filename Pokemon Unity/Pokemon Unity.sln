@@ -8,6 +8,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{F6278824-EF26-0B19-80EC-89090458C325}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitTestProject\UnitTestProject.csproj", "{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F6278824-EF26-0B19-80EC-89090458C325} = {F6278824-EF26-0B19-80EC-89090458C325}
+		{10F42E31-4957-FD75-9899-6B6E9B1C9EA8} = {10F42E31-4957-FD75-9899-6B6E9B1C9EA8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

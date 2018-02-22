@@ -53,6 +53,16 @@
     <Compile Include="PokemonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pokemon Unity\Assembly-CSharp-Editor.csproj">
+      <Project>{f6278824-ef26-0b19-80ec-89090458c325}</Project>
+      <Name>Assembly-CSharp-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon Unity\Assembly-CSharp.csproj">
+      <Project>{10f42e31-4957-fd75-9899-6b6e9b1c9ea8}</Project>
+      <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

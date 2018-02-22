@@ -8,21 +8,24 @@ namespace UnitTestProject
     {
         #region HP/Status...
         [TestMethod]
-        public void SetHP()
+        public void Pokemon_SetHP_To_Zero()
         {
+            Pokemon pokemon = new Pokemon();
+            //Assert.Equals(0, pokemon.HP);
+            Assert.Fail();
         }
 
         [TestMethod]
-        public void SetStatus() { }
+        public void Pokemon_SetStatus_To_Faint() { Assert.Fail(); }
 
         [TestMethod]
-        public void FullyHeal() { }
+        public void Pokemon_FullyHeal() { Assert.Fail(); }
 
         [TestMethod]
-        public void MakeFainted() { }
+        public void Pokemon_MakeFainted() { Assert.Fail(); }
 
         [TestMethod]
-        public void SetPokerus() { }
+        public void Pokemon_SetPokerus_To_Infected() { Assert.Fail(); }
         #endregion
 
         #region Level/stats...
