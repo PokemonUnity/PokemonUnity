@@ -10,7 +10,7 @@ public class PokemonHealth : MonoBehaviour
 {
 	//public static PokemonHealth instance;
 	
-	//public int maxHealth = 100;                                     // The max amount of health the pokemon can gain.
+	public int maxHealth = 100;                                     // The max amount of health the pokemon can gain.
 	private int currentHealth;                                      // The current health the pokemon has.
 	public Text displayCurrentHealth;                               // The visual health for pokemon HUD.
 	public Text displayMaxHealth;                                   // The visual health for pokemon HUD.
@@ -152,7 +152,7 @@ public class PokemonHealth : MonoBehaviour
 		//Text = healthSlider.value; //Set text under hp to match slider currentHealth
 	}
 	
-	public void HPChangeValue(this Slider slider){
+	public void HPChangeValue(Slider slider){ //this
 		Debug.Log("slider change:"+slider.value);
 		//GoodSlider(this.GetComponent<Slider>().value);
 		//images =     gameObject.GetComponentsInChildren<Image>();

@@ -5278,7 +5278,7 @@ public class BattleHandler : MonoBehaviour
                                                         ? 1.5f
                                                         : 1f;
                                                     float OTMod = (pokemon[i2].getIDno() !=
-                                                                   SaveData.currentSave.playerID)
+                                                                   SaveData.currentSave.playerID.ToString())
                                                         ? 1.5f
                                                         : 1f;
                                                     float sharedMod = 1f; //shared experience

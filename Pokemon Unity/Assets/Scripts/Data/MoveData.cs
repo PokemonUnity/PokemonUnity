@@ -44,10 +44,11 @@ public class MoveData {
         /// (x=set, 0=level)
         /// </summary>
         SetDamage,     
-		Critical, Recoil,
         /// <summary>
         /// based off of user's maxHp
         /// </summary>
+		Critical, Recoil,
+        Flinch, RecoilMax //Added these 2
 	};
 
 	public enum Category{

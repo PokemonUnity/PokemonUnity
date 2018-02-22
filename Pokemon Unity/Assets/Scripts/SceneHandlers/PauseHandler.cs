@@ -563,7 +563,7 @@ public class PauseHandler : MonoBehaviour
                         yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
                     }
                 }
-            }
+            //}
             if (Input.GetButton("Start") || Input.GetButton("Back"))
             {
                 running = false;
