@@ -11,12 +11,12 @@ namespace UnitTestProject
         public void Pokemon_SetHP_To_Zero()
         {
             Pokemon pokemon = new Pokemon();
-            //Assert.Equals(0, pokemon.HP);
+            //Assert.AreEqual(0, pokemon.HP);
             Assert.Fail();
         }
 
         [TestMethod]
-        public void Pokemon_SetStatus_To_Faint() { Assert.Fail(); }
+        public void Pokemon_SetStatus_To_Burn() { Assert.Fail(); }
 
         [TestMethod]
         public void Pokemon_FullyHeal() { Assert.Fail(); }

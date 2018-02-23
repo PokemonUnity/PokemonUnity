@@ -9,11 +9,11 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Current Total HP
     /// </summary>
-    private int TotalHP; 
+    private int totalHP = 1; 
     /// <summary>
     /// Current HP
     /// </summary>
-    private int HP;
+    private int hp = 1;
     /// <summary>
     /// Current Attack Stat
     /// </summary>
@@ -41,14 +41,16 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Effort Values
     /// </summary>
-    private int[] EV = new int[6];
+    private int[] EV = new int[6]; //{ 0, 0, 0, 0, 0, 0 }; //same thing
     /// <summary>
     /// Species (National Pokedex number)
     /// </summary>
-    private int Species;
+    /// ToDo: Fetch from PokemonData : _base.PokeId
+    private int species;
     /// <summary>
     /// Personal ID
     /// </summary>
+    /// ToDo: String value?
     private int PersonalId;
     /// <summary>
     /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
@@ -66,7 +68,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// [0] = Pokerus Strain; [1] = Days until cured.
     /// if ([0] && [1] == 0) => Not Infected
     /// </remarks>
-    private int[] pokerus = new int[] { 0, 0 };
+    private int[] pokerus = new int[2]; //{ 0, 0 };
     /// <summary>
     /// Held item
     /// </summary>
@@ -86,7 +88,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Mail?...
     /// </summary>
-    private bool mail;
+    private bool? mail;
     /// <summary>
     /// The pokemon fused into this one.
     /// </summary>
@@ -102,7 +104,22 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Current happiness
     /// </summary>
+    /// <remarks>
+    /// This is the samething as "friendship";
+    /// </remarks>
     private int happiness;
+    public enum HappinessMethods
+    {
+        WALKING,
+        LEVELUP,
+        GROOM,
+        FAINT,
+        VITAMIN,
+        EVBERRY,
+        POWDER,
+        ENERGYROOT,
+        REVIVALHERB
+    }
     /// <summary>
     /// Status problem (PBStatuses)
     /// </summary>
@@ -121,7 +138,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// Moves (PBMove)
     /// </summary>
     /// ToDo Move class, not enum
-    private eMoves.Move[] moves = new eMoves.Move[] { eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
+    private eMoves.Move[] moves = new eMoves.Move[4]; //{ eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
     /// <summary>
     /// The moves known when this Pokemon was obtained
     /// </summary>
@@ -129,11 +146,11 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Ball used
     /// </summary>
-    private eItems.Item ballUsed;
+    private eItems.Item ballUsed = (eItems.Item)0; //ToDo: None?
     /// <summary>
     /// Markings
     /// </summary>
-    private bool[] markings;
+    private bool[] markings = new bool[6]; //{ false, false, false, false, false, false };
     /// <summary>
     /// Manner Obtained:
     /// </summary>
@@ -163,7 +180,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <remarks>
     /// Wouldnt this change again when traded to another trainer?
     /// </remarks>
-    private int obtainLevel = 0;
+    private int obtainLevel; // = 0;
     private System.DateTimeOffset obtainWhen;
     private System.DateTimeOffset hatchedWhen;
     /// <summary>
@@ -176,13 +193,13 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Forces the first/second/hidden (0/1/2) ability
     /// </summary>
-    private eAbility.Ability[] abilityFlag;
+    private eAbility.Ability[] abilityFlag = new eAbility.Ability[3];
     /// <summary>
     /// </summary>
     /// <remarks>
     /// isMale; null = genderless?
     /// </remarks>
-    private bool genderFlag;
+    private bool? genderFlag;
     /// <summary>
     /// Forces a particular nature
     /// </summary>
@@ -203,6 +220,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// Contest stats
     /// </summary>
     private int cool, beauty, cute, smart, tough, sheen;
+    private PokemonData _base;
     /// <summary>
     /// Max total EVs
     /// </summary>
@@ -227,7 +245,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <param name="pokemon"></param>
     /// ToDo: Inherit PokemonData 
     public Pokemon(ePokemons.Pokemon pokemon) //: base(pokemon)
-    { }
+    { _base = PokemonDatabase.getPokemon((int)pokemon); } //ToDo: Redo PokemonDatabase/PokemonData
 
     #region Ownership, obtained information
     /// <summary>
@@ -386,6 +404,177 @@ public class Pokemon //: ePokemons //PokemonData
     }
     #endregion
 
-    #region 
+    #region Types
+    #endregion
+
+    #region Moves
+    #endregion
+
+    #region Contest attributes, ribbons
+    #endregion
+
+    #region Items
+    #endregion
+
+    #region Other
+    /// <summary>
+    /// Returns the species name of this Pokemon
+    /// </summary>
+    /// <returns></returns>
+    public string SpeciesName()
+    {
+        return _base.getName();
+    }
+
+    /// <summary>
+    /// Returns the markings this Pokemon has
+    /// </summary>
+    /// <returns>6 Markings</returns>
+    public bool[] Markings()
+    {
+        return markings;
+    }
+
+    /// <summary>
+    /// Returns a string stathing the Unown form of this Pokemon
+    /// </summary>
+    /// <returns></returns>
+    public char UnknownShape()
+    {
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[_base.getID()]; //ToDo: FormId; "if pokemon is an Unknown"
+    }
+
+    /// <summary>
+    /// Returns the EV yield of this Pokemon
+    /// </summary>
+    /// <returns></returns>
+    public int[] evYield()
+    {
+        return EV;//_base.getBaseStats();
+    }
+
+    /// <summary>
+    /// Sets this Pokemon's HP
+    /// </summary>
+    /// <param name="value"></param>
+    public void HP(int value)
+    {
+        hp = value < 0 ? 0 : value;
+        if (hp == 0) status = 0; // statusCount = 0; //ToDo: Fainted
+    }
+
+    public bool isFainted()
+    {
+        return eggSteps == 0 //not an egg
+            && hp <= 0;
+    }
+
+    /// <summary>
+    /// Heals all HP of this Pokemon
+    /// </summary>
+    public void HealHP()
+    {
+        if (eggSteps > 0) return;   //ToDo: Throw exception error on returns
+        hp = totalHP;               //ToDo: Return 'true' on success?
+    }
+
+    /// <summary>
+    /// Heals the status problem of this Pokemon
+    /// </summary>
+    public void HealStatus()
+    {
+        if (eggSteps > 0) return;
+        status = 0; statusCount = 0; //remove status ailments
+    }
+
+    /// <summary>
+    /// Heals all PP of this Pokemon
+    /// </summary>
+    /// <param name="index"></param>
+    public void HealPP(int index = -1)
+    {
+        if (eggSteps > 0) return;
+        if (index >= 0) moves[index] = moves[index]; // ToDo: pp = totalpp
+        else
+        {
+            for (int i = 0; i < 3; i++){
+                moves[index] = moves[index]; // ToDo: pp = totalpp
+            }
+        }
+    }
+
+    /// <summary>
+    /// Heals all HP, PP, and status problems of this Pokemon
+    /// </summary>
+    public void Heal()
+    {
+        if (eggSteps > 0) return;
+        HealHP();
+        HealStatus();
+        HealPP();
+    }
+
+    /// <summary>
+    /// Changes the happiness of this Pokemon depending on what happened to change it
+    /// </summary>
+    /// <param name="method"></param>
+    public void ChangeHappiness(HappinessMethods method)
+    {
+        int gain = 0; bool luxury = false;
+        switch (method)
+        {
+            case HappinessMethods.WALKING:
+                gain = 1;
+                gain += happiness < 200 ? 1 : 0;
+                //gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
+                break;
+            case HappinessMethods.LEVELUP:
+                gain = 2;
+                if (happiness < 200) gain = 3;
+                if (happiness < 100) gain = 5;
+                luxury = true;
+                break;
+            case HappinessMethods.GROOM:
+                gain = 4;
+                if (happiness < 200) gain = 10;
+                luxury = true;
+                break;
+            case HappinessMethods.FAINT:
+                gain = -1;
+                break;
+            case HappinessMethods.VITAMIN:
+                gain = 2;
+                if (happiness < 200) gain = 3;
+                if (happiness < 100) gain = 5;
+                break;
+            case HappinessMethods.EVBERRY:
+                gain = 2;
+                if (happiness < 200) gain = 5;
+                if (happiness < 100) gain = 10;
+                break;
+            case HappinessMethods.POWDER:
+                gain = -10;
+                if (happiness < 200) gain = -5;
+                break;
+            case HappinessMethods.ENERGYROOT:
+                gain = -15;
+                if (happiness < 200) gain = -10;
+                break;
+            case HappinessMethods.REVIVALHERB:
+                gain = -20;
+                if (happiness < 200) gain = -15;
+                break;
+            default:
+                break;
+        }
+        gain += luxury && this.ballUsed == eItems.Item.LUXURY_BALL ? 1 : 0;
+        if (this.item == eItems.Item.SOOTHE_BELL && gain > 0)
+            gain = (int)Math.Floor(gain * 1.5f);
+        happiness += gain;
+        happiness = happiness > 255 ? 255 : happiness < 0 ? 0 : happiness; //Max 255, Min 0
+    }
+    #endregion
+
+    #region Stat calculations, Pokemon creation
     #endregion
 }
