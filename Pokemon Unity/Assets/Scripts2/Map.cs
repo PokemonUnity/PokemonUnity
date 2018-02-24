@@ -91,3 +91,16 @@ class Map : MonoBehaviour
     }
     #endregion
 }
+
+/// <summary>
+/// Map GameObject will be an Array of tiles
+/// mapEnum = MapId = BlenderJsonToUnity[]
+/// </summary>
+class BlenderJsonToUnity
+{
+    Vector3 tileLocation;
+    Quaternion tileRotation;
+    string tileShape; // Mesh object
+    string tileTexture; // Texture enum or filename
+    int tileCollision; //enum here... Mesh object will determine collision mapping
+}
