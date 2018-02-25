@@ -360,6 +360,44 @@ public class Pokemon //: ePokemons //PokemonData
     #endregion
 
     #region Level
+    public int Level
+    {
+        get
+        {
+            return 0;
+            // ToDo: return Experience.GetLevelFromExperience(this.exp, this.GrowthRate)
+        }
+        set
+        {
+            if (value < 1 || value > 100) //Experience.MAXLEVEL
+                throw new Exception(string.Format("The level number {0} is invalid", value));
+            // ToDo: return Experience.GetStartExperience(this.exp, this.GrowthRate)
+        }
+    }
+
+    public bool isEgg
+    {
+        get
+        {
+            return eggSteps > 0;
+        }
+    }
+
+    public int GrowthRate
+    {
+        get
+        {
+            return (int)_base.getLevelingRate(); //ToDo
+        }
+    }
+
+    int baseExp
+    {
+        get
+        {
+            return (int)_base.getLevelingRate(); //ToDo: 
+        }
+    }
     #endregion
 
     #region Gender
@@ -526,7 +564,7 @@ public class Pokemon //: ePokemons //PokemonData
 
     public bool isFainted()
     {
-        return eggSteps == 0 //not an egg
+        return !this.isEgg //eggSteps == 0 //not an egg
             && hp <= 0;
     }
 
@@ -535,8 +573,8 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     public void HealHP()
     {
-        if (eggSteps > 0) return;   //ToDo: Throw exception error on returns
-        hp = totalHP;               //ToDo: Return 'true' on success?
+        if (this.isEgg) return;     //ToDo: Throw exception error on returns
+        this.HP = totalHP;          //ToDo: Return 'true' on success?
     }
 
     /// <summary>
@@ -544,7 +582,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     public void HealStatus()
     {
-        if (eggSteps > 0) return;
+        if (this.isEgg) return;
         status = 0; statusCount = 0; //remove status ailments
     }
 
@@ -554,7 +592,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <param name="index"></param>
     public void HealPP(int index = -1)
     {
-        if (eggSteps > 0) return;
+        if (this.isEgg) return;
         if (index >= 0) moves[index] = moves[index]; // ToDo: pp = totalpp
         else
         {
@@ -569,7 +607,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     public void Heal()
     {
-        if (eggSteps > 0) return;
+        if (this.isEgg) return;
         HealHP();
         HealStatus();
         HealPP();
