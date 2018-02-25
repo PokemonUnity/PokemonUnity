@@ -29,7 +29,7 @@ namespace UnitTestProject
         {
             Pokemon pokemon = new Pokemon();
             pokemon.GivePokerus();
-            Assert.AreEqual(true, pokemon.PokerusStage().Value);
+            Assert.AreEqual(true, pokemon.PokerusStage.Value);
         }
         #endregion
 

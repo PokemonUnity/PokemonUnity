@@ -261,23 +261,31 @@ public class Pokemon //: ePokemons //PokemonData
     /// Returns the public portion of the original trainer's ID
     /// </summary>
     /// <returns></returns>
-    public string PublicId()
+    /*public string PublicId()
     {
         //return TrainerId.ToString();
         return OT.ToString(); //ToDo: TrainerId fix here
+    }*/
+    public string PublicId
+    {
+        get { return OT.ToString(); } 
     }
 
     /// <summary>
     /// Returns this Pokemon's level when this Pokemon was obtained
     /// </summary>
     /// <returns></returns>
-    public int ObtainLevel()
+    /*public int ObtainLevel()
     {
         //int level = 0; int.TryParse(this.obtainLevel, out level);
         return this.obtainLevel;
+    }*/
+    public int ObtainLevel
+    {
+        get { return this.obtainLevel; } 
     }
 
-    /// <summary>
+    /*// <summary>
     /// Returns the time when this Pokemon was obtained
     /// </summary>
     /// <returns></returns>
@@ -294,9 +302,21 @@ public class Pokemon //: ePokemons //PokemonData
     public void TimeReceived(DateTimeOffset UTCdate)
     {
         obtainWhen = UTCdate;
+    }*/
+    /// <summary>
+    /// Sets or Returns the time when this Pokemon was obtained
+    /// </summary>
+    public DateTimeOffset TimeReceived
+    {
+        get
+        {
+            if (obtainWhen == null) this.obtainWhen = DateTimeOffset.UtcNow;
+            return this.obtainWhen;
+        }
+        set { this.obtainWhen = value; }
     }
 
-    /// <summary>
+    /*// <summary>
     /// Returns the time when this Pokemon hatched
     /// </summary>
     /// <returns></returns>
@@ -318,6 +338,24 @@ public class Pokemon //: ePokemons //PokemonData
     public void TimeEggHatched (DateTimeOffset UTCdate)
     {
         hatchedWhen = UTCdate;
+    }*/
+    /// <summary>
+    /// Sets or Returns the time when this Pokemon hatched
+    /// </summary>
+    public DateTimeOffset TimeEggHatched
+    {
+        get
+        {
+            if (this.ObtainedMode == ObtainedMethod.EGG)
+            {
+                if (hatchedWhen == null) this.hatchedWhen = DateTimeOffset.UtcNow;
+                return this.hatchedWhen;
+            }
+            else
+                //return DateTimeOffset.UtcNow; //ToDo: Something else? Maybe error?
+                throw new Exception("Trainer did not acquire Pokemon as an egg.");
+        }
+        set { this.hatchedWhen = value; }
     }
     #endregion
 
@@ -345,19 +383,21 @@ public class Pokemon //: ePokemons //PokemonData
     /// [0] = Pokerus Strain; [1] = Days until cured.
     /// if ([0] && [1] == 0) => Not Infected
     /// </returns>
-    public int[] Pokerus()
+    /*public int[] Pokerus()
     {
         return this.pokerus;
-    }
+    }*/
+    public int[] Pokerus { get { return this.pokerus; } }
 
     /// <summary>
     /// Returns the Pokerus infection stage for this Pokemon
     /// </summary>
     /// <returns></returns>
-    public int PokerusStrain()
+    /*public int PokerusStrain()
     {
         return this.pokerus[0] / 16;
-    }
+    }*/
+    public int PokerusStrain { get { return this.pokerus[0] / 16; } }
 
     /// <summary>
     /// Returns the Pokerus infection stage for this Pokemon
@@ -366,11 +406,20 @@ public class Pokemon //: ePokemons //PokemonData
     /// if null, not infected; 
     /// true infected, and false cured?
     /// </returns>
-    public bool? PokerusStage()
+    /*public bool? PokerusStage()
     {
         if (pokerus[0] == 0 && pokerus[1] == 0) return null;        // Not Infected
         if (pokerus[0] > 0 && pokerus[1] == 0) return false;        // Cured; (pokerus[0] % 16) == 0
         return true;                                                // Infected
+    }*/
+    public bool? PokerusStage
+    {
+        get
+        {
+            if (pokerus[0] == 0 && pokerus[1] == 0) return null;        // Not Infected
+            if (pokerus[0] > 0 && pokerus[1] == 0) return false;        // Cured; (pokerus[0] % 16) == 0
+            return true;                                                // Infected
+        }
     }
 
     /// <summary>
@@ -420,20 +469,22 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Returns the species name of this Pokemon
     /// </summary>
-    /// <returns></returns>
+    /*// <returns></returns>
     public string SpeciesName()
     {
         return _base.getName();
-    }
+    }*/
+    public string SpeciesName { get { return this._base.getName(); } }
 
     /// <summary>
     /// Returns the markings this Pokemon has
     /// </summary>
     /// <returns>6 Markings</returns>
-    public bool[] Markings()
+    /*public bool[] Markings()
     {
         return markings;
-    }
+    }*/
+    public bool[] Markings { get { return this.markings; } }
 
     /// <summary>
     /// Returns a string stathing the Unown form of this Pokemon
@@ -447,20 +498,30 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Returns the EV yield of this Pokemon
     /// </summary>
-    /// <returns></returns>
+    /*// <returns></returns>
     public int[] evYield()
     {
-        return EV;//_base.getBaseStats();
-    }
+        return EV;
+    }*/
+    public int[] evYield { get { return this.EV; } }//_base.getBaseStats();
 
     /// <summary>
-    /// Sets this Pokemon's HP
+    /// Sets this Pokemon's HP;
+    /// Changes status on fainted
     /// </summary>
-    /// <param name="value"></param>
+    /*// <param name="value"></param>
     public void HP(int value)
     {
         hp = value < 0 ? 0 : value;
         if (hp == 0) status = 0; // statusCount = 0; //ToDo: Fainted
+    }*/
+    public int HP
+    {
+        set
+        {
+            this.hp = value < 0 ? 0 : value;
+            if (this.hp == 0) this.status = 0; // statusCount = 0; //ToDo: Fainted
+        }
     }
 
     public bool isFainted()
