@@ -214,7 +214,7 @@ public class PokedexHandler : MonoBehaviour {
 
 	private void updateAbilities(int i){
 	
-		PokemonData pokemon = PokemonDatabase.getPokemon (i);
+		PokemonDataOld pokemon = PokemonDatabaseOld.getPokemon (i);
 		if (pokemon == null) {
 			ability1.text = "Unknown";
 			ability2.text = "Unknown";
@@ -256,7 +256,7 @@ public class PokedexHandler : MonoBehaviour {
 	private void setText(int i){
 		id.text = "#" + toNum (i);
 		idShadow.text = "#" + toNum (i);
-		PokemonData pokemon = PokemonDatabase.getPokemon (i);
+		PokemonDataOld pokemon = PokemonDatabaseOld.getPokemon (i);
 		if (pokemon == null) {
 			name.text = "None";
 			nameShadow.text = "None";
@@ -268,18 +268,18 @@ public class PokedexHandler : MonoBehaviour {
 	}
 
 	private void setTyping(int id){
-		if (PokemonDatabase.getPokemon (id) != null) {
-			type1.texture = typeToImage (PokemonDatabase.getPokemon (id).getType1 ());
+		if (PokemonDatabaseOld.getPokemon (id) != null) {
+			type1.texture = typeToImage (PokemonDatabaseOld.getPokemon (id).getType1 ());
 
-			if (PokemonDatabase.getPokemon (id).getType2 () == PokemonData.Type.NONE) {
+			if (PokemonDatabaseOld.getPokemon (id).getType2 () == PokemonDataOld.Type.NONE) {
 				type2.gameObject.SetActive (false);
 			} else {
 				type2.gameObject.SetActive (true);
-				type2.texture = typeToImage (PokemonDatabase.getPokemon (id).getType2 ());
+				type2.texture = typeToImage (PokemonDatabaseOld.getPokemon (id).getType2 ());
 			}
 		} else {
-			type1.texture = typeToImage (PokemonData.Type.NONE);
-			type2.texture = typeToImage (PokemonData.Type.NONE);
+			type1.texture = typeToImage (PokemonDataOld.Type.NONE);
+			type2.texture = typeToImage (PokemonDataOld.Type.NONE);
 		}
 	}
 
@@ -312,48 +312,48 @@ public class PokedexHandler : MonoBehaviour {
 		}
 	}
 
-	private Texture typeToImage(PokemonData.Type type){
+	private Texture typeToImage(PokemonDataOld.Type type){
 
 
 
 
-		if (type == PokemonData.Type.NORMAL) {
+		if (type == PokemonDataOld.Type.NORMAL) {
 			return types [0];
-		} else if (type == PokemonData.Type.FIGHTING) {
+		} else if (type == PokemonDataOld.Type.FIGHTING) {
 			return types [1];
-		} else if (type == PokemonData.Type.FLYING) {
+		} else if (type == PokemonDataOld.Type.FLYING) {
 			return types [2];
-		} else if (type == PokemonData.Type.POISON) {
+		} else if (type == PokemonDataOld.Type.POISON) {
 			return types [3];
-		} else if (type == PokemonData.Type.GROUND) {
+		} else if (type == PokemonDataOld.Type.GROUND) {
 			return types [4];
-		} else if (type == PokemonData.Type.ROCK) {
+		} else if (type == PokemonDataOld.Type.ROCK) {
 			return types [5];
-		} else if (type == PokemonData.Type.BUG) {
+		} else if (type == PokemonDataOld.Type.BUG) {
 			return types [6];
-		} else if (type == PokemonData.Type.GHOST) {
+		} else if (type == PokemonDataOld.Type.GHOST) {
 			return types [7];
-		} else if (type == PokemonData.Type.STEEL) {
+		} else if (type == PokemonDataOld.Type.STEEL) {
 			return types [8];
-		} else if (type == PokemonData.Type.NONE) {
+		} else if (type == PokemonDataOld.Type.NONE) {
 			return types [9];
-		} else if (type == PokemonData.Type.FIRE) {
+		} else if (type == PokemonDataOld.Type.FIRE) {
 			return types [10];
-		} else if (type == PokemonData.Type.WATER) {
+		} else if (type == PokemonDataOld.Type.WATER) {
 			return types [11];
-		} else if (type == PokemonData.Type.GRASS) {
+		} else if (type == PokemonDataOld.Type.GRASS) {
 			return types [12];
-		} else if (type == PokemonData.Type.ELECTRIC) {
+		} else if (type == PokemonDataOld.Type.ELECTRIC) {
 			return types [13];
-		} else if (type == PokemonData.Type.PSYCHIC) {
+		} else if (type == PokemonDataOld.Type.PSYCHIC) {
 			return types [14];
-		} else if (type == PokemonData.Type.ICE) {
+		} else if (type == PokemonDataOld.Type.ICE) {
 			return types [15];
-		} else if (type == PokemonData.Type.DRAGON) {
+		} else if (type == PokemonDataOld.Type.DRAGON) {
 			return types [16];
-		} else if (type == PokemonData.Type.DARK) {
+		} else if (type == PokemonDataOld.Type.DARK) {
 			return types [17];
-		} else if (type == PokemonData.Type.FAIRY) {
+		} else if (type == PokemonDataOld.Type.FAIRY) {
 			return types [18];
 		} else {
 			return types [9];

@@ -52,7 +52,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\Map.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
+    <Compile Include="Assets\Scripts2\Pokemon\PokemonData.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
@@ -68,9 +70,9 @@
     <Compile Include="Assets\Scripts\Data\NatureDatabase.cs" />
     <Compile Include="Assets\Scripts\Data\PC.cs" />
     <Compile Include="Assets\Scripts\Data\Translations.cs" />
-    <Compile Include="Assets\Scripts\Data\Pokemon.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonData.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonDatabase.cs" />
+    <Compile Include="Assets\Scripts\Data\PokemonOld.cs" />
+    <Compile Include="Assets\Scripts\Data\PokemonDataOld.cs" />
+    <Compile Include="Assets\Scripts\Data\PokemonDatabaseOld.cs" />
     <Compile Include="Assets\Scripts\Data\PokemonHealth.cs" />
     <Compile Include="Assets\Scripts\Data\Trainer.cs" />
     <Compile Include="Assets\Scripts\DayNightCycle.cs" />

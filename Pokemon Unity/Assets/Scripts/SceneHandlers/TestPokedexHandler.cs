@@ -33,7 +33,7 @@ public class TestPokedexHandler : MonoBehaviour
     private GUIText choiceText;
     private GUIText choiceTextShadow;
 
-    private Pokemon selectedPokemon;
+    private PokemonOld selectedPokemon;
 
     private Transform selectedInfo;
 
@@ -350,7 +350,7 @@ public class TestPokedexHandler : MonoBehaviour
     }
 
 
-    private void updateSelectedInfo(Pokemon selectedPokemon)
+    private void updateSelectedInfo(PokemonOld selectedPokemonOld)
     {
         if (!carrying)
         {
@@ -374,14 +374,14 @@ public class TestPokedexHandler : MonoBehaviour
             }
             else
             {
-                selectedName.text = selectedPokemon.getName();
+                selectedName.text = selectedPokemonOld.getName();
                 selectedNameShadow.text = selectedName.text;
-                if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
+                if (selectedPokemonOld.getGender() == PokemonOld.Gender.FEMALE)
                 {
                     selectedGender.text = "♀";
                     selectedGender.color = new Color(1, 0.2f, 0.2f, 1);
                 }
-                else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
+                else if (selectedPokemonOld.getGender() == PokemonOld.Gender.MALE)
                 {
                     selectedGender.text = "♂";
                     selectedGender.color = new Color(0.2f, 0.4f, 1, 1);
@@ -391,10 +391,10 @@ public class TestPokedexHandler : MonoBehaviour
                     selectedGender.text = null;
                 }
                 selectedGenderShadow.text = selectedGender.text;
-                selectedSpriteAnimation = selectedPokemon.GetFrontAnim();
+                selectedSpriteAnimation = selectedPokemonOld.GetFrontAnim();
                 selectedSprite.texture = selectedSpriteAnimation[0];
-                string type1 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
-                string type2 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
+                string type1 = PokemonDatabaseOld.getPokemon(selectedPokemonOld.getID()).getType1().ToString();
+                string type2 = PokemonDatabaseOld.getPokemon(selectedPokemonOld.getID()).getType2().ToString();
                 selectedType1.texture = null;
                 selectedType2.texture = null;
                 if (type1 != "NONE")
@@ -405,29 +405,29 @@ public class TestPokedexHandler : MonoBehaviour
                 {
                     selectedType2.texture = Resources.Load<Texture>("PCSprites/type" + type2);
                 }
-                selectedLevel.text = "Level " + selectedPokemon.getLevel();
+                selectedLevel.text = "Level " + selectedPokemonOld.getLevel();
                 selectedLevelShadow.text = selectedLevel.text;
                 selectedAbility.text =
-                    PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+                    PokemonDatabaseOld.getPokemon(selectedPokemonOld.getID()).getAbility(selectedPokemonOld.getAbility());
                 selectedAbilityShadow.text = selectedAbility.text;
                 selectedItem.text = "None";
-                if (selectedPokemon.getHeldItem() != null)
+                if (selectedPokemonOld.getHeldItem() != null)
                 {
-                    selectedItem.text = selectedPokemon.getHeldItem();
+                    selectedItem.text = selectedPokemonOld.getHeldItem();
                 }
                 selectedItemShadow.text = selectedItem.text;
                 selectedStatus.texture = null;
-                if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+                if (selectedPokemonOld.getStatus() != PokemonOld.Status.NONE)
                 {
                     selectedStatus.texture =
-                        Resources.Load<Texture>("PCSprites/status" + selectedPokemon.getStatus().ToString());
+                        Resources.Load<Texture>("PCSprites/status" + selectedPokemonOld.getStatus().ToString());
                 }
             }
         }
     }
 
     //Show the selectedInfo regardless of carrying or not.
-    private void updateSelectedInfoOverride(Pokemon selectedPokemon)
+    private void updateSelectedInfoOverride(PokemonOld selectedPokemon)
     {
         if (carrying)
         {
@@ -1161,7 +1161,7 @@ public class TestPokedexHandler : MonoBehaviour
                         yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 
                         Scene.main.Typing.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Typing.control(8, currentBoxHeader.text, Pokemon.Gender.NONE,
+                        StartCoroutine(Scene.main.Typing.control(8, currentBoxHeader.text, PokemonOld.Gender.NONE,
                             new Sprite[] {boxEditIcon}));
                         while (Scene.main.Typing.gameObject.activeSelf)
                         {
@@ -1368,7 +1368,7 @@ public class TestPokedexHandler : MonoBehaviour
                                 else if (chosenIndex == 3)
                                 {
                                     //ITEM
-                                    Pokemon currentPokemon =
+                                    PokemonOld currentPokemon =
                                         SaveData.currentSave.PC.boxes[currentBoxID][currentPosition - 3];
 
                                     Dialog.undrawChoiceBox();
@@ -1836,7 +1836,7 @@ public class TestPokedexHandler : MonoBehaviour
                                     else if (chosenIndex == 3)
                                     {
                                         //ITEM
-                                        Pokemon currentPokemon = SaveData.currentSave.PC.boxes[0][currentPosition - 33];
+                                        PokemonOld currentPokemon = SaveData.currentSave.PC.boxes[0][currentPosition - 33];
 
                                         Dialog.undrawChoiceBox();
                                         Dialog.drawDialogBox();
