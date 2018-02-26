@@ -21,7 +21,7 @@ public class PokemonData {
     /// Different Gens assign different pokedex num
     /// </summary>
     /// <remarks>Think there is 3 pokedex</remarks>
-    private int[,] regionalPokedex;
+    private int[] regionalPokedex;
 	/// <summary>
 	/// Name of the specific pokemon+form
 	/// for given Id in database
@@ -141,9 +141,10 @@ public class PokemonData {
     public Pokemon ID { get { return this.id; } }
     /// <summary>
     /// Different Gens assign different pokedex num
+    /// example: Bulbasaur = [1,231]
     /// </summary>
     /// <remarks>Think there is 3 pokedex</remarks>
-    public int[,] RegionalPokedex { get { return this.regionalPokedex; } }
+    public int[] RegionalPokedex { get { return this.regionalPokedex; } }
     /// <summary>
     /// Name of the specific pokemon+form
     /// for given Id in database
@@ -489,7 +490,7 @@ public class PokemonData {
     #region Constructors
     public PokemonData(){}
   
-    public PokemonData(Pokemon Id, int[,] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+    public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
                         float maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, LevelingRate levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -550,7 +551,7 @@ public class PokemonData {
         //this.evolutionRequirements = evolutionRequirements;
     }
 
-    public static PokemonData CreatePokemonData(int Id, int[,] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+    public static PokemonData CreatePokemonData(int Id, int[] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
                         float maleRatio, int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
