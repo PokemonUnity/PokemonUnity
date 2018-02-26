@@ -244,8 +244,8 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     /// <param name="pokemon"></param>
     /// ToDo: Inherit PokemonData 
-    public Pokemon(ePokemons.Pokemon pokemon) //: base(pokemon)
-    { _base = PokemonDatabase.getPokemon((int)pokemon); } //ToDo: Redo PokemonDatabase/PokemonData
+    public Pokemon(PokemonData.Pokemon pokemon) //: base(pokemon)
+    { _base = PokemonData.GetPokemon(pokemon); } //ToDo: Redo PokemonDatabase/PokemonData -- DONE
 
     #region Ownership, obtained information
     /// <summary>
@@ -371,7 +371,7 @@ public class Pokemon //: ePokemons //PokemonData
         {
             if (value < 1 || value > 100) //Experience.MAXLEVEL
                 throw new Exception(string.Format("The level number {0} is invalid", value));
-            // ToDo: return Experience.GetStartExperience(this.exp, this.GrowthRate)
+            // ToDo: return Experience.GetStartExperience(value, this.GrowthRate)
         }
     }
 
@@ -383,11 +383,11 @@ public class Pokemon //: ePokemons //PokemonData
         }
     }
 
-    public int GrowthRate
+    public PokemonData.LevelingRate GrowthRate
     {
         get
         {
-            return (int)_base.getLevelingRate(); //ToDo
+            return _base.GrowthRate; //ToDo: Return as int?
         }
     }
 
@@ -395,7 +395,7 @@ public class Pokemon //: ePokemons //PokemonData
     {
         get
         {
-            return (int)_base.getLevelingRate(); //ToDo: 
+            return _base.BaseExpYield; //ToDo: 
         }
     }
     #endregion
@@ -512,7 +512,7 @@ public class Pokemon //: ePokemons //PokemonData
     {
         return _base.getName();
     }*/
-    public string SpeciesName { get { return this._base.getName(); } }
+    public string SpeciesName { get { return this._base.Species; } }
 
     /// <summary>
     /// Returns the markings this Pokemon has
@@ -530,7 +530,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <returns></returns>
     public char UnknownShape()
     {
-        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[_base.getID()]; //ToDo: FormId; "if pokemon is an Unknown"
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[_base.ArrayId]; //ToDo: FormId; "if pokemon is an Unknown"
     }
 
     /// <summary>
