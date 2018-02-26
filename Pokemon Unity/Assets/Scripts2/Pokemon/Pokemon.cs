@@ -9,6 +9,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Current Total HP
     /// </summary>
+    public int TotalHP { get { return totalHP; } }
     private int totalHP = 1; 
     /// <summary>
     /// Current HP
@@ -37,11 +38,11 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
     /// </summary>
-    private int[] IV = new int[6];
+    private readonly int[] IV = new int[6];
     /// <summary>
     /// Effort Values
     /// </summary>
-    private int[] EV = new int[6]; //{ 0, 0, 0, 0, 0, 0 }; //same thing
+    private readonly int[] EV = new int[6]; //{ 0, 0, 0, 0, 0, 0 }; //same thing
     /// <summary>
     /// Species (National Pokedex number)
     /// </summary>
@@ -68,7 +69,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// [0] = Pokerus Strain; [1] = Days until cured.
     /// if ([0] && [1] == 0) => Not Infected
     /// </remarks>
-    private int[] pokerus = new int[2]; //{ 0, 0 };
+    private readonly int[] pokerus = new int[2]; //{ 0, 0 };
     /// <summary>
     /// Held item
     /// </summary>
@@ -138,11 +139,11 @@ public class Pokemon //: ePokemons //PokemonData
     /// Moves (PBMove)
     /// </summary>
     /// ToDo Move class, not enum
-    private eMoves.Move[] moves = new eMoves.Move[4]; //{ eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
+    private readonly eMoves.Move[] moves = new eMoves.Move[4]; //{ eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
     /// <summary>
     /// The moves known when this Pokemon was obtained
     /// </summary>
-    private eMoves.Move[] firstMoves = new eMoves.Move[4];
+    private readonly eMoves.Move[] firstMoves = new eMoves.Move[4];
     /// <summary>
     /// Ball used
     /// </summary>
@@ -150,7 +151,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Markings
     /// </summary>
-    private bool[] markings = new bool[6]; //{ false, false, false, false, false, false };
+    private readonly bool[] markings = new bool[6]; //{ false, false, false, false, false, false };
     /// <summary>
     /// Manner Obtained:
     /// </summary>
@@ -193,7 +194,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Forces the first/second/hidden (0/1/2) ability
     /// </summary>
-    private eAbility.Ability[] abilityFlag = new eAbility.Ability[3];
+    private readonly eAbility.Ability[] abilityFlag = new eAbility.Ability[3];
     /// <summary>
     /// </summary>
     /// <remarks>
@@ -215,7 +216,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <remarks>
     /// Make 2d Array (Array[,]) separated by regions/Gens
     /// </remarks>
-    private bool[] ribbons;
+    private bool[] ribbons; //= new bool[numberOfRegions,RibbonsPerRegion];
     /// <summary>
     /// Contest stats
     /// </summary>
@@ -224,17 +225,17 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Max total EVs
     /// </summary>
-    static readonly int EVLIMIT = 510; 
+    const int EVLIMIT = 510; //static readonly
     /// <summary>
     /// Max EVs that a single stat can have
     /// </summary>
     /// ToDo: use const instead?
     /// Can be referenced as [Attribute] if is a const value
-    static readonly int EVSTATLIMIT = 252; 
+    const int EVSTATLIMIT = 252; //static readonly
     /// <summary>
     /// Maximum length a Pokemon's nickname can be
     /// </summary>
-    static readonly int NAMELIMIT = 10;
+    const int NAMELIMIT = 10; //static readonly
     #endregion
 
     public Pokemon() { }
@@ -555,6 +556,7 @@ public class Pokemon //: ePokemons //PokemonData
     }*/
     public int HP
     {
+        get { return this.hp; } //ToDo: If greater than totalHP throw error?
         set
         {
             this.hp = value < 0 ? 0 : value;
@@ -565,7 +567,7 @@ public class Pokemon //: ePokemons //PokemonData
     public bool isFainted()
     {
         return !this.isEgg //eggSteps == 0 //not an egg
-            && hp <= 0;
+            && this.HP <= 0;//hp <= 0;
     }
 
     /// <summary>

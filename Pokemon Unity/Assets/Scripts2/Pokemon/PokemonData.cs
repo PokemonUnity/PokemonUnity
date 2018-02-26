@@ -9,7 +9,7 @@ public class PokemonData {
 	/// <summary>
 	/// Id is the database value for specific pokemon+form
     /// Different Pokemon forms share the same Pokedex number. 
-    /// Values are loaded from <see cref="ePokemons.Pokemon"/>, where each form is registered to an Id.
+    /// Values are loaded from <see cref="Pokemon"/>, where each form is registered to an Id.
 	/// </summary>
 	/// <example>
 	/// Deoxys Pokedex# can be 1,
@@ -51,7 +51,6 @@ public class PokemonData {
 	private string pokedexEntry; 
 	private Pokemon[] forms;
     private int form; //Not sure if this is needed here
-	//public enum Ability : int? { } //made a class, dont think i need this or below
 
 	private Type type1;
 	private Type type2;
@@ -79,7 +78,7 @@ public class PokemonData {
 	//private float hitboxWidth; //used for 3d battles; just use collision detection from models
 	private float height;
 	private float weight;
-    private int shapeID; //enum
+    private int shapeID; // ToDo: enum
 
 	private int baseExpYield;
 	private LevelingRate levelingRate;
@@ -111,7 +110,6 @@ public class PokemonData {
     /// Custom Class needed here... <see cref="eItems.Item"/> as itemId
     /// </remarks>
 	private int[,] heldItem;
-	//private System.Collections.Generic.Dictionary<int, float> heldItem = new System.Collections.Generic.Dictionary<int, float>();
 
 	private int[] movesetLevels;
     /// <summary>
@@ -126,14 +124,14 @@ public class PokemonData {
 	//private string[] tmList; //Will be done thru ItemsClass
 
 	private int[] evolutionID;
-	private string[] evolutionRequirements;
+	private string[] evolutionRequirements;//ToDo: Evolution class type array here
     #endregion
 
     #region Properties
     /// <summary>
     /// Id is the database value for specific pokemon+form
     /// Different Pokemon forms share the same Pokedex number. 
-    /// Values are loaded from <see cref="ePokemons.Pokemon"/>, where each form is registered to an Id.
+    /// Values are loaded from <see cref="Pokemon"/>, where each form is registered to an Id.
     /// </summary>
     /// <example>
     /// Deoxys Pokedex# can be 1,
@@ -178,7 +176,6 @@ public class PokemonData {
     /// If null, returns this.Pokemon.Id
     /// </summary>
     public Pokemon[] Forms { get { return this.forms; } } //Not sure if this is needed here
-    //public enum Ability : int? { } //made a class, dont think i need this or below
 
     public Type Type1 { get { return this.type1; } }
     public Type Type2 { get { return this.type2; } }

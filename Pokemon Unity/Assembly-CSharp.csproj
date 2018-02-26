@@ -116,9 +116,11 @@
     <Compile Include="Assets\Scripts\SceneHandlers\PartyHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\PauseHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\PCHandler.cs" />
+    <Compile Include="Assets\Scripts\SceneHandlers\PokedexHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\Scene.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\SettingsHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\SummaryHandler.cs" />
+    <Compile Include="Assets\Scripts\SceneHandlers\TestPokedexHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\TrainerHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\TypingHandler.cs" />
     <Compile Include="Assets\Scripts\SceneTransition.cs" />
