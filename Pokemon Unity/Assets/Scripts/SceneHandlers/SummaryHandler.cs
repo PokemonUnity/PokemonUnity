@@ -334,10 +334,10 @@ public class SummaryHandler : MonoBehaviour
 
         dexNo.text = selectedPokemon.getLongID();
         dexNoShadow.text = dexNo.text;
-        species.text = PokemonDatabase.getPokemon(selectedPokemon.getID()).getName();
+        species.text = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getName();
         speciesShadow.text = species.text;
-        string type1string = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
-        string type2string = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
+        string type1string = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType1().ToString();
+        string type2string = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType2().ToString();
         type1.sprite = Resources.Load<Sprite>("null");
         type2.sprite = Resources.Load<Sprite>("null");
         if (type1string != "NONE")
@@ -361,10 +361,10 @@ public class SummaryHandler : MonoBehaviour
         expPoints.text = "" + selectedPokemon.getExp();
         expPointsShadow.text = expPoints.text;
         float expCurrentLevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+            PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel());
         float expNextlevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+            PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel() + 1);
         float expAlong = selectedPokemon.getExp() - expCurrentLevel;
         float expDistance = expAlong / (expNextlevel - expCurrentLevel);
@@ -470,7 +470,7 @@ public class SummaryHandler : MonoBehaviour
         }
 
 
-        abilityName.text = PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+        abilityName.text = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
         abilityNameShadow.text = abilityName.text;
         //abilities not yet implemented
         abilityDescription.text = "";

@@ -364,7 +364,7 @@ public class CustomEvent : MonoBehaviour
                     //Play Great for Pokemon
                     AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
 
-                    PokemonData pkd = PokemonDatabase.getPokemon(currentEvent.ints[0]);
+                    PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(currentEvent.ints[0]);
 
                     string pkName = pkd.getName();
                     PokemonOld.Gender pkGender = PokemonOld.Gender.CALCULATE;

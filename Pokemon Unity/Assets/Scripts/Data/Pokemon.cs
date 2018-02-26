@@ -12,8 +12,8 @@ using System.Collections;
 public class PokemonOld {
 
 	/// <summary>
-	/// Set value using Pokemon's <see cref="PokemonData.ID"/>
-	/// <seealso cref="PokemonData.ID"/>
+	/// Set value using Pokemon's <see cref="PokemonDataOld.ID"/>
+	/// <seealso cref="PokemonDataOld.ID"/>
 	/// </summary>
 	private int pokemonID;
 	private string nickname;
@@ -35,7 +35,7 @@ public class PokemonOld {
 	
 	/// <summary>
 	///	Used only for a few pokemon to specify what form it's in. 
-	/// <seealso cref="PokemonData.Form"/>
+	/// <seealso cref="PokemonDataOld.Form"/>
 	/// <returns>by default is null/0</returns>
 	/// </summary>
 	/// <remarks>
@@ -202,7 +202,7 @@ public class PokemonOld {
     /// the 3rd is hidden but still remains active.
     /// Multiples of same abilities count as 1. 
     /// (Shouldnt contain multiples of same abilities)
-    ///	<seealso cref="PokemonData.Abilities"/>
+    ///	<seealso cref="PokemonDataOld.Abilities"/>
 	/// </summary>
 	///	<remarks>
 	/// Should be [int? a1,int? a2,int? a3]
@@ -261,7 +261,7 @@ public class PokemonOld {
 	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
 	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
 	               string nature, int ability, string[] moveset, int[] PPups){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 
 		this.pokemonID = pokemonID;
 		this.nickname = nickname;
@@ -279,8 +279,8 @@ public class PokemonOld {
 		}
 		this.level = level;
 		//Find exp for current level, and next level.
-		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
+		this.exp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level);
+		this.nextLevelExp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
 		this.happiness = thisPokemonData.getBaseFriendship();
 
 		this.isShiny = isShiny;
@@ -361,7 +361,7 @@ public class PokemonOld {
 	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
 	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
 	               NatureDatabase.Nature nature, int ability, string[] moveset, int[] PPups){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 
 		this.pokemonID = pokemonID;
 		this.nickname = nickname;
@@ -379,8 +379,8 @@ public class PokemonOld {
 		}
 		this.level = level;
 		//Find exp for current level, and next level.
-		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
+		this.exp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level);
+		this.nextLevelExp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
 		this.happiness = thisPokemonData.getBaseFriendship();
 
 		this.isShiny = isShiny;
@@ -461,7 +461,7 @@ public class PokemonOld {
 	//New Pokemon with: random IVS, and Shininess 
 	//					default moveset, and EVS (0)
 	public PokemonOld(int pokemonID, Gender gender, int level, string caughtBall, string heldItem, string OT, int ability){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 
 		this.pokemonID = pokemonID;
 
@@ -484,8 +484,8 @@ public class PokemonOld {
 
 		this.level = level;
 		//Find exp for current level, and next level.
-		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
+		this.exp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level);
+		this.nextLevelExp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
 
 		this.happiness = thisPokemonData.getBaseFriendship();
 
@@ -575,7 +575,7 @@ public class PokemonOld {
 	//adding a caught pokemon (only a few customizable details)
 	public PokemonOld(PokemonOld pokemon, string nickname, string caughtBall){
 
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemon.pokemonID);
 		
 		this.pokemonID = pokemon.pokemonID;
 		this.nickname = nickname;
@@ -843,7 +843,7 @@ public class PokemonOld {
     #region Methods
     //Recalculate the pokemon's Stats.
     public void calculateStats(){
-		int[] baseStats = PokemonDatabase.getPokemon(pokemonID).getBaseStats();
+		int[] baseStats = PokemonDatabaseOld.getPokemon(pokemonID).getBaseStats();
 		if(baseStats[0] == 1){
 			this.HP = 1;}
 		else{
@@ -900,7 +900,7 @@ public class PokemonOld {
 			this.exp += expAdded;
 			while(exp >= nextLevelExp){
 				this.level += 1;
-				this.nextLevelExp = PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(pokemonID).getLevelingRate(), level+1);
+				this.nextLevelExp = PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(pokemonID).getLevelingRate(), level+1);
 				calculateStats();
 				if(this.HP > 0 && this.status == Status.FAINTED){
 					this.status = Status.NONE;}
@@ -990,7 +990,7 @@ public class PokemonOld {
 //*/
 
 	public int getEvolutionID(string currentMethod){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 		int[] evolutions = thisPokemonData.getEvolutions();
 		string[] evolutionRequirements = thisPokemonData.getEvolutionRequirements();
 
@@ -1005,7 +1005,7 @@ public class PokemonOld {
 
 	//Check PokemonData.cs for list of evolution method names.
 	public bool canEvolve(string currentMethod){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 		int[] evolutions = thisPokemonData.getEvolutions();
 		string[] evolutionRequirements = thisPokemonData.getEvolutionRequirements();
 
@@ -1105,8 +1105,8 @@ public class PokemonOld {
 	}
 
 	public bool evolve(string currentMethod){
-		int[] evolutions = PokemonDatabase.getPokemon(pokemonID).getEvolutions();
-		string[] evolutionRequirements = PokemonDatabase.getPokemon(pokemonID).getEvolutionRequirements();
+		int[] evolutions = PokemonDatabaseOld.getPokemon(pokemonID).getEvolutions();
+		string[] evolutionRequirements = PokemonDatabaseOld.getPokemon(pokemonID).getEvolutionRequirements();
 		for(int i = 0; i < evolutions.Length; i++){
 			if(checkEvolutionMethods(currentMethod, evolutionRequirements[i])){
 				float hpPercent = ((float)this.currentHP/(float)this.HP);
@@ -1122,7 +1122,7 @@ public class PokemonOld {
 
 	//return a string that contains all of this pokemon's data
 	public override string ToString(){
-		string result = pokemonID +": "+ this.getName() +"("+ PokemonDatabase.getPokemon(pokemonID).getName() +"), "+
+		string result = pokemonID +": "+ this.getName() +"("+ PokemonDatabaseOld.getPokemon(pokemonID).getName() +"), "+
 				gender.ToString() +", Level "+ level +", EXP: "+ exp +", To next: "+ (nextLevelExp - exp) +
 				", Friendship: "+ happiness +", RareValue="+ rareValue +", Pokerus="+ pokerus.ToString() +", Shiny="+ isShiny.ToString() +
 				", Status: "+  status +", Ball: "+ caughtBallString +", Item: "+ heldItem +
@@ -1131,7 +1131,7 @@ public class PokemonOld {
 				", IVs: "+ IV_HP +","+ IV_ATK +","+ IV_DEF +","+ IV_SPA +","+ IV_SPD +","+ IV_SPE +
 				", EVs: "+ EV_HP +","+ EV_ATK +","+ EV_DEF +","+ EV_SPA +","+ EV_SPD +","+ EV_SPE +
 				", Stats: "+ currentHP +"/"+ HP +","+ ATK +","+ DEF +","+ SPA +","+ SPD +","+ SPE +
-				", Nature: "+ natureString +", "+PokemonDatabase.getPokemon(pokemonID).getAbility(ability);
+				", Nature: "+ natureString +", "+PokemonDatabaseOld.getPokemon(pokemonID).getAbility(ability);
 		result += ", [";
 		for(int i = 0; i < 4; i++){
 			if(!string.IsNullOrEmpty(movesetString[i])){
@@ -1263,7 +1263,7 @@ public class PokemonOld {
 	//Get the pokemon's nickname, or regular name if it has none.
 	public string getName(){
 		if (string.IsNullOrEmpty(nickname)){
-			return PokemonDatabase.getPokemon(pokemonID).getName();
+			return PokemonDatabaseOld.getPokemon(pokemonID).getName();
 		}
 		else{
 			return nickname;
@@ -1506,7 +1506,7 @@ public class PokemonOld {
 	}
 
 	public bool CanLearnMove(string move){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 
 		string[] moves = thisPokemonData.getMovesetMoves();
 		for(int i = 0; i < moves.Length; i++){
@@ -1520,7 +1520,7 @@ public class PokemonOld {
 	}
 
 	public string MoveLearnedAtLevel(int level){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 
 		int[] movesetLevels = thisPokemonData.getMovesetLevels();
 		for(int i = 0; i < movesetLevels.Length; i++){

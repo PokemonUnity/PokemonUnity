@@ -393,8 +393,8 @@ public class PCHandler : MonoBehaviour
                 selectedGenderShadow.text = selectedGender.text;
                 selectedSpriteAnimation = selectedPokemon.GetFrontAnim();
                 selectedSprite.texture = selectedSpriteAnimation[0];
-                string type1 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
-                string type2 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
+                string type1 = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType1().ToString();
+                string type2 = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType2().ToString();
                 selectedType1.texture = null;
                 selectedType2.texture = null;
                 if (type1 != "NONE")
@@ -408,7 +408,7 @@ public class PCHandler : MonoBehaviour
                 selectedLevel.text = "Level " + selectedPokemon.getLevel();
                 selectedLevelShadow.text = selectedLevel.text;
                 selectedAbility.text =
-                    PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+                    PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
                 selectedAbilityShadow.text = selectedAbility.text;
                 selectedItem.text = "None";
                 if (selectedPokemon.getHeldItem() != null)

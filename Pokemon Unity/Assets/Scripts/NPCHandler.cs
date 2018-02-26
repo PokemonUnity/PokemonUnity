@@ -73,8 +73,8 @@ public class NPCHandler : MonoBehaviour
         {
             spriteSheet = PokemonOld.GetSpriteFromID(pokemonID, false, false);
 
-            npcLight.intensity = PokemonDatabase.getPokemon(pokemonID).getLuminance();
-            npcLight.color = PokemonDatabase.getPokemon(pokemonID).getLightColor();
+            npcLight.intensity = PokemonDatabaseOld.getPokemon(pokemonID).getLuminance();
+            npcLight.color = PokemonDatabaseOld.getPokemon(pokemonID).getLightColor();
             lightSheet = PokemonOld.GetSpriteFromID(pokemonID, false, true);
         }
 

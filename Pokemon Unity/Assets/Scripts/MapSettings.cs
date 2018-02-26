@@ -325,8 +325,8 @@ public class MapSettings : MonoBehaviour
 #if DEBUG
         string debugtext = "";
             for(int i = 0; i < chanceSplitList.Length; i++){
-                debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
-            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
+                debugtext += PokemonDatabaseOld.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
+            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabaseOld.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
 #endif
         
         return new PokemonOld(chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,

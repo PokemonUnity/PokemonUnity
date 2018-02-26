@@ -362,22 +362,22 @@ public class BattleHandler : MonoBehaviour
     //Ability can be changed in battle. These changes never persist after swapping out.
     private string[] pokemonAbility = new string[6];
     //Types can be changed in battle. These changes never persist after swapping out.
-    private PokemonData.Type[] pokemonType1 = new PokemonData.Type[]
+    private PokemonDataOld.Type[] pokemonType1 = new PokemonDataOld.Type[]
     {
-        PokemonData.Type.NONE, PokemonData.Type.NONE, PokemonData.Type.NONE,
-        PokemonData.Type.NONE, PokemonData.Type.NONE, PokemonData.Type.NONE
+        PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE,
+        PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE
     };
 
-    private PokemonData.Type[] pokemonType2 = new PokemonData.Type[]
+    private PokemonDataOld.Type[] pokemonType2 = new PokemonDataOld.Type[]
     {
-        PokemonData.Type.NONE, PokemonData.Type.NONE, PokemonData.Type.NONE,
-        PokemonData.Type.NONE, PokemonData.Type.NONE, PokemonData.Type.NONE
+        PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE,
+        PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE
     };
 
-    private PokemonData.Type[] pokemonType3 = new PokemonData.Type[]
+    private PokemonDataOld.Type[] pokemonType3 = new PokemonDataOld.Type[]
     {
-        PokemonData.Type.NONE, PokemonData.Type.NONE, PokemonData.Type.NONE,
-        PokemonData.Type.NONE, PokemonData.Type.NONE, PokemonData.Type.NONE
+        PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE,
+        PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE, PokemonDataOld.Type.NONE
     };
 
     //pokemon stat boost data
@@ -1361,10 +1361,10 @@ public class BattleHandler : MonoBehaviour
                 pokemon0MaxHP.text = "" + pokemon[0].getHP();
                 pokemon0MaxHPShadow.text = pokemon0MaxHP.text;
                 float expCurrentLevel =
-                    PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(pokemon[0].getID()).getLevelingRate(),
+                    PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(pokemon[0].getID()).getLevelingRate(),
                         pokemon[0].getLevel());
                 float expNextlevel =
-                    PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(pokemon[0].getID()).getLevelingRate(),
+                    PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(pokemon[0].getID()).getLevelingRate(),
                         pokemon[0].getLevel() + 1);
                 float expAlong = pokemon[0].getExp() - expCurrentLevel;
                 float expDistance = expAlong / (expNextlevel - expCurrentLevel);
@@ -1382,94 +1382,94 @@ public class BattleHandler : MonoBehaviour
         {
             if (moveset[i] != null)
             {
-                PokemonData.Type type = MoveDatabase.getMove(moveset[i]).getType();
+                PokemonDataOld.Type type = MoveDatabase.getMove(moveset[i]).getType();
 
-                if (type == PokemonData.Type.BUG)
+                if (type == PokemonDataOld.Type.BUG)
                 {
                     buttonMoveCover[i].color = new Color(0.47f, 0.57f, 0.06f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.DARK)
+                else if (type == PokemonDataOld.Type.DARK)
                 {
                     buttonMoveCover[i].color = new Color(0.32f, 0.28f, 0.24f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.DRAGON)
+                else if (type == PokemonDataOld.Type.DRAGON)
                 {
                     buttonMoveCover[i].color = new Color(0.32f, 0.25f, 1f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.ELECTRIC)
+                else if (type == PokemonDataOld.Type.ELECTRIC)
                 {
                     buttonMoveCover[i].color = new Color(0.64f, 0.52f, 0.04f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.FAIRY)
+                else if (type == PokemonDataOld.Type.FAIRY)
                 {
                     buttonMoveCover[i].color = new Color(0.7f, 0.33f, 0.6f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.FIGHTING)
+                else if (type == PokemonDataOld.Type.FIGHTING)
                 {
                     buttonMoveCover[i].color = new Color(0.75f, 0.19f, 0.15f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.FIRE)
+                else if (type == PokemonDataOld.Type.FIRE)
                 {
                     buttonMoveCover[i].color = new Color(0.94f, 0.5f, 0.19f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.FLYING)
+                else if (type == PokemonDataOld.Type.FLYING)
                 {
                     buttonMoveCover[i].color = new Color(0.5f, 0.43f, 0.72f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.GHOST)
+                else if (type == PokemonDataOld.Type.GHOST)
                 {
                     buttonMoveCover[i].color = new Color(0.4f, 0.32f, 0.55f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.GRASS)
+                else if (type == PokemonDataOld.Type.GRASS)
                 {
                     buttonMoveCover[i].color = new Color(0.34f, 0.5f, 0.25f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.GROUND)
+                else if (type == PokemonDataOld.Type.GROUND)
                 {
                     buttonMoveCover[i].color = new Color(0.53f, 0.4f, 0.19f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.ICE)
+                else if (type == PokemonDataOld.Type.ICE)
                 {
                     buttonMoveCover[i].color = new Color(0.4f, 0.6f, 0.6f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.NORMAL)
+                else if (type == PokemonDataOld.Type.NORMAL)
                 {
                     buttonMoveCover[i].color = new Color(0.5f, 0.5f, 0.35f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.POISON)
+                else if (type == PokemonDataOld.Type.POISON)
                 {
                     buttonMoveCover[i].color = new Color(0.63f, 0.25f, 0.63f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.PSYCHIC)
+                else if (type == PokemonDataOld.Type.PSYCHIC)
                 {
                     buttonMoveCover[i].color = new Color(0.75f, 0.25f, 0.4f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.ROCK)
+                else if (type == PokemonDataOld.Type.ROCK)
                 {
                     buttonMoveCover[i].color = new Color(0.48f, 0.35f, 0.14f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.STEEL)
+                else if (type == PokemonDataOld.Type.STEEL)
                 {
                     buttonMoveCover[i].color = new Color(0.6f, 0.6f, 0.67f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
                 }
-                else if (type == PokemonData.Type.WATER)
+                else if (type == PokemonDataOld.Type.WATER)
                 {
                     buttonMoveCover[i].color = new Color(0.25f, 0.42f, 0.75f, 1);
                     buttonMoveType[i].sprite = Resources.Load<Sprite>("PCSprites/type" + type.ToString());
@@ -1689,23 +1689,23 @@ public class BattleHandler : MonoBehaviour
         }
         pokemonSelectedType1.sprite = Resources.Load<Sprite>("null");
         pokemonSelectedType2.sprite = Resources.Load<Sprite>("null");
-        PokemonData.Type type1 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1();
-        PokemonData.Type type2 = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2();
-        if (type1 != PokemonData.Type.NONE)
+        PokemonDataOld.Type type1 = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType1();
+        PokemonDataOld.Type type2 = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType2();
+        if (type1 != PokemonDataOld.Type.NONE)
         {
             pokemonSelectedType1.sprite = Resources.Load<Sprite>("PCSprites/type" + type1.ToString());
         }
-        if (type2 != PokemonData.Type.NONE)
+        if (type2 != PokemonDataOld.Type.NONE)
         {
             pokemonSelectedType2.sprite = Resources.Load<Sprite>("PCSprites/type" + type2.ToString());
         }
 
         //Summary
         float expCurrentLevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+            PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel());
         float expNextlevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+            PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel() + 1);
         float expAlong = selectedPokemon.getExp() - expCurrentLevel;
         float expDistance = expAlong / (expNextlevel - expCurrentLevel);
@@ -1766,7 +1766,7 @@ public class BattleHandler : MonoBehaviour
         }
 
         pokemonSummaryAbilityName.text =
-            PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+            PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
         pokemonSummaryAbilityNameShadow.text = pokemonSummaryAbilityName.text;
         //abilities not yet implemented
         pokemonSummaryAbilityDescription.text = "";
@@ -2414,261 +2414,261 @@ public class BattleHandler : MonoBehaviour
     }
 
     /// returns the modifier of a type vs. type. returns as 0f-2f
-    private float getSuperEffectiveModifier(PokemonData.Type attackingType, PokemonData.Type targetType)
+    private float getSuperEffectiveModifier(PokemonDataOld.Type attackingType, PokemonDataOld.Type targetType)
     {
-        if (attackingType == PokemonData.Type.BUG)
+        if (attackingType == PokemonDataOld.Type.BUG)
         {
-            if (targetType == PokemonData.Type.DARK || targetType == PokemonData.Type.GRASS ||
-                targetType == PokemonData.Type.PSYCHIC)
+            if (targetType == PokemonDataOld.Type.DARK || targetType == PokemonDataOld.Type.GRASS ||
+                targetType == PokemonDataOld.Type.PSYCHIC)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.FAIRY || targetType == PokemonData.Type.FIGHTING ||
-                     targetType == PokemonData.Type.FIRE || targetType == PokemonData.Type.FLYING ||
-                     targetType == PokemonData.Type.GHOST || targetType == PokemonData.Type.POISON ||
-                     targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.FAIRY || targetType == PokemonDataOld.Type.FIGHTING ||
+                     targetType == PokemonDataOld.Type.FIRE || targetType == PokemonDataOld.Type.FLYING ||
+                     targetType == PokemonDataOld.Type.GHOST || targetType == PokemonDataOld.Type.POISON ||
+                     targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.DARK)
+        else if (attackingType == PokemonDataOld.Type.DARK)
         {
-            if (targetType == PokemonData.Type.GHOST || targetType == PokemonData.Type.PSYCHIC)
+            if (targetType == PokemonDataOld.Type.GHOST || targetType == PokemonDataOld.Type.PSYCHIC)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.DARK || targetType == PokemonData.Type.FAIRY ||
-                     targetType == PokemonData.Type.FIGHTING)
+            else if (targetType == PokemonDataOld.Type.DARK || targetType == PokemonDataOld.Type.FAIRY ||
+                     targetType == PokemonDataOld.Type.FIGHTING)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.DRAGON)
+        else if (attackingType == PokemonDataOld.Type.DRAGON)
         {
-            if (targetType == PokemonData.Type.DRAGON)
+            if (targetType == PokemonDataOld.Type.DRAGON)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.FAIRY)
+            else if (targetType == PokemonDataOld.Type.FAIRY)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.ELECTRIC)
+        else if (attackingType == PokemonDataOld.Type.ELECTRIC)
         {
-            if (targetType == PokemonData.Type.FLYING || targetType == PokemonData.Type.WATER)
+            if (targetType == PokemonDataOld.Type.FLYING || targetType == PokemonDataOld.Type.WATER)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.DRAGON || targetType == PokemonData.Type.ELECTRIC ||
-                     targetType == PokemonData.Type.GRASS)
+            else if (targetType == PokemonDataOld.Type.DRAGON || targetType == PokemonDataOld.Type.ELECTRIC ||
+                     targetType == PokemonDataOld.Type.GRASS)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.GROUND)
+            else if (targetType == PokemonDataOld.Type.GROUND)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.FAIRY)
+        else if (attackingType == PokemonDataOld.Type.FAIRY)
         {
-            if (targetType == PokemonData.Type.DARK || targetType == PokemonData.Type.DRAGON ||
-                targetType == PokemonData.Type.FIGHTING)
+            if (targetType == PokemonDataOld.Type.DARK || targetType == PokemonDataOld.Type.DRAGON ||
+                targetType == PokemonDataOld.Type.FIGHTING)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.FIRE || targetType == PokemonData.Type.POISON ||
-                     targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.FIRE || targetType == PokemonDataOld.Type.POISON ||
+                     targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.FIGHTING)
+        else if (attackingType == PokemonDataOld.Type.FIGHTING)
         {
-            if (targetType == PokemonData.Type.DARK || targetType == PokemonData.Type.ICE ||
-                targetType == PokemonData.Type.NORMAL || targetType == PokemonData.Type.ROCK ||
-                targetType == PokemonData.Type.STEEL)
+            if (targetType == PokemonDataOld.Type.DARK || targetType == PokemonDataOld.Type.ICE ||
+                targetType == PokemonDataOld.Type.NORMAL || targetType == PokemonDataOld.Type.ROCK ||
+                targetType == PokemonDataOld.Type.STEEL)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.BUG || targetType == PokemonData.Type.FAIRY ||
-                     targetType == PokemonData.Type.FLYING || targetType == PokemonData.Type.POISON ||
-                     targetType == PokemonData.Type.PSYCHIC)
+            else if (targetType == PokemonDataOld.Type.BUG || targetType == PokemonDataOld.Type.FAIRY ||
+                     targetType == PokemonDataOld.Type.FLYING || targetType == PokemonDataOld.Type.POISON ||
+                     targetType == PokemonDataOld.Type.PSYCHIC)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.GHOST)
+            else if (targetType == PokemonDataOld.Type.GHOST)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.FIRE)
+        else if (attackingType == PokemonDataOld.Type.FIRE)
         {
-            if (targetType == PokemonData.Type.BUG || targetType == PokemonData.Type.GRASS ||
-                targetType == PokemonData.Type.ICE || targetType == PokemonData.Type.STEEL)
+            if (targetType == PokemonDataOld.Type.BUG || targetType == PokemonDataOld.Type.GRASS ||
+                targetType == PokemonDataOld.Type.ICE || targetType == PokemonDataOld.Type.STEEL)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.DRAGON || targetType == PokemonData.Type.FIRE ||
-                     targetType == PokemonData.Type.ROCK || targetType == PokemonData.Type.WATER)
+            else if (targetType == PokemonDataOld.Type.DRAGON || targetType == PokemonDataOld.Type.FIRE ||
+                     targetType == PokemonDataOld.Type.ROCK || targetType == PokemonDataOld.Type.WATER)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.FLYING)
+        else if (attackingType == PokemonDataOld.Type.FLYING)
         {
-            if (targetType == PokemonData.Type.BUG || targetType == PokemonData.Type.FIGHTING ||
-                targetType == PokemonData.Type.GRASS)
+            if (targetType == PokemonDataOld.Type.BUG || targetType == PokemonDataOld.Type.FIGHTING ||
+                targetType == PokemonDataOld.Type.GRASS)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.ELECTRIC || targetType == PokemonData.Type.ROCK ||
-                     targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.ELECTRIC || targetType == PokemonDataOld.Type.ROCK ||
+                     targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.GHOST)
+        else if (attackingType == PokemonDataOld.Type.GHOST)
         {
-            if (targetType == PokemonData.Type.GHOST || targetType == PokemonData.Type.PSYCHIC)
+            if (targetType == PokemonDataOld.Type.GHOST || targetType == PokemonDataOld.Type.PSYCHIC)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.DARK)
+            else if (targetType == PokemonDataOld.Type.DARK)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.NORMAL)
+            else if (targetType == PokemonDataOld.Type.NORMAL)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.GRASS)
+        else if (attackingType == PokemonDataOld.Type.GRASS)
         {
-            if (targetType == PokemonData.Type.GROUND || targetType == PokemonData.Type.ROCK ||
-                targetType == PokemonData.Type.WATER)
+            if (targetType == PokemonDataOld.Type.GROUND || targetType == PokemonDataOld.Type.ROCK ||
+                targetType == PokemonDataOld.Type.WATER)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.BUG || targetType == PokemonData.Type.DRAGON ||
-                     targetType == PokemonData.Type.FIRE || targetType == PokemonData.Type.FLYING ||
-                     targetType == PokemonData.Type.GRASS || targetType == PokemonData.Type.POISON ||
-                     targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.BUG || targetType == PokemonDataOld.Type.DRAGON ||
+                     targetType == PokemonDataOld.Type.FIRE || targetType == PokemonDataOld.Type.FLYING ||
+                     targetType == PokemonDataOld.Type.GRASS || targetType == PokemonDataOld.Type.POISON ||
+                     targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.GROUND)
+        else if (attackingType == PokemonDataOld.Type.GROUND)
         {
-            if (targetType == PokemonData.Type.ELECTRIC || targetType == PokemonData.Type.FIRE ||
-                targetType == PokemonData.Type.POISON || targetType == PokemonData.Type.ROCK ||
-                targetType == PokemonData.Type.STEEL)
+            if (targetType == PokemonDataOld.Type.ELECTRIC || targetType == PokemonDataOld.Type.FIRE ||
+                targetType == PokemonDataOld.Type.POISON || targetType == PokemonDataOld.Type.ROCK ||
+                targetType == PokemonDataOld.Type.STEEL)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.BUG || targetType == PokemonData.Type.GRASS)
+            else if (targetType == PokemonDataOld.Type.BUG || targetType == PokemonDataOld.Type.GRASS)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.FLYING)
+            else if (targetType == PokemonDataOld.Type.FLYING)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.ICE)
+        else if (attackingType == PokemonDataOld.Type.ICE)
         {
-            if (targetType == PokemonData.Type.DRAGON || targetType == PokemonData.Type.FLYING ||
-                targetType == PokemonData.Type.GRASS || targetType == PokemonData.Type.GROUND)
+            if (targetType == PokemonDataOld.Type.DRAGON || targetType == PokemonDataOld.Type.FLYING ||
+                targetType == PokemonDataOld.Type.GRASS || targetType == PokemonDataOld.Type.GROUND)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.FIRE || targetType == PokemonData.Type.ICE ||
-                     targetType == PokemonData.Type.STEEL || targetType == PokemonData.Type.WATER)
+            else if (targetType == PokemonDataOld.Type.FIRE || targetType == PokemonDataOld.Type.ICE ||
+                     targetType == PokemonDataOld.Type.STEEL || targetType == PokemonDataOld.Type.WATER)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.NORMAL)
+        else if (attackingType == PokemonDataOld.Type.NORMAL)
         {
-            if (targetType == PokemonData.Type.ROCK || targetType == PokemonData.Type.STEEL)
+            if (targetType == PokemonDataOld.Type.ROCK || targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.GHOST)
+            else if (targetType == PokemonDataOld.Type.GHOST)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.POISON)
+        else if (attackingType == PokemonDataOld.Type.POISON)
         {
-            if (targetType == PokemonData.Type.FAIRY || targetType == PokemonData.Type.GRASS)
+            if (targetType == PokemonDataOld.Type.FAIRY || targetType == PokemonDataOld.Type.GRASS)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.POISON || targetType == PokemonData.Type.GROUND ||
-                     targetType == PokemonData.Type.ROCK || targetType == PokemonData.Type.GHOST)
+            else if (targetType == PokemonDataOld.Type.POISON || targetType == PokemonDataOld.Type.GROUND ||
+                     targetType == PokemonDataOld.Type.ROCK || targetType == PokemonDataOld.Type.GHOST)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.PSYCHIC)
+        else if (attackingType == PokemonDataOld.Type.PSYCHIC)
         {
-            if (targetType == PokemonData.Type.FIGHTING || targetType == PokemonData.Type.POISON)
+            if (targetType == PokemonDataOld.Type.FIGHTING || targetType == PokemonDataOld.Type.POISON)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.PSYCHIC || targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.PSYCHIC || targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
-            else if (targetType == PokemonData.Type.DARK)
+            else if (targetType == PokemonDataOld.Type.DARK)
             {
                 return 0f;
             }
         }
-        else if (attackingType == PokemonData.Type.ROCK)
+        else if (attackingType == PokemonDataOld.Type.ROCK)
         {
-            if (targetType == PokemonData.Type.BUG || targetType == PokemonData.Type.FIRE ||
-                targetType == PokemonData.Type.FLYING || targetType == PokemonData.Type.ICE)
+            if (targetType == PokemonDataOld.Type.BUG || targetType == PokemonDataOld.Type.FIRE ||
+                targetType == PokemonDataOld.Type.FLYING || targetType == PokemonDataOld.Type.ICE)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.FIGHTING || targetType == PokemonData.Type.GROUND ||
-                     targetType == PokemonData.Type.STEEL)
+            else if (targetType == PokemonDataOld.Type.FIGHTING || targetType == PokemonDataOld.Type.GROUND ||
+                     targetType == PokemonDataOld.Type.STEEL)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.STEEL)
+        else if (attackingType == PokemonDataOld.Type.STEEL)
         {
-            if (targetType == PokemonData.Type.FAIRY || targetType == PokemonData.Type.ICE ||
-                targetType == PokemonData.Type.ROCK)
+            if (targetType == PokemonDataOld.Type.FAIRY || targetType == PokemonDataOld.Type.ICE ||
+                targetType == PokemonDataOld.Type.ROCK)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.ELECTRIC || targetType == PokemonData.Type.FIRE ||
-                     targetType == PokemonData.Type.STEEL || targetType == PokemonData.Type.WATER)
+            else if (targetType == PokemonDataOld.Type.ELECTRIC || targetType == PokemonDataOld.Type.FIRE ||
+                     targetType == PokemonDataOld.Type.STEEL || targetType == PokemonDataOld.Type.WATER)
             {
                 return 0.5f;
             }
         }
-        else if (attackingType == PokemonData.Type.WATER)
+        else if (attackingType == PokemonDataOld.Type.WATER)
         {
-            if (targetType == PokemonData.Type.FIRE || targetType == PokemonData.Type.GROUND ||
-                targetType == PokemonData.Type.ROCK)
+            if (targetType == PokemonDataOld.Type.FIRE || targetType == PokemonDataOld.Type.GROUND ||
+                targetType == PokemonDataOld.Type.ROCK)
             {
                 return 2f;
             }
-            else if (targetType == PokemonData.Type.DRAGON || targetType == PokemonData.Type.GRASS ||
-                     targetType == PokemonData.Type.WATER)
+            else if (targetType == PokemonDataOld.Type.DRAGON || targetType == PokemonDataOld.Type.GRASS ||
+                     targetType == PokemonDataOld.Type.WATER)
             {
                 return 0.5f;
             }
@@ -2788,10 +2788,10 @@ public class BattleHandler : MonoBehaviour
         //set PokemonData
         updatePokemonStats(switchPosition);
         pokemonAbility[switchPosition] =
-            PokemonDatabase.getPokemon(newPokemon.getID()).getAbility(newPokemon.getAbility());
-        pokemonType1[switchPosition] = PokemonDatabase.getPokemon(newPokemon.getID()).getType1();
-        pokemonType2[switchPosition] = PokemonDatabase.getPokemon(newPokemon.getID()).getType2();
-        pokemonType3[switchPosition] = PokemonData.Type.NONE;
+            PokemonDatabaseOld.getPokemon(newPokemon.getID()).getAbility(newPokemon.getAbility());
+        pokemonType1[switchPosition] = PokemonDatabaseOld.getPokemon(newPokemon.getID()).getType1();
+        pokemonType2[switchPosition] = PokemonDatabaseOld.getPokemon(newPokemon.getID()).getType2();
+        pokemonType3[switchPosition] = PokemonDataOld.Type.NONE;
 
         //reset Pokemon Effects
         confused[switchPosition] = false;
@@ -2878,8 +2878,8 @@ public class BattleHandler : MonoBehaviour
                 pokemon[position].addExp(expPool);
                 expPool = 0;
                 float levelStartExp =
-                    PokemonDatabase.getLevelExp(
-                        PokemonDatabase.getPokemon(pokemon[position].getID()).getLevelingRate(),
+                    PokemonDatabaseOld.getLevelExp(
+                        PokemonDatabaseOld.getPokemon(pokemon[position].getID()).getLevelingRate(),
                         pokemon[position].getLevel());
                 float currentExpMinusStart = pokemon[position].getExp() - levelStartExp;
                 float nextLevelExpMinusStart = pokemon[position].getExpNext() - levelStartExp;
@@ -4808,7 +4808,7 @@ public class BattleHandler : MonoBehaviour
                                         float ballRate = (float) commandItem[movingPokemon].getFloatParameter();
                                         float catchRate =
                                             (float)
-                                            PokemonDatabase.getPokemon(pokemon[targetIndex].getID()).getCatchRate();
+                                            PokemonDatabaseOld.getPokemon(pokemon[targetIndex].getID()).getCatchRate();
                                         float statusRate = 1f;
                                         if ((pokemon[targetIndex].getStatus() != PokemonOld.Status.NONE))
                                         {
@@ -5272,7 +5272,7 @@ public class BattleHandler : MonoBehaviour
                                                 {
                                                     float isWildMod = (trainerBattle) ? 1.5f : 1f;
                                                     float baseExpYield =
-                                                        PokemonDatabase.getPokemon(pokemon[targetIndex].getID())
+                                                        PokemonDatabaseOld.getPokemon(pokemon[targetIndex].getID())
                                                             .getBaseExpYield();
                                                     float luckyEggMod = (pokemon[i2].getHeldItem() == "Lucky Egg")
                                                         ? 1.5f

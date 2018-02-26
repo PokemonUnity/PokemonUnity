@@ -79,7 +79,7 @@ public class MoveData {
 
 	private string name;
 
-	private PokemonData.Type type;
+	private PokemonDataOld.Type type;
 	private Category category;
 	private int power;
 	private float accuracy;
@@ -100,7 +100,7 @@ public class MoveData {
 
 	public MoveData() { return; }
 
-	public MoveData(string name, PokemonData.Type type, Category category, int power, float accuracy, 
+	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, 
 	                int PP, Contest contest, int appeal, int jamming, string description){
 		this.name = name;
 		this.type = type;
@@ -130,7 +130,7 @@ public class MoveData {
 
 	}
 
-	public MoveData(string name, PokemonData.Type type, Category category, int power, float accuracy, 
+	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, 
 	                int PP, Contest contest, int appeal, int jamming, string description, string fieldEffect){
 		this.name = name;
 		this.type = type;
@@ -162,7 +162,7 @@ public class MoveData {
 	}
 
 
-	public MoveData(string name, PokemonData.Type type, Category category, int power, float accuracy, int PP, Target target,
+	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, int PP, Target target,
 	                int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
 	                Effect[] moveEffects, float[] moveParameters,
 	                Contest contest, int appeal, int jamming, string description){
@@ -186,7 +186,7 @@ public class MoveData {
 		this.description = description;
 	}
 
-	public MoveData(string name, PokemonData.Type type, Category category, int power, float accuracy, int PP, Target target,
+	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, int PP, Target target,
 	                int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
 	                Effect[] moveEffects, float[] moveParameters,
 	                Contest contest, int appeal, int jamming, string description, string fieldEffect){
@@ -211,7 +211,7 @@ public class MoveData {
 		this.fieldEffect = fieldEffect;
 	}
 
-	public MoveData(eMoves.Move internalName, PokemonData.Type type, Category category, int power, float accuracy, int PP, Target target,
+	public MoveData(eMoves.Move internalName, PokemonDataOld.Type type, Category category, int power, float accuracy, int PP, Target target,
 	                int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
 	                Effect[] moveEffects, float[] moveParameters,
 	                Contest contest, int appeal, int jamming/*, string description, string fieldEffect*/){
@@ -239,7 +239,7 @@ public class MoveData {
 	public string getName(){
 		return name;}
 
-	public PokemonData.Type getType(){
+	public PokemonDataOld.Type getType(){
 		return type;}
 
 	public Category getCategory(){

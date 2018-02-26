@@ -209,7 +209,7 @@ public class EvolutionHandler : MonoBehaviour
             yield return new WaitForSeconds(0.8f);
             StartCoroutine(
                 dialog.DrawTextSilent("\nYour " + selectedPokemonName + " evolved into " +
-                                      PokemonDatabase.getPokemon(evolutionID).getName() + "!"));
+                                      PokemonDatabaseOld.getPokemon(evolutionID).getName() + "!"));
 
             //wait for MFX to stop
             float extraTime = (evoMFX.length - 0.8f > 0) ? evoMFX.length - 0.8f : 0;

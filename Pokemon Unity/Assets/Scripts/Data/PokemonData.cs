@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
-public class PokemonData {
+public class PokemonDataOld {
 	#region Variables
 	/// <summary>
 	/// Id is the database value for specific pokemon+form
@@ -320,11 +320,11 @@ public class PokemonData {
 	#endregion
 	
 
-    public PokemonData()
+    public PokemonDataOld()
     {
         
     }
-	public PokemonData (int ID, string name, Type type1, Type type2, string ability1, string ability2, string hiddenAbility,
+	public PokemonDataOld (int ID, string name, Type type1, Type type2, string ability1, string ability2, string hiddenAbility,
 	                    float maleRatio, int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
 	                    float height, float weight, int baseExpYield, LevelingRate levelingRate,
 	                    int evYieldHP, int evYieldATK, int evYieldDEF, int evYieldSPA, int evYieldSPD, int evYieldSPE, 
@@ -387,7 +387,7 @@ public class PokemonData {
 		this.evolutionRequirements = evolutionRequirements;
 	}
 
-	public PokemonData (int ID, string name, Type type1, Type type2, int? ability1, int? ability2, int? hiddenAbility,
+	public PokemonDataOld (int ID, string name, Type type1, Type type2, int? ability1, int? ability2, int? hiddenAbility,
 	                    float maleRatio, int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
 	                    float height, float weight, int baseExpYield, LevelingRate levelingRate,
 	                    int evYieldHP, int evYieldATK, int evYieldDEF, int evYieldSPA, int evYieldSPD, int evYieldSPE, 
@@ -448,7 +448,7 @@ public class PokemonData {
 		this.evolutionRequirements = evolutionRequirements;
 	}
   
-    public PokemonData(int Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+    public PokemonDataOld(int Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
                         /*float maleRatio,*/ int catchRate, EggGroup eggGroup1, EggGroup eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -458,7 +458,7 @@ public class PokemonData {
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
 
-        PokedexTranslation translation = PokemonDatabase.GetPokedexTranslation(Id);
+        PokedexTranslation translation = PokemonDatabaseOld.GetPokedexTranslation(Id);
         this.ID = Id;
         this.regionalPokedex = regionalDex;
         this.Name = translation.Name;
@@ -466,8 +466,8 @@ public class PokemonData {
         this.pokedexEntry = translation.PokedexEntry;
         //this.forms = forms; //ToDo: need new mechanic for how this should work
 
-        this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
-        this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
+        this.type1 = type1 != null ? (PokemonDataOld.Type)type1 : PokemonDataOld.Type.NONE;
+        this.type2 = type2 != null ? (PokemonDataOld.Type)type2 : PokemonDataOld.Type.NONE;
         this.Abilities = abilities;
         //this.ability1Id = (eAbility.Ability)ability1;
         //this.ability2Id = (eAbility.Ability)ability2;
@@ -494,7 +494,7 @@ public class PokemonData {
 
         this.luminance = luminance;
         //this.lightColor = lightColor;
-        this.pokedexColor = pokedexColor | PokemonData.PokedexColor.NONE;
+        this.pokedexColor = pokedexColor | PokemonDataOld.PokedexColor.NONE;
 
         //ToDo: wild pokemon held items not yet implemented
         this.heldItem = heldItem; //[item id,% chance]
@@ -507,7 +507,7 @@ public class PokemonData {
         //this.evolutionRequirements = evolutionRequirements;
     }
 
-    public static PokemonData CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+    public static PokemonDataOld CreatePokemonData(int Id, int PokeId, string name, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
                         /*float maleRatio,*/ int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
                         float height, float weight, int baseExpYield, int levelingRate,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -516,25 +516,25 @@ public class PokemonData {
                         float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
                         int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,* /*int? forms,*/ int[,] heldItem = null)
     {//PokemonData(ePokemons.Pokemon.BULBASAUR,1,12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,SEED,45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-        return new PokemonData(
+        return new PokemonDataOld(
             Id,
             null,//PokeId,
-            type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-            type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
+            type1 != null ? (PokemonDataOld.Type)type1 : PokemonDataOld.Type.NONE,
+            type2 != null ? (PokemonDataOld.Type)type2 : PokemonDataOld.Type.NONE,
             new eAbility.Ability[] { 
                 ability1 != null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
                 ability2 != null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
                 hiddenAbility != null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE
             }, 
             catchRate,
-            eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonData.EggGroup.NONE, 
-            eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonData.EggGroup.NONE, 
+            eggGroup1 != null ? (EggGroup)eggGroup1 : PokemonDataOld.EggGroup.NONE, 
+            eggGroup2 != null ? (EggGroup)eggGroup2 : PokemonDataOld.EggGroup.NONE, 
             hatchTime, 
             height, 
             weight, 
             baseExpYield, 
             levelingRate, 
-            pokedexColor | PokemonData.PokedexColor.NONE,
+            pokedexColor | PokemonDataOld.PokedexColor.NONE,
             baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE, 
             luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (eMoves.Move)move), tmList, evolutionID, evolutionLevel, evolutionMethod, heldItem);
 	} 
@@ -563,10 +563,10 @@ public class PokemonData {
 		return maleRatio;
 	}
 
-	public PokemonData.Type getType1(){
+	public PokemonDataOld.Type getType1(){
 		return type1;
 	}
-	public PokemonData.Type getType2(){
+	public PokemonDataOld.Type getType2(){
 		return type2;
 	}
 
@@ -650,7 +650,7 @@ public class PokemonData {
 		return evolutionRequirements;
 	}
 
-	public PokemonData.LevelingRate getLevelingRate(){
+	public PokemonDataOld.LevelingRate getLevelingRate(){
 		return levelingRate;
 	}
 
@@ -776,7 +776,7 @@ public class PokemonData {
 	/// <param name="PokemonType">pokemon type</param>
 	/// <returns>return a Unity.Color</returns>
 	/// <example>StringToColor(Electric)</example>
-	public Color StringToColor(PokemonData.Type PokemonType) {
+	public Color StringToColor(PokemonDataOld.Type PokemonType) {
 		return StringToColor(PokemonType.ToString()); //Will fix later
 	}
 	/// <summary>
