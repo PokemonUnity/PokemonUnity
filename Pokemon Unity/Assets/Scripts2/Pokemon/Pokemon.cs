@@ -506,6 +506,14 @@ public class Pokemon //: ePokemons //PokemonData
 
     #region Other
     /// <summary>
+    /// Nickname; 
+    /// Returns Pokemon species name if not nicknamed.
+    /// </summary>
+    public string Name { get { return name ?? _base.Name; } }
+
+    public int Form { set { if(value <= _base.Forms)_base.Form = value; } }
+
+    /// <summary>
     /// Returns the species name of this Pokemon
     /// </summary>
     /*// <returns></returns>

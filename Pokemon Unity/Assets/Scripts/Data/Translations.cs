@@ -7,6 +7,7 @@ public class PokedexTranslation
     /// </summary>
     public string Species;
     public string PokedexEntry;
+    public string[] Forms;
 }
 
 [System.Serializable]

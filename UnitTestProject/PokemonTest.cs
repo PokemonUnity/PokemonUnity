@@ -58,6 +58,16 @@ namespace UnitTestProject
         #region Moves...
         #endregion
 
+        #region Misc
+        [TestMethod]
+        public void Pokemon_TestPokemon_SetForm_To_Form2()
+        {
+            Pokemon pokemon = new Pokemon(PokemonData.Pokemon.NONE);
+            pokemon.Form = 2;
+            Assert.AreEqual("test1", pokemon.Name);
+        }
+        #endregion
+
         #region
         #endregion
     }

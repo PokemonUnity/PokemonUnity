@@ -2,6 +2,9 @@
 <Language name="English" id="9" identifier="en" iso639="en" iso3166="us">
   <Species>
     <!-- "^"(\d*)"\t"(\d*)"\t"([\w\S.\- ]*)"\t"([\w ’,-]*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"([\w\s\d.’,\-—“”!/():♀♂]*|[\r])"" | <Pokemon id="$1" language="$2" name="$3" genus="$4">$8</Pokemon> -->
+<Pokemon id="0" language="9" name="TestPokemon" genus="Test" form0="test0" form1="test1" form2="test2" form3="test3">This is a test.
+This is unimportant text and values,
+to be used for testing the PokemonData class.</Pokemon>
 <Pokemon id="1" language="9" name="Bulbasaur" genus="Seed">Bulbasaur can be seen napping in bright sunlight.
 There is a seed on its back. By soaking up the sun’s rays,
 the seed grows progressively larger.</Pokemon>
