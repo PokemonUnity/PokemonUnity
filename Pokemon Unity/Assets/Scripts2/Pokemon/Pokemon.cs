@@ -199,6 +199,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     /// <remarks>
     /// isMale; null = genderless?
+    /// Should consider gender as byte? bool takes up same amount of space
     /// </remarks>
     private bool? genderFlag;
     /// <summary>
@@ -402,6 +403,30 @@ public class Pokemon //: ePokemons //PokemonData
     #endregion
 
     #region Gender
+    /// <summary>
+    /// Returns this Pokemons gender. male; female; genderless.
+    /// Sets this Pokemon's gender to a particular gender (if possible)
+    /// </summary>
+    public bool? Gender { get { return this.genderFlag; } }
+
+    /*// <summary>
+    /// Helper function that determines whether the input values would make a female.
+    /// </summary>
+    /// ToDo: isMale; isFemale; isGenderless... properties?
+    public bool? isMale/isFemale/isGenderless//(float genderRate = this._base.MaleRatio)
+    {
+        get
+        {
+            if (this._base.MaleRatio == 100f) return true; 
+            if (this._base.MaleRatio == 100f) return false; //Always female
+            return null; //genderless
+        }
+    }*/
+
+    /// <summary>
+    /// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
+    /// </summary>
+    public bool isSingleGendered { get { return true; } }
     #endregion
 
     #region Ability
