@@ -18,7 +18,7 @@ public class SaveData
     public string levelName;
     public SeriV3 playerPosition;
     public int playerDirection;
-    public GlobalVariables.Language playerLanguage;
+    public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
 
     //Important player data
