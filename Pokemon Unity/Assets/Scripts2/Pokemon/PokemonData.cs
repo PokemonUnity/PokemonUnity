@@ -190,8 +190,10 @@ public class PokemonData {
     //ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
     public int Forms { get { return this.forms; } } 
 
-    public Type Type1 { get { return this.type1; } }
-    public Type Type2 { get { return this.type2; } }
+    //public virtual Type Type1 { get { return this.type1; } }
+    //public virtual Type Type2 { get { return this.type2; } }
+    //Maybe use this instead?
+    public virtual Type[] Types { get { return new PokemonData.Type[] { this.type1, this.type2 }; } }
     /// <summary>
     /// All three pokemon abilities 
     /// (Abiltiy1, Ability2, HiddenAbility).

@@ -604,6 +604,25 @@ public class Pokemon //: ePokemons //PokemonData
     #endregion
 
     #region Types
+    /// <summary>
+    /// Returns whether this Pokemon has the specified type.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public bool hasType(PokemonData.Type type)
+    {
+        return this._base.Types[0] == type || this._base.Types[1] == type;
+    }
+
+    /// <summary>
+    /// Returns this Pokemon's first type
+    /// </summary>
+    public PokemonData.Type Type1 { get { return this._base.Types[0]; } }
+
+    /// <summary>
+    /// Returns this Pokemon's second type
+    /// </summary>
+    public PokemonData.Type Type2 { get { return this._base.Types[1]; } }
     #endregion
 
     #region Moves
