@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿//using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -164,7 +164,7 @@ public class PokemonData {
     /// Deoxys Pokedex# can be 1,
     /// but Deoxys-Power id# can be 32
     /// </example>
-    public string Name { get { return PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.name; } }
+    public string Name { get { return PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.name; } }//ToDo: Form = 0 should return null
     /// <summary>
     /// Species is the pokemon breed/genus
     /// <para>Charizard is a Species. 
@@ -181,10 +181,13 @@ public class PokemonData {
     /// </summary>
 	public string PokedexEntry { get { return this.pokedexEntry; } }
     /// <summary>
-    /// Form is the same Pokemon Pokedex entry but a different PokemonId
-    /// If null, returns this.Pokemon.Id
+    /// Form is the same Pokemon Pokedex entry. 
+    /// Changing forms should change name value
     /// </summary>
-    public int Form { get { return this.form; } set { this.form = value; } } //Changing forms should change name value
+    /// but a different PokemonId
+    /// If null, returns this.Pokemon.Id
+    public int Form { get { return this.form; } set { this.form = value; } } //ToDo: Changing forms should change name value
+    //ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
     public int Forms { get { return this.forms; } } 
 
     public Type Type1 { get { return this.type1; } }
@@ -630,8 +633,29 @@ public class PokemonData {
             evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 	}
 
-    public static readonly PokemonData[] Database; //Not const because translation values
-    static PokemonData()
+    /// Not const because translation values
+    public static readonly PokemonData[] Database = new PokemonData[] {
+            //null
+            //  PokemonData.CreatePokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE2, Ability1, Ability2, HiddenAbility,
+            //				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
+            //				EXPYield, PokemonData.LevelingRate.LEVELINGRATE, evYieldHP,ATK,DEF,SPA,SPD,SPE, PokemonData.PokedexColor.COLOR, BaseFriendship,
+            //				Species, PokedexEntry (choose your favourite) //needs to be loaded seperately...
+            //				baseStatsHP,ATK,DEF,SPA,SPD,SPE, Luminance (0 if unknown), LightColor (Color.clear if unknown)
+            //				new int[]{ level, level, level, etc...}
+            //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
+            //				new int[]{pokemonID}, 
+            //				new string[]{"Method,Parameter"}),
+            PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE,
+                        0f, 100, EggGroups.NONE, EggGroups.NONE, 1000,
+                        10f, 150f, 15, LevelingRate.ERRATIC,
+                        /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+                        Color.NONE, 50,
+                        10, 5, 5, 5, 5, 5,
+                        0f, new int[] { 1,2,3 }, new eMoves.Move[4], null,//int[] tmList,
+                        null, null, null, 4,//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //int forms, 
+                        null) //Test
+        };
+    /*static PokemonData()
     {
         Database = new PokemonData[] {
             //null
@@ -644,21 +668,26 @@ public class PokemonData {
             //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
-            PokemonData.CreatePokemonData(Pokemon.NONE, new int[1] { 0 }, Type.NONE, Type.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE,
+            PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE,
                         0f, 100, EggGroups.NONE, EggGroups.NONE, 1000,
                         10f, 150f, 15, LevelingRate.ERRATIC,
-                        /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+                        //*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,* /
                         Color.NONE, 50,
                         10, 5, 5, 5, 5, 5,
-                        0f, new int[] { 1,2,3 }, new eMoves.Move[] {eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE }, null,//int[] tmList,
+                        0f, new int[] { 1,2,3 }, new eMoves.Move[4], null,//int[] tmList,
                         null, null, null, 4,//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //int forms, 
                         null) //Test
         };
-    }
+    }*/
 
-    private static Dictionary<int, PokedexTranslation> _pokeTranslations = LoadPokedexTranslations(SaveData.currentSave.playerLanguage);
-
-    public static Dictionary<int, PokedexTranslation> LoadPokedexTranslations(GlobalVariables.Language language)//, int form = 0
+#if DEBUG
+    private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations();
+#else
+    private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations(SaveData.currentSave.playerLanguage | GlobalVariables.Language.English);
+#endif
+    private static Dictionary<int, PokedexTranslation> _pokeEnglishTranslations;// = LoadEnglishPokedexTranslations();
+    ///ToDo: Should be a void that stores value to _pokeTranslations instead of returning...
+    public static void/*Dictionary<int, PokedexTranslation>*/ LoadPokedexTranslations(GlobalVariables.Language language = GlobalVariables.Language.English)//, int form = 0
     {
         var data = new Dictionary<int, PokedexTranslation>();
 
@@ -673,7 +702,14 @@ public class PokemonData {
                 break;
         }
         System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-        string file = Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //"/Resources/Database/PokemonTranslations/Pokemon_"
+        //ToDo: Consider "/Resources/Database/PokemonTranslations/Pokemon_"
+#if DEBUG
+        string file = @"..\..\..\\Pokemon Unity\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+        //string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+        //string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
+        string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+#endif
         FileStream fs = new FileStream(file, FileMode.Open);
         xmlDoc.Load(fs);
 
@@ -684,12 +720,14 @@ public class PokemonData {
                 var translation = new PokedexTranslation();
                 translation.Name = node.Attributes["name"].Value; //ToDo: Name = "name" Where formId == 0; else name = formId.name
                 //ToDo: Maybe add a forms array, and a new method for single name calls
-                translation.Forms = new string[node.Attributes.Count-4]; int n = 0;//only count forms?
+                translation.Forms = new string[node.Attributes.Count-3]; int n = 1;//only count forms?
                 //int n = 1;translation.Forms[0] = node.Attributes["name"].Value;//that or return an empty array T[0]
-                for (int i = 0; i < node.Attributes.Count; i++)//foreach(System.Xml.XmlAttribute attr in node)
+                for (int i = 4; i < node.Attributes.Count; i++)//foreach(System.Xml.XmlAttribute attr in node)
                 {
-                    if (node.Attributes[i].LocalName.Contains("form"))
+                    //Skipping first 4 values will save processing
+                    if (node.Attributes[i].LocalName.Contains("form")) //Name vs LocalName?
                     {
+                        //translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values 
                         translation.Forms[n] = node.Attributes[i].Value; n++;
                     }
                 }
@@ -699,7 +737,9 @@ public class PokemonData {
             }
         }
 
-        return data;
+        //ToDo: Is filestream still open or does it need to be closed and disposed of?
+        fs.Dispose(); fs.Close();
+        _pokeTranslations = data;//return data;
     }
 
     /// <summary>
@@ -711,22 +751,27 @@ public class PokemonData {
     /// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
     public static PokedexTranslation GetPokedexTranslation(Pokemon id, GlobalVariables.Language language = GlobalVariables.Language.English)// int form = 0,
     {
-        int arrayId = GetPokemon(id).ArrayId;
         if (_pokeTranslations == null) //should return english if player's default language is null
         {
             LoadPokedexTranslations(language);//, form
         }
 
-        if (!_pokeTranslations.ContainsKey(arrayId))// int id
+        int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
+        if (!_pokeTranslations.ContainsKey(arrayId) && language == GlobalVariables.Language.English)
         {
-            Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
-            throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}", (int)id));
+            //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
+            throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
             //return new PokedexTranslation();
+        }
+        //ToDo: Show english text for missing data on foreign languages 
+        else if (!_pokeTranslations.ContainsKey(arrayId) && language != GlobalVariables.Language.English) 
+        {
+            return _pokeEnglishTranslations[arrayId];
         }
 
         return _pokeTranslations[arrayId];// int id
     }
-    #endregion
+#endregion
 
     #region Methods
     /// <summary>
@@ -755,6 +800,7 @@ public class PokemonData {
             if (pokemon.ID == ID) return pokemon;
         }
         throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
+        //return null;
     }
 
 	static int getPokemonArrayId(Pokemon ID)
@@ -988,7 +1034,7 @@ public class PokemonData {
 
 public static class Experience
 {
-    #region expTable
+#region expTable
     private static int[] expTableErratic = new int[]{
         0,15,52,122,237,406,637,942,1326,1800,
         2369,3041,3822,4719,5737,6881,8155,9564,11111,12800,
@@ -1060,7 +1106,7 @@ public static class Experience
         479600,507617,529063,559209,582187,614566,639146,673863,700115,737280,
         765275,804997,834809,877201,908905,954084,987754,1035837,1071552,1122660,
         1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000};
-    #endregion
+#endregion
 
     public static int GetStartExperience(PokemonData.LevelingRate levelingRate, int currentLevel)
     {
@@ -1073,7 +1119,7 @@ public static class Experience
         {
             if (currentLevel > 100)
             {
-                exp = (int)Mathf.Floor((Mathf.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
+                exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
             }
             else exp = expTableErratic[currentLevel - 1]; //Because the array starts at 0, not 1.
         }
@@ -1081,7 +1127,7 @@ public static class Experience
         {
             if (currentLevel > 100)
             {
-                exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3) * (4 / 5));
+                exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (4 / 5));
             }
             else exp = expTableFast[currentLevel - 1];
         }
@@ -1089,7 +1135,7 @@ public static class Experience
         {
             if (currentLevel > 100)
             {
-                exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3));
+                exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3));
             }
             else exp = expTableMediumFast[currentLevel - 1];
         }
@@ -1097,7 +1143,7 @@ public static class Experience
         {
             if (currentLevel > 100)
             {
-                exp = (int)Mathf.Floor(((6 / 5) * Mathf.Pow(currentLevel - 1, 3)) - (15 * Mathf.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
+                exp = (int)System.Math.Floor(((6 / 5) * System.Math.Pow(currentLevel - 1, 3)) - (15 * System.Math.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
             }
             else exp = expTableMediumSlow[currentLevel - 1];
         }
@@ -1105,7 +1151,7 @@ public static class Experience
         {
             if (currentLevel > 100)
             {
-                exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3) * (5 / 4));
+                exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (5 / 4));
             }
             else exp = expTableSlow[currentLevel - 1];
         }
@@ -1113,7 +1159,7 @@ public static class Experience
         {
             if (currentLevel > 100)
             {
-                exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3) * ((Mathf.Floor(Mathf.Pow(currentLevel, 3) / 2) + 32) / 50));
+                exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * ((System.Math.Floor(System.Math.Pow(currentLevel, 3) / 2) + 32) / 50));
             }
             else exp = expTableFluctuating[currentLevel - 1];
         }

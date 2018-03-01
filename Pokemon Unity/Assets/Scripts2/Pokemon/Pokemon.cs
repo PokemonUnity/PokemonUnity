@@ -511,7 +511,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     public string Name { get { return name ?? _base.Name; } }
 
-    public int Form { set { if(value <= _base.Forms)_base.Form = value; } }
+    public int Form { set { /*if(value <= _base.Forms)*/_base.Form = value; } }//ToDo: Fix Forms and uncomment
 
     /// <summary>
     /// Returns the species name of this Pokemon
