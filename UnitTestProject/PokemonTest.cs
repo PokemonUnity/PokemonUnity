@@ -15,13 +15,23 @@ namespace Tests
             Assert.AreEqual(0, pokemon.HP);
         }
 
-        [TestMethod]
-        public void Pokemon_SetHP_Throw_Error_GreaterThan_MaxHP() { Assert.Inconclusive(); }
-        /*{
+        [TestMethod]//[ExpectedException(typeof(Exception))]
+        public void Pokemon_SetHP_GreaterThan_MaxHP_Equals_MaxHP() //{ Assert.Inconclusive(); }
+        {
             Pokemon pokemon = new Pokemon();
-            pokemon.HP = 25;
-            Assert.AreEqual(error, pokemon.HP);
-        }*/
+            pokemon.HP = pokemon.TotalHP + 1;
+            /*try
+            {
+                pokemon.HP = pokemon.TotalHP + 1;
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                //Assert.AreEqual(error, pokemon.HP);
+                Assert.IsTrue(e is Exception);
+            }*/
+            Assert.AreEqual(pokemon.TotalHP, pokemon.HP);
+        }
 
         [TestMethod]
         public void Pokemon_SetStatus_To_Burn() { Assert.Inconclusive(); }
