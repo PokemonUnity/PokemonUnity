@@ -3,7 +3,7 @@
   <h1 align="center">Pokémon Unity by IIcolour Spectrum</h3>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"></a>
-    <a href="https://discord.gg/SggHcXP"><img alt="Discord Server" src="https://img.shields.io/badge/join%20us%20on-discord-7289DA.svg"></a>
+    <a href="https://discord.gg/aftYdfV"><img alt="Discord Server" src="https://img.shields.io/badge/join%20us%20on-discord-7289DA.svg"></a>
     <a href="https://www.reddit.com/r/PokemonUnity/"><img alt="Reddit" src="https://img.shields.io/badge/join%20us%20on-reddit-ff5700.svg"></a>
     <a href="https://pokemonunity.gitbooks.io/pokemon-unity/content/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"></a>
   </p>
@@ -27,9 +27,7 @@ Thank you to everyone who supported me during the development of Pokémon Unity.
 
 ## Demo and Downloads
 
-There is a demo WebGL for testing available here: [Link to Unity Cloud Build](https://developer.cloud.unity3d.com/share/Wy-y2uSUhG/)
-
-There are also demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! Please report any bugs if found.
+There are demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! Please report any bugs if found.
 
 ## Credits
 
@@ -39,7 +37,7 @@ There are also demos for Windows, Linux, and Mac zipped in [Releases](https://gi
 
 ## Links
 
-* Reddit: https://www.reddit.com/r/PokemonUnity/
-* YouTube: https://www.youtube.com/c/IIcolourSpectrum
-* Discord server: https://discord.gg/SggHcXP
-* Documentation: https://pokemonunity.gitbooks.io/pokemon-unity/content/
+* Reddit: <https://www.reddit.com/r/PokemonUnity/>
+* YouTube: <https://www.youtube.com/c/IIcolourSpectrum>
+* Discord server: <https://discord.gg/aftYdfV>
+* Documentation: <https://pokemonunity.gitbooks.io/pokemon-unity/content/>
