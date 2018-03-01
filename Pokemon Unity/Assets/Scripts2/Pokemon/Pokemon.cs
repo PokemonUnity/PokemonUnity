@@ -434,7 +434,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// Returns the ID of the Pokemons Ability.
     /// </summary>
     /// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
-    public eAbility.Ability[] Abilities { get { return abilityFlag; } }// set { abilityFlag = value; }
+    public eAbility.Ability[] Abilities { get { return abilityFlag; } }//ToDo: set { abilityFlag = value; }
 
     /// <summary>
     /// Returns whether this Pokemon has a partiular ability
@@ -472,6 +472,25 @@ public class Pokemon //: ePokemons //PokemonData
     #endregion
 
     #region Nature
+    /// <summary>
+    /// Returns the ID of this Pokemon's nature
+    /// Sets this Pokemon's nature to a particular nature.
+    /// </summary>
+    public NatureDatabase.Nature Nature { get { return this.natureFlag; } }//ToDo: set { this.natureFlag = value; nature.calcStats(); }
+
+    /// <summary>
+    /// Returns whether this Pokemon has a particular nature
+    /// </summary>
+    /// <param name="nature"></param>
+    /// <returns></returns>
+    public bool hasNature(NatureDatabase.Nature nature = 0) //None
+    {
+        if ((int)nature < 1) return (int)this.Nature >= 1;
+        else
+        {
+            return this.Nature == nature;
+        }
+    }
     #endregion
 
     #region Shininess
