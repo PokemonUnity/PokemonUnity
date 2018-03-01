@@ -430,6 +430,45 @@ public class Pokemon //: ePokemons //PokemonData
     #endregion
 
     #region Ability
+    /// <summary>
+    /// Returns the ID of the Pokemons Ability.
+    /// </summary>
+    /// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
+    public eAbility.Ability[] Abilities { get { return abilityFlag; } }// set { abilityFlag = value; }
+
+    /// <summary>
+    /// Returns whether this Pokemon has a partiular ability
+    /// </summary>
+    /// <param name="ability"></param>
+    /// <returns></returns>
+    public bool hasAbility(eAbility.Ability ability = eAbility.Ability.NONE)
+    {
+        if(ability == eAbility.Ability.NONE) return (int)Abilities[0] > 0 || (int)Abilities[1] > 0 || (int)Abilities[2] > 0;
+        else
+        {
+            return Abilities[0] == ability || Abilities[1] == ability || Abilities[2] == ability;
+        }
+        //return false;
+    }
+
+    public bool hasHiddenAbility()
+    {
+        return Abilities[2] != eAbility.Ability.NONE;
+    }
+
+    /// <summary>
+    /// Returns a list of abilities this Pokemon can have.
+    /// </summary>
+    /// <returns></returns>
+    /// Is there a list of abilities a pokemon can have outside of "default" values?
+    public eAbility.Ability[] getAbilityList()
+    {
+        //List<eAbility.Ability> abilList;
+        //foreach(){ list.add() }
+        //eAbility.Ability[] abilities = abilList.ToArray();
+        //return abilities;
+        return this._base.Abilities; //ToDo: List of abilities?
+    }
     #endregion
 
     #region Nature
