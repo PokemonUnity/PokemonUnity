@@ -207,6 +207,7 @@ public class PokemonData {
     /// <value>-1f is interpreted as genderless</value>
     /// </summary>
     public float MaleRatio { get { return this.maleRatio; } }
+    public float ShinyChance { get; set; }
     /// <summary>max is 255</summary> 
 	public int CatchRate { get { return this.catchRate; } }
     public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
