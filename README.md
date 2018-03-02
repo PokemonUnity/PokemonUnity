@@ -2,7 +2,6 @@
   <img alt="Pokémon Unity Logo" src="https://i.imgur.com/E3necpp.png" />
   <h1 align="center">Pokémon Unity by IIcolour Spectrum</h3>
   <p align="center">
-    <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"></a>
     <a href="https://discord.gg/aftYdfV"><img alt="Discord Server" src="https://img.shields.io/discord/285560546244427777.svg"></a>
     <a href="https://www.reddit.com/r/PokemonUnity/"><img alt="Reddit" src="https://img.shields.io/badge/join%20us%20on-reddit-ff5700.svg"></a>
     <a href="https://pokemonunity.gitbooks.io/pokemon-unity/content/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"></a>
