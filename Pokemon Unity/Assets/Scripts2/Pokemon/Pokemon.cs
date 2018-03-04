@@ -49,7 +49,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// ToDo: Fetch from PokemonData : _base.PokeId
     private int species;
     /// <summary>
-    /// Personal ID
+    /// Personal/Pokemon ID
     /// </summary>
     /// ToDo: String value?
     private int PersonalId;
@@ -246,8 +246,15 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     /// <param name="pokemon"></param>
     /// ToDo: Inherit PokemonData 
-    public Pokemon(PokemonData.Pokemon pokemon) //: base(pokemon)
-    { _base = PokemonData.GetPokemon(pokemon); } //ToDo: Redo PokemonDatabase/PokemonData -- DONE
+    public Pokemon(PokemonData.Pokemon pokemon) //ToDo: Redo PokemonDatabase/PokemonData -- DONE
+    {
+        //PersonalId = 
+        _base = PokemonData.GetPokemon(pokemon);
+        //Gender = isMale();
+        Abilities[0] = _base.Abilities[1] == eAbility.Ability.NONE ? _base.Abilities[0] : _base.Abilities[new Random().Next(0,2)];
+        Nature = (NatureDatabase.Nature)(new Random().Next(0, 24));
+        //IsShiny
+    } 
 
     #region Ownership, obtained information
     /// <summary>
@@ -417,8 +424,8 @@ public class Pokemon //: ePokemons //PokemonData
     {
         get
         {
-            if (this._base.MaleRatio == 100f) return true; 
-            if (this._base.MaleRatio == 100f) return false; //Always female
+            if (genderRate == 100f) return true; 
+            if (genderRate == 100f) return false; //Always female
             return null; //genderless
         }
     }*/
@@ -434,7 +441,9 @@ public class Pokemon //: ePokemons //PokemonData
     /// Returns the ID of the Pokemons Ability.
     /// </summary>
     /// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
-    public eAbility.Ability[] Abilities { get { return abilityFlag; } }//ToDo: set { abilityFlag = value; }
+    /// ToDo: Ability 1 or 2, never both...
+    /// ToDo: Error on non-compatible ability?
+    public eAbility.Ability[] Abilities { get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
 
     /// <summary>
     /// Returns whether this Pokemon has a partiular ability
@@ -474,9 +483,9 @@ public class Pokemon //: ePokemons //PokemonData
     #region Nature
     /// <summary>
     /// Returns the ID of this Pokemon's nature
-    /// Sets this Pokemon's nature to a particular nature.
+    /// Sets this Pokemon's nature to a particular nature (and calculates the stat modifications).
     /// </summary>
-    public NatureDatabase.Nature Nature { get { return this.natureFlag; } }//ToDo: set { this.natureFlag = value; nature.calcStats(); }
+    public NatureDatabase.Nature Nature { get { return this.natureFlag; } set { this.natureFlag = value; /*nature.calcStats();*/ } }//ToDo:
 
     /// <summary>
     /// Returns whether this Pokemon has a particular nature
