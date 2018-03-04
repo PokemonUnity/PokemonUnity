@@ -194,7 +194,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Forces the first/second/hidden (0/1/2) ability
     /// </summary>
-    private readonly eAbility.Ability[] abilityFlag = new eAbility.Ability[3];
+    private eAbility.Ability[] abilityFlag = new eAbility.Ability[2];// readonly
     /// <summary>
     /// </summary>
     /// <remarks>
@@ -443,17 +443,17 @@ public class Pokemon //: ePokemons //PokemonData
     /// <returns></returns>
     public bool hasAbility(eAbility.Ability ability = eAbility.Ability.NONE)
     {
-        if(ability == eAbility.Ability.NONE) return (int)Abilities[0] > 0 || (int)Abilities[1] > 0 || (int)Abilities[2] > 0;
+        if (ability == eAbility.Ability.NONE) return (int)Abilities[0] > 0 || (int)Abilities[1] > 0;// || (int)Abilities[2] > 0;
         else
         {
-            return Abilities[0] == ability || Abilities[1] == ability || Abilities[2] == ability;
+            return Abilities[0] == ability || Abilities[1] == ability;// || Abilities[2] == ability;
         }
         //return false;
     }
 
     public bool hasHiddenAbility()
     {
-        return Abilities[2] != eAbility.Ability.NONE;
+        return Abilities[1] != eAbility.Ability.NONE;
     }
 
     /// <summary>
