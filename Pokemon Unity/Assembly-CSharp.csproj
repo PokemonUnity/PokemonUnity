@@ -52,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\GameVariables.cs" />
     <Compile Include="Assets\Scripts2\Map.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\PokemonData.cs" />
