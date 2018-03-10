@@ -9,7 +9,7 @@ public static class MoveDatabase
 
 
     private static MoveData[] moves = new MoveData[]
-    {
+	{//new MoveData\("([\w\s-]*)"[.,\w\s\[\]{}"\-\\']*[\n| ][."\w]*"\),
         //null,
         new MoveData("Absorb", PokemonDataOld.Type.GRASS, MoveData.Category.SPECIAL, 20, 1f, 25, MoveData.Target.ADJACENT,
             0, false, true, false, false, new MoveData.Effect[] {MoveData.Effect.HPDrain}, new float[] {1},

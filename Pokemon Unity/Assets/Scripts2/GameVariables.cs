@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+class GameVariables
+{
+}
+
 /// <summary>
 /// <see cref="GlobalVariables"/> is a <see cref="UnityEngine.GameObject"/>
 /// that persist throughout the game and inbetween scene levels.
-/// <see cref="GameVariables"/> is not an <see cref="object"/>
+/// <see cref="Settings"/> is not an <see cref="object"/>
 /// but a series of const variables that will be used as rules or 
 /// placeholders for the game mechanics.
 /// </summary>
-class GameVariables
+public class Settings
 {
     #region Constant Values and Game Rules
     #endregion
@@ -38,10 +42,7 @@ class GameVariables
         English = 9
     }
     #endregion
-}
 
-public class Settings
-{
 	#region Screen Options
 	/// <summary>
 	/// The default screen width (at a zoom of 1.0; size is half this at zoom 0.5).

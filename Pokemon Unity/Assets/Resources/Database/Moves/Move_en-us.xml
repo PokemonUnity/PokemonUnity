@@ -9,6 +9,7 @@ where language_id=9 and version_group_id=16
     -->
   <Moves>
     <!-- "^"(\d*)"\t"([\w\S.\- ]*)"\t"([\w '’,-]*)"\t"(\d*)"\t"(\d*)"\t"([\w\s\d.’,\-—“”!/():♀♂]*|[\r])"" | <Move id="$1" language="$5" name="$3" identifier="$2" versionid="$4">$6</Move> -->
+    <!-- <Move id="([\d]*)" \w*="\d*" name="([\w\s'-]*)"[.,\w\s\[\]{}"\-\\'’=>]*[\n| ][\w’.!]*</Move> -->
     <Move id="1" language="9" name="Pound" identifier="pound" versionid="16">The target is physically pounded with
     a long tail, a foreleg, or the like.</Move>
     <Move id="2" language="9" name="Karate Chop" identifier="karate-chop" versionid="16">The target is attacked with a sharp chop.

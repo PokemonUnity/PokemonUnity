@@ -54,8 +54,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts2\GameVariables.cs" />
     <Compile Include="Assets\Scripts2\Map.cs" />
+    <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
-    <Compile Include="Assets\Scripts2\Pokemon\PokemonData.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
