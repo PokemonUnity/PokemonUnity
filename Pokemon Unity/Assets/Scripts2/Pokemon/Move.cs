@@ -54,6 +54,7 @@ public class Move //: MoveData
 	/// Gets this move's type.
 	/// </summary>
 	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }*/
+	public Target Targets { get { return _base.Target; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
 	#endregion
@@ -308,6 +309,7 @@ public class Move //: MoveData
 		#region Properties
 		public int PP { get { return pp; } }
 		public Move ID { get { return id; } }
+		public Target Target { get { return target; } }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		#endregion
@@ -1910,6 +1912,18 @@ public class Move //: MoveData
 		private int pp;
 		#endregion
 
+	}
+	public class MoveTarget
+	{
+		public bool hasMultipleTargets(Move move)
+		{
+			return move.Targets == Target.AllOpposing || move.Targets == Target.AllNonUsers;
+		}
+		public bool targetsOneOpponent(Move move)
+		{
+			return move.Targets == Target.SingleNonUser || move.Targets == Target.RandomOpposing
+				|| move.Targets == Target.SingleOpposing || move.Targets == Target.OppositeOpposing;
+		}
 	}
 	#endregion
 }
