@@ -2146,15 +2146,14 @@ public class Pokemon //: ePokemons //PokemonData
 		public static int GetStartExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentLevel)
 		{
 			int exp = 0;
-			if (currentLevel > 100)
-			{
-				currentLevel = 100;
-			}
+			//if (currentLevel > 100) currentLevel = 100; 
+			if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL; 
 			if (levelingRate == PokemonData.LevelingRate.ERRATIC)
 			{
 				if (currentLevel > 100)
 				{
-					exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
+					//exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
+					exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (currentLevel * 6 / 10) / 100);
 				}
 				else exp = expTableErratic[currentLevel - 1]; //Because the array starts at 0, not 1.
 			}
@@ -2178,7 +2177,10 @@ public class Pokemon //: ePokemons //PokemonData
 			{
 				if (currentLevel > 100)
 				{
-					exp = (int)System.Math.Floor(((6 / 5) * System.Math.Pow(currentLevel - 1, 3)) - (15 * System.Math.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
+					//Dont remember why currentlevel minus 1 is in formula...
+					//I think it has to deal with formula table glitch for lvl 1-2 pokemons...
+					//exp = (int)System.Math.Floor(((6 / 5) * System.Math.Pow(currentLevel - 1, 3)) - (15 * System.Math.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
+					exp = (int)System.Math.Floor((6 * System.Math.Pow(currentLevel - 1, 3) / 5) - 15 * System.Math.Pow(currentLevel - 1, 2) + 100 * (currentLevel - 1) - 140);
 				}
 				else exp = expTableMediumSlow[currentLevel - 1];
 			}
@@ -2194,7 +2196,13 @@ public class Pokemon //: ePokemons //PokemonData
 			{
 				if (currentLevel > 100)
 				{
-					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * ((System.Math.Floor(System.Math.Pow(currentLevel, 3) / 2) + 32) / 50));
+					int rate = 82;
+					//Slow rate with increasing level
+					rate -= (currentLevel - 100) / 2;
+					if (rate < 40) rate = 40;
+
+					//exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * ((System.Math.Floor(System.Math.Pow(currentLevel, 3) / 2) + 32) / 50));
+					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (((currentLevel * rate / 100) / 50)));
 				}
 				else exp = expTableFluctuating[currentLevel - 1];
 			}
@@ -2203,9 +2211,23 @@ public class Pokemon //: ePokemons //PokemonData
 
 
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="levelingRate"></param>
+		/// <param name="currentExperience"></param>
+		/// <returns></returns>
 		public static int GetLevelFromExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentExperience)
 		{
-			return 0;
+			//int maxexp = GetExp(levelingRate, Settings.MAXIMUMLEVEL);
+			//if (currentExperience > maxexp) currentExperience = maxexp;
+			//int exp;
+			for (int i = 0; i < Settings.MAXIMUMLEVEL; i++)
+			{
+				//if (GetExp(levelingRate, Settings.MAXIMUMLEVEL) == currentExperience) return i;
+				//if (GetExp(levelingRate, Settings.MAXIMUMLEVEL) > currentExperience) return i-1;
+			}
+			return Settings.MAXIMUMLEVEL;
 		}
 	}
 	#endregion
