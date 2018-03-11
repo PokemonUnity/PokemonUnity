@@ -134,53 +134,67 @@ public class Move //: MoveData
 		/// <summary>
 		/// No target (i.e. Counter, Metal Burst, Mirror Coat, Curse)
 		/// </summary>
-		/// Single opposing Pokémon directly opposite of user
-		NONE = 0,
+		/// NONE
+		NoTarget = 0,
 		/// <summary>
 		/// User
 		/// </summary>
-		SELF,
+		/// SELF
+		User,
 		/// <summary>
 		/// Single Pokémon other than the user
 		/// </summary>
-		SINGLEOTHER,
+		/// SINGLEOTHER
+		SingleNonUser,
 		/// <summary>
 		/// Single opposing Pokémon selected at random (i.e. Outrage, Petal Dance, Thrash, Uproar)
 		/// </summary>
-		SINGLERANDOMOPPONENT,
+		/// SINGLERANDOMOPPONENT
+		RandomOpposing,
 		/// <summary>
 		/// User's partner (i.e. Helping Hand)
 		/// </summary>
-		/// ToDo: Single or All?
-		ADJACENTALLY,
+		/// ADJACENTALLY
+		Partner,
 		/// <summary>
 		/// Single opposing Pokémon (i.e. Me First)
 		/// </summary>
-		SINGLEOPPONENT,
+		/// SINGLEOPPONENT
+		SingleOpposing,
+		/// <summary>
+		/// Single opposing Pokémon directly opposite of user
+		/// </summary>
+		OppositeOpposing,
 		/// <summary>
 		/// Single Pokémon on user's side (i.e. Acupressure)
 		/// </summary>
-		SINGLEALLYSELF,
+		/// SINGLEALLYSELF
+		UserOrPartner,
 		/// <summary>
 		/// Both sides (e.g. Sunny Day, Trick Room)
 		/// </summary>
-		ALLFIELD,
+		/// ALLFIELD
+		BothSides,
 		/// <summary>
 		/// All Pokémon other than the user
 		/// </summary>
-		ALLOTHERS,
+		/// ALLOTHERS
+		AllNonUsers,
 		/// <summary>
 		/// Opposing side (i.e. Spikes, Toxic Spikes, Stealth Rocks)
 		/// </summary>
-		ALLOPPONENTFIELD,
+		/// ALLOPPONENTFIELD
+		OpposingSide,
 		/// <summary>
 		/// All opposing Pokémon
 		/// </summary>
-		ALLOPPONENT,
+		/// ALLOPPONENT
+		AllOpposing,
 		/// <summary>
 		/// User's side (e.g. Light Screen, Mist)
 		/// </summary>
-		ALLALLYFIELD
+		/// ALLALLYFIELD
+		UserSide
 	}
 	/// <summary>
 	/// Version from Veekun's Pokedex, needs to be redone
