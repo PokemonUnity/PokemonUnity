@@ -2067,6 +2067,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// </summary>
 	/// Experience can be it's own class away from Pokemon. But there's no need for it to be global.
+	/// ToDo: Consider making Experience class a Pokemon extension class...
 	private static class Experience
 	{
 		#region expTable
@@ -2081,7 +2082,9 @@ public class Pokemon //: ePokemons //PokemonData
 			286328,296358,305767,316074,326531,336255,346965,357812,567807,378880,
 			390077,400293,411686,423190,433572,445239,457001,467489,479378,491346,
 			501878,513934,526049,536557,548720,560922,571333,583539,591882,600000};
-
+		/// <summary>
+		/// Medium (Medium Fast)
+		/// </summary>
 		private static int[] expTableFast = new int[]{
 			0,6,21,51,100,172,274,409,583,800,
 			1064,1382,1757,2195,2700,3276,3930,4665,5487,6400,
@@ -2105,7 +2108,9 @@ public class Pokemon //: ePokemons //PokemonData
 			357911,373248,389017,405224,421875,438976,456533,474552,493039,512000,
 			531441,551368,571787,592704,614125,636056,658503,681472,704969,729000,
 			753571,778688,804357,830584,857375,884736,912673,941192,970299,1000000};
-
+		/// <summary>
+		/// Parabolic (Medium Slow)
+		/// </summary>
 		private static int[] expTableMediumSlow = new int[]{
 			0,9,57,96,135,179,236,314,419,560,
 			742,973,1261,1612,2035,2535,3120,3798,4575,5460,
@@ -2143,11 +2148,11 @@ public class Pokemon //: ePokemons //PokemonData
 			1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000};
 		#endregion
 
-		public static int GetStartExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentLevel)
+		private static int GetExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentLevel)
 		{
 			int exp = 0;
 			//if (currentLevel > 100) currentLevel = 100; 
-			if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL; 
+			//if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL; 
 			if (levelingRate == PokemonData.LevelingRate.ERRATIC)
 			{
 				if (currentLevel > 100)
@@ -2212,20 +2217,57 @@ public class Pokemon //: ePokemons //PokemonData
 
 		}
 		/// <summary>
-		/// 
+		/// Gets the maximum Exp Points possible for the given growth rate.
 		/// </summary>
 		/// <param name="levelingRate"></param>
-		/// <param name="currentExperience"></param>
 		/// <returns></returns>
-		public static int GetLevelFromExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentExperience)
+		public static int GetMaxExperience(Pokemon.PokemonData.LevelingRate levelingRate)
 		{
-			//int maxexp = GetExp(levelingRate, Settings.MAXIMUMLEVEL);
-			//if (currentExperience > maxexp) currentExperience = maxexp;
-			//int exp;
+			return GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+		}
+		/// <summary>
+		/// Gets the number of Exp Points needed to reach the given
+		/// level with the given growth rate.
+		/// </summary>
+		/// <param name="levelingRate"></param>
+		/// <param name="currentLevel"></param>
+		/// <returns></returns>
+		public static int GetStartExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentLevel)
+		{
+			if (currentLevel < 0) currentLevel = 1;
+			if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL;
+			return GetExperience(levelingRate, currentLevel);
+		}
+		/// <summary>
+		/// Adds experience points ensuring that the new total doesn't
+		/// exceed the maximum Exp. Points for the given growth rate.
+		/// </summary>
+		/// <param name="levelingRate">Growth rate.</param>
+		/// <param name="currentExperience">Current Exp Points.</param>
+		/// <param name="experienceGain">Exp. Points to add</param>
+		/// <returns></returns>
+		/// Subtract ceiling exp for left over experience points remaining after level up?...
+		public static int AddExperience(Pokemon.PokemonData.LevelingRate levelingRate, int currentExperience, int experienceGain)
+		{
+			int exp = currentExperience + experienceGain;
+			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+			if (exp > maxexp) exp = maxexp;
+			return exp;
+		}
+		/// <summary>
+		/// Calculates a level given the number of Exp Points and growth rate.
+		/// </summary>
+		/// <param name="levelingRate">Growth rate.</param>
+		/// <param name="experiencePoints">Current Experience Points</param>
+		/// <returns></returns>
+		public static int GetLevelFromExperience(Pokemon.PokemonData.LevelingRate levelingRate, int experiencePoints)
+		{
+			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+			if (experiencePoints > maxexp) experiencePoints = maxexp;
 			for (int i = 0; i < Settings.MAXIMUMLEVEL; i++)
 			{
-				//if (GetExp(levelingRate, Settings.MAXIMUMLEVEL) == currentExperience) return i;
-				//if (GetExp(levelingRate, Settings.MAXIMUMLEVEL) > currentExperience) return i-1;
+				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) == experiencePoints) return i;
+				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) > experiencePoints) return i-1;
 			}
 			return Settings.MAXIMUMLEVEL;
 		}
