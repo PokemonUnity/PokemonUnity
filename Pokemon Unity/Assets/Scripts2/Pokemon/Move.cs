@@ -55,6 +55,8 @@ public class Move //: MoveData
 	/// </summary>
 	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }*/
 	public Target Targets { get { return _base.Target; } }
+	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }
+	public MoveData.Move MoveId { get { return _base.ID; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
 	#endregion
@@ -310,6 +312,7 @@ public class Move //: MoveData
 		public int PP { get { return pp; } }
 		public Move ID { get { return id; } }
 		public Target Target { get { return target; } }
+		public Pokemon.PokemonData.Type Type { get { return type; } }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		#endregion
@@ -1896,22 +1899,37 @@ public class Move //: MoveData
 	{
 		#region Variables
 		private MoveData _base;
+
+		//function   = movedata.function
+		private int basedamage; //= movedata.basedamage
+		private Pokemon.PokemonData.Type type;       //= movedata.type
+		private int accuracy;	//= movedata.accuracy
+		private int addlEffect; //= movedata.addlEffect
+		private Move.Target target;		//= movedata.target
+		private int priority;	//= movedata.priority
+		private Move.MoveData.Flags flags;		//= movedata.flags
+		private int category;	//= movedata.category
+		private Move thismove;	//= move
+		/// <summary>
+		/// Can be changed with Mimic/Transform
+		/// </summary>
+		private int pp;			//= move.pp
+		private int totalpp;
+		/// <summary>
+		/// For Aerilate, Pixilate, Refrigerate
+		/// </summary>
+		private bool powerboost;
+		
 		//NOTYPE          = 0x01
 		//IGNOREPKMNTYPES = 0x02
 		//NOWEIGHTING     = 0x04
 		//NOCRITICAL      = 0x08
 		//NOREFLECT       = 0x10
 		//SELFCONFUSE     = 0x20
-		/// <summary>
-		/// For Aerilate, Pixilate, Refrigerate
-		/// </summary>
-		private bool powerboost;
-		/// <summary>
-		/// Can be changed with Mimic/Transform
-		/// </summary>
-		private int pp;
 		#endregion
 
+		//ToDo: Interface to call Move's function
+		//public MoveBattle 
 	}
 	public class MoveTarget
 	{
@@ -1927,3 +1945,18 @@ public class Move //: MoveData
 	}
 	#endregion
 }
+
+#region Move Interfaces
+public interface IMoveEffect
+{
+	int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Move.Target alltargets, bool showanimation);
+}
+public interface IMoveAdditionalEffect
+{
+	void AdditionalEffect(Pokemon attacker, Pokemon opponent);
+}
+public interface IMoveModifyAccuracy
+{
+	void ModifyAccuracy(int moveAccuracy, Pokemon attacker, Pokemon opponent);
+}
+#endregion

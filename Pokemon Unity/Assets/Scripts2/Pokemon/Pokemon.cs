@@ -153,11 +153,11 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Moves (PBMove)
 	/// </summary>
 	/// ToDo Move class, not enum
-	private eMoves.Move[] moves = new eMoves.Move[4]; //{ eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE, eMoves.Move.NONE };
+	private Move[] moves = new Move[4]; //{ Move.MoveData.Move.NONE, Move.MoveData.Move.NONE, Move.MoveData.Move.NONE, Move.MoveData.Move.NONE };
 	/// <summary>
 	/// The moves known when this Pokemon was obtained
 	/// </summary>
-	private eMoves.Move[] firstMoves = new eMoves.Move[4];
+	private Move.MoveData.Move[] firstMoves = new Move.MoveData.Move[4];
 	/// <summary>
 	/// Ball used
 	/// </summary>
@@ -649,51 +649,55 @@ public class Pokemon //: ePokemons //PokemonData
 	#endregion
 
 	#region Moves
-	/*// <summary>
+	/// <summary>
 	/// Returns the number of moves known by the Pokémon.
 	/// </summary>
-	int numMoves()
+	public int numMoves()
 	{
 		int ret = 0;
 		for (int i = 0; i < 4; i++) {//foreach(var move in this.moves){ 
-			if ((int)this.moves[i] != 0) ret += 1;//move.id
+			if ((int)this.moves[i].MoveId != 0) ret += 1;//move.id
 		}
 		return ret;
-	}*/
+	}
 
-	/*// <summary>
+	/// <summary>
 	/// Returns true if the Pokémon knows the given move.
 	/// </summary>
-	bool hasMove(eMoves.Move move) {
+	public bool hasMove(Move.MoveData.Move move) {
 		//if (move <= 0) return false;//move == null ||
 		for (int i = 0; i < 4; i++)
 		{
-			if (this.moves[i] == move) return true;
+			if (this.moves[i].MoveId == move) return true;
 		}
 		return false;
-	}*/
+	}
 
-	//bool knowsMove(eMoves.Move move) { return this.hasMove (move); }
+	public bool knowsMove(Move.MoveData.Move move) { return this.hasMove (move); }
 
-	/*// <summary>
+	/// <summary>
     /// Returns the list of moves this Pokémon can learn by levelling up.
     /// </summary>
     /// ToDo: Custom<int Level, eMove move> Class
-    eMoves.Move[] getMoveList() {
-        //movelist =[]
-        //_base.MovesetMoves
-        //for k in 0..length - 1
-        //movelist.push([level, move])}
-        return movelist
-     }*/
+    public Move.MoveData.Move[] getMoveList() {
+		Move.MoveData.Move[] movelist = _base.MovesetMoves;
+        for (int k = 0; k < movelist.Length - 1; k++)
+		{
+			//Array to List/Dictionary
+			//separate into Move.value and Pokemon.Level 
+			//needed to learn the skill
+			//movelist([level, move])}
+		}
+        return movelist;
+     }
 
 	/*// <summary>
     /// Sets this Pokémon's movelist to the default movelist it originally had.
     /// </summary>
     void resetMoves()
     {
-        //eMoves.Move moves = this.getMoveList();
-        eMoves.Move[] movelist;
+        //Move.MoveData.Move moves = this.getMoveList();
+        Move.MoveData.Move[] movelist;
         foreach(var i in moves) {//for (int i = 0; i < moveList; i++){
             if (i[0] <= this.level)
             {
@@ -716,7 +720,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	void LearnMove(eMoves.Move move) {
+	void LearnMove(Move.MoveData.Move move) {
 		if ((int)move <= 0) return;
 		for (int i = 0; i < 4; i++) {
 			if (moves[i].id == move) {
@@ -787,7 +791,7 @@ public class Pokemon //: ePokemons //PokemonData
 		//for (int i = 0; i< 4; i++) { 
 		//	moves[i]= new Move(0);
 		//}
-		moves = new eMoves.Move[4];
+		moves = new Move.MoveData.Move[4];
 	}*/
 
 	/*// <summary>
@@ -800,18 +804,18 @@ public class Pokemon //: ePokemons //PokemonData
 		//firstmoves = moves;
 	}*/
 
-	/*void AddFirstMove(eMoves.Move move) {
+	/*void AddFirstMove(Move.MoveData.Move move) {
 		if (move > 0 && !firstMoves.include(move)) firstMoves.push(move);
 		return;
 	}*/
 
-	/*void RemoveFirstMove(eMoves.Move move) {
+	/*void RemoveFirstMove(Move.MoveData.Move move) {
 		//if (move > 0) firstMoves.delete(move); 
 		return;
 	}*/
 
 	/*void ClearFirstMoves() {
-		firstMoves = new eMoves.Move[4];
+		firstMoves = new Move.MoveData.Move[4];
 	}*/
 
 	/*bool isCompatibleWithMove(move) {
@@ -1143,13 +1147,14 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <remarks>
 		/// This should be an enum...
 		/// </remarks>
-		private string[] movesetMovesStrings;
-		private eMoves.Move[] movesetMoves;
+		//private string[] movesetMovesStrings;
+		private Move.MoveData.Move[] movesetMoves;
 
 		//private string[] tmList; //Will be done thru ItemsClass
 
 		private int[] evolutionID;
 		/// ToDo: Evolution class type array here
+		PokemonEvolution[] evolutions;
 		private string[] evolutionRequirements;
 		#endregion
 
@@ -1275,7 +1280,7 @@ public class Pokemon //: ePokemons //PokemonData
 		public int[,] HeldItem { get { return this.heldItem; } }
 
 		public int[] MovesetLevels { get { return this.movesetLevels; } }
-		public eMoves.Move[] MovesetMoves { get { return this.movesetMoves; } }
+		public Move.MoveData.Move[] MovesetMoves { get { return this.movesetMoves; } }
 
 		public int[] EvolutionID { get { return this.evolutionID; } }
 		/// <summary>
@@ -1533,7 +1538,7 @@ public class Pokemon //: ePokemons //PokemonData
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
 							Color pokedexColor, int baseFriendship,//* / string species, string pokedexEntry,*/
 							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, eMoves.Move[] movesetMoves, int[] tmList,
+							float luminance, /*Color lightColor,*/ int[] movesetLevels, Move.MoveData.Move[] movesetMoves, int[] tmList,
 							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
 							int[,] heldItem = null)
 		{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
@@ -1619,7 +1624,7 @@ public class Pokemon //: ePokemons //PokemonData
 				(LevelingRate)levelingRate,
 				pokedexColor | PokemonData.Color.NONE,
 				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (eMoves.Move)move), tmList,
+				luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move), tmList,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
@@ -1629,7 +1634,7 @@ public class Pokemon //: ePokemons //PokemonData
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
 							Color pokedexColor, int baseFriendship,//*/ string species, string pokedexEntry,
 							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, eMoves.Move[] movesetMoves, int[] tmList,
+							float luminance, /*Color lightColor,*/ int[] movesetLevels, Move.MoveData.Move[] movesetMoves, int[] tmList,
 							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
 							int[,] heldItem = null)
 		{
@@ -1654,7 +1659,7 @@ public class Pokemon //: ePokemons //PokemonData
 				levelingRate,
 				pokedexColor | PokemonData.Color.NONE,
 				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (eMoves.Move)move),*/ tmList,
+				luminance, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
@@ -1676,7 +1681,7 @@ public class Pokemon //: ePokemons //PokemonData
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         Color.NONE, 50,
 						10, 5, 5, 5, 5, 5,
-						0f, new int[] { 1,2,3 }, new eMoves.Move[4], null,//int[] tmList,
+						0f, new int[] { 1,2,3 }, new Move.MoveData.Move[4], null,//int[] tmList,
                         null, null, null, 4,//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //int forms, 
                         null) //Test
         };
@@ -1699,7 +1704,7 @@ public class Pokemon //: ePokemons //PokemonData
 							//*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,* /
 							Color.NONE, 50,
 							10, 5, 5, 5, 5, 5,
-							0f, new int[] { 1,2,3 }, new eMoves.Move[4], null,//int[] tmList,
+							0f, new int[] { 1,2,3 }, new Move.MoveData.Move[4], null,//int[] tmList,
 							null, null, null, 4,//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //int forms, 
 							null) //Test
 			};
@@ -2063,7 +2068,78 @@ public class Pokemon //: ePokemons //PokemonData
 		#endregion
 
 	}
-
+	public class PokemonMoveset
+	{
+		/// <summary>
+		/// Level needed to learn Move
+		/// </summary>
+		public int Level;
+		/// <summary>
+		/// Move learned upon leveling-up
+		/// </summary>
+		public Move.MoveData.Move MoveLearned;
+	}
+	/// <summary>
+	/// The moves that all Pokémon of the species learn as they level up. 
+	/// </summary>
+	public class PokemonMoveTree
+	{
+		/// <summary>
+		/// Level at which the move is learned 
+		/// (0 means the move can only be learned when 
+		/// a Pokémon evolves into this species).
+		/// </summary>
+		/// Level needed to learn Move
+		public int Level;
+		/// <summary>
+		/// Move learned upon leveling-up
+		/// </summary>
+		public Move.MoveData.Move MoveLearned;
+	}
+	/// <summary>
+	/// The evolution paths this species can take. 
+	/// For each possible evolution of this species, 
+	/// there are three parts
+	/// </summary>
+	public class PokemonEvolution
+	{
+		/// <summary>
+		/// The PokemonId of the evolved species.
+		/// </summary>
+		public PokemonData.Pokemon EvolvesTo;
+		/// <summary>
+		/// The evolution method.
+		/// </summary>
+		public int EvolveMethod;
+		
+	}
+	public class PokemonEvolution<T> : PokemonEvolution
+	{
+		/*// <summary>
+		/// The PokemonId of the evolved species.
+		/// </summary>
+		public PokemonData.Pokemon EvolvesTo;
+		/// <summary>
+		/// The evolution method.
+		/// </summary>
+		public int EvolveMethod;
+		//public object EvolveValue;
+		//public T EvolveValue<T>() { return GetValue(); };*/
+		/// <summary>
+		/// The value <see cref="EvolveMethod"/> as mentioned KEY.
+		/// </summary>
+		public T EvolveValue;
+		/*public int IntValue;
+		public string StringValue;
+		private int GetValue(int p)
+		{
+			return this.IntValue;
+		}
+		private string GetValue(string p)
+		{
+			return this.StringValue;
+		}*/
+	}
 	/// <summary>
 	/// </summary>
 	/// Experience can be it's own class away from Pokemon. But there's no need for it to be global.
