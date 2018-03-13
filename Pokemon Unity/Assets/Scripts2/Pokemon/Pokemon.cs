@@ -157,7 +157,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// The moves known when this Pokemon was obtained
 	/// </summary>
-	private Move.MoveData.Move[] firstMoves = new Move.MoveData.Move[4];
+	private List<Move.MoveData.Move> firstMoves = new List<Move.MoveData.Move>();
 	/// <summary>
 	/// Ball used
 	/// </summary>
@@ -675,150 +675,152 @@ public class Pokemon //: ePokemons //PokemonData
 
 	public bool knowsMove(Move.MoveData.Move move) { return this.hasMove (move); }
 
-	/// <summary>
+	/*// <summary>
     /// Returns the list of moves this Pokémon can learn by levelling up.
     /// </summary>
     /// ToDo: Custom<int Level, eMove move> Class
-    public Move.MoveData.Move[] getMoveList() {
-		Move.MoveData.Move[] movelist = _base.MovesetMoves;
-        for (int k = 0; k < movelist.Length - 1; k++)
-		{
-			//Array to List/Dictionary
-			//separate into Move.value and Pokemon.Level 
-			//needed to learn the skill
-			//movelist([level, move])}
-		}
-        return movelist;
-     }
+    public PokemonMoveset[] getMoveList() {
+		//Move.MoveData.Move[] movelist = _base.MovesetMoves;
+		//for (int k = 0; k < movelist.Length - 1; k++)
+		//{
+		//	//Array to List/Dictionary
+		//	//separate into Move.value and Pokemon.Level 
+		//	//needed to learn the skill
+		//	//movelist([level, move])}
+		//}
+		//return movelist;
+		return _base.MoveSet;
+     }*/
 
-	/*// <summary>
+	/// <summary>
     /// Sets this Pokémon's movelist to the default movelist it originally had.
     /// </summary>
-    void resetMoves()
+    public void resetMoves()
     {
-        //Move.MoveData.Move moves = this.getMoveList();
-        Move.MoveData.Move[] movelist;
-        foreach(var i in moves) {//for (int i = 0; i < moveList; i++){
-            if (i[0] <= this.level)
+		//Move.MoveData.Move moves = this.getMoveList();
+		//Move.MoveData.Move[] movelist = new Move.MoveData.Move[4];
+		List<Move.MoveData.Move> movelist = new List<Move.MoveData.Move>(); 
+        for (int i = 0; i < _base.MoveSet.Length; i++){//foreach(var i in _base.MoveSet)
+            if (_base.MoveSet[i].Level <= this.Level)
             {
-                movelist[movelist.length] = i[1];
+                movelist.Add(_base.MoveSet[i].MoveId);
             }
         }
         //movelist|=[] // Remove duplicates
-        int listend = movelist.length - 4;
+        int listend = movelist.Count - 4;
         listend = listend < 0 ? 0 : listend;
         int j = 0;
-        for (int i = 0; i < listend + 4; i++) { //i in listend...listend+4
-            moveid = (i >= movelist.length) ? 0 : movelist[i];
-            @moves[j] = PBMove.new(moveid);
+        for (int i = 0; i < listend + 4; i++) { 
+            Move.MoveData.Move moveid = (i >= movelist.Count) ? 0 : movelist[i];
+			this.moves[j] = new Move(moveid);
+            //moves[j] = (i >= movelist.Count) ? 0 : new Move(movelist[i]);
             j += 1;
         }
-    }*/
+    }
 
-	/*// <summary>
+	/// <summary>
 	/// Silently learns the given move. Will erase the first known move if it has to.
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	void LearnMove(Move.MoveData.Move move) {
+	public void LearnMove(Move.MoveData.Move move) {
 		if ((int)move <= 0) return;
 		for (int i = 0; i < 4; i++) {
-			if (moves[i].id == move) {
+			if (moves[i].MoveId == move) {
 				int j = i + 1;
 				while (j < 4) {
-					if (moves[j].id == 0) break;
-					tmp = @moves[j];
-					@moves[j] = @moves[j - 1];
-					@moves[j - 1] = tmp;
+					if (moves[j].MoveId == 0) break;
+					Move tmp = moves[j];
+					moves[j] = moves[j - 1];
+					moves[j - 1] = tmp;
 					j += 1;
 				}
 				return;
 			}
 		}
 		for (int i = 0; i < 4; i++) {
-			if (@moves[i].id == 0) {
-				@moves[i] = new Move(move);
+			if (moves[i].MoveId == 0) {
+				moves[i] = new Move(move);
 				return;
 			}
 		}
-		@moves[0] = @moves[1];
-		@moves[1] = @moves[2];
-		@moves[2] = @moves[3];
-		@moves[3] = new Move(move);
-	}*/
+		moves[0] = moves[1];
+		moves[1] = moves[2];
+		moves[2] = moves[3];
+		moves[3] = new Move(move);
+	}
 
-	/*// <summary>
+	/// <summary>
 	/// Deletes the given move from the Pokémon.
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	void pbDeleteMove(move) {
-		return if !move || move <= 0
-		newmoves =[]
+	public void DeleteMove(Move.MoveData.Move move) {
+		if (move <= 0) return;
+		List<Move> newmoves = new List<Move>();
 		for (int i = 0; i < 4; i++) { 
-			if (moves[i].id != move) newmoves.push(@moves[i]);
+			if (moves[i].MoveId != move) newmoves.Add(moves[i]);
 		}
 
-		newmoves.push(PBMove.new(0));
+		newmoves.Add(new Move(0));
 		for (int i = 0; i< 4; i++) {
-			@moves[i] = newmoves[i];
+			moves[i] = newmoves[i];
 		}
-	 }*/
+	 }
 
-	/*// <summary>
+	/// <summary>
 	/// Deletes the move at the given index from the Pokémon.
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	void DeleteMoveAtIndex(index) {
-		newmoves =[];
+	public void DeleteMoveAtIndex(int index) {
+		List<Move> newmoves = new List<Move>();
 
 		for (int i = 0; i < 4; i++) {
-			if (i != index) newmoves.push(@moves[i]);
+			if (i != index) newmoves.Add(moves[i]);
 		}
-
-		newmoves.push(PBMove.new(0));
+		
+		newmoves.Add(new Move(0));
 
 		for (int i = 0; i < 4; i++) {
-			@moves[i] = newmoves[i];
+			moves[i] = newmoves[i];
 		}
-	}*/
+	}
 
-	/*// <summary>
+	/// <summary>
 	/// Deletes all moves from the Pokémon.
 	/// </summary>
-	void DeleteAllMoves() { 
-		//for (int i = 0; i< 4; i++) { 
-		//	moves[i]= new Move(0);
-		//}
-		moves = new Move.MoveData.Move[4];
-	}*/
+	public void DeleteAllMoves() { 
+		//moves = new Move.MoveData.Move[4];
+		for (int i = 0; i< 4; i++) { 
+			moves[i]= new Move(0);
+		}
+	}
 
-	/*// <summary>
+	/// <summary>
 	/// Copies currently known moves into a separate array, for Move Relearner.
 	/// </summary>
-	void RecordFirstMoves() {
-		//for (int i = 0; i < 4; i++) {
-		//	if (moves[i].id > 0) firstmoves.push(moves[i].id);
-		//}
-		//firstmoves = moves;
-	}*/
+	public void RecordFirstMoves() {
+		for (int i = 0; i < 4; i++) {
+			if (moves[i].MoveId > 0) firstMoves.Add(moves[i].MoveId);
+		}
+	}
 
-	/*void AddFirstMove(Move.MoveData.Move move) {
-		if (move > 0 && !firstMoves.include(move)) firstMoves.push(move);
+	public void AddFirstMove(Move.MoveData.Move move) {
+		if (move > 0 && !firstMoves.Contains(move)) firstMoves.Add(move);
 		return;
-	}*/
+	}
 
-	/*void RemoveFirstMove(Move.MoveData.Move move) {
-		//if (move > 0) firstMoves.delete(move); 
+	public void RemoveFirstMove(Move.MoveData.Move move) {
+		if (move > 0) firstMoves.Remove(move); 
 		return;
-	}*/
+	}
 
-	/*void ClearFirstMoves() {
-		firstMoves = new Move.MoveData.Move[4];
-	}*/
+	public void ClearFirstMoves() {
+		firstMoves.Clear(); //= new Move.MoveData.Move[4];
+	}
 
-	/*bool isCompatibleWithMove(move) {
+	/*bool isCompatibleWithMove(Move.MoveData.Move move) {
 		return SpeciesCompatible(this.species, move);
 	}*/
 
@@ -1290,6 +1292,7 @@ public class Pokemon //: ePokemons //PokemonData
 
 		public int[] MovesetLevels { get { return this.movesetLevels; } }
 		public Move.MoveData.Move[] MovesetMoves { get { return this.movesetMoves; } }
+		public PokemonMoveset[] MoveSet { get { return this.moveSet; } }
 
 		public int[] EvolutionID { get { return this.evolutionID; } }
 		/// <summary>
