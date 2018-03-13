@@ -1238,7 +1238,13 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </summary>
 		public GenderRatio MaleRatio { get { return this.maleRatio; } }
 		public float ShinyChance { get; set; }
-		/// <summary>max is 255</summary> 
+		/// <summary>
+		/// The catch rate of the species. 
+		/// Is a number between 0 and 255 inclusive. 
+		/// The higher the number, the more likely a capture 
+		/// (0 means it cannot be caught by anything except a Master Ball).
+		/// </summary> 
+		/// Also known as Pokemon's "Rareness"...
 		public int CatchRate { get { return this.catchRate; } }
 		public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
 		//public EggGroup EggGroup2 { get { return this.eggGroup2; } }
