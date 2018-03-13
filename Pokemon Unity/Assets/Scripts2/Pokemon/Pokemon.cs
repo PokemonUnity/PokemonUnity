@@ -78,6 +78,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Held item
 	/// </summary>
+	public  eItems.Item Item { get { return this.item; } set { this.item = value; } }
 	private eItems.Item item;
 	/// <summary>
 	/// Consumed held item (used in battle only)
@@ -94,7 +95,22 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Mail?...
 	/// </summary>
-	private bool? mail;
+	private string mail;
+	/// <summary>
+	/// Perform a null check; if anything other than null, there is a message
+	/// </summary>
+	/// ToDo: Item category
+	public string Mail
+	{
+		get {
+			if (this.mail == null) return null; //If empty return null
+			if (mail.Length == 0 || this.Item == 0)//|| this.item.Category != eItems.Item.Category.Mail )
+			{
+				mail = null; return null;
+			}
+			return mail;
+		}
+	}
 	/// <summary>
 	/// The pokemon fused into this one.
 	/// </summary>
@@ -161,7 +177,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Ball used
 	/// </summary>
-	private eItems.Item ballUsed = (eItems.Item)0; //ToDo: None?
+	private eItems.Item ballUsed;// = (eItems.Item)0; //ToDo: None?
 	/// <summary>
 	/// Markings
 	/// </summary>
@@ -1346,6 +1362,7 @@ public class Pokemon //: ePokemons //PokemonData
 		public UnityEngine.Color LightColor { get { return this.lightColor; } }
 
 		/// <summary>
+		/// Returns the items this species can be found holding in the wild.
 		/// [item id,% chance]
 		/// </summary>
 		/// <example>int[,] heldItems = { {1,2,3},{4,5,6} }
@@ -1355,6 +1372,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Or maybe...[item id,% chance,generationId/regionId]
 		/// Custom Class needed here... <see cref="eItems.Item"/> as itemId
 		/// </remarks>
+		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
 		public int[,] HeldItem { get { return this.heldItem; } }
 
 		public int[] MovesetLevels { get { return this.movesetLevels; } }

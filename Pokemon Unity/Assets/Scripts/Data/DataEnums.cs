@@ -217,6 +217,7 @@ public class eItems{
     /// </remarks>
     public enum Item
     {
+		NONE = 0,
         /// <summary>Used in battle :   [Catches]{mechanic:catch} a wild Pokémon without fail.      If used in a trainer battle, nothing happens and the ball is lost.</summary>		MASTER_BALL = 1,
         /// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 2×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>		ULTRA_BALL = 2,
         /// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon, using a catch rate of 1.5×.      If used in a trainer battle, nothing happens and the ball is lost.</summary>		GREAT_BALL = 3,
