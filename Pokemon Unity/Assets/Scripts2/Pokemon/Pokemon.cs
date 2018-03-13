@@ -2026,6 +2026,12 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Move learned upon leveling-up
 		/// </summary>
 		public Move.MoveData.Move MoveId;
+		public PokemonMoveset() { }
+		public PokemonMoveset(int level, Move.MoveData.Move move)
+		{
+			this.Level = level;
+			this.MoveId = move;
+		}
 	}
 	/// <summary>
 	/// The moves that all Pokémon of the species learn as they level up. 
