@@ -1988,16 +1988,22 @@ public class Pokemon //: ePokemons //PokemonData
 		#endregion
 
 	}
+	/// <summary>
+	/// The moves that all Pokémon of the species learn as they level up. 
+	/// </summary>
 	public class PokemonMoveset
 	{
 		/// <summary>
-		/// Level needed to learn Move
+		/// Level at which the move is learned 
+		/// (0 means the move can only be learned when 
+		/// a Pokémon evolves into this species).
 		/// </summary>
+		/// Level needed to learn Move
 		public int Level;
 		/// <summary>
 		/// Move learned upon leveling-up
 		/// </summary>
-		public Move.MoveData.Move MoveLearned;
+		public Move.MoveData.Move MoveId;
 	}
 	/// <summary>
 	/// The moves that all Pokémon of the species learn as they level up. 
