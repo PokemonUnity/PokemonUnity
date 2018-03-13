@@ -1572,7 +1572,7 @@ public class Pokemon //: ePokemons //PokemonData
 		}
 
 		public static PokemonData CreatePokemonData(Pokemon Id, int[] PokeId/*, string name*/, Type type1, Type type2, eAbility.Ability ability1, eAbility.Ability ability2, eAbility.Ability hiddenAbility,
-							float maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
+							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
 							Color pokedexColor, int baseFriendship,//*/ string species, string pokedexEntry,
