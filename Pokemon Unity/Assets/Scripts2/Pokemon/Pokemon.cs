@@ -2024,6 +2024,13 @@ public class Pokemon //: ePokemons //PokemonData
 	public class PokemonEvolution
 	{
 		/// <summary>
+		/// no parameter,
+		/// Positive integer,
+		/// Item  = <see cref="eItems.Item"/>,
+		/// Move = <see cref="Move.MoveData.Move"/>,
+		/// Species = <see cref="PokemonData.Pokemon"/>,
+		/// Type = <see cref="PokemonData.Type"/>
+		/// </summary>
 		/// <example>
 		/// <para>E.G.	Poliwhirl(61)
 		///		<code>new int[]{62,186},
@@ -2034,7 +2041,6 @@ public class Pokemon //: ePokemons //PokemonData
 		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
 		/// </para> 
 		/// </example>
-		/// </summary>
 		/// ToDo: Custom class => new Evolve(){ EvolveMethod.Item, Items.Item } 
 		/// ToDo: If all conditions are met in "new Evolve()" instance, then evolve.
 		/// Ideas:
@@ -2042,6 +2048,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Evolution that depends on the Pokémon's nature or form.
 		/// Fusion evolution(e.g. for Magnemite/Slowpoke). Check that there is a Shellder in the party, and if so, delete it and evolve the levelled-up Slowpoke.
 		/// Check how many EVs the Pokémon has, and allows evolution only if that amount is greater than or equal to the EV threshold value set by the parameter.
+		/// Shiny-Random?
 		public enum EvolutionMethod
 		{
 			/// <summary>
@@ -2226,6 +2233,9 @@ public class Pokemon //: ePokemons //PokemonData
 			/// </summary>
 			/// <example>Hitmontop</example>
 			AtkDefEqual,
+			///	<summary>if pokemon's shinyValue divided by 2's remainder is equal to 0 or 1</summary>
+			///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level-parameter? 
+			Shiny,
 			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
 			/// Shiny value? I thought it was based on "Friendship"
 			Silcoon,
@@ -2271,7 +2281,7 @@ public class Pokemon //: ePokemons //PokemonData
 		//public object EvolveValue;
 		//public T EvolveValue<T>() { return GetValue(); };*/
 		/// <summary>
-		/// The value <see cref="EvolveMethod"/> as mentioned KEY.
+		/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
 		/// </summary>
 		public T EvolveValue;
 		/*public int IntValue;
