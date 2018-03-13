@@ -1141,13 +1141,6 @@ public class Pokemon //: ePokemons //PokemonData
 		private int[,] heldItem;
 
 		private int[] movesetLevels;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <remarks>
-		/// This should be an enum...
-		/// </remarks>
-		//private string[] movesetMovesStrings;
 		private Move.MoveData.Move[] movesetMoves;
 
 		//private string[] tmList; //Will be done thru ItemsClass
