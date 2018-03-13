@@ -1142,6 +1142,7 @@ public class Pokemon //: ePokemons //PokemonData
 
 		private int[] movesetLevels;
 		private Move.MoveData.Move[] movesetMoves;
+		private PokemonMoveset[] moveSet;
 
 		//private string[] tmList; //Will be done thru ItemsClass
 
@@ -2034,21 +2035,25 @@ public class Pokemon //: ePokemons //PokemonData
 		}
 	}
 	/// <summary>
-	/// The moves that all Pokémon of the species learn as they level up. 
+	/// All the moves this pokemon species can learn, and the methods by which they learn them
 	/// </summary>
 	public class PokemonMoveTree
 	{
-		/// <summary>
-		/// Level at which the move is learned 
-		/// (0 means the move can only be learned when 
-		/// a Pokémon evolves into this species).
-		/// </summary>
-		/// Level needed to learn Move
-		public int Level;
-		/// <summary>
-		/// Move learned upon leveling-up
-		/// </summary>
+		public LearnMethod TeachMethod;
 		public Move.MoveData.Move MoveId;
+		public enum LearnMethod
+		{
+			levelup = 1,
+			egg = 2,
+			tutor = 3,
+			machine = 4,
+			stadium_surfing_pikachu = 5,
+			light_ball_egg = 6,
+			colosseum_purification = 7,
+			xd_shadow = 8,
+			xd_purification = 9,
+			form_change = 10
+		}
 	}
 	/// <summary>
 	/// The evolution paths this species can take. 
