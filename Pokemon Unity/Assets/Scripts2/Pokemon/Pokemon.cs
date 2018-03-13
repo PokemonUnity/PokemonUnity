@@ -1094,9 +1094,9 @@ public class Pokemon //: ePokemons //PokemonData
 
 		/// <summary>
 		/// The male ratio.
-		/// <value>-1f is interpreted as genderless</value>
 		/// </summary>
-		private float maleRatio;
+		/// instead of a float value...
+		private GenderRatio maleRatio;
 		/// <summary>max is 255</summary> 
 		private int catchRate;
 		private EggGroups eggGroup1;
@@ -1156,6 +1156,15 @@ public class Pokemon //: ePokemons //PokemonData
 		/// ToDo: Evolution class type array here
 		PokemonEvolution[] evolutions;
 		private string[] evolutionRequirements;
+		/// <summary>
+		/// The item that needs to be held by a parent when breeding in order for the egg to be this species. 
+		/// If neither parent is holding the required item, the egg will be the next evolved species instead.
+		/// <para></para>
+		/// The only species that should have this line are ones which cannot breed, 
+		/// but evolve into a species which can. That is, the species should be a "baby" species.
+		/// Not all baby species need this line.
+		/// </summary>
+		private eItems.Item Incense;
 		#endregion
 
 		/// ToDo: Should any of the property values be Set-able?
@@ -1234,7 +1243,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// The male ratio.
 		/// <value>-1f is interpreted as genderless</value>
 		/// </summary>
-		public float MaleRatio { get { return this.maleRatio; } }
+		public GenderRatio MaleRatio { get { return this.maleRatio; } }
 		public float ShinyChance { get; set; }
 		/// <summary>max is 255</summary> 
 		public int CatchRate { get { return this.catchRate; } }
@@ -1415,6 +1424,20 @@ public class Pokemon //: ePokemons //PokemonData
 			DRAGON = 14,
 			UNDISCOVERED = 15 //"no-eggs"
 		};
+		/// <summary>
+		/// The likelihood of a Pokémon of the species being a certain gender.
+		/// </summary>
+		public enum GenderRatio
+		{
+			AlwaysMale,
+			FemaleOneEighth,
+			Female25Percent,
+			Female50Percent,
+			Female75Percent,
+			FemaleSevenEighths,
+			AlwaysFemale,
+			Genderless
+		}
 		public enum LevelingRate
 		{
 			ERRATIC = 6, //fast then very slow?
@@ -1453,7 +1476,7 @@ public class Pokemon //: ePokemons //PokemonData
 		public PokemonData() { }// this.name = PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.Name; } //name equals form name unless there is none.
 
 		public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
-							float maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
+							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
 							Color pokedexColor, int baseFriendship,//* / string species, string pokedexEntry,*/
@@ -1533,7 +1556,7 @@ public class Pokemon //: ePokemons //PokemonData
 					(eAbility.Ability)ability2 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
 					(eAbility.Ability)hiddenAbility | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE
 																			//}, 
-				maleRatio,
+				0,//ToDo: maleRatio, 
 				catchRate,
 				(EggGroups)eggGroup1 | PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
 				(EggGroups)eggGroup2 | PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
