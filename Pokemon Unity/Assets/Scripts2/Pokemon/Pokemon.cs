@@ -226,12 +226,25 @@ public class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	private bool? shinyFlag;
 	/// <summary>
-	/// Array of ribbons
+	/// Deprecated; Array of ribbons
 	/// </summary>
 	/// <remarks>
 	/// Make 2d Array (Array[,]) separated by regions/Gens
 	/// </remarks>
-	private bool[] ribbons; //= new bool[numberOfRegions,RibbonsPerRegion];
+	private bool[] ribbon; //= new bool[numberOfRegions,RibbonsPerRegion];
+	private List<Ribbon> ribbons = new List<Ribbon>();
+	/// <summary>
+	/// Each region/ribbon sprite should have it's own Ribbon.EnumId
+	/// </summary>
+	/// <example>Pokemon acquired beauty ribbon in region1 AND 2?</example>
+	/// I didnt know ribbons could be upgraded...
+	/// Make each ribbon into sets, where next number up is upgrade? (or multiply?)
+	/// Does it make a difference if pokemon won contest in different regions?
+	public enum Ribbon
+	{
+		NONE = 0
+	}
+	public List<Ribbon> Ribbons { get { return this.ribbons; } }
 	/// <summary>
 	/// Contest stats
 	/// </summary>
@@ -833,9 +846,63 @@ public class Pokemon //: ePokemons //PokemonData
 	{
 
 	}
-    #endregion
+	#endregion
 
-    #region Contest attributes, ribbons
+	#region Contest attributes, ribbons
+	/// <summary>
+	/// Returns whether this Pokémon has the specified ribbon.
+	/// </summary>
+	/// <param name="ribbon"></param>
+	/// <returns></returns>
+	public bool hasRibbon(Ribbon ribbon)
+	{
+		if (Ribbons.Count == 0) return false;
+		return Ribbons.Contains(ribbon);
+	}
+	/// <summary>
+	/// Gives this Pokémon the specified ribbon.
+	/// </summary>
+	/// <param name="ribbon"></param>
+	public void giveRibbon(Ribbon ribbon)
+	{
+		if (ribbon <= 0) return;
+		if (!Ribbons.Contains(ribbon)) this.ribbons.Add(ribbon);
+	}
+	/// <summary>
+	/// Replaces one ribbon with the next one along, if possible.
+	/// </summary>
+	/// <param name="ribbon"></param>
+	/// ToDo: Not finished here...
+	public void upgradeRibbon(params Ribbon[] ribbon)//(Ribbon ribbon, Ribbon? upgradedRibbon = null)
+	{
+		//if(Ribbons.Count)
+		//for(int i = 0; i < ribbon.Length)
+	}
+	/// <summary>
+	/// Removes the specified ribbon from this Pokémon.
+	/// </summary>
+	/// <param name="ribbon"></param>
+	public void takeRibbon(Ribbon ribbon)
+	{
+		if (ribbons.Count == 0) return;
+		if (ribbon <= 0) return;
+		for(int i = 0; i < ribbons.Count; i++)
+		{
+			if (Ribbons[i] == ribbon)
+			{
+				ribbons[i] = Ribbon.NONE;
+				break;
+			}
+		}
+		ribbons.Remove(Ribbon.NONE); //ToDo: List.RemoveAll(Ribbon == NONE)
+	}
+	/// <summary>
+	/// Removes all ribbons from this Pokémon.
+	/// </summary>
+	public void clearAllRibbons()
+	{
+		ribbons.Clear();
+	}
     #endregion
 
     #region Items
