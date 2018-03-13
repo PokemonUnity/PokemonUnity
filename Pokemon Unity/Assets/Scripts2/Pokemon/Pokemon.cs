@@ -1439,86 +1439,6 @@ public class Pokemon //: ePokemons //PokemonData
 			NONE = 0
 		};
 		/// <summary>
-		/// ToDo: Custom class => new Evolve(){ EvolveMethod.Item, Items.Item } 
-		/// ToDo: If all conditions are met in "new Evolve()" instance, then evolve.
-		/// <example>
-		/// <para>E.G.	Poliwhirl(61)
-		///		<code>new int[]{62,186},
-		///		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),</code></para> 
-		/// <para>
-		/// E.G. to evolve to sylveon
-		///		<code>new int[]{..., 700},
-		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
-		/// </para> 
-		/// </example>
-		/// </summary>
-		private enum EvolutionMethod
-		{
-			/// <summary>
-			///	if pokemon's level is greater or equal to int level
-			/// <example>Level,int level</example>
-			/// </summary>
-			Level,
-			///	<summary>
-			///	if name of stone is equal to string itemName
-			/// <example>Stone,string itemName</example>
-			///	</summary>
-			Stone,
-			/// <summary>
-			///	if currently trading pokemon
-			/// <example>Trade</example>
-			///	</summary>
-			Trade,
-			/// <summary>
-			///	if pokemon's friendship is greater or equal to 220
-			/// <example>Friendship</example>
-			///	</summary>
-			Friendship,
-			/// <summary>
-			///	if pokemon's heldItem is equal to string itemName
-			/// <example>Item,string itemName</example>
-			/// </summary>
-			Item,
-			/// <summary>
-			/// if pokemon's gender is equal to Pokemon.Gender
-			/// <example>Gender,Pokemon.Gender</example>
-			/// </summary>
-			Gender,
-			/// <summary>
-			///	if pokemon has a move thats name or typing is equal to string moveName
-			/// <example>Move,string moveName</example>
-			/// </summary>
-			Move,
-			/// <summary>
-			///	if currentMap is equal to string mapName
-			///	<example>Map,string mapName</example>
-			/// </summary>
-			Map,
-			/// <summary>
-			///	if time is between 9PM and 4AM time is "Night". else time is "Day".
-			///	if time is equal to string dayNight (either Day, or Night)
-			///	<example>Time,DatetimeOffset/bool dayNight</example>
-			/// </summary>
-			Time,
-			///	<summary>Unique evolution methods: if party contains a Remoraid</summary>
-			Mantine,
-			///	<summary>Unique evolution methods: if party contains a dark pokemon</summary>
-			Pangoro,
-			///	<summary>Unique evolution methods: if currentMap's weather is rain</summary>
-			Goodra,
-			///	<summary>Unique evolution methods: if pokemon's ATK is greater than DEF</summary>
-			Hitmonlee,
-			///	<summary>Unique evolution methods: if pokemon's ATK is lower than DEF</summary>
-			Hitmonchan,
-			/// <summary>Unique evolution methods: if pokemon's ATK is equal to DEF</summary>
-			Hitmontop,
-			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
-			/// Shiny value? I thought it was based on "Friendship"
-			Silcoon,
-			///	<summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1</summary>
-			Cascoon
-		}
-		/// <summary>
 		/// Pokemon ids are connected to XML file.
 		/// </summary>
 		/// <remarks>Can now code with strings or int and
@@ -2094,7 +2014,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <summary>
 		/// Move learned upon leveling-up
 		/// </summary>
-		public Move.MoveData.Move MoveLearned;
+		public Move.MoveData.Move MoveId;
 	}
 	/// <summary>
 	/// The evolution paths this species can take. 
@@ -2104,13 +2024,94 @@ public class Pokemon //: ePokemons //PokemonData
 	public class PokemonEvolution
 	{
 		/// <summary>
-		/// The PokemonId of the evolved species.
+		/// ToDo: Custom class => new Evolve(){ EvolveMethod.Item, Items.Item } 
+		/// ToDo: If all conditions are met in "new Evolve()" instance, then evolve.
+		/// <example>
+		/// <para>E.G.	Poliwhirl(61)
+		///		<code>new int[]{62,186},
+		///		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),</code></para> 
+		/// <para>
+		/// E.G. to evolve to sylveon
+		///		<code>new int[]{..., 700},
+		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
+		/// </para> 
+		/// </example>
 		/// </summary>
-		public PokemonData.Pokemon EvolvesTo;
+		public enum EvolutionMethod
+		{
+			/// <summary>
+			///	if pokemon's level is greater or equal to int level
+			/// <example>Level,int level</example>
+			/// </summary>
+			Level,
+			///	<summary>
+			///	if name of stone is equal to string itemName
+			/// <example>Stone,string itemName</example>
+			///	</summary>
+			Stone,
+			/// <summary>
+			///	if currently trading pokemon
+			/// <example>Trade</example>
+			///	</summary>
+			Trade,
+			/// <summary>
+			///	if pokemon's friendship is greater or equal to 220
+			/// <example>Friendship</example>
+			///	</summary>
+			Friendship,
+			/// <summary>
+			///	if pokemon's heldItem is equal to string itemName
+			/// <example>Item,string itemName</example>
+			/// </summary>
+			Item,
+			/// <summary>
+			/// if pokemon's gender is equal to Pokemon.Gender
+			/// <example>Gender,Pokemon.Gender</example>
+			/// </summary>
+			Gender,
+			/// <summary>
+			///	if pokemon has a move thats name or typing is equal to string moveName
+			/// <example>Move,string moveName</example>
+			/// </summary>
+			Move,
+			/// <summary>
+			///	if currentMap is equal to string mapName
+			///	<example>Map,string mapName</example>
+			/// </summary>
+			Map,
+			/// <summary>
+			///	if time is between 9PM and 4AM time is "Night". else time is "Day".
+			///	if time is equal to string dayNight (either Day, or Night)
+			///	<example>Time,DatetimeOffset/bool dayNight</example>
+			/// </summary>
+			Time,
+			///	<summary>Unique evolution methods: if party contains a Remoraid</summary>
+			Mantine,
+			///	<summary>Unique evolution methods: if party contains a dark pokemon</summary>
+			Pangoro,
+			///	<summary>Unique evolution methods: if currentMap's weather is rain</summary>
+			Goodra,
+			///	<summary>Unique evolution methods: if pokemon's ATK is greater than DEF</summary>
+			Hitmonlee,
+			///	<summary>Unique evolution methods: if pokemon's ATK is lower than DEF</summary>
+			Hitmonchan,
+			/// <summary>Unique evolution methods: if pokemon's ATK is equal to DEF</summary>
+			Hitmontop,
+			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
+			/// Shiny value? I thought it was based on "Friendship"
+			Silcoon,
+			///	<summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1</summary>
+			Cascoon
+		}
+		/// <summary>
+		/// The PokemonId of the evolved species.
+		/// The PokemonId of the species this pokemon evolves into.
+		/// </summary>
+		public PokemonData.Pokemon Species;
 		/// <summary>
 		/// The evolution method.
 		/// </summary>
-		public int EvolveMethod;
+		public EvolutionMethod EvolveMethod;
 		
 	}
 	public class PokemonEvolution<T> : PokemonEvolution
