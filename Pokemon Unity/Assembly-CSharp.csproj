@@ -142,7 +142,6 @@
     <None Include="Assets\Resources\Database\Moves\Move_en-us.xml" />
     <None Include="Assets\Resources\Database\Item\Item_en-us.xml" />
     <None Include="Assets\Resources\Database\Data.xml" />
-    <None Include="Assets\Resources\Database\Contest\Pokemon_en-us.xml" />
     <None Include="Assets\Resources\Database\Ability\Ability_en-us.xml" />
     <None Include="Assets\Resources\Database\Menu\Pokemon_en-us.xml" />
     <Reference Include="UnityEngine.UI">
@@ -230,7 +229,9 @@
       <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\Resources\Database\Contest\Ribbon_en-us.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

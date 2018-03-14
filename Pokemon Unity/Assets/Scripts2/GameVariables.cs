@@ -395,7 +395,7 @@ public class Settings
 	{
 		int MapId;
 		int EncounterChance;
-		PokemonData.Pokemon Species;
+		Pokemon.PokemonData.Pokemon Species;
 		/// <summary>
 		/// LevelMin is 0 in Array.
 		/// LevelMax is 1 in Array.
