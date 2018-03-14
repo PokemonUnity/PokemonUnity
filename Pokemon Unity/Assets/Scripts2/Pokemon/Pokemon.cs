@@ -525,10 +525,10 @@ public class Pokemon //: ePokemons //PokemonData
 
 	#region Nature
 	/// <summary>
-	/// Returns the ID of this Pokemon's nature
+	/// Returns the ID of this Pokemon's nature or
 	/// Sets this Pokemon's nature to a particular nature (and calculates the stat modifications).
 	/// </summary>
-	public NatureDatabase.Nature Nature { get { return this.natureFlag; } set { this.natureFlag = value; /*nature.calcStats();*/ } }//ToDo:
+	public NatureDatabase.Nature Nature { get { return this.natureFlag; } set { this.natureFlag = value; calcStats(); } }
 
 	/// <summary>
 	/// Returns whether this Pokemon has a particular nature
@@ -1105,6 +1105,37 @@ public class Pokemon //: ePokemons //PokemonData
 	#endregion
 
 	#region Stat calculations, Pokemon creation
+	/// <summary>
+	/// Returns the maximum HP of this Pokémon.
+	/// </summary>
+	/// <param name="baseHP"></param>
+	/// <param name="level"></param>
+	/// <param name="iv"></param>
+	/// <param name="ev"></param>
+	/// <returns></returns>
+	public int calcHP(int baseHP, int level, int iv, int ev)
+	{
+		if (baseHP == 1) return 1;
+		return (int)Math.Floor((decimal)(baseHP * 2 + iv + (ev >> 2)) * level / 100) + level + 10;
+	}
+	/// <summary>
+	/// Returns the specified stat of this Pokémon (not used for total HP).
+	/// </summary>
+	/// <param name="baseStat"></param>
+	/// <param name="level"></param>
+	/// <param name="iv"></param>
+	/// <param name="ev"></param>
+	/// <param name="pv"></param>
+	/// <returns></returns>
+	public int calcStat(int baseStat, int level, int iv, int ev, int pv)
+	{
+		return (int)Math.Floor((Math.Floor((decimal)(baseStat * 2 + iv + (ev >> 2)) * level / 100) + 5) * pv / 100);
+	}
+	public void calcStats()
+	{
+		int[] pvalues = new int[] { 100, 100, 100, 100, 100 };
+		//Nature
+	}
 	#endregion
 
 	#region Nested Classes

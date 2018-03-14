@@ -7,6 +7,7 @@ public static class NatureDatabase
 {
     public enum Nature
     {
+		UNSET,
         HARDY,
         LONELY,
         BRAVE,
