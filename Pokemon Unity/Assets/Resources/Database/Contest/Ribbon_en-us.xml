@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Language name="English" id="9" identifier="en" iso639="en" iso3166="us">
+  <Ribbons>
+<Ribbon id="1" language="9" identifier="HOENNCOOL" name="Cool Ribbon" region="" type="">Hoenn Cool Contest Normal Rank winner!</Ribbon>
+<Ribbon id="2" language="9" identifier="HOENNCOOLSUPER" name="Cool Ribbon Super" region="" type="">Hoenn Cool Contest Super Rank winner!</Ribbon>
+<Ribbon id="3" language="9" identifier="HOENNCOOLHYPER" name="Cool Ribbon Hyper" region="" type="">Hoenn Cool Contest Hyper Rank winner!</Ribbon>
+<Ribbon id="4" language="9" identifier="HOENNCOOLMASTER" name="" region="" type="">Hoenn Cool Contest Master Rank winner!</Ribbon>
+<Ribbon id="5" language="9" identifier="HOENNBEAUTY" name="" region="" type="">Hoenn Beauty Contest Normal Rank winner!</Ribbon>
+<Ribbon id="6" language="9" identifier="HOENNBEAUTYSUPER" name="" region="" type="">Hoenn Beauty Contest Super Rank winner!</Ribbon>
+<Ribbon id="7" language="9" identifier="HOENNBEAUTYHYPER" name="" region="" type="">Hoenn Beauty Contest Hyper Rank winner!</Ribbon>
+<Ribbon id="8" language="9" identifier="HOENNBEAUTYMASTER" name="" region="" type="">Hoenn Beauty Contest Master Rank winner!</Ribbon>
+<Ribbon id="9" language="9" identifier="HOENNCUTE" name="" region="" type="">Hoenn Cute Contest Normal Rank winner!</Ribbon>
+<Ribbon id="10" language="9" identifier="HOENNCUTESUPER" name="" region="" type="">Hoenn Cute Contest Super Rank winner!</Ribbon>
+<Ribbon id="11" language="9" identifier="HOENNCUTEHYPER" name="" region="" type="">Hoenn Cute Contest Hyper Rank winner!</Ribbon>
+<Ribbon id="12" language="9" identifier="HOENNCUTEMASTER" name="" region="" type="">Hoenn Cute Contest Master Rank winner!</Ribbon>
+<Ribbon id="13" language="9" identifier="HOENNSMART" name="" region="" type="">Hoenn Smart Contest Normal Rank winner!</Ribbon>
+<Ribbon id="14" language="9" identifier="HOENNSMARTSUPER" name="" region="" type="">Hoenn Smart Contest Super Rank winner!</Ribbon>
+<Ribbon id="15" language="9" identifier="HOENNSMARTHYPER" name="" region="" type="">Hoenn Smart Contest Hyper Rank winner!</Ribbon>
+<Ribbon id="16" language="9" identifier="HOENNSMARTMASTER" name="" region="" type="">Hoenn Smart Contest Master Rank winner!</Ribbon>
+<Ribbon id="17" language="9" identifier="HOENNTOUGH" name="" region="" type="">Hoenn Tough Contest Normal Rank winner!</Ribbon>
+<Ribbon id="18" language="9" identifier="HOENNTOUGHSUPER" name="" region="" type="">Hoenn Tough Contest Super Rank winner!</Ribbon>
+<Ribbon id="19" language="9" identifier="HOENNTOUGHHYPER" name="" region="" type="">Hoenn Tough Contest Hyper Rank winner!</Ribbon>
+<Ribbon id="20" language="9" identifier="HOENNTOUGHMASTER" name="" region="" type="">Hoenn Tough Contest Master Rank winner!</Ribbon>
+<Ribbon id="21" language="9" identifier="SINNOHCOOL" name="" region="" type="">Super Contest Cool Category Normal Rank winner!</Ribbon>
+<Ribbon id="22" language="9" identifier="SINNOHCOOLSUPER" name="" region="" type="">Super Contest Cool Category Great Rank winner!</Ribbon>
+<Ribbon id="23" language="9" identifier="SINNOHCOOLHYPER" name="" region="" type="">Super Contest Cool Category Ultra Rank winner!</Ribbon>
+<Ribbon id="24" language="9" identifier="SINNOHCOOLMASTER" name="" region="" type="">Super Contest Cool Category Master Rank winner!</Ribbon>
+<Ribbon id="25" language="9" identifier="SINNOHBEAUTY" name="" region="" type="">Super Contest Beauty Category Normal Rank winner!</Ribbon>
+<Ribbon id="26" language="9" identifier="SINNOHBEAUTYSUPER" name="" region="" type="">Super Contest Beauty Category Great Rank winner!</Ribbon>
+<Ribbon id="27" language="9" identifier="SINNOHBEAUTYHYPER" name="" region="" type="">Super Contest Beauty Category Ultra Rank winner!</Ribbon>
+<Ribbon id="28" language="9" identifier="SINNOHBEAUTYMASTER" name="" region="" type="">Super Contest Beauty Category Master Rank winner!</Ribbon>
+<Ribbon id="29" language="9" identifier="SINNOHCUTE" name="" region="" type="">Super Contest Cute Category Normal Rank winner!</Ribbon>
+<Ribbon id="30" language="9" identifier="SINNOHCUTESUPER" name="" region="" type="">Super Contest Cute Category Great Rank winner!</Ribbon>
+<Ribbon id="31" language="9" identifier="SINNOHCUTEHYPER" name="" region="" type="">Super Contest Cute Category Ultra Rank winner!</Ribbon>
+<Ribbon id="32" language="9" identifier="SINNOHCUTEMASTER" name="" region="" type="">Super Contest Cute Category Master Rank winner!</Ribbon>
+<Ribbon id="33" language="9" identifier="SINNOHSMART" name="" region="" type="">Super Contest Smart Category Normal Rank winner!</Ribbon>
+<Ribbon id="34" language="9" identifier="SINNOHSMARTSUPER" name="" region="" type="">Super Contest Smart Category Great Rank winner!</Ribbon>
+<Ribbon id="35" language="9" identifier="SINNOHSMARTHYPER" name="" region="" type="">Super Contest Smart Category Ultra Rank winner!</Ribbon>
+<Ribbon id="36" language="9" identifier="SINNOHSMARTMASTER" name="" region="" type="">Super Contest Smart Category Master Rank winner!</Ribbon>
+<Ribbon id="37" language="9" identifier="SINNOHTOUGH" name="" region="" type="">Super Contest Tough Category Normal Rank winner!</Ribbon>
+<Ribbon id="38" language="9" identifier="SINNOHTOUGHSUPER" name="" region="" type="">Super Contest Tough Category Great Rank winner!</Ribbon>
+<Ribbon id="39" language="9" identifier="SINNOHTOUGHHYPER" name="" region="" type="">Super Contest Tough Category Ultra Rank winner!</Ribbon>
+<Ribbon id="40" language="9" identifier="SINNOHTOUGHMASTER" name="" region="" type="">Super Contest Tough Category Master Rank winner!</Ribbon>
+<Ribbon id="41" language="9" identifier="WINNING" name="Winning Ribbon" region="" type="">Ribbon awarded for clearing Hoenn's Battle Tower's Lv. 50 challenge.</Ribbon>
+<Ribbon id="42" language="9" identifier="VICTORY" name="Victory Ribbon" region="" type="">Ribbon awarded for clearing Hoenn's Battle Tower's Lv. 100 challenge.</Ribbon>
+<Ribbon id="43" language="9" identifier="ABILITY" name="" region="" type="">A Ribbon awarded for defeating the Tower Tycoon at the Battle Tower.</Ribbon>
+<Ribbon id="44" language="9" identifier="GREATABILITY" name="" region="" type="">A Ribbon awarded for defeating the Tower Tycoon at the Battle Tower.</Ribbon>
+<Ribbon id="45" language="9" identifier="DOUBLEABILITY" name="" region="" type="">A Ribbon awarded for completing the Battle Tower Double challenge.</Ribbon>
+<Ribbon id="46" language="9" identifier="MULTIABILITY" name="" region="" type="">A Ribbon awarded for completing the Battle Tower Multi challenge.</Ribbon>
+<Ribbon id="47" language="9" identifier="PAIRABILITY" name="" region="" type="">A Ribbon awarded for completing the Battle Tower Link Multi challenge.</Ribbon>
+<Ribbon id="48" language="9" identifier="WORLDABILITY" name="" region="" type="">A Ribbon awarded for completing the Wi-Fi Battle Tower challenge.</Ribbon>
+<Ribbon id="49" language="9" identifier="CHAMPION" name="" region="" type="">Ribbon for clearing the Pokémon League and entering the Hall of Fame in another region.</Ribbon>
+<Ribbon id="50" language="9" identifier="SINNOHCHAMP" name="Sinnoh Champ Ribbon" region="" type="">Ribbon awarded for beating the Sinnoh Champion and entering the Hall of Fame.</Ribbon>
+<Ribbon id="51" language="9" identifier="RECORD" name="" region="" type="">A Ribbon awarded for setting an incredible record.</Ribbon>
+<Ribbon id="52" language="9" identifier="EVENT" name="" region="" type="">Pokémon Event Participation Ribbon.</Ribbon>
+<Ribbon id="53" language="9" identifier="LEGEND" name="" region="" type="">A Ribbon awarded for setting a legendary record.</Ribbon>
+<Ribbon id="54" language="9" identifier="GORGEOUS" name="" region="" type="">An extraordinarily gorgeous and extravagant Ribbon.</Ribbon>
+<Ribbon id="55" language="9" identifier="ROYAL" name="" region="" type="">An incredibly regal Ribbon with an air of nobility.</Ribbon>
+<Ribbon id="56" language="9" identifier="GORGEOUSROYAL" name="Gorgeous Royal Ribbon" region="" type="">A gorgeous and regal Ribbon that is the peak of fabulous.</Ribbon>
+<Ribbon id="57" language="9" identifier="ALERT" name="" region="" type="">A Ribbon for recalling an invigorating event that created life energy.</Ribbon>
+<Ribbon id="58" language="9" identifier="SHOCK" name="" region="" type="">A Ribbon for recalling a thrilling event that made life more exciting.</Ribbon>
+<Ribbon id="59" language="9" identifier="DOWNCAST" name="" region="" type="">A Ribbon for recalling feelings of sadness that added spice to life.</Ribbon>
+<Ribbon id="60" language="9" identifier="CARELESS" name="" region="" type="">A Ribbon for recalling a careless error that helped steer life decisions.</Ribbon>
+<Ribbon id="61" language="9" identifier="RELAX" name="" region="" type="">A Ribbon for recalling a refreshing event that added sparkle to life.</Ribbon>
+<Ribbon id="62" language="9" identifier="SNOOZE" name="" region="" type="">A Ribbon for recalling a deep slumber that made life soothing.</Ribbon>
+<Ribbon id="63" language="9" identifier="SMILE" name="" region="" type="">A Ribbon for recalling that smiles enrich the quality of life.</Ribbon>
+<Ribbon id="64" language="9" identifier="FOOTPRINT" name="" region="" type="">A Ribbon awarded to a Pokémon deemed to have a top-quality footprint.</Ribbon>
+<Ribbon id="65" language="9" identifier="ARTIST" name="" region="" type="">Ribbon awarded for being chosen as a super sketch model in Hoenn.</Ribbon>
+<Ribbon id="66" language="9" identifier="EFFORT" name="" region="" type="">Ribbon awarded for being an exceptionally hard worker.</Ribbon>
+<Ribbon id="67" language="9" identifier="BIRTHDAY" name="" region="" type="">A Ribbon to celebrate a birthday.</Ribbon>
+<Ribbon id="68" language="9" identifier="SPECIAL" name="" region="" type="">A special Ribbon for a special day.</Ribbon>
+<Ribbon id="69" language="9" identifier="CLASSIC" name="" region="" type="">A Ribbon that proclaims love for Pokémon.</Ribbon>
+<Ribbon id="70" language="9" identifier="PREMIER" name="" region="" type="">Special Holiday Ribbon.</Ribbon>
+<Ribbon id="71" language="9" identifier="SOUVENIR" name="Souvenir Ribbon" region="" type="">A Ribbon to cherish a special memory.</Ribbon>
+<Ribbon id="72" language="9" identifier="WISHING" name="Wishing Ribbon" region="" type="">A Ribbon said to make your wish come true.</Ribbon>
+<Ribbon id="73" language="9" identifier="NATIONAL" name="National Ribbon" region="" type="">A Ribbon awarded for overcoming all difficult challenges.</Ribbon>
+<Ribbon id="74" language="9" identifier="COUNTRY" name="Country Ribbon" region="" type="">Pokémon League Champion Ribbon.</Ribbon>
+<Ribbon id="75" language="9" identifier="BATTLECHAMPION" name="Battle Champion Ribbon" region="" type="">Battle Competition Champion Ribbon.</Ribbon>
+<Ribbon id="76" language="9" identifier="REGIONALCHAMPION" name="Regional Champion Ribbon" region="" type="">Pokémon World Championships Regional Champion Ribbon.</Ribbon>
+<Ribbon id="77" language="9" identifier="EARTH" name="Earth Ribbon" region="" type="">A Ribbon awarded for winning 100 matches in a row.</Ribbon>
+<Ribbon id="78" language="9" identifier="WORLD" name="World Ribbon" region="" type="">Pokémon League Champion Ribbon.</Ribbon>
+<Ribbon id="79" language="9" identifier="NATIONALCHAMPION" name="National Champion Ribbon" region="" type="">Pokémon World Championships National Champion Ribbon.</Ribbon>
+<Ribbon id="80" language="9" identifier="WORLDCHAMPION" name="World Champion Ribbon" region="" type="">Pokémon World Championships World Champion Ribbon.</Ribbon>
+  </Ribbons>
+</Language>
