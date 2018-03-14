@@ -1,11 +1,19 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon Unity", "Assembly-CSharp.csproj", "{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon Unity", "Assembly-CSharp-firstpass.csproj", "{689E422C-B77F-5B31-E119-AD21E63C6EE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{689E422C-B77F-5B31-E119-AD21E63C6EE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon Unity", "Assembly-CSharp-Editor.csproj", "{F6278824-EF26-0B19-80EC-89090458C325}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{F6278824-EF26-0B19-80EC-89090458C325}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitTestProject\UnitTestProject.csproj", "{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F6278824-EF26-0B19-80EC-89090458C325} = {F6278824-EF26-0B19-80EC-89090458C325}
+		{10F42E31-4957-FD75-9899-6B6E9B1C9EA8} = {10F42E31-4957-FD75-9899-6B6E9B1C9EA8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +33,10 @@ Global
 		{F6278824-EF26-0B19-80EC-89090458C325}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6278824-EF26-0B19-80EC-89090458C325}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6278824-EF26-0B19-80EC-89090458C325}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
