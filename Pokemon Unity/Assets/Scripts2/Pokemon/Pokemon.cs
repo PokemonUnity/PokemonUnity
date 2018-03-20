@@ -1865,14 +1865,14 @@ public class Pokemon //: ePokemons //PokemonData
 		/// 
 		/// </summary>
 		///ToDo: Should be a void that stores value to _pokeTranslations instead of returning...
-		public static void/*Dictionary<int, PokedexTranslation>*/ LoadPokedexTranslations(Settings.Language language = Settings.Language.English)//, int form = 0
+		public static void/*Dictionary<int, PokedexTranslation>*/ LoadPokedexTranslations(Settings.Languages language = Settings.Languages.English)//, int form = 0
 		{
 			var data = new Dictionary<int, PokedexTranslation>();
 
 			string fileLanguage;
 			switch (language)
 			{
-				case Settings.Language.English:
+				case Settings.Languages.English:
 					fileLanguage = "en-us";
 					break;
 				default: //Default in case new language is added to game but not programmed ahead of time here...
@@ -1927,7 +1927,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <param name="language"></param>
 		/// <returns></returns>
 		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
-		public static PokedexTranslation GetPokedexTranslation(Pokemon id, Settings.Language language = Settings.Language.English)// int form = 0,
+		public static PokedexTranslation GetPokedexTranslation(Pokemon id, Settings.Languages language = Settings.Languages.English)// int form = 0,
 		{
 			if (_pokeTranslations == null) //should return english if player's default language is null
 			{
@@ -1935,14 +1935,14 @@ public class Pokemon //: ePokemons //PokemonData
 			}
 
 			int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-			if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Language.English)
+			if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
 			{
 				//Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
 				throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
 				//return new PokedexTranslation();
 			}
 			//ToDo: Show english text for missing data on foreign languages 
-			else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Language.English)
+			else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
 			{
 				return _pokeEnglishTranslations[arrayId];
 			}

@@ -56,7 +56,7 @@
     <Compile Include="Assets\Scripts2\Map.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
-    <Compile Include="Assets\Scripts2\Translator.cs" />
+    <Compile Include="Assets\Scripts2\Translations\CreateXML.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
@@ -71,7 +71,7 @@
     <Compile Include="Assets\Scripts\Data\NatureData.cs" />
     <Compile Include="Assets\Scripts\Data\NatureDatabase.cs" />
     <Compile Include="Assets\Scripts\Data\PC.cs" />
-    <Compile Include="Assets\Scripts\Data\Translations.cs" />
+    <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
     <Compile Include="Assets\Scripts\Data\PokemonOld.cs" />
     <Compile Include="Assets\Scripts\Data\PokemonDataOld.cs" />
     <Compile Include="Assets\Scripts\Data\PokemonDatabaseOld.cs" />
@@ -232,6 +232,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Resources\Database\Contest\Ribbon_en-us.xml" />
+    <Content Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

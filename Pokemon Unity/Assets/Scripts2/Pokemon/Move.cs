@@ -1826,14 +1826,14 @@ public class Move //: MoveData
 		private static Dictionary<int, MoveTranslation> _moveEnglishTranslations;
 		/// <summary>
 		/// </summary>
-		public static void LoadMoveTranslations(Settings.Language language = Settings.Language.English)//, int form = 0
+		public static void LoadMoveTranslations(Settings.Languages language = Settings.Languages.English)//, int form = 0
 		{
 			var data = new Dictionary<int, MoveTranslation>();
 
 			string fileLanguage;
 			switch (language)
 			{
-				case Settings.Language.English:
+				case Settings.Languages.English:
 					fileLanguage = "en-us";
 					break;
 				default: //Default in case new language is added to game but not programmed ahead of time here...
@@ -1872,7 +1872,7 @@ public class Move //: MoveData
 		/// <param name="language"></param>
 		/// <returns></returns>
 		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
-		public static MoveTranslation GetMoveTranslation(Move id, Settings.Language language = Settings.Language.English)// int form = 0,
+		public static MoveTranslation GetMoveTranslation(Move id, Settings.Languages language = Settings.Languages.English)// int form = 0,
 		{
 			if (_moveTranslations == null) //should return english if player's default language is null
 			{
@@ -1880,13 +1880,13 @@ public class Move //: MoveData
 			}
 
 			int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-			if (!_moveTranslations.ContainsKey(arrayId) && language == Settings.Language.English)
+			if (!_moveTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
 			{
 				//Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
 				throw new System.Exception(string.Format("Failed to load move translation for move with id: {0}_{1}", (int)id, id.ToString()));
 			}
 			//ToDo: Show english text for missing data on foreign languages 
-			else if (!_moveTranslations.ContainsKey(arrayId) && language != Settings.Language.English)
+			else if (!_moveTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
 			{
 				return _moveEnglishTranslations[arrayId];
 			}
