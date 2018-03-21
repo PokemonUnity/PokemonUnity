@@ -128,7 +128,7 @@ public class Pokemon
         string nature, int ability, string[] moveset, int[] PPups)
     {
         PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
-        this.forms = thisPokemonData.Forms;
+        this.forms = thisPokemonData.Forms.Length;
 
         this.pokemonID = pokemonID;
         this.nickname = nickname;
@@ -1765,19 +1765,4 @@ public class Pokemon
         }
         return spriteSheet;
     }
-}
-
-public static class PokemonForms
-{
-
-    #region Pokemon Forms
-    public static Pokemon changeForms(this Pokemon pokemon, int formNumber)
-    {
-        PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
-        if (formNumber >= 0 && pokemon.Forms <= formNumber)
-        {
-            pokemon.Form = formNumber;
-        }
-    }
-    #endregion
 }

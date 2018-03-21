@@ -78,7 +78,7 @@ public class PokemonData
     /// <summary>
     /// Total count of the number of forms pulled from the pokedex
     /// </summary>
-    private string[] forms;
+    private string[] forms = new string[0];
     /// <summary>
     /// Represents CURRENT form, if no form is active, current or does not exist
     /// then value is 0.
@@ -88,7 +88,7 @@ public class PokemonData
     private int form;// = 0; 
     public int Form { get { return form; } set { if (value <= Forms.Length && value >= 0) form = value; } }
     public string formName { get {
-            if (forms.Length > 0) return forms[form];
+            if (forms.Length > 0) return forms[form - 1];
             else return name; } }
     public string[] Forms { get { return forms; } }
     private Type type1;
@@ -256,7 +256,8 @@ public class PokemonData
 
         this.evolutionID = evolutionID;
         this.evolutionRequirements = evolutionRequirements;
-        this.forms = formsArray.Length;
+        if (formsArray == null) formsArray = new string[0];
+        this.forms = formsArray;
     }
 
 
