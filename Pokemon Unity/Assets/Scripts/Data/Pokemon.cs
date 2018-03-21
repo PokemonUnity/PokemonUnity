@@ -28,6 +28,17 @@ public class Pokemon
         CALCULATE
     }
 
+    private int forms;
+    private string formName;
+    /// <summary>
+    /// Use this to find the name/species of the pokemon
+    /// </summary>
+    /// Anytime you want to add a new form, you will need to write code
+    /// that checks the name/string here, and do a bool method
+    /// <example>
+    /// if(Pokemon.Form == "PokemonForm2"){Do Action;}
+    /// </example>
+    public string Form { get { return formName; } }
     //Used only for a few pokemon to specify what form is in. by default is null/0
     private int form; //Unown = letter of the alphabet.
     //Deoxys = which of the four forms.
@@ -117,11 +128,12 @@ public class Pokemon
         string nature, int ability, string[] moveset, int[] PPups)
     {
         PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+        this.forms = thisPokemonData.Forms;
 
         this.pokemonID = pokemonID;
         this.nickname = nickname;
         //SET UP FORMS LATER #####################################################################################
-        this.form = 0;
+        //this.form = 0;
         this.gender = gender;
         //if gender is CALCULATE, then calculate gender using maleRatio
         if (gender == Gender.CALCULATE)
@@ -238,11 +250,12 @@ public class Pokemon
     public Pokemon(int pokemonID, Gender gender, int level, string caughtBall, string heldItem, string OT, int ability)
     {
         PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
+        this.forms = thisPokemonData.Forms;
 
         this.pokemonID = pokemonID;
 
         //SET UP FORMS LATER #####################################################################################
-        this.form = 0;
+        //this.form = 0;
 
         this.gender = gender;
         //if gender is CALCULATE, then calculate gender using maleRatio
@@ -372,11 +385,12 @@ public class Pokemon
     public Pokemon(Pokemon pokemon, string nickname, string caughtBall)
     {
         PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
+        this.forms = thisPokemonData.Forms;
 
         this.pokemonID = pokemon.pokemonID;
         this.nickname = nickname;
         //SET UP FORMS LATER #####################################################################################
-        this.form = 0;
+        //this.form = 0;
         this.gender = pokemon.gender;
 
         this.level = pokemon.level;
@@ -448,6 +462,19 @@ public class Pokemon
         packMoveset();
     }
 
+    #region Pokemon Forms
+    public /*Pokemon*/ void changeForms(int formNumber)
+    {
+        if (formNumber >= 0 && this.forms <= formNumber)
+        {
+            this.form = formNumber;
+        }
+        PokemonData thisPokemonData = PokemonDatabase.getPokemon(this.pokemonID);
+        thisPokemonData.Form = formNumber;
+        this.formName = thisPokemonData.formName;
+        //return this;
+    }
+    #endregion
 
     //Recalculate the pokemon's Stats.
     public void calculateStats()
@@ -1738,4 +1765,19 @@ public class Pokemon
         }
         return spriteSheet;
     }
+}
+
+public static class PokemonForms
+{
+
+    #region Pokemon Forms
+    public static Pokemon changeForms(this Pokemon pokemon, int formNumber)
+    {
+        PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemon.pokemonID);
+        if (formNumber >= 0 && pokemon.Forms <= formNumber)
+        {
+            pokemon.Form = formNumber;
+        }
+    }
+    #endregion
 }

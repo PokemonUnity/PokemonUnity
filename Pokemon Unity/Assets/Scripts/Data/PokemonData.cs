@@ -75,6 +75,22 @@ public class PokemonData
         PINK
     };
 
+    /// <summary>
+    /// Total count of the number of forms pulled from the pokedex
+    /// </summary>
+    private string[] forms;
+    /// <summary>
+    /// Represents CURRENT form, if no form is active, current or does not exist
+    /// then value is 0.
+    /// </summary>
+    /// ToDo: Make a PokemonForm class, that establishes the rule for 
+    /// <see cref="Pokemon"/> and <see cref="Form"/>
+    private int form;// = 0; 
+    public int Form { get { return form; } set { if (value <= Forms.Length && value >= 0) form = value; } }
+    public string formName { get {
+            if (forms.Length > 0) return forms[form];
+            else return name; } }
+    public string[] Forms { get { return forms; } }
     private Type type1;
     private Type type2;
     private string ability1;
@@ -184,7 +200,10 @@ public class PokemonData
         int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
         float luminance, Color lightColor, //string[] heldItem,
         int[] movesetLevels, string[] movesetMoves, string[] tmList,
-        int[] evolutionID, string[] evolutionRequirements)
+        int[] evolutionID, string[] evolutionRequirements, 
+        //To use formsArray: 
+        //string[] formsArray = new string[] {"Pokemon0-Default", "Pokemon1-Form1", "Pokemon..."},        
+        string[] formsArray = null)
     {
         this.ID = ID;
         this.name = name;
@@ -237,6 +256,7 @@ public class PokemonData
 
         this.evolutionID = evolutionID;
         this.evolutionRequirements = evolutionRequirements;
+        this.forms = formsArray.Length;
     }
 
 
