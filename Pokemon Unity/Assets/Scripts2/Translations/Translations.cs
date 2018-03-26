@@ -1,4 +1,5 @@
-﻿[System.Serializable]
+﻿#region Extras
+[System.Serializable]
 public class PokedexTranslation //: ITranslation, ITranslationPokedex
 {
     ITranslation _translate;
@@ -18,29 +19,29 @@ public class PokedexTranslation //: ITranslation, ITranslationPokedex
 [System.Serializable]
 public class MoveTranslation : ITranslation
 {
-    public string Name;
-    public string Description;
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
 
 [System.Serializable]
 public class ItemTranslation : ITranslation
 {
-    public string Name;
-    public string Description;
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
 
 [System.Serializable]
 public class AbilityTranslation : ITranslation
 {
-    public string Name;
-    public string Description;
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
 
 [System.Serializable]
 public class NatureTranslation : ITranslation
 {
-    public string Name;
-    public string Description;
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
 
 public interface ITranslation
@@ -55,7 +56,7 @@ public interface ITranslationPokedex
     string[] Forms { get; set; }
 }
 
-public static class Class1
+public static class LanguageExtension
 {
     public static string Translate(this Settings.Language language, string textId, params string[] fieldValues)
     {
@@ -91,3 +92,4 @@ public static class Class1
         }
     }
 }
+#endregion

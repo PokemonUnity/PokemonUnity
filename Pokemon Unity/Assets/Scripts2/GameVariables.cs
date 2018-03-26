@@ -53,6 +53,7 @@ public class Settings
             /// <summary>
             /// Unique Name of the string.
             /// </summary>
+            /// ID
             public string Name { get; private set; }
 
             /// <summary>
@@ -66,11 +67,11 @@ public class Settings
             /// <param name="cultureInfo">Culture info for this string</param>
             /// <param name="name">Unique Name of the string</param>
             /// <param name="value">Value for the <paramref name="name"/></param>
-            public LocalizedString(string name, string value, Languages cultureInfo)
+            public LocalizedString(string name, string value, Languages cultureInfo, string node = null)
             {
                 Name = name;
                 Value = value;
-                //NodeType = node;
+                NodeType = node;
                 CultureInfo = cultureInfo;
             }
         }
@@ -147,6 +148,11 @@ public class Settings
         /// </remarks>
         public class XmlLocalizationDictionary : LocalizationDictionary
         {
+
+            #region XML English Translate Variables
+            private int nodeCount;
+            #endregion
+
             /// <summary>
             /// Private constructor.
             /// </summary>
@@ -194,7 +200,7 @@ public class Settings
                     throw new Exception("culture is not defined in language XML file!");
                 }
 
-                var languageInt = localizationDictionaryNode[0].GetAttributeValueOrNull("culture");
+                var languageInt = localizationDictionaryNode[0].GetAttributeValueOrNull("id");
                 /*if (languageInt is not an int )
                 {
                     throw new Exception("Language int/enum value is not defined in language XML file!");
@@ -207,7 +213,7 @@ public class Settings
                 //Make a list of all the node types
                 //Maybe a dictionary<string,nodeType>?
 
-                var textNodes = xmlDocument.SelectNodes("/localizationDictionary/texts/text");
+                var textNodes = xmlDocument.SelectNodes("/localizationDictionary/texts");// /text
                 if (textNodes != null)
                 {
                     foreach (XmlNode node in textNodes)
@@ -223,7 +229,7 @@ public class Settings
                             dublicateNames.Add(name);
                         }
 
-                        dictionary[name] = (node.GetAttributeValueOrNull("value") ?? node.InnerText).NormalizeLineEndings();
+                        dictionary[name] = (node.GetAttributeValueOrNull("value") ?? node.InnerText);//.NormalizeLineEndings();
                     }
                 }
 
