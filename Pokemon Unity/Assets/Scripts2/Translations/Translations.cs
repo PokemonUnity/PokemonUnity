@@ -184,5 +184,10 @@ public static class LanguageExtension
             return string.Format(textId, stringArray.ToArray());
         }*/
     }
+
+    public static Translator.Language.LocalizedString TranslateString(string text, params string[] fieldValues)
+    {
+        return text.Translate(fieldValues);
+    }
 }
 #endregion

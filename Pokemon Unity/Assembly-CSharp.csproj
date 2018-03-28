@@ -56,7 +56,7 @@
     <Compile Include="Assets\Scripts2\Map.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
-    <Compile Include="Assets\Scripts2\Translations\CreateXML.cs" />
+    <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />

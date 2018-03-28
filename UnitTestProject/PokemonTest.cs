@@ -69,7 +69,7 @@ namespace Tests
         #endregion
 
         #region Misc
-        [TestMethod, Ignore]
+        [TestMethod]
         public void Pokemon_TestPokemon_SetForm_To_Form2()
         {
             Pokemon pokemon = new Pokemon(Pokemon.PokemonData.Pokemon.NONE);
