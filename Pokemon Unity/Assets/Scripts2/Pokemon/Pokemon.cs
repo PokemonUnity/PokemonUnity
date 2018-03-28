@@ -1267,7 +1267,8 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </summary>
 		private string pokedexEntry;
 		/// ToDo: Maybe PokemonData contains count of # of forms?
-		private int forms; 
+		//private int forms; 
+		private string[] forms = new string[0]; 
 		/// <summary>
 		/// Represents CURRENT form, if no form is active, current or does not exist
 		/// then value is 0.
@@ -1388,7 +1389,20 @@ public class Pokemon //: ePokemons //PokemonData
 		/// but Deoxys-Power id# can be 32
 		/// </example>
 		/// ToDo: Form = 0 should return null
-		public string Name { get { return PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.name; } }
+		//public string Name { get { return PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.name; } }
+		public string Name { get
+            {
+                /*List<string> formvalues = new List<string>();
+                foreach (var formValue in this.ID.ToString().Translate().FieldNames) {
+                    //fieldnames.Add(field);
+                    if (formValue.Key.Contains("form")){
+                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                        formvalues.Add(formValue.Value);
+                    }
+                }
+                return formvalues.ToArray()[this.Form] ?? this.name*/
+                return this.forms[this.Form] ?? this.name; } }
 		/// <summary>
 		/// Species is the pokemon breed/genus
 		/// <para>Charizard is a Species. 
@@ -1413,7 +1427,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// ToDo: Changing forms should change name value
 		public int Form { get { return this.form; } set { this.form = value; } }
 		/// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
-		public int Forms { get { return this.forms; } }
+		public int Forms { get { return this.forms.Length; } }
 
 		//public virtual Type Type1 { get { return this.type1; } }
 		//public virtual Type Type2 { get { return this.type2; } }
@@ -1685,15 +1699,38 @@ public class Pokemon //: ePokemons //PokemonData
 							int[,] heldItem = null)
 		{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
 
-			PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
+			//PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
+			var translation = Id.ToString().Translate();
 			this.id = Id;
 			this.regionalPokedex = regionalDex;
-			this.name = translation.Name;
-			this.species = translation.Species;
-			this.pokedexEntry = translation.PokedexEntry;
-			//this.forms = forms; //| new Pokemon[] { Id }; //ToDo: need new mechanic for how this should work
+			//this.name = translation.Name;
+			//this.species = translation.Species;
+			//this.pokedexEntry = translation.PokedexEntry;
+			this.pokedexEntry = translation.Value;
+            //this.forms = forms; //| new Pokemon[] { Id }; //ToDo: need new mechanic for how this should work
+            List<string> formvalues = new List<string>();
+            foreach (var fieldValue in translation.FieldNames)
+            {
+                //fieldnames.Add(field);
+                if (fieldValue.Key.Contains("form"))
+                {
+                    //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                    //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                    formvalues.Add(fieldValue.Value);
+                }
+                if (fieldValue.Key.Contains("genus"))
+                {
+                    this.species = fieldValue.Value;
+                }
+                if (fieldValue.Key.Contains("name"))
+                {
+                    this.name = fieldValue.Value ?? translation.Identifier;
+                }
+            }
+            this.forms = formvalues.ToArray();
 
-			this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
+
+            this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
 			this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
 			this.abilities = abilities;
 			//this.ability1Id = (eAbility.Ability)ability1;
@@ -1728,7 +1765,7 @@ public class Pokemon //: ePokemons //PokemonData
 
 			this.movesetLevels = movesetLevels;
 			this.movesetMoves = movesetMoves; //ToDo: Array Cast conversion
-											  //this.tmList = tmList; //ToDo: Need new item database array/enum for this; one that's regional/generation dependant
+            //this.tmList = tmList; //ToDo: Need new item database array/enum for this; one that's regional/generation dependant
 
 			this.evolutionID = evolutionID;
 			//this.evolutionMethod = evolutionMethod; //ToDo:
@@ -1750,11 +1787,11 @@ public class Pokemon //: ePokemons //PokemonData
 				PokeId,
 				(PokemonData.Type)type1 | PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
 				(PokemonData.Type)type2 | PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-																//new eAbility.Ability[] { 
+                //new eAbility.Ability[] { 
 					(eAbility.Ability)ability1 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
 					(eAbility.Ability)ability2 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
 					(eAbility.Ability)hiddenAbility | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE
-																			//}, 
+                //}, 
 				0,//ToDo: maleRatio, 
 				catchRate,
 				(EggGroups)eggGroup1 | PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
