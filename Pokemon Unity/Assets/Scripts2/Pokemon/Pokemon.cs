@@ -1855,7 +1855,7 @@ public class Pokemon //: ePokemons //PokemonData
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
             PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE,
-						0f, 100, EggGroups.NONE, EggGroups.NONE, 1000,
+						GenderRatio.AlwaysMale /*0f*/, 100, EggGroups.NONE, EggGroups.NONE, 1000,
 						10f, 150f, 15, LevelingRate.ERRATIC,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         Color.NONE, 50,
