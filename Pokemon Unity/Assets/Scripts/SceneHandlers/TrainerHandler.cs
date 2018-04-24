@@ -267,7 +267,7 @@ public class TrainerHandler : MonoBehaviour
                 if (currentScreen == 1)
                 {
                     destinationPosition = new Vector3(-0.806f, 0, 0);
-                    StartCoroutine("boxLid", false);
+                    StartCoroutine(boxLid(false));
                 }
                 else if (currentScreen == 0)
                 {
@@ -288,7 +288,7 @@ public class TrainerHandler : MonoBehaviour
                     destinationPosition = new Vector3(0, 0, 0);
                     currentBadge = 0;
                     badgeSel.pixelInset = badges[0].pixelInset;
-                    StartCoroutine("boxLid", true);
+                    StartCoroutine(boxLid(true));
                 }
             }
         }
@@ -537,8 +537,8 @@ public class TrainerHandler : MonoBehaviour
         StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
 
         running = true;
-        StartCoroutine("animBG");
-        StartCoroutine("animColon");
+        StartCoroutine(animBG());
+        StartCoroutine(animColon());
 
         cancelSelected = false;
         cancel.texture = cancelTex;
@@ -707,7 +707,7 @@ public class TrainerHandler : MonoBehaviour
         }
         if (currentScreen != 1)
         {
-            StartCoroutine("boxLid", true);
+            StartCoroutine(boxLid(true));
         }
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));

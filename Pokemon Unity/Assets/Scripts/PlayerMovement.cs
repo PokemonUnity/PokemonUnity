@@ -2,6 +2,8 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -134,23 +136,12 @@ public class PlayerMovement : MonoBehaviour
 
         //Check current map
         RaycastHit[] hitRays = Physics.RaycastAll(transform.position + Vector3.up, Vector3.down);
-        int closestIndex = -1;
-        float closestDistance = float.PositiveInfinity;
-        if (hitRays.Length > 0)
-        {
-            for (int i = 0; i < hitRays.Length; i++)
-            {
-                if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                {
-                    if (hitRays[i].distance < closestDistance)
-                    {
-                        closestDistance = hitRays[i].distance;
-                        closestIndex = i;
-                    }
-                }
-            }
-        }
-        if (closestIndex != -1)
+        int closestIndex;
+        float closestDistance;
+
+        CheckHitRaycastDistance(hitRays, out closestIndex, out closestDistance);
+
+        if (closestIndex >= 0)
         {
             currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
         }
@@ -159,23 +150,10 @@ public class PlayerMovement : MonoBehaviour
             //if no map found
             //Check for map in front of player's direction
             hitRays = Physics.RaycastAll(transform.position + Vector3.up + getForwardVectorRaw(), Vector3.down);
-            closestIndex = -1;
-            closestDistance = float.PositiveInfinity;
-            if (hitRays.Length > 0)
-            {
-                for (int i = 0; i < hitRays.Length; i++)
-                {
-                    if (hitRays[i].collider.gameObject.GetComponent<MapCollider>() != null)
-                    {
-                        if (hitRays[i].distance < closestDistance)
-                        {
-                            closestDistance = hitRays[i].distance;
-                            closestIndex = i;
-                        }
-                    }
-                }
-            }
-            if (closestIndex != -1)
+
+            CheckHitRaycastDistance(hitRays, out closestIndex, out closestDistance);
+
+            if (closestIndex >= 0)
             {
                 currentMap = hitRays[closestIndex].collider.gameObject.GetComponent<MapCollider>();
             }
@@ -189,11 +167,14 @@ public class PlayerMovement : MonoBehaviour
         if (currentMap != null)
         {
             accessedMapSettings = currentMap.gameObject.GetComponent<MapSettings>();
-            if (accessedAudio != accessedMapSettings.getBGM())
+            AudioClip audioClip = accessedMapSettings.getBGM();
+            int loopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
+
+            if (accessedAudio != audioClip)
             {
                 //if audio is not already playing
-                accessedAudio = accessedMapSettings.getBGM();
-                accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
+                accessedAudio = audioClip;
+                accessedAudioLoopStartSamples = loopStartSamples;
                 BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
             }
             if (accessedMapSettings.mapNameBoxTexture != null)
@@ -207,20 +188,11 @@ public class PlayerMovement : MonoBehaviour
         //check position for transparent bumpEvents
         Collider transparentCollider = null;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.4f);
-        if (hitColliders.Length > 0)
-        {
-            for (int i = 0; i < hitColliders.Length; i++)
-            {
-                if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent"))
-                {
-                    if (!hitColliders[i].name.ToLowerInvariant().Contains("player") &&
-                        !hitColliders[i].name.ToLowerInvariant().Contains("follower"))
-                    {
-                        transparentCollider = hitColliders[i];
-                    }
-                }
-            }
-        }
+
+        transparentCollider = hitColliders.LastOrDefault(collider => collider.name.ToLowerInvariant().Contains("_transparent") &&
+                !collider.name.ToLowerInvariant().Contains("player") &&
+                !collider.name.ToLowerInvariant().Contains("follower"));
+
         if (transparentCollider != null)
         {
             //send bump message to the object's parent object
@@ -230,20 +202,29 @@ public class PlayerMovement : MonoBehaviour
         //DEBUG
         if (accessedMapSettings != null)
         {
-            WildPokemonInitialiser[] encounterList =
-                accessedMapSettings.getEncounterList(WildPokemonInitialiser.Location.Standard);
-            string namez = "";
-            for (int i = 0; i < encounterList.Length; i++)
+            string pkmnNames = "";
+            foreach(var encounter in accessedMapSettings.getEncounterList(WildPokemonInitialiser.Location.Standard))
             {
-                namez += PokemonDatabase.getPokemon(encounterList[i].ID).getName() + ", ";
+                pkmnNames += PokemonDatabase.getPokemon(encounter.ID).getName() + ", ";
             }
-            Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
+            Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + pkmnNames);
         }
         //
 
         GlobalVariables.global.resetFollower();
     }
 
+    public void CheckHitRaycastDistance(RaycastHit[] hitRays, out int closestIndex, out float closestDistance)
+    {
+        closestIndex = -1;
+        float closestDist = closestDistance = float.PositiveInfinity;
+        
+        foreach(RaycastHit hitRay in hitRays.Where(x => x.collider.gameObject.GetComponent<MapCollider>() != null && x.distance < closestDist))
+        {
+            closestDistance = hitRay.distance;
+            closestIndex = Array.IndexOf(hitRays, hitRay);
+        }
+    }
 
     void Update()
     {
@@ -278,24 +259,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDirectionKeyHeld(int directionCheck)
     {
-        bool directionHeld = false;
-        if (directionCheck == 0 && Input.GetAxisRaw("Vertical") > 0)
+        if ((directionCheck == 0 && Input.GetAxisRaw("Vertical") > 0) ||
+            (directionCheck == 1 && Input.GetAxisRaw("Horizontal") > 0) ||
+            (directionCheck == 2 && Input.GetAxisRaw("Vertical") < 0) ||
+            (directionCheck == 3 && Input.GetAxisRaw("Horizontal") < 0))
         {
-            directionHeld = true;
+            return true;
         }
-        else if (directionCheck == 1 && Input.GetAxisRaw("Horizontal") > 0)
-        {
-            directionHeld = true;
-        }
-        else if (directionCheck == 2 && Input.GetAxisRaw("Vertical") < 0)
-        {
-            directionHeld = true;
-        }
-        else if (directionCheck == 3 && Input.GetAxisRaw("Horizontal") < 0)
-        {
-            directionHeld = true;
-        }
-        return directionHeld;
+        return false;
     }
 
     private IEnumerator control()
@@ -449,25 +420,23 @@ public class PlayerMovement : MonoBehaviour
     public void updateDirection(int dir)
     {
         direction = dir;
-        pawnSprite.sprite = spriteSheet[direction * frames + frame];
-        pawnReflectionSprite.sprite = pawnSprite.sprite;
-        //pawnReflectionSprite.SetTextureOffset("_MainTex", GetUVSpriteMap(direction*frames+frame));
+
+        pawnReflectionSprite.sprite = pawnSprite.sprite = spriteSheet[direction * frames + frame];
+
         if (mount.enabled)
         {
-            mount.sprite = mountSpriteSheet[dir];
+            mount.sprite = mountSpriteSheet[direction];
         }
     }
 
-    private void updateMount(bool enabled)
+    private void updateMount(bool enabled, string spriteName = "")
     {
         mount.enabled = enabled;
-    }
-
-    private void updateMount(bool enabled, string spriteName)
-    {
-        mount.enabled = enabled;
-        mountSpriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/" + spriteName);
-        mount.sprite = mountSpriteSheet[direction];
+        if (!mount.enabled)
+        {
+            mountSpriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/" + spriteName);
+            mount.sprite = mountSpriteSheet[direction];
+        }
     }
 
     public void updateAnimation(string newAnimationName, int fps)
@@ -578,7 +547,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void pauseInput()
+    public void pauseInput(float secondsToWait = 0f)
     {
         canInput = false;
         if (animationName == "run")
@@ -586,11 +555,7 @@ public class PlayerMovement : MonoBehaviour
             updateAnimation("walk", walkFPS);
         }
         running = false;
-    }
 
-    public void pauseInput(float secondsToWait)
-    {
-        pauseInput();
         StartCoroutine(checkBusinessBeforeUnpause(secondsToWait));
     }
 
@@ -602,14 +567,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isInputPaused()
     {
-        if (canInput)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return !canInput;
     }
 
     public void activateStrength()
@@ -672,36 +630,28 @@ public class PlayerMovement : MonoBehaviour
         //cycle through each of the collisions
         if (hitColliders.Length > 0)
         {
-            for (int i = 0; i < hitColliders.Length; i++)
+            foreach (RaycastHit hitCollider in hitColliders)
             {
                 //if map has not been found yet
                 if (mapHit.collider == null)
                 {
                     //if a collision's gameObject has a mapCollider, it is a map. set it to be the destination map.
-                    if (hitColliders[i].collider.gameObject.GetComponent<MapCollider>() != null)
+                    if (hitCollider.collider.gameObject.GetComponent<MapCollider>() != null)
                     {
-                        mapHit = hitColliders[i];
+                        mapHit = hitCollider;
                         destinationMap = mapHit.collider.gameObject.GetComponent<MapCollider>();
                     }
                 }
-                else if (bridgeHit.collider != null && checkForBridge)
+                else if ((bridgeHit.collider != null && checkForBridge) || mapHit.collider != null)
                 {
                     //if both have been found
-                    i = hitColliders.Length; //stop searching
+                    break; //stop searching
                 }
                 //if bridge has not been found yet
-                if (bridgeHit.collider == null && checkForBridge)
+                if (bridgeHit.collider == null && checkForBridge && hitCollider.collider.gameObject.GetComponent<BridgeHandler>() != null)
                 {
                     //if a collision's gameObject has a BridgeHandler, it is a bridge.
-                    if (hitColliders[i].collider.gameObject.GetComponent<BridgeHandler>() != null)
-                    {
-                        bridgeHit = hitColliders[i];
-                    }
-                }
-                else if (mapHit.collider != null)
-                {
-                    //if both have been found
-                    i = hitColliders.Length; //stop searching
+                    bridgeHit = hitCollider;
                 }
             }
         }
@@ -729,13 +679,10 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
 
         //if either slope is greater than 1 it is too steep.
-        if (currentSlope <= 1 && destinationSlope <= 1)
+        if ((currentSlope <= 1 && destinationSlope <= 1) && (yDistance <= currentSlope || yDistance <= destinationSlope))
         {
             //if yDistance is greater than both slopes there is a vertical wall between them
-            if (yDistance <= currentSlope || yDistance <= destinationSlope)
-            {
-                return movement;
-            }
+            return movement;
         }
         return Vector3.zero;
     }
@@ -753,20 +700,17 @@ public class PlayerMovement : MonoBehaviour
             //check destination for objects/transparents
             Collider objectCollider = null;
             Collider transparentCollider = null;
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0),
-                0.4f);
-            if (hitColliders.Length > 0)
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position + movement + new Vector3(0, 0.5f, 0), 0.4f);
+
+            for (int i = 0; i < hitColliders.Length; i++)
             {
-                for (int i = 0; i < hitColliders.Length; i++)
+                if (hitColliders[i].name.ToLowerInvariant().Contains("_object"))
                 {
-                    if (hitColliders[i].name.ToLowerInvariant().Contains("_object"))
-                    {
-                        objectCollider = hitColliders[i];
-                    }
-                    else if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent"))
-                    {
-                        transparentCollider = hitColliders[i];
-                    }
+                    objectCollider = hitColliders[i];
+                }
+                else if (hitColliders[i].name.ToLowerInvariant().Contains("_transparent"))
+                {
+                    transparentCollider = hitColliders[i];
                 }
             }
 
@@ -846,18 +790,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    public IEnumerator move(Vector3 movement)
-    {
-        yield return StartCoroutine(move(movement, true, false));
-    }
-
-    public IEnumerator move(Vector3 movement, bool encounter)
-    {
-        yield return StartCoroutine(move(movement, encounter, false));
-    }
-
-    public IEnumerator move(Vector3 movement, bool encounter, bool lockFollower)
+    public IEnumerator move(Vector3 movement, bool encounter = true, bool lockFollower = false)
     {
         if (movement != Vector3.zero)
         {
@@ -929,13 +862,7 @@ public class PlayerMovement : MonoBehaviour
         mainCamera.transform.localPosition = targetPosition;
     }
 
-
-    public void forceMoveForward()
-    {
-        StartCoroutine(forceMoveForwardIE(1));
-    }
-
-    public void forceMoveForward(int spaces)
+    public void forceMoveForward(int spaces = 1)
     {
         StartCoroutine(forceMoveForwardIE(spaces));
     }
@@ -1014,7 +941,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentMap.getTileTag(transform.position + spaceInFront) == 2)
             {
                 //water tile tag
-                StartCoroutine("surfCheck");
+                StartCoroutine(surfCheck());
             }
         }
     }
@@ -1063,8 +990,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator dismount()
     {
-        StartCoroutine("stillMount");
-        yield return StartCoroutine("jump");
+        StartCoroutine(stillMount());
+        yield return StartCoroutine(jump());
         followerScript.canMove = true;
         mount.transform.localPosition = mountPosition;
         updateMount(false);
@@ -1081,18 +1008,16 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                     yield return
-                        Dialog.StartCoroutine("drawText",
-                            "The water is dyed a deep blue. Would you \nlike to surf on it?");
+                        Dialog.StartCoroutine(Dialog.drawText("The water is dyed a deep blue. Would you \nlike to surf on it?"));
                     Dialog.drawChoiceBox();
-                    yield return Dialog.StartCoroutine("choiceNavigate");
+                    yield return Dialog.StartCoroutine(Dialog.choiceNavigate());
                     Dialog.undrawChoiceBox();
                     int chosenIndex = Dialog.chosenIndex;
                     if (chosenIndex == 1)
                     {
                         Dialog.drawDialogBox();
                         yield return
-                            Dialog.StartCoroutine("drawText",
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Surf") + "!");
+                            Dialog.StartCoroutine(Dialog.drawText(targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Surf") + "!"));
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;
@@ -1123,10 +1048,10 @@ public class PlayerMovement : MonoBehaviour
 
                         mount.transform.position = mount.transform.position + spaceInFront;
 
-                        followerScript.StartCoroutine("withdrawToBall");
-                        StartCoroutine("stillMount");
+                        followerScript.StartCoroutine(followerScript.withdrawToBall());
+                        StartCoroutine(stillMount());
                         forceMoveForward();
-                        yield return StartCoroutine("jump");
+                        yield return StartCoroutine(jump());
 
                         updateAnimation("surf", walkFPS);
                         speed = surfSpeed;
@@ -1141,7 +1066,7 @@ public class PlayerMovement : MonoBehaviour
             if (setCheckBusyWith(this.gameObject))
             {
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", "The water is dyed a deep blue.");
+                yield return Dialog.StartCoroutine(Dialog.drawText("The water is dyed a deep blue."));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
@@ -1157,7 +1082,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
         {
-            if (Random.value <= accessedMapSettings.getEncounterProbability())
+            if (UnityEngine.Random.value <= accessedMapSettings.getEncounterProbability())
             {
                 if (setCheckBusyWith(Scene.main.Battle.gameObject))
                 {

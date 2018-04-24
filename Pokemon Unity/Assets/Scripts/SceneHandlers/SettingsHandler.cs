@@ -591,10 +591,10 @@ public class SettingsHandler : MonoBehaviour
             {
                 Dialog.drawDialogBox();
                 yield return
-                    Dialog.StartCoroutine("drawText", "Would you like to save the currently \\selected settings?");
+                    Dialog.StartCoroutine(Dialog.drawText( "Would you like to save the currently \\selected settings?"));
                 Dialog.drawChoiceBoxNo();
                 yield return new WaitForSeconds(0.2f);
-                yield return StartCoroutine(Dialog.choiceNavigateNo());
+                yield return StartCoroutine(Dialog.choiceNavigate(0));
                 int chosenIndex = Dialog.chosenIndex;
                 if (chosenIndex == 1)
                 {

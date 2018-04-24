@@ -292,9 +292,9 @@ public class FollowerMovement : MonoBehaviour
 
                 Dialog.drawDialogBox();
                 yield return
-                    Dialog.StartCoroutine("drawText",
+                    Dialog.StartCoroutine(Dialog.drawText(
                         SaveData.currentSave.PC.boxes[0][followerIndex].getName() +
-                        " is enjoying walking around \\out of their ball.");
+                        " is enjoying walking around \\out of their ball."));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;

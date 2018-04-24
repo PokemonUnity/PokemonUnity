@@ -588,7 +588,7 @@ public class InteractTrainer : MonoBehaviour
                 for (int i = 0; i < trainerConfrontDialog.Length; i++)
                 {
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", trainerConfrontDialog[i]);
+                    yield return Dialog.StartCoroutine(Dialog.drawText( trainerConfrontDialog[i]));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -632,7 +632,7 @@ public class InteractTrainer : MonoBehaviour
                     for (int i = 0; i < trainerDefeatDialog.Length; i++)
                     {
                         Dialog.drawDialogBox();
-                        yield return Dialog.StartCoroutine("drawText", trainerDefeatDialog[i]);
+                        yield return Dialog.StartCoroutine(Dialog.drawText( trainerDefeatDialog[i]));
                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                         {
                             yield return null;
@@ -647,7 +647,7 @@ public class InteractTrainer : MonoBehaviour
                 for (int i = 0; i < trainerPostDefeatDialog.Length; i++)
                 {
                     Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", trainerPostDefeatDialog[i]);
+                    yield return Dialog.StartCoroutine(Dialog.drawText( trainerPostDefeatDialog[i]));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;

@@ -37,7 +37,7 @@ public class GlobalVariables : MonoBehaviour
 
     void OnDestroy()
     {
-        SceneManager.sceneLoaded -= CheckSceneLoaded;
+        SceneManager.sceneLoaded -= CheckLevelLoaded;
     }
     
     void Awake()

@@ -62,7 +62,7 @@ public class ActivateOnCVariable : MonoBehaviour
         if (not)
         {
             //invert bool
-            checkResult = (checkResult) ? false : true;
+            checkResult = !checkResult;
         }
         target.SetActive(checkResult);
     }
