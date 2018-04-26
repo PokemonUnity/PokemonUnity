@@ -93,7 +93,7 @@ public class SfxHandler : MonoBehaviour
             if (!source.isPlaying)
             {
                 increment = 1f;
-                Debug.Log("early end");
+                GlobalVariables.global.debug("early end");
             }
 
             source.volume = initialVolume * (1 - increment);

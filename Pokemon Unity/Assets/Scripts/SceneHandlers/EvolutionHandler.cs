@@ -582,7 +582,7 @@ public class EvolutionHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Particle Discarded");
+                    GlobalVariables.global.debug("Particle Discarded");
                 }
             }
             if (direction > 0)

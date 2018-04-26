@@ -62,6 +62,7 @@ public class MapNameBoxHandler : MonoBehaviour
         mapNameTextShadow.text = name;
         mapNameText.color = textColor;
 
+        mapName.gameObject.SetActive(true);
         increment = 0f;
         while (increment < 1)
         {
@@ -87,5 +88,7 @@ public class MapNameBoxHandler : MonoBehaviour
             mapName.position = new Vector3(0, 0.17f * increment, mapName.position.z);
             yield return null;
         }
+        yield return new WaitForSeconds(0.5f);
+        mapName.gameObject.SetActive(false);
     }
 }

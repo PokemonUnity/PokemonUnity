@@ -11,13 +11,13 @@ public class SaveData
 
     private int fileIndex;
     private int buildID;
-
+    public GlobalVariables.Language playerLanguage;
 
     //file loading data
     public string levelName;
     public SeriV3 playerPosition;
     public int playerDirection;
-
+    public bool playerOrtho;
 
     //Important player data
     public string playerName;
@@ -25,6 +25,8 @@ public class SaveData
     public bool isMale;
     public int playerID;
     public string fileCreationDate;
+    public System.DateTime? lastSave;
+    public System.DateTime startTime = new System.DateTime();
 
     public string mapName;
 
@@ -45,13 +47,18 @@ public class SaveData
 
     public int playerMoney;
     public int pokeDex; //pokedex not implemented
+    public System.TimeSpan playerTime;
     public int playerHours;
     public int playerMinutes;
     public int playerSeconds;
 
     public bool[] gymsEncountered = new bool[12];
+    /// <summary>
+    /// if <see cref="gymsBeatTime"/> is null, then value is false.
+    /// </summary>
+    /// <remarks>This isnt needed...</remarks>
     public bool[] gymsBeaten = new bool[12];
-    public string[] gymsBeatTime = new string[12];
+    public System.DateTime?[] gymsBeatTime = new System.DateTime?[12];
 
 
     //Important gameplay data
@@ -59,7 +66,7 @@ public class SaveData
     public SeriV3 respawnScenePosition;
     public int respawnSceneDirection;
     public string respawnText;
-
+    public bool isDemo;
 
     private List<CVariable> cVariables = new List<CVariable>();
     public List<NonResettingList> nonResettingLists = new List<NonResettingList>();
@@ -119,11 +126,11 @@ public class SaveData
             }
             else if (cVariableArray[i].name == null)
             {
-                Debug.Log("Error: Variable Not Found!");
+                GlobalVariables.global.debug("Error: Variable Not Found!");
                 return -1;
             }
         }
-        Debug.Log("Error: Variable Not Found!");
+        GlobalVariables.global.debug("Error: Variable Not Found!");
         return -1;
     }
 
@@ -143,7 +150,7 @@ public class SaveData
         if (index == -1)
         {
             cVariables.Add(new CVariable(variableName, newValue));
-            Debug.Log("Added New Variable!");
+            GlobalVariables.global.debug("Added New Variable!");
         }
         else
         {

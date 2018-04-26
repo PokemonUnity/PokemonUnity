@@ -403,7 +403,7 @@ public class TypingHandler : MonoBehaviour
                 typedString += typeSpaceText[i].text.Substring(0, 1);
             }
         }
-        Debug.Log("String =" + typedString + ".");
+        GlobalVariables.global.debug("String =" + typedString + ".");
     }
 
 

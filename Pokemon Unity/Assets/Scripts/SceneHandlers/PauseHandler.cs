@@ -525,6 +525,7 @@ public class PauseHandler : MonoBehaviour
                                 SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
                                 SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
                                 SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+                                SaveData.currentSave.playerOrtho = GlobalVariables.global.playerOrtho;
 
                                 NonResettingHandler.saveDataToGlobal();
 
@@ -546,7 +547,7 @@ public class PauseHandler : MonoBehaviour
                         else {
                             Dialog.drawDialogBox();
 							yield return StartCoroutine(Dialog.drawText("Saving is currently disabled."));
-							yield return new WaitForSeconds(2f); //added
+							yield return new WaitForSeconds(2f);
 							Dialog.undrawDialogBox();
                         }
                     }

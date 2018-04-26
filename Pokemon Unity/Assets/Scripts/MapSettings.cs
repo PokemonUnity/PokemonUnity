@@ -7,8 +7,10 @@ public class MapSettings : MonoBehaviour
 {
     public AudioClip mapBGMClip;
     public int mapBGMLoopStartSamples = 0;
+    public int mapBGMBufferRate = 5000;
     public AudioClip mapBGMNightClip = null;
     public int mapBGMNightLoopStartSamples = 0;
+    public int mapBGMNightBufferRate = 5000;
     public string mapName;
     public string discordImageKey;
     public string discordDetails;
@@ -72,6 +74,20 @@ public class MapSettings : MonoBehaviour
             }
         }
         return mapBGMLoopStartSamples;
+    }
+    
+    public int getBGMBufferRate()
+    {
+        if (mapBGMNightClip != null)
+        {
+            float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
+            if (time >= 20 || time < 3.5f)
+            {
+                //night
+                return mapBGMNightBufferRate;
+            }
+        }
+        return mapBGMBufferRate;
     }
 
     public Sprite getBattleBackground()
@@ -313,7 +329,7 @@ public class MapSettings : MonoBehaviour
             string debugtext = "";
             for(int i = 0; i < chanceSplitList.Length; i++){
                 debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
-            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
+            GlobalVariables.global.debug(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
             //*/
 
 

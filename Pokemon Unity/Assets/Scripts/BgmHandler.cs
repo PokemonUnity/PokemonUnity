@@ -6,10 +6,11 @@ using System.Collections;
 public class BgmHandler : MonoBehaviour
 {
     public static BgmHandler main;
+    public bool muted;
 
     private float baseVolume;
 
-    private int samplesEndBuffer = 5000;
+    private int samplesEndBuffer;
     private float defaultFadeSpeed = 1.8f;
 
     private AudioSource source;
@@ -23,7 +24,7 @@ public class BgmHandler : MonoBehaviour
 
     private Track currentTrack;
 
-    private AudioTrack
+    public AudioTrack
         mainTrack = new AudioTrack(),
         mainTrackNext = new AudioTrack(),
         overlayTrack = new AudioTrack(),
@@ -50,21 +51,29 @@ public class BgmHandler : MonoBehaviour
 
     void Update()
     {
-        baseVolume = PlayerPrefs.GetFloat("musicVolume");
+        if(!muted)
+            baseVolume = PlayerPrefs.GetFloat("musicVolume");
+        else baseVolume = 0f;
+        
+        if(Input.GetKeyDown(KeyCode.M)) //quick mute toggle
+        {
+            muted = !muted;
+        }
+
         if (fading == null)
         {
             source.volume = baseVolume;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && SaveData.currentSave.debugMode) //debug
         {
-            if (mainTrack.clip == null)
+            if (!mainTrack.clip)
             {
-                Debug.Log("CLIP: null");
+                GlobalVariables.global.debug("CLIP: null");
             }
             else
             {
-                Debug.Log("CLIP: " + mainTrack.clip);
+                GlobalVariables.global.debug("CLIP: " + mainTrack.clip.ToString() + "\n"+("SAMPLES: "+source.timeSamples+"/"+source.clip.samples+"\nBUFFER: "+samplesEndBuffer).ToString());
             }
         }
 
@@ -109,11 +118,16 @@ public class BgmHandler : MonoBehaviour
 
     private void Play(Track trackType)
     {
+        Play(trackType, 5000);
+    }
+    private void Play(Track trackType, int buffer)
+    {
         AudioTrack track = mainTrack;
         if (trackType == Track.Main)
         {
             mainTrack = mainTrackNext;
             track = mainTrack;
+            samplesEndBuffer = buffer;
         }
         else if (trackType == Track.Overlay)
         {
@@ -125,7 +139,6 @@ public class BgmHandler : MonoBehaviour
         }
 
         currentTrack = trackType;
-
         source.clip = track.clip;
         source.timeSamples = track.samplesPosition;
         source.volume = baseVolume;
@@ -144,8 +157,11 @@ public class BgmHandler : MonoBehaviour
         }
         source.Stop();
     }
-
-    public void PlayMain(AudioClip bgm, int loopStartSamples)
+    public void PlayMain(AudioClip bgm, int loopStartSamples, bool instant)
+    {
+        PlayMain(bgm, loopStartSamples, instant, 5000);
+    }
+    public void PlayMain(AudioClip bgm, int loopStartSamples, bool instant, int buffer)
     {
         loop = true;
         //if main is playing:   Fade out current main track (if any/not fading), THEN play new track
@@ -154,7 +170,7 @@ public class BgmHandler : MonoBehaviour
             //if current track is not already playing
             if (bgm != mainTrack.clip)
             {
-                StartCoroutine(PlayMainIE(bgm, loopStartSamples));
+                StartCoroutine(PlayMainIE(bgm, loopStartSamples, instant, buffer));
             }
             else
             {
@@ -168,27 +184,26 @@ public class BgmHandler : MonoBehaviour
             mainTrack = new AudioTrack(bgm, loopStartSamples);
         }
     }
-
-    private IEnumerator PlayMainIE(AudioClip bgm, int loopStartSamples)
+    private IEnumerator PlayMainIE(AudioClip bgm, int loopStartSamples, bool instant, int buffer)
     {
         mainTrackNext = new AudioTrack(bgm, loopStartSamples);
         //Fade out current main track (if any/not fading), THEN play new track
-        if (mainTrack.clip == null)
+        if (mainTrack.clip == null || instant)
         {
-            Play(Track.Main);
+            Play(Track.Main, buffer);
         }
         else if (fading == null)
         {
             yield return fading = StartCoroutine(Fade(defaultFadeSpeed));
-            Play(Track.Main);
+            Play(Track.Main, buffer);
         }
     }
-
-    private void StopMainFade()
+    private void StopMainFade(bool backwardsCompat)
     {
-        StopCoroutine(fading);
+        /*if(fading != null)*/ StopCoroutine(fading);
         StopCoroutine("PlayMainIE");
         mainTrack = mainTrackNext;
+        //if(!backwardsCompat) Play(Track.Main);
     }
 
     public void PlayOverlay(AudioClip bgm, int loopStartSamples)
@@ -214,7 +229,7 @@ public class BgmHandler : MonoBehaviour
             //if main is fading: stop the fading
             if (fading != null)
             {
-                StopMainFade();
+                StopMainFade(true);
             }
             else
             {

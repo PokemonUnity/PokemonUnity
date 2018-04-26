@@ -4,9 +4,13 @@ using UnityEngine;
 using System.Collections;
 public class CustomEvent : MonoBehaviour
 {
+    public bool busyOnCall = true;
+
     public CustomEventTree[] interactEventTrees;
     public CustomEventTree[] bumpEventTrees;
-
+    public CustomEventTree[] internalEventTrees;
+    public CustomEventTree[] demoEventTrees;
+    
     private DialogBoxHandler Dialog;
 
     private NPCHandler thisNPCHandler;
@@ -36,12 +40,18 @@ public class CustomEvent : MonoBehaviour
 
     private IEnumerator interact()
     {
-        yield return StartCoroutine(runEventTrees(interactEventTrees));
+        if(SaveData.currentSave.isDemo) { //if the events should use their 'demo' counterparts
+            yield return StartCoroutine(runEventTrees(demoEventTrees));
+        }
+        else yield return StartCoroutine(runEventTrees(interactEventTrees));
     }
-
     private IEnumerator bump()
     {
         yield return StartCoroutine(runEventTrees(bumpEventTrees));
+    }
+    private IEnumerator runInternal() //used for internal calls in code where a special event is nessasary
+    {
+        yield return StartCoroutine(runEventTrees(internalEventTrees));
     }
 
     private IEnumerator runEventTrees(CustomEventTree[] treesArray)
@@ -49,7 +59,31 @@ public class CustomEvent : MonoBehaviour
         if (treesArray.Length > 0)
         {
             eventTreeIndex = 0;
-            if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+            if(busyOnCall)
+            {
+                if (PlayerMovement.player.setCheckBusyWith(this.gameObject))
+                {
+                    setThisNPCHandlerBusy(true);
+
+                    for (currentEventIndex = 0;
+                        currentEventIndex < treesArray[eventTreeIndex].events.Length;
+                        currentEventIndex++)
+                    {
+                        if (!treesArray[eventTreeIndex].events[currentEventIndex].runSimultaneously)
+                        {
+                            yield return StartCoroutine(runEvent(treesArray, currentEventIndex));
+                        }
+                        else
+                        {
+                            StartCoroutine(runEvent(treesArray, currentEventIndex));
+                        }
+                    }
+
+                    setThisNPCHandlerBusy(false);
+                    PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                }
+            }
+            else
             {
                 setThisNPCHandlerBusy(true);
 
@@ -68,8 +102,8 @@ public class CustomEvent : MonoBehaviour
                 }
 
                 setThisNPCHandlerBusy(false);
-                PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
-            }
+            } //yes I know there's probably a better way to implement this without just copy and pasting
+    
             if (deactivateOnFinish)
             {
                 this.gameObject.SetActive(false);
@@ -91,7 +125,7 @@ public class CustomEvent : MonoBehaviour
 
         CustomEventDetails.CustomEventType ty = currentEvent.eventType;
 
-        Debug.Log("Run event. Type: " + ty.ToString());
+        GlobalVariables.global.debug("Run event. Type: " + ty.ToString());
 
         switch (ty)
         {
@@ -212,7 +246,7 @@ public class CustomEvent : MonoBehaviour
             case (CustomEventDetails.CustomEventType.Dialog):
                 for (int i = 0; i < currentEvent.strings.Length; i++)
                 {
-                    if (currentEvent.bool0 && i != 0)
+                    if (currentEvent.bool0 && i > 0)
                     {
                         yield return Dialog.StartCoroutine("scrollText",currentEvent.float0);
                         yield return StartCoroutine(Dialog.drawTextSilent(currentEvent.strings[i]));
@@ -222,10 +256,14 @@ public class CustomEvent : MonoBehaviour
                     }
                     if (i < currentEvent.strings.Length - 1)
                     {
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                        if(!currentEvent.bool1)
                         {
-                            yield return null;
+                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            {
+                                yield return null;
+                            }
                         }
+                        else yield return new WaitForSeconds(3);
                     }
                 }
                 if (nextEvent != null)
@@ -477,7 +515,7 @@ public class CustomEvent : MonoBehaviour
                         }
                     }
 
-                    Debug.Log(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
+                    GlobalVariables.global.debug(pkMoveset[0] + ", " + pkMoveset[1] + ", " + pkMoveset[2] + ", " + pkMoveset[3]);
 
 
                     Pokemon pk = new Pokemon(currentEvent.ints[0], nickname, pkGender, currentEvent.ints[1],
@@ -622,7 +660,7 @@ public class CustomEvent : MonoBehaviour
 
                 if (trainer.battleBGM != null)
                 {
-                    Debug.Log(trainer.battleBGM.name);
+                    GlobalVariables.global.debug(trainer.battleBGM.name);
                     BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
                 }
                 else
@@ -634,7 +672,7 @@ public class CustomEvent : MonoBehaviour
                 yield return new WaitForSeconds(1.6f);
 
                 Scene.main.Battle.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Battle.control(true, trainer, currentEvent.bool0));
+                StartCoroutine(Scene.main.Battle.control(true, trainer, currentEvent.bool0, currentEvent.bool1));
 
                 while (Scene.main.Battle.gameObject.activeSelf)
                 {
@@ -669,13 +707,14 @@ public class CustomEvent : MonoBehaviour
             case CustomEventDetails.CustomEventType.MoveCamera:
                 yield return StartCoroutine(PlayerMovement.player.moveCameraTo(new Vector3(currentEvent.ints[0], currentEvent.ints[1], currentEvent.ints[2]), currentEvent.float0));
                 break;
+
             case CustomEventDetails.CustomEventType.Exclaim:
                 GameObject exclaim = currentEvent.object0.transform.Find("Exclaim").gameObject;
                 AudioClip exclaimAudio = currentEvent.sound;
-                if(exclaim != null) {
+                if(exclaim) {
                     float increment = -1f;
                     float speed = 0.15f;
-                    if(currentEvent.sprite != null){
+                    if(currentEvent.sprite){
                         exclaim.GetComponent<SpriteRenderer>().sprite = currentEvent.sprite;
                     }
                     exclaim.SetActive(true);
@@ -699,10 +738,37 @@ public class CustomEvent : MonoBehaviour
                     }
                     exclaim.SetActive(false);
                 } else {
-                    Debug.Log("Unsupported character for Exclaim event");
+                    GlobalVariables.global.debug("Unsupported character for Exclaim event");
                 }
 
                 break;
+
+            case CustomEventDetails.CustomEventType.Execute:
+                if(currentEvent.object0 == this.gameObject &&
+                    (
+                        currentEvent.string0 == "runInternal" ||
+                        currentEvent.string0 == "interact" ||
+                        currentEvent.string0 == "bump"
+                    )
+                )
+                {
+                    GlobalVariables.global.debug("Execute event loop found, try to jump to other trees instead of executing the same CustomEvent.");
+                    break;
+                }
+                else
+                {
+                    GlobalVariables.global.debug(currentEvent.string0);
+                    GlobalVariables.global.debug(currentEvent.smOptions.ToString());
+                    PlayerMovement.player.unsetCheckBusyWith(this.gameObject);
+                    if(PlayerMovement.player.setCheckBusyWith(currentEvent.object0))
+                    {
+                        //probably best if you set the player as busy within the message response as well
+                        currentEvent.object0.SendMessage(currentEvent.string0,currentEvent.smOptions);
+                        PlayerMovement.player.unsetCheckBusyWith(currentEvent.object0);
+                        PlayerMovement.player.setCheckBusyWith(this.gameObject);
+                    };
+			        break;
+                }
         }
     }
 
@@ -753,10 +819,11 @@ public class CustomEventDetails
         SetCVariable, //string0: CVariable name | float0: new value
         LogicCheck, //logic | float0: check value | string0: CVariable name
         TrainerBattle, //object0: trainer script | bool0: allowed to lose | int0: tree to jump to on loss
-        ReturnToTitle,	//no input
-		JumpTo,			//int0: tree to jump to
-		MoveCamera,     //ints[0]: x co-ordinate | ints[1]: y co-ordinate | ints[2]: z co-ordinate | 
-        Exclaim
+        ReturnToTitle, //no input
+		JumpTo, //int0: tree to jump to
+		MoveCamera, //ints[0]: x co-ordinate | ints[1]: y co-ordinate | ints[2]: z co-ordinate
+        Exclaim, //float0: wait for seconds | object0: character to exclaim || sprite: exclaim sprite | sound: exclaim sfx
+        Execute //object0: game object to SendMessage(string0,smOptions) | string0: message to send to the game object | smOptions: options for SendMessage
     }
 
     public enum Direction
@@ -783,6 +850,7 @@ public class CustomEventDetails
     public Direction dir;
 
     public Logic logic;
+    public SendMessageOptions smOptions;
 
     public int int0;
     public float float0;
@@ -798,7 +866,6 @@ public class CustomEventDetails
     public GameObject object1;
 
     public AudioClip sound;
-
 
     public bool runSimultaneously;
 

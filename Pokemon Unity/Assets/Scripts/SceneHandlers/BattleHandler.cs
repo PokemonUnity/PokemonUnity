@@ -294,7 +294,7 @@ public class BattleHandler : MonoBehaviour
         background;
 
     //DEBUG
-    public bool canMegaEvolve = false;
+    public bool canMegaEvolve;
 
     private Sprite[] playerTrainer1Animation;
     private Image playerTrainerSprite1;
@@ -3508,16 +3508,19 @@ public class BattleHandler : MonoBehaviour
     /// Basic Wild Battle
     public IEnumerator control(Pokemon wildPokemon)
     {
-        yield return StartCoroutine(control(false, new Trainer(new Pokemon[] {wildPokemon}), false));
+        yield return StartCoroutine(control(false, new Trainer(new Pokemon[] {wildPokemon}), false, false));
     }
 
     /// Basic Trainer Battle
     public IEnumerator control(Trainer trainer)
     {
-        yield return StartCoroutine(control(true, trainer, false));
+        yield return StartCoroutine(control(true, trainer, false, false));
     }
-
-    public IEnumerator control(bool isTrainerBattle, Trainer trainer, bool healedOnDefeat)
+    public IEnumerator control(Trainer trainer, bool doubles)
+    {
+        yield return StartCoroutine(control(true, trainer, false, doubles));
+    }
+    public IEnumerator control(bool isTrainerBattle, Trainer trainer, bool healedOnDefeat, bool doubles)
     {
         //Used to compare after the battle to check for evolutions.
         int[] initialLevels = new int[6];
@@ -3535,7 +3538,7 @@ public class BattleHandler : MonoBehaviour
 
         //GET BATTLE BACKGROUNDS
         int currentTileTag = PlayerMovement.player.currentMap.getTileTag(PlayerMovement.player.transform.position);
-        Debug.Log(currentTileTag);
+        GlobalVariables.global.debug(currentTileTag.ToString());
         background.sprite = PlayerMovement.player.accessedMapSettings.getBattleBackground(currentTileTag);
 
         playerBase.sprite = PlayerMovement.player.accessedMapSettings.getBattleBase(currentTileTag);
@@ -3626,8 +3629,8 @@ public class BattleHandler : MonoBehaviour
         hidePartyBar(true);
         hidePartyBar(false);
 
-//		Debug.Log(pokemon[0].getName()+": HP: "+pokemon[0].getHP()+"ATK: "+pokemon[0].getATK()+"DEF: "+pokemon[0].getDEF()+"SPA: "+pokemon[0].getSPA()+"SPD: "+pokemon[0].getSPD()+"SPE:"+pokemon[0].getSPE());
-//		Debug.Log(pokemon[3].getName()+": HP: "+pokemon[3].getHP()+"ATK: "+pokemon[3].getATK()+"DEF: "+pokemon[3].getDEF()+"SPA: "+pokemon[3].getSPA()+"SPD: "+pokemon[3].getSPD()+"SPE:"+pokemon[3].getSPE());
+//		GlobalVariables.global.debug(pokemon[0].getName()+": HP: "+pokemon[0].getHP()+"ATK: "+pokemon[0].getATK()+"DEF: "+pokemon[0].getDEF()+"SPA: "+pokemon[0].getSPA()+"SPD: "+pokemon[0].getSPD()+"SPE:"+pokemon[0].getSPE());
+//		GlobalVariables.global.debug(pokemon[3].getName()+": HP: "+pokemon[3].getHP()+"ATK: "+pokemon[3].getATK()+"DEF: "+pokemon[3].getDEF()+"SPA: "+pokemon[3].getSPA()+"SPD: "+pokemon[3].getSPD()+"SPE:"+pokemon[3].getSPE());
 
 
         if (trainerBattle)
@@ -3722,8 +3725,8 @@ public class BattleHandler : MonoBehaviour
             updatePokemonStatsDisplay(3);
             updateCurrentTask(0);
 
-            //		Debug.Log(pokemon[0].getName()+": HP: "+pokemon[0].getHP()+"ATK: "+pokemon[0].getATK()+"DEF: "+pokemon[0].getDEF()+"SPA: "+pokemon[0].getSPA()+"SPD: "+pokemon[0].getSPD()+"SPE:"+pokemon[0].getSPE());
-            //		Debug.Log(pokemon[3].getName()+": HP: "+pokemon[3].getHP()+"ATK: "+pokemon[3].getATK()+"DEF: "+pokemon[3].getDEF()+"SPA: "+pokemon[3].getSPA()+"SPD: "+pokemon[3].getSPD()+"SPE:"+pokemon[3].getSPE());
+            //		GlobalVariables.global.debug(pokemon[0].getName()+": HP: "+pokemon[0].getHP()+"ATK: "+pokemon[0].getATK()+"DEF: "+pokemon[0].getDEF()+"SPA: "+pokemon[0].getSPA()+"SPD: "+pokemon[0].getSPD()+"SPE:"+pokemon[0].getSPE());
+            //		GlobalVariables.global.debug(pokemon[3].getName()+": HP: "+pokemon[3].getHP()+"ATK: "+pokemon[3].getATK()+"DEF: "+pokemon[3].getDEF()+"SPA: "+pokemon[3].getSPA()+"SPD: "+pokemon[3].getSPD()+"SPE:"+pokemon[3].getSPE());
 
             ////////////////////////////////////////
             /// Task Selection State
@@ -3804,7 +3807,7 @@ public class BattleHandler : MonoBehaviour
                     //// NAVIGATE MOVESET OPTIONS ////
 
                     int currentPokemon = 0;
-
+                    if(SaveData.currentSave.debugMode) canMegaEvolve = true; //give debug option to win battle
                     if (taskPosition == 1)
                     {
                         updateCurrentTask(1);
@@ -4001,7 +4004,15 @@ public class BattleHandler : MonoBehaviour
                             {
                                 if (movePosition == 0)
                                 {
-                                    //if mega evolution selected (mega evolution not yet implemented)
+                                    //if mega evolution selected (mega evolution not yet implemented, used for debug atm)
+                                    SfxHandler.Play(selectClip);
+                                    if(SaveData.currentSave.debugMode) //double check to make sure the player is in debug mode
+                                    {
+                                        commandMove[currentPokemon] = MoveDatabase.getMove("Struggle");
+                                        victor = 0; //give the player a victory after struggling
+                                        runState = false;
+                                    }
+                                    else updateCurrentTask(0);
                                 }
                                 else if (movePosition == 3)
                                 {
@@ -4723,7 +4734,7 @@ public class BattleHandler : MonoBehaviour
                         }
                         command[pi] = CommandType.Move;
                         commandMove[pi] = MoveDatabase.getMove(pokemonMoveset[pi][AImoveIndex]);
-                        Debug.Log(commandMove[pi].getName() + ", PP: " + pokemon[pi].getPP(AImoveIndex));
+                        GlobalVariables.global.debug(commandMove[pi].getName() + ", PP: " + pokemon[pi].getPP(AImoveIndex));
                     }
                 }
             }
@@ -4824,7 +4835,7 @@ public class BattleHandler : MonoBehaviour
                                                               * catchRate * ballRate) /
                                                              (3 * (float) pokemon[targetIndex].getHP()) * statusRate);
 
-                                        Debug.Log("modifiedRate: " + modifiedRate);
+                                        GlobalVariables.global.debug("modifiedRate: " + modifiedRate);
 
                                         //GEN VI
                                         //int shakeProbability = Mathf.FloorToInt(65536f / Mathf.Pow((255f/modifiedRate),0.1875f));
@@ -4850,11 +4861,11 @@ public class BattleHandler : MonoBehaviour
                                                 shake = 4;
                                             }
                                         }
-                                        Debug.Log("(" + shakes + ")" + debugString);
+                                        GlobalVariables.global.debug("(" + shakes + ")" + debugString);
 
                                         if (shakes == 4)
                                         {
-                                            Debug.Log("Caught the " + pokemon[targetIndex].getName());
+                                            GlobalVariables.global.debug("Caught the " + pokemon[targetIndex].getName());
                                             running = false;
 
                                             //pokeball animation not yet implemented
@@ -4899,7 +4910,7 @@ public class BattleHandler : MonoBehaviour
 
                                                 yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
                                             }
-                                            Debug.Log("CurrentHP" + pokemon[targetIndex].getCurrentHP());
+                                            GlobalVariables.global.debug("CurrentHP" + pokemon[targetIndex].getCurrentHP());
                                             SaveData.currentSave.PC.addPokemon(new Pokemon(pokemon[targetIndex],
                                                 nickname, commandItem[movingPokemon].getName()));
                                         }
@@ -5178,7 +5189,7 @@ public class BattleHandler : MonoBehaviour
                                     //inflict damage
                                     int DEBUG_beforeHP = pokemon[targetIndex].getCurrentHP();
                                     pokemon[targetIndex].removeHP(damageToDeal);
-                                    Debug.Log(DEBUG_beforeHP + " - " + damageToDeal + " = " +
+                                    GlobalVariables.global.debug(DEBUG_beforeHP + " - " + damageToDeal + " = " +
                                               pokemon[targetIndex].getCurrentHP());
 
                                     if (damageToDeal > 0)
@@ -5414,7 +5425,7 @@ public class BattleHandler : MonoBehaviour
                             if (i == 0)
                             {
                                 //DEBUG
-                                Debug.Log(pokemon[0].getLongID());
+                                GlobalVariables.global.debug(pokemon[0].getLongID());
                                 StopCoroutine(animatePlayer1);
                                 animatePlayer1 = StartCoroutine(animatePokemon(player1, pokemon[0].GetBackAnim_()));
                                 yield return new WaitForSeconds(0.2f);
@@ -5586,7 +5597,7 @@ public class BattleHandler : MonoBehaviour
                                         if (i == 0)
                                         {
                                             //DEBUG
-                                            Debug.Log(pokemon[3].getLongID());
+                                            GlobalVariables.global.debug(pokemon[3].getLongID());
                                             StopCoroutine(animateOpponent1);
                                             animateOpponent1 =
                                                 StartCoroutine(animatePokemon(opponent1, pokemon[3].GetFrontAnim_()));
@@ -5783,7 +5794,7 @@ public class BattleHandler : MonoBehaviour
                                                             if (i == 0)
                                                             {
                                                                 //DEBUG
-                                                                Debug.Log(pokemon[0].getLongID());
+                                                                GlobalVariables.global.debug(pokemon[0].getLongID());
                                                                 StopCoroutine(animatePlayer1);
                                                                 animatePlayer1 =
                                                                     StartCoroutine(animatePokemon(player1,
@@ -5923,7 +5934,7 @@ public class BattleHandler : MonoBehaviour
                                                                         if (i == 0)
                                                                         {
                                                                             //DEBUG
-                                                                            Debug.Log(pokemon[0].getLongID());
+                                                                            GlobalVariables.global.debug(pokemon[0].getLongID());
                                                                             StopCoroutine(animatePlayer1);
                                                                             animatePlayer1 =
                                                                                 StartCoroutine(animatePokemon(player1,

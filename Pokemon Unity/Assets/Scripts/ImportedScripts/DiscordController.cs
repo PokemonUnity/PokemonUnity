@@ -27,7 +27,7 @@ public class DiscordController : MonoBehaviour
 
     public void ChangePresence(string pdetails)
     {
-        Debug.Log("Discord: on click!");
+        GlobalVariables.global.debug("Discord: on click!");
         clickCounter++;
 
         presence.details = pdetails;
@@ -39,41 +39,41 @@ public class DiscordController : MonoBehaviour
     public void ReadyCallback()
     {
         ++callbackCalls;
-        Debug.Log("Discord: ready");
+        GlobalVariables.global.debug("Discord: ready");
         onConnect.Invoke();
     }
 
     public void DisconnectedCallback(int errorCode, string message)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: disconnect {0}: {1}", errorCode, message));
+        GlobalVariables.global.debug(string.Format("Discord: disconnect {0}: {1}", errorCode, message));
         onDisconnect.Invoke();
     }
 
     public void ErrorCallback(int errorCode, string message)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: error {0}: {1}", errorCode, message));
+        GlobalVariables.global.debug(string.Format("Discord: error {0}: {1}", errorCode, message));
     }
 
     public void JoinCallback(string secret)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: join ({0})", secret));
+        GlobalVariables.global.debug(string.Format("Discord: join ({0})", secret));
         onJoin.Invoke(secret);
     }
 
     public void SpectateCallback(string secret)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: spectate ({0})", secret));
+        GlobalVariables.global.debug(string.Format("Discord: spectate ({0})", secret));
         onSpectate.Invoke(secret);
     }
 
     public void RequestCallback(DiscordRpc.JoinRequest request)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: join request {0}: {1}", request.username, request.userId));
+        GlobalVariables.global.debug(string.Format("Discord: join request {0}: {1}", request.username, request.userId));
         onJoinRequest.Invoke(request);
     }
 
@@ -88,7 +88,7 @@ public class DiscordController : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("Discord: init");
+        GlobalVariables.global.debug("Discord: init");
         callbackCalls = 0;
 
         handlers = new DiscordRpc.EventHandlers();
@@ -103,7 +103,7 @@ public class DiscordController : MonoBehaviour
 
     void OnDisable()
     {
-        Debug.Log("Discord: shutdown");
+        GlobalVariables.global.debug("Discord: shutdown");
         DiscordRpc.Shutdown();
     }
 

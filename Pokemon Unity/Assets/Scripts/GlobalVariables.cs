@@ -3,9 +3,11 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-
 public class GlobalVariables : MonoBehaviour
 {
+    public bool isEditor = false;
+    public bool allowDebug = true;
+        //change this setting when releasing a public build, as it allows for developer features to be accessed.
     DiscordRpc.EventHandlers handlers;
     public DiscordRpc.RichPresence presence;
     public string applicationId; //change this application id when you're testing discord rpc
@@ -14,35 +16,55 @@ public class GlobalVariables : MonoBehaviour
     public UnityEngine.Events.UnityEvent onConnect;
     public UnityEngine.Events.UnityEvent onDisconnect;
 
-
+    public enum Language
+    {
+        /// <summary>
+        /// US English
+        /// </summary>
+        English = 9
+    }
     public static GlobalVariables global;
     public Vector3 playerPosition;
     public int playerDirection;
     public bool playerForwardOnLoad;
+    public bool playerOrtho;
     public bool fadeIn;
     public Texture fadeTex;
 
     public int followerIndex = 0;
-
-    private double buildNum = 0.17;
     private GameObject Player;
     private FollowerMovement FollowerSettings;
 
     private GUIText debugText;
     private GUIText debugTextShadow;
 
+    public Camera MainCamera;
+    public MeshRenderer Display;
+
     public AudioClip surfBGM;
     public int surfBgmLoopStart;
 
     public RenderTexture GUIDisplay;
+    public TextAsset versioningJSON;
 
 
     //unimportant data (reset upon load)
     public string itemUsedLast;
 
-
     //Important gameplay data
     public bool respawning = false;
+
+    ///Works as a replacement for Debug.Log(), allowing the log to be sent to the debugText in-game.
+    public void debug(string message)
+    {
+        Debug.Log(message);
+        debugText.text = "Debug Mode\n"+message;
+        debugTextShadow.text = debugText.text;
+    }
+    //public void getLang(string m)
+    //{
+
+    //}
 
     void OnDestroy()
     {
@@ -61,11 +83,13 @@ public class GlobalVariables : MonoBehaviour
         handlers.disconnectedCallback += DisconnectedCallback;
         handlers.errorCallback += ErrorCallback;
         DiscordRpc.Initialize(applicationId, ref handlers, true, optionalSteamId);
+        presence.startTimestamp = System.Convert.ToInt32((int)(System.DateTime.UtcNow -
+            new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc)).TotalSeconds);
 
         SceneManager.sceneLoaded += CheckLevelLoaded;
         if (SaveData.currentSave == null)
         {
-            Debug.Log("save file created");
+            Debug.Log("Save file created");
             SaveData.currentSave = new SaveData(-1);
         }
         if (global == null)
@@ -74,6 +98,8 @@ public class GlobalVariables : MonoBehaviour
 
             debugText = this.transform.Find("DEBUG").GetComponent<GUIText>();
             debugTextShadow = debugText.transform.Find("DEBUGShadow").GetComponent<GUIText>();
+            MainCamera = this.transform.Find("MainCamera").GetComponent<Camera>();
+            Display = MainCamera.transform.Find("Display").GetComponent<MeshRenderer>();
             //debugText.text = "build " + buildNum;
             //debugTextShadow.text = debugText.text;
             Object.DontDestroyOnLoad(this.gameObject);
@@ -112,16 +138,25 @@ public class GlobalVariables : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    void OnApplicationQuit()
+    {
+        debug("shutdown");
+        DiscordRpc.Shutdown();
+    }
     public IEnumerator GetDebugText()
     {
         yield return debugText.text;
     }
-    public void EnableDebugMode()
+    public bool EnableDebugMode()
     {
-        SaveData.currentSave.debugMode = true;
-        debugText.text = "build " + buildNum + "\nDebugging Mode Enabled";
-        //debugTextShadow.text = debugText.text;
+        return EnableDebugMode(SaveData.currentSave);
+    }
+    public bool EnableDebugMode(SaveData data)
+    {
+        data.debugMode = true;
+        debugText.gameObject.SetActive(true);
+        debugTextShadow.text = debugText.text;
+        return true;
     }
     public void CreateFileData(string name, bool isMale)
     {
@@ -132,13 +167,14 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.isMale = isMale;
         SaveData.currentSave.playerMoney = 2481; 
         SaveData.currentSave.playerOutfit = "hgss";
+        SaveData.currentSave.playerLanguage = Language.English;
 
         SaveData.currentSave.playerShirt = "Ethan's Shirt";
         SaveData.currentSave.playerMisc = null;
         SaveData.currentSave.playerHat = "Ethan's Hat";
         //customizables not implemented
 
-        if(isMale == true){
+        if(isMale){
             SaveData.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
         } else {
             SaveData.currentSave.setCVariable("male",0);
@@ -203,14 +239,13 @@ public class GlobalVariables : MonoBehaviour
         SaveData.currentSave.PC.addPokemon(new Pokemon(012, null, Pokemon.Gender.CALCULATE, 35, false, "Great Ball", "",
             name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
-            new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
+            new string[] {"Razor Leaf", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
 
         //SaveData.currentSave.PC.swapPokemon(0,1,3,1);
         SaveData.currentSave.PC.swapPokemon(0, 2, 3, 2);
         SaveData.currentSave.PC.swapPokemon(0, 3, 3, 3);
         SaveData.currentSave.PC.swapPokemon(0, 4, 3, 4);
         SaveData.currentSave.PC.swapPokemon(0, 5, 3, 5);
-
 
         SaveData.currentSave.PC.packParty();
 
@@ -278,12 +313,13 @@ public class GlobalVariables : MonoBehaviour
 
         string date = month + day + System.DateTime.Now.Year;
 
-        //SaveData.currentSave.fileCreationDate = "Aug. 2nd, 2017";
         SaveData.currentSave.fileCreationDate = date;
+        SaveData.currentSave.startTime = System.DateTime.UtcNow;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
+        //SaveData.currentSave.fileCreationDate = new System.DateTime(2015, 2, 14); //"Feb. 14th, 2015";
         SaveData.currentSave.playerScore = 481;
         SaveData.currentSave.pokeDex = 0;
         SaveData.currentSave.playerHours = 0;
@@ -303,10 +339,10 @@ public class GlobalVariables : MonoBehaviour
             true, true, false, false, false, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.gymsBeatTime = new string[]
-        {
-            "Apr. 27th, 2017", "Apr. 30th, 2017", null, null, null, date,
-            null, null, null, null, null, null
+        SaveData.currentSave.gymsBeatTime = new System.DateTime?[]
+          {
+            new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
+              null, null, null, null, null, null
         };
         ////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -326,6 +362,7 @@ public class GlobalVariables : MonoBehaviour
                     //if fading in to the scene.
                     Player.transform.position = global.playerPosition;
                     PlayerMovement.player.direction = global.playerDirection;
+                    PlayerMovement.player.mainCamera.orthographic = global.playerOrtho;
                     if (!respawning)
                     {
                         PlayerMovement.player.pauseInput(0.6f);
@@ -349,7 +386,7 @@ public class GlobalVariables : MonoBehaviour
         }
     }
 
-    /// Loads the new scene, placing the player in the correct position.
+    /// Loads the new scene, placing the player in the correct position
     public void Respawn()
     {
         respawning = true;
@@ -368,13 +405,6 @@ public class GlobalVariables : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(SaveData.currentSave.respawnSceneName);
         }
-    }
-
-
-    public void debug(string message)
-    {
-        debugText.text = message;
-        debugTextShadow.text = message;
     }
 
     public void resetFollower()
@@ -397,11 +427,12 @@ public class GlobalVariables : MonoBehaviour
                     else {
                         SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][i].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][i].getLevel() + ")");
                     }
+                    UpdatePresence();
                     i = 6;
                 }
             }
         }
-        Debug.Log("follower: " + PokemonDatabase.getPokemon(FollowerSettings.pokemonID).getName());
+        debug("Follower: " + PokemonDatabase.getPokemon(FollowerSettings.pokemonID).getName());
     }
 
     public void updateResolution()
@@ -453,52 +484,46 @@ public class GlobalVariables : MonoBehaviour
     public void SetRPCState(string state)
     {
         presence.state = state;
-        Debug.Log("Discord: state set to \"" + state + "\"");
-        UpdatePresence();
+        debug("Discord: state set to \"" + state + "\"");
     }
     public void SetRPCDetails(string details)
     {
         presence.details = details;
-        Debug.Log("Discord: details set to \"" + details + "\"");
-        UpdatePresence();
+        debug("Discord: details set to \"" + details + "\"");
     }
     public void SetRPCLargeImageKey(string key, string text)
     {
         presence.largeImageKey = key;
         presence.largeImageText = text;
-        Debug.Log("Discord: large image set to \"" + key + "\", \"" + text + "\"");
-        UpdatePresence();
+        debug("Discord: large image set to \"" + key + "\", \"" + text + "\"");
     }
     public void SetRPCSmallImageKey(string key, string text)
     {
         presence.smallImageKey = key;
         presence.smallImageText = text;
-        Debug.Log("Discord: small image set to \"" + key + "\", \"" + text + "\"");
-        UpdatePresence();
+        debug("Discord: small image set to \"" + key + "\", \"" + text + "\"");
     }
     public void UpdatePresence()
     {
         DiscordRpc.UpdatePresence(ref presence);
-        Debug.Log("Discord: updating presence");
+        debug("Discord: updating presence");
     }
     public void ReadyCallback()
     {
         ++callbackCalls;
-        Debug.Log("Discord: ready");
         debug("Discord: ready");
         onConnect.Invoke();
-        UpdatePresence();
     }
     public void DisconnectedCallback(int errorCode, string message)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: disconnect {0}: {1}", errorCode, message));
+        debug(string.Format("Discord: disconnect {0}: {1}", errorCode, message));
         onDisconnect.Invoke();
     }
 
     public void ErrorCallback(int errorCode, string message)
     {
         ++callbackCalls;
-        Debug.Log(string.Format("Discord: error {0}: {1}", errorCode, message));
+        debug(string.Format("Discord: error {0}: {1}", errorCode, message));
     }
 }

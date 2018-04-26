@@ -11,9 +11,9 @@ public class ServerHandler : MonoBehaviour
         WWW www = new WWW("http://localhost:8080/?token=anonymous&a=connect");
         yield return www;
         if (!string.IsNullOrEmpty(www.error)) {
-            UnityEngine.Debug.Log("Error: " + www.error);
+            GlobalVariables.global.debug("Error: " + www.error);
         } else {
-            UnityEngine.Debug.Log("Connected to service successfully.");
+            GlobalVariables.global.debug("Connected to service successfully.");
         }
     }
 }

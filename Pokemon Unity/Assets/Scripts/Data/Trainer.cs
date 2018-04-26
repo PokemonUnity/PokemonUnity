@@ -31,6 +31,7 @@ public class Trainer : MonoBehaviour
     public int customPrizeMoney = 0;
 
     public bool isFemale = false;
+    public bool doubles = false;
 
     public PokemonInitialiser[] trainerParty = new PokemonInitialiser[1];
     private Pokemon[] party;

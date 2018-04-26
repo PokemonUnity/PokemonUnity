@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<debug>
+    <enable>Are you sure you want to enable Debug \nMode?</enable>
+    <bike>"Toggle Bike"</bike>
+    <freecam>"Free Cam"</freecam>
+    <exit>"Exit Debug"</exit>
+</debug>
+<dialog>
+    <yes>Yes</yes>
+    <no>No</no>
+</dialog>
+<menu>
+    <load>Continue</load>
+    <new>New Game</new>
+    <intro1>Welcome to the world of Pokémon!</intro1>
+</menu>

@@ -706,7 +706,7 @@ public class BagHandler : MonoBehaviour
             while (currentPosition[currentScreen] + currentTopPosition[currentScreen] - 1 >= currentItemList.Length &&
                    loopBreaker > 0)
             {
-                Debug.Log("" + currentItemList.Length + " " + currentPosition[currentScreen] + " " +
+                GlobalVariables.global.debug("" + currentItemList.Length + " " + currentPosition[currentScreen] + " " +
                           (currentTopPosition[currentScreen] - 1));
                 if (currentPosition[currentScreen] > 1)
                 {
@@ -724,7 +724,7 @@ public class BagHandler : MonoBehaviour
                 loopBreaker -= 1;
                 if (loopBreaker == 0)
                 {
-                    Debug.Log("LOOPBREAKER");
+                    GlobalVariables.global.debug("LOOPBREAKER");
                 }
                 updateItemList();
                 updateSelectedItem();
@@ -1371,7 +1371,7 @@ public class BagHandler : MonoBehaviour
                                     int maxQuantity =
                                         Mathf.FloorToInt((float) SaveData.currentSave.playerMoney /
                                                          (float) selectedItem.getPrice());
-                                    Debug.Log(maxQuantity);
+                                    GlobalVariables.global.debug(maxQuantity.ToString());
                                     yield return StartCoroutine(openNumbersBox(selectedItem.getPrice(), maxQuantity));
 
                                     if (shopSelectedQuantity > 0)
@@ -1434,7 +1434,7 @@ public class BagHandler : MonoBehaviour
 
                                 //quantity selection not yet implemented
                                 int maxQuantity = SaveData.currentSave.Bag.getQuantity(selectedItem.getName());
-                                Debug.Log(maxQuantity);
+                                GlobalVariables.global.debug(maxQuantity.ToString());
                                 yield return
                                     StartCoroutine(openNumbersBox(
                                         Mathf.FloorToInt((float) selectedItem.getPrice() / 2f), maxQuantity));
@@ -2577,6 +2577,7 @@ public class BagHandler : MonoBehaviour
                     else {
                         GlobalVariables.global.SetRPCState("Follower: " + currentPokemon.getName() + " (Level " + currentPokemon.getLevel() + ")");
                     } //update rpc state because the pokemon leveled up
+                    GlobalVariables.global.UpdatePresence();
                     removeItem(selectedItem.getName(), 1); //remove item
                     updateSelectedItem();
 
@@ -2616,7 +2617,7 @@ public class BagHandler : MonoBehaviour
                     if (pkmnID == currentPokemon.getID())
                     {
                         string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.getLevel());
-                        Debug.Log(move);
+                        GlobalVariables.global.debug(move);
                         if (!string.IsNullOrEmpty(move) && !currentPokemon.HasMove(move))
                         {
                             yield return StartCoroutine(LearnMove(currentPokemon, move));

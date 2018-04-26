@@ -176,7 +176,7 @@ public class InteractPush : MonoBehaviour
         destinationPosition1 = startPosition + movement;
 
         int direction = 0;
-        //Debug.Log("move: "+movement.x +" "+movement.z);
+        //GlobalVariables.global.debug("move: "+movement.x +" "+movement.z);
         if (Mathf.RoundToInt(movement.x) != 0)
         {
             // moving right or left
@@ -189,7 +189,7 @@ public class InteractPush : MonoBehaviour
             destinationPosition2 = destinationPosition1 + new Vector3(1, 0, 0);
         }
 
-        //Debug.Log("s: "+startPosition +" d1: "+destinationPosition1+" d2: "+destinationPosition2);
+        //GlobalVariables.global.debug("s: "+startPosition +" d1: "+destinationPosition1+" d2: "+destinationPosition2);
 
         //return a list of every collision at xyz position with a spherical radius of 0.4f
         hitColliders =

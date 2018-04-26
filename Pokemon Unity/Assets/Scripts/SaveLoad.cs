@@ -20,6 +20,8 @@ public static class SaveLoad
         {
             if (SaveData.currentSave.getFileIndex() >= 0 && SaveData.currentSave.getFileIndex() < savedGames.Length)
             {
+                SaveData.currentSave.playerTime += SaveData.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+                SaveData.currentSave.lastSave = System.DateTime.UtcNow;// new System.DateTime(,System.DateTimeKind.Utc);
                 savedGames[SaveData.currentSave.getFileIndex()] = SaveData.currentSave;
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");
@@ -31,7 +33,7 @@ public static class SaveLoad
 
     public static bool Load()
     {
-        Debug.Log(Application.persistentDataPath);
+        GlobalVariables.global.debug(Application.persistentDataPath);
         if (File.Exists(Application.persistentDataPath + "/playerData.pkud"))
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -73,7 +75,7 @@ public static class SaveLoad
         bool sGN2 = savedGames[1] == null;
         bool sGN3 = savedGames[2] == null;
 
-        Debug.Log(sGN1.ToString() + ", " + sGN2.ToString() + ", " + sGN3.ToString());
+        GlobalVariables.global.debug(sGN1.ToString() + ", " + sGN2.ToString() + ", " + sGN3.ToString());
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerData.pkud");

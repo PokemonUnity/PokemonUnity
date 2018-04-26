@@ -123,7 +123,7 @@ public class InteractTrainer : MonoBehaviour
         }
         else
         {
-            Debug.Log("no map found for: " + gameObject.name);
+            GlobalVariables.global.debug("no map found for: " + gameObject.name);
         }
 
         if (trainerBehaviour == TrainerBehaviour.Turn)

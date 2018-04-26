@@ -676,7 +676,7 @@ public class Pokemon
     
             for(int i = 0; i < methods.Length; i++){ //check every method
                 if(methods[0] == currentMethodSplit[0]){ //if method name equals current method name...
-                    if (checkEvolutionMethods(currentMethod, evolutionRequirements[i]) == true){ //if an evolution method was satisfied
+                    if (checkEvolutionMethods(currentMethod, evolutionRequirements[i])){ //if an evolution method was satisfied
                         return evolutions[i]; //do not check any others. (This prioritises the evolutions in order first to last)
                     }
                 }
@@ -696,7 +696,7 @@ public class Pokemon
             //if an evolution method was satisfied, return true
             if (checkEvolutionMethods(currentMethod, evolutionRequirements[i]))
             {
-                Debug.Log("Relevant ID[" + i + "] = " + evolutions[i]);
+                GlobalVariables.global.debug("Relevant ID[" + i + "] = " + evolutions[i]);
                 return evolutions[i];
             }
         }
@@ -715,11 +715,11 @@ public class Pokemon
             //if an evolution method was satisfied, return true
             if (checkEvolutionMethods(currentMethod, evolutionRequirements[i]))
             {
-                //		Debug.Log("All Checks Passed");
+                //		GlobalVariables.global.debug("All Checks Passed");
                 return true;
             }
         }
-        //Debug.Log("Check Failed");
+        //GlobalVariables.global.debug("Check Failed");
         return false;
     }
 
@@ -739,7 +739,7 @@ public class Pokemon
         for (int i = 0; i < methods.Length; i++)
         {
             //for every method for the currently checked evolution
-            //Debug.Log(evolutionRequirements +" | "+ currentMethodSplit[0] +" "+ methods[i] +" "+ parameters[i]);
+            //GlobalVariables.global.debug(evolutionRequirements +" | "+ currentMethodSplit[0] +" "+ methods[i] +" "+ parameters[i]);
             if (methods[i] == "Level")
             {
                 //if method contains a Level requirement
@@ -1579,7 +1579,7 @@ public class Pokemon
                 //Attempt to load Base Variant (possibly Shiny)
                 animation = Resources.LoadAll<Sprite>(folder + "/" + convertLongID(ID) + shiny + "/");
             }
-            //	else{ Debug.Log("Female Variant Found"); }
+            //	else{ GlobalVariables.global.debug("Female Variant Found"); }
         }
         else
         {
@@ -1681,7 +1681,7 @@ public class Pokemon
                 //Attempt to load Base Variant (possibly Shiny)
                 animation = Resources.LoadAll<Texture>(folder + "/" + convertLongID(ID) + shiny + "/");
             }
-            //	else{ Debug.Log("Female Variant Found");}
+            //	else{ GlobalVariables.global.debug("Female Variant Found");}
         }
         else
         {

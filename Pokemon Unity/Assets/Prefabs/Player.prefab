@@ -338,7 +338,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660179462373330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 10}
+  m_LocalPosition: {x: 115, y: 3, z: -103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043529022003490}
@@ -871,6 +871,7 @@ MonoBehaviour:
   surfing: 0
   bike: 0
   strength: 0
+  enableJumping: 0
   walkSpeed: 0.3
   runSpeed: 0.15
   surfSpeed: 0.2
@@ -879,18 +880,27 @@ MonoBehaviour:
   canInput: 1
   increment: 1
   followerScript: {fileID: 0}
+  openClip: {fileID: 8300000, guid: 8d6f822eca4eef34388bf98f099fe2fa, type: 3}
   hitBox: {fileID: 0}
   currentMap: {fileID: 0}
   destinationMap: {fileID: 0}
   accessedMapSettings: {fileID: 0}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 20155787583709044}
   mainCameraDefaultPosition: {x: 0, y: 0, z: 0}
   mainCameraDefaultFOV: 0
+  HighResCameraR: {fileID: 8400000, guid: cd242841270eac544971f155df6b244c, type: 2}
+  HighResCamera:
+  - {fileID: 2100000, guid: 621cf4984e4a3a24d85c2e04c90db345, type: 2}
+  CameraR: {fileID: 8400000, guid: bac0ace83fd707c46a56a40586fb629e, type: 2}
+  Camera:
+  - {fileID: 2100000, guid: 5ea4af97d34e7d144b1281d0914dc37f, type: 2}
+  CamPos: {x: 0, y: 0, z: 0}
   walkFPS: 7
   runFPS: 12
   bumpClip: {fileID: 8300000, guid: 90055a0bb952fde4586a71609206b104, type: 3}
   jumpClip: {fileID: 8300000, guid: cec26dd31c658c943a8d9510121865c2, type: 3}
   landClip: {fileID: 8300000, guid: 27e072d1e67b2d94494745d555e51276, type: 3}
+  selectClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
 --- !u!124 &124871008916661756
 Behaviour:
   m_ObjectHideFlags: 1

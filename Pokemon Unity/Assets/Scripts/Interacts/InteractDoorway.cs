@@ -39,6 +39,7 @@ public class InteractDoorway : MonoBehaviour
     public string transferScene; //If blank, will transfer to the currently loaded scene
     public Vector3 transferPosition;
     public int transferDirection;
+    public bool orthographic = false;
     public string examineText;
     public string lockedExamineText;
 
@@ -124,7 +125,6 @@ public class InteractDoorway : MonoBehaviour
             }
         }
     }
-
     public IEnumerator bump()
     {
         if (!isLocked && !PlayerMovement.player.isInputPaused())
@@ -159,8 +159,8 @@ public class InteractDoorway : MonoBehaviour
                         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
                             yRotation + (90f * increment), transform.localEulerAngles.z);
                         PlayerMovement.player.mainCamera.fieldOfView = PlayerMovement.player.mainCameraDefaultFOV -
-                                                                       ((PlayerMovement.player.mainCameraDefaultFOV /
-                                                                         10f) * increment);
+                            ((PlayerMovement.player.mainCameraDefaultFOV /
+                            10f) * increment);
                         yield return null;
                     }
 
@@ -208,7 +208,7 @@ public class InteractDoorway : MonoBehaviour
                 StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.slowedSpeed));
                 if (!dontFadeMusic)
                 {
-                    BgmHandler.main.PlayMain(null, 0);
+                    BgmHandler.main.PlayMain(null, 0, false);
                 }
                 yield return new WaitForSeconds(fadeTime);
 
@@ -228,6 +228,7 @@ public class InteractDoorway : MonoBehaviour
                     GlobalVariables.global.playerPosition = transferPosition;
                     GlobalVariables.global.playerDirection = transferDirection;
                     GlobalVariables.global.playerForwardOnLoad = movesForward;
+                    GlobalVariables.global.playerOrtho = orthographic;
                     GlobalVariables.global.fadeIn = true;
                     UnityEngine.SceneManagement.SceneManager.LoadScene(transferScene);
                 }
@@ -250,7 +251,7 @@ public class InteractDoorway : MonoBehaviour
                     GlobalVariables.global.fadeIn = true;
                     //SceneTransition.gameScene.FadeIn();
                     StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.slowedSpeed));
-
+                    PlayerMovement.player.mainCamera.orthographic = orthographic;
                     yield return new WaitForSeconds(0.1f);
                     PlayerMovement.player.pauseInput(0.2f);
                 }
@@ -264,5 +265,98 @@ public class InteractDoorway : MonoBehaviour
         lockedPosition = PlayerMovement.player.mainCamera.transform.position;
         yield return new WaitForSeconds(1f);
         lockPlayerCamera = false;
+    }
+
+    //custom event executables:
+    public IEnumerator openDoor()
+    {
+        if (enterSound != null)
+        {
+            if (!enterSound.isPlaying)
+            {
+                enterSound.volume = PlayerPrefs.GetFloat("sfxVolume");
+                enterSound.Play();
+            }
+        }
+
+        if (entranceStyle == EntranceStyle.SWINGRIGHT)
+        {
+            float increment = 0f;
+            float speed = 0.25f;
+            float yRotation = transform.localEulerAngles.y;
+            while (increment < 1)
+            {
+                increment += (1f / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
+                    yRotation + (90f * increment), transform.localEulerAngles.z);
+                yield return null;
+            }
+        }
+        else if (entranceStyle == EntranceStyle.SLIDE)
+        {
+            float increment = 0f;
+            float speed = 0.25f;
+            while (increment < 1)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
+                    1f - (0.92f * increment));
+                yield return null;
+            }
+        }
+    }
+
+    public IEnumerator closeDoor()
+    {
+        if (enterSound != null)
+        {
+            if (!enterSound.isPlaying)
+            {
+                enterSound.volume = PlayerPrefs.GetFloat("sfxVolume");
+                enterSound.Play();
+            }
+        }
+
+        if (entranceStyle == EntranceStyle.SWINGRIGHT)
+        {
+            float increment = 0f;
+            float speed = 0.25f;
+            float yRotation = transform.localEulerAngles.y;
+            while (increment < 1)
+            {
+                increment += (1f / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
+                    yRotation - (90f * increment), transform.localEulerAngles.z); //???
+                yield return null;
+            }
+        }
+        else if (entranceStyle == EntranceStyle.SLIDE)
+        {
+            float increment = 0f;
+            float speed = 0.25f;
+            while (increment < 1)
+            {
+                increment += (1 / speed) * Time.deltaTime;
+                if (increment > 1)
+                {
+                    increment = 1;
+                }
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
+                    1f + (0.92f * increment));
+                yield return null;
+            }
+        }
     }
 }

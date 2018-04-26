@@ -116,7 +116,7 @@ public class NPCHandler : MonoBehaviour
         }
         else
         {
-            Debug.Log("no map found for: " + gameObject.name);
+            GlobalVariables.global.debug("no map found for: " + gameObject.name);
         }
 
 

@@ -149,7 +149,7 @@ public static class ItemDatabase
         {
             debug += cleanedResult[i].getName() + ", ";
         }
-        Debug.Log(debug);
+        GlobalVariables.global.debug(debug);
 
         return cleanedResult;
     }
@@ -176,7 +176,7 @@ public static class ItemDatabase
         {
             debug += cleanedResult[i].getName() + ", ";
         }
-        Debug.Log(debug);
+        GlobalVariables.global.debug(debug);
 
         return cleanedResult;
     }

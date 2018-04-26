@@ -5,8 +5,11 @@ using System.Collections;
 
 public class MapCollider : MonoBehaviour
 {
-    //Collision Map String provided by DeKay's Collision Map Compiler for Pokémon Essentials
+    //Collision Map String providers:
+        //DeKay's Collision Map Compiler (Requires Pokémon Essentials)
+        //TeamPopplio's Tiled2PkUnity (Requires Tiled)
     //See TOOLS folder for details
+    //Voluntary documentation can be found at https://www.gitbook.com/book/pokemonunity/pokemon-unity
 
     public string shorthandCollisionMap;
     public int width;
@@ -239,15 +242,15 @@ public class MapCollider : MonoBehaviour
         {
             if (map1Hit.collider == null && map2Hit.collider == null)
             {
-                Debug.Log("DEBUG: No Map1Hit or Map2Hit!");
+                GlobalVariables.global.debug("DEBUG: No Map1Hit or Map2Hit!");
             }
             else if (map1Hit.collider == null)
             {
-                Debug.Log("DEBUG: No Map1Hit!");
+                GlobalVariables.global.debug("DEBUG: No Map1Hit!");
             }
             else
             {
-                Debug.Log("DEBUG: No Map1Hit!");
+                GlobalVariables.global.debug("DEBUG: No Map1Hit!");
             }
 
             return 0;

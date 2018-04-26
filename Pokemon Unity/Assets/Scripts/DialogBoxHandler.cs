@@ -105,7 +105,7 @@ public class DialogBoxHandler : MonoBehaviour
 				increment = 1;}
 			DialogBoxText.pixelOffset = new Vector2(14, (DialogBoxText.pixelOffset.y+distance)*increment);
             if(DialogBoxText.pixelOffset.y == originalValue+disableRender){
-                Debug.Log(text);
+                GlobalVariables.global.debug(text);
                 text[0] = " ";
                 DialogBoxText.text = string.Join("\n", text);
             }
@@ -407,15 +407,15 @@ public class DialogBoxHandler : MonoBehaviour
     public IEnumerator scrollText(float scrollSpeed) 
     {
         SfxHandler.Play(selectClip);
-        float textPosDestination = DialogBoxText.pixelOffset.y + 14f; //the box must be scrolled up 14
+        float lineSkip = 14f;
+        float textPosDestination = DialogBoxText.pixelOffset.y + lineSkip; //the box must be scrolled up 14
         while (DialogBoxText.pixelOffset.y < textPosDestination)
         {
             if (Mathf.RoundToInt(DialogBoxText.pixelOffset.y) == textPosDestination - 5)
             {
                 //if text is about to spill over the top
-                string[] textMod = DialogBoxText.text.Split("\n"[0]); //remove the top line of text.
-                DialogBoxText.text = textMod[1] + "\n"; //new line for using drawTextSilent
-                Debug.Log("scrolling text");
+                string[] textMod = DialogBoxText.text.Split("\n"[0]); //remove the top line of text.        
+                DialogBoxText.text = textMod[1]+"\n"; //new line for using drawTextSilent
                 DialogBoxTextShadow.text = DialogBoxText.text;
                 textPosDestination -= 14f; //reduce destination and position by 14 to account for the removed line. 
                 DialogBoxText.pixelOffset = new Vector2(DialogBoxText.pixelOffset.x, DialogBoxText.pixelOffset.y - 14f);

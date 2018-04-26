@@ -6,9 +6,7 @@ using System.Collections;
 public class BumpLedge : MonoBehaviour
 {
     public int movementDirection = 2;
-
-
-    private IEnumerator bump()
+    public IEnumerator bump()
     {
         if (PlayerMovement.player.direction == movementDirection)
         {

@@ -65,7 +65,7 @@ public class NonResettingHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
+                    GlobalVariables.global.debug("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
                 }
             }
             for (int i = 0; i < items.Length; i++)
@@ -79,7 +79,7 @@ public class NonResettingHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NonResettingList Inconsistancy for" + items[i].name);
+                    GlobalVariables.global.debug("NonResettingList Inconsistancy for" + items[i].name);
                 }
             }
             for (int i = 0; i < events.Length; i++)
@@ -90,7 +90,7 @@ public class NonResettingHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("NonResettingList Inconsistancy for" + events[i].name);
+                    GlobalVariables.global.debug("NonResettingList Inconsistancy for" + events[i].name);
                 }
             }
         }

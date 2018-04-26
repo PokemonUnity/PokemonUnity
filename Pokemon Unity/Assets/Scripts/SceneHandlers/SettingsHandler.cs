@@ -307,7 +307,7 @@ public class SettingsHandler : MonoBehaviour
                 PlayerPrefs.SetInt("customSprites", selectedOptionIndex[5]);
                 SaveData.currentSave.playerOutfit = "hgss";
                 //PlayerMovement.player.updateAnimation("walk", 7);
-                //Debug.Log("Disabled custom sprites");
+                //GlobalVariables.global.debug("Disabled custom sprites");
             }
             else
             {
@@ -315,7 +315,7 @@ public class SettingsHandler : MonoBehaviour
                 SaveData.currentSave.playerOutfit = "custom";
                 //PlayerMovement.player.updateAnimation("walk", 7);
                 customSpritesHighlight.pixelOffset = new Vector2(217, 79);
-                //Debug.Log("Enabled custom sprites");
+                //GlobalVariables.global.debug("Enabled custom sprites");
             }
         }
         else if (selectedOption == 6)

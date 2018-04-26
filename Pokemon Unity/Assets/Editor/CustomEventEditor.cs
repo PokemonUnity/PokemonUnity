@@ -8,13 +8,17 @@ public class CustomEventEditor : Editor
     //Event Trees Arrays
     public SerializedProperty
         interact_Prop,
-        bump_Prop;
+        bump_Prop,
+        internal_Prop,
+        demo_Prop;
 
     void OnEnable()
     {
         // Setup the SerializedProperties
         interact_Prop = serializedObject.FindProperty("interactEventTrees");
         bump_Prop = serializedObject.FindProperty("bumpEventTrees");
+        internal_Prop = serializedObject.FindProperty("internalEventTrees");
+        demo_Prop = serializedObject.FindProperty("demoEventTrees");
     }
 
     //Event Trees
@@ -38,7 +42,8 @@ public class CustomEventEditor : Editor
         object1_Prop,
         sound_Prop,
         runSimul_Prop,
-        sprite_Prop;
+        sprite_Prop,
+        smOptions_Prop;
 
     private bool interactUnfold = false;
     private bool[] interactTreesUnfold = new bool[1];
@@ -58,13 +63,32 @@ public class CustomEventEditor : Editor
         new bool[1], new bool[1], new bool[1], new bool[1], new bool[1], new bool[1]
     };
 
+    private bool internalUnfold = false;
+    private bool[] internalTreesUnfold = new bool[1];
+
+    private bool[][] internalEventsUnfold = new bool[][]
+    {
+        new bool[1], new bool[1], new bool[1], new bool[1], new bool[1], new bool[1],
+        new bool[1], new bool[1], new bool[1], new bool[1], new bool[1], new bool[1]
+    };
+
+    private bool demoUnfold = false;
+    private bool[] demoTreesUnfold = new bool[1];
+
+    private bool[][] demoEventsUnfold = new bool[][]
+    {
+        new bool[1], new bool[1], new bool[1], new bool[1], new bool[1], new bool[1],
+        new bool[1], new bool[1], new bool[1], new bool[1], new bool[1], new bool[1]
+    };
+
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
         EditorGUI.indentLevel = 0;
-
+        serializedObject.FindProperty("busyOnCall").boolValue = EditorGUILayout.Toggle(new GUIContent("Set as busy?"),
+            serializedObject.FindProperty("busyOnCall").boolValue);
         interactUnfold = EditorGUILayout.Foldout(interactUnfold,
             new GUIContent("Interact Event Trees (" + interact_Prop.arraySize + ")"));
         if (interactUnfold)
@@ -233,6 +257,179 @@ public class CustomEventEditor : Editor
         /* Draw a line */
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
+        EditorGUI.indentLevel = 0;
+
+        internalUnfold = EditorGUILayout.Foldout(internalUnfold,
+            new GUIContent("Internal Event Trees (" + internal_Prop.arraySize + ")"));
+
+        if (internalUnfold)
+        {
+            EditorGUI.indentLevel = 1;
+            internal_Prop.arraySize = EditorGUILayout.IntField(new GUIContent("Number of Trees"),
+                internal_Prop.arraySize);
+            if (internal_Prop.arraySize > 12)
+            {
+                //set max trees at 12
+                internal_Prop.arraySize = 12;
+            }
+            internalTreesUnfold = BoolArrayMatchToProp(internalTreesUnfold, internal_Prop);
+
+            //Draw each tree either folded or unfolded
+            int arrayInitialLength = internal_Prop.arraySize;
+            for (int tNo = 0; tNo < arrayInitialLength && tNo < internal_Prop.arraySize; tNo++)
+            {
+                EditorGUI.indentLevel = 2;
+                //Set the Current Serialized Object to the relative one in the list
+                SerializedProperty currentSTree = internal_Prop.GetArrayElementAtIndex(tNo);
+
+                treeName_Prop = currentSTree.FindPropertyRelative("treeName");
+                events_Prop = currentSTree.FindPropertyRelative("events");
+
+                //Get current tree's name
+                string treeName = (tNo == 0)
+                    ? "T0: Default (" + events_Prop.arraySize + ")"
+                    : "T" + tNo + " (" + events_Prop.arraySize + ")";
+                if (tNo > 0 && treeName_Prop.stringValue != null)
+                {
+                    if (treeName_Prop.stringValue.Length > 0)
+                    {
+                        treeName = "T" + tNo + ": " + treeName_Prop.stringValue + " (" + events_Prop.arraySize + ")";
+                    }
+                }
+
+                //Display a foldout for the current tree
+                internalTreesUnfold[tNo] = EditorGUILayout.Foldout(internalTreesUnfold[tNo], new GUIContent(treeName));
+                if (internalTreesUnfold[tNo])
+                {
+                    EditorGUI.indentLevel = 3;
+                    if (tNo > 0)
+                    {
+                        treeName_Prop.stringValue = EditorGUILayout.TextField(new GUIContent("Name of Tree"),
+                            treeName_Prop.stringValue);
+                    }
+                    if (treeName_Prop.stringValue == "Default")
+                    {
+                        treeName_Prop.stringValue = null;
+                    }
+
+                    events_Prop.arraySize = EditorGUILayout.IntField(new GUIContent("Number of Events"),
+                        events_Prop.arraySize);
+                    internalEventsUnfold[tNo] = BoolArrayMatchToProp(internalEventsUnfold[tNo], events_Prop);
+
+                    EditorGUILayout.Space();
+
+                    //Draw each event either folded or unfolded
+                    int eventArrayInitialLength = events_Prop.arraySize;
+                    for (int eNo = 0; eNo < eventArrayInitialLength && eNo < events_Prop.arraySize; eNo++)
+                    {
+                        //Set the Current Serialized Object to the relative one in the list
+                        SerializedProperty currentSEvent = events_Prop.GetArrayElementAtIndex(eNo);
+
+                        //Display a foldout for the current event
+                        internalEventsUnfold[tNo][eNo] = EditorGUILayout.Foldout(internalEventsUnfold[tNo][eNo],
+                            new GUIContent("#" + (eNo + 1) + ": " + GetEventDescription(currentSEvent)));
+                        if (internalEventsUnfold[tNo][eNo])
+                        {
+                            DrawUnfoldedEventButtons(events_Prop, internalEventsUnfold[tNo], eNo);
+                            UpdateUnfoldedEventData(currentSEvent);
+                        }
+                    }
+                }
+
+                EditorGUILayout.Space();
+            }
+        }
+
+        EditorGUILayout.Space();
+        /* Draw a line */
+        GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
+
+        EditorGUI.indentLevel = 0;
+
+        demoUnfold = EditorGUILayout.Foldout(demoUnfold,
+            new GUIContent("Demo Event Trees (" + demo_Prop.arraySize + ")"));
+
+        if (demoUnfold)
+        {
+            EditorGUI.indentLevel = 1;
+            demo_Prop.arraySize = EditorGUILayout.IntField(new GUIContent("Number of Trees"),
+                demo_Prop.arraySize);
+            if (demo_Prop.arraySize > 12)
+            {
+                //set max trees at 12
+                demo_Prop.arraySize = 12;
+            }
+            demoTreesUnfold = BoolArrayMatchToProp(demoTreesUnfold, demo_Prop);
+            //Draw each tree either folded or unfolded
+            int arrayInitialLength = demo_Prop.arraySize;
+            for (int tNo = 0; tNo < arrayInitialLength && tNo < demo_Prop.arraySize; tNo++)
+            {
+                EditorGUI.indentLevel = 2;
+                //Set the Current Serialized Object to the relative one in the list
+                SerializedProperty currentSTree = demo_Prop.GetArrayElementAtIndex(tNo);
+
+                treeName_Prop = currentSTree.FindPropertyRelative("treeName");
+                events_Prop = currentSTree.FindPropertyRelative("events");
+
+                //Get current tree's name
+                string treeName = (tNo == 0)
+                    ? "T0: Default (" + events_Prop.arraySize + ")"
+                    : "T" + tNo + " (" + events_Prop.arraySize + ")";
+                if (tNo > 0 && treeName_Prop.stringValue != null)
+                {
+                    if (treeName_Prop.stringValue.Length > 0)
+                    {
+                        treeName = "T" + tNo + ": " + treeName_Prop.stringValue + " (" + events_Prop.arraySize + ")";
+                    }
+                }
+
+                //Display a foldout for the current tree
+                demoTreesUnfold[tNo] = EditorGUILayout.Foldout(demoTreesUnfold[tNo], new GUIContent(treeName));
+                if (demoTreesUnfold[tNo])
+                {
+                    EditorGUI.indentLevel = 3;
+                    if (tNo > 0)
+                    {
+                        treeName_Prop.stringValue = EditorGUILayout.TextField(new GUIContent("Name of Tree"),
+                            treeName_Prop.stringValue);
+                    }
+                    if (treeName_Prop.stringValue == "Default")
+                    {
+                        treeName_Prop.stringValue = null;
+                    }
+
+                    events_Prop.arraySize = EditorGUILayout.IntField(new GUIContent("Number of Events"),
+                        events_Prop.arraySize);
+                    demoEventsUnfold[tNo] = BoolArrayMatchToProp(demoEventsUnfold[tNo], events_Prop);
+
+                    EditorGUILayout.Space();
+
+                    //Draw each event either folded or unfolded
+                    int eventArrayInitialLength = events_Prop.arraySize;
+                    for (int eNo = 0; eNo < eventArrayInitialLength && eNo < events_Prop.arraySize; eNo++)
+                    {
+                        //Set the Current Serialized Object to the relative one in the list
+                        SerializedProperty currentSEvent = events_Prop.GetArrayElementAtIndex(eNo);
+
+                        //Display a foldout for the current event
+                        demoEventsUnfold[tNo][eNo] = EditorGUILayout.Foldout(demoEventsUnfold[tNo][eNo],
+                            new GUIContent("#" + (eNo + 1) + ": " + GetEventDescription(currentSEvent)));
+                        if (demoEventsUnfold[tNo][eNo])
+                        {
+                            DrawUnfoldedEventButtons(events_Prop, demoEventsUnfold[tNo], eNo);
+                            UpdateUnfoldedEventData(currentSEvent);
+                        }
+                    }
+                }
+
+                EditorGUILayout.Space();
+            }
+        }
+
+        EditorGUILayout.Space();
+        /* Draw a line */
+        GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
+
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -283,6 +480,7 @@ public class CustomEventEditor : Editor
         sound_Prop = currentSEvent.FindPropertyRelative("sound");
         runSimul_Prop = currentSEvent.FindPropertyRelative("runSimultaneously");
         sprite_Prop = currentSEvent.FindPropertyRelative("sprite");
+        smOptions_Prop = currentSEvent.FindPropertyRelative("smOptions");
     }
 
     private string GetEventDescription(SerializedProperty currentSEvent)
@@ -450,7 +648,9 @@ public class CustomEventEditor : Editor
                 break;
 
             case CustomEventDetails.CustomEventType.TrainerBattle:
-                eventDescription = "Battle with ";
+                if (bool1_Prop.boolValue)
+                    eventDescription = "Double Battle with ";
+                else eventDescription = "Battle with ";
                 eventDescription += (object0_Prop.objectReferenceValue != null)
                     ? object0_Prop.objectReferenceValue.name + "\""
                     : "null\"";
@@ -494,8 +694,13 @@ public class CustomEventEditor : Editor
         {
             case CustomEventDetails.CustomEventType.Dialog:
                 strings_Prop.arraySize = EditorGUILayout.IntField(new GUIContent("Lines"), strings_Prop.arraySize);
-                EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Scroll lines?"));
-                EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Scroll speed"));
+                EditorGUILayout.PropertyField(bool1_Prop, new GUIContent("No input?"));
+                if(strings_Prop.arraySize > 1)
+                {
+                    EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Scroll lines?"));
+                    if(bool0_Prop.boolValue)
+                        EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Scroll speed"));
+                }
                 EditorGUILayout.Space();
                 for (int i = 0; i < strings_Prop.arraySize; i++)
                 {
@@ -717,6 +922,7 @@ public class CustomEventEditor : Editor
 
             case CustomEventDetails.CustomEventType.TrainerBattle:
                 EditorGUILayout.PropertyField(object0_Prop, new GUIContent("Trainer Script"));
+                EditorGUILayout.PropertyField(bool1_Prop, new GUIContent("Double Battle?"));
                 EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Loss Allowed?"));
                 if (bool0_Prop.boolValue)
                 {
@@ -736,14 +942,20 @@ public class CustomEventEditor : Editor
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(2), new GUIContent("Z"));
                 EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Speed"));
 			    break;
+
             case CustomEventDetails.CustomEventType.Exclaim:
                 EditorGUILayout.PropertyField(runSimul_Prop, new GUIContent("Run Simultaneously"));
                 EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Wait For Seconds"));
                 EditorGUILayout.PropertyField(object0_Prop, new GUIContent("Character"));
                 EditorGUILayout.PropertyField(sprite_Prop, new GUIContent("Exclaim Sprite"));
                 EditorGUILayout.PropertyField(sound_Prop, new GUIContent("Exclaim SFX"));
-
 			    break;
+
+            case CustomEventDetails.CustomEventType.Execute:
+                EditorGUILayout.PropertyField(object0_Prop, new GUIContent("Game Object"));
+                EditorGUILayout.PropertyField(string0_Prop, new GUIContent("Execute Message"));
+                EditorGUILayout.PropertyField(smOptions_Prop, new GUIContent("Options"));
+                break;
         }
 
         /* Draw a line */

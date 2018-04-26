@@ -83,8 +83,6 @@ public class MainMenuHandler : MonoBehaviour {
 	}
 
 	void Start(){
-		GlobalVariables.global.SetRPCDetails("In the Main Menu");
-		GlobalVariables.global.SetRPCLargeImageKey("main_menu","Main Menu");
 		StartCoroutine(control());
 	}
 
@@ -258,31 +256,66 @@ public class MainMenuHandler : MonoBehaviour {
 				transform.Find("Settings").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
 				
 			}
-			if(transform.Find("FileData").position == new Vector3(0.5f, transform.Find("").position.y, transform.Find("FileData").position.z) || newGame == true) {
+			if(transform.Find("FileData").position == new Vector3(0.5f, transform.Find("").position.y, transform.Find("FileData").position.z) || newGame) {
 				if(!newGame) {
 					yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
 					transform.Find("OpeningLecture").gameObject.SetActive(true);
 					yield return StartCoroutine(ScreenFade.main.Fade(true, 0f));
 				}
 				GlobalVariables.global.SetRPCDetails("Starting a new game...");
+				GlobalVariables.global.UpdatePresence();
 				Dialog.drawDialogBox();
 				yield return Dialog.StartCoroutine("drawText","...\n...");
 				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
 				Dialog.drawDialogBox();
+				System.TimeSpan now = System.DateTime.Now.TimeOfDay;
 
-				yield return Dialog.StartCoroutine("drawText","Hmm... Intresting...\n...");
-				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
-				Dialog.drawDialogBox();
+				if ((now >= new System.TimeSpan(4, 0, 0)) && (now < new System.TimeSpan(10, 59, 0)))
+				{ //morning
+					yield return Dialog.StartCoroutine("drawText","Yaaaaawn...\n...");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+					Dialog.drawDialogBox();
+					yield return Dialog.StartCoroutine("drawText","Huh? It's already become so\nbright outside!");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				}
+				else if ((now >= new System.TimeSpan(11, 0, 0)) && (now < new System.TimeSpan(15, 59, 0)))
+				{ //daytime
+					yield return Dialog.StartCoroutine("drawText","Yaaaaawn...\n...");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+					Dialog.drawDialogBox();
+					yield return Dialog.StartCoroutine("drawText","Huh? What?! Is it already that late?!\nOh no! I overslept!");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				}
+				else if ((now >= new System.TimeSpan(16, 0, 0)) && (now < new System.TimeSpan(18, 59, 0)))
+				{ //twilight
+					yield return Dialog.StartCoroutine("drawText","Hmm. Looks like the sun is descending\nin the sky...");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+					Dialog.drawDialogBox();
+					yield return Dialog.StartCoroutine("drawText","...So this would be what is called\n\"twilight,\" wouldn't it?");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				}
+				else if ((now >= new System.TimeSpan(0, 0, 0)) && (now < new System.TimeSpan(3, 59, 0)))
+				{ //midnight
+					yield return Dialog.StartCoroutine("drawText","Yaaaaawn...\n...");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+					Dialog.drawDialogBox();
+					yield return Dialog.StartCoroutine("drawText","Huh? A guest?\nAt this hour?");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				}
+				else
+				{ //night, or failsafe if the time is somehow not working
+					yield return Dialog.StartCoroutine("drawText","Hmm... Intresting...\n...");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+					Dialog.drawDialogBox();
+					yield return Dialog.StartCoroutine("drawText","Huh? Oh! Excuse me, sorry!\nI was just reading this book here.");
+					while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
+				}
 
-				yield return Dialog.StartCoroutine("drawText","Huh? Oh! Excuse me, sorry!\nI was just reading this book here.");
-				while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){yield return null;}
 				Dialog.undrawDialogBox();
-				
 				yield return StartCoroutine(ScreenFade.main.Fade(false, 0f));
 				transform.Find("OpeningLecture").Find("Background").GetComponent<GUITexture>().color = new UnityEngine.Color(0.5f,0.5f,0.5f);
 				transform.Find("OpeningLecture").Find("Professor").gameObject.SetActive(true);
-				BgmHandler.main.PlayMain(null, 0);
-				BgmHandler.main.PlayMain(professorMusic, 0);
+				BgmHandler.main.PlayMain(professorMusic, 0, true);
 				yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 				Dialog.drawDialogBox();
 
@@ -354,7 +387,7 @@ public class MainMenuHandler : MonoBehaviour {
 				Dialog.drawDialogBox();
 				yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 				
-				BgmHandler.main.PlayMain(null, 0);
+				BgmHandler.main.PlayMain(null, 0, false);
 				SaveData.currentSave = new SaveData(SaveLoad.getSavedGamesCount());
 
 				GlobalVariables.global.CreateFileData(playerName, gender); 
@@ -362,21 +395,22 @@ public class MainMenuHandler : MonoBehaviour {
 				GlobalVariables.global.playerPosition = new Vector3(79,0,31);
 				GlobalVariables.global.playerDirection = 2;
 				GlobalVariables.global.fadeIn = true;
-				UnityEngine.SceneManagement.SceneManager.LoadScene("indoorsNW");
+				GlobalVariables.global.playerOrtho = true; //the player's house is made to be orthographic
 				
 				if(PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() == SaveData.currentSave.PC.boxes[0][0].getName()){
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
+					GlobalVariables.global.SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
 				}
 				else {
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
+					GlobalVariables.global.SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
 				}
+				UnityEngine.SceneManagement.SceneManager.LoadScene("indoorsNW");
+				//presence will update when the player loads the indoors scene
 			}
 			yield return null;
 		}
 	}
-
 	private IEnumerator openAnim(){
-		BgmHandler.main.PlayMain(null, 0);
+		BgmHandler.main.PlayMain(null, 0, false);
 		float scrollSpeed = 0.5f;
 		float increment = 0;
 		while (increment < 1){
@@ -390,20 +424,19 @@ public class MainMenuHandler : MonoBehaviour {
 			if(transform.Find("FileData").position == new Vector3(0.5f, transform.Find("FileData").position.y, transform.Find("FileData").position.z)) {
 
 				yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-				SaveData.currentSave = SaveLoad.savedGames[selectedFile];
-
-				Debug.Log(SaveLoad.savedGames[0]);
-				Debug.Log(SaveLoad.savedGames[1]);
-				Debug.Log(SaveLoad.savedGames[2]);
+				GlobalVariables.global.debug(SaveLoad.savedGames[0].ToString());
+				//GlobalVariables.global.debug(SaveLoad.savedGames[1].ToString());
+				//GlobalVariables.global.debug(SaveLoad.savedGames[2].ToString());
+				GlobalVariables.global.debug(SaveData.currentSave.playerPosition.v3.ToString());
 				GlobalVariables.global.playerPosition = SaveData.currentSave.playerPosition.v3;
 				GlobalVariables.global.playerDirection = SaveData.currentSave.playerDirection;
+				GlobalVariables.global.playerOrtho = SaveData.currentSave.playerOrtho;
 				if(PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() == SaveData.currentSave.PC.boxes[0][0].getName()){
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
+					GlobalVariables.global.SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
 				}
 				else {
-					GlobalVariables.global.SetRPCDetails("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
+					GlobalVariables.global.SetRPCState("Follower: " + SaveData.currentSave.PC.boxes[0][0].getName() + " (" + PokemonDatabase.getPokemon(SaveData.currentSave.PC.boxes[0][0].getID()).getName() + ", Level " + SaveData.currentSave.PC.boxes[0][0].getLevel().ToString() + ")");
 				}
-					
 				UnityEngine.SceneManagement.SceneManager.LoadScene(SaveData.currentSave.levelName);
 				//yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 			}
@@ -413,10 +446,10 @@ public class MainMenuHandler : MonoBehaviour {
 
 	public IEnumerator control(){
 		int fileCount = SaveLoad.getSavedGamesCount();
-
+		GlobalVariables.global.SetRPCLargeImageKey("main_menu","Main Menu");
 		if(fileCount == 0){
 			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
-			BgmHandler.main.PlayMain(menuBGM, 0);
+			BgmHandler.main.PlayMain(menuBGM, 0, true);
 			newGame = true;
 			importantThings.SetActive(true);
 			updateButton(1);
@@ -438,28 +471,27 @@ public class MainMenuHandler : MonoBehaviour {
 			yield return StartCoroutine("openAnimNewGame");
 		}
 		else{
+			GlobalVariables.global.SetRPCDetails("In the Main Menu");
+			GlobalVariables.global.UpdatePresence();
 			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
-			BgmHandler.main.PlayMain(menuBGM, 0);
+			BgmHandler.main.PlayMain(menuBGM, 0, true);
 			updateButton(0);
 			updateFile(0);
 
 			StartCoroutine(animateIcons());
 
-			if(fileCount == 1){
+			if(fileCount == 1)
 				fileNumbersText.text = "File     1";
-				fileNumbersTextShadow.text = "File     1";}
-			else if(fileCount == 2){
+			else if(fileCount == 2)
 				fileNumbersText.text = "File     1   2";
-				fileNumbersTextShadow.text = "File     1   2";}
-			else if(fileCount == 3){
+			else if(fileCount == 3)
 				fileNumbersText.text = "File     1   2   3";
-				fileNumbersTextShadow.text = "File     1   2";}
 		}
 
 		running = true;
 		//bool introup = true;
 		StartCoroutine("animBG");
-		/*if(introup == true) {
+		/*if(introup) {
 			yield return new WaitForSeconds(3.2f);
 			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.2f));
 			yield return new WaitForSeconds(0.2f);
@@ -481,6 +513,7 @@ public class MainMenuHandler : MonoBehaviour {
 			if(Input.GetButtonDown("Select")){
 				if(selectedButton == 0){		//CONTINUE
 					SfxHandler.Play(selectClip);
+					SaveData.currentSave = SaveLoad.savedGames[selectedFile];
 					yield return StartCoroutine("openAnim");
 					
 				}
@@ -506,7 +539,7 @@ public class MainMenuHandler : MonoBehaviour {
 				SfxHandler.Play(selectClip2);
 				float time = Time.time;
 				bool released = false;
-				Debug.Log("Save "+(selectedFile+1)+" will be deleted! Release 'Delete' key to prevent this!");
+				GlobalVariables.global.debug("Save "+(selectedFile+1)+" will be deleted! Release 'Delete' key to prevent this!");
 				while(Time.time < time+4 && !released){
 					if(Input.GetKeyUp(KeyCode.Delete)){
 						released = true;
@@ -517,17 +550,28 @@ public class MainMenuHandler : MonoBehaviour {
 				if(Input.GetKey(KeyCode.Delete) && !released){
 					SfxHandler.Play(selectClip4);
 					SaveLoad.resetSaveGame(selectedFile);
-					Debug.Log("Save "+(selectedFile+1)+" was deleted!");
+					GlobalVariables.global.debug("Save "+(selectedFile+1)+" was deleted!");
 					
 					yield return new WaitForSeconds(1f);
 					
 					Application.LoadLevel(Application.loadedLevel);
 				}
 				else{
-					Debug.Log("'Delete' key was released!");
+					GlobalVariables.global.debug("'Delete' key was released!");
 				}
-			yield return null;
-		}*/
+				yield return null;
+			}*/
+			else if (Input.GetKeyDown("right shift") && GlobalVariables.global.allowDebug){
+				SfxHandler.Play(selectClip);
+				SaveData.currentSave = SaveLoad.savedGames[selectedFile];
+				if(GlobalVariables.global.EnableDebugMode(SaveData.currentSave))
+				{
+					SaveData.currentSave.levelName = "overworldTest";
+					SaveData.currentSave.playerPosition = new SeriV3(new Vector3(-1,0,37));
+					GlobalVariables.global.debug(SaveData.currentSave.levelName);
+					yield return StartCoroutine("openAnim");
+				};
+			}
 			else if(Input.GetKeyDown(KeyCode.Delete)){
 				Dialog.drawDialogBox();
 				yield return Dialog.StartCoroutine("drawText","Are you sure you want to delete Save #"+(selectedFile+1)+"?");
@@ -537,7 +581,7 @@ public class MainMenuHandler : MonoBehaviour {
 				int chosenIndex = Dialog.chosenIndex;
 				if(chosenIndex == 1){
 					SaveLoad.resetSaveGame(selectedFile);
-					Debug.Log("Save "+(selectedFile+1)+" was deleted!");
+					GlobalVariables.global.debug("Save "+(selectedFile+1)+" was deleted!");
 					Dialog.undrawDialogBox();
 					Dialog.undrawChoiceBox();
 					Dialog.drawDialogBox();

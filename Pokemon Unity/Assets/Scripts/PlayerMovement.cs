@@ -6,7 +6,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement player;
-
+    
     private DialogBoxHandler Dialog;
     private MapNameBoxHandler MapName;
 
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public bool surfing = false;
     public bool bike = false;
     public bool strength = false;
+    public bool enableJumping = false;
     public float walkSpeed = 0.3f; //time in seconds taken to walk 1 square.
     public float runSpeed = 0.15f;
     public float surfSpeed = 0.2f;
@@ -31,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject follower;
     public FollowerMovement followerScript;
+
+    private string res = "High-Res";
+    public AudioClip openClip;
 
     private Transform pawn;
     private Transform pawnReflection;
@@ -51,6 +55,12 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 mainCameraDefaultPosition;
     public float mainCameraDefaultFOV;
 
+    public RenderTexture HighResCameraR;
+    public Material[] HighResCamera;
+    public RenderTexture CameraR;
+    public Material[] Camera;
+
+    public Vector3 CamPos = new Vector3(0, 0, 0);
     private SpriteRenderer mount;
     private Vector3 mountPosition;
 
@@ -78,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip bumpClip;
     public AudioClip jumpClip;
     public AudioClip landClip;
+    public AudioClip selectClip;
 
 
     void Awake()
@@ -99,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         mainCamera = transform.Find("Camera").GetComponent<Camera>();
         mainCameraDefaultPosition = mainCamera.transform.localPosition;
         mainCameraDefaultFOV = mainCamera.fieldOfView;
+
 
         pawn = transform.Find("Pawn");
         pawnReflection = transform.Find("PawnReflection");
@@ -187,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("no map found");
+                GlobalVariables.global.debug("no map found");
             }
         }
 
@@ -200,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
                 //if audio is not already playing
                 accessedAudio = accessedMapSettings.getBGM();
                 accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
-                BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+                BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples, false, accessedMapSettings.getBGMBufferRate());
 
             }
             if (accessedMapSettings.mapNameBoxTexture != null)
@@ -244,13 +256,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 namez += PokemonDatabase.getPokemon(encounterList[i].ID).getName() + ", ";
             }
-            Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
-            GlobalVariables.global.SetRPCLargeImageKey(accessedMapSettings.discordImageKey, accessedMapSettings.name);
-            if(accessedMapSettings.discordDetails != null && accessedMapSettings.discordDetails != "") {
-                GlobalVariables.global.SetRPCDetails(accessedMapSettings.discordDetails);
+            GlobalVariables.global.debug("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
+            if(GlobalVariables.global.presence.largeImageKey != accessedMapSettings.discordImageKey || accessedMapSettings.discordDetails != "")
+            {
+                if(GlobalVariables.global.presence.largeImageKey != accessedMapSettings.discordImageKey)
+                    GlobalVariables.global.SetRPCLargeImageKey(accessedMapSettings.discordImageKey, accessedMapSettings.mapName);
+                if(accessedMapSettings.discordDetails != "")
+                    GlobalVariables.global.SetRPCDetails(accessedMapSettings.discordDetails);
+                GlobalVariables.global.UpdatePresence();
             }
         }
-        //
         GlobalVariables.global.resetFollower();
     }
 
@@ -262,12 +277,12 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetAxisRaw("Horizontal") > 0)
             {
-                //	Debug.Log("NEW INPUT: Right");
+                //	GlobalVariables.global.debug("NEW INPUT: Right");
                 mostRecentDirectionPressed = 1;
             }
             else if (Input.GetAxisRaw("Horizontal") < 0)
             {
-                //	Debug.Log("NEW INPUT: Left");
+                //	GlobalVariables.global.debug("NEW INPUT: Left");
                 mostRecentDirectionPressed = 3;
             }
         }
@@ -275,12 +290,12 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetAxisRaw("Vertical") > 0)
             {
-                //	Debug.Log("NEW INPUT: Up");
+                //	GlobalVariables.global.debug("NEW INPUT: Up");
                 mostRecentDirectionPressed = 0;
             }
             else if (Input.GetAxisRaw("Vertical") < 0)
             {
-                //	Debug.Log("NEW INPUT: Down");
+                //	GlobalVariables.global.debug("NEW INPUT: Down");
                 mostRecentDirectionPressed = 2;
             }
         }
@@ -431,10 +446,50 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-                else if (Input.GetKeyDown("g") && SaveData.currentSave.debugMode == true)
+
+                //debug camera:
+                else if (Input.GetKeyDown("v") && SaveData.currentSave.debugMode)
+                { 
+                    //DEBUG up
+                    CamPos.y++;
+                    StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
+                }
+                else if (Input.GetKeyDown("b") && SaveData.currentSave.debugMode)
                 {
-                    //DEBUG
-                    Debug.Log(currentMap.getTileTag(transform.position));
+                    //DEBUG down
+                    CamPos.y--;
+                    StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
+                }
+                else if (Input.GetKeyDown("t") && SaveData.currentSave.debugMode)
+                {
+                    //DEBUG foward
+                    CamPos.z++;
+                    StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
+                }
+                else if (Input.GetKeyDown("g") && SaveData.currentSave.debugMode)
+                {
+                    //DEBUG backward
+                    CamPos.z--;
+                    StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
+                }
+                else if (Input.GetKeyDown("f") && SaveData.currentSave.debugMode)
+                {
+                    //DEBUG left
+                    CamPos.x--;
+                    StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
+                }
+                else if (Input.GetKeyDown("h") && SaveData.currentSave.debugMode)
+                {
+                    //DEBUG right
+                    CamPos.x++;
+                    StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
+                }
+
+                //debug toggles:
+                else if (Input.GetKeyDown("z") && SaveData.currentSave.debugMode && !GlobalVariables.global.isEditor)
+                {
+                    //DEBUG follower toggle
+                    GlobalVariables.global.debug(currentMap.getTileTag(transform.position).ToString());
                     if (followerScript.canMove)
                     {
                         followerScript.StartCoroutine("withdrawToBall");
@@ -444,20 +499,105 @@ public class PlayerMovement : MonoBehaviour
                         followerScript.canMove = true;
                     }
                 }
-                /*else if (Input.GetKeyDown(",") && SaveData.currentSave.debugMode == true+)
+                else if(Input.GetKeyDown("m") && SaveData.currentSave.debugMode)
                 {
-                    //GlobalVariables.debug(GlobalVariables.GetDebugText());
-                    //DEBUG
-                    Debug.Log(currentMap.getTileTag(transform.position));
-                    if (followerScript.canMove)
+                    
+                }
+
+                //debug menu:
+                else if (Input.GetKeyDown("right shift") && GlobalVariables.global.allowDebug && !GlobalVariables.global.isEditor)
+                {
+                    if(!SaveData.currentSave.debugMode)
                     {
-                        followerScript.StartCoroutine("withdrawToBall");
+                        Dialog.drawDialogBox();
+                        yield return StartCoroutine(Dialog.drawText("Are you sure you want to enable Debug \nMode? This will disable saving."));
+                        Dialog.drawChoiceBoxNo();
+                        yield return new WaitForSeconds(0.2f);
+                        yield return StartCoroutine(Dialog.choiceNavigateNo());
+                        int chosenIndex = Dialog.chosenIndex;
+                        if(chosenIndex == 1) {
+                            Dialog.undrawChoiceBox();
+                            Dialog.drawDialogBox();
+                            GlobalVariables.global.EnableDebugMode();
+                            yield return
+                                StartCoroutine(Dialog.drawText("Debug Mode has been enabled, saving has \nbeen disabled."));
+                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+                            {
+                                yield return null;
+                            }
+                        };
                     }
                     else
                     {
-                        followerScript.canMove = true;
+                        SfxHandler.Play(selectClip);
+                        //yield return StartCoroutine(Dialog.drawText("What would you like to enable?"));
+                        string[] choices = new string[]{"Reset Cam","Toggle UI","Open PC","Toggle Time","Jump on A",res,"Reload Map","Exit Debug"};
+                        Dialog.drawChoiceBox(choices);
+                        //yield return new WaitForSeconds(0.2f);
+                        yield return StartCoroutine(Dialog.choiceNavigate(choices));
+                        int chosenIndex = Dialog.chosenIndex;
+                        if(chosenIndex == 7) { //Reset cam 
+                            SfxHandler.Play(selectClip);
+                            CamPos = new Vector3(0, 0, 0);
+                            StartCoroutine(player.moveCameraTo(CamPos, 0f));
+                        }
+                        else if(chosenIndex == 6) { //Toggle UI
+                            SfxHandler.Play(selectClip);
+                            GameObject debugText = GlobalVariables.global.transform.Find("DEBUG").gameObject;
+                            //GameObject debugTextShadow = debugText.transform.Find("DEBUGShadow").gameObject;
+                            debugText.SetActive(!debugText.activeInHierarchy);
+                        }
+                        else if(chosenIndex == 5) { //Open PC
+                            StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+                            yield return new WaitForSeconds(ScreenFade.defaultSpeed + 0.4f);
+                            //yield return new WaitForSeconds(sceneTransition.FadeOut(0.4f) + 0.4f);
+                            SfxHandler.Play(openClip);
+                            //Set ScenePC to be active so that it appears
+                            Scene.main.PC.gameObject.SetActive(true);
+                            StartCoroutine(Scene.main.PC.control());
+                            //Start an empty loop that will only stop when ScenePC is no longer active (is closed)
+                            while (Scene.main.PC.gameObject.activeSelf)
+                            {
+                                yield return null;
+                            }
+                            Dialog.undrawChoiceBox();
+                            yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                            //yield return new WaitForSeconds(sceneTransition.FadeIn(0.4f));
+                        }
+                        else if(chosenIndex == 4) { //Toggle Time
+                            DayNightCycle cycle = GameObject.Find("Directional light").GetComponent<DayNightCycle>();
+                            SfxHandler.Play(selectClip);
+                            cycle.debugCustomTime = !cycle.debugCustomTime;
+                        }
+                        else if(chosenIndex == 3) { //Jump on A
+                            SfxHandler.Play(selectClip);
+                            player.enableJumping = !player.enableJumping;
+                        }
+                        else if(chosenIndex == 2) { //High-res
+                            SfxHandler.Play(selectClip);
+                            if(res == "High-Res") {
+                                mainCamera.targetTexture = HighResCameraR;
+                                GlobalVariables.global.Display.materials = HighResCamera;
+                                res = "Low-Res";
+                            }
+                            else {
+                                mainCamera.targetTexture = CameraR;
+                                GlobalVariables.global.Display.materials = Camera;
+                                res = "High-Res";
+                            }
+                        }
+                        else if(chosenIndex == 1) { //Reload Map
+                            SfxHandler.Play(selectClip);
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+                        }
+                        else if(chosenIndex == 0) { //Exit
+                            Dialog.undrawChoiceBox();
+                            Dialog.drawDialogBox();
+                        }
                     }
-                }*/
+                    Dialog.undrawDialogBox();
+                    Dialog.undrawChoiceBox();
+                }
             }
             if (still)
             {
@@ -532,7 +672,7 @@ public class PlayerMovement : MonoBehaviour
                     Sprite custom16 = Sprite.Create(www.texture, new Rect(96f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
                     spriteSheet = new Sprite[] {custom1,custom2,custom3,custom4,custom5,custom6,custom7,custom8,custom9,custom10,custom11,custom12,custom13,custom14,custom15,custom16};*/
                     //I highly doubt this is the correct way to do it
-                    Debug.Log("Not implemented");
+                    GlobalVariables.global.debug("Not implemented");
                     if(SaveData.currentSave.getCVariable("male") == 1) {
                         spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
                     }
@@ -615,7 +755,7 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerMovement.player.busyWith == caller)
         {
             pauseInput();
-            Debug.Log("Busy with " + PlayerMovement.player.busyWith);
+            GlobalVariables.global.debug("Busy with " + PlayerMovement.player.busyWith);
             return true;
         }
         return false;
@@ -641,7 +781,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Busy with " + PlayerMovement.player.busyWith);
+            GlobalVariables.global.debug("Busy with " + PlayerMovement.player.busyWith);
         }
     }
 
@@ -663,7 +803,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void unpauseInput()
     {
-        Debug.Log("unpaused");
+        GlobalVariables.global.debug("unpaused");
         canInput = true;
     }
 
@@ -793,7 +933,7 @@ public class PlayerMovement : MonoBehaviour
         float yDistance = Mathf.Abs((transform.position.y + movement.y) - transform.position.y);
         yDistance = Mathf.Round(yDistance * 100f) / 100f;
 
-        //Debug.Log("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
+        //GlobalVariables.global.debug("currentSlope: "+currentSlope+", destinationSlope: "+destinationSlope+", yDistance: "+yDistance);
 
         //if either slope is greater than 1 it is too steep.
         if (currentSlope <= 1 && destinationSlope <= 1)
@@ -807,6 +947,12 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.zero;
     }
 
+    
+    /*public IEnumerator move()
+    {
+        still = false;
+        yield return StartCoroutine(moveForward());
+    }*/
     ///Make the player move one space in the direction they are facing
     private IEnumerator moveForward()
     {
@@ -866,7 +1012,7 @@ public class PlayerMovement : MonoBehaviour
                             speed = walkSpeed;
                             surfing = false;
                             StartCoroutine("dismount");
-                            BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+                            BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples, false);
                         }
 
                         if (destinationMap != currentMap)
@@ -874,12 +1020,13 @@ public class PlayerMovement : MonoBehaviour
                             //if moving onto a new map
                             currentMap = destinationMap;
                             accessedMapSettings = destinationMap.gameObject.GetComponent<MapSettings>();
+
                             if (accessedAudio != accessedMapSettings.getBGM())
                             {
                                 //if audio is not already playing
                                 accessedAudio = accessedMapSettings.getBGM();
                                 accessedAudioLoopStartSamples = accessedMapSettings.getBGMLoopStartSamples();
-                                BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples);
+                                BgmHandler.main.PlayMain(accessedAudio, accessedAudioLoopStartSamples, false, accessedMapSettings.getBGMBufferRate());
                             }
                             destinationMap.BroadcastMessage("repair", SendMessageOptions.DontRequireReceiver);
                             if (accessedMapSettings.mapNameBoxTexture != null)
@@ -887,7 +1034,13 @@ public class PlayerMovement : MonoBehaviour
                                 MapName.display(accessedMapSettings.mapNameBoxTexture, accessedMapSettings.mapName,
                                     accessedMapSettings.mapNameColor);
                             }
-                            Debug.Log(destinationMap.name + "   " + accessedAudio.name);
+                            GlobalVariables.global.debug(destinationMap.name + "   " + accessedAudio.name);
+                            GlobalVariables.global.SetRPCLargeImageKey(accessedMapSettings.discordImageKey, accessedMapSettings.mapName);
+                            if(accessedMapSettings.discordDetails != null && accessedMapSettings.discordDetails != "")
+                            {
+                                GlobalVariables.global.SetRPCDetails(accessedMapSettings.discordDetails);
+                            }
+                            GlobalVariables.global.UpdatePresence();
                         }
 
                         if (transparentCollider != null)
@@ -1071,8 +1224,7 @@ public class PlayerMovement : MonoBehaviour
         if (currentInteraction != null)
         {
             //sent interact message to the collider's object's parent object
-            currentInteraction.transform.parent.gameObject.SendMessage("interact",
-                SendMessageOptions.DontRequireReceiver);
+            currentInteraction.transform.parent.gameObject.SendMessage("interact",SendMessageOptions.DontRequireReceiver);
             currentInteraction = null;
         }
         else if (!surfing)
@@ -1081,6 +1233,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 //water tile tag
                 StartCoroutine("surfCheck");
+            }
+            else if (player.enableJumping)
+            {
+                forceMoveForward();
+                StartCoroutine(player.jump()); //debug jump
             }
         }
     }
@@ -1166,7 +1323,7 @@ public class PlayerMovement : MonoBehaviour
                         surfing = true;
                         updateMount(true, "surf");
 
-                        BgmHandler.main.PlayMain(GlobalVariables.global.surfBGM, GlobalVariables.global.surfBgmLoopStart);
+                        BgmHandler.main.PlayMain(GlobalVariables.global.surfBGM, GlobalVariables.global.surfBgmLoopStart, false);
 
                         //determine the vector for the space in front of the player by checking direction
                         Vector3 spaceInFront = new Vector3(0, 0, 0);

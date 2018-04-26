@@ -98,7 +98,7 @@ public class FollowerMovement : MonoBehaviour
         {
             transform.Translate(Vector3.right);
         }
-
+        if(GlobalVariables.global.isEditor) StartCoroutine("withdrawToBall",0.4f);
         changeFollower(followerIndex);
         StartCoroutine("animateSprite");
     }
@@ -170,8 +170,11 @@ public class FollowerMovement : MonoBehaviour
         hide = true;
         transform.position = Player.transform.position;
     }
-
     public IEnumerator withdrawToBall()
+    {
+        yield return StartCoroutine(withdrawToBall(0.4f));
+    }
+    public IEnumerator withdrawToBall(float time)
     {
         StopCoroutine("animateSprite");
         canMove = false;
@@ -181,7 +184,6 @@ public class FollowerMovement : MonoBehaviour
         sReflectionRenderer.sprite = pokeBall;
         sLReflectionRenderer.sprite = null;
         float increment = 0f;
-        float time = 0.4f;
         Vector3 lockedPosition = transform.position;
         while (increment < 1)
         {

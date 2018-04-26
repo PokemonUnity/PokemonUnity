@@ -741,6 +741,7 @@ MonoBehaviour:
   trainerName: Brooke
   customPrizeMoney: 0
   isFemale: 1
+  doubles: 0
   trainerParty:
   - ID: 197
     level: 12
@@ -930,6 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f736fc58a6ed37f41b1cfd3678d7c8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busyOnCall: 1
   interactEventTrees: []
   bumpEventTrees:
   - treeName: 
@@ -937,6 +939,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.3
       string0: 
@@ -952,6 +955,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.4
       string0: 
@@ -968,6 +972,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -983,6 +988,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.4
       string0: 
@@ -999,6 +1005,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 3
       logic: 0
+      smOptions: 0
       int0: 4
       float0: 0.4
       string0: 
@@ -1015,6 +1022,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 2
       logic: 0
+      smOptions: 0
       int0: 7
       float0: 0.4
       string0: 
@@ -1031,6 +1039,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 3
       logic: 0
+      smOptions: 0
       int0: 4
       float0: 0.4
       string0: 
@@ -1048,6 +1057,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -1063,6 +1073,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -1078,6 +1089,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -1093,6 +1105,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -1105,6 +1118,8 @@ MonoBehaviour:
       sound: {fileID: 0}
       runSimultaneously: 0
       sprite: {fileID: 0}
+  internalEventTrees: []
+  demoEventTrees: []
 --- !u!1001 &57197553
 Prefab:
   m_ObjectHideFlags: 0
@@ -3119,6 +3134,7 @@ MonoBehaviour:
   trainerName: Linda
   customPrizeMoney: 0
   isFemale: 1
+  doubles: 0
   trainerParty:
   - ID: 300
     level: 31
@@ -8445,12 +8461,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f736fc58a6ed37f41b1cfd3678d7c8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busyOnCall: 1
   interactEventTrees:
   - treeName: 
     events:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -8466,6 +8484,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.1
       string0: 
@@ -8482,6 +8501,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.05
       string0: 
@@ -8497,6 +8517,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: -1
       float0: 0
       string0: 
@@ -8512,6 +8533,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.05
       string0: 
@@ -8527,6 +8549,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: -1
       float0: 0
       string0: 
@@ -8542,6 +8565,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.05
       string0: 
@@ -8557,6 +8581,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: -1
       float0: 0
       string0: 
@@ -8572,6 +8597,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.05
       string0: 
@@ -8587,6 +8613,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: -1
       float0: 0
       string0: 
@@ -8602,6 +8629,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.05
       string0: 
@@ -8617,6 +8645,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.1
       string0: 
@@ -8631,6 +8660,8 @@ MonoBehaviour:
       runSimultaneously: 0
       sprite: {fileID: 0}
   bumpEventTrees: []
+  internalEventTrees: []
+  demoEventTrees: []
 --- !u!4 &646206374 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017, type: 2}
@@ -9280,12 +9311,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f736fc58a6ed37f41b1cfd3678d7c8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busyOnCall: 1
   interactEventTrees:
   - treeName: 
     events:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -9301,6 +9334,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -9317,6 +9351,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 2
       float0: 0
       string0: 
@@ -9330,6 +9365,8 @@ MonoBehaviour:
       runSimultaneously: 0
       sprite: {fileID: 0}
   bumpEventTrees: []
+  internalEventTrees: []
+  demoEventTrees: []
 --- !u!4 &708368028 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017, type: 2}
@@ -13664,6 +13701,7 @@ MonoBehaviour:
   trainerName: Brooke
   customPrizeMoney: 0
   isFemale: 1
+  doubles: 0
   trainerParty:
   - ID: 197
     level: 12
@@ -18004,7 +18042,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4168307147198506, guid: 7da40ed5224fd43409db25f7dc33e481, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4168307147198506, guid: 7da40ed5224fd43409db25f7dc33e481, type: 2}
       propertyPath: m_LocalPosition.y
@@ -18012,7 +18050,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4168307147198506, guid: 7da40ed5224fd43409db25f7dc33e481, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 4168307147198506, guid: 7da40ed5224fd43409db25f7dc33e481, type: 2}
       propertyPath: m_LocalRotation.x
@@ -18325,12 +18363,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f736fc58a6ed37f41b1cfd3678d7c8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busyOnCall: 1
   interactEventTrees:
   - treeName: 
     events:
     - eventType: 1
       dir: 3
       logic: 0
+      smOptions: 0
       int0: 2
       float0: 0
       string0: 
@@ -18346,6 +18386,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 1
       logic: 0
+      smOptions: 0
       int0: 2
       float0: 0
       string0: 
@@ -18361,6 +18402,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 1
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -18376,6 +18418,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 4
+      smOptions: 0
       int0: 2
       float0: 0.1
       string0: 
@@ -18393,6 +18436,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.2
       string0: 
@@ -18410,6 +18454,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.3
       string0: 
@@ -18427,6 +18472,7 @@ MonoBehaviour:
     - eventType: 10
       dir: 0
       logic: 4
+      smOptions: 0
       int0: 2
       float0: 3
       string0: 
@@ -18446,6 +18492,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.2
       string0: 
@@ -18462,6 +18509,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -18478,6 +18526,7 @@ MonoBehaviour:
     - eventType: 7
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 3
       float0: 17.5
       string0: Ultra Ball
@@ -18501,6 +18550,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.2
       string0: 
@@ -18520,6 +18570,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.2
       string0: 
@@ -18537,6 +18588,7 @@ MonoBehaviour:
     - eventType: 9
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 12.4
       string0: TestVariable
@@ -18553,6 +18605,7 @@ MonoBehaviour:
     - eventType: 10
       dir: 0
       logic: 1
+      smOptions: 0
       int0: 1
       float0: 12
       string0: TestVariable
@@ -18571,6 +18624,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -18591,6 +18645,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -18606,6 +18661,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 1.2
       string0: 
@@ -18621,6 +18677,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 1.2
       string0: 
@@ -18636,6 +18693,7 @@ MonoBehaviour:
     - eventType: 2
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.2
       string0: 
@@ -18651,6 +18709,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 1
       float0: 0.2
       string0: 
@@ -18666,6 +18725,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 1
       string0: 
@@ -18681,6 +18741,7 @@ MonoBehaviour:
     - eventType: 14
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.5
       string0: 
@@ -18696,6 +18757,7 @@ MonoBehaviour:
     - eventType: 14
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 1
       float0: 0.5
       string0: 
@@ -18711,6 +18773,7 @@ MonoBehaviour:
     - eventType: 14
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 1
       float0: 0.5
       string0: 
@@ -18726,6 +18789,7 @@ MonoBehaviour:
     - eventType: 14
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 1
       float0: 0.5
       string0: 
@@ -18741,6 +18805,7 @@ MonoBehaviour:
     - eventType: 14
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 1
       float0: 0.5
       string0: 
@@ -18753,6 +18818,8 @@ MonoBehaviour:
       sound: {fileID: 0}
       runSimultaneously: 0
       sprite: {fileID: 0}
+  internalEventTrees: []
+  demoEventTrees: []
 --- !u!114 &1370824162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20064,7 +20131,7 @@ MonoBehaviour:
   mapBGMNightClip: {fileID: 0}
   mapBGMNightLoopStartSamples: 0
   mapName: Map Test 2
-  discordImageKey: 
+  discordImageKey: maptest2
   discordDetails: 
   mapNameBoxTexture: {fileID: 2800000, guid: ab060ed267d472646b30b4a04b8355f8, type: 3}
   mapNameColor: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
@@ -20350,6 +20417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f736fc58a6ed37f41b1cfd3678d7c8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busyOnCall: 1
   interactEventTrees: []
   bumpEventTrees:
   - treeName: 
@@ -20357,6 +20425,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0
       string0: 
@@ -20370,6 +20439,8 @@ MonoBehaviour:
       sound: {fileID: 0}
       runSimultaneously: 0
       sprite: {fileID: 0}
+  internalEventTrees: []
+  demoEventTrees: []
 --- !u!4 &1468212836 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: b45e3c8958de20045adcb5d2acb36017, type: 2}
@@ -22019,6 +22090,7 @@ MonoBehaviour:
   trainerName: Cole
   customPrizeMoney: 0
   isFemale: 0
+  doubles: 0
   trainerParty:
   - ID: 448
     level: 62
@@ -26393,6 +26465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f736fc58a6ed37f41b1cfd3678d7c8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busyOnCall: 1
   interactEventTrees: []
   bumpEventTrees:
   - treeName: 
@@ -26400,6 +26473,7 @@ MonoBehaviour:
     - eventType: 0
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.3
       string0: 
@@ -26415,6 +26489,7 @@ MonoBehaviour:
     - eventType: 15
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -26430,6 +26505,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.4
       string0: 
@@ -26446,6 +26522,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 0
       float0: 0.4
       string0: 
@@ -26462,6 +26539,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 3
       logic: 0
+      smOptions: 0
       int0: 5
       float0: 0.4
       string0: 
@@ -26478,6 +26556,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 2
       logic: 0
+      smOptions: 0
       int0: 7
       float0: 0.4
       string0: 
@@ -26494,6 +26573,7 @@ MonoBehaviour:
     - eventType: 3
       dir: 3
       logic: 0
+      smOptions: 0
       int0: 4
       float0: 0.4
       string0: 
@@ -26511,6 +26591,7 @@ MonoBehaviour:
     - eventType: 1
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -26526,6 +26607,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -26541,6 +26623,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -26556,6 +26639,7 @@ MonoBehaviour:
     - eventType: 8
       dir: 0
       logic: 0
+      smOptions: 0
       int0: 10
       float0: 0.4
       string0: 
@@ -26568,6 +26652,8 @@ MonoBehaviour:
       sound: {fileID: 0}
       runSimultaneously: 0
       sprite: {fileID: 0}
+  internalEventTrees: []
+  demoEventTrees: []
 --- !u!1001 &1931327882
 Prefab:
   m_ObjectHideFlags: 0

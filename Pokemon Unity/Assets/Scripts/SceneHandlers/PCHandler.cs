@@ -1144,12 +1144,12 @@ public class PCHandler : MonoBehaviour
                     int chosenIndex = Dialog.chosenIndex;
                     if (chosenIndex == 3)
                     {
-                        Debug.Log("Jump not yet implemented");
+                        GlobalVariables.global.debug("Jump not yet implemented");
                         yield return new WaitForSeconds(0.2f);
                     }
                     else if (chosenIndex == 2)
                     {
-                        Debug.Log("Wallpaper not yet implemented");
+                        GlobalVariables.global.debug("Wallpaper not yet implemented");
                         yield return new WaitForSeconds(0.2f);
                     }
                     else if (chosenIndex == 1)
