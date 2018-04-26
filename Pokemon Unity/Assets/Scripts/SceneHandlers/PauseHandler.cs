@@ -497,7 +497,7 @@ public class PauseHandler : MonoBehaviour
                         yield return StartCoroutine(Dialog.drawText("Would you like to save the game?"));
                         Dialog.drawChoiceBoxNo();
                         yield return new WaitForSeconds(0.2f);
-                        yield return StartCoroutine(Dialog.choiceNavigateNo());
+                        yield return StartCoroutine(Dialog.choiceNavigate(0));
                         int chosenIndex = Dialog.chosenIndex;
                         if (chosenIndex == 1)
                         {

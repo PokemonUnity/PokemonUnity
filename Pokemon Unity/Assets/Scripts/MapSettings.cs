@@ -72,12 +72,7 @@ public class MapSettings : MonoBehaviour
         return mapBGMLoopStartSamples;
     }
 
-    public Sprite getBattleBackground()
-    {
-        return getBattleBackground(0);
-    }
-
-    public Sprite getBattleBackground(int currentTag)
+    public Sprite getBattleBackground(int currentTag = 0)
     {
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
         string timeString = "";
@@ -142,12 +137,7 @@ public class MapSettings : MonoBehaviour
         return Resources.Load<Sprite>("BattleBackgrounds/Backgrounds/" + checkString);
     }
 
-    public Sprite getBattleBase()
-    {
-        return getBattleBase(0);
-    }
-
-    public Sprite getBattleBase(int currentTag)
+    public Sprite getBattleBase(int currentTag = 0)
     {
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
         string timeString = "";

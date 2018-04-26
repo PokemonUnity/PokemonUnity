@@ -38,48 +38,9 @@ public class GUIParticleHandler : MonoBehaviour
     }
 
 
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float duration)
-    {
-        return createParticle(particleSprite, position, size, 0f, duration,
-            position, 0f, size);
-    }
 
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float angle, float duration)
-    {
-        return createParticle(particleSprite, position, size, angle, duration,
-            position, 0f, size);
-    }
-
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float angle, float duration,
-        Vector2 destinationPosition)
-    {
-        return createParticle(particleSprite, position, size, angle, duration,
-            destinationPosition, 0f, size);
-    }
-
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float angle, float duration,
-        float rotationsPerSec)
-    {
-        return createParticle(particleSprite, position, size, angle, duration,
-            position, rotationsPerSec, size);
-    }
-
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float angle, float duration,
-        Vector2 destinationPosition, float rotationsPerSec)
-    {
-        return createParticle(particleSprite, position, size, angle, duration,
-            destinationPosition, rotationsPerSec, size);
-    }
-
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float angle, float duration,
-        float rotationsPerSec, float finalSize)
-    {
-        return createParticle(particleSprite, position, size, angle, duration,
-            position, rotationsPerSec, finalSize);
-    }
-
-    public Image createParticle(Sprite particleSprite, Vector2 position, float size, float angle, float duration,
-        Vector2 destinationPosition, float rotationsPerSec, float finalSize)
+    public Image createParticle(Sprite particleSprite, Vector2 position, Vector2 destinationPosition, float size = 0f, 
+        float angle = 0f, float duration = 0f, float rotationsPerSec = 0f, float finalSize = 0f)
     {
         int targetParticle = getFirstInactiveParticle();
         if (targetParticle > -1)

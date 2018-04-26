@@ -695,16 +695,16 @@ public class PartyHandler : MonoBehaviour
 
                                             Dialog.drawDialogBox();
                                             yield return
-                                                Dialog.StartCoroutine("drawText",
-                                                    "Gave " + chosenItem + " to " + selectedPokemon.getName() + ",");
+                                                Dialog.StartCoroutine(Dialog.drawText(
+                                                    "Gave " + chosenItem + " to " + selectedPokemon.getName() + ","));
                                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
                                             }
                                             Dialog.drawDialogBox();
                                             yield return
-                                                Dialog.StartCoroutine("drawText",
-                                                    "and received " + receivedItem + " in return.");
+                                                Dialog.StartCoroutine(Dialog.drawText(
+                                                    "and received " + receivedItem + " in return."));
                                             while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                             {
                                                 yield return null;
@@ -783,8 +783,7 @@ public class PartyHandler : MonoBehaviour
 
                                         Dialog.drawDialogBox();
                                         yield return
-                                            Dialog.StartCoroutine("drawText",
-                                                "Gave " + chosenItem + " to " + selectedPokemon.getName() + ".");
+                                            Dialog.StartCoroutine(Dialog.drawText("Gave " + chosenItem + " to " + selectedPokemon.getName() + "."));
                                         while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                         {
                                             yield return null;
@@ -828,7 +827,7 @@ public class PartyHandler : MonoBehaviour
             }
             yield return null;
         }
-        StopCoroutine("animateIcons");
+        StopCoroutine(animateIcons());
         //yield return new WaitForSeconds(sceneTransition.FadeOut());
         yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
         GlobalVariables.global.resetFollower();

@@ -289,27 +289,27 @@ public class CustomEvent : MonoBehaviour
                 Dialog.drawDialogBox();
                 if (currentEvent.bool0)
                 {
-                    Dialog.StartCoroutine("drawText",
+                    Dialog.StartCoroutine(Dialog.drawText(
                         SaveData.currentSave.playerName + " received TM" +
-                        ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!");
+                        ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!"));
                 }
                 else
                 {
                     if (currentEvent.int0 > 1)
                     {
-                        Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received " + currentEvent.string0 + "s!");
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received " + currentEvent.string0 + "s!"));
                     }
                     else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                              firstLetter == "u")
                     {
-                        Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received an " + currentEvent.string0 + "!");
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received an " + currentEvent.string0 + "!"));
                     }
                     else
                     {
-                        Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received a " + currentEvent.string0 + "!");
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received a " + currentEvent.string0 + "!"));
                     }
                 }
                 yield return new WaitForSeconds(itemGetMFX.length);
@@ -322,25 +322,25 @@ public class CustomEvent : MonoBehaviour
                     if (currentEvent.bool0)
                     {
                         yield return
-                            Dialog.StartCoroutine("drawTextSilent",
+                            Dialog.StartCoroutine(Dialog.drawTextSilent(
                                 SaveData.currentSave.playerName + " put the TM" +
-                                ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag.");
+                                ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag."));
                     }
                     else
                     {
                         if (currentEvent.int0 > 1)
                         {
                             yield return
-                                Dialog.StartCoroutine("drawTextSilent",
+                                Dialog.StartCoroutine(Dialog.drawTextSilent(
                                     SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
-                                    "s \\away into the bag.");
+                                    "s \\away into the bag."));
                         }
                         else
                         {
                             yield return
-                                Dialog.StartCoroutine("drawTextSilent",
+                                Dialog.StartCoroutine(Dialog.drawTextSilent(
                                     SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
-                                    " \\away into the bag.");
+                                    " \\away into the bag."));
                         }
                     }
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
@@ -350,7 +350,7 @@ public class CustomEvent : MonoBehaviour
                 }
                 else
                 {
-                    yield return Dialog.StartCoroutine("drawTextSilent", "But there was no room...");
+                    yield return Dialog.StartCoroutine(Dialog.drawTextSilent( "But there was no room..."));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -397,8 +397,8 @@ public class CustomEvent : MonoBehaviour
 
                     Dialog.drawDialogBox();
                     yield return
-                        Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received the " + pkName + "!");
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            SaveData.currentSave.playerName + " received the " + pkName + "!"));
                     BgmHandler.main.PlayMFX(pokeGetMFX);
                     yield return new WaitForSeconds(pokeGetMFX.length);
 

@@ -60,13 +60,13 @@ public class InteractBreak : MonoBehaviour
             {
                 Dialog.drawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine("drawText", interactText);
+                yield return Dialog.StartCoroutine(Dialog.drawText(interactText));
                 /* 			//This inactive code is used to print a third line of text.
                     while(!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back")){	//these 3 lines stop the next bit from running until space is pressed.
                         yield return null;
                     }
                     Dialog.StartCoroutine("scrollText");
-                    yield return Dialog.StartCoroutine("drawText", "\\That'd be neat.");
+                    yield return Dialog.StartCoroutine(Dialog.drawText( "\\That'd be neat.");
             */
                 Dialog.drawChoiceBox();
 
@@ -79,8 +79,8 @@ public class InteractBreak : MonoBehaviour
 
                     Dialog.drawDialogBox();
                     yield return
-                        Dialog.StartCoroutine("drawText",
-                            targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance(fieldEffect) + "!");
+                        Dialog.StartCoroutine(Dialog.drawText(
+                            targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance(fieldEffect) + "!"));
                     while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                     {
                         yield return null;
@@ -113,7 +113,7 @@ public class InteractBreak : MonoBehaviour
             {
                 Dialog.drawDialogBox();
                     //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine("drawText", examineText);
+                yield return Dialog.StartCoroutine(Dialog.drawText( examineText));
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;

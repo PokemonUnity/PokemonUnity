@@ -656,18 +656,7 @@ public class SummaryHandler : MonoBehaviour
         SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
     }
 
-
-    public IEnumerator control(Pokemon[] pokemonList, int currentPosition)
-    {
-        yield return StartCoroutine(control(pokemonList, currentPosition, false, null));
-    }
-
-    public IEnumerator control(Pokemon pokemon, string newMoveString)
-    {
-        yield return StartCoroutine(control(new Pokemon[] {pokemon}, 0, true, newMoveString));
-    }
-
-    public IEnumerator control(Pokemon[] pokemonList, int currentPosition, bool learning, string newMoveString)
+    public IEnumerator control(Pokemon[] pokemonList, int currentPosition = 0, bool learning = false, string newMoveString = null)
     {
         moves.localPosition = (learning) ? new Vector3(0, 32) : Vector3.zero;
         newMove.gameObject.SetActive(learning);
@@ -691,7 +680,7 @@ public class SummaryHandler : MonoBehaviour
             updateMoveToLearn(newMoveString);
         }
 
-        StartCoroutine("animatePokemon");
+        StartCoroutine(animatePokemon());
 
         bool running = true;
         int currentPage = (learning) ? 4 : 1;
