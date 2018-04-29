@@ -26,6 +26,7 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
+Pokemon Unity/Pokemon Unity.sln
 
 
 # Unity3D generated meta files
@@ -53,4 +54,3 @@ Thumbs.db.meta
 _git-journal
 git-journal.bash-completion
 git-journal.fish
-Pokemon Unity/Pokemon Unity.sln
