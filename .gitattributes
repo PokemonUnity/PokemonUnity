@@ -28,5 +28,5 @@
 *.PREFAB	diff=astextplain
 *.asset		diff=astextplain
 *.ASSET		diff=astextplain
-#*.unity	diff=astextplain
-#*.UNITY 	diff=astextplain
+*.unity		diff=astextplain
+*.UNITY 	diff=astextplain
