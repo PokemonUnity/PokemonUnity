@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 40dcada960ac83c4e848d2cb79660efe
-timeCreated: 1525009824
+timeCreated: 1525157623
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,9 +11,12 @@ TextureImporter:
     21300008: summary3_tab0
     21300010: summary4_tab0
     21300012: summary5_tab0
-    21300014: summary0_tab
+    21300014: summary6_tab0
     21300016: summary1_bg
     21300018: summary1_page
+    21300020: summary_left
+    21300022: summary_bottom
+    21300024: summary1_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -174,7 +177,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: summary0_tab
+      name: summary6_tab0
       rect:
         serializedVersion: 2
         x: 274
@@ -196,7 +199,7 @@ TextureImporter:
         width: 15
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 9, y: 0, z: 0, w: 9}
       outline: []
       physicsShape: []
@@ -210,8 +213,50 @@ TextureImporter:
         width: 169
         height: 154
       alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 8, z: 3, w: 3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: summary_left
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 10, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: summary_bottom
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 4, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: summary1_0
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1
+        width: 89
+        height: 7
+      alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 20, y: 1, z: 1, w: 1}
       outline: []
       physicsShape: []
       tessellationDetail: 0

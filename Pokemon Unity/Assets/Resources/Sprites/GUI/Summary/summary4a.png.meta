@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: ae0da73ebf828ff40a3704d6f299e0b8
-timeCreated: 1523421476
+timeCreated: 1525065325
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: summary4a_page
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,7 +79,21 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: summary4a_page
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 26
+        width: 252
+        height: 266
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 7, z: 8, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

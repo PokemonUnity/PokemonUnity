@@ -89,7 +89,8 @@
 *.reason filter=lfs diff=lfs merge=lfs -text
 *.lxo filter=lfs diff=lfs merge=lfs -text
 
-*.asset merge=unityyamlmerge eol=lf
 /Assets/Terrains/*.asset filter=lfs diff=lfs merge=lfs -text
 #only if subfolders with terrains exist:
 /Assets/Terrains/**/*.asset filter=lfs diff=lfs merge=lfs -text
+
+#*.asset merge=unityyamlmerge text=auto

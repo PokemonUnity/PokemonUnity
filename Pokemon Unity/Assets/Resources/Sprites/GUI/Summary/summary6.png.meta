@@ -1,9 +1,12 @@
 fileFormatVersion: 2
 guid: 30efd0ec545930842954dcc0df4a2451
-timeCreated: 1430025886
+timeCreated: 1525066965
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: summary6_bg
+    21300002: summary6_tab1
+    21300004: summary6_page0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,7 +81,49 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: summary6_bg
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 149
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 9, y: 0, z: 0, w: 9}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: summary6_tab1
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 161
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: summary6_page0
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 59
+        width: 122
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 11, y: 9, z: 11, w: 9}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

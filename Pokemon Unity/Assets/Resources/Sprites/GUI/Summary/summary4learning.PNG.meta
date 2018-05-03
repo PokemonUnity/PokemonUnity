@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 8e79c10c843f56b4085c369585300ff5
-timeCreated: 1523421472
+timeCreated: 1525065382
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: summary4learning_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,7 +79,21 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: summary4learning_0
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 18
+        width: 252
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

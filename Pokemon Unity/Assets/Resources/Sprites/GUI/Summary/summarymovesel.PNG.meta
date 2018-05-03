@@ -1,9 +1,11 @@
 fileFormatVersion: 2
 guid: 00de09c1f2d4c324c942f61e24d71177
-timeCreated: 1523421466
+timeCreated: 1525067857
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: summarymovesel_0
+    21300002: summarymovesel_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,7 +80,35 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: summarymovesel_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 74
+        width: 252
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: summarymovesel_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 252
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 10, y: 10, z: 10, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

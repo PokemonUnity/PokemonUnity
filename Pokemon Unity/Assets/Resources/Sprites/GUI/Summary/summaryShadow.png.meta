@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 188c0a34c7baa55459feaf67a4cee94d
-timeCreated: 1523421467
+timeCreated: 1525067210
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: summaryShadow_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,7 +79,21 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: summaryShadow_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 86
+        width: 264
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 10, z: 8, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
