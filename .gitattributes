@@ -1,3 +1,7 @@
+# Create a Changelog without causing conflict errors
+/changelog.md	merge=union
+/NEWS			merge=union
+
 # Auto detect text files and perform LF normalization
 * text=auto
 
@@ -32,6 +36,14 @@
 #*.UNITY 	diff=astextplain
 #*.anim		diff=astextplain
 #*.controller 	diff=astextplain
+
+# Ignores on Git Export/Download/Releases
+/.gitattributes export-ignore #Dont really need users configuring this...  
+/.gitignore export-ignore
+/.github export-ignore 
+/UnitTestProject export-ignore
+/readme.md export-ignore
+/code_of_conduct.md export-ignore
 
 ## Unity ##
 
