@@ -1854,15 +1854,15 @@ public class Pokemon //: ePokemons //PokemonData
             //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
-            PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE,
-						GenderRatio.AlwaysMale /*0f*/, 100, EggGroups.NONE, EggGroups.NONE, 1000,
-						10f, 150f, 15, LevelingRate.ERRATIC,
+            new PokemonData( Id: Pokemon.NONE, regionalDex: new int[1], type1: Type.NONE, type2: Type.NONE, abilities: new eAbility.Ability[] { eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE },
+                        maleRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
+                        height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-                        Color.NONE, 50,
-						10, 5, 5, 5, 5, 5,
-						0f, new int[] { 1,2,3 }, new Move.MoveData.Move[4], null,//int[] tmList,
-                        null, null, null, 4,//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //int forms, 
-                        null) //Test
+                        pokedexColor: Color.NONE, baseFriendship: 50,
+                        baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
+                        luminance: 0f, movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Move.MoveData.Move[4], tmList: null,
+                        evolutionID: null, evolutionLevel: null, evolutionMethod: null, forms: 4,
+                        heldItem: null), //Test
         };
 		/*static PokemonData()
 		{
