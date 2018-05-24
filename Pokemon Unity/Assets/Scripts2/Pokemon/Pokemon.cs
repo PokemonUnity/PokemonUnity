@@ -2277,6 +2277,13 @@ public class Pokemon //: ePokemons //PokemonData
 	{
 		public LearnMethod TeachMethod;
 		public Move.MoveData.Move MoveId;
+        /// <summary>
+        /// Default level is 0; 
+        /// only really important if learn method is <see cref="LearnMethod.levelup"/>
+        /// </summary>
+        /// leaves door open to new game designs, if players want to limit move methods to a level requirement
+        /// use to set min or max level needed for designated learn method
+        public int Level;
 		public enum LearnMethod
 		{
 			levelup = 1,
@@ -2424,10 +2431,11 @@ public class Pokemon //: ePokemons //PokemonData
 			/// </summary>
 			Time,
 			/// <summary>
-			///	if time is between 9PM and 4AM time is "Night". else time is "Day".
-			///	if time is equal to string dayNight (either Day, or Night).
-			///	<code>Time,DatetimeOffset/bool dayNight</code>
+			///	if date is between Day-Month or maybe certain 1/4 (quarter) of the year.
+			///	if date is equal to string season (either Summer, Winter, Spring, or Fall).
+			///	<code>Time,DatetimeOffset/bool season</code>
 			/// </summary>
+            /// is holiday to "spot-on" as an occasion or requirement for leveling-up?
 			Season,
 			/// <summary>
 			///	if pokemon's heldItem is equal to string itemName
@@ -2530,7 +2538,12 @@ public class Pokemon //: ePokemons //PokemonData
 			///	(if there is an empty space in the party), 
 			///	and changes the duplicate's species to the given species.
 			///	</summary>
-			Shedinja
+            ///	how is this different from "party"?
+			Shedinja,
+            /// <summary>
+            /// </summary>
+            /// Just wanted to see a requirement for after "fainting" too many times, your pokemon just died, and became a ghost-type...  
+            Deaths
 		}
 		/// <summary>
 		/// The PokemonId of the evolved species.
@@ -2541,8 +2554,15 @@ public class Pokemon //: ePokemons //PokemonData
 		/// The evolution method.
 		/// </summary>
 		public EvolutionMethod EvolveMethod;
-		
-	}
+        //public object EvolutionMethodValue;
+        //public PokemonEvolution<T> EvolutionMethodValue;
+        //public class T { }
+        //public PokemonEvolution(){}
+        public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow){
+            this.Species = EvolveTo;
+            this.EvolveMethod = EvolveHow;
+        }
+    }
 	public class PokemonEvolution<T> : PokemonEvolution
 	{
 		/*// <summary>
@@ -2559,6 +2579,130 @@ public class Pokemon //: ePokemons //PokemonData
 		/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
 		/// </summary>
 		public T EvolveValue;
+
+        //public PokemonEvolution<T> (T objects){}
+        //void evolve(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) { }
+
+        public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
+            #region Switch
+            //This should trigger after the class has been initialized, right?
+            switch (EvolveHow)
+            {
+                case EvolutionMethod.Level:
+                case EvolutionMethod.LevelFemale:
+                case EvolutionMethod.LevelMale:
+                case EvolutionMethod.Ninjask:
+                case EvolutionMethod.Beauty:
+                case EvolutionMethod.Happiness:
+                case EvolutionMethod.HappinessDay:
+                case EvolutionMethod.HappinessNight:
+                case EvolutionMethod.Hatred:
+                    //if(typeof(T) || this.GetType() == typeof(string))
+                    if (Value.GetType() != typeof(int))
+                        //throw new Exception("Type not acceptable for Method-Value pair.");
+                        //Instead of throwing an exception, i'll correct the problem instead?
+                        Convert.ChangeType(Value, typeof(int));
+                    Value = default(T);
+                    break;
+                case EvolutionMethod.Item:
+                case EvolutionMethod.ItemFemale:
+                case EvolutionMethod.ItemMale:
+                case EvolutionMethod.TradeItem:
+                case EvolutionMethod.HoldItem:
+                case EvolutionMethod.HoldItemDay:
+                case EvolutionMethod.HoldItemNight:
+                    if (this.EvolveValue.GetType() != typeof(eItems))
+                        Convert.ChangeType(Value, typeof(eItems));
+                    Value = default(T);
+                    break;
+                case EvolutionMethod.TradeSpecies:
+                case EvolutionMethod.Party:
+                case EvolutionMethod.Shedinja:
+                    if (this.EvolveValue.GetType() != typeof(PokemonData.Pokemon))
+                        Convert.ChangeType(Value, typeof(PokemonData.Pokemon));
+                    Value = default(T);
+                    break;
+                case EvolutionMethod.Move:
+                    if (this.EvolveValue.GetType() != typeof(Move.MoveData.Move))
+                        Convert.ChangeType(Value, typeof(Move.MoveData.Move));
+                    Value = default(T);
+                    break;
+                case EvolutionMethod.Type:
+                    if (this.EvolveValue.GetType() != typeof(PokemonData.Type))
+                        Convert.ChangeType(Value, typeof(PokemonData.Type));
+                    Value = default(T);
+                    break;
+                case EvolutionMethod.Time:
+                case EvolutionMethod.Season:
+                case EvolutionMethod.Location:
+                case EvolutionMethod.Weather:
+                default:
+                    //if there's no problem, just ignore it, and move on...
+                    break;
+            }
+            #endregion
+            this.EvolveValue = Value;
+        }
+        /*public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
+            #region Switch
+            //This should trigger after the class has been initialized, right?
+            switch (this.EvolveMethod)
+            {
+                case EvolutionMethod.Level:
+                case EvolutionMethod.LevelFemale:
+                case EvolutionMethod.LevelMale:
+                case EvolutionMethod.Ninjask:
+                case EvolutionMethod.Beauty:
+                case EvolutionMethod.Happiness:
+                case EvolutionMethod.HappinessDay:
+                case EvolutionMethod.HappinessNight:
+                case EvolutionMethod.Hatred:
+                    //if(typeof(T) || this.GetType() == typeof(string))
+                    if (this.EvolveValue.GetType() != typeof(int))
+                        //throw new Exception("Type not acceptable for Method-Value pair.");
+                        //Instead of throwing an exception, i'll correct the problem instead?
+                        Convert.ChangeType(this.EvolveValue, typeof(int));
+                        this.EvolveValue = default(T);
+                    break;
+                case EvolutionMethod.Item:
+                case EvolutionMethod.ItemFemale:
+                case EvolutionMethod.ItemMale:
+                case EvolutionMethod.TradeItem:
+                case EvolutionMethod.HoldItem:
+                case EvolutionMethod.HoldItemDay:
+                case EvolutionMethod.HoldItemNight:
+                    if (this.EvolveValue.GetType() != typeof(eItems))
+                        Convert.ChangeType(this.EvolveValue, typeof(eItems));
+                        this.EvolveValue = default(T);
+                    break;
+                case EvolutionMethod.TradeSpecies:
+                case EvolutionMethod.Party:
+                case EvolutionMethod.Shedinja:
+                    if (this.EvolveValue.GetType() != typeof(PokemonData.Pokemon))
+                        Convert.ChangeType(this.EvolveValue, typeof(PokemonData.Pokemon));
+                        this.EvolveValue = default(T);
+                    break;
+                case EvolutionMethod.Move:
+                    if (this.EvolveValue.GetType() != typeof(Move.MoveData.Move))
+                        Convert.ChangeType(this.EvolveValue, typeof(Move.MoveData.Move));
+                        this.EvolveValue = default(T);
+                    break;
+                case EvolutionMethod.Type:
+                    if (this.EvolveValue.GetType() != typeof(PokemonData.Type))
+                        Convert.ChangeType(this.EvolveValue, typeof(PokemonData.Type));
+                        this.EvolveValue = default(T);
+                    break;
+                case EvolutionMethod.Time:
+                case EvolutionMethod.Season:
+                case EvolutionMethod.Location:
+                case EvolutionMethod.Weather:
+                default:
+                    //if there's no problem, just ignore it, and move on...
+                    break;
+            }
+            #endregion
+        }
+        //private static Con<T2>(object ObjIn)
 		/*public int IntValue;
 		public string StringValue;
 		private int GetValue(int p)
