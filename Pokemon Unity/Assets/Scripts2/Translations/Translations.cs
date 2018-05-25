@@ -190,4 +190,9 @@ public static class LanguageExtension
         return text.Translate(fieldValues);
     }
 }
+    public static string PadNumbers(this string input)
+    {
+        return System.Text.RegularExpressions.Regex.Replace(input,"[0-9]+", match => match.Value.PadLeft(3,'0'));
+    }
+}
 #endregion
