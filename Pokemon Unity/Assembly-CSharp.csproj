@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -52,201 +51,182 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
-    <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
-    <Compile Include="Assets\Scripts\AudioHandler.cs" />
-    <Compile Include="Assets\Scripts\BgmHandler.cs" />
-    <Compile Include="Assets\Scripts\BridgeHandler.cs" />
-    <Compile Include="Assets\Scripts\Data\Bag.cs" />
-    <Compile Include="Assets\Scripts\Data\DataEnums.cs" />
-    <Compile Include="Assets\Scripts\Data\ItemData.cs" />
-    <Compile Include="Assets\Scripts\Data\ItemDatabase.cs" />
-    <Compile Include="Assets\Scripts\Data\MoveData.cs" />
-    <Compile Include="Assets\Scripts\Data\MoveDatabase.cs" />
-    <Compile Include="Assets\Scripts\Data\NatureData.cs" />
-    <Compile Include="Assets\Scripts\Data\NatureDatabase.cs" />
-    <Compile Include="Assets\Scripts\Data\PC.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonDatabaseOld.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonDataOld.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonHealth.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonOld.cs" />
-    <Compile Include="Assets\Scripts\Data\Trainer.cs" />
-    <Compile Include="Assets\Scripts\DayNightCycle.cs" />
-    <Compile Include="Assets\Scripts\DialogBoxHandler.cs" />
-    <Compile Include="Assets\Scripts\DialogBoxHandlerNew.cs" />
-    <Compile Include="Assets\Scripts\flycameraDebug.cs" />
-    <Compile Include="Assets\Scripts\FollowerMovement.cs" />
-    <Compile Include="Assets\Scripts\GlobalVariables.cs" />
-    <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
-    <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
-    <Compile Include="Assets\Scripts\ImportedScripts\AspectUtilityEnhanced.cs" />
-    <Compile Include="Assets\Scripts\ImportedScripts\RotatableGUIItem.cs" />
-    <Compile Include="Assets\Scripts\ImportedScripts\SeriV3.cs" />
-    <Compile Include="Assets\Scripts\Interacts\BumpLedge.cs" />
-    <Compile Include="Assets\Scripts\Interacts\BumpPokemonCenterRespawn.cs" />
-    <Compile Include="Assets\Scripts\Interacts\BumpRespawnSet.cs" />
-    <Compile Include="Assets\Scripts\Interacts\CustomEvent.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractBreak.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractDoorway.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractItem.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractPC.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractPokemonCenter.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractPush.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractRedirect.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractShop.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractSign.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractTrainer.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractTrainerSight.cs" />
-    <Compile Include="Assets\Scripts\MapCollider.cs" />
-    <Compile Include="Assets\Scripts\MapNameBoxHandler.cs" />
-    <Compile Include="Assets\Scripts\MapSettings.cs" />
-    <Compile Include="Assets\Scripts\NonResettingHandler.cs" />
-    <Compile Include="Assets\Scripts\NPCHandler.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
-    <Compile Include="Assets\Scripts\SaveData.cs" />
-    <Compile Include="Assets\Scripts\SaveLoad.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\MainMenuHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PartyHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PauseHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PCHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PokedexHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\Scene.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\SettingsHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\SummaryHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\TestPokedexHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\TrainerHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\TypingHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition.cs" />
-    <Compile Include="Assets\Scripts\ScreenFade.cs" />
-    <Compile Include="Assets\Scripts\SetMatTint.cs" />
-    <Compile Include="Assets\Scripts\SetResolution.cs" />
-    <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
-    <Compile Include="Assets\Scripts\SfxHandler.cs" />
-    <Compile Include="Assets\Scripts\SpriteAnimation.cs" />
-    <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
-    <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
-    <Compile Include="Assets\Scripts\WindowLight.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\CanvasUIManager.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\DialogHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\StartupSceneHandler.cs" />
-    <Compile Include="Assets\Scripts2\GameVariables.cs" />
-    <Compile Include="Assets\Scripts2\Map.cs" />
-    <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
-    <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
-    <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
-    <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
-    <None Include="Assets\Resources\Database\Location\Pokemon_en-us.xml" />
-    <None Include="Assets\Materials\Shaders\RenderBehind.shader" />
-    <None Include="Assets\Resources\Database\Berry\Pokemon_en-us.xml" />
-    <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
-    <None Include="Assets\Resources\Database\Nature\Nature_en-us.xml" />
-    <None Include="Assets\Resources\Database\Type\Pokemon_en-us.xml" />
-    <None Include="Assets\Resources\Database\Pokemon\Pokemon_en-us.xml" />
-    <None Include="Assets\Resources\Database\Moves\Move_en-us.xml" />
-    <None Include="Assets\Resources\Database\Item\Item_en-us.xml" />
-    <None Include="Assets\Resources\Database\Data.xml" />
-    <None Include="Assets\Resources\Database\Ability\Ability_en-us.xml" />
-    <None Include="Assets\Materials\Shaders\Sprites-GUI.shader" />
-    <None Include="Assets\Materials\Shaders\Sprites-DiffuseMod.shader" />
-    <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
-    <None Include="Assets\Materials\Shaders\Sprites-Tinted.shader" />
-    <None Include="Assets\Resources\Database\Contest\Ribbon_en-us.xml" />
-    <None Include="Assets\Resources\Database\Menu\Pokemon_en-us.xml" />
-    <None Include="Assets\Resources\Sprites\Animations\Animation.shader" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Networking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.TestRunner">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TestRunner">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Timeline">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Timeline">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.TreeEditor">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIAutomation">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UIAutomation">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.GoogleAudioSpatializer">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.GoogleAudioSpatializer">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.HoloLens">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.HoloLens">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.VR">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Graphs">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
-      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Advertisements">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/Editor/UnityEditor.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Analytics">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/topho/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
+     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
+     <Compile Include="Assets\Scripts\AudioHandler.cs" />
+     <Compile Include="Assets\Scripts\BgmHandler.cs" />
+     <Compile Include="Assets\Scripts\BridgeHandler.cs" />
+     <Compile Include="Assets\Scripts\Data\Bag.cs" />
+     <Compile Include="Assets\Scripts\Data\DataEnums.cs" />
+     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
+     <Compile Include="Assets\Scripts\Data\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\Data\MoveData.cs" />
+     <Compile Include="Assets\Scripts\Data\MoveDatabase.cs" />
+     <Compile Include="Assets\Scripts\Data\NatureData.cs" />
+     <Compile Include="Assets\Scripts\Data\NatureDatabase.cs" />
+     <Compile Include="Assets\Scripts\Data\PC.cs" />
+     <Compile Include="Assets\Scripts\Data\PokemonDatabaseOld.cs" />
+     <Compile Include="Assets\Scripts\Data\PokemonDataOld.cs" />
+     <Compile Include="Assets\Scripts\Data\PokemonHealth.cs" />
+     <Compile Include="Assets\Scripts\Data\PokemonOld.cs" />
+     <Compile Include="Assets\Scripts\Data\Trainer.cs" />
+     <Compile Include="Assets\Scripts\DayNightCycle.cs" />
+     <Compile Include="Assets\Scripts\DialogBoxHandler.cs" />
+     <Compile Include="Assets\Scripts\DialogBoxHandlerNew.cs" />
+     <Compile Include="Assets\Scripts\flycameraDebug.cs" />
+     <Compile Include="Assets\Scripts\FollowerMovement.cs" />
+     <Compile Include="Assets\Scripts\GlobalVariables.cs" />
+     <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
+     <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
+     <Compile Include="Assets\Scripts\ImportedScripts\AspectUtilityEnhanced.cs" />
+     <Compile Include="Assets\Scripts\ImportedScripts\RotatableGUIItem.cs" />
+     <Compile Include="Assets\Scripts\ImportedScripts\SeriV3.cs" />
+     <Compile Include="Assets\Scripts\Interacts\BumpLedge.cs" />
+     <Compile Include="Assets\Scripts\Interacts\BumpPokemonCenterRespawn.cs" />
+     <Compile Include="Assets\Scripts\Interacts\BumpRespawnSet.cs" />
+     <Compile Include="Assets\Scripts\Interacts\CustomEvent.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractBreak.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractDoorway.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractItem.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractPC.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractPokemonCenter.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractPush.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractRedirect.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractShop.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractSign.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractTrainer.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InteractTrainerSight.cs" />
+     <Compile Include="Assets\Scripts\MapCollider.cs" />
+     <Compile Include="Assets\Scripts\MapNameBoxHandler.cs" />
+     <Compile Include="Assets\Scripts\MapSettings.cs" />
+     <Compile Include="Assets\Scripts\NonResettingHandler.cs" />
+     <Compile Include="Assets\Scripts\NPCHandler.cs" />
+     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
+     <Compile Include="Assets\Scripts\SaveData.cs" />
+     <Compile Include="Assets\Scripts\SaveLoad.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\MainMenuHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\PartyHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\PauseHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\PCHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\PokedexHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\Scene.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\SettingsHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\SummaryHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\TestPokedexHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\TrainerHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneHandlers\TypingHandler.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition.cs" />
+     <Compile Include="Assets\Scripts\ScreenFade.cs" />
+     <Compile Include="Assets\Scripts\SetMatTint.cs" />
+     <Compile Include="Assets\Scripts\SetResolution.cs" />
+     <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
+     <Compile Include="Assets\Scripts\SfxHandler.cs" />
+     <Compile Include="Assets\Scripts\SpriteAnimation.cs" />
+     <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
+     <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
+     <Compile Include="Assets\Scripts\WindowLight.cs" />
+     <Compile Include="Assets\Scripts2\EventHandlers\BattleAnimationHandler.cs" />
+     <Compile Include="Assets\Scripts2\EventHandlers\CanvasUIManager.cs" />
+     <Compile Include="Assets\Scripts2\EventHandlers\DialogHandler.cs" />
+     <Compile Include="Assets\Scripts2\EventHandlers\StartupSceneHandler.cs" />
+     <Compile Include="Assets\Scripts2\GameVariables.cs" />
+     <Compile Include="Assets\Scripts2\Map.cs" />
+     <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
+     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
+     <Compile Include="Assets\Scripts2\ReSkinAnimation.cs" />
+     <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
+     <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
+     <None Include="Assets\Resources\Database\Location\Pokemon_en-us.xml" />
+     <None Include="Assets\Materials\Shaders\RenderBehind.shader" />
+     <None Include="Assets\Resources\Database\Berry\Pokemon_en-us.xml" />
+     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
+     <None Include="Assets\Resources\Database\Nature\Nature_en-us.xml" />
+     <None Include="Assets\Scripts2\AnimationEffect.cs.txt" />
+     <None Include="Assets\Resources\Database\Type\Pokemon_en-us.xml" />
+     <None Include="Assets\Resources\Database\Pokemon\Pokemon_en-us.xml" />
+     <None Include="Assets\Resources\Database\Moves\Move_en-us.xml" />
+     <None Include="Assets\Resources\Database\Item\Item_en-us.xml" />
+     <None Include="Assets\Resources\Database\Data.xml" />
+     <None Include="Assets\Resources\Database\Ability\Ability_en-us.xml" />
+     <None Include="Assets\Materials\Shaders\Sprites-GUI.shader" />
+     <None Include="Assets\Materials\Shaders\Sprites-DiffuseMod.shader" />
+     <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
+     <None Include="Assets\Materials\Shaders\Sprites-Tinted.shader" />
+     <None Include="Assets\Resources\Database\Contest\Ribbon_en-us.xml" />
+     <None Include="Assets\Resources\Database\Menu\Pokemon_en-us.xml" />
+     <None Include="Assets\Resources\Sprites\Animations\Animation.shader" />
+     <None Include="Assets\Scripts2\Billboard.cs.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TestRunner">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Timeline">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Timeline">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TreeEditor">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UIAutomation">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UIAutomation">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.GoogleAudioSpatializer">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.GoogleAudioSpatializer">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.HoloLens">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.SpatialTracking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.SpatialTracking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.VR">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{689E422C-B77F-5B31-E119-AD21E63C6EE7}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
+      <Project>{689E422C-B77F-5B31-E119-AD21E63C6EE7}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -256,4 +236,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
