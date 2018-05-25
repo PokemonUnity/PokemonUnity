@@ -6,14 +6,132 @@ using System.Text;
 //using Localization;
 //using Localization.Dictionaries;
 //using Localization.Dictionaries.Xml;
-using System.IO;
+//using System.IO;
 using System.Xml;
 using System.Collections;
 //using System.Collections.Immutable;
 using System.Globalization;
 
-class GameVariables
+/// <summary>
+/// Variables that are stored when game is saved, and other temp values used for gameplay
+/// </summary>
+public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
+    #region Variables
+    //Game UI
+    //public UnityEngine.Texture2D DialogWindowSkin;
+    //private UnityEngine.UI.Image DialogWindowSkin;
+    /// <summary>
+    /// Frame Style
+    /// </summary>
+    public static UnityEngine.Sprite WindowSkin { get; private set; }
+    public static UnityEngine.Sprite DialogSkin { get; private set; }
+    /// <summary>
+    /// Music Volume
+    /// </summary>
+    public static float mVol = (7f / 20f) * (7f / 20f);
+    /// <summary>
+    /// SFX (Sound Effects) Volume 
+    /// </summary>
+    public static float sVol = (14f / 20f) * (14f / 20f);
+    public static bool battleScene = true;
+    public static bool fullscreen;
+    public static byte textSpeed = 2;
+
+    //public static Translator.Languages UserLanguage = Translator.Languages.English;
+    public static Settings.Languages UserLanguage = Settings.Languages.English;
+
+    private byte slotIndex;
+    //private int buildID;
+    public static bool SaveFileFound;
+    public System.DateTimeOffset fileCreationDate;
+    public System.DateTimeOffset? lastSave;
+    public System.DateTimeOffset startTime = new System.DateTimeOffset();
+    //private double buildNum = 0.17;
+    //var t = new System.Resources.ResourceManager().
+    #if DEBUG
+    private static string FILE_NAME = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\"; //TestProject\bin\Debug
+    //string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+    //string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
+    private string FILE_NAME = UnityEngine.Application.persistentDataPath + "/Test.data";
+    //string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+#endif
+    #endregion
+
+    /// <summary>
+    /// Loads saved game data from memory slot
+    /// </summary>
+    /// <param name="i">Array int from binary stream</param>
+    public static void Load(byte i)
+    {
+        GameVariables.SaveLoad.Load();
+    }
+    public static void Save()
+    {
+        //using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
+        //GameVariables.SaveLoad.Save();
+    }
+    #region Save/Load Data
+    private class SaveLoad {
+        #region Variables
+        //int DatabaseEntryStringWidth = 100;
+        System.IO.FileStream fs;
+        //BinaryWriter w; //= new BinaryWriter(fs);
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        //GameVariables data = new GameVariables();
+        GameVariables[] gamesaves = new GameVariables[3];
+        Translator.Languages userpreflanguage = Translator.Languages.English;
+        #endregion
+
+        public static void Save(System.IO.BinaryWriter writer) { }
+        public static void Load() { }
+        
+        /// <summary>
+        /// When initially boots up, this will be all the application data stored
+        /// on user's PersonalComputer (PC). If first time running game, naturally
+        /// stored data would not exist, and the game will produce one by default.
+        /// </summary>
+        void OldMe()
+        {
+            //UnityEngine.Debug.Log("Checking to see if BinaryText exist...");
+            if (System.IO.File.Exists(FILE_NAME))
+            {
+                //UnityEngine.Debug.Log(FILE_NAME + " already exists!");
+
+                //UnityEngine.Debug.Log("Loading Old Info from BinaryText...");
+                // Create the reader for data.
+                //fs = new FileStream(FILE_NAME, FileMode.Open, FileAccess.Read);
+                fs = System.IO.File.Open(FILE_NAME, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                //UnityEngine.Debug.Log("Information Loaded.");
+                //UnityEngine.Debug.Log("Deserializing Information...");
+                //data = (GameVariables)bf.Deserialize(fs);
+                SaveLoad d = (SaveLoad)bf.Deserialize(fs);
+                //UnityEngine.Debug.Log("Rewriting TextField/Variables...");
+
+                //username = data.username;
+                //rememberme = data.rememberme;
+                Settings.UserLanguage = d.userpreflanguage;
+
+                //An Array[3] of GameVariables representing GameSaves
+                gamesaves = d.gamesaves;//(GameVariables[])bf.Deserialize(fs);
+                SaveFileFound = true;
+
+                //UnityEngine.Debug.Log("Information Loaded and Updated.");
+                //UnityEngine.Debug.Log("Closing BinaryText...");
+                //UnityEngine.Debug.Log("Closing FileStream...");
+                fs.Close();
+                //UnityEngine.Debug.Log("BinaryText Closed.");
+                return;
+            }
+            else
+            {
+                SaveFileFound = false;
+                System.IO.File.Open(FILE_NAME, System.IO.FileMode.Create).Close();
+            }
+        }
+    }
+    #endregion
 }
 
 /// <summary>
@@ -23,12 +141,18 @@ class GameVariables
 /// but a series of const variables that will be used as rules or 
 /// placeholders for the game mechanics.
 /// </summary>
-public class Settings
+public class Settings //: Settings<Translations.Languages>
 {
     #region Constant Values and Game Rules
     public static Translator.Languages UserLanguage = Translator.Languages.English;
+    public static bool TextLTR { get; private set; }
     //public XmlFileLocalizationDictionaryProvider TranslationText;// = new XmlFileLocalizationDictionaryProvider(Server.MapPath("~/App_Data/"));
     //information.Initialize("PokemonUnity");
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public const float framesPerSecond = 30f;
     #endregion
 
     #region Variables
@@ -37,19 +161,58 @@ public class Settings
     #region Properties
     #endregion
 
+    #region Resources
+    public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
+    {
+        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
+    }
+
+    public UnityEngine.Sprite[] LoadAllDialogSkinSprites()
+    {
+        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
+    }
+    #endregion
+
+    #region Custom Game Mode
+    //Nuzlocke Challenge
+    #endregion
+
     /* Tried to attempt a PokemonRNG for converting ints into bytes of data
      * but since the engine will handle all the heavy lifting, i'll just 
      * continue to build the logic out as normal and not worry or bother 
      * with binary values
-    private static System.UInt16 seed = 0x0000; //{ get; set; }
-    public static UInt16 Seed { get { return seed; } } //readonly
+    public int seed;
     void newSeed()
-    { seed = (UInt16)(seed * 0x41C64E6D + 0x6073); }*/
+    {
+        //Random t = new Random(seed);
+        if(seed == 0) seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+        if (!useFixedSeed) { 
+            if(true) seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
+            else {  
+            seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+            seed ^= (UInt16)System.DateTime.Now.Ticks;
+            seed &= UInt16.MaxValue;}
+        }
+    }*/     
+    private static System.UInt16 seed = 0x0000; //{ get; set; }
+    public static UInt16 Seed   { get {
+            if(seed == 0x0000) seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+            if (!useFixedSeed) { 
+                if(true) seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
+                /*else {  
+                seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+                seed ^= (UInt16)System.DateTime.Now.Ticks;
+                seed &= UInt16.MaxValue;}*/
+            }
+            return seed;
+        }
+    } //readonly
+    public static bool useFixedSeed;
     #region Enumerators
     /// <summary>
     /// Still need to sort out Language Enums
     /// </summary>
-    public enum Languages //: Translator.Languages//ILanguage<Translations.Languages>
+    public enum Languages //: Languages<Translations.Languages>//Translator.Languages//
     {
         /// <summary>
         /// US English
@@ -472,4 +635,16 @@ public class Settings
 	/// </summary>
 	public const bool NO_MEGA_EVOLUTION = true;
 	#endregion
+}
+
+public static class TransformExtension
+{
+    public static UnityEngine.Transform ClearChildren (this UnityEngine.Transform transform)
+    {
+        foreach (UnityEngine.Transform child in transform)
+        {
+            UnityEngine.GameObject.Destroy(child.gameObject);
+        }
+        return transform;
+    }
 }

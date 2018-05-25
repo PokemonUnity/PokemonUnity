@@ -1,7 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en" name="English" id="9" identifier="en" iso639="en" iso3166="us">
-<texts identifier="" >
+<texts>
 <!-- <text name="MainMenu" identifier="MainMenu" >Main menu</text>-->
+<!-- 
+<Instructions>
+	<Label 
+		id="0" 
+		name="Not needed, placed here as a proper label/description of value"  
+		identifier="What we type in the code to call this value" 
+		language="9" 
+		field_#="field name/identifier/description" field#="placeholder for custom value" field42="fieldname"
+>Translation text here. 
+The field numbers do not matter, 
+but the name "field" itself cannot be duplicated. 
+The order in which the fields appear is what goes inside of the squiggly brackets.
+Like: {0} will call the first place holder value and {1} will call the second
+All spacing and lines are recorded as part of text, so try to write everything in
+one line, while utilizing:
+\n for new lines and
+\r for message/card/dialog end</Label>
+</Instructions>
+-->
 <Sample>
 <Idea id="0" name="HealBlock"  identifier="HealBlock" language="9" pokemonName="1" abilityName="2">{1}'s {2} restored its HP!</Idea>
 <Idea id="0" name="HealBlock"  identifier="HealBlock" language="9" pokemonName="0" abilityName="1">{pokemonName}'s {abilityName} restored its HP!</Idea>
@@ -10,6 +29,11 @@
 <!-- <Idea id="0" name="HealBlock"  identifier="HealBlock" language="9" field="pokemonName" field="abilityName">{pokemonName}'s {abilityName} restored its HP!</Idea>
 <Idea id="0" name="HealBlock"  identifier="HealBlock" language="9" field="pokemonName" field="abilityName">{0}'s {1} restored its HP!</Idea>-->
 </Sample>
+<Scenes>
+<TextPrompt id="0" identifier="No" language="9">No</TextPrompt>
+<TextPrompt id="1" identifier="Yes" language="9">Yes</TextPrompt>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">Continue</CanvasUI>
+</Scenes>
 <Abilities>
 <!--
 select * 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 [System.Serializable]
+[System.Obsolete]
 public class PokedexTranslation //: ITranslation, ITranslationPokedex
 {
     ITranslation _translate;
@@ -19,6 +20,7 @@ public class PokedexTranslation //: ITranslation, ITranslationPokedex
 }
 
 [System.Serializable]
+[System.Obsolete]
 public class MoveTranslation : ITranslation
 {
     public string Name { get; set; }
@@ -26,6 +28,7 @@ public class MoveTranslation : ITranslation
 }
 
 [System.Serializable]
+[System.Obsolete]
 public class ItemTranslation : ITranslation
 {
     public string Name { get; set; }
@@ -33,6 +36,7 @@ public class ItemTranslation : ITranslation
 }
 
 [System.Serializable]
+[System.Obsolete]
 public class AbilityTranslation : ITranslation
 {
     public string Name { get; set; }
@@ -40,18 +44,21 @@ public class AbilityTranslation : ITranslation
 }
 
 [System.Serializable]
+[System.Obsolete]
 public class NatureTranslation : ITranslation
 {
     public string Name { get; set; }
     public string Description { get; set; }
 }
 
+[System.Obsolete]
 public interface ITranslation
 {
     string Name { get; set; }
     string Description { get; set; }
 }
 
+[System.Obsolete]
 public interface ITranslationPokedex
 {
     string Species { get; set; }
@@ -190,6 +197,70 @@ public static class LanguageExtension
         return text.Translate(fieldValues);
     }
 }
+#endregion
+
+#region 
+public static class gameTextExtension //: LanguageExtension
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message">string that contains full length message</param>
+    /// <param name="text">Text string to that will be displayed in color</param>
+    /// <param name="color">rrggbbaa color value</param>
+    public static void RichTextAssignColor(ref string message, string text, string color)
+    {
+        //message.Replace("["+text+"]", string.Format("<color=#{0}>{1}</color>", color, text));
+        RichTextAssignColor(ref message, text, text, color);
+        //return message;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message">string that contains full length message</param>
+    /// <param name="replaceText">Text in message string to replace</param>
+    /// <param name="text">Text string to that will be displayed in color</param>
+    /// <param name="color">rrggbbaa color value</param>
+    public static void RichTextAssignColor(ref string message, string replaceText, string text, string color)
+    {
+        message.Replace("[" + replaceText + "]", string.Format("<color={0}>{1}</color>", color, text));//#rrggbbaa works as well
+        //return message;
+    }
+    /// <summary>
+    /// This might be pretty taxing on system, would not recommend using until a replacement can be made
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string highlightCodexAllTerms(this string text)
+    {
+        /*if (fieldValues == null)
+        {
+            //ToDo: Method to pull translated string value from Dictionary<string,string> stored in memory cache
+            return textId;
+        }
+        else
+        {
+            System.Collections.Generic.List<string> stringArray = new System.Collections.Generic.List<string>(fieldValues);
+            //Use same Dictionary<string,string> method here
+            return string.Format(textId, stringArray.ToArray());
+        }*/
+        string[] CodexLibrary = new string[] { "Pokemons", "Items", "Moves", "Abilities", "Types" };//Maybe locations... and npcs
+        foreach(string codex in CodexLibrary)
+        { 
+            switch (codex)
+            {
+                case "Pokemons":
+                    foreach(var pokemon in System.Enum.GetNames(typeof(Pokemon.PokemonData.Pokemon)))
+                    {
+                        RichTextAssignColor(ref text, pokemon, "blue");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return text;
+    }
     public static string PadNumbers(this string input)
     {
         return System.Text.RegularExpressions.Regex.Replace(input,"[0-9]+", match => match.Value.PadLeft(3,'0'));
