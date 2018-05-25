@@ -100,7 +100,7 @@ public class EditorHelper : MonoBehaviour
         object[] args = new object[2] { 0, 0 };
         System.Reflection.MethodInfo mi = typeof(TextureImporter).GetMethod("GetWidthAndHeight", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        for (int z = 0; z < 3; z++)//textures.Length
+        for (int z = 0; z < textures.Length; z++)//
         {
             // path is Assets/Resources/Sprites/Sprite (1).png
             // path is Assets/Resources/Sprites/Pokemon/PokemonIcons/unfixed double size/icon013.png
@@ -171,7 +171,7 @@ public class EditorHelper : MonoBehaviour
             
             EditorCurveBinding spriteBinding = new EditorCurveBinding();
             spriteBinding.type = typeof(SpriteRenderer);
-            spriteBinding.path = "assets/anims/pokemon/";
+            spriteBinding.path = "Assets/Resources/Sprites/Pokemon/FRONT/[R]/";
             spriteBinding.propertyName = "Idle_"+pokeNum;
 
             ObjectReferenceKeyframe[] spriteKeyframes = new ObjectReferenceKeyframe[frames[z]];
@@ -244,6 +244,7 @@ public class EditorHelper : MonoBehaviour
 
             AnimationUtility.SetAnimationClipSettings(newClip, acs);
             AnimationUtility.SetObjectReferenceCurve(newClip, spriteBinding, spriteKeyframes);
+            AssetDatabase.CreateAsset(newClip, "assets/anims/pokemon/" + pokeNum + ".anim");
 
             ti_FR.spritesheet = ti_BR.spritesheet = ti_FS.spritesheet = ti_BS.spritesheet = newData.ToArray();
             AssetDatabase.ImportAsset("Assets/Resources/Sprites/Pokemon/FRONT/[R]/" + path, ImportAssetOptions.ForceUpdate);
