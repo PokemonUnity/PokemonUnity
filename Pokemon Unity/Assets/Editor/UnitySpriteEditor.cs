@@ -148,7 +148,7 @@ public class EditorHelper : MonoBehaviour
             ti_FR.spriteImportMode = ti_BR.spriteImportMode = ti_FS.spriteImportMode = ti_BS.spriteImportMode = SpriteImportMode.Multiple;
 
  
-            List<SpriteMetaData> newData = new List<SpriteMetaData>();
+            List<SpriteMetaData>[] newData = new List<SpriteMetaData>[4];
 
             mi.Invoke(ti_FR, args);//textures[z]
             
@@ -171,11 +171,11 @@ public class EditorHelper : MonoBehaviour
                 for (int x = 0; x < Width; x += SliceWidth)
                 {
                     if (n == frames[z]) break;// continue;
-                    SpriteMetaData smd = new SpriteMetaData();
-                    smd.pivot = new Vector2(0.5f, 0f);
-                    smd.alignment = 9;
-                    smd.name = string.Format("{0}_{1}", textures[z].name, n.ToString());//(textures[z].height - j) / SliceHeight + ", " + i / SliceWidth;
-                    smd.rect = new Rect(x, y - SliceHeight, SliceWidth, SliceHeight);
+                    SpriteMetaData[] smd = new SpriteMetaData[4];
+                    smd[0].pivot = smd[1].pivot = smd[2].pivot = smd[3].pivot = new Vector2(0.5f, 0f);
+                    smd[0].alignment = smd[1].alignment = smd[2].alignment = smd[3].alignment = 9;
+                    smd[0].name = smd[1].name = smd[2].name = smd[3].name = string.Format("{0}_{1}", textures[z].name, n.ToString());//(textures[z].height - j) / SliceHeight + ", " + i / SliceWidth;
+                    smd[0].rect = smd[1].rect = smd[2].rect = smd[3].rect = new Rect(x, y - SliceHeight, SliceWidth, SliceHeight);
 
                     //if on the last row, check for empty frames
                     /*if (y == SliceHeight) {
@@ -188,13 +188,14 @@ public class EditorHelper : MonoBehaviour
                         if (System.Array.TrueForAll<Color>(pix, e => (e.linear.r > 0.3f || e.linear.g > 0.3f || e.linear.b > 0.3f) & e.a > 0.3f))//(pix != null)
                             newData.Add(smd);
                         //else break;//n += 9;
-                    }else*/ newData.Add(smd); n++;
+                    }else*/
+                    newData[0].Add(smd[0]); newData[1].Add(smd[1]); newData[2].Add(smd[2]); newData[3].Add(smd[3]); n++;
                 }
             }
             //Debug.Assert(newData.Count == frames[z]);
-            if(newData.Count == frames[z])
-            Debug.Log(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}",newData.Count == frames[z], newData.Count, frames[z]));
-            else Debug.LogWarning(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}; Image Name: {3}; #: {4}",newData.Count == frames[z], newData.Count, frames[z], textures[z].name, z+1));
+            if(newData[0].Count == frames[z])
+            Debug.Log(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}",newData[0].Count == frames[z], newData[0].Count, frames[z]));
+            else Debug.LogWarning(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}; Image Name: {3}; #: {4}",newData[0].Count == frames[z], newData[0].Count, frames[z], textures[z].name, z+1));
 
             /*AnimationClip newClip = new AnimationClip();
             AnimationClipSettings acs = AnimationUtility.GetAnimationClipSettings(newClip);
@@ -206,7 +207,10 @@ public class EditorHelper : MonoBehaviour
 
             AnimationUtility.SetAnimationClipSettings(newClip, acs);*/
 
-            ti_FR.spritesheet = ti_BR.spritesheet = ti_FS.spritesheet = ti_BS.spritesheet = newData.ToArray();
+            ti_FR.spritesheet = newData[0].ToArray();
+            ti_BR.spritesheet = newData[1].ToArray();
+            ti_FS.spritesheet = newData[2].ToArray();
+            ti_BS.spritesheet = newData[3].ToArray();
             //AssetDatabase.ImportAsset("Sprites/Pokemon/FRONT/[R]/" + path, ImportAssetOptions.ForceUpdate);
             //AssetDatabase.ImportAsset("Sprites/Pokemon/BACK/[R]/" + path, ImportAssetOptions.ForceUpdate);
             //AssetDatabase.ImportAsset("Sprites/Pokemon/FRONT/[S]/" + path, ImportAssetOptions.ForceUpdate);
