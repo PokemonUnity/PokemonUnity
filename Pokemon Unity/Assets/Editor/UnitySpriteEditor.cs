@@ -71,6 +71,11 @@ public class EditorHelper : MonoBehaviour
         //UnityEditor.Experimental.AssetImporters.
         //TextureImporterPlatformSettings
 
+        //List<string> pokedexList = new List<string>();
+        //List<int> pokedexFrameCount = new List<int>();
+        SortedList<string, int> pokeDex = new SortedList<string, int>();
+        bool Add2List = false;
+
         //Texture2D[] textures = new Texture2D[totalSprites];
         Texture2D[] textures = Resources.LoadAll<Texture2D>("Sprites/Pokemon/FRONT/[R]").OrderBy(t => t.name.PadNumbers()).ToArray();
         //Texture2D[] textures = AssetDatabase.IsValidFolder.Resources.LoadAll<Texture2D>("Sprites/Pokemon/FRONT/[R]");
@@ -95,7 +100,7 @@ public class EditorHelper : MonoBehaviour
         object[] args = new object[2] { 0, 0 };
         System.Reflection.MethodInfo mi = typeof(TextureImporter).GetMethod("GetWidthAndHeight", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        for (int z = 0; z < textures.Length; z++)//
+        for (int z = 0; z < 3; z++)//textures.Length
         {
             // path is Assets/Resources/Sprites/Sprite (1).png
             // path is Assets/Resources/Sprites/Pokemon/PokemonIcons/unfixed double size/icon013.png
@@ -148,9 +153,40 @@ public class EditorHelper : MonoBehaviour
             ti_FR.spriteImportMode = ti_BR.spriteImportMode = ti_FS.spriteImportMode = ti_BS.spriteImportMode = SpriteImportMode.Multiple;
 
  
-            List<SpriteMetaData>[] newData = new List<SpriteMetaData>[4];
+            List<SpriteMetaData> newData = new List<SpriteMetaData>();
 
             mi.Invoke(ti_FR, args);//textures[z]
+            
+            AnimationClip newClip = new AnimationClip();
+            newClip.wrapMode = WrapMode.Loop;
+            newClip.frameRate = 1f;
+
+            AnimationClipSettings acs = AnimationUtility.GetAnimationClipSettings(newClip);
+            acs.loopTime = true;
+            acs.startTime = 0f;
+            acs.stopTime = 0f;
+
+            string pokeNum = System.Text.RegularExpressions.Regex.Match(textures[z].name, "[0-9]+").Value.PadLeft(3, '0');
+            //Debug.Log(pokeNum); //It works.
+            
+            EditorCurveBinding spriteBinding = new EditorCurveBinding();
+            spriteBinding.type = typeof(SpriteRenderer);
+            spriteBinding.path = "assets/anims/pokemon/";
+            spriteBinding.propertyName = "Idle_"+pokeNum;
+
+            ObjectReferenceKeyframe[] spriteKeyframes = new ObjectReferenceKeyframe[frames[z]];
+            if (!pokeDex.ContainsKey(pokeNum)) {//(!pokedexList.Contains(pokeNum))
+                //spriteKeyframes = new ObjectReferenceKeyframe[frames[z]];
+                //pokedexList.Add(pokeNum); pokedexFrameCount.Add(frames[z]);
+                pokeDex.Add(pokeNum, frames[z]);
+                Add2List = true;
+            }
+
+            SerializedObject serializedClip = new SerializedObject(newClip);
+            SerializedProperty loopTimeProperty = serializedClip.FindProperty("m_AnimationClipSettings.m_LoopTime");
+            if (loopTimeProperty != null)
+                loopTimeProperty.boolValue = true;
+            serializedClip.ApplyModifiedProperties();
             
             //int SliceWidth = ti.maxTextureSize < 2048 ? (front_regular[z].width / 10) * (1600 / ti.maxTextureSize) : front_regular[z].width / 10;
             int Width = (int)args[0]; //1600; //front_regular[z].width < front_regular[z].height /*ti.maxTextureSize < 2048*/ ? ((front_regular[z].width * front_regular[z].height) * (1600 / ti.maxTextureSize)) / 1600 * (1600 / ti.maxTextureSize) : 1600;
@@ -171,11 +207,21 @@ public class EditorHelper : MonoBehaviour
                 for (int x = 0; x < Width; x += SliceWidth)
                 {
                     if (n == frames[z]) break;// continue;
-                    SpriteMetaData[] smd = new SpriteMetaData[4];
-                    smd[0].pivot = smd[1].pivot = smd[2].pivot = smd[3].pivot = new Vector2(0.5f, 0f);
-                    smd[0].alignment = smd[1].alignment = smd[2].alignment = smd[3].alignment = 9;
-                    smd[0].name = smd[1].name = smd[2].name = smd[3].name = string.Format("{0}_{1}", textures[z].name, n.ToString());//(textures[z].height - j) / SliceHeight + ", " + i / SliceWidth;
-                    smd[0].rect = smd[1].rect = smd[2].rect = smd[3].rect = new Rect(x, y - SliceHeight, SliceWidth, SliceHeight);
+                    SpriteMetaData smd = new SpriteMetaData();
+                    smd.pivot = new Vector2(0.5f, 0f);
+                    smd.alignment = 9;
+                    smd.name = string.Format("{0}_{1}", textures[z].name, n.ToString());//(textures[z].height - j) / SliceHeight + ", " + i / SliceWidth;
+                    smd.rect = new Rect(x, y - SliceHeight, SliceWidth, SliceHeight);
+
+                    if (Add2List)
+                    {
+                        Sprite s = new Sprite();
+                        s = Sprite.Create(textures[z], new Rect(0, 0, 12, 12), smd.pivot, 100);
+                        s.name = smd.name;
+                        spriteKeyframes[n] = new ObjectReferenceKeyframe();
+                        spriteKeyframes[n].time = n / newClip.frameRate;
+                        spriteKeyframes[n].value = s;// Sprite.Create(textures[z], smd.rect, smd.pivot, 100);
+                    }
 
                     //if on the last row, check for empty frames
                     /*if (y == SliceHeight) {
@@ -188,42 +234,60 @@ public class EditorHelper : MonoBehaviour
                         if (System.Array.TrueForAll<Color>(pix, e => (e.linear.r > 0.3f || e.linear.g > 0.3f || e.linear.b > 0.3f) & e.a > 0.3f))//(pix != null)
                             newData.Add(smd);
                         //else break;//n += 9;
-                    }else*/
-                    newData[0].Add(smd[0]); newData[1].Add(smd[1]); newData[2].Add(smd[2]); newData[3].Add(smd[3]); n++;
+                    }else*/ newData.Add(smd); n++;
                 }
             }
             //Debug.Assert(newData.Count == frames[z]);
-            if(newData[0].Count == frames[z])
-            Debug.Log(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}",newData[0].Count == frames[z], newData[0].Count, frames[z]));
-            else Debug.LogWarning(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}; Image Name: {3}; #: {4}",newData[0].Count == frames[z], newData[0].Count, frames[z], textures[z].name, z+1));
+            if(newData.Count == frames[z])
+            Debug.Log(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}",newData.Count == frames[z], newData.Count, frames[z]));
+            else Debug.LogWarning(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}; Image Name: {3}; #: {4}",newData.Count == frames[z], newData.Count, frames[z], textures[z].name, z+1));
 
-            /*AnimationClip newClip = new AnimationClip();
-            AnimationClipSettings acs = AnimationUtility.GetAnimationClipSettings(newClip);
+            AnimationUtility.SetAnimationClipSettings(newClip, acs);
+            AnimationUtility.SetObjectReferenceCurve(newClip, spriteBinding, spriteKeyframes);
 
-            newClip.wrapMode = WrapMode.Loop;
-            acs.loopTime = true;
-            acs.startTime = 0f;
-            acs.stopTime = 0f;
-
-            AnimationUtility.SetAnimationClipSettings(newClip, acs);*/
-
-            ti_FR.spritesheet = newData[0].ToArray();
-            ti_BR.spritesheet = newData[1].ToArray();
-            ti_FS.spritesheet = newData[2].ToArray();
-            ti_BS.spritesheet = newData[3].ToArray();
-            //AssetDatabase.ImportAsset("Sprites/Pokemon/FRONT/[R]/" + path, ImportAssetOptions.ForceUpdate);
-            //AssetDatabase.ImportAsset("Sprites/Pokemon/BACK/[R]/" + path, ImportAssetOptions.ForceUpdate);
-            //AssetDatabase.ImportAsset("Sprites/Pokemon/FRONT/[S]/" + path, ImportAssetOptions.ForceUpdate);
-            //AssetDatabase.ImportAsset("Sprites/Pokemon/BACK/[S]/" + path, ImportAssetOptions.ForceUpdate);
-            //ti_FR.filterMode = FilterMode.Point; ti_FR.textureCompression = TextureImporterCompression.Uncompressed; ti_FR.maxTextureSize = 2048; // ti_FR.compressionQuality = 0;
-            //ti_BR.filterMode = FilterMode.Point; ti_BR.textureCompression = TextureImporterCompression.Uncompressed; ti_BR.maxTextureSize = 2048; // ti_BR.compressionQuality = 0;
-            //ti_FS.filterMode = FilterMode.Point; ti_FS.textureCompression = TextureImporterCompression.Uncompressed; ti_FS.maxTextureSize = 2048; // ti_FS.compressionQuality = 0;
-            //ti_BS.filterMode = FilterMode.Point; ti_BS.textureCompression = TextureImporterCompression.Uncompressed; ti_BS.maxTextureSize = 2048; // ti_BS.compressionQuality = 0;
+            ti_FR.spritesheet = ti_BR.spritesheet = ti_FS.spritesheet = ti_BS.spritesheet = newData.ToArray();
+            AssetDatabase.ImportAsset("Assets/Resources/Sprites/Pokemon/FRONT/[R]/" + path, ImportAssetOptions.ForceUpdate);
+            AssetDatabase.ImportAsset("Assets/Resources/Sprites/Pokemon/BACK/[R]/" + path, ImportAssetOptions.ForceUpdate);
+            AssetDatabase.ImportAsset("Assets/Resources/Sprites/Pokemon/FRONT/[S]/" + path, ImportAssetOptions.ForceUpdate);
+            AssetDatabase.ImportAsset("Assets/Resources/Sprites/Pokemon/BACK/[S]/" + path, ImportAssetOptions.ForceUpdate);
+            ti_FR.filterMode = FilterMode.Point;// ti_FR.textureCompression = TextureImporterCompression.Uncompressed; ti_FR.maxTextureSize = 2048; // ti_FR.compressionQuality = 0;
+            ti_BR.filterMode = FilterMode.Point;// ti_BR.textureCompression = TextureImporterCompression.Uncompressed; ti_BR.maxTextureSize = 2048; // ti_BR.compressionQuality = 0;
+            ti_FS.filterMode = FilterMode.Point;// ti_FS.textureCompression = TextureImporterCompression.Uncompressed; ti_FS.maxTextureSize = 2048; // ti_FS.compressionQuality = 0;
+            ti_BS.filterMode = FilterMode.Point;// ti_BS.textureCompression = TextureImporterCompression.Uncompressed; ti_BS.maxTextureSize = 2048; // ti_BS.compressionQuality = 0;
         }
         //Will only reimport the first icon... will need to reimport the rest if the first is good enough.
         //AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(textures[0]), ImportAssetOptions.ForceUpdate);
         //This should update everything one time. but it doesn't do anything...
         AssetDatabase.Refresh();
         Debug.Log("Done Slicing!");
+    }
+
+    private static AnimationClip createClip (Sprite[] sprites, bool loop, float frameRate)
+    {
+        AnimationClip clip = new AnimationClip();
+        clip.frameRate = frameRate;
+
+        EditorCurveBinding spriteBinding = new EditorCurveBinding();
+        spriteBinding.type = typeof(SpriteRenderer);
+        spriteBinding.path = "";
+        spriteBinding.propertyName = "m_Sprite";
+
+        ObjectReferenceKeyframe[] spriteKeyframes = new ObjectReferenceKeyframe[sprites.Length];
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            spriteKeyframes[i] = new ObjectReferenceKeyframe();
+            spriteKeyframes[i].time = i / frameRate;
+            spriteKeyframes[i].value = sprites[i];
+        }
+
+        SerializedObject serializedClip = new SerializedObject(clip);
+        SerializedProperty loopTimeProperty = serializedClip.FindProperty("m_AnimationClipSettings.m_LoopTime");
+        if (loopTimeProperty != null)
+            loopTimeProperty.boolValue = loop;
+        serializedClip.ApplyModifiedProperties();
+
+        AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyframes);
+
+        return clip;
     }
 }
