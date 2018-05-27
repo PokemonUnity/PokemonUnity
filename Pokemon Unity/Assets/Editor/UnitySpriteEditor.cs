@@ -71,10 +71,13 @@ public class EditorHelper : MonoBehaviour
         //UnityEditor.Experimental.AssetImporters.
         //TextureImporterPlatformSettings
 
+        /* ToDo: Remove all comment blocks
+         * Separated animation script into a new method,
+         * remove all animation code from this method
         //List<string> pokedexList = new List<string>();
         //List<int> pokedexFrameCount = new List<int>();
         SortedList<string, int> pokeDex = new SortedList<string, int>();
-        bool Add2List = false;
+        bool Add2List = false;*/
 
         //Texture2D[] textures = new Texture2D[totalSprites];
         Texture2D[] textures = Resources.LoadAll<Texture2D>("Sprites/Pokemon/FRONT/[R]").OrderBy(t => t.name.PadNumbers()).ToArray();
@@ -100,7 +103,7 @@ public class EditorHelper : MonoBehaviour
         object[] args = new object[2] { 0, 0 };
         System.Reflection.MethodInfo mi = typeof(TextureImporter).GetMethod("GetWidthAndHeight", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        for (int z = 0; z < textures.Length; z++)//
+        for (int z = 475; z < textures.Length; z++)//
         {
             // path is Assets/Resources/Sprites/Sprite (1).png
             // path is Assets/Resources/Sprites/Pokemon/PokemonIcons/unfixed double size/icon013.png
@@ -157,7 +160,7 @@ public class EditorHelper : MonoBehaviour
 
             mi.Invoke(ti_FR, args);//textures[z]
             
-            AnimationClip newClip = new AnimationClip();
+            /*AnimationClip newClip = new AnimationClip();
             newClip.wrapMode = WrapMode.Loop;
             newClip.frameRate = 1f;
 
@@ -186,7 +189,7 @@ public class EditorHelper : MonoBehaviour
             SerializedProperty loopTimeProperty = serializedClip.FindProperty("m_AnimationClipSettings.m_LoopTime");
             if (loopTimeProperty != null)
                 loopTimeProperty.boolValue = true;
-            serializedClip.ApplyModifiedProperties();
+            serializedClip.ApplyModifiedProperties();*/
             
             //int SliceWidth = ti.maxTextureSize < 2048 ? (front_regular[z].width / 10) * (1600 / ti.maxTextureSize) : front_regular[z].width / 10;
             int Width = (int)args[0]; //1600; //front_regular[z].width < front_regular[z].height /*ti.maxTextureSize < 2048*/ ? ((front_regular[z].width * front_regular[z].height) * (1600 / ti.maxTextureSize)) / 1600 * (1600 / ti.maxTextureSize) : 1600;
@@ -213,7 +216,7 @@ public class EditorHelper : MonoBehaviour
                     smd.name = string.Format("{0}_{1}", textures[z].name, n.ToString());//(textures[z].height - j) / SliceHeight + ", " + i / SliceWidth;
                     smd.rect = new Rect(x, y - SliceHeight, SliceWidth, SliceHeight);
 
-                    if (Add2List)
+                    /*if (Add2List)
                     {
                         Sprite s = new Sprite();
                         s = Sprite.Create(textures[z], new Rect(0, 0, 12, 12), smd.pivot, 100);
@@ -221,7 +224,7 @@ public class EditorHelper : MonoBehaviour
                         spriteKeyframes[n] = new ObjectReferenceKeyframe();
                         spriteKeyframes[n].time = n / newClip.frameRate;
                         spriteKeyframes[n].value = s;// Sprite.Create(textures[z], smd.rect, smd.pivot, 100);
-                    }
+                    }*/
 
                     //if on the last row, check for empty frames
                     /*if (y == SliceHeight) {
@@ -242,9 +245,9 @@ public class EditorHelper : MonoBehaviour
             Debug.Log(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}",newData.Count == frames[z], newData.Count, frames[z]));
             else Debug.LogWarning(string.Format("{0}; Frame Count: {1}; Frame Slices: {2}; Image Name: {3}; #: {4}",newData.Count == frames[z], newData.Count, frames[z], textures[z].name, z+1));
 
-            AnimationUtility.SetAnimationClipSettings(newClip, acs);
+            /*AnimationUtility.SetAnimationClipSettings(newClip, acs);
             AnimationUtility.SetObjectReferenceCurve(newClip, spriteBinding, spriteKeyframes);
-            AssetDatabase.CreateAsset(newClip, "assets/anims/pokemon/" + pokeNum + ".anim");
+            AssetDatabase.CreateAsset(newClip, "assets/anims/pokemon/" + pokeNum + ".anim");*/
 
             ti_FR.spritesheet = ti_BR.spritesheet = ti_FS.spritesheet = ti_BS.spritesheet = newData.ToArray();
             AssetDatabase.ImportAsset("Assets/Resources/Sprites/Pokemon/FRONT/[R]/" + path, ImportAssetOptions.ForceUpdate);
@@ -290,5 +293,99 @@ public class EditorHelper : MonoBehaviour
         AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyframes);
 
         return clip;
+    }
+
+    /// <summary>
+    /// Create an animationclip with an event function
+    /// for each sprite-frame in texture2d asset.
+    /// The function will read the gameobject the animation clip is attached to
+    /// and change the SpriteRender sprite image to match the name of the sprite-frame image
+    /// </summary>
+    /// <param name="sprites"></param>
+    /// <param name="loop"></param>
+    /// <param name="frameRate"></param>
+    private static void createEventClip (Texture2D sprites)
+    {
+        AnimationClip clip = new AnimationClip();
+        /*clip.frameRate = frameRate;
+
+        EditorCurveBinding spriteBinding = new EditorCurveBinding();
+        spriteBinding.type = typeof(SpriteRenderer);
+        spriteBinding.path = "";
+        spriteBinding.propertyName = "m_Sprite";
+
+        ObjectReferenceKeyframe[] spriteKeyframes = new ObjectReferenceKeyframe[sprites.Length];
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            spriteKeyframes[i] = new ObjectReferenceKeyframe();
+            spriteKeyframes[i].time = i / frameRate;
+            spriteKeyframes[i].value = sprites[i];
+        }
+
+        SerializedObject serializedClip = new SerializedObject(clip);
+        SerializedProperty loopTimeProperty = serializedClip.FindProperty("m_AnimationClipSettings.m_LoopTime");
+        if (loopTimeProperty != null)
+            loopTimeProperty.boolValue = loop;
+        serializedClip.ApplyModifiedProperties();
+
+        AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyframes);*/
+
+        /*
+        //List<string> pokedexList = new List<string>();
+        //List<int> pokedexFrameCount = new List<int>();
+        SortedList<string, int> pokeDex = new SortedList<string, int>();
+        bool Add2List = false;
+
+        AnimationClip newClip = new AnimationClip();
+        newClip.wrapMode = WrapMode.Loop;
+        newClip.frameRate = 1f;
+
+        AnimationClipSettings acs = AnimationUtility.GetAnimationClipSettings(newClip);
+        acs.loopTime = true;
+        acs.startTime = 0f;
+        acs.stopTime = 0f;
+
+        string pokeNum = System.Text.RegularExpressions.Regex.Match(textures[z].name, "[0-9]+").Value.PadLeft(3, '0');
+        //Debug.Log(pokeNum); //It works.
+
+        EditorCurveBinding spriteBinding = new EditorCurveBinding();
+        spriteBinding.type = typeof(SpriteRenderer);
+        spriteBinding.path = "Assets/Resources/Sprites/Pokemon/FRONT/[R]/";
+        spriteBinding.propertyName = "Idle_" + pokeNum;
+
+        ObjectReferenceKeyframe[] spriteKeyframes = new ObjectReferenceKeyframe[frames[z]];
+        if (!pokeDex.ContainsKey(pokeNum))
+        {//(!pokedexList.Contains(pokeNum))
+         //spriteKeyframes = new ObjectReferenceKeyframe[frames[z]];
+         //pokedexList.Add(pokeNum); pokedexFrameCount.Add(frames[z]);
+            pokeDex.Add(pokeNum, frames[z]);
+            Add2List = true;
+        }
+
+        SerializedObject serializedClip = new SerializedObject(newClip);
+        SerializedProperty loopTimeProperty = serializedClip.FindProperty("m_AnimationClipSettings.m_LoopTime");
+        if (loopTimeProperty != null)
+            loopTimeProperty.boolValue = true;
+        serializedClip.ApplyModifiedProperties();
+
+        for (int i = 0; i < length; i++)
+        {
+
+            if (Add2List)
+            {
+                Sprite s = new Sprite();
+                s = Sprite.Create(textures[z], new Rect(0, 0, 12, 12), smd.pivot, 100);
+                s.name = smd.name;
+                spriteKeyframes[n] = new ObjectReferenceKeyframe();
+                spriteKeyframes[n].time = n / newClip.frameRate;
+                spriteKeyframes[n].value = s;// Sprite.Create(textures[z], smd.rect, smd.pivot, 100);
+            }
+
+        }*/
+
+        //return clip;
+        //AnimationUtility.SetAnimationClipSettings(clip, acs);
+        //AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyframes);
+        AssetDatabase.CreateAsset(clip, "assets/anims/pokemon/" + /*pokeNum +*/ ".anim");
     }
 }
