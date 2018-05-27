@@ -304,21 +304,39 @@ public class Move //: MoveData
 		/// <example>For example, Quick Attack has a priority of 1.</example>
 		/// </summary>
 		private int priority;
-		private Flags[] flags;
+        /// <summary>
+        /// [Deprecated]
+        /// </summary>
+        /// ToDo: Instead of an Enum;
+        /// Make into a class of bool values defaulted to false
+        /// OR find a way to set/default uncalled values in array
+		private Flagss[] flagsEnum;
+        private Flags flags = new Flags();
 		private Category category;
-		#endregion
+        //everything below is influenced from pokemon-showdown
+        private bool secondary; // { int chance; boosts; status/effect }
+        private Contest contestType;
+        //enum volatileStatus
+        //enum sideCondition
+        //class effect
+        //string isZ;
+        //accuracy == true | 0-100?
+        //boosts { int stats = 0; } else null?
+        //bool isViable = false
+        //enum zMoveEffect; int zMovePower; boost zMoveBoost 
+        #endregion
 
-		#region Properties
-		public int PP { get { return pp; } }
+        #region Properties
+        public int PP { get { return pp; } }
 		public Move ID { get { return id; } }
 		public Target Target { get { return target; } }
 		public Pokemon.PokemonData.Type Type { get { return type; } }
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public string Name { get; private set; }
+		public string Description { get; private set; }
 		#endregion
 
 		#region Enumerator
-		public enum Flags
+		public enum Flagss
 		{
 			/// <summary>
 			/// The move makes physical contact with the target
@@ -1757,7 +1775,7 @@ public class Move //: MoveData
 		};
 		#endregion
 		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Type type, Category category, int power, float accuracy, int PP, 
-					Target target, int priority, Flags[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
+					Target target, int priority, Flagss[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string fieldEffect*/)
 		{
 			return new MoveData();
@@ -1816,6 +1834,7 @@ public class Move //: MoveData
 			throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
 		}
 
+        #region Deprecated/Obsolete		
 #if DEBUG
 		private static Dictionary<int, MoveTranslation> _moveTranslations;// = LoadMoveTranslations();
 #else
@@ -1894,11 +1913,14 @@ public class Move //: MoveData
 			return _moveTranslations[arrayId];// int id
 		}
 		#endregion
+	    #endregion
 	}
 	public class MoveBattle
 	{
 		#region Variables
-		private MoveData _base;
+		private MoveData _baseData;
+		private Move _baseMove;
+        private string _baseBattle;
 
 		//function   = movedata.function
 		private int basedamage; //= movedata.basedamage
@@ -1907,7 +1929,7 @@ public class Move //: MoveData
 		private int addlEffect; //= movedata.addlEffect
 		private Move.Target target;		//= movedata.target
 		private int priority;	//= movedata.priority
-		private Move.MoveData.Flags flags;		//= movedata.flags
+		private Move.Flags flags;		//= movedata.flags
 		private int category;	//= movedata.category
 		private Move thismove;	//= move
 		/// <summary>
@@ -1926,12 +1948,32 @@ public class Move //: MoveData
 		//NOCRITICAL      = 0x08
 		//NOREFLECT       = 0x10
 		//SELFCONFUSE     = 0x20
-		#endregion
+        public enum SpecialCondition
+        {
+            NOTYPE,
+            IGNOREPKMNTYPES,
+            NOWEIGHTING,
+            NOCRITICAL,
+            NOREFLECT,
+            SELFCONFUSE
+        }
+        #endregion
 
-		//ToDo: Interface to call Move's function
-		//public MoveBattle 
-	}
-	public class MoveTarget
+        #region Property
+        int TotalPP { get
+            {
+                if (totalpp > 0) return totalpp;
+                if (thismove != null) return thismove.TotalPP;
+                return 0;
+            } }
+
+        MoveData.Move Id { get { return thismove.MoveId; } }
+        #endregion
+
+        //ToDo: Interface to call Move's function
+        //public MoveBattle 
+    }
+    public class MoveTarget
 	{
 		public bool hasMultipleTargets(Move move)
 		{
@@ -1943,6 +1985,81 @@ public class Move //: MoveData
 				|| move.Targets == Target.SingleOpposing || move.Targets == Target.OppositeOpposing;
 		}
 	}
+    public class Flags
+    {
+        /// <summary>
+        /// Ignores a target's substitute.
+        /// </summary>
+        public bool Authentic { get; set; }
+        //= false;
+        /// <summary>
+        /// The move makes physical contact with the target
+        /// </summary>
+        public bool Contact;
+        /// <summary>
+        /// The target can use <see cref="Move.Protect"/> or <see cref="Move.Detect"/> to protect itself from the move
+        /// </summary>
+        public bool Protectable;
+        /// <summary>
+        /// The target can use <see cref="Move.Magic_Coat"/> to redirect the effect of the move. 
+        /// Use this flag if the move deals no damage but causes a negative effect on the target.
+        /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
+        /// </summary>
+        public bool Reflectable;
+        /// <summary>
+        /// The target can use <see cref="Move.Snatch"/> to steal the effect of the move. 
+        /// Use this flag for most moves that target the user.
+        /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
+        /// </summary>
+        public bool Snatch;
+        /// <summary>
+        /// The move can be copied by <see cref="Move.Mirror_Move"/>.
+        /// </summary>
+        public bool Mirror;
+        // <summary>
+        // The move has a 10% chance of making the opponent flinch if the user is holding a 
+        // <see cref="eItems.Item.KINGS_ROCK"/>/<see cref="eItems.Item.RAZOR_FANG"/>. 
+        // Use this flag for all damaging moves that don't already have a flinching effect.
+        // </summary>
+        //public bool TriggerFlinch;
+        /// <summary>
+        /// If the user is <see cref="Pokemon.bStatus.Frozen"/>, the move will thaw it out before it is used.
+        /// </summary>
+        /// Thaw
+        public bool Defrost;
+        // <summary>
+        // The move has a high critical hit rate.
+        // </summary>
+        //public bool Crit;
+        /// <summary>
+        /// The move is a biting move (powered up by the ability Strong Jaw).
+        /// </summary>
+        public bool Bite;
+        /// <summary>
+        /// The move is a punching move (powered up by the ability Iron Fist).
+        /// </summary>
+        public bool Punching;
+        /// <summary>
+        /// The move is a sound-based move.
+        /// </summary>
+        public bool SoundBased;
+        /// <summary>
+        /// The move is a powder-based move (Grass-type Pokémon are immune to them).
+        /// </summary>
+        public bool PowderBased;
+        /// <summary>
+        /// The move is a pulse-based move (powered up by the ability Mega Launcher).
+        /// </summary>
+        public bool PulseBased;
+        /// <summary>
+        /// The move is a bomb-based move (resisted by the ability Bulletproof).
+        /// </summary>
+        public bool BombBased;
+    }
+    /*public class MoveEffects
+    {
+        delegate void MoveEffectDelegate();//MoveEffect
+    }*/
 	#endregion
 }
 
@@ -1960,3 +2077,11 @@ public interface IMoveModifyAccuracy
 	void ModifyAccuracy(int moveAccuracy, Pokemon attacker, Pokemon opponent);
 }
 #endregion
+
+/// <summary>
+/// Namespace to nest all Pokemon Move Enums
+/// </summary>
+namespace PokemonUnity.Move
+{
+
+}

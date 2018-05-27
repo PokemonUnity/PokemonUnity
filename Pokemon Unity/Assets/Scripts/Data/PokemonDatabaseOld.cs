@@ -17,6 +17,7 @@ using System;
 /// first index value is null
 /// returns [0,1,2...] as order in pokedex
 /// </summary>
+[Obsolete("Use `Pokemon.cs` in `/Scripts2` folder...")]
 public static class PokemonDatabaseOld
 {
 	#region Debug

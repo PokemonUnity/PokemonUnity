@@ -164,7 +164,8 @@ public class ItemData
         Seven = 7
     }
 
-#region Not Needed
+    #region Not Needed
+    [System.Obsolete]
     public enum ItemType
     {
         ITEM,
@@ -174,6 +175,7 @@ public class ItemData
         KEY
     }
 
+    [System.Obsolete]
     public enum BattleType
     {
         NONE,
@@ -183,6 +185,7 @@ public class ItemData
         BATTLEITEMS
     }
 
+    [System.Obsolete]
     public enum ItemEffect
     {
         NONE,
@@ -197,18 +200,24 @@ public class ItemData
         STATBOOST,
         TM
     }
-    
+
     /// <summary>
     /// Use <see cref="ItemCategory.ALL_MACHINES"/> or <see cref="ItemPockets.MACHINE"/> and make a "GetTMnum()"
     /// </summary>
+    [System.Obsolete]
     private int tmNo;
+    [System.Obsolete]
     private string stringParameter;
+    [System.Obsolete]
     private float floatParameter;
+    [System.Obsolete]
     private BattleType battleType;
+    [System.Obsolete]
     private ItemEffect itemEffect;
+    [System.Obsolete]
+    private ItemType itemType;
 #endregion
 
-    private ItemType itemType;
     private int price;
 
 
@@ -243,6 +252,7 @@ public class ItemData
     }
 
     #region oldItemData-to be removed...
+    [System.Obsolete]
     public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price)
     {
         this.name = name;
@@ -253,6 +263,7 @@ public class ItemData
         this.itemEffect = ItemEffect.NONE;
     }
 
+    [System.Obsolete]
     public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect)
     {
@@ -264,6 +275,7 @@ public class ItemData
         this.itemEffect = itemEffect;
     }
 
+    [System.Obsolete]
     public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, string stringParameter)
     {
@@ -276,6 +288,7 @@ public class ItemData
         this.stringParameter = stringParameter;
     }
 
+    [System.Obsolete]
     public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, float floatParameter)
     {
@@ -288,7 +301,7 @@ public class ItemData
         this.floatParameter = floatParameter;
     }
 
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    [System.Obsolete]public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, string stringParameter, float floatParameter)
     {
         this.name = name;
@@ -310,7 +323,7 @@ public class ItemData
     /// <param name="battleType"></param>
     /// <param name="description"></param>
     /// <param name="price"></param>
-    public ItemData(int tmNo, string name, ItemType itemType, BattleType battleType, string description, int price)
+    [System.Obsolete]public ItemData(int tmNo, string name, ItemType itemType, BattleType battleType, string description, int price)
     {
         this.tmNo = tmNo;
         this.name = name;

@@ -13,7 +13,7 @@ public static class ItemDatabase
     //    e.g.
     //It restores the PP of a Pokemon's
     //moves by 10 points at most each.
-
+    [System.Obsolete]
     private static ItemData[] oldItems = new ItemData[]
     {
         //Poké Balls

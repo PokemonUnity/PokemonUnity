@@ -213,7 +213,7 @@ public class eItems{
     /// Running off of genVI. 
     /// Be sure to overwrite both if modifying.
     /// Replace "[HP]{mechanic:hp}" in summary-tags with
-    /// "<see cref="PokemonOld.HP"/>" or "<see cref="PokemonOld.currentHP"/>"
+    /// "<see cref="Pokemon.HP"/>" or "<see cref="Pokemon.TotalHP"/>"
     /// </remarks>
     public enum Item
     {

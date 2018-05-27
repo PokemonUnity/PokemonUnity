@@ -1687,26 +1687,15 @@ public class Pokemon //: ePokemons //PokemonData
 
 		#region Constructors
 		public PokemonData() { }// this.name = PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.Name; } //name equals form name unless there is none.
-
-		public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
-							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
-							float height, float weight, int baseExpYield, LevelingRate levelingRate,
-							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-							Color pokedexColor, int baseFriendship,//* / string species, string pokedexEntry,*/
-							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, Move.MoveData.Move[] movesetMoves, int[] tmList,
-							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
-							int[,] heldItem = null)
-		{//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-
-			//PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
-			var translation = Id.ToString().Translate();
-			this.id = Id;
-			this.regionalPokedex = regionalDex;
-			//this.name = translation.Name;
-			//this.species = translation.Species;
-			//this.pokedexEntry = translation.PokedexEntry;
-			this.pokedexEntry = translation.Value;
+		public PokemonData(Pokemon Id) : this()
+        {
+            //PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
+            var translation = Id.ToString().Translate();
+            this.id = Id;
+            //this.name = translation.Name;
+            //this.species = translation.Species;
+            //this.pokedexEntry = translation.PokedexEntry;
+            this.pokedexEntry = translation.Value;
             //this.forms = forms; //| new Pokemon[] { Id }; //ToDo: need new mechanic for how this should work
             List<string> formvalues = new List<string>();
             foreach (var fieldValue in translation.FieldNames)
@@ -1728,7 +1717,19 @@ public class Pokemon //: ePokemons //PokemonData
                 }
             }
             this.forms = formvalues.ToArray();
+        }
 
+		public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
+							float height, float weight, int baseExpYield, LevelingRate levelingRate,
+							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+							Color pokedexColor, int baseFriendship,//* / string species, string pokedexEntry,*/
+							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
+							float luminance, /*Color lightColor,*/ int[] movesetLevels, Move.MoveData.Move[] movesetMoves, int[] tmList,
+							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
+							int[,] heldItem = null) : this (Id)
+        {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+            this.regionalPokedex = regionalDex;
 
             this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
 			this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
@@ -1772,6 +1773,7 @@ public class Pokemon //: ePokemons //PokemonData
 			//this.evolutionRequirements = evolutionRequirements;
 		}
 
+        [Obsolete]
 		public static PokemonData CreatePokemonData(Pokemon Id, int[] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
 							float maleRatio, int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, int levelingRate,
@@ -1842,8 +1844,8 @@ public class Pokemon //: ePokemons //PokemonData
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
-		/// Not const because translation values
-		public static readonly PokemonData[] Database = new PokemonData[] {
+        /// Not const because translation values
+        public static readonly PokemonData[] Database = new PokemonData[] {
             //null
             //  PokemonData.CreatePokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE2, Ability1, Ability2, HiddenAbility,
             //				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
@@ -1864,7 +1866,7 @@ public class Pokemon //: ePokemons //PokemonData
                         evolutionID: null, evolutionLevel: null, evolutionMethod: null, forms: 4,
                         heldItem: null), //Test
         };
-		/*static PokemonData()
+        /*static PokemonData()
 		{
 			Database = new PokemonData[] {
 				//null
@@ -1889,19 +1891,24 @@ public class Pokemon //: ePokemons //PokemonData
 			};
 		}*/
 
+        #region Obsolete Translation Method
 #if DEBUG
+        [Obsolete]
 		private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations();
 #else
-    private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations(SaveData.currentSave.playerLanguage | Settings.Language.English);
+        [Obsolete]
+        private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations(SaveData.currentSave.playerLanguage | Settings.Language.English);
 #endif
 		/// <summary>
 		/// 
 		/// </summary>
+        [Obsolete]
 		private static Dictionary<int, PokedexTranslation> _pokeEnglishTranslations;// = LoadEnglishPokedexTranslations();
 		/// <summary>
 		/// 
 		/// </summary>
 		///ToDo: Should be a void that stores value to _pokeTranslations instead of returning...
+        [Obsolete]
 		public static void/*Dictionary<int, PokedexTranslation>*/ LoadPokedexTranslations(Settings.Languages language = Settings.Languages.English)//, int form = 0
 		{
 			var data = new Dictionary<int, PokedexTranslation>();
@@ -1964,6 +1971,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <param name="language"></param>
 		/// <returns></returns>
 		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
+        [Obsolete]
 		public static PokedexTranslation GetPokedexTranslation(Pokemon id, Settings.Languages language = Settings.Languages.English)// int form = 0,
 		{
 			if (_pokeTranslations == null) //should return english if player's default language is null
@@ -1987,6 +1995,7 @@ public class Pokemon //: ePokemons //PokemonData
 			return _pokeTranslations[arrayId];// int id
 		}
 		#endregion
+        #endregion
 
 		#region Methods
 		/// <summary>
@@ -2252,38 +2261,6 @@ public class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	public class PokemonMoveset
 	{
-		/// <summary>
-		/// Level at which the move is learned 
-		/// (0 means the move can only be learned when 
-		/// a Pokémon evolves into this species).
-		/// </summary>
-		/// Level needed to learn Move
-		public int Level;
-		/// <summary>
-		/// Move learned upon leveling-up
-		/// </summary>
-		public Move.MoveData.Move MoveId;
-		public PokemonMoveset() { }
-		public PokemonMoveset(int level, Move.MoveData.Move move)
-		{
-			this.Level = level;
-			this.MoveId = move;
-		}
-	}
-	/// <summary>
-	/// All the moves this pokemon species can learn, and the methods by which they learn them
-	/// </summary>
-	public class PokemonMoveTree
-	{
-		public LearnMethod TeachMethod;
-		public Move.MoveData.Move MoveId;
-        /// <summary>
-        /// Default level is 0; 
-        /// only really important if learn method is <see cref="LearnMethod.levelup"/>
-        /// </summary>
-        /// leaves door open to new game designs, if players want to limit move methods to a level requirement
-        /// use to set min or max level needed for designated learn method
-        public int Level;
 		public enum LearnMethod
 		{
 			levelup = 1,
@@ -2297,13 +2274,101 @@ public class Pokemon //: ePokemons //PokemonData
 			xd_purification = 9,
 			form_change = 10
 		}
+		public LearnMethod TeachMethod;
+		/// <summary>
+		/// Level at which the move is learned 
+		/// (0 means the move can only be learned when 
+		/// a Pokémon evolves into this species).
+        /// Default level is 0; 
+        /// only really important if learn method is <see cref="LearnMethod.levelup"/>
+		/// </summary>
+		/// Level needed to learn Move
+        /// leaves door open to new game designs, if players want to limit move methods to a level requirement
+        /// use to set min or max level needed for designated learn method
+		public int Level;
+		/// <summary>
+		/// Move learned upon leveling-up
+		/// </summary>
+		public Move.MoveData.Move MoveId;
+		//public PokemonMoveset() { }
+		/*public PokemonMoveset(Move.MoveData.Move move, int level)
+		{
+			this.Level = level;
+			this.MoveId = move;
+		}
+		public PokemonMoveset(Move.MoveData.Move move)
+		{
+			this.MoveId = move;
+		}*/
+		public PokemonMoveset(Move.MoveData.Move moveId, LearnMethod method = LearnMethod.levelup, int level = 0) //: this()
+		{
+			this.Level = level;
+			this.MoveId = moveId;
+            this.TeachMethod = method;
+		}
 	}
+	/// <summary>
+	/// All the moves this pokemon species can learn, and the methods by which they learn them
+	/// </summary>
+	public class PokemonMoveTree
+	{
+        /// <summary>
+        /// to use: LevelUp.OrderBy(x => x.Value).ThenBy(x => x.Key)
+        /// </summary>
+        public SortedList<Move.MoveData.Move, int> LevelUp { get; private set; }
+		public Move.MoveData.Move[] Egg { get; private set; }
+        public Move.MoveData.Move[] Tutor { get; private set; }
+		public Move.MoveData.Move[] Machine { get; private set; }
+        //Teach pikachu surf?... do we really need it to know surf?... Maybe if "specal form" (surfboard pickachu) is added to game
+        //public Move.MoveData.Move[] stadium_surfing_pikachu { get; private set; }
+        /// <summary>
+        /// If <see cref="eItems.Item.LIGHT_BALL"/> is held by either parent of a <see cref="PokemonData.Pokemon.Pichu"/> when the Egg is produced,
+        /// the Pichu that hatches will know the move <see cref="Move.MoveData.Move.Volt_Tackle"/>.
+        /// </summary>
+        /// Not sure about this one
+        public Move.MoveData.Move[] light_ball_egg { get; private set; }
+        //public Move.MoveData.Move[] colosseum_purification { get; private set; }
+        //public Move.MoveData.Move[] xd_shadow { get; private set; }
+        //public Move.MoveData.Move[] xd_purification { get; private set; }
+        /// <summary>
+        /// </summary>
+        /// Merge both Colosseum and XD into one list
+        public Move.MoveData.Move[] Shadow { get; private set; }
+        /// <summary>
+        /// When a pokemon is purified from a shadow state, the moves they can potentially unlock?...
+        /// </summary>
+        /// Merge both Colosseum and XD into one list
+        public Move.MoveData.Move[] Purification { get; private set; }
+        public Move.MoveData.Move[] FormChange { get; private set; }
+        public PokemonMoveTree(
+                SortedList<Move.MoveData.Move, int> levelup = null,
+                Move.MoveData.Move[] egg = null,
+                Move.MoveData.Move[] tutor = null,
+                Move.MoveData.Move[] machine = null,
+                //Move.MoveData.Move[] stadium_surfing_pikachu = null,
+                //Move.MoveData.Move[] light_ball_egg = null,
+                Move.MoveData.Move[] shadow = null,
+                Move.MoveData.Move[] purification = null,
+                Move.MoveData.Move[] form_change = null
+            )
+        {
+            this.LevelUp = levelup ?? new SortedList<Move.MoveData.Move, int>();                       
+			this.Egg = egg ?? new Move.MoveData.Move[0];
+            this.Tutor = tutor ?? new Move.MoveData.Move[0];
+            this.Machine = machine ?? new Move.MoveData.Move[0];
+            //this.stadium_surfing_pikachu = 5,
+            //this.light_ball_egg = light_ball_egg ?? new Move.MoveData.Move[0];
+            this.Shadow = shadow ?? new Move.MoveData.Move[0];
+            this.Purification = purification ?? new Move.MoveData.Move[0];
+            this.FormChange = form_change ?? new Move.MoveData.Move[0];
+        }
+    }
 	/// <summary>
 	/// The evolution paths this species can take. 
 	/// For each possible evolution of this species, 
 	/// there are three parts
 	/// </summary>
-	public class PokemonEvolution
+	public class PokemonEvolution//<T> where T : new()
 	{
 		/// <summary>
 		/// no parameter,
@@ -2923,4 +2988,12 @@ public class Pokemon //: ePokemons //PokemonData
 		}
 	}
 	#endregion
+}
+
+/// <summary>
+/// Namespace to nest all Pokemon Enums
+/// </summary>
+namespace PokemonUnity.Pokemon
+{
+
 }

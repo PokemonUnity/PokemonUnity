@@ -9,6 +9,7 @@ using System.Collections;
 //using DataEnums;
 
 [System.Serializable]
+[System.Obsolete("Use `Pokemon.cs` in `/Scripts2` folder...")]
 public class PokemonOld {
 
 	/// <summary>

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
+[System.Obsolete("Use `Pokemon.cs` in `/Scripts2` folder...")]
 public class PokemonDataOld {
 	#region Variables
 	/// <summary>
