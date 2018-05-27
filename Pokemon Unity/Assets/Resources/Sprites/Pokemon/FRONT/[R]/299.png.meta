@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7e848c57956b1ef418840ddff35c766e
-timeCreated: 1527242384
+timeCreated: 1527298688
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -60,7 +60,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -104,7 +104,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -118,7 +118,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -132,7 +132,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -146,7 +146,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -160,7 +160,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -174,7 +174,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -188,7 +188,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -202,7 +202,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -216,7 +216,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -230,7 +230,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 165
+        y: 160
         width: 160
         height: 160
       alignment: 9
@@ -244,7 +244,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 5
+        y: 0
         width: 160
         height: 160
       alignment: 9
@@ -258,7 +258,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 5
+        y: 0
         width: 160
         height: 160
       alignment: 9
@@ -272,7 +272,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 5
+        y: 0
         width: 160
         height: 160
       alignment: 9
@@ -286,7 +286,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 5
+        y: 0
         width: 160
         height: 160
       alignment: 9
@@ -300,217 +300,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 5
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_15
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 5
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_16
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 5
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_17
-      rect:
-        serializedVersion: 2
-        x: 1120
-        y: 5
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_18
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 5
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_19
-      rect:
-        serializedVersion: 2
-        x: 1440
-        y: 5
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_20
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_21
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_22
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_23
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_24
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_25
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_26
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_27
-      rect:
-        serializedVersion: 2
-        x: 1120
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_28
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: -155
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 299_29
-      rect:
-        serializedVersion: 2
-        x: 1440
-        y: -155
+        y: 0
         width: 160
         height: 160
       alignment: 9

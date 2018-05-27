@@ -1,9 +1,90 @@
 fileFormatVersion: 2
 guid: d49af9e58a0acfb418a8eaf8b07e761a
-timeCreated: 1527228473
+timeCreated: 1527277474
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: 10_0
+    21300002: 10_1
+    21300004: 10_2
+    21300006: 10_3
+    21300008: 10_4
+    21300010: 10_5
+    21300012: 10_6
+    21300014: 10_7
+    21300016: 10_8
+    21300018: 10_9
+    21300020: 10_10
+    21300022: 10_11
+    21300024: 10_12
+    21300026: 10_13
+    21300028: 10_14
+    21300030: 10_15
+    21300032: 10_16
+    21300034: 10_17
+    21300036: 10_18
+    21300038: 10_19
+    21300040: 10_20
+    21300042: 10_21
+    21300044: 10_22
+    21300046: 10_23
+    21300048: 10_24
+    21300050: 10_25
+    21300052: 10_26
+    21300054: 10_27
+    21300056: 10_28
+    21300058: 10_29
+    21300060: 10_30
+    21300062: 10_31
+    21300064: 10_32
+    21300066: 10_33
+    21300068: 10_34
+    21300070: 10_35
+    21300072: 10_36
+    21300074: 10_37
+    21300076: 10_38
+    21300078: 10_39
+    21300080: 10_40
+    21300082: 10_41
+    21300084: 10_42
+    21300086: 10_43
+    21300088: 10_44
+    21300090: 10_45
+    21300092: 10_46
+    21300094: 10_47
+    21300096: 10_48
+    21300098: 10_49
+    21300100: 10_50
+    21300102: 10_51
+    21300104: 10_52
+    21300106: 10_53
+    21300108: 10_54
+    21300110: 10_55
+    21300112: 10_56
+    21300114: 10_57
+    21300116: 10_58
+    21300118: 10_59
+    21300120: 10_60
+    21300122: 10_61
+    21300124: 10_62
+    21300126: 10_63
+    21300128: 10_64
+    21300130: 10_65
+    21300132: 10_66
+    21300134: 10_67
+    21300136: 10_68
+    21300138: 10_69
+    21300140: 10_70
+    21300142: 10_71
+    21300144: 10_72
+    21300146: 10_73
+    21300148: 10_74
+    21300150: 10_75
+    21300152: 10_76
+    21300154: 10_77
+    21300156: 10_78
+    21300158: 10_79
+    21300160: 10_80
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -40,7 +121,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -1204,132 +1285,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_81
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_82
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_83
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_84
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_85
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_86
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_87
-      rect:
-        serializedVersion: 2
-        x: 1120
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_88
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 10_89
-      rect:
-        serializedVersion: 2
-        x: 1440
         y: 0
         width: 160
         height: 160

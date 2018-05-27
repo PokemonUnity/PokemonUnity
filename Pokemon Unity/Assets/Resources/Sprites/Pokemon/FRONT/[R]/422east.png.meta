@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7dc9716f8dcd0644ebd7aae4667f7c1e
-timeCreated: 1527244375
+timeCreated: 1527331321
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -74,6 +74,57 @@ TextureImporter:
     21300134: 422east_67
     21300136: 422east_68
     21300138: 422east_69
+    21300140: 422east_70
+    21300142: 422east_71
+    21300144: 422east_72
+    21300146: 422east_73
+    21300148: 422east_74
+    21300150: 422east_75
+    21300152: 422east_76
+    21300154: 422east_77
+    21300156: 422east_78
+    21300158: 422east_79
+    21300160: 422east_80
+    21300162: 422east_81
+    21300164: 422east_82
+    21300166: 422east_83
+    21300168: 422east_84
+    21300170: 422east_85
+    21300172: 422east_86
+    21300174: 422east_87
+    21300176: 422east_88
+    21300178: 422east_89
+    21300180: 422east_90
+    21300182: 422east_91
+    21300184: 422east_92
+    21300186: 422east_93
+    21300188: 422east_94
+    21300190: 422east_95
+    21300192: 422east_96
+    21300194: 422east_97
+    21300196: 422east_98
+    21300198: 422east_99
+    21300200: 422east_100
+    21300202: 422east_101
+    21300204: 422east_102
+    21300206: 422east_103
+    21300208: 422east_104
+    21300210: 422east_105
+    21300212: 422east_106
+    21300214: 422east_107
+    21300216: 422east_108
+    21300218: 422east_109
+    21300220: 422east_110
+    21300222: 422east_111
+    21300224: 422east_112
+    21300226: 422east_113
+    21300228: 422east_114
+    21300230: 422east_115
+    21300232: 422east_116
+    21300234: 422east_117
+    21300236: 422east_118
+    21300238: 422east_119
+    21300240: 422east_120
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -110,7 +161,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -154,7 +205,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -168,7 +219,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -182,7 +233,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -196,7 +247,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -210,7 +261,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -224,7 +275,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -238,7 +289,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -252,7 +303,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -266,7 +317,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -280,7 +331,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 1065
+        y: 1920
         width: 160
         height: 160
       alignment: 9
@@ -294,7 +345,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -308,7 +359,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -322,7 +373,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -336,7 +387,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -350,7 +401,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -364,7 +415,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -378,7 +429,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -392,7 +443,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -406,7 +457,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -420,7 +471,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 905
+        y: 1760
         width: 160
         height: 160
       alignment: 9
@@ -434,7 +485,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -448,7 +499,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -462,7 +513,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -476,7 +527,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -490,7 +541,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -504,7 +555,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -518,7 +569,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -532,7 +583,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -546,7 +597,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -560,7 +611,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 745
+        y: 1600
         width: 160
         height: 160
       alignment: 9
@@ -574,7 +625,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -588,7 +639,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -602,7 +653,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -616,7 +667,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -630,7 +681,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -644,7 +695,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -658,7 +709,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -672,7 +723,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -686,7 +737,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -700,7 +751,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 585
+        y: 1440
         width: 160
         height: 160
       alignment: 9
@@ -714,7 +765,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -728,7 +779,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -742,7 +793,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -756,7 +807,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -770,7 +821,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -784,7 +835,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -798,7 +849,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -812,7 +863,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -826,7 +877,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -840,7 +891,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 425
+        y: 1280
         width: 160
         height: 160
       alignment: 9
@@ -854,7 +905,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -868,7 +919,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -882,7 +933,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -896,7 +947,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -910,7 +961,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -924,7 +975,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -938,7 +989,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -952,7 +1003,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -966,7 +1017,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -980,7 +1031,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 265
+        y: 1120
         width: 160
         height: 160
       alignment: 9
@@ -994,7 +1045,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1008,7 +1059,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1022,7 +1073,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1036,7 +1087,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1050,7 +1101,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1064,7 +1115,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1078,7 +1129,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1092,7 +1143,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1106,7 +1157,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1120,7 +1171,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 105
+        y: 960
         width: 160
         height: 160
       alignment: 9
@@ -1134,7 +1185,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1148,7 +1199,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1162,7 +1213,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1176,7 +1227,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1190,7 +1241,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1204,7 +1255,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1218,7 +1269,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1232,7 +1283,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1246,7 +1297,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1280
-        y: -55
+        y: 800
         width: 160
         height: 160
       alignment: 9
@@ -1260,7 +1311,581 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: -55
+        y: 800
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_81
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_82
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_83
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_84
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_85
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_86
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_87
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_88
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_89
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 640
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_91
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_92
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_93
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_94
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_95
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_96
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_97
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_98
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_99
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 480
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_100
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_101
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_102
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_103
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_104
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_105
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_106
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_107
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_108
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_109
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 320
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_110
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_111
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_112
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_113
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_114
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_115
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_116
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_117
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_118
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_119
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 160
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 422east_120
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
         width: 160
         height: 160
       alignment: 9
