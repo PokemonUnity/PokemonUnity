@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonUnity.Pokemon;
+using PokemonUnity.Move;
 
 /// <summary>
 /// 
@@ -146,16 +148,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Status problem (PBStatuses)
 	/// </summary>
 	/// ToDo: Status Class
-	private bStatus status;
-	public enum bStatus
-	{
-		None,
-		Sleep,
-		Poison,
-		Paralysis,
-		Burn,
-		Frozen
-	}
+	private PokemonUnity.Move.Status status;
 	/// <summary>
 	/// Sleep count/Toxic flag
 	/// </summary>
@@ -741,20 +734,20 @@ public class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns></returns>
-	public bool hasType(PokemonData.Type type)
+	public bool hasType(PokemonData.Types type)
 	{
-		return this._base.Types[0] == type || this._base.Types[1] == type;
+		return this._base.Type[0] == type || this._base.Type[1] == type;
 	}
 
 	/// <summary>
 	/// Returns this Pokemon's first type
 	/// </summary>
-	public PokemonData.Type Type1 { get { return this._base.Types[0]; } }
+	public PokemonData.Types Type1 { get { return this._base.Type[0]; } }
 
 	/// <summary>
 	/// Returns this Pokemon's second type
 	/// </summary>
-	public PokemonData.Type Type2 { get { return this._base.Types[1]; } }
+	public PokemonData.Types Type2 { get { return this._base.Type[1]; } }
 	#endregion
 
 	#region Moves
@@ -1277,8 +1270,8 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <see cref="Pokemon"/> and <see cref="Form"/>
 		private int form;// = 0; 
 
-		private Type type1;
-		private Type type2;
+		private Types type1;
+		private Types type2;
 		/// <summary>
 		/// All three pokemon abilities 
 		/// (Abiltiy1, Ability2, HiddenAbility).
@@ -1432,7 +1425,7 @@ public class Pokemon //: ePokemons //PokemonData
 		//public virtual Type Type1 { get { return this.type1; } }
 		//public virtual Type Type2 { get { return this.type2; } }
 		//Maybe use this instead?
-		public virtual Type[] Types { get { return new PokemonData.Type[] { this.type1, this.type2 }; } }
+		public virtual Types[] Type { get { return new PokemonData.Types[] { this.type1, this.type2 }; } }
 		/// <summary>
 		/// All three pokemon abilities 
 		/// (Abiltiy1, Ability2, HiddenAbility).
@@ -1594,7 +1587,7 @@ public class Pokemon //: ePokemons //PokemonData
 		#endregion
 
 		#region Enumerators
-		public enum Type
+		public enum Types
 		{
 			NONE = 0,
 			NORMAL = 1,
@@ -1719,7 +1712,7 @@ public class Pokemon //: ePokemons //PokemonData
             this.forms = formvalues.ToArray();
         }
 
-		public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Type? type1, Type? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+		public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1731,8 +1724,8 @@ public class Pokemon //: ePokemons //PokemonData
         {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
             this.regionalPokedex = regionalDex;
 
-            this.type1 = type1 != null ? (PokemonData.Type)type1 : PokemonData.Type.NONE;
-			this.type2 = type2 != null ? (PokemonData.Type)type2 : PokemonData.Type.NONE;
+            this.type1 = type1 != null ? (PokemonData.Types)type1 : PokemonData.Types.NONE;
+			this.type2 = type2 != null ? (PokemonData.Types)type2 : PokemonData.Types.NONE;
 			this.abilities = abilities;
 			//this.ability1Id = (eAbility.Ability)ability1;
 			//this.ability2Id = (eAbility.Ability)ability2;
@@ -1787,8 +1780,8 @@ public class Pokemon //: ePokemons //PokemonData
 			return CreatePokemonData(//new PokemonData(
 				(Pokemon)Id,
 				PokeId,
-				(PokemonData.Type)type1 | PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-				(PokemonData.Type)type2 | PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
+				(PokemonData.Types)type1 | PokemonData.Types.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
+				(PokemonData.Types)type2 | PokemonData.Types.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
                 //new eAbility.Ability[] { 
 					(eAbility.Ability)ability1 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
 					(eAbility.Ability)ability2 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
@@ -1809,7 +1802,7 @@ public class Pokemon //: ePokemons //PokemonData
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
-		public static PokemonData CreatePokemonData(Pokemon Id, int[] PokeId/*, string name*/, Type type1, Type type2, eAbility.Ability ability1, eAbility.Ability ability2, eAbility.Ability hiddenAbility,
+		public static PokemonData CreatePokemonData(Pokemon Id, int[] PokeId/*, string name*/, Types type1, Types type2, eAbility.Ability ability1, eAbility.Ability ability2, eAbility.Ability hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1856,7 +1849,7 @@ public class Pokemon //: ePokemons //PokemonData
             //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
-            new PokemonData( Id: Pokemon.NONE, regionalDex: new int[1], type1: Type.NONE, type2: Type.NONE, abilities: new eAbility.Ability[] { eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE },
+            new PokemonData( Id: Pokemon.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, abilities: new eAbility.Ability[] { eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE },
                         maleRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
                         height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -2376,7 +2369,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Item  = <see cref="eItems.Item"/>,
 		/// Move = <see cref="Move.MoveData.Move"/>,
 		/// Species = <see cref="PokemonData.Pokemon"/>,
-		/// Type = <see cref="PokemonData.Type"/>
+		/// Type = <see cref="PokemonData.Types"/>
 		/// </summary>
 		/// <example>
 		/// <para>E.G.	Poliwhirl(61)
@@ -2693,8 +2686,8 @@ public class Pokemon //: ePokemons //PokemonData
                     Value = default(T);
                     break;
                 case EvolutionMethod.Type:
-                    if (this.EvolveValue.GetType() != typeof(PokemonData.Type))
-                        Convert.ChangeType(Value, typeof(PokemonData.Type));
+                    if (this.EvolveValue.GetType() != typeof(PokemonData.Types))
+                        Convert.ChangeType(Value, typeof(PokemonData.Types));
                     Value = default(T);
                     break;
                 case EvolutionMethod.Time:

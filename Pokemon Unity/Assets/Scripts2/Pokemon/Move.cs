@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonUnity.Move;
+using Veekun;
 
 public class Move //: MoveData
 {
@@ -55,7 +57,7 @@ public class Move //: MoveData
 	/// </summary>
 	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }*/
 	public Target Targets { get { return _base.Target; } }
-	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }
+	public Pokemon.PokemonData.Types Type { get { return _base.Type; } }
 	public MoveData.Move MoveId { get { return _base.ID; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
@@ -199,61 +201,6 @@ public class Move //: MoveData
 		/// ALLALLYFIELD
 		UserSide
 	}
-	/// <summary>
-	/// Version from Veekun's Pokedex, needs to be redone
-	/// </summary>
-	public enum TargetB
-	{
-		/// <summary>
-		/// No target (i.e. Counter, Metal Burst, Mirror Coat, Curse)
-		/// </summary>
-		/// Single opposing Pokémon selected at random (i.e. Outrage, Petal Dance, Thrash, Uproar)
-		/// Single opposing Pokémon directly opposite of user
-		NONE = 0,
-		/// <summary>
-		/// User
-		/// </summary>
-		SELF,
-		/// <summary>
-		/// Single Pokémon other than the user
-		/// </summary>
-		ADJACENT,
-		/// <summary>
-		/// </summary>
-		ANY,
-		/// <summary>
-		/// User's partner (i.e. Helping Hand)
-		/// </summary>
-		ADJACENTALLY,
-		/// <summary>
-		/// Single opposing Pokémon (i.e. Me First)
-		/// </summary>
-		ADJACENTOPPONENT,
-		/// <summary>
-		/// Single Pokémon on user's side (i.e. Acupressure)
-		/// </summary>
-		ADJACENTALLYSELF,
-		/// <summary>
-		/// Both sides (e.g. Sunny Day, Trick Room)
-		/// </summary>
-		ALL,
-		/// <summary>
-		/// All Pokémon other than the user
-		/// </summary>
-		ALLADJACENT,
-		/// <summary>
-		/// Opposing side (i.e. Spikes, Toxic Spikes, Stealth Rocks)
-		/// </summary>
-		ALLADJACENTOPPONENT,
-		/// <summary>
-		/// All opposing Pokémon
-		/// </summary>
-		ALLOPPONENT,
-		/// <summary>
-		/// User's side (e.g. Light Screen, Mist)
-		/// </summary>
-		ALLALLY
-	}
 	#endregion
 
 	#region Methods
@@ -275,7 +222,7 @@ public class Move //: MoveData
 		/// For multi-hit moves, this is the base power of a single hit.
 		/// </summary>
 		private int basedamage;
-		private Pokemon.PokemonData.Type type;
+		private Pokemon.PokemonData.Types type;
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -310,7 +257,8 @@ public class Move //: MoveData
         /// ToDo: Instead of an Enum;
         /// Make into a class of bool values defaulted to false
         /// OR find a way to set/default uncalled values in array
-		private Flagss[] flagsEnum;
+        [Obsolete]
+		private Veekun.Flags[] flagsEnum;
         private Flags flags = new Flags();
 		private Category category;
         //everything below is influenced from pokemon-showdown
@@ -330,78 +278,12 @@ public class Move //: MoveData
         public int PP { get { return pp; } }
 		public Move ID { get { return id; } }
 		public Target Target { get { return target; } }
-		public Pokemon.PokemonData.Type Type { get { return type; } }
+		public Pokemon.PokemonData.Types Type { get { return type; } }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
 		#endregion
 
 		#region Enumerator
-		public enum Flagss
-		{
-			/// <summary>
-			/// The move makes physical contact with the target
-			/// </summary>
-			Contact,
-			/// <summary>
-			/// The target can use <see cref="Move.Protect"/> or <see cref="Move.Detect"/> to protect itself from the move
-			/// </summary>
-			Protectable,
-			/// <summary>
-			/// The target can use <see cref="Move.Magic_Coat"/> to redirect the effect of the move. 
-			/// Use this flag if the move deals no damage but causes a negative effect on the target.
-			/// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
-			/// </summary>
-			MagicCoat,
-			/// <summary>
-			/// The target can use <see cref="Move.Snatch"/> to steal the effect of the move. 
-			/// Use this flag for most moves that target the user.
-			/// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
-			/// </summary>
-			Snatchable,
-			/// <summary>
-			/// The move can be copied by <see cref="Move.Mirror_Move"/>.
-			/// </summary>
-			MirrorMove,
-			/// <summary>
-			/// The move has a 10% chance of making the opponent flinch if the user is holding a 
-			/// <see cref="eItems.Item.KINGS_ROCK"/>/<see cref="eItems.Item.RAZOR_FANG"/>. 
-			/// Use this flag for all damaging moves that don't already have a flinching effect.
-			/// </summary>
-			TriggerFlinch,
-			/// <summary>
-			/// If the user is <see cref="Pokemon.bStatus.Frozen"/>, the move will thaw it out before it is used.
-			/// </summary>
-			Thaw,
-			/// <summary>
-			/// The move has a high critical hit rate.
-			/// </summary>
-			Crit,
-			/// <summary>
-			/// The move is a biting move (powered up by the ability Strong Jaw).
-			/// </summary>
-			Biting,
-			/// <summary>
-			/// The move is a punching move (powered up by the ability Iron Fist).
-			/// </summary>
-			Punching,
-			/// <summary>
-			/// The move is a sound-based move.
-			/// </summary>
-			SoundBased,
-			/// <summary>
-			/// The move is a powder-based move (Grass-type Pokémon are immune to them).
-			/// </summary>
-			PowderBased,
-			/// <summary>
-			/// The move is a pulse-based move (powered up by the ability Mega Launcher).
-			/// </summary>
-			PulseBased,
-			/// <summary>
-			/// The move is a bomb-based move (resisted by the ability Bulletproof).
-			/// </summary>
-			BombBased
-
-		}
 		/// <summary>
 		/// Move ids are connected to XML file.
 		/// </summary>
@@ -1067,10 +949,10 @@ public class Move //: MoveData
 		private static readonly MoveData[] Database = new MoveData[]
 		{
 			null,
-			CreateMoveData(Move.Absorb, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
+			CreateMoveData(Move.Absorb, Pokemon.PokemonData.Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
 				0, false, true, false, false, new Effect[] {Effect.HPDrain}, new float[] {1},
 				Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Acrobatics, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
+			CreateMoveData(Move.Acrobatics, Pokemon.PokemonData.Types.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
 				0, true, true, false, false, new Effect[] {}, new float[] {}, Contest.COOL, 1, 0)/*,
 			CreateMoveData(Move.Aerial_Ace, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 60, 0, 20, Contest.COOL,
 				2, 0),
@@ -1774,8 +1656,8 @@ public class Move //: MoveData
 				Contest.CLEVER, 4, 0)*/
 		};
 		#endregion
-		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Type type, Category category, int power, float accuracy, int PP, 
-					Target target, int priority, Flagss[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
+		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, 
+					Target target, int priority, Veekun.Flags[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string fieldEffect*/)
 		{
 			return new MoveData();
@@ -1799,7 +1681,7 @@ public class Move //: MoveData
 			//this.description = description;
 			//this.fieldEffect = fieldEffect;*/
 		}
-		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Type type, Category category, int power, float accuracy, int PP, TargetB target,
+		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, TargetB target,
 					int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
 					Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string description, string fieldEffect*/)
@@ -1924,7 +1806,7 @@ public class Move //: MoveData
 
 		//function   = movedata.function
 		private int basedamage; //= movedata.basedamage
-		private Pokemon.PokemonData.Type type;       //= movedata.type
+		private Pokemon.PokemonData.Types type;       //= movedata.type
 		private int accuracy;	//= movedata.accuracy
 		private int addlEffect; //= movedata.addlEffect
 		private Move.Target target;		//= movedata.target
@@ -2083,5 +1965,141 @@ public interface IMoveModifyAccuracy
 /// </summary>
 namespace PokemonUnity.Move
 {
+	public enum Status
+	{
+		None,
+		Sleep,
+		Poison,
+		Paralysis,
+		Burn,
+		Frozen
+	}
+
+}
+
+namespace Veekun
+{
+    [Obsolete]
+	public enum Flags
+	{
+		/// <summary>
+		/// The move makes physical contact with the target
+		/// </summary>
+		Contact,
+		/// <summary>
+		/// The target can use <see cref="Move.Protect"/> or <see cref="Move.Detect"/> to protect itself from the move
+		/// </summary>
+		Protectable,
+		/// <summary>
+		/// The target can use <see cref="Move.Magic_Coat"/> to redirect the effect of the move. 
+		/// Use this flag if the move deals no damage but causes a negative effect on the target.
+		/// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
+		/// </summary>
+		MagicCoat,
+		/// <summary>
+		/// The target can use <see cref="Move.Snatch"/> to steal the effect of the move. 
+		/// Use this flag for most moves that target the user.
+		/// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
+		/// </summary>
+		Snatchable,
+		/// <summary>
+		/// The move can be copied by <see cref="Move.Mirror_Move"/>.
+		/// </summary>
+		MirrorMove,
+		/// <summary>
+		/// The move has a 10% chance of making the opponent flinch if the user is holding a 
+		/// <see cref="eItems.Item.KINGS_ROCK"/>/<see cref="eItems.Item.RAZOR_FANG"/>. 
+		/// Use this flag for all damaging moves that don't already have a flinching effect.
+		/// </summary>
+		TriggerFlinch,
+		/// <summary>
+		/// If the user is <see cref="Pokemon.bStatus.Frozen"/>, the move will thaw it out before it is used.
+		/// </summary>
+		Thaw,
+		/// <summary>
+		/// The move has a high critical hit rate.
+		/// </summary>
+		Crit,
+		/// <summary>
+		/// The move is a biting move (powered up by the ability Strong Jaw).
+		/// </summary>
+		Biting,
+		/// <summary>
+		/// The move is a punching move (powered up by the ability Iron Fist).
+		/// </summary>
+		Punching,
+		/// <summary>
+		/// The move is a sound-based move.
+		/// </summary>
+		SoundBased,
+		/// <summary>
+		/// The move is a powder-based move (Grass-type Pokémon are immune to them).
+		/// </summary>
+		PowderBased,
+		/// <summary>
+		/// The move is a pulse-based move (powered up by the ability Mega Launcher).
+		/// </summary>
+		PulseBased,
+		/// <summary>
+		/// The move is a bomb-based move (resisted by the ability Bulletproof).
+		/// </summary>
+		BombBased
+
+	}
+	/// <summary>
+	/// Version from Veekun's Pokedex, needs to be redone
+	/// </summary>
+	public enum TargetB
+	{
+		/// <summary>
+		/// No target (i.e. Counter, Metal Burst, Mirror Coat, Curse)
+		/// </summary>
+		/// Single opposing Pokémon selected at random (i.e. Outrage, Petal Dance, Thrash, Uproar)
+		/// Single opposing Pokémon directly opposite of user
+		NONE = 0,
+		/// <summary>
+		/// User
+		/// </summary>
+		SELF,
+		/// <summary>
+		/// Single Pokémon other than the user
+		/// </summary>
+		ADJACENT,
+		/// <summary>
+		/// </summary>
+		ANY,
+		/// <summary>
+		/// User's partner (i.e. Helping Hand)
+		/// </summary>
+		ADJACENTALLY,
+		/// <summary>
+		/// Single opposing Pokémon (i.e. Me First)
+		/// </summary>
+		ADJACENTOPPONENT,
+		/// <summary>
+		/// Single Pokémon on user's side (i.e. Acupressure)
+		/// </summary>
+		ADJACENTALLYSELF,
+		/// <summary>
+		/// Both sides (e.g. Sunny Day, Trick Room)
+		/// </summary>
+		ALL,
+		/// <summary>
+		/// All Pokémon other than the user
+		/// </summary>
+		ALLADJACENT,
+		/// <summary>
+		/// Opposing side (i.e. Spikes, Toxic Spikes, Stealth Rocks)
+		/// </summary>
+		ALLADJACENTOPPONENT,
+		/// <summary>
+		/// All opposing Pokémon
+		/// </summary>
+		ALLOPPONENT,
+		/// <summary>
+		/// User's side (e.g. Light Screen, Mist)
+		/// </summary>
+		ALLALLY
+	}
 
 }
