@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonUnity;
+using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
 using Veekun;
 
@@ -57,7 +59,7 @@ public class Move //: MoveData
 	/// </summary>
 	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }*/
 	public Target Targets { get { return _base.Target; } }
-	public Pokemon.PokemonData.Types Type { get { return _base.Type; } }
+	public Types Type { get { return _base.Type; } }
 	public Moves MoveId { get { return _base.ID; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
@@ -222,7 +224,7 @@ public class Move //: MoveData
 		/// For multi-hit moves, this is the base power of a single hit.
 		/// </summary>
 		private int basedamage;
-		private Pokemon.PokemonData.Types type;
+		private Types type;
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
@@ -278,7 +280,7 @@ public class Move //: MoveData
         public int PP { get { return pp; } }
 		public Moves ID { get { return id; } }
 		public Target Target { get { return target; } }
-		public Pokemon.PokemonData.Types Type { get { return type; } }
+		public Types Type { get { return type; } }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
 		#endregion
@@ -291,10 +293,10 @@ public class Move //: MoveData
 		private static readonly MoveData[] Database = new MoveData[]
 		{
 			null,
-			CreateMoveData(Moves.Absorb, Pokemon.PokemonData.Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
+			CreateMoveData(Moves.Absorb, Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
 				0, false, true, false, false, new Effect[] {Effect.HPDrain}, new float[] {1},
 				Contest.CLEVER, 4, 0),
-			CreateMoveData(Moves.Acrobatics, Pokemon.PokemonData.Types.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
+			CreateMoveData(Moves.Acrobatics, Types.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
 				0, true, true, false, false, new Effect[] {}, new float[] {}, Contest.COOL, 1, 0)/*,
 			CreateMoveData(Move.Aerial_Ace, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 60, 0, 20, Contest.COOL,
 				2, 0),
@@ -998,7 +1000,7 @@ public class Move //: MoveData
 				Contest.CLEVER, 4, 0)*/
 		};
 		#endregion
-		public static MoveData CreateMoveData(Moves internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, 
+		public static MoveData CreateMoveData(Moves internalName, Types type, Category category, int power, float accuracy, int PP, 
 					Target target, int priority, Veekun.Flags[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string fieldEffect*/)
 		{
@@ -1023,7 +1025,7 @@ public class Move //: MoveData
 			//this.description = description;
 			//this.fieldEffect = fieldEffect;*/
 		}
-		public static MoveData CreateMoveData(Moves internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, TargetB target,
+		public static MoveData CreateMoveData(Moves internalName, Types type, Category category, int power, float accuracy, int PP, TargetB target,
 					int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
 					Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string description, string fieldEffect*/)
@@ -1148,7 +1150,7 @@ public class Move //: MoveData
 
 		//function   = movedata.function
 		private int basedamage; //= movedata.basedamage
-		private Pokemon.PokemonData.Types type;       //= movedata.type
+		private Types type;       //= movedata.type
 		private int accuracy;	//= movedata.accuracy
 		private int addlEffect; //= movedata.addlEffect
 		private Move.Target target;		//= movedata.target
