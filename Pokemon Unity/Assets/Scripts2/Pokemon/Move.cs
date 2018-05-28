@@ -58,7 +58,7 @@ public class Move //: MoveData
 	public Pokemon.PokemonData.Type Type { get { return _base.Type; } }*/
 	public Target Targets { get { return _base.Target; } }
 	public Pokemon.PokemonData.Types Type { get { return _base.Type; } }
-	public MoveData.Move MoveId { get { return _base.ID; } }
+	public MoveData.Moves MoveId { get { return _base.ID; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
 	#endregion
@@ -68,7 +68,7 @@ public class Move //: MoveData
 	/// <summary>
 	/// Initializes this object to the specified move ID.
 	/// </summary>
-	public Move(MoveData.Move move) { _base = new MoveData().getMove(move); pp = _base.PP; }
+	public Move(MoveData.Moves move) { _base = new MoveData().getMove(move); pp = _base.PP; }
 
 	#region Enumerator
 	public enum Effect
@@ -215,7 +215,7 @@ public class Move //: MoveData
 		/// totalpp
 		/// </summary>
 		private int pp { get; set; }
-		private Move id { get; set; }
+		private Moves id { get; set; }
 		/// <summary>
 		/// The move's base power value. Status moves have a base power of 0, 
 		/// while moves with a variable base power are defined here with a base power of 1. 
@@ -276,7 +276,7 @@ public class Move //: MoveData
 
         #region Properties
         public int PP { get { return pp; } }
-		public Move ID { get { return id; } }
+		public Moves ID { get { return id; } }
 		public Target Target { get { return target; } }
 		public Pokemon.PokemonData.Types Type { get { return type; } }
 		public string Name { get; private set; }
@@ -290,7 +290,7 @@ public class Move //: MoveData
 		/// <remarks>Can now code with strings or int and
 		/// access the same value.</remarks>
 		/// ToDo: Needs to be redone. Alphabetical and no Id tags -- Done
-		public enum Move
+		public enum Moves
 		{
 			/// <summary>
 			/// null
@@ -949,10 +949,10 @@ public class Move //: MoveData
 		private static readonly MoveData[] Database = new MoveData[]
 		{
 			null,
-			CreateMoveData(Move.Absorb, Pokemon.PokemonData.Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
+			CreateMoveData(Moves.Absorb, Pokemon.PokemonData.Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
 				0, false, true, false, false, new Effect[] {Effect.HPDrain}, new float[] {1},
 				Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Acrobatics, Pokemon.PokemonData.Types.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
+			CreateMoveData(Moves.Acrobatics, Pokemon.PokemonData.Types.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
 				0, true, true, false, false, new Effect[] {}, new float[] {}, Contest.COOL, 1, 0)/*,
 			CreateMoveData(Move.Aerial_Ace, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 60, 0, 20, Contest.COOL,
 				2, 0),
@@ -1656,7 +1656,7 @@ public class Move //: MoveData
 				Contest.CLEVER, 4, 0)*/
 		};
 		#endregion
-		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, 
+		public static MoveData CreateMoveData(Moves internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, 
 					Target target, int priority, Veekun.Flags[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string fieldEffect*/)
 		{
@@ -1681,7 +1681,7 @@ public class Move //: MoveData
 			//this.description = description;
 			//this.fieldEffect = fieldEffect;*/
 		}
-		public static MoveData CreateMoveData(Move internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, TargetB target,
+		public static MoveData CreateMoveData(Moves internalName, Pokemon.PokemonData.Types type, Category category, int power, float accuracy, int PP, TargetB target,
 					int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
 					Effect[] moveEffects, float[] moveParameters,
 					Contest contest, int appeal, int jamming/*, string description, string fieldEffect*/)
@@ -1707,7 +1707,7 @@ public class Move //: MoveData
 			//this.description = description;
 			//this.fieldEffect = fieldEffect;*/
 		}
-		internal MoveData getMove(Move ID)
+		internal MoveData getMove(Moves ID)
 		{
 			foreach (MoveData move in Database)
 			{
@@ -1773,7 +1773,7 @@ public class Move //: MoveData
 		/// <param name="language"></param>
 		/// <returns></returns>
 		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
-		public static MoveTranslation GetMoveTranslation(Move id, Settings.Languages language = Settings.Languages.English)// int form = 0,
+		public static MoveTranslation GetMoveTranslation(Moves id, Settings.Languages language = Settings.Languages.English)// int form = 0,
 		{
 			if (_moveTranslations == null) //should return english if player's default language is null
 			{
@@ -1849,7 +1849,7 @@ public class Move //: MoveData
                 return 0;
             } }
 
-        MoveData.Move Id { get { return thismove.MoveId; } }
+        MoveData.Moves Id { get { return thismove.MoveId; } }
         #endregion
 
         //ToDo: Interface to call Move's function
