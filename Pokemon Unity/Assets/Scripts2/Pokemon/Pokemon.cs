@@ -250,90 +250,6 @@ public class Pokemon //: ePokemons //PokemonData
 	/// I didnt know ribbons could be upgraded...
 	/// Make each ribbon into sets, where next number up is upgrade? (or multiply?)
 	/// Does it make a difference if pokemon won contest in different regions?
-	public enum Ribbon
-	{
-		NONE = 0,
-		HOENNCOOL = 1,
-		HOENNCOOLSUPER = 2,
-		HOENNCOOLHYPER = 3,
-		HOENNCOOLMASTER = 4,
-		HOENNBEAUTY = 5,
-		HOENNBEAUTYSUPER = 6,
-		HOENNBEAUTYHYPER = 7,
-		HOENNBEAUTYMASTER = 8,
-		HOENNCUTE = 9,
-		HOENNCUTESUPER = 10,
-		HOENNCUTEHYPER = 11,
-		HOENNCUTEMASTER = 12,
-		HOENNSMART = 13,
-		HOENNSMARTSUPER = 14,
-		HOENNSMARTHYPER = 15,
-		HOENNSMARTMASTER = 16,
-		HOENNTOUGH = 17,
-		HOENNTOUGHSUPER = 18,
-		HOENNTOUGHHYPER = 19,
-		HOENNTOUGHMASTER = 20,
-		SINNOHCOOL = 21,
-		SINNOHCOOLSUPER = 22,
-		SINNOHCOOLHYPER = 23,
-		SINNOHCOOLMASTER = 24,
-		SINNOHBEAUTY = 25,
-		SINNOHBEAUTYSUPER = 26,
-		SINNOHBEAUTYHYPER = 27,
-		SINNOHBEAUTYMASTER = 28,
-		SINNOHCUTE = 29,
-		SINNOHCUTESUPER = 30,
-		SINNOHCUTEHYPER = 31,
-		SINNOHCUTEMASTER = 32,
-		SINNOHSMART = 33,
-		SINNOHSMARTSUPER = 34,
-		SINNOHSMARTHYPER = 35,
-		SINNOHSMARTMASTER = 36,
-		SINNOHTOUGH = 37,
-		SINNOHTOUGHSUPER = 38,
-		SINNOHTOUGHHYPER = 39,
-		SINNOHTOUGHMASTER = 40,
-		WINNING = 41,
-		VICTORY = 42,
-		ABILITY = 43,
-		GREATABILITY = 44,
-		DOUBLEABILITY = 45,
-		MULTIABILITY = 46,
-		PAIRABILITY = 47,
-		WORLDABILITY = 48,
-		CHAMPION = 49,
-		SINNOHCHAMP = 50,
-		RECORD = 51,
-		EVENT = 52,
-		LEGEND = 53,
-		GORGEOUS = 54,
-		ROYAL = 55,
-		GORGEOUSROYAL = 56,
-		ALERT = 57,
-		SHOCK = 58,
-		DOWNCAST = 59,
-		CARELESS = 60,
-		RELAX = 61,
-		SNOOZE = 62,
-		SMILE = 63,
-		FOOTPRINT = 64,
-		ARTIST = 65,
-		EFFORT = 66,
-		BIRTHDAY = 67,
-		SPECIAL = 68,
-		CLASSIC = 69,
-		PREMIER = 70,
-		SOUVENIR = 71,
-		WISHING = 72,
-		NATIONAL = 73,
-		COUNTRY = 74,
-		BATTLECHAMPION = 75,
-		REGIONALCHAMPION = 76,
-		EARTH = 77,
-		WORLD = 78,
-		NATIONALCHAMPION = 79,
-		WORLDCHAMPION = 80
-	}
 	public List<Ribbon> Ribbons { get { return this.ribbons; } }
 	/// <summary>
 	/// Contest stats
@@ -2156,7 +2072,6 @@ public class Pokemon //: ePokemons //PokemonData
 			}
 		}*/
 		#endregion
-
 	}
 	/// <summary>
 	/// The moves that all Pokémon of the species learn as they level up. 
@@ -2894,6 +2809,90 @@ public class Pokemon //: ePokemons //PokemonData
 
 namespace PokemonUnity
 {
+	public enum Ribbon
+	{
+		NONE = 0,
+		HOENNCOOL = 1,
+		HOENNCOOLSUPER = 2,
+		HOENNCOOLHYPER = 3,
+		HOENNCOOLMASTER = 4,
+		HOENNBEAUTY = 5,
+		HOENNBEAUTYSUPER = 6,
+		HOENNBEAUTYHYPER = 7,
+		HOENNBEAUTYMASTER = 8,
+		HOENNCUTE = 9,
+		HOENNCUTESUPER = 10,
+		HOENNCUTEHYPER = 11,
+		HOENNCUTEMASTER = 12,
+		HOENNSMART = 13,
+		HOENNSMARTSUPER = 14,
+		HOENNSMARTHYPER = 15,
+		HOENNSMARTMASTER = 16,
+		HOENNTOUGH = 17,
+		HOENNTOUGHSUPER = 18,
+		HOENNTOUGHHYPER = 19,
+		HOENNTOUGHMASTER = 20,
+		SINNOHCOOL = 21,
+		SINNOHCOOLSUPER = 22,
+		SINNOHCOOLHYPER = 23,
+		SINNOHCOOLMASTER = 24,
+		SINNOHBEAUTY = 25,
+		SINNOHBEAUTYSUPER = 26,
+		SINNOHBEAUTYHYPER = 27,
+		SINNOHBEAUTYMASTER = 28,
+		SINNOHCUTE = 29,
+		SINNOHCUTESUPER = 30,
+		SINNOHCUTEHYPER = 31,
+		SINNOHCUTEMASTER = 32,
+		SINNOHSMART = 33,
+		SINNOHSMARTSUPER = 34,
+		SINNOHSMARTHYPER = 35,
+		SINNOHSMARTMASTER = 36,
+		SINNOHTOUGH = 37,
+		SINNOHTOUGHSUPER = 38,
+		SINNOHTOUGHHYPER = 39,
+		SINNOHTOUGHMASTER = 40,
+		WINNING = 41,
+		VICTORY = 42,
+		ABILITY = 43,
+		GREATABILITY = 44,
+		DOUBLEABILITY = 45,
+		MULTIABILITY = 46,
+		PAIRABILITY = 47,
+		WORLDABILITY = 48,
+		CHAMPION = 49,
+		SINNOHCHAMP = 50,
+		RECORD = 51,
+		EVENT = 52,
+		LEGEND = 53,
+		GORGEOUS = 54,
+		ROYAL = 55,
+		GORGEOUSROYAL = 56,
+		ALERT = 57,
+		SHOCK = 58,
+		DOWNCAST = 59,
+		CARELESS = 60,
+		RELAX = 61,
+		SNOOZE = 62,
+		SMILE = 63,
+		FOOTPRINT = 64,
+		ARTIST = 65,
+		EFFORT = 66,
+		BIRTHDAY = 67,
+		SPECIAL = 68,
+		CLASSIC = 69,
+		PREMIER = 70,
+		SOUVENIR = 71,
+		WISHING = 72,
+		NATIONAL = 73,
+		COUNTRY = 74,
+		BATTLECHAMPION = 75,
+		REGIONALCHAMPION = 76,
+		EARTH = 77,
+		WORLD = 78,
+		NATIONALCHAMPION = 79,
+		WORLDCHAMPION = 80
+	}
 	public enum Types
 	{
 		NONE = 0,
@@ -2918,7 +2917,6 @@ namespace PokemonUnity
 		UNKNOWN = 10001,
 		SHADOW = 10002
 	};
-
 	public enum Color
 	{
 		RED = 8,
@@ -3698,8 +3696,6 @@ namespace PokemonUnity
             HOOPA = 720,
             VOLCANION = 721
         }
-		#endregion
-
 		public enum EggGroups
 		{
 			NONE = 0,
@@ -3719,6 +3715,7 @@ namespace PokemonUnity
 			DRAGON = 14,
 			UNDISCOVERED = 15 //"no-eggs"
 		};
+		#endregion
     }
 
 }
