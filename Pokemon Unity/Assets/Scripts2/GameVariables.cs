@@ -11,6 +11,8 @@ using System.Xml;
 using System.Collections;
 //using System.Collections.Immutable;
 using System.Globalization;
+using PokemonUnity;
+using PokemonUnity.Pokemon;
 
 /// <summary>
 /// Variables that are stored when game is saved, and other temp values used for gameplay
@@ -352,7 +354,7 @@ public class Settings //: Settings<Translations.Languages>
 	public static readonly eItems.Item[] MEGARINGS = new eItems.Item[] { eItems.Item.MEGA_RING/*, eItems.Item.MEGA_BRACELET, eItems.Item.MEGA_CUFF, eItems.Item.MEGA_CHARM*/ };
 	#endregion
 
-	#region
+	#region Badges
 	/// <summary>
 	/// The minimum number of badges required to boost each stat of a player's
 	/// Pokémon by 1.1x, while using moves in battle only.
@@ -418,7 +420,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const int BADGEFORWATERFALL = 8;
 	#endregion
 		
-	#region
+	#region Player Storage
 	/// <summary>
 	/// The maximum number of slots per pocket (-1 means infinite number). Ignore
 	///    the first number (0).
@@ -448,7 +450,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const int STORAGEBOXES = 24;
 	#endregion
 		
-	#region
+	#region Pokedex
 	/// <summary>
 	/// Whether the Pokédex list shown is the one for the player's current region
 	///    (true), or whether a menu pops up for the player to manually choose which
@@ -502,7 +504,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const bool ALWAYSSHOWALLFORMS = false;
 	#endregion
 
-	#region
+	#region Currency Limit
 	/// <summary>
 	/// The amount of money the player starts the game with.
 	/// </summary>
@@ -522,7 +524,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const int PLAYERNAMELIMIT = 10;
 	#endregion
 		
-	#region
+	#region Roaming Pokemons
 	/*// <summary>
 	/// A list of maps used by roaming Pokémon. Each map has an array of other maps
 	///    it can lead to.
@@ -563,7 +565,7 @@ public class Settings //: Settings<Translations.Languages>
 	]*/
 	#endregion
 
-	#region
+	#region PokeRadar
 	/// <summary>
 	/// A set of arrays each containing details of a wild encounter that can only
 	///    occur via using the Poké Radar. The information within is as follows:<para></para>
@@ -577,7 +579,7 @@ public class Settings //: Settings<Translations.Languages>
 	{
 		int MapId;
 		int EncounterChance;
-		Pokemon.PokemonData.Pokemons Species;
+		Pokemons Species;
 		/// <summary>
 		/// LevelMin is 0 in Array.
 		/// LevelMax is 1 in Array.

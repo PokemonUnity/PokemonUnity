@@ -1223,23 +1223,23 @@ public class Move //: MoveData
         /// </summary>
         public bool Contact;
         /// <summary>
-        /// The target can use <see cref="Move.Protect"/> or <see cref="Move.Detect"/> to protect itself from the move
+        /// The target can use <see cref="Moves.Protect"/> or <see cref="Moves.Detect"/> to protect itself from the move
         /// </summary>
         public bool Protectable;
         /// <summary>
-        /// The target can use <see cref="Move.Magic_Coat"/> to redirect the effect of the move. 
+        /// The target can use <see cref="Moves.Magic_Coat"/> to redirect the effect of the move. 
         /// Use this flag if the move deals no damage but causes a negative effect on the target.
         /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
         /// </summary>
         public bool Reflectable;
         /// <summary>
-        /// The target can use <see cref="Move.Snatch"/> to steal the effect of the move. 
+        /// The target can use <see cref="Moves.Snatch"/> to steal the effect of the move. 
         /// Use this flag for most moves that target the user.
         /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
         /// </summary>
         public bool Snatch;
         /// <summary>
-        /// The move can be copied by <see cref="Move.Mirror_Move"/>.
+        /// The move can be copied by <see cref="Moves.Mirror_Move"/>.
         /// </summary>
         public bool Mirror;
         // <summary>
@@ -1249,7 +1249,7 @@ public class Move //: MoveData
         // </summary>
         //public bool TriggerFlinch;
         /// <summary>
-        /// If the user is <see cref="Pokemon.bStatus.Frozen"/>, the move will thaw it out before it is used.
+        /// If the user is <see cref="Status.Frozen"/>, the move will thaw it out before it is used.
         /// </summary>
         /// Thaw
         public bool Defrost;
