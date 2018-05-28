@@ -362,7 +362,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name="pokemon"></param>
 	/// ToDo: Inherit PokemonData 
-	public Pokemon(PokemonData.Pokemon pokemon) //ToDo: Redo PokemonDatabase/PokemonData -- DONE
+	public Pokemon(PokemonData.Pokemons pokemon) //ToDo: Redo PokemonDatabase/PokemonData -- DONE
 	{
 		//PersonalId = 
 		_base = PokemonData.GetPokemon(pokemon);
@@ -1218,14 +1218,14 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <summary>
 		/// Id is the database value for specific pokemon+form
 		/// Different Pokemon forms share the same Pokedex number. 
-		/// Values are loaded from <see cref="Pokemon"/>, where each form is registered to an Id.
+		/// Values are loaded from <see cref="Pokemons"/>, where each form is registered to an Id.
 		/// </summary>
 		/// <example>
 		/// Deoxys Pokedex# can be 1,
 		/// but Deoxys-Power id# can be 32
 		/// </example>
 		/// <remarks>If game event/gm wants to "give" player Deoxys-Power form and not Speed form</remarks>
-		private Pokemon id;
+		private Pokemons id;
 		/// <summary>
 		/// Different Gens assign different pokedex num
 		/// </summary>
@@ -1267,7 +1267,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// then value is 0.
 		/// </summary>
 		/// ToDo: Make a PokemonForm class, that establishes the rule for 
-		/// <see cref="Pokemon"/> and <see cref="Form"/>
+		/// <see cref="Pokemons"/> and <see cref="Form"/>
 		private int form;// = 0; 
 
 		private Types type1;
@@ -1356,14 +1356,14 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <summary>
 		/// Id is the database value for specific pokemon+form
 		/// Different Pokemon forms share the same Pokedex number. 
-		/// Values are loaded from <see cref="Pokemon"/>, where each form is registered to an Id.
+		/// Values are loaded from <see cref="Pokemons"/>, where each form is registered to an Id.
 		/// </summary>
 		/// <example>
 		/// Deoxys Pokedex# can be 1,
 		/// but Deoxys-Power id# can be 32
 		/// </example>
 		/// <remarks>If game event/gm wants to "give" player Deoxys-Power form and not Speed form</remarks>
-		public Pokemon ID { get { return this.id; } }
+		public Pokemons ID { get { return this.id; } }
 		/// <summary>
 		/// Different Gens assign different pokedex num
 		/// example: Bulbasaur = [1,231]
@@ -1672,7 +1672,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </summary>
 		/// <remarks>Can now code with strings or int and
 		/// access the same value.</remarks>
-		public enum Pokemon
+		public enum Pokemons
 		{
 			NONE = 0
 		}
@@ -1680,7 +1680,7 @@ public class Pokemon //: ePokemons //PokemonData
 
 		#region Constructors
 		public PokemonData() { }// this.name = PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.Name; } //name equals form name unless there is none.
-		public PokemonData(Pokemon Id) : this()
+		public PokemonData(Pokemons Id) : this()
         {
             //PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
             var translation = Id.ToString().Translate();
@@ -1712,7 +1712,7 @@ public class Pokemon //: ePokemons //PokemonData
             this.forms = formvalues.ToArray();
         }
 
-		public PokemonData(Pokemon Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+		public PokemonData(Pokemons Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1767,7 +1767,7 @@ public class Pokemon //: ePokemons //PokemonData
 		}
 
         [Obsolete]
-		public static PokemonData CreatePokemonData(Pokemon Id, int[] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
+		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
 							float maleRatio, int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, int levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1778,7 +1778,7 @@ public class Pokemon //: ePokemons //PokemonData
 							int[,] heldItem = null)
 		{
 			return CreatePokemonData(//new PokemonData(
-				(Pokemon)Id,
+				(Pokemons)Id,
 				PokeId,
 				(PokemonData.Types)type1 | PokemonData.Types.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
 				(PokemonData.Types)type2 | PokemonData.Types.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
@@ -1802,7 +1802,7 @@ public class Pokemon //: ePokemons //PokemonData
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
-		public static PokemonData CreatePokemonData(Pokemon Id, int[] PokeId/*, string name*/, Types type1, Types type2, eAbility.Ability ability1, eAbility.Ability ability2, eAbility.Ability hiddenAbility,
+		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, Types type1, Types type2, eAbility.Ability ability1, eAbility.Ability ability2, eAbility.Ability hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1849,7 +1849,7 @@ public class Pokemon //: ePokemons //PokemonData
             //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
-            new PokemonData( Id: Pokemon.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, abilities: new eAbility.Ability[] { eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE },
+            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, abilities: new eAbility.Ability[] { eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE },
                         maleRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
                         height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1965,7 +1965,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <returns></returns>
 		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
         [Obsolete]
-		public static PokedexTranslation GetPokedexTranslation(Pokemon id, Settings.Languages language = Settings.Languages.English)// int form = 0,
+		public static PokedexTranslation GetPokedexTranslation(Pokemons id, Settings.Languages language = Settings.Languages.English)// int form = 0,
 		{
 			if (_pokeTranslations == null) //should return english if player's default language is null
 			{
@@ -1996,7 +1996,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </summary>
 		/// <param name="ID"></param>
 		/// <returns></returns>
-		public static PokemonData GetPokemon(Pokemon ID)
+		public static PokemonData GetPokemon(Pokemons ID)
 		{
 			//Debug.Log("Get Pokemons");
 			/*PokemonData result = null;
@@ -2020,7 +2020,7 @@ public class Pokemon //: ePokemons //PokemonData
 			//return null;
 		}
 
-		static int getPokemonArrayId(Pokemon ID)
+		static int getPokemonArrayId(Pokemons ID)
 		{
 			//Debug.Log("Get Pokemons");
 			/*PokemonData result = null;
@@ -2315,7 +2315,7 @@ public class Pokemon //: ePokemons //PokemonData
         //Teach pikachu surf?... do we really need it to know surf?... Maybe if "specal form" (surfboard pickachu) is added to game
         //public Move.MoveData.Move[] stadium_surfing_pikachu { get; private set; }
         /// <summary>
-        /// If <see cref="eItems.Item.LIGHT_BALL"/> is held by either parent of a <see cref="PokemonData.Pokemon.Pichu"/> when the Egg is produced,
+        /// If <see cref="eItems.Item.LIGHT_BALL"/> is held by either parent of a <see cref="PokemonData.Pokemons.Pichu"/> when the Egg is produced,
         /// the Pichu that hatches will know the move <see cref="Move.MoveData.Move.Volt_Tackle"/>.
         /// </summary>
         /// Not sure about this one
@@ -2368,7 +2368,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Positive integer,
 		/// Item  = <see cref="eItems.Item"/>,
 		/// Move = <see cref="Moves"/>,
-		/// Species = <see cref="PokemonData.Pokemon"/>,
+		/// Species = <see cref="PokemonData.Pokemons"/>,
 		/// Type = <see cref="PokemonData.Types"/>
 		/// </summary>
 		/// <example>
@@ -2607,7 +2607,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// The PokemonId of the evolved species.
 		/// The PokemonId of the species this pokemon evolves into.
 		/// </summary>
-		public PokemonData.Pokemon Species;
+		public PokemonData.Pokemons Species;
 		/// <summary>
 		/// The evolution method.
 		/// </summary>
@@ -2616,7 +2616,7 @@ public class Pokemon //: ePokemons //PokemonData
         //public PokemonEvolution<T> EvolutionMethodValue;
         //public class T { }
         //public PokemonEvolution(){}
-        public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow){
+        public PokemonEvolution(PokemonData.Pokemons EvolveTo, EvolutionMethod EvolveHow){
             this.Species = EvolveTo;
             this.EvolveMethod = EvolveHow;
         }
@@ -2641,7 +2641,7 @@ public class Pokemon //: ePokemons //PokemonData
         //public PokemonEvolution<T> (T objects){}
         //void evolve(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) { }
 
-        public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
+        public PokemonEvolution(PokemonData.Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
             #region Switch
             //This should trigger after the class has been initialized, right?
             switch (EvolveHow)
@@ -2676,8 +2676,8 @@ public class Pokemon //: ePokemons //PokemonData
                 case EvolutionMethod.TradeSpecies:
                 case EvolutionMethod.Party:
                 case EvolutionMethod.Shedinja:
-                    if (this.EvolveValue.GetType() != typeof(PokemonData.Pokemon))
-                        Convert.ChangeType(Value, typeof(PokemonData.Pokemon));
+                    if (this.EvolveValue.GetType() != typeof(PokemonData.Pokemons))
+                        Convert.ChangeType(Value, typeof(PokemonData.Pokemons));
                     Value = default(T);
                     break;
                 case EvolutionMethod.Move:
