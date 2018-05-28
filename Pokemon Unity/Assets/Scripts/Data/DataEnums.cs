@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+[Obsolete]
 public class eAbility{
 	/// <summary>
 	/// Ability ids are connected to XML file.
@@ -205,6 +206,7 @@ public class eAbility{
 	}
 }
 
+[Obsolete]
 public class eItems{
     /// <summary>
     /// Item ids are connected to XML file. 
@@ -967,6 +969,7 @@ public class eItems{
     }
 }
 
+[Obsolete]
 public class eMoves{
     /// <summary>
     /// Move ids are connected to XML file.
@@ -978,6 +981,7 @@ public class eMoves{
     }
 }
 
+[Obsolete]
 public class ePokemons{
     /// <summary>
     /// Pokemon ids are connected to XML file.

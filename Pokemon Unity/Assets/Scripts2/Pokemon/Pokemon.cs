@@ -5,6 +5,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
+using PokemonUnity.Ability;
 
 /// <summary>
 /// 
@@ -218,7 +219,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Forces the first/second/hidden (0/1/2) ability
 	/// </summary>
-	private eAbility.Ability[] abilityFlag = new eAbility.Ability[2];// readonly
+	private Abilities[] abilityFlag = new Abilities[2];// readonly
 	/// <summary>
 	/// </summary>
 	/// <remarks>
@@ -284,7 +285,7 @@ public class Pokemon //: ePokemons //PokemonData
 		//PersonalId = 
 		_base = PokemonData.GetPokemon(pokemon);
 		//Gender = isMale();
-		Abilities[0] = _base.Abilities[1] == eAbility.Ability.NONE ? _base.Abilities[0] : _base.Abilities[new Random().Next(0, 2)];
+		Ability[0] = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
 		Nature = (NatureDatabase.Nature)(new Random().Next(0, 24));
 		//IsShiny
 	}
@@ -476,26 +477,26 @@ public class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
 	/// ToDo: Ability 1 or 2, never both...
 	/// ToDo: Error on non-compatible ability?
-	public eAbility.Ability[] Abilities { get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
+	public Abilities[] Ability { get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
 
 	/// <summary>
 	/// Returns whether this Pokemon has a partiular ability
 	/// </summary>
 	/// <param name="ability"></param>
 	/// <returns></returns>
-	public bool hasAbility(eAbility.Ability ability = eAbility.Ability.NONE)
+	public bool hasAbility(Abilities ability = Abilities.NONE)
 	{
-		if (ability == eAbility.Ability.NONE) return (int)Abilities[0] > 0 || (int)Abilities[1] > 0;// || (int)Abilities[2] > 0;
+		if (ability == Abilities.NONE) return (int)Ability[0] > 0 || (int)Ability[1] > 0;// || (int)Abilities[2] > 0;
 		else
 		{
-			return Abilities[0] == ability || Abilities[1] == ability;// || Abilities[2] == ability;
+			return Ability[0] == ability || Ability[1] == ability;// || Abilities[2] == ability;
 		}
 		//return false;
 	}
 
 	public bool hasHiddenAbility()
 	{
-		return Abilities[1] != eAbility.Ability.NONE;
+		return Ability[1] != Abilities.NONE;
 	}
 
 	/// <summary>
@@ -503,13 +504,13 @@ public class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <returns></returns>
 	/// Is there a list of abilities a pokemon can have outside of "default" values?
-	public eAbility.Ability[] getAbilityList()
+	public Abilities[] getAbilityList()
 	{
-		//List<eAbility.Ability> abilList;
+		//List<Abilities> abilList;
 		//foreach(){ list.add() }
-		//eAbility.Ability[] abilities = abilList.ToArray();
+		//Abilities[] abilities = abilList.ToArray();
 		//return abilities;
-		return this._base.Abilities; //ToDo: List of abilities?
+		return this._base.Ability; //ToDo: List of abilities?
 	}
 	#endregion
 
@@ -1197,7 +1198,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Should be [int? a1,int? a2,int? a3]
 		/// instead of above...
 		/// </remarks> 
-		private readonly eAbility.Ability[] abilities = new eAbility.Ability[3];
+		private readonly Abilities[] ability = new Abilities[3];
 
 		/// <summary>
 		/// The male ratio.
@@ -1351,7 +1352,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Should be [int? a1,int? a2,int? a3]
 		/// instead of above...
 		/// </remarks> 
-		public eAbility.Ability[] Abilities { get { return this.abilities; } }
+		public Abilities[] Ability { get { return this.ability; } }
 
 		/// <summary>
 		/// The male ratio.
@@ -1537,7 +1538,7 @@ public class Pokemon //: ePokemons //PokemonData
             this.forms = formvalues.ToArray();
         }
 
-		public PokemonData(Pokemons Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, eAbility.Ability[] abilities, //eAbility.Ability? ability1, eAbility.Ability? ability2, eAbility.Ability? hiddenAbility,
+		public PokemonData(Pokemons Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, Abilities[] abilities, //Abilities? ability1, Abilities? ability2, Abilities? hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1551,10 +1552,10 @@ public class Pokemon //: ePokemons //PokemonData
 
             this.type1 = type1 != null ? (Types)type1 : Types.NONE;
 			this.type2 = type2 != null ? (Types)type2 : Types.NONE;
-			this.abilities = abilities;
-			//this.ability1Id = (eAbility.Ability)ability1;
-			//this.ability2Id = (eAbility.Ability)ability2;
-			//this.hiddenAbilityId = (eAbility.Ability)hiddenAbility;
+			this.ability = abilities;
+			//this.ability1Id = (Abilities)ability1;
+			//this.ability2Id = (Abilities)ability2;
+			//this.hiddenAbilityId = (Abilities)hiddenAbility;
 
 			this.maleRatio = maleRatio; //ToDo
 			this.catchRate = catchRate;
@@ -1607,10 +1608,10 @@ public class Pokemon //: ePokemons //PokemonData
 				PokeId,
 				(Types)type1 | Types.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
 				(Types)type2 | Types.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-                //new eAbility.Ability[] { 
-					(eAbility.Ability)ability1 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
-					(eAbility.Ability)ability2 | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
-					(eAbility.Ability)hiddenAbility | eAbility.Ability.NONE,//!= null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE
+                //new Abilities[] { 
+					(Abilities)ability1 | Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
+					(Abilities)ability2 | Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
+					(Abilities)hiddenAbility | Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
                 //}, 
 				0,//ToDo: maleRatio, 
 				catchRate,
@@ -1627,7 +1628,7 @@ public class Pokemon //: ePokemons //PokemonData
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
-		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, Types type1, Types type2, eAbility.Ability ability1, eAbility.Ability ability2, eAbility.Ability hiddenAbility,
+		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, Types type1, Types type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1642,10 +1643,10 @@ public class Pokemon //: ePokemons //PokemonData
 				PokeId,
 				type1, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
 				type2, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-				new eAbility.Ability[] {
-				ability1, //| eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability1 : eAbility.Ability.NONE,
-                ability2, //| eAbility.Ability.NONE,//!= null ? (eAbility.Ability)ability2 : eAbility.Ability.NONE,
-                hiddenAbility, //| eAbility.Ability.NONE,//!= null ? (eAbility.Ability)hiddenAbility : eAbility.Ability.NONE
+				new Abilities[] {
+				ability1, //| Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
+                ability2, //| Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
+                hiddenAbility, //| Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
 				},
 				maleRatio,
 				catchRate,
@@ -1674,7 +1675,7 @@ public class Pokemon //: ePokemons //PokemonData
             //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
-            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, abilities: new eAbility.Ability[] { eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE },
+            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, abilities: new Abilities[] { Abilities.NONE, Abilities.NONE, Abilities.NONE },
                         maleRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
                         height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1697,7 +1698,7 @@ public class Pokemon //: ePokemons //PokemonData
 				//				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
 				//				new int[]{pokemonID}, 
 				//				new string[]{"Method,Parameter"}),
-				PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE, eAbility.Ability.NONE,
+				PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, Abilities.NONE, Abilities.NONE, Abilities.NONE,
 							0f, 100, EggGroups.NONE, EggGroups.NONE, 1000,
 							10f, 150f, 15, LevelingRate.ERRATIC,
 							//*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,* /
