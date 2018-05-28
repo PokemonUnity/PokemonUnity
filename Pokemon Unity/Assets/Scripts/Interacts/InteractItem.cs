@@ -62,7 +62,7 @@ public class InteractItem : MonoBehaviour
             if (TM)
             {
                 Dialog.StartCoroutine("drawText",
-                    SaveData.currentSave.playerName + " found TM" + ItemDatabase.getItem(item).getTMNo() + ": " + item +
+                    SaveData.currentSave.playerName + " found TM" + ItemDatabaseOld.getItem(item).getTMNo() + ": " + item +
                     "!");
             }
             else
@@ -97,7 +97,7 @@ public class InteractItem : MonoBehaviour
                 {
                     yield return
                         Dialog.StartCoroutine("drawTextSilent",
-                            SaveData.currentSave.playerName + " put the TM" + ItemDatabase.getItem(item).getTMNo() +
+                            SaveData.currentSave.playerName + " put the TM" + ItemDatabaseOld.getItem(item).getTMNo() +
                             " \\away into the bag.");
                 }
                 else

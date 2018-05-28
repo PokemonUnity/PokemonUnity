@@ -88,7 +88,7 @@ public class BagHandler : MonoBehaviour
     public Texture partySlotSelectedTex;
 
     /// <summary>
-    /// This should be an <see cref="ItemData.ItemPockets"/> enum;
+    /// This should be an <see cref="ItemDataOld.ItemPockets"/> enum;
     /// Use <seealso cref="currentBagScreen"/>
     /// </summary>
     /// <remarks>Is there a way to find out which int is for what screen? So confused...</remarks>
@@ -100,7 +100,7 @@ public class BagHandler : MonoBehaviour
     /// currentMenuScreen? Also account for PC menu or even settings menu?
     /// ...maybe not, since it's "BagHandler" class
     /// </remarks>
-    public ItemData.ItemPockets currentBagScreen = ItemData.ItemPockets.MISC;
+    public ItemDataOld.ItemPockets currentBagScreen = ItemDataOld.ItemPockets.MISC;
 
     public int[] currentPosition = new int[]
     {
@@ -128,7 +128,7 @@ public class BagHandler : MonoBehaviour
     public int partyLength;
 
     private string[] currentItemStringList;
-    private ItemData[] currentItemList;
+    private ItemDataOld[] currentItemList;
 
     private bool shopMode;
     private string[] shopItemList;
@@ -318,7 +318,7 @@ public class BagHandler : MonoBehaviour
     private void updateItemList()
     {
         string[] itemsString = new string[8];
-        ItemData[] items = new ItemData[8];
+        ItemDataOld[] items = new ItemDataOld[8];
 
         int index = 0;
         for (int i = 0; i < 8; i++)
@@ -341,7 +341,7 @@ public class BagHandler : MonoBehaviour
                 /*case null: //it'll use default value; cant be null
                     itemSlot[i].gameObject.SetActive(false);
                     break;*/
-                case ItemData.ItemPockets.MISC:
+                case ItemDataOld.ItemPockets.MISC:
                     itemX[i].gameObject.SetActive(true);
                     if (shopMode && currentScreenInt == 1)
                     {
@@ -355,18 +355,18 @@ public class BagHandler : MonoBehaviour
                     }
                     itemXShadow[i].text = itemX[i].text;
                     break;
-                case ItemData.ItemPockets.BATTLE:
-                case ItemData.ItemPockets.BERRY:
-                case ItemData.ItemPockets.MAIL:
-                case ItemData.ItemPockets.MEDICINE:
-                case ItemData.ItemPockets.POKEBALL:
-                case ItemData.ItemPockets.MACHINE:
+                case ItemDataOld.ItemPockets.BATTLE:
+                case ItemDataOld.ItemPockets.BERRY:
+                case ItemDataOld.ItemPockets.MAIL:
+                case ItemDataOld.ItemPockets.MEDICINE:
+                case ItemDataOld.ItemPockets.POKEBALL:
+                case ItemDataOld.ItemPockets.MACHINE:
                     itemX[i].gameObject.SetActive(false);
                     itemQuantityShadow[i].text = itemQuantity[i].text = "No. " + items[i].getTMNo();
                     //ToDo: Easier icon look-up
                     itemIcon[i].texture = Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(items[i].getName()).getType().ToString());
                     break;
-                case ItemData.ItemPockets.KEY: 
+                case ItemDataOld.ItemPockets.KEY: 
                     itemX[i].gameObject.SetActive(false);
                     //if (items[i].getItemFlags()) { } else//if countable else quantity null
                     itemQuantityShadow[i].text = itemQuantity[i].text = string.Empty;
@@ -436,7 +436,7 @@ public class BagHandler : MonoBehaviour
             string selectedItem = currentItemStringList[index];
             if (currentScreenInt != 4)
             {
-                itemDescription.text = ItemDatabase.getItem(selectedItem).getDescription();
+                itemDescription.text = ItemDatabaseOld.getItem(selectedItem).getDescription();
                 itemDescriptionShadow.text = itemDescription.text;
             }
             else if (!shopMode)
@@ -456,7 +456,7 @@ public class BagHandler : MonoBehaviour
                     tmAccuracy.text = "-";
                 }
                 tmAccuracyShadow.text = tmAccuracy.text;
-                tmDescription.text = ItemDatabase.getItem(selectedItem).getDescription();
+                tmDescription.text = ItemDatabaseOld.getItem(selectedItem).getDescription();
                 tmDescriptionShadow.text = tmDescription.text;
             }
         }
@@ -481,7 +481,7 @@ public class BagHandler : MonoBehaviour
         {
             itemDescription.gameObject.SetActive(false);
             visableSlots = 5;
-            currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.TM);
+            currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.TM);
         }
         else
         {
@@ -491,19 +491,19 @@ public class BagHandler : MonoBehaviour
             {
                 if (currentScreenInt == 1)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.ITEM);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
                 }
                 else if (currentScreenInt == 2)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.MEDICINE);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.MEDICINE);
                 }
                 else if (currentScreenInt == 3)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.BERRY);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.BERRY);
                 }
                 else if (currentScreenInt == 5)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.KEY);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.KEY);
                 }
             }
             else
@@ -518,15 +518,15 @@ public class BagHandler : MonoBehaviour
                 }
                 else if (currentScreenInt == 3)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.ITEM);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
                 }
                 else if (currentScreenInt == 4)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.MEDICINE);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.MEDICINE);
                 }
                 else if (currentScreenInt == 5)
                 {
-                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.BERRY);
+                    currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.BERRY);
                 }
             }
         }
@@ -789,10 +789,10 @@ public class BagHandler : MonoBehaviour
                 updateDescription();
             }
 
-            ItemData selectedItem =
-                ItemDatabase.getItem(
+            ItemDataOld selectedItem =
+                ItemDatabaseOld.getItem(
                     currentItemStringList[currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1]);
-            if (selectedItem.getItemEffect() == ItemData.ItemEffect.EVOLVE)
+            if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -814,7 +814,7 @@ public class BagHandler : MonoBehaviour
                     }
                 }
             }
-            else if (selectedItem.getItemEffect() == ItemData.ItemEffect.TM)
+            else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -931,7 +931,7 @@ public class BagHandler : MonoBehaviour
                     dataValueText.text = "$" +
                                          Mathf.Floor(
                                              (float)
-                                             ItemDatabase.getItem(
+                                             ItemDatabaseOld.getItem(
                                                  currentItemStringList[
                                                      currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] -
                                                      1]).getPrice() / 2f);
@@ -956,25 +956,25 @@ public class BagHandler : MonoBehaviour
         bool result = SaveData.currentSave.Bag.addItem(itemName, amount);
         if (result)
         {
-            ItemData.ItemType itemType = ItemDatabase.getItem(itemName).getItemType();
+            ItemDataOld.ItemType itemType = ItemDatabaseOld.getItem(itemName).getItemType();
             bool relevantScreen = false;
-            if (currentScreenInt == 1 && itemType == ItemData.ItemType.ITEM)
+            if (currentScreenInt == 1 && itemType == ItemDataOld.ItemType.ITEM)
             {
                 relevantScreen = true;
             }
-            else if (currentScreenInt == 2 && itemType == ItemData.ItemType.MEDICINE)
+            else if (currentScreenInt == 2 && itemType == ItemDataOld.ItemType.MEDICINE)
             {
                 relevantScreen = true;
             }
-            else if (currentScreenInt == 3 && itemType == ItemData.ItemType.BERRY)
+            else if (currentScreenInt == 3 && itemType == ItemDataOld.ItemType.BERRY)
             {
                 relevantScreen = true;
             }
-            else if (currentScreenInt == 4 && itemType == ItemData.ItemType.TM)
+            else if (currentScreenInt == 4 && itemType == ItemDataOld.ItemType.TM)
             {
                 relevantScreen = true;
             }
-            else if (currentScreenInt == 5 && itemType == ItemData.ItemType.KEY)
+            else if (currentScreenInt == 5 && itemType == ItemDataOld.ItemType.KEY)
             {
                 relevantScreen = true;
             }
@@ -1200,7 +1200,7 @@ public class BagHandler : MonoBehaviour
         {
             -1, 0, 0, 0, 0, 0
         };
-        currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemData.ItemType.ITEM);
+        currentItemStringList = SaveData.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
         partyPosition = 0;
         inParty = false;
 
@@ -1402,7 +1402,7 @@ public class BagHandler : MonoBehaviour
                         if (shopMode)
                         {
                             selected = currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1;
-                            ItemData selectedItem = ItemDatabase.getItem(currentItemStringList[selected]);
+                            ItemDataOld selectedItem = ItemDatabaseOld.getItem(currentItemStringList[selected]);
 
                             switching = true;
                             selectedPosition = currentPosition[currentScreenInt];
@@ -1577,10 +1577,10 @@ public class BagHandler : MonoBehaviour
                         else if (getItem)
                         {
                             selected = currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1;
-                            ItemData selectedItem = ItemDatabase.getItem(currentItemStringList[selected]);
+                            ItemDataOld selectedItem = ItemDatabaseOld.getItem(currentItemStringList[selected]);
 
-                            if (selectedItem.getItemType() == ItemData.ItemType.TM ||
-                                selectedItem.getItemType() == ItemData.ItemType.KEY)
+                            if (selectedItem.getItemType() == ItemDataOld.ItemType.TM ||
+                                selectedItem.getItemType() == ItemDataOld.ItemType.KEY)
                             {
                                 Dialog.drawDialogBox();
                                 yield return
@@ -1670,10 +1670,10 @@ public class BagHandler : MonoBehaviour
                             yield return
                                 Dialog.StartCoroutine("drawText", "Do what with " + currentItemStringList[selected] + "?");
                             string[] choices = new string[] {"Deselect", "Cancel"};
-                            ItemData selectedItem = ItemDatabase.getItem(currentItemStringList[selected]);
-                            if (selectedItem.getItemType() == ItemData.ItemType.KEY)
+                            ItemDataOld selectedItem = ItemDatabaseOld.getItem(currentItemStringList[selected]);
+                            if (selectedItem.getItemType() == ItemDataOld.ItemType.KEY)
                             {
-                                if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                                if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.UNIQUE)
                                 {
                                     choices = new string[]
                                     {
@@ -1681,10 +1681,10 @@ public class BagHandler : MonoBehaviour
                                     };
                                 }
                             }
-                            else if (selectedItem.getItemEffect() != ItemData.ItemEffect.NONE &&
-                                     selectedItem.getItemEffect() != ItemData.ItemEffect.FLEE &&
-                                     selectedItem.getItemEffect() != ItemData.ItemEffect.BALL &&
-                                     selectedItem.getItemEffect() != ItemData.ItemEffect.STATBOOST)
+                            else if (selectedItem.getItemEffect() != ItemDataOld.ItemEffect.NONE &&
+                                     selectedItem.getItemEffect() != ItemDataOld.ItemEffect.FLEE &&
+                                     selectedItem.getItemEffect() != ItemDataOld.ItemEffect.BALL &&
+                                     selectedItem.getItemEffect() != ItemDataOld.ItemEffect.STATBOOST)
                             {
                                 choices = new string[]
                                 {
@@ -1703,7 +1703,7 @@ public class BagHandler : MonoBehaviour
                             }
                             if (chosenIndex == 2)
                             {
-                                if (selectedItem.getItemType() == ItemData.ItemType.KEY)
+                                if (selectedItem.getItemType() == ItemDataOld.ItemType.KEY)
                                 {
                                     //REGISTER (key item)
                                     Dialog.drawDialogBox();
@@ -1737,14 +1737,14 @@ public class BagHandler : MonoBehaviour
                                 else
                                 {
                                     //USE
-                                    if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                                    if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.UNIQUE)
                                     {
                                     }
                                     else if (partyLength > 0)
                                     {
                                         bool selectingPokemon = true;
                                         Dialog.drawDialogBox();
-                                        if (selectedItem.getItemType() != ItemData.ItemType.TM)
+                                        if (selectedItem.getItemType() != ItemDataOld.ItemType.TM)
                                         {
                                             yield return
                                                 Dialog.StartCoroutine("drawText",
@@ -1904,15 +1904,15 @@ public class BagHandler : MonoBehaviour
                                 "Swap", "Take", "Deselect", "Cancel"
                             };
                         }
-                        ItemData selectedItem = ItemDatabase.getItem(currentItemStringList[selected]);
+                        ItemDataOld selectedItem = ItemDatabaseOld.getItem(currentItemStringList[selected]);
                         //Adjust choices to suit situation
-                        if (selectedItem.getItemType() != ItemData.ItemType.KEY)
+                        if (selectedItem.getItemType() != ItemDataOld.ItemType.KEY)
                         {
-                            if (selectedItem.getItemEffect() == ItemData.ItemEffect.HP ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.PP ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.STATUS ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.EV ||
-                                selectedItem.getItemEffect() == ItemData.ItemEffect.EVOLVE)
+                            if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.HP ||
+                                selectedItem.getItemEffect() == ItemDataOld.ItemEffect.PP ||
+                                selectedItem.getItemEffect() == ItemDataOld.ItemEffect.STATUS ||
+                                selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EV ||
+                                selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
                             {
                                 if (string.IsNullOrEmpty(currentPokemon.getHeldItem()))
                                 {
@@ -1929,14 +1929,14 @@ public class BagHandler : MonoBehaviour
                                     };
                                 }
                             }
-                            else if (selectedItem.getItemEffect() == ItemData.ItemEffect.TM)
+                            else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
                             {
                                 choices = new string[]
                                 {
                                     "Use", "Deselect", "Cancel"
                                 };
                             }
-                            else if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+                            else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.UNIQUE)
                             {
                                 if (selectedItem.getName() == "Rare Candy")
                                 {
@@ -2113,14 +2113,14 @@ public class BagHandler : MonoBehaviour
 
 
     //RUN ITEM EFFECT.		This code handles the usage of items in the bag.
-    private IEnumerator runItemEffect(ItemData selectedItem, PokemonOld currentPokemon)
+    private IEnumerator runItemEffect(ItemDataOld selectedItem, PokemonOld currentPokemon)
     {
         yield return StartCoroutine(runItemEffect(selectedItem, currentPokemon, false));
     }
 
-    private IEnumerator runItemEffect(ItemData selectedItem, PokemonOld currentPokemon, bool booted)
+    private IEnumerator runItemEffect(ItemDataOld selectedItem, PokemonOld currentPokemon, bool booted)
     {
-        if (selectedItem.getItemEffect() == ItemData.ItemEffect.HP)
+        if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.HP)
         {
             //HP
             if (currentPokemon.getCurrentHP() < currentPokemon.getHP() &&
@@ -2194,7 +2194,7 @@ public class BagHandler : MonoBehaviour
                 updateSelectedItem();
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.PP)
+        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.PP)
         {
             //PP
             string[] currentPokemonMoveset = currentPokemon.getMoveset();
@@ -2328,7 +2328,7 @@ public class BagHandler : MonoBehaviour
                 updateSelectedItem();
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.STATUS)
+        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.STATUS)
         {
             //STATUS
             //Check current pokemon has the status the item cures
@@ -2450,7 +2450,7 @@ public class BagHandler : MonoBehaviour
                 updateSelectedItem();
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.EV)
+        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EV)
         {
             //EV
             string statBooster = selectedItem.getStringParameter().ToUpper();
@@ -2508,7 +2508,7 @@ public class BagHandler : MonoBehaviour
                 updateSelectedItem();
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.EVOLVE)
+        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
         {
             //EVOLVE
             if (currentPokemon.canEvolve("Stone," + selectedItem.getName()))
@@ -2551,7 +2551,7 @@ public class BagHandler : MonoBehaviour
                 updateSelectedItem();
             }
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.TM)
+        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
         {
             //TM
             if (currentPokemon.HasMove(selectedItem.getName()))
@@ -2615,7 +2615,7 @@ public class BagHandler : MonoBehaviour
             selected = -1;
             updateSelectedItem();
         }
-        else if (selectedItem.getItemEffect() == ItemData.ItemEffect.UNIQUE)
+        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.UNIQUE)
         {
             //UNIQUE
             string selectedItemName = selectedItem.getName();

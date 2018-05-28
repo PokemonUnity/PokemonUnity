@@ -1,6 +1,7 @@
-﻿#region Deprecated/Obsolete
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PokemonUnity.Pokemon;
 
+#region Deprecated/Obsolete
 [System.Serializable]
 [System.Obsolete]
 public class PokedexTranslation //: ITranslation, ITranslationPokedex
@@ -250,7 +251,7 @@ public static class gameTextExtension //: LanguageExtension
             switch (codex)
             {
                 case "Pokemons":
-                    foreach(var pokemon in System.Enum.GetNames(typeof(Pokemon.PokemonData.Pokemons)))
+                    foreach(var pokemon in System.Enum.GetNames(typeof(Pokemons)))
                     {
                         RichTextAssignColor(ref text, pokemon, "blue");
                     }

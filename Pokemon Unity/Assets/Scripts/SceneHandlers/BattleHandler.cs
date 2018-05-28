@@ -405,7 +405,7 @@ public class BattleHandler : MonoBehaviour
     private CommandType[] command = new CommandType[6];
     private int[] commandTarget = new int[6];
     private MoveData[] commandMove = new MoveData[6];
-    private ItemData[] commandItem = new ItemData[6];
+    private ItemDataOld[] commandItem = new ItemDataOld[6];
     private PokemonOld[] commandPokemon = new PokemonOld[6];
 
 
@@ -1266,22 +1266,22 @@ public class BattleHandler : MonoBehaviour
             itemList.SetActive(true);
             if (bagCategoryPosition == 0)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemData.BattleType.HPPPRESTORE);
+                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.HPPPRESTORE);
                 itemListCategoryText.text = "HP/PP Restore";
             }
             else if (bagCategoryPosition == 1)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemData.BattleType.POKEBALLS);
+                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.POKEBALLS);
                 itemListCategoryText.text = "Poké Balls";
             }
             else if (bagCategoryPosition == 2)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemData.BattleType.STATUSHEALER);
+                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.STATUSHEALER);
                 itemListCategoryText.text = "Status Healers";
             }
             else if (bagCategoryPosition == 3)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemData.BattleType.BATTLEITEMS);
+                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.BATTLEITEMS);
                 itemListCategoryText.text = "Battle Items";
             }
             itemListCategoryTextShadow.text = itemListCategoryText.text;
@@ -1946,7 +1946,7 @@ public class BattleHandler : MonoBehaviour
         if (newPosition + (itemListPagePosition * 8) < itemListString.Length)
         {
             itemListDescription.text =
-                ItemDatabase.getItem(itemListString[newPosition + (itemListPagePosition * 8)]).getDescription();
+                ItemDatabaseOld.getItem(itemListString[newPosition + (itemListPagePosition * 8)]).getDescription();
         }
         else
         {
@@ -3705,7 +3705,7 @@ public class BattleHandler : MonoBehaviour
             command = new CommandType[6];
             commandMove = new MoveData[6];
             commandTarget = new int[6];
-            commandItem = new ItemData[6];
+            commandItem = new ItemDataOld[6];
             commandPokemon = new PokemonOld[6];
             //
 
@@ -4235,11 +4235,11 @@ public class BattleHandler : MonoBehaviour
                                             else
                                             {
                                                 //use item
-                                                ItemData selectedItem =
-                                                    ItemDatabase.getItem(
+                                                ItemDataOld selectedItem =
+                                                    ItemDatabaseOld.getItem(
                                                         itemListString[itemListPosition + (8 * itemListPagePosition)]);
                                                 //Check item can be used
-                                                if (selectedItem.getItemEffect() == ItemData.ItemEffect.HP)
+                                                if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.HP)
                                                 {
                                                     //Check target pokemon's health is not full
                                                     int target = 0; //target selection not yet implemented
@@ -4258,7 +4258,7 @@ public class BattleHandler : MonoBehaviour
                                                         Dialog.UndrawDialogBox();
                                                     }
                                                 }
-                                                else if (selectedItem.getItemEffect() == ItemData.ItemEffect.STATUS)
+                                                else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.STATUS)
                                                 {
                                                     int target = 0; //target selection not yet implemented
                                                     //Check target pokemon has the status the item cures
@@ -4290,7 +4290,7 @@ public class BattleHandler : MonoBehaviour
                                                 else
                                                 {
                                                     commandItem[currentPokemon] =
-                                                        ItemDatabase.getItem(itemListString[itemListPosition]);
+                                                        ItemDatabaseOld.getItem(itemListString[itemListPosition]);
                                                     SaveData.currentSave.Bag.removeItem(
                                                         itemListString[itemListPosition], 1);
                                                     runState = false;
@@ -4783,7 +4783,7 @@ public class BattleHandler : MonoBehaviour
 
                             if (i < 3)
                             {
-                                if (commandItem[movingPokemon].getItemEffect() == ItemData.ItemEffect.BALL)
+                                if (commandItem[movingPokemon].getItemEffect() == ItemDataOld.ItemEffect.BALL)
                                 {
                                     //debug autoselect targetIndex (target selection not yet implemented)
                                     int targetIndex = 3;
@@ -4907,7 +4907,7 @@ public class BattleHandler : MonoBehaviour
                                         Dialog.UndrawDialogBox();
                                     }
                                 }
-                                else if (commandItem[movingPokemon].getItemEffect() == ItemData.ItemEffect.HP)
+                                else if (commandItem[movingPokemon].getItemEffect() == ItemDataOld.ItemEffect.HP)
                                 {
                                     //commandTarget refers to the field position, healing a party member takes place before the turn.
                                     if (commandTarget[movingPokemon] < 3)
@@ -4923,7 +4923,7 @@ public class BattleHandler : MonoBehaviour
                                                 commandItem[movingPokemon].getFloatParameter()));
                                     }
                                 }
-                                else if (commandItem[movingPokemon].getItemEffect() == ItemData.ItemEffect.STATUS)
+                                else if (commandItem[movingPokemon].getItemEffect() == ItemDataOld.ItemEffect.STATUS)
                                 {
                                     //commandTarget refers to the field position, curing a party member takes place before the turn.
                                     if (commandTarget[movingPokemon] < 3)

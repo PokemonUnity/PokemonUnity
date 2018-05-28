@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Item;
 
 [System.Serializable]
 public class Bag
@@ -11,14 +12,14 @@ public class Bag
     /// in combination with quantity[], 
     /// one holds the itemId and the other has amount
     /// </summary>
-    /// <remarks>if use <see cref="eItems.Item"/> might be less on memory</remarks>
-    private ItemData[] order;
+    /// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
+    private ItemDataOld[] order;
     private int[] quantity;
 
     public Bag()
     {
-        orderString = new string[ItemDatabase.getItemsLength()];
-        quantity = new int[ItemDatabase.getItemsLength()];
+        orderString = new string[ItemDatabaseOld.getItemsLength()];
+        quantity = new int[ItemDatabaseOld.getItemsLength()];
     }
 
     /// <summary>
@@ -38,7 +39,7 @@ public class Bag
         return -1;
     }
 
-    public int getIndexOf(ItemData name)
+    public int getIndexOf(ItemDataOld name)
     {
         for (int i = 0; i < order.Length; i++)
         {
@@ -100,7 +101,7 @@ public class Bag
         int length = 0;
         for (int i = 0; i < orderString.Length; i++)
         {
-            if (ItemDatabase.getItem(orderString[i]) != null)
+            if (ItemDatabaseOld.getItem(orderString[i]) != null)
             {
                 length += 1;
             }
@@ -130,7 +131,7 @@ public class Bag
     /// <returns></returns>
     public int getQuantity(string itemName)
     {
-        int index = ItemDatabase.getIndexOf(itemName);
+        int index = ItemDatabaseOld.getIndexOf(itemName);
         if (index != -1)
         {
             return quantity[index];
@@ -138,9 +139,9 @@ public class Bag
         return 0;
     }
 
-    public int getQuantity(ItemData itemName)
+    public int getQuantity(ItemDataOld itemName)
     {
-        int index = ItemDatabase.getIndexOf(itemName); //Bag.getIndexOf? Why go to itemdatabase?
+        int index = ItemDatabaseOld.getIndexOf(itemName); //Bag.getIndexOf? Why go to itemdatabase?
         if (index != -1)
         {
             return quantity[index];
@@ -150,7 +151,7 @@ public class Bag
 
     public int getQuantity(eItems.Item itemName)
     {
-        int index = ItemDatabase.getIndexOf(itemName); //Bag.getIndexOf? Why go to itemdatabase?
+        int index = ItemDatabaseOld.getIndexOf(itemName); //Bag.getIndexOf? Why go to itemdatabase?
         if (index != -1)
         {
             return quantity[index];
@@ -162,7 +163,7 @@ public class Bag
     {
         //returns false if will exceed the quantity limit (999)
         packOrder();
-        string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+        string name = ItemDatabaseOld.getItem(itemName).getName(); //ensures that the name is correct
         int index = getIndexOf(name);
         if (index == -1)
         {
@@ -170,7 +171,7 @@ public class Bag
             index = getLength();
             orderString[index] = name;
         }
-        index = ItemDatabase.getIndexOf(orderString[index]);
+        index = ItemDatabaseOld.getIndexOf(orderString[index]);
         if (quantity[index] + amount > 999)
         {
             return false;
@@ -179,7 +180,7 @@ public class Bag
         return true;
     }
 
-    public bool addItem(ItemData itemName, int amount = 1)
+    public bool addItem(ItemDataOld itemName, int amount = 1)
     {
         //returns false if will exceed the quantity limit (999)
         packOrder();
@@ -191,7 +192,7 @@ public class Bag
             index = getLength();
             order[index] = itemName;
         }
-        index = ItemDatabase.getIndexOf(order[index]);
+        index = ItemDatabaseOld.getIndexOf(order[index]);
         if (quantity[index] + amount > 999)
         {
             return false;
@@ -210,9 +211,9 @@ public class Bag
         {
             //item does not exist in bag, add it to the end
             index = getLength();
-            order[index] = ItemDatabase.getItem(itemName);
+            order[index] = ItemDatabaseOld.getItem(itemName);
         }
-        index = ItemDatabase.getIndexOf(order[index]);
+        index = ItemDatabaseOld.getIndexOf(order[index]);
         if (quantity[index] + amount > 999)
         {
             return false;
@@ -225,14 +226,14 @@ public class Bag
     {
         //returns false if trying to remove more items than exist
         packOrder();
-        string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+        string name = ItemDatabaseOld.getItem(itemName).getName(); //ensures that the name is correct
         int index = getIndexOf(name);
         if (index == -1)
         {
             //item does not exist in bag
             return false;
         }
-        index = ItemDatabase.getIndexOf(orderString[index]);
+        index = ItemDatabaseOld.getIndexOf(orderString[index]);
         if (quantity[index] - amount < 0)
         {
             return false;
@@ -246,7 +247,7 @@ public class Bag
         return true;
     }
 
-    public bool removeItem(ItemData itemName, int amount = 1) //ToDo: amount should default to 'ALL'
+    public bool removeItem(ItemDataOld itemName, int amount = 1) //ToDo: amount should default to 'ALL'
     {
         //returns false if trying to remove more items than exist
         packOrder();
@@ -257,7 +258,7 @@ public class Bag
             //item does not exist in bag
             return false;
         }
-        index = ItemDatabase.getIndexOf(orderString[index]);
+        index = ItemDatabaseOld.getIndexOf(orderString[index]);
         if (quantity[index] - amount < 0)
         {
             return false;
@@ -282,7 +283,7 @@ public class Bag
             //item does not exist in bag
             return false;
         }
-        index = ItemDatabase.getIndexOf(orderString[index]);
+        index = ItemDatabaseOld.getIndexOf(orderString[index]);
         if (quantity[index] - amount < 0)
         {
             return false;
@@ -299,15 +300,15 @@ public class Bag
 
     public string[] getSellableItemArray()
     {
-        return getItemTypeArray(ItemData.ItemType.ITEM, true);
+        return getItemTypeArray(ItemDataOld.ItemType.ITEM, true);
     }
 
-    public string[] getItemTypeArray(ItemData.ItemType itemType)
+    public string[] getItemTypeArray(ItemDataOld.ItemType itemType)
     {
         return getItemTypeArray(itemType, false);
     }
 
-    private string[] getItemTypeArray(ItemData.ItemType itemType, bool allSellables)
+    private string[] getItemTypeArray(ItemDataOld.ItemType itemType, bool allSellables)
     {
         packOrder();
         string[] result = new string[getLength()];
@@ -318,7 +319,7 @@ public class Bag
         {
             if (!allSellables)
             {
-                if (ItemDatabase.getItem(orderString[i]).getItemType() == itemType)
+                if (ItemDatabaseOld.getItem(orderString[i]).getItemType() == itemType)
                 {
                     //if correct ItemType
                     result[resultPos] = orderString[i];
@@ -327,9 +328,9 @@ public class Bag
             }
             else
             {
-                if (ItemDatabase.getItem(orderString[i]).getItemType() == ItemData.ItemType.ITEM ||
-                    ItemDatabase.getItem(orderString[i]).getItemType() == ItemData.ItemType.MEDICINE ||
-                    ItemDatabase.getItem(orderString[i]).getItemType() == ItemData.ItemType.BERRY)
+                if (ItemDatabaseOld.getItem(orderString[i]).getItemType() == ItemDataOld.ItemType.ITEM ||
+                    ItemDatabaseOld.getItem(orderString[i]).getItemType() == ItemDataOld.ItemType.MEDICINE ||
+                    ItemDatabaseOld.getItem(orderString[i]).getItemType() == ItemDataOld.ItemType.BERRY)
                 {
                     //if correct ItemType
                     result[resultPos] = orderString[i];
@@ -346,7 +347,7 @@ public class Bag
         return cleanedResult;
     }
 
-    public string[] getBattleTypeArray(ItemData.BattleType battleType)
+    public string[] getBattleTypeArray(ItemDataOld.BattleType battleType)
     {
         packOrder();
         string[] result = new string[getLength()];
@@ -355,7 +356,7 @@ public class Bag
         //cycle through order, adding all correct ItemTypes to result
         for (int i = 0; i < length; i++)
         {
-            if (ItemDatabase.getItem(orderString[i]).getBattleType() == battleType)
+            if (ItemDatabaseOld.getItem(orderString[i]).getBattleType() == battleType)
             {
                 //if correct ItemType
                 result[resultPos] = orderString[i];

@@ -290,7 +290,7 @@ public class CustomEvent : MonoBehaviour
                 {
                     Dialog.StartCoroutine("drawText",
                         SaveData.currentSave.playerName + " received TM" +
-                        ItemDatabase.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!");
+                        ItemDatabaseOld.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!");
                 }
                 else
                 {
@@ -323,7 +323,7 @@ public class CustomEvent : MonoBehaviour
                         yield return
                             Dialog.StartCoroutine("drawTextSilent",
                                 SaveData.currentSave.playerName + " put the TM" +
-                                ItemDatabase.getItem(currentEvent.string0).getTMNo() + " \\away into the bag.");
+                                ItemDatabaseOld.getItem(currentEvent.string0).getTMNo() + " \\away into the bag.");
                     }
                     else
                     {

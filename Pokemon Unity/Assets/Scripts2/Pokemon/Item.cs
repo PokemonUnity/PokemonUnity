@@ -1,211 +1,901 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
+using PokemonUnity;
+using PokemonUnity.Item;
 
-public class eAbility{
-	/// <summary>
-	/// Ability ids are connected to XML file.
-	/// </summary>
-	/// <remarks>Can now code with strings or int and
-	/// access the same value.</remarks>
-	public enum Ability{
-        NONE = 0,
-		STENCH = 1,
-		DRIZZLE = 2,
-		SPEED_BOOST = 3,
-		BATTLE_ARMOR = 4,
-		STURDY = 5,
-		DAMP = 6,
-		LIMBER = 7,
-		SAND_VEIL = 8,
-		STATIC = 9,
-		VOLT_ABSORB = 10,
-		WATER_ABSORB = 11,
-		OBLIVIOUS = 12,
-		CLOUD_NINE = 13,
-		COMPOUND_EYES = 14,
-		INSOMNIA = 15,
-		COLOR_CHANGE = 16,
-		IMMUNITY = 17,
-		FLASH_FIRE = 18,
-		SHIELD_DUST = 19,
-		OWN_TEMPO = 20,
-		SUCTION_CUPS = 21,
-		INTIMIDATE = 22,
-		SHADOW_TAG = 23,
-		ROUGH_SKIN = 24,
-		WONDER_GUARD = 25,
-		LEVITATE = 26,
-		EFFECT_SPORE = 27,
-		SYNCHRONIZE = 28,
-		CLEAR_BODY = 29,
-		NATURAL_CURE = 30,
-		LIGHTNING_ROD = 31,
-		SERENE_GRACE = 32,
-		SWIFT_SWIM = 33,
-		CHLOROPHYLL = 34,
-		ILLUMINATE = 35,
-		TRACE = 36,
-		HUGE_POWER = 37,
-		POISON_POINT = 38,
-		INNER_FOCUS = 39,
-		MAGMA_ARMOR = 40,
-		WATER_VEIL = 41,
-		MAGNET_PULL = 42,
-		SOUNDPROOF = 43,
-		RAIN_DISH = 44,
-		SAND_STREAM = 45,
-		PRESSURE = 46,
-		THICK_FAT = 47,
-		EARLY_BIRD = 48,
-		FLAME_BODY = 49,
-		RUN_AWAY = 50,
-		KEEN_EYE = 51,
-		HYPER_CUTTER = 52,
-		PICKUP = 53,
-		TRUANT = 54,
-		HUSTLE = 55,
-		CUTE_CHARM = 56,
-		PLUS = 57,
-		MINUS = 58,
-		FORECAST = 59,
-		STICKY_HOLD = 60,
-		SHED_SKIN = 61,
-		GUTS = 62,
-		MARVEL_SCALE = 63,
-		LIQUID_OOZE = 64,
-		OVERGROW = 65,
-		BLAZE = 66,
-		TORRENT = 67,
-		SWARM = 68,
-		ROCK_HEAD = 69,
-		DROUGHT = 70,
-		ARENA_TRAP = 71,
-		VITAL_SPIRIT = 72,
-		WHITE_SMOKE = 73,
-		PURE_POWER = 74,
-		SHELL_ARMOR = 75,
-		AIR_LOCK = 76,
-		TANGLED_FEET = 77,
-		MOTOR_DRIVE = 78,
-		RIVALRY = 79,
-		STEADFAST = 80,
-		SNOW_CLOAK = 81,
-		GLUTTONY = 82,
-		ANGER_POINT = 83,
-		UNBURDEN = 84,
-		HEATPROOF = 85,
-		SIMPLE = 86,
-		DRY_SKIN = 87,
-		DOWNLOAD = 88,
-		IRON_FIST = 89,
-		POISON_HEAL = 90,
-		ADAPTABILITY = 91,
-		SKILL_LINK = 92,
-		HYDRATION = 93,
-		SOLAR_POWER = 94,
-		QUICK_FEET = 95,
-		NORMALIZE = 96,
-		SNIPER = 97,
-		MAGIC_GUARD = 98,
-		NO_GUARD = 99,
-		STALL = 100,
-		TECHNICIAN = 101,
-		LEAF_GUARD = 102,
-		KLUTZ = 103,
-		MOLD_BREAKER = 104,
-		SUPER_LUCK = 105,
-		AFTERMATH = 106,
-		ANTICIPATION = 107,
-		FOREWARN = 108,
-		UNAWARE = 109,
-		TINTED_LENS = 110,
-		FILTER = 111,
-		SLOW_START = 112,
-		SCRAPPY = 113,
-		STORM_DRAIN = 114,
-		ICE_BODY = 115,
-		SOLID_ROCK = 116,
-		SNOW_WARNING = 117,
-		HONEY_GATHER = 118,
-		FRISK = 119,
-		RECKLESS = 120,
-		MULTITYPE = 121,
-		FLOWER_GIFT = 122,
-		BAD_DREAMS = 123,
-		PICKPOCKET = 124,
-		SHEER_FORCE = 125,
-		CONTRARY = 126,
-		UNNERVE = 127,
-		DEFIANT = 128,
-		DEFEATIST = 129,
-		CURSED_BODY = 130,
-		HEALER = 131,
-		FRIEND_GUARD = 132,
-		WEAK_ARMOR = 133,
-		HEAVY_METAL = 134,
-		LIGHT_METAL = 135,
-		MULTISCALE = 136,
-		TOXIC_BOOST = 137,
-		FLARE_BOOST = 138,
-		HARVEST = 139,
-		TELEPATHY = 140,
-		MOODY = 141,
-		OVERCOAT = 142,
-		POISON_TOUCH = 143,
-		REGENERATOR = 144,
-		BIG_PECKS = 145,
-		SAND_RUSH = 146,
-		WONDER_SKIN = 147,
-		ANALYTIC = 148,
-		ILLUSION = 149,
-		IMPOSTER = 150,
-		INFILTRATOR = 151,
-		MUMMY = 152,
-		MOXIE = 153,
-		JUSTIFIED = 154,
-		RATTLED = 155,
-		MAGIC_BOUNCE = 156,
-		SAP_SIPPER = 157,
-		PRANKSTER = 158,
-		SAND_FORCE = 159,
-		IRON_BARBS = 160,
-		ZEN_MODE = 161,
-		VICTORY_STAR = 162,
-		TURBOBLAZE = 163,
-		TERAVOLT = 164,
-		AROMA_VEIL = 165,
-		FLOWER_VEIL = 166,
-		CHEEK_POUCH = 167,
-		PROTEAN = 168,
-		FUR_COAT = 169,
-		MAGICIAN = 170,
-		BULLETPROOF = 171,
-		COMPETITIVE = 172,
-		STRONG_JAW = 173,
-		REFRIGERATE = 174,
-		SWEET_VEIL = 175,
-		STANCE_CHANGE = 176,
-		GALE_WINGS = 177,
-		MEGA_LAUNCHER = 178,
-		GRASS_PELT = 179,
-		SYMBIOSIS = 180,
-		TOUGH_CLAWS = 181,
-		PIXILATE = 182,
-		GOOEY = 183,
-		AERILATE = 184,
-		PARENTAL_BOND = 185,
-		DARK_AURA = 186,
-		FAIRY_AURA = 187,
-		AURA_BREAK = 188,
-		PRIMORDIAL_SEA = 189,
-		DESOLATE_LAND = 190,
-		DELTA_STREAM = 191
-	}
+
+public class Item
+{
+    public string Name { get; private set; }
+    public string Description { get; private set; }
+    public int Price { get; private set; }
+    
+    public Items ItemId { get; private set; }
+    public ItemFlags[] ItemFlags { get; private set; }
+    public ItemCategory ItemCategory { get; private set; }
+    public ItemPockets? ItemPocket { get {
+            ItemPockets? itemPocket;
+            switch (this.ItemCategory)
+            {//([\w]*) = [\d]*, //PocketId = ([\d]*)
+                case ItemCategory.COLLECTIBLES: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.EVOLUTION: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.SPELUNKING: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.HELD_ITEMS: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.CHOICE: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.EFFORT_TRAINING: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.BAD_HELD_ITEMS: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.TRAINING: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.PLATES: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.SPECIES_SPECIFIC: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.TYPE_ENHANCEMENT: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.LOOT: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.MULCH: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.DEX_COMPLETION: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.SCARVES: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.JEWELS: itemPocket = (ItemPockets)1; break;
+                case ItemCategory.MEGA_STONES: itemPocket = (ItemPockets)1; break;
+
+                case ItemCategory.VITAMINS: itemPocket = (ItemPockets)2; break;
+                case ItemCategory.HEALING: itemPocket = (ItemPockets)2; break;
+                case ItemCategory.PP_RECOVERY: itemPocket = (ItemPockets)2; break;
+                case ItemCategory.REVIVAL: itemPocket = (ItemPockets)2; break;
+                case ItemCategory.STATUS_CURES: itemPocket = (ItemPockets)2; break;
+
+                case ItemCategory.SPECIAL_BALLS: itemPocket = (ItemPockets)3; break;
+                case ItemCategory.STANDARD_BALLS: itemPocket = (ItemPockets)3; break;
+                case ItemCategory.APRICORN_BALLS: itemPocket = (ItemPockets)3; break;
+
+                case ItemCategory.ALL_MACHINES: itemPocket = (ItemPockets)4; break;
+
+                case ItemCategory.EFFORT_DROP: itemPocket = (ItemPockets)5; break;
+                case ItemCategory.MEDICINE: itemPocket = (ItemPockets)5; break;
+                case ItemCategory.OTHER: itemPocket = (ItemPockets)5; break;
+                case ItemCategory.IN_A_PINCH: itemPocket = (ItemPockets)5; break;
+                case ItemCategory.PICKY_HEALING: itemPocket = (ItemPockets)5; break;
+                case ItemCategory.TYPE_PROTECTION: itemPocket = (ItemPockets)5; break;
+                case ItemCategory.BAKING_ONLY: itemPocket = (ItemPockets)5; break;
+
+                case ItemCategory.ALL_MAIL: itemPocket = (ItemPockets)6; break;
+
+                case ItemCategory.STAT_BOOSTS: itemPocket = (ItemPockets)7; break;
+                case ItemCategory.FLUTES: itemPocket = (ItemPockets)7; break;
+                case ItemCategory.MIRACLE_SHOOTER: itemPocket = (ItemPockets)7; break;
+
+                case ItemCategory.EVENT_ITEMS: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.GAMEPLAY: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.PLOT_ADVANCEMENT: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.UNUSED: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.APRICORN_BOX: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.DATA_CARDS: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.XY_UNKNOWN: itemPocket = (ItemPockets)8; break;
+                default:
+                    itemPocket = null;
+                    break;
+            }
+            return itemPocket;
+        } }
+    public ItemFlingEffect ItemFlingEffect { get; private set; }
+
+    Item(Items itemId) {
+        //this.Price = ItemData.getIndexOf(itemId);
+    }
+
+    /// <summary>
+    /// Returns int value of Pokemon from PokemonData[] <see cref="Database"/>
+    /// </summary>
+    public int ArrayId
+    {//(Pokemon ID)
+        get
+        {
+            //Debug.Log("Get Pokemons");
+            /*PokemonData result = null;
+			int i = 1;
+			while(result == null){
+				if(Database[i].ID == ID){
+					//Debug.Log("Pokemon DB Success");
+					return result = Database[i];
+				}
+				i += 1;
+				if(i >= Database.Length){
+					Debug.Log("Pokemon DB Fail");
+					return null;}
+			}
+			return result;*/
+            /*foreach(PokemonData pokemon in Database)
+			{
+				if (pokemon.ID == ID) return pokemon;
+			}*/
+            for (int i = 0; i < Database.Length; i++)
+            {
+                if (Database[i].ItemId == this.ItemId)
+                {
+                    return i;
+                }
+            }
+            throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
+        }
+    }
+
+    private Item(Items itemId, ItemCategory itemCategory = ItemCategory.UNUSED, /*BattleType battleType, string description,*/ int price = 0, int? flingPower = null,
+        ItemFlingEffect? itemEffect = null, /*string stringParameter, float floatParameter,*/ ItemFlags[] flags = null)
+    {
+        //this.name = name;
+        //this.itemType = itemType;
+        //this.battleType = battleType;
+        //this.description = description;
+        this.Price = price;
+        //this.itemEffect = itemEffect;
+        //this.stringParameter = stringParameter;
+        //this.floatParameter = floatParameter;
+    }
+
+    private Item(int itemId, int itemCategory, /*BattleType battleType, string description,;*/ int price, int? flingPower,
+        int? itemEffect, /*string stringParameter, float floatParameter,*/ int[] flags = null) : this((Items)itemId, (ItemCategory)itemCategory, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item))
+    {
+        //return 
+        //new Item((Items)itemId, (ItemCategory)itemCategory, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item));
+    }
+
+    #region ItemDatabase
+    /// <summary>
+    /// Replaces <see cref="oldItems"/>
+    /// </summary>
+    /// <remarks>
+    /// \((\d*)\s*(\d*)\s*(\d*)\s*([\d\w]*)\s*([\d\w]*)\s*
+    /// </remarks>
+    private static readonly Item[] Database = new Item[] {
+new Item(1,     34,     0, null, null, new int[]{1,2,4,5}),
+new Item(2,     34,     1200, null, null, new int[]{1,2,4,5}),
+new Item(3,     34,     600, null, null, new int[]{1,2,4,5}),
+new Item(4,     34,     200, null, null, new int[]{1,2,4,5}),
+new Item(5,     34,     0, null, null, new int[]{1,2,4,5}),
+new Item(6,     33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(7,     33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(8,     33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(9,     33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(10,    33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(11,    33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(12,    33,     200, null, null, new int[]{1,2,4,5}),
+new Item(13,    33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(14,    33,     300, null, null, new int[]{1,2,4,5}),
+new Item(15,    33,     1000, null, null, new int[]{1,2,4,5}),
+new Item(16,    33,     200, null, null, new int[]{1,2,4,5}),
+new Item(17,    27,     300, 30, null, new int[]{1,2,3,4,5}),
+new Item(18,    30,     100, 30, null, new int[]{1,2,3,4,5}),
+new Item(19,    30,     250, 30, null, new int[]{1,2,3,4,5}),
+new Item(20,    30,     250, 30, null, new int[]{1,2,3,4,5}),
+new Item(21,    30,     250, 30, null, new int[]{1,2,3,4,5}),
+new Item(22,    30,     200, 30, null, new int[]{1,2,3,4,5}),
+new Item(23,    27,     3000, 30, null, new int[]{1,2,3,4,5}),
+new Item(24,    27,     2500, 30, null, new int[]{1,2,3,4,5}),
+new Item(25,    27,     1200, 30, null, new int[]{1,2,3,4,5}),
+new Item(26,    27,     700, 30, null, new int[]{1,2,3,4,5}),
+new Item(27,    30,     600, 30, null, new int[]{1,2,3,4,5}),
+new Item(28,    29,     1500, 30, null, new int[]{1,2,3,4,5,8}),
+new Item(29,    29,     4000, 30, null, new int[]{1,2,3,4,5,8}),
+new Item(30,    27,     200, 30, null, new int[]{1,2,3,4,5}),
+new Item(31,    27,     300, 30, null, new int[]{1,2,3,4,5}),
+new Item(32,    27,     350, 30, null, new int[]{1,2,3,4,5}),
+new Item(33,    27,     500, 30, null, new int[]{1,2,3,4,5}),
+new Item(34,    27,     500, 30, null, new int[]{1,2,3,4,5}),
+new Item(35,    27,     800, 30, null, new int[]{1,2,3,4,5}),
+new Item(36,    30,     450, 30, null, new int[]{1,2,3,4,5}),
+new Item(37,    29,     2800, 30, null, new int[]{1,2,3,4,5}),
+new Item(38,    28,     1200, 30, null, new int[]{1,2,3,4,5}),
+new Item(39,    28,     2000, 30, null, new int[]{1,2,3,4,5}),
+new Item(40,    28,     3000, 30, null, new int[]{1,2,3,4,5}),
+new Item(41,    28,     4500, 30, null, new int[]{1,2,3,4,5}),
+new Item(42,    30,     200, 30, null, new int[]{1,2,3,4,5}),
+new Item(43,    27,     100, 30, null, new int[]{1,2,3,4,5}),
+new Item(44,    29,     200, 30, null, new int[]{1,2,3,4,5}),
+new Item(45,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(46,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(47,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(48,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(49,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(50,    26,     4800, 30, null, new int[]{1,2,3,4,5}),
+new Item(51,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(52,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(53,    26,     9800, 30, null, new int[]{1,2,3,4,5}),
+new Item(54,    30,     200, 30, null, new int[]{1,2,3,4,5}),
+new Item(55,    1,      700, 30, null, new int[]{1,2,4,5}),
+new Item(56,    1,      650, 30, null, new int[]{1,2,4,5}),
+new Item(57,    1,      500, 30, null, new int[]{1,2,4,5}),
+new Item(58,    1,      550, 30, null, new int[]{1,2,4,5}),
+new Item(59,    1,      350, 30, null, new int[]{1,2,4,5}),
+new Item(60,    1,      950, 30, null, new int[]{1,2,4,5}),
+new Item(61,    1,      350, 30, null, new int[]{1,2,4,5}),
+new Item(62,    1,      350, 30, null, new int[]{1,2,4,5}),
+new Item(63,    11,     1000, 30, null, new int[]{1,2,4,5}),
+new Item(64,    11,     1000, 30, null, new int[]{1,2,4,5}),
+new Item(65,    38,     100, 30, null, new int[]{1,2,3,4,5}),
+new Item(66,    38,     200, 30, null, new int[]{1,2,4,5}),
+new Item(67,    38,     300, 30, null, new int[]{1,2,4,5}),
+new Item(68,    11,     400, 30, null, new int[]{1,2,3,5}),
+new Item(69,    11,     500, 30, null, new int[]{1,2,3,5}),
+new Item(70,    9,      20, 30, null, new int[]{1}),
+new Item(71,    9,      20, 30, null, new int[]{1}),
+new Item(72,    9,      200, 30, null, new int[]{8}),
+new Item(73,    9,      200, 30, null, new int[]{8}),
+new Item(74,    9,      200, 30, null, new int[]{8}),
+new Item(75,    9,      200, 30, null, new int[]{8}),
+new Item(76,    11,     500, 30, null, null    ),
+new Item(77,    11,     700, 30, null, null    ),
+new Item(78,    11,     550, 30, null, null    ),
+new Item(79,    11,     350, 30, null, null    ),
+new Item(80,    10,     2100, 30, null, new int[]{8}),
+new Item(81,    10,     2100, 30, null, new int[]{8}),
+new Item(82,    10,     2100, 30, null, new int[]{8}),
+new Item(83,    10,     2100, 30, null, new int[]{8}),
+new Item(84,    10,     2100, 30, null, new int[]{8}),
+new Item(85,    10,     2100, 30, null, new int[]{8}),
+new Item(86,    24,     500, 30, null, null    ),
+new Item(87,    24,     5000, 30, null, null    ),
+new Item(88,    24,     1400, 30, null, null    ),
+new Item(89,    24,     7500, 30, null, null    ),
+new Item(90,    24,     2000, 30, null, null    ),
+new Item(91,    24,     9800, 30, null, new int[]{8}),
+new Item(92,    24,     10000, 30, null, null    ),
+new Item(93,    9,      100, 30, null, new int[]{8}),
+new Item(94,    35,     100, 30, null, null    ),
+new Item(95,    32,     200, 30, null, null    ),
+new Item(96,    32,     200, 30, null, null    ),
+new Item(97,    32,     200, 30, null, null    ),
+new Item(98,    32,     200, 30, null, null    ),
+new Item(99,    35,     1000, 100, null, new int[]{8}),
+new Item(100,   35,     1000, 100, null, new int[]{8}),
+new Item(101,   35,     1000, 100, null, new int[]{8}),
+new Item(102,   35,     1000, 100, null, new int[]{8}),
+new Item(103,   35,     1000, 100, null, new int[]{8}),
+new Item(104,   35,     1000, 100, null, new int[]{8}),
+new Item(105,   35,     1000, 100, null, new int[]{8}),
+new Item(106,   24,     10000, 100, null, new int[]{8}),
+new Item(107,   10,     2100, 80, null, null    ),
+new Item(108,   10,     2100, 80, null, null    ),
+new Item(109,   10,     2100, 80, null, null    ),
+new Item(110,   10,     2100, 80, null, new int[]{8}),
+new Item(111,   35,     2100, 80, null, new int[]{8}),
+new Item(112,   18,     10000, 60, null, new int[]{5}),
+new Item(113,   18,     10000, 60, null, new int[]{5}),
+new Item(114,   25,     50, null, null, null    ),
+new Item(115,   25,     50, null, null, null    ),
+new Item(116,   25,     50, null, null, null    ),
+new Item(117,   25,     50, null, null, null    ),
+new Item(118,   25,     50, null, null, null    ),
+new Item(119,   25,     50, null, null, null    ),
+new Item(120,   25,     50, null, null, null    ),
+new Item(121,   25,     50, null, null, null    ),
+new Item(122,   25,     50, null, null, null    ),
+new Item(123,   25,     50, null, null, null    ),
+new Item(124,   25,     50, null, null, null    ),
+new Item(125,   25,     50, null, null, null    ),
+new Item(126,   3,      20, 10, 3, new int[]{7}),
+new Item(127,   3,      20, 10, 3, new int[]{7}),
+new Item(128,   3,      20, 10, 3, new int[]{7}),
+new Item(129,   3,      20, 10, 3, new int[]{7}),
+new Item(130,   3,      20, 10, 3, new int[]{7}),
+new Item(131,   3,      20, 10, 3, new int[]{7}),
+new Item(132,   3,      20, 10, 3, new int[]{7}),
+new Item(133,   3,      20, 10, 3, new int[]{7}),
+new Item(134,   3,      20, 10, 3, new int[]{7}),
+new Item(135,   3,      20, 10, 3, new int[]{7}),
+new Item(136,   6,      20, 10, 3, new int[]{7}),
+new Item(137,   6,      20, 10, 3, new int[]{7}),
+new Item(138,   6,      20, 10, 3, new int[]{7}),
+new Item(139,   6,      20, 10, 3, new int[]{7}),
+new Item(140,   6,      20, 10, 3, new int[]{7}),
+new Item(141,   8,      20, 10, null, null    ),
+new Item(142,   8,      20, 10, null, null    ),
+new Item(143,   8,      20, 10, null, null    ),
+new Item(144,   8,      20, 10, null, null    ),
+new Item(145,   8,      20, 10, null, null    ),
+new Item(146,   2,      20, 10, null, null    ),
+new Item(147,   2,      20, 10, null, null    ),
+new Item(148,   2,      20, 10, null, null    ),
+new Item(149,   2,      20, 10, null, null    ),
+new Item(150,   2,      20, 10, null, null    ),
+new Item(151,   2,      20, 10, null, null    ),
+new Item(152,   8,      20, 10, null, null    ),
+new Item(153,   8,      20, 10, null, null    ),
+new Item(154,   8,      20, 10, null, null    ),
+new Item(155,   8,      20, 10, null, null    ),
+new Item(156,   8,      20, 10, null, null    ),
+new Item(157,   8,      20, 10, null, null    ),
+new Item(158,   8,      20, 10, null, null    ),
+new Item(159,   8,      20, 10, null, null    ),
+new Item(160,   8,      20, 10, null, null    ),
+new Item(161,   7,      20, 10, null, new int[]{7}),
+new Item(162,   7,      20, 10, null, new int[]{7}),
+new Item(163,   7,      20, 10, null, new int[]{7}),
+new Item(164,   7,      20, 10, null, new int[]{7}),
+new Item(165,   7,      20, 10, null, new int[]{7}),
+new Item(166,   7,      20, 10, null, new int[]{7}),
+new Item(167,   7,      20, 10, null, new int[]{7}),
+new Item(168,   7,      20, 10, null, new int[]{7}),
+new Item(169,   7,      20, 10, null, new int[]{7}),
+new Item(170,   7,      20, 10, null, new int[]{7}),
+new Item(171,   7,      20, 10, null, new int[]{7}),
+new Item(172,   7,      20, 10, null, new int[]{7}),
+new Item(173,   7,      20, 10, null, new int[]{7}),
+new Item(174,   7,      20, 10, null, new int[]{7}),
+new Item(175,   7,      20, 10, null, new int[]{7}),
+new Item(176,   7,      20, 10, null, new int[]{7}),
+new Item(177,   7,      20, 10, null, new int[]{7}),
+new Item(178,   5,      20, 10, 3, new int[]{7}),
+new Item(179,   5,      20, 10, 3, new int[]{7}),
+new Item(180,   5,      20, 10, 3, new int[]{7}),
+new Item(181,   5,      20, 10, 3, new int[]{7}),
+new Item(182,   5,      20, 10, 3, new int[]{7}),
+new Item(183,   5,      20, 10, 3, new int[]{7}),
+new Item(184,   5,      20, 10, 3, new int[]{7}),
+new Item(185,   4,      20, 10, null, new int[]{7}),
+new Item(186,   5,      20, 10, 3, new int[]{7}),
+new Item(187,   5,      20, 10, null, new int[]{7}),
+new Item(188,   4,      20, 10, null, new int[]{7}),
+new Item(189,   4,      20, 10, null, new int[]{7}),
+new Item(190,   12,     10, 10, null, new int[]{5,7}),
+new Item(191,   12,     100, 10, 4, new int[]{5,7}),
+new Item(192,   14,     3000, 60, null, new int[]{5,7}),
+new Item(193,   16,     3000, 30, null, new int[]{5,7}),
+new Item(194,   12,     100, 80, null, new int[]{5,7}),
+new Item(195,   16,     100, 10, null, new int[]{5,7}),
+new Item(196,   12,     100, 10, 4, new int[]{5,7}),
+new Item(197,   13,     100, 10, null, new int[]{5,7}),
+new Item(198,   12,     100, 30, 7, new int[]{5,7}),
+new Item(199,   19,     100, 10, null, new int[]{5,7}),
+new Item(200,   16,     100, 30, null, new int[]{5,7}),
+new Item(201,   16,     200, 30, null, new int[]{5}),
+new Item(202,   18,     200, 30, null, new int[]{5}),
+new Item(203,   18,     200, 90, null, new int[]{5}),
+new Item(204,   18,     200, 30, null, new int[]{5}),
+new Item(205,   12,     200, 30, null, new int[]{5,7}),
+new Item(206,   16,     200, 30, null, new int[]{5,7,8}),
+new Item(207,   12,     200, 10, null, new int[]{5,7}),
+new Item(208,   16,     200, 30, null, new int[]{5,7}),
+new Item(209,   12,     200, 30, null, new int[]{5,7}),
+new Item(210,   19,     100, 30, null, new int[]{5,7}),
+new Item(211,   12,     200, 10, null, new int[]{5,7}),
+new Item(212,   10,     2100, 30, null, null    ),
+new Item(213,   18,     100, 30, 5, new int[]{5}),
+new Item(214,   19,     100, 10, null, new int[]{5,7}),
+new Item(215,   19,     100, 100, null, new int[]{5,7,8}),
+new Item(216,   19,     100, 30, null, new int[]{5,7}),
+new Item(217,   19,     100, 30, null, new int[]{5,7}),
+new Item(218,   19,     100, 30, null, new int[]{5,7}),
+new Item(219,   19,     100, 30, null, new int[]{5,7}),
+new Item(220,   19,     100, 30, null, new int[]{5,7}),
+new Item(221,   19,     100, 50, null, new int[]{5,7}),
+new Item(222,   19,     100, 70, 6, new int[]{5,7}),
+new Item(223,   19,     100, 30, null, new int[]{5,7}),
+new Item(224,   19,     100, 30, null, new int[]{5,7}),
+new Item(225,   19,     100, 30, null, new int[]{5,7}),
+new Item(226,   19,     9800, 30, null, new int[]{5,7}),
+new Item(227,   19,     100, 70, null, new int[]{5,7}),
+new Item(228,   19,     100, 10, null, new int[]{5,7}),
+new Item(229,   10,     2100, 30, null, null    ),
+new Item(230,   12,     200, 30, null, new int[]{5,7}),
+new Item(231,   19,     9600, 10, null, new int[]{5,7}),
+new Item(232,   12,     9600, 10, null, new int[]{5,7}),
+new Item(233,   18,     10, 40, null, new int[]{5}),
+new Item(234,   18,     10, 10, null, new int[]{5}),
+new Item(235,   18,     500, 90, null, new int[]{5}),
+new Item(236,   18,     200, 60, null, new int[]{5}),
+new Item(237,   36,     100, 10, null, new int[]{7}),
+new Item(238,   36,     100, 10, null, new int[]{7}),
+new Item(239,   36,     100, 10, null, new int[]{7}),
+new Item(240,   36,     100, 10, null, new int[]{7}),
+new Item(241,   36,     100, 10, null, new int[]{7}),
+new Item(242,   12,     200, 10, null, new int[]{5,7}),
+new Item(243,   12,     200, 10, null, new int[]{5,7}),
+new Item(244,   12,     200, 10, null, new int[]{5,7}),
+new Item(245,   12,     200, 10, null, new int[]{5,7}),
+new Item(246,   12,     200, 30, null, new int[]{5,7,8}),
+new Item(247,   12,     200, 30, null, new int[]{5,7}),
+new Item(248,   12,     100, 10, null, new int[]{5,7}),
+new Item(249,   15,     100, 30, 1, new int[]{5,7}),
+new Item(250,   15,     100, 30, 2, new int[]{5,7}),
+new Item(251,   18,     10, 10, null, new int[]{5}),
+new Item(252,   12,     200, 10, null, new int[]{5,7}),
+new Item(253,   12,     200, 10, null, new int[]{5,7}),
+new Item(254,   12,     200, 30, null, new int[]{5,7}),
+new Item(255,   15,     200, 130, null, new int[]{5,7,8}),
+new Item(256,   15,     200, 10, null, new int[]{5,7}),
+new Item(257,   12,     200, 10, null, new int[]{5,7}),
+new Item(258,   12,     200, 30, null, new int[]{5,7}),
+new Item(259,   12,     200, 40, null, new int[]{5,7,8}),
+new Item(260,   12,     200, 10, null, new int[]{5,7,8}),
+new Item(261,   12,     200, 60, null, new int[]{5,7,8}),
+new Item(262,   12,     200, 60, null, new int[]{5,7,8}),
+new Item(263,   12,     200, 90, null, new int[]{5,7}),
+new Item(264,   13,     200, 10, null, new int[]{5,7}),
+new Item(265,   15,     200, 80, null, new int[]{5,7}),
+new Item(266,   14,     3000, 70, null, new int[]{5,7}),
+new Item(267,   14,     3000, 70, null, new int[]{5,7}),
+new Item(268,   14,     3000, 70, null, new int[]{5,7}),
+new Item(269,   14,     3000, 70, null, new int[]{5,7}),
+new Item(270,   14,     3000, 70, null, new int[]{5,7}),
+new Item(271,   14,     3000, 70, null, new int[]{5,7}),
+new Item(272,   12,     100, 10, null, new int[]{5,7}),
+new Item(273,   12,     200, 10, null, new int[]{5,7}),
+new Item(274,   13,     200, 10, null, new int[]{5,7}),
+new Item(275,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(276,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(277,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(278,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(279,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(280,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(281,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(282,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(283,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(284,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(285,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(286,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(287,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(288,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(289,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(290,   17,     1000, 90, null, new int[]{5,7,8}),
+new Item(291,   19,     9600, 10, null, new int[]{5,7}),
+new Item(292,   19,     9600, 10, null, new int[]{5,7}),
+new Item(293,   15,     9600, 10, null, new int[]{5,7}),
+new Item(294,   19,     9600, 10, null, new int[]{5,7}),
+new Item(295,   19,     9600, 10, null, new int[]{5,7}),
+new Item(296,   16,     9600, 10, null, new int[]{5,7}),
+new Item(297,   16,     9600, 10, null, new int[]{5}),
+new Item(298,   10,     2100, 80, null, null    ),
+new Item(299,   10,     2100, 80, null, null    ),
+new Item(300,   10,     2100, 80, null, null    ),
+new Item(301,   10,     2100, 50, null, null    ),
+new Item(302,   10,     2100, 10, null, null    ),
+new Item(303,   12,     2100, 80, null, new int[]{5,7}),
+new Item(304,   12,     2100, 30, 7, new int[]{5,7}),
+new Item(305,   37,     3000, null, null, null    ),
+new Item(306,   37,     3000, null, null, null    ),
+new Item(307,   37,     3000, null, null, null    ),
+new Item(308,   37,     1500, null, null, null    ),
+new Item(309,   37,     1000, null, null, null    ),
+new Item(310,   37,     3000, null, null, null    ),
+new Item(311,   37,     2000, null, null, null    ),
+new Item(312,   37,     1500, null, null, null    ),
+new Item(313,   37,     2000, null, null, null    ),
+new Item(314,   37,     2000, null, null, null    ),
+new Item(315,   37,     2000, null, null, null    ),
+new Item(316,   37,     1500, null, null, null    ),
+new Item(317,   37,     3000, null, null, null    ),
+new Item(318,   37,     5500, null, null, null    ),
+new Item(319,   37,     7500, null, null, null    ),
+new Item(320,   37,     2000, null, null, null    ),
+new Item(321,   37,     2000, null, null, null    ),
+new Item(322,   37,     2000, null, null, null    ),
+new Item(323,   37,     3000, null, null, null    ),
+new Item(324,   37,     2000, null, null, null    ),
+new Item(325,   37,     1000, null, null, null    ),
+new Item(326,   37,     3000, null, null, null    ),
+new Item(327,   37,     3000, null, null, null    ),
+new Item(328,   37,     3000, null, null, null    ),
+new Item(329,   37,     5500, null, null, null    ),
+new Item(330,   37,     3000, null, null, null    ),
+new Item(331,   37,     1000, null, null, null    ),
+new Item(332,   37,     2000, null, null, null    ),
+new Item(333,   37,     3000, null, null, null    ),
+new Item(334,   37,     3000, null, null, null    ),
+new Item(335,   37,     3000, null, null, null    ),
+new Item(336,   37,     1000, null, null, null    ),
+new Item(337,   37,     2000, null, null, null    ),
+new Item(338,   37,     3000, null, null, null    ),
+new Item(339,   37,     3000, null, null, null    ),
+new Item(340,   37,     3000, null, null, null    ),
+new Item(341,   37,     2000, null, null, null    ),
+new Item(342,   37,     5500, null, null, null    ),
+new Item(343,   37,     2000, null, null, null    ),
+new Item(344,   37,     3000, null, null, null    ),
+new Item(345,   37,     1500, null, null, null    ),
+new Item(346,   37,     3000, null, null, null    ),
+new Item(347,   37,     2000, null, null, null    ),
+new Item(348,   37,     3000, null, null, null    ),
+new Item(349,   37,     3000, null, null, null    ),
+new Item(350,   37,     2000, null, null, null    ),
+new Item(351,   37,     3000, null, null, null    ),
+new Item(352,   37,     3000, null, null, null    ),
+new Item(353,   37,     1500, null, null, null    ),
+new Item(354,   37,     5500, null, null, null    ),
+new Item(355,   37,     2000, null, null, null    ),
+new Item(356,   37,     5500, null, null, null    ),
+new Item(357,   37,     3000, null, null, null    ),
+new Item(358,   37,     2000, null, null, null    ),
+new Item(359,   37,     3000, null, null, null    ),
+new Item(360,   37,     2000, null, null, null    ),
+new Item(361,   37,     3000, null, null, null    ),
+new Item(362,   37,     2000, null, null, null    ),
+new Item(363,   37,     3000, null, null, null    ),
+new Item(364,   37,     3000, null, null, null    ),
+new Item(365,   37,     2000, null, null, null    ),
+new Item(366,   37,     3000, null, null, null    ),
+new Item(367,   37,     2000, null, null, null    ),
+new Item(368,   37,     7500, null, null, null    ),
+new Item(369,   37,     3000, null, null, null    ),
+new Item(370,   37,     3000, null, null, null    ),
+new Item(371,   37,     1000, null, null, null    ),
+new Item(372,   37,     7500, null, null, null    ),
+new Item(373,   37,     1500, null, null, null    ),
+new Item(374,   37,     1000, null, null, null    ),
+new Item(375,   37,     3000, null, null, null    ),
+new Item(376,   37,     3000, null, null, null    ),
+new Item(377,   37,     2000, null, null, null    ),
+new Item(378,   37,     3000, null, null, null    ),
+new Item(379,   37,     1500, null, null, null    ),
+new Item(380,   37,     2000, null, null, null    ),
+new Item(381,   37,     1500, null, null, null    ),
+new Item(382,   37,     1500, null, null, null    ),
+new Item(383,   37,     3000, null, null, null    ),
+new Item(384,   37,     3000, null, null, null    ),
+new Item(385,   37,     3000, null, null, null    ),
+new Item(386,   37,     1000, null, null, null    ),
+new Item(387,   37,     2000, null, null, null    ),
+new Item(388,   37,     3000, null, null, null    ),
+new Item(389,   37,     3000, null, null, null    ),
+new Item(390,   37,     3000, null, null, null    ),
+new Item(391,   37,     1500, null, null, null    ),
+new Item(392,   37,     3000, null, null, null    ),
+new Item(393,   37,     3000, null, null, null    ),
+new Item(394,   37,     2000, null, null, null    ),
+new Item(395,   37,     3000, null, null, null    ),
+new Item(396,   37,     5500, null, null, null    ),
+new Item(397,   37,     0, null, null, null    ),
+new Item(398,   37,     0, null, null, null    ),
+new Item(399,   37,     0, null, null, null    ),
+new Item(400,   37,     0, null, null, null    ),
+new Item(401,   37,     0, null, null, null    ),
+new Item(402,   37,     0, null, null, null    ),
+new Item(403,   37,     0, null, null, null    ),
+new Item(404,   37,     0, null, null, null    ),
+new Item(405,   21,     0, null, null, null    ),
+new Item(406,   23,     0, null, null, null    ),
+new Item(407,   23,     0, null, null, null    ),
+new Item(408,   21,     0, null, null, null    ),
+new Item(409,   21,     0, null, null, null    ),
+new Item(410,   21,     0, null, null, null    ),
+new Item(411,   21,     0, null, null, null    ),
+new Item(412,   21,     0, null, null, null    ),
+new Item(413,   23,     0, null, null, null    ),
+new Item(414,   21,     0, null, null, null    ),
+new Item(415,   22,     0, null, null, null    ),
+new Item(416,   22,     0, null, null, null    ),
+new Item(417,   22,     0, null, null, null    ),
+new Item(418,   23,     0, null, null, null    ),
+new Item(419,   21,     0, null, null, null    ),
+new Item(420,   21,     0, null, null, null    ),
+new Item(421,   21,     0, null, null, null    ),
+new Item(422,   21,     0, null, null, null    ),
+new Item(423,   21,     0, null, null, null    ),
+new Item(424,   21,     0, null, null, null    ),
+new Item(425,   21,     0, null, null, null    ),
+new Item(426,   21,     0, null, null, null    ),
+new Item(427,   21,     0, null, null, null    ),
+new Item(428,   20,     0, null, null, null    ),
+new Item(429,   20,     0, null, null, null    ),
+new Item(430,   20,     0, null, null, null    ),
+new Item(431,   20,     0, null, null, null    ),
+new Item(432,   20,     0, null, null, null    ),
+new Item(433,   22,     0, null, null, null    ),
+new Item(434,   21,     0, null, null, null    ),
+new Item(435,   22,     0, null, null, null    ),
+new Item(436,   22,     0, null, null, null    ),
+new Item(437,   22,     0, null, null, null    ),
+new Item(438,   22,     0, null, null, null    ),
+new Item(439,   22,     0, null, null, null    ),
+new Item(440,   22,     0, null, null, null    ),
+new Item(441,   22,     0, null, null, null    ),
+new Item(442,   18,     10000, null, null, null    ),
+new Item(443,   21,     0, null, null, null    ),
+new Item(444,   20,     0, null, null, null    ),
+new Item(445,   20,     0, null, null, null    ),
+new Item(446,   21,     0, null, null, null    ),
+new Item(447,   21,     0, null, null, null    ),
+new Item(448,   22,     0, null, null, null    ),
+new Item(449,   39,     300, null, null, null    ),
+new Item(450,   39,     300, null, null, null    ),
+new Item(451,   39,     300, null, null, null    ),
+new Item(452,   39,     300, null, null, null    ),
+new Item(453,   39,     300, null, null, null    ),
+new Item(454,   39,     300, null, null, null    ),
+new Item(455,   39,     300, null, null, null    ),
+new Item(456,   34,     0, null, null, null    ),
+new Item(457,   34,     0, null, null, null    ),
+new Item(458,   40,     0, null, null, null    ),
+new Item(459,   40,     0, null, null, null    ),
+new Item(460,   40,     0, null, null, null    ),
+new Item(461,   40,     0, null, null, null    ),
+new Item(462,   40,     0, null, null, null    ),
+new Item(463,   40,     0, null, null, null    ),
+new Item(464,   40,     0, null, null, null    ),
+new Item(465,   21,     0, null, null, null    ),
+new Item(466,   21,     0, null, null, null    ),
+new Item(467,   22,     0, null, null, null    ),
+new Item(468,   22,     0, null, null, null    ),
+new Item(469,   22,     0, null, null, null    ),
+new Item(470,   20,     0, null, null, null    ),
+new Item(471,   21,     0, null, null, null    ),
+new Item(472,   21,     0, null, null, null    ),
+new Item(473,   23,     0, null, null, null    ),
+new Item(474,   22,     0, null, null, null    ),
+new Item(475,   22,     0, null, null, null    ),
+new Item(476,   22,     0, null, null, null    ),
+new Item(477,   22,     0, null, null, null    ),
+new Item(478,   22,     0, null, null, null    ),
+new Item(479,   22,     0, null, null, null    ),
+new Item(480,   22,     0, null, null, null    ),
+new Item(481,   22,     0, null, null, null    ),
+new Item(482,   22,     0, null, null, null    ),
+new Item(483,   22,     0, null, null, null    ),
+new Item(484,   21,     0, null, null, null    ),
+new Item(485,   22,     0, null, null, null    ),
+new Item(486,   41,     0, null, null, null    ),
+new Item(487,   41,     0, null, null, null    ),
+new Item(488,   41,     0, null, null, null    ),
+new Item(489,   41,     0, null, null, null    ),
+new Item(490,   41,     0, null, null, null    ),
+new Item(491,   41,     0, null, null, null    ),
+new Item(492,   41,     0, null, null, null    ),
+new Item(493,   41,     0, null, null, null    ),
+new Item(494,   41,     0, null, null, null    ),
+new Item(495,   41,     0, null, null, null    ),
+new Item(496,   41,     0, null, null, null    ),
+new Item(497,   41,     0, null, null, null    ),
+new Item(498,   41,     0, null, null, null    ),
+new Item(499,   41,     0, null, null, null    ),
+new Item(500,   41,     0, null, null, null    ),
+new Item(501,   41,     0, null, null, null    ),
+new Item(502,   41,     0, null, null, null    ),
+new Item(503,   41,     0, null, null, null    ),
+new Item(504,   41,     0, null, null, null    ),
+new Item(505,   41,     0, null, null, null    ),
+new Item(506,   41,     0, null, null, null    ),
+new Item(507,   41,     0, null, null, null    ),
+new Item(508,   41,     0, null, null, null    ),
+new Item(509,   41,     0, null, null, null    ),
+new Item(510,   41,     0, null, null, null    ),
+new Item(511,   41,     0, null, null, null    ),
+new Item(512,   41,     0, null, null, null    ),
+new Item(513,   23,     0, null, null, null    ),
+new Item(514,   23,     0, null, null, null    ),
+new Item(515,   25,     50, null, null, null    ),
+new Item(516,   25,     50, null, null, null    ),
+new Item(517,   25,     50, null, null, null    ),
+new Item(518,   25,     50, null, null, null    ),
+new Item(519,   25,     50, null, null, null    ),
+new Item(520,   25,     50, null, null, null    ),
+new Item(521,   25,     50, null, null, null    ),
+new Item(522,   25,     50, null, null, null    ),
+new Item(523,   25,     50, null, null, null    ),
+new Item(524,   25,     50, null, null, null    ),
+new Item(525,   25,     50, null, null, null    ),
+new Item(526,   25,     0, null, null, null    ),
+new Item(527,   21,     0, null, null, null    ),
+new Item(528,   21,     0, null, null, null    ),
+new Item(529,   21,     0, null, null, null    ),
+new Item(530,   22,     0, null, null, null    ),
+new Item(531,   21,     0, null, null, null    ),
+new Item(532,   21,     0, null, null, null    ),
+new Item(533,   22,     0, null, null, null    ),
+new Item(534,   20,     0, null, null, null    ),
+new Item(535,   22,     0, null, null, null    ),
+new Item(536,   21,     0, null, null, null    ),
+new Item(537,   22,     0, null, null, null    ),
+new Item(538,   22,     0, null, null, null    ),
+new Item(539,   22,     0, null, null, null    ),
+new Item(540,   22,     0, null, null, null    ),
+new Item(541,   22,     0, null, null, null    ),
+new Item(542,   21,     0, null, null, null    ),
+new Item(543,   22,     0, null, null, null    ),
+new Item(544,   22,     0, null, null, null    ),
+new Item(545,   22,     0, null, null, null    ),
+new Item(546,   22,     0, null, null, null    ),
+new Item(547,   22,     0, null, null, null    ),
+new Item(548,   22,     0, null, null, null    ),
+new Item(549,   21,     0, null, null, null    ),
+new Item(550,   21,     0, null, null, null    ),
+new Item(551,   21,     0, null, null, null    ),
+new Item(552,   21,     0, null, null, null    ),
+new Item(553,   22,     0, null, null, null    ),
+new Item(554,   22,     0, null, null, null    ),
+new Item(555,   22,     0, null, null, null    ),
+new Item(556,   20,     0, null, null, null    ),
+new Item(557,   20,     0, null, null, null    ),
+new Item(558,   21,     0, null, null, null    ),
+new Item(559,   22,     0, null, null, null    ),
+new Item(560,   22,     0, null, null, null    ),
+new Item(561,   22,     0, null, null, null    ),
+new Item(562,   20,     0, null, null, null    ),
+new Item(563,   18,     1000, 70, null, null    ),
+new Item(564,   18,     1000, 70, null, null    ),
+new Item(565,   18,     1000, 70, null, null    ),
+new Item(566,   18,     1000, 70, null, null    ),
+new Item(567,   27,     100, 30, null, null    ),
+new Item(568,   25,     50, null, null, null    ),
+new Item(569,   25,     50, null, null, null    ),
+new Item(570,   25,     50, null, null, null    ),
+new Item(571,   25,     50, null, null, null    ),
+new Item(572,   25,     50, null, null, null    ),
+new Item(573,   25,     50, null, null, null    ),
+new Item(574,   25,     50, null, null, null    ),
+new Item(575,   25,     50, null, null, null    ),
+new Item(576,   25,     50, null, null, null    ),
+new Item(577,   25,     50, null, null, null    ),
+new Item(578,   25,     50, null, null, null    ),
+new Item(579,   25,     50, null, null, null    ),
+new Item(580,   10,     500, 30, null, null    ),
+new Item(581,   12,     200, 40, null, null    ),
+new Item(582,   12,     200, 30, null, null    ),
+new Item(583,   12,     200, 60, null, null    ),
+new Item(584,   12,     200, 10, null, null    ),
+new Item(585,   12,     200, 10, null, null    ),
+new Item(586,   12,     200, 10, null, null    ),
+new Item(587,   12,     200, 30, null, null    ),
+new Item(588,   12,     200, 30, null, null    ),
+new Item(589,   12,     200, 30, null, null    ),
+new Item(590,   12,     200, 30, null, null    ),
+new Item(591,   42,     200, null, null, null    ),
+new Item(592,   42,     200, null, null, null    ),
+new Item(593,   42,     200, null, null, null    ),
+new Item(594,   42,     200, null, null, null    ),
+new Item(595,   42,     200, null, null, null    ),
+new Item(596,   42,     200, null, null, null    ),
+new Item(597,   42,     200, null, null, null    ),
+new Item(598,   42,     200, null, null, null    ),
+new Item(599,   42,     200, null, null, null    ),
+new Item(600,   42,     200, null, null, null    ),
+new Item(601,   42,     200, null, null, null    ),
+new Item(602,   42,     200, null, null, null    ),
+new Item(603,   42,     200, null, null, null    ),
+new Item(604,   42,     200, null, null, null    ),
+new Item(605,   42,     200, null, null, null    ),
+new Item(606,   26,     3000, 20, null, null    ),
+new Item(607,   26,     3000, 20, null, null    ),
+new Item(608,   26,     3000, 20, null, null    ),
+new Item(609,   26,     3000, 20, null, null    ),
+new Item(610,   26,     3000, 20, null, null    ),
+new Item(611,   26,     3000, 20, null, null    ),
+new Item(612,   24,     200, 20, null, null    ),
+new Item(613,   35,     1000, 100, null, null    ),
+new Item(614,   35,     1000, 100, null, null    ),
+new Item(615,   20,     0, null, null, null    ),
+new Item(616,   12,     200, 30, null, null    ),
+new Item(617,   33,     0, null, null, null    ),
+new Item(618,   11,     1000, 30, null, null    ),
+new Item(619,   21,     0, null, null, null    ),
+new Item(620,   22,     0, null, null, null    ),
+new Item(621,   24,     0, 30, null, null    ),
+new Item(622,   24,     0, 30, null, null    ),
+new Item(623,   24,     0, 30, null, null    ),
+new Item(624,   24,     0, 30, null, null    ),
+new Item(625,   24,     0, 30, null, null    ),
+new Item(626,   24,     0, 30, null, null    ),
+new Item(627,   24,     0, 30, null, null    ),
+new Item(628,   24,     0, 30, null, null    ),
+new Item(629,   24,     0, 30, null, null    ),
+new Item(630,   24,     0, 30, null, null    ),
+new Item(631,   24,     0, 30, null, null    ),
+new Item(632,   30,     100, 30, null, null    ),
+new Item(633,   43,     0, null, null, null    ),
+new Item(634,   43,     0, null, null, null    ),
+new Item(635,   43,     0, null, null, null    ),
+new Item(636,   43,     0, null, null, null    ),
+new Item(637,   43,     0, null, null, null    ),
+new Item(638,   43,     0, null, null, null    ),
+new Item(639,   43,     0, null, null, null    ),
+new Item(640,   43,     0, null, null, null    ),
+new Item(641,   43,     0, null, null, null    ),
+new Item(642,   43,     0, null, null, null    ),
+new Item(643,   43,     0, null, null, null    ),
+new Item(644,   43,     0, null, null, null    ),
+new Item(645,   43,     0, null, null, null    ),
+new Item(646,   43,     0, null, null, null    ),
+new Item(647,   43,     0, null, null, null    ),
+new Item(648,   43,     0, null, null, null    ),
+new Item(649,   43,     0, null, null, null    ),
+new Item(650,   43,     0, null, null, null    ),
+new Item(651,   43,     0, null, null, null    ),
+new Item(652,   43,     0, null, null, null    ),
+new Item(653,   43,     0, null, null, null    ),
+new Item(654,   43,     0, null, null, null    ),
+new Item(655,   43,     0, null, null, null    ),
+new Item(656,   43,     0, null, null, null    ),
+new Item(657,   22,     0, null, null, null    ),
+new Item(658,   22,     0, null, null, null    ),
+new Item(659,   37,     10000, null, null, null    ),
+new Item(660,   37,     10000, null, null, null    ),
+new Item(661,   37,     10000, null, null, null    ),
+new Item(662,   21,     0, null, null, null    ),
+new Item(663,   23,     0, null, null, null    ),
+new Item(664,   22,     0, null, null, null    ),
+new Item(665,   22,     0, null, null, null    ),
+new Item(666,   22,     0, null, null, null    ),
+new Item(668,   42,     200, null, null, null    ),
+new Item(669,   42,     200, null, null, null    ),
+new Item(670,   21,     0, null, null, null    ),
+new Item(671,   21,     0, null, null, null    ),
+new Item(673,   21,     0, null, null, null    ),
+new Item(674,   21,     0, null, null, null    ),
+new Item(675,   21,     0, null, null, null    ),
+new Item(676,   22,     0, null, null, null    ),
+new Item(677,   22,     0, null, null, null    ),
+new Item(678,   22,     0, null, null, null    ),
+new Item(679,   22,     0, null, null, null    ),
+new Item(681,   21,     0, null, null, null    ),
+new Item(682,   12,     0, null, null, null    ),
+new Item(683,   12,     0, null, null, null    ),
+new Item(684,   17,     0, null, null, null    ),
+new Item(685,   26,     0, null, null, null    ),
+new Item(686,   10,     0, null, null, null    ),
+new Item(687,   10,     0, null, null, null    ),
+new Item(688,   12,     0, null, null, null    ),
+new Item(689,   12,     0, null, null, null    ),
+new Item(690,   12,     0, null, null, null    ),
+new Item(691,   32,     0, null, null, null    ),
+new Item(692,   32,     0, null, null, null    ),
+new Item(693,   32,     0, null, null, null    ),
+new Item(694,   32,     0, null, null, null    ),
+new Item(695,   44,     0, null, null, null    ),
+new Item(696,   44,     0, null, null, null    ),
+new Item(697,   44,     0, null, null, null    ),
+new Item(698,   44,     0, null, null, null    ),
+new Item(699,   44,     0, null, null, null    ),
+new Item(700,   44,     0, null, null, null    ),
+new Item(701,   44,     0, null, null, null    ),
+new Item(702,   44,     0, null, null, null    ),
+new Item(703,   44,     0, null, null, null    ),
+new Item(704,   44,     0, null, null, null    ),
+new Item(705,   44,     0, null, null, null    ),
+new Item(706,   44,     0, null, null, null    ),
+new Item(707,   44,     0, null, null, null    ),
+new Item(708,   44,     0, null, null, null    ),
+new Item(709,   44,     0, null, null, null    ),
+new Item(710,   44,     0, null, null, null    ),
+new Item(711,   44,     0, null, null, null    ),
+new Item(712,   44,     0, null, null, null    ),
+new Item(713,   44,     0, null, null, null    ),
+new Item(714,   44,     0, null, null, null    ),
+new Item(715,   44,     0, null, null, null    ),
+new Item(716,   44,     0, null, null, null    ),
+new Item(717,   44,     0, null, null, null    ),
+new Item(718,   44,     0, null, null, null    ),
+new Item(719,   44,     0, null, null, null    ),
+new Item(720,   44,     0, null, null, null    ),
+new Item(721,   44,     0, null, null, null    ),
+new Item(722,   44,     0, null, null, null    ),
+new Item(723,   7,      0, null, null, null    ),
+new Item(724,   4,      0, null, null, null    ),
+new Item(725,   4,      0, null, null, null    ),
+new Item(726,   10001,  0, null, null, null    ),
+new Item(727,   10001,  0, null, null, null    ),
+new Item(728,   30,     0, null, null, null    ),
+new Item(729,   35,     0, null, null, null    ),
+new Item(730,   35,     0, null, null, null    ),
+new Item(731,   42,     0, null, null, null    ),
+new Item(732,   21,     0, null, null, null    ),
+new Item(733,   22,     0, null, null, null    ),
+new Item(734,   21,     0, null, null, null    ),
+new Item(735,   22,     0, null, null, null    ),
+new Item(736,   22,     0, null, null, null    ),
+new Item(737,   21,     0, null, null, null    ),
+new Item(738,   22,     0, null, null, null    ),
+new Item(739,   21,     0, null, null, null    ),
+new Item(740,   22,     0, null, null, null    ),
+new Item(741,   22,     0, null, null, null    ),
+new Item(742,   21,     0, null, null, null    ),
+new Item(743,   21,     0, null, null, null    ),
+new Item(744,   21,     0, null, null, null    ),
+new Item(745,   37,     0, null, null, null    ),
+new Item(746,   37,     0, null, null, null    ),
+new Item(747,   37,     0, null, null, null    ),
+new Item(748,   37,     0, null, null, null    ),
+new Item(749,   37,     0, null, null, null    )
+};
+    #endregion
+    
 }
 
-public class eItems{
+namespace PokemonUnity.Item
+{
     /// <summary>
     /// Item ids are connected to XML file. 
     /// </summary>
@@ -215,7 +905,7 @@ public class eItems{
     /// Replace "[HP]{mechanic:hp}" in summary-tags with
     /// "<see cref="Pokemon.HP"/>" or "<see cref="Pokemon.TotalHP"/>"
     /// </remarks>
-    public enum Item
+    public enum Items
     {
 		NONE = 0,
         /// <summary>Used in battle :   [Catches]{mechanic:catch} a wild Pokémon without fail.      If used in a trainer battle, nothing happens and the ball is lost.</summary>		MASTER_BALL = 1,
@@ -965,26 +1655,161 @@ public class eItems{
         /// <summary>The user damages opposing Pokémon by emitting a powerful flash.</summary>		TM99 = 748,
         /// <summary>The user tells the target a secret, and the target loses its ability to concentrate. This lowers the target’s Sp. Atk stat.</summary>		TM100 = 749
     }
-}
 
-public class eMoves{
-    /// <summary>
-    /// Move ids are connected to XML file.
-    /// </summary>
-    /// <remarks>Can now code with strings or int and
-    /// access the same value.</remarks>
-    public enum Move {
-        NONE = 0
+    public enum ItemPockets
+    {
+        MISC = 1,
+        MEDICINE = 2,
+        POKEBALL = 3,
+        /// <summary>
+        /// TMs
+        /// </summary>
+        MACHINE = 4, 
+        BERRY = 5,
+        MAIL = 6,
+        BATTLE = 7,
+        /// <summary>
+        /// Items that are not 'stackable' and therefore should take up 1 individual item spot per (if multiples)
+        /// Or possibly limit and restrict to one per user
+        /// </summary>
+        KEY = 8
     }
-}
 
-public class ePokemons{
     /// <summary>
-    /// Pokemon ids are connected to XML file.
     /// </summary>
-    /// <remarks>Can now code with strings or int and
-    /// access the same value.</remarks>
-    public enum Pokemon {
-
+    public enum ItemFlags
+    {
+        /// <summary>
+        /// Has a count in the bag
+        /// </summary>
+        COUNTABLE = 1,
+        /// <summary>
+        /// Consumed when used
+        /// </summary>
+        CONSUMABLE = 2,
+        /// <summary>
+        /// Usable outside battle
+        /// </summary>
+        USEABLE_OVERWORLD = 3,
+        /// <summary>
+        /// Usable in battle
+        /// </summary>
+        USEABLE_IN_BATTLE = 4,
+        /// <summary>
+        /// Can be held by a pokemon
+        /// </summary>
+        HOLDABLE = 5,
+        /// <summary>
+        /// Works passively when held
+        /// </summary>
+        HOLDABLE_PASSIVE = 6,
+        /// <summary>
+        /// Usable by a pokemon when held
+        /// </summary>
+        HOLDABLE_ACTIVE = 7,
+        /// <summary>
+        /// Appears in Sinnoh Underground
+        /// </summary>
+        UNDERGROUND = 8
     }
+
+    /// <summary>
+    /// Item Category determines both the item's effect
+    /// and the bag-pocket that the item belongs to.
+    /// </summary>
+    /// <remarks>
+    /// Can determine an <see cref="itemEffect"/> by the category it belongs to.
+    /// </remarks>
+    public enum ItemCategory
+    {
+		COLLECTIBLES = 9, //PocketId = 1
+		EVOLUTION = 10, //PocketId = 1
+		SPELUNKING = 11, //PocketId = 1
+		HELD_ITEMS = 12, //PocketId = 1
+		CHOICE = 13, //PocketId = 1
+		EFFORT_TRAINING = 14, //PocketId = 1
+		BAD_HELD_ITEMS = 15, //PocketId = 1
+		TRAINING = 16, //PocketId = 1
+		PLATES = 17, //PocketId = 1
+		SPECIES_SPECIFIC = 18, //PocketId = 1
+		TYPE_ENHANCEMENT = 19, //PocketId = 1
+		LOOT = 24, //PocketId = 1
+		MULCH = 32, //PocketId = 1
+		DEX_COMPLETION = 35, //PocketId = 1
+		SCARVES = 36, //PocketId = 1
+		JEWELS = 42, //PocketId = 1
+		MEGA_STONES = 44, //PocketId = 1
+
+		VITAMINS = 26, //PocketId = 2
+		HEALING = 27, //PocketId = 2
+		PP_RECOVERY = 28, //PocketId = 2
+		REVIVAL = 29, //PocketId = 2
+		STATUS_CURES = 30, //PocketId = 2
+
+		SPECIAL_BALLS = 33, //PocketId = 3
+		STANDARD_BALLS = 34, //PocketId = 3
+		APRICORN_BALLS = 39, //PocketId = 3
+
+		ALL_MACHINES = 37, //PocketId = 4
+
+		EFFORT_DROP = 2, //PocketId = 5
+		MEDICINE = 3, //PocketId = 5
+		OTHER = 4, //PocketId = 5
+		IN_A_PINCH = 5, //PocketId = 5
+		PICKY_HEALING = 6, //PocketId = 5
+		TYPE_PROTECTION = 7, //PocketId = 5
+		BAKING_ONLY = 8, //PocketId = 5
+
+		ALL_MAIL = 25, //PocketId = 6
+
+		STAT_BOOSTS = 1, //PocketId = 7
+		FLUTES = 38, //PocketId = 7
+		MIRACLE_SHOOTER = 43, //PocketId = 7
+
+		EVENT_ITEMS = 20, //PocketId = 8
+		GAMEPLAY = 21, //PocketId = 8
+		PLOT_ADVANCEMENT = 22, //PocketId = 8
+		UNUSED = 23, //PocketId = 8
+		APRICORN_BOX = 40, //PocketId = 8
+		DATA_CARDS = 41, //PocketId = 8
+		XY_UNKNOWN = 10001, //PocketId = 8
+    }
+
+    /// <summary>
+    /// Effects that occur when items are thrown at target.
+    /// Not all items can be thrown(?)...
+    /// </summary>
+    /// <remarks>Didnt have access to variable names...</remarks>
+    public enum ItemFlingEffect
+    {
+        /// <summary>
+        /// Badly poisons the target.
+        /// </summary>
+        One = 1,
+        /// <summary>
+        /// Burns the target.
+        /// </summary>
+        Two = 2,
+        /// <summary>
+        /// Immediately activates the berry's effect on the target.
+        /// </summary>
+        Three = 3,
+        /// <summary>
+        /// Immediately activates the herb's effect on the target.
+        /// </summary>
+        Four = 4, 
+        /// <summary>
+        /// Paralyzes the target.
+        /// </summary>
+        Five = 5,
+        /// <summary>
+        /// Poisons the target.
+        /// </summary>
+        Six = 6,
+        /// <summary>
+        /// Target will flinch if it has not yet gone this turn.
+        /// </summary>
+        Seven = 7
+    }
+
 }

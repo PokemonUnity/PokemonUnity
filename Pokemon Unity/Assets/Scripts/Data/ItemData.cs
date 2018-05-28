@@ -3,7 +3,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class ItemData
+[System.Obsolete]
+public class ItemDataOld
 {
     private string name;
     private string description;
@@ -231,7 +232,7 @@ public class ItemData
     private ItemPockets itemPocket;
     private ItemFlingEffect itemFlingEffect;
 
-    public ItemData(eItems.Item itemId, ItemCategory itemCategory, /*BattleType battleType, string description,*/ int price, int? flingPower,
+    public ItemDataOld(eItems.Item itemId, ItemCategory itemCategory, /*BattleType battleType, string description,*/ int price, int? flingPower,
         ItemFlingEffect? itemEffect, /*string stringParameter, float floatParameter,*/ ItemFlags[] flags = null)
     {
         //this.name = name;
@@ -244,16 +245,16 @@ public class ItemData
         //this.floatParameter = floatParameter;
     }
 
-    public ItemData(int itemId, int itemCategory, /*BattleType battleType, string description,*/ int price, int? flingPower,
+    public ItemDataOld(int itemId, int itemCategory, /*BattleType battleType, string description,*/ int price, int? flingPower,
         int? itemEffect, /*string stringParameter, float floatParameter,*/ int[] flags = null)
     {
         //return 
-        new ItemData((eItems.Item)itemId, (ItemCategory)itemType, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item));
+        new ItemDataOld((eItems.Item)itemId, (ItemCategory)itemType, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item));
     }
 
     #region oldItemData-to be removed...
     [System.Obsolete]
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price)
+    public ItemDataOld(string name, ItemType itemType, BattleType battleType, string description, int price)
     {
         this.name = name;
         this.itemType = itemType;
@@ -264,7 +265,7 @@ public class ItemData
     }
 
     [System.Obsolete]
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDataOld(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect)
     {
         this.name = name;
@@ -276,7 +277,7 @@ public class ItemData
     }
 
     [System.Obsolete]
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDataOld(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, string stringParameter)
     {
         this.name = name;
@@ -289,7 +290,7 @@ public class ItemData
     }
 
     [System.Obsolete]
-    public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    public ItemDataOld(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, float floatParameter)
     {
         this.name = name;
@@ -301,7 +302,7 @@ public class ItemData
         this.floatParameter = floatParameter;
     }
 
-    [System.Obsolete]public ItemData(string name, ItemType itemType, BattleType battleType, string description, int price,
+    [System.Obsolete]public ItemDataOld(string name, ItemType itemType, BattleType battleType, string description, int price,
         ItemEffect itemEffect, string stringParameter, float floatParameter)
     {
         this.name = name;
@@ -315,7 +316,7 @@ public class ItemData
     }
     
     /// <summary>
-    /// Initializes a new TMs instance of the <see cref="ItemData"/> class.
+    /// Initializes a new TMs instance of the <see cref="ItemDataOld"/> class.
     /// </summary>
     /// <param name="tmNo"></param>
     /// <param name="name"></param>
@@ -323,7 +324,7 @@ public class ItemData
     /// <param name="battleType"></param>
     /// <param name="description"></param>
     /// <param name="price"></param>
-    [System.Obsolete]public ItemData(int tmNo, string name, ItemType itemType, BattleType battleType, string description, int price)
+    [System.Obsolete]public ItemDataOld(int tmNo, string name, ItemType itemType, BattleType battleType, string description, int price)
     {
         this.tmNo = tmNo;
         this.name = name;

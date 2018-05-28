@@ -128,11 +128,11 @@ public class PokemonOld {
 	/// <remarks>This should be an enum value</remarks>
 	private string caughtBallString;
     /// <summary>
-    /// <seealso cref="ItemData.ItemCategory.STANDARD_BALLS"/>
-    /// <seealso cref="ItemData.ItemCategory.SPECIAL_BALLS"/>
+    /// <seealso cref="ItemDataOld.ItemCategory.STANDARD_BALLS"/>
+    /// <seealso cref="ItemDataOld.ItemCategory.SPECIAL_BALLS"/>
     /// </summary>
     /// <remarks>
-    /// Does a check against <see cref="ItemData.ItemCategory"/> to confirm if valid
+    /// Does a check against <see cref="ItemDataOld.ItemCategory"/> to confirm if valid
     /// or returns null
     /// </remarks>
     private eItems.Item caughtBall;
