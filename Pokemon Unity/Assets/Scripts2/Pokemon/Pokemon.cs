@@ -1612,25 +1612,6 @@ public class Pokemon //: ePokemons //PokemonData
 			UNKNOWN = 10001,
 			SHADOW = 10002
 		};
-		public enum EggGroups
-		{
-			NONE = 0,
-			MONSTER = 1,
-			WATER1 = 2,
-			BUG = 3,
-			FLYING = 4,
-			FIELD = 5, //"Ground"?
-			FAIRY = 6,
-			GRASS = 7, //"Plant"
-			HUMANLIKE = 8, //"humanshape"
-			WATER3 = 9,
-			MINERAL = 10,
-			AMORPHOUS = 11, //"indeterminate"
-			WATER2 = 12,
-			DITTO = 13,
-			DRAGON = 14,
-			UNDISCOVERED = 15 //"no-eggs"
-		};
 		/// <summary>
 		/// The likelihood of a Pokémon of the species being a certain gender.
 		/// </summary>
@@ -2503,8 +2484,8 @@ public class Pokemon //: ePokemons //PokemonData
                 //}, 
 				0,//ToDo: maleRatio, 
 				catchRate,
-				(EggGroups)eggGroup1 | PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
-				(EggGroups)eggGroup2 | PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
+				(EggGroups)eggGroup1 | EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
+				(EggGroups)eggGroup2 | EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
 				hatchTime,
 				height,
 				weight,
@@ -3713,6 +3694,25 @@ namespace PokemonUnity
 		PINK = 6,
 		NONE = 0
 	};
+		public enum EggGroups
+		{
+			NONE = 0,
+			MONSTER = 1,
+			WATER1 = 2,
+			BUG = 3,
+			FLYING = 4,
+			FIELD = 5, //"Ground"?
+			FAIRY = 6,
+			GRASS = 7, //"Plant"
+			HUMANLIKE = 8, //"humanshape"
+			WATER3 = 9,
+			MINERAL = 10,
+			AMORPHOUS = 11, //"indeterminate"
+			WATER2 = 12,
+			DITTO = 13,
+			DRAGON = 14,
+			UNDISCOVERED = 15 //"no-eggs"
+		};
     /// <summary>
     /// Namespace to nest all Pokemon Enums
     /// </summary>
