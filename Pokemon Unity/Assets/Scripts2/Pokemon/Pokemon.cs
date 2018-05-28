@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
 
@@ -1653,20 +1654,6 @@ public class Pokemon //: ePokemons //PokemonData
 			SLOW = 1,
 			FLUCTUATING = 5 //slow then fast?
 		};
-		public enum Color
-		{
-			RED = 8,
-			BLUE = 2,
-			YELLOW = 10,
-			GREEN = 5,
-			BLACK = 1,
-			BROWN = 3,
-			PURPLE = 7,
-			GRAY = 4,
-			WHITE = 9,
-			PINK = 6,
-			NONE = 0
-		};
 		/// <summary>
 		/// Pokemon ids are connected to XML file.
 		/// </summary>
@@ -2479,7 +2466,7 @@ public class Pokemon //: ePokemons //PokemonData
 
 			this.luminance = luminance;
 			//this.lightColor = lightColor;
-			this.pokedexColor = pokedexColor | PokemonData.Color.NONE;
+			this.pokedexColor = pokedexColor | Color.NONE;
 
 			//ToDo: wild pokemon held items not yet implemented
 			this.heldItem = heldItem; //[item id,% chance]
@@ -2523,7 +2510,7 @@ public class Pokemon //: ePokemons //PokemonData
 				weight,
 				baseExpYield,
 				(LevelingRate)levelingRate,
-				pokedexColor | PokemonData.Color.NONE,
+				pokedexColor | Color.NONE,
 				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
 				luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (Moves)move), tmList,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
@@ -2558,7 +2545,7 @@ public class Pokemon //: ePokemons //PokemonData
 				weight,
 				baseExpYield,
 				levelingRate,
-				pokedexColor | PokemonData.Color.NONE,
+				pokedexColor | Color.NONE,
 				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
 				luminance, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
@@ -3712,6 +3699,20 @@ public class Pokemon //: ePokemons //PokemonData
 
 namespace PokemonUnity
 {
+	public enum Color
+	{
+		RED = 8,
+		BLUE = 2,
+		YELLOW = 10,
+		GREEN = 5,
+		BLACK = 1,
+		BROWN = 3,
+		PURPLE = 7,
+		GRAY = 4,
+		WHITE = 9,
+		PINK = 6,
+		NONE = 0
+	};
     /// <summary>
     /// Namespace to nest all Pokemon Enums
     /// </summary>
