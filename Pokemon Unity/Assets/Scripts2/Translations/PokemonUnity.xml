@@ -25129,7 +25129,7 @@ Starmie swims through water by spinning its star-shaped
 body as if it were a propeller on a ship. The core at the
 center of this Pokémon’s body glows in seven colors.
 </Pokemon>
-<Pokemon id="122" language="9" identifier="Mr Mime" name="Mr. Mime" genus="Barrier">
+<Pokemon id="122" language="9" identifier="Mr_Mime" name="Mr. Mime" genus="Barrier">
 Mr. Mime is a master of pantomime. Its gestures and motions
 convince watchers that something unseeable actually exists.
 Once the watchers are convinced, the unseeable thing exists
@@ -25820,7 +25820,7 @@ Lugia’s wings pack devastating power—a light fluttering of its
 wings can blow apart regular houses. As a result, this
 Pokémon chooses to live out of sight deep under the sea.
 </Pokemon>
-<Pokemon id="250" language="9" identifier="Ho-Oh" name="Ho-Oh" genus="Rainbow">
+<Pokemon id="250" language="9" identifier="Ho_Oh" name="Ho-Oh" genus="Rainbow">
 Ho-Oh’s feathers glow in seven colors depending on the angle
 at which they are struck by light. These feathers are said to
 bring happiness to the bearers. This Pokémon is said to live at
@@ -26759,7 +26759,7 @@ for rain was the way to make crops grow.
 It prefers an arid atmosphere. It leaks water that
 looks like tears when adjusting its moisture level.
 </Pokemon>
-<Pokemon id="439" language="9" identifier="Mime Jr" name="Mime Jr." genus="Mime">
+<Pokemon id="439" language="9" identifier="Mime_Jr" name="Mime Jr." genus="Mime">
 It habitually mimics foes. Once mimicked, the foe
 cannot take its eyes off this Pokémon.
 </Pokemon>
@@ -26908,7 +26908,7 @@ the rest.
 Its impressive tusks are made of ice. The population
 thinned when it turned warm after the ice age.
 </Pokemon>
-<Pokemon id="474" language="9" identifier="Porygon-Z" name="Porygon-Z" genus="Virtual">
+<Pokemon id="474" language="9" identifier="Porygon_Z" name="Porygon-Z" genus="Virtual">
 Its programming was modified to enable it to travel
 through alien dimensions. Seems there might have
 been an error...

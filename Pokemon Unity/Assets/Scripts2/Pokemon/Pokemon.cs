@@ -1703,10 +1703,16 @@ public class Pokemon //: ePokemons //PokemonData
             raichu = 26,
             sandshrew = 27,
             sandslash = 28,
-            nidoran-f = 29,
+            /// <summary>
+            /// NidoranFemale
+            /// </summary>
+            nidoran_f = 29,
             nidorina = 30,
             nidoqueen = 31,
-            nidoran-m = 32,
+            /// <summary>
+            /// NidoranMale
+            /// </summary>
+            nidoran_m = 32,
             nidorino = 33,
             nidoking = 34,
             clefairy = 35,
@@ -1796,7 +1802,7 @@ public class Pokemon //: ePokemons //PokemonData
             seaking = 119,
             staryu = 120,
             starmie = 121,
-            mr-mime = 122,
+            mr_mime = 122,
             scyther = 123,
             jynx = 124,
             electabuzz = 125,
@@ -1924,7 +1930,7 @@ public class Pokemon //: ePokemons //PokemonData
             pupitar = 247,
             tyranitar = 248,
             lugia = 249,
-            ho-oh = 250,
+            ho_oh = 250,
             celebi = 251,
             treecko = 252,
             grovyle = 253,
@@ -2113,7 +2119,7 @@ public class Pokemon //: ePokemons //PokemonData
             bronzor = 436,
             bronzong = 437,
             bonsly = 438,
-            mime-jr = 439,
+            mime_jr = 439,
             happiny = 440,
             chatot = 441,
             spiritomb = 442,
@@ -2148,7 +2154,7 @@ public class Pokemon //: ePokemons //PokemonData
             glaceon = 471,
             gliscor = 472,
             mamoswine = 473,
-            porygon-z = 474,
+            porygon_z = 474,
             gallade = 475,
             probopass = 476,
             dusknoir = 477,
