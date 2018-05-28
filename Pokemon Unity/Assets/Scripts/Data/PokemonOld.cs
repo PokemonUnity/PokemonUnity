@@ -188,7 +188,7 @@ public class PokemonOld {
 	/// </summary>
 	/// <remarks>Should be an enum</remarks>
 	private string natureString;
-	private NatureDatabase.Nature nature;
+	private NatureDatabaseOld.Nature nature;
 		
 	private int currentHP;
 	private int HP; //is this the same as the maxHP.value?
@@ -361,7 +361,7 @@ public class PokemonOld {
 	               bool isShiny, eItems.Item caughtBall, eItems.Item heldItem, string OT,
 	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
 	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
-	               NatureDatabase.Nature nature, int ability, string[] moveset, int[] PPups){
+	               NatureDatabaseOld.Nature nature, int ability, string[] moveset, int[] PPups){
 		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
 
 		this.pokemonID = pokemonID;
@@ -541,7 +541,7 @@ public class PokemonOld {
 		this.EV_SPE = 0;
 
 		//Randomize nature
-		this.natureString = NatureDatabase.getRandomNature().getName();
+		this.natureString = NatureDatabaseOld.getRandomNature().getName();
 
 		//calculate stats
 		this.calculateStats();
@@ -855,23 +855,23 @@ public class PokemonOld {
 		if(baseStats[1] == 1){
 			this.ATK = 1;}
 		else{
-			this.ATK = Mathf.FloorToInt(Mathf.FloorToInt(((IV_ATK+(2*baseStats[1])+(EV_ATK/4))*level)/100+5)*NatureDatabase.getNature(natureString).getATK());}
+			this.ATK = Mathf.FloorToInt(Mathf.FloorToInt(((IV_ATK+(2*baseStats[1])+(EV_ATK/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getATK());}
 		if(baseStats[2] == 1){
 			this.DEF = 1;}
 		else{
-			this.DEF = Mathf.FloorToInt(Mathf.FloorToInt(((IV_DEF+(2*baseStats[2])+(EV_DEF/4))*level)/100+5)*NatureDatabase.getNature(natureString).getDEF());}
+			this.DEF = Mathf.FloorToInt(Mathf.FloorToInt(((IV_DEF+(2*baseStats[2])+(EV_DEF/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getDEF());}
 		if(baseStats[3] == 1){
 			this.SPA = 1;}
 		else{
-			this.SPA = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPA+(2*baseStats[3])+(EV_SPA/4))*level)/100+5)*NatureDatabase.getNature(natureString).getSPA());}
+			this.SPA = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPA+(2*baseStats[3])+(EV_SPA/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getSPA());}
 		if(baseStats[4] == 1){
 			this.SPD = 1;}
 		else{
-			this.SPD = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPD+(2*baseStats[4])+(EV_SPD/4))*level)/100+5)*NatureDatabase.getNature(natureString).getSPD());}
+			this.SPD = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPD+(2*baseStats[4])+(EV_SPD/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getSPD());}
 		if(baseStats[5] == 1){
 			this.SPE = 1;}
 		else{
-			this.SPE = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPE+(2*baseStats[5])+(EV_SPE/4))*level)/100+5)*NatureDatabase.getNature(natureString).getSPE());}
+			this.SPE = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPE+(2*baseStats[5])+(EV_SPE/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getSPE());}
 	}
 
 	//set Nickname

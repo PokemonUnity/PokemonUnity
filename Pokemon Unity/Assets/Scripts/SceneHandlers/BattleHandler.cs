@@ -1733,11 +1733,11 @@ public class BattleHandler : MonoBehaviour
 
         float[] natureMod = new float[]
         {
-            NatureDatabase.getNature(selectedPokemon.getNature()).getATK(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getDEF(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getSPA(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getSPD(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getSPE()
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getATK(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getDEF(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getSPA(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getSPD(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getSPE()
         };
         pokemonSummaryStats.text =
             selectedPokemon.getATK() + "\n" +

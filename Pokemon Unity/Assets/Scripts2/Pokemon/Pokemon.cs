@@ -5,7 +5,7 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
-using PokemonUnity.Ability;
+using PokemonUnity.Item;
 
 /// <summary>
 /// 
@@ -231,7 +231,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Forces a particular nature
 	/// </summary>
 	/// ToDo: Redo NatureDatabase Class
-	private NatureDatabase.Nature natureFlag;
+	private Natures natureFlag;
 	/// <summary>
 	/// Forces the shininess
 	/// </summary>
@@ -286,7 +286,7 @@ public class Pokemon //: ePokemons //PokemonData
 		_base = PokemonData.GetPokemon(pokemon);
 		//Gender = isMale();
 		Ability[0] = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
-		Nature = (NatureDatabase.Nature)(new Random().Next(0, 24));
+		Nature = (Natures)(new Random().Next(0, 24));
 		//IsShiny
 	}
 
@@ -519,14 +519,14 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Returns the ID of this Pokemon's nature or
 	/// Sets this Pokemon's nature to a particular nature (and calculates the stat modifications).
 	/// </summary>
-	public NatureDatabase.Nature Nature { get { return this.natureFlag; } set { this.natureFlag = value; calcStats(); } }
+	public Natures Nature { get { return this.natureFlag; } set { this.natureFlag = value; calcStats(); } }
 
 	/// <summary>
 	/// Returns whether this Pokemon has a particular nature
 	/// </summary>
 	/// <param name="nature"></param>
 	/// <returns></returns>
-	public bool hasNature(NatureDatabase.Nature nature = 0) //None
+	public bool hasNature(Natures nature = 0) //None
 	{
 		if ((int)nature < 1) return (int)this.Nature >= 1;
 		else

@@ -460,8 +460,8 @@ public class CustomEvent : MonoBehaviour
                     }
 
                     string pkNature = (currentEvent.ints[3] == 0)
-                        ? NatureDatabase.getRandomNature().getName()
-                        : NatureDatabase.getNature(currentEvent.ints[3] - 1).getName();
+                        ? NatureDatabaseOld.getRandomNature().getName()
+                        : NatureDatabaseOld.getNature(currentEvent.ints[3] - 1).getName();
 
                     string[] pkMoveset = pkd.GenerateMoveset(currentEvent.ints[1]);
                     for (int i = 0; i < 4; i++)

@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using PokemonUnity;
-using PokemonUnity.Item;
 
 
 public class Ability
@@ -8,7 +6,7 @@ public class Ability
     
 }
 
-namespace PokemonUnity.Ability
+namespace PokemonUnity.Pokemon
 {
     /// <summary>
 	/// Ability ids are connected to XML file.
