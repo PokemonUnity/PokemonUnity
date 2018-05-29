@@ -51,12 +51,12 @@ public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSyste
     public System.DateTimeOffset startTime = new System.DateTimeOffset();
     //private double buildNum = 0.17;
     //var t = new System.Resources.ResourceManager().
-    #if DEBUG
+#if DEBUG
     private const string FILE_NAME = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\"; //TestProject\bin\Debug
     //string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
     //string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
-    private const string FILE_NAME = UnityEngine.Application.persistentDataPath + "/Test.data";
+    private static string FILE_NAME = UnityEngine.Application.persistentDataPath + "/Test.data";
     //string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
     #endregion
