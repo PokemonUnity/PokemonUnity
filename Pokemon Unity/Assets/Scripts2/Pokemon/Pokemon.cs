@@ -82,8 +82,8 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Held item
 	/// </summary>
-	public  eItems.Item Item { get { return this.item; } set { this.item = value; } }
-	private eItems.Item item;
+	public  Items Item { get { return this.item; } set { this.item = value; } }
+	private Items item;
 	/// <summary>
 	/// Consumed held item (used in battle only)
 	/// </summary>
@@ -108,7 +108,7 @@ public class Pokemon //: ePokemons //PokemonData
 	{
 		get {
 			if (this.mail == null) return null; //If empty return null
-			if (mail.Length == 0 || this.Item == 0)//|| this.item.Category != eItems.Item.Category.Mail )
+			if (mail.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
 			{
 				mail = null; return null;
 			}
@@ -172,7 +172,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Ball used
 	/// </summary>
-	private eItems.Item ballUsed;// = (eItems.Item)0; //ToDo: None?
+	private Items ballUsed;// = (Items)0; //ToDo: None?
 	/// <summary>
 	/// Markings
 	/// </summary>
@@ -1087,8 +1087,8 @@ public class Pokemon //: ePokemons //PokemonData
             default:
                 break;
         }
-        gain += luxury && this.ballUsed == eItems.Item.LUXURY_BALL ? 1 : 0;
-        if (this.item == eItems.Item.SOOTHE_BELL && gain > 0)
+        gain += luxury && this.ballUsed == Items.LUXURY_BALL ? 1 : 0;
+        if (this.item == Items.SOOTHE_BELL && gain > 0)
             gain = (int)Math.Floor(gain * 1.5f);
         happiness += gain;
         happiness = happiness > 255 ? 255 : happiness < 0 ? 0 : happiness; //Max 255, Min 0
@@ -1244,7 +1244,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </example>
 		/// <remarks>
 		/// Or maybe...[item id,% chance,generationId/regionId]
-		/// Custom Class needed here... <see cref="eItems.Item"/> as itemId
+		/// Custom Class needed here... <see cref="Items"/> as itemId
 		/// </remarks>
 		private int[,] heldItem;
 
@@ -1266,7 +1266,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// but evolve into a species which can. That is, the species should be a "baby" species.
 		/// Not all baby species need this line.
 		/// </summary>
-		private eItems.Item Incense;
+		private Items Incense;
 		#endregion
 
 		/// ToDo: Should any of the property values be Set-able?
@@ -1406,7 +1406,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </example>
 		/// <remarks>
 		/// Or maybe...[item id,% chance,generationId/regionId]
-		/// Custom Class needed here... <see cref="eItems.Item"/> as itemId
+		/// Custom Class needed here... <see cref="Items"/> as itemId
 		/// </remarks>
 		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
 		public int[,] HeldItem { get { return this.heldItem; } }
@@ -2140,7 +2140,7 @@ public class Pokemon //: ePokemons //PokemonData
         //Teach pikachu surf?... do we really need it to know surf?... Maybe if "specal form" (surfboard pickachu) is added to game
         //public Move.MoveData.Move[] stadium_surfing_pikachu { get; private set; }
         /// <summary>
-        /// If <see cref="eItems.Item.LIGHT_BALL"/> is held by either parent of a <see cref="Pokemons.Pichu"/> when the Egg is produced,
+        /// If <see cref="Items.LIGHT_BALL"/> is held by either parent of a <see cref="Pokemons.Pichu"/> when the Egg is produced,
         /// the Pichu that hatches will know the move <see cref="Move.MoveData.Move.Volt_Tackle"/>.
         /// </summary>
         /// Not sure about this one
@@ -2191,7 +2191,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <summary>
 		/// no parameter,
 		/// Positive integer,
-		/// Item  = <see cref="eItems.Item"/>,
+		/// Item  = <see cref="Items"/>,
 		/// Move = <see cref="Moves"/>,
 		/// Species = <see cref="Pokemons"/>,
 		/// Type = <see cref="Types"/>
