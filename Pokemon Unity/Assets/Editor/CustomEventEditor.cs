@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿/*using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -145,7 +145,7 @@ public class CustomEventEditor : Editor
         }
 
         EditorGUILayout.Space();
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
         EditorGUI.indentLevel = 0;
@@ -229,7 +229,7 @@ public class CustomEventEditor : Editor
         }
 
         EditorGUILayout.Space();
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
         serializedObject.ApplyModifiedProperties();
@@ -479,7 +479,7 @@ public class CustomEventEditor : Editor
     {
         SetEventProps(currentSEvent);
 
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
         EditorGUILayout.PropertyField(eventType_Prop);
@@ -734,7 +734,7 @@ public class CustomEventEditor : Editor
 			    break;
         }
 
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
         EditorGUILayout.Space();
     }
@@ -770,4 +770,4 @@ public class CustomEventEditor : Editor
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space();
     }
-}
+}*/

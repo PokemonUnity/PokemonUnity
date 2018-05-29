@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 
 public class AnimationEffect : MonoBehaviour {
@@ -19,4 +19,4 @@ public class AnimationEffect : MonoBehaviour {
 		renderer.material.mainTextureOffset = new Vector2(Xpos,Ypos);
 		if (currentTile>=totalTiles)		Destroy(gameObject);
 	}
-}
+}*/
