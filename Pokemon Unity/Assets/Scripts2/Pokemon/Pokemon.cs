@@ -14,152 +14,156 @@ using PokemonUnity.Item;
 [System.Serializable]
 public class Pokemon //: ePokemons //PokemonData
 {
-	#region Variables
-	/// <summary>
-	/// Current Total HP
-	/// </summary>
-	public int TotalHP { get { return totalHP; } }
-	private int totalHP = 1;
-	/// <summary>
-	/// Current HP
-	/// </summary>
-	private int hp = 1;
-	/// <summary>
-	/// Current Attack Stat
-	/// </summary>
-	private int ATK;
-	/// <summary>
-	/// Current Defense stat
-	/// </summary>
-	private int DEF;
-	/// <summary>
-	/// Current Special Attack Stat
-	/// </summary>
-	private int SPA;
-	/// <summary>
-	/// Current Special Defense Stat
-	/// </summary>
-	private int SPD;
-	/// <summary>
-	/// Current Speed Stat
-	/// </summary>
-	private int SPE;
-	/// <summary>
-	/// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
-	/// </summary>
-	private readonly int[] IV = new int[6];
-	/// <summary>
-	/// Effort Values
-	/// </summary>
-	private readonly int[] EV = new int[6]; //{ 0, 0, 0, 0, 0, 0 }; //same thing
-	/// <summary>
-	/// Species (National Pokedex number)
-	/// </summary>
-	/// ToDo: Fetch from PokemonData : _base.PokeId
-	private int species;
-	/// <summary>
-	/// Personal/Pokemon ID
-	/// </summary>
-	/// ToDo: String value?
-	private int PersonalId;
-	/// <summary>
-	/// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
-	/// Deprecated
-	/// </summary>
-	/// ToDo: Remove this, and fetch from Trainer Class?
-	/// Can also store hexadecimal/binary values in int
-	private int TrainerId;
-	/// <summary>
-	/// Pokerus strain and infection time
-	/// </summary>
-	/// <remarks>
-	/// ToDo: Custom class?
-	/// 3 Values; Not Infected, Cured, Infected.
-	/// [0] = Pokerus Strain; [1] = Days until cured.
-	/// if ([0] && [1] == 0) => Not Infected
-	/// </remarks>
-	private readonly int[] pokerus = new int[2]; //{ 0, 0 };
-	/// <summary>
-	/// Held item
-	/// </summary>
-	public  Items Item { get { return this.item; } set { this.item = value; } }
-	private Items item;
-	/// <summary>
-	/// Consumed held item (used in battle only)
-	/// </summary>
-	private bool itemRecycle;
-	/// <summary>
-	/// Resulting held item (used in battle only)
-	/// </summary>
-	private bool itemInitial;
-	/// <summary>
-	/// Where Pokemon can use Belch (used in battle only)
-	/// </summary>
-	private bool belch;
-	/// <summary>
-	/// Mail?...
-	/// </summary>
-	private string mail;
-	/// <summary>
-	/// Perform a null check; if anything other than null, there is a message
-	/// </summary>
-	/// ToDo: Item category
-	public string Mail
-	{
-		get {
-			if (this.mail == null) return null; //If empty return null
-			if (mail.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
-			{
-				mail = null; return null;
-			}
-			return mail;
-		}
-	}
-	/// <summary>
-	/// The pokemon fused into this one.
-	/// </summary>
-	private int fused;
-	/// <summary>
-	/// Nickname
-	/// </summary>
-	private string name;
-	/// <summary>
-	/// Current experience points
-	/// </summary>
-	private int exp;
-	/// <summary>
-	/// Current happiness
-	/// </summary>
-	/// <remarks>
-	/// This is the samething as "friendship";
-	/// </remarks>
-	private int happiness;
-	public enum HappinessMethods
-	{
-		WALKING,
-		LEVELUP,
-		GROOM,
-		FAINT,
-		VITAMIN,
-		EVBERRY,
-		POWDER,
-		ENERGYROOT,
-		REVIVALHERB
-	}
-	/// <summary>
-	/// Status problem (PBStatuses)
-	/// </summary>
-	/// ToDo: Status Class
-	private Status status;
-	/// <summary>
-	/// Sleep count/Toxic flag
-	/// </summary>
-	/// ToDo: Add to Status Class
-	private int statusCount;
-	/// <summary>
-	/// Steps to hatch egg, 0 if Pokemon is not an egg
-	/// </summary>
-	private int eggSteps;
+    #region Variables
+    /// <summary>
+    /// Current Total HP
+    /// </summary>
+    public int TotalHP { get { return totalHP; } }
+    private int totalHP = 1;
+    /// <summary>
+    /// Current HP
+    /// </summary>
+    private int hp = 1;
+    /// <summary>
+    /// Current Attack Stat
+    /// </summary>
+    private int ATK;
+    /// <summary>
+    /// Current Defense stat
+    /// </summary>
+    private int DEF;
+    /// <summary>
+    /// Current Special Attack Stat
+    /// </summary>
+    private int SPA;
+    /// <summary>
+    /// Current Special Defense Stat
+    /// </summary>
+    private int SPD;
+    /// <summary>
+    /// Current Speed Stat
+    /// </summary>
+    private int SPE;
+    /// <summary>
+    /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
+    /// </summary>
+    private readonly int[] IV = new int[6];
+    /// <summary>
+    /// Effort Values
+    /// </summary>
+    /// new int[6] = { 0, 0, 0, 0, 0, 0 }; //same thing
+    private readonly int[] EV = new int[6];
+    /// <summary>
+    /// Species (National Pokedex number)
+    /// </summary>
+    /// ToDo: Fetch from PokemonData : _base.PokeId
+    private int species;
+    /// <summary>
+    /// Personal/Pokemon ID
+    /// </summary>
+    /// ToDo: String value?
+    public int PersonalId { get; private set; }
+    /// <summary>
+    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
+    /// Deprecated
+    /// </summary>
+    /// ToDo: Remove this, and fetch from Trainer Class?
+    /// Can also store hexadecimal/binary values in int
+    public int TrainerId { get; private set; }
+    /// <summary>
+    /// Pokerus strain and infection time
+    /// </summary>
+    /// { 0, 0 };
+    /// <example>
+    /// </example>
+    /// <remarks>
+    /// ToDo: Custom class?
+    /// 3 Values; Not Infected, Cured, Infected.
+    /// [0] = Pokerus Strain; [1] = Days until cured.
+    /// if ([0] && [1] == 0) => Not Infected
+    /// </remarks>
+    private readonly int[] pokerus = new int[2];
+    /// <summary>
+    /// Held item
+    /// </summary>
+    public Items? Item { get; private set; }
+    /// <summary>
+    /// Consumed held item (used in battle only)
+    /// </summary>
+    private bool itemRecycle;
+    /// <summary>
+    /// Resulting held item (used in battle only)
+    /// </summary>
+    private bool itemInitial;
+    /// <summary>
+    /// Where Pokemon can use Belch (used in battle only)
+    /// </summary>
+    private bool belch;
+    /// <summary>
+    /// Mail?...
+    /// </summary>
+    private Mail mail { get; set; }
+    /// <summary>
+    /// Perform a null check; if anything other than null, there is a message
+    /// </summary>
+    /// ToDo: Item category
+    public string Mail
+    {
+        get {
+            if (this.mail == null) return null; //If empty return null
+            if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+            {
+                mail = null; return null;
+            }
+            return mail.Message;
+        }
+        //set { mail = value; }
+    }
+    /// <summary>
+    /// The pokemon fused into this one.
+    /// </summary>
+    private int fused;
+    /// <summary>
+    /// Nickname
+    /// </summary>
+    private string name;
+    /// <summary>
+    /// Current experience points
+    /// </summary>
+    private int exp;
+    /// <summary>
+    /// Current happiness
+    /// </summary>
+    /// <remarks>
+    /// This is the samething as "friendship";
+    /// </remarks>
+    private int happiness;
+    public enum HappinessMethods
+    {
+        WALKING,
+        LEVELUP,
+        GROOM,
+        FAINT,
+        VITAMIN,
+        EVBERRY,
+        POWDER,
+        ENERGYROOT,
+        REVIVALHERB
+    }
+    /// <summary>
+    /// Status problem (PBStatuses)
+    /// </summary>
+    /// ToDo: Status Class
+    private Status status;
+    /// <summary>
+    /// Sleep count/Toxic flag
+    /// </summary>
+    /// ToDo: Add to Status Class
+    private int statusCount;
+    /// <summary>
+    /// Steps to hatch egg, 0 if Pokemon is not an egg
+    /// </summary>
+    public int eggSteps { get; private set; }
 	/// <summary>
 	/// Moves (PBMove)
 	/// </summary>
@@ -180,7 +184,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Manner Obtained:
 	/// </summary>
-	private ObtainedMethod ObtainedMode;
+	public ObtainedMethod ObtainedMode { get; private set; }
 	public enum ObtainedMethod
 	{
 		MET = 0,
@@ -203,10 +207,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Replaces the obtain map's name if not null
 	/// </summary>
 	private string obtainString;
-	/// <remarks>
-	/// Wouldnt this change again when traded to another trainer?
-	/// </remarks>
-	private int obtainLevel; // = 0;
+	//private int obtainLevel; // = 0;
 	private System.DateTimeOffset obtainWhen;
 	private System.DateTimeOffset hatchedWhen;
 	/// <summary>
@@ -220,13 +221,7 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Forces the first/second/hidden (0/1/2) ability
 	/// </summary>
 	private Abilities[] abilityFlag = new Abilities[2];// readonly
-	/// <summary>
-	/// </summary>
-	/// <remarks>
-	/// isMale; null = genderless?
-	/// Should consider gender as byte? bool takes up same amount of space
-	/// </remarks>
-	private bool? genderFlag;
+	//private bool? gender;
 	/// <summary>
 	/// Forces a particular nature
 	/// </summary>
@@ -286,7 +281,7 @@ public class Pokemon //: ePokemons //PokemonData
 		_base = PokemonData.GetPokemon(pokemon);
 		//Gender = isMale();
 		Ability[0] = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
-		Nature = (Natures)(new Random().Next(0, 24));
+        Nature = new Nature().Natures;//(Natures)(new Random().Next(0, 24));
 		//IsShiny
 	}
 
@@ -318,6 +313,9 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Returns this Pokemon's level when this Pokemon was obtained
 	/// </summary>
 	/// <returns></returns>
+	/// <remarks>
+	/// Wouldnt this change again when traded to another trainer?
+	/// </remarks>
 	/*public int ObtainLevel()
     {
         //int level = 0; int.TryParse(this.obtainLevel, out level);
@@ -325,7 +323,7 @@ public class Pokemon //: ePokemons //PokemonData
     }*/
 	public int ObtainLevel
 	{
-		get { return this.obtainLevel; }
+        get; private set;
 	}
 
 	/*// <summary>
@@ -448,7 +446,11 @@ public class Pokemon //: ePokemons //PokemonData
 	/// Returns this Pokemons gender. male; female; genderless.
 	/// Sets this Pokemon's gender to a particular gender (if possible)
 	/// </summary>
-	public bool? Gender { get { return this.genderFlag; } }
+	/// <remarks>
+	/// isMale; null = genderless?
+	/// Should consider gender as byte? bool takes up same amount of space
+	/// </remarks>
+	public bool? Gender { get; private set; }
 
 	/*// <summary>
     /// Helper function that determines whether the input values would make a female.
@@ -1088,7 +1090,7 @@ public class Pokemon //: ePokemons //PokemonData
                 break;
         }
         gain += luxury && this.ballUsed == Items.LUXURY_BALL ? 1 : 0;
-        if (this.item == Items.SOOTHE_BELL && gain > 0)
+        if (this.Item == Items.SOOTHE_BELL && gain > 0)
             gain = (int)Math.Floor(gain * 1.5f);
         happiness += gain;
         happiness = happiness > 255 ? 255 : happiness < 0 ? 0 : happiness; //Max 255, Min 0
@@ -1466,8 +1468,8 @@ public class Pokemon //: ePokemons //PokemonData
 		#endregion
 
 		#region Constructors
-		public PokemonData() { }// this.name = PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.Name; } //name equals form name unless there is none.
-		public PokemonData(Pokemons Id) : this()
+		//public PokemonData() { }// this.name = PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.Name; } //name equals form name unless there is none.
+		public PokemonData(Pokemons Id) //: this()
         {
             //PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
             var translation = Id.ToString().Translate();

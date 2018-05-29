@@ -135,7 +135,11 @@
      <Compile Include="Assets\Scripts2\EventHandlers\StartupSceneHandler.cs" />
      <Compile Include="Assets\Scripts2\GameVariables.cs" />
      <Compile Include="Assets\Scripts2\Map.cs" />
+     <Compile Include="Assets\Scripts2\Pokemon\Ability.cs" />
+     <Compile Include="Assets\Scripts2\Pokemon\Item.cs" />
+     <Compile Include="Assets\Scripts2\Pokemon\Mail.cs" />
      <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
+     <Compile Include="Assets\Scripts2\Pokemon\Nature.cs" />
      <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
      <Compile Include="Assets\Scripts2\ReSkinAnimation.cs" />
      <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
