@@ -38,7 +38,8 @@
 #*.controller 	diff=astextplain
 
 # Ignores on Git Export/Download/Releases
-/.gitattributes export-ignore #Dont really need users configuring this...  
+# Dont really need users configuring this... 
+/.gitattributes export-ignore  
 /.gitignore export-ignore
 /.github export-ignore 
 /UnitTestProject export-ignore
