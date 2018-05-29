@@ -1500,7 +1500,7 @@ public class Pokemon //: ePokemons //PokemonData
             this.forms = formvalues.ToArray();
         }
 
-		public PokemonData(Pokemons Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, Abilities[] abilities, //Abilities? ability1, Abilities? ability2, Abilities? hiddenAbility,
+		public PokemonData(Pokemons Id, int[] regionalDex/*, string name*/, Types? type1, Types? type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility,//Abilities[] abilities, //
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1514,10 +1514,10 @@ public class Pokemon //: ePokemons //PokemonData
 
             this.type1 = type1 != null ? (Types)type1 : Types.NONE;
 			this.type2 = type2 != null ? (Types)type2 : Types.NONE;
-			this.ability = abilities;
-			//this.ability1Id = (Abilities)ability1;
-			//this.ability2Id = (Abilities)ability2;
-			//this.hiddenAbilityId = (Abilities)hiddenAbility;
+			//this.ability = abilities;
+			this.ability1 = (Abilities)ability1;
+			this.ability2 = (Abilities)ability2;
+			this.abilityh = (Abilities)hiddenAbility;
 
 			this.MaleRatio = maleRatio; //ToDo
 			this.CatchRate = catchRate;
@@ -1605,11 +1605,11 @@ public class Pokemon //: ePokemons //PokemonData
 				PokeId,
 				type1, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
 				type2, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-				new Abilities[] {
+				//new Abilities[] {
 				ability1, //| Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
                 ability2, //| Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
                 hiddenAbility, //| Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
-				},
+				//},
 				maleRatio,
 				catchRate,
 				eggGroup1, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
@@ -1637,7 +1637,7 @@ public class Pokemon //: ePokemons //PokemonData
             //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
             //				new int[]{pokemonID}, 
             //				new string[]{"Method,Parameter"}),
-            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, abilities: new Abilities[] { Abilities.NONE, Abilities.NONE, Abilities.NONE },
+            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, ability1: Abilities.NONE, ability2: Abilities.NONE, hiddenAbility: Abilities.NONE,
                         maleRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
                         height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
@@ -1645,7 +1645,7 @@ public class Pokemon //: ePokemons //PokemonData
                         baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
                         luminance: 0f, movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null,
                         evolutionID: null, evolutionLevel: null, evolutionMethod: null, forms: 4,
-                        heldItem: null), //Test
+                        heldItem: null) //Test
         };
         /*static PokemonData()
 		{
