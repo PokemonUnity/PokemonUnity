@@ -150,7 +150,6 @@
     <None Include="Assets\Resources\Database\Berry\Pokemon_en-us.xml" />
     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
     <None Include="Assets\Resources\Database\Nature\Nature_en-us.xml" />
-    <Compile Include="Assets\Scripts2\AnimationEffect.cs" />
     <None Include="Assets\Resources\Database\Type\Pokemon_en-us.xml" />
     <None Include="Assets\Resources\Database\Pokemon\Pokemon_en-us.xml" />
     <None Include="Assets\Resources\Database\Moves\Move_en-us.xml" />
@@ -164,7 +163,6 @@
     <None Include="Assets\Resources\Database\Contest\Ribbon_en-us.xml" />
     <None Include="Assets\Resources\Database\Menu\Pokemon_en-us.xml" />
     <None Include="Assets\Resources\Sprites\Animations\Animation.shader" />
-    <Compile Include="Assets\Scripts2\Billboard.cs" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>

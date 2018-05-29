@@ -1215,8 +1215,7 @@ public class Pokemon //: ePokemons //PokemonData
 		//private int[] evolutionID;
 		//private string[] evolutionRequirements;
 		#endregion
-
-		/// ToDo: Should any of the property values be Set-able?
+            
 		#region Properties
 		/// <summary>
 		/// Id is the database value for specific pokemon+form
@@ -1247,7 +1246,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// but Deoxys-Power id# can be 32
 		/// </example>
 		/// ToDo: Form = 0 should return null
-		//public string Name { get { return PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.name; } }
+		/// public string Name { get { return PokemonData.GetPokedexTranslation(this.ID).Forms[this.Form] ?? this.name; } }
 		public string Name { get
             {
                 /*List<string> formvalues = new List<string>();
