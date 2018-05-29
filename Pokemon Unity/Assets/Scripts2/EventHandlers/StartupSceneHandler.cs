@@ -44,10 +44,11 @@ class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventSystems.
             MenuOptions.transform.GetChild(3).gameObject.transform.localPosition += new UnityEngine.Vector3(0f, 70f, 0f);
             //UnityEngine.Debug.Log(MenuOptions.transform.GetChild(1).gameObject.transform.position);
             //UnityEngine.Debug.Log(MenuOptions.transform.GetChild(1).gameObject.transform.localPosition);
+            //ToDo: Git was giving build error on `ForceUpdateRectTransforms()`; says it doesnt exist...
             //Refresh the changes to display the new position
-            MenuOptions.transform.GetChild(1).gameObject.GetComponent<UnityEngine.RectTransform>().ForceUpdateRectTransforms();
-            MenuOptions.transform.GetChild(2).gameObject.GetComponent<UnityEngine.RectTransform>().ForceUpdateRectTransforms();
-            MenuOptions.transform.GetChild(3).gameObject.GetComponent<UnityEngine.RectTransform>().ForceUpdateRectTransforms();
+            //MenuOptions.transform.GetChild(1).gameObject.GetComponent<UnityEngine.RectTransform>().ForceUpdateRectTransforms();
+            //MenuOptions.transform.GetChild(2).gameObject.GetComponent<UnityEngine.RectTransform>().ForceUpdateRectTransforms();
+            //MenuOptions.transform.GetChild(3).gameObject.GetComponent<UnityEngine.RectTransform>().ForceUpdateRectTransforms();
         }
 
     }
