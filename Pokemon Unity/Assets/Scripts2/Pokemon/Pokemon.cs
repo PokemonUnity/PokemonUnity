@@ -1500,14 +1500,14 @@ public class Pokemon //: ePokemons //PokemonData
             this.forms = formvalues.ToArray();
         }
 
-		public PokemonData(Pokemons Id, int[] regionalDex/*, string name*/, Types type1, Types type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility,//Abilities[] abilities, //
-							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
-							float height, float weight, int baseExpYield, LevelingRate levelingRate,
+		public PokemonData(Pokemons Id = Pokemons.NONE, int[] regionalDex = null/*, string name*/, Types type1 = Types.NONE, Types type2 = Types.NONE, Abilities ability1 = Abilities.NONE, Abilities ability2 = Abilities.NONE, Abilities hiddenAbility = Abilities.NONE,//Abilities[] abilities, //
+							GenderRatio maleRatio = GenderRatio.Genderless, int catchRate = 0, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
+							float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-							Color pokedexColor, int baseFriendship,//* / string species, string pokedexEntry,*/
-							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, Moves[] movesetMoves, int[] tmList,
-							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
+							Color pokedexColor = Color.NONE, int baseFriendship = 0,//* / string species, string pokedexEntry,*/
+							int baseStatsHP = 0, int baseStatsATK = 0, int baseStatsDEF = 0, int baseStatsSPA = 0, int baseStatsSPD = 0, int baseStatsSPE = 0,
+							float luminance = 0f, /*Color lightColor,*/ int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
+							int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, /*string[] evolutionRequirements,*/ int forms = 0,
 							int[,] heldItem = null) : this (Id)
         {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
             this.RegionalPokedex = regionalDex;
