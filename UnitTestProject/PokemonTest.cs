@@ -1,5 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PokemonUnity;
+using PokemonUnity.Pokemon;
+using PokemonUnity.Move;
+using PokemonUnity.Item;
 
 namespace Tests
 {
@@ -72,7 +76,7 @@ namespace Tests
         [TestMethod]
         public void Pokemon_TestPokemon_SetForm_To_Form2()
         {
-            Pokemon pokemon = new Pokemon(Pokemon.PokemonData.Pokemon.NONE);
+            Pokemon pokemon = new Pokemon(Pokemons.NONE);
             pokemon.Form = 2;
             Assert.AreEqual("test1", pokemon.Name);
         }
