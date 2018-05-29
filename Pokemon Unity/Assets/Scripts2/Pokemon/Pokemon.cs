@@ -1133,22 +1133,8 @@ public class Pokemon //: ePokemons //PokemonData
 	public class PokemonData
 	{
 		#region Variables
-		/// <summary>
-		/// Id is the database value for specific pokemon+form
-		/// Different Pokemon forms share the same Pokedex number. 
-		/// Values are loaded from <see cref="Pokemons"/>, where each form is registered to an Id.
-		/// </summary>
-		/// <example>
-		/// Deoxys Pokedex# can be 1,
-		/// but Deoxys-Power id# can be 32
-		/// </example>
-		/// <remarks>If game event/gm wants to "give" player Deoxys-Power form and not Speed form</remarks>
-		private Pokemons id;
-		/// <summary>
-		/// Different Gens assign different pokedex num
-		/// </summary>
-		/// <remarks>Think there is 3 pokedex</remarks>
-		private int[] regionalPokedex;
+		//private Pokemons id;
+		//private int[] regionalPokedex;
 		//private enum habitat; //ToDo: Grassland, Mountains...
 		/// <summary>
 		/// Name of the specific pokemon+form
@@ -1162,34 +1148,20 @@ public class Pokemon //: ePokemons //PokemonData
 		/// but Deoxys-Power id# can be 32
 		/// </example>
 		private string name;
-		/// <summary>
-		/// Species is the pokemon breed/genus
-		/// <para>Charizard is a Species. 
-		/// But megaCharizard is a Form.
-		/// </para>
-		/// </summary>
-		/// <example>
-		/// Deoxys-Power, Speed, Defense
-		/// are all part of the same species.
-		/// </example>
-		/// <remarks>Should be an int, not a string</remarks>
-		private string species;
-		/// <summary>
-		/// </summary>
-		private string pokedexEntry;
-		/// ToDo: Maybe PokemonData contains count of # of forms?
+		//private string species;
+		//private string pokedexEntry;
 		//private int forms; 
 		private string[] forms = new string[0]; 
-		/// <summary>
+		/*// <summary>
 		/// Represents CURRENT form, if no form is active, current or does not exist
 		/// then value is 0.
 		/// </summary>
 		/// ToDo: Make a PokemonForm class, that establishes the rule for 
 		/// <see cref="Pokemons"/> and <see cref="Form"/>
-		private int form;// = 0; 
+		private int form;// = 0; */
 
-		private Types type1;
-		private Types type2;
+		private Types type1 = Types.NONE;
+		private Types type2 = Types.NONE;
 		/// <summary>
 		/// All three pokemon abilities 
 		/// (Abiltiy1, Ability2, HiddenAbility).
@@ -1199,74 +1171,47 @@ public class Pokemon //: ePokemons //PokemonData
 		/// instead of above...
 		/// </remarks> 
 		private readonly Abilities[] ability = new Abilities[3];
+		private Abilities ability1 = Abilities.NONE;
+		private Abilities ability2 = Abilities.NONE;
+		private Abilities abilityh = Abilities.NONE;
 
-		/// <summary>
-		/// The male ratio.
-		/// </summary>
-		/// instead of a float value...
-		private GenderRatio maleRatio;
-		/// <summary>max is 255</summary> 
-		private int catchRate;
-		private EggGroups eggGroup1;
-		private EggGroups eggGroup2;
-		private int hatchTime;
+		//private GenderRatio maleRatio;
+		//private int catchRate;
+		private EggGroups eggGroup1 = EggGroups.NONE;
+		private EggGroups eggGroup2 = EggGroups.NONE;
+		//private int hatchTime;
 
 		//private float hitboxWidth; //used for 3d battles; just use collision detection from models
-		private float height;
-		private float weight;
-		/// ToDo: Make this an enum
-		private int shapeID; 
+		//private float height;
+		//private float weight;
+		//private int shapeID; 
 
-		private int baseExpYield;
-		private LevelingRate levelingRate;
+		//private int baseExpYield;
+		//private LevelingRate levelingRate;
 
-		private Color pokedexColor;
-		/// <summary>
-		/// Friendship levels is the same as pokemon Happiness.
-		/// </summary>
-		private int baseFriendship;
+		//private Color pokedexColor;
+		//private int baseFriendship;
 
-		private int baseStatsHP;
-		private int baseStatsATK;
-		private int baseStatsDEF;
-		private int baseStatsSPA;
-		private int baseStatsSPD;
-		private int baseStatsSPE;
+		//private int baseStatsHP;
+		//private int baseStatsATK;
+		//private int baseStatsDEF;
+		//private int baseStatsSPA;
+		//private int baseStatsSPD;
+		//private int baseStatsSPE;
 
-		private float luminance;
-		private UnityEngine.Color lightColor;
+		//private float luminance;
+		//private UnityEngine.Color lightColor;
+        
+		//private int[,] heldItem;
 
-		/// <summary>
-		/// [item id,% chance]
-		/// </summary>
-		/// <example>int[,] heldItems = { {1,2,3},{4,5,6} }
-		/// <para>heldItems[1,0] == 4 as int</para>
-		/// </example>
-		/// <remarks>
-		/// Or maybe...[item id,% chance,generationId/regionId]
-		/// Custom Class needed here... <see cref="Items"/> as itemId
-		/// </remarks>
-		private int[,] heldItem;
-
-		private int[] movesetLevels;
-		private Moves[] movesetMoves;
-		private PokemonMoveset[] moveSet;
+		//private int[] movesetLevels;
+		//private Moves[] movesetMoves;
+		//private PokemonMoveset[] moveSet;
 
 		//private string[] tmList; //Will be done thru ItemsClass
 
-		private int[] evolutionID;
-		/// ToDo: Evolution class type array here
-		PokemonEvolution[] evolutions;
-		private string[] evolutionRequirements;
-		/// <summary>
-		/// The item that needs to be held by a parent when breeding in order for the egg to be this species. 
-		/// If neither parent is holding the required item, the egg will be the next evolved species instead.
-		/// <para></para>
-		/// The only species that should have this line are ones which cannot breed, 
-		/// but evolve into a species which can. That is, the species should be a "baby" species.
-		/// Not all baby species need this line.
-		/// </summary>
-		private Items Incense;
+		//private int[] evolutionID;
+		//private string[] evolutionRequirements;
 		#endregion
 
 		/// ToDo: Should any of the property values be Set-able?
@@ -1281,13 +1226,13 @@ public class Pokemon //: ePokemons //PokemonData
 		/// but Deoxys-Power id# can be 32
 		/// </example>
 		/// <remarks>If game event/gm wants to "give" player Deoxys-Power form and not Speed form</remarks>
-		public Pokemons ID { get { return this.id; } }
+		public Pokemons ID { get; private set; }
 		/// <summary>
 		/// Different Gens assign different pokedex num
 		/// example: Bulbasaur = [1,231]
 		/// </summary>
 		/// <remarks>Think there is 3 pokedex</remarks>
-		public int[] RegionalPokedex { get { return this.regionalPokedex; } }
+		public int[] RegionalPokedex { get; private set; }
 		/// <summary>
 		/// Name of the specific pokemon+form
 		/// for given Id in database
@@ -1325,18 +1270,21 @@ public class Pokemon //: ePokemons //PokemonData
 		/// are all part of the same species.
 		/// </example>
 		/// <remarks>Should be an int, not a string</remarks>
-		public string Species { get { return this.species; } }
+		public string Species { get; private set; }
 		/// <summary>
 		/// </summary>
-		public string PokedexEntry { get { return this.pokedexEntry; } }
-		/// <summary>
-		/// Form is the same Pokemon Pokedex entry. 
-		/// Changing forms should change name value
-		/// </summary>
-		/// but a different PokemonId
-		/// If null, returns this.Pokemon.Id
-		/// ToDo: Changing forms should change name value
-		public int Form { get { return this.form; } set { this.form = value; } }
+		public string PokedexEntry { get; private set; }
+        /// <summary>
+        /// Form is the same Pokemon Pokedex entry. 
+        /// Changing forms should change name value.
+        /// Represents CURRENT form, if no form is active, current or does not exist
+        /// then value is 0.
+        /// </summary>
+        /// but a different PokemonId
+        /// If null, returns this.Pokemon.Id
+        /// ToDo: Make a PokemonForm class, that establishes the rule for 
+        /// <see cref="Pokemons"/> and <see cref="Form"/>
+        public int Form { get; set; }
 		/// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
 		public int Forms { get { return this.forms.Length; } }
 
@@ -1352,13 +1300,14 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Should be [int? a1,int? a2,int? a3]
 		/// instead of above...
 		/// </remarks> 
-		public Abilities[] Ability { get { return this.ability; } }
+        /// ToDo: this.ability;
+		public Abilities[] Ability { get { return new Abilities[] { this.ability1, this.ability2, this.abilityh }; } }
 
 		/// <summary>
 		/// The male ratio.
 		/// <value>-1f is interpreted as genderless</value>
 		/// </summary>
-		public GenderRatio MaleRatio { get { return this.maleRatio; } }
+		public GenderRatio MaleRatio { get; private set; }
 		public float ShinyChance { get; set; }
 		/// <summary>
 		/// The catch rate of the species. 
@@ -1367,35 +1316,35 @@ public class Pokemon //: ePokemons //PokemonData
 		/// (0 means it cannot be caught by anything except a Master Ball).
 		/// </summary> 
 		/// Also known as Pokemon's "Rareness"...
-		public int CatchRate { get { return this.catchRate; } }
+		public int CatchRate { get; private set; }
 		public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
 		//public EggGroup EggGroup2 { get { return this.eggGroup2; } }
-		public int HatchTime { get { return this.hatchTime; } }
+		public int HatchTime { get; private set; }
 
 		//public float hitboxWidth { get { return this.hitboxWidth; } } //used for 3d battles just use collision detection from models
-		public float Height { get { return this.height; } }
-		public float Weight { get { return this.weight; } }
+		public float Height { get; private set; }
+		public float Weight { get; private set; }
 		/// ToDo: Make this an enum
-		public int ShapeID { get { return this.shapeID; } } 
+		public int ShapeID { get; private set; } 
 
-		public int BaseExpYield { get { return this.baseExpYield; } }
-		public LevelingRate GrowthRate { get { return this.levelingRate; } }
+		public int BaseExpYield { get; private set; }
+		public LevelingRate GrowthRate { get; private set; }
 
-		public Color PokedexColor { get { return this.pokedexColor; } }
+		public Color PokedexColor { get; private set; }
 		/// <summary>
 		/// Friendship levels is the same as pokemon Happiness.
 		/// </summary>
-		public int BaseFriendship { get { return this.baseFriendship; } }
+		public int BaseFriendship { get; private set; }
 
-		public int BaseStatsHP { get { return this.baseStatsHP; } }
-		public int BaseStatsATK { get { return this.baseStatsATK; } }
-		public int BaseStatsDEF { get { return this.baseStatsDEF; } }
-		public int BaseStatsSPA { get { return this.baseStatsSPA; } }
-		public int BaseStatsSPD { get { return this.baseStatsSPD; } }
-		public int BaseStatsSPE { get { return this.baseStatsSPE; } }
+		public int BaseStatsHP  { get; private set; }
+		public int BaseStatsATK { get; private set; }
+		public int BaseStatsDEF { get; private set; }
+		public int BaseStatsSPA { get; private set; }
+		public int BaseStatsSPD { get; private set; }
+		public int BaseStatsSPE { get; private set; }
 
-		public float Luminance { get { return this.luminance; } }
-		public UnityEngine.Color LightColor { get { return this.lightColor; } }
+		public float Luminance { get; private set; }
+		public UnityEngine.Color LightColor { get; private set; }
 
 		/// <summary>
 		/// Returns the items this species can be found holding in the wild.
@@ -1409,13 +1358,15 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Custom Class needed here... <see cref="Items"/> as itemId
 		/// </remarks>
 		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
-		public int[,] HeldItem { get { return this.heldItem; } }
+		public int[,] HeldItem { get; private set; }
 
-		public int[] MovesetLevels { get { return this.movesetLevels; } }
-		public Moves[] MovesetMoves { get { return this.movesetMoves; } }
-		public PokemonMoveset[] MoveSet { get { return this.moveSet; } }
+		public int[] MovesetLevels { get; private set; }
+		public Moves[] MovesetMoves { get; private set; }
+		public PokemonMoveset[] MoveSet { get; private set; }
 
-		public int[] EvolutionID { get { return this.evolutionID; } }
+		/// ToDo: Evolution class type array here
+		public PokemonEvolution[] Evolutions { get; private set; }
+		public int[] EvolutionID { get; private set; }
 		/// <summary>
 		/// <example>
 		/// E.G.	Poliwhirl(61)
@@ -1501,7 +1452,17 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </item>
 		/// </list>
 		/// </summary>
-		public string[] EvolutionRequirements { get { return this.evolutionRequirements; } }
+		public string[] EvolutionRequirements { get; private set; }
+
+		/// <summary>
+		/// The item that needs to be held by a parent when breeding in order for the egg to be this species. 
+		/// If neither parent is holding the required item, the egg will be the next evolved species instead.
+		/// <para></para>
+		/// The only species that should have this line are ones which cannot breed, 
+		/// but evolve into a species which can. That is, the species should be a "baby" species.
+		/// Not all baby species need this line.
+		/// </summary>
+		public Items Incense { get; private set; }
 		#endregion
 
 		#region Constructors
@@ -1510,11 +1471,11 @@ public class Pokemon //: ePokemons //PokemonData
         {
             //PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
             var translation = Id.ToString().Translate();
-            this.id = Id;
+            this.ID = Id;
             //this.name = translation.Name;
             //this.species = translation.Species;
             //this.pokedexEntry = translation.PokedexEntry;
-            this.pokedexEntry = translation.Value;
+            this.PokedexEntry = translation.Value;
             //this.forms = forms; //| new Pokemon[] { Id }; //ToDo: need new mechanic for how this should work
             List<string> formvalues = new List<string>();
             foreach (var fieldValue in translation.FieldNames)
@@ -1528,7 +1489,7 @@ public class Pokemon //: ePokemons //PokemonData
                 }
                 if (fieldValue.Key.Contains("genus"))
                 {
-                    this.species = fieldValue.Value;
+                    this.Species = fieldValue.Value;
                 }
                 if (fieldValue.Key.Contains("name"))
                 {
@@ -1548,7 +1509,7 @@ public class Pokemon //: ePokemons //PokemonData
 							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
 							int[,] heldItem = null) : this (Id)
         {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
-            this.regionalPokedex = regionalDex;
+            this.RegionalPokedex = regionalDex;
 
             this.type1 = type1 != null ? (Types)type1 : Types.NONE;
 			this.type2 = type2 != null ? (Types)type2 : Types.NONE;
@@ -1557,37 +1518,37 @@ public class Pokemon //: ePokemons //PokemonData
 			//this.ability2Id = (Abilities)ability2;
 			//this.hiddenAbilityId = (Abilities)hiddenAbility;
 
-			this.maleRatio = maleRatio; //ToDo
-			this.catchRate = catchRate;
+			this.MaleRatio = maleRatio; //ToDo
+			this.CatchRate = catchRate;
 			this.eggGroup1 = eggGroup1;
 			this.eggGroup2 = eggGroup2;
-			this.hatchTime = hatchTime;
+			this.HatchTime = hatchTime;
 
-			this.height = height;
-			this.weight = weight;
-			this.baseExpYield = baseExpYield;
-			this.levelingRate = (LevelingRate)levelingRate; //== null ? (LevelingRate)levelingRate : LevelingRate.NONE;
+			this.Height = height;
+			this.Weight = weight;
+			this.BaseExpYield = baseExpYield;
+			this.GrowthRate = (LevelingRate)levelingRate; //== null ? (LevelingRate)levelingRate : LevelingRate.NONE;
 
-			this.baseStatsHP = baseStatsHP;
-			this.baseStatsATK = baseStatsATK;
-			this.baseStatsDEF = baseStatsDEF;
-			this.baseStatsSPA = baseStatsSPA;
-			this.baseStatsSPD = baseStatsSPD;
-			this.baseStatsSPE = baseStatsSPE;
-			this.baseFriendship = baseFriendship; //ToDo: forgot to implement when transfering database
+			this.BaseStatsHP = baseStatsHP;
+			this.BaseStatsATK = baseStatsATK;
+			this.BaseStatsDEF = baseStatsDEF;
+			this.BaseStatsSPA = baseStatsSPA;
+			this.BaseStatsSPD = baseStatsSPD;
+			this.BaseStatsSPE = baseStatsSPE;
+			this.BaseFriendship = baseFriendship; //ToDo: forgot to implement when transfering database
 
-			this.luminance = luminance;
+			this.Luminance = luminance;
 			//this.lightColor = lightColor;
-			this.pokedexColor = pokedexColor | Color.NONE;
+			this.PokedexColor = pokedexColor | Color.NONE;
 
 			//ToDo: wild pokemon held items not yet implemented
-			this.heldItem = heldItem; //[item id,% chance]
+			this.HeldItem = heldItem; //[item id,% chance]
 
-			this.movesetLevels = movesetLevels;
-			this.movesetMoves = movesetMoves; //ToDo: Array Cast conversion
+			this.MovesetLevels = movesetLevels;
+			this.MovesetMoves = movesetMoves; //ToDo: Array Cast conversion
             //this.tmList = tmList; //ToDo: Need new item database array/enum for this; one that's regional/generation dependant
 
-			this.evolutionID = evolutionID;
+			this.EvolutionID = evolutionID;
 			//this.evolutionMethod = evolutionMethod; //ToDo:
 			//this.evolutionRequirements = evolutionRequirements;
 		}
@@ -2494,8 +2455,8 @@ public class Pokemon //: ePokemons //PokemonData
                 case EvolutionMethod.HoldItem:
                 case EvolutionMethod.HoldItemDay:
                 case EvolutionMethod.HoldItemNight:
-                    if (this.EvolveValue.GetType() != typeof(eItems))
-                        Convert.ChangeType(Value, typeof(eItems));
+                    if (this.EvolveValue.GetType() != typeof(Items))
+                        Convert.ChangeType(Value, typeof(Items));
                     Value = default(T);
                     break;
                 case EvolutionMethod.TradeSpecies:
