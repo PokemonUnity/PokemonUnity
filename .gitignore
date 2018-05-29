@@ -17,7 +17,7 @@ node_modules/
 ExportedObj/
 #*.csproj
 *.unityproj
-#*.sln
+*.sln
 *.suo
 *.tmp
 *.user
