@@ -1366,7 +1366,7 @@ public class Pokemon //: ePokemons //PokemonData
 		public PokemonMoveset[] MoveSet { get; private set; }
 
 		/// ToDo: Evolution class type array here
-		public PokemonEvolution[] Evolutions { get; private set; }
+		public IPokemonEvolution[] Evolutions { get; private set; }
 		public int[] EvolutionID { get; private set; }
 		/// <summary>
 		/// <example>
@@ -1506,8 +1506,8 @@ public class Pokemon //: ePokemons //PokemonData
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
 							Color pokedexColor = Color.NONE, int baseFriendship = 0,//* / string species, string pokedexEntry,*/
 							int baseStatsHP = 0, int baseStatsATK = 0, int baseStatsDEF = 0, int baseStatsSPA = 0, int baseStatsSPD = 0, int baseStatsSPE = 0,
-							float luminance = 0f, /*Color lightColor,*/ int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
-							int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, /*string[] evolutionRequirements,*/ int forms = 0,
+							float luminance = 0f, /*Color lightColor,*/ int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null, IPokemonEvolution[] evolution = null,
+                            int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, /*string[] evolutionRequirements,*/ int forms = 0,
 							int[,] heldItem = null) : this (Id)
         {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
             this.RegionalPokedex = regionalDex;
@@ -1549,6 +1549,7 @@ public class Pokemon //: ePokemons //PokemonData
 			this.MovesetMoves = movesetMoves; //ToDo: Array Cast conversion
             //this.tmList = tmList; //ToDo: Need new item database array/enum for this; one that's regional/generation dependant
 
+            this.Evolutions = evolution;
 			this.EvolutionID = evolutionID;
 			//this.evolutionMethod = evolutionMethod; //ToDo:
 			//this.evolutionRequirements = evolutionRequirements;
@@ -1621,7 +1622,7 @@ public class Pokemon //: ePokemons //PokemonData
 				levelingRate,
 				pokedexColor | Color.NONE,
 				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList,
+				luminance, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList, null,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
 
@@ -1643,9 +1644,10 @@ public class Pokemon //: ePokemons //PokemonData
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         pokedexColor: Color.NONE, baseFriendship: 50,
                         baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
-                        luminance: 0f, movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null,
-                        evolutionID: null, evolutionLevel: null, evolutionMethod: null, forms: 4,
-                        heldItem: null) //Test
+                        luminance: 0f, movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
+                        evolution: new IPokemonEvolution[] {  new PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
+                        //evolutionID: null, evolutionLevel: null, evolutionMethod: null, 
+                        forms: 4, heldItem: null) //Test
         };
         /*static PokemonData()
 		{
@@ -2148,257 +2150,17 @@ public class Pokemon //: ePokemons //PokemonData
 	/// For each possible evolution of this species, 
 	/// there are three parts
 	/// </summary>
-	public class PokemonEvolution//<T> where T : new()
+	public class PokemonEvolution : IPokemonEvolution //<T> where T : new()
 	{
-		/// <summary>
-		/// no parameter,
-		/// Positive integer,
-		/// Item  = <see cref="Items"/>,
-		/// Move = <see cref="Moves"/>,
-		/// Species = <see cref="Pokemons"/>,
-		/// Type = <see cref="Types"/>
-		/// </summary>
-		/// <example>
-		/// <para>E.G.	Poliwhirl(61)
-		///		<code>new int[]{62,186},
-		///		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),</code></para> 
-		/// <para>
-		/// E.G. to evolve to sylveon
-		///		<code>new int[]{..., 700},
-		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
-		/// </para> 
-		/// </example>
-		/// ToDo: Custom class => new Evolve(){ EvolveMethod.Item, Items.Item } 
-		/// ToDo: If all conditions are met in "new Evolve()" instance, then evolve.
-		/// Ideas:
-		/// Merge two or more existing methods together into a new one.
-		/// Evolution that depends on the Pokémon's nature or form.
-		/// Fusion evolution(e.g. for Magnemite/Slowpoke). Check that there is a Shellder in the party, and if so, delete it and evolve the levelled-up Slowpoke.
-		/// Check how many EVs the Pokémon has, and allows evolution only if that amount is greater than or equal to the EV threshold value set by the parameter.
-		/// Shiny-Random?
-		public enum EvolutionMethod
-		{
-			/// <summary>
-			///	if pokemon's level is greater or equal to int level
-			/// <code>Level,int level</code>
-			/// </summary>
-			Level,
-			/// <summary>
-			///	Exactly the same as "Level", except the Pokémon must also be male.
-			/// <code>Level,int level</code>
-			/// </summary>
-			/// <example>Burmy</example>
-			LevelMale,
-			/// <summary>
-			///	Exactly the same as "Level", except the Pokémon must also be female.
-			/// <code>Level,int level</code>
-			/// </summary>
-			/// <example>Burmy, Combee</example>
-			LevelFemale,
-			///	<summary>
-			///	The Pokémon will evolve if a particular item is used on it 
-			///	(named by the parameter - typically an evolution stone).
-			/// <code>Stone,string itemName</code>
-			///	</summary>
-			/// <example>Clefairy, Cottonee, Eelektrik, Eevee, Exeggcute, Gloom, 
-			/// Growlithe, Jigglypuff, Lampent, Lombre, Minccino, Misdreavus, 
-			/// Munna, Murkrow, Nidorina, Nidorino, Nuzleaf, Panpour, Pansage, 
-			/// Pansear, Petilil, Pikachu, Poliwhirl, Roselia, Shellder, Skitty, 
-			/// Staryu, Sunkern, Togetic, Vulpix, Weepinbell</example>
-			Item,
-			/// <summary>
-			///	Exactly the same as "<see cref="Item"/>", 
-			///	except the Pokémon must also be male.
-			/// </summary>
-			/// <example>Kirlia</example>
-			ItemMale,
-			/// <summary>
-			///	Exactly the same as "<see cref="Item"/>", 
-			///	except the Pokémon must also be female.
-			/// </summary>
-			/// <example>Snorunt</example>
-			ItemFemale,
-			/// <summary>
-			///	The Pokémon will evolve immediately after it is traded.
-			///	</summary>
-			/// <example>Boldore, Graveler, Gurdurr, Haunter, Kadabra, Machoke</example>
-			Trade,
-			/// <summary>
-			///	Exactly the same as "Trade", 
-			///	except the Pokémon must also be holding a particular item 
-			///	(named by the parameter). 
-			///	That item is removed afterwards.
-			///	</summary>
-			/// <example>Clamperl, Dusclops, Electabuzz, Feebas, Magmar, 
-			/// Onix, Porygon, Porygon2, Poliwhirl, Rhydon, Scyther, Seadra, 
-			/// Slowpoke</example>
-			TradeItem,
-			/// <summary>
-			///	Exactly the same as "Trade", 
-			///	except the Pokémon must have been traded for a Pokémon of a certain species 
-			///	(named by the parameter).
-			///	</summary>
-			/// <example>Karrablast, Shelmet</example>
-			TradeSpecies,
-			/// <summary>
-			///	if pokemon's happiness is greater or equal to 220.
-			///	Note: Happiness checks should come last before all other methods.
-			///	</summary>
-			/// <example>Azurill, Buneary, Chansey, Cleffa, Golbat, 
-			/// Igglybuff, Munchlax, Pichu, Swadloon, Togepi, Woobat</example>
-			Happiness,
-			/// <summary>
-			///	Exactly the same as "Happiness", 
-			///	but will only evolve during the daytime.
-			///	</summary>
-			/// <example>Budew, Eevee, Riolu</example>
-			HappinessDay,
-			/// <summary>
-			///	Exactly the same as "Happiness", 
-			///	but will only evolve during the night-time.
-			///	</summary>
-			/// <example>Chingling, Eevee</example>
-			HappinessNight,
-			/// <summary>
-			///	This method is almost identical to "Happiness", 
-			///	with the sole changes of replacing the "greater than" sign 
-			///	to a "less than" sign, and changing the threshold value. 
-			///	If you use this method, 
-			///	you may also want to make it easier to get a Pokémon to hate you in-game 
-			///	(currently the only ways to do this are fainting and using herbal medicine, 
-			///	which can easily be countered by the many more happiness-boosting methods).
-			///	</summary>
-			Hatred,
-			/// <summary>
-			///	if time is between 9PM and 4AM time is "Night". else time is "Day".
-			///	if time is equal to string dayNight (either Day, or Night).
-			///	<code>Time,DatetimeOffset/bool dayNight</code>
-			/// </summary>
-			Time,
-			/// <summary>
-			///	if date is between Day-Month or maybe certain 1/4 (quarter) of the year.
-			///	if date is equal to string season (either Summer, Winter, Spring, or Fall).
-			///	<code>Time,DatetimeOffset/bool season</code>
-			/// </summary>
-            /// is holiday to "spot-on" as an occasion or requirement for leveling-up?
-			Season,
-			/// <summary>
-			///	if pokemon's heldItem is equal to string itemName
-			/// <example>Item,string itemName</example>
-			/// </summary>
-			/// Holding a certain item after leveling-up?
-			HoldItem,
-			/// <summary>
-			///	The Pokémon will evolve if it levels up during the daytime 
-			///	while holding a particular item (named by the parameter).
-			/// <code>Item,string itemName</code>
-			/// </summary>
-			/// <example>Happiny</example>
-			HoldItemDay,
-			/// <summary>
-			///	The Pokémon will evolve if it levels up during the night-time 
-			///	while holding a particular item (named by the parameter).
-			/// <code>Item,string itemName</code>
-			/// </summary>
-			/// <example>Gligar, Sneasel</example>
-			HoldItemNight,
-			/// <summary>
-			/// The Pokémon will evolve when it levels up, 
-			/// if its beauty stat is greater than or equal to the parameter.
-			/// </summary>
-			/// <example>Feebas</example>
-			Beauty,
-			/// <summary>
-			///	The Pokémon will evolve if it levels up while knowing a particular move (named by the parameter).
-			/// <example>Move,string moveName</example>
-			/// </summary>
-			/// <example>Aipom, Bonsly, Lickitung, Mime Jr., Piloswine, Tangela, Yanma</example>
-			Move,
-			/// <summary>
-			///	The Pokémon will evolve if it levels up while the player has a Pokémon of a certain species in their party 
-			///	(named by the parameter). 
-			///	The named Pokémon is unaffected.
-			/// <example>Pokemon,string pokemonName</example>
-			/// </summary>
-			/// <example>Mantyke, Mantine</example>
-			/// if party contains a Remoraid
-			Party,
-			/// <summary>
-			///	The Pokémon will evolve if it levels up while the player has a Pokémon of a certain type in their party 
-			///	(named by the parameter). 
-			/// <example>Type,string pokemonTypeName</example>
-			/// </summary>
-			/// <example>Pangoro</example>
-			/// if party contains a dark pokemon
-			Type,
-			/// <summary>
-			/// The Pokémon will evolve when it levels up, 
-			/// if the player is currently on the map given by the parameter.
-			///	<code>Map,string mapName</code>
-			/// </summary>
-			Location,
-			///	<summary>
-			///	The Pokémon will evolve if it levels up only during a certain kind of overworld weather.
-			///	</summary>
-			/// <example>Goodra</example>
-			///	if currentMap's weather is rain
-			Weather,
-			///	<summary>
-			///	Exactly the same as "Level", 
-			///	except the Pokémon's Attack stat must also be greater than its Defense stat.
-			///	</summary>
-			/// <example>Hitmonlee</example>
-			AttackGreater,
-			///	<summary>
-			///	Exactly the same as "Level", 
-			///	except the Pokémon's Attack stat must also be lower than its Defense stat.
-			///	</summary>
-			/// <example>Hitmonchan</example>
-			DefenseGreater,
-			/// <summary>
-			/// Exactly the same as "Level", 
-			/// except the Pokémon's Attack stat must also be equal to its Defense stat.
-			/// </summary>
-			/// <example>Hitmontop</example>
-			AtkDefEqual,
-			///	<summary>if pokemon's shinyValue divided by 2's remainder is equal to 0 or 1</summary>
-			///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level-parameter? 
-			Shiny,
-			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
-			/// Shiny value? I thought it was based on "Friendship"
-			Silcoon,
-			///	<summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1</summary>
-			Cascoon,
-			///	<summary>
-			///	Unique evolution methods: 
-			///	Exactly the same as "Level". 
-			///	There is no difference between the two methods at all. 
-			///	Is used alongside the method "Shedinja".
-			///	</summary>
-			Ninjask,
-			///	<summary>
-			///	Unique evolution methods: 
-			///	Must be used with the method "Ninjask". 
-			///	Duplicates the Pokémon that just evolved 
-			///	(if there is an empty space in the party), 
-			///	and changes the duplicate's species to the given species.
-			///	</summary>
-            ///	how is this different from "party"?
-			Shedinja,
-            /// <summary>
-            /// </summary>
-            /// Just wanted to see a requirement for after "fainting" too many times, your pokemon just died, and became a ghost-type...  
-            Deaths
-		}
 		/// <summary>
 		/// The PokemonId of the evolved species.
 		/// The PokemonId of the species this pokemon evolves into.
 		/// </summary>
-		public Pokemons Species;
+		public Pokemons Species { get; private set; }
 		/// <summary>
 		/// The evolution method.
 		/// </summary>
-		public EvolutionMethod EvolveMethod;
+		public EvolutionMethod EvolveMethod { get; private set; }
         //public object EvolutionMethodValue;
         //public PokemonEvolution<T> EvolutionMethodValue;
         //public class T { }
@@ -2406,6 +2168,10 @@ public class Pokemon //: ePokemons //PokemonData
         public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow){
             this.Species = EvolveTo;
             this.EvolveMethod = EvolveHow;
+        }
+        public virtual bool isGenericT()
+        {
+            return false;
         }
     }
 	public class PokemonEvolution<T> : PokemonEvolution
@@ -2423,7 +2189,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// <summary>
 		/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
 		/// </summary>
-		public T EvolveValue;
+		public T EvolveValue { get; private set; }
 
         //public PokemonEvolution<T> (T objects){}
         //void evolve(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) { }
@@ -2558,7 +2324,12 @@ public class Pokemon //: ePokemons //PokemonData
 		{
 			return this.StringValue;
 		}*/
-	}
+
+        public override bool isGenericT()
+        {
+            return true;// base.isGenericT();
+        }
+    }
 	/// <summary>
 	/// </summary>
 	/// Experience can be it's own class away from Pokemon. But there's no need for it to be global.
@@ -2769,7 +2540,12 @@ public class Pokemon //: ePokemons //PokemonData
 	}
 	#endregion
 }
+public interface IPokemonEvolution
+{
+    Pokemons Species { get; }
 
+    EvolutionMethod EvolveMethod { get; }
+}
 namespace PokemonUnity
 {
 	public enum Ribbon
@@ -3679,6 +3455,246 @@ namespace PokemonUnity
 			UNDISCOVERED = 15 //"no-eggs"
 		};
 		#endregion
+		/// <summary>
+		/// no parameter,
+		/// Positive integer,
+		/// Item  = <see cref="Items"/>,
+		/// Move = <see cref="Moves"/>,
+		/// Species = <see cref="Pokemons"/>,
+		/// Type = <see cref="Types"/>
+		/// </summary>
+		/// <example>
+		/// <para>E.G.	Poliwhirl(61)
+		///		<code>new int[]{62,186},
+		///		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),</code></para> 
+		/// <para>
+		/// E.G. to evolve to sylveon
+		///		<code>new int[]{..., 700},
+		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
+		/// </para> 
+		/// </example>
+		/// ToDo: Custom class => new Evolve(){ EvolveMethod.Item, Items.Item } 
+		/// ToDo: If all conditions are met in "new Evolve()" instance, then evolve.
+		/// Ideas:
+		/// Merge two or more existing methods together into a new one.
+		/// Evolution that depends on the Pokémon's nature or form.
+		/// Fusion evolution(e.g. for Magnemite/Slowpoke). Check that there is a Shellder in the party, and if so, delete it and evolve the levelled-up Slowpoke.
+		/// Check how many EVs the Pokémon has, and allows evolution only if that amount is greater than or equal to the EV threshold value set by the parameter.
+		/// Shiny-Random?
+		public enum EvolutionMethod
+		{
+			/// <summary>
+			///	if pokemon's level is greater or equal to int level
+			/// <code>Level,int level</code>
+			/// </summary>
+			Level,
+			/// <summary>
+			///	Exactly the same as "Level", except the Pokémon must also be male.
+			/// <code>Level,int level</code>
+			/// </summary>
+			/// <example>Burmy</example>
+			LevelMale,
+			/// <summary>
+			///	Exactly the same as "Level", except the Pokémon must also be female.
+			/// <code>Level,int level</code>
+			/// </summary>
+			/// <example>Burmy, Combee</example>
+			LevelFemale,
+			///	<summary>
+			///	The Pokémon will evolve if a particular item is used on it 
+			///	(named by the parameter - typically an evolution stone).
+			/// <code>Stone,string itemName</code>
+			///	</summary>
+			/// <example>Clefairy, Cottonee, Eelektrik, Eevee, Exeggcute, Gloom, 
+			/// Growlithe, Jigglypuff, Lampent, Lombre, Minccino, Misdreavus, 
+			/// Munna, Murkrow, Nidorina, Nidorino, Nuzleaf, Panpour, Pansage, 
+			/// Pansear, Petilil, Pikachu, Poliwhirl, Roselia, Shellder, Skitty, 
+			/// Staryu, Sunkern, Togetic, Vulpix, Weepinbell</example>
+			Item,
+			/// <summary>
+			///	Exactly the same as "<see cref="Item"/>", 
+			///	except the Pokémon must also be male.
+			/// </summary>
+			/// <example>Kirlia</example>
+			ItemMale,
+			/// <summary>
+			///	Exactly the same as "<see cref="Item"/>", 
+			///	except the Pokémon must also be female.
+			/// </summary>
+			/// <example>Snorunt</example>
+			ItemFemale,
+			/// <summary>
+			///	The Pokémon will evolve immediately after it is traded.
+			///	</summary>
+			/// <example>Boldore, Graveler, Gurdurr, Haunter, Kadabra, Machoke</example>
+			Trade,
+			/// <summary>
+			///	Exactly the same as "Trade", 
+			///	except the Pokémon must also be holding a particular item 
+			///	(named by the parameter). 
+			///	That item is removed afterwards.
+			///	</summary>
+			/// <example>Clamperl, Dusclops, Electabuzz, Feebas, Magmar, 
+			/// Onix, Porygon, Porygon2, Poliwhirl, Rhydon, Scyther, Seadra, 
+			/// Slowpoke</example>
+			TradeItem,
+			/// <summary>
+			///	Exactly the same as "Trade", 
+			///	except the Pokémon must have been traded for a Pokémon of a certain species 
+			///	(named by the parameter).
+			///	</summary>
+			/// <example>Karrablast, Shelmet</example>
+			TradeSpecies,
+			/// <summary>
+			///	if pokemon's happiness is greater or equal to 220.
+			///	Note: Happiness checks should come last before all other methods.
+			///	</summary>
+			/// <example>Azurill, Buneary, Chansey, Cleffa, Golbat, 
+			/// Igglybuff, Munchlax, Pichu, Swadloon, Togepi, Woobat</example>
+			Happiness,
+			/// <summary>
+			///	Exactly the same as "Happiness", 
+			///	but will only evolve during the daytime.
+			///	</summary>
+			/// <example>Budew, Eevee, Riolu</example>
+			HappinessDay,
+			/// <summary>
+			///	Exactly the same as "Happiness", 
+			///	but will only evolve during the night-time.
+			///	</summary>
+			/// <example>Chingling, Eevee</example>
+			HappinessNight,
+			/// <summary>
+			///	This method is almost identical to "Happiness", 
+			///	with the sole changes of replacing the "greater than" sign 
+			///	to a "less than" sign, and changing the threshold value. 
+			///	If you use this method, 
+			///	you may also want to make it easier to get a Pokémon to hate you in-game 
+			///	(currently the only ways to do this are fainting and using herbal medicine, 
+			///	which can easily be countered by the many more happiness-boosting methods).
+			///	</summary>
+			Hatred,
+			/// <summary>
+			///	if time is between 9PM and 4AM time is "Night". else time is "Day".
+			///	if time is equal to string dayNight (either Day, or Night).
+			///	<code>Time,DatetimeOffset/bool dayNight</code>
+			/// </summary>
+			Time,
+			/// <summary>
+			///	if date is between Day-Month or maybe certain 1/4 (quarter) of the year.
+			///	if date is equal to string season (either Summer, Winter, Spring, or Fall).
+			///	<code>Time,DatetimeOffset/bool season</code>
+			/// </summary>
+            /// is holiday to "spot-on" as an occasion or requirement for leveling-up?
+			Season,
+			/// <summary>
+			///	if pokemon's heldItem is equal to string itemName
+			/// <example>Item,string itemName</example>
+			/// </summary>
+			/// Holding a certain item after leveling-up?
+			HoldItem,
+			/// <summary>
+			///	The Pokémon will evolve if it levels up during the daytime 
+			///	while holding a particular item (named by the parameter).
+			/// <code>Item,string itemName</code>
+			/// </summary>
+			/// <example>Happiny</example>
+			HoldItemDay,
+			/// <summary>
+			///	The Pokémon will evolve if it levels up during the night-time 
+			///	while holding a particular item (named by the parameter).
+			/// <code>Item,string itemName</code>
+			/// </summary>
+			/// <example>Gligar, Sneasel</example>
+			HoldItemNight,
+			/// <summary>
+			/// The Pokémon will evolve when it levels up, 
+			/// if its beauty stat is greater than or equal to the parameter.
+			/// </summary>
+			/// <example>Feebas</example>
+			Beauty,
+			/// <summary>
+			///	The Pokémon will evolve if it levels up while knowing a particular move (named by the parameter).
+			/// <example>Move,string moveName</example>
+			/// </summary>
+			/// <example>Aipom, Bonsly, Lickitung, Mime Jr., Piloswine, Tangela, Yanma</example>
+			Move,
+			/// <summary>
+			///	The Pokémon will evolve if it levels up while the player has a Pokémon of a certain species in their party 
+			///	(named by the parameter). 
+			///	The named Pokémon is unaffected.
+			/// <example>Pokemon,string pokemonName</example>
+			/// </summary>
+			/// <example>Mantyke, Mantine</example>
+			/// if party contains a Remoraid
+			Party,
+			/// <summary>
+			///	The Pokémon will evolve if it levels up while the player has a Pokémon of a certain type in their party 
+			///	(named by the parameter). 
+			/// <example>Type,string pokemonTypeName</example>
+			/// </summary>
+			/// <example>Pangoro</example>
+			/// if party contains a dark pokemon
+			Type,
+			/// <summary>
+			/// The Pokémon will evolve when it levels up, 
+			/// if the player is currently on the map given by the parameter.
+			///	<code>Map,string mapName</code>
+			/// </summary>
+			Location,
+			///	<summary>
+			///	The Pokémon will evolve if it levels up only during a certain kind of overworld weather.
+			///	</summary>
+			/// <example>Goodra</example>
+			///	if currentMap's weather is rain
+			Weather,
+			///	<summary>
+			///	Exactly the same as "Level", 
+			///	except the Pokémon's Attack stat must also be greater than its Defense stat.
+			///	</summary>
+			/// <example>Hitmonlee</example>
+			AttackGreater,
+			///	<summary>
+			///	Exactly the same as "Level", 
+			///	except the Pokémon's Attack stat must also be lower than its Defense stat.
+			///	</summary>
+			/// <example>Hitmonchan</example>
+			DefenseGreater,
+			/// <summary>
+			/// Exactly the same as "Level", 
+			/// except the Pokémon's Attack stat must also be equal to its Defense stat.
+			/// </summary>
+			/// <example>Hitmontop</example>
+			AtkDefEqual,
+			///	<summary>if pokemon's shinyValue divided by 2's remainder is equal to 0 or 1</summary>
+			///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level-parameter? 
+			Shiny,
+			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
+			/// Shiny value? I thought it was based on "Friendship"
+			Silcoon,
+			///	<summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1</summary>
+			Cascoon,
+			///	<summary>
+			///	Unique evolution methods: 
+			///	Exactly the same as "Level". 
+			///	There is no difference between the two methods at all. 
+			///	Is used alongside the method "Shedinja".
+			///	</summary>
+			Ninjask,
+			///	<summary>
+			///	Unique evolution methods: 
+			///	Must be used with the method "Ninjask". 
+			///	Duplicates the Pokémon that just evolved 
+			///	(if there is an empty space in the party), 
+			///	and changes the duplicate's species to the given species.
+			///	</summary>
+            ///	how is this different from "party"?
+			Shedinja,
+            /// <summary>
+            /// </summary>
+            /// Just wanted to see a requirement for after "fainting" too many times, your pokemon just died, and became a ghost-type...  
+            Deaths
+		}
     }
 
 }
