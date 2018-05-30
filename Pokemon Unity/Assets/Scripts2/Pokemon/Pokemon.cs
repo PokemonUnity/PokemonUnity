@@ -1290,6 +1290,8 @@ public class Pokemon //: ePokemons //PokemonData
 		/// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
 		public int Forms { get { return this.forms.Length; } }
 
+		public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
+		//public EggGroup EggGroup2 { get { return this.eggGroup2; } }
 		//public virtual Type Type1 { get { return this.type1; } }
 		//public virtual Type Type2 { get { return this.type2; } }
 		//Maybe use this instead?
@@ -1319,8 +1321,6 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </summary> 
 		/// Also known as Pokemon's "Rareness"...
 		public int CatchRate { get; private set; }
-		public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
-		//public EggGroup EggGroup2 { get { return this.eggGroup2; } }
 		public int HatchTime { get; private set; }
 
 		//public float hitboxWidth { get { return this.hitboxWidth; } } //used for 3d battles just use collision detection from models
@@ -1328,25 +1328,26 @@ public class Pokemon //: ePokemons //PokemonData
 		public float Weight { get; private set; }
 		/// ToDo: Make this an enum
 		public int ShapeID { get; private set; } 
-
-		public int BaseExpYield { get; private set; }
+        [Obsolete("Please, just use a VOID call to solve color conversion")]
+		public UnityEngine.Color LightColor { get; private set; }
 		public LevelingRate GrowthRate { get; private set; }
-
 		public Color PokedexColor { get; private set; }
+
 		/// <summary>
 		/// Friendship levels is the same as pokemon Happiness.
 		/// </summary>
 		public int BaseFriendship { get; private set; }
-
+		public int BaseExpYield { get; private set; }
 		public int BaseStatsHP  { get; private set; }
 		public int BaseStatsATK { get; private set; }
 		public int BaseStatsDEF { get; private set; }
 		public int BaseStatsSPA { get; private set; }
 		public int BaseStatsSPD { get; private set; }
 		public int BaseStatsSPE { get; private set; }
-
+        /// <summary>
+        /// </summary>
+        /// Not quite sure what this is for...
 		public float Luminance { get; private set; }
-		public UnityEngine.Color LightColor { get; private set; }
 
 		/// <summary>
 		/// Returns the items this species can be found holding in the wild.
@@ -1361,8 +1362,9 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </remarks>
 		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
 		public int[,] HeldItem { get; private set; }
-
+        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
 		public int[] MovesetLevels { get; private set; }
+        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
 		public Moves[] MovesetMoves { get; private set; }
         /// <summary>
         /// </summary>
@@ -1656,7 +1658,9 @@ public class Pokemon //: ePokemons //PokemonData
                         /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
                         pokedexColor: Color.NONE, baseFriendship: 50,
                         baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
-                        luminance: 0f, movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
+                        luminance: 0f, 
+                        movesetmoves: new PokemonMoveset[] { new PokemonMoveset(moveId: Moves.Acid_Armor, method: LearnMethod.levelup, level: 15) },
+                        //movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
                         evolution: new IPokemonEvolution[] {  new PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
                         //evolutionID: null, evolutionLevel: null, evolutionMethod: null, 
                         forms: 4, heldItem: null) //Test
