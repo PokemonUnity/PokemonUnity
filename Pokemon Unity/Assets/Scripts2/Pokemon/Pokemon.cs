@@ -1373,7 +1373,6 @@ public class Pokemon //: ePokemons //PokemonData
 	    /// All the moves this pokemon species can learn, and the methods by which they learn them
 	    /// </summary>
 		public PokemonMoveTree MoveTree { get; private set; }
-
 		/// ToDo: Evolution class type array here
 		public IPokemonEvolution[] Evolutions { get; private set; }
 		public int[] EvolutionID { get; private set; }
@@ -1888,7 +1887,7 @@ public class Pokemon //: ePokemons //PokemonData
 				throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
 			}
 		}
-		/*
+        /*
 		/// <summary>
 		/// [ability1,ability2,hiddenAbility]
 		/// </summary>
@@ -2049,353 +2048,356 @@ public class Pokemon //: ePokemons //PokemonData
 					return StringToColor(color.ToString());
 			}
 		}*/
-		#endregion
-	}
-	/// <summary>
-	/// The moves that all Pokémon of the species learn as they level up. 
-	/// </summary>
-	public class PokemonMoveset
-	{
-		public LearnMethod TeachMethod;
-		/// <summary>
-		/// Level at which the move is learned 
-		/// (0 means the move can only be learned when 
-		/// a Pokémon evolves into this species).
-        /// Default level is 0; 
-        /// only really important if learn method is <see cref="LearnMethod.levelup"/>
-		/// </summary>
-		/// Level needed to learn Move
-        /// leaves door open to new game designs, if players want to limit move methods to a level requirement
-        /// use to set min or max level needed for designated learn method
-		public int Level;
-		/// <summary>
-		/// Move learned upon leveling-up
-		/// </summary>
-		public Moves MoveId;
-		//public PokemonMoveset() { }
-		/*public PokemonMoveset(Move.MoveData.Move move, int level)
-		{
-			this.Level = level;
-			this.MoveId = move;
-		}
-		public PokemonMoveset(Move.MoveData.Move move)
-		{
-			this.MoveId = move;
-		}*/
-		public PokemonMoveset(Moves moveId, LearnMethod method = LearnMethod.levelup, int level = 0) //: this()
-		{
-			this.Level = level;
-			this.MoveId = moveId;
-            this.TeachMethod = method;
-		}
-	}
-	/// <summary>
-	/// All the moves this pokemon species can learn, and the methods by which they learn them
-	/// </summary>
-	public class PokemonMoveTree
-	{
-        #region Properties
-        /// <summary>
-        /// to use: LevelUp.OrderBy(x => x.Value).ThenBy(x => x.Key)
-        /// </summary>
-        public SortedList<Moves, int> LevelUp { get; private set; }
-		public Moves[] Egg { get; private set; }
-        public Moves[] Tutor { get; private set; }
-		public Moves[] Machine { get; private set; }
-        //Teach pikachu surf?... do we really need it to know surf?... Maybe if "specal form" (surfboard pickachu) is added to game
-        //public Move.MoveData.Move[] stadium_surfing_pikachu { get; private set; }
-        /// <summary>
-        /// If <see cref="Items.LIGHT_BALL"/> is held by either parent of a <see cref="Pokemons.Pichu"/> when the Egg is produced,
-        /// the Pichu that hatches will know the move <see cref="Move.MoveData.Move.Volt_Tackle"/>.
-        /// </summary>
-        /// Not sure about this one
-        public Moves[] light_ball_egg { get; private set; }
-        //public Move.MoveData.Move[] colosseum_purification { get; private set; }
-        //public Move.MoveData.Move[] xd_shadow { get; private set; }
-        //public Move.MoveData.Move[] xd_purification { get; private set; }
-        /// <summary>
-        /// </summary>
-        /// Merge both Colosseum and XD into one list
-        public Moves[] Shadow { get; private set; }
-        /// <summary>
-        /// When a pokemon is purified from a shadow state, the moves they can potentially unlock?...
-        /// </summary>
-        /// Merge both Colosseum and XD into one list
-        public Moves[] Purification { get; private set; }
-        public Moves[] FormChange { get; private set; }
         #endregion
-        //public PokemonMoveTree() { }
-        public PokemonMoveTree(
-                SortedList<Moves, int> levelup = null,
-                Moves[] egg = null,
-                Moves[] tutor = null,
-                Moves[] machine = null,
-                //Move.MoveData.Move[] stadium_surfing_pikachu = null,
-                //Move.MoveData.Move[] light_ball_egg = null,
-                Moves[] shadow = null,
-                Moves[] purification = null,
-                Moves[] form_change = null
-            )
-        {
-            this.LevelUp = levelup ?? new SortedList<Moves, int>();                       
-			this.Egg = egg ?? new Moves[0];
-            this.Tutor = tutor ?? new Moves[0];
-            this.Machine = machine ?? new Moves[0];
-            //this.stadium_surfing_pikachu = 5,
-            //this.light_ball_egg = light_ball_egg ?? new Move.MoveData.Move[0];
-            this.Shadow = shadow ?? new Moves[0];
-            this.Purification = purification ?? new Moves[0];
-            this.FormChange = form_change ?? new Moves[0];
-        }
-        public PokemonMoveTree(PokemonMoveset[] moveset)
-        { 
-            #region Foreach-Loop
-            SortedList<Moves, int> level = new SortedList<Moves, int>();
-            List<Moves> egg = new List<Moves>();
-            List<Moves> tutor = new List<Moves>();
-            List<Moves> machine = new List<Moves>();
-            List<Moves> shadow = new List<Moves>();
-            List<Moves> purify = new List<Moves>();
-            List<Moves> form = new List<Moves>();
-            foreach (PokemonMoveset move in moveset)
+
+        #region Nested Classes
+        /// <summary>
+        /// The moves that all Pokémon of the species learn as they level up. 
+        /// </summary>
+        public class PokemonMoveset
+	    {
+		    public LearnMethod TeachMethod;
+		    /// <summary>
+		    /// Level at which the move is learned 
+		    /// (0 means the move can only be learned when 
+		    /// a Pokémon evolves into this species).
+            /// Default level is 0; 
+            /// only really important if learn method is <see cref="LearnMethod.levelup"/>
+		    /// </summary>
+		    /// Level needed to learn Move
+            /// leaves door open to new game designs, if players want to limit move methods to a level requirement
+            /// use to set min or max level needed for designated learn method
+		    public int Level;
+		    /// <summary>
+		    /// Move learned upon leveling-up
+		    /// </summary>
+		    public Moves MoveId;
+		    //public PokemonMoveset() { }
+		    /*public PokemonMoveset(Move.MoveData.Move move, int level)
+		    {
+			    this.Level = level;
+			    this.MoveId = move;
+		    }
+		    public PokemonMoveset(Move.MoveData.Move move)
+		    {
+			    this.MoveId = move;
+		    }*/
+		    public PokemonMoveset(Moves moveId, LearnMethod method = LearnMethod.levelup, int level = 0) //: this()
+		    {
+			    this.Level = level;
+			    this.MoveId = moveId;
+                this.TeachMethod = method;
+		    }
+	    }
+	    /// <summary>
+	    /// All the moves this pokemon species can learn, and the methods by which they learn them
+	    /// </summary>
+	    public class PokemonMoveTree
+	    {
+            #region Properties
+            /// <summary>
+            /// to use: LevelUp.OrderBy(x => x.Value).ThenBy(x => x.Key)
+            /// </summary>
+            public SortedList<Moves, int> LevelUp { get; private set; }
+		    public Moves[] Egg { get; private set; }
+            public Moves[] Tutor { get; private set; }
+		    public Moves[] Machine { get; private set; }
+            //Teach pikachu surf?... do we really need it to know surf?... Maybe if "specal form" (surfboard pickachu) is added to game
+            //public Move.MoveData.Move[] stadium_surfing_pikachu { get; private set; }
+            /// <summary>
+            /// If <see cref="Items.LIGHT_BALL"/> is held by either parent of a <see cref="Pokemons.Pichu"/> when the Egg is produced,
+            /// the Pichu that hatches will know the move <see cref="Move.MoveData.Move.Volt_Tackle"/>.
+            /// </summary>
+            /// Not sure about this one
+            public Moves[] light_ball_egg { get; private set; }
+            //public Move.MoveData.Move[] colosseum_purification { get; private set; }
+            //public Move.MoveData.Move[] xd_shadow { get; private set; }
+            //public Move.MoveData.Move[] xd_purification { get; private set; }
+            /// <summary>
+            /// </summary>
+            /// Merge both Colosseum and XD into one list
+            public Moves[] Shadow { get; private set; }
+            /// <summary>
+            /// When a pokemon is purified from a shadow state, the moves they can potentially unlock?...
+            /// </summary>
+            /// Merge both Colosseum and XD into one list
+            public Moves[] Purification { get; private set; }
+            public Moves[] FormChange { get; private set; }
+            #endregion
+            //public PokemonMoveTree() { }
+            public PokemonMoveTree(
+                    SortedList<Moves, int> levelup = null,
+                    Moves[] egg = null,
+                    Moves[] tutor = null,
+                    Moves[] machine = null,
+                    //Move.MoveData.Move[] stadium_surfing_pikachu = null,
+                    //Move.MoveData.Move[] light_ball_egg = null,
+                    Moves[] shadow = null,
+                    Moves[] purification = null,
+                    Moves[] form_change = null
+                )
             {
-                switch (move.TeachMethod)
+                this.LevelUp = levelup ?? new SortedList<Moves, int>();                       
+			    this.Egg = egg ?? new Moves[0];
+                this.Tutor = tutor ?? new Moves[0];
+                this.Machine = machine ?? new Moves[0];
+                //this.stadium_surfing_pikachu = 5,
+                //this.light_ball_egg = light_ball_egg ?? new Move.MoveData.Move[0];
+                this.Shadow = shadow ?? new Moves[0];
+                this.Purification = purification ?? new Moves[0];
+                this.FormChange = form_change ?? new Moves[0];
+            }
+            public PokemonMoveTree(PokemonMoveset[] moveset)
+            { 
+                #region Foreach-Loop
+                SortedList<Moves, int> level = new SortedList<Moves, int>();
+                List<Moves> egg = new List<Moves>();
+                List<Moves> tutor = new List<Moves>();
+                List<Moves> machine = new List<Moves>();
+                List<Moves> shadow = new List<Moves>();
+                List<Moves> purify = new List<Moves>();
+                List<Moves> form = new List<Moves>();
+                foreach (PokemonMoveset move in moveset)
                 {
-                    case LearnMethod.levelup:
-                        if (!level.ContainsKey(move.MoveId)) level.Add(move.MoveId, move.Level);
+                    switch (move.TeachMethod)
+                    {
+                        case LearnMethod.levelup:
+                            if (!level.ContainsKey(move.MoveId)) level.Add(move.MoveId, move.Level);
+                            break;
+                        case LearnMethod.egg:
+                            if (!egg.Contains(move.MoveId)) egg.Add(move.MoveId);
+                            break;
+                        case LearnMethod.tutor:
+                            if (!tutor.Contains(move.MoveId)) tutor.Add(move.MoveId);
+                            break;
+                        case LearnMethod.machine:
+                            if (!machine.Contains(move.MoveId)) machine.Add(move.MoveId);
+                            break;
+                        case LearnMethod.stadium_surfing_pikachu:
+                            break;
+                        case LearnMethod.light_ball_egg:
+                            break;
+                        case LearnMethod.purification:
+                        case LearnMethod.xd_purification:
+                        case LearnMethod.colosseum_purification:
+                            if (!purify.Contains(move.MoveId)) purify.Add(move.MoveId);
+                            break;
+                        case LearnMethod.shadow:
+                        case LearnMethod.xd_shadow:
+                            if (!shadow.Contains(move.MoveId)) shadow.Add(move.MoveId);
+                            break;
+                        case LearnMethod.form_change:
+                            if (!form.Contains(move.MoveId)) form.Add(move.MoveId);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                #endregion
+                /*return PokemonMoveTree(
+                        levelup: level,
+                        egg: egg.ToArray(),
+                        tutor: tutor.ToArray(),
+                        machine: machine.ToArray(),
+                        shadow: shadow.ToArray(),
+                        purification: purify.ToArray(),
+                        form_change: form.ToArray()
+                    );*/
+                this.LevelUp = level;
+                this.Egg = egg.ToArray();
+                this.Tutor = tutor.ToArray();
+                this.Machine = machine.ToArray();
+                this.Shadow = shadow.ToArray();
+                this.Purification = purify.ToArray();
+                this.FormChange = form.ToArray();
+            }
+        }
+	    /// <summary>
+	    /// The evolution paths this species can take. 
+	    /// For each possible evolution of this species, 
+	    /// there are three parts
+	    /// </summary>
+	    public class PokemonEvolution : IPokemonEvolution //<T> where T : new()
+	    {
+		    /// <summary>
+		    /// The PokemonId of the evolved species.
+		    /// The PokemonId of the species this pokemon evolves into.
+		    /// </summary>
+		    public Pokemons Species { get; private set; }
+		    /// <summary>
+		    /// The evolution method.
+		    /// </summary>
+		    public EvolutionMethod EvolveMethod { get; private set; }
+            //public object EvolutionMethodValue;
+            //public PokemonEvolution<T> EvolutionMethodValue;
+            //public class T { }
+            //public PokemonEvolution(){}
+            public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow){
+                this.Species = EvolveTo;
+                this.EvolveMethod = EvolveHow;
+            }
+            public virtual bool isGenericT()
+            {
+                return false;
+            }
+        }
+	    public class PokemonEvolution<T> : PokemonEvolution
+	    {
+		    /*// <summary>
+		    /// The PokemonId of the evolved species.
+		    /// </summary>
+		    public PokemonData.Pokemon EvolvesTo;
+		    /// <summary>
+		    /// The evolution method.
+		    /// </summary>
+		    public int EvolveMethod;
+		    //public object EvolveValue;
+		    //public T EvolveValue<T>() { return GetValue(); };*/
+		    /// <summary>
+		    /// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
+		    /// </summary>
+		    public T EvolveValue { get; private set; }
+
+            //public PokemonEvolution<T> (T objects){}
+            //void evolve(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) { }
+
+            public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
+                #region Switch
+                //This should trigger after the class has been initialized, right?
+                switch (EvolveHow)
+                {
+                    case EvolutionMethod.Level:
+                    case EvolutionMethod.LevelFemale:
+                    case EvolutionMethod.LevelMale:
+                    case EvolutionMethod.Ninjask:
+                    case EvolutionMethod.Beauty:
+                    case EvolutionMethod.Happiness:
+                    case EvolutionMethod.HappinessDay:
+                    case EvolutionMethod.HappinessNight:
+                    case EvolutionMethod.Hatred:
+                        //if(typeof(T) || this.GetType() == typeof(string))
+                        if (Value.GetType() != typeof(int))
+                            //throw new Exception("Type not acceptable for Method-Value pair.");
+                            //Instead of throwing an exception, i'll correct the problem instead?
+                            Convert.ChangeType(Value, typeof(int));
+                        Value = default(T);
                         break;
-                    case LearnMethod.egg:
-                        if (!egg.Contains(move.MoveId)) egg.Add(move.MoveId);
+                    case EvolutionMethod.Item:
+                    case EvolutionMethod.ItemFemale:
+                    case EvolutionMethod.ItemMale:
+                    case EvolutionMethod.TradeItem:
+                    case EvolutionMethod.HoldItem:
+                    case EvolutionMethod.HoldItemDay:
+                    case EvolutionMethod.HoldItemNight:
+                        if (this.EvolveValue.GetType() != typeof(Items))
+                            Convert.ChangeType(Value, typeof(Items));
+                        Value = default(T);
                         break;
-                    case LearnMethod.tutor:
-                        if (!tutor.Contains(move.MoveId)) tutor.Add(move.MoveId);
+                    case EvolutionMethod.TradeSpecies:
+                    case EvolutionMethod.Party:
+                    case EvolutionMethod.Shedinja:
+                        if (this.EvolveValue.GetType() != typeof(Pokemons))
+                            Convert.ChangeType(Value, typeof(Pokemons));
+                        Value = default(T);
                         break;
-                    case LearnMethod.machine:
-                        if (!machine.Contains(move.MoveId)) machine.Add(move.MoveId);
+                    case EvolutionMethod.Move:
+                        if (this.EvolveValue.GetType() != typeof(Moves))
+                            Convert.ChangeType(Value, typeof(Moves));
+                        Value = default(T);
                         break;
-                    case LearnMethod.stadium_surfing_pikachu:
+                    case EvolutionMethod.Type:
+                        if (this.EvolveValue.GetType() != typeof(Types))
+                            Convert.ChangeType(Value, typeof(Types));
+                        Value = default(T);
                         break;
-                    case LearnMethod.light_ball_egg:
-                        break;
-                    case LearnMethod.purification:
-                    case LearnMethod.xd_purification:
-                    case LearnMethod.colosseum_purification:
-                        if (!purify.Contains(move.MoveId)) purify.Add(move.MoveId);
-                        break;
-                    case LearnMethod.shadow:
-                    case LearnMethod.xd_shadow:
-                        if (!shadow.Contains(move.MoveId)) shadow.Add(move.MoveId);
-                        break;
-                    case LearnMethod.form_change:
-                        if (!form.Contains(move.MoveId)) form.Add(move.MoveId);
-                        break;
+                    case EvolutionMethod.Time:
+                    case EvolutionMethod.Season:
+                    case EvolutionMethod.Location:
+                    case EvolutionMethod.Weather:
                     default:
+                        //if there's no problem, just ignore it, and move on...
                         break;
                 }
+                #endregion
+                this.EvolveValue = Value;
             }
-            #endregion
-            /*return PokemonMoveTree(
-                    levelup: level,
-                    egg: egg.ToArray(),
-                    tutor: tutor.ToArray(),
-                    machine: machine.ToArray(),
-                    shadow: shadow.ToArray(),
-                    purification: purify.ToArray(),
-                    form_change: form.ToArray()
-                );*/
-            this.LevelUp = level;
-            this.Egg = egg.ToArray();
-            this.Tutor = tutor.ToArray();
-            this.Machine = machine.ToArray();
-            this.Shadow = shadow.ToArray();
-            this.Purification = purify.ToArray();
-            this.FormChange = form.ToArray();
-        }
-    }
-	/// <summary>
-	/// The evolution paths this species can take. 
-	/// For each possible evolution of this species, 
-	/// there are three parts
-	/// </summary>
-	public class PokemonEvolution : IPokemonEvolution //<T> where T : new()
-	{
-		/// <summary>
-		/// The PokemonId of the evolved species.
-		/// The PokemonId of the species this pokemon evolves into.
-		/// </summary>
-		public Pokemons Species { get; private set; }
-		/// <summary>
-		/// The evolution method.
-		/// </summary>
-		public EvolutionMethod EvolveMethod { get; private set; }
-        //public object EvolutionMethodValue;
-        //public PokemonEvolution<T> EvolutionMethodValue;
-        //public class T { }
-        //public PokemonEvolution(){}
-        public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow){
-            this.Species = EvolveTo;
-            this.EvolveMethod = EvolveHow;
-        }
-        public virtual bool isGenericT()
-        {
-            return false;
-        }
-    }
-	public class PokemonEvolution<T> : PokemonEvolution
-	{
-		/*// <summary>
-		/// The PokemonId of the evolved species.
-		/// </summary>
-		public PokemonData.Pokemon EvolvesTo;
-		/// <summary>
-		/// The evolution method.
-		/// </summary>
-		public int EvolveMethod;
-		//public object EvolveValue;
-		//public T EvolveValue<T>() { return GetValue(); };*/
-		/// <summary>
-		/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
-		/// </summary>
-		public T EvolveValue { get; private set; }
+            /*public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
+                #region Switch
+                //This should trigger after the class has been initialized, right?
+                switch (this.EvolveMethod)
+                {
+                    case EvolutionMethod.Level:
+                    case EvolutionMethod.LevelFemale:
+                    case EvolutionMethod.LevelMale:
+                    case EvolutionMethod.Ninjask:
+                    case EvolutionMethod.Beauty:
+                    case EvolutionMethod.Happiness:
+                    case EvolutionMethod.HappinessDay:
+                    case EvolutionMethod.HappinessNight:
+                    case EvolutionMethod.Hatred:
+                        //if(typeof(T) || this.GetType() == typeof(string))
+                        if (this.EvolveValue.GetType() != typeof(int))
+                            //throw new Exception("Type not acceptable for Method-Value pair.");
+                            //Instead of throwing an exception, i'll correct the problem instead?
+                            Convert.ChangeType(this.EvolveValue, typeof(int));
+                            this.EvolveValue = default(T);
+                        break;
+                    case EvolutionMethod.Item:
+                    case EvolutionMethod.ItemFemale:
+                    case EvolutionMethod.ItemMale:
+                    case EvolutionMethod.TradeItem:
+                    case EvolutionMethod.HoldItem:
+                    case EvolutionMethod.HoldItemDay:
+                    case EvolutionMethod.HoldItemNight:
+                        if (this.EvolveValue.GetType() != typeof(eItems))
+                            Convert.ChangeType(this.EvolveValue, typeof(eItems));
+                            this.EvolveValue = default(T);
+                        break;
+                    case EvolutionMethod.TradeSpecies:
+                    case EvolutionMethod.Party:
+                    case EvolutionMethod.Shedinja:
+                        if (this.EvolveValue.GetType() != typeof(PokemonData.Pokemon))
+                            Convert.ChangeType(this.EvolveValue, typeof(PokemonData.Pokemon));
+                            this.EvolveValue = default(T);
+                        break;
+                    case EvolutionMethod.Move:
+                        if (this.EvolveValue.GetType() != typeof(Move.MoveData.Move))
+                            Convert.ChangeType(this.EvolveValue, typeof(Move.MoveData.Move));
+                            this.EvolveValue = default(T);
+                        break;
+                    case EvolutionMethod.Type:
+                        if (this.EvolveValue.GetType() != typeof(PokemonData.Type))
+                            Convert.ChangeType(this.EvolveValue, typeof(PokemonData.Type));
+                            this.EvolveValue = default(T);
+                        break;
+                    case EvolutionMethod.Time:
+                    case EvolutionMethod.Season:
+                    case EvolutionMethod.Location:
+                    case EvolutionMethod.Weather:
+                    default:
+                        //if there's no problem, just ignore it, and move on...
+                        break;
+                }
+                #endregion
+            }
+            //private static Con<T2>(object ObjIn)
+		    /*public int IntValue;
+		    public string StringValue;
+		    private int GetValue(int p)
+		    {
+			    return this.IntValue;
+		    }
+		    private string GetValue(string p)
+		    {
+			    return this.StringValue;
+		    }*/
 
-        //public PokemonEvolution<T> (T objects){}
-        //void evolve(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) { }
-
-        public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
-            #region Switch
-            //This should trigger after the class has been initialized, right?
-            switch (EvolveHow)
+            public override bool isGenericT()
             {
-                case EvolutionMethod.Level:
-                case EvolutionMethod.LevelFemale:
-                case EvolutionMethod.LevelMale:
-                case EvolutionMethod.Ninjask:
-                case EvolutionMethod.Beauty:
-                case EvolutionMethod.Happiness:
-                case EvolutionMethod.HappinessDay:
-                case EvolutionMethod.HappinessNight:
-                case EvolutionMethod.Hatred:
-                    //if(typeof(T) || this.GetType() == typeof(string))
-                    if (Value.GetType() != typeof(int))
-                        //throw new Exception("Type not acceptable for Method-Value pair.");
-                        //Instead of throwing an exception, i'll correct the problem instead?
-                        Convert.ChangeType(Value, typeof(int));
-                    Value = default(T);
-                    break;
-                case EvolutionMethod.Item:
-                case EvolutionMethod.ItemFemale:
-                case EvolutionMethod.ItemMale:
-                case EvolutionMethod.TradeItem:
-                case EvolutionMethod.HoldItem:
-                case EvolutionMethod.HoldItemDay:
-                case EvolutionMethod.HoldItemNight:
-                    if (this.EvolveValue.GetType() != typeof(Items))
-                        Convert.ChangeType(Value, typeof(Items));
-                    Value = default(T);
-                    break;
-                case EvolutionMethod.TradeSpecies:
-                case EvolutionMethod.Party:
-                case EvolutionMethod.Shedinja:
-                    if (this.EvolveValue.GetType() != typeof(Pokemons))
-                        Convert.ChangeType(Value, typeof(Pokemons));
-                    Value = default(T);
-                    break;
-                case EvolutionMethod.Move:
-                    if (this.EvolveValue.GetType() != typeof(Moves))
-                        Convert.ChangeType(Value, typeof(Moves));
-                    Value = default(T);
-                    break;
-                case EvolutionMethod.Type:
-                    if (this.EvolveValue.GetType() != typeof(Types))
-                        Convert.ChangeType(Value, typeof(Types));
-                    Value = default(T);
-                    break;
-                case EvolutionMethod.Time:
-                case EvolutionMethod.Season:
-                case EvolutionMethod.Location:
-                case EvolutionMethod.Weather:
-                default:
-                    //if there's no problem, just ignore it, and move on...
-                    break;
+                return true;// base.isGenericT();
             }
-            #endregion
-            this.EvolveValue = Value;
         }
-        /*public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
-            #region Switch
-            //This should trigger after the class has been initialized, right?
-            switch (this.EvolveMethod)
-            {
-                case EvolutionMethod.Level:
-                case EvolutionMethod.LevelFemale:
-                case EvolutionMethod.LevelMale:
-                case EvolutionMethod.Ninjask:
-                case EvolutionMethod.Beauty:
-                case EvolutionMethod.Happiness:
-                case EvolutionMethod.HappinessDay:
-                case EvolutionMethod.HappinessNight:
-                case EvolutionMethod.Hatred:
-                    //if(typeof(T) || this.GetType() == typeof(string))
-                    if (this.EvolveValue.GetType() != typeof(int))
-                        //throw new Exception("Type not acceptable for Method-Value pair.");
-                        //Instead of throwing an exception, i'll correct the problem instead?
-                        Convert.ChangeType(this.EvolveValue, typeof(int));
-                        this.EvolveValue = default(T);
-                    break;
-                case EvolutionMethod.Item:
-                case EvolutionMethod.ItemFemale:
-                case EvolutionMethod.ItemMale:
-                case EvolutionMethod.TradeItem:
-                case EvolutionMethod.HoldItem:
-                case EvolutionMethod.HoldItemDay:
-                case EvolutionMethod.HoldItemNight:
-                    if (this.EvolveValue.GetType() != typeof(eItems))
-                        Convert.ChangeType(this.EvolveValue, typeof(eItems));
-                        this.EvolveValue = default(T);
-                    break;
-                case EvolutionMethod.TradeSpecies:
-                case EvolutionMethod.Party:
-                case EvolutionMethod.Shedinja:
-                    if (this.EvolveValue.GetType() != typeof(PokemonData.Pokemon))
-                        Convert.ChangeType(this.EvolveValue, typeof(PokemonData.Pokemon));
-                        this.EvolveValue = default(T);
-                    break;
-                case EvolutionMethod.Move:
-                    if (this.EvolveValue.GetType() != typeof(Move.MoveData.Move))
-                        Convert.ChangeType(this.EvolveValue, typeof(Move.MoveData.Move));
-                        this.EvolveValue = default(T);
-                    break;
-                case EvolutionMethod.Type:
-                    if (this.EvolveValue.GetType() != typeof(PokemonData.Type))
-                        Convert.ChangeType(this.EvolveValue, typeof(PokemonData.Type));
-                        this.EvolveValue = default(T);
-                    break;
-                case EvolutionMethod.Time:
-                case EvolutionMethod.Season:
-                case EvolutionMethod.Location:
-                case EvolutionMethod.Weather:
-                default:
-                    //if there's no problem, just ignore it, and move on...
-                    break;
-            }
-            #endregion
-        }
-        //private static Con<T2>(object ObjIn)
-		/*public int IntValue;
-		public string StringValue;
-		private int GetValue(int p)
-		{
-			return this.IntValue;
-		}
-		private string GetValue(string p)
-		{
-			return this.StringValue;
-		}*/
-
-        public override bool isGenericT()
-        {
-            return true;// base.isGenericT();
-        }
+        #endregion
     }
 	/// <summary>
 	/// </summary>
