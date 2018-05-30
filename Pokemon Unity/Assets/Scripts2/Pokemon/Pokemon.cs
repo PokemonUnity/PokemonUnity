@@ -1344,6 +1344,12 @@ public class Pokemon //: ePokemons //PokemonData
 		public int BaseStatsSPA { get; private set; }
 		public int BaseStatsSPD { get; private set; }
 		public int BaseStatsSPE { get; private set; }
+		public int evYieldHP  { get; private set; }
+		public int evYieldATK { get; private set; }
+		public int evYieldDEF { get; private set; }
+		public int evYieldSPA { get; private set; }
+		public int evYieldSPD { get; private set; }
+		public int evYieldSPE { get; private set; }
         /// <summary>
         /// </summary>
         /// Not quite sure what this is for...
