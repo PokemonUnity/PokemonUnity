@@ -1383,6 +1383,7 @@ public class Pokemon //: ePokemons //PokemonData
 		public PokemonMoveTree MoveTree { get; private set; }
 		/// ToDo: Evolution class type array here
 		public IPokemonEvolution[] Evolutions { get; private set; }
+        [Obsolete("Please use IPokemonEvolution to query any pokemons that a pokemon can evolve into")]
 		public int[] EvolutionID { get; private set; }
 		/// <summary>
 		/// <example>
@@ -1469,6 +1470,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// </item>
 		/// </list>
 		/// </summary>
+        [Obsolete("Please use IPokemonEvolution to query any pokemons that a pokemon can evolve into")]
 		public string[] EvolutionRequirements { get; private set; }
 
 		/// <summary>
