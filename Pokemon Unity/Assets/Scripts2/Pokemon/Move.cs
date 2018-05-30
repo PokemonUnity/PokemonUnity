@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
 using Veekun;
+using PokemonEssential;
 
 public class Move //: MoveData
 {
@@ -73,6 +74,7 @@ public class Move //: MoveData
 	public Move(Moves move) { _base = new MoveData().getMove(move); PP = _base.PP; }
 
 	#region Enumerator
+    [Obsolete("Will replace IIcolour's with Pokemon Showdown's version")]
 	public enum Effect
 	{
 		/// <summary>
@@ -134,75 +136,6 @@ public class Move //: MoveData
 		CLEVER,
 		TOUGH
 	}
-	/// <summary>
-	/// </summary>
-	public enum Target
-	{
-		/// <summary>
-		/// No target (i.e. Counter, Metal Burst, Mirror Coat, Curse)
-		/// </summary>
-		/// NONE
-		NoTarget = 0,
-		/// <summary>
-		/// User
-		/// </summary>
-		/// SELF
-		User,
-		/// <summary>
-		/// Single Pokémon other than the user
-		/// </summary>
-		/// SINGLEOTHER
-		SingleNonUser,
-		/// <summary>
-		/// Single opposing Pokémon selected at random (i.e. Outrage, Petal Dance, Thrash, Uproar)
-		/// </summary>
-		/// SINGLERANDOMOPPONENT
-		RandomOpposing,
-		/// <summary>
-		/// User's partner (i.e. Helping Hand)
-		/// </summary>
-		/// ADJACENTALLY
-		Partner,
-		/// <summary>
-		/// Single opposing Pokémon (i.e. Me First)
-		/// </summary>
-		/// SINGLEOPPONENT
-		SingleOpposing,
-		/// <summary>
-		/// Single opposing Pokémon directly opposite of user
-		/// </summary>
-		OppositeOpposing,
-		/// <summary>
-		/// Single Pokémon on user's side (i.e. Acupressure)
-		/// </summary>
-		/// SINGLEALLYSELF
-		UserOrPartner,
-		/// <summary>
-		/// Both sides (e.g. Sunny Day, Trick Room)
-		/// </summary>
-		/// ALLFIELD
-		BothSides,
-		/// <summary>
-		/// All Pokémon other than the user
-		/// </summary>
-		/// ALLOTHERS
-		AllNonUsers,
-		/// <summary>
-		/// Opposing side (i.e. Spikes, Toxic Spikes, Stealth Rocks)
-		/// </summary>
-		/// ALLOPPONENTFIELD
-		OpposingSide,
-		/// <summary>
-		/// All opposing Pokémon
-		/// </summary>
-		/// ALLOPPONENT
-		AllOpposing,
-		/// <summary>
-		/// User's side (e.g. Light Screen, Mist)
-		/// </summary>
-		/// ALLALLYFIELD
-		UserSide
-	}
 	#endregion
 
 	#region Methods
@@ -215,38 +148,8 @@ public class Move //: MoveData
 		#region Variables
 		//private int pp { get; set; }
 		//private Moves id { get; set; }
-		/// <summary>
-		/// The move's base power value. Status moves have a base power of 0, 
-		/// while moves with a variable base power are defined here with a base power of 1. 
-		/// For multi-hit moves, this is the base power of a single hit.
-		/// </summary>
-		private int basedamage;
 		//private Types type;
-		/// <summary>
-		/// The move's accuracy, as a percentage. 
-		/// An accuracy of 0 means the move doesn't perform an accuracy check 
-		/// (i.e. it cannot be evaded).
-		/// </summary>
-		private int accuracy;
-		/// <summary>
-		/// The probability that the move's additional effect occurs, as a percentage. 
-		/// If the move has no additional effect (e.g. all status moves), this value is 0. 
-		/// <para></para>
-		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
-		/// which is not the same thing as having an effect that will always occur.
-		/// Abilities like Sheer Force and Shield Dust only affect additional effects, 
-		/// not regular effects.
-		/// </summary>
-		private float addlEffect;
 		//private Target target;
-		/// <summary>
-		/// The move's priority, between -6 and 6 inclusive. This is usually 0. 
-		/// A higher priority move will be used before all moves of lower priority, 
-		/// regardless of Speed calculations. 
-		/// Moves with equal priority will be used depending on which move user is faster.
-		/// <example>For example, Quick Attack has a priority of 1.</example>
-		/// </summary>
-		private int priority;
         /// <summary>
         /// [Deprecated]
         /// </summary>
@@ -256,10 +159,9 @@ public class Move //: MoveData
         [Obsolete]
 		private Veekun.Flags[] flagsEnum;
         private Flags flags = new Flags();
-		private Category category;
         //everything below is influenced from pokemon-showdown
         private bool secondary; // { int chance; boosts; status/effect }
-        private Contest contestType;
+        public Contest ContestType { get; private set; }
         //enum volatileStatus
         //enum sideCondition
         //class effect
@@ -271,6 +173,7 @@ public class Move //: MoveData
         #endregion
 
         #region Properties
+		public Category Category { get; private set; }
 		/// <summary>
 		/// totalpp
 		/// </summary>
@@ -283,6 +186,37 @@ public class Move //: MoveData
 		public Types Type { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
+        public Flags Flags { get { return this.flags; } }
+		/// <summary>
+		/// The move's base power value. Status moves have a base power of 0, 
+		/// while moves with a variable base power are defined here with a base power of 1. 
+		/// For multi-hit moves, this is the base power of a single hit.
+		/// </summary>
+		public int BaseDamage { get; private set; }
+		/// <summary>
+		/// The move's accuracy, as a percentage. 
+		/// An accuracy of 0 means the move doesn't perform an accuracy check 
+		/// (i.e. it cannot be evaded).
+		/// </summary>
+		public int Accuracy { get; private set; }
+		/// <summary>
+		/// The probability that the move's additional effect occurs, as a percentage. 
+		/// If the move has no additional effect (e.g. all status moves), this value is 0. 
+		/// <para></para>
+		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
+		/// which is not the same thing as having an effect that will always occur.
+		/// Abilities like Sheer Force and Shield Dust only affect additional effects, 
+		/// not regular effects.
+		/// </summary>
+		public float AddlEffect { get; private set; }
+		/// <summary>
+		/// The move's priority, between -6 and 6 inclusive. This is usually 0. 
+		/// A higher priority move will be used before all moves of lower priority, 
+		/// regardless of Speed calculations. 
+		/// Moves with equal priority will be used depending on which move user is faster.
+		/// <example>For example, Quick Attack has a priority of 1.</example>
+		/// </summary>
+		public int Priority { get; private set; }
 		#endregion
 
 		#region Enumerator
@@ -1141,52 +1075,39 @@ public class Move //: MoveData
 		#endregion
 	    #endregion
 	}
+	/// <summary>
+    /// Clones Pokemon's Move stats, and uses those values for pokemon battles.
+	/// </summary>
 	public class MoveBattle
 	{
 		#region Variables
-		private MoveData _baseData;
-		private Move _baseMove;
-        private string _baseBattle;
+		private MoveData _baseData { get; set; }
+		private Move _baseMove { get; set; }
+        private string _baseBattle { get; set; }
 
 		//function   = movedata.function
-		private int basedamage; //= movedata.basedamage
-		private Types type;       //= movedata.type
-		private int accuracy;	//= movedata.accuracy
-		private int addlEffect; //= movedata.addlEffect
-		private Move.Target target;		//= movedata.target
-		private int priority;	//= movedata.priority
-		private Move.Flags flags;		//= movedata.flags
-		private int category;	//= movedata.category
-		private Move thismove;	//= move
-		/// <summary>
-		/// Can be changed with Mimic/Transform
-		/// </summary>
-		private int pp;			//= move.pp
-		private int totalpp;
+		private int basedamage { get { return _baseData.BaseDamage; } }     //= movedata.BaseDamage
+        private Types type { get { return _baseData.Type; } }               //= movedata.type
+        private int accuracy { get { return _baseData.Accuracy; } }         //= movedata.accuracy
+        private float addlEffect { get { return _baseData.AddlEffect; } }   //= movedata.addlEffect
+        private Target target { get { return _baseData.Target; } }          //= movedata.target
+        private int priority { get { return _baseData.Priority; } }         //= movedata.priority
+        private Flags flags { get { return _baseData.Flags; } }             //= movedata.flags
+	    private Category category { get { return _baseData.Category; }  }	//= movedata.category
+        private Move thismove { get; set; }	                                //= move
+		private int totalpp { get; set; }
 		/// <summary>
 		/// For Aerilate, Pixilate, Refrigerate
 		/// </summary>
-		private bool powerboost;
-		
-		//NOTYPE          = 0x01
-		//IGNOREPKMNTYPES = 0x02
-		//NOWEIGHTING     = 0x04
-		//NOCRITICAL      = 0x08
-		//NOREFLECT       = 0x10
-		//SELFCONFUSE     = 0x20
-        public enum SpecialCondition
-        {
-            NOTYPE,
-            IGNOREPKMNTYPES,
-            NOWEIGHTING,
-            NOCRITICAL,
-            NOREFLECT,
-            SELFCONFUSE
-        }
+		private bool powerboost;		
         #endregion
 
         #region Property
-        int TotalPP { get
+		/// <summary>
+		/// Can be changed with Mimic/Transform
+		/// </summary>
+		public int PP { get; private set; }			                        //= move.pp
+        public int TotalPP { get
             {
                 if (totalpp > 0) return totalpp;
                 if (thismove != null) return thismove.TotalPP;
@@ -1292,7 +1213,7 @@ public class Move //: MoveData
 #region Move Interfaces
 public interface IMoveEffect
 {
-	int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Move.Target alltargets, bool showanimation);
+	int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Target alltargets, bool showanimation);
 }
 public interface IMoveAdditionalEffect
 {
@@ -1978,9 +1899,104 @@ namespace PokemonUnity.Move
 	}
 }
 
+namespace PokemonShowdown
+{
+
+}
+
+namespace PokemonEssential
+{
+	//NOTYPE          = 0x01
+	//IGNOREPKMNTYPES = 0x02
+	//NOWEIGHTING     = 0x04
+	//NOCRITICAL      = 0x08
+	//NOREFLECT       = 0x10
+	//SELFCONFUSE     = 0x20
+    public enum SpecialCondition
+    {
+        NOTYPE,
+        IGNOREPKMNTYPES,
+        NOWEIGHTING,
+        NOCRITICAL,
+        NOREFLECT,
+        SELFCONFUSE
+    }
+	/// <summary>
+	/// </summary>
+    /// ToDo: Create Pokemon Showdown Move class
+    /// [Obsolete("Will replace Pokemon Essential's with Pokemon Showdown's version")]
+	public enum Target
+	{
+		/// <summary>
+		/// No target (i.e. Counter, Metal Burst, Mirror Coat, Curse)
+		/// </summary>
+		/// NONE
+		NoTarget = 0,
+		/// <summary>
+		/// User
+		/// </summary>
+		/// SELF
+		User,
+		/// <summary>
+		/// Single Pokémon other than the user
+		/// </summary>
+		/// SINGLEOTHER
+		SingleNonUser,
+		/// <summary>
+		/// Single opposing Pokémon selected at random (i.e. Outrage, Petal Dance, Thrash, Uproar)
+		/// </summary>
+		/// SINGLERANDOMOPPONENT
+		RandomOpposing,
+		/// <summary>
+		/// User's partner (i.e. Helping Hand)
+		/// </summary>
+		/// ADJACENTALLY
+		Partner,
+		/// <summary>
+		/// Single opposing Pokémon (i.e. Me First)
+		/// </summary>
+		/// SINGLEOPPONENT
+		SingleOpposing,
+		/// <summary>
+		/// Single opposing Pokémon directly opposite of user
+		/// </summary>
+		OppositeOpposing,
+		/// <summary>
+		/// Single Pokémon on user's side (i.e. Acupressure)
+		/// </summary>
+		/// SINGLEALLYSELF
+		UserOrPartner,
+		/// <summary>
+		/// Both sides (e.g. Sunny Day, Trick Room)
+		/// </summary>
+		/// ALLFIELD
+		BothSides,
+		/// <summary>
+		/// All Pokémon other than the user
+		/// </summary>
+		/// ALLOTHERS
+		AllNonUsers,
+		/// <summary>
+		/// Opposing side (i.e. Spikes, Toxic Spikes, Stealth Rocks)
+		/// </summary>
+		/// ALLOPPONENTFIELD
+		OpposingSide,
+		/// <summary>
+		/// All opposing Pokémon
+		/// </summary>
+		/// ALLOPPONENT
+		AllOpposing,
+		/// <summary>
+		/// User's side (e.g. Light Screen, Mist)
+		/// </summary>
+		/// ALLALLYFIELD
+		UserSide
+	}
+}
+
 namespace Veekun
 {
-    [Obsolete]
+    [Obsolete("Will replace Veekun's with Pokemon Showdown's version")]
 	public enum Flags
 	{
 		/// <summary>
@@ -2050,6 +2066,7 @@ namespace Veekun
 	/// <summary>
 	/// Version from Veekun's Pokedex, needs to be redone
 	/// </summary>
+    [Obsolete("Will replace Veekun's with Pokemon Essential's version")]
 	public enum TargetB
 	{
 		/// <summary>
