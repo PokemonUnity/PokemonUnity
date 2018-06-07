@@ -12,7 +12,7 @@ using PokemonUnity.Item;
 /// </summary>
 /// ToDo: Consider nesting PokemonData class?
 [System.Serializable]
-public class Pokemon //: ePokemons //PokemonData
+public partial class Pokemon //: ePokemons //PokemonData
 {
     #region Variables
     /// <summary>
@@ -1133,7 +1133,7 @@ public class Pokemon //: ePokemons //PokemonData
 	#endregion
 
 	#region Nested Classes
-	public class PokemonData
+	public partial class PokemonData
 	{
 		#region Variables
 		//private Pokemons id;
@@ -1652,8 +1652,8 @@ public class Pokemon //: ePokemons //PokemonData
 				luminance, null, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList, null,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
-
-        /// Not const because translation values
+        #region Obsolete Database Values
+        /*// Not const because translation values
         public static readonly PokemonData[] Database = new PokemonData[] {
             new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, ability1: Abilities.NONE, ability2: Abilities.NONE, hiddenAbility: Abilities.NONE,
                         maleRatio: GenderRatio.AlwaysMale /*0f*, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
@@ -1667,6 +1667,8 @@ public class Pokemon //: ePokemons //PokemonData
                         evolution: new IPokemonEvolution[] {  new PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
                         //evolutionID: null, evolutionLevel: null, evolutionMethod: null, 
                         forms: 4, heldItem: null) //Test
+        };*/
+        #endregion
 
         #region Obsolete Translation Method
 #if DEBUG

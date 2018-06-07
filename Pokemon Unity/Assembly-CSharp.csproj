@@ -52,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\Pokemon\PokemonDatabase.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
@@ -145,23 +146,12 @@
     <Compile Include="Assets\Scripts2\ReSkinAnimation.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
-    <None Include="Assets\Resources\Database\Location\Pokemon_en-us.xml" />
     <None Include="Assets\Materials\Shaders\RenderBehind.shader" />
-    <None Include="Assets\Resources\Database\Berry\Pokemon_en-us.xml" />
     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
-    <None Include="Assets\Resources\Database\Nature\Nature_en-us.xml" />
-    <None Include="Assets\Resources\Database\Type\Pokemon_en-us.xml" />
-    <None Include="Assets\Resources\Database\Pokemon\Pokemon_en-us.xml" />
-    <None Include="Assets\Resources\Database\Moves\Move_en-us.xml" />
-    <None Include="Assets\Resources\Database\Item\Item_en-us.xml" />
-    <None Include="Assets\Resources\Database\Data.xml" />
-    <None Include="Assets\Resources\Database\Ability\Ability_en-us.xml" />
     <None Include="Assets\Materials\Shaders\Sprites-GUI.shader" />
     <None Include="Assets\Materials\Shaders\Sprites-DiffuseMod.shader" />
     <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
     <None Include="Assets\Materials\Shaders\Sprites-Tinted.shader" />
-    <None Include="Assets\Resources\Database\Contest\Ribbon_en-us.xml" />
-    <None Include="Assets\Resources\Database\Menu\Pokemon_en-us.xml" />
     <None Include="Assets\Resources\Sprites\Animations\Animation.shader" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -232,6 +222,23 @@
       <Project>{689E422C-B77F-5B31-E119-AD21E63C6EE7}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_10_EncounterConditions.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_11.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_12_AbilityText.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_13_CONSTRAINTS.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_14_BONUS_Optional.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_1_Essentials.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_2.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_3_PokemonMoves.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_4.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_5_MoveText.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_6.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_7_ItemText.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_8.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_9_EncounterMapping.sql" />
+    <Content Include="Assets\Resources\Database\SQL_DB\veekun-pokedex.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
