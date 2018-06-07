@@ -27,23 +27,23 @@ public class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Current Attack Stat
     /// </summary>
-    private int ATK;
+    public int ATK { get; private set; }
     /// <summary>
     /// Current Defense stat
     /// </summary>
-    private int DEF;
+    public int DEF { get; private set; }
     /// <summary>
     /// Current Special Attack Stat
     /// </summary>
-    private int SPA;
+    public int SPA { get; private set; }
     /// <summary>
     /// Current Special Defense Stat
     /// </summary>
-    private int SPD;
+    public int SPD { get; private set; }
     /// <summary>
     /// Current Speed Stat
     /// </summary>
-    private int SPE;
+    public int SPE { get; private set; }
     /// <summary>
     /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
     /// </summary>
@@ -925,7 +925,7 @@ public class Pokemon //: ePokemons //PokemonData
     /// </summary>
     public string Name { get { return name ?? _base.Name; } }
 
-    public int Form { set { /*if(value <= _base.Forms)*/_base.Form = value; } }//ToDo: Fix Forms and uncomment
+    public int Form { set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }//ToDo: Fix Forms and uncomment
 
     /// <summary>
     /// Returns the species name of this Pokemon
@@ -1150,7 +1150,7 @@ public class Pokemon //: ePokemons //PokemonData
 		/// Deoxys Pokedex# can be 1,
 		/// but Deoxys-Power id# can be 32
 		/// </example>
-		private string name;
+		private string name { get; set; }
 		//private string species;
 		//private string pokedexEntry;
 		//private int forms; 
@@ -1286,6 +1286,8 @@ public class Pokemon //: ePokemons //PokemonData
         /// If null, returns this.Pokemon.Id
         /// ToDo: Make a PokemonForm class, that establishes the rule for 
         /// <see cref="Pokemons"/> and <see cref="Form"/>
+        /// Maybe the stats set/reated for pokemon of this form #?
+        /// Ex. Form 1 would have +10 more HP than base form...
         public int Form { get; set; }
 		/// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
 		public int Forms { get { return this.forms.Length; } }
@@ -1519,9 +1521,10 @@ public class Pokemon //: ePokemons //PokemonData
         }
 
 		public PokemonData(Pokemons Id = Pokemons.NONE, int[] regionalDex = null/*, string name*/, Types type1 = Types.NONE, Types type2 = Types.NONE, Abilities ability1 = Abilities.NONE, Abilities ability2 = Abilities.NONE, Abilities hiddenAbility = Abilities.NONE,//Abilities[] abilities, //
-							GenderRatio maleRatio = GenderRatio.Genderless, int catchRate = 0, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
+							GenderRatio genderRatio = GenderRatio.Genderless, float? maleRatio = null, int catchRate = 1, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
 							float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
 							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+							int evHP = 0, int evATK = 0, int evDEF = 0, int evSPA = 0, int evSPD = 0, int evSPE = 0,
 							Color pokedexColor = Color.NONE, int baseFriendship = 0,//* / string species, string pokedexEntry,*/
 							int baseStatsHP = 0, int baseStatsATK = 0, int baseStatsDEF = 0, int baseStatsSPA = 0, int baseStatsSPD = 0, int baseStatsSPE = 0,
 							float luminance = 0f, /*Color lightColor,*/
@@ -1540,7 +1543,7 @@ public class Pokemon //: ePokemons //PokemonData
 			this.ability2 = (Abilities)ability2;
 			this.abilityh = (Abilities)hiddenAbility;
 
-			this.MaleRatio = maleRatio; //ToDo
+			this.MaleRatio = maleRatio.HasValue? getGenderRatio(maleRatio.Value) : genderRatio; //ToDo: maleRatio; maybe `GenderRatio genderRatio(maleRatio);`
 			this.CatchRate = catchRate;
 			this.eggGroup1 = eggGroup1;
 			this.eggGroup2 = eggGroup2;
@@ -1568,12 +1571,12 @@ public class Pokemon //: ePokemons //PokemonData
 
             this.MoveTree = new PokemonMoveTree(movesetmoves);
             this.MovesetLevels = movesetLevels;
-			this.MovesetMoves = movesetMoves; //ToDo: Array Cast conversion
+			this.MovesetMoves = movesetMoves; 
             //this.tmList = tmList; //ToDo: Need new item database array/enum for this; one that's regional/generation dependant
 
             this.Evolutions = evolution;
 			this.EvolutionID = evolutionID;
-			//this.evolutionMethod = evolutionMethod; //ToDo:
+			//this.evolutionMethod = evolutionMethod; 
 			//this.evolutionRequirements = evolutionRequirements;
 		}
 
@@ -1612,7 +1615,7 @@ public class Pokemon //: ePokemons //PokemonData
 				luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (Moves)move), tmList,
 				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
 		}
-
+        [Obsolete]
 		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, Types type1, Types type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility,
 							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
 							float height, float weight, int baseExpYield, LevelingRate levelingRate,
@@ -1633,7 +1636,8 @@ public class Pokemon //: ePokemons //PokemonData
                 ability2, //| Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
                 hiddenAbility, //| Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
 				//},
-				maleRatio,
+				maleRatio,  //gender
+                0f,         //gender
 				catchRate,
 				eggGroup1, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
 				eggGroup2, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
@@ -1642,6 +1646,7 @@ public class Pokemon //: ePokemons //PokemonData
 				weight,
 				baseExpYield,
 				levelingRate,
+                0,0,0,0,0,0,
 				pokedexColor | Color.NONE,
 				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
 				luminance, null, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList, null,
@@ -1650,53 +1655,18 @@ public class Pokemon //: ePokemons //PokemonData
 
         /// Not const because translation values
         public static readonly PokemonData[] Database = new PokemonData[] {
-            //null
-            //  PokemonData.CreatePokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE2, Ability1, Ability2, HiddenAbility,
-            //				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
-            //				EXPYield, LevelingRate.LEVELINGRATE, evYieldHP,ATK,DEF,SPA,SPD,SPE, PokemonData.PokedexColor.COLOR, BaseFriendship,
-            //				Species, PokedexEntry (choose your favourite) //needs to be loaded seperately...
-            //				baseStatsHP,ATK,DEF,SPA,SPD,SPE, Luminance (0 if unknown), LightColor (Color.clear if unknown)
-            //				new int[]{ level, level, level, etc...}
-            //				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
-            //				new int[]{pokemonID}, 
-            //				new string[]{"Method,Parameter"}),
             new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, ability1: Abilities.NONE, ability2: Abilities.NONE, hiddenAbility: Abilities.NONE,
-                        maleRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
+                        maleRatio: GenderRatio.AlwaysMale /*0f*, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
                         height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
-                        /*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
+                        //int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,
                         pokedexColor: Color.NONE, baseFriendship: 50,
                         baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
                         luminance: 0f, 
-                        movesetmoves: new PokemonMoveset[] { new PokemonMoveset(moveId: Moves.Acid_Armor, method: LearnMethod.levelup, level: 15) },
+                        movesetmoves: new PokemonMoveset[] { new PokemonMoveset(moveId: Moves.ACID_ARMOR, method: LearnMethod.levelup, level: 15) },
                         //movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
                         evolution: new IPokemonEvolution[] {  new PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
                         //evolutionID: null, evolutionLevel: null, evolutionMethod: null, 
                         forms: 4, heldItem: null) //Test
-        };
-        /*static PokemonData()
-		{
-			Database = new PokemonData[] {
-				//null
-				//  PokemonData.CreatePokemonData(ID, NAME, PokemonData.Type.TYPE1, PokemonData.Type.TYPE2, Ability1, Ability2, HiddenAbility,
-				//				MaleRatio, CatchRate, PokemonData.EggGroup.EGGGROUP1, PokemonData.EggGroup.EGGGROUP2, HatchTime, Height, Weight,
-				//				EXPYield, LevelingRate.LEVELINGRATE, evYieldHP,ATK,DEF,SPA,SPD,SPE, PokemonData.PokedexColor.COLOR, BaseFriendship,
-				//				Species, PokedexEntry (choose your favourite) //needs to be loaded seperately...
-				//				baseStatsHP,ATK,DEF,SPA,SPD,SPE, Luminance (0 if unknown), LightColor (Color.clear if unknown)
-				//				new int[]{ level, level, level, etc...}
-				//				new string[]{ "move", "move", "move", etc...} ), //needs to be loaded separately...
-				//				new int[]{pokemonID}, 
-				//				new string[]{"Method,Parameter"}),
-				PokemonData.CreatePokemonData(Pokemon.NONE, new int[1], Type.NONE, Type.NONE, Abilities.NONE, Abilities.NONE, Abilities.NONE,
-							0f, 100, EggGroups.NONE, EggGroups.NONE, 1000,
-							10f, 150f, 15, LevelingRate.ERRATIC,
-							//*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,* /
-							Color.NONE, 50,
-							10, 5, 5, 5, 5, 5,
-							0f, new int[] { 1,2,3 }, new Move.MoveData.Move[4], null,//int[] tmList,
-							null, null, null, 4,//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //int forms, 
-							null) //Test
-			};
-		}*/
 
         #region Obsolete Translation Method
 #if DEBUG
@@ -2060,6 +2030,29 @@ public class Pokemon //: ePokemons //PokemonData
 					return StringToColor(color.ToString());
 			}
 		}*/
+
+        GenderRatio getGenderRatio(float maleRatioPercent)
+        {
+            /*switch ((int)maleRatioPercent)
+            {
+                case  -1:
+                default:
+                    return GenderRatio.Genderless;
+                    //break;
+            }*/
+            if (maleRatioPercent == 100f) return GenderRatio.AlwaysMale;
+            else if (maleRatioPercent == 0f) return GenderRatio.AlwaysFemale;
+            else if (maleRatioPercent > 0f && maleRatioPercent < 12.5f) return GenderRatio.AlwaysFemale;
+            else if (maleRatioPercent >= 12.5f && maleRatioPercent < 25f) return GenderRatio.FemaleSevenEighths;
+            else if (maleRatioPercent >= 25f && maleRatioPercent < 37.5f) return GenderRatio.Female75Percent;
+            else if (maleRatioPercent >= 37.5f && maleRatioPercent < 50f) return GenderRatio.Female75Percent;
+            else if (maleRatioPercent >= 50f && maleRatioPercent < 62.5f) return GenderRatio.Female50Percent;
+            else if (maleRatioPercent >= 62.5f && maleRatioPercent < 75f) return GenderRatio.Female50Percent;
+            else if (maleRatioPercent >= 75f && maleRatioPercent < 87.5f) return GenderRatio.Female25Percent;
+            else if (maleRatioPercent >= 87.5f && maleRatioPercent < 100f) return GenderRatio.FemaleOneEighth;
+            else if (maleRatioPercent < 0 || maleRatioPercent > 100f) return GenderRatio.Genderless;
+            else return GenderRatio.Genderless;
+        }
         #endregion
 
         #region Nested Classes
@@ -2248,6 +2241,10 @@ public class Pokemon //: ePokemons //PokemonData
                 this.Species = EvolveTo;
                 this.EvolveMethod = EvolveHow;
             }
+            /*public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, Type ValueType, object ObjectValue) 
+            {
+                PokemonEvolution<ValueType>(EvolveTo, EvolveHow, ObjectValue);
+            }*/
             public virtual bool isGenericT()
             {
                 return false;
@@ -2765,7 +2762,9 @@ namespace PokemonUnity
 			AlwaysMale,
 			FemaleOneEighth,
 			Female25Percent,
+            //no inbetween?
 			Female50Percent,
+            //divided by 8 and missing values in between...
 			Female75Percent,
 			FemaleSevenEighths,
 			AlwaysFemale,
