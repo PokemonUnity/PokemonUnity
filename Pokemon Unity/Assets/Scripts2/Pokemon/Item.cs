@@ -1656,421 +1656,421 @@ namespace PokemonUnity.Item
         /// <summary>The user tells the target a secret, and the target loses its ability to concentrate. This lowers the target’s Sp. Atk stat.</summary>		TM100 = 749,
         //Everything beyond here is new, about 208 new values added
         /// <summary>Held: Allows Latias to Mega Evolve into Mega Latias. : 	Held: Allows Latias to Mega Evolve into Mega Latias.</summary>
-	LATIASITE = 760,
+        LATIASITE = 760,
         /// <summary>Held: Allows Latios to Mega Evolve into Mega Latios. : 	Held: Allows Latios to Mega Evolve into Mega Latios.</summary>
-	LATIOSITE = 761,
+        LATIOSITE = 761,
         /// <summary>Unknown. : 	Unknown.</summary>
-	COMMON_STONE = 762,
+        COMMON_STONE = 762,
         /// <summary>Allows the player to change their lipstick color. : 	Allows the player to change their lipstick color.</summary>
-	MAKEUP_BAG = 763,
+        MAKEUP_BAG = 763,
         /// <summary>Unobtainable, but allows the player to change clothes anywhere. : 	Unobtainable, but allows the player to change clothes anywhere.</summary>
-	TRAVEL_TRUNK = 764,
+        TRAVEL_TRUNK = 764,
         /// <summary>Cures any major status ailment and confusion. : 	Cures any major status ailment and confusion.</summary>
-	SHALOUR_SABLE = 765,
+        SHALOUR_SABLE = 765,
         /// <summary>Unused.  This appears as the girlplayer's Mega Bracelet in PokÃ©mon Contests, but it cannot actually be obtained. : 	Unused Key Stone.</summary>
-	MEGA_CHARM = 768,
+        MEGA_CHARM = 768,
         /// <summary>Unused.  This is Korrina's Key Stone in X and Y, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_GLOVE = 769,
+        MEGA_GLOVE = 769,
         /// <summary>Allows Captain Stern to set out on his expedition. : 	Allows Captain Stern to set out on his expedition.</summary>
-	DEVON_PARTS = 770,
+        DEVON_PARTS = 770,
         /// <summary>Creates and stores PokÃ©blocks. : 	Creates and stores PokÃ©blocks.</summary>
-	POKEBLOCK_KIT = 772,
+        POKEBLOCK_KIT = 772,
         /// <summary>Unlocks the door to Room 1 in Sea Mauville. : 	Unlocks the door to Room 1 in Sea Mauville.</summary>
-	KEY_TO_ROOM_1 = 773,
+        KEY_TO_ROOM_1 = 773,
         /// <summary>Unlocks the door to Room 2 in Sea Mauville. : 	Unlocks the door to Room 2 in Sea Mauville.</summary>
-	KEY_TO_ROOM_2 = 774,
+        KEY_TO_ROOM_2 = 774,
         /// <summary>Unlocks the door to Room 4 in Sea Mauville. : 	Unlocks the door to Room 4 in Sea Mauville.</summary>
-	KEY_TO_ROOM_4 = 775,
+        KEY_TO_ROOM_4 = 775,
         /// <summary>Unlocks the door to Room 6 in Sea Mauville. : 	Unlocks the door to Room 6 in Sea Mauville.</summary>
-	KEY_TO_ROOM_6 = 776,
+        KEY_TO_ROOM_6 = 776,
         /// <summary>Worn by the player while underwater via Dive in Omega Ruby and Alpha Sapphire. : 	Worn by the player while underwater.</summary>
-	DEVON_SCUBA_GEAR = 779,
+        DEVON_SCUBA_GEAR = 779,
         /// <summary>Worn during PokÃ©mon Contests. : 	Worn during PokÃ©mon Contests.</summary>
-	CONTEST_COSTUME__JACKET = 780,
+        CONTEST_COSTUME__JACKET = 780,
         /// <summary>Allows the player to ride Groudon in the Cave of Origin. : 	Allows the player to ride Groudon in the Cave of Origin.</summary>
-	MAGMA_SUIT = 782,
+        MAGMA_SUIT = 782,
         /// <summary>Allows the player to ride Kyogre in the Cave of Origin. : 	Allows the player to ride Kyogre in the Cave of Origin.</summary>
-	AQUA_SUIT = 783,
+        AQUA_SUIT = 783,
         /// <summary>Allows the player and their mother to see the star show in the Mossdeep Space Center. : 	Allows the player and their mother to see the star show in the Mossdeep Space Center.</summary>
-	PAIR_OF_TICKETS = 784,
+        PAIR_OF_TICKETS = 784,
         /// <summary>Allows the player's PokÃ©mon to Mega Evolve. : 	Allows the player's PokÃ©mon to Mega Evolve.</summary>
-	MEGA_BRACELET = 785,
+        MEGA_BRACELET = 785,
         /// <summary>Unused.  This is Wally's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_PENDANT = 786,
+        MEGA_PENDANT = 786,
         /// <summary>Unused.  This is Maxie's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_GLASSES = 787,
+        MEGA_GLASSES = 787,
         /// <summary>Unused.  This is Archie's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_ANCHOR = 788,
+        MEGA_ANCHOR = 788,
         /// <summary>Unused.  This is Steven's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_STICKPIN = 789,
+        MEGA_STICKPIN = 789,
         /// <summary>Unused.  This is Lisia's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_TIARA = 790,
+        MEGA_TIARA = 790,
         /// <summary>Unused.  This is Zinnia's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
-	MEGA_ANKLET = 791,
+        MEGA_ANKLET = 791,
         /// <summary>Held: Allows Swampert to Mega Evolve into Mega Swampert. : 	Held: Allows Swampert to Mega Evolve into Mega Swampert.</summary>
-	SWAMPERTITE = 793,
+        SWAMPERTITE = 793,
         /// <summary>Held: Allows Sceptile to Mega Evolve into Mega Sceptile. : 	Held: Allows Sceptile to Mega Evolve into Mega Sceptile.</summary>
-	SCEPTILITE = 794,
+        SCEPTILITE = 794,
         /// <summary>Held: Allows Sableye to Mega Evolve into Mega Sableye. : 	Held: Allows Sableye to Mega Evolve into Mega Sableye.</summary>
-	SABLENITE = 795,
+        SABLENITE = 795,
         /// <summary>Held: Allows Altaria to Mega Evolve into Mega Altaria. : 	Held: Allows Altaria to Mega Evolve into Mega Altaria.</summary>
-	ALTARIANITE = 796,
+        ALTARIANITE = 796,
         /// <summary>Held: Allows Gallade to Mega Evolve into Mega Gallade. : 	Held: Allows Gallade to Mega Evolve into Mega Gallade.</summary>
-	GALLADITE = 797,
+        GALLADITE = 797,
         /// <summary>Held: Allows Audino to Mega Evolve into Mega Audino. : 	Held: Allows Audino to Mega Evolve into Mega Audino.</summary>
-	AUDINITE = 798,
+        AUDINITE = 798,
         /// <summary>Held: Allows Metagross to Mega Evolve into Mega Metagross. : 	Held: Allows Metagross to Mega Evolve into Mega Metagross.</summary>
-	METAGROSSITE = 799,
+        METAGROSSITE = 799,
         /// <summary>Held: Allows Sharpedo to Mega Evolve into Mega Sharpedo. : 	Held: Allows Sharpedo to Mega Evolve into Mega Sharpedo.</summary>
-	SHARPEDONITE = 800,
+        SHARPEDONITE = 800,
         /// <summary>Held: Allows Slowbro to Mega Evolve into Mega Slowbro. : 	Held: Allows Slowbro to Mega Evolve into Mega Slowbro.</summary>
-	SLOWBRONITE = 801,
+        SLOWBRONITE = 801,
         /// <summary>Held: Allows Steelix to Mega Evolve into Mega Steelix. : 	Held: Allows Steelix to Mega Evolve into Mega Steelix.</summary>
-	STEELIXITE = 802,
+        STEELIXITE = 802,
         /// <summary>Held: Allows Pidgeot to Mega Evolve into Mega Pidgeot. : 	Held: Allows Pidgeot to Mega Evolve into Mega Pidgeot.</summary>
-	PIDGEOTITE = 803,
+        PIDGEOTITE = 803,
         /// <summary>Held: Allows Glalie to Mega Evolve into Mega Glalie. : 	Held: Allows Glalie to Mega Evolve into Mega Glalie.</summary>
-	GLALITITE = 804,
+        GLALITITE = 804,
         /// <summary>Held: Allows Diancie to Mega Evolve into Mega Diancie. : 	Held: Allows Diancie to Mega Evolve into Mega Diancie.</summary>
-	DIANCITE = 805,
+        DIANCITE = 805,
         /// <summary>Transforms Hoopa into its Unbound form for up to three days. : 	Transforms Hoopa into its Unbound form for up to three days.</summary>
-	PRISON_BOTTLE = 806,
+        PRISON_BOTTLE = 806,
         /// <summary>Unused.  This appears as the boy player's Mega Bracelet in PokÃ©mon Contests, but it cannot actually be obtained. : 	Unused Key Stone.</summary>
-	MEGA_CUFF = 807,
+        MEGA_CUFF = 807,
         /// <summary>Held: Allows Camerupt to Mega Evolve into Mega Camerupt. : 	Held: Allows Camerupt to Mega Evolve into Mega Camerupt.</summary>
-	CAMERUPTITE = 808,
+        CAMERUPTITE = 808,
         /// <summary>Held: Allows Lopunny to Mega Evolve into Mega Lopunny. : 	Held: Allows Lopunny to Mega Evolve into Mega Lopunny.</summary>
-	LOPUNNITE = 809,
+        LOPUNNITE = 809,
         /// <summary>Held: Allows Salamence to Mega Evolve into Mega Salamence. : 	Held: Allows Salamence to Mega Evolve into Mega Salamence.</summary>
-	SALAMENCITE = 810,
+        SALAMENCITE = 810,
         /// <summary>Held: Allows Beedrill to Mega Evolve into Mega Beedrill. : 	Held: Allows Beedrill to Mega Evolve into Mega Beedrill.</summary>
-	BEEDRILLITE = 811,
+        BEEDRILLITE = 811,
         /// <summary>Allows the player's PokÃ©mon to Mega Evolve. : 	Allows the player's PokÃ©mon to Mega Evolve.</summary>
-	KEY_STONE = 814,
+        KEY_STONE = 814,
         /// <summary>Causes the Meteorite to transform to its final form, allowing Rayquaza to Mega Evolve. : 	Causes the Meteorite to transform to its final form, allowing Rayquaza to Mega Evolve.</summary>
-	METEORITE_SHARD = 815,
+        METEORITE_SHARD = 815,
         /// <summary>Summons Latias or Latios for a ride. : 	Summons Latias or Latios for a ride.</summary>
-	EON_FLUTE = 816,
+        EON_FLUTE = 816,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Normal moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Normal moves.</summary>
-	NORMALIUM_Z__HELD = 817,
+        NORMALIUM_Z__HELD = 817,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fire moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fire moves.</summary>
-	FIRIUM_Z__HELD = 818,
+        FIRIUM_Z__HELD = 818,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Water moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Water moves.</summary>
-	WATERIUM_Z__HELD = 819,
+        WATERIUM_Z__HELD = 819,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Electric moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Electric moves.</summary>
-	ELECTRIUM_Z__HELD = 820,
+        ELECTRIUM_Z__HELD = 820,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Grass moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Grass moves.</summary>
-	GRASSIUM_Z__HELD = 821,
+        GRASSIUM_Z__HELD = 821,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ice moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ice moves.</summary>
-	ICIUM_Z__HELD = 822,
+        ICIUM_Z__HELD = 822,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fighting moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fighting moves.</summary>
-	FIGHTINIUM_Z__HELD = 823,
+        FIGHTINIUM_Z__HELD = 823,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Poison moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Poison moves.</summary>
-	POISONIUM_Z__HELD = 824,
+        POISONIUM_Z__HELD = 824,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ground moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ground moves.</summary>
-	GROUNDIUM_Z__HELD = 825,
+        GROUNDIUM_Z__HELD = 825,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Flying moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Flying moves.</summary>
-	FLYINIUM_Z__HELD = 826,
+        FLYINIUM_Z__HELD = 826,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Psychic moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Psychic moves.</summary>
-	PSYCHIUM_Z__HELD = 827,
+        PSYCHIUM_Z__HELD = 827,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Bug moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Bug moves.</summary>
-	BUGINIUM_Z__HELD = 828,
+        BUGINIUM_Z__HELD = 828,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Rock moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Rock moves.</summary>
-	ROCKIUM_Z__HELD = 829,
+        ROCKIUM_Z__HELD = 829,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ghost moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ghost moves.</summary>
-	GHOSTIUM_Z__HELD = 830,
+        GHOSTIUM_Z__HELD = 830,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dragon moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dragon moves.</summary>
-	DRAGONIUM_Z__HELD = 831,
+        DRAGONIUM_Z__HELD = 831,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dark moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dark moves.</summary>
-	DARKINIUM_Z__HELD = 832,
+        DARKINIUM_Z__HELD = 832,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Steel moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Steel moves.</summary>
-	STEELIUM_Z__HELD = 833,
+        STEELIUM_Z__HELD = 833,
         /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fairy moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fairy moves.</summary>
-	FAIRIUM_Z__HELD = 834,
+        FAIRIUM_Z__HELD = 834,
         /// <summary>Held: Allows []{pokemon:pikachu} to upgrade []{move:volt-tackle} into []{move:catastropika}. : 	Held: Allows Pikachu to upgrade Volt Tackle into Catastropika.</summary>
-	PIKANIUM_Z__HELD = 835,
+        PIKANIUM_Z__HELD = 835,
         /// <summary>Trade to Mr. Hyper to set one of a PokÃ©mon's genes to 31. : 	Trade to Mr. Hyper to maximize one of a PokÃ©mon's genes.</summary>
-	BOTTLE_CAP = 836,
+        BOTTLE_CAP = 836,
         /// <summary>Trade to Mr. Hyper to set all of a PokÃ©mon's genes to 31. : 	Trade to Mr. Hyper to maximize all of a PokÃ©mon's genes.</summary>
-	GOLD_BOTTLE_CAP = 837,
+        GOLD_BOTTLE_CAP = 837,
         /// <summary>Allows the player's PokÃ©mon to use Z-moves. : 	Allows the player's PokÃ©mon to use Z-moves.</summary>
-	Z_RING = 838,
+        Z_RING = 838,
         /// <summary>Held: Allows []{pokemon:decidueye} to upgrade []{move:spirit-shackle} into []{move:sinister-arrow-raid}. : 	Held: Allows Decidueye to upgrade Spirit Shackle into Sinister Arrow Raid.</summary>
-	DECIDIUM_Z__HELD = 839,
+        DECIDIUM_Z__HELD = 839,
         /// <summary>Held: Allows []{pokemon:incineroar} to upgrade []{move:darkest-lariat} into []{move:malicious-moonsault}. : 	Held: Allows Incineroar to upgrade Darkest Lariat into Malicious Moonsault.</summary>
-	INCINIUM_Z__HELD = 840,
+        INCINIUM_Z__HELD = 840,
         /// <summary>Held: Allows []{pokemon:primarina} to upgrade []{move:sparkling-aria} into []{move:oceanic-operetta}. : 	Held: Allows Primarina to upgrade Sparkling Aria into Oceanic Operetta.</summary>
-	PRIMARIUM_Z__HELD = 841,
+        PRIMARIUM_Z__HELD = 841,
         /// <summary>Held: Allows []{pokemon:tapu-koko}, []{pokemon:tapu-lele}, []{pokemon:tapu-bulu}, and []{pokemon:tapu-fini} to upgrade []{move:natures-madness} into []{move:guardian-of-alola}. : 	Held: Allows the Tapus to upgrade Nature's Madness into Guardian of Alola.</summary>
-	TAPUNIUM_Z__HELD = 842,
+        TAPUNIUM_Z__HELD = 842,
         /// <summary>Held: Allows []{pokemon:marshadow} to upgrade []{move:spectral-thief} into []{move:soul-stealing-7-star-strike}. : 	Held: Allows Marshadow to upgrade Spectral Thief into Soul-Stealing 7 Star Strike.</summary>
-	MARSHADIUM_Z__HELD = 843,
+        MARSHADIUM_Z__HELD = 843,
         /// <summary>Held: Allows Alola []{pokemon:raichu} to upgrade []{move:thunderbolt} into []{move:stoked-sparksurfer}. : 	Held: Allows Alola Raichu to upgrade Thunderbolt into Stoked Sparksurfer.</summary>
-	ALORAICHIUM_Z__HELD = 844,
+        ALORAICHIUM_Z__HELD = 844,
         /// <summary>Held: Allows []{pokemon:snorlax} to upgrade []{move:giga-impact} into []{move:pulverizing-pancake}. : 	Held: Allows Snorlax to upgrade Giga Impact into Pulverizing Pancake.</summary>
-	SNORLIUM_Z__HELD = 845,
+        SNORLIUM_Z__HELD = 845,
         /// <summary>Held: Allows []{pokemon:eevee} to upgrade []{move:last-resort} into []{move:extreme-evoboost}. : 	Held: Allows Eevee to upgrade Last Resort into Extreme Evoboost.</summary>
-	EEVIUM_Z__HELD = 846,
+        EEVIUM_Z__HELD = 846,
         /// <summary>Held: Allows []{pokemon:mew} to upgrade []{move:psychic} into []{move:genesis-supernova}. : 	Held: Allows Mew to upgrade Psychic into Genesis Supernova.</summary>
-	MEWNIUM_Z__HELD = 847,
+        MEWNIUM_Z__HELD = 847,
         /// <summary>Held: Allows cap-wearing []{pokemon:pikachu} to upgrade []{move:thunderbolt} into []{move:10-000-000-volt-thunderbolt}. : 	Held: Allows cap-wearing Pikachu to upgrade Thunderbolt into 10,000,000 Volt Thunderbolt.</summary>
-	PIKASHUNIUM_Z__HELD = 877,
+        PIKASHUNIUM_Z__HELD = 877,
         /// <summary>Holds ingredients during Mallow's trial. : 	Holds ingredients during Mallow's trial.</summary>
-	FORAGE_BAG = 878,
+        FORAGE_BAG = 878,
         /// <summary>Allows the player to fish for PokÃ©mon. : 	Allows the player to fish for PokÃ©mon.</summary>
-	FISHING_ROD = 879,
+        FISHING_ROD = 879,
         /// <summary>Lost by Professor Kukui. : 	Lost by Professor Kukui.</summary>
-	PROFESSORS_MASK = 880,
+        PROFESSORS_MASK = 880,
         /// <summary>Hosts a mission in Festival Plaza. : 	Hosts a mission in Festival Plaza.</summary>
-	FESTIVAL_TICKET = 881,
+        FESTIVAL_TICKET = 881,
         /// <summary>Required to obtain a Z-Ring. : 	Required to obtain a Z-Ring.</summary>
-	SPARKLING_STONE = 882,
+        SPARKLING_STONE = 882,
         /// <summary>Makes wild PokÃ©mon more likely to summon allies.  Held: increases the holder's Speed by one stage when affected by Intimidate. : 	Makes wild PokÃ©mon more likely to summon allies.  Held: increases the holder's Speed by one stage when affected by Intimidate.</summary>
-	ADRENALINE_ORB = 883,
+        ADRENALINE_ORB = 883,
         /// <summary>Contains collected Zygarde cells/cores.  Can teach Zygarde moves. : 	Contains collected Zygarde cells/cores.  Can teach Zygarde moves.</summary>
-	ZYGARDE_CUBE = 884,
+        ZYGARDE_CUBE = 884,
         /// <summary>Used on a party PokÃ©mon :   Evolves an Alola []{pokemon:sandshrew} into Alola[]{pokemon:sandslash} or an Alola[]{pokemon:vulpix} into Alola[]{pokemon:ninetales}. : 	Evolves an Alola Sandshrew into Alola Sandslash or an Alola Vulpix into Alola Ninetales.</summary>
-	ICE_STONE = 885,
+        ICE_STONE = 885,
         /// <summary>Allows the player to summon a Ride PokÃ©mon.  Unused, as this can be done simply by pressing Y. : 	Allows the player to summon a Ride PokÃ©mon.</summary>
-	RIDE_PAGER = 886,
+        RIDE_PAGER = 886,
         /// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild PokÃ©mon.If the wild PokÃ©mon is an Ultra Beast, this ball has a catch rate of 5Ã—.  Otherwise, it has a catch rate of 0.1Ã—. If used in a trainer battle, nothing happens and the ball is lost. : 	Tries to catch a wild PokÃ©mon.Success rate is 5Ã— for Ultra Beasts and 0.1Ã— for all other PokÃ©mon.</ summary >
-	BEAST - BALL = 887, 
+        BEAST - BALL = 887, 
         /// <summary>Cures major status ailments and confusion. : 	Cures major status ailments and confusion.</summary>
-	BIG_MALASADA = 888,
+        BIG_MALASADA = 888,
         /// <summary>Changes Oricorio to Baile Style.  Single-use and cannot be used in battle. : 	Changes Oricorio to Baile Style.</summary>
-	RED_NECTAR = 889,
+        RED_NECTAR = 889,
         /// <summary>Changes Oricorio to Pom-Pom Style.  Single-use and cannot be used in battle. : 	Changes Oricorio to Pom-Pom Style.</summary>
-	YELLOW_NECTAR = 890,
+        YELLOW_NECTAR = 890,
         /// <summary>Changes Oricorio to Paâ€™u Style.  Single-use and cannot be used in battle. : 	Changes Oricorio to Paâ€™u Style.</summary>
-	PINK_NECTAR = 891,
+        PINK_NECTAR = 891,
         /// <summary>Changes Oricorio to Sensu Style.  Single-use and cannot be used in battle. : 	Changes Oricorio to Sensu Style.</summary>
-	PURPLE_NECTAR = 892,
+        PURPLE_NECTAR = 892,
         /// <summary>Evolves Nebby into Solgaleo when used at the Altar of the Sunne. : 	Evolves Nebby into Solgaleo when used at the Altar of the Sunne.</summary>
-	SUN_FLUTE = 893,
+        SUN_FLUTE = 893,
         /// <summary>Evolves Nebby into Lunala when used at the Altar of the Moone. : 	Evolves Nebby into Lunala when used at the Altar of the Moone.</summary>
-	MOON_FLUTE = 894,
+        MOON_FLUTE = 894,
         /// <summary>Unlocks Looker's motel room on Route 8. : 	Unlocks Looker's motel room on Route 8.</summary>
-	ENIGMATIC_CARD = 895,
+        ENIGMATIC_CARD = 895,
         /// <summary>Held: When the holder changes the Terrain (whether by move or ability), it will last  8 turns instead of 5. : 	Held: Extends the holder's Terrain effects to 8 turns.</summary>
-	TERRAIN_EXTENDER = 896,
+        TERRAIN_EXTENDER = 896,
         /// <summary>Held: Prevents side effects of contact moves used on the holder. : 	Held: Prevents side effects of contact moves used on the holder.</summary>
-	PROTECTIVE_PADS = 897,
+        PROTECTIVE_PADS = 897,
         /// <summary>Held: If the holder enters battle during Electric Terrain, or if Electric Terrain is activated while the holder is in battle, this item is consumed and the holder's Defense raises by one stage. : 	Held: Consumed on Electric Terrain and raises the holder's Defense by one stage.</summary>
-	ELECTRIC_SEED = 898,
+        ELECTRIC_SEED = 898,
         /// <summary>Held: If the holder enters battle during Psychic Terrain, or if Psychic Terrain is activated while the holder is in battle, this item is consumed and the holder's Special Defense raises by one stage. : 	Held: Consumed on Psychic Terrain and raises the holder's Special Defense by one stage.</summary>
-	PSYCHIC_SEED = 899,
+        PSYCHIC_SEED = 899,
         /// <summary>Held: If the holder enters battle during Misty Terrain, or if Misty Terrain is activated while the holder is in battle, this item is consumed and the holder's Special Defense raises by one stage. : 	Held: Consumed on Misty Terrain and raises the holder's Special Defense by one stage.</summary>
-	MISTY_SEED = 900,
+        MISTY_SEED = 900,
         /// <summary>Held: If the holder enters battle during Grassy Terrain, or if Grassy Terrain is activated while the holder is in battle, this item is consumed and the holder's Defense raises by one stage. : 	Held: Consumed on Grassy Terrain and raises the holder's Defense by one stage.</summary>
-	GRASSY_SEED = 901,
+        GRASSY_SEED = 901,
         /// <summary>Held: Changes Silvally to its Fighting form.  Changes Multi-Attack's type to Fighting. : 	Held: Changes Silvally to its Fighting form.  Changes Multi-Attack's type to Fighting.</summary>
-	FIGHTING_MEMORY = 902,
+        FIGHTING_MEMORY = 902,
         /// <summary>Held: Changes Silvally to its Flying form.  Changes Multi-Attack's type to Flying. : 	Held: Changes Silvally to its Flying form.  Changes Multi-Attack's type to Flying.</summary>
-	FLYING_MEMORY = 903,
+        FLYING_MEMORY = 903,
         /// <summary>Held: Changes Silvally to its Poison form.  Changes Multi-Attack's type to Poison. : 	Held: Changes Silvally to its Poison form.  Changes Multi-Attack's type to Poison.</summary>
-	POISON_MEMORY = 904,
+        POISON_MEMORY = 904,
         /// <summary>Held: Changes Silvally to its Ground form.  Changes Multi-Attack's type to Ground. : 	Held: Changes Silvally to its Ground form.  Changes Multi-Attack's type to Ground.</summary>
-	GROUND_MEMORY = 905,
+        GROUND_MEMORY = 905,
         /// <summary>Held: Changes Silvally to its Rock form.  Changes Multi-Attack's type to Rock. : 	Held: Changes Silvally to its Rock form.  Changes Multi-Attack's type to Rock.</summary>
-	ROCK_MEMORY = 906,
+        ROCK_MEMORY = 906,
         /// <summary>Held: Changes Silvally to its Bug form.  Changes Multi-Attack's type to Bug. : 	Held: Changes Silvally to its Bug form.  Changes Multi-Attack's type to Bug.</summary>
-	BUG_MEMORY = 907,
+        BUG_MEMORY = 907,
         /// <summary>Held: Changes Silvally to its Ghost form.  Changes Multi-Attack's type to Ghost. : 	Held: Changes Silvally to its Ghost form.  Changes Multi-Attack's type to Ghost.</summary>
-	GHOST_MEMORY = 908,
+        GHOST_MEMORY = 908,
         /// <summary>Held: Changes Silvally to its Steel form.  Changes Multi-Attack's type to Steel. : 	Held: Changes Silvally to its Steel form.  Changes Multi-Attack's type to Steel.</summary>
-	STEEL_MEMORY = 909,
+        STEEL_MEMORY = 909,
         /// <summary>Held: Changes Silvally to its Fire form.  Changes Multi-Attack's type to Fire. : 	Held: Changes Silvally to its Fire form.  Changes Multi-Attack's type to Fire.</summary>
-	FIRE_MEMORY = 910,
+        FIRE_MEMORY = 910,
         /// <summary>Held: Changes Silvally to its Water form.  Changes Multi-Attack's type to Water. : 	Held: Changes Silvally to its Water form.  Changes Multi-Attack's type to Water.</summary>
-	WATER_MEMORY = 911,
+        WATER_MEMORY = 911,
         /// <summary>Held: Changes Silvally to its Grass form.  Changes Multi-Attack's type to Grass. : 	Held: Changes Silvally to its Grass form.  Changes Multi-Attack's type to Grass.</summary>
-	GRASS_MEMORY = 912,
+        GRASS_MEMORY = 912,
         /// <summary>Held: Changes Silvally to its Electric form.  Changes Multi-Attack's type to Electric. : 	Held: Changes Silvally to its Electric form.  Changes Multi-Attack's type to Electric.</summary>
-	ELECTRIC_MEMORY = 913,
+        ELECTRIC_MEMORY = 913,
         /// <summary>Held: Changes Silvally to its Psychic form.  Changes Multi-Attack's type to Psychic. : 	Held: Changes Silvally to its Psychic form.  Changes Multi-Attack's type to Psychic.</summary>
-	PSYCHIC_MEMORY = 914,
+        PSYCHIC_MEMORY = 914,
         /// <summary>Held: Changes Silvally to its Ice form.  Changes Multi-Attack's type to Ice. : 	Held: Changes Silvally to its Ice form.  Changes Multi-Attack's type to Ice.</summary>
-	ICE_MEMORY = 915,
+        ICE_MEMORY = 915,
         /// <summary>Held: Changes Silvally to its Dragon form.  Changes Multi-Attack's type to Dragon. : 	Held: Changes Silvally to its Dragon form.  Changes Multi-Attack's type to Dragon.</summary>
-	DRAGON_MEMORY = 916,
+        DRAGON_MEMORY = 916,
         /// <summary>Held: Changes Silvally to its Dark form.  Changes Multi-Attack's type to Dark. : 	Held: Changes Silvally to its Dark form.  Changes Multi-Attack's type to Dark.</summary>
-	DARK_MEMORY = 917,
+        DARK_MEMORY = 917,
         /// <summary>Held: Changes Silvally to its Fairy form.  Changes Multi-Attack's type to Fairy. : 	Held: Changes Silvally to its Fairy form.  Changes Multi-Attack's type to Fairy.</summary>
-	FAIRY_MEMORY = 918,
+        FAIRY_MEMORY = 918,
         /// <summary>XXX new effect for bike--green : 	XXX new effect for bike--green</summary>
-	BIKE__GREEN = 919,
+        BIKE__GREEN = 919,
         /// <summary>XXX new effect for storage-key--galactic-warehouse : 	XXX new effect for storage-key--galactic-warehouse</summary>
-	STORAGE_KEY__GALACTIC_WAREHOUSE = 920,
+        STORAGE_KEY__GALACTIC_WAREHOUSE = 920,
         /// <summary>XXX new effect for basement-key--goldenrod : 	XXX new effect for basement-key--goldenrod</summary>
-	BASEMENT_KEY__GOLDENROD = 921,
+        BASEMENT_KEY__GOLDENROD = 921,
         /// <summary>XXX new effect for xtranceiver--red : 	XXX new effect for xtranceiver--red</summary>
-	XTRANCEIVER__RED = 922,
+        XTRANCEIVER__RED = 922,
         /// <summary>XXX new effect for xtranceiver--yellow : 	XXX new effect for xtranceiver--yellow</summary>
-	XTRANCEIVER__YELLOW = 923,
+        XTRANCEIVER__YELLOW = 923,
         /// <summary>XXX new effect for dna-splicers--merge : 	XXX new effect for dna-splicers--merge</summary>
-	DNA_SPLICERS__MERGE = 924,
+        DNA_SPLICERS__MERGE = 924,
         /// <summary>XXX new effect for dna-splicers--split : 	XXX new effect for dna-splicers--split</summary>
-	DNA_SPLICERS__SPLIT = 925,
+        DNA_SPLICERS__SPLIT = 925,
         /// <summary>XXX new effect for dropped-item--red : 	XXX new effect for dropped-item--red</summary>
-	DROPPED_ITEM__RED = 926,
+        DROPPED_ITEM__RED = 926,
         /// <summary>XXX new effect for dropped-item--yellow : 	XXX new effect for dropped-item--yellow</summary>
-	DROPPED_ITEM__YELLOW = 927,
+        DROPPED_ITEM__YELLOW = 927,
         /// <summary>XXX new effect for holo-caster--green : 	XXX new effect for holo-caster--green</summary>
-	HOLO_CASTER__GREEN = 928,
+        HOLO_CASTER__GREEN = 928,
         /// <summary>XXX new effect for bike--yellow : 	XXX new effect for bike--yellow</summary>
-	BIKE__YELLOW = 929,
+        BIKE__YELLOW = 929,
         /// <summary>XXX new effect for holo-caster--red : 	XXX new effect for holo-caster--red</summary>
-	HOLO_CASTER__RED = 930,
+        HOLO_CASTER__RED = 930,
         /// <summary>XXX new effect for basement-key--new-mauville : 	XXX new effect for basement-key--new-mauville</summary>
-	BASEMENT_KEY__NEW_MAUVILLE = 931,
+        BASEMENT_KEY__NEW_MAUVILLE = 931,
         /// <summary>XXX new effect for storage-key--sea-mauville : 	XXX new effect for storage-key--sea-mauville</summary>
-	STORAGE_KEY__SEA_MAUVILLE = 932,
+        STORAGE_KEY__SEA_MAUVILLE = 932,
         /// <summary>XXX new effect for ss-ticket--hoenn : 	XXX new effect for ss-ticket--hoenn</summary>
-	SS_TICKET__HOENN = 933,
+        SS_TICKET__HOENN = 933,
         /// <summary>XXX new effect for contest-costume--dress : 	XXX new effect for contest-costume--dress</summary>
-	CONTEST_COSTUME__DRESS = 934,
+        CONTEST_COSTUME__DRESS = 934,
         /// <summary>XXX new effect for meteorite--2 : 	XXX new effect for meteorite--2</summary>
-	METEORITE__2 = 935,
+        METEORITE__2 = 935,
         /// <summary>XXX new effect for meteorite--3 : 	XXX new effect for meteorite--3</summary>
-	METEORITE__3 = 936,
+        METEORITE__3 = 936,
         /// <summary>XXX new effect for meteorite--4 : 	XXX new effect for meteorite--4</summary>
-	METEORITE__4 = 937,
+        METEORITE__4 = 937,
         /// <summary>XXX new effect for normalium-z--bag : 	XXX new effect for normalium-z--bag</summary>
-	NORMALIUM_Z__BAG = 938,
+        NORMALIUM_Z__BAG = 938,
         /// <summary>XXX new effect for firium-z--bag : 	XXX new effect for firium-z--bag</summary>
-	FIRIUM_Z__BAG = 939,
+        FIRIUM_Z__BAG = 939,
         /// <summary>XXX new effect for waterium-z--bag : 	XXX new effect for waterium-z--bag</summary>
-	WATERIUM_Z__BAG = 940,
+        WATERIUM_Z__BAG = 940,
         /// <summary>XXX new effect for electrium-z--bag : 	XXX new effect for electrium-z--bag</summary>
-	ELECTRIUM_Z__BAG = 941,
+        ELECTRIUM_Z__BAG = 941,
         /// <summary>XXX new effect for grassium-z--bag : 	XXX new effect for grassium-z--bag</summary>
-	GRASSIUM_Z__BAG = 942,
+        GRASSIUM_Z__BAG = 942,
         /// <summary>XXX new effect for icium-z--bag : 	XXX new effect for icium-z--bag</summary>
-	ICIUM_Z__BAG = 943,
+        ICIUM_Z__BAG = 943,
         /// <summary>XXX new effect for fightinium-z--bag : 	XXX new effect for fightinium-z--bag</summary>
-	FIGHTINIUM_Z__BAG = 944,
+        FIGHTINIUM_Z__BAG = 944,
         /// <summary>XXX new effect for poisonium-z--bag : 	XXX new effect for poisonium-z--bag</summary>
-	POISONIUM_Z__BAG = 945,
+        POISONIUM_Z__BAG = 945,
         /// <summary>XXX new effect for groundium-z--bag : 	XXX new effect for groundium-z--bag</summary>
-	GROUNDIUM_Z__BAG = 946,
+        GROUNDIUM_Z__BAG = 946,
         /// <summary>XXX new effect for flyinium-z--bag : 	XXX new effect for flyinium-z--bag</summary>
-	FLYINIUM_Z__BAG = 947,
+        FLYINIUM_Z__BAG = 947,
         /// <summary>XXX new effect for psychium-z--bag : 	XXX new effect for psychium-z--bag</summary>
-	PSYCHIUM_Z__BAG = 948,
+        PSYCHIUM_Z__BAG = 948,
         /// <summary>XXX new effect for buginium-z--bag : 	XXX new effect for buginium-z--bag</summary>
-	BUGINIUM_Z__BAG = 949,
+        BUGINIUM_Z__BAG = 949,
         /// <summary>XXX new effect for rockium-z--bag : 	XXX new effect for rockium-z--bag</summary>
-	ROCKIUM_Z__BAG = 950,
+        ROCKIUM_Z__BAG = 950,
         /// <summary>XXX new effect for ghostium-z--bag : 	XXX new effect for ghostium-z--bag</summary>
-	GHOSTIUM_Z__BAG = 951,
+        GHOSTIUM_Z__BAG = 951,
         /// <summary>XXX new effect for dragonium-z--bag : 	XXX new effect for dragonium-z--bag</summary>
-	DRAGONIUM_Z__BAG = 952,
+        DRAGONIUM_Z__BAG = 952,
         /// <summary>XXX new effect for darkinium-z--bag : 	XXX new effect for darkinium-z--bag</summary>
-	DARKINIUM_Z__BAG = 953,
+        DARKINIUM_Z__BAG = 953,
         /// <summary>XXX new effect for steelium-z--bag : 	XXX new effect for steelium-z--bag</summary>
-	STEELIUM_Z__BAG = 954,
+        STEELIUM_Z__BAG = 954,
         /// <summary>XXX new effect for fairium-z--bag : 	XXX new effect for fairium-z--bag</summary>
-	FAIRIUM_Z__BAG = 955,
+        FAIRIUM_Z__BAG = 955,
         /// <summary>XXX new effect for pikanium-z--bag : 	XXX new effect for pikanium-z--bag</summary>
-	PIKANIUM_Z__BAG = 956,
+        PIKANIUM_Z__BAG = 956,
         /// <summary>XXX new effect for decidium-z--bag : 	XXX new effect for decidium-z--bag</summary>
-	DECIDIUM_Z__BAG = 957,
+        DECIDIUM_Z__BAG = 957,
         /// <summary>XXX new effect for incinium-z--bag : 	XXX new effect for incinium-z--bag</summary>
-	INCINIUM_Z__BAG = 958,
+        INCINIUM_Z__BAG = 958,
         /// <summary>XXX new effect for primarium-z--bag : 	XXX new effect for primarium-z--bag</summary>
-	PRIMARIUM_Z__BAG = 959,
+        PRIMARIUM_Z__BAG = 959,
         /// <summary>XXX new effect for tapunium-z--bag : 	XXX new effect for tapunium-z--bag</summary>
-	TAPUNIUM_Z__BAG = 960,
+        TAPUNIUM_Z__BAG = 960,
         /// <summary>XXX new effect for marshadium-z--bag : 	XXX new effect for marshadium-z--bag</summary>
-	MARSHADIUM_Z__BAG = 961,
+        MARSHADIUM_Z__BAG = 961,
         /// <summary>XXX new effect for aloraichium-z--bag : 	XXX new effect for aloraichium-z--bag</summary>
-	ALORAICHIUM_Z__BAG = 962,
+        ALORAICHIUM_Z__BAG = 962,
         /// <summary>XXX new effect for snorlium-z--bag : 	XXX new effect for snorlium-z--bag</summary>
-	SNORLIUM_Z__BAG = 963,
+        SNORLIUM_Z__BAG = 963,
         /// <summary>XXX new effect for eevium-z--bag : 	XXX new effect for eevium-z--bag</summary>
-	EEVIUM_Z__BAG = 964,
+        EEVIUM_Z__BAG = 964,
         /// <summary>XXX new effect for mewnium-z--bag : 	XXX new effect for mewnium-z--bag</summary>
-	MEWNIUM_Z__BAG = 965,
+        MEWNIUM_Z__BAG = 965,
         /// <summary>XXX new effect for pikashunium-z--bag : 	XXX new effect for pikashunium-z--bag</summary>
-	PIKASHUNIUM_Z__BAG = 966,
+        PIKASHUNIUM_Z__BAG = 966,
         /// <summary>XXX new effect for solganium-z--held : 	XXX new effect for solganium-z--held</summary>
-	SOLGANIUM_Z__HELD = 967,
+        SOLGANIUM_Z__HELD = 967,
         /// <summary>XXX new effect for lunalium-z--held : 	XXX new effect for lunalium-z--held</summary>
-	LUNALIUM_Z__HELD = 968,
+        LUNALIUM_Z__HELD = 968,
         /// <summary>XXX new effect for ultranecrozium-z--held : 	XXX new effect for ultranecrozium-z--held</summary>
-	ULTRANECROZIUM_Z__HELD = 969,
+        ULTRANECROZIUM_Z__HELD = 969,
         /// <summary>XXX new effect for mimikium-z--held : 	XXX new effect for mimikium-z--held</summary>
-	MIMIKIUM_Z__HELD = 970,
+        MIMIKIUM_Z__HELD = 970,
         /// <summary>XXX new effect for lycanium-z--held : 	XXX new effect for lycanium-z--held</summary>
-	LYCANIUM_Z__HELD = 971,
+        LYCANIUM_Z__HELD = 971,
         /// <summary>XXX new effect for kommonium-z--held : 	XXX new effect for kommonium-z--held</summary>
-	KOMMONIUM_Z__HELD = 972,
+        KOMMONIUM_Z__HELD = 972,
         /// <summary>XXX new effect for solganium-z--bag : 	XXX new effect for solganium-z--bag</summary>
-	SOLGANIUM_Z__BAG = 973,
+        SOLGANIUM_Z__BAG = 973,
         /// <summary>XXX new effect for lunalium-z--bag : 	XXX new effect for lunalium-z--bag</summary>
-	LUNALIUM_Z__BAG = 974,
+        LUNALIUM_Z__BAG = 974,
         /// <summary>XXX new effect for ultranecrozium-z--bag : 	XXX new effect for ultranecrozium-z--bag</summary>
-	ULTRANECROZIUM_Z__BAG = 975,
+        ULTRANECROZIUM_Z__BAG = 975,
         /// <summary>XXX new effect for mimikium-z--bag : 	XXX new effect for mimikium-z--bag</summary>
-	MIMIKIUM_Z__BAG = 976,
+        MIMIKIUM_Z__BAG = 976,
         /// <summary>XXX new effect for lycanium-z--bag : 	XXX new effect for lycanium-z--bag</summary>
-	LYCANIUM_Z__BAG = 977,
+        LYCANIUM_Z__BAG = 977,
         /// <summary>XXX new effect for kommonium-z--bag : 	XXX new effect for kommonium-z--bag</summary>
-	KOMMONIUM_Z__BAG = 978,
+        KOMMONIUM_Z__BAG = 978,
         /// <summary>XXX new effect for z-power-ring : 	XXX new effect for z-power-ring</summary>
-	Z_POWER_RING = 979,
+        Z_POWER_RING = 979,
         /// <summary>XXX new effect for pink-petal : 	XXX new effect for pink-petal</summary>
-	PINK_PETAL = 980,
+        PINK_PETAL = 980,
         /// <summary>XXX new effect for orange-petal : 	XXX new effect for orange-petal</summary>
-	ORANGE_PETAL = 981,
+        ORANGE_PETAL = 981,
         /// <summary>XXX new effect for blue-petal : 	XXX new effect for blue-petal</summary>
-	BLUE_PETAL = 982,
+        BLUE_PETAL = 982,
         /// <summary>XXX new effect for red-petal : 	XXX new effect for red-petal</summary>
-	RED_PETAL = 983,
+        RED_PETAL = 983,
         /// <summary>XXX new effect for green-petal : 	XXX new effect for green-petal</summary>
-	GREEN_PETAL = 984,
+        GREEN_PETAL = 984,
         /// <summary>XXX new effect for yellow-petal : 	XXX new effect for yellow-petal</summary>
-	YELLOW_PETAL = 985,
+        YELLOW_PETAL = 985,
         /// <summary>XXX new effect for purple-petal : 	XXX new effect for purple-petal</summary>
-	PURPLE_PETAL = 986,
+        PURPLE_PETAL = 986,
         /// <summary>XXX new effect for rainbow-flower : 	XXX new effect for rainbow-flower</summary>
-	RAINBOW_FLOWER = 987,
+        RAINBOW_FLOWER = 987,
         /// <summary>XXX new effect for surge-badge : 	XXX new effect for surge-badge</summary>
-	SURGE_BADGE = 988,
+        SURGE_BADGE = 988,
         /// <summary>XXX new effect for n-solarizer--merge : 	XXX new effect for n-solarizer--merge</summary>
-	N_SOLARIZER__MERGE = 989,
+        N_SOLARIZER__MERGE = 989,
         /// <summary>XXX new effect for n-lunarizer--merge : 	XXX new effect for n-lunarizer--merge</summary>
-	N_LUNARIZER__MERGE = 990,
+        N_LUNARIZER__MERGE = 990,
         /// <summary>XXX new effect for n-solarizer--split : 	XXX new effect for n-solarizer--split</summary>
-	N_SOLARIZER__SPLIT = 991,
+        N_SOLARIZER__SPLIT = 991,
         /// <summary>XXX new effect for n-lunarizer--split : 	XXX new effect for n-lunarizer--split</summary>
-	N_LUNARIZER__SPLIT = 992,
+        N_LUNARIZER__SPLIT = 992,
         /// <summary>XXX new effect for ilimas-normalium-z : 	XXX new effect for ilimas-normalium-z</summary>
-	ILIMAS_NORMALIUM_Z = 993,
+        ILIMAS_NORMALIUM_Z = 993,
         /// <summary>XXX new effect for left-poke-ball : 	XXX new effect for left-poke-ball</summary>
-	LEFT_POKE_BALL = 994,
+        LEFT_POKE_BALL = 994,
         /// <summary>XXX new effect for roto-hatch : 	XXX new effect for roto-hatch</summary>
-	ROTO_HATCH = 995,
+        ROTO_HATCH = 995,
         /// <summary>XXX new effect for roto-bargain : 	XXX new effect for roto-bargain</summary>
-	ROTO_BARGAIN = 996,
+        ROTO_BARGAIN = 996,
         /// <summary>XXX new effect for roto-prize-money : 	XXX new effect for roto-prize-money</summary>
-	ROTO_PRIZE_MONEY = 997,
+        ROTO_PRIZE_MONEY = 997,
         /// <summary>XXX new effect for roto-exp-points : 	XXX new effect for roto-exp-points</summary>
-	ROTO_EXP_POINTS = 998,
+        ROTO_EXP_POINTS = 998,
         /// <summary>XXX new effect for roto-friendship : 	XXX new effect for roto-friendship</summary>
-	ROTO_FRIENDSHIP = 999,
+        ROTO_FRIENDSHIP = 999,
         /// <summary>XXX new effect for roto-encounter : 	XXX new effect for roto-encounter</summary>
-	ROTO_ENCOUNTER = 1000,
+        ROTO_ENCOUNTER = 1000,
         /// <summary>XXX new effect for roto-stealth : 	XXX new effect for roto-stealth</summary>
-	ROTO_STEALTH = 1001,
+        ROTO_STEALTH = 1001,
         /// <summary>XXX new effect for roto-hp-restore : 	XXX new effect for roto-hp-restore</summary>
-	ROTO_HP_RESTORE = 1002,
+        ROTO_HP_RESTORE = 1002,
         /// <summary>XXX new effect for roto-pp-restore : 	XXX new effect for roto-pp-restore</summary>
-	ROTO_PP_RESTORE = 1003,
+        ROTO_PP_RESTORE = 1003,
         /// <summary>XXX new effect for roto-boost : 	XXX new effect for roto-boost</summary>
-	ROTO_BOOST = 1004,
+        ROTO_BOOST = 1004,
         /// <summary>XXX new effect for roto-catch : 	XXX new effect for roto-catch</summary>
-	ROTO_CATCH = 1005
+        ROTO_CATCH = 1005
     }
 
     public enum ItemPockets
