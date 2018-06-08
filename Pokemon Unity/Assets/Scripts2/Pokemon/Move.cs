@@ -1251,30 +1251,6 @@ namespace PokemonUnity.Move
 		/// null
 		/// </summary>
 		NONE = 0,
-		/// <summary>
-		/// "The foe is stricken by a shock wave. This attack always inflicts 40 HP damage."
-		/// </summary>
-		/// <summary>
-		/// "An attack that is used in desperation only if the user has no PP. It also hurts the user slightly."
-		/// </summary>
-		/// <summary>
-		/// "The user bites with flame-cloaked \nfangs. It may also make the foe \nflinch or sustain a burn."
-		/// </summary>
-		/// <summary>
-		/// "The user creates a gust of repulsive wind. It may also raise all the user's stats at once."
-		/// </summary>
-		/// <summary>
-		/// "The user emits a healing pulse which restores the target's HP by up to half of its max HP."
-		/// </summary>
-		/// <summary>
-		/// Forest's_Curse
-		/// </summary>
-		/// <summary>
-		/// King's_Shield
-		/// </summary>
-		/// <summary>
-		/// Land's_Wrath
-		/// </summary>
 		POUND = 1,
 		KARATE_CHOP = 2,
 		DOUBLE_SLAP = 3,
@@ -1356,7 +1332,10 @@ namespace PokemonUnity.Move
 		SLEEP_POWDER = 79,
 		PETAL_DANCE = 80,
 		STRING_SHOT = 81,
-		DRAGON_RAGE = 82,
+        /// <summary>
+        /// "The foe is stricken by a shock wave. This attack always inflicts 40 HP damage."
+        /// </summary>
+        DRAGON_RAGE = 82,
 		FIRE_SPIN = 83,
 		THUNDER_SHOCK = 84,
 		THUNDERBOLT = 85,
@@ -1439,7 +1418,10 @@ namespace PokemonUnity.Move
 		SUPER_FANG = 162,
 		SLASH = 163,
 		SUBSTITUTE = 164,
-		STRUGGLE = 165,
+        /// <summary>
+        /// "An attack that is used in desperation only if the user has no PP. It also hurts the user slightly."
+        /// </summary>
+        STRUGGLE = 165,
 		SKETCH = 166,
 		TRIPLE_KICK = 167,
 		THIEF = 168,
@@ -1698,7 +1680,10 @@ namespace PokemonUnity.Move
 		SHADOW_CLAW = 421,
 		THUNDER_FANG = 422,
 		ICE_FANG = 423,
-		FIRE_FANG = 424,
+        /// <summary>
+        /// "The user bites with flame-cloaked \nfangs. It may also make the foe \nflinch or sustain a burn."
+        /// </summary>
+        FIRE_FANG = 424,
 		SHADOW_SNEAK = 425,
 		MUD_BOMB = 426,
 		PSYCHO_CUT = 427,
@@ -1740,7 +1725,10 @@ namespace PokemonUnity.Move
 		MAGMA_STORM = 463,
 		DARK_VOID = 464,
 		SEED_FLARE = 465,
-		OMINOUS_WIND = 466,
+        /// <summary>
+        /// "The user creates a gust of repulsive wind. It may also raise all the user's stats at once."
+        /// </summary>
+        OMINOUS_WIND = 466,
 		SHADOW_FORCE = 467,
 		HONE_CLAWS = 468,
 		WIDE_GUARD = 469,
@@ -1779,7 +1767,10 @@ namespace PokemonUnity.Move
 		ALLY_SWITCH = 502,
 		SCALD = 503,
 		SHELL_SMASH = 504,
-		HEAL_PULSE = 505,
+        /// <summary>
+        /// "The user emits a healing pulse which restores the target's HP by up to half of its max HP."
+        /// </summary>
+        HEAL_PULSE = 505,
 		HEX = 506,
 		SKY_DROP = 507,
 		SHIFT_GEAR = 508,
@@ -1845,7 +1836,10 @@ namespace PokemonUnity.Move
 		NOBLE_ROAR = 568,
 		ION_DELUGE = 569,
 		PARABOLIC_CHARGE = 570,
-		FORESTS_CURSE = 571,
+        /// <summary>
+        /// Forest's_Curse
+        /// </summary>
+        FORESTS_CURSE = 571,
 		PETAL_BLIZZARD = 572,
 		FREEZE_DRY = 573,
 		DISARMING_VOICE = 574,
@@ -1862,7 +1856,10 @@ namespace PokemonUnity.Move
 		MOONBLAST = 585,
 		BOOMBURST = 586,
 		FAIRY_LOCK = 587,
-		KINGS_SHIELD = 588,
+        /// <summary>
+        /// King's_Shield
+        /// </summary>
+        KINGS_SHIELD = 588,
 		PLAY_NICE = 589,
 		CONFIDE = 590,
 		DIAMOND_STORM = 591,
@@ -1890,7 +1887,10 @@ namespace PokemonUnity.Move
 		OBLIVION_WING = 613,
 		THOUSAND_ARROWS = 614,
 		THOUSAND_WAVES = 615,
-		LANDS_WRATH = 616,
+        /// <summary>
+        /// Land's_Wrath
+        /// </summary>
+        LANDS_WRATH = 616,
 		LIGHT_OF_RUIN = 617,
 		ORIGIN_PULSE = 618,
 		PRECIPICE_BLADES = 619,
