@@ -1994,7 +1994,7 @@ namespace PokemonUnity.Move
         ZING_ZAP = 716,
         NATURES_MADNESS = 717,
         MULTI_ATTACK = 718,
-        10_000_000_VOLT_THUNDERBOLT = 719,
+        //10_000_000_VOLT_THUNDERBOLT = 719,
         MIND_BLOWN = 720,
         PLASMA_FISTS = 721,
         PHOTON_GEYSER = 722,

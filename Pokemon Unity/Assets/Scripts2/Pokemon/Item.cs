@@ -1834,7 +1834,7 @@ namespace PokemonUnity.Item
         /// <summary>Allows the player to summon a Ride PokÃ©mon.  Unused, as this can be done simply by pressing Y. : 	Allows the player to summon a Ride PokÃ©mon.</summary>
         RIDE_PAGER = 886,
         /// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild PokÃ©mon.If the wild PokÃ©mon is an Ultra Beast, this ball has a catch rate of 5Ã—.  Otherwise, it has a catch rate of 0.1Ã—. If used in a trainer battle, nothing happens and the ball is lost. : 	Tries to catch a wild PokÃ©mon.Success rate is 5Ã— for Ultra Beasts and 0.1Ã— for all other PokÃ©mon.</ summary >
-        BEAST - BALL = 887, 
+        BEAST_BALL = 887, 
         /// <summary>Cures major status ailments and confusion. : 	Cures major status ailments and confusion.</summary>
         BIG_MALASADA = 888,
         /// <summary>Changes Oricorio to Baile Style.  Single-use and cannot be used in battle. : 	Changes Oricorio to Baile Style.</summary>
