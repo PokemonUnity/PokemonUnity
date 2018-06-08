@@ -1667,13 +1667,13 @@ namespace PokemonUnity.Item
         TRAVEL_TRUNK = 764,
         /// <summary>Cures any major status ailment and confusion. : 	Cures any major status ailment and confusion.</summary>
         SHALOUR_SABLE = 765,
-        /// <summary>Unused.  This appears as the girlplayer's Mega Bracelet in PokÃ©mon Contests, but it cannot actually be obtained. : 	Unused Key Stone.</summary>
+        /// <summary>Unused.  This appears as the girlplayer's Mega Bracelet in Pokémon Contests, but it cannot actually be obtained. : 	Unused Key Stone.</summary>
         MEGA_CHARM = 768,
         /// <summary>Unused.  This is Korrina's Key Stone in X and Y, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
         MEGA_GLOVE = 769,
         /// <summary>Allows Captain Stern to set out on his expedition. : 	Allows Captain Stern to set out on his expedition.</summary>
         DEVON_PARTS = 770,
-        /// <summary>Creates and stores PokÃ©blocks. : 	Creates and stores PokÃ©blocks.</summary>
+        /// <summary>Creates and stores Pokéblocks. : 	Creates and stores Pokéblocks.</summary>
         POKEBLOCK_KIT = 772,
         /// <summary>Unlocks the door to Room 1 in Sea Mauville. : 	Unlocks the door to Room 1 in Sea Mauville.</summary>
         KEY_TO_ROOM_1 = 773,
@@ -1685,7 +1685,7 @@ namespace PokemonUnity.Item
         KEY_TO_ROOM_6 = 776,
         /// <summary>Worn by the player while underwater via Dive in Omega Ruby and Alpha Sapphire. : 	Worn by the player while underwater.</summary>
         DEVON_SCUBA_GEAR = 779,
-        /// <summary>Worn during PokÃ©mon Contests. : 	Worn during PokÃ©mon Contests.</summary>
+        /// <summary>Worn during Pokémon Contests. : 	Worn during Pokémon Contests.</summary>
         CONTEST_COSTUME__JACKET = 780,
         /// <summary>Allows the player to ride Groudon in the Cave of Origin. : 	Allows the player to ride Groudon in the Cave of Origin.</summary>
         MAGMA_SUIT = 782,
@@ -1693,7 +1693,7 @@ namespace PokemonUnity.Item
         AQUA_SUIT = 783,
         /// <summary>Allows the player and their mother to see the star show in the Mossdeep Space Center. : 	Allows the player and their mother to see the star show in the Mossdeep Space Center.</summary>
         PAIR_OF_TICKETS = 784,
-        /// <summary>Allows the player's PokÃ©mon to Mega Evolve. : 	Allows the player's PokÃ©mon to Mega Evolve.</summary>
+        /// <summary>Allows the player's Pokémon to Mega Evolve. : 	Allows the player's Pokémon to Mega Evolve.</summary>
         MEGA_BRACELET = 785,
         /// <summary>Unused.  This is Wally's Key Stone in Omega Ruby and Alpha Sapphire, but it cannot be obtained by the player. : 	Unused NPC Key Stone.</summary>
         MEGA_PENDANT = 786,
@@ -1735,7 +1735,7 @@ namespace PokemonUnity.Item
         DIANCITE = 805,
         /// <summary>Transforms Hoopa into its Unbound form for up to three days. : 	Transforms Hoopa into its Unbound form for up to three days.</summary>
         PRISON_BOTTLE = 806,
-        /// <summary>Unused.  This appears as the boy player's Mega Bracelet in PokÃ©mon Contests, but it cannot actually be obtained. : 	Unused Key Stone.</summary>
+        /// <summary>Unused.  This appears as the boy player's Mega Bracelet in Pokémon Contests, but it cannot actually be obtained. : 	Unused Key Stone.</summary>
         MEGA_CUFF = 807,
         /// <summary>Held: Allows Camerupt to Mega Evolve into Mega Camerupt. : 	Held: Allows Camerupt to Mega Evolve into Mega Camerupt.</summary>
         CAMERUPTITE = 808,
@@ -1745,55 +1745,55 @@ namespace PokemonUnity.Item
         SALAMENCITE = 810,
         /// <summary>Held: Allows Beedrill to Mega Evolve into Mega Beedrill. : 	Held: Allows Beedrill to Mega Evolve into Mega Beedrill.</summary>
         BEEDRILLITE = 811,
-        /// <summary>Allows the player's PokÃ©mon to Mega Evolve. : 	Allows the player's PokÃ©mon to Mega Evolve.</summary>
+        /// <summary>Allows the player's Pokémon to Mega Evolve. : 	Allows the player's Pokémon to Mega Evolve.</summary>
         KEY_STONE = 814,
         /// <summary>Causes the Meteorite to transform to its final form, allowing Rayquaza to Mega Evolve. : 	Causes the Meteorite to transform to its final form, allowing Rayquaza to Mega Evolve.</summary>
         METEORITE_SHARD = 815,
         /// <summary>Summons Latias or Latios for a ride. : 	Summons Latias or Latios for a ride.</summary>
         EON_FLUTE = 816,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Normal moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Normal moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Normal moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Normal moves.</summary>
         NORMALIUM_Z__HELD = 817,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fire moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fire moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Fire moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Fire moves.</summary>
         FIRIUM_Z__HELD = 818,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Water moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Water moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Water moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Water moves.</summary>
         WATERIUM_Z__HELD = 819,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Electric moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Electric moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Electric moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Electric moves.</summary>
         ELECTRIUM_Z__HELD = 820,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Grass moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Grass moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Grass moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Grass moves.</summary>
         GRASSIUM_Z__HELD = 821,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ice moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ice moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Ice moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Ice moves.</summary>
         ICIUM_Z__HELD = 822,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fighting moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fighting moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Fighting moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Fighting moves.</summary>
         FIGHTINIUM_Z__HELD = 823,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Poison moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Poison moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Poison moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Poison moves.</summary>
         POISONIUM_Z__HELD = 824,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ground moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ground moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Ground moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Ground moves.</summary>
         GROUNDIUM_Z__HELD = 825,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Flying moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Flying moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Flying moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Flying moves.</summary>
         FLYINIUM_Z__HELD = 826,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Psychic moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Psychic moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Psychic moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Psychic moves.</summary>
         PSYCHIUM_Z__HELD = 827,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Bug moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Bug moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Bug moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Bug moves.</summary>
         BUGINIUM_Z__HELD = 828,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Rock moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Rock moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Rock moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Rock moves.</summary>
         ROCKIUM_Z__HELD = 829,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ghost moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Ghost moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Ghost moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Ghost moves.</summary>
         GHOSTIUM_Z__HELD = 830,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dragon moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dragon moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Dragon moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Dragon moves.</summary>
         DRAGONIUM_Z__HELD = 831,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dark moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Dark moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Dark moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Dark moves.</summary>
         DARKINIUM_Z__HELD = 832,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Steel moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Steel moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Steel moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Steel moves.</summary>
         STEELIUM_Z__HELD = 833,
-        /// <summary>Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fairy moves. : 	Held: Allows a PokÃ©mon to use the Z-move equivalents of its Fairy moves.</summary>
+        /// <summary>Held: Allows a Pokémon to use the Z-move equivalents of its Fairy moves. : 	Held: Allows a Pokémon to use the Z-move equivalents of its Fairy moves.</summary>
         FAIRIUM_Z__HELD = 834,
         /// <summary>Held: Allows []{pokemon:pikachu} to upgrade []{move:volt-tackle} into []{move:catastropika}. : 	Held: Allows Pikachu to upgrade Volt Tackle into Catastropika.</summary>
         PIKANIUM_Z__HELD = 835,
-        /// <summary>Trade to Mr. Hyper to set one of a PokÃ©mon's genes to 31. : 	Trade to Mr. Hyper to maximize one of a PokÃ©mon's genes.</summary>
+        /// <summary>Trade to Mr. Hyper to set one of a Pokémon's genes to 31. : 	Trade to Mr. Hyper to maximize one of a Pokémon's genes.</summary>
         BOTTLE_CAP = 836,
-        /// <summary>Trade to Mr. Hyper to set all of a PokÃ©mon's genes to 31. : 	Trade to Mr. Hyper to maximize all of a PokÃ©mon's genes.</summary>
+        /// <summary>Trade to Mr. Hyper to set all of a Pokémon's genes to 31. : 	Trade to Mr. Hyper to maximize all of a Pokémon's genes.</summary>
         GOLD_BOTTLE_CAP = 837,
-        /// <summary>Allows the player's PokÃ©mon to use Z-moves. : 	Allows the player's PokÃ©mon to use Z-moves.</summary>
+        /// <summary>Allows the player's Pokémon to use Z-moves. : 	Allows the player's Pokémon to use Z-moves.</summary>
         Z_RING = 838,
         /// <summary>Held: Allows []{pokemon:decidueye} to upgrade []{move:spirit-shackle} into []{move:sinister-arrow-raid}. : 	Held: Allows Decidueye to upgrade Spirit Shackle into Sinister Arrow Raid.</summary>
         DECIDIUM_Z__HELD = 839,
@@ -1817,7 +1817,7 @@ namespace PokemonUnity.Item
         PIKASHUNIUM_Z__HELD = 877,
         /// <summary>Holds ingredients during Mallow's trial. : 	Holds ingredients during Mallow's trial.</summary>
         FORAGE_BAG = 878,
-        /// <summary>Allows the player to fish for PokÃ©mon. : 	Allows the player to fish for PokÃ©mon.</summary>
+        /// <summary>Allows the player to fish for Pokémon. : 	Allows the player to fish for Pokémon.</summary>
         FISHING_ROD = 879,
         /// <summary>Lost by Professor Kukui. : 	Lost by Professor Kukui.</summary>
         PROFESSORS_MASK = 880,
@@ -1825,15 +1825,15 @@ namespace PokemonUnity.Item
         FESTIVAL_TICKET = 881,
         /// <summary>Required to obtain a Z-Ring. : 	Required to obtain a Z-Ring.</summary>
         SPARKLING_STONE = 882,
-        /// <summary>Makes wild PokÃ©mon more likely to summon allies.  Held: increases the holder's Speed by one stage when affected by Intimidate. : 	Makes wild PokÃ©mon more likely to summon allies.  Held: increases the holder's Speed by one stage when affected by Intimidate.</summary>
+        /// <summary>Makes wild Pokémon more likely to summon allies.  Held: increases the holder's Speed by one stage when affected by Intimidate. : 	Makes wild Pokémon more likely to summon allies.  Held: increases the holder's Speed by one stage when affected by Intimidate.</summary>
         ADRENALINE_ORB = 883,
         /// <summary>Contains collected Zygarde cells/cores.  Can teach Zygarde moves. : 	Contains collected Zygarde cells/cores.  Can teach Zygarde moves.</summary>
         ZYGARDE_CUBE = 884,
-        /// <summary>Used on a party PokÃ©mon :   Evolves an Alola []{pokemon:sandshrew} into Alola[]{pokemon:sandslash} or an Alola[]{pokemon:vulpix} into Alola[]{pokemon:ninetales}. : 	Evolves an Alola Sandshrew into Alola Sandslash or an Alola Vulpix into Alola Ninetales.</summary>
+        /// <summary>Used on a party Pokémon :   Evolves an Alola []{pokemon:sandshrew} into Alola[]{pokemon:sandslash} or an Alola[]{pokemon:vulpix} into Alola[]{pokemon:ninetales}. : 	Evolves an Alola Sandshrew into Alola Sandslash or an Alola Vulpix into Alola Ninetales.</summary>
         ICE_STONE = 885,
-        /// <summary>Allows the player to summon a Ride PokÃ©mon.  Unused, as this can be done simply by pressing Y. : 	Allows the player to summon a Ride PokÃ©mon.</summary>
+        /// <summary>Allows the player to summon a Ride Pokémon.  Unused, as this can be done simply by pressing Y. : 	Allows the player to summon a Ride Pokémon.</summary>
         RIDE_PAGER = 886,
-        /// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild PokÃ©mon.If the wild PokÃ©mon is an Ultra Beast, this ball has a catch rate of 5Ã—.  Otherwise, it has a catch rate of 0.1Ã—. If used in a trainer battle, nothing happens and the ball is lost. : 	Tries to catch a wild PokÃ©mon.Success rate is 5Ã— for Ultra Beasts and 0.1Ã— for all other PokÃ©mon.</ summary >
+        /// <summary>Used in battle :   Attempts to [catch]{mechanic:catch} a wild Pokémon.If the wild Pokémon is an Ultra Beast, this ball has a catch rate of 5Ã—.  Otherwise, it has a catch rate of 0.1Ã—. If used in a trainer battle, nothing happens and the ball is lost. : 	Tries to catch a wild Pokémon.Success rate is 5Ã— for Ultra Beasts and 0.1Ã— for all other Pokémon.</ summary >
         BEAST_BALL = 887, 
         /// <summary>Cures major status ailments and confusion. : 	Cures major status ailments and confusion.</summary>
         BIG_MALASADA = 888,
