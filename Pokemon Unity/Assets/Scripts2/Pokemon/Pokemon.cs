@@ -3217,6 +3217,9 @@ namespace PokemonUnity
             SHIELDON = 410,
             BASTIODON = 411,
             BURMY = 412,
+            /// <summary>
+            /// "WORMADAM_PLANT"?
+            /// </summary>
             WORMADAM = 413,
             MOTHIM = 414,
             COMBEE = 415,
@@ -3291,11 +3294,17 @@ namespace PokemonUnity
             PALKIA = 484,
             HEATRAN = 485,
             REGIGIGAS = 486,
+            /// <summary>
+            /// "GIRATINA_ALTERED"?
+            /// </summary>
             GIRATINA = 487,
             CRESSELIA = 488,
             PHIONE = 489,
             MANAPHY = 490,
             DARKRAI = 491,
+            /// <summary>
+            /// "SHAYMIN_LAND"?
+            /// </summary>
             SHAYMIN = 492,
             ARCEUS = 493,
             VICTINI = 494,
@@ -3354,11 +3363,17 @@ namespace PokemonUnity
             WHIMSICOTT = 547,
             PETILIL = 548,
             LILLIGANT = 549,
+            /// <summary>
+            /// "BASCULIN_RED_STRIPED"
+            /// </summary>
             BASCULIN = 550,
             SANDILE = 551,
             KROKOROK = 552,
             KROOKODILE = 553,
             DARUMAKA = 554,
+            /// <summary>
+            /// DARMANITAN_STANDARD
+            /// </summary>
             DARMANITAN = 555,
             MARACTUS = 556,
             DWEBBLE = 557,
@@ -3445,13 +3460,28 @@ namespace PokemonUnity
             COBALION = 638,
             TERRAKION = 639,
             VIRIZION = 640,
+            /// <summary>
+            /// "INCARNATE"?
+            /// </summary>
             TORNADUS = 641,
+            /// <summary>
+            /// "INCARNATE"?
+            /// </summary>
             THUNDURUS = 642,
             RESHIRAM = 643,
             ZEKROM = 644,
+            /// <summary>
+            /// "INCARNATE"?
+            /// </summary>
             LANDORUS = 645,
             KYUREM = 646,
+            /// <summary>
+            /// KELDEO_ORDINARY
+            /// </summary>
             KELDEO = 647,
+            /// <summary>
+            /// "MELOETTA_ARIA"
+            /// </summary>
             MELOETTA = 648,
             GENESECT = 649,
             CHESPIN = 650,
@@ -3482,9 +3512,15 @@ namespace PokemonUnity
             PANGORO = 675,
             FURFROU = 676,
             ESPURR = 677,
+            /// <summary>
+            /// "MEOWSTIC_MALE"
+            /// </summary>
             MEOWSTIC = 678,
             HONEDGE = 679,
             DOUBLADE = 680,
+            /// <summary>
+            /// AEGISLASH_SHIELD
+            /// </summary>
             AEGISLASH = 681,
             SPRITZEE = 682,
             AROMATISSE = 683,
@@ -3514,7 +3550,13 @@ namespace PokemonUnity
             KLEFKI = 707,
             PHANTUMP = 708,
             TREVENANT = 709,
+            /// <summary>
+            /// "PUMPKABOO_AVERAGE"
+            /// </summary>
             PUMPKABOO = 710,
+            /// <summary>
+            /// "GOURGEIST_AVERAGE"
+            /// </summary>
             GOURGEIST = 711,
             BERGMITE = 712,
             AVALUGG = 713,
@@ -4047,5 +4089,4 @@ namespace PokemonUnity
             Deaths
 		}
     }
-
 }
