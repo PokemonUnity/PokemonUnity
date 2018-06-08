@@ -1554,7 +1554,14 @@ public partial class Pokemon //: ePokemons //PokemonData
 			this.BaseExpYield = baseExpYield;
 			this.GrowthRate = (LevelingRate)levelingRate; //== null ? (LevelingRate)levelingRate : LevelingRate.NONE;
 
-			this.BaseStatsHP = baseStatsHP;
+			this.evYieldHP  = evHP;
+			this.evYieldATK = evATK;
+			this.evYieldDEF = evDEF;
+			this.evYieldSPA = evSPA;
+			this.evYieldSPD = evSPD;
+			this.evYieldSPE = evSPE;
+
+			this.BaseStatsHP  = baseStatsHP;
 			this.BaseStatsATK = baseStatsATK;
 			this.BaseStatsDEF = baseStatsDEF;
 			this.BaseStatsSPA = baseStatsSPA;
