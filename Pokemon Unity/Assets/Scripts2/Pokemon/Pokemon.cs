@@ -275,7 +275,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name="pokemon"></param>
 	/// ToDo: Inherit PokemonData 
-	public Pokemon(Pokemons pokemon) //ToDo: Redo PokemonDatabase/PokemonData -- DONE
+	public Pokemon(Pokemons pokemon) 
 	{
 		//PersonalId = 
 		_base = PokemonData.GetPokemon(pokemon);

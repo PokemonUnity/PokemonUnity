@@ -95,7 +95,7 @@ namespace Tests
     /// <summary>
     /// Database sample on how to write code for different componenets of your database.
     /// </summary>
-    [TestClass]
+    //[TestClass]
     public class FrameworkTest
     {
         Pokemon.PokemonData[] Database = new Pokemon.PokemonData[] {
@@ -110,7 +110,7 @@ namespace Tests
                         heldItem: null) 
         };
         #region PokemonData
-        [TestMethod]
+        //[TestMethod]
         public void PokemonDatabase()
         {
         }
