@@ -3180,6 +3180,9 @@ namespace PokemonUnity
             GROUDON = 383,
             RAYQUAZA = 384,
             JIRACHI = 385,
+            /// <summary>
+            /// "DEOXYS_NORMAL"
+            /// </summary>
             DEOXYS = 386,
             TURTWIG = 387,
             GROTLE = 388,
