@@ -1496,7 +1496,7 @@ public partial class Pokemon //: ePokemons //PokemonData
             //this.name = translation.Name;
             //this.species = translation.Species;
             //this.pokedexEntry = translation.PokedexEntry;
-            this.PokedexEntry = translation.Value;
+            this.PokedexEntry = translation.Value.Trim('\n');
             //this.forms = forms; //| new Pokemon[] { Id }; //ToDo: need new mechanic for how this should work
             List<string> formvalues = new List<string>();
             foreach (var fieldValue in translation.FieldNames)
