@@ -17,7 +17,7 @@ node_modules/
 ExportedObj/
 #*.csproj
 *.unityproj
-*.sln
+#*.sln
 *.suo
 *.tmp
 *.user
@@ -56,4 +56,4 @@ git-journal.fish
 # Pokemon Unity/Pokemon Unity.sln
 # */Pokemon Unity.sln
 # UnitTestProject\bin\*
-UnitTestProject/bin/*
+[Uu]nit[Tt]est[Pp]roject/bin/*
