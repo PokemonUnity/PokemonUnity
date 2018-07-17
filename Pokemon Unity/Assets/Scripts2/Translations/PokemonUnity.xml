@@ -24618,7 +24618,7 @@ with large spikes. In battle, this Pokémon will try to make
 the foe flinch by jabbing it with its spines. It then leaps at
 the stunned foe to tear wildly with its sharp claws.
 </Pokemon>
-<Pokemon id="29" language="9" identifier="NIDORANFEMALE" name="Nidoran♀" genus="Poison Pin">
+<Pokemon id="29" language="9" identifier="NIDORAN_F" name="Nidoran♀" genus="Poison Pin">
 Nidoran♀ has barbs that secrete a powerful poison.
 They are thought to have developed as protection for
 this small-bodied Pokémon. When enraged, it releases
@@ -24635,7 +24635,7 @@ Nidoqueen’s body is encased in extremely hard scales.
 It is adept at sending foes flying with harsh tackles. This
 Pokémon is at its strongest when it is defending its young.
 </Pokemon>
-<Pokemon id="32" language="9" identifier="NIDORANMALE" name="Nidoran♂" genus="Poison Pin">
+<Pokemon id="32" language="9" identifier="NIDORAN_M" name="Nidoran♂" genus="Poison Pin">
 Nidoran♂ has developed muscles for moving its ears. Thanks
 to them, the ears can be freely moved in any direction. Even
 the slightest sound does not escape this Pokémon’s notice.
@@ -27808,7 +27808,7 @@ With fiery breath of more than 10,000 degrees
 Fahrenheit, they viciously threaten any challenger.
 The females protect the pride’s cubs.
 </Pokemon>
-<Pokemon id="669" language="9" identifier="FLABéBé" name="Flabébé" genus="Single Bloom">
+<Pokemon id="669" language="9" identifier="FLABEBE" name="Flabébé" genus="Single Bloom">
 When it finds a flower it likes, it dwells on
 that flower its whole life long. It floats in the
 wind’s embrace with an untroubled heart.
