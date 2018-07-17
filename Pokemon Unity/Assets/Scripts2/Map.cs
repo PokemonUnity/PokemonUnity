@@ -89,7 +89,30 @@ class Map : MonoBehaviour
             }
         }
     }
-    #endregion
+	#endregion
+
+	#region Idea3: Overworld is a multidimensional ([,]) array of .scene (map chunks)
+	/// <summary>
+	/// .scenes is a multidimensional ([,]) array of map chunks
+	/// stored as an int[,] but identified thru an enum, for organitional purposes
+	/// </summary>
+	class MapRegion
+	{
+		/// <summary>
+		/// Diamond and Pearl 
+		/// </summary>
+		enum RegionDP { }
+		int?[,] Region { get; set; }
+		int?[,] RegionDiamondPearl()
+		{
+			return new int?[,]
+			{
+				{ },
+				{ },
+			};
+		}
+	}
+	#endregion
 }
 
 /// <summary>
@@ -141,4 +164,174 @@ class BlenderJsonToUnity
 
         return data; //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
     }*/
+}
+
+class WildPokemon
+{
+	class MapPokemon
+	{
+		PokemonUnity.Pokemon.Pokemons Pokemon { get; set; }
+		int minLevel { get; set; }
+		int maxLevel { get; set; }
+	}
+	class TravelGround
+	{
+		/// <summary>
+		/// How often or likely to engage and encounter a pokemon
+		/// </summary>
+		int Rate { get; set; }
+		#region Walking
+		/// <summary>
+		/// 20%
+		/// </summary>
+		int Slot1 { get; set; }
+		/// <summary>
+		/// 20%
+		/// </summary>
+		int Slot2 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int Slot3 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int Slot4 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int Slot5 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int Slot6 { get; set; }
+		/// <summary>
+		/// 5%
+		/// </summary>
+		int Slot7 { get; set; }
+		/// <summary>
+		/// 5%
+		/// </summary>
+		int Slot8 { get; set; }
+		/// <summary>
+		/// 4%
+		/// </summary>
+		int Slot9 { get; set; }
+		/// <summary>
+		/// 4%
+		/// </summary>
+		int Slot10 { get; set; }
+		/// <summary>
+		/// 1%
+		/// </summary>
+		int Slot11 { get; set; }
+		/// <summary>
+		/// 1%
+		/// </summary>
+		int Slot12 { get; set; }
+		#endregion
+		#region Swarm
+		/// <summary>
+		/// 20%
+		/// </summary>
+		int SwarmSlot1 { get; set; }
+		/// <summary>
+		/// 20%
+		/// </summary>
+		int SwarmSlot2 { get; set; }
+		#endregion
+		#region Day
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int DaySlot1 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int DaySlot2 { get; set; }
+		#endregion
+		#region Night
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int NightSlot1 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int NightSlot2 { get; set; }
+		#endregion
+		#region PokeRadar
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int RadarSlot1 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int RadarSlot2 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int RadarSlot3 { get; set; }
+		/// <summary>
+		/// 10%
+		/// </summary>
+		int RadarSlot4 { get; set; }
+		#endregion
+	}
+	class TravelWater
+	{
+		#region Surfing
+		/// <summary>
+		/// 10
+		/// How often or likely to engage and encounter a pokemon
+		/// </summary>
+		int Rate { get; set; }
+		/// <summary>
+		/// 60%
+		/// </summary>
+		MapPokemon Slot1 { get; set; }
+		/// <summary>
+		/// 30%
+		/// </summary>
+		MapPokemon Slot2 { get; set; }
+		/// <summary>
+		/// 5%
+		/// </summary>
+		MapPokemon Slot3 { get; set; }
+		/// <summary>
+		/// 4%
+		/// </summary>
+		MapPokemon Slot4 { get; set; }
+		/// <summary>
+		/// 1%
+		/// </summary>
+		MapPokemon Slot5 { get; set; }
+		#endregion
+		#region Old Rod
+		/// <summary>
+		/// 25
+		/// How often or likely to engage and encounter a pokemon
+		/// </summary>
+		int Rate2 { get; set; }
+		#endregion
+		#region Good Rod
+		/// <summary>
+		/// 50
+		/// How often or likely to engage and encounter a pokemon
+		/// </summary>
+		int Rate3 { get; set; }
+		#endregion
+		#region Super Rod
+		/// <summary>
+		/// 75
+		/// How often or likely to engage and encounter a pokemon
+		/// </summary>
+		int Rate4 { get; set; }
+		#endregion
+	}
+	class TravelAir
+	{
+
+	}
 }
