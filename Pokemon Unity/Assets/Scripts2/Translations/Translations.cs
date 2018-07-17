@@ -68,23 +68,162 @@ public interface ITranslationPokedex
 #endregion
 
 #region Extras
-public static class LanguageExtension
+public class GameText : XmlFileLocalizationDictionaryProvider
 {
-    private static LocalizationDictionaryProviderBase _dictionary;
-    public static void /*XmlFileLocalizationDictionaryProvider*/ Initialize(string filename)
+	//static readonly System.Lazy<LocalizationDictionaryProviderBase> _dictionary { get { return new System.Lazy<LocalizationDictionaryProviderBase>} }
+	//static readonly System.Lazy<GameText> instanceHolder { get { return new System.Lazy<GameText>(() => new GameText()); } }
+	public static GameText Instance { get {
+			//if (instanceHolder == null)
+			//{
+			//	_initialize();
+				//instanceHolder = new GameText(filename: null);
+			//}
+			return instanceHolder; } }
+	static readonly GameText instanceHolder;// = new GameText(filename: null); //newInstance();
+		/*get { //readonly = null
+			if (instanceHolder == null)
+			{
+				_initialize();
+				instanceHolder = new GameText(filename: null);
+			}
+			return instanceHolder; }
+		set { instanceHolder = value; } }*/
+	private static string path { get {
+			//if(_path == null)_initialize();
+			string x = null;
+#if DEBUG
+			x = x ?? @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+			//string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+			//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+			//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
+			x = x ?? UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+			//string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+#endif
+			return x;// ?? _initialize();
+		}
+		/*set
+		{
+			_path = value;
+		}*/
+	}// = null;
+	//private static string file;// = null;
+	//string _path;
+	static GameText()// : base(path)
+	{
+		//should return english if player's default language is null
+		//if(path == null)_initialize();
+		//base.Initialize(file ?? "PokemonUnity");
+		//Instance.Initialize(file ?? "PokemonUnity");
+		//instanceHolder.Initialize(file ?? "PokemonUnity");
+		instanceHolder = new GameText(filename: null);
+	}
+	/*GameText() : base(path)
+	{
+		//base.Initialize(file ?? "PokemonUnity");
+	}* /
+	public GameText(string dirpath = null, string filename = null) : base(dirpath)
+	{
+		//should return english if player's default language is null
+		//if(path == null)_initialize();
+		path = dirpath;
+		base.Initialize(filename ?? "PokemonUnity");
+		//instanceHolder.Initialize(filename ?? "PokemonUnity");
+		//file = filename ?? "PokemonUnity";
+		instanceHolder = this;
+	}*/
+	public GameText(string filename = null) : base(path)
+	{
+		//should return english if player's default language is null
+		//if(path == null)_initialize();
+		//path = dirpath;
+		base.Initialize(filename ?? "PokemonUnity");
+		//instanceHolder.Initialize(filename ?? "PokemonUnity");
+		//file = filename ?? "PokemonUnity";
+		//instanceHolder = this;
+	}
+    /*public void Initialize(string filename = null, string directorypath = null) //XmlFileLocalizationDictionaryProvider
     {
 #if DEBUG
-        string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-        //string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-        //string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+        path = directorypath ?? @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+        //string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
-        string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+        path = directorypath ?? UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+        //string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
-        //XmlFileLocalizationDictionaryProvider x = new XmlFileLocalizationDictionaryProvider(filepath);
-        _dictionary = new XmlFileLocalizationDictionaryProvider(filepath);
-        _dictionary.Initialize("PokemonUnity");
+		//XmlFileLocalizationDictionaryProvider x = new XmlFileLocalizationDictionaryProvider(filepath);
+		//Instance = new XmlFileLocalizationDictionaryProvider(filepath);
+		//Instance.Initialize(filename);//"PokemonUnity"
+		//x.Initialize(filename);
         //return x;
+		//GameText(filepath);
+    }*/
+    public string _initialize()
+    {
+		//instanceHolder.file = filename ?? instanceHolder.file;
+		//GameText x = new GameText(filename ?? "PokemonUnity");
+		string x = null;
+#if DEBUG
+        x = path ?? @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+        //string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
+        x = path ?? UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+        //string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+#endif
+		//XmlFileLocalizationDictionaryProvider x = new XmlFileLocalizationDictionaryProvider(filepath);
+		//Instance = new XmlFileLocalizationDictionaryProvider(filepath);
+		//Instance.Initialize(filename);//"PokemonUnity"
+		//x.Initialize(filename);
+        return x;
+		//GameText(filepath);
     }
+	/*static void ChangeLanguage(string filename = null, string directorypath = null)
+	{
+		path = directorypath ?? path;
+		file = filename ?? file;
+		//_initialize();
+		instanceHolder = new GameText(filename: file);
+	}*/
+    /*public static GameText newInstance(string path = null)
+    {
+		//instanceHolder.file = filename ?? instanceHolder.file;
+		//GameText x = new GameText(filename ?? "PokemonUnity");
+		string x = null;
+#if DEBUG
+        x = path ?? @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+        //string filepath = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\";//\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
+        x = path ?? UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+        //string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+#endif
+		//XmlFileLocalizationDictionaryProvider x = new XmlFileLocalizationDictionaryProvider(filepath);
+		//Instance = new XmlFileLocalizationDictionaryProvider(filepath);
+		//Instance.Initialize(filename);//"PokemonUnity"
+		//x.Initialize(filename);
+        //return x;
+		//GameText(filepath);
+		//insta
+		GameText y = new GameText(dirpath: x);
+		return y;
+    }*/
+	/*static void ChangeLanguage(string filename = null, string directorypath = null)
+	{
+		path = directorypath ?? path;
+		file = filename ?? file;
+		//_initialize();
+		instanceHolder = new GameText(filename: file);
+	}*/
+}
+
+public static class LanguageExtension //: GameText
+{
+    static LocalizationDictionaryProviderBase _dictionary { get { return GameText.Instance; } } //new GameText().Instance
     public static string Translate(this Settings.Languages language, string textId, params string[] fieldValues)
     {
         //Uses the langauge class that has the stored user's (current) language value
@@ -121,39 +260,46 @@ public static class LanguageExtension
 
     public static Translator.Language.LocalizedString Translate(this string text, params string[] fieldValues)
     {
+#if DEBUG
+		//Log Translation Text for Debugging purposes...
+		//TranslationLogger.LogMessageToFile(text);
+#endif
+
         //Uses the langauge class that has the stored user's (current) language value
         //to perform translantion, by matching value from a dictionary stored in the memory 
         
-        if (_dictionary == null) //should return english if player's default language is null
+        /*if (_dictionary == null) //should return english if player's default language is null
         {
             //LoadPokedexTranslations(language);//, form
             Initialize("PokemonUnity");
-        }
+        }*/
 
         //if(_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Count < _dictionary.Dictionaries[Translator.Languages.English.ToString()].GetAllStrings().Count) _dictionary.Dictionaries[Settings.UserLanguage.ToString()]
 
         //int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-        /*if (!_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(textId))//&& language == Settings.Languages.English
+        /*if (!_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(text))//&& language == Settings.Languages.English
         {
             //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
-            throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
+            //throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
+            throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}", text));
             //return new PokedexTranslation();
         }
         //ToDo: Show english text for missing data on foreign languages 
-        else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
+        /*else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
         {
             return _pokeEnglishTranslations[arrayId];
         }*/
         //
         
-        
+        //if (_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(text))
+		//{
             //if(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames.Length > 0){
             //List<string> formvalues = new List<string>();
             List<string> fieldvalues = new List<string>();
             //List<KeyValuePair<string,string>> fieldnames = new List<KeyValuePair<string,string>>();
             foreach (KeyValuePair<string, string> field in _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
             {
-                if (field.Key != "id" || field.Key != "identifier" || field.Key != "name" || field.Key != "language")
+                if (field.Key != "id" || field.Key != "identifier" || field.Key != "language")// || field.Key != "name"
                 {
                     //fieldnames.Add(field);
                     /*if (field.Key.Contains("form")){
@@ -176,11 +322,16 @@ public static class LanguageExtension
             //if (_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames.Contains("form")){ //Name vs LocalName?
             if (fieldvalues.Count > 0)
             { //fieldnames.Contains("form")
-                _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldValues);
+                _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldValues);// + 
+				//Adding form value to output string, so that if a pokemon isnt being translated, it would be easy to decide between description or name
+				//formvalues.Count > 0? "|" + formvalues.JoinAsString(";"):"";
                 //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = formvalues.JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
             }
 
-        return _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text];
+			return _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text];
+		//} else
+			//throw new System.Exception("No Translation Found For: " + text);
+			//return "No Translation Found For: " + text;
 
         /*if (fieldValues == null)
         {
@@ -197,6 +348,38 @@ public static class LanguageExtension
     {
         return text.Translate(fieldValues);
     }
+}
+
+class TranslationLogger
+{
+	private static readonly string filename = GetTempPath() + "TranslationLog.txt";
+
+	static string GetTempPath()
+	{
+		string path = System.Environment.GetEnvironmentVariable("TEMP");
+		if (!path.EndsWith("\\")) path += "\\";
+		return path;
+	}
+
+	public static void LogMessageToFile(string msg)
+	{
+		System.IO.StreamWriter sw = System.IO.File.AppendText(filename);
+		try
+		{
+			msg = System.String.Format("{0:G}: {1}", System.DateTime.Now, msg);
+			sw.WriteLine(msg);
+		}
+		finally
+		{
+			sw.Close();
+		}
+	}
+
+	public static void LogMessageFile(string msg)
+	{
+		msg = System.String.Format("{0:G}: {1}{2}", System.DateTime.Now, msg, System.Environment.NewLine);
+		System.IO.File.AppendAllText(filename, msg);
+	}
 }
 #endregion
 
