@@ -3,7 +3,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Trainer : MonoBehaviour
+[System.Obsolete]
+public class TrainerOld : MonoBehaviour
 {
     public enum Class
     {
@@ -46,7 +47,7 @@ public class Trainer : MonoBehaviour
     public string[] playerVictoryDialog;
     public string[] playerLossDialog;
 
-    public Trainer(PokemonOld[] party)
+    public TrainerOld(PokemonOld[] party)
     {
         this.trainerClass = Class.Trainer;
         this.trainerName = "";

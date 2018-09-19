@@ -613,7 +613,7 @@ public class CustomEvent : MonoBehaviour
                 //Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);
 
-                Trainer trainer = currentEvent.object0.GetComponent<Trainer>();
+                TrainerOld trainer = currentEvent.object0.GetComponent<TrainerOld>();
 
                 if (trainer.battleBGM != null)
                 {

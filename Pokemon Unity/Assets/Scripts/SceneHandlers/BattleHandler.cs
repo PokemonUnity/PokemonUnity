@@ -3508,16 +3508,16 @@ public class BattleHandler : MonoBehaviour
     /// Basic Wild Battle
     public IEnumerator control(PokemonOld wildPokemon)
     {
-        yield return StartCoroutine(control(false, new Trainer(new PokemonOld[] {wildPokemon}), false));
+        yield return StartCoroutine(control(false, new TrainerOld(new PokemonOld[] {wildPokemon}), false));
     }
 
     /// Basic Trainer Battle
-    public IEnumerator control(Trainer trainer)
+    public IEnumerator control(TrainerOld trainer)
     {
         yield return StartCoroutine(control(true, trainer, false));
     }
 
-    public IEnumerator control(bool isTrainerBattle, Trainer trainer, bool healedOnDefeat)
+    public IEnumerator control(bool isTrainerBattle, TrainerOld trainer, bool healedOnDefeat)
     {
         //Used to compare after the battle to check for evolutions.
         int[] initialLevels = new int[6];
