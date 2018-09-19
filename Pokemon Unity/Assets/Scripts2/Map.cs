@@ -113,6 +113,70 @@ class Map : MonoBehaviour
 		}
 	}
 	#endregion
+
+	#region Idea4: 3d map chunk from 2d array
+	/// <summary>
+	/// Overworld excel grid of map headers 
+	/// </summary>
+	class MapMatrix
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
+		/// if MAP then it allows you to load mapHeaders
+		/// else it's a small chunk or dungeon
+		int MapId;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// enum label of matrix
+		/// matrix id 0 is the overworld map
+		int MatrxId;
+		public int Height { get; private set; }
+		public int Width { get; private set; }
+		public MapChunk mapHeader { get; private set; }
+	}
+	/// <summary>
+	/// Header data contains map x,y size
+	/// </summary>
+	class MapChunk
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// Internal Name
+		int MapId;
+		string Name;
+		/// <summary>
+		/// Texture around Name when entering Map
+		/// </summary>
+		int NameStyle;
+		int MapType;
+		//int Texture1;
+		//int Texture2;
+		int Scripts;
+		int MapScripts;
+		int MusicDay;
+		int MusicNight;
+		int Texts;
+		/// <summary>
+		/// Table or Encounter chart for pokemons expected to find on map
+		/// </summary>
+		int WildPokemon;
+		int Events;
+		int Flags;
+		int Weather;
+		int Camera;
+		/// <summary>
+		/// </summary>
+		/// For height loop or For width loop
+		/// [Z,i] = gameobject int value
+		/// each value in for loop should be rounded to nearest whole number
+		/// need to map collision to X,Y value as well...
+		int[,] MapArray;
+	}
+	#endregion
 }
 
 /// <summary>
