@@ -1000,7 +1000,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	}
 	#endregion
 
-    #region Other
+	#region Other
     /// <summary>
     /// Mail?...
     /// </summary>
@@ -2650,8 +2650,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// Experience can be it's own class away from Pokemon. But there's no need for it to be global.
 	/// ToDo: Consider making Experience class a Pokemon extension class...
-	private static class Experience
+	public class Experience
 	{
+		private int level { get { return GetLevelFromExperience(Growth, Current); } }
+		public int Current { get; private set; }
+		public int NextLevel { get { return GetExperience(Growth, level + 1); } }
+		private LevelingRate Growth { get; set; }
 		#region expTable
 		private static int[] expTableErratic = new int[]{
 			0,15,52,122,237,406,637,942,1326,1800,
@@ -2853,6 +2857,64 @@ public partial class Pokemon //: ePokemons //PokemonData
 			}
 			return Settings.MAXIMUMLEVEL;
 		}
+		/*public static int GetLevelExperiencePoints(LevelingRate levelingRate, int currentLevel)
+		{
+			int exp = 0;
+			if (currentLevel > 100)
+			{
+				currentLevel = 100;
+			}
+			if (levelingRate == LevelingRate.ERRATIC)
+			{
+				if (currentLevel > 100)
+				{
+					exp = (int)Mathf.Floor((Mathf.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
+				}
+				else exp = expTableErratic[currentLevel - 1]; //Because the array starts at 0, not 1.
+			}
+			else if (levelingRate == LevelingRate.FAST)
+			{
+				if (currentLevel > 100)
+				{
+					exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3) * (4 / 5));
+				}
+				else exp = expTableFast[currentLevel - 1];
+			}
+			else if (levelingRate == LevelingRate.MEDIUMFAST)
+			{
+				if (currentLevel > 100)
+				{
+					exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3));
+				}
+				else exp = expTableMediumFast[currentLevel - 1];
+			}
+			else if (levelingRate == LevelingRate.MEDIUMSLOW)
+			{
+				if (currentLevel > 100)
+				{
+					exp = (int)Mathf.Floor(((6 / 5) * Mathf.Pow(currentLevel - 1, 3)) - (15 * Mathf.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
+				}
+				else exp = expTableMediumSlow[currentLevel - 1];
+			}
+			else if (levelingRate == LevelingRate.SLOW)
+			{
+				if (currentLevel > 100)
+				{
+					exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3) * (5 / 4));
+				}
+				else exp = expTableSlow[currentLevel - 1];
+			}
+			else if (levelingRate == LevelingRate.FLUCTUATING)
+			{
+				if (currentLevel > 100)
+				{
+					exp = (int)Mathf.Floor(Mathf.Pow(currentLevel, 3) * ((Mathf.Floor(Mathf.Pow(currentLevel, 3) / 2) + 32) / 50));
+				}
+				else exp = expTableFluctuating[currentLevel - 1];
+			}
+
+			return exp;
+		}*/
 	}
 	#endregion
 }
