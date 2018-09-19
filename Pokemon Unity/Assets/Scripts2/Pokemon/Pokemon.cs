@@ -443,6 +443,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	#endregion
 
 	#region Gender
+	//private bool? gender;
 	/// <summary>
 	/// Returns this Pokemons gender. male; female; genderless.
 	/// Sets this Pokemon's gender to a particular gender (if possible)
@@ -451,21 +452,49 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// isMale; null = genderless?
 	/// Should consider gender as byte? bool takes up same amount of space
 	/// </remarks>
-	public bool? Gender { get; private set; }
+	public virtual bool? Gender { get; private set; }
 
-	/*// <summary>
+	/// <summary>
     /// Helper function that determines whether the input values would make a female.
     /// </summary>
     /// ToDo: isMale; isFemale; isGenderless... properties?
-    public bool? isMale/isFemale/isGenderless//(float genderRate = this._base.MaleRatio)
+    private bool? gender//isMale/isFemale/isGenderless//(float genderRate = this._base.MaleRatio)
     {
         get
         {
-            if (genderRate == 100f) return true; 
-            if (genderRate == 100f) return false; //Always female
-            return null; //genderless
+            //if (genderRate == 100f) return true; 
+            if (_base.MaleRatio == GenderRatio.AlwaysMale) return true; 
+            //if (genderRate == 100f) return false; //Always female
+            if (_base.MaleRatio == GenderRatio.AlwaysFemale) return false; 
+			if (_base.MaleRatio == GenderRatio.Genderless) return null; //genderless
+			return getGender();
         }
-    }*/
+    }
+
+	bool? getGender()
+	{
+		switch (_base.MaleRatio)
+		{
+			case GenderRatio.FemaleOneEighth:
+				break;
+			case GenderRatio.Female25Percent:
+				break;
+			case GenderRatio.Female50Percent:
+				break;
+			case GenderRatio.Female75Percent:
+				break;
+			case GenderRatio.FemaleSevenEighths:
+				break;
+			case GenderRatio.AlwaysMale:
+				return true;
+			case GenderRatio.AlwaysFemale:
+				return false;
+			case GenderRatio.Genderless:
+			default:
+				return null;
+		}
+		return null;
+	}
 
 	/// <summary>
 	/// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
