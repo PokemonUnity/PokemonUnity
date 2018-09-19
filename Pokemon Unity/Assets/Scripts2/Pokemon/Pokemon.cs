@@ -992,7 +992,264 @@ public partial class Pokemon //: ePokemons //PokemonData
 	{
 		ribbons.Clear();
 	}
-    #endregion
+	#endregion
+
+	#region Items
+	#endregion
+
+	#region Shadow
+	/// <summary>
+	/// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead.
+	/// </summary>
+	/// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
+	/// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
+	public bool isHyperMode { get; private set; }
+	/// <summary>
+	/// Shadow Pokémon don't have a set Nature or a set gender, but once encountered, the personality value, 
+	/// Nature and IVs are saved to the memory for the Shadow Monitor to be able to keep track of their exact status and location. 
+	/// This means that once a Shadow Pokémon is encountered for the first time, its Nature, IVs and gender will remain the same for the rest of the game, 
+	/// even if the player fails to capture it or is forced to re-battle it later.
+	/// </summary>
+	public bool isShadow { get
+		{
+			if (!ShadowLevel.HasValue || ShadowLevel.Value == -1) return false;
+			else return true;
+		} }
+	/// <summary>
+	/// Heart Gauge.
+	/// The Heart Gauge is split into five equal bars. When a Shadow Pokémon is first snagged, all five bars are full.
+	/// </summary>
+	/// If pokemon is purified, shadow level should be equal to -1
+	/// If pokemon has never been shadowed, then value should be null
+	/// HeartGuage max size should be determined by _base.database
+	public int? ShadowLevel { get; private set; }
+	//public int? HeartGuage { get { return ShadowLevel; } }
+
+	void decreaseShadowLevel (pokemonActions Action)
+	{
+		int points = 0;
+
+		#region Pokemon Colosseum Shadow Switch
+		/* Values from Pokémon Colosseum
+		Nature	Battle	Callto	Party	DayCare	Scent
+		Adamant 150  	225  	150  	300  	75
+		Bashful 50  	300  	75  	450  	200
+		Bold  	150  	225  	200  	300  	50
+		Brave   200  	225  	150  	225  	75
+		Calm  	50  	300  	100  	450  	150
+		Careful 75  	300  	75  	450  	150
+		Docile  75  	600  	100  	225  	100
+		Gentle  50  	300  	75  	600  	150
+		Hardy   150  	300  	150  	150  	100
+		Hasty   200  	300  	75  	150  	150
+		Impish  200  	300  	150  	150  	75
+		Jolly   150  	300  	100  	150  	150
+		Lax  	100  	225  	150  	225  	150
+		Lonely  50  	450  	150  	150  	200
+		Mild  	75  	225  	75  	450  	200
+		Modest  75  	300  	75  	600  	100
+		Naive   100  	300  	150  	225  	100
+		Naughty 150  	225  	200  	225  	75
+		Quiet   100  	300  	100  	300  	100
+		Quirky  200  	225  	50  	600  	75
+		Rash  	75  	300  	100  	300  	150
+		Relaxed 75  	225  	75  	600  	150
+		Sassy   200  	150  	150  	225  	100
+		Serious 100  	450  	100  	300  	75
+		Timid   50  	450  	50  	600  	150
+		*/
+		switch (Action)
+		{
+			case pokemonActions.Battle:
+				if(this.Nature == Natures.ADAMANT ) points = 150;
+				if(this.Nature == Natures.BASHFUL ) points = 50	;
+				if(this.Nature == Natures.BOLD    ) points = 150;
+				if(this.Nature == Natures.BRAVE   ) points = 200;
+				if(this.Nature == Natures.CALM    ) points = 50	;
+				if(this.Nature == Natures.CAREFUL ) points = 75	;
+				if(this.Nature == Natures.DOCILE  ) points = 75	;
+				if(this.Nature == Natures.GENTLE  ) points = 50	;
+				if(this.Nature == Natures.HARDY   ) points = 150;
+				if(this.Nature == Natures.HASTY   ) points = 200;
+				if(this.Nature == Natures.IMPISH  ) points = 200;
+				if(this.Nature == Natures.JOLLY   ) points = 150;
+				if(this.Nature == Natures.LAX     ) points = 100;
+				if(this.Nature == Natures.LONELY  ) points = 50	;
+				if(this.Nature == Natures.MILD    ) points = 75	;
+				if(this.Nature == Natures.MODEST  ) points = 75	;
+				if(this.Nature == Natures.NAIVE   ) points = 100;
+				if(this.Nature == Natures.NAUGHTY ) points = 150;
+				if(this.Nature == Natures.QUIET   ) points = 100;
+				if(this.Nature == Natures.QUIRKY  ) points = 200;
+				if(this.Nature == Natures.RASH    ) points = 75	;
+				if(this.Nature == Natures.RELAXED ) points = 75	;
+				if(this.Nature == Natures.SASSY   ) points = 200;
+				if(this.Nature == Natures.SERIOUS ) points = 100;
+				if(this.Nature == Natures.TIMID   ) points = 50	;
+				break;
+			case pokemonActions.CallTo:
+				if (this.Nature == Natures.ADAMANT) points = 225;   
+				if(this.Nature == Natures.BASHFUL ) points = 300;   
+				if(this.Nature == Natures.BOLD    ) points = 225;   
+				if(this.Nature == Natures.BRAVE   ) points = 225;   
+				if(this.Nature == Natures.CALM    ) points = 300;   
+				if(this.Nature == Natures.CAREFUL ) points = 300;   
+				if(this.Nature == Natures.DOCILE  ) points = 600;   
+				if(this.Nature == Natures.GENTLE  ) points = 300;   
+				if(this.Nature == Natures.HARDY   ) points = 300;   
+				if(this.Nature == Natures.HASTY   ) points = 300;   
+				if(this.Nature == Natures.IMPISH  ) points = 300;   
+				if(this.Nature == Natures.JOLLY   ) points = 300;   
+				if(this.Nature == Natures.LAX     ) points = 225;   
+				if(this.Nature == Natures.LONELY  ) points = 450;   
+				if(this.Nature == Natures.MILD    ) points = 225;   
+				if(this.Nature == Natures.MODEST  ) points = 300;   
+				if(this.Nature == Natures.NAIVE   ) points = 300;   
+				if(this.Nature == Natures.NAUGHTY ) points = 225;   
+				if(this.Nature == Natures.QUIET   ) points = 300;   
+				if(this.Nature == Natures.QUIRKY  ) points = 225;   
+				if(this.Nature == Natures.RASH    ) points = 300;   
+				if(this.Nature == Natures.RELAXED ) points = 225;   
+				if(this.Nature == Natures.SASSY   ) points = 150;   
+				if(this.Nature == Natures.SERIOUS ) points = 450;
+				if (this.Nature == Natures.TIMID  ) points = 450;   	  
+				break;											
+			case pokemonActions.Party:   						
+				if(this.Nature == Natures.ADAMANT ) points = 150;   
+				if(this.Nature == Natures.BASHFUL ) points = 75 ;   
+				if(this.Nature == Natures.BOLD    ) points = 200;   
+				if(this.Nature == Natures.BRAVE   ) points = 150;   
+				if(this.Nature == Natures.CALM    ) points = 100;   
+				if(this.Nature == Natures.CAREFUL ) points = 75 ;   
+				if(this.Nature == Natures.DOCILE  ) points = 100;   
+				if(this.Nature == Natures.GENTLE  ) points = 75 ;   
+				if(this.Nature == Natures.HARDY   ) points = 150;   
+				if(this.Nature == Natures.HASTY   ) points = 75 ;   
+				if(this.Nature == Natures.IMPISH  ) points = 150;   
+				if(this.Nature == Natures.JOLLY   ) points = 100;   
+				if(this.Nature == Natures.LAX     ) points = 150;   
+				if(this.Nature == Natures.LONELY  ) points = 150;   
+				if(this.Nature == Natures.MILD    ) points = 75 ;   
+				if(this.Nature == Natures.MODEST  ) points = 75 ;   
+				if(this.Nature == Natures.NAIVE   ) points = 150;   
+				if(this.Nature == Natures.NAUGHTY ) points = 200;   
+				if(this.Nature == Natures.QUIET   ) points = 100;   
+				if(this.Nature == Natures.QUIRKY  ) points = 50 ;   
+				if(this.Nature == Natures.RASH    ) points = 100;   
+				if(this.Nature == Natures.RELAXED ) points = 75 ;   
+				if(this.Nature == Natures.SASSY   ) points = 150;   
+				if(this.Nature == Natures.SERIOUS ) points = 100;
+				if (this.Nature == Natures.TIMID  ) points = 50 ;   
+				break;											
+			case pokemonActions.DayCare:						
+			case pokemonActions.MysteryAction:					
+				if(this.Nature == Natures.ADAMANT ) points = 300;   
+				if(this.Nature == Natures.BASHFUL ) points = 450;   
+				if(this.Nature == Natures.BOLD    ) points = 300;   
+				if(this.Nature == Natures.BRAVE   ) points = 225;   
+				if(this.Nature == Natures.CALM    ) points = 450;   
+				if(this.Nature == Natures.CAREFUL ) points = 450;   
+				if(this.Nature == Natures.DOCILE  ) points = 225;   
+				if(this.Nature == Natures.GENTLE  ) points = 600;   
+				if(this.Nature == Natures.HARDY   ) points = 150;   
+				if(this.Nature == Natures.HASTY   ) points = 150;   
+				if(this.Nature == Natures.IMPISH  ) points = 150;   
+				if(this.Nature == Natures.JOLLY   ) points = 150;   
+				if(this.Nature == Natures.LAX     ) points = 225;   
+				if(this.Nature == Natures.LONELY  ) points = 150;   
+				if(this.Nature == Natures.MILD    ) points = 450;   
+				if(this.Nature == Natures.MODEST  ) points = 600;   
+				if(this.Nature == Natures.NAIVE   ) points = 225;   
+				if(this.Nature == Natures.NAUGHTY ) points = 225;   
+				if(this.Nature == Natures.QUIET   ) points = 300;   
+				if(this.Nature == Natures.QUIRKY  ) points = 600;   
+				if(this.Nature == Natures.RASH    ) points = 300;   
+				if(this.Nature == Natures.RELAXED ) points = 600;   
+				if(this.Nature == Natures.SASSY   ) points = 225;   
+				if(this.Nature == Natures.SERIOUS ) points = 300;
+				if (this.Nature == Natures.TIMID  ) points = 600;   
+				break;											
+			case pokemonActions.Scent:							
+				if(this.Nature == Natures.ADAMANT ) points = 75	;
+				if(this.Nature == Natures.BASHFUL ) points = 200;
+				if(this.Nature == Natures.BOLD    ) points = 50	;
+				if(this.Nature == Natures.BRAVE   ) points = 75	;
+				if(this.Nature == Natures.CALM    ) points = 150;
+				if(this.Nature == Natures.CAREFUL ) points = 150;
+				if(this.Nature == Natures.DOCILE  ) points = 100;
+				if(this.Nature == Natures.GENTLE  ) points = 150;
+				if(this.Nature == Natures.HARDY   ) points = 100;
+				if(this.Nature == Natures.HASTY   ) points = 150;
+				if(this.Nature == Natures.IMPISH  ) points = 75	;
+				if(this.Nature == Natures.JOLLY   ) points = 150;
+				if(this.Nature == Natures.LAX     ) points = 150;
+				if(this.Nature == Natures.LONELY  ) points = 200;
+				if(this.Nature == Natures.MILD    ) points = 200;
+				if(this.Nature == Natures.MODEST  ) points = 100;
+				if(this.Nature == Natures.NAIVE   ) points = 100;
+				if(this.Nature == Natures.NAUGHTY ) points = 75	;
+				if(this.Nature == Natures.QUIET   ) points = 100;
+				if(this.Nature == Natures.QUIRKY  ) points = 75	;
+				if(this.Nature == Natures.RASH    ) points = 150;
+				if(this.Nature == Natures.RELAXED ) points = 150;
+				if(this.Nature == Natures.SASSY   ) points = 100;
+				if(this.Nature == Natures.SERIOUS ) points = 75	;
+				if(this.Nature == Natures.TIMID   ) points = 150;
+				break;
+			default:
+				break;
+		}
+		#endregion
+
+		#region Pokemon XD Shadow Switch
+		/* Values from Pokémon XD
+		Nature	Battle	Callto	Party	???		Scent
+		Adamant 110  	270  	110  	300  	80
+		Bashful 80  	300  	90  	330  	130
+		Bold    110  	270  	90  	300  	100
+		Brave   130  	270  	90  	270  	80
+		Calm    80  	300  	110  	330  	110
+		Careful 90  	300  	100  	330  	110
+		Docile  100  	360  	80  	270  	120
+		Gentle  70  	300  	130  	360  	100
+		Hardy   110  	300  	100  	240  	90
+		Hasty   130  	300  	70  	240  	100
+		Impish  120  	300  	100  	240  	80
+		Jolly   120  	300  	90  	240  	90
+		Lax     100  	270  	90  	270  	110
+		Lonely  70  	330  	100  	240  	130
+		Mild    80  	270  	100  	330  	120
+		Modest  70  	300  	120  	360  	110
+		Naive   100  	300  	120  	270  	80
+		Naughty 120  	270  	110  	270  	70
+		Quiet   100  	300  	100  	300  	100
+		Quirky  130  	270  	80  	360  	90
+		Rash    90  	300  	90  	300  	120
+		Relaxed 90  	270  	110  	360  	100
+		Sassy   130  	240  	100  	270  	70
+		Serious 100  	330  	110  	300  	90
+		Timid   70  	330  	110  	360  	120
+		*
+		switch (Action)
+		{
+			case pokemonActions.Battle:
+				break;
+			case pokemonActions.CallTo:
+				break;
+			case pokemonActions.Party:
+				break;
+			case pokemonActions.DayCare:
+			case pokemonActions.MysteryAction:
+				break;
+			case pokemonActions.Scent:
+				break;
+			default:
+				break;
+		}*/
+		#endregion
+		if (ShadowLevel.Value > 0)
+			ShadowLevel = (ShadowLevel.Value - points) < 0 ? 0 : ShadowLevel.Value - points;
+	}
 
 	enum pokemonActions
 	{
