@@ -205,7 +205,7 @@ public class PauseHandler : MonoBehaviour
         else if (selectedIcon == 4)
         {
             targetIcon = iconTrainer;
-            setSelectedText(SaveData.currentSave.playerName);
+            setSelectedText(SaveDataOld.currentSave.playerName);
         }
         else if (selectedIcon == 5)
         {
@@ -484,7 +484,7 @@ public class PauseHandler : MonoBehaviour
                         int badgeTotal = 0;
                         for (int i = 0; i < 12; i++)
                         {
-                            if (SaveData.currentSave.gymsBeaten[i])
+                            if (SaveDataOld.currentSave.gymsBeaten[i])
                             {
                                 badgeTotal += 1;
                             }
@@ -495,10 +495,10 @@ public class PauseHandler : MonoBehaviour
                             playerTime = "0" + playerTime;
                         }
                         playerTime = SaveData.currentSave.playerHours + " : " + playerTime;*/
-                        System.TimeSpan playTime = SaveData.currentSave.playerTime + SaveData.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+                        System.TimeSpan playTime = SaveDataOld.currentSave.playerTime + SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
 
                         mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
-                        dataText.text = SaveData.currentSave.playerName + "\n" +
+                        dataText.text = SaveDataOld.currentSave.playerName + "\n" +
                                         badgeTotal + "\n" +
                                         "0" + "\n" + //pokedex not yet implemented
                                         System.String.Format("{0} : {1:00}", playTime.Hours, playTime.Minutes); //playerTime
@@ -517,17 +517,17 @@ public class PauseHandler : MonoBehaviour
                                 Dialog.undrawChoiceBox();
                                 Dialog.drawDialogBox();
 
-                                SaveData.currentSave.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-                                SaveData.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
-                                SaveData.currentSave.playerDirection = PlayerMovement.player.direction;
-                                SaveData.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+                                SaveDataOld.currentSave.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                                SaveDataOld.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
+                                SaveDataOld.currentSave.playerDirection = PlayerMovement.player.direction;
+                                SaveDataOld.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
 
                                 NonResettingHandler.saveDataToGlobal();
 
-                                SaveLoad.Save();
+                                SaveLoadOld.Save();
 
                                 yield return
-                                    StartCoroutine(Dialog.drawText(SaveData.currentSave.playerName + " saved the game!"));
+                                    StartCoroutine(Dialog.drawText(SaveDataOld.currentSave.playerName + " saved the game!"));
                                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                 {
                                     yield return null;

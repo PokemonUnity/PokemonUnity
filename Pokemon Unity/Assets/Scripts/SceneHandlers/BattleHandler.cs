@@ -1266,22 +1266,22 @@ public class BattleHandler : MonoBehaviour
             itemList.SetActive(true);
             if (bagCategoryPosition == 0)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.HPPPRESTORE);
+                itemListString = SaveDataOld.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.HPPPRESTORE);
                 itemListCategoryText.text = "HP/PP Restore";
             }
             else if (bagCategoryPosition == 1)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.POKEBALLS);
+                itemListString = SaveDataOld.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.POKEBALLS);
                 itemListCategoryText.text = "Poké Balls";
             }
             else if (bagCategoryPosition == 2)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.STATUSHEALER);
+                itemListString = SaveDataOld.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.STATUSHEALER);
                 itemListCategoryText.text = "Status Healers";
             }
             else if (bagCategoryPosition == 3)
             {
-                itemListString = SaveData.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.BATTLEITEMS);
+                itemListString = SaveDataOld.currentSave.Bag.getBattleTypeArray(ItemDataOld.BattleType.BATTLEITEMS);
                 itemListCategoryText.text = "Battle Items";
             }
             itemListCategoryTextShadow.text = itemListCategoryText.text;
@@ -1300,7 +1300,7 @@ public class BattleHandler : MonoBehaviour
             buttonCheckTextShadow.text = buttonCheckText.text;
             pokemonSelectedPokemon.SetActive(true);
             pokemonSummary.SetActive(true);
-            updatePokemonSummaryDisplay(SaveData.currentSave.PC.boxes[0][pokePartyPosition]);
+            updatePokemonSummaryDisplay(SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]);
         }
         else if (currentTask == 6)
         {
@@ -1537,7 +1537,7 @@ public class BattleHandler : MonoBehaviour
                 itemListIcon[i].sprite = Resources.Load<Sprite>("Items/" + itemListPageString[i]);
                 itemListName[i].text = itemListPageString[i];
                 itemListNameShadow[i].text = itemListName[i].text;
-                itemListQuantity[i].text = "" + SaveData.currentSave.Bag.getQuantity(itemListPageString[i]);
+                itemListQuantity[i].text = "" + SaveDataOld.currentSave.Bag.getQuantity(itemListPageString[i]);
                 itemListQuantityShadow[i].text = itemListQuantity[i].text;
             }
             else
@@ -1552,7 +1552,7 @@ public class BattleHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            PokemonOld selectedPokemon = SaveDataOld.currentSave.PC.boxes[0][i];
             if (selectedPokemon == null)
             {
                 buttonPokemonSlot[i].gameObject.SetActive(false);
@@ -1971,7 +1971,7 @@ public class BattleHandler : MonoBehaviour
         }
         if (newPosition < 6)
         {
-            if (SaveData.currentSave.PC.boxes[0][newPosition] == null)
+            if (SaveDataOld.currentSave.PC.boxes[0][newPosition] == null)
             {
                 int checkPosition = pokePartyPosition;
                 bool spaceFound = false;
@@ -1986,7 +1986,7 @@ public class BattleHandler : MonoBehaviour
                             newPosition = pokePartyPosition; //don't move the position
                             spaceFound = true;
                         }
-                        else if (SaveData.currentSave.PC.boxes[0][checkPosition] != null)
+                        else if (SaveDataOld.currentSave.PC.boxes[0][checkPosition] != null)
                         {
                             newPosition = checkPosition; //adjust the position
                             spaceFound = true;
@@ -2008,14 +2008,14 @@ public class BattleHandler : MonoBehaviour
                             else
                             {
                                 newPosition = 5;
-                                while (SaveData.currentSave.PC.boxes[0][newPosition] == null && newPosition > 0)
+                                while (SaveDataOld.currentSave.PC.boxes[0][newPosition] == null && newPosition > 0)
                                 {
                                     newPosition -= 1;
                                 }
                             }
                             spaceFound = true;
                         }
-                        else if (SaveData.currentSave.PC.boxes[0][checkPosition] != null)
+                        else if (SaveDataOld.currentSave.PC.boxes[0][checkPosition] != null)
                         {
                             newPosition = checkPosition; //adjust the position
                             spaceFound = true;
@@ -2029,7 +2029,7 @@ public class BattleHandler : MonoBehaviour
             newPosition = maxPosition;
             if (newPosition < 6)
             {
-                if (SaveData.currentSave.PC.boxes[0][newPosition] == null)
+                if (SaveDataOld.currentSave.PC.boxes[0][newPosition] == null)
                 {
                     int checkPosition = pokePartyPosition;
                     bool spaceFound = false;
@@ -2044,7 +2044,7 @@ public class BattleHandler : MonoBehaviour
                                 newPosition = pokePartyPosition; //don't move the position
                                 spaceFound = true;
                             }
-                            else if (SaveData.currentSave.PC.boxes[0][checkPosition] != null)
+                            else if (SaveDataOld.currentSave.PC.boxes[0][checkPosition] != null)
                             {
                                 newPosition = checkPosition; //adjust the position
                                 spaceFound = true;
@@ -2064,9 +2064,9 @@ public class BattleHandler : MonoBehaviour
                 //unhighlight
                 if (i == 0)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][i] != null)
+                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                     {
-                        buttonPokemonSlot[i].sprite = (SaveData.currentSave.PC.boxes[0][i].getStatus() !=
+                        buttonPokemonSlot[i].sprite = (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() !=
                                                        PokemonOld.Status.FAINTED)
                             ? buttonPokemonRoundTex
                             : buttonPokemonRoundFntTex;
@@ -2074,9 +2074,9 @@ public class BattleHandler : MonoBehaviour
                 }
                 else if (i < 6)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][i] != null)
+                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                     {
-                        buttonPokemonSlot[i].sprite = (SaveData.currentSave.PC.boxes[0][i].getStatus() !=
+                        buttonPokemonSlot[i].sprite = (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() !=
                                                        PokemonOld.Status.FAINTED)
                             ? buttonPokemonTex
                             : buttonPokemonFntTex;
@@ -2092,9 +2092,9 @@ public class BattleHandler : MonoBehaviour
                 //highlight
                 if (i == 0)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][i] != null)
+                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                     {
-                        buttonPokemonSlot[i].sprite = (SaveData.currentSave.PC.boxes[0][i].getStatus() !=
+                        buttonPokemonSlot[i].sprite = (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() !=
                                                        PokemonOld.Status.FAINTED)
                             ? buttonPokemonRoundSelTex
                             : buttonPokemonRoundFntSelTex;
@@ -2102,9 +2102,9 @@ public class BattleHandler : MonoBehaviour
                 }
                 else if (i < 6)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][i] != null)
+                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                     {
-                        buttonPokemonSlot[i].sprite = (SaveData.currentSave.PC.boxes[0][i].getStatus() !=
+                        buttonPokemonSlot[i].sprite = (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() !=
                                                        PokemonOld.Status.FAINTED)
                             ? buttonPokemonSelTex
                             : buttonPokemonFntSelTex;
@@ -2140,7 +2140,7 @@ public class BattleHandler : MonoBehaviour
 
         if (newPosition < 4)
         {
-            string[] moveset = SaveData.currentSave.PC.boxes[0][pokePartyPosition].getMoveset();
+            string[] moveset = SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition].getMoveset();
             if (string.IsNullOrEmpty(moveset[newPosition]))
             {
                 pokemonMovesSelectedCategory.sprite = Resources.Load<Sprite>("null");
@@ -3523,9 +3523,9 @@ public class BattleHandler : MonoBehaviour
         int[] initialLevels = new int[6];
         for (int i = 0; i < initialLevels.Length; i++)
         {
-            if (SaveData.currentSave.PC.boxes[0][i] != null)
+            if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
             {
-                initialLevels[i] = SaveData.currentSave.PC.boxes[0][i].getLevel();
+                initialLevels[i] = SaveDataOld.currentSave.PC.boxes[0][i].getLevel();
             }
         }
 
@@ -3549,7 +3549,7 @@ public class BattleHandler : MonoBehaviour
             trainer1Animation = trainer.GetSprites();
         }
         playerTrainer1Animation =
-            Resources.LoadAll<Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + "back");
+            Resources.LoadAll<Sprite>("PlayerSprites/" + SaveDataOld.currentSave.getPlayerSpritePrefix() + "back");
         playerTrainerSprite1.sprite = playerTrainer1Animation[0];
         //Note: the player animation should NEVER have no sprites 
         if (trainer1Animation.Length > 0)
@@ -3587,11 +3587,11 @@ public class BattleHandler : MonoBehaviour
 
         for (int i = 0; i < 6; i++)
         {
-            if (SaveData.currentSave.PC.boxes[0][i] != null)
+            if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
             {
-                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
+                if (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
                 {
-                    switchPokemon(0, SaveData.currentSave.PC.boxes[0][i], false, true);
+                    switchPokemon(0, SaveDataOld.currentSave.PC.boxes[0][i], false, true);
                     i = 6;
                 }
             }
@@ -3638,7 +3638,7 @@ public class BattleHandler : MonoBehaviour
 
             yield return new WaitForSeconds(0.9f);
             StartCoroutine(displayPartyBar(true, opponentParty));
-            StartCoroutine(displayPartyBar(false, SaveData.currentSave.PC.boxes[0]));
+            StartCoroutine(displayPartyBar(false, SaveDataOld.currentSave.PC.boxes[0]));
 
             yield return StartCoroutine(drawTextAndWait(opponentName + " wants to fight!", 2.6f, 2.6f));
 
@@ -4247,7 +4247,7 @@ public class BattleHandler : MonoBehaviour
                                                     {
                                                         commandItem[currentPokemon] = selectedItem;
                                                         commandTarget[currentPokemon] = target;
-                                                        SaveData.currentSave.Bag.removeItem(selectedItem.getName(), 1);
+                                                        SaveDataOld.currentSave.Bag.removeItem(selectedItem.getName(), 1);
                                                         runState = false;
                                                     }
                                                     else
@@ -4275,7 +4275,7 @@ public class BattleHandler : MonoBehaviour
                                                     {
                                                         commandItem[currentPokemon] = selectedItem;
                                                         commandTarget[currentPokemon] = target;
-                                                        SaveData.currentSave.Bag.removeItem(
+                                                        SaveDataOld.currentSave.Bag.removeItem(
                                                             itemListString[itemListPosition], 1);
                                                         runState = false;
                                                     }
@@ -4291,7 +4291,7 @@ public class BattleHandler : MonoBehaviour
                                                 {
                                                     commandItem[currentPokemon] =
                                                         ItemDatabaseOld.getItem(itemListString[itemListPosition]);
-                                                    SaveData.currentSave.Bag.removeItem(
+                                                    SaveDataOld.currentSave.Bag.removeItem(
                                                         itemListString[itemListPosition], 1);
                                                     runState = false;
                                                 }
@@ -4430,7 +4430,7 @@ public class BattleHandler : MonoBehaviour
                                                     SfxHandler.Play(scrollClip);
                                                 }
                                                 updatePokemonSummaryDisplay(
-                                                    SaveData.currentSave.PC.boxes[0][pokePartyPosition]);
+                                                    SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]);
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
@@ -4463,7 +4463,7 @@ public class BattleHandler : MonoBehaviour
                                                     SfxHandler.Play(scrollClip);
                                                 }
                                                 updatePokemonSummaryDisplay(
-                                                    SaveData.currentSave.PC.boxes[0][pokePartyPosition]);
+                                                    SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]);
                                                 yield return new WaitForSeconds(0.2f);
                                             }
                                         }
@@ -4471,14 +4471,14 @@ public class BattleHandler : MonoBehaviour
                                         {
                                             if (summaryPosition == 0)
                                             {
-                                                if (SaveData.currentSave.PC.boxes[0][pokePartyPosition].getStatus() !=
+                                                if (SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition].getStatus() !=
                                                     PokemonOld.Status.FAINTED)
                                                 {
                                                     //check that pokemon is not on the field
                                                     bool notOnField = true;
                                                     for (int i = 0; i < pokemonPerSide; i++)
                                                     {
-                                                        if (SaveData.currentSave.PC.boxes[0][pokePartyPosition] ==
+                                                        if (SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition] ==
                                                             pokemon[i])
                                                         {
                                                             notOnField = false;
@@ -4490,7 +4490,7 @@ public class BattleHandler : MonoBehaviour
                                                         //debug
                                                         command[currentPokemon] = CommandType.Switch;
                                                         commandPokemon[currentPokemon] =
-                                                            SaveData.currentSave.PC.boxes[0][pokePartyPosition];
+                                                            SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition];
                                                         runState = false;
                                                         updateCurrentTask(-1);
                                                         SfxHandler.Play(selectClip);
@@ -4501,7 +4501,7 @@ public class BattleHandler : MonoBehaviour
                                                         yield return
                                                             StartCoroutine(
                                                                 drawTextAndWait(
-                                                                    SaveData.currentSave.PC.boxes[0][pokePartyPosition]
+                                                                    SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]
                                                                         .getName() + " is already fighting!"));
                                                         Dialog.UndrawDialogBox();
                                                     }
@@ -4511,7 +4511,7 @@ public class BattleHandler : MonoBehaviour
                                                     yield return
                                                         StartCoroutine(
                                                             drawTextAndWait(
-                                                                SaveData.currentSave.PC.boxes[0][pokePartyPosition]
+                                                                SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]
                                                                     .getName() + " is unable to fight!"));
                                                     Dialog.UndrawDialogBox();
                                                 }
@@ -4583,7 +4583,7 @@ public class BattleHandler : MonoBehaviour
                                                         if (movesPosition == 4)
                                                         {
                                                             if (
-                                                                SaveData.currentSave.PC.boxes[0][pokePartyPosition]
+                                                                SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]
                                                                     .getStatus() != PokemonOld.Status.FAINTED)
                                                             {
                                                                 //check that pokemon is not on the field
@@ -4591,7 +4591,7 @@ public class BattleHandler : MonoBehaviour
                                                                 for (int i = 0; i < pokemonPerSide; i++)
                                                                 {
                                                                     if (
-                                                                        SaveData.currentSave.PC.boxes[0][
+                                                                        SaveDataOld.currentSave.PC.boxes[0][
                                                                             pokePartyPosition] == pokemon[i])
                                                                     {
                                                                         notOnField = false;
@@ -4603,7 +4603,7 @@ public class BattleHandler : MonoBehaviour
                                                                     //debug
                                                                     command[currentPokemon] = CommandType.Switch;
                                                                     commandPokemon[currentPokemon] =
-                                                                        SaveData.currentSave.PC.boxes[0][
+                                                                        SaveDataOld.currentSave.PC.boxes[0][
                                                                             pokePartyPosition];
                                                                     runState = false;
                                                                     updateCurrentTask(-1);
@@ -4615,7 +4615,7 @@ public class BattleHandler : MonoBehaviour
                                                                     yield return
                                                                         StartCoroutine(
                                                                             drawTextAndWait(
-                                                                                SaveData.currentSave.PC.boxes[0][
+                                                                                SaveDataOld.currentSave.PC.boxes[0][
                                                                                     pokePartyPosition].getName() +
                                                                                 " is already fighting!"));
                                                                     Dialog.UndrawDialogBox();
@@ -4626,7 +4626,7 @@ public class BattleHandler : MonoBehaviour
                                                                 yield return
                                                                     StartCoroutine(
                                                                         drawTextAndWait(
-                                                                            SaveData.currentSave.PC.boxes[0][
+                                                                            SaveDataOld.currentSave.PC.boxes[0][
                                                                                 pokePartyPosition].getName() +
                                                                             " is unable to fight!"));
                                                                 Dialog.UndrawDialogBox();
@@ -4793,7 +4793,7 @@ public class BattleHandler : MonoBehaviour
                                     yield return
                                         StartCoroutine(
                                             drawTextAndWait(
-                                                SaveData.currentSave.playerName + " used one " +
+                                                SaveDataOld.currentSave.playerName + " used one " +
                                                 commandItem[movingPokemon].getName() + "!", 2.4f));
                                     yield return new WaitForSeconds(1.2f);
                                     if (trainerBattle)
@@ -4900,7 +4900,7 @@ public class BattleHandler : MonoBehaviour
                                                 yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
                                             }
                                             Debug.Log("CurrentHP" + pokemon[targetIndex].getCurrentHP());
-                                            SaveData.currentSave.PC.addPokemon(new PokemonOld(pokemon[targetIndex],
+                                            SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(pokemon[targetIndex],
                                                 nickname, commandItem[movingPokemon].getName()));
                                         }
 
@@ -4916,7 +4916,7 @@ public class BattleHandler : MonoBehaviour
                                         yield return
                                             StartCoroutine(
                                                 drawTextAndWait(
-                                                    SaveData.currentSave.playerName + " used the " +
+                                                    SaveDataOld.currentSave.playerName + " used the " +
                                                     commandItem[movingPokemon].getName() + "!", 2.4f));
                                         yield return
                                             StartCoroutine(Heal(commandTarget[movingPokemon],
@@ -4932,7 +4932,7 @@ public class BattleHandler : MonoBehaviour
                                         yield return
                                             StartCoroutine(
                                                 drawTextAndWait(
-                                                    SaveData.currentSave.playerName + " used the " +
+                                                    SaveDataOld.currentSave.playerName + " used the " +
                                                     commandItem[movingPokemon].getName() + "!", 2.4f));
                                         yield return StartCoroutine(Heal(commandTarget[movingPokemon], true));
                                     }
@@ -4943,7 +4943,7 @@ public class BattleHandler : MonoBehaviour
                                     yield return
                                         StartCoroutine(
                                             drawTextAndWait(
-                                                SaveData.currentSave.playerName + " used " +
+                                                SaveDataOld.currentSave.playerName + " used " +
                                                 commandItem[movingPokemon].getName() + "!", 2.4f));
                                 }
                             }
@@ -5278,7 +5278,7 @@ public class BattleHandler : MonoBehaviour
                                                         ? 1.5f
                                                         : 1f;
                                                     float OTMod = (pokemon[i2].getIDno() !=
-                                                                   SaveData.currentSave.playerID.ToString())
+                                                                   SaveDataOld.currentSave.playerID.ToString())
                                                         ? 1.5f
                                                         : 1f;
                                                     float sharedMod = 1f; //shared experience
@@ -5539,9 +5539,9 @@ public class BattleHandler : MonoBehaviour
                 for (int i = 0; i < 6; i++)
                 {
                     //check each player
-                    if (SaveData.currentSave.PC.boxes[0][i] != null)
+                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                     {
-                        if (SaveData.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
+                        if (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
                         {
                             allPlayersDefeated = false;
                         }
@@ -5689,7 +5689,7 @@ public class BattleHandler : MonoBehaviour
                                     if (pokePartyPosition == 6)
                                     {
                                     } //debug
-                                    else if (SaveData.currentSave.PC.boxes[0][pokePartyPosition] != null)
+                                    else if (SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition] != null)
                                     {
                                         updateCurrentTask(5);
                                         SfxHandler.Play(selectClip);
@@ -5710,7 +5710,7 @@ public class BattleHandler : MonoBehaviour
                                                         SfxHandler.Play(scrollClip);
                                                     }
                                                     updatePokemonSummaryDisplay(
-                                                        SaveData.currentSave.PC.boxes[0][pokePartyPosition]);
+                                                        SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]);
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
@@ -5743,7 +5743,7 @@ public class BattleHandler : MonoBehaviour
                                                         SfxHandler.Play(scrollClip);
                                                     }
                                                     updatePokemonSummaryDisplay(
-                                                        SaveData.currentSave.PC.boxes[0][pokePartyPosition]);
+                                                        SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]);
                                                     yield return new WaitForSeconds(0.2f);
                                                 }
                                             }
@@ -5753,14 +5753,14 @@ public class BattleHandler : MonoBehaviour
                                                 {
                                                     // switch
                                                     if (
-                                                        SaveData.currentSave.PC.boxes[0][pokePartyPosition].getStatus() !=
+                                                        SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition].getStatus() !=
                                                         PokemonOld.Status.FAINTED)
                                                     {
                                                         //check that pokemon is not on the field
                                                         bool notOnField = true;
                                                         for (int i2 = 0; i2 < pokemonPerSide; i2++)
                                                         {
-                                                            if (SaveData.currentSave.PC.boxes[0][pokePartyPosition] ==
+                                                            if (SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition] ==
                                                                 pokemon[i2])
                                                             {
                                                                 notOnField = false;
@@ -5770,7 +5770,7 @@ public class BattleHandler : MonoBehaviour
                                                         if (notOnField)
                                                         {
                                                             switchPokemon(i,
-                                                                SaveData.currentSave.PC.boxes[0][pokePartyPosition]);
+                                                                SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]);
                                                             updateCurrentTask(-1);
                                                             SfxHandler.Play(selectClip);
 
@@ -5802,7 +5802,7 @@ public class BattleHandler : MonoBehaviour
                                                             yield return
                                                                 StartCoroutine(
                                                                     drawTextAndWait(
-                                                                        SaveData.currentSave.PC.boxes[0][
+                                                                        SaveDataOld.currentSave.PC.boxes[0][
                                                                             pokePartyPosition].getName() +
                                                                         " is already fighting!"));
                                                             Dialog.UndrawDialogBox();
@@ -5813,7 +5813,7 @@ public class BattleHandler : MonoBehaviour
                                                         yield return
                                                             StartCoroutine(
                                                                 drawTextAndWait(
-                                                                    SaveData.currentSave.PC.boxes[0][pokePartyPosition]
+                                                                    SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]
                                                                         .getName() + " is unable to fight!"));
                                                         Dialog.UndrawDialogBox();
                                                     }
@@ -5890,7 +5890,7 @@ public class BattleHandler : MonoBehaviour
                                                             {
                                                                 // switch
                                                                 if (
-                                                                    SaveData.currentSave.PC.boxes[0][pokePartyPosition]
+                                                                    SaveDataOld.currentSave.PC.boxes[0][pokePartyPosition]
                                                                         .getStatus() != PokemonOld.Status.FAINTED)
                                                                 {
                                                                     //check that pokemon is not on the field
@@ -5898,7 +5898,7 @@ public class BattleHandler : MonoBehaviour
                                                                     for (int i2 = 0; i2 < pokemonPerSide; i2++)
                                                                     {
                                                                         if (
-                                                                            SaveData.currentSave.PC.boxes[0][
+                                                                            SaveDataOld.currentSave.PC.boxes[0][
                                                                                 pokePartyPosition] == pokemon[i2])
                                                                         {
                                                                             notOnField = false;
@@ -5908,7 +5908,7 @@ public class BattleHandler : MonoBehaviour
                                                                     if (notOnField)
                                                                     {
                                                                         switchPokemon(i,
-                                                                            SaveData.currentSave.PC.boxes[0][
+                                                                            SaveDataOld.currentSave.PC.boxes[0][
                                                                                 pokePartyPosition]);
                                                                         updateCurrentTask(-1);
                                                                         SfxHandler.Play(selectClip);
@@ -5916,7 +5916,7 @@ public class BattleHandler : MonoBehaviour
                                                                         yield return
                                                                             StartCoroutine(
                                                                                 drawTextAndWait(
-                                                                                    SaveData.currentSave.playerName +
+                                                                                    SaveDataOld.currentSave.playerName +
                                                                                     " sent out " + pokemon[i].getName() +
                                                                                     "!", 1.5f, 1.5f));
                                                                         Dialog.UndrawDialogBox();
@@ -5944,7 +5944,7 @@ public class BattleHandler : MonoBehaviour
                                                                         yield return
                                                                             StartCoroutine(
                                                                                 drawTextAndWait(
-                                                                                    SaveData.currentSave.PC.boxes[0][
+                                                                                    SaveDataOld.currentSave.PC.boxes[0][
                                                                                         pokePartyPosition].getName() +
                                                                                     " is already fighting!"));
                                                                         Dialog.UndrawDialogBox();
@@ -5955,7 +5955,7 @@ public class BattleHandler : MonoBehaviour
                                                                     yield return
                                                                         StartCoroutine(
                                                                             drawTextAndWait(
-                                                                                SaveData.currentSave.PC.boxes[0][
+                                                                                SaveDataOld.currentSave.PC.boxes[0][
                                                                                     pokePartyPosition].getName() +
                                                                                 " is unable to fight!"));
                                                                     Dialog.UndrawDialogBox();
@@ -6043,7 +6043,7 @@ public class BattleHandler : MonoBehaviour
 
                         yield return
                             StartCoroutine(
-                                drawTextAndWait(SaveData.currentSave.playerName + " defeated " + opponentName + "!",
+                                drawTextAndWait(SaveDataOld.currentSave.playerName + " defeated " + opponentName + "!",
                                     2.4f, 2.4f));
                         Dialog.UndrawDialogBox();
                         yield return StartCoroutine(slideTrainer(opponentBase, trainerSprite1, true, false));
@@ -6055,9 +6055,9 @@ public class BattleHandler : MonoBehaviour
 
                         yield return
                             StartCoroutine(
-                                drawTextAndWait(SaveData.currentSave.playerName + " received $" +
+                                drawTextAndWait(SaveDataOld.currentSave.playerName + " received $" +
                                                 trainer.GetPrizeMoney() + " for winning!"));
-                        SaveData.currentSave.playerMoney += trainer.GetPrizeMoney();
+                        SaveDataOld.currentSave.playerMoney += trainer.GetPrizeMoney();
                     }
                     else
                     {
@@ -6082,7 +6082,7 @@ public class BattleHandler : MonoBehaviour
                     {
                         yield return
                             StartCoroutine(
-                                drawTextAndWait(opponentName + " defeated " + SaveData.currentSave.playerName + "!",
+                                drawTextAndWait(opponentName + " defeated " + SaveDataOld.currentSave.playerName + "!",
                                     2.4f, 2.4f));
                         Dialog.UndrawDialogBox();
                         yield return StartCoroutine(slideTrainer(opponentBase, trainerSprite1, true, false));
@@ -6098,14 +6098,14 @@ public class BattleHandler : MonoBehaviour
                     {
                         yield return
                             StartCoroutine(
-                                drawTextAndWait(SaveData.currentSave.playerName + " is out of usable Pokémon!", 2f));
+                                drawTextAndWait(SaveDataOld.currentSave.playerName + " is out of usable Pokémon!", 2f));
                         yield return
-                            StartCoroutine(drawTextAndWait(SaveData.currentSave.playerName + " dropped $200 in panic!",
+                            StartCoroutine(drawTextAndWait(SaveDataOld.currentSave.playerName + " dropped $200 in panic!",
                                 2f));
                         yield return StartCoroutine(drawTextAndWait("... ... ... ...", 2f));
 
                         yield return
-                            StartCoroutine(drawTextAndWait(SaveData.currentSave.playerName + " blacked out!", 1.8f, 1.8f))
+                            StartCoroutine(drawTextAndWait(SaveDataOld.currentSave.playerName + " blacked out!", 1.8f, 1.8f))
                             ;
                         Dialog.UndrawDialogBox();
                         //overlayed dialog box not yet implemented
@@ -6117,9 +6117,9 @@ public class BattleHandler : MonoBehaviour
                     //fully heal players party so that they cant walk around with a defeated party
                     for (int i = 0; i < 6; i++)
                     {
-                        if (SaveData.currentSave.PC.boxes[0][i] != null)
+                        if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                         {
-                            SaveData.currentSave.PC.boxes[0][i].healFull();
+                            SaveDataOld.currentSave.PC.boxes[0][i].healFull();
                         }
                     }
                 }
@@ -6148,19 +6148,19 @@ public class BattleHandler : MonoBehaviour
         {
             for (int i = 0; i < initialLevels.Length; i++)
             {
-                if (SaveData.currentSave.PC.boxes[0][i] != null)
+                if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
                 {
                     //if level is different to it was at the start of the battle
-                    if (SaveData.currentSave.PC.boxes[0][i].getLevel() != initialLevels[i])
+                    if (SaveDataOld.currentSave.PC.boxes[0][i].getLevel() != initialLevels[i])
                     {
                         //if can evolve
-                        if (SaveData.currentSave.PC.boxes[0][i].canEvolve("Level"))
+                        if (SaveDataOld.currentSave.PC.boxes[0][i].canEvolve("Level"))
                         {
                             BgmHandler.main.PlayOverlay(null, 0, 0);
 
                             //Set SceneEvolution to be active so that it appears
                             Scene.main.Evolution.gameObject.SetActive(true);
-                            StartCoroutine(Scene.main.Evolution.control(SaveData.currentSave.PC.boxes[0][i], "Level"));
+                            StartCoroutine(Scene.main.Evolution.control(SaveDataOld.currentSave.PC.boxes[0][i], "Level"));
                             //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
                             while (Scene.main.Evolution.gameObject.activeSelf)
                             {

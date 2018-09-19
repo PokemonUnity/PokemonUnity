@@ -5,10 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-[System.Serializable]
-public class SaveData
+[System.Serializable, System.Obsolete]
+public class SaveDataOld
 {
-    public static SaveData currentSave;
+    public static SaveDataOld currentSave;
 
     private int fileIndex;
     private int buildID;
@@ -73,8 +73,8 @@ public class SaveData
     /// </summary>
     /// <remarks>if null, has not been seen or captured</remarks> 
     public bool?[] playerPokedex = new bool?[PokemonDatabaseOld.LoadPokedex().Length]; 
-    public int pokedexCaught = (from caught in SaveData.currentSave.playerPokedex where caught == true select caught).Count();
-    public int pokedexSeen = (from seen in SaveData.currentSave.playerPokedex where seen != null select seen).Count(); 
+    public int pokedexCaught = (from caught in SaveDataOld.currentSave.playerPokedex where caught == true select caught).Count();
+    public int pokedexSeen = (from seen in SaveDataOld.currentSave.playerPokedex where seen != null select seen).Count(); 
 
     public System.TimeSpan playerTime;
     public int playerHours;
@@ -107,7 +107,7 @@ public class SaveData
     public List<NonResettingList> nonResettingLists = new List<NonResettingList>();
 
 
-    public SaveData(int fileIndex)
+    public SaveDataOld(int fileIndex)
     {
         this.fileIndex = fileIndex;
     }

@@ -437,7 +437,7 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-                else if (Input.GetKeyDown("g") && SaveData.currentSave.debugMode == true)
+                else if (Input.GetKeyDown("g") && SaveDataOld.currentSave.debugMode == true)
                 {
                     //DEBUG
                     Debug.Log(currentMap.getTileTag(transform.position));
@@ -505,14 +505,14 @@ public class PlayerMovement : MonoBehaviour
         if (animationName != newAnimationName)
         {
             animationName = newAnimationName;
-            if(SaveData.currentSave.getPlayerSpritePrefix().Contains("custom")) {
-                WWW www = new WWW("file://" + System.IO.Path.Combine(Application.streamingAssetsPath, SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName));
+            if(SaveDataOld.currentSave.getPlayerSpritePrefix().Contains("custom")) {
+                WWW www = new WWW("file://" + System.IO.Path.Combine(Application.streamingAssetsPath, SaveDataOld.currentSave.getPlayerSpritePrefix() + newAnimationName));
  
                 if (!string.IsNullOrEmpty(www.error)) {
                     Debug.Log (www.error);
-                    SaveData.currentSave.playerOutfit = "hgss";
+                    SaveDataOld.currentSave.playerOutfit = "hgss";
                     PlayerPrefs.SetInt("customSprites", 0);
-                    if(SaveData.currentSave.getCVariable("male") == 1) {
+                    if(SaveDataOld.currentSave.getCVariable("male") == 1) {
                         spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
                     }
                     else {
@@ -539,7 +539,7 @@ public class PlayerMovement : MonoBehaviour
                     spriteSheet = new Sprite[] {custom1,custom2,custom3,custom4,custom5,custom6,custom7,custom8,custom9,custom10,custom11,custom12,custom13,custom14,custom15,custom16};*/
                     //I highly doubt this is the correct way to do it
                     Debug.Log("Not implemented");
-                    if(SaveData.currentSave.getCVariable("male") == 1) {
+                    if(SaveDataOld.currentSave.getCVariable("male") == 1) {
                         spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
                     }
                     else {
@@ -549,7 +549,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else {
                 spriteSheet =
-                    Resources.LoadAll<Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
+                    Resources.LoadAll<Sprite>("PlayerSprites/" + SaveDataOld.currentSave.getPlayerSpritePrefix() + newAnimationName);
                 //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
             }
             framesPerSec = fps;
@@ -1144,7 +1144,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator surfCheck()
     {
-        PokemonOld targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
+        PokemonOld targetPokemon = SaveDataOld.currentSave.PC.getFirstFEUserInParty("Surf");
         if (targetPokemon != null)
         {
             if (getForwardVector(direction, false) != Vector3.zero)

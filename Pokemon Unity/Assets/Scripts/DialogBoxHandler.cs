@@ -324,7 +324,7 @@ public class DialogBoxHandler : MonoBehaviour
                 {
                     //player name
                     i += 1; //adjust for the extra character in the operator (e.g. "{P" )
-                    char[] pChars = SaveData.currentSave.playerName.ToCharArray();
+                    char[] pChars = SaveDataOld.currentSave.playerName.ToCharArray();
                     for (int i2 = 0; i2 < pChars.Length; i2++)
                     {
                         yield return StartCoroutine(drawChar(pChars[i2], secPerChar));

@@ -300,12 +300,12 @@ public class PokemonOld {
 		this.caughtBallString = caughtBall;
 		//this.heldItem = heldItem;
 
-		this.OT = string.IsNullOrEmpty(OT)? SaveData.currentSave.playerName : OT;
-		if (this.OT != SaveData.currentSave.playerName){
+		this.OT = string.IsNullOrEmpty(OT)? SaveDataOld.currentSave.playerName : OT;
+		if (this.OT != SaveDataOld.currentSave.playerName){
 			this.IDno = Random.Range (0,65536).ToString().PadLeft(6,'0'); //if owned by another trainer, assign a random number. 
 		}										//this way if they trade it to you, it will have a different number to the player's.
 		else{
-			this.IDno = SaveData.currentSave.playerID.ToString().Substring(SaveData.currentSave.playerID.ToString().Length-6,6);
+			this.IDno = SaveDataOld.currentSave.playerID.ToString().Substring(SaveDataOld.currentSave.playerID.ToString().Length-6,6);
 		}
 
 		this.metLevel = level;
@@ -400,12 +400,12 @@ public class PokemonOld {
 		this.caughtBall = caughtBall;
 		this.heldItem = heldItem;
 
-		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
-		if (this.OT != SaveData.currentSave.playerName){
+		this.OT = (string.IsNullOrEmpty(OT))? SaveDataOld.currentSave.playerName : OT;
+		if (this.OT != SaveDataOld.currentSave.playerName){
 			this.IDno = Random.Range (0,65536).ToString(); //if owned by another trainer, assign a random number. 
 		}										            //this way if they trade it to you, it will have a different number to the player's.
 		else{
-			this.IDno = SaveData.currentSave.playerID.ToString();
+			this.IDno = SaveDataOld.currentSave.playerID.ToString();
 		}
 
 		this.metLevel = level;
@@ -516,12 +516,12 @@ public class PokemonOld {
 			this.metMap = "Somewhere";}
 		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
 
-		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
-		if(this.OT != SaveData.currentSave.playerName){
+		this.OT = (string.IsNullOrEmpty(OT))? SaveDataOld.currentSave.playerName : OT;
+		if(this.OT != SaveDataOld.currentSave.playerName){
 			this.IDno = Random.Range (0,65536).ToString(); //if owned by another trainer, assign a random number. 
 		}										//this way if they trade it to you, it will have a different number to the player's.
 		else{
-			this.IDno = SaveData.currentSave.playerID.ToString();
+			this.IDno = SaveDataOld.currentSave.playerID.ToString();
 		}
 
 		//Set IVs randomly between 0 and 32 (32 is exlcuded)
@@ -599,8 +599,8 @@ public class PokemonOld {
 		this.caughtBallString = caughtBall;
 		this.heldItem = pokemon.heldItem;
 
-		this.OT = SaveData.currentSave.playerName;
-		this.IDno = SaveData.currentSave.playerID.ToString(); //Only need last 6 digits...
+		this.OT = SaveDataOld.currentSave.playerName;
+		this.IDno = SaveDataOld.currentSave.playerID.ToString(); //Only need last 6 digits...
 		
 		this.metLevel = level;
 		if(PlayerMovement.player.accessedMapSettings != null){

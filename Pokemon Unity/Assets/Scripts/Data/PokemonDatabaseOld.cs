@@ -2646,7 +2646,7 @@ PokemonData.CreatePokemonData(10090,15,null,7,4,91,null,null,null,null,null,null
         return Pokedex;//Loadpokedex;
     }
 
-    private static Dictionary<int, PokedexTranslation> _pokeTranslations = LoadPokedexTranslations(SaveData.currentSave.playerLanguage);
+    private static Dictionary<int, PokedexTranslation> _pokeTranslations = LoadPokedexTranslations(SaveDataOld.currentSave.playerLanguage);
 
     public static Dictionary<int, PokedexTranslation> LoadPokedexTranslations(GlobalVariables.Language language)
     {

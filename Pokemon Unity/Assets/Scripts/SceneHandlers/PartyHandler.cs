@@ -102,7 +102,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            PokemonOld selectedPokemon = SaveDataOld.currentSave.PC.boxes[0][i];
             if (selectedPokemon == null)
             {
                 slot[i].gameObject.SetActive(false);
@@ -183,7 +183,7 @@ public class PartyHandler : MonoBehaviour
                 //add
                 if (currentPosition < 5)
                 {
-                    if (SaveData.currentSave.PC.boxes[0][currentPosition + 1] == null)
+                    if (SaveDataOld.currentSave.PC.boxes[0][currentPosition + 1] == null)
                     {
                         currentPosition = 6;
                     }
@@ -203,7 +203,7 @@ public class PartyHandler : MonoBehaviour
                 if (currentPosition == 6)
                 {
                     currentPosition -= 1;
-                    while (SaveData.currentSave.PC.boxes[0][currentPosition] == null)
+                    while (SaveDataOld.currentSave.PC.boxes[0][currentPosition] == null)
                     {
                         currentPosition -= 1;
                     }
@@ -221,7 +221,7 @@ public class PartyHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][i];
+            PokemonOld selectedPokemon = SaveDataOld.currentSave.PC.boxes[0][i];
             if (selectedPokemon != null)
             {
                 if (i == swapPosition)
@@ -388,7 +388,7 @@ public class PartyHandler : MonoBehaviour
                 yield return null;
             }
 
-            SaveData.currentSave.PC.swapPokemon(0, position1, 0, position2);
+            SaveDataOld.currentSave.PC.swapPokemon(0, position1, 0, position2);
             updateParty();
 
             increment = 0;
@@ -478,7 +478,7 @@ public class PartyHandler : MonoBehaviour
         switching = false;
         swapPosition = -1;
         currentPosition = 0;
-        SaveData.currentSave.PC.packParty();
+        SaveDataOld.currentSave.PC.packParty();
         updateParty();
         updateFrames();
         Dialog.drawDialogBox();
@@ -575,7 +575,7 @@ public class PartyHandler : MonoBehaviour
                 }
                 else
                 {
-                    PokemonOld selectedPokemon = SaveData.currentSave.PC.boxes[0][currentPosition];
+                    PokemonOld selectedPokemon = SaveDataOld.currentSave.PC.boxes[0][currentPosition];
                     int chosenIndex = -1;
                     while (chosenIndex != 0)
                     {
@@ -602,7 +602,7 @@ public class PartyHandler : MonoBehaviour
 
                             //Set SceneSummary to be active so that it appears
                             Scene.main.Summary.gameObject.SetActive(true);
-                            StartCoroutine(Scene.main.Summary.control(SaveData.currentSave.PC.boxes[0], currentPosition));
+                            StartCoroutine(Scene.main.Summary.control(SaveDataOld.currentSave.PC.boxes[0], currentPosition));
                             //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
                             while (Scene.main.Summary.gameObject.activeSelf)
                             {
@@ -690,8 +690,8 @@ public class PartyHandler : MonoBehaviour
                                         if (chosenIndex == 1)
                                         {
                                             string receivedItem = selectedPokemon.swapHeldItem(chosenItem);
-                                            SaveData.currentSave.Bag.addItem(receivedItem, 1);
-                                            SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                            SaveDataOld.currentSave.Bag.addItem(receivedItem, 1);
+                                            SaveDataOld.currentSave.Bag.removeItem(chosenItem, 1);
 
                                             Dialog.drawDialogBox();
                                             yield return
@@ -717,7 +717,7 @@ public class PartyHandler : MonoBehaviour
                                     //Take
                                     Dialog.undrawChoiceBox();
                                     string receivedItem = selectedPokemon.swapHeldItem("");
-                                    SaveData.currentSave.Bag.addItem(receivedItem, 1);
+                                    SaveDataOld.currentSave.Bag.addItem(receivedItem, 1);
 
                                     updateParty();
                                     updateFrames();
@@ -776,7 +776,7 @@ public class PartyHandler : MonoBehaviour
                                     if (!string.IsNullOrEmpty(chosenItem))
                                     {
                                         selectedPokemon.swapHeldItem(chosenItem);
-                                        SaveData.currentSave.Bag.removeItem(chosenItem, 1);
+                                        SaveDataOld.currentSave.Bag.removeItem(chosenItem, 1);
 
                                         updateParty();
                                         updateFrames();

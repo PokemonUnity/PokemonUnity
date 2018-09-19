@@ -289,7 +289,7 @@ public class CustomEvent : MonoBehaviour
                 if (currentEvent.bool0)
                 {
                     Dialog.StartCoroutine("drawText",
-                        SaveData.currentSave.playerName + " received TM" +
+                        SaveDataOld.currentSave.playerName + " received TM" +
                         ItemDatabaseOld.getItem(currentEvent.string0).getTMNo() + ": " + currentEvent.string0 + "!");
                 }
                 else
@@ -297,23 +297,23 @@ public class CustomEvent : MonoBehaviour
                     if (currentEvent.int0 > 1)
                     {
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received " + currentEvent.string0 + "s!");
+                            SaveDataOld.currentSave.playerName + " received " + currentEvent.string0 + "s!");
                     }
                     else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                              firstLetter == "u")
                     {
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received an " + currentEvent.string0 + "!");
+                            SaveDataOld.currentSave.playerName + " received an " + currentEvent.string0 + "!");
                     }
                     else
                     {
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received a " + currentEvent.string0 + "!");
+                            SaveDataOld.currentSave.playerName + " received a " + currentEvent.string0 + "!");
                     }
                 }
                 yield return new WaitForSeconds(itemGetMFX.length);
 
-                bool itemAdd = SaveData.currentSave.Bag.addItem(currentEvent.string0, currentEvent.int0);
+                bool itemAdd = SaveDataOld.currentSave.Bag.addItem(currentEvent.string0, currentEvent.int0);
 
                 Dialog.drawDialogBox();
                 if (itemAdd)
@@ -322,7 +322,7 @@ public class CustomEvent : MonoBehaviour
                     {
                         yield return
                             Dialog.StartCoroutine("drawTextSilent",
-                                SaveData.currentSave.playerName + " put the TM" +
+                                SaveDataOld.currentSave.playerName + " put the TM" +
                                 ItemDatabaseOld.getItem(currentEvent.string0).getTMNo() + " \\away into the bag.");
                     }
                     else
@@ -331,14 +331,14 @@ public class CustomEvent : MonoBehaviour
                         {
                             yield return
                                 Dialog.StartCoroutine("drawTextSilent",
-                                    SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
+                                    SaveDataOld.currentSave.playerName + " put the " + currentEvent.string0 +
                                     "s \\away into the bag.");
                         }
                         else
                         {
                             yield return
                                 Dialog.StartCoroutine("drawTextSilent",
-                                    SaveData.currentSave.playerName + " put the " + currentEvent.string0 +
+                                    SaveDataOld.currentSave.playerName + " put the " + currentEvent.string0 +
                                     " \\away into the bag.");
                         }
                     }
@@ -359,7 +359,7 @@ public class CustomEvent : MonoBehaviour
                 break;
 
             case CustomEventDetails.CustomEventType.ReceivePokemon:
-                if (SaveData.currentSave.PC.hasSpace(0))
+                if (SaveDataOld.currentSave.PC.hasSpace(0))
                 {
                     //Play Great for Pokemon
                     AudioClip pokeGetMFX = Resources.Load<AudioClip>("Audio/mfx/GetGreat");
@@ -397,7 +397,7 @@ public class CustomEvent : MonoBehaviour
                     Dialog.drawDialogBox();
                     yield return
                         Dialog.StartCoroutine("drawText",
-                            SaveData.currentSave.playerName + " received the " + pkName + "!");
+                            SaveDataOld.currentSave.playerName + " received the " + pkName + "!");
                     BgmHandler.main.PlayMFX(pokeGetMFX);
                     yield return new WaitForSeconds(pokeGetMFX.length);
 
@@ -481,7 +481,7 @@ public class CustomEvent : MonoBehaviour
                         pkNature, currentEvent.ints[4],
                         pkMoveset, new int[4]);
 
-                    SaveData.currentSave.PC.addPokemon(pk);
+                    SaveDataOld.currentSave.PC.addPokemon(pk);
                 }
                 else
                 {
@@ -510,7 +510,7 @@ public class CustomEvent : MonoBehaviour
                 break;
 
             case CustomEventDetails.CustomEventType.SetCVariable:
-                SaveData.currentSave.setCVariable(currentEvent.string0, currentEvent.float0);
+                SaveDataOld.currentSave.setCVariable(currentEvent.string0, currentEvent.float0);
                 break;
             case (CustomEventDetails.CustomEventType.LogicCheck):
                 bool passedCheck = false;
@@ -520,29 +520,29 @@ public class CustomEvent : MonoBehaviour
                 switch (lo)
                 {
                     case CustomEventDetails.Logic.CVariableEquals:
-                        if (currentEvent.float0 == SaveData.currentSave.getCVariable(currentEvent.string0))
+                        if (currentEvent.float0 == SaveDataOld.currentSave.getCVariable(currentEvent.string0))
                         {
                             passedCheck = true;
                         }
                         break;
                     case CustomEventDetails.Logic.CVariableGreaterThan:
-                        if (SaveData.currentSave.getCVariable(currentEvent.string0) > currentEvent.float0)
+                        if (SaveDataOld.currentSave.getCVariable(currentEvent.string0) > currentEvent.float0)
                         {
                             passedCheck = true;
                         }
                         break;
                     case CustomEventDetails.Logic.CVariableLessThan:
-                        if (SaveData.currentSave.getCVariable(currentEvent.string0) < currentEvent.float0)
+                        if (SaveDataOld.currentSave.getCVariable(currentEvent.string0) < currentEvent.float0)
                         {
                             passedCheck = true;
                         }
                         break;
                     case CustomEventDetails.Logic.GymBadgeNoOwned:
-                        if (Mathf.FloorToInt(currentEvent.float0) < SaveData.currentSave.gymsBeaten.Length &&
+                        if (Mathf.FloorToInt(currentEvent.float0) < SaveDataOld.currentSave.gymsBeaten.Length &&
                             Mathf.FloorToInt(currentEvent.float0) >= 0)
                         {
                             //ensure input number is valid
-                            if (SaveData.currentSave.gymsBeaten[Mathf.FloorToInt(currentEvent.float0)])
+                            if (SaveDataOld.currentSave.gymsBeaten[Mathf.FloorToInt(currentEvent.float0)])
                             {
                                 passedCheck = true;
                             }
@@ -550,9 +550,9 @@ public class CustomEvent : MonoBehaviour
                         break;
                     case CustomEventDetails.Logic.GymBadgesEarned:
                         int badgeCount = 0;
-                        for (int bi = 0; bi < SaveData.currentSave.gymsBeaten.Length; bi++)
+                        for (int bi = 0; bi < SaveDataOld.currentSave.gymsBeaten.Length; bi++)
                         {
-                            if (SaveData.currentSave.gymsBeaten[bi])
+                            if (SaveDataOld.currentSave.gymsBeaten[bi])
                             {
                                 badgeCount += 1;
                             }
@@ -565,9 +565,9 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.PokemonIDIsInParty:
                         for (int pi = 0; pi < 6; pi++)
                         {
-                            if (SaveData.currentSave.PC.boxes[0][pi] != null)
+                            if (SaveDataOld.currentSave.PC.boxes[0][pi] != null)
                             {
-                                if (SaveData.currentSave.PC.boxes[0][pi].getID() ==
+                                if (SaveDataOld.currentSave.PC.boxes[0][pi].getID() ==
                                     Mathf.FloorToInt(currentEvent.float0))
                                 {
                                     passedCheck = true;
@@ -579,14 +579,14 @@ public class CustomEvent : MonoBehaviour
                     case CustomEventDetails.Logic.SpaceInParty:
                         if (currentEvent.bool0)
                         {
-                            if (!SaveData.currentSave.PC.hasSpace(0))
+                            if (!SaveDataOld.currentSave.PC.hasSpace(0))
                             {
                                 passedCheck = true;
                             }
                         }
                         else
                         {
-                            if (SaveData.currentSave.PC.hasSpace(0))
+                            if (SaveDataOld.currentSave.PC.hasSpace(0))
                             {
                                 passedCheck = true;
                             }

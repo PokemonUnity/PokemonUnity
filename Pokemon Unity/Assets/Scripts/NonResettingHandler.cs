@@ -50,12 +50,12 @@ public class NonResettingHandler : MonoBehaviour
 
     void Start()
     {
-        int sceneNonResettingListIndex = SaveData.currentSave.getNonResettingListIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        int sceneNonResettingListIndex = SaveDataOld.currentSave.getNonResettingListIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
         //if entry is already in global, update everything to match
         if (sceneNonResettingListIndex >= 0)
         {
-            NonResettingList sceneNonResettingList = SaveData.currentSave.nonResettingLists[sceneNonResettingListIndex];
+            NonResettingList sceneNonResettingList = SaveDataOld.currentSave.nonResettingLists[sceneNonResettingListIndex];
 
             for (int i = 0; i < trainers.Length; i++)
             {
@@ -131,18 +131,18 @@ public class NonResettingHandler : MonoBehaviour
             if (thisNonResettingList != null)
             {
                 bool listUpdated = false;
-                for (int i = 0; i < SaveData.currentSave.nonResettingLists.Count; i++)
+                for (int i = 0; i < SaveDataOld.currentSave.nonResettingLists.Count; i++)
                 {
-                    if (SaveData.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
+                    if (SaveDataOld.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
                     {
-                        SaveData.currentSave.nonResettingLists[i] = thisNonResettingList;
+                        SaveDataOld.currentSave.nonResettingLists[i] = thisNonResettingList;
                         listUpdated = true;
-                        i = SaveData.currentSave.nonResettingLists.Count;
+                        i = SaveDataOld.currentSave.nonResettingLists.Count;
                     }
                 }
                 if (!listUpdated)
                 {
-                    SaveData.currentSave.nonResettingLists.Add(thisNonResettingList);
+                    SaveDataOld.currentSave.nonResettingLists.Add(thisNonResettingList);
                 }
             }
         }

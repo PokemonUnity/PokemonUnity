@@ -305,14 +305,14 @@ public class SettingsHandler : MonoBehaviour
                 customSpritesHighlight.text = "Off";
                 customSpritesHighlight.pixelOffset = new Vector2(186, 79);
                 PlayerPrefs.SetInt("customSprites", selectedOptionIndex[5]);
-                SaveData.currentSave.playerOutfit = "hgss";
+                SaveDataOld.currentSave.playerOutfit = "hgss";
                 PlayerMovement.player.updateAnimation("walk", 7);
                 Debug.Log("Disabled custom sprites");
             }
             else
             {
                 customSpritesHighlight.text = "On";
-                SaveData.currentSave.playerOutfit = "custom";
+                SaveDataOld.currentSave.playerOutfit = "custom";
                 PlayerMovement.player.updateAnimation("walk", 7);
                 customSpritesHighlight.pixelOffset = new Vector2(217, 79);
                 Debug.Log("Enabled custom sprites");

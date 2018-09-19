@@ -55,10 +55,10 @@ public class GlobalVariables : MonoBehaviour
     void Awake()
     {
         SceneManager.sceneLoaded += CheckSceneLoaded;
-        if (SaveData.currentSave == null)
+        if (SaveDataOld.currentSave == null)
         {
             Debug.Log("save file created");
-            SaveData.currentSave = new SaveData(-1);
+            SaveDataOld.currentSave = new SaveDataOld(-1);
         }
         if (global == null)
         {
@@ -110,7 +110,7 @@ public class GlobalVariables : MonoBehaviour
     }
     public void EnableDebugMode()
     {
-        SaveData.currentSave.debugMode = true;
+        SaveDataOld.currentSave.debugMode = true;
         debugText.text = "build " + buildNum + "\nDebugging Mode Enabled";
         debugTextShadow.text = debugText.text;
     }
@@ -118,123 +118,123 @@ public class GlobalVariables : MonoBehaviour
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //EnableDebugMode();
-        SaveData.currentSave.playerName = name;
-        SaveData.currentSave.playerID = 29482; //not implemented
-        SaveData.currentSave.isMale = isMale;
-        SaveData.currentSave.playerMoney = 2481; 
-        SaveData.currentSave.playerLanguage = Language.English;
+        SaveDataOld.currentSave.playerName = name;
+        SaveDataOld.currentSave.playerID = 29482; //not implemented
+        SaveDataOld.currentSave.isMale = isMale;
+        SaveDataOld.currentSave.playerMoney = 2481; 
+        SaveDataOld.currentSave.playerLanguage = Language.English;
 
-        SaveData.currentSave.playerOutfit = "hgss";
+        SaveDataOld.currentSave.playerOutfit = "hgss";
 
-        SaveData.currentSave.playerShirt = "Ethan's Shirt";
-        SaveData.currentSave.playerMisc = null;
-        SaveData.currentSave.playerHat = "Ethan's Hat";
+        SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
+        SaveDataOld.currentSave.playerMisc = null;
+        SaveDataOld.currentSave.playerHat = "Ethan's Hat";
         //customizables not implemented
 
         if(isMale == true){
-            SaveData.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
+            SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
         } else {
-            SaveData.currentSave.setCVariable("male",0);
+            SaveDataOld.currentSave.setCVariable("male",0);
         }
 
         //PC test
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
             name,
             Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
             Random.Range(0, 32),
             0, 0, 0, 0, 0, 0, "ADAMANT", 0, PokemonDatabaseOld.getPokemon(6).GenerateMoveset(42), new int[4]));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(197, PokemonOld.Gender.CALCULATE, 34, "Great Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(393, PokemonOld.Gender.CALCULATE, 6, "Poké Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(197, PokemonOld.Gender.CALCULATE, 28, "Great Ball", "", name, -1));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(68, PokemonOld.Gender.CALCULATE, 37, "Ultra Ball", "", name, -1));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(448, PokemonOld.Gender.CALCULATE, 56, "Great Ball", "", name, 0));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(197, PokemonOld.Gender.CALCULATE, 34, "Great Ball", "", name, 0));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(393, PokemonOld.Gender.CALCULATE, 6, "Poké Ball", "", name, 0));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(197, PokemonOld.Gender.CALCULATE, 28, "Great Ball", "", name, -1));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(68, PokemonOld.Gender.CALCULATE, 37, "Ultra Ball", "", name, -1));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(448, PokemonOld.Gender.CALCULATE, 56, "Great Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(006, PokemonOld.Gender.CALCULATE, 37, "Poké Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(607, PokemonOld.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
-        SaveData.currentSave.PC.boxes[1][1].addExp(7100);
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(157, PokemonOld.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(300, PokemonOld.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, PokemonOld.Gender.CALCULATE, 37, "Poké Ball", "", name, 0));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(607, PokemonOld.Gender.CALCULATE, 48, "Poké Ball", "", "Bob", 0));
+        SaveDataOld.currentSave.PC.boxes[1][1].addExp(7100);
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(157, PokemonOld.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(300, PokemonOld.Gender.CALCULATE, 51, "Poké Ball", "", name, 0));
 
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(393, "Surf Bloke", PokemonOld.Gender.MALE, 15, false, "Ultra Ball", //starters not implemented
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(393, "Surf Bloke", PokemonOld.Gender.MALE, 15, false, "Ultra Ball", //starters not implemented
             "", name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));
 
 
-        SaveData.currentSave.PC.boxes[0][1].setNickname("Greg");
-        SaveData.currentSave.PC.swapPokemon(0, 5, 1, 5);
-        SaveData.currentSave.PC.swapPokemon(0, 3, 1, 11);
-        SaveData.currentSave.PC.swapPokemon(1, 1, 1, 12);
-        SaveData.currentSave.PC.swapPokemon(1, 2, 1, 21);
-        SaveData.currentSave.PC.swapPokemon(0, 5, 1, 3);
+        SaveDataOld.currentSave.PC.boxes[0][1].setNickname("Greg");
+        SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 5);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 3, 1, 11);
+        SaveDataOld.currentSave.PC.swapPokemon(1, 1, 1, 12);
+        SaveDataOld.currentSave.PC.swapPokemon(1, 2, 1, 21);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 3);
 
-        SaveData.currentSave.PC.swapPokemon(0, 2, 1, 4);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 2, 1, 4);
 
-        SaveData.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
-        SaveData.currentSave.PC.boxes[0][1].addExp(420);
+        SaveDataOld.currentSave.PC.boxes[0][1].setStatus(PokemonOld.Status.POISONED);
+        SaveDataOld.currentSave.PC.boxes[0][1].addExp(420);
 
-        SaveData.currentSave.PC.packParty();
+        SaveDataOld.currentSave.PC.packParty();
 
-        SaveData.currentSave.PC.swapPokemon(0, 0, 0, 2);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 0, 0, 2);
 
-        SaveData.currentSave.PC.boxes[0][0].swapHeldItem("Ultra Ball");
+        SaveDataOld.currentSave.PC.boxes[0][0].swapHeldItem("Ultra Ball");
 
-        SaveData.currentSave.PC.boxes[0][1].removeHP(56);
-        SaveData.currentSave.PC.boxes[0][4].removeHP(64);
+        SaveDataOld.currentSave.PC.boxes[0][1].removeHP(56);
+        SaveDataOld.currentSave.PC.boxes[0][4].removeHP(64);
 
-        SaveData.currentSave.PC.boxes[0][4].removePP(0, 5);
-        SaveData.currentSave.PC.boxes[0][4].removePP(1, 5);
-        SaveData.currentSave.PC.boxes[0][3].removePP(0, 6);
-        SaveData.currentSave.PC.boxes[0][0].removePP(2, 11);
+        SaveDataOld.currentSave.PC.boxes[0][4].removePP(0, 5);
+        SaveDataOld.currentSave.PC.boxes[0][4].removePP(1, 5);
+        SaveDataOld.currentSave.PC.boxes[0][3].removePP(0, 6);
+        SaveDataOld.currentSave.PC.boxes[0][0].removePP(2, 11);
 
         //PC.boxes[0][0].setStatus(Pokemon.Status.FROZEN);
-        SaveData.currentSave.PC.boxes[0][2].setStatus(PokemonOld.Status.PARALYZED);
-        SaveData.currentSave.PC.boxes[0][3].setStatus(PokemonOld.Status.BURNED);
-        SaveData.currentSave.PC.boxes[0][4].setStatus(PokemonOld.Status.ASLEEP);
+        SaveDataOld.currentSave.PC.boxes[0][2].setStatus(PokemonOld.Status.PARALYZED);
+        SaveDataOld.currentSave.PC.boxes[0][3].setStatus(PokemonOld.Status.BURNED);
+        SaveDataOld.currentSave.PC.boxes[0][4].setStatus(PokemonOld.Status.ASLEEP);
 
 
-        SaveData.currentSave.PC.addPokemon(new PokemonOld(012, null, PokemonOld.Gender.CALCULATE, 35, false, "Great Ball", "",
+        SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(012, null, PokemonOld.Gender.CALCULATE, 35, false, "Great Ball", "",
             name,
             31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
             new string[] {"Ominous Wind", "Sunny Day", "Gust", "Sleep Powder"}, new int[] {0, 0, 0, 0}));
 
         //SaveData.currentSave.PC.swapPokemon(0,1,3,1);
-        SaveData.currentSave.PC.swapPokemon(0, 2, 3, 2);
-        SaveData.currentSave.PC.swapPokemon(0, 3, 3, 3);
-        SaveData.currentSave.PC.swapPokemon(0, 4, 3, 4);
-        SaveData.currentSave.PC.swapPokemon(0, 5, 3, 5);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 2, 3, 2);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 3, 3, 3);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 4, 3, 4);
+        SaveDataOld.currentSave.PC.swapPokemon(0, 5, 3, 5);
 
 
-        SaveData.currentSave.PC.packParty();
+        SaveDataOld.currentSave.PC.packParty();
 
         //Bag test
-        SaveData.currentSave.Bag.addItem("Poké Ball", 9);
-        SaveData.currentSave.Bag.addItem("Miracle Seed", 1);
-        SaveData.currentSave.Bag.addItem("Poké Ball", 3);
-        SaveData.currentSave.Bag.addItem("Charcoal", 1);
-        SaveData.currentSave.Bag.addItem("Potion", 4);
-        SaveData.currentSave.Bag.addItem("Poké Doll", 13);
-        SaveData.currentSave.Bag.addItem("Escape Rope", 4);
-        SaveData.currentSave.Bag.addItem("Fire Stone", 2);
-        SaveData.currentSave.Bag.removeItem("Poké Doll", 10);
-        SaveData.currentSave.Bag.addItem("Stardust", 1);
-        SaveData.currentSave.Bag.addItem("Water Stone", 1);
-        SaveData.currentSave.Bag.addItem("Moon Stone", 1);
-        SaveData.currentSave.Bag.addItem("Super Potion", 2);
-        SaveData.currentSave.Bag.addItem("Great Ball", 4);
-        SaveData.currentSave.Bag.addItem("Psyshock", 1);
-        SaveData.currentSave.Bag.addItem("Bulk Up", 1);
-        SaveData.currentSave.Bag.addItem("Elixir", 2);
-        SaveData.currentSave.Bag.addItem("Ether", 1);
-        SaveData.currentSave.Bag.addItem("Antidote", 1);
-        SaveData.currentSave.Bag.addItem("Full Heal", 1);
-        SaveData.currentSave.Bag.addItem("Rare Candy", 100);
-        SaveData.currentSave.Bag.addItem("Paralyze Heal", 1);
-        SaveData.currentSave.Bag.addItem("Awakening", 1);
-        SaveData.currentSave.Bag.addItem("Burn Heal", 1);
-        SaveData.currentSave.Bag.addItem("Ice Heal", 1);
-        SaveData.currentSave.Bag.addItem("Max Potion", 1);
-        SaveData.currentSave.Bag.addItem("Hyper Potion", 1);
+        SaveDataOld.currentSave.Bag.addItem("Poké Ball", 9);
+        SaveDataOld.currentSave.Bag.addItem("Miracle Seed", 1);
+        SaveDataOld.currentSave.Bag.addItem("Poké Ball", 3);
+        SaveDataOld.currentSave.Bag.addItem("Charcoal", 1);
+        SaveDataOld.currentSave.Bag.addItem("Potion", 4);
+        SaveDataOld.currentSave.Bag.addItem("Poké Doll", 13);
+        SaveDataOld.currentSave.Bag.addItem("Escape Rope", 4);
+        SaveDataOld.currentSave.Bag.addItem("Fire Stone", 2);
+        SaveDataOld.currentSave.Bag.removeItem("Poké Doll", 10);
+        SaveDataOld.currentSave.Bag.addItem("Stardust", 1);
+        SaveDataOld.currentSave.Bag.addItem("Water Stone", 1);
+        SaveDataOld.currentSave.Bag.addItem("Moon Stone", 1);
+        SaveDataOld.currentSave.Bag.addItem("Super Potion", 2);
+        SaveDataOld.currentSave.Bag.addItem("Great Ball", 4);
+        SaveDataOld.currentSave.Bag.addItem("Psyshock", 1);
+        SaveDataOld.currentSave.Bag.addItem("Bulk Up", 1);
+        SaveDataOld.currentSave.Bag.addItem("Elixir", 2);
+        SaveDataOld.currentSave.Bag.addItem("Ether", 1);
+        SaveDataOld.currentSave.Bag.addItem("Antidote", 1);
+        SaveDataOld.currentSave.Bag.addItem("Full Heal", 1);
+        SaveDataOld.currentSave.Bag.addItem("Rare Candy", 100);
+        SaveDataOld.currentSave.Bag.addItem("Paralyze Heal", 1);
+        SaveDataOld.currentSave.Bag.addItem("Awakening", 1);
+        SaveDataOld.currentSave.Bag.addItem("Burn Heal", 1);
+        SaveDataOld.currentSave.Bag.addItem("Ice Heal", 1);
+        SaveDataOld.currentSave.Bag.addItem("Max Potion", 1);
+        SaveDataOld.currentSave.Bag.addItem("Hyper Potion", 1);
 
 
         /*
@@ -278,30 +278,30 @@ public class GlobalVariables : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test trainer card/save
-        SaveData.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
-        SaveData.currentSave.playerMoney = 2481;
-        SaveData.currentSave.playerScore = SaveData.currentSave.pokedexCaught + "/" + SaveData.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
+        SaveDataOld.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
+        SaveDataOld.currentSave.playerMoney = 2481;
+        SaveDataOld.currentSave.playerScore = SaveDataOld.currentSave.pokedexCaught + "/" + SaveDataOld.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
         //SaveData.currentSave.pokeDex = 0;
         
-        SaveData.currentSave.playerHours = 0;
-        SaveData.currentSave.playerMinutes = 7;
-        SaveData.currentSave.playerSeconds = 12;
-        SaveData.currentSave.playerTime = new System.TimeSpan(0,7,12);
+        SaveDataOld.currentSave.playerHours = 0;
+        SaveDataOld.currentSave.playerMinutes = 7;
+        SaveDataOld.currentSave.playerSeconds = 12;
+        SaveDataOld.currentSave.playerTime = new System.TimeSpan(0,7,12);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //debug code to test badge box
-        SaveData.currentSave.gymsEncountered = new bool[]
+        SaveDataOld.currentSave.gymsEncountered = new bool[]
         {
             true, true, false, true, true, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.gymsBeaten = new bool[]
+        SaveDataOld.currentSave.gymsBeaten = new bool[]
         {
             true, true, false, false, false, true,
             false, false, false, false, false, false
         };
-        SaveData.currentSave.gymsBeatTime = new System.DateTime?[]
+        SaveDataOld.currentSave.gymsBeatTime = new System.DateTime?[]
         {
             new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
             null, null, null, null, null, null
@@ -362,17 +362,17 @@ public class GlobalVariables : MonoBehaviour
 
         fadeIn = true;
         playerForwardOnLoad = false;
-        playerPosition = SaveData.currentSave.respawnScenePosition;
-        playerDirection = SaveData.currentSave.respawnSceneDirection;
+        playerPosition = SaveDataOld.currentSave.respawnScenePosition;
+        playerDirection = SaveDataOld.currentSave.respawnSceneDirection;
 
-        if (string.IsNullOrEmpty(SaveData.currentSave.respawnSceneName))
+        if (string.IsNullOrEmpty(SaveDataOld.currentSave.respawnSceneName))
         {
             respawning = false;
             SceneManager.LoadScene("overworldS");
         }
         else
         {
-            SceneManager.LoadScene(SaveData.currentSave.respawnSceneName);
+            SceneManager.LoadScene(SaveDataOld.currentSave.respawnSceneName);
         }
     }
 
@@ -391,9 +391,9 @@ public class GlobalVariables : MonoBehaviour
         }
         for (int i = 0; i < 6; i++)
         {
-            if (SaveData.currentSave.PC.boxes[0][i] != null)
+            if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
             {
-                if (SaveData.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
+                if (SaveDataOld.currentSave.PC.boxes[0][i].getStatus() != PokemonOld.Status.FAINTED)
                 {
                     FollowerSettings.changeFollower(i);
                     i = 6;
