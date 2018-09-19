@@ -179,37 +179,53 @@ public class Settings //: Settings<Translations.Languages>
     //Nuzlocke Challenge
     #endregion
 
-    /* Tried to attempt a PokemonRNG for converting ints into bytes of data
+	#region Variables
+	/* Tried to attempt a PokemonRNG for converting ints into bytes of data
      * but since the engine will handle all the heavy lifting, i'll just 
      * continue to build the logic out as normal and not worry or bother 
      * with binary values
     public int seed;
-    void newSeed()
-    {
-        //Random t = new Random(seed);
-        if(seed == 0) seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-        if (!useFixedSeed) { 
-            if(true) seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-            else {  
-            seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-            seed ^= (UInt16)System.DateTime.Now.Ticks;
-            seed &= UInt16.MaxValue;}
-        }
-    }*/     
-    private static System.UInt16 seed = 0x0000; //{ get; set; }
+    public static bool useFixedSeed;
+	//private static Random rand = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue);
     public static UInt16 Seed   { get {
-            if(seed == 0x0000) seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+            if(seed == 0x0000) seed = (UInt16)rand.Next(0, UInt16.MaxValue);
             if (!useFixedSeed) { 
                 if(true) seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-                /*else {  
-                seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-                seed ^= (UInt16)System.DateTime.Now.Ticks;
-                seed &= UInt16.MaxValue;}*/
+                //else {  
+                //seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+                //seed ^= (UInt16)System.DateTime.Now.Ticks;
+                //seed &= UInt16.MaxValue;}
             }
             return seed;
         }
-    } //readonly
-    public static bool useFixedSeed;
+    } //readonly*/
+	/// <summary>
+	/// Constantly revolving random, that won't repeat the same seed number twice, 
+	/// until it cycles thru all possible seed values
+	/// </summary>
+	public static Random Rand { get { return new Random(Seed()); } }
+	private static System.UInt16? seed;// = 0x0000; //{ get; set; }
+	public static UInt16 Seed(bool useFixedSeed = false)
+    {
+		//Random t = new Random(seed);
+		if (!seed.HasValue) {
+			seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
+            //seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+            seed ^= (UInt16)System.DateTime.Now.Ticks;
+            seed &= UInt16.MaxValue;
+		}
+		//UInt16 rand = (UInt16)rand.Next(0, UInt16.MaxValue);
+        if (!useFixedSeed) { 
+            seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
+        } 
+        return seed.Value;
+    }
+    #endregion
+
+    #region Custom Game Mode
+    //Nuzlocke Challenge
+    #endregion
+
     #region Enumerators
     /// <summary>
     /// Still need to sort out Language Enums

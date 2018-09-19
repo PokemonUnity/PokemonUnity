@@ -60,7 +60,7 @@ public class Nature
 
     private static Natures getRandomNature()
     {
-        return natures[new System.Random().Next(0, natures.Length)].Natures;
+        return natures[new System.Random(Settings.Seed()).Next(0, natures.Length)].Natures;
     }
 }
 
