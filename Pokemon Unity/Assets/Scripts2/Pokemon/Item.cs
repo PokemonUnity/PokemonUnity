@@ -5,9 +5,17 @@ using PokemonUnity.Item;
 
 public class Item
 {
-    public string Name { get; private set; }
+	#region Variables
+	public string Name { get; private set; }
+	public string Plural { get; private set; }
     public string Description { get; private set; }
     public int Price { get; private set; }
+    public string Use { get; private set; }
+	/// <summary>
+	/// Should be a description of what it does when in battle,
+	/// but might be better as a bool
+	/// </summary>
+    public bool BattleUse { get; private set; }
     
     public Items ItemId { get; private set; }
     public ItemFlags[] ItemFlags { get; private set; }
@@ -16,57 +24,57 @@ public class Item
             ItemPockets? itemPocket;
             switch (this.ItemCategory)
             {//([\w]*) = [\d]*, //PocketId = ([\d]*)
-                case ItemCategory.COLLECTIBLES: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.EVOLUTION: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.SPELUNKING: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.HELD_ITEMS: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.CHOICE: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.EFFORT_TRAINING: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.BAD_HELD_ITEMS: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.TRAINING: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.PLATES: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.SPECIES_SPECIFIC: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.TYPE_ENHANCEMENT: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.LOOT: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.MULCH: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.DEX_COMPLETION: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.SCARVES: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.JEWELS: itemPocket = (ItemPockets)1; break;
-                case ItemCategory.MEGA_STONES: itemPocket = (ItemPockets)1; break;
-
-                case ItemCategory.VITAMINS: itemPocket = (ItemPockets)2; break;
-                case ItemCategory.HEALING: itemPocket = (ItemPockets)2; break;
-                case ItemCategory.PP_RECOVERY: itemPocket = (ItemPockets)2; break;
-                case ItemCategory.REVIVAL: itemPocket = (ItemPockets)2; break;
-                case ItemCategory.STATUS_CURES: itemPocket = (ItemPockets)2; break;
-
-                case ItemCategory.SPECIAL_BALLS: itemPocket = (ItemPockets)3; break;
-                case ItemCategory.STANDARD_BALLS: itemPocket = (ItemPockets)3; break;
-                case ItemCategory.APRICORN_BALLS: itemPocket = (ItemPockets)3; break;
-
-                case ItemCategory.ALL_MACHINES: itemPocket = (ItemPockets)4; break;
-
-                case ItemCategory.EFFORT_DROP: itemPocket = (ItemPockets)5; break;
-                case ItemCategory.MEDICINE: itemPocket = (ItemPockets)5; break;
-                case ItemCategory.OTHER: itemPocket = (ItemPockets)5; break;
-                case ItemCategory.IN_A_PINCH: itemPocket = (ItemPockets)5; break;
-                case ItemCategory.PICKY_HEALING: itemPocket = (ItemPockets)5; break;
-                case ItemCategory.TYPE_PROTECTION: itemPocket = (ItemPockets)5; break;
-                case ItemCategory.BAKING_ONLY: itemPocket = (ItemPockets)5; break;
-
-                case ItemCategory.ALL_MAIL: itemPocket = (ItemPockets)6; break;
-
-                case ItemCategory.STAT_BOOSTS: itemPocket = (ItemPockets)7; break;
-                case ItemCategory.FLUTES: itemPocket = (ItemPockets)7; break;
-                case ItemCategory.MIRACLE_SHOOTER: itemPocket = (ItemPockets)7; break;
-
-                case ItemCategory.EVENT_ITEMS: itemPocket = (ItemPockets)8; break;
-                case ItemCategory.GAMEPLAY: itemPocket = (ItemPockets)8; break;
-                case ItemCategory.PLOT_ADVANCEMENT: itemPocket = (ItemPockets)8; break;
-                case ItemCategory.UNUSED: itemPocket = (ItemPockets)8; break;
-                case ItemCategory.APRICORN_BOX: itemPocket = (ItemPockets)8; break;
-                case ItemCategory.DATA_CARDS: itemPocket = (ItemPockets)8; break;
-                case ItemCategory.XY_UNKNOWN: itemPocket = (ItemPockets)8; break;
+                case ItemCategory.COLLECTIBLES:		//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.EVOLUTION:		//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.SPELUNKING:		//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.HELD_ITEMS:		//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.CHOICE:			//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.EFFORT_TRAINING:	//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.BAD_HELD_ITEMS:	//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.TRAINING:			//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.PLATES:			//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.SPECIES_SPECIFIC: //itemPocket = (ItemPockets)1; break;
+                case ItemCategory.TYPE_ENHANCEMENT: //itemPocket = (ItemPockets)1; break;
+                case ItemCategory.LOOT:				//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.MULCH:			//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.DEX_COMPLETION:	//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.SCARVES:			//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.JEWELS:			//itemPocket = (ItemPockets)1; break;
+                case ItemCategory.MEGA_STONES:		itemPocket = (ItemPockets)1; break;
+													
+                case ItemCategory.VITAMINS:			//itemPocket = (ItemPockets)2; break;
+                case ItemCategory.HEALING:			//itemPocket = (ItemPockets)2; break;
+                case ItemCategory.PP_RECOVERY:		//itemPocket = (ItemPockets)2; break;
+                case ItemCategory.REVIVAL:			//itemPocket = (ItemPockets)2; break;
+                case ItemCategory.STATUS_CURES:		itemPocket = (ItemPockets)2; break;
+													
+                case ItemCategory.SPECIAL_BALLS:	//itemPocket = (ItemPockets)3; break;
+                case ItemCategory.STANDARD_BALLS:	//itemPocket = (ItemPockets)3; break;
+                case ItemCategory.APRICORN_BALLS:	itemPocket = (ItemPockets)3; break;
+													
+                case ItemCategory.ALL_MACHINES:		itemPocket = (ItemPockets)4; break;
+													
+                case ItemCategory.EFFORT_DROP:		//itemPocket = (ItemPockets)5; break;
+                case ItemCategory.MEDICINE:			//itemPocket = (ItemPockets)5; break;
+                case ItemCategory.OTHER:			//itemPocket = (ItemPockets)5; break;
+                case ItemCategory.IN_A_PINCH:		//itemPocket = (ItemPockets)5; break;
+                case ItemCategory.PICKY_HEALING:	//itemPocket = (ItemPockets)5; break;
+                case ItemCategory.TYPE_PROTECTION:	//itemPocket = (ItemPockets)5; break;
+                case ItemCategory.BAKING_ONLY:		itemPocket = (ItemPockets)5; break;
+													
+                case ItemCategory.ALL_MAIL:			//itemPocket = (ItemPockets)6; break;
+													
+                case ItemCategory.STAT_BOOSTS:		//itemPocket = (ItemPockets)7; break;
+                case ItemCategory.FLUTES:			//itemPocket = (ItemPockets)7; break;
+                case ItemCategory.MIRACLE_SHOOTER:	itemPocket = (ItemPockets)7; break;
+													
+                case ItemCategory.EVENT_ITEMS:		//itemPocket = (ItemPockets)8; break;
+                case ItemCategory.GAMEPLAY:			//itemPocket = (ItemPockets)8; break;
+                case ItemCategory.PLOT_ADVANCEMENT: //itemPocket = (ItemPockets)8; break;
+                case ItemCategory.UNUSED:			//itemPocket = (ItemPockets)8; break;
+                case ItemCategory.APRICORN_BOX:		//itemPocket = (ItemPockets)8; break;
+                case ItemCategory.DATA_CARDS:		//itemPocket = (ItemPockets)8; break;
+                case ItemCategory.XY_UNKNOWN:		itemPocket = (ItemPockets)8; break;
                 default:
                     itemPocket = null;
                     break;
@@ -74,8 +82,10 @@ public class Item
             return itemPocket;
         } }
     public ItemFlingEffect ItemFlingEffect { get; private set; }
+	#endregion
 
-    Item(Items itemId) {
+	#region Constructor
+    public Item(Items itemId) {
         //this.Price = ItemData.getIndexOf(itemId);
     }
 
@@ -134,15 +144,33 @@ public class Item
         //return 
         //new Item((Items)itemId, (ItemCategory)itemCategory, price, flingPower, (ItemFlingEffect)itemEffect, System.Array.ConvertAll(flags, item => (ItemFlags)item));
     }
+	#endregion
 
-    #region ItemDatabase
-    /// <summary>
-    /// Replaces <see cref="oldItems"/>
-    /// </summary>
-    /// <remarks>
-    /// \((\d*)\s*(\d*)\s*(\d*)\s*([\d\w]*)\s*([\d\w]*)\s*
-    /// </remarks>
-    private static readonly Item[] Database = new Item[] {
+	public class ItemHandler
+	{
+		/*
+		UseFromBag			
+		ConfirmUseInField  
+		UseInField         
+		UseOnPokemon       
+		BattleUseOnBattler 
+		BattleUseOnPokemon 
+		UseInBattle        
+		UseText
+		*/      
+	}
+
+	#region ItemDatabase
+	/// <summary>
+	/// Replaces <see cref="oldItems"/>
+	/// </summary>
+	/// <remarks>
+	/// \((\d*)\s*(\d*)\s*(\d*)\s*([\d\w]*)\s*([\d\w]*)\s*
+	/// </remarks>
+	public static readonly Item[] Database; //= new Item[] {
+	static Item()
+	{
+		Database = new Item[] {
 new Item(1,     34,     0, null, null, new int[]{1,2,4,5}),
 new Item(2,     34,     1200, null, null, new int[]{1,2,4,5}),
 new Item(3,     34,     600, null, null, new int[]{1,2,4,5}),
@@ -890,8 +918,8 @@ new Item(747,   37,     0, null, null, null    ),
 new Item(748,   37,     0, null, null, null    ),
 new Item(749,   37,     0, null, null, null    )
 };
-    #endregion
-    
+	}
+    #endregion    
 }
 
 namespace PokemonUnity.Item
