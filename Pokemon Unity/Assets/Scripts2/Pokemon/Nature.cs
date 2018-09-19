@@ -5,7 +5,7 @@ public class Nature
 {
 
     public Natures Natures { get; private set; }
-    public float[] Stat_mod { get; private set; }//= new float[5];
+    float[] Stat_mod { get; set; }//= new float[5];
     public float ATK { get { return Stat_mod[0]; } } 
     public float DEF { get { return Stat_mod[1]; } } 
     public float SPA { get { return Stat_mod[2]; } } 

@@ -18,7 +18,10 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Current Total HP
     /// </summary>
-    public int TotalHP { get { return totalHP; } }
+    public int TotalHP { get {
+			return //totalHP;
+				((2 * _base.BaseStatsHP + IV[0] + (EV[0] / 4)) * Level) / 100 + Level + 10; } }
+	[Obsolete("Default HP should be auto generated, and not provided thru placeholder value")]
     private int totalHP = 1;
     /// <summary>
     /// Current HP
@@ -27,70 +30,71 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Current Attack Stat
     /// </summary>
-    public int ATK { get; private set; }
+    public virtual int ATK {
+		get
+		{
+			return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
+		}
+	}
     /// <summary>
     /// Current Defense stat
     /// </summary>
-    public int DEF { get; private set; }
+    public virtual int DEF { get
+		{
+			return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
+		}
+	}
     /// <summary>
     /// Current Special Attack Stat
     /// </summary>
-    public int SPA { get; private set; }
+    public virtual int SPA {
+		get
+		{
+			return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
+		}
+	}
     /// <summary>
     /// Current Special Defense Stat
     /// </summary>
-    public int SPD { get; private set; }
+    public virtual int SPD {
+		get
+		{
+			return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
+		}
+	}
     /// <summary>
     /// Current Speed Stat
     /// </summary>
-    public int SPE { get; private set; }
+    public virtual int SPE {
+		get
+		{
+			return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
+		}
+	}
     /// <summary>
     /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
     /// </summary>
-    private readonly int[] IV = new int[6];
-    /// <summary>
-    /// Effort Values
-    /// </summary>
-    /// new int[6] = { 0, 0, 0, 0, 0, 0 }; //same thing
-    private readonly int[] EV = new int[6];
-    /// <summary>
-    /// Species (National Pokedex number)
-    /// </summary>
-    /// ToDo: Fetch from PokemonData : _base.PokeId
-    private int species;
-    /// <summary>
-    /// Personal/Pokemon ID
-    /// </summary>
-    /// ToDo: String value?
-    public int PersonalId { get; private set; }
-    /// <summary>
-    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
-    /// Deprecated
-    /// </summary>
-    /// ToDo: Remove this, and fetch from Trainer Class?
-    /// Can also store hexadecimal/binary values in int
-    public int TrainerId { get; private set; }
-    /// <summary>
-    /// Pokerus strain and infection time
-    /// </summary>
-    /// { 0, 0 };
-    /// <example>
-    /// </example>
-    /// <remarks>
-    /// ToDo: Custom class?
-    /// 3 Values; Not Infected, Cured, Infected.
-    /// [0] = Pokerus Strain; [1] = Days until cured.
-    /// if ([0] && [1] == 0) => Not Infected
-    /// </remarks>
-    private readonly int[] pokerus = new int[2];
+    public int[] IV { get; private set; }
+	/// <summary>
+	/// Effort Values
+	/// </summary>
+	/// <see cref="EVSTATLIMIT"/>
+	/// new int[6] = { 0, 0, 0, 0, 0, 0 }; //same thing
+	public int[] EV { get; private set; }
+	/// <summary>
+	/// Species (National Pokedex number)
+	/// </summary>
+	/// ToDo: Fetch from PokemonData : _base.PokeId
+	public Pokemons Species { get { return _base.ID; } }
     /// <summary>
     /// Held item
     /// </summary>
-    public Items? Item { get; private set; }
-    /// <summary>
-    /// Consumed held item (used in battle only)
-    /// </summary>
-    private bool itemRecycle;
+    public Items Item { get; private set; }
+	#region Move to PokemonBattle Class
+	/// <summary>
+	/// Consumed held item (used in battle only)
+	/// </summary>
+	private bool itemRecycle;
     /// <summary>
     /// Resulting held item (used in battle only)
     /// </summary>
@@ -98,68 +102,40 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Where Pokemon can use Belch (used in battle only)
     /// </summary>
+	/// ToDo: Move to pkemonBattle class
     private bool belch;
-    /// <summary>
-    /// Mail?...
-    /// </summary>
-    private Mail mail { get; set; }
-    /// <summary>
-    /// Perform a null check; if anything other than null, there is a message
-    /// </summary>
-    /// ToDo: Item category
-    public string Mail
-    {
-        get {
-            if (this.mail == null) return null; //If empty return null
-            if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
-            {
-                mail = null; return null;
-            }
-            return mail.Message;
-        }
-        //set { mail = value; }
-    }
-    /// <summary>
-    /// The pokemon fused into this one.
-    /// </summary>
-    private int fused;
-    /// <summary>
-    /// Nickname
-    /// </summary>
-    private string name;
-    /// <summary>
-    /// Current experience points
-    /// </summary>
-    private int exp;
-    /// <summary>
-    /// Current happiness
-    /// </summary>
-    /// <remarks>
-    /// This is the samething as "friendship";
-    /// </remarks>
-    private int happiness;
-    public enum HappinessMethods
-    {
-        WALKING,
-        LEVELUP,
-        GROOM,
-        FAINT,
-        VITAMIN,
-        EVBERRY,
-        POWDER,
-        ENERGYROOT,
-        REVIVALHERB
-    }
+	#endregion
+	/// <summary>
+	/// Current experience points
+	/// </summary>
+	/// <example>
+	/// lv1->lv2=5xp
+	/// lv2->lv3=10xp
+	/// if pokemon is lvl 3 and 0xp, it should have a total of 15xp
+	/// but display counter should still say 0
+	/// </example>
+	/// <remarks>
+	/// experience should accumulate accross past levels.
+	/// Should also rename to "currentExp"?
+	/// </remarks>
+	public Experience Exp { get; private set; }
+	/// <summary>
+	/// Current happiness
+	/// </summary>
+	/// <remarks>
+	/// This is the samething as "friendship";
+	/// </remarks>
+	public int Happiness { get; private set; }
     /// <summary>
     /// Status problem (PBStatuses)
     /// </summary>
     /// ToDo: Status Class
-    private Status status;
+    public Status Status { get; set; }
     /// <summary>
     /// Sleep count/Toxic flag
     /// </summary>
-    /// ToDo: Add to Status Class
-    private int statusCount;
+    /// ToDo: Add to Status Class or StatusTurn() method
+    public int statusCount { get; private set; }
     /// <summary>
     /// Steps to hatch egg, 0 if Pokemon is not an egg
     /// </summary>
@@ -168,7 +144,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Moves (PBMove)
 	/// </summary>
 	/// ToDo Move class, not enum
-	private Move[] moves = new Move[4]; //{ Move.MoveData.Move.NONE, Move.MoveData.Move.NONE, Move.MoveData.Move.NONE, Move.MoveData.Move.NONE };
+	public Move[] moves { get; private set; } 
 	/// <summary>
 	/// The moves known when this Pokemon was obtained
 	/// </summary>
@@ -176,11 +152,91 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Ball used
 	/// </summary>
-	private Items ballUsed;// = (Items)0; //ToDo: None?
+	/// ToDo: Interface for Pokeball Only item?
+	/// ToDo: None?
+	public Items ballUsed { get; private set; }
+	private PokemonData _base { get; set; }
 	/// <summary>
-	/// Markings
+	/// Max total EVs
 	/// </summary>
-	private readonly bool[] markings = new bool[6]; //{ false, false, false, false, false, false };
+	public const int EVLIMIT = 510; 
+	/// <summary>
+	/// Max EVs that a single stat can have
+	/// </summary>
+	/// ToDo: use const instead?
+	/// Can be referenced as [Attribute] if is a const value
+	public const int EVSTATLIMIT = 252; 
+	/// <summary>
+	/// Maximum length a Pokemon's nickname can be
+	/// </summary>
+	public const int NAMELIMIT = 10;
+	#endregion
+
+	#region Constructor
+	public Pokemon()
+	{
+		PersonalId = new Random().Next(256);
+		PersonalId |= new Random().Next(256) << 8;
+		PersonalId |= new Random().Next(256) << 16;
+		PersonalId |= new Random().Next(256) << 24;
+		Ability = Abilities.NONE;
+        natureFlag = new Nature();//(Natures)(new Random().Next(0, 24));
+		shinyFlag = isShiny();
+		//Gender = isMale();
+		//IV = new int[] { 10, 10, 10, 10, 10, 10 };
+		IV = new int[] { Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32) };
+		EV = new int[6];
+		moves = new Move[4];// { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
+		pokerus = new int[2];
+		Markings = new bool[6]; //{ false, false, false, false, false, false };
+		Status = Status.None;
+		statusCount = 0;
+		ballUsed = Items.NONE;
+		Item = Items.NONE;
+		//calcStats();
+	}
+
+	/// <summary>
+	/// Uses PokemonData to initialize a Pokemon from base stats
+	/// </summary>
+	/// <param name="pokemon"></param>
+	/// ToDo: Inherit PokemonData 
+	public Pokemon(Pokemons pokemon) : this()
+	{
+		_base = PokemonData.GetPokemon(pokemon);
+		Ability = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
+		//Gender = GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+
+		//calcStats();
+	}
+
+	public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
+		int TPLEVEL = 10,
+		Items TPITEM = Items.NONE,
+		Moves TPMOVE1 = Moves.NONE,
+		Moves TPMOVE2 = Moves.NONE,
+		Moves TPMOVE3 = Moves.NONE,
+		Moves TPMOVE4 = Moves.NONE,
+		Abilities TPABILITY = Abilities.NONE,
+		int? TPGENDER = null,
+		int TPFORM = 0,
+		bool TPSHINY = false,
+		//Natures TPNATURE,
+		int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
+		int TPHAPPINESS = 70,
+		string TPNAME = null,
+		bool TPSHADOW = false,
+		Items TPBALL = Items.NONE) : this(TPSPECIES)
+	{
+		//Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
+		IV = TPIV ?? IV;
+		//EV = new int[6];
+		
+		//calcStats();
+	}
+	#endregion
+
+	#region Ownership, obtained information
 	/// <summary>
 	/// Manner Obtained:
 	/// </summary>
@@ -202,90 +258,35 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Doubles as "HatchedMap"
 	/// ToDo: Make this an enum
 	/// </remarks>
-	private int obtainMap;
+	private int obtainMap { get; set; }
 	/// <summary>
 	/// Replaces the obtain map's name if not null
 	/// </summary>
-	private string obtainString;
+	private string obtainString { get; set; }
 	//private int obtainLevel; // = 0;
-	private System.DateTimeOffset obtainWhen;
-	private System.DateTimeOffset hatchedWhen;
+	private System.DateTimeOffset obtainWhen { get; set; }
+	private System.DateTimeOffset hatchedWhen { get; set; }
 	/// <summary>
 	/// Original Trainer's Name
 	/// </summary>
 	/// <remarks>
-	/// ToDo: PlayerTrainer Class here
+	/// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
 	/// </remarks>
-	private Trainer OT;
-	/// <summary>
-	/// Forces the first/second/hidden (0/1/2) ability
-	/// </summary>
-	private Abilities[] abilityFlag = new Abilities[2];// readonly
-	//private bool? gender;
-	/// <summary>
-	/// Forces a particular nature
-	/// </summary>
-	/// ToDo: Redo NatureDatabase Class
-	private Natures natureFlag;
-	/// <summary>
-	/// Forces the shininess
-	/// </summary>
-	private bool? shinyFlag;
-	/// <summary>
-	/// Deprecated; Array of ribbons
-	/// </summary>
-	/// <remarks>
-	/// Make 2d Array (Array[,]) separated by regions/Gens
-	/// </remarks>
-	private bool[] ribbon; //= new bool[numberOfRegions,RibbonsPerRegion];
-	private List<Ribbon> ribbons = new List<Ribbon>();
-	/// <summary>
-	/// Each region/ribbon sprite should have it's own Ribbon.EnumId
-	/// </summary>
-	/// <example>Pokemon acquired beauty ribbon in region1 AND 2?</example>
-	/// I didnt know ribbons could be upgraded...
-	/// Make each ribbon into sets, where next number up is upgrade? (or multiply?)
-	/// Does it make a difference if pokemon won contest in different regions?
-	public List<Ribbon> Ribbons { get { return this.ribbons; } }
-	/// <summary>
-	/// Contest stats
-	/// </summary>
-	private int cool, beauty, cute, smart, tough, sheen;
-	private PokemonData _base;
-	/// <summary>
-	/// Max total EVs
-	/// </summary>
-	const int EVLIMIT = 510; //static readonly
-	/// <summary>
-	/// Max EVs that a single stat can have
-	/// </summary>
-	/// ToDo: use const instead?
-	/// Can be referenced as [Attribute] if is a const value
-	const int EVSTATLIMIT = 252; //static readonly
-	/// <summary>
-	/// Maximum length a Pokemon's nickname can be
-	/// </summary>
-	const int NAMELIMIT = 10; //static readonly
-	#endregion
+	private Trainer OT { get; set; }
+    /// <summary>
+    /// Personal/Pokemon ID
+    /// </summary>
+    /// ToDo: String value?
+    public int PersonalId { get; private set; }
+    /// <summary>
+    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
+    /// Deprecated
+    /// </summary>
+    /// ToDo: Remove this, and fetch from Trainer Class?
+    /// Can also store hexadecimal/binary values in int
+	[Obsolete("Use <Trainer>Pokemon.OT to fetch trainer information.")]
+    public int TrainerId { get; private set; }
 
-	public Pokemon() { }
-
-	/// <summary>
-	/// Uses PokemonData to initialize a Pokemon from base stats
-	/// </summary>
-	/// <param name="pokemon"></param>
-	/// ToDo: Inherit PokemonData 
-	public Pokemon(Pokemons pokemon) 
-	{
-		//PersonalId = 
-		_base = PokemonData.GetPokemon(pokemon);
-		//Gender = isMale();
-		Ability[0] = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
-        Nature = new Nature().Natures;//(Natures)(new Random().Next(0, 24));
-		//IsShiny
-	}
-
-	#region Ownership, obtained information
 	/// <summary>
 	/// Returns whether or not the specified Trainer is the NOT this Pokemon's original trainer
 	/// </summary>
@@ -474,12 +475,17 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 	#region Ability
 	/// <summary>
+	/// Forces the first/second/hidden (0/1/2) ability
+	/// </summary>
+	[Obsolete]
+	private Abilities abilityFlag;
+	/// <summary>
 	/// Returns the ID of the Pokemons Ability.
 	/// </summary>
 	/// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
 	/// ToDo: Ability 1 or 2, never both...
 	/// ToDo: Error on non-compatible ability?
-	public Abilities[] Ability { get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
+	public Abilities Ability { get; private set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
 
 	/// <summary>
 	/// Returns whether this Pokemon has a partiular ability
@@ -488,17 +494,17 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <returns></returns>
 	public bool hasAbility(Abilities ability = Abilities.NONE)
 	{
-		if (ability == Abilities.NONE) return (int)Ability[0] > 0 || (int)Ability[1] > 0;// || (int)Abilities[2] > 0;
+		if (ability == Abilities.NONE) return (int)_base.Ability[0] > 0 || (int)_base.Ability[1] > 0;// || (int)Abilities[2] > 0;
 		else
 		{
-			return Ability[0] == ability || Ability[1] == ability;// || Abilities[2] == ability;
+			return _base.Ability[0] == ability || _base.Ability[1] == ability;// || Abilities[2] == ability;
 		}
 		//return false;
 	}
 
 	public bool hasHiddenAbility()
 	{
-		return Ability[1] != Abilities.NONE;
+		return _base.Ability[2] != Abilities.NONE;
 	}
 
 	/// <summary>
@@ -518,10 +524,15 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 	#region Nature
 	/// <summary>
+	/// Forces a particular nature
+	/// </summary>
+	/// ToDo: Redo NatureDatabase Class
+	private Nature natureFlag { get; set; }
+	/// <summary>
 	/// Returns the ID of this Pokemon's nature or
 	/// Sets this Pokemon's nature to a particular nature (and calculates the stat modifications).
 	/// </summary>
-	public Natures Nature { get { return this.natureFlag; } set { this.natureFlag = value; calcStats(); } }
+	public Natures Nature { get { return this.natureFlag.Natures; } } //set { this.natureFlag = value; calcStats(); } }
 
 	/// <summary>
 	/// Returns whether this Pokemon has a particular nature
@@ -547,7 +558,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Use this when rolling for shiny...
 	/// Honestly, without this math, i probably would've done something a lot more primative.
 	/// Look forward to primative math on wild pokemon encounter chances...
-	public bool isShiny()
+	private bool isShiny()
 	{
 		if (shinyFlag.HasValue) return shinyFlag.Value;
 		int a = this.PersonalId ^ this.TrainerId; //Wild Pokemon TrainerId?
@@ -560,16 +571,34 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Makes this Pokemon shiny or not shiny
 	/// </summary>
-	public bool IsShiny
+	public virtual bool IsShiny
 	{
 		//If not manually set, use math to figure out.
 		//ToDo: Store results to save on redoing future execution? 
 		get { return shinyFlag ?? isShiny()/*false*/; }
 		set { shinyFlag = value; }
 	}
+	/// <summary>
+	/// Forces the shininess
+	/// </summary>
+	private bool? shinyFlag { get; set; }
 	#endregion
 
 	#region Pokerus
+    /// <summary>
+    /// Pokerus strain and infection time
+    /// </summary>
+    /// { 0, 0 };
+    /// <example>
+    /// </example>
+    /// <remarks>
+    /// ToDo: Custom class?
+    /// 3 Values; Not Infected, Cured, Infected.
+    /// [0] = Pokerus Strain; [1] = Days until cured.
+    /// if ([0] && [1] == 0) => Not Infected
+    /// </remarks>
+    private int[] pokerus { get; set; }
+
 	/// <summary>
 	/// Returns the full value of this Pokemon's Pokerus
 	/// </summary>
@@ -860,6 +889,27 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 	#region Contest attributes, ribbons
 	/// <summary>
+	/// Deprecated; Array of ribbons
+	/// </summary>
+	/// <remarks>
+	/// Make 2d Array (Array[,]) separated by regions/Gens
+	/// </remarks>
+	[Obsolete]
+	private bool[] ribbon; //= new bool[numberOfRegions,RibbonsPerRegion];
+	private List<Ribbon> ribbons { get; set; } 
+	/// <summary>
+	/// Each region/ribbon sprite should have it's own Ribbon.EnumId
+	/// </summary>
+	/// <example>Pokemon acquired beauty ribbon in region1 AND 2?</example>
+	/// I didnt know ribbons could be upgraded...
+	/// Make each ribbon into sets, where next number up is upgrade? (or multiply?)
+	/// Does it make a difference if pokemon won contest in different regions?
+	public List<Ribbon> Ribbons { get { return this.ribbons; } }
+	/// <summary>
+	/// Contest stats; Max value is 255
+	/// </summary>
+	private int cool, beauty, cute, smart, tough, sheen;
+	/// <summary>
 	/// Returns whether this Pokémon has the specified ribbon.
 	/// </summary>
 	/// <param name="ribbon"></param>
@@ -915,17 +965,60 @@ public partial class Pokemon //: ePokemons //PokemonData
 	}
     #endregion
 
-    #region Items
-    #endregion
+	enum pokemonActions
+	{
+		Battle, CallTo, Party, DayCare, MysteryAction, Scent
+	}
+	#endregion
 
     #region Other
     /// <summary>
-    /// Nickname; 
-    /// Returns Pokemon species name if not nicknamed.
+    /// Mail?...
     /// </summary>
-    public string Name { get { return name ?? _base.Name; } }
+    private Mail mail { get; set; }
+    /// <summary>
+    /// Perform a null check; if anything other than null, there is a message
+    /// </summary>
+    /// ToDo: Item category
+    public string Mail
+    {
+        get {
+            if (this.mail == null) return null; //If empty return null
+            if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+            {
+                //mail = null;
+				return null;
+            }
+            return mail.Message;
+        }
+        //set { mail = value; }
+    }
+    /// <summary>
+    /// The pokemons fused into this one.
+    /// </summary>
+	/// was int before
+	/// Store both pokemons separately
+	/// Combine the stats of both to create a new hybrid
+	/// When reverting back, return to original data, and split exp gained between fusion
+	/// ExpGained = (FusedExp - MiddleExpOfPokemons) / #ofPokemons
+	/// should remain null until needed
+    private Pokemon[] fused { get; set; }
+	/// <summary>
+	/// Nickname
+	/// </summary>
+	private string name { get; set; }
+	/// <summary>
+	/// Nickname; 
+	/// Returns Pokemon species name if not nicknamed.
+	/// </summary>
+	public virtual string Name { get { return name ?? _base.Name; } }
 
-    public int Form { set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }//ToDo: Fix Forms and uncomment
+	/// <summary>
+	/// </summary>
+	/// ToDo: Fix Forms and uncomment
+	/// Maybe a method, where when a form is changed
+	/// checks pokemon value and overwrites name and stats
+    public int Form { set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 
     /// <summary>
     /// Returns the species name of this Pokemon
@@ -937,15 +1030,19 @@ public partial class Pokemon //: ePokemons //PokemonData
     }*/
     public string SpeciesName { get { return this._base.Species; } }
 
-    /// <summary>
-    /// Returns the markings this Pokemon has
-    /// </summary>
-    /// <returns>6 Markings</returns>
-    /*public bool[] Markings()
+	/// <summary>
+	/// Returns the markings this Pokemon has
+	/// </summary>
+	/// <returns>6 Markings</returns>
+	/*public bool[] Markings()
     {
         return markings;
-    }*/
-    public bool[] Markings { get { return this.markings; } }
+    }
+	public bool[] Markings { get { return this.markings; } }
+	/// <summary>
+	/// Markings
+	/// </summary>*/
+	public bool[] Markings { get; set; }
 
     /// <summary>
     /// Returns a string stathing the Unown form of this Pokemon
@@ -956,33 +1053,23 @@ public partial class Pokemon //: ePokemons //PokemonData
         return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[_base.ArrayId]; //ToDo: FormId; "if pokemon is an Unknown"
     }
 
-    /// <summary>
-    /// Returns the EV yield of this Pokemon
-    /// </summary>
-    /*// <returns></returns>
-    public int[] evYield()
-    {
-        return EV;
-    }*/
-    public int[] evYield { get { return this.EV; } }//_base.getBaseStats();
-
-    /// <summary>
-    /// Sets this Pokemon's HP;
-    /// Changes status on fainted
-    /// </summary>
-    /*// <param name="value"></param>
+	/// <summary>
+	/// Sets this Pokemon's HP;
+	/// Changes status on fainted
+	/// </summary>
+	/*// <param name="value"></param>
     public void HP(int value)
     {
         hp = value < 0 ? 0 : value;
         if (hp == 0) status = 0; // statusCount = 0; //ToDo: Fainted
     }*/
-    public int HP
+	public int HP
     {
         get { return this.hp; } //ToDo: If greater than totalHP throw error?
         set
         {
             this.hp = value < 0 ? 0 : value > this.TotalHP ? TotalHP : value;
-            if (this.hp == 0) this.status = 0; // statusCount = 0; //ToDo: Fainted
+            if (this.hp == 0) this.Status = 0; // statusCount = 0; //ToDo: Fainted
         }
     }
 
@@ -1007,7 +1094,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public void HealStatus()
     {
         if (this.isEgg) return;
-        this.status = 0; statusCount = 0; //remove status ailments
+        this.Status = 0; statusCount = 0; //remove status ailments
     }
 
     /// <summary>
@@ -1048,18 +1135,18 @@ public partial class Pokemon //: ePokemons //PokemonData
         {
             case HappinessMethods.WALKING:
                 gain = 1;
-                gain += happiness < 200 ? 1 : 0;
+                gain += Happiness < 200 ? 1 : 0;
                 //gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
                 break;
             case HappinessMethods.LEVELUP:
                 gain = 2;
-                if (happiness < 200) gain = 3;
-                if (happiness < 100) gain = 5;
+                if (Happiness < 200) gain = 3;
+                if (Happiness < 100) gain = 5;
                 luxury = true;
                 break;
             case HappinessMethods.GROOM:
                 gain = 4;
-                if (happiness < 200) gain = 10;
+                if (Happiness < 200) gain = 10;
                 luxury = true;
                 break;
             case HappinessMethods.FAINT:
@@ -1067,25 +1154,25 @@ public partial class Pokemon //: ePokemons //PokemonData
                 break;
             case HappinessMethods.VITAMIN:
                 gain = 2;
-                if (happiness < 200) gain = 3;
-                if (happiness < 100) gain = 5;
+                if (Happiness < 200) gain = 3;
+                if (Happiness < 100) gain = 5;
                 break;
             case HappinessMethods.EVBERRY:
                 gain = 2;
-                if (happiness < 200) gain = 5;
-                if (happiness < 100) gain = 10;
+                if (Happiness < 200) gain = 5;
+                if (Happiness < 100) gain = 10;
                 break;
             case HappinessMethods.POWDER:
                 gain = -10;
-                if (happiness < 200) gain = -5;
+                if (Happiness < 200) gain = -5;
                 break;
             case HappinessMethods.ENERGYROOT:
                 gain = -15;
-                if (happiness < 200) gain = -10;
+                if (Happiness < 200) gain = -10;
                 break;
             case HappinessMethods.REVIVALHERB:
                 gain = -20;
-                if (happiness < 200) gain = -15;
+                if (Happiness < 200) gain = -15;
                 break;
             default:
                 break;
@@ -1093,12 +1180,108 @@ public partial class Pokemon //: ePokemons //PokemonData
         gain += luxury && this.ballUsed == Items.LUXURY_BALL ? 1 : 0;
         if (this.Item == Items.SOOTHE_BELL && gain > 0)
             gain = (int)Math.Floor(gain * 1.5f);
-        happiness += gain;
-        happiness = happiness > 255 ? 255 : happiness < 0 ? 0 : happiness; //Max 255, Min 0
+        Happiness += gain;
+        Happiness = Happiness > 255 ? 255 : Happiness < 0 ? 0 : Happiness; //Max 255, Min 0
     }
 	#endregion
 
 	#region Stat calculations, Pokemon creation
+    /*// <summary>
+    /// Returns the EV yield of this Pokemon
+    /// </summary>
+    /// <returns></returns>
+    public int[] evYield()
+    {
+        return EV;
+    }*
+	//_base.getBaseStats();
+    public int[] evYield { get { return this.EV; } }*/
+
+	/*public bool addEVs(string stat, float amount)
+	{
+		int intAmount = Mathf.FloorToInt(amount);
+		int evTotal = EV_HP + EV_ATK + EV_DEF + EV_SPA + EV_SPD + EV_SPE;
+		if (evTotal < 510)
+		{ //if total EV cap is already reached.
+			if (evTotal + intAmount > 510)
+			{ //if this addition will pass the total EV cap.
+				intAmount = 510 - evTotal; //set intAmount to be the remaining points before cap is reached.
+			}
+			if (stat == "HP")
+			{ //if adding to HP.
+				if (EV_HP < 252)
+				{ //if HP is not full.
+					EV_HP += intAmount;
+					if (EV_HP > 252)
+					{ //if single stat EV cap is passed.
+						EV_HP = 252;
+					} //set stat back to the cap.
+					return true;
+				}
+			}
+			else if (stat == "ATK")
+			{ //if adding to ATK.
+				if (EV_ATK < 252)
+				{ //if ATK is not full.
+					EV_ATK += intAmount;
+					if (EV_ATK > 252)
+					{ //if single stat EV cap is passed.
+						EV_ATK = 252;
+					} //set stat back to the cap.
+					return true;
+				}
+			}
+			else if (stat == "DEF")
+			{ //if adding to DEF.
+				if (EV_DEF < 252)
+				{ //if DEF is not full.
+					EV_DEF += intAmount;
+					if (EV_DEF > 252)
+					{ //if single stat EV cap is passed.
+						EV_DEF = 252;
+					} //set stat back to the cap.
+					return true;
+				}
+			}
+			else if (stat == "SPA")
+			{ //if adding to SPA.
+				if (EV_SPA < 252)
+				{ //if SPA is not full.
+					EV_SPA += intAmount;
+					if (EV_SPA > 252)
+					{ //if single stat EV cap is passed.
+						EV_SPA = 252;
+					} //set stat back to the cap.
+					return true;
+				}
+			}
+			else if (stat == "SPD")
+			{ //if adding to SPD.
+				if (EV_SPD < 252)
+				{ //if SPD is not full.
+					EV_SPD += intAmount;
+					if (EV_SPD > 252)
+					{ //if single stat EV cap is passed.
+						EV_SPD = 252;
+					} //set stat back to the cap.
+					return true;
+				}
+			}
+			else if (stat == "SPE")
+			{ //if adding to SPE.
+				if (EV_SPE < 252)
+				{ //if SPE is not full.
+					EV_SPE += intAmount;
+					if (EV_SPE > 252)
+					{ //if single stat EV cap is passed.
+						EV_SPE = 252;
+					} //set stat back to the cap.
+					return true;
+				}
+			}
+		}
+		return false; //returns false if total or relevant EV cap was reached before running.
+	}*/
 	/// <summary>
 	/// Returns the maximum HP of this Pokémon.
 	/// </summary>
@@ -1154,6 +1337,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 		//private string species;
 		//private string pokedexEntry;
 		//private int forms; 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// ToDo: Instead of string, what if it was pokemon enum?
+		/// Enum would sync with xml translation, 
+		/// and help with linking pokemon forms with original
+		/// Or a new form class, to help with changing base data
 		private string[] forms = new string[0]; 
 		/*// <summary>
 		/// Represents CURRENT form, if no form is active, current or does not exist
@@ -2092,6 +2282,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		    /// Move learned upon leveling-up
 		    /// </summary>
 		    public Moves MoveId;
+			public int Generation;
 		    //public PokemonMoveset() { }
 		    /*public PokemonMoveset(Move.MoveData.Move move, int level)
 		    {
@@ -2102,11 +2293,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 		    {
 			    this.MoveId = move;
 		    }*/
-		    public PokemonMoveset(Moves moveId, LearnMethod method = LearnMethod.levelup, int level = 0) //: this()
+		    public PokemonMoveset(Moves moveId, LearnMethod method = LearnMethod.levelup, int level = 0, int? generation = null) //: this()
 		    {
 			    this.Level = level;
 			    this.MoveId = moveId;
                 this.TeachMethod = method;
+				if (generation != null) this.Generation = generation.Value;
 		    }
 	    }
 	    /// <summary>
@@ -2179,6 +2371,8 @@ public partial class Pokemon //: ePokemons //PokemonData
                 List<Moves> form = new List<Moves>();
                 foreach (PokemonMoveset move in moveset)
                 {
+					//ToDo: Generation Filter
+					//if(move.Generation == Settings.pokemonGeneration || Settings.pokemonGeneration < 1)
                     switch (move.TeachMethod)
                     {
                         case LearnMethod.levelup:
