@@ -13,13 +13,27 @@ using System.Collections;
 using System.Globalization;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Item;
 
 /// <summary>
-/// Variables that are stored when game is saved, and other temp values used for gameplay
+/// Variables that are stored when game is saved, and other temp values used for gameplay.
+/// This class should be called once, when the game boots-up.
+/// During boot-up, game will check directory for save files and load data.
+/// GameVariables class will overwrite all the other class default values when player triggers a load state.
 /// </summary>
-public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
+/// This class should be static...
+public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
-    #region Variables
+    public bool debugMode { get; set; }
+
+	public Trainer playerTrainer { get; set; }
+    //public static Translator.Languages UserLanguage = Translator.Languages.English;
+    public static Settings.Languages UserLanguage = Settings.Languages.English;
+    public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
+
+    public static SaveDataOld currentSave;
+
+    #region Unity Canvas UI
     //Game UI
     //public UnityEngine.Texture2D DialogWindowSkin;
     //private UnityEngine.UI.Image DialogWindowSkin;
@@ -28,6 +42,18 @@ public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSyste
     /// </summary>
     public static UnityEngine.Sprite WindowSkin { get; private set; }
     public static UnityEngine.Sprite DialogSkin { get; private set; }
+
+    #region Resources
+    public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
+    {
+        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
+    }
+
+    public UnityEngine.Sprite[] LoadAllDialogSkinSprites()
+    {
+        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
+    }
+    #endregion
     /// <summary>
     /// Music Volume
     /// </summary>
@@ -40,32 +66,92 @@ public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSyste
     public static bool fullscreen;
     public static byte textSpeed = 2;
 
-    //public static Translator.Languages UserLanguage = Translator.Languages.English;
-    public static Settings.Languages UserLanguage = Settings.Languages.English;
 
-    private byte slotIndex;
-    //private int buildID;
-    public static bool SaveFileFound;
-    public System.DateTimeOffset fileCreationDate;
-    public System.DateTimeOffset? lastSave;
-    public System.DateTimeOffset startTime = new System.DateTimeOffset();
+	#region Global and map metadata
+	//ToDo: Each time map changes, new values are loaded/replaced below
+	class Global
+	{
+		/// <summary>
+		/// Location you return to when you respawn
+		/// </summary>
+		string MetadataHome;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// String below should point to Audio/Sound files
+		string MetadataWildBattleBGM;
+		string MetadataTrainerBattleBGM;
+		string MetadataWildVictoryME;
+		string MetadataTrainerVictoryME;
+		string MetadataSurfBGM;
+		string MetadataBicycleBGM;
+		/* TrainerClass
+		Trainer MetadataPlayerA          ;
+		Trainer MetadataPlayerB          ;
+		Trainer MetadataPlayerC          ;
+		Trainer MetadataPlayerD          ;
+		Trainer MetadataPlayerE          ;
+		Trainer MetadataPlayerF          ;
+		Trainer MetadataPlayerG          ;
+		Trainer MetadataPlayerH;*/
+	}
+
+	class NonGlobalTypes
+	{
+		bool MetadataOutdoor;
+		bool MetadataShowArea;
+		bool MetadataBicycle;
+		bool MetadataBicycleAlways;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// "uuu"
+		int[,] MetadataHealingSpot; 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// return WeatherType
+		bool MetadataWeather;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// "uuu"
+		int[] MetadataMapPosition; 
+		int MetadataDiveMap;
+		bool MetadataDarkMap;
+		bool MetadataSafariMap;
+		bool MetadataSnapEdges;
+		bool MetadataDungeon;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// String below should point to Audio/Sound files
+		string MetadataBattleBack;
+		string MetadataMapWildBattleBGM;
+		string MetadataMapTrainerBattleBGM;
+		string MetadataMapWildVictoryME;
+		string MetadataMapTrainerVictoryME;
+		int[,] MetadataMapSize;
+	}
+	#endregion
+	#endregion
+
+	#region Save/Load Data
+	private byte slotIndex { get; set; }
+    private int fileIndex { get; set; }
+	private const int buildID = 2;
     //private double buildNum = 0.17;
-    //var t = new System.Resources.ResourceManager().
-#if DEBUG
-    private const string FILE_NAME = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Translations\"; //TestProject\bin\Debug
-    //string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-    //string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
-#else
-    private static string FILE_NAME = UnityEngine.Application.persistentDataPath + "/Test.data";
-    //string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
-#endif
-    #endregion
+    public static bool SaveFileFound { get; set; }
+    public System.DateTimeOffset fileCreationDate { get; set; }
+	public System.DateTimeOffset? lastSave { get; set; }
+	public System.DateTimeOffset startTime { get; set; }
+	//var t = new System.Resources.ResourceManager().
 
-    /// <summary>
-    /// Loads saved game data from memory slot
-    /// </summary>
-    /// <param name="i">Array int from binary stream</param>
-    public static void Load(byte i)
+	/// <summary>
+	/// Loads saved game data from memory slot
+	/// </summary>
+	/// <param name="i">Array int from binary stream</param>
+	public static void Load(byte i)
     {
         GameVariables.SaveLoad.Load();
     }
@@ -74,7 +160,7 @@ public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSyste
         //using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
         //GameVariables.SaveLoad.Save();
     }
-    #region Save/Load Data
+
     private class SaveLoad {
         #region Variables
         //int DatabaseEntryStringWidth = 100;
@@ -84,10 +170,18 @@ public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSyste
         //GameVariables data = new GameVariables();
         GameVariables[] gamesaves = new GameVariables[3];
         Translator.Languages userpreflanguage = Translator.Languages.English;
+#if DEBUG
+		private const string FILE_NAME = @"Test.pkud"; //TestProject\bin\Debug
+		//private const string FILE_NAME = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; //TestProject\bin\Debug
+		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
+		private const string FILE_NAME = UnityEngine.Application.persistentDataPath + "/Test.pkud";
+		//string filepath = UnityEngine.Application.dataPath + "/Scripts2/Translations/";//Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+#endif
         #endregion
 
         public static void Save(System.IO.BinaryWriter writer) { }
-        public static void Load() { }
         
         /// <summary>
         /// When initially boots up, this will be all the application data stored
@@ -131,9 +225,90 @@ public class GameVariables : UnityEngine.MonoBehaviour//, UnityEngine.EventSyste
                 SaveFileFound = false;
                 System.IO.File.Open(FILE_NAME, System.IO.FileMode.Create).Close();
             }
-        }
-    }
-    #endregion
+		}
+
+		public static SaveDataOld[] savedGames = new SaveDataOld[]
+		{
+			null, null, null
+		};
+
+		public static void Save()
+		{
+			if (SaveDataOld.currentSave != null)
+			{
+				if (SaveDataOld.currentSave.getFileIndex() >= 0 && SaveDataOld.currentSave.getFileIndex() < savedGames.Length)
+				{
+					SaveDataOld.currentSave.playerTime += SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+					SaveDataOld.currentSave.lastSave = System.DateTime.UtcNow;// new System.DateTime(,System.DateTimeKind.Utc);
+					savedGames[SaveDataOld.currentSave.getFileIndex()] = SaveDataOld.currentSave;
+					System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+					System.IO.FileStream file = System.IO.File.Create(FILE_NAME);//Application.persistentDataPath + "/playerData.pkud"
+					bf.Serialize(file, SaveLoad.savedGames);
+					file.Close();
+				}
+			}
+		}
+
+		public static bool Load()
+		{
+			//Debug.Log(Application.persistentDataPath);
+			if (System.IO.File.Exists(FILE_NAME))
+			{
+				System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+				System.IO.FileStream file = System.IO.File.Open(FILE_NAME, System.IO.FileMode.Open);
+				SaveLoad.savedGames = (SaveDataOld[])bf.Deserialize(file);
+
+				//playerTrainer = new Trainer().LoadTrainer(trainerSaveData: trainerData);
+
+				file.Close();
+				return true;
+			}
+			return false;
+		}
+
+		public static int getSavedGamesCount()
+		{
+			int count = 0;
+			for (int i = 0; i < savedGames.Length; i++)
+			{
+				if (savedGames[i] != null)
+				{
+					count += 1;
+				}
+			}
+			return count;
+		}
+
+		public static void resetSaveGame(int index)
+		{
+			savedGames[index] = null;
+
+			if (index < 2)
+			{
+				for (int i = index; i < 2; i++)
+				{
+					SaveLoad.savedGames[i] = SaveLoad.savedGames[i + 1];
+					SaveLoad.savedGames[i + 1] = null;
+				}
+			}
+
+			bool sGN1 = savedGames[0] == null;
+			bool sGN2 = savedGames[1] == null;
+			bool sGN3 = savedGames[2] == null;
+
+			//Debug.Log(sGN1.ToString() + ", " + sGN2.ToString() + ", " + sGN3.ToString());
+
+			System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+			System.IO.FileStream file = System.IO.File.Create(FILE_NAME);//Application.persistentDataPath + "/playerData.pkud"
+			bf.Serialize(file, SaveLoad.savedGames);
+			file.Close();
+		}
+	}
+	#endregion
+
+	#region Active Battle and Misc Battle related Data
+	public static Battle battle { get; set; }
+	#endregion
 }
 
 /// <summary>
@@ -155,29 +330,52 @@ public class Settings //: Settings<Translations.Languages>
     /// 
     /// </summary>
     public const float framesPerSecond = 30f;
-    #endregion
 
-    #region Variables
-    #endregion
+	public const int pokemonGeneration = (int)Generation.All;
 
-    #region Properties
-    #endregion
+	public static int pokemonGenerationCount { 
+		get { 
+			int MaxPoke = 0;
+            int Gen1 = 151;
+			int Gen2 = 251;
+			int Gen3 = 386;
+			int Gen4 = 493;
+			int Gen5 = 649;
+			int Gen6 = 721;
+			int Gen7 = 807;
 
-    #region Resources
-    public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
-    {
-        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
-    }
-
-    public UnityEngine.Sprite[] LoadAllDialogSkinSprites()
-    {
-        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
-    }
-    #endregion
-
-    #region Custom Game Mode
-    //Nuzlocke Challenge
-    #endregion
+            #region Generation
+            switch (pokemonGeneration)
+            {
+                case (1):
+                    MaxPoke = Gen1;
+                    break;
+                case (2):
+                    MaxPoke = Gen2;
+                    break;
+                case (3):
+                    MaxPoke = Gen3;
+                    break;
+                case (4):
+                    MaxPoke = Gen4;
+                    break;
+                case (5):
+                    MaxPoke = Gen5;
+                    break;
+                case (6):
+                    MaxPoke = Gen6;
+                    break;
+                case (-1):
+                case (0):
+                case (7):
+				default:
+                    MaxPoke = Gen7;
+                    break;
+            }
+            #endregion
+			return MaxPoke; } 
+	}
+	#endregion
 
 	#region Variables
 	/* Tried to attempt a PokemonRNG for converting ints into bytes of data
@@ -367,7 +565,7 @@ public class Settings //: Settings<Translations.Languages>
 	/// An array of items which act as Mega Rings for the player (NPCs don't need a
 	///    Mega Ring item, just a Mega Stone).
 	/// </summary>
-	public static readonly eItems.Item[] MEGARINGS = new eItems.Item[] { eItems.Item.MEGA_RING/*, eItems.Item.MEGA_BRACELET, eItems.Item.MEGA_CUFF, eItems.Item.MEGA_CHARM*/ };
+	public static readonly Items[] MEGARINGS = new Items[] { Items.MEGA_RING, Items.MEGA_BRACELET, Items.MEGA_CUFF, Items.MEGA_CHARM };
 	#endregion
 
 	#region Badges
@@ -611,7 +809,7 @@ public class Settings //: Settings<Translations.Languages>
 	}
 	#endregion
 
-	#region
+	#region Safari
 	/// <summary>
 	/// The number of steps allowed before a Safari Zone game is over (0=infinite).
 	/// </summary>
@@ -622,7 +820,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const int BUGCONTESTTIME = 1200;
 	#endregion
 
-	#region
+	#region Battling and Encounter
 	/// <summary>
 	/// The Global Switch that is set to ON when the player whites out.
 	/// </summary>
@@ -665,4 +863,25 @@ public static class TransformExtension
         }
         return transform;
     }
+}
+
+namespace PokemonUnity
+{
+	enum Generation
+	{
+		All = 0,
+		RedBlueYellow = 1,
+		GoldSilverCrystal = 2,
+		RubySapphireEmerald = 3,
+		//FireRedLeafGreen, 
+		DiamondPearlPlatinum = 4,
+		//HeartgoldSoulsilver, 
+		BlackWhite = 5,
+		//BlackWhite2, 
+		XY = 6,
+		//OmegaRubyAlphaSapphire,
+		SunMoon = 7,
+		//UltraSunUltraMoon
+		Custom = -1
+	}
 }
