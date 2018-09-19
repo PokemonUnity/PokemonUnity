@@ -3305,6 +3305,18 @@ namespace PokemonUnity
 		PINK = 6,
 		NONE = 0
 	};
+	public enum HappinessMethods
+    {
+        WALKING,
+        LEVELUP,
+        GROOM,
+        FAINT,
+        VITAMIN,
+        EVBERRY,
+        POWDER,
+        ENERGYROOT,
+        REVIVALHERB
+    }
     /// <summary>
     /// Namespace to nest all Pokemon Enums
     /// </summary>
