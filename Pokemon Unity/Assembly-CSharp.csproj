@@ -52,7 +52,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\Battle\Effects.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\ItemHandler.cs" />
+    <Compile Include="Assets\Scripts2\PhoneDatabase.cs" />
+    <Compile Include="Assets\Scripts2\Battle\Battle.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\PokemonDatabase.cs" />
+    <Compile Include="Assets\Scripts2\Trainer.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
