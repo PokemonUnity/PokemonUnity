@@ -928,7 +928,7 @@ public class Move //: MoveData
 			this.type = type;
 			this.category = category;
 			this.power = power;
-			this.//accuracy = accuracy;
+			this.accuracy = accuracy;
 			this.PP = PP;
 			this.target = target;
 			this.priority = priority;
@@ -954,7 +954,7 @@ public class Move //: MoveData
 			this.type = type;
 			this.category = category;
 			this.power = power;
-			this.//accuracy = accuracy;
+			this.accuracy = accuracy;
 			this.PP = PP;
 			this.target = target;
 			this.priority = priority;
@@ -2132,9 +2132,33 @@ namespace PokemonShowdown
         /// </summary>
 		/// Has no effect on Pokemon with the Ability Soundproof.
         public bool sound { get; private set; }
-		//public Flags() { }
+        public Flags(bool authentic = false, bool bite = false, bool bullet = false, bool charge = false, bool contact = false, bool dance = false, bool defrost = false,
+					bool distance = false, bool gravity = false, bool heal = false, bool mirror = false, bool mystery = false, bool nonsky = false, bool powder = false, 
+					bool protect = false, bool pulse = false, bool punch = false, bool recharge = false, bool reflectable = false, bool snatch = false, bool sound = false) {
+			this.authentic = authentic;
+			this.bite = bite;
+			this.bullet = bullet;
+			this.charge = charge;
+			this.contact = contact;
+			this.dance = dance;
+			this.defrost = defrost;
+			this.distance = distance;
+			this.gravity = gravity;
+			this.heal = heal;
+			this.mirror = mirror;
+			this.mystery = mystery;
+			this.nonsky = nonsky;
+			this.powder = powder;
+			this.protect = protect;
+			this.pulse = pulse;
+			this.punch = punch;
+			this.recharge = recharge;
+			this.reflectable = reflectable;
+			this.snatch = snatch;
+			this.sound = sound;
+		}
     }
-	public class Boosts
+    public class Boosts
 	{
 
 	}
@@ -2145,6 +2169,7 @@ namespace PokemonShowdown
 	{
 		private static readonly BattleMovedex[] Database;
 
+		#region Variables
 		public Category category { get; private set; }
 		public int num { get; private set; }
 		public int? accuracy { get; private set; }
@@ -2171,7 +2196,8 @@ namespace PokemonShowdown
 		public Boosts zMoveBoost { get; private set; }
 		public string selfSwitch { get; private set; }
 		public string volatileStatus { get; private set; }
-		
+		#endregion
+
 		public BattleMovedex(){}
 
 		static BattleMovedex()
@@ -2189,7 +2215,7 @@ Database = new BattleMovedex[] {
 		//name = "10,000,000 Volt Thunderbolt",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "pikashuniumz",
 		critRatio = 3,
 		//secondary = false,
@@ -2208,7 +2234,7 @@ Database = new BattleMovedex[] {
 		//name = "Absorb",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -2228,7 +2254,7 @@ Database = new BattleMovedex[] {
 		//name = "Accelerock",
 		pp = 20,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ROCK,
@@ -2246,7 +2272,7 @@ Database = new BattleMovedex[] {
 		//name = "Acid",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -2265,11 +2291,11 @@ Database = new BattleMovedex[] {
 		category = Category.STATUS,
 		//desc = "Raises the user's Defense by 2 stages.",
 		//shortDesc = "Raises the user's Defense by 2.",
-		id = Moves.ACIDARMOR,
+		id = Moves.ACID_ARMOR,
 		//name = "Acid Armor",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 2
 		},
@@ -2285,12 +2311,12 @@ Database = new BattleMovedex[] {
 		basePower = 1,
 		category = Category.PHYSICAL,
 		//shortDesc = "Power is equal to the base move's Z-Power.",
-		id = Moves.ACIDDOWNPOUR,
+		id = Moves.ACID_DOWNPOUR__PHYSICAL,
 		isViable = true,
 		//name = "Acid Downpour",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "poisoniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -2304,12 +2330,12 @@ Database = new BattleMovedex[] {
 		category = Category.SPECIAL,
 		//desc = "Has a 100% chance to lower the target's Special Defense by 2 stages.",
 		//shortDesc = "100% chance to lower the target's Sp. Def by 2.",
-		id = Moves.ACIDSPRAY,
+		id = Moves.ACID_SPRAY,
 		isViable = true,
 		//name = "Acid Spray",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -2340,7 +2366,7 @@ Database = new BattleMovedex[] {
 		//name = "Acrobatics",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FLYING,
@@ -2358,7 +2384,7 @@ Database = new BattleMovedex[] {
 		//name = "Acupressure",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		//onHit = function (target) {
 		//	let stats = [];
 		//	for (let stat in target.Boosts) {
@@ -2393,7 +2419,7 @@ Database = new BattleMovedex[] {
 		//name = "Aerial Ace",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FLYING,
@@ -2412,7 +2438,7 @@ Database = new BattleMovedex[] {
 		//name = "Aeroblast",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, mirror: true, distance: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Any,
@@ -2431,7 +2457,7 @@ Database = new BattleMovedex[] {
 		//name = "After You",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {authentic = 1, mystery = 1},
+		flags = new Flags (authentic: true, mystery: true),
 		//onHit = function (target) {
 		//	if (target.Side.active.length < 2) return false; // fails in singles
 		//	let action = this.willMove(target);
@@ -2461,7 +2487,7 @@ Database = new BattleMovedex[] {
 		//name = "Agility",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spe = 2
 		},
@@ -2482,7 +2508,7 @@ Database = new BattleMovedex[] {
 		//name = "Air Cutter",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
@@ -2502,7 +2528,7 @@ Database = new BattleMovedex[] {
 		//name = "Air Slash",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, mirror: true, distance: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -2523,7 +2549,7 @@ Database = new BattleMovedex[] {
 		//name = "All-Out Pummeling",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "fightiniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -2541,7 +2567,7 @@ Database = new BattleMovedex[] {
 		//name = "Ally Switch",
 		pp = 15,
 		priority = 2,
-		flags = new Flags() {},
+		flags = new Flags (),
 		//onTryHit = function (source) {
 		//	if (source.side.active.length === 1) return false;
 		//	if (source.side.active.length === 3 && source.position === 1) return false;
@@ -2569,7 +2595,7 @@ Database = new BattleMovedex[] {
 		//name = "Amnesia",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spd = 2
 		},
@@ -2591,7 +2617,7 @@ Database = new BattleMovedex[] {
 		//name = "Anchor Shot",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			//onHit = function (target, source, move) {
@@ -2614,7 +2640,7 @@ Database = new BattleMovedex[] {
 		//name = "Ancient Power",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			self = {
@@ -2644,7 +2670,7 @@ Database = new BattleMovedex[] {
 		//name = "Aqua Jet",
 		pp = 20,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.WATER,
@@ -2662,7 +2688,7 @@ Database = new BattleMovedex[] {
 		//name = "Aqua Ring",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		volatileStatus = "aquaring",
 		effect = {
 			//onStart = function (pokemon) {
@@ -2691,7 +2717,7 @@ Database = new BattleMovedex[] {
 		//name = "Aqua Tail",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.WATER,
@@ -2709,7 +2735,7 @@ Database = new BattleMovedex[] {
 		//name = "Arm Thrust",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -2729,7 +2755,7 @@ Database = new BattleMovedex[] {
 		//name = "Aromatherapy",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {snatch = 1, distance = 1},
+		flags = new Flags (snatch: true, distance: true),
 		//onHit = function (pokemon, source, move) {
 		//	this.add('-activate', source, 'move = Aromatherapy');
 		//	let success = false;
@@ -2758,7 +2784,7 @@ Database = new BattleMovedex[] {
 		//name = "Aromatic Mist",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		boosts = new Boosts() {
 			spd = 1
 		},
@@ -2779,7 +2805,7 @@ Database = new BattleMovedex[] {
 		//name = "Assist",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		//onHit = function (target) {
 		//	let moves = [];
 		//	for (const pokemon of target.Side.pokemon) {
@@ -2824,7 +2850,7 @@ Database = new BattleMovedex[] {
 		//name = "Assurance",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//beforeTurnCallback = function (pokemon, target) {
 		//	pokemon.addVolatile("assurance");
 		//	pokemon.volatiles.assurance.position = target.Position;
@@ -2860,7 +2886,7 @@ Database = new BattleMovedex[] {
 		//name = "Astonish",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -2882,7 +2908,7 @@ Database = new BattleMovedex[] {
 		//name = "Attack Order",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -2901,7 +2927,7 @@ Database = new BattleMovedex[] {
 		//name = "Attract",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "attract",
 		effect = {
 			noCopy = true, // doesn't get copied by Baton Pass
@@ -2959,7 +2985,7 @@ Database = new BattleMovedex[] {
 		//name = "Aura Sphere",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, pulse = 1, mirror = 1, distance = 1},
+		flags = new Flags (bullet: true, protect: true, pulse: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FIGHTING,
@@ -2977,7 +3003,7 @@ Database = new BattleMovedex[] {
 		//name = "Aurora Beam",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -3001,7 +3027,7 @@ Database = new BattleMovedex[] {
 		//name = "Aurora Veil",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "auroraveil",
 		//onTryHitSide = function () {
 		//	if (!this.isWeather("hail")) return false;
@@ -3054,7 +3080,7 @@ Database = new BattleMovedex[] {
 		//name = "Autotomize",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		//onTryHit = function (pokemon) {
 		//	let hasContrary = pokemon.hasAbility("contrary");
 		//	if ((!hasContrary && pokemon.boosts.spe === 6) || (hasContrary && pokemon.boosts.spe === -6)) {
@@ -3113,7 +3139,7 @@ Database = new BattleMovedex[] {
 		//name = "Avalanche",
 		pp = 10,
 		priority = -4,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ICE,
@@ -3131,7 +3157,7 @@ Database = new BattleMovedex[] {
 		//name = "Baby-Doll Eyes",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		boosts = new Boosts() {
 			atk = -1
 		},
@@ -3153,7 +3179,7 @@ Database = new BattleMovedex[] {
 		//name = "Baneful Bunker",
 		pp = 10,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		stallingMove = true,
 		volatileStatus = "banefulbunker",
 		//onTryHit = function (target, source, move) {
@@ -3210,7 +3236,7 @@ Database = new BattleMovedex[] {
 		//name = "Barrage",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -3229,7 +3255,7 @@ Database = new BattleMovedex[] {
 		//name = "Barrier",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 2
 		},
@@ -3251,7 +3277,7 @@ Database = new BattleMovedex[] {
 		//name = "Baton Pass",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		selfSwitch = "copyvolatile",
 		//secondary = false,
 		target = Target.Self,
@@ -3271,7 +3297,7 @@ Database = new BattleMovedex[] {
 		//name = "Beak Blast",
 		pp = 15,
 		priority = -3,
-		flags = new Flags() {bullet = 1, protect = 1},
+		flags = new Flags (bullet: true, protect: true),
 		//beforeTurnCallback = function (pokemon) {
 		//	pokemon.addVolatile("beakblast");
 		//},
@@ -3313,7 +3339,7 @@ Database = new BattleMovedex[] {
 		//name = "Beat Up",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, mystery: true),
 		//onModifyMove = function (move, pokemon) {
 		//	move.allies = pokemon.side.pokemon.filter(ally => ally === pokemon || !ally.fainted && !ally.status);
 		//	move.multihit = move.allies.length;
@@ -3335,7 +3361,7 @@ Database = new BattleMovedex[] {
 		//name = "Belch",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1},
+		flags = new Flags (protect: true),
 		// Move disabling implemented in Battle#nextTurn in sim/battle.js
 		//secondary = false,
 		target = Target.Normal,
@@ -3354,7 +3380,7 @@ Database = new BattleMovedex[] {
 		//name = "Belly Drum",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		//onHit = function (target) {
 		//	if (target.Hp <= target.Maxhp / 2 || target.Boosts.atk >= 6 || target.Maxhp === 1) { // Shedinja clause
 		//		return false;
@@ -3379,7 +3405,7 @@ Database = new BattleMovedex[] {
 		//name = "Bestow",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (mirror: true, authentic: true, mystery: true),
 		//onHit = function (target, source, move) {
 		//	if (target.Item) {
 		//		return false;
@@ -3409,7 +3435,7 @@ Database = new BattleMovedex[] {
 		//name = "Bide",
 		pp = 10,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1},
+		flags = new Flags (contact: true, protect: true),
 		volatileStatus = "bide",
 		ignoreImmunity = true,
 		//beforeMoveCallback = function (pokemon) {
@@ -3449,7 +3475,7 @@ Database = new BattleMovedex[] {
 			//			damage = this.effectData.totalDamage * 2,
 			//			category = Category.PHYSICAL,
 			//			priority = 1,
-			//			flags = new Flags() {contact = 1, protect = 1},
+			//			flags = new Flags (contact: true, protect: true),
 			//			effectType = "Move",
 			//			type = "Normal"
 			//		};
@@ -3483,7 +3509,7 @@ Database = new BattleMovedex[] {
 		//name = "Bind",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -3502,7 +3528,7 @@ Database = new BattleMovedex[] {
 		//name = "Bite",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -3523,7 +3549,7 @@ Database = new BattleMovedex[] {
 		//name = "Black Hole Eclipse",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "darkiniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -3541,7 +3567,7 @@ Database = new BattleMovedex[] {
 		//name = "Blast Burn",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -3563,7 +3589,7 @@ Database = new BattleMovedex[] {
 		//name = "Blaze Kick",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		secondary = new Secondary() {
 			chance = 10,
@@ -3586,7 +3612,7 @@ Database = new BattleMovedex[] {
 		//name = "Blizzard",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//onModifyMove = function (move) {
 		//	if (this.isWeather("hail")) move.//accuracy = true;
 		//},
@@ -3610,7 +3636,7 @@ Database = new BattleMovedex[] {
 		//name = "Block",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, mirror = 1},
+		flags = new Flags (reflectable: true, mirror: true),
 		//onHit = function (target, source, move) {
 		//	return target.AddVolatile("trapped", source, move, "trapper");
 		//},
@@ -3631,7 +3657,7 @@ Database = new BattleMovedex[] {
 		//name = "Bloom Doom",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "grassiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -3650,7 +3676,7 @@ Database = new BattleMovedex[] {
 		//name = "Blue Flare",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			status = "brn"
@@ -3672,7 +3698,7 @@ Database = new BattleMovedex[] {
 		//name = "Body Slam",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "par"
@@ -3694,7 +3720,7 @@ Database = new BattleMovedex[] {
 		//name = "Bolt Strike",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			status = "par"
@@ -3715,7 +3741,7 @@ Database = new BattleMovedex[] {
 		//name = "Bone Club",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			volatileStatus = "flinch"
@@ -3736,7 +3762,7 @@ Database = new BattleMovedex[] {
 		//name = "Bone Rush",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -3756,7 +3782,7 @@ Database = new BattleMovedex[] {
 		//name = "Bonemerang",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -3776,7 +3802,7 @@ Database = new BattleMovedex[] {
 		//name = "Boomburst",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		//secondary = false,
 		target = Target.AllAdjacent,
 		type = Types.NORMAL,
@@ -3794,7 +3820,7 @@ Database = new BattleMovedex[] {
 		//name = "Bounce",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1, gravity = 1, distance = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true, gravity: true, distance: true),
 		//onTry = function (attacker, defender, move) {
 		//	if (attacker.removeVolatile(move.id)) {
 		//		return;
@@ -3849,7 +3875,7 @@ Database = new BattleMovedex[] {
 		//name = "Brave Bird",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		recoil = new int[] {33, 100},
 		//secondary = false,
 		target = Target.Any,
@@ -3868,7 +3894,7 @@ Database = new BattleMovedex[] {
 		//name = "Breakneck Blitz",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "normaliumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -3887,7 +3913,7 @@ Database = new BattleMovedex[] {
 		//name = "Brick Break",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//onTryHit = function (pokemon) {
 		//	// will shatter screens through sub, before you hit
 		//	if (pokemon.runImmunity("Fighting")) {
@@ -3913,7 +3939,7 @@ Database = new BattleMovedex[] {
 		//name = "Brine",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onBasePowerPriority = 4,
 		//onBasePower = function (basePower, pokemon, target) {
 		//	if (target.Hp * 2 <= target.Maxhp) {
@@ -3937,7 +3963,7 @@ Database = new BattleMovedex[] {
 		//name = "Brutal Swing",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.AllAdjacent,
 		type = Types.DARK,
@@ -3955,7 +3981,7 @@ Database = new BattleMovedex[] {
 		//name = "Bubble",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -3978,7 +4004,7 @@ Database = new BattleMovedex[] {
 		//name = "Bubble Beam",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -4001,7 +4027,7 @@ Database = new BattleMovedex[] {
 		//name = "Bug Bite",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//onHit = function (target, source) {
 		//	let item = target.GetItem();
 		//	if (source.hp && item.isBerry && target.TakeItem(source)) {
@@ -4030,7 +4056,7 @@ Database = new BattleMovedex[] {
 		//name = "Bug Buzz",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -4054,7 +4080,7 @@ Database = new BattleMovedex[] {
 		//name = "Bulk Up",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1,
 			def = 1
@@ -4076,7 +4102,7 @@ Database = new BattleMovedex[] {
 		//name = "Bulldoze",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -4100,7 +4126,7 @@ Database = new BattleMovedex[] {
 		//name = "Bullet Punch",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.STEEL,
@@ -4119,7 +4145,7 @@ Database = new BattleMovedex[] {
 		//name = "Bullet Seed",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -4138,7 +4164,7 @@ Database = new BattleMovedex[] {
 		//name = "Burn Up",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (protect: true, mirror: true, defrost: true),
 		//onTryMove = function (pokemon, target, move) {
 		//	if (pokemon.hasType("Fire")) return;
 		//	this.add('-fail', pokemon, 'move = Burn Up');
@@ -4168,7 +4194,7 @@ Database = new BattleMovedex[] {
 		//name = "Calm Mind",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spa = 1,
 			spd = 1
@@ -4190,7 +4216,7 @@ Database = new BattleMovedex[] {
 		//name = "Camouflage",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		//onHit = function (target) {
 		//	let newType = "Normal";
 		//	if (this.isTerrain("electricterrain")) {
@@ -4223,7 +4249,7 @@ Database = new BattleMovedex[] {
 		//name = "Captivate",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		//onTryHit = function (pokemon, source) {
 		//	if ((pokemon.gender === "M" && source.gender === "F") || (pokemon.gender === "F" && source.gender === "M")) {
 		//		return;
@@ -4250,7 +4276,7 @@ Database = new BattleMovedex[] {
 		//name = "Catastropika",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {contact = 1},
+		flags = new Flags (contact: true),
 		isZ = "pikaniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -4268,7 +4294,7 @@ Database = new BattleMovedex[] {
 		//name = "Celebrate",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		//onTryHit = function (target, source) {
 		//	this.add('-activate', target, 'move = Celebrate');
 		//},
@@ -4289,7 +4315,7 @@ Database = new BattleMovedex[] {
 		//name = "Charge",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		volatileStatus = "charge",
 		//onHit = function (pokemon) {
 		//	this.add('-activate', pokemon, 'move = Charge');
@@ -4327,7 +4353,7 @@ Database = new BattleMovedex[] {
 		//name = "Charge Beam",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 70,
 			self = {
@@ -4352,7 +4378,7 @@ Database = new BattleMovedex[] {
 		//name = "Charm",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		boosts = new Boosts() {
 			atk = -2
 		},
@@ -4374,7 +4400,7 @@ Database = new BattleMovedex[] {
 		//name = "Chatter",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, distance = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, distance: true, authentic: true),
 		noSketch = true,
 		secondary = new Secondary() {
 			chance = 100,
@@ -4396,7 +4422,7 @@ Database = new BattleMovedex[] {
 		//name = "Chip Away",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		ignoreDefensive = true,
 		ignoreEvasion = true,
 		//secondary = false,
@@ -4417,7 +4443,7 @@ Database = new BattleMovedex[] {
 		//name = "Circle Throw",
 		pp = 10,
 		priority = -6,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		forceSwitch = true,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -4435,7 +4461,7 @@ Database = new BattleMovedex[] {
 		//name = "Clamp",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -4455,7 +4481,7 @@ Database = new BattleMovedex[] {
 		//name = "Clanging Scales",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		selfBoost = {
 			boosts = new Boosts() {
 				def = -1
@@ -4478,7 +4504,7 @@ Database = new BattleMovedex[] {
 		//name = "Clangorous Soulblaze",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {sound = 1, authentic = 1},
+		flags = new Flags (sound: true, authentic: true),
 		selfBoost = {
 			boosts = new Boosts() {
 				atk = 1,
@@ -4508,7 +4534,7 @@ Database = new BattleMovedex[] {
 		//name = "Clear Smog",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//onHit = function (target) {
 		//	target.ClearBoosts();
 		//	this.add('-clearboost', target);
@@ -4531,7 +4557,7 @@ Database = new BattleMovedex[] {
 		//name = "Close Combat",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				def = -1,
@@ -4556,7 +4582,7 @@ Database = new BattleMovedex[] {
 		//name = "Coil",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1,
 			def = 1,
@@ -4579,7 +4605,7 @@ Database = new BattleMovedex[] {
 		//name = "Comet Punch",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -4598,7 +4624,7 @@ Database = new BattleMovedex[] {
 		//name = "Confide",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (reflectable: true, mirror: true, sound: true, authentic: true),
 		boosts = new Boosts() {
 			spa = -1
 		},
@@ -4619,7 +4645,7 @@ Database = new BattleMovedex[] {
 		//name = "Confuse Ray",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		volatileStatus = "confusion",
 		//secondary = false,
 		target = Target.Normal,
@@ -4638,7 +4664,7 @@ Database = new BattleMovedex[] {
 		//name = "Confusion",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			volatileStatus = "confusion"
@@ -4659,7 +4685,7 @@ Database = new BattleMovedex[] {
 		//name = "Constrict",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -4682,7 +4708,7 @@ Database = new BattleMovedex[] {
 		//name = "Continental Crush",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "rockiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -4700,7 +4726,7 @@ Database = new BattleMovedex[] {
 		//name = "Conversion",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		//onHit = function (target) {
 		//	let type = this.getMove(target.MoveSlOTS[0].id).type;
 		//	if (target.HasType(type) || !target.SetType(type)) return false;
@@ -4723,7 +4749,7 @@ Database = new BattleMovedex[] {
 		//name = "Conversion 2",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		//onHit = function (target, source) {
 		//	if (!target.LastMove) {
 		//		return false;
@@ -4762,7 +4788,7 @@ Database = new BattleMovedex[] {
 		//name = "Copycat",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		//onHit = function (pokemon) {
 		//	let noCopycat = ["assist", "banefulbunker", "bestow", "chatter", "circlethrow", "copycat", "counter", "covet", "destinybond", "detect", "dragontail", "endure", "feint", "focuspunch", "followme", "helpinghand", "mefirst", "metronome", "mimic", "mirrorcoat", "mirrormove", "naturepower", "protect", "ragepowder", "roar", "sketch", "sleeptalk", "snatch", "struggle", "switcheroo", "thief", "transform", "trick", "whirlwind"];
 		//	if (!this.lastMove || noCopycat.includes(this.lastMove.id) || this.lastMove.isZ) {
@@ -4788,7 +4814,7 @@ Database = new BattleMovedex[] {
 		//name = "Core Enforcer",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//onHit = function (target) {
 		//	if (["battlebond", "comatose", "disguise", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "stancechange"].includes(target.Ability)) return;
 		//	if (target.NewlySwitched || this.willMove(target)) return;
@@ -4816,7 +4842,7 @@ Database = new BattleMovedex[] {
 		//name = "Corkscrew Crash",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "steeliumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -4834,7 +4860,7 @@ Database = new BattleMovedex[] {
 		//name = "Cosmic Power",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 1,
 			spd = 1
@@ -4857,7 +4883,7 @@ Database = new BattleMovedex[] {
 		//name = "Cotton Guard",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 3
 		},
@@ -4878,7 +4904,7 @@ Database = new BattleMovedex[] {
 		//name = "Cotton Spore",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {powder = 1, protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (powder: true, protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			spe = -2
 		},
@@ -4903,7 +4929,7 @@ Database = new BattleMovedex[] {
 		//name = "Counter",
 		pp = 20,
 		priority = -5,
-		flags = new Flags() {contact = 1, protect = 1},
+		flags = new Flags (contact: true, protect: true),
 		//beforeTurnCallback = function (pokemon) {
 		//	pokemon.addVolatile("counter");
 		//},
@@ -4948,7 +4974,7 @@ Database = new BattleMovedex[] {
 		//name = "Covet",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//onAfterHit = function (target, source, move) {
 		//	if (source.item || source.volatiles["gem"]) {
 		//		return;
@@ -4981,7 +5007,7 @@ Database = new BattleMovedex[] {
 		//name = "Crabhammer",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -5000,7 +5026,7 @@ Database = new BattleMovedex[] {
 		//name = "Crafty Shield",
 		pp = 10,
 		priority = 3,
-		flags = new Flags() {},
+		flags = new Flags (),
 		sideCondition = "craftyshield",
 		//onTryHitSide = function (side, source) {
 		//	return !!this.willAct();
@@ -5036,7 +5062,7 @@ Database = new BattleMovedex[] {
 		//name = "Cross Chop",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -5055,7 +5081,7 @@ Database = new BattleMovedex[] {
 		//name = "Cross Poison",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "psn"
@@ -5078,7 +5104,7 @@ Database = new BattleMovedex[] {
 		//name = "Crunch",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			boosts = new Boosts() {
@@ -5101,7 +5127,7 @@ Database = new BattleMovedex[] {
 		//name = "Crush Claw",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -5127,7 +5153,7 @@ Database = new BattleMovedex[] {
 		//name = "Crush Grip",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -5145,7 +5171,7 @@ Database = new BattleMovedex[] {
 		//name = "Curse",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		volatileStatus = "curse",
 		//onModifyMove = function (move, source, target) {
 		//	if (!source.hasType("Ghost")) {
@@ -5192,7 +5218,7 @@ Database = new BattleMovedex[] {
 		//name = "Cut",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -5211,7 +5237,7 @@ Database = new BattleMovedex[] {
 		//name = "Dark Pulse",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, pulse = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, pulse: true, mirror: true, distance: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "flinch"
@@ -5233,7 +5259,7 @@ Database = new BattleMovedex[] {
 		//name = "Dark Void",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "slp",
 		//onTryMove = function (pokemon, target, move) {
 		//	if (pokemon.template.species === "Darkrai" || move.hasBounced) {
@@ -5261,7 +5287,7 @@ Database = new BattleMovedex[] {
 		//name = "Darkest Lariat",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		ignoreEvasion = true,
 		ignoreDefensive = true,
 		//secondary = false,
@@ -5282,7 +5308,7 @@ Database = new BattleMovedex[] {
 		//name = "Dazzling Gleam",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.FAIRY,
@@ -5301,7 +5327,7 @@ Database = new BattleMovedex[] {
 		//name = "Defend Order",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 1,
 			spd = 1
@@ -5323,7 +5349,7 @@ Database = new BattleMovedex[] {
 		//name = "Defense Curl",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 1
 		},
@@ -5349,7 +5375,7 @@ Database = new BattleMovedex[] {
 		//name = "Defog",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		//onHit = function (target, source, move) {
 		//	let success = false;
 		//	if (!target.Volatiles["substitute"] || move.infiltrates) success = this.boost({evasion = -1});
@@ -5388,7 +5414,7 @@ Database = new BattleMovedex[] {
 		//name = "Destiny Bond",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		volatileStatus = "destinybond",
 		//onPrepareHit = function (pokemon) {
 		//	return !pokemon.removeVolatile("destinybond");
@@ -5436,7 +5462,7 @@ Database = new BattleMovedex[] {
 		//name = "Detect",
 		pp = 5,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		stallingMove = true,
 		volatileStatus = "protect",
 		//onPrepareHit = function (pokemon) {
@@ -5461,7 +5487,7 @@ Database = new BattleMovedex[] {
 		//name = "Devastating Drake",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "dragoniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -5480,7 +5506,7 @@ Database = new BattleMovedex[] {
 		//name = "Diamond Storm",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			self = {
@@ -5505,7 +5531,7 @@ Database = new BattleMovedex[] {
 		//name = "Dig",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true, nonsky: true),
 		//onTry = function (attacker, defender, move) {
 		//	if (attacker.removeVolatile(move.id)) {
 		//		return;
@@ -5557,7 +5583,7 @@ Database = new BattleMovedex[] {
 		//name = "Disable",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "disable",
 		//onTryHit = function (target) {
 		//	if (!target.LastMove || target.LastMove.isZ) {
@@ -5630,7 +5656,7 @@ Database = new BattleMovedex[] {
 		//name = "Disarming Voice",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.FAIRY,
@@ -5649,7 +5675,7 @@ Database = new BattleMovedex[] {
 		//name = "Discharge",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "par"
@@ -5670,7 +5696,7 @@ Database = new BattleMovedex[] {
 		//name = "Dive",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true, nonsky: true),
 		//onTry = function (attacker, defender, move) {
 		//	if (attacker.removeVolatile(move.id)) {
 		//		return;
@@ -5721,7 +5747,7 @@ Database = new BattleMovedex[] {
 		//name = "Dizzy Punch",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "confusion"
@@ -5742,7 +5768,7 @@ Database = new BattleMovedex[] {
 		//name = "Doom Desire",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isFutureMove = true,
 		//onTry = function (source, target) {
 		//	target.Side.addSideCondition("futuremove");
@@ -5760,7 +5786,7 @@ Database = new BattleMovedex[] {
 		//			basePower = 140,
 		//			category = Category.SPECIAL,
 		//			priority = 0,
-		//			flags = new Flags() {},
+		//			flags = new Flags (),
 		//			effectType = "Move",
 		//			isFutureMove = true,
 		//			type = "Steel"
@@ -5787,7 +5813,7 @@ Database = new BattleMovedex[] {
 		//name = "Double-Edge",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {33, 100},
 		//secondary = false,
 		target = Target.Normal,
@@ -5806,7 +5832,7 @@ Database = new BattleMovedex[] {
 		//name = "Double Hit",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -5825,7 +5851,7 @@ Database = new BattleMovedex[] {
 		//name = "Double Kick",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -5844,7 +5870,7 @@ Database = new BattleMovedex[] {
 		//name = "Double Slap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -5863,7 +5889,7 @@ Database = new BattleMovedex[] {
 		//name = "Double Team",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			evasion = 1
 		},
@@ -5885,7 +5911,7 @@ Database = new BattleMovedex[] {
 		//name = "Draco Meteor",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				spa = -2
@@ -5909,7 +5935,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Ascent",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		self = {
 			boosts = new Boosts() {
 				def = -1,
@@ -5932,7 +5958,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Breath",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "par"
@@ -5954,7 +5980,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Claw",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DRAGON,
@@ -5973,7 +5999,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Dance",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1, dance = 1},
+		flags = new Flags (snatch: true, dance: true),
 		boosts = new Boosts() {
 			atk = 1,
 			spe = 1
@@ -5996,7 +6022,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Hammer",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DRAGON,
@@ -6015,7 +6041,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Pulse",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, pulse = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, pulse: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.DRAGON,
@@ -6034,7 +6060,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Rage",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DRAGON,
@@ -6052,7 +6078,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Rush",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "flinch"
@@ -6074,7 +6100,7 @@ Database = new BattleMovedex[] {
 		//name = "Dragon Tail",
 		pp = 10,
 		priority = -6,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		forceSwitch = true,
 		target = Target.Normal,
 		type = Types.DRAGON,
@@ -6092,7 +6118,7 @@ Database = new BattleMovedex[] {
 		//name = "Draining Kiss",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, heal: true),
 		drain = new int[] {3, 4},
 		//secondary = false,
 		target = Target.Normal,
@@ -6112,7 +6138,7 @@ Database = new BattleMovedex[] {
 		//name = "Drain Punch",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1, heal = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -6131,7 +6157,7 @@ Database = new BattleMovedex[] {
 		//name = "Dream Eater",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//onTryHit = function (target) {
 		//	if (target.Status !== "slp" && !target.HasAbility("comatose")) {
@@ -6157,7 +6183,7 @@ Database = new BattleMovedex[] {
 		//name = "Drill Peck",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FLYING,
@@ -6176,7 +6202,7 @@ Database = new BattleMovedex[] {
 		//name = "Drill Run",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -6195,7 +6221,7 @@ Database = new BattleMovedex[] {
 		//name = "Dual Chop",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -6214,7 +6240,7 @@ Database = new BattleMovedex[] {
 		//name = "Dynamic Punch",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 100,
 			volatileStatus = "confusion"
@@ -6236,7 +6262,7 @@ Database = new BattleMovedex[] {
 		//name = "Earth Power",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -6260,7 +6286,7 @@ Database = new BattleMovedex[] {
 		//name = "Earthquake",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.AllAdjacent,
 		type = Types.GROUND,
@@ -6284,7 +6310,7 @@ Database = new BattleMovedex[] {
 		//name = "Echoed Voice",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		//onTry = function () {
 		//	this.addPseudoWeather("echoedvoice");
 		//},
@@ -6319,7 +6345,7 @@ Database = new BattleMovedex[] {
 		//name = "Eerie Impulse",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			spa = -2
 		},
@@ -6340,7 +6366,7 @@ Database = new BattleMovedex[] {
 		//name = "Egg Bomb",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -6358,10 +6384,10 @@ Database = new BattleMovedex[] {
 		//name = "Electric Terrain",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		terrain = "electricterrain",
 		effect = {
-			duration = 5,
+			duration = 5
 			//durationCallback = function (source, effect) {
 			//	if (source && source.hasItem("terrainextender")) {
 			//		return 8;
@@ -6419,21 +6445,21 @@ Database = new BattleMovedex[] {
 		//name = "Electrify",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, mystery: true),
 		volatileStatus = "electrify",
-		onTryHit = function (target) {
-			if (!this.willMove(target) && target.ActiveTurns) return false;
-		},
+		//onTryHit = function (target) {
+		//	if (!this.willMove(target) && target.ActiveTurns) return false;
+		//},
 		effect = {
-			duration = 1,
-			onStart = function (target) {
-				this.add('-singleturn', target, 'move = Electrify');
-			},
-			onModifyMovePriority = -2,
-			onModifyMove = function (move) {
-				this.debug('Electrify making move type electric');
-				move.type = "Electric";
-			}
+			duration = 1
+			//onStart = function (target) {
+			//	this.add('-singleturn', target, 'move = Electrify');
+			//},
+			//onModifyMovePriority = -2,
+			//onModifyMove = function (move) {
+			//	this.debug('Electrify making move type electric');
+			//	move.type = "Electric";
+			//}
 		},
 		//secondary = false,
 		target = Target.Normal,
@@ -6445,23 +6471,23 @@ Database = new BattleMovedex[] {
 		num = 486,
 		accuracy = 100,
 		basePower = 0,
-		basePowerCallback = function (pokemon, target) {
-			let ratio = (pokemon.getStat("spe") / target.GetStat("spe"));
-			this.debug([40, 60, 80, 120, 150][(Math.floor(ratio) > 4 ? 4  = Math.floor(ratio))] + ' bp');
-			if (ratio >= 4) {
-				return 150;
-			}
-			if (ratio >= 3) {
-				return 120;
-			}
-			if (ratio >= 2) {
-				return 80;
-			}
-			if (ratio >= 1) {
-				return 60;
-			}
-			return 40;
-		},
+		//basePowerCallback = function (pokemon, target) {
+		//	let ratio = (pokemon.getStat("spe") / target.GetStat("spe"));
+		//	this.debug([40, 60, 80, 120, 150][(Math.floor(ratio) > 4 ? 4  = Math.floor(ratio))] + ' bp');
+		//	if (ratio >= 4) {
+		//	return 150;
+		//	}
+		//	if (ratio >= 3) {
+		//		return 120;
+		//	}
+		//	if (ratio >= 2) {
+		//	return 80;
+		//	}
+		//	if (ratio >= 1) {
+		//		return 60;
+		//	}
+		//	return 40;
+		//},
 		category = Category.SPECIAL,
 		//desc = "The power of this move depends on (user's current Speed / target'S current Speed), rounded down. Power is equal to 150 if the result is 4 or more, 120 if 3, 80 if 2, 60 if 1, 40 if less than 1.",
 		//shortDesc = "More power the faster the user is than the target.",
@@ -6469,7 +6495,7 @@ Database = new BattleMovedex[] {
 		//name = "Electro Ball",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ELECTRIC,
@@ -6487,7 +6513,7 @@ Database = new BattleMovedex[] {
 		//name = "Electroweb",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -6510,7 +6536,7 @@ Database = new BattleMovedex[] {
 		//name = "Embargo",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		volatileStatus = "embargo",
 		effect = {
 			duration = 5,
@@ -6540,7 +6566,7 @@ Database = new BattleMovedex[] {
 		//name = "Ember",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "brn"
@@ -6562,7 +6588,7 @@ Database = new BattleMovedex[] {
 		//name = "Encore",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "encore",
 		effect = {
 			duration = 3,
@@ -6626,7 +6652,7 @@ Database = new BattleMovedex[] {
 		//name = "Endeavor",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onTry = function (pokemon, target) {
 			if (pokemon.hp >= target.Hp) {
 				this.add('-immune', target, '[msg]');
@@ -6650,7 +6676,7 @@ Database = new BattleMovedex[] {
 		//name = "Endure",
 		pp = 10,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		stallingMove = true,
 		volatileStatus = "endure",
 		onTryHit = function (pokemon) {
@@ -6690,7 +6716,7 @@ Database = new BattleMovedex[] {
 		//name = "Energy Ball",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -6713,7 +6739,7 @@ Database = new BattleMovedex[] {
 		//name = "Entrainment",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onTryHit = function (target, source) {
 			if (target === source) return false;
 			let bannedTargetABilities = ["battlebond", "comatose", "disguise", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "stancechange", "truant"];
@@ -6751,7 +6777,7 @@ Database = new BattleMovedex[] {
 		//name = "Eruption",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.FIRE,
@@ -6770,7 +6796,7 @@ Database = new BattleMovedex[] {
 		//name = "Explosion",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		selfdestruct = "always",
 		//secondary = false,
 		target = Target.AllAdjacent,
@@ -6790,7 +6816,7 @@ Database = new BattleMovedex[] {
 		//name = "Extrasensory",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			volatileStatus = "flinch"
@@ -6812,7 +6838,7 @@ Database = new BattleMovedex[] {
 		//name = "Extreme Evoboost",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "eeviumz",
 		boosts = new Boosts() {
 			atk = 2,
@@ -6838,7 +6864,7 @@ Database = new BattleMovedex[] {
 		//name = "Extreme Speed",
 		pp = 5,
 		priority = 2,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -6857,7 +6883,7 @@ Database = new BattleMovedex[] {
 		//name = "Facade",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onBasePowerPriority = 4,
 		onBasePower = function (basePower, pokemon) {
 			if (pokemon.status && pokemon.status !== "slp") {
@@ -6881,7 +6907,7 @@ Database = new BattleMovedex[] {
 		//name = "Feint Attack",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DARK,
@@ -6899,7 +6925,7 @@ Database = new BattleMovedex[] {
 		//name = "Fairy Lock",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {mirror = 1, authentic = 1},
+		flags = new Flags (mirror: true, authentic: true),
 		pseudoWeather = "fairylock",
 		effect = {
 			duration = 2,
@@ -6927,7 +6953,7 @@ Database = new BattleMovedex[] {
 		//name = "Fairy Wind",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FAIRY,
@@ -6946,7 +6972,7 @@ Database = new BattleMovedex[] {
 		//name = "Fake Out",
 		pp = 10,
 		priority = 3,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onTry = function (pokemon, target) {
 			if (pokemon.activeTurns > 1) {
 				this.attrLastMove('[still]');
@@ -6975,7 +7001,7 @@ Database = new BattleMovedex[] {
 		//name = "Fake Tears",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		boosts = new Boosts() {
 			spd = -2
 		},
@@ -6996,7 +7022,7 @@ Database = new BattleMovedex[] {
 		//name = "False Swipe",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		noFaint = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -7015,7 +7041,7 @@ Database = new BattleMovedex[] {
 		//name = "Feather Dance",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1, dance = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true, dance: true),
 		boosts = new Boosts() {
 			atk = -2
 		},
@@ -7036,7 +7062,7 @@ Database = new BattleMovedex[] {
 		//name = "Feint",
 		pp = 10,
 		priority = 2,
-		flags = new Flags() {mirror = 1},
+		flags = new Flags (mirror: true),
 		breaksProtect = true,
 		// Breaking protection implemented in scripts.js
 		//secondary = false,
@@ -7056,7 +7082,7 @@ Database = new BattleMovedex[] {
 		//name = "Fell Stinger",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onAfterMoveSeCONDARYSELF = function (pokemon, target, move) {
 			if (!target || target.Fainted || target.Hp <= 0) this.boost({atk = 3}, pokemon, pokemon, move);
 		},
@@ -7078,7 +7104,7 @@ Database = new BattleMovedex[] {
 		//name = "Fiery Dance",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, dance = 1},
+		flags = new Flags (protect: true, mirror: true, dance: true),
 		secondary = new Secondary() {
 			chance = 50,
 			self = {
@@ -7109,7 +7135,7 @@ Database = new BattleMovedex[] {
 		//name = "Final Gambit",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1},
+		flags = new Flags (protect: true),
 		selfdestruct = "ifHit",
 		//secondary = false,
 		target = Target.Normal,
@@ -7129,7 +7155,7 @@ Database = new BattleMovedex[] {
 		//name = "Fire Blast",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "brn"
@@ -7151,7 +7177,7 @@ Database = new BattleMovedex[] {
 		//name = "Fire Fang",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondaries = [
 			{
 				chance = 10,
@@ -7178,7 +7204,7 @@ Database = new BattleMovedex[] {
 		//name = "Fire Lash",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -7208,7 +7234,7 @@ Database = new BattleMovedex[] {
 		//name = "Fire Pledge",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		onPrepareHit = function (target, source, move) {
 			for (const action of this.queue) {
 				// @ts-ignore
@@ -7275,7 +7301,7 @@ Database = new BattleMovedex[] {
 		//name = "Fire Punch",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "brn"
@@ -7296,7 +7322,7 @@ Database = new BattleMovedex[] {
 		//name = "Fire Spin",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -7316,7 +7342,7 @@ Database = new BattleMovedex[] {
 		//name = "First Impression",
 		pp = 10,
 		priority = 2,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onTry = function (pokemon, target) {
 			if (pokemon.activeTurns > 1) {
 				this.add('-fail', pokemon);
@@ -7341,7 +7367,7 @@ Database = new BattleMovedex[] {
 		//name = "Fissure",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		ohko = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -7379,7 +7405,7 @@ Database = new BattleMovedex[] {
 		//name = "Flail",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -7397,7 +7423,7 @@ Database = new BattleMovedex[] {
 		//name = "Flame Burst",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onHit = function (target, source) {
 			if (target.Side.active.length === 1) {
 				return;
@@ -7436,7 +7462,7 @@ Database = new BattleMovedex[] {
 		//name = "Flame Charge",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			self = {
@@ -7461,7 +7487,7 @@ Database = new BattleMovedex[] {
 		//name = "Flame Wheel",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, defrost: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "brn"
@@ -7483,7 +7509,7 @@ Database = new BattleMovedex[] {
 		//name = "Flamethrower",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "brn"
@@ -7505,7 +7531,7 @@ Database = new BattleMovedex[] {
 		//name = "Flare Blitz",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, defrost: true),
 		recoil = new int[] {33, 100},
 		secondary = new Secondary() {
 			chance = 10,
@@ -7527,7 +7553,7 @@ Database = new BattleMovedex[] {
 		//name = "Flash",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			accuracy = -1
 		},
@@ -7549,7 +7575,7 @@ Database = new BattleMovedex[] {
 		//name = "Flash Cannon",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -7572,7 +7598,7 @@ Database = new BattleMovedex[] {
 		//name = "Flatter",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		volatileStatus = "confusion",
 		boosts = new Boosts() {
 			spa = 1
@@ -7595,7 +7621,7 @@ Database = new BattleMovedex[] {
 		//name = "Fleur Cannon",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				spa = -2
@@ -7618,7 +7644,7 @@ Database = new BattleMovedex[] {
 		//name = "Fling",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, mystery: true),
 		onPrepareHit = function (target, source, move) {
 			if (source.ignoringItem()) return false;
 			let item = source.getItem();
@@ -7665,7 +7691,7 @@ Database = new BattleMovedex[] {
 		//name = "Floral Healing",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, heal = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, heal: true, mystery: true),
 		onHit = function (target) {
 			if (this.isTerrain("grassyterrain")) {
 				return this.heal(this.modify(target.Maxhp, 0.667)); // TODO = find out the real value
@@ -7690,7 +7716,7 @@ Database = new BattleMovedex[] {
 		//name = "Flower Shield",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {distance = 1},
+		flags = new Flags (distance: true),
 		onHitField = function (target, source) {
 			let targets = [];
 			for (const side of this.sides) {
@@ -7724,7 +7750,7 @@ Database = new BattleMovedex[] {
 		//name = "Fly",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1, gravity = 1, distance = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true, gravity: true, distance: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -7774,7 +7800,7 @@ Database = new BattleMovedex[] {
 		id = Moves.FLYINGPRESS,
 		//name = "Flying Press",
 		pp = 10,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, gravity = 1, distance = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, gravity: true, distance: true, nonsky: true),
 		onEffectiveness = function (typeMod, type, move) {
 			// @ts-ignore
 			return typeMod + this.getEffectiveness("Flying", type);
@@ -7798,7 +7824,7 @@ Database = new BattleMovedex[] {
 		//name = "Focus Blast",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -7821,7 +7847,7 @@ Database = new BattleMovedex[] {
 		//name = "Focus Energy",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		volatileStatus = "focusenergy",
 		effect = {
 			onStart = function (target, source, effect) {
@@ -7855,7 +7881,7 @@ Database = new BattleMovedex[] {
 		//name = "Focus Punch",
 		pp = 20,
 		priority = -3,
-		flags = new Flags() {contact = 1, protect = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, punch: true),
 		beforeTurnCallback = function (pokemon) {
 			pokemon.addVolatile("focuspunch");
 		},
@@ -7893,7 +7919,7 @@ Database = new BattleMovedex[] {
 		//name = "Follow Me",
 		pp = 20,
 		priority = 2,
-		flags = new Flags() {},
+		flags = new Flags (),
 		volatileStatus = "followme",
 		onTryHit = function (target) {
 			if (target.Side.active.length < 2) return false;
@@ -7932,7 +7958,7 @@ Database = new BattleMovedex[] {
 		//name = "Force Palm",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "par"
@@ -7953,7 +7979,7 @@ Database = new BattleMovedex[] {
 		//name = "Foresight",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "foresight",
 		onTryHit = function (target) {
 			if (target.Volatiles["miracleeye"]) return false;
@@ -7989,7 +8015,7 @@ Database = new BattleMovedex[] {
 		//name = "Forest's Curse",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onHit = function (target) {
 			if (target.HasType("Grass")) return false;
 			if (!target.AddType("Grass")) return false;
@@ -8013,7 +8039,7 @@ Database = new BattleMovedex[] {
 		//name = "Foul Play",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		useTargetOFfensive = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -8033,7 +8059,7 @@ Database = new BattleMovedex[] {
 		//name = "Freeze-Dry",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onEffectiveness = function (typeMod, type) {
 			if (type === "Water") return 1;
 		},
@@ -8057,7 +8083,7 @@ Database = new BattleMovedex[] {
 		//name = "Freeze Shock",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {charge = 1, protect = 1, mirror = 1},
+		flags = new Flags (charge: true, protect: true, mirror: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -8090,7 +8116,7 @@ Database = new BattleMovedex[] {
 		//name = "Frenzy Plant",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {recharge = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (recharge: true, protect: true, mirror: true, nonsky: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -8111,7 +8137,7 @@ Database = new BattleMovedex[] {
 		//name = "Frost Breath",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		willCrit = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -8134,7 +8160,7 @@ Database = new BattleMovedex[] {
 		//name = "Frustration",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -8152,7 +8178,7 @@ Database = new BattleMovedex[] {
 		//name = "Fury Attack",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -8177,7 +8203,7 @@ Database = new BattleMovedex[] {
 		//name = "Fury Cutter",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onHit = function (target, source) {
 			source.addVolatile("furycutter");
 		},
@@ -8210,7 +8236,7 @@ Database = new BattleMovedex[] {
 		//name = "Fury Swipes",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -8230,7 +8256,7 @@ Database = new BattleMovedex[] {
 		//name = "Fusion Bolt",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onBasePowerPriority = 4,
 		onBasePower = function (basePower, pokemon) {
 			for (const active of pokemon.side.active) {
@@ -8258,7 +8284,7 @@ Database = new BattleMovedex[] {
 		//name = "Fusion Flare",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (protect: true, mirror: true, defrost: true),
 		onBasePowerPriority = 4,
 		onBasePower = function (basePower, pokemon) {
 			for (const active of pokemon.side.active) {
@@ -8285,7 +8311,7 @@ Database = new BattleMovedex[] {
 		//name = "Future Sight",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		ignoreImmunity = true,
 		isFutureMove = true,
 		onTry = function (source, target) {
@@ -8304,7 +8330,7 @@ Database = new BattleMovedex[] {
 					basePower = 120,
 					category = Category.SPECIAL,
 					priority = 0,
-					flags = new Flags() {},
+					flags = new Flags (),
 					ignoreImmunity = false,
 					effectType = "Move",
 					isFutureMove = true,
@@ -8331,7 +8357,7 @@ Database = new BattleMovedex[] {
 		//name = "Gastro Acid",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		volatileStatus = "gastroacid",
 		onTryHit = function (pokemon) {
 			let bannedAbilities = ["battlebond", "comatose", "disguise", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "stancechange"];
@@ -8364,7 +8390,7 @@ Database = new BattleMovedex[] {
 		//name = "Gear Grind",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -8383,7 +8409,7 @@ Database = new BattleMovedex[] {
 		//name = "Gear Up",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1, authentic = 1},
+		flags = new Flags (snatch: true, authentic: true),
 		onHitSide = function (side, source) {
 			let targets = [];
 			for (let p in side.active) {
@@ -8413,7 +8439,7 @@ Database = new BattleMovedex[] {
 		//name = "Genesis Supernova",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "mewniumz",
 		secondary = new Secondary() {
 			chance = 100,
@@ -8439,7 +8465,7 @@ Database = new BattleMovedex[] {
 		//name = "Geomancy",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {charge = 1, nonsky = 1},
+		flags = new Flags (charge: true, nonsky: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -8476,7 +8502,7 @@ Database = new BattleMovedex[] {
 		//name = "Giga Drain",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -8495,7 +8521,7 @@ Database = new BattleMovedex[] {
 		//name = "Giga Impact",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -8516,7 +8542,7 @@ Database = new BattleMovedex[] {
 		//name = "Gigavolt Havoc",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "electriumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -8534,7 +8560,7 @@ Database = new BattleMovedex[] {
 		//name = "Glaciate",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -8558,7 +8584,7 @@ Database = new BattleMovedex[] {
 		//name = "Glare",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "par",
 		//secondary = false,
 		target = Target.Normal,
@@ -8603,7 +8629,7 @@ Database = new BattleMovedex[] {
 		//name = "Grass Knot",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -8628,7 +8654,7 @@ Database = new BattleMovedex[] {
 		//name = "Grass Pledge",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		onPrepareHit = function (target, source, move) {
 			for (const action of this.queue) {
 				// @ts-ignore
@@ -8689,7 +8715,7 @@ Database = new BattleMovedex[] {
 		//name = "Grass Whistle",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true),
 		status = "slp",
 		//secondary = false,
 		target = Target.Normal,
@@ -8708,7 +8734,7 @@ Database = new BattleMovedex[] {
 		//name = "Grassy Terrain",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		terrain = "grassyterrain",
 		effect = {
 			duration = 5,
@@ -8769,7 +8795,7 @@ Database = new BattleMovedex[] {
 		//name = "Gravity",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		pseudoWeather = "gravity",
 		effect = {
 			duration = 5,
@@ -8851,7 +8877,7 @@ Database = new BattleMovedex[] {
 		//name = "Growl",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true),
 		boosts = new Boosts() {
 			atk = -1
 		},
@@ -8872,7 +8898,7 @@ Database = new BattleMovedex[] {
 		//name = "Growth",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		onModifyMove = function (move) {
 			if (this.isWeather(["sunnyday", "desolateland"])) move.boosts = {atk = 2, spa = 2};
 		},
@@ -8897,7 +8923,7 @@ Database = new BattleMovedex[] {
 		//name = "Grudge",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		volatileStatus = "grudge",
 		effect = {
 			onStart = function (pokemon) {
@@ -8937,7 +8963,7 @@ Database = new BattleMovedex[] {
 		//name = "Guard Split",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mystery = 1},
+		flags = new Flags (protect: true, mystery: true),
 		onHit = function (target, source) {
 			let newdef = Math.floor((target.Stats.def + source.stats.def) / 2);
 			target.Stats.def = newdef;
@@ -8964,7 +8990,7 @@ Database = new BattleMovedex[] {
 		//name = "Guard Swap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			let targetBOosts = {};
 			let sourceBoosts = {};
@@ -9003,7 +9029,7 @@ Database = new BattleMovedex[] {
 		//name = "Guardian of Alola",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "tapuniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -9021,7 +9047,7 @@ Database = new BattleMovedex[] {
 		//name = "Guillotine",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		ohko = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -9041,7 +9067,7 @@ Database = new BattleMovedex[] {
 		//name = "Gunk Shot",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "psn"
@@ -9062,7 +9088,7 @@ Database = new BattleMovedex[] {
 		//name = "Gust",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FLYING,
@@ -9087,7 +9113,7 @@ Database = new BattleMovedex[] {
 		//name = "Gyro Ball",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {bullet = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.STEEL,
@@ -9105,7 +9131,7 @@ Database = new BattleMovedex[] {
 		//name = "Hail",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		weather = "hail",
 		//secondary = false,
 		target = Target.All,
@@ -9125,7 +9151,7 @@ Database = new BattleMovedex[] {
 		//name = "Hammer Arm",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		self = {
 			boosts = new Boosts() {
 				spe = -1
@@ -9148,7 +9174,7 @@ Database = new BattleMovedex[] {
 		//name = "Happy Hour",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		onTryHit = function (target, source) {
 			this.add('-activate', target, 'move = Happy Hour');
 		},
@@ -9169,7 +9195,7 @@ Database = new BattleMovedex[] {
 		//name = "Harden",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 1
 		},
@@ -9191,7 +9217,7 @@ Database = new BattleMovedex[] {
 		//name = "Haze",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		onHitField = function () {
 			this.add('-clearallboost');
 			for (const side of this.sides) {
@@ -9218,7 +9244,7 @@ Database = new BattleMovedex[] {
 		//name = "Head Charge",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {1, 4},
 		//secondary = false,
 		target = Target.Normal,
@@ -9238,7 +9264,7 @@ Database = new BattleMovedex[] {
 		//name = "Head Smash",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -9257,7 +9283,7 @@ Database = new BattleMovedex[] {
 		//name = "Headbutt",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -9279,7 +9305,7 @@ Database = new BattleMovedex[] {
 		//name = "Heal Bell",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {snatch = 1, sound = 1, distance = 1, authentic = 1},
+		flags = new Flags (snatch: true, sound: true, distance: true, authentic: true),
 		onHit = function (pokemon, source) {
 			this.add('-activate', source, 'move = Heal Bell');
 			let side = pokemon.side;
@@ -9306,7 +9332,7 @@ Database = new BattleMovedex[] {
 		//name = "Heal Block",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		volatileStatus = "healblock",
 		effect = {
 			duration = 5,
@@ -9361,7 +9387,7 @@ Database = new BattleMovedex[] {
 		//name = "Heal Order",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		heal = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Self,
@@ -9380,7 +9406,7 @@ Database = new BattleMovedex[] {
 		//name = "Heal Pulse",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, pulse = 1, reflectable = 1, distance = 1, heal = 1, mystery = 1},
+		flags = new Flags (protect: true, pulse: true, reflectable: true, distance: true, heal: true, mystery: true),
 		onHit = function (target, source) {
 			if (source.hasAbility("megalauncher")) {
 				return this.heal(this.modify(target.Maxhp, 0.75));
@@ -9406,7 +9432,7 @@ Database = new BattleMovedex[] {
 		//name = "Healing Wish",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onTryHit = function (pokemon, target, move) {
 			if (!this.canSwitch(pokemon.side)) {
 				delete move.selfdestruct;
@@ -9463,7 +9489,7 @@ Database = new BattleMovedex[] {
 		//name = "Heart Stamp",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -9484,7 +9510,7 @@ Database = new BattleMovedex[] {
 		//name = "Heart Swap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			let targetBOosts = {};
 			let sourceBoosts = {};
@@ -9533,7 +9559,7 @@ Database = new BattleMovedex[] {
 		//name = "Heat Crash",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIRE,
@@ -9552,7 +9578,7 @@ Database = new BattleMovedex[] {
 		//name = "Heat Wave",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "brn"
@@ -9591,7 +9617,7 @@ Database = new BattleMovedex[] {
 		//name = "Heavy Slam",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.STEEL,
@@ -9609,7 +9635,7 @@ Database = new BattleMovedex[] {
 		//name = "Helping Hand",
 		pp = 20,
 		priority = 5,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		volatileStatus = "helpinghand",
 		onTryHit = function (target) {
 			if (!target.NewlySwitched && !this.willMove(target)) return false;
@@ -9652,7 +9678,7 @@ Database = new BattleMovedex[] {
 		//name = "Hex",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GHOST,
@@ -9670,7 +9696,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move, pokemon) {
 			move.type = pokemon.hpType || "Dark";
 		},
@@ -9691,7 +9717,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Bug",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.BUG,
@@ -9708,7 +9734,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Dark",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DARK,
@@ -9725,7 +9751,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Dragon",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DRAGON,
@@ -9743,7 +9769,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Electric",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ELECTRIC,
@@ -9761,7 +9787,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Fighting",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -9779,7 +9805,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Fire",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIRE,
@@ -9796,7 +9822,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Flying",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FLYING,
@@ -9813,7 +9839,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Ghost",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GHOST,
@@ -9831,7 +9857,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Grass",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -9848,7 +9874,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Ground",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GROUND,
@@ -9866,7 +9892,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Ice",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ICE,
@@ -9883,7 +9909,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Poison",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.POISON,
@@ -9900,7 +9926,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Psychic",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.PSYCHIC,
@@ -9917,7 +9943,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Rock",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ROCK,
@@ -9934,7 +9960,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Steel",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.STEEL,
@@ -9951,7 +9977,7 @@ Database = new BattleMovedex[] {
 		//name = "Hidden Power Water",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.WATER,
@@ -9968,7 +9994,7 @@ Database = new BattleMovedex[] {
 		//name = "High Horsepower",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GROUND,
@@ -9987,7 +10013,7 @@ Database = new BattleMovedex[] {
 		//name = "High Jump Kick",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, gravity = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, gravity: true),
 		hasCustomRecoil = true,
 		onMoveFail = function (target, source, move) {
 			this.damage(source.maxhp / 2, source, source, "highjumpkick");
@@ -10009,7 +10035,7 @@ Database = new BattleMovedex[] {
 		//name = "Hold Back",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		noFaint = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -10028,7 +10054,7 @@ Database = new BattleMovedex[] {
 		//name = "Hold Hands",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		//secondary = false,
 		target = Target.AdjacentAlly,
 		type = Types.NORMAL,
@@ -10047,7 +10073,7 @@ Database = new BattleMovedex[] {
 		//name = "Hone Claws",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1,
 			accuracy = 1
@@ -10069,7 +10095,7 @@ Database = new BattleMovedex[] {
 		//name = "Horn Attack",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -10087,7 +10113,7 @@ Database = new BattleMovedex[] {
 		//name = "Horn Drill",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		ohko = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -10107,7 +10133,7 @@ Database = new BattleMovedex[] {
 		//name = "Horn Leech",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -10126,7 +10152,7 @@ Database = new BattleMovedex[] {
 		//name = "Howl",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1
 		},
@@ -10148,7 +10174,7 @@ Database = new BattleMovedex[] {
 		//name = "Hurricane",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, mirror: true, distance: true),
 		onModifyMove = function (move) {
 			if (this.isWeather(["raindance", "primordialsea"])) {
 				move.//accuracy = true;
@@ -10176,7 +10202,7 @@ Database = new BattleMovedex[] {
 		//name = "Hydro Cannon",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -10198,7 +10224,7 @@ Database = new BattleMovedex[] {
 		//name = "Hydro Pump",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.WATER,
@@ -10216,7 +10242,7 @@ Database = new BattleMovedex[] {
 		//name = "Hydro Vortex",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "wateriumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -10234,7 +10260,7 @@ Database = new BattleMovedex[] {
 		//name = "Hyper Beam",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -10255,7 +10281,7 @@ Database = new BattleMovedex[] {
 		//name = "Hyper Fang",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			volatileStatus = "flinch"
@@ -10277,7 +10303,7 @@ Database = new BattleMovedex[] {
 		//name = "Hyperspace Fury",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {mirror = 1, authentic = 1},
+		flags = new Flags (mirror: true, authentic: true),
 		breaksProtect = true,
 		onTry = function (pokemon) {
 			if (pokemon.template.species === 'Hoopa-Unbound') {
@@ -10313,7 +10339,7 @@ Database = new BattleMovedex[] {
 		//name = "Hyperspace Hole",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {mirror = 1, authentic = 1},
+		flags = new Flags (mirror: true, authentic: true),
 		breaksProtect = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -10333,7 +10359,7 @@ Database = new BattleMovedex[] {
 		//name = "Hyper Voice",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.NORMAL,
@@ -10351,7 +10377,7 @@ Database = new BattleMovedex[] {
 		//name = "Hypnosis",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "slp",
 		//secondary = false,
 		target = Target.Normal,
@@ -10382,7 +10408,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Ball",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {bullet = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, contact: true, protect: true, mirror: true),
 		effect = {
 			duration = 2,
 			onLockMove = "iceball",
@@ -10420,7 +10446,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Beam",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "frz"
@@ -10441,7 +10467,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Burn",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {charge = 1, protect = 1, mirror = 1},
+		flags = new Flags (charge: true, protect: true, mirror: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -10475,7 +10501,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Fang",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondaries = [
 			{
 				chance = 10,
@@ -10502,7 +10528,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Hammer",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		self = {
 			boosts = new Boosts() {
 				spe = -1
@@ -10526,7 +10552,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Punch",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "frz"
@@ -10548,7 +10574,7 @@ Database = new BattleMovedex[] {
 		//name = "Ice Shard",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ICE,
@@ -10567,7 +10593,7 @@ Database = new BattleMovedex[] {
 		//name = "Icicle Crash",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -10589,7 +10615,7 @@ Database = new BattleMovedex[] {
 		//name = "Icicle Spear",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -10608,7 +10634,7 @@ Database = new BattleMovedex[] {
 		//name = "Icy Wind",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -10631,7 +10657,7 @@ Database = new BattleMovedex[] {
 		//name = "Imprison",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, authentic = 1},
+		flags = new Flags (snatch: true, authentic: true),
 		volatileStatus = "imprison",
 		effect = {
 			noCopy = true,
@@ -10671,7 +10697,7 @@ Database = new BattleMovedex[] {
 		//name = "Incinerate",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onHit = function (pokemon, source) {
 			let item = pokemon.getItem();
 			if ((item.isBerry || item.isGem) && pokemon.takeItem(source)) {
@@ -10695,7 +10721,7 @@ Database = new BattleMovedex[] {
 		//name = "Inferno",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			status = "brn"
@@ -10716,7 +10742,7 @@ Database = new BattleMovedex[] {
 		//name = "Inferno Overdrive",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "firiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -10734,7 +10760,7 @@ Database = new BattleMovedex[] {
 		//name = "Infestation",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -10753,7 +10779,7 @@ Database = new BattleMovedex[] {
 		//name = "Ingrain",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1, nonsky = 1},
+		flags = new Flags (snatch: true, nonsky: true),
 		volatileStatus = "ingrain",
 		effect = {
 			onStart = function (pokemon) {
@@ -10789,7 +10815,7 @@ Database = new BattleMovedex[] {
 		//name = "Instruct",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			if (!target.LastMove) return false;
 			let lastMove = target.LastMove;
@@ -10820,7 +10846,7 @@ Database = new BattleMovedex[] {
 		//name = "Ion Deluge",
 		pp = 25,
 		priority = 1,
-		flags = new Flags() {},
+		flags = new Flags (),
 		pseudoWeather = "iondeluge",
 		effect = {
 			duration = 1,
@@ -10852,7 +10878,7 @@ Database = new BattleMovedex[] {
 		//name = "Iron Defense",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 2
 		},
@@ -10874,7 +10900,7 @@ Database = new BattleMovedex[] {
 		//name = "Iron Head",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -10895,7 +10921,7 @@ Database = new BattleMovedex[] {
 		//name = "Iron Tail",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			boosts = new Boosts() {
@@ -10919,7 +10945,7 @@ Database = new BattleMovedex[] {
 		//name = "Judgment",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move, pokemon) {
 			const item = pokemon.getItem();
 			if (item.id && item.onPlate && !item.zMove) {
@@ -10944,7 +10970,7 @@ Database = new BattleMovedex[] {
 		//name = "Jump Kick",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, gravity = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, gravity: true),
 		hasCustomRecoil = true,
 		onMoveFail = function (target, source, move) {
 			this.damage(source.maxhp / 2, source, source, "jumpkick");
@@ -10966,7 +10992,7 @@ Database = new BattleMovedex[] {
 		//name = "Karate Chop",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -10985,7 +11011,7 @@ Database = new BattleMovedex[] {
 		//name = "Kinesis",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			accuracy = -1
 		},
@@ -11007,7 +11033,7 @@ Database = new BattleMovedex[] {
 		//name = "King's Shield",
 		pp = 10,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		stallingMove = true,
 		volatileStatus = "kingsshield",
 		onTryHit = function (pokemon) {
@@ -11065,7 +11091,7 @@ Database = new BattleMovedex[] {
 		//name = "Knock Off",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onBasePowerPriority = 4,
 		onBasePower = function (basePower, source, target, move) {
 			let item = target.GetItem();
@@ -11099,7 +11125,7 @@ Database = new BattleMovedex[] {
 		//name = "Land's Wrath",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.GROUND,
@@ -11117,7 +11143,7 @@ Database = new BattleMovedex[] {
 		//name = "Laser Focus",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		volatileStatus = "laserfocus",
 		effect = {
 			duration = 2,
@@ -11148,7 +11174,7 @@ Database = new BattleMovedex[] {
 		//name = "Last Resort",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onTryHit = function (target, source) {
 			if (source.moveSlOTS.length < 2) return false; // Last Resort fails unless the user knows at least 2 moves
 			let hasLastResort = false; // User must actually have Last Resort for it to succeed
@@ -11179,7 +11205,7 @@ Database = new BattleMovedex[] {
 		//name = "Lava Plume",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "brn"
@@ -11201,7 +11227,7 @@ Database = new BattleMovedex[] {
 		//name = "Leaf Blade",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -11221,7 +11247,7 @@ Database = new BattleMovedex[] {
 		//name = "Leaf Storm",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				spa = -2
@@ -11244,7 +11270,7 @@ Database = new BattleMovedex[] {
 		//name = "Leaf Tornado",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -11267,7 +11293,7 @@ Database = new BattleMovedex[] {
 		//name = "Leafage",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -11286,7 +11312,7 @@ Database = new BattleMovedex[] {
 		//name = "Leech Life",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -11306,7 +11332,7 @@ Database = new BattleMovedex[] {
 		//name = "Leech Seed",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		volatileStatus = "leechseed",
 		effect = {
 			onStart = function (target) {
@@ -11348,7 +11374,7 @@ Database = new BattleMovedex[] {
 		//name = "Leer",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			def = -1
 		},
@@ -11369,7 +11395,7 @@ Database = new BattleMovedex[] {
 		//name = "Let's Snuggle Forever",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {contact = 1},
+		flags = new Flags (contact: true),
 		isZ = "mimikiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -11387,7 +11413,7 @@ Database = new BattleMovedex[] {
 		//name = "Lick",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "par"
@@ -11409,7 +11435,7 @@ Database = new BattleMovedex[] {
 		//name = "Light of Ruin",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		isUnreleased = true,
 		recoil = new int[] {1, 2},
 		//secondary = false,
@@ -11430,7 +11456,7 @@ Database = new BattleMovedex[] {
 		//name = "Light Screen",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "lightscreen",
 		effect = {
 			duration = 5,
@@ -11475,7 +11501,7 @@ Database = new BattleMovedex[] {
 		//name = "Light That Burns the Sky",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		onModifyMove = function (move, pokemon) {
 			if (pokemon.getStat("atk", false, true) > pokemon.getStat("spa", false, true)) move.category = "Physical";
 		},
@@ -11498,7 +11524,7 @@ Database = new BattleMovedex[] {
 		//name = "Liquidation",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			boosts = new Boosts() {
@@ -11521,7 +11547,7 @@ Database = new BattleMovedex[] {
 		//name = "Lock-On",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onTryHit = function (target, source) {
 			if (source.volatiles["lockon"]) return false;
 		},
@@ -11554,7 +11580,7 @@ Database = new BattleMovedex[] {
 		//name = "Lovely Kiss",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "slp",
 		//secondary = false,
 		target = Target.Normal,
@@ -11593,7 +11619,7 @@ Database = new BattleMovedex[] {
 		//name = "Low Kick",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -11611,7 +11637,7 @@ Database = new BattleMovedex[] {
 		//name = "Low Sweep",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -11634,7 +11660,7 @@ Database = new BattleMovedex[] {
 		//name = "Lucky Chant",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "luckychant",
 		effect = {
 			duration = 5,
@@ -11666,7 +11692,7 @@ Database = new BattleMovedex[] {
 		//name = "Lunar Dance",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1, dance = 1},
+		flags = new Flags (snatch: true, heal: true, dance: true),
 		onTryHit = function (pokemon, target, move) {
 			if (!this.canSwitch(pokemon.side)) {
 				delete move.selfdestruct;
@@ -11727,7 +11753,7 @@ Database = new BattleMovedex[] {
 		//name = "Lunge",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -11750,7 +11776,7 @@ Database = new BattleMovedex[] {
 		//name = "Luster Purge",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -11774,7 +11800,7 @@ Database = new BattleMovedex[] {
 		//name = "Mach Punch",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -11793,7 +11819,7 @@ Database = new BattleMovedex[] {
 		//name = "Magic Coat",
 		pp = 15,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		volatileStatus = "magiccoat",
 		effect = {
 			duration = 1,
@@ -11842,7 +11868,7 @@ Database = new BattleMovedex[] {
 		//name = "Magic Room",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {mirror = 1},
+		flags = new Flags (mirror: true),
 		pseudoWeather = "magicroom",
 		effect = {
 			duration = 5,
@@ -11882,7 +11908,7 @@ Database = new BattleMovedex[] {
 		//name = "Magical Leaf",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -11901,7 +11927,7 @@ Database = new BattleMovedex[] {
 		//name = "Magma Storm",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -11920,7 +11946,7 @@ Database = new BattleMovedex[] {
 		//name = "Magnet Bomb",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.STEEL,
@@ -11938,7 +11964,7 @@ Database = new BattleMovedex[] {
 		//name = "Magnetic Flux",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1, distance = 1, authentic = 1},
+		flags = new Flags (snatch: true, distance: true, authentic: true),
 		onHitSide = function (side, source) {
 			let targets = [];
 			for (let p in side.active) {
@@ -11968,7 +11994,7 @@ Database = new BattleMovedex[] {
 		//name = "Magnet Rise",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, gravity = 1},
+		flags = new Flags (snatch: true, gravity: true),
 		volatileStatus = "magnetrise",
 		effect = {
 			duration = 5,
@@ -12001,7 +12027,7 @@ Database = new BattleMovedex[] {
 		//name = "Magnitude",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		onModifyMove = function (move, pokemon) {
 			let i = this.random(100);
 			if (i < 5) {
@@ -12048,7 +12074,7 @@ Database = new BattleMovedex[] {
 		//name = "Malicious Moonsault",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {contact = 1},
+		flags = new Flags (contact: true),
 		isZ = "inciniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -12066,7 +12092,7 @@ Database = new BattleMovedex[] {
 		//name = "Mat Block",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, nonsky = 1},
+		flags = new Flags (snatch: true, nonsky: true),
 		stallingMove = true,
 		sideCondition = "matblock",
 		onTryHitSide = function (side, source) {
@@ -12116,7 +12142,7 @@ Database = new BattleMovedex[] {
 		//name = "Me First",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, authentic = 1},
+		flags = new Flags (protect: true, authentic: true),
 		onTryHit = function (target, pokemon) {
 			let action = this.willMove(target);
 			if (action) {
@@ -12156,7 +12182,7 @@ Database = new BattleMovedex[] {
 		//name = "Mean Look",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, mirror = 1},
+		flags = new Flags (reflectable: true, mirror: true),
 		onHit = function (target, source, move) {
 			return target.AddVolatile("trapped", source, move, "trapper");
 		},
@@ -12177,7 +12203,7 @@ Database = new BattleMovedex[] {
 		//name = "Meditate",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1
 		},
@@ -12198,7 +12224,7 @@ Database = new BattleMovedex[] {
 		//name = "Mega Drain",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Normal,
@@ -12217,7 +12243,7 @@ Database = new BattleMovedex[] {
 		//name = "Mega Kick",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -12235,7 +12261,7 @@ Database = new BattleMovedex[] {
 		//name = "Mega Punch",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -12254,7 +12280,7 @@ Database = new BattleMovedex[] {
 		//name = "Megahorn",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.BUG,
@@ -12273,7 +12299,7 @@ Database = new BattleMovedex[] {
 		//name = "Memento",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		boosts = new Boosts() {
 			atk = -2,
 			spa = -2
@@ -12296,7 +12322,7 @@ Database = new BattleMovedex[] {
 		//name = "Menacing Moonraze Maelstrom",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "lunaliumz",
 		ignoreAbility = true,
 		//secondary = false,
@@ -12319,7 +12345,7 @@ Database = new BattleMovedex[] {
 		//name = "Metal Burst",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		beforeTurnCallback = function (pokemon) {
 			pokemon.addVolatile("metalburst");
 		},
@@ -12363,7 +12389,7 @@ Database = new BattleMovedex[] {
 		//name = "Metal Claw",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			self = {
@@ -12388,7 +12414,7 @@ Database = new BattleMovedex[] {
 		//name = "Metal Sound",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true, mystery: true),
 		boosts = new Boosts() {
 			spd = -2
 		},
@@ -12410,7 +12436,7 @@ Database = new BattleMovedex[] {
 		//name = "Meteor Mash",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 20,
 			self = {
@@ -12435,7 +12461,7 @@ Database = new BattleMovedex[] {
 		//name = "Metronome",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		noMetronome = ["afteryou", "assist", "banefulbunker", "beakblast", "belch", "bestow", "celebrate", "chatter", "copycat", "counter", "covet", "craftyshield", "destinybond", "detect", "diamondstorm", "dragonascent", "endure", "feint", "fleurcannon", "focuspunch", "followme", "freezeshock", "helpinghand", "holdhands", "hyperspacefury", "hyperspacehole", "iceburn", "instruct", "kingsshield", "lightofruin", "matblock", "mefirst", "metronome", "mimic", "mindblown", "mirrorcoat", "mirrormove", "naturepower", "originpulse", "photongeyser", "plasmafists", "precipiceblades", "protect", "quash", "quickguard", "ragepowder", "relicsong", "secretsword", "shelltrap", "sketch", "sleeptalk", "snarl", "snatch", "snore", "spectralthief", "spikyshield", "spotlight", "steameruption", "struggle", "switcheroo", "technoblast", "thief", "thousandarrows", "thousandwaves", "transform", "trick", "vcreate", "wideguard"],
 		onHit = function (target, source, effect) {
 			let moves = [];
@@ -12475,7 +12501,7 @@ Database = new BattleMovedex[] {
 		//name = "Milk Drink",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		heal = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Self,
@@ -12494,7 +12520,7 @@ Database = new BattleMovedex[] {
 		//name = "Mimic",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			let disallowedMoves = ["chatter", "mimic", "sketch", "struggle", "transform"];
 			if (source.transformed || !target.LastMove || disallowedMoves.INCLUDES(target.LastMove.id) || source.moves.INDEXOF(target.LastMove.id) >= 0 || target.LastMove.isZ) return false;
@@ -12531,7 +12557,7 @@ Database = new BattleMovedex[] {
 		//name = "Mind Blown",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		mindBlownRecoil = true,
 		onAfterMove = function (pokemon, target, move) {
 			if (move.mindBlownRecoil && !move.multihit) {
@@ -12555,7 +12581,7 @@ Database = new BattleMovedex[] {
 		//name = "Mind Reader",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onTryHit = function (target, source) {
 			if (source.volatiles["lockon"]) return false;
 		},
@@ -12580,7 +12606,7 @@ Database = new BattleMovedex[] {
 		//name = "Minimize",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		volatileStatus = "minimize",
 		effect = {
 			noCopy = true,
@@ -12616,7 +12642,7 @@ Database = new BattleMovedex[] {
 		//name = "Miracle Eye",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "miracleeye",
 		onTryHit = function (target) {
 			if (target.Volatiles["foresight"]) return false;
@@ -12656,7 +12682,7 @@ Database = new BattleMovedex[] {
 		//name = "Mirror Coat",
 		pp = 20,
 		priority = -5,
-		flags = new Flags() {protect = 1},
+		flags = new Flags (protect: true),
 		beforeTurnCallback = function (pokemon) {
 			pokemon.addVolatile("mirrorcoat");
 		},
@@ -12701,7 +12727,7 @@ Database = new BattleMovedex[] {
 		//name = "Mirror Move",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		onTryHit = function (target, pokemon) {
 			if (!target.LastMove || !target.LastMove.flags["mirror"] || target.LastMove.isZ) {
 				return false;
@@ -12726,7 +12752,7 @@ Database = new BattleMovedex[] {
 		//name = "Mirror Shot",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			boosts = new Boosts() {
@@ -12749,7 +12775,7 @@ Database = new BattleMovedex[] {
 		//name = "Mist",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "mist",
 		effect = {
 			duration = 5,
@@ -12793,7 +12819,7 @@ Database = new BattleMovedex[] {
 		//name = "Mist Ball",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -12816,7 +12842,7 @@ Database = new BattleMovedex[] {
 		//name = "Misty Terrain",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		terrain = "mistyterrain",
 		effect = {
 			duration = 5,
@@ -12877,7 +12903,7 @@ Database = new BattleMovedex[] {
 		//name = "Moonblast",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			boosts = new Boosts() {
@@ -12901,7 +12927,7 @@ Database = new BattleMovedex[] {
 		//name = "Moongeist Beam",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		ignoreAbility = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -12921,7 +12947,7 @@ Database = new BattleMovedex[] {
 		//name = "Moonlight",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onHit = function (pokemon) {
 			if (this.isWeather(["sunnyday", "desolateland"])) {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
@@ -12949,7 +12975,7 @@ Database = new BattleMovedex[] {
 		//name = "Morning Sun",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onHit = function (pokemon) {
 			if (this.isWeather(["sunnyday", "desolateland"])) {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
@@ -12976,7 +13002,7 @@ Database = new BattleMovedex[] {
 		//name = "Mud-Slap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -12999,7 +13025,7 @@ Database = new BattleMovedex[] {
 		//name = "Mud Bomb",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			boosts = new Boosts() {
@@ -13022,7 +13048,7 @@ Database = new BattleMovedex[] {
 		//name = "Mud Shot",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -13045,7 +13071,7 @@ Database = new BattleMovedex[] {
 		//name = "Mud Sport",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		pseudoWeather = "mudsport",
 		effect = {
 			duration = 5,
@@ -13081,7 +13107,7 @@ Database = new BattleMovedex[] {
 		//name = "Muddy Water",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		secondary = new Secondary() {
 			chance = 30,
 			boosts = new Boosts() {
@@ -13105,7 +13131,7 @@ Database = new BattleMovedex[] {
 		//name = "Multi-Attack",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onModifyMove = function (move, pokemon) {
 			move.type = this.runEvent("Memory", pokemon, null, "multiattack", "Normal");
 		},
@@ -13126,7 +13152,7 @@ Database = new BattleMovedex[] {
 		//name = "Mystical Fire",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -13150,7 +13176,7 @@ Database = new BattleMovedex[] {
 		//name = "Nasty Plot",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spa = 2
 		},
@@ -13171,7 +13197,7 @@ Database = new BattleMovedex[] {
 		//name = "Natural Gift",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onPrepareHit = function (target, pokemon, move) {
 			if (pokemon.ignoringItem()) return false;
 			let item = pokemon.getItem();
@@ -13201,7 +13227,7 @@ Database = new BattleMovedex[] {
 		//name = "Nature Power",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		onTryHit = function (target, pokemon) {
 			let move = "triattack";
 			if (this.isTerrain("electricterrain")) {
@@ -13236,7 +13262,7 @@ Database = new BattleMovedex[] {
 		//name = "Nature's Madness",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FAIRY,
@@ -13254,7 +13280,7 @@ Database = new BattleMovedex[] {
 		//name = "Needle Arm",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -13275,7 +13301,7 @@ Database = new BattleMovedex[] {
 		//name = "Never-Ending Nightmare",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "ghostiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -13293,7 +13319,7 @@ Database = new BattleMovedex[] {
 		//name = "Night Daze",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 40,
 			boosts = new Boosts() {
@@ -13318,7 +13344,7 @@ Database = new BattleMovedex[] {
 		//name = "Night Shade",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GHOST,
@@ -13337,7 +13363,7 @@ Database = new BattleMovedex[] {
 		//name = "Night Slash",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -13356,7 +13382,7 @@ Database = new BattleMovedex[] {
 		//name = "Nightmare",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		volatileStatus = "nightmare",
 		effect = {
 			noCopy = true,
@@ -13388,7 +13414,7 @@ Database = new BattleMovedex[] {
 		//name = "Noble Roar",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true),
 		boosts = new Boosts() {
 			atk = -1,
 			spa = -1
@@ -13411,7 +13437,7 @@ Database = new BattleMovedex[] {
 		//name = "Nuzzle",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			status = "par"
@@ -13433,7 +13459,7 @@ Database = new BattleMovedex[] {
 		//name = "Oblivion Wing",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, distance = 1, heal = 1},
+		flags = new Flags (protect: true, mirror: true, distance: true, heal: true),
 		drain = new int[] {3, 4},
 		//secondary = false,
 		target = Target.Any,
@@ -13452,7 +13478,7 @@ Database = new BattleMovedex[] {
 		//name = "Oceanic Operetta",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "primariumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -13470,7 +13496,7 @@ Database = new BattleMovedex[] {
 		//name = "Octazooka",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -13493,7 +13519,7 @@ Database = new BattleMovedex[] {
 		//name = "Odor Sleuth",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true, mystery: true),
 		volatileStatus = "foresight",
 		onTryHit = function (target) {
 			if (target.Volatiles["miracleeye"]) return false;
@@ -13515,7 +13541,7 @@ Database = new BattleMovedex[] {
 		//name = "Ominous Wind",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			self = {
@@ -13545,7 +13571,7 @@ Database = new BattleMovedex[] {
 		//name = "Origin Pulse",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, pulse = 1, mirror = 1},
+		flags = new Flags (protect: true, pulse: true, mirror: true),
 		target = Target.AllAdjacentFoes,
 		type = Types.WATER,
 		zMovePower = 185,
@@ -13563,7 +13589,7 @@ Database = new BattleMovedex[] {
 		//name = "Outrage",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "lockedmove"
 		},
@@ -13590,7 +13616,7 @@ Database = new BattleMovedex[] {
 		//name = "Overheat",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				spa = -2
@@ -13614,7 +13640,7 @@ Database = new BattleMovedex[] {
 		//name = "Pain Split",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, mystery: true),
 		onHit = function (target, pokemon) {
 			let averagehp = Math.floor((target.Hp + pokemon.hp) / 2) || 1;
 			target.Sethp(averagehp);
@@ -13638,7 +13664,7 @@ Database = new BattleMovedex[] {
 		//name = "Parabolic Charge",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (protect: true, mirror: true, heal: true),
 		drain = new int[] {1, 2},
 		//secondary = false,
 		target = Target.AllAdjacent,
@@ -13658,7 +13684,7 @@ Database = new BattleMovedex[] {
 		//name = "Parting Shot",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true),
 		selfSwitch = true,
 		boosts = new Boosts() {
 			atk = -1,
@@ -13681,7 +13707,7 @@ Database = new BattleMovedex[] {
 		//name = "Pay Day",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onHit = function () {
 			this.add('-fieldactivate', 'move = Pay Day');
 		},
@@ -13710,7 +13736,7 @@ Database = new BattleMovedex[] {
 		//name = "Payback",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DARK,
@@ -13728,7 +13754,7 @@ Database = new BattleMovedex[] {
 		//name = "Peck",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FLYING,
@@ -13747,7 +13773,7 @@ Database = new BattleMovedex[] {
 		//name = "Perish Song",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {sound = 1, distance = 1, authentic = 1},
+		flags = new Flags (sound: true, distance: true, authentic: true),
 		onHitField = function (target, source, move) {
 			let result = false;
 			let message = false;
@@ -13801,7 +13827,7 @@ Database = new BattleMovedex[] {
 		//name = "Petal Blizzard",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.AllAdjacent,
 		type = Types.GRASS,
@@ -13819,7 +13845,7 @@ Database = new BattleMovedex[] {
 		//name = "Petal Dance",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, dance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, dance: true),
 		self = {
 			volatileStatus = "lockedmove"
 		},
@@ -13845,7 +13871,7 @@ Database = new BattleMovedex[] {
 		//name = "Phantom Force",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, mirror = 1},
+		flags = new Flags (contact: true, charge: true, mirror: true),
 		breaksProtect = true,
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
@@ -13890,7 +13916,7 @@ Database = new BattleMovedex[] {
 		//name = "Photon Geyser",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move, pokemon) {
 			if (pokemon.getStat("atk", false, true) > pokemon.getStat("spa", false, true)) move.category = "Physical";
 		},
@@ -13912,7 +13938,7 @@ Database = new BattleMovedex[] {
 		//name = "Pin Missile",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -13932,7 +13958,7 @@ Database = new BattleMovedex[] {
 		//name = "Plasma Fists",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		pseudoWeather = "iondeluge",
 		//secondary = false,
 		target = Target.Normal,
@@ -13951,7 +13977,7 @@ Database = new BattleMovedex[] {
 		//name = "Play Nice",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (reflectable: true, mirror: true, authentic: true),
 		boosts = new Boosts() {
 			atk = -1
 		},
@@ -13973,7 +13999,7 @@ Database = new BattleMovedex[] {
 		//name = "Play Rough",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -13996,7 +14022,7 @@ Database = new BattleMovedex[] {
 		//name = "Pluck",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		onHit = function (target, source) {
 			let item = target.GetItem();
 			if (source.hp && item.isBerry && target.TakeItem(source)) {
@@ -14024,7 +14050,7 @@ Database = new BattleMovedex[] {
 		//name = "Poison Fang",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			status = "tox"
@@ -14045,7 +14071,7 @@ Database = new BattleMovedex[] {
 		//name = "Poison Gas",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "psn",
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
@@ -14065,7 +14091,7 @@ Database = new BattleMovedex[] {
 		//name = "Poison Jab",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "psn"
@@ -14086,7 +14112,7 @@ Database = new BattleMovedex[] {
 		//name = "Poison Powder",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {powder = 1, protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (powder: true, protect: true, reflectable: true, mirror: true),
 		status = "psn",
 		//secondary = false,
 		target = Target.Normal,
@@ -14105,7 +14131,7 @@ Database = new BattleMovedex[] {
 		//name = "Poison Sting",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "psn"
@@ -14126,7 +14152,7 @@ Database = new BattleMovedex[] {
 		//name = "Poison Tail",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		secondary = new Secondary() {
 			chance = 10,
@@ -14148,7 +14174,7 @@ Database = new BattleMovedex[] {
 		//name = "Pollen Puff",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		onTryHit = function (target, source, move) {
 			if (source.side === target.Side) {
 				move.basePower = 0;
@@ -14172,7 +14198,7 @@ Database = new BattleMovedex[] {
 		//name = "Pound",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -14190,7 +14216,7 @@ Database = new BattleMovedex[] {
 		//name = "Powder",
 		pp = 20,
 		priority = 1,
-		flags = new Flags() {powder = 1, protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (powder: true, protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "powder",
 		effect = {
 			duration = 1,
@@ -14223,7 +14249,7 @@ Database = new BattleMovedex[] {
 		//name = "Powder Snow",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "frz"
@@ -14245,7 +14271,7 @@ Database = new BattleMovedex[] {
 		//name = "Power Gem",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ROCK,
@@ -14263,7 +14289,7 @@ Database = new BattleMovedex[] {
 		//name = "Power Split",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mystery = 1},
+		flags = new Flags (protect: true, mystery: true),
 		onHit = function (target, source) {
 			let newatk = Math.floor((target.Stats.atk + source.stats.atk) / 2);
 			target.Stats.atk = newatk;
@@ -14290,7 +14316,7 @@ Database = new BattleMovedex[] {
 		//name = "Power Swap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			let targetBOosts = {};
 			let sourceBoosts = {};
@@ -14322,7 +14348,7 @@ Database = new BattleMovedex[] {
 		//name = "Power Trick",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		volatileStatus = "powertrick",
 		effect = {
 			onStart = function (pokemon) {
@@ -14369,7 +14395,7 @@ Database = new BattleMovedex[] {
 		//name = "Power Trip",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DARK,
@@ -14388,7 +14414,7 @@ Database = new BattleMovedex[] {
 		//name = "Power-Up Punch",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 100,
 			self = {
@@ -14414,7 +14440,7 @@ Database = new BattleMovedex[] {
 		//name = "Power Whip",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -14433,7 +14459,7 @@ Database = new BattleMovedex[] {
 		//name = "Precipice Blades",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		target = Target.AllAdjacentFoes,
 		type = Types.GROUND,
 		zMovePower = 190,
@@ -14450,7 +14476,7 @@ Database = new BattleMovedex[] {
 		//name = "Present",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move, pokemon, target) {
 			let rand = this.random(10);
 			if (rand < 2) {
@@ -14480,7 +14506,7 @@ Database = new BattleMovedex[] {
 		//name = "Prismatic Laser",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -14502,7 +14528,7 @@ Database = new BattleMovedex[] {
 		//name = "Protect",
 		pp = 10,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		stallingMove = true,
 		volatileStatus = "protect",
 		onPrepareHit = function (pokemon) {
@@ -14551,7 +14577,7 @@ Database = new BattleMovedex[] {
 		//name = "Psybeam",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			volatileStatus = "confusion"
@@ -14572,7 +14598,7 @@ Database = new BattleMovedex[] {
 		//name = "Psych Up",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {authentic = 1, mystery = 1},
+		flags = new Flags (authentic: true, mystery: true),
 		onHit = function (target, source) {
 			for (let i in target.Boosts) {
 				source.boosts[i] = target.Boosts[i];
@@ -14597,7 +14623,7 @@ Database = new BattleMovedex[] {
 		//name = "Psychic",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			boosts = new Boosts() {
@@ -14621,7 +14647,7 @@ Database = new BattleMovedex[] {
 		//name = "Psychic Fangs",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		onTryHit = function (pokemon) {
 			// will shatter screens through sub, before you hit
 			if (pokemon.runImmunity("Psychic")) {
@@ -14647,7 +14673,7 @@ Database = new BattleMovedex[] {
 		//name = "Psychic Terrain",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		terrain = "psychicterrain",
 		effect = {
 			duration = 5,
@@ -14703,7 +14729,7 @@ Database = new BattleMovedex[] {
 		//name = "Psycho Boost",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				spa = -2
@@ -14727,7 +14753,7 @@ Database = new BattleMovedex[] {
 		//name = "Psycho Cut",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -14746,7 +14772,7 @@ Database = new BattleMovedex[] {
 		//name = "Psycho Shift",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onPrepareHit = function (target, source, move) {
 			if (!source.status) return false;
 			move.status = source.status;
@@ -14775,7 +14801,7 @@ Database = new BattleMovedex[] {
 		//name = "Psyshock",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.PSYCHIC,
@@ -14795,7 +14821,7 @@ Database = new BattleMovedex[] {
 		//name = "Psystrike",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.PSYCHIC,
@@ -14816,7 +14842,7 @@ Database = new BattleMovedex[] {
 		//name = "Psywave",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.PSYCHIC,
@@ -14834,7 +14860,7 @@ Database = new BattleMovedex[] {
 		//name = "Pulverizing Pancake",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {contact = 1},
+		flags = new Flags (contact: true),
 		isZ = "snorliumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -14857,7 +14883,7 @@ Database = new BattleMovedex[] {
 		//name = "Punishment",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.DARK,
@@ -14875,7 +14901,7 @@ Database = new BattleMovedex[] {
 		//name = "Purify",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, heal = 1},
+		flags = new Flags (protect: true, reflectable: true, heal: true),
 		onHit = function (target, source) {
 			if (!target.CureStatus()) return false;
 			this.heal(Math.ceil(source.maxhp * 0.5), source);
@@ -14906,7 +14932,7 @@ Database = new BattleMovedex[] {
 		//name = "Pursuit",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		beforeTurnCallback = function (pokemon) {
 			for (const side of this.sides) {
 				if (side === pokemon.side) continue;
@@ -14966,7 +14992,7 @@ Database = new BattleMovedex[] {
 		//name = "Quash",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onHit = function (target) {
 			if (target.Side.active.length < 2) return false; // fails in singles
 			let action = this.willMove(target);
@@ -15002,7 +15028,7 @@ Database = new BattleMovedex[] {
 		//name = "Quick Attack",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -15020,7 +15046,7 @@ Database = new BattleMovedex[] {
 		//name = "Quick Guard",
 		pp = 15,
 		priority = 3,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "quickguard",
 		onTryHitSide = function (side, source) {
 			return this.willAct();
@@ -15072,7 +15098,7 @@ Database = new BattleMovedex[] {
 		//name = "Quiver Dance",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1, dance = 1},
+		flags = new Flags (snatch: true, dance: true),
 		boosts = new Boosts() {
 			spa = 1,
 			spd = 1,
@@ -15095,7 +15121,7 @@ Database = new BattleMovedex[] {
 		//name = "Rage",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "rage"
 		},
@@ -15131,7 +15157,7 @@ Database = new BattleMovedex[] {
 		//name = "Rage Powder",
 		pp = 20,
 		priority = 2,
-		flags = new Flags() {powder = 1},
+		flags = new Flags (powder: true),
 		volatileStatus = "ragepowder",
 		onTryHit = function (target) {
 			if (target.Side.active.length < 2) return false;
@@ -15166,7 +15192,7 @@ Database = new BattleMovedex[] {
 		//name = "Rain Dance",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		weather = "RainDance",
 		//secondary = false,
 		target = Target.All,
@@ -15186,7 +15212,7 @@ Database = new BattleMovedex[] {
 		//name = "Rapid Spin",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			onHit = function (pokemon) {
 				if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
@@ -15220,7 +15246,7 @@ Database = new BattleMovedex[] {
 		//name = "Razor Leaf",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
@@ -15240,7 +15266,7 @@ Database = new BattleMovedex[] {
 		//name = "Razor Shell",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -15263,7 +15289,7 @@ Database = new BattleMovedex[] {
 		//name = "Razor Wind",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {charge = 1, protect = 1, mirror = 1},
+		flags = new Flags (charge: true, protect: true, mirror: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.volatiles["twoturnmove"]) {
 				if (attacker.volatiles["twoturnmove"].duration === 2) return null;
@@ -15301,7 +15327,7 @@ Database = new BattleMovedex[] {
 		//name = "Recover",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		heal = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Self,
@@ -15320,7 +15346,7 @@ Database = new BattleMovedex[] {
 		//name = "Recycle",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		onHit = function (pokemon) {
 			if (pokemon.item || !pokemon.lastItem) return false;
 			pokemon.setItem(pokemon.lastItem);
@@ -15345,7 +15371,7 @@ Database = new BattleMovedex[] {
 		//name = "Reflect",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "reflect",
 		effect = {
 			duration = 5,
@@ -15389,7 +15415,7 @@ Database = new BattleMovedex[] {
 		//name = "Reflect Type",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			if (source.template && (source.template.num === 493 || source.template.num === 773)) return false;
 			this.add('-start', source, "typechange", '[from] move = Reflect Type', '[of] ' + target);
@@ -15423,7 +15449,7 @@ Database = new BattleMovedex[] {
 		//name = "Refresh",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		onHit = function (pokemon) {
 			if (["", "slp", "frz"].includes(pokemon.status)) return false;
 			pokemon.cureStatus();
@@ -15446,7 +15472,7 @@ Database = new BattleMovedex[] {
 		//name = "Relic Song",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "slp"
@@ -15478,7 +15504,7 @@ Database = new BattleMovedex[] {
 		//name = "Rest",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onTryMove = function (pokemon) {
 			if (pokemon.hp < pokemon.maxhp && pokemon.status !== "slp" && !pokemon.hasAbility("comatose")) return;
 			this.add('-fail', pokemon);
@@ -15508,7 +15534,7 @@ Database = new BattleMovedex[] {
 		//name = "Retaliate",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onBasePowerPriority = 4,
 		onBasePower = function (basePower, pokemon) {
 			if (pokemon.side.faintedLastTurn) {
@@ -15537,7 +15563,7 @@ Database = new BattleMovedex[] {
 		//name = "Return",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -15556,7 +15582,7 @@ Database = new BattleMovedex[] {
 		//name = "Revelation Dance",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, dance = 1},
+		flags = new Flags (protect: true, mirror: true, dance: true),
 		onModifyMove = function (move, pokemon) {
 			let type = pokemon.types[0];
 			if (type === "Bird") type = "???";
@@ -15586,7 +15612,7 @@ Database = new BattleMovedex[] {
 		//name = "Revenge",
 		pp = 10,
 		priority = -4,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -15623,7 +15649,7 @@ Database = new BattleMovedex[] {
 		//name = "Reversal",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -15642,7 +15668,7 @@ Database = new BattleMovedex[] {
 		//name = "Roar",
 		pp = 20,
 		priority = -6,
-		flags = new Flags() {reflectable = 1, mirror = 1, sound = 1, authentic = 1, mystery = 1},
+		flags = new Flags (reflectable: true, mirror: true, sound: true, authentic: true, mystery: true),
 		forceSwitch = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -15661,7 +15687,7 @@ Database = new BattleMovedex[] {
 		//name = "Roar of Time",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -15683,7 +15709,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Blast",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -15702,7 +15728,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Climb",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "confusion"
@@ -15724,7 +15750,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Polish",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spe = 2
 		},
@@ -15746,7 +15772,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Slide",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -15767,7 +15793,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Smash",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -15790,7 +15816,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Throw",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ROCK,
@@ -15808,7 +15834,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Tomb",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -15831,7 +15857,7 @@ Database = new BattleMovedex[] {
 		//name = "Rock Wrecker",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {bullet = 1, recharge = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, recharge: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "mustrecharge"
 		},
@@ -15852,7 +15878,7 @@ Database = new BattleMovedex[] {
 		//name = "Role Play",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {authentic = 1, mystery = 1},
+		flags = new Flags (authentic: true, mystery: true),
 		onTryHit = function (target, source) {
 			let bannedTargetABilities = ["battlebond", "comatose", "disguise", "flowergift", "forecast", "illusion", "imposter", "multitype", "powerconstruct", "powerofalchemy", "receiver", "rkssystem", "schooling", "shieldsdown", "stancechange", "trace", "wonderguard", "zenmode"];
 			let bannedSourceAbilities = ["battlebond", "comatose", "disguise", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "stancechange"];
@@ -15885,7 +15911,7 @@ Database = new BattleMovedex[] {
 		//name = "Rolling Kick",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -15918,7 +15944,7 @@ Database = new BattleMovedex[] {
 		//name = "Rollout",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		effect = {
 			duration = 2,
 			onLockMove = "rollout",
@@ -15956,7 +15982,7 @@ Database = new BattleMovedex[] {
 		//name = "Roost",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		heal = new int[] {1, 2},
 		self = {
 			volatileStatus = "roost"
@@ -15987,7 +16013,7 @@ Database = new BattleMovedex[] {
 		//name = "Rototiller",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {distance = 1, nonsky = 1},
+		flags = new Flags (distance: true, nonsky: true),
 		onHitField = function (target, source) {
 			let targets = [];
 			let anyAirborne = false;
@@ -16033,7 +16059,7 @@ Database = new BattleMovedex[] {
 		//name = "Round",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		onTry = function () {
 			for (const action of this.queue) {
 				// @ts-ignore
@@ -16064,7 +16090,7 @@ Database = new BattleMovedex[] {
 		//name = "Sacred Fire",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (protect: true, mirror: true, defrost: true),
 		secondary = new Secondary() {
 			chance = 50,
 			status = "brn"
@@ -16086,7 +16112,7 @@ Database = new BattleMovedex[] {
 		//name = "Sacred Sword",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		ignoreEvasion = true,
 		ignoreDefensive = true,
 		//secondary = false,
@@ -16106,7 +16132,7 @@ Database = new BattleMovedex[] {
 		//name = "Safeguard",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "safeguard",
 		effect = {
 			duration = 5,
@@ -16158,7 +16184,7 @@ Database = new BattleMovedex[] {
 		//name = "Sand Attack",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			accuracy = -1
 		},
@@ -16179,7 +16205,7 @@ Database = new BattleMovedex[] {
 		//name = "Sand Tomb",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -16198,7 +16224,7 @@ Database = new BattleMovedex[] {
 		//name = "Sandstorm",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		weather = "Sandstorm",
 		//secondary = false,
 		target = Target.All,
@@ -16216,7 +16242,7 @@ Database = new BattleMovedex[] {
 		//name = "Savage Spin-Out",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "buginiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -16235,7 +16261,7 @@ Database = new BattleMovedex[] {
 		//name = "Scald",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (protect: true, mirror: true, defrost: true),
 		thawsTarget = true,
 		secondary = new Secondary() {
 			chance = 30,
@@ -16257,7 +16283,7 @@ Database = new BattleMovedex[] {
 		//name = "Scary Face",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		boosts = new Boosts() {
 			spe = -2
 		},
@@ -16278,7 +16304,7 @@ Database = new BattleMovedex[] {
 		//name = "Scratch",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -16296,7 +16322,7 @@ Database = new BattleMovedex[] {
 		//name = "Screech",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true, mystery: true),
 		boosts = new Boosts() {
 			def = -2
 		},
@@ -16318,7 +16344,7 @@ Database = new BattleMovedex[] {
 		//name = "Searing Shot",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "brn"
@@ -16339,7 +16365,7 @@ Database = new BattleMovedex[] {
 		//name = "Searing Sunraze Smash",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {contact = 1},
+		flags = new Flags (contact: true),
 		isZ = "solganiumz",
 		ignoreAbility = true,
 		//secondary = false,
@@ -16358,7 +16384,7 @@ Database = new BattleMovedex[] {
 		//name = "Secret Power",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move, pokemon) {
 			if (this.isTerrain("")) return;
 			move.secondaries = [];
@@ -16410,7 +16436,7 @@ Database = new BattleMovedex[] {
 		//name = "Secret Sword",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -16429,7 +16455,7 @@ Database = new BattleMovedex[] {
 		//name = "Seed Bomb",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -16448,7 +16474,7 @@ Database = new BattleMovedex[] {
 		//name = "Seed Flare",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 40,
 			boosts = new Boosts() {
@@ -16473,7 +16499,7 @@ Database = new BattleMovedex[] {
 		//name = "Seismic Toss",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -16491,7 +16517,7 @@ Database = new BattleMovedex[] {
 		//name = "Self-Destruct",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		selfdestruct = "always",
 		//secondary = false,
 		target = Target.AllAdjacent,
@@ -16511,7 +16537,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Ball",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			boosts = new Boosts() {
@@ -16535,7 +16561,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Bone",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			boosts = new Boosts() {
@@ -16559,7 +16585,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Claw",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -16579,7 +16605,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Force",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, mirror = 1},
+		flags = new Flags (contact: true, charge: true, mirror: true),
 		breaksProtect = true,
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
@@ -16624,7 +16650,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Punch",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GHOST,
@@ -16643,7 +16669,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Sneak",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GHOST,
@@ -16661,7 +16687,7 @@ Database = new BattleMovedex[] {
 		//name = "Sharpen",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1
 		},
@@ -16682,7 +16708,7 @@ Database = new BattleMovedex[] {
 		//name = "Shattered Psyche",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "psychiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -16700,7 +16726,7 @@ Database = new BattleMovedex[] {
 		//name = "Sheer Cold",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		ohko = "Ice",
 		target = Target.Normal,
@@ -16720,7 +16746,7 @@ Database = new BattleMovedex[] {
 		//name = "Shell Smash",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = -1,
 			spd = -1,
@@ -16745,7 +16771,7 @@ Database = new BattleMovedex[] {
 		//name = "Shell Trap",
 		pp = 5,
 		priority = -3,
-		flags = new Flags() {protect = 1},
+		flags = new Flags (protect: true),
 		beforeTurnCallback = function (pokemon) {
 			pokemon.addVolatile("shelltrap");
 		},
@@ -16784,7 +16810,7 @@ Database = new BattleMovedex[] {
 		//name = "Shift Gear",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spe = 2,
 			atk = 1
@@ -16806,7 +16832,7 @@ Database = new BattleMovedex[] {
 		//name = "Shock Wave",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.ELECTRIC,
@@ -16825,7 +16851,7 @@ Database = new BattleMovedex[] {
 		//name = "Shore Up",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onHit = function (pokemon) {
 			if (this.isWeather("sandstorm")) {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
@@ -16851,7 +16877,7 @@ Database = new BattleMovedex[] {
 		//name = "Signal Beam",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			volatileStatus = "confusion"
@@ -16872,7 +16898,7 @@ Database = new BattleMovedex[] {
 		//name = "Silver Wind",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			self = {
@@ -16901,7 +16927,7 @@ Database = new BattleMovedex[] {
 		//name = "Simple Beam",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onTryHit = function (pokemon) {
 			let bannedAbilities = ["battlebond", "comatose", "disguise", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "simple", "stancechange", "truant"];
 			if (bannedAbilities.includes(pokemon.ability)) {
@@ -16933,7 +16959,7 @@ Database = new BattleMovedex[] {
 		//name = "Sing",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true),
 		status = "slp",
 		//secondary = false,
 		target = Target.Normal,
@@ -16952,7 +16978,7 @@ Database = new BattleMovedex[] {
 		//name = "Sinister Arrow Raid",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "decidiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -16971,7 +16997,7 @@ Database = new BattleMovedex[] {
 		pp = 1,
 		noPPBoosts = true,
 		priority = 0,
-		flags = new Flags() {authentic = 1, mystery = 1},
+		flags = new Flags (authentic: true, mystery: true),
 		onHit = function (target, source) {
 			let disallowedMoves = ["chatter", "sketch", "struggle"];
 			if (source.transformed || !target.LastMove || disallowedMoves.INCLUDES(target.LastMove.id) || source.moves.INDEXOF(target.LastMove.id) >= 0 || target.LastMove.isZ) return false;
@@ -17008,7 +17034,7 @@ Database = new BattleMovedex[] {
 		//name = "Skill Swap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, authentic: true, mystery: true),
 		onTryHit = function (target, source) {
 			let bannedAbilities = ["battlebond", "comatose", "disguise", "illusion", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "stancechange", "wonderguard"];
 			if (bannedAbilities.includes(target.Ability) || bannedAbilities.includes(source.ability)) {
@@ -17051,7 +17077,7 @@ Database = new BattleMovedex[] {
 		//name = "Skull Bash",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -17083,7 +17109,7 @@ Database = new BattleMovedex[] {
 		//name = "Sky Attack",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {charge = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (charge: true, protect: true, mirror: true, distance: true),
 		critRatio = 2,
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
@@ -17117,7 +17143,7 @@ Database = new BattleMovedex[] {
 		//name = "Sky Drop",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1, gravity = 1, distance = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true, gravity: true, distance: true),
 		onModifyMove = function (move, source) {
 			if (!source.volatiles["skydrop"]) {
 				move.//accuracy = true;
@@ -17236,7 +17262,7 @@ Database = new BattleMovedex[] {
 		//name = "Sky Uppercut",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -17255,7 +17281,7 @@ Database = new BattleMovedex[] {
 		//name = "Slack Off",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		heal = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Self,
@@ -17274,7 +17300,7 @@ Database = new BattleMovedex[] {
 		//name = "Slam",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -17292,7 +17318,7 @@ Database = new BattleMovedex[] {
 		//name = "Slash",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -17312,7 +17338,7 @@ Database = new BattleMovedex[] {
 		//name = "Sleep Powder",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {powder = 1, protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (powder: true, protect: true, reflectable: true, mirror: true),
 		status = "slp",
 		//secondary = false,
 		target = Target.Normal,
@@ -17332,7 +17358,7 @@ Database = new BattleMovedex[] {
 		//name = "Sleep Talk",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		sleepUsable = true,
 		onTryHit = function (pokemon) {
 			if (pokemon.status !== "slp" && !pokemon.hasAbility("comatose")) return false;
@@ -17372,7 +17398,7 @@ Database = new BattleMovedex[] {
 		//name = "Sludge",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "psn"
@@ -17394,7 +17420,7 @@ Database = new BattleMovedex[] {
 		//name = "Sludge Bomb",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "psn"
@@ -17416,7 +17442,7 @@ Database = new BattleMovedex[] {
 		//name = "Sludge Wave",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "psn"
@@ -17437,7 +17463,7 @@ Database = new BattleMovedex[] {
 		//name = "Smack Down",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		volatileStatus = "smackdown",
 		effect = {
 			noCopy = true,
@@ -17486,7 +17512,7 @@ Database = new BattleMovedex[] {
 		//name = "Smart Strike",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.STEEL,
@@ -17508,7 +17534,7 @@ Database = new BattleMovedex[] {
 		//name = "Smelling Salts",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onHit = function (target) {
 			if (target.Status === "par") target.CureStatus();
 		},
@@ -17529,7 +17555,7 @@ Database = new BattleMovedex[] {
 		//name = "Smog",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 40,
 			status = "psn"
@@ -17550,7 +17576,7 @@ Database = new BattleMovedex[] {
 		//name = "Smokescreen",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			accuracy = -1
 		},
@@ -17571,7 +17597,7 @@ Database = new BattleMovedex[] {
 		//name = "Snarl",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -17594,7 +17620,7 @@ Database = new BattleMovedex[] {
 		//name = "Snatch",
 		pp = 10,
 		priority = 4,
-		flags = new Flags() {authentic = 1},
+		flags = new Flags (authentic: true),
 		volatileStatus = "snatch",
 		effect = {
 			duration = 1,
@@ -17630,7 +17656,7 @@ Database = new BattleMovedex[] {
 		//name = "Snore",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		sleepUsable = true,
 		onTryHit = function (target, source) {
 			if (source.status !== "slp" && !source.hasAbility("comatose")) return false;
@@ -17656,7 +17682,7 @@ Database = new BattleMovedex[] {
 		//name = "Spectral Thief",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, authentic = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, authentic: true),
 		stealsBoosts = true,
 		// Boost stealing implemented in scripts.js
 		//secondary = false,
@@ -17676,7 +17702,7 @@ Database = new BattleMovedex[] {
 		//name = "Speed Swap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, authentic: true, mystery: true),
 		onHit = function (target, source) {
 			const targetSPe = target.Stats.spe;
 			target.Stats.spe = source.stats.spe;
@@ -17701,7 +17727,7 @@ Database = new BattleMovedex[] {
 		//name = "Spiky Shield",
 		pp = 10,
 		priority = 4,
-		flags = new Flags() {},
+		flags = new Flags (),
 		stallingMove = true,
 		volatileStatus = "spikyshield",
 		onTryHit = function (target, source, move) {
@@ -17759,7 +17785,7 @@ Database = new BattleMovedex[] {
 		//name = "Spirit Shackle",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			onHit = function (target, source, move) {
@@ -17782,7 +17808,7 @@ Database = new BattleMovedex[] {
 		//name = "Soak",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onHit = function (target) {
 			if (!target.SetType("Water")) return false;
 			this.add('-start', target, "typechange", "Water");
@@ -17805,7 +17831,7 @@ Database = new BattleMovedex[] {
 		//name = "Soft-Boiled",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		heal = new int[] {1, 2},
 		//secondary = false,
 		target = Target.Self,
@@ -17824,7 +17850,7 @@ Database = new BattleMovedex[] {
 		//name = "Solar Beam",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {charge = 1, protect = 1, mirror = 1},
+		flags = new Flags (charge: true, protect: true, mirror: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -17861,7 +17887,7 @@ Database = new BattleMovedex[] {
 		//name = "Solar Blade",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, charge = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, charge: true, protect: true, mirror: true),
 		onTry = function (attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
@@ -17899,7 +17925,7 @@ Database = new BattleMovedex[] {
 		//name = "Sonic Boom",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -17917,7 +17943,7 @@ Database = new BattleMovedex[] {
 		//name = "Soul-Stealing 7-Star Strike",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {contact = 1},
+		flags = new Flags (contact: true),
 		isZ = "marshadiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -17936,7 +17962,7 @@ Database = new BattleMovedex[] {
 		//name = "Spacial Rend",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -17955,7 +17981,7 @@ Database = new BattleMovedex[] {
 		//name = "Spark",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			status = "par"
@@ -17976,7 +18002,7 @@ Database = new BattleMovedex[] {
 		//name = "Sparkling Aria",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		secondary = new Secondary() {
 			dustproof = true,
 			chance = 100,
@@ -18000,7 +18026,7 @@ Database = new BattleMovedex[] {
 		//name = "Spider Web",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		onHit = function (target, source, move) {
 			return target.AddVolatile("trapped", source, move, "trapper");
 		},
@@ -18021,7 +18047,7 @@ Database = new BattleMovedex[] {
 		//name = "Spike Cannon",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -18041,7 +18067,7 @@ Database = new BattleMovedex[] {
 		//name = "Spikes",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, nonsky = 1},
+		flags = new Flags (reflectable: true, nonsky: true),
 		sideCondition = "spikes",
 		effect = {
 			// this is a side condition
@@ -18081,7 +18107,7 @@ Database = new BattleMovedex[] {
 		//name = "Spit Up",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1},
+		flags = new Flags (protect: true),
 		onTry = function (pokemon) {
 			if (!pokemon.volatiles["stockpile"]) {
 				return false;
@@ -18107,7 +18133,7 @@ Database = new BattleMovedex[] {
 		//name = "Spite",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		onHit = function (target) {
 			if (target.LastMove && !target.LastMove.isZ) {
 				let ppDeducted = target.DeductPP(target.LastMove.id, 4);
@@ -18135,7 +18161,7 @@ Database = new BattleMovedex[] {
 		//name = "Splash",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {gravity = 1},
+		flags = new Flags (gravity: true),
 		onTryHit = function (target, source) {
 			this.add('-nothing');
 		},
@@ -18156,7 +18182,7 @@ Database = new BattleMovedex[] {
 		//name = "Splintered Stormshards",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		onHit = function () {
 			this.clearTerrain();
 		},
@@ -18178,7 +18204,7 @@ Database = new BattleMovedex[] {
 		//name = "Spore",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {powder = 1, protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (powder: true, protect: true, reflectable: true, mirror: true),
 		status = "slp",
 		//secondary = false,
 		target = Target.Normal,
@@ -18197,7 +18223,7 @@ Database = new BattleMovedex[] {
 		//name = "Spotlight",
 		pp = 15,
 		priority = 3,
-		flags = new Flags() {protect = 1, reflectable = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mystery: true),
 		volatileStatus = "spotlight",
 		onTryHit = function (target) {
 			if (target.Side.active.length < 2) return false;
@@ -18233,7 +18259,7 @@ Database = new BattleMovedex[] {
 		//name = "Stealth Rock",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1},
+		flags = new Flags (reflectable: true),
 		sideCondition = "stealthrock",
 		effect = {
 			// this is a side condition
@@ -18263,7 +18289,7 @@ Database = new BattleMovedex[] {
 		//name = "Steam Eruption",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, defrost = 1},
+		flags = new Flags (protect: true, mirror: true, defrost: true),
 		thawsTarget = true,
 		secondary = new Secondary() {
 			chance = 30,
@@ -18285,7 +18311,7 @@ Database = new BattleMovedex[] {
 		//name = "Steel Wing",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			self = {
@@ -18311,7 +18337,7 @@ Database = new BattleMovedex[] {
 		//name = "Sticky Web",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1},
+		flags = new Flags (reflectable: true),
 		sideCondition = "stickyweb",
 		effect = {
 			onStart = function (side) {
@@ -18340,7 +18366,7 @@ Database = new BattleMovedex[] {
 		//name = "Stockpile",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		onTryHit = function (pokemon) {
 			if (pokemon.volatiles["stockpile"] && pokemon.volatiles["stockpile"].layers >= 3) return false;
 		},
@@ -18382,7 +18408,7 @@ Database = new BattleMovedex[] {
 		//name = "Stoked Sparksurfer",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "aloraichiumz",
 		secondary = new Secondary() {
 			chance = 100,
@@ -18403,7 +18429,7 @@ Database = new BattleMovedex[] {
 		//name = "Stomp",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, nonsky: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -18428,7 +18454,7 @@ Database = new BattleMovedex[] {
 		//name = "Stomping Tantrum",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GROUND,
@@ -18447,7 +18473,7 @@ Database = new BattleMovedex[] {
 		//name = "Stone Edge",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		critRatio = 2,
 		//secondary = false,
 		target = Target.Normal,
@@ -18469,7 +18495,7 @@ Database = new BattleMovedex[] {
 		//name = "Stored Power",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.PSYCHIC,
@@ -18488,7 +18514,7 @@ Database = new BattleMovedex[] {
 		//name = "Storm Throw",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		willCrit = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -18507,7 +18533,7 @@ Database = new BattleMovedex[] {
 		//name = "Steamroller",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -18528,7 +18554,7 @@ Database = new BattleMovedex[] {
 		//name = "Strength",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -18547,7 +18573,7 @@ Database = new BattleMovedex[] {
 		//name = "Strength Sap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, heal = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, heal: true),
 		onHit = function (target, source) {
 			if (target.Boosts.atk === -6) return false;
 			let atk = target.GetStat("atk", false, true);
@@ -18571,7 +18597,7 @@ Database = new BattleMovedex[] {
 		//name = "String Shot",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			spe = -2
 		},
@@ -18593,7 +18619,7 @@ Database = new BattleMovedex[] {
 		pp = 1,
 		noPPBoosts = true,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1},
+		flags = new Flags (contact: true, protect: true),
 		noSketch = true,
 		onModifyMove = function (move, pokemon, target) {
 			move.type = '???';
@@ -18617,7 +18643,7 @@ Database = new BattleMovedex[] {
 		//name = "Struggle Bug",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -18640,7 +18666,7 @@ Database = new BattleMovedex[] {
 		//name = "Stun Spore",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {powder = 1, protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (powder: true, protect: true, reflectable: true, mirror: true),
 		status = "par",
 		//secondary = false,
 		target = Target.Normal,
@@ -18659,7 +18685,7 @@ Database = new BattleMovedex[] {
 		//name = "Submission",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {1, 4},
 		//secondary = false,
 		target = Target.Normal,
@@ -18679,7 +18705,7 @@ Database = new BattleMovedex[] {
 		//name = "Substitute",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, nonsky = 1},
+		flags = new Flags (snatch: true, nonsky: true),
 		volatileStatus = "Substitute",
 		onTryHit = function (target) {
 			if (target.Volatiles["substitute"]) {
@@ -18755,7 +18781,7 @@ Database = new BattleMovedex[] {
 		//name = "Subzero Slammer",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "iciumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -18774,7 +18800,7 @@ Database = new BattleMovedex[] {
 		//name = "Sucker Punch",
 		pp = 5,
 		priority = 1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onTry = function (source, target) {
 			let action = this.willMove(target);
 			if (!action || action.choice !== "move" || (action.move.category === "Status" && action.move.id !== "mefirst") || target.Volatiles.mustrecharge) {
@@ -18800,7 +18826,7 @@ Database = new BattleMovedex[] {
 		//name = "Sunny Day",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		weather = "sunnyday",
 		//secondary = false,
 		target = Target.All,
@@ -18820,7 +18846,7 @@ Database = new BattleMovedex[] {
 		//name = "Sunsteel Strike",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		ignoreAbility = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -18843,7 +18869,7 @@ Database = new BattleMovedex[] {
 		//name = "Super Fang",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -18862,7 +18888,7 @@ Database = new BattleMovedex[] {
 		//name = "Superpower",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				atk = -1,
@@ -18886,7 +18912,7 @@ Database = new BattleMovedex[] {
 		//name = "Supersonic",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, sound: true, authentic: true),
 		volatileStatus = "confusion",
 		//secondary = false,
 		target = Target.Normal,
@@ -18905,7 +18931,7 @@ Database = new BattleMovedex[] {
 		//name = "Supersonic Skystrike",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "flyiniumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -18924,7 +18950,7 @@ Database = new BattleMovedex[] {
 		//name = "Surf",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		//secondary = false,
 		target = Target.AllAdjacent,
 		type = Types.WATER,
@@ -18942,7 +18968,7 @@ Database = new BattleMovedex[] {
 		//name = "Swagger",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		volatileStatus = "confusion",
 		boosts = new Boosts() {
 			atk = 2
@@ -18964,7 +18990,7 @@ Database = new BattleMovedex[] {
 		//name = "Swallow",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onTryHit = function (pokemon) {
 			if (!pokemon.volatiles["stockpile"] || !pokemon.volatiles["stockpile"].layers) return false;
 		},
@@ -18991,7 +19017,7 @@ Database = new BattleMovedex[] {
 		//name = "Sweet Kiss",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		volatileStatus = "confusion",
 		//secondary = false,
 		target = Target.Normal,
@@ -19010,7 +19036,7 @@ Database = new BattleMovedex[] {
 		//name = "Sweet Scent",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			evasion = -2
 		},
@@ -19031,7 +19057,7 @@ Database = new BattleMovedex[] {
 		//name = "Swift",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.NORMAL,
@@ -19050,7 +19076,7 @@ Database = new BattleMovedex[] {
 		//name = "Switcheroo",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, mystery: true),
 		onTryHit = function (target) {
 			if (target.HasAbility("stickyhold")) {
 				this.add('-immune', target, '[msg]');
@@ -19102,7 +19128,7 @@ Database = new BattleMovedex[] {
 		//name = "Swords Dance",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1, dance = 1},
+		flags = new Flags (snatch: true, dance: true),
 		boosts = new Boosts() {
 			atk = 2
 		},
@@ -19123,7 +19149,7 @@ Database = new BattleMovedex[] {
 		//name = "Synchronoise",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onTryHit = function (target, source) {
 			if (!target.HasType(source.getTypes())) {
 				this.add('-immune', target, '[msg]');
@@ -19148,7 +19174,7 @@ Database = new BattleMovedex[] {
 		//name = "Synthesis",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		onHit = function (pokemon) {
 			if (this.isWeather(["sunnyday", "desolateland"])) {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
@@ -19175,7 +19201,7 @@ Database = new BattleMovedex[] {
 		//name = "Tackle",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -19194,7 +19220,7 @@ Database = new BattleMovedex[] {
 		//name = "Tail Glow",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			spa = 3
 		},
@@ -19216,7 +19242,7 @@ Database = new BattleMovedex[] {
 		//name = "Tail Slap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -19235,7 +19261,7 @@ Database = new BattleMovedex[] {
 		//name = "Tail Whip",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			def = -1
 		},
@@ -19257,7 +19283,7 @@ Database = new BattleMovedex[] {
 		//name = "Tailwind",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "tailwind",
 		effect = {
 			duration = 4,
@@ -19297,7 +19323,7 @@ Database = new BattleMovedex[] {
 		//name = "Take Down",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {1, 4},
 		//secondary = false,
 		target = Target.Normal,
@@ -19317,7 +19343,7 @@ Database = new BattleMovedex[] {
 		//name = "Taunt",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "taunt",
 		effect = {
 			duration = 3,
@@ -19363,7 +19389,7 @@ Database = new BattleMovedex[] {
 		//name = "Tearful Look",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, mirror = 1},
+		flags = new Flags (reflectable: true, mirror: true),
 		boosts = new Boosts() {
 			atk = -1,
 			spa = -1
@@ -19386,7 +19412,7 @@ Database = new BattleMovedex[] {
 		//name = "Techno Blast",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move, pokemon) {
 			move.type = this.runEvent("Drive", pokemon, null, "technoblast", "Normal");
 		},
@@ -19407,7 +19433,7 @@ Database = new BattleMovedex[] {
 		//name = "Tectonic Rage",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "groundiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -19425,7 +19451,7 @@ Database = new BattleMovedex[] {
 		//name = "Teeter Dance",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, dance = 1},
+		flags = new Flags (protect: true, mirror: true, dance: true),
 		volatileStatus = "confusion",
 		//secondary = false,
 		target = Target.AllAdjacent,
@@ -19444,7 +19470,7 @@ Database = new BattleMovedex[] {
 		//name = "Telekinesis",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, gravity = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, gravity: true, mystery: true),
 		volatileStatus = "telekinesis",
 		effect = {
 			duration = 3,
@@ -19492,7 +19518,7 @@ Database = new BattleMovedex[] {
 		//name = "Teleport",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		onTryHit = false,
 		//secondary = false,
 		target = Target.Self,
@@ -19511,7 +19537,7 @@ Database = new BattleMovedex[] {
 		//name = "Thief",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onAfterHit = function (target, source, move) {
 			if (source.item || source.volatiles["gem"]) {
 				return;
@@ -19544,7 +19570,7 @@ Database = new BattleMovedex[] {
 		//name = "Thousand Arrows",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		onEffectiveness = function (typeMod, type, move) {
 			// @ts-ignore
 			if (move.type !== "Ground") return;
@@ -19574,7 +19600,7 @@ Database = new BattleMovedex[] {
 		//name = "Thousand Waves",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		onHit = function (target, source, move) {
 			if (source.isActive) target.AddVolatile("trapped", source, move, "trapper");
 		},
@@ -19595,7 +19621,7 @@ Database = new BattleMovedex[] {
 		//name = "Thrash",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			volatileStatus = "lockedmove"
 		},
@@ -19621,7 +19647,7 @@ Database = new BattleMovedex[] {
 		//name = "Throat Chop",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		effect = {
 			duration = 2,
 			onStart = function (target) {
@@ -19669,7 +19695,7 @@ Database = new BattleMovedex[] {
 		//name = "Thunder",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onModifyMove = function (move) {
 			if (this.isWeather(["raindance", "primordialsea"])) {
 				move.//accuracy = true;
@@ -19697,7 +19723,7 @@ Database = new BattleMovedex[] {
 		//name = "Thunder Fang",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {bite = 1, contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (bite: true, contact: true, protect: true, mirror: true),
 		secondaries = [
 			{
 				chance = 10,
@@ -19724,7 +19750,7 @@ Database = new BattleMovedex[] {
 		//name = "Thunder Punch",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, punch = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, punch: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "par"
@@ -19745,7 +19771,7 @@ Database = new BattleMovedex[] {
 		//name = "Thunder Shock",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "par"
@@ -19767,7 +19793,7 @@ Database = new BattleMovedex[] {
 		//name = "Thunder Wave",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "par",
 		ignoreImmunity = false,
 		//secondary = false,
@@ -19788,7 +19814,7 @@ Database = new BattleMovedex[] {
 		//name = "Thunderbolt",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 10,
 			status = "par"
@@ -19809,7 +19835,7 @@ Database = new BattleMovedex[] {
 		//name = "Tickle",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		boosts = new Boosts() {
 			atk = -1,
 			def = -1
@@ -19831,7 +19857,7 @@ Database = new BattleMovedex[] {
 		//name = "Topsy-Turvy",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onHit = function (target) {
 			let success = false;
 			for (let i in target.Boosts) {
@@ -19859,7 +19885,7 @@ Database = new BattleMovedex[] {
 		//name = "Torment",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, authentic = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, authentic: true),
 		volatileStatus = "torment",
 		effect = {
 			noCopy = true,
@@ -19891,7 +19917,7 @@ Database = new BattleMovedex[] {
 		//name = "Toxic",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		// No Guard-like effect for Poison-type users implemented in BattleScripts#tryMoveHit
 		status = "tox",
 		//secondary = false,
@@ -19912,7 +19938,7 @@ Database = new BattleMovedex[] {
 		//name = "Toxic Spikes",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {reflectable = 1, nonsky = 1},
+		flags = new Flags (reflectable: true, nonsky: true),
 		sideCondition = "toxicspikes",
 		effect = {
 			// this is a side condition
@@ -19956,7 +19982,7 @@ Database = new BattleMovedex[] {
 		//name = "Toxic Thread",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "psn",
 		boosts = new Boosts() {
 			spe = -1
@@ -19978,7 +20004,7 @@ Database = new BattleMovedex[] {
 		//name = "Transform",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {mystery = 1},
+		flags = new Flags (mystery: true),
 		onHit = function (target, pokemon) {
 			if (!pokemon.transformInto(target, pokemon)) {
 				return false;
@@ -20002,7 +20028,7 @@ Database = new BattleMovedex[] {
 		//name = "Tri Attack",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			onHit = function (target, source) {
@@ -20033,7 +20059,7 @@ Database = new BattleMovedex[] {
 		//name = "Trick",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, mirror: true, mystery: true),
 		onTryHit = function (target) {
 			if (target.HasAbility("stickyhold")) {
 				this.add('-immune', target, '[msg]');
@@ -20084,7 +20110,7 @@ Database = new BattleMovedex[] {
 		//name = "Trick-or-Treat",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onHit = function (target) {
 			if (target.HasType("Ghost")) return false;
 			if (!target.AddType("Ghost")) return false;
@@ -20115,7 +20141,7 @@ Database = new BattleMovedex[] {
 		//name = "Trick Room",
 		pp = 5,
 		priority = -7,
-		flags = new Flags() {mirror = 1},
+		flags = new Flags (mirror: true),
 		pseudoWeather = "trickroom",
 		effect = {
 			duration = 5,
@@ -20163,7 +20189,7 @@ Database = new BattleMovedex[] {
 		//name = "Triple Kick",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		multihit = 3,
 		multi//accuracy = true,
 		//secondary = false,
@@ -20183,7 +20209,7 @@ Database = new BattleMovedex[] {
 		//name = "Trop Kick",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			boosts = new Boosts() {
@@ -20224,7 +20250,7 @@ Database = new BattleMovedex[] {
 		pp = 5,
 		noPPBoosts = true,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -20242,7 +20268,7 @@ Database = new BattleMovedex[] {
 		//name = "Twineedle",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = 2,
 		secondary = new Secondary() {
 			chance = 20,
@@ -20264,7 +20290,7 @@ Database = new BattleMovedex[] {
 		//name = "Twinkle Tackle",
 		pp = 1,
 		priority = 0,
-		flags = new Flags() {},
+		flags = new Flags (),
 		isZ = "fairiumz",
 		//secondary = false,
 		target = Target.Normal,
@@ -20282,7 +20308,7 @@ Database = new BattleMovedex[] {
 		//name = "Twister",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "flinch"
@@ -20304,7 +20330,7 @@ Database = new BattleMovedex[] {
 		//name = "U-turn",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		selfSwitch = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -20323,7 +20349,7 @@ Database = new BattleMovedex[] {
 		//name = "Uproar",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, sound = 1, authentic = 1},
+		flags = new Flags (protect: true, mirror: true, sound: true, authentic: true),
 		self = {
 			volatileStatus = "uproar"
 		},
@@ -20379,7 +20405,7 @@ Database = new BattleMovedex[] {
 		//name = "V-create",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		self = {
 			boosts = new Boosts() {
 				spe = -1,
@@ -20404,7 +20430,7 @@ Database = new BattleMovedex[] {
 		//name = "Vacuum Wave",
 		pp = 30,
 		priority = 1,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -20422,7 +20448,7 @@ Database = new BattleMovedex[] {
 		//name = "Venom Drench",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		onHit = function (target, source, move) {
 			if (target.Status === "psn" || target.Status === "tox") {
 				return this.boost({atk = -1, spa = -1, spe = -1}, target, source, move);
@@ -20446,7 +20472,7 @@ Database = new BattleMovedex[] {
 		//name = "Venoshock",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		onBasePowerPriority = 4,
 		onBasePower = function (basePower, pokemon, target) {
 			if (target.Status === "psn" || target.Status === "tox") {
@@ -20470,7 +20496,7 @@ Database = new BattleMovedex[] {
 		//name = "Vice Grip",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -20488,7 +20514,7 @@ Database = new BattleMovedex[] {
 		//name = "Vine Whip",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.GRASS,
@@ -20506,7 +20532,7 @@ Database = new BattleMovedex[] {
 		//name = "Vital Throw",
 		pp = 10,
 		priority = -1,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.FIGHTING,
@@ -20525,7 +20551,7 @@ Database = new BattleMovedex[] {
 		//name = "Volt Switch",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		selfSwitch = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -20545,7 +20571,7 @@ Database = new BattleMovedex[] {
 		//name = "Volt Tackle",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {33, 100},
 		secondary = new Secondary() {
 			chance = 10,
@@ -20571,7 +20597,7 @@ Database = new BattleMovedex[] {
 		//name = "Wake-Up Slap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		onHit = function (target) {
 			if (target.Status === "slp") target.CureStatus();
 		},
@@ -20592,7 +20618,7 @@ Database = new BattleMovedex[] {
 		//name = "Water Gun",
 		pp = 25,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.WATER,
@@ -20617,7 +20643,7 @@ Database = new BattleMovedex[] {
 		//name = "Water Pledge",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1, nonsky = 1},
+		flags = new Flags (protect: true, mirror: true, nonsky: true),
 		onPrepareHit = function (target, source, move) {
 			for (const action of this.queue) {
 				// @ts-ignore
@@ -20684,7 +20710,7 @@ Database = new BattleMovedex[] {
 		//name = "Water Pulse",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {protect = 1, pulse = 1, mirror = 1, distance = 1},
+		flags = new Flags (protect: true, pulse: true, mirror: true, distance: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "confusion"
@@ -20705,7 +20731,7 @@ Database = new BattleMovedex[] {
 		//name = "Water Sport",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {nonsky = 1},
+		flags = new Flags (nonsky: true),
 		pseudoWeather = "watersport",
 		effect = {
 			duration = 5,
@@ -20745,7 +20771,7 @@ Database = new BattleMovedex[] {
 		//name = "Water Spout",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		//secondary = false,
 		target = Target.AllAdjacentFoes,
 		type = Types.WATER,
@@ -20764,7 +20790,7 @@ Database = new BattleMovedex[] {
 		//name = "Waterfall",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "flinch"
@@ -20792,7 +20818,7 @@ Database = new BattleMovedex[] {
 		//name = "Water Shuriken",
 		pp = 20,
 		priority = 1,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		multihit = new int[] {2, 5},
 		//secondary = false,
 		target = Target.Normal,
@@ -20811,7 +20837,7 @@ Database = new BattleMovedex[] {
 		//name = "Weather Ball",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		onModifyMove = function (move) {
 			switch (this.effectiveWeather()) {
 			case "sunnyday":
@@ -20851,7 +20877,7 @@ Database = new BattleMovedex[] {
 		//name = "Whirlpool",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -20871,7 +20897,7 @@ Database = new BattleMovedex[] {
 		//name = "Whirlwind",
 		pp = 20,
 		priority = -6,
-		flags = new Flags() {reflectable = 1, mirror = 1, authentic = 1, mystery = 1},
+		flags = new Flags (reflectable: true, mirror: true, authentic: true, mystery: true),
 		forceSwitch = true,
 		//secondary = false,
 		target = Target.Normal,
@@ -20890,7 +20916,7 @@ Database = new BattleMovedex[] {
 		//name = "Wide Guard",
 		pp = 10,
 		priority = 3,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		sideCondition = "wideguard",
 		onTryHitSide = function (side, source) {
 			return this.willAct();
@@ -20943,7 +20969,7 @@ Database = new BattleMovedex[] {
 		//name = "Wild Charge",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {1, 4},
 		//secondary = false,
 		target = Target.Normal,
@@ -20963,7 +20989,7 @@ Database = new BattleMovedex[] {
 		//name = "Will-O-Wisp",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		status = "brn",
 		//secondary = false,
 		target = Target.Normal,
@@ -20982,7 +21008,7 @@ Database = new BattleMovedex[] {
 		//name = "Wing Attack",
 		pp = 35,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1, distance = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true, distance: true),
 		//secondary = false,
 		target = Target.Any,
 		type = Types.FLYING,
@@ -21001,7 +21027,7 @@ Database = new BattleMovedex[] {
 		//name = "Wish",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {snatch = 1, heal = 1},
+		flags = new Flags (snatch: true, heal: true),
 		sideCondition = "Wish",
 		effect = {
 			duration = 2,
@@ -21036,7 +21062,7 @@ Database = new BattleMovedex[] {
 		//name = "Withdraw",
 		pp = 40,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			def = 1
 		},
@@ -21057,7 +21083,7 @@ Database = new BattleMovedex[] {
 		//name = "Wonder Room",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {mirror = 1},
+		flags = new Flags (mirror: true),
 		pseudoWeather = "wonderroom",
 		effect = {
 			duration = 5,
@@ -21098,7 +21124,7 @@ Database = new BattleMovedex[] {
 		//name = "Wood Hammer",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		recoil = new int[] {33, 100},
 		//secondary = false,
 		target = Target.Normal,
@@ -21117,7 +21143,7 @@ Database = new BattleMovedex[] {
 		//name = "Work Up",
 		pp = 30,
 		priority = 0,
-		flags = new Flags() {snatch = 1},
+		flags = new Flags (snatch: true),
 		boosts = new Boosts() {
 			atk = 1,
 			spa = 1
@@ -21139,7 +21165,7 @@ Database = new BattleMovedex[] {
 		//name = "Worry Seed",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1, mystery = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true, mystery: true),
 		onTryHit = function (pokemon) {
 			let bannedAbilities = ["battlebond", "comatose", "disguise", "insomnia", "multitype", "powerconstruct", "rkssystem", "schooling", "shieldsdown", "stancechange", "truant"];
 			if (bannedAbilities.includes(pokemon.ability)) {
@@ -21174,7 +21200,7 @@ Database = new BattleMovedex[] {
 		//name = "Wrap",
 		pp = 20,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		volatileStatus = "partiallytrapped",
 		//secondary = false,
 		target = Target.Normal,
@@ -21196,7 +21222,7 @@ Database = new BattleMovedex[] {
 		//name = "Wring Out",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.NORMAL,
@@ -21215,7 +21241,7 @@ Database = new BattleMovedex[] {
 		//name = "X-Scissor",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		//secondary = false,
 		target = Target.Normal,
 		type = Types.BUG,
@@ -21233,7 +21259,7 @@ Database = new BattleMovedex[] {
 		//name = "Yawn",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {protect = 1, reflectable = 1, mirror = 1},
+		flags = new Flags (protect: true, reflectable: true, mirror: true),
 		volatileStatus = "yawn",
 		//onTryHit = function (target) {
 		//	if (target.Status || !target.RunStatusImmunity("slp")) {
@@ -21268,7 +21294,7 @@ Database = new BattleMovedex[] {
 		//name = "Zap Cannon",
 		pp = 5,
 		priority = 0,
-		flags = new Flags() {bullet = 1, protect = 1, mirror = 1},
+		flags = new Flags (bullet: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 100,
 			status = "par"
@@ -21290,7 +21316,7 @@ Database = new BattleMovedex[] {
 		//name = "Zen Headbutt",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			volatileStatus = "flinch"
@@ -21312,7 +21338,7 @@ Database = new BattleMovedex[] {
 		//name = "Zing Zap",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 30,
 			volatileStatus = "flinch"
@@ -21335,7 +21361,7 @@ Database = new BattleMovedex[] {
 		//name = "Paleo Wave",
 		pp = 15,
 		priority = 0,
-		flags = new Flags() {protect = 1, mirror = 1},
+		flags = new Flags (protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 20,
 			boosts = new Boosts() {
@@ -21360,7 +21386,7 @@ Database = new BattleMovedex[] {
 		//name = "Shadow Strike",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, protect = 1, mirror = 1},
+		flags = new Flags (contact: true, protect: true, mirror: true),
 		secondary = new Secondary() {
 			chance = 50,
 			boosts = new Boosts() {
@@ -21384,7 +21410,7 @@ Database = new BattleMovedex[] {
 		//name = "Magikarp's Revenge",
 		pp = 10,
 		priority = 0,
-		flags = new Flags() {contact = 1, recharge = 1, protect = 1, mirror = 1, heal = 1},
+		flags = new Flags (contact: true, recharge: true, protect: true, mirror: true, heal: true),
 		noSketch = true,
 		drain = new int[] {1, 2},
 		onTry = function (pokemon) {
@@ -21636,5 +21662,4 @@ namespace Veekun
 		/// </summary>
 		ALLALLY
 	}
-
 }
