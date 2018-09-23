@@ -21702,7 +21702,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 2,
-	id = Moves.ATTACKORDER, 
+	id = Moves.ATTACK_ORDER, 
 	//name = "Attack Order", 
 	//function = 000, 
 	basePower = 90,
@@ -21718,7 +21718,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 3,
-	id = Moves.BUGBUZZ, 
+	id = Moves.BUG_BUZZ, 
 	//name = "Bug Buzz", 
 	//function = 046, 
 	basePower = 90,
@@ -21734,7 +21734,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 4,
-	id = Moves.XSCISSOR, 
+	id = Moves.X_SCISSOR, 
 	//name = "X-Scissor", 
 	//function = 000, 
 	basePower = 80,
@@ -21750,7 +21750,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 5,
-	id = Moves.SIGNALBEAM, 
+	id = Moves.SIGNAL_BEAM, 
 	//name = "Signal Beam", 
 	//function = 013, 
 	basePower = 75,
@@ -21766,7 +21766,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 6,
-	id = Moves.UTURN, 
+	id = Moves.U_TURN, 
 	//name = "U-turn", 
 	//function = 0EE, 
 	basePower = 70,
@@ -21798,7 +21798,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 8,
-	id = Moves.BUGBITE, 
+	id = Moves.BUG_BITE, 
 	//name = "Bug Bite", 
 	//function = 0F4, 
 	basePower = 60,
@@ -21814,7 +21814,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 9,
-	id = Moves.SILVERWIND, 
+	id = Moves.SILVER_WIND, 
 	//name = "Silver Wind", 
 	//function = 02D, 
 	basePower = 60,
@@ -21830,7 +21830,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 10,
-	id = Moves.STRUGGLEBUG, 
+	id = Moves.STRUGGLE_BUG, 
 	//name = "Struggle Bug", 
 	//function = 045, 
 	basePower = 30,
@@ -21862,7 +21862,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 12,
-	id = Moves.FURYCUTTER, 
+	id = Moves.FURY_CUTTER, 
 	//name = "Fury Cutter", 
 	//function = 091, 
 	basePower = 20,
@@ -21878,7 +21878,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 13,
-	id = Moves.LEECHLIFE, 
+	id = Moves.LEECH_LIFE, 
 	//name = "Leech Life", 
 	//function = 0DD, 
 	basePower = 20,
@@ -21894,7 +21894,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 14,
-	id = Moves.PINMISSILE, 
+	id = Moves.PIN_MISSILE, 
 	//name = "Pin Missile", 
 	//function = 0C0, 
 	basePower = 14,
@@ -21910,7 +21910,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 15,
-	id = Moves.DEFENDORDER, 
+	id = Moves.DEFEND_ORDER, 
 	//name = "Defend Order", 
 	//function = 02A, 
 	basePower = 0,
@@ -21926,7 +21926,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 16,
-	id = Moves.HEALORDER, 
+	id = Moves.HEAL_ORDER, 
 	//name = "Heal Order", 
 	//function = 0D5, 
 	basePower = 0,
@@ -21937,12 +21937,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true, bite: true ) { }
 	//,description = "The user calls out its underlings to heal it. The user regains up to half of its max HP."
 },
 new MoveDataDex() {
 	num = 17,
-	id = Moves.QUIVERDANCE, 
+	id = Moves.QUIVER_DANCE, 
 	//name = "Quiver Dance", 
 	//function = 02B, 
 	basePower = 0,
@@ -21958,7 +21958,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 18,
-	id = Moves.RAGEPOWDER, 
+	id = Moves.RAGE_POWDER, 
 	//name = "Rage Powder", 
 	//function = 117, 
 	basePower = 0,
@@ -21974,7 +21974,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 19,
-	id = Moves.SPIDERWEB, 
+	id = Moves.SPIDER_WEB, 
 	//name = "Spider Web", 
 	//function = 0EF, 
 	basePower = 0,
@@ -21990,7 +21990,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 20,
-	id = Moves.STRINGSHOT, 
+	id = Moves.STRING_SHOT, 
 	//name = "String Shot", 
 	//function = 044, 
 	basePower = 0,
@@ -22006,7 +22006,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 21,
-	id = Moves.TAILGLOW, 
+	id = Moves.TAIL_GLOW, 
 	//name = "Tail Glow", 
 	//function = 039, 
 	basePower = 0,
@@ -22022,7 +22022,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 22,
-	id = Moves.FOULPLAY, 
+	id = Moves.FOUL_PLAY, 
 	//name = "Foul Play", 
 	//function = 121, 
 	basePower = 95,
@@ -22038,7 +22038,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 23,
-	id = Moves.NIGHTDAZE, 
+	id = Moves.NIGHT_DAZE, 
 	//name = "Night Daze", 
 	//function = 047, 
 	basePower = 85,
@@ -22070,7 +22070,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 25,
-	id = Moves.DARKPULSE, 
+	id = Moves.DARK_PULSE, 
 	//name = "Dark Pulse", 
 	//function = 00F, 
 	basePower = 80,
@@ -22086,7 +22086,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 26,
-	id = Moves.SUCKERPUNCH, 
+	id = Moves.SUCKER_PUNCH, 
 	//name = "Sucker Punch", 
 	//function = 116, 
 	basePower = 80,
@@ -22102,7 +22102,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 27,
-	id = Moves.NIGHTSLASH, 
+	id = Moves.NIGHT_SLASH, 
 	//name = "Night Slash", 
 	//function = 000, 
 	basePower = 70,
@@ -22134,7 +22134,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 29,
-	id = Moves.FAINTATTACK, 
+	id = Moves.FEINT_ATTACK, 
 	//name = "Faint Attack", 
 	//function = 0A5, 
 	basePower = 60,
@@ -22230,7 +22230,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 35,
-	id = Moves.KNOCKOFF, 
+	id = Moves.KNOCK_OFF, 
 	//name = "Knock Off", 
 	//function = 0F0, 
 	basePower = 20,
@@ -22246,7 +22246,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 36,
-	id = Moves.BEATUP, 
+	id = Moves.BEAT_UP, 
 	//name = "Beat Up", 
 	//function = 0C1, 
 	basePower = 1,
@@ -22294,7 +22294,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 39,
-	id = Moves.DARKVOID, 
+	id = Moves.DARK_VOID, 
 	//name = "Dark Void", 
 	//function = 003, 
 	basePower = 0,
@@ -22326,7 +22326,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 41,
-	id = Moves.FAKETEARS, 
+	id = Moves.FAKE_TEARS, 
 	//name = "Fake Tears", 
 	//function = 04F, 
 	basePower = 0,
@@ -22358,7 +22358,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 43,
-	id = Moves.HONECLAWS, 
+	id = Moves.HONE_CLAWS, 
 	//name = "Hone Claws", 
 	//function = 029, 
 	basePower = 0,
@@ -22390,7 +22390,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 45,
-	id = Moves.NASTYPLOT, 
+	id = Moves.NASTY_PLOT, 
 	//name = "Nasty Plot", 
 	//function = 032, 
 	basePower = 0,
@@ -22486,7 +22486,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 51,
-	id = Moves.ROAROFTIME, 
+	id = Moves.ROAR_OF_TIME, 
 	//name = "Roar of Time", 
 	//function = 0C2, 
 	basePower = 150,
@@ -22502,7 +22502,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 52,
-	id = Moves.DRACOMETEOR, 
+	id = Moves.DRACO_METEOR, 
 	//name = "Draco Meteor", 
 	//function = 03F, 
 	basePower = 140,
@@ -22534,7 +22534,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 54,
-	id = Moves.DRAGONRUSH, 
+	id = Moves.DRAGON_RUSH, 
 	//name = "Dragon Rush", 
 	//function = 00F, 
 	basePower = 100,
@@ -22550,7 +22550,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 55,
-	id = Moves.SPACIALREND, 
+	id = Moves.SPACIAL_REND, 
 	//name = "Spacial Rend", 
 	//function = 000, 
 	basePower = 100,
@@ -22566,7 +22566,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 56,
-	id = Moves.DRAGONPULSE, 
+	id = Moves.DRAGON_PULSE, 
 	//name = "Dragon Pulse", 
 	//function = 000, 
 	basePower = 90,
@@ -22582,7 +22582,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 57,
-	id = Moves.DRAGONCLAW, 
+	id = Moves.DRAGON_CLAW, 
 	//name = "Dragon Claw", 
 	//function = 000, 
 	basePower = 80,
@@ -22598,7 +22598,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 58,
-	id = Moves.DRAGONTAIL, 
+	id = Moves.DRAGON_TAIL, 
 	//name = "Dragon Tail", 
 	//function = 0EC, 
 	basePower = 60,
@@ -22614,7 +22614,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 59,
-	id = Moves.DRAGONBREATH, 
+	id = Moves.DRAGON_BREATH, 
 	//name = "DragonBreath", 
 	//function = 007, 
 	basePower = 60,
@@ -22630,7 +22630,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 60,
-	id = Moves.DUALCHOP, 
+	id = Moves.DUAL_CHOP, 
 	//name = "Dual Chop", 
 	//function = 0BD, 
 	basePower = 40,
@@ -22662,7 +22662,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 62,
-	id = Moves.DRAGONRAGE, 
+	id = Moves.DRAGON_RAGE, 
 	//name = "Dragon Rage", 
 	//function = 06B, 
 	basePower = 1,
@@ -22678,7 +22678,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 63,
-	id = Moves.DRAGONDANCE, 
+	id = Moves.DRAGON_DANCE, 
 	//name = "Dragon Dance", 
 	//function = 026, 
 	basePower = 0,
@@ -22694,7 +22694,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 64,
-	id = Moves.BOLTSTRIKE, 
+	id = Moves.BOLT_STRIKE, 
 	//name = "Bolt Strike", 
 	//function = 007, 
 	basePower = 130,
@@ -22726,7 +22726,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 66,
-	id = Moves.VOLTTACKLE, 
+	id = Moves.VOLT_TACKLE, 
 	//name = "Volt Tackle", 
 	//function = 0FD, 
 	basePower = 120,
@@ -22742,7 +22742,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 67,
-	id = Moves.ZAPCANNON, 
+	id = Moves.ZAP_CANNON, 
 	//name = "Zap Cannon", 
 	//function = 007, 
 	basePower = 120,
@@ -22758,7 +22758,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 68,
-	id = Moves.FUSIONBOLT, 
+	id = Moves.FUSION_BOLT, 
 	//name = "Fusion Bolt", 
 	//function = 079, 
 	basePower = 100,
@@ -22790,7 +22790,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 70,
-	id = Moves.WILDCHARGE, 
+	id = Moves.WILD_CHARGE, 
 	//name = "Wild Charge", 
 	//function = 0FA, 
 	basePower = 90,
@@ -22822,7 +22822,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 72,
-	id = Moves.THUNDERPUNCH, 
+	id = Moves.THUNDER_PUNCH, 
 	//name = "ThunderPunch", 
 	//function = 007, 
 	basePower = 75,
@@ -22838,7 +22838,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 73,
-	id = Moves.VOLTSWITCH, 
+	id = Moves.VOLT_SWITCH, 
 	//name = "Volt Switch", 
 	//function = 0EE, 
 	basePower = 70,
@@ -22870,7 +22870,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 75,
-	id = Moves.THUNDERFANG, 
+	id = Moves.THUNDER_FANG, 
 	//name = "Thunder Fang", 
 	//function = 009, 
 	basePower = 65,
@@ -22886,7 +22886,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 76,
-	id = Moves.SHOCKWAVE, 
+	id = Moves.SHOCK_WAVE, 
 	//name = "Shock Wave", 
 	//function = 0A5, 
 	basePower = 60,
@@ -22918,7 +22918,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 78,
-	id = Moves.CHARGEBEAM, 
+	id = Moves.CHARGE_BEAM, 
 	//name = "Charge Beam", 
 	//function = 020, 
 	basePower = 50,
@@ -22934,7 +22934,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 79,
-	id = Moves.THUNDERSHOCK, 
+	id = Moves.THUNDER_SHOCK, 
 	//name = "ThunderShock", 
 	//function = 007, 
 	basePower = 40,
@@ -22950,7 +22950,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 80,
-	id = Moves.ELECTROBALL, 
+	id = Moves.ELECTRO_BALL, 
 	//name = "Electro Ball", 
 	//function = 099, 
 	basePower = 1,
@@ -22982,7 +22982,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 82,
-	id = Moves.MAGNETRISE, 
+	id = Moves.MAGNET_RISE, 
 	//name = "Magnet Rise", 
 	//function = 119, 
 	basePower = 0,
@@ -22998,7 +22998,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 83,
-	id = Moves.THUNDERWAVE, 
+	id = Moves.THUNDER_WAVE, 
 	//name = "Thunder Wave", 
 	//function = 007, 
 	basePower = 0,
@@ -23014,7 +23014,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 84,
-	id = Moves.FOCUSPUNCH, 
+	id = Moves.FOCUS_PUNCH, 
 	//name = "Focus Punch", 
 	//function = 115, 
 	basePower = 150,
@@ -23030,7 +23030,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 85,
-	id = Moves.HIJUMPKICK, 
+	id = Moves.HIGH_JUMP_KICK, 
 	//name = "Hi Jump Kick", 
 	//function = 10B, 
 	basePower = 130,
@@ -23046,7 +23046,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 86,
-	id = Moves.CLOSECOMBAT, 
+	id = Moves.CLOSE_COMBAT, 
 	//name = "Close Combat", 
 	//function = 03C, 
 	basePower = 120,
@@ -23062,7 +23062,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 87,
-	id = Moves.FOCUSBLAST, 
+	id = Moves.FOCUS_BLAST, 
 	//name = "Focus Blast", 
 	//function = 046, 
 	basePower = 120,
@@ -23094,7 +23094,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 89,
-	id = Moves.CROSSCHOP, 
+	id = Moves.CROSS_CHOP, 
 	//name = "Cross Chop", 
 	//function = 000, 
 	basePower = 100,
@@ -23110,7 +23110,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 90,
-	id = Moves.DYNAMICPUNCH, 
+	id = Moves.DYNAMIC_PUNCH, 
 	//name = "DynamicPunch", 
 	//function = 013, 
 	basePower = 100,
@@ -23126,7 +23126,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 91,
-	id = Moves.HAMMERARM, 
+	id = Moves.HAMMER_ARM, 
 	//name = "Hammer Arm", 
 	//function = 03E, 
 	basePower = 100,
@@ -23142,7 +23142,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 92,
-	id = Moves.JUMPKICK, 
+	id = Moves.JUMP_KICK, 
 	//name = "Jump Kick", 
 	//function = 10B, 
 	basePower = 100,
@@ -23158,7 +23158,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 93,
-	id = Moves.AURASPHERE, 
+	id = Moves.AURA_SPHERE, 
 	//name = "Aura Sphere", 
 	//function = 0A5, 
 	basePower = 90,
@@ -23174,7 +23174,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 94,
-	id = Moves.SACREDSWORD, 
+	id = Moves.SACRED_SWORD, 
 	//name = "Sacred Sword", 
 	//function = 0A9, 
 	basePower = 90,
@@ -23190,7 +23190,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 95,
-	id = Moves.SECRETSWORD, 
+	id = Moves.SECRET_SWORD, 
 	//name = "Secret Sword", 
 	//function = 122, 
 	basePower = 85,
@@ -23206,7 +23206,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 96,
-	id = Moves.SKYUPPERCUT, 
+	id = Moves.SKY_UPPERCUT, 
 	//name = "Sky Uppercut", 
 	//function = 11B, 
 	basePower = 85,
@@ -23238,7 +23238,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 98,
-	id = Moves.BRICKBREAK, 
+	id = Moves.BRICK_BREAK, 
 	//name = "Brick Break", 
 	//function = 10A, 
 	basePower = 75,
@@ -23254,7 +23254,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 99,
-	id = Moves.DRAINPUNCH, 
+	id = Moves.DRAIN_PUNCH, 
 	//name = "Drain Punch", 
 	//function = 0DD, 
 	basePower = 75,
@@ -23270,7 +23270,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 100,
-	id = Moves.VITALTHROW, 
+	id = Moves.VITAL_THROW, 
 	//name = "Vital Throw", 
 	//function = 0A5, 
 	basePower = 70,
@@ -23286,7 +23286,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 101,
-	id = Moves.CIRCLETHROW, 
+	id = Moves.CIRCLE_THROW, 
 	//name = "Circle Throw", 
 	//function = 0EC, 
 	basePower = 60,
@@ -23302,7 +23302,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 102,
-	id = Moves.FORCEPALM, 
+	id = Moves.FORCE_PALM, 
 	//name = "Force Palm", 
 	//function = 007, 
 	basePower = 60,
@@ -23318,7 +23318,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 103,
-	id = Moves.LOWSWEEP, 
+	id = Moves.LOW_SWEEP, 
 	//name = "Low Sweep", 
 	//function = 044, 
 	basePower = 60,
@@ -23350,7 +23350,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 105,
-	id = Moves.ROLLINGKICK, 
+	id = Moves.ROLLING_KICK, 
 	//name = "Rolling Kick", 
 	//function = 00F, 
 	basePower = 60,
@@ -23366,7 +23366,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 106,
-	id = Moves.WAKEUPSLAP, 
+	id = Moves.WAKE_UP_SLAP, 
 	//name = "Wake-Up Slap", 
 	//function = 07D, 
 	basePower = 60,
@@ -23382,7 +23382,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 107,
-	id = Moves.KARATECHOP, 
+	id = Moves.KARATE_CHOP, 
 	//name = "Karate Chop", 
 	//function = 000, 
 	basePower = 50,
@@ -23398,7 +23398,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 108,
-	id = Moves.MACHPUNCH, 
+	id = Moves.MACH_PUNCH, 
 	//name = "Mach Punch", 
 	//function = 000, 
 	basePower = 40,
@@ -23414,7 +23414,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 109,
-	id = Moves.ROCKSMASH, 
+	id = Moves.ROCK_SMASH, 
 	//name = "Rock Smash", 
 	//function = 043, 
 	basePower = 40,
@@ -23430,7 +23430,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 110,
-	id = Moves.STORMTHROW, 
+	id = Moves.STORM_THROW, 
 	//name = "Storm Throw", 
 	//function = 0A0, 
 	basePower = 40,
@@ -23446,7 +23446,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 111,
-	id = Moves.VACUUMWAVE, 
+	id = Moves.VACUUM_WAVE, 
 	//name = "Vacuum Wave", 
 	//function = 000, 
 	basePower = 40,
@@ -23462,7 +23462,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 112,
-	id = Moves.DOUBLEKICK, 
+	id = Moves.DOUBLE_KICK, 
 	//name = "Double Kick", 
 	//function = 0BD, 
 	basePower = 30,
@@ -23478,7 +23478,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 113,
-	id = Moves.ARMTHRUST, 
+	id = Moves.ARM_THRUST, 
 	//name = "Arm Thrust", 
 	//function = 0C0, 
 	basePower = 15,
@@ -23494,7 +23494,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 114,
-	id = Moves.TRIPLEKICK, 
+	id = Moves.TRIPLE_KICK, 
 	//name = "Triple Kick", 
 	//function = 0BF, 
 	basePower = 10,
@@ -23526,7 +23526,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 116,
-	id = Moves.FINALGAMBIT, 
+	id = Moves.FINAL_GAMBIT, 
 	//name = "Final Gambit", 
 	//function = 0E1, 
 	basePower = 1,
@@ -23542,7 +23542,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 117,
-	id = Moves.LOWKICK, 
+	id = Moves.LOW_KICK, 
 	//name = "Low Kick", 
 	//function = 09A, 
 	basePower = 1,
@@ -23574,7 +23574,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 119,
-	id = Moves.SEISMICTOSS, 
+	id = Moves.SEISMIC_TOSS, 
 	//name = "Seismic Toss", 
 	//function = 06D, 
 	basePower = 1,
@@ -23590,7 +23590,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 120,
-	id = Moves.BULKUP, 
+	id = Moves.BULK_UP, 
 	//name = "Bulk Up", 
 	//function = 024, 
 	basePower = 0,
@@ -23622,7 +23622,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 122,
-	id = Moves.QUICKGUARD, 
+	id = Moves.QUICK_GUARD, 
 	//name = "Quick Guard", 
 	//function = 0AB, 
 	basePower = 0,
@@ -23638,7 +23638,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 123,
-	id = Moves.VCREATE, 
+	id = Moves.V_CREATE, 
 	//name = "V-create", 
 	//function = 03D, 
 	basePower = 180,
@@ -23654,7 +23654,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 124,
-	id = Moves.BLASTBURN, 
+	id = Moves.BLAST_BURN, 
 	//name = "Blast Burn", 
 	//function = 0C2, 
 	basePower = 150,
@@ -23702,7 +23702,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 127,
-	id = Moves.BLUEFLARE, 
+	id = Moves.BLUE_FLARE, 
 	//name = "Blue Flare", 
 	//function = 00A, 
 	basePower = 130,
@@ -23718,7 +23718,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 128,
-	id = Moves.FIREBLAST, 
+	id = Moves.FIRE_BLAST, 
 	//name = "Fire Blast", 
 	//function = 00A, 
 	basePower = 120,
@@ -23734,7 +23734,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 129,
-	id = Moves.FLAREBLITZ, 
+	id = Moves.FLARE_BLITZ, 
 	//name = "Flare Blitz", 
 	//function = 0FE, 
 	basePower = 120,
@@ -23750,7 +23750,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 130,
-	id = Moves.MAGMASTORM, 
+	id = Moves.MAGMA_STORM, 
 	//name = "Magma Storm", 
 	//function = 0CF, 
 	basePower = 120,
@@ -23766,7 +23766,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 131,
-	id = Moves.FUSIONFLARE, 
+	id = Moves.FUSION_FLARE, 
 	//name = "Fusion Flare", 
 	//function = 07A, 
 	basePower = 100,
@@ -23782,7 +23782,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 132,
-	id = Moves.HEATWAVE, 
+	id = Moves.HEAT_WAVE, 
 	//name = "Heat Wave", 
 	//function = 00A, 
 	basePower = 100,
@@ -23814,7 +23814,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 134,
-	id = Moves.SACREDFIRE, 
+	id = Moves.SACRED_FIRE, 
 	//name = "Sacred Fire", 
 	//function = 00A, 
 	basePower = 100,
@@ -23830,7 +23830,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 135,
-	id = Moves.SEARINGSHOT, 
+	id = Moves.SEARING_SHOT, 
 	//name = "Searing Shot", 
 	//function = 00A, 
 	basePower = 100,
@@ -23862,7 +23862,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 137,
-	id = Moves.BLAZEKICK, 
+	id = Moves.BLAZE_KICK, 
 	//name = "Blaze Kick", 
 	//function = 00A, 
 	basePower = 85,
@@ -23878,7 +23878,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 138,
-	id = Moves.FIERYDANCE, 
+	id = Moves.FIERY_DANCE, 
 	//name = "Fiery Dance", 
 	//function = 020, 
 	basePower = 80,
@@ -23894,7 +23894,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 139,
-	id = Moves.LAVAPLUME, 
+	id = Moves.LAVA_PLUME, 
 	//name = "Lava Plume", 
 	//function = 00A, 
 	basePower = 80,
@@ -23910,7 +23910,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 140,
-	id = Moves.FIREPUNCH, 
+	id = Moves.FIRE_PUNCH, 
 	//name = "Fire Punch", 
 	//function = 00A, 
 	basePower = 75,
@@ -23926,7 +23926,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 141,
-	id = Moves.FLAMEBURST, 
+	id = Moves.FLAME_BURST, 
 	//name = "Flame Burst", 
 	//function = 074, 
 	basePower = 70,
@@ -23942,7 +23942,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 142,
-	id = Moves.FIREFANG, 
+	id = Moves.FIRE_FANG, 
 	//name = "Fire Fang", 
 	//function = 00B, 
 	basePower = 65,
@@ -23958,7 +23958,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 143,
-	id = Moves.FLAMEWHEEL, 
+	id = Moves.FLAME_WHEEL, 
 	//name = "Flame Wheel", 
 	//function = 00A, 
 	basePower = 60,
@@ -23974,7 +23974,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 144,
-	id = Moves.FIREPLEDGE, 
+	id = Moves.FIRE_PLEDGE, 
 	//name = "Fire Pledge", 
 	//function = 107, 
 	basePower = 50,
@@ -23990,7 +23990,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 145,
-	id = Moves.FLAMECHARGE, 
+	id = Moves.FLAME_CHARGE, 
 	//name = "Flame Charge", 
 	//function = 01F, 
 	basePower = 50,
@@ -24022,7 +24022,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 147,
-	id = Moves.FIRESPIN, 
+	id = Moves.FIRE_SPIN, 
 	//name = "Fire Spin", 
 	//function = 0CF, 
 	basePower = 35,
@@ -24054,7 +24054,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 149,
-	id = Moves.HEATCRASH, 
+	id = Moves.HEAT_CRASH, 
 	//name = "Heat Crash", 
 	//function = 09B, 
 	basePower = 1,
@@ -24070,7 +24070,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 150,
-	id = Moves.SUNNYDAY, 
+	id = Moves.SUNNY_DAY, 
 	//name = "Sunny Day", 
 	//function = 0FF, 
 	basePower = 0,
@@ -24086,7 +24086,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 151,
-	id = Moves.WILLOWISP, 
+	id = Moves.WILL_O_WISP, 
 	//name = "Will-O-Wisp", 
 	//function = 00A, 
 	basePower = 0,
@@ -24102,7 +24102,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 152,
-	id = Moves.SKYATTACK, 
+	id = Moves.SKY_ATTACK, 
 	//name = "Sky Attack", 
 	//function = 0C7, 
 	basePower = 140,
@@ -24118,7 +24118,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 153,
-	id = Moves.BRAVEBIRD, 
+	id = Moves.BRAVE_BIRD, 
 	//name = "Brave Bird", 
 	//function = 0FB, 
 	basePower = 120,
@@ -24198,7 +24198,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 158,
-	id = Moves.DRILLPECK, 
+	id = Moves.DRILL_PECK, 
 	//name = "Drill Peck", 
 	//function = 000, 
 	basePower = 80,
@@ -24214,7 +24214,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 159,
-	id = Moves.AIRSLASH, 
+	id = Moves.AIR_SLASH, 
 	//name = "Air Slash", 
 	//function = 00F, 
 	basePower = 75,
@@ -24230,7 +24230,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 160,
-	id = Moves.AERIALACE, 
+	id = Moves.AERIAL_ACE, 
 	//name = "Aerial Ace", 
 	//function = 0A5, 
 	basePower = 60,
@@ -24278,7 +24278,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 163,
-	id = Moves.SKYDROP, 
+	id = Moves.SKY_DROP, 
 	//name = "Sky Drop", 
 	//function = 0CE, 
 	basePower = 60,
@@ -24294,7 +24294,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 164,
-	id = Moves.WINGATTACK, 
+	id = Moves.WING_ATTACK, 
 	//name = "Wing Attack", 
 	//function = 000, 
 	basePower = 60,
@@ -24326,7 +24326,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 166,
-	id = Moves.AIRCUTTER, 
+	id = Moves.AIR_CUTTER, 
 	//name = "Air Cutter", 
 	//function = 000, 
 	basePower = 55,
@@ -24390,7 +24390,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 170,
-	id = Moves.FEATHERDANCE, 
+	id = Moves.FEATHER_DANCE, 
 	//name = "FeatherDance", 
 	//function = 04B, 
 	basePower = 0,
@@ -24406,7 +24406,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 171,
-	id = Moves.MIRRORMOVE, 
+	id = Moves.MIRROR_MOVE, 
 	//name = "Mirror Move", 
 	//function = 0AE, 
 	basePower = 0,
@@ -24433,7 +24433,7 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user lands and rests its body. It restores the user's HP by up to half of its max HP."
 },
 new MoveDataDex() {
@@ -24454,7 +24454,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 174,
-	id = Moves.SHADOWFORCE, 
+	id = Moves.SHADOW_FORCE, 
 	//name = "Shadow Force", 
 	//function = 0CD, 
 	basePower = 120,
@@ -24470,7 +24470,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 175,
-	id = Moves.SHADOWBALL, 
+	id = Moves.SHADOW_BALL, 
 	//name = "Shadow Ball", 
 	//function = 046, 
 	basePower = 80,
@@ -24486,7 +24486,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 176,
-	id = Moves.SHADOWCLAW, 
+	id = Moves.SHADOW_CLAW, 
 	//name = "Shadow Claw", 
 	//function = 000, 
 	basePower = 70,
@@ -24502,7 +24502,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 177,
-	id = Moves.OMINOUSWIND, 
+	id = Moves.OMINOUS_WIND, 
 	//name = "Ominous Wind", 
 	//function = 02D, 
 	basePower = 60,
@@ -24518,7 +24518,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 178,
-	id = Moves.SHADOWPUNCH, 
+	id = Moves.SHADOW_PUNCH, 
 	//name = "Shadow Punch", 
 	//function = 0A5, 
 	basePower = 60,
@@ -24550,7 +24550,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 180,
-	id = Moves.SHADOWSNEAK, 
+	id = Moves.SHADOW_SNEAK, 
 	//name = "Shadow Sneak", 
 	//function = 000, 
 	basePower = 40,
@@ -24598,7 +24598,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 183,
-	id = Moves.NIGHTSHADE, 
+	id = Moves.NIGHT_SHADE, 
 	//name = "Night Shade", 
 	//function = 06D, 
 	basePower = 1,
@@ -24614,7 +24614,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 184,
-	id = Moves.CONFUSERAY, 
+	id = Moves.CONFUSE_RAY, 
 	//name = "Confuse Ray", 
 	//function = 013, 
 	basePower = 0,
@@ -24646,7 +24646,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 186,
-	id = Moves.DESTINYBOND, 
+	id = Moves.DESTINY_BOND, 
 	//name = "Destiny Bond", 
 	//function = 0E7, 
 	basePower = 0,
@@ -24710,7 +24710,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 190,
-	id = Moves.FRENZYPLANT, 
+	id = Moves.FRENZY_PLANT, 
 	//name = "Frenzy Plant", 
 	//function = 0C2, 
 	basePower = 150,
@@ -24726,7 +24726,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 191,
-	id = Moves.LEAFSTORM, 
+	id = Moves.LEAF_STORM, 
 	//name = "Leaf Storm", 
 	//function = 03F, 
 	basePower = 140,
@@ -24742,7 +24742,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 192,
-	id = Moves.PETALDANCE, 
+	id = Moves.PETAL_DANCE, 
 	//name = "Petal Dance", 
 	//function = 0D2, 
 	basePower = 120,
@@ -24758,7 +24758,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 193,
-	id = Moves.POWERWHIP, 
+	id = Moves.POWER_WHIP, 
 	//name = "Power Whip", 
 	//function = 000, 
 	basePower = 120,
@@ -24774,7 +24774,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 194,
-	id = Moves.SEEDFLARE, 
+	id = Moves.SEED_FLARE, 
 	//name = "Seed Flare", 
 	//function = 04F, 
 	basePower = 120,
@@ -24790,7 +24790,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 195,
-	id = Moves.SOLARBEAM, 
+	id = Moves.SOLAR_BEAM, 
 	//name = "SolarBeam", 
 	//function = 0C4, 
 	basePower = 120,
@@ -24806,7 +24806,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 196,
-	id = Moves.WOODHAMMER, 
+	id = Moves.WOOD_HAMMER, 
 	//name = "Wood Hammer", 
 	//function = 0FB, 
 	basePower = 120,
@@ -24822,7 +24822,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 197,
-	id = Moves.LEAFBLADE, 
+	id = Moves.LEAF_BLADE, 
 	//name = "Leaf Blade", 
 	//function = 000, 
 	basePower = 90,
@@ -24838,7 +24838,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 198,
-	id = Moves.ENERGYBALL, 
+	id = Moves.ENERGY_BALL, 
 	//name = "Energy Ball", 
 	//function = 046, 
 	basePower = 80,
@@ -24854,7 +24854,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 199,
-	id = Moves.SEEDBOMB, 
+	id = Moves.SEED_BOMB, 
 	//name = "Seed Bomb", 
 	//function = 000, 
 	basePower = 80,
@@ -24870,7 +24870,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 200,
-	id = Moves.GIGADRAIN, 
+	id = Moves.GIGA_DRAIN, 
 	//name = "Giga Drain", 
 	//function = 0DD, 
 	basePower = 75,
@@ -24886,7 +24886,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 201,
-	id = Moves.HORNLEECH, 
+	id = Moves.HORN_LEECH, 
 	//name = "Horn Leech", 
 	//function = 0DD, 
 	basePower = 75,
@@ -24902,7 +24902,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 202,
-	id = Moves.LEAFTORNADO, 
+	id = Moves.LEAF_TORNADO, 
 	//name = "Leaf Tornado", 
 	//function = 047, 
 	basePower = 65,
@@ -24918,7 +24918,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 203,
-	id = Moves.MAGICALLEAF, 
+	id = Moves.MAGICAL_LEAF, 
 	//name = "Magical Leaf", 
 	//function = 0A5, 
 	basePower = 60,
@@ -24934,7 +24934,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 204,
-	id = Moves.NEEDLEARM, 
+	id = Moves.NEEDLE_ARM, 
 	//name = "Needle Arm", 
 	//function = 00F, 
 	basePower = 60,
@@ -24950,7 +24950,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 205,
-	id = Moves.RAZORLEAF, 
+	id = Moves.RAZOR_LEAF, 
 	//name = "Razor Leaf", 
 	//function = 000, 
 	basePower = 55,
@@ -24966,7 +24966,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 206,
-	id = Moves.GRASSPLEDGE, 
+	id = Moves.GRASS_PLEDGE, 
 	//name = "Grass Pledge", 
 	//function = 106, 
 	basePower = 50,
@@ -24982,7 +24982,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 207,
-	id = Moves.MEGADRAIN, 
+	id = Moves.MEGA_DRAIN, 
 	//name = "Mega Drain", 
 	//function = 0DD, 
 	basePower = 40,
@@ -24998,7 +24998,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 208,
-	id = Moves.VINEWHIP, 
+	id = Moves.VINE_WHIP, 
 	//name = "Vine Whip", 
 	//function = 000, 
 	basePower = 35,
@@ -25014,7 +25014,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 209,
-	id = Moves.BULLETSEED, 
+	id = Moves.BULLET_SEED, 
 	//name = "Bullet Seed", 
 	//function = 0C0, 
 	basePower = 25,
@@ -25046,7 +25046,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 211,
-	id = Moves.GRASSKNOT, 
+	id = Moves.GRASS_KNOT, 
 	//name = "Grass Knot", 
 	//function = 09A, 
 	basePower = 1,
@@ -25078,7 +25078,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 213,
-	id = Moves.COTTONGUARD, 
+	id = Moves.COTTON_GUARD, 
 	//name = "Cotton Guard", 
 	//function = 038, 
 	basePower = 0,
@@ -25094,7 +25094,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 214,
-	id = Moves.COTTONSPORE, 
+	id = Moves.COTTON_SPORE, 
 	//name = "Cotton Spore", 
 	//function = 04D, 
 	basePower = 0,
@@ -25110,7 +25110,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 215,
-	id = Moves.GRASSWHISTLE, 
+	id = Moves.GRASS_WHISTLE, 
 	//name = "GrassWhistle", 
 	//function = 003, 
 	basePower = 0,
@@ -25137,12 +25137,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user lays roots that restore its HP on every turn. Because it is rooted, it can't switch out."
 },
 new MoveDataDex() {
 	num = 217,
-	id = Moves.LEECHSEED, 
+	id = Moves.LEECH_SEED, 
 	//name = "Leech Seed", 
 	//function = 0DC, 
 	basePower = 0,
@@ -25158,7 +25158,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 218,
-	id = Moves.SLEEPPOWDER, 
+	id = Moves.SLEEP_POWDER, 
 	//name = "Sleep Powder", 
 	//function = 003, 
 	basePower = 0,
@@ -25190,7 +25190,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 220,
-	id = Moves.STUNSPORE, 
+	id = Moves.STUN_SPORE, 
 	//name = "Stun Spore", 
 	//function = 007, 
 	basePower = 0,
@@ -25217,12 +25217,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
 new MoveDataDex() {
 	num = 222,
-	id = Moves.WORRYSEED, 
+	id = Moves.WORRY_SEED, 
 	//name = "Worry Seed", 
 	//function = 064, 
 	basePower = 0,
@@ -25254,7 +25254,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 224,
-	id = Moves.EARTHPOWER, 
+	id = Moves.EARTH_POWER, 
 	//name = "Earth Power", 
 	//function = 046, 
 	basePower = 90,
@@ -25286,7 +25286,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 226,
-	id = Moves.DRILLRUN, 
+	id = Moves.DRILL_RUN, 
 	//name = "Drill Run", 
 	//function = 000, 
 	basePower = 80,
@@ -25302,7 +25302,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 227,
-	id = Moves.BONECLUB, 
+	id = Moves.BONE_CLUB, 
 	//name = "Bone Club", 
 	//function = 00F, 
 	basePower = 65,
@@ -25318,7 +25318,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 228,
-	id = Moves.MUDBOMB, 
+	id = Moves.MUD_BOMB, 
 	//name = "Mud Bomb", 
 	//function = 047, 
 	basePower = 65,
@@ -25350,7 +25350,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 230,
-	id = Moves.MUDSHOT, 
+	id = Moves.MUD_SHOT, 
 	//name = "Mud Shot", 
 	//function = 044, 
 	basePower = 55,
@@ -25382,7 +25382,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 232,
-	id = Moves.SANDTOMB, 
+	id = Moves.SAND_TOMB, 
 	//name = "Sand Tomb", 
 	//function = 0CF, 
 	basePower = 35,
@@ -25398,7 +25398,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 233,
-	id = Moves.BONERUSH, 
+	id = Moves.BONE_RUSH, 
 	//name = "Bone Rush", 
 	//function = 0C0, 
 	basePower = 25,
@@ -25414,7 +25414,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 234,
-	id = Moves.MUDSLAP, 
+	id = Moves.MUD_SLAP, 
 	//name = "Mud-Slap", 
 	//function = 047, 
 	basePower = 20,
@@ -25462,7 +25462,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 237,
-	id = Moves.MUDSPORT, 
+	id = Moves.MUD_SPORT, 
 	//name = "Mud Sport", 
 	//function = 09D, 
 	basePower = 0,
@@ -25478,7 +25478,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 238,
-	id = Moves.SANDATTACK, 
+	id = Moves.SAND_ATTACK, 
 	//name = "Sand-Attack", 
 	//function = 047, 
 	basePower = 0,
@@ -25510,7 +25510,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 240,
-	id = Moves.FREEZESHOCK, 
+	id = Moves.FREEZE_SHOCK, 
 	//name = "Freeze Shock", 
 	//function = 0C5, 
 	basePower = 140,
@@ -25526,7 +25526,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 241,
-	id = Moves.ICEBURN, 
+	id = Moves.ICE_BURN, 
 	//name = "Ice Burn", 
 	//function = 0C6, 
 	basePower = 140,
@@ -25558,7 +25558,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 243,
-	id = Moves.ICEBEAM, 
+	id = Moves.ICE_BEAM, 
 	//name = "Ice Beam", 
 	//function = 00C, 
 	basePower = 95,
@@ -25574,7 +25574,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 244,
-	id = Moves.ICICLECRASH, 
+	id = Moves.ICICLE_CRASH, 
 	//name = "Icicle Crash", 
 	//function = 00F, 
 	basePower = 85,
@@ -25590,7 +25590,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 245,
-	id = Moves.ICEPUNCH, 
+	id = Moves.ICE_PUNCH, 
 	//name = "Ice Punch", 
 	//function = 00C, 
 	basePower = 75,
@@ -25606,7 +25606,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 246,
-	id = Moves.AURORABEAM, 
+	id = Moves.AURORA_BEAM, 
 	//name = "Aurora Beam", 
 	//function = 042, 
 	basePower = 65,
@@ -25638,7 +25638,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 248,
-	id = Moves.ICEFANG, 
+	id = Moves.ICE_FANG, 
 	//name = "Ice Fang", 
 	//function = 00E, 
 	basePower = 65,
@@ -25670,7 +25670,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 250,
-	id = Moves.ICYWIND, 
+	id = Moves.ICY_WIND, 
 	//name = "Icy Wind", 
 	//function = 044, 
 	basePower = 55,
@@ -25686,7 +25686,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 251,
-	id = Moves.FROSTBREATH, 
+	id = Moves.FROST_BREATH, 
 	//name = "Frost Breath", 
 	//function = 0A0, 
 	basePower = 40,
@@ -25702,7 +25702,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 252,
-	id = Moves.ICESHARD, 
+	id = Moves.ICE_SHARD, 
 	//name = "Ice Shard", 
 	//function = 000, 
 	basePower = 40,
@@ -25718,7 +25718,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 253,
-	id = Moves.POWDERSNOW, 
+	id = Moves.POWDER_SNOW, 
 	//name = "Powder Snow", 
 	//function = 00C, 
 	basePower = 40,
@@ -25734,7 +25734,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 254,
-	id = Moves.ICEBALL, 
+	id = Moves.ICE_BALL, 
 	//name = "Ice Ball", 
 	//function = 0D3, 
 	basePower = 30,
@@ -25750,7 +25750,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 255,
-	id = Moves.ICICLESPEAR, 
+	id = Moves.ICICLE_SPEAR, 
 	//name = "Icicle Spear", 
 	//function = 0C0, 
 	basePower = 25,
@@ -25766,7 +25766,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 256,
-	id = Moves.SHEERCOLD, 
+	id = Moves.SHEER_COLD, 
 	//name = "Sheer Cold", 
 	//function = 070, 
 	basePower = 1,
@@ -25846,7 +25846,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 261,
-	id = Moves.SELFDESTRUCT, 
+	id = Moves.SELF_DESTRUCT, 
 	//name = "Selfdestruct", 
 	//function = 0E0, 
 	basePower = 200,
@@ -25862,7 +25862,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 262,
-	id = Moves.GIGAIMPACT, 
+	id = Moves.GIGA_IMPACT, 
 	//name = "Giga Impact", 
 	//function = 0C2, 
 	basePower = 150,
@@ -25878,7 +25878,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 263,
-	id = Moves.HYPERBEAM, 
+	id = Moves.HYPER_BEAM, 
 	//name = "Hyper Beam", 
 	//function = 0C2, 
 	basePower = 150,
@@ -25894,7 +25894,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 264,
-	id = Moves.LASTRESORT, 
+	id = Moves.LAST_RESORT, 
 	//name = "Last Resort", 
 	//function = 125, 
 	basePower = 140,
@@ -25910,7 +25910,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 265,
-	id = Moves.DOUBLEEDGE, 
+	id = Moves.DOUBLE_EDGE, 
 	//name = "Double-Edge", 
 	//function = 0FB, 
 	basePower = 120,
@@ -25926,7 +25926,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 266,
-	id = Moves.HEADCHARGE, 
+	id = Moves.HEAD_CHARGE, 
 	//name = "Head Charge", 
 	//function = 0FA, 
 	basePower = 120,
@@ -25942,7 +25942,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 267,
-	id = Moves.MEGAKICK, 
+	id = Moves.MEGA_KICK, 
 	//name = "Mega Kick", 
 	//function = 000, 
 	basePower = 120,
@@ -25974,7 +25974,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 269,
-	id = Moves.EGGBOMB, 
+	id = Moves.EGG_BOMB, 
 	//name = "Egg Bomb", 
 	//function = 000, 
 	basePower = 100,
@@ -26006,7 +26006,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 271,
-	id = Moves.SKULLBASH, 
+	id = Moves.SKULL_BASH, 
 	//name = "Skull Bash", 
 	//function = 0C8, 
 	basePower = 100,
@@ -26022,7 +26022,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 272,
-	id = Moves.HYPERVOICE, 
+	id = Moves.HYPER_VOICE, 
 	//name = "Hyper Voice", 
 	//function = 000, 
 	basePower = 90,
@@ -26038,7 +26038,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 273,
-	id = Moves.ROCKCLIMB, 
+	id = Moves.ROCK_CLIMB, 
 	//name = "Rock Climb", 
 	//function = 013, 
 	basePower = 90,
@@ -26054,7 +26054,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 274,
-	id = Moves.TAKEDOWN, 
+	id = Moves.TAKE_DOWN, 
 	//name = "Take Down", 
 	//function = 0FA, 
 	basePower = 90,
@@ -26086,7 +26086,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 276,
-	id = Moves.BODYSLAM, 
+	id = Moves.BODY_SLAM, 
 	//name = "Body Slam", 
 	//function = 007, 
 	basePower = 85,
@@ -26102,7 +26102,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 277,
-	id = Moves.TECHNOBLAST, 
+	id = Moves.TECHNO_BLAST, 
 	//name = "Techno Blast", 
 	//function = 09F, 
 	basePower = 85,
@@ -26118,7 +26118,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 278,
-	id = Moves.EXTREMESPEED, 
+	id = Moves.EXTREME_SPEED, 
 	//name = "ExtremeSpeed", 
 	//function = 000, 
 	basePower = 80,
@@ -26134,7 +26134,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 279,
-	id = Moves.HYPERFANG, 
+	id = Moves.HYPER_FANG, 
 	//name = "Hyper Fang", 
 	//function = 00F, 
 	basePower = 80,
@@ -26150,7 +26150,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 280,
-	id = Moves.MEGAPUNCH, 
+	id = Moves.MEGA_PUNCH, 
 	//name = "Mega Punch", 
 	//function = 000, 
 	basePower = 80,
@@ -26166,7 +26166,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 281,
-	id = Moves.RAZORWIND, 
+	id = Moves.RAZOR_WIND, 
 	//name = "Razor Wind", 
 	//function = 0C3, 
 	basePower = 80,
@@ -26214,7 +26214,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 284,
-	id = Moves.TRIATTACK, 
+	id = Moves.TRI_ATTACK, 
 	//name = "Tri Attack", 
 	//function = 017, 
 	basePower = 80,
@@ -26230,7 +26230,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 285,
-	id = Moves.CRUSHCLAW, 
+	id = Moves.CRUSH_CLAW, 
 	//name = "Crush Claw", 
 	//function = 043, 
 	basePower = 75,
@@ -26246,7 +26246,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 286,
-	id = Moves.RELICSONG, 
+	id = Moves.RELIC_SONG, 
 	//name = "Relic Song", 
 	//function = 003, 
 	basePower = 75,
@@ -26262,7 +26262,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 287,
-	id = Moves.CHIPAWAY, 
+	id = Moves.CHIP_AWAY, 
 	//name = "Chip Away", 
 	//function = 0A9, 
 	basePower = 70,
@@ -26278,7 +26278,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 288,
-	id = Moves.DIZZYPUNCH, 
+	id = Moves.DIZZY_PUNCH, 
 	//name = "Dizzy Punch", 
 	//function = 013, 
 	basePower = 70,
@@ -26342,7 +26342,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 292,
-	id = Moves.SECRETPOWER, 
+	id = Moves.SECRET_POWER, 
 	//name = "Secret Power", 
 	//function = 0A4, 
 	basePower = 70,
@@ -26374,7 +26374,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 294,
-	id = Moves.HORNATTACK, 
+	id = Moves.HORN_ATTACK, 
 	//name = "Horn Attack", 
 	//function = 000, 
 	basePower = 65,
@@ -26438,7 +26438,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 298,
-	id = Moves.SMELLINGSALT, 
+	id = Moves.SMELLING_SALTS, 
 	//name = "SmellingSalt", 
 	//function = 07C, 
 	basePower = 60,
@@ -26470,7 +26470,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 300,
-	id = Moves.VICEGRIP, 
+	id = Moves.VICE_GRIP, 
 	//name = "ViceGrip", 
 	//function = 000, 
 	basePower = 55,
@@ -26534,7 +26534,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 304,
-	id = Moves.WEATHERBALL, 
+	id = Moves.WEATHER_BALL, 
 	//name = "Weather Ball", 
 	//function = 087, 
 	basePower = 50,
@@ -26550,7 +26550,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 305,
-	id = Moves.ECHOEDVOICE, 
+	id = Moves.ECHOED_VOICE, 
 	//name = "Echoed Voice", 
 	//function = 092, 
 	basePower = 40,
@@ -26566,7 +26566,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 306,
-	id = Moves.FAKEOUT, 
+	id = Moves.FAKE_OUT, 
 	//name = "Fake Out", 
 	//function = 012, 
 	basePower = 40,
@@ -26582,7 +26582,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 307,
-	id = Moves.FALSESWIPE, 
+	id = Moves.FALSE_SWIPE, 
 	//name = "False Swipe", 
 	//function = 0E9, 
 	basePower = 40,
@@ -26598,7 +26598,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 308,
-	id = Moves.PAYDAY, 
+	id = Moves.PAY_DAY, 
 	//name = "Pay Day", 
 	//function = 109, 
 	basePower = 40,
@@ -26630,7 +26630,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 310,
-	id = Moves.QUICKATTACK, 
+	id = Moves.QUICK_ATTACK, 
 	//name = "Quick Attack", 
 	//function = 000, 
 	basePower = 40,
@@ -26678,7 +26678,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 313,
-	id = Moves.DOUBLEHIT, 
+	id = Moves.DOUBLE_HIT, 
 	//name = "Double Hit", 
 	//function = 0BD, 
 	basePower = 35,
@@ -26710,7 +26710,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 315,
-	id = Moves.TAILSLAP, 
+	id = Moves.TAIL_SLAP, 
 	//name = "Tail Slap", 
 	//function = 0C0, 
 	basePower = 25,
@@ -26742,7 +26742,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 317,
-	id = Moves.RAPIDSPIN, 
+	id = Moves.RAPID_SPIN, 
 	//name = "Rapid Spin", 
 	//function = 110, 
 	basePower = 20,
@@ -26758,7 +26758,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 318,
-	id = Moves.SPIKECANNON, 
+	id = Moves.SPIKE_CANNON, 
 	//name = "Spike Cannon", 
 	//function = 0C0, 
 	basePower = 20,
@@ -26774,7 +26774,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 319,
-	id = Moves.COMETPUNCH, 
+	id = Moves.COMET_PUNCH, 
 	//name = "Comet Punch", 
 	//function = 0C0, 
 	basePower = 18,
@@ -26790,7 +26790,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 320,
-	id = Moves.FURYSWIPES, 
+	id = Moves.FURY_SWIPES, 
 	//name = "Fury Swipes", 
 	//function = 0C0, 
 	basePower = 18,
@@ -26838,7 +26838,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 323,
-	id = Moves.DOUBLESLAP, 
+	id = Moves.DOUBLE_SLAP, 
 	//name = "DoubleSlap", 
 	//function = 0C0, 
 	basePower = 15,
@@ -26854,7 +26854,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 324,
-	id = Moves.FURYATTACK, 
+	id = Moves.FURY_ATTACK, 
 	//name = "Fury Attack", 
 	//function = 0C0, 
 	basePower = 15,
@@ -26918,7 +26918,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 328,
-	id = Moves.CRUSHGRIP, 
+	id = Moves.CRUSH_GRIP, 
 	//name = "Crush Grip", 
 	//function = 08C, 
 	basePower = 1,
@@ -26998,7 +26998,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 333,
-	id = Moves.HIDDENPOWER, 
+	id = Moves.HIDDEN_POWER, 
 	//name = "Hidden Power", 
 	//function = 090, 
 	basePower = 1,
@@ -27014,7 +27014,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 334,
-	id = Moves.HORNDRILL, 
+	id = Moves.HORN_DRILL, 
 	//name = "Horn Drill", 
 	//function = 070, 
 	basePower = 1,
@@ -27030,7 +27030,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 335,
-	id = Moves.NATURALGIFT, 
+	id = Moves.NATURAL_GIFT, 
 	//name = "Natural Gift", 
 	//function = 096, 
 	basePower = 1,
@@ -27078,7 +27078,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 338,
-	id = Moves.SONICBOOM, 
+	id = Moves.SONIC_BOOM, 
 	//name = "SonicBoom", 
 	//function = 06A, 
 	basePower = 1,
@@ -27094,7 +27094,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 339,
-	id = Moves.SPITUP, 
+	id = Moves.SPIT_UP, 
 	//name = "Spit Up", 
 	//function = 113, 
 	basePower = 1,
@@ -27110,7 +27110,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 340,
-	id = Moves.SUPERFANG, 
+	id = Moves.SUPER_FANG, 
 	//name = "Super Fang", 
 	//function = 06C, 
 	basePower = 1,
@@ -27126,7 +27126,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 341,
-	id = Moves.TRUMPCARD, 
+	id = Moves.TRUMP_CARD, 
 	//name = "Trump Card", 
 	//function = 097, 
 	basePower = 1,
@@ -27142,7 +27142,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 342,
-	id = Moves.WRINGOUT, 
+	id = Moves.WRING_OUT, 
 	//name = "Wring Out", 
 	//function = 08C, 
 	basePower = 1,
@@ -27174,7 +27174,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 344,
-	id = Moves.AFTERYOU, 
+	id = Moves.AFTER_YOU, 
 	//name = "After You", 
 	//function = 11D, 
 	basePower = 0,
@@ -27222,7 +27222,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 347,
-	id = Moves.BATONPASS, 
+	id = Moves.BATON_PASS, 
 	//name = "Baton Pass", 
 	//function = 0ED, 
 	basePower = 0,
@@ -27238,7 +27238,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 348,
-	id = Moves.BELLYDRUM, 
+	id = Moves.BELLY_DRUM, 
 	//name = "Belly Drum", 
 	//function = 03A, 
 	basePower = 0,
@@ -27350,7 +27350,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 355,
-	id = Moves.CONVERSION2, 
+	id = Moves.CONVERSION_2, 
 	//name = "Conversion 2", 
 	//function = 05F, 
 	basePower = 0,
@@ -27382,7 +27382,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 357,
-	id = Moves.DEFENSECURL, 
+	id = Moves.DEFENSE_CURL, 
 	//name = "Defense Curl", 
 	//function = 01E, 
 	basePower = 0,
@@ -27414,7 +27414,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 359,
-	id = Moves.DOUBLETEAM, 
+	id = Moves.DOUBLE_TEAM, 
 	//name = "Double Team", 
 	//function = 022, 
 	basePower = 0,
@@ -27494,7 +27494,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 364,
-	id = Moves.FOCUSENERGY, 
+	id = Moves.FOCUS_ENERGY, 
 	//name = "Focus Energy", 
 	//function = 023, 
 	basePower = 0,
@@ -27510,7 +27510,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 365,
-	id = Moves.FOLLOWME, 
+	id = Moves.FOLLOW_ME, 
 	//name = "Follow Me", 
 	//function = 117, 
 	basePower = 0,
@@ -27606,7 +27606,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 371,
-	id = Moves.HEALBELL, 
+	id = Moves.HEAL_BELL, 
 	//name = "Heal Bell", 
 	//function = 019, 
 	basePower = 0,
@@ -27622,7 +27622,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 372,
-	id = Moves.HELPINGHAND, 
+	id = Moves.HELPING_HAND, 
 	//name = "Helping Hand", 
 	//function = 09C, 
 	basePower = 0,
@@ -27670,7 +27670,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 375,
-	id = Moves.LOCKON, 
+	id = Moves.LOCK_ON, 
 	//name = "Lock-On", 
 	//function = 0A6, 
 	basePower = 0,
@@ -27686,7 +27686,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 376,
-	id = Moves.LOVELYKISS, 
+	id = Moves.LOVELY_KISS, 
 	//name = "Lovely Kiss", 
 	//function = 003, 
 	basePower = 0,
@@ -27702,7 +27702,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 377,
-	id = Moves.LUCKYCHANT, 
+	id = Moves.LUCKY_CHANT, 
 	//name = "Lucky Chant", 
 	//function = 0A1, 
 	basePower = 0,
@@ -27718,7 +27718,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 378,
-	id = Moves.MEFIRST, 
+	id = Moves.ME_FIRST, 
 	//name = "Me First", 
 	//function = 0B0, 
 	basePower = 0,
@@ -27734,7 +27734,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 379,
-	id = Moves.MEANLOOK, 
+	id = Moves.MEAN_LOOK, 
 	//name = "Mean Look", 
 	//function = 0EF, 
 	basePower = 0,
@@ -27766,7 +27766,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 381,
-	id = Moves.MILKDRINK, 
+	id = Moves.MILK_DRINK, 
 	//name = "Milk Drink", 
 	//function = 0D5, 
 	basePower = 0,
@@ -27777,7 +27777,7 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP."
 },
 new MoveDataDex() {
@@ -27798,7 +27798,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 383,
-	id = Moves.MINDREADER, 
+	id = Moves.MIND_READER, 
 	//name = "Mind Reader", 
 	//function = 0A6, 
 	basePower = 0,
@@ -27841,12 +27841,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
 new MoveDataDex() {
 	num = 386,
-	id = Moves.MORNINGSUN, 
+	id = Moves.MORNING_SUN, 
 	//name = "Morning Sun", 
 	//function = 0D8, 
 	basePower = 0,
@@ -27857,12 +27857,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
 new MoveDataDex() {
 	num = 387,
-	id = Moves.NATUREPOWER, 
+	id = Moves.NATURE_POWER, 
 	//name = "Nature Power", 
 	//function = 0B3, 
 	basePower = 0,
@@ -27878,7 +27878,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 388,
-	id = Moves.ODORSLEUTH, 
+	id = Moves.ODOR_SLEUTH, 
 	//name = "Odor Sleuth", 
 	//function = 0A7, 
 	basePower = 0,
@@ -27894,7 +27894,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 389,
-	id = Moves.PAINSPLIT, 
+	id = Moves.PAIN_SPLIT, 
 	//name = "Pain Split", 
 	//function = 05A, 
 	basePower = 0,
@@ -27910,7 +27910,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 390,
-	id = Moves.PERISHSONG, 
+	id = Moves.PERISH_SONG, 
 	//name = "Perish Song", 
 	//function = 0E5, 
 	basePower = 0,
@@ -27942,7 +27942,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 392,
-	id = Moves.PSYCHUP, 
+	id = Moves.PSYCH_UP, 
 	//name = "Psych Up", 
 	//function = 055, 
 	basePower = 0,
@@ -27969,7 +27969,7 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "Restoring its own cells, the user restores its own HP by half of its max HP."
 },
 new MoveDataDex() {
@@ -27990,7 +27990,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 395,
-	id = Moves.REFLECTTYPE, 
+	id = Moves.REFLECT_TYPE, 
 	//name = "Reflect Type", 
 	//function = 062, 
 	basePower = 0,
@@ -28054,7 +28054,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 399,
-	id = Moves.SCARYFACE, 
+	id = Moves.SCARY_FACE, 
 	//name = "Scary Face", 
 	//function = 04D, 
 	basePower = 0,
@@ -28102,7 +28102,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 402,
-	id = Moves.SHELLSMASH, 
+	id = Moves.SHELL_SMASH, 
 	//name = "Shell Smash", 
 	//function = 035, 
 	basePower = 0,
@@ -28118,7 +28118,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 403,
-	id = Moves.SIMPLEBEAM, 
+	id = Moves.SIMPLE_BEAM, 
 	//name = "Simple Beam", 
 	//function = 063, 
 	basePower = 0,
@@ -28166,7 +28166,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 406,
-	id = Moves.SLACKOFF, 
+	id = Moves.SLACK_OFF, 
 	//name = "Slack Off", 
 	//function = 0D5, 
 	basePower = 0,
@@ -28177,12 +28177,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user slacks off, restoring its own HP by up to half of its maximum HP."
 },
 new MoveDataDex() {
 	num = 407,
-	id = Moves.SLEEPTALK, 
+	id = Moves.SLEEP_TALK, 
 	//name = "Sleep Talk", 
 	//function = 0B4, 
 	basePower = 0,
@@ -28214,7 +28214,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 409,
-	id = Moves.SOFTBOILED, 
+	id = Moves.SOFT_BOILED, 
 	//name = "Softboiled", 
 	//function = 0D5, 
 	basePower = 0,
@@ -28225,7 +28225,7 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP."
 },
 new MoveDataDex() {
@@ -28321,12 +28321,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The power stored using the move Stockpile is absorbed by the user to heal its HP."
 },
 new MoveDataDex() {
 	num = 416,
-	id = Moves.SWEETKISS, 
+	id = Moves.SWEET_KISS, 
 	//name = "Sweet Kiss", 
 	//function = 013, 
 	basePower = 0,
@@ -28342,7 +28342,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 417,
-	id = Moves.SWEETSCENT, 
+	id = Moves.SWEET_SCENT, 
 	//name = "Sweet Scent", 
 	//function = 048, 
 	basePower = 0,
@@ -28358,7 +28358,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 418,
-	id = Moves.SWORDSDANCE, 
+	id = Moves.SWORDS_DANCE, 
 	//name = "Swords Dance", 
 	//function = 02E, 
 	basePower = 0,
@@ -28374,7 +28374,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 419,
-	id = Moves.TAILWHIP, 
+	id = Moves.TAIL_WHIP, 
 	//name = "Tail Whip", 
 	//function = 043, 
 	basePower = 0,
@@ -28390,7 +28390,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 420,
-	id = Moves.TEETERDANCE, 
+	id = Moves.TEETER_DANCE, 
 	//name = "Teeter Dance", 
 	//function = 013, 
 	basePower = 0,
@@ -28465,12 +28465,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "One turn after this move is used, the target's HP is restored by half the user's maximum HP."
 },
 new MoveDataDex() {
 	num = 425,
-	id = Moves.WORKUP, 
+	id = Moves.WORK_UP, 
 	//name = "Work Up", 
 	//function = 027, 
 	basePower = 0,
@@ -28502,7 +28502,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 427,
-	id = Moves.GUNKSHOT, 
+	id = Moves.GUNK_SHOT, 
 	//name = "Gunk Shot", 
 	//function = 005, 
 	basePower = 120,
@@ -28518,7 +28518,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 428,
-	id = Moves.SLUDGEWAVE, 
+	id = Moves.SLUDGE_WAVE, 
 	//name = "Sludge Wave", 
 	//function = 005, 
 	basePower = 95,
@@ -28534,7 +28534,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 429,
-	id = Moves.SLUDGEBOMB, 
+	id = Moves.SLUDGE_BOMB, 
 	//name = "Sludge Bomb", 
 	//function = 005, 
 	basePower = 90,
@@ -28550,7 +28550,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 430,
-	id = Moves.POISONJAB, 
+	id = Moves.POISON_JAB, 
 	//name = "Poison Jab", 
 	//function = 005, 
 	basePower = 80,
@@ -28566,7 +28566,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 431,
-	id = Moves.CROSSPOISON, 
+	id = Moves.CROSS_POISON, 
 	//name = "Cross Poison", 
 	//function = 005, 
 	basePower = 70,
@@ -28614,7 +28614,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 434,
-	id = Moves.CLEARSMOG, 
+	id = Moves.CLEAR_SMOG, 
 	//name = "Clear Smog", 
 	//function = 050, 
 	basePower = 50,
@@ -28630,7 +28630,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 435,
-	id = Moves.POISONFANG, 
+	id = Moves.POISON_FANG, 
 	//name = "Poison Fang", 
 	//function = 006, 
 	basePower = 50,
@@ -28646,7 +28646,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 436,
-	id = Moves.POISONTAIL, 
+	id = Moves.POISON_TAIL, 
 	//name = "Poison Tail", 
 	//function = 005, 
 	basePower = 50,
@@ -28678,7 +28678,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 438,
-	id = Moves.ACIDSPRAY, 
+	id = Moves.ACID_SPRAY, 
 	//name = "Acid Spray", 
 	//function = 04F, 
 	basePower = 40,
@@ -28710,7 +28710,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 440,
-	id = Moves.POISONSTING, 
+	id = Moves.POISON_STING, 
 	//name = "Poison Sting", 
 	//function = 005, 
 	basePower = 15,
@@ -28726,7 +28726,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 441,
-	id = Moves.ACIDARMOR, 
+	id = Moves.ACID_ARMOR, 
 	//name = "Acid Armor", 
 	//function = 02F, 
 	basePower = 0,
@@ -28758,7 +28758,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 443,
-	id = Moves.GASTROACID, 
+	id = Moves.GASTRO_ACID, 
 	//name = "Gastro Acid", 
 	//function = 068, 
 	basePower = 0,
@@ -28774,7 +28774,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 444,
-	id = Moves.POISONGAS, 
+	id = Moves.POISON_GAS, 
 	//name = "Poison Gas", 
 	//function = 005, 
 	basePower = 0,
@@ -28790,7 +28790,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 445,
-	id = Moves.POISONPOWDER, 
+	id = Moves.POISON_POWDER, 
 	//name = "PoisonPowder", 
 	//function = 005, 
 	basePower = 0,
@@ -28822,7 +28822,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 447,
-	id = Moves.TOXICSPIKES, 
+	id = Moves.TOXIC_SPIKES, 
 	//name = "Toxic Spikes", 
 	//function = 104, 
 	basePower = 0,
@@ -28838,7 +28838,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 448,
-	id = Moves.PSYCHOBOOST, 
+	id = Moves.PSYCHO_BOOST, 
 	//name = "Psycho Boost", 
 	//function = 03F, 
 	basePower = 140,
@@ -28854,7 +28854,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 449,
-	id = Moves.DREAMEATER, 
+	id = Moves.DREAM_EATER, 
 	//name = "Dream Eater", 
 	//function = 0DE, 
 	basePower = 100,
@@ -28870,7 +28870,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 450,
-	id = Moves.FUTURESIGHT, 
+	id = Moves.FUTURE_SIGHT, 
 	//name = "Future Sight", 
 	//function = 111, 
 	basePower = 100,
@@ -28950,7 +28950,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 455,
-	id = Moves.ZENHEADBUTT, 
+	id = Moves.ZEN_HEADBUTT, 
 	//name = "Zen Headbutt", 
 	//function = 00F, 
 	basePower = 80,
@@ -28966,7 +28966,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 456,
-	id = Moves.LUSTERPURGE, 
+	id = Moves.LUSTER_PURGE, 
 	//name = "Luster Purge", 
 	//function = 046, 
 	basePower = 70,
@@ -28982,7 +28982,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 457,
-	id = Moves.MISTBALL, 
+	id = Moves.MIST_BALL, 
 	//name = "Mist Ball", 
 	//function = 045, 
 	basePower = 70,
@@ -28998,7 +28998,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 458,
-	id = Moves.PSYCHOCUT, 
+	id = Moves.PSYCHO_CUT, 
 	//name = "Psycho Cut", 
 	//function = 000, 
 	basePower = 70,
@@ -29046,7 +29046,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 461,
-	id = Moves.HEARTSTAMP, 
+	id = Moves.HEART_STAMP, 
 	//name = "Heart Stamp", 
 	//function = 00F, 
 	basePower = 60,
@@ -29078,7 +29078,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 463,
-	id = Moves.MIRRORCOAT, 
+	id = Moves.MIRROR_COAT, 
 	//name = "Mirror Coat", 
 	//function = 072, 
 	basePower = 1,
@@ -29110,7 +29110,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 465,
-	id = Moves.STOREDPOWER, 
+	id = Moves.STORED_POWER, 
 	//name = "Stored Power", 
 	//function = 08E, 
 	basePower = 1,
@@ -29142,7 +29142,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 467,
-	id = Moves.ALLYSWITCH, 
+	id = Moves.ALLY_SWITCH, 
 	//name = "Ally Switch", 
 	//function = 120, 
 	basePower = 0,
@@ -29190,7 +29190,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 470,
-	id = Moves.CALMMIND, 
+	id = Moves.CALM_MIND, 
 	//name = "Calm Mind", 
 	//function = 02C, 
 	basePower = 0,
@@ -29206,7 +29206,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 471,
-	id = Moves.COSMICPOWER, 
+	id = Moves.COSMIC_POWER, 
 	//name = "Cosmic Power", 
 	//function = 02A, 
 	basePower = 0,
@@ -29238,7 +29238,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 473,
-	id = Moves.GUARDSPLIT, 
+	id = Moves.GUARD_SPLIT, 
 	//name = "Guard Split", 
 	//function = 059, 
 	basePower = 0,
@@ -29254,7 +29254,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 474,
-	id = Moves.GUARDSWAP, 
+	id = Moves.GUARD_SWAP, 
 	//name = "Guard Swap", 
 	//function = 053, 
 	basePower = 0,
@@ -29270,7 +29270,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 475,
-	id = Moves.HEALBLOCK, 
+	id = Moves.HEAL_BLOCK, 
 	//name = "Heal Block", 
 	//function = 0BB, 
 	basePower = 0,
@@ -29286,7 +29286,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 476,
-	id = Moves.HEALPULSE, 
+	id = Moves.HEAL_PULSE, 
 	//name = "Heal Pulse", 
 	//function = 0DF, 
 	basePower = 0,
@@ -29297,12 +29297,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.SingleNonUser,
 	priority = 0,
-	flags = new Flags( protect: true,reflectable: truei ) { }
+	flags = new Flags( protect: true,reflectable: true,bite: true ) { }
 	//,description = "The user emits a healing pulse which restores the target's HP by up to half of its max HP."
 },
 new MoveDataDex() {
 	num = 477,
-	id = Moves.HEALINGWISH, 
+	id = Moves.HEALING_WISH, 
 	//name = "Healing Wish", 
 	//function = 0E3, 
 	basePower = 0,
@@ -29313,12 +29313,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user faints. In return, the Pokémon taking its place will have its HP restored and status cured."
 },
 new MoveDataDex() {
 	num = 478,
-	id = Moves.HEARTSWAP, 
+	id = Moves.HEART_SWAP, 
 	//name = "Heart Swap", 
 	//function = 054, 
 	basePower = 0,
@@ -29382,7 +29382,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 482,
-	id = Moves.LIGHTSCREEN, 
+	id = Moves.LIGHT_SCREEN, 
 	//name = "Light Screen", 
 	//function = 0A3, 
 	basePower = 0,
@@ -29398,7 +29398,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 483,
-	id = Moves.LUNARDANCE, 
+	id = Moves.LUNAR_DANCE, 
 	//name = "Lunar Dance", 
 	//function = 0E4, 
 	basePower = 0,
@@ -29409,12 +29409,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user faints. In return, the Pokémon taking its place will have its status and HP fully restored."
 },
 new MoveDataDex() {
 	num = 484,
-	id = Moves.MAGICCOAT, 
+	id = Moves.MAGIC_COAT, 
 	//name = "Magic Coat", 
 	//function = 0B1, 
 	basePower = 0,
@@ -29430,7 +29430,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 485,
-	id = Moves.MAGICROOM, 
+	id = Moves.MAGIC_ROOM, 
 	//name = "Magic Room", 
 	//function = 0F9, 
 	basePower = 0,
@@ -29462,7 +29462,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 487,
-	id = Moves.MIRACLEEYE, 
+	id = Moves.MIRACLE_EYE, 
 	//name = "Miracle Eye", 
 	//function = 0A8, 
 	basePower = 0,
@@ -29478,7 +29478,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 488,
-	id = Moves.POWERSPLIT, 
+	id = Moves.POWER_SPLIT, 
 	//name = "Power Split", 
 	//function = 058, 
 	basePower = 0,
@@ -29494,7 +29494,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 489,
-	id = Moves.POWERSWAP, 
+	id = Moves.POWER_SWAP, 
 	//name = "Power Swap", 
 	//function = 052, 
 	basePower = 0,
@@ -29510,7 +29510,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 490,
-	id = Moves.POWERTRICK, 
+	id = Moves.POWER_TRICK, 
 	//name = "Power Trick", 
 	//function = 057, 
 	basePower = 0,
@@ -29526,7 +29526,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 491,
-	id = Moves.PSYCHOSHIFT, 
+	id = Moves.PSYCHO_SHIFT, 
 	//name = "Psycho Shift", 
 	//function = 01B, 
 	basePower = 0,
@@ -29569,12 +29569,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user goes to sleep for two turns. It fully restores the user's HP and heals any status problem."
 },
 new MoveDataDex() {
 	num = 494,
-	id = Moves.ROLEPLAY, 
+	id = Moves.ROLE_PLAY, 
 	//name = "Role Play", 
 	//function = 065, 
 	basePower = 0,
@@ -29590,7 +29590,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 495,
-	id = Moves.SKILLSWAP, 
+	id = Moves.SKILL_SWAP, 
 	//name = "Skill Swap", 
 	//function = 067, 
 	basePower = 0,
@@ -29654,7 +29654,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 499,
-	id = Moves.TRICKROOM, 
+	id = Moves.TRICK_ROOM, 
 	//name = "Trick Room", 
 	//function = 11F, 
 	basePower = 0,
@@ -29670,7 +29670,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 500,
-	id = Moves.WONDERROOM, 
+	id = Moves.WONDER_ROOM, 
 	//name = "Wonder Room", 
 	//function = 124, 
 	basePower = 0,
@@ -29686,7 +29686,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 501,
-	id = Moves.HEADSMASH, 
+	id = Moves.HEAD_SMASH, 
 	//name = "Head Smash", 
 	//function = 0FC, 
 	basePower = 150,
@@ -29702,7 +29702,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 502,
-	id = Moves.ROCKWRECKER, 
+	id = Moves.ROCK_WRECKER, 
 	//name = "Rock Wrecker", 
 	//function = 0C2, 
 	basePower = 150,
@@ -29718,7 +29718,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 503,
-	id = Moves.STONEEDGE, 
+	id = Moves.STONE_EDGE, 
 	//name = "Stone Edge", 
 	//function = 000, 
 	basePower = 100,
@@ -29734,7 +29734,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 504,
-	id = Moves.ROCKSLIDE, 
+	id = Moves.ROCK_SLIDE, 
 	//name = "Rock Slide", 
 	//function = 00F, 
 	basePower = 75,
@@ -29750,7 +29750,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 505,
-	id = Moves.POWERGEM, 
+	id = Moves.POWER_GEM, 
 	//name = "Power Gem", 
 	//function = 000, 
 	basePower = 70,
@@ -29766,7 +29766,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 506,
-	id = Moves.ANCIENTPOWER, 
+	id = Moves.ANCIENT_POWER, 
 	//name = "AncientPower", 
 	//function = 02D, 
 	basePower = 60,
@@ -29782,7 +29782,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 507,
-	id = Moves.ROCKTHROW, 
+	id = Moves.ROCK_THROW, 
 	//name = "Rock Throw", 
 	//function = 000, 
 	basePower = 50,
@@ -29798,7 +29798,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 508,
-	id = Moves.ROCKTOMB, 
+	id = Moves.ROCK_TOMB, 
 	//name = "Rock Tomb", 
 	//function = 044, 
 	basePower = 50,
@@ -29814,7 +29814,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 509,
-	id = Moves.SMACKDOWN, 
+	id = Moves.SMACK_DOWN, 
 	//name = "Smack Down", 
 	//function = 11C, 
 	basePower = 50,
@@ -29846,7 +29846,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 511,
-	id = Moves.ROCKBLAST, 
+	id = Moves.ROCK_BLAST, 
 	//name = "Rock Blast", 
 	//function = 0C0, 
 	basePower = 25,
@@ -29862,7 +29862,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 512,
-	id = Moves.ROCKPOLISH, 
+	id = Moves.ROCK_POLISH, 
 	//name = "Rock Polish", 
 	//function = 030, 
 	basePower = 0,
@@ -29894,7 +29894,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 514,
-	id = Moves.STEALTHROCK, 
+	id = Moves.STEALTH_ROCK, 
 	//name = "Stealth Rock", 
 	//function = 105, 
 	basePower = 0,
@@ -29910,7 +29910,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 515,
-	id = Moves.WIDEGUARD, 
+	id = Moves.WIDE_GUARD, 
 	//name = "Wide Guard", 
 	//function = 0AC, 
 	basePower = 0,
@@ -29926,7 +29926,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 516,
-	id = Moves.DOOMDESIRE, 
+	id = Moves.DOOM_DESIRE, 
 	//name = "Doom Desire", 
 	//function = 111, 
 	basePower = 140,
@@ -29942,7 +29942,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 517,
-	id = Moves.IRONTAIL, 
+	id = Moves.IRON_TAIL, 
 	//name = "Iron Tail", 
 	//function = 043, 
 	basePower = 100,
@@ -29958,7 +29958,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 518,
-	id = Moves.METEORMASH, 
+	id = Moves.METEOR_MASH, 
 	//name = "Meteor Mash", 
 	//function = 01C, 
 	basePower = 100,
@@ -29974,7 +29974,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 519,
-	id = Moves.FLASHCANNON, 
+	id = Moves.FLASH_CANNON, 
 	//name = "Flash Cannon", 
 	//function = 046, 
 	basePower = 80,
@@ -29990,7 +29990,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 520,
-	id = Moves.IRONHEAD, 
+	id = Moves.IRON_HEAD, 
 	//name = "Iron Head", 
 	//function = 00F, 
 	basePower = 80,
@@ -30006,7 +30006,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 521,
-	id = Moves.STEELWING, 
+	id = Moves.STEEL_WING, 
 	//name = "Steel Wing", 
 	//function = 01D, 
 	basePower = 70,
@@ -30022,7 +30022,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 522,
-	id = Moves.MIRRORSHOT, 
+	id = Moves.MIRROR_SHOT, 
 	//name = "Mirror Shot", 
 	//function = 047, 
 	basePower = 65,
@@ -30038,7 +30038,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 523,
-	id = Moves.MAGNETBOMB, 
+	id = Moves.MAGNET_BOMB, 
 	//name = "Magnet Bomb", 
 	//function = 0A5, 
 	basePower = 60,
@@ -30054,7 +30054,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 524,
-	id = Moves.GEARGRIND, 
+	id = Moves.GEAR_GRIND, 
 	//name = "Gear Grind", 
 	//function = 0BD, 
 	basePower = 50,
@@ -30070,7 +30070,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 525,
-	id = Moves.METALCLAW, 
+	id = Moves.METAL_CLAW, 
 	//name = "Metal Claw", 
 	//function = 01C, 
 	basePower = 50,
@@ -30086,7 +30086,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 526,
-	id = Moves.BULLETPUNCH, 
+	id = Moves.BULLET_PUNCH, 
 	//name = "Bullet Punch", 
 	//function = 000, 
 	basePower = 40,
@@ -30102,7 +30102,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 527,
-	id = Moves.GYROBALL, 
+	id = Moves.GYRO_BALL, 
 	//name = "Gyro Ball", 
 	//function = 08D, 
 	basePower = 1,
@@ -30118,7 +30118,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 528,
-	id = Moves.HEAVYSLAM, 
+	id = Moves.HEAVY_SLAM, 
 	//name = "Heavy Slam", 
 	//function = 09B, 
 	basePower = 1,
@@ -30134,7 +30134,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 529,
-	id = Moves.METALBURST, 
+	id = Moves.METAL_BURST, 
 	//name = "Metal Burst", 
 	//function = 073, 
 	basePower = 1,
@@ -30166,7 +30166,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 531,
-	id = Moves.IRONDEFENSE, 
+	id = Moves.IRON_DEFENSE, 
 	//name = "Iron Defense", 
 	//function = 02F, 
 	basePower = 0,
@@ -30182,7 +30182,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 532,
-	id = Moves.METALSOUND, 
+	id = Moves.METAL_SOUND, 
 	//name = "Metal Sound", 
 	//function = 04F, 
 	basePower = 0,
@@ -30198,7 +30198,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 533,
-	id = Moves.SHIFTGEAR, 
+	id = Moves.SHIFT_GEAR, 
 	//name = "Shift Gear", 
 	//function = 036, 
 	basePower = 0,
@@ -30214,7 +30214,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 534,
-	id = Moves.HYDROCANNON, 
+	id = Moves.HYDRO_CANNON, 
 	//name = "Hydro Cannon", 
 	//function = 0C2, 
 	basePower = 150,
@@ -30230,7 +30230,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 535,
-	id = Moves.WATERSPOUT, 
+	id = Moves.WATER_SPOUT, 
 	//name = "Water Spout", 
 	//function = 08B, 
 	basePower = 150,
@@ -30246,7 +30246,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 536,
-	id = Moves.HYDROPUMP, 
+	id = Moves.HYDRO_PUMP, 
 	//name = "Hydro Pump", 
 	//function = 000, 
 	basePower = 120,
@@ -30262,7 +30262,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 537,
-	id = Moves.MUDDYWATER, 
+	id = Moves.MUDDY_WATER, 
 	//name = "Muddy Water", 
 	//function = 047, 
 	basePower = 95,
@@ -30294,7 +30294,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 539,
-	id = Moves.AQUATAIL, 
+	id = Moves.AQUA_TAIL, 
 	//name = "Aqua Tail", 
 	//function = 000, 
 	basePower = 90,
@@ -30374,7 +30374,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 544,
-	id = Moves.RAZORSHELL, 
+	id = Moves.RAZOR_SHELL, 
 	//name = "Razor Shell", 
 	//function = 043, 
 	basePower = 75,
@@ -30406,7 +30406,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 546,
-	id = Moves.BUBBLEBEAM, 
+	id = Moves.BUBBLE_BEAM, 
 	//name = "BubbleBeam", 
 	//function = 044, 
 	basePower = 65,
@@ -30438,7 +30438,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 548,
-	id = Moves.WATERPULSE, 
+	id = Moves.WATER_PULSE, 
 	//name = "Water Pulse", 
 	//function = 013, 
 	basePower = 60,
@@ -30454,7 +30454,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 549,
-	id = Moves.WATERPLEDGE, 
+	id = Moves.WATER_PLEDGE, 
 	//name = "Water Pledge", 
 	//function = 108, 
 	basePower = 50,
@@ -30470,7 +30470,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 550,
-	id = Moves.AQUAJET, 
+	id = Moves.AQUA_JET, 
 	//name = "Aqua Jet", 
 	//function = 000, 
 	basePower = 40,
@@ -30486,7 +30486,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 551,
-	id = Moves.WATERGUN, 
+	id = Moves.WATER_GUN, 
 	//name = "Water Gun", 
 	//function = 000, 
 	basePower = 40,
@@ -30550,7 +30550,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 555,
-	id = Moves.AQUARING, 
+	id = Moves.AQUA_RING, 
 	//name = "Aqua Ring", 
 	//function = 0DA, 
 	basePower = 0,
@@ -30561,12 +30561,12 @@ new MoveDataDex() {
 	effects = 0,
 	target = Target.User,
 	priority = 0,
-	flags = new Flags( snatch: truei ) { }
+	flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user envelops itself in a veil made of water. It regains some HP on every turn."
 },
 new MoveDataDex() {
 	num = 556,
-	id = Moves.RAINDANCE, 
+	id = Moves.RAIN_DANCE, 
 	//name = "Rain Dance", 
 	//function = 100, 
 	basePower = 0,
@@ -30598,7 +30598,7 @@ new MoveDataDex() {
 },
 new MoveDataDex() {
 	num = 558,
-	id = Moves.WATERSPORT, 
+	id = Moves.WATER_SPORT, 
 	//name = "Water Sport", 
 	//function = 09E, 
 	basePower = 0,
