@@ -26,21 +26,42 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 {
     public bool debugMode { get; set; }
 
-	public Trainer playerTrainer { get; set; }
     //public static Translator.Languages UserLanguage = Translator.Languages.English;
     public static Settings.Languages UserLanguage = Settings.Languages.English;
     public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
-    public static SaveDataOld currentSave;
+	public Trainer playerTrainer { get; set; }
+	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
+	#region Private Records of Player Storage Data
+	public static Pokemon[,] PC_Poke { get; set; }
+	public static string[] PC_boxNames { get; set; }
+	public static int[] PC_boxTexture { get; set; }
+	public static List<Item> PC_Items { get; set; }
+	public static List<Item> Bag_Items { get; set; }
+	#endregion
 
-    #region Unity Canvas UI
-    //Game UI
-    //public UnityEngine.Texture2D DialogWindowSkin;
-    //private UnityEngine.UI.Image DialogWindowSkin;
-    /// <summary>
-    /// Frame Style
-    /// </summary>
-    public static UnityEngine.Sprite WindowSkin { get; private set; }
+	public static SaveDataOld currentSave;
+
+	#region Constructor
+	GameVariables()
+	{
+		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
+		PC_boxNames = new string[Settings.STORAGEBOXES];
+		PC_boxTexture = new int[Settings.STORAGEBOXES];
+
+		PC_Items = new List<Item>();
+		Bag_Items = new List<Item>();
+	}
+	#endregion
+
+	#region Unity Canvas UI
+	//Game UI
+	//public UnityEngine.Texture2D DialogWindowSkin;
+	//private UnityEngine.UI.Image DialogWindowSkin;
+	/// <summary>
+	/// Frame Style
+	/// </summary>
+	public static UnityEngine.Sprite WindowSkin { get; private set; }
     public static UnityEngine.Sprite DialogSkin { get; private set; }
 
     #region Resources
@@ -303,6 +324,352 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			bf.Serialize(file, SaveLoad.savedGames);
 			file.Close();
 		}
+	}
+	#endregion
+
+	#region Trainer PC and Bag Inventory
+	public class TrainerPC
+	{
+		//public static PC
+		private Trainer trainer { get; set; }
+		private int? activeBox { get; set; }
+		public string Name { get; set; }
+		public int Texture { get; set; }
+		public Pokemon[] Pokemons { get; set; }
+		/// <summary>
+		/// </summary>
+		/// ToDo: Add filter to add/remove items...
+		public List<Item> Items { get { return GameVariables.PC_Items; } set { GameVariables.PC_Items = value; } }
+
+		public TrainerPC this[int i]
+		{
+			get
+			{
+				this.activeBox = i;
+				Pokemon[] p = new Pokemon[30];
+				for (int t = 0; t < 30; t++)
+				{
+					p[t] = GameVariables.PC_Poke[i, t];
+				}
+				this.Pokemons = p;
+				this.Texture = GameVariables.PC_boxTexture[i];
+				this.Name = GameVariables.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
+				return this;
+			}
+		}
+
+		public TrainerPC()
+		{
+		}
+
+		public TrainerPC(Trainer t) : this()
+		{
+			trainer = t;
+		}
+
+		public bool hasSpace()
+		{
+			if (getBoxCount().HasValue && getBoxCount().Value < 30) return true;
+			else return false;
+		}
+
+		public int? getBoxCount()
+		{
+			int result = 0;
+			for (int i = 0; i < Pokemons.Length; i++)
+			{
+				if (Pokemons[i] != null || Pokemons[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
+				{
+					result += 1;
+				}
+			}
+			return result;
+		}
+
+		public int? getIndexOfFirstEmpty()
+		{
+			//int result = 0;
+			for (int i = 0; i < Pokemons.Length; i++)
+			{
+				if (Pokemons[i] == null || Pokemons[i].Species == PokemonUnity.Pokemon.Pokemons.NONE)
+				{
+					return i;
+				}
+			}
+			return null;
+		}
+
+		/*public int getBoxCount(int box)
+		{
+			int result = 0;
+			for (int i = 0; i < Pokemons[box].Length; i++)
+			{
+				if (Pokemons[box,i] != null || Party[i].Species != Pokemons.NONE)
+				{
+					result += 1;
+				}
+			}
+			return result;
+		}*/
+
+
+		/// <summary>
+		/// Add a new pokemon directly to active box. 
+		/// If pokemon could not be added return false.
+		/// </summary>
+		/// <param name="acquiredPokemon"></param>
+		/// <returns></returns>
+		public bool addPokemon(Pokemon acquiredPokemon)
+		{
+			//attempt to add to the earliest available opening in active box. no array packing needed.
+			if (hasSpace())
+			{
+				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
+				GameVariables.PC_Poke[activeBox.Value, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+				return true;
+			}
+			//if could not add a pokemon, return false. Party and PC are both full.
+			return false;
+		}
+
+		public void swapPokemon(int box1, int pos1, int box2, int pos2)
+		{
+			Pokemon temp = GameVariables.PC_Poke[box1, pos1];
+			GameVariables.PC_Poke[box1, pos1] = GameVariables.PC_Poke[box2, pos2];
+			GameVariables.PC_Poke[box2, pos2] = temp;
+		}
+	}
+
+	public class TrainerBag
+	{
+		private Trainer trainer { get; set; }
+		/*// <summary>
+		/// in combination with quantity[], 
+		/// one holds the itemId and the other has amount
+		/// </summary>
+		/// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
+		/// <see cref="Items"/> stores quantity value
+		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
+		public List<Item> Misc { get; private set; }
+		public List<Item> Medicine { get; private set; }
+		public List<Item> Pokeball { get; private set; }
+		public List<Item> Machine { get; private set; }
+		public List<Item> Berry { get; private set; }
+		public List<Item> Mail { get; private set; }
+		public List<Item> Battle { get; private set; }
+		public List<Item> Key { get; private set; }
+		private int[] quantity;
+
+		public Item this[Items item]
+		{
+			get
+			{
+				return GameVariables.Bag_Items.FirstOrDefault(i => i.ItemId == item);
+			}
+		}
+
+		public Item this[Item item]
+		{
+			get
+			{
+				return this[item.ItemId];
+			}
+		}
+
+		public TrainerBag()
+		{
+			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new List<Item>();
+			//orderString = new string[ItemDatabaseOld.getItemsLength()];
+			//quantity = new int[ItemDatabaseOld.getItemsLength()];
+			foreach (Item item in GameVariables.Bag_Items)
+			{
+				switch (item.ItemPocket)
+				{
+					case ItemPockets.MISC:
+						Misc.Add(item);
+						break;
+					case ItemPockets.MEDICINE:
+						Medicine.Add(item);
+						break;
+					case ItemPockets.POKEBALL:
+						Pokeball.Add(item);
+						break;
+					case ItemPockets.MACHINE:
+						Machine.Add(item);
+						break;
+					case ItemPockets.BERRY:
+						Berry.Add(item);
+						break;
+					case ItemPockets.MAIL:
+						Mail.Add(item);
+						break;
+					case ItemPockets.BATTLE:
+						Battle.Add(item);
+						break;
+					case ItemPockets.KEY:
+						Key.Add(item);
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		public TrainerBag(Trainer t) : this()
+		{
+			trainer = t;
+		}
+
+		/*public int getIndexOf(Item name)
+		{
+			for (int i = 0; i < order.Length; i++)
+			{
+				if (order[i] == name)
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		public void moveBehind(int targetIndex, int destinationIndex)
+		{
+			string temp = orderString[targetIndex];
+			string[] packedOrder = new string[orderString.Length];
+
+			orderString[targetIndex] = null;
+
+			if (Mathf.Abs(targetIndex - destinationIndex) == 1)
+			{
+				orderString[targetIndex] = orderString[destinationIndex];
+				orderString[destinationIndex] = temp;
+			}
+			else
+			{
+				int packedIndex = 0;
+				for (int i = 0; i < orderString.Length; i++)
+				{
+					if (i == destinationIndex)
+					{
+						packedOrder[packedIndex] = temp;
+						packedIndex += 1;
+					}
+					if (orderString[i] != null)
+					{
+						packedOrder[packedIndex] = orderString[i];
+						packedIndex += 1;
+					}
+				}
+				orderString = packedOrder;
+			}
+		}
+
+		public void packOrder()
+		{
+			string[] packedOrder = new string[orderString.Length];
+			int packedIndex = 0;
+			for (int i = 0; i < orderString.Length; i++)
+			{
+				if (orderString[i] != null)
+				{
+					packedOrder[packedIndex] = orderString[i];
+					packedIndex += 1;
+				}
+			}
+			orderString = packedOrder;
+		}
+
+		public bool addItem(Item itemName)
+		{
+			//returns false if will exceed the quantity limit (999)
+			//packOrder();
+			//string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+			int index = getIndexOf(itemName);
+			if (index == -1)
+			{
+				//item does not exist in bag, add it to the end
+				index = getLength();
+				order[index] = itemName;
+			}
+			index = Item.getIndexOf(order[index]);
+			if (quantity[index] + itemName.Quantity > 999)
+			{
+				return false;
+			}
+			quantity[index] += amount;
+			return true;
+		}
+
+		public bool addItem(Items itemName, int amount = 1)
+		{
+			//returns false if will exceed the quantity limit (999)
+			packOrder();
+			//string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+			int index = getIndexOf(itemName);
+			if (index == -1)
+			{
+				//item does not exist in bag, add it to the end
+				index = getLength();
+				order[index] = ItemDatabaseOld.getItem(itemName);
+			}
+			index = ItemDatabaseOld.getIndexOf(order[index]);
+			if (quantity[index] + amount > 999)
+			{
+				return false;
+			}
+			quantity[index] += amount;
+			return true;
+		}
+
+		public bool removeItem(Item itemName, int amount = 1) //ToDo: amount should default to 'ALL'
+		{
+			//returns false if trying to remove more items than exist
+			packOrder();
+			//string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+			int index = getIndexOf(itemName);
+			if (index == -1)
+			{
+				//item does not exist in bag
+				return false;
+			}
+			index = ItemDatabaseOld.getIndexOf(orderString[index]);
+			if (quantity[index] - amount < 0)
+			{
+				return false;
+			}
+			quantity[index] -= amount;
+			if (quantity[index] == 0)
+			{
+				orderString[getIndexOf(itemName)] = null;
+				packOrder();
+			}
+			return true;
+		}
+
+		public bool removeItem(Items itemName, int amount = 1)  //ToDo: amount should default to 'ALL'
+		{
+			//returns false if trying to remove more items than exist
+			packOrder();
+			//string name = ItemDatabase.getItem(itemName).getName(); //ensures that the name is correct
+			int index = getIndexOf(itemName);
+			if (index == -1)
+			{
+				//item does not exist in bag
+				return false;
+			}
+			index = ItemDatabaseOld.getIndexOf(orderString[index]);
+			if (quantity[index] - amount < 0)
+			{
+				return false;
+			}
+			quantity[index] -= amount;
+			if (quantity[index] == 0)
+			{
+				orderString[getIndexOf(itemName)] = null;
+				packOrder();
+			}
+			return true;
+		}*/
 	}
 	#endregion
 
