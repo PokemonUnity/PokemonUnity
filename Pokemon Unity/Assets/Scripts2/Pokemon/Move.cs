@@ -21629,6 +21629,64 @@ namespace PokemonEssential
 		/// ALLALLYFIELD
 		UserSide
 	}
+	public class MoveDataDex
+	{
+		private static readonly MoveDataDex[] Database;
+
+		#region Variables
+		public Category category { get; private set; }
+		public int num { get; private set; }
+		public Moves id { get; private set; }
+		/// <summary>
+		/// The move's accuracy, as a percentage. 
+		/// An accuracy of 0 means the move doesn't perform an accuracy check 
+		/// (i.e. it cannot be evaded).
+		/// </summary>
+		public int accuracy { get; private set; }
+		//public bool isViable { get; private set; }
+		public int basePower { get; private set; }
+		public int pp { get; private set; }
+		public int priority { get; private set; }
+		public Flags flags { get; private set; }
+		//public string isZ { get; private set; }
+		public int critRatio { get; private set; }
+		//public Secondary secondary { get; private set; }
+		public Target target { get; private set; }
+		public Types type { get; private set; }
+		public Contest contestType { get; private set; }
+		//public Boosts boosts { get; private set; }
+		/// <summary>
+		/// The probability that the move's additional effect occurs, as a percentage. 
+		/// If the move has no additional effect (e.g. all status moves), this value is 0.
+		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
+		/// which is not the same thing as having an effect that will always occur. 
+		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
+		/// </summary>
+		public Effects.Move effect { get; private set; }
+		//public int[] drain { get; private set; }
+		//public int[] multihit { get; private set; }
+		//public int[] heal { get; private set; }
+		
+		//public int zMovePower { get; private set; }
+		//public string zMoveEffect { get; private set; }
+		//public Boosts zMoveBoost { get; private set; }
+		//public string selfSwitch { get; private set; }
+		//public string volatileStatus { get; private set; }
+		#endregion
+
+		public MoveDataDex(){}
+
+		static MoveDataDex()
+		{
+Database = new MoveDataDex[] {
+	// ^(\d*),(\w*),([\w\s-]*),(\w*),(\d*),(\w*),(\w*),(\d*),(\d*),(\d*),(\d*),([-\d]*),(\w*),("[\w\s-,.'é]*")
+	// new MoveDataDex() {\n\tnum = $1, \n\tid = Moves.$2, \n\t//name = "$3", \n\t//function = $4, \n\tbasePower = $5, \n\ttype = Types.$6, \n\tcategory = Category.$7, \n\taccuracy = $8, \n\tpp = $9, \n\teffects = $10, \n\ttarget = Target.$11, \n\tpriority = $12, \n\tflags = new Flags() { $13 } \n\t//,description = $14\n},
+	//(flags = new Flags\(\) \{\s[\w]*)l([,]|[\w\s=,]*\s\}) 
+	#region Database
+	#endregion
+};
+		}
+	}
 }
 
 namespace Veekun
