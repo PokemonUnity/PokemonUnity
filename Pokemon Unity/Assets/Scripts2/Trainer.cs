@@ -8,6 +8,7 @@ using PokemonUnity;
 public class Trainer
 {
 	public Pokemon[] Party { get; private set; }
+	//ToDo: Add Trainer's Bag, NPCs can use items too.
 	//public int ID { get; set; }
 	/// <summary>
 	/// This is how the scripts refer to the trainer type. 
@@ -80,6 +81,9 @@ public class Trainer
     {
 		//if trainer is another player
 		//Change name being loaded
+		Name = trainer.PlayerName;
+		//Load player's gender as well
+		Gender = trainer.isMale;
     }
 
 	void GetTrainer(TrainerTypes type)
