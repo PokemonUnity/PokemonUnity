@@ -30,7 +30,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
     public static Settings.Languages UserLanguage = Settings.Languages.English;
     public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
-	public Trainer playerTrainer { get; set; }
+	public Player playerTrainer { get; set; }
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#region Private Records of Player Storage Data
 	public static Pokemon[,] PC_Poke { get; set; }
@@ -331,7 +331,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 	public class TrainerPC
 	{
 		//public static PC
-		private Trainer trainer { get; set; }
+		private Player trainer { get; set; }
 		private int? activeBox { get; set; }
 		public string Name { get; set; }
 		public int Texture { get; set; }
@@ -362,7 +362,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		{
 		}
 
-		public TrainerPC(Trainer t) : this()
+		public TrainerPC(Player t) : this()
 		{
 			trainer = t;
 		}
@@ -442,7 +442,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 
 	public class TrainerBag
 	{
-		private Trainer trainer { get; set; }
+		private Player trainer { get; set; }
 		/*// <summary>
 		/// in combination with quantity[], 
 		/// one holds the itemId and the other has amount
@@ -515,7 +515,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			}
 		}
 
-		public TrainerBag(Trainer t) : this()
+		public TrainerBag(Player t) : this()
 		{
 			trainer = t;
 		}

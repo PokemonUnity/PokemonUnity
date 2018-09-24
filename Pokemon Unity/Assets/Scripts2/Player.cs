@@ -8,7 +8,7 @@ using PokemonUnity.Move;
 using PokemonUnity.Item;
 
 [Serializable]
-public class Trainer
+public class Player
 {
 	#region Variables
 	//public int 
@@ -107,7 +107,7 @@ public class Trainer
 	#endregion
 	#endregion
 
-	static Trainer()
+	static Player()
 	{
 /*TPSPECIES	,
 TPLEVEL		,
@@ -129,7 +129,7 @@ TPBALL		,
 TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false, 0]*/
 	}
 
-	Trainer()
+	Player()
 	{
 		Party = new Pokemon[6];
 
@@ -143,7 +143,7 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 		//gymsBeatTime = new System.DateTime?[gymBadges.Count];
 	}
 
-	public void LoadTrainer(Trainer trainerSaveData)
+	public void LoadTrainer(Player trainerSaveData)
 	{
 
 	}
@@ -212,160 +212,4 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 		return result;
 	}
 	#endregion
-}
-namespace PokemonUnity
-{
-	public enum TrainerTypes
-	{
-		/// <summary>
-		/// Custom designs or just generic character played by another user
-		/// </summary>
-		PLAYER,
-		POKEMONTRAINER_Red,
-		POKEMONTRAINER_Leaf,
-		POKEMONTRAINER_Brendan,
-		POKEMONTRAINER_May,
-		RIVAL1,
-		RIVAL2,
-		AROMALADY,
-		BEAUTY,
-		BIKER,
-		BIRDKEEPER,
-		BUGCATCHER,
-		BURGLAR,
-		CHANELLER,
-		CUEBALL,
-		ENGINEER,
-		FISHERMAN,
-		GAMBLER,
-		GENTLEMAN,
-		HIKER,
-		JUGGLER,
-		LADY,
-		PAINTER,
-		POKEMANIAC,
-		POKEMONBREEDER,
-		PROFESSOR,
-		ROCKER,
-		RUINMANIAC,
-		SAILOR,
-		SCIENTIST,
-		SUPERNERD,
-		TAMER,
-		BLACKBELT,
-		CRUSHGIRL,
-		CAMPER,
-		PICNICKER,
-		COOLTRAINER_M,
-		COOLTRAINER_F,
-		YOUNGSTER,
-		LASS,
-		POKEMONRANGER_M,
-		POKEMONRANGER_F,
-		PSYCHIC_M,
-		PSYCHIC_F,
-		SWIMMER_M,
-		SWIMMER_F,
-		SWIMMER2_M,
-		SWIMMER2_F,
-		TUBER_M,
-		TUBER_F,
-		TUBER2_M,
-		TUBER2_F,
-		COOLCOUPLE,
-		CRUSHKIN,
-		SISANDBRO,
-		TWINS,
-		YOUNGCOUPLE,
-		TEAMROCKET_M,
-		TEAMROCKET_F,
-		ROCKETBOSS,
-		LEADER_Brock,
-		LEADER_Misty,
-		LEADER_Surge,
-		LEADER_Erika,
-		LEADER_Koga,
-		LEADER_Sabrina,
-		LEADER_Blaine,
-		LEADER_Giovanni,
-		ELITEFOUR_Lorelei,
-		ELITEFOUR_Bruno,
-		ELITEFOUR_Agatha,
-		ELITEFOUR_Lance,
-		CHAMPION
-	}
-
-	enum GymBadges
-	{
-		Rock
-	}
-	
-	/*// <summary>
-	/// Extension methods for <see cref="MenuItemDefinition"/>.
-	/// </summary>
-	public static class MenuItemDefinitionExtensions
-	{
-		/// <summary>
-		/// Moves a menu item to top in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		public static void MoveMenuItemToTop(this IList<MenuItemDefinition> menuItems, string menuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(0, menuItem);
-		}
-
-		/// <summary>
-		/// Moves a menu item to bottom in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		public static void MoveMenuItemToBottom(this IList<MenuItemDefinition> menuItems, string menuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(menuItems.Count, menuItem);
-		}
-
-		/// <summary>
-		/// Moves a menu item in the list after another menu item in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		/// <param name="targetMenuItemName">Target menu item (to move before it)</param>
-		public static void MoveMenuItemBefore(this IList<MenuItemDefinition> menuItems, string menuItemName, string targetMenuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			var targetMenuItem = GetMenuItem(menuItems, targetMenuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(menuItems.IndexOf(targetMenuItem), menuItem);
-		}
-
-		/// <summary>
-		/// Moves a menu item in the list before another menu item in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		/// <param name="targetMenuItemName">Target menu item (to move after it)</param>
-		public static void MoveMenuItemAfter(this IList<MenuItemDefinition> menuItems, string menuItemName, string targetMenuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			var targetMenuItem = GetMenuItem(menuItems, targetMenuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(menuItems.IndexOf(targetMenuItem) + 1, menuItem);
-		}
-
-		private static MenuItemDefinition GetMenuItem(IEnumerable<MenuItemDefinition> menuItems, string menuItemName)
-		{
-			var menuItem = menuItems.FirstOrDefault(i => i.Name == menuItemName);
-			if (menuItem == null)
-			{
-				throw new Exception("Can not find menu item: " + menuItemName);
-			}
-
-			return menuItem;
-		}
-	}*/
 }

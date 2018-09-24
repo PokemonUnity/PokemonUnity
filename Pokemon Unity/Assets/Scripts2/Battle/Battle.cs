@@ -114,14 +114,14 @@ public class Battle
 	/// <summary>
 	/// Player trainer
 	/// </summary>
-	public Trainer player { get; private set; }
+	public Player player { get; private set; }
 	/// <summary>
 	/// Opponent trainer
 	/// </summary>
 	/// If wild encounter...
 	/// Dont show pokeballs,
 	/// Dont show trainer sprite
-	public Trainer opponent { get; private set; }
+	public Player opponent { get; private set; }
 	/// <summary>
 	/// Player's Pokémon party
 	/// </summary>

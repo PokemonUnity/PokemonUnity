@@ -272,7 +272,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <remarks>
 	/// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
 	/// </remarks>
-	private Trainer OT { get; set; }
+	private Player OT { get; set; }
     /// <summary>
     /// Personal/Pokemon ID
     /// </summary>
@@ -292,7 +292,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name="trainer"></param>
 	/// <returns></returns>
-	public bool isForeign(Trainer trainer) {
+	public bool isForeign(Player trainer) {
 		return trainer != this.OT; //ToDo: Match HashId 
 	}
 
