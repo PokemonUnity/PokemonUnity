@@ -7,6 +7,7 @@ using PokemonUnity;
 /// </summary>
 public class Trainer
 {
+	public Pokemon[] Party { get; private set; }
 	//public int ID { get; set; }
 	/// <summary>
 	/// This is how the scripts refer to the trainer type. 
@@ -14,13 +15,13 @@ public class Trainer
 	/// but written in all capital letters and with no spaces or symbols. 
 	/// The internal name is never seen by the player.
 	/// </summary>
-	public TrainerTypes ID { get; set; }
+	public TrainerTypes ID { get; private set; }
 	/// <summary>
 	/// The name of the trainer type, as seen by the player. 
 	/// Multiple trainer types can have the same display name, 
 	/// although they cannot share ID numbers or internal names.
 	/// </summary>
-	public string Name { get; set; }
+	public string Name { get; private set; }
 	/// <summary>
 	/// The amount of money earned from defeating a trainer of this type. 
 	/// The base money value is multiplied by the highest Level among all the trainer's 
@@ -28,56 +29,57 @@ public class Trainer
 	/// Must be a number between 0 and 255.	
 	/// Optional. If undefined, the default is 30.
 	/// </summary>
-	public byte BaseMoney { get; set; }
+	public byte BaseMoney { get; private set; }
 	/// <summary>
 	/// The name of a background music (BGM) file in the folder "Audio/BGM". 
 	/// The music that plays during battles against trainers of this type. 
 	/// Typically only defined for Gym Leaders, Elite Four members and rivals.	
 	/// Optional. If undefined, the default BGM is used.
 	/// </summary>
-	public int 	BattleBGM { get; set; }
+	public int 	BattleBGM { get; private set; }
 	/// <summary>
 	/// The name of a background music (BGM) file in the folder "Audio/BGM". 
 	/// The victory background music that plays upon defeat of trainers of this type.	
 	/// Optional. If undefined, the default victory BGM is used.
 	/// </summary>
-	public int 	VictoryBGM { get; set; }
+	public int 	VictoryBGM { get; private set; }
 	/// <summary>
 	/// The name of a music effect (ME) file in the folder "Audio/ME". 
 	/// The music that plays before the battle begins, while still talking to the trainer.	
 	/// Optional. If undefined, the default ME is used.
 	/// </summary>
-	public int 	IntroME { get; set; }
+	public int 	IntroME { get; private set; }
 	/// <summary>
 	/// The gender of all trainers of this type. Is one of:
 	/// Male, Female, Mixed(i.e. if the type shows a pair of trainers)
 	/// Optional. If undefined, the default is "Mixed".
 	/// </summary>
-	public bool?	Gender { get; set; }
+	public bool? Gender { get; private set; }
 	/// <summary>
 	/// The skill level of all trainers of this type, used for battle AI. 
 	/// Higher numbers represent higher skill levels. 
 	/// Must be a number between 0 and 255.	
 	/// Optional. If undefined, default is equal to the base money value.
 	/// </summary>
-	public byte	SkillLevel { get; set; }
+	public byte	SkillLevel { get; private set; }
 	/// <summary>
 	/// A text field which can be used to modify the AI behaviour of all trainers of this type. 
 	/// No such modifiers are defined by default, and there is no standard format. 
 	/// See the page Battle AI for more details.
 	/// Optional. If undefined, the default is blank.
 	/// </summary>
-	public int?	SkillCodes { get; set; }
+	public int?	SkillCodes { get; private set; }
 
 	public Trainer(TrainerTypes trainer)
     {
+		Party = new Pokemon[6];
 		GetTrainer(trainer);
-		//if trainer is another player
-		//Change name being loaded
-    }
+	}
 
 	public Trainer(Player trainer) : this(TrainerTypes.PLAYER)
     {
+		//if trainer is another player
+		//Change name being loaded
     }
 
 	void GetTrainer(TrainerTypes type)
@@ -236,6 +238,9 @@ public class Trainer
 		#endregion
 	}
 
+	#region Party
+	#endregion
+
 	/// <summary>
 	/// List of all the NPC trainers that will be used throughout the game.
 	/// NPCs should be identified by their Array[Index] when programming.
@@ -250,6 +255,44 @@ public class Trainer
 		}
 	}
 }
+
+public static class PokemonPartyExtension
+{
+	public static void PackParty(this Pokemon[] Party)
+	{
+		Pokemon[] packedArray = new Pokemon[6];
+		int i2 = 0; //counter for packed array
+		for (int i = 0; i < 6; i++)
+		{
+			if (Party[i] != null || Party[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
+			{
+				//if next object in box has a value
+				packedArray[i2] = Party[i]; //add to packed array
+				i2 += 1; //ready packed array's next position
+			}
+		}
+		Party = packedArray;
+	}
+	public static bool HasSpace(this Pokemon[] partyOrPC, int capacity)
+	{
+		if (partyOrPC.GetCount().HasValue && partyOrPC.GetCount().Value < capacity) return true;
+		else return false;
+	}
+
+	public static int? GetCount(this Pokemon[] partyOrPC)
+	{
+		int result = 0;
+		for (int i = 0; i < partyOrPC.Length; i++)
+		{
+			if (partyOrPC[i] != null || partyOrPC[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
+			{
+				result += 1;
+			}
+		}
+		return result;
+	}
+}
+
 namespace PokemonUnity
 {
 	public enum TrainerTypes

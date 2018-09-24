@@ -12,7 +12,8 @@ public class Player
 {
 	#region Variables
 	//public int 
-	public Pokemon[] Party { get; private set; }
+	//public Pokemon[] Party { get; private set; }
+	public Trainer Trainer { get { return new Trainer(this); } }
 	/// <summary>
 	/// When displaying items in bag, do a foreach loop and filter by item category
 	/// </summary>
@@ -131,7 +132,7 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 
 	Player()
 	{
-		Party = new Pokemon[6];
+		//Party = new Pokemon[6];
 
 		List<GymBadges> gymBadges = new List<GymBadges>();
 		foreach(GymBadges i in (GymBadges[])Enum.GetValues(typeof(GymBadges)))
@@ -149,22 +150,6 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 	}
 
 	#region Methods
-	public void packParty()
-	{
-		Pokemon[] packedArray = new Pokemon[6];
-		int i2 = 0; //counter for packed array
-		for (int i = 0; i < 6; i++)
-		{
-			if (Party[i] != null || Party[i].Species != Pokemons.NONE)
-			{
-				//if next object in box has a value
-				packedArray[i2] = Party[i]; //add to packed array
-				i2 += 1; //ready packed array's next position
-			}
-		}
-		Party = packedArray;
-	}
-
 	/// <summary>
 	/// Skims every available box player has, and attempts to add pokemon.
 	/// </summary>
@@ -173,11 +158,11 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 	public int? addPokemon(Pokemon pokemon)
 	{
 		//attempt to add to party first. pack the party array if space available.
-		if (hasSpace())
+		if (Trainer.Party.HasSpace(Trainer.Party.Length))
 		{
-			packParty();
-			Party[Party.Length - 1] = pokemon;
-			packParty();
+			Trainer.Party.PackParty();
+			Trainer.Party[Trainer.Party.Length - 1] = pokemon;
+			Trainer.Party.PackParty();
 			return -1; //true
 		}
 		else
@@ -192,24 +177,17 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 			}
 		return null;
 	}
-
-	public bool hasSpace()
-	{
-		if (getPartyCount().HasValue && getPartyCount().Value < 30) return true;
-		else return false;
-	}
-
-	public int? getPartyCount()
-	{
-		int result = 0;
-		for (int i = 0; i < Party.Length; i++)
-		{
-			if (Party[i] != null || Party[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
-			{
-				result += 1;
-			}
-		}
-		return result;
-	}
 	#endregion
+}
+namespace PokemonUnity
+{
+	/// <summary>
+	/// Whatever gym badges you want to incorporate throughout your game.
+	/// This is where the ID of the badges are stored, and the game can
+	/// validate certain actions based on said ID or # of badges...
+	/// </summary>
+	public enum GymBadges
+	{
+		Rock
+	}
 }
