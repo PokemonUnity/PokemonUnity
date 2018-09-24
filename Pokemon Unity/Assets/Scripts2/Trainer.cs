@@ -5,7 +5,7 @@ using PokemonUnity;
 /// It is important to note that the player also has a trainer type, 
 /// and it is defined in exactly the same way as any other trainer type. 
 /// </summary>
-public class NPC
+public class Trainer
 {
 	//public int ID { get; set; }
 	/// <summary>
@@ -69,11 +69,15 @@ public class NPC
 	/// </summary>
 	public int?	SkillCodes { get; set; }
 
-	public NPC(TrainerTypes trainer)
+	public Trainer(TrainerTypes trainer)
     {
 		GetTrainer(trainer);
 		//if trainer is another player
 		//Change name being loaded
+    }
+
+	public Trainer(Player trainer) : this(TrainerTypes.PLAYER)
+    {
     }
 
 	void GetTrainer(TrainerTypes type)
@@ -232,13 +236,99 @@ public class NPC
 		#endregion
 	}
 
-	public static NPC[] Types
+	/// <summary>
+	/// List of all the NPC trainers that will be used throughout the game.
+	/// NPCs should be identified by their Array[Index] when programming.
+	/// </summary>
+	public static Trainer[] Database
 	{
 		get
 		{
-			return new NPC[]
+			return new Trainer[]
 			{
 			};
 		}
+	}
+}
+namespace PokemonUnity
+{
+	public enum TrainerTypes
+	{
+		/// <summary>
+		/// Custom designs or just generic character played by another user
+		/// </summary>
+		PLAYER,
+		POKEMONTRAINER_Red,
+		POKEMONTRAINER_Leaf,
+		POKEMONTRAINER_Brendan,
+		POKEMONTRAINER_May,
+		RIVAL1,
+		RIVAL2,
+		AROMALADY,
+		BEAUTY,
+		BIKER,
+		BIRDKEEPER,
+		BUGCATCHER,
+		BURGLAR,
+		CHANELLER,
+		CUEBALL,
+		ENGINEER,
+		FISHERMAN,
+		GAMBLER,
+		GENTLEMAN,
+		HIKER,
+		JUGGLER,
+		LADY,
+		PAINTER,
+		POKEMANIAC,
+		POKEMONBREEDER,
+		PROFESSOR,
+		ROCKER,
+		RUINMANIAC,
+		SAILOR,
+		SCIENTIST,
+		SUPERNERD,
+		TAMER,
+		BLACKBELT,
+		CRUSHGIRL,
+		CAMPER,
+		PICNICKER,
+		COOLTRAINER_M,
+		COOLTRAINER_F,
+		YOUNGSTER,
+		LASS,
+		POKEMONRANGER_M,
+		POKEMONRANGER_F,
+		PSYCHIC_M,
+		PSYCHIC_F,
+		SWIMMER_M,
+		SWIMMER_F,
+		SWIMMER2_M,
+		SWIMMER2_F,
+		TUBER_M,
+		TUBER_F,
+		TUBER2_M,
+		TUBER2_F,
+		COOLCOUPLE,
+		CRUSHKIN,
+		SISANDBRO,
+		TWINS,
+		YOUNGCOUPLE,
+		TEAMROCKET_M,
+		TEAMROCKET_F,
+		ROCKETBOSS,
+		LEADER_Brock,
+		LEADER_Misty,
+		LEADER_Surge,
+		LEADER_Erika,
+		LEADER_Koga,
+		LEADER_Sabrina,
+		LEADER_Blaine,
+		LEADER_Giovanni,
+		ELITEFOUR_Lorelei,
+		ELITEFOUR_Bruno,
+		ELITEFOUR_Agatha,
+		ELITEFOUR_Lance,
+		CHAMPION
 	}
 }
