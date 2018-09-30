@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventSystems.ISubmitHandler, UnityEngine.EventSystems.IScrollHandler
 {
+	private static GameVariables PersistantPlayerData;
     private static UnityEngine.GameObject MainMenu;// = UnityEngine.GameObject.Find("MainMenu");
     /// <summary>
     /// This is the panel display that shows save data for currently selected CONTINUE option
@@ -16,6 +17,8 @@ class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventSystems.
     //private static UnityEngine.UI.Text DialogUIScrollText = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
     void Awake()
     {
+		PersistantPlayerData = new GameVariables();
+		//ToDo: On Start-up, Load & Process GameVariables, to begin and instantiate game
         MainMenu = UnityEngine.GameObject.Find("MainMenu");
         FileDataPanel = MainMenu.transform.GetChild(0).gameObject;
         MenuOptions = MainMenu.transform.GetChild(1).gameObject;

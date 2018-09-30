@@ -43,7 +43,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 	public static SaveDataOld currentSave;
 
 	#region Constructor
-	GameVariables()
+	public GameVariables()
 	{
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
