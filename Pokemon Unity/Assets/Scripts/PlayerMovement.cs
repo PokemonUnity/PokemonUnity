@@ -246,8 +246,8 @@ public class PlayerMovement : MonoBehaviour
         //DEBUG
         if (accessedMapSettings != null)
         {
-            WildPokemonInitialiser[] encounterList =
-                accessedMapSettings.getEncounterList(WildPokemonInitialiser.Method.WALK);
+            WildPokemonInitialiserOld[] encounterList =
+                accessedMapSettings.getEncounterList(WildPokemonInitialiserOld.Method.WALK);
             string namez = "";
             for (int i = 0; i < encounterList.Length; i++)
             {
@@ -967,12 +967,12 @@ public class PlayerMovement : MonoBehaviour
                     if (destinationTag == 2)
                     {
                         //surf tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Method.SURF));
+                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiserOld.Method.SURF));
                     }
                     else
                     {
                         //land tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Method.WALK));
+                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiserOld.Method.WALK));
                     }
                 }
             }
@@ -1225,7 +1225,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
     }
 
-    public IEnumerator wildEncounter(WildPokemonInitialiser.Method encounterLocation)
+    public IEnumerator wildEncounter(WildPokemonInitialiserOld.Method encounterLocation)
     {
         if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
         {

@@ -56,7 +56,7 @@ public class MapSettings : MonoBehaviour
 
     public PokemonRarity pokemonRarity = PokemonRarity.Uncommon;
 
-    public WildPokemonInitialiser[] encounters = new WildPokemonInitialiser[0];
+    public WildPokemonInitialiserOld[] encounters = new WildPokemonInitialiserOld[0];
 
     // returns the BGM to an external script
     public AudioClip getBGM()
@@ -246,9 +246,10 @@ public class MapSettings : MonoBehaviour
         return x / 187.5f;
     }
 
-    public WildPokemonInitialiser[] getEncounterList(WildPokemonInitialiser.Method location)
+	[System.Obsolete("Please refer to any encounter scripts in `/Scripts2/Maps.cs` for alternate solution.")]
+    public WildPokemonInitialiserOld[] getEncounterList(WildPokemonInitialiserOld.Method location)
     {
-        WildPokemonInitialiser[] list = new WildPokemonInitialiser[encounters.Length];
+        WildPokemonInitialiserOld[] list = new WildPokemonInitialiserOld[encounters.Length];
         int listIndex = 0;
 
         float time = System.DateTime.Now.Hour + ((float) System.DateTime.Now.Minute / 60f);
@@ -287,7 +288,7 @@ public class MapSettings : MonoBehaviour
             }
         }
 
-        WildPokemonInitialiser[] packedList = new WildPokemonInitialiser[listIndex];
+        WildPokemonInitialiserOld[] packedList = new WildPokemonInitialiserOld[listIndex];
 
         for (int i = 0; i < packedList.Length; i++)
         {
@@ -297,9 +298,9 @@ public class MapSettings : MonoBehaviour
         return packedList;
     }
 
-    public PokemonOld getRandomEncounter(WildPokemonInitialiser.Method location)
+    public PokemonOld getRandomEncounter(WildPokemonInitialiserOld.Method location)
     {
-        WildPokemonInitialiser[] list = getEncounterList(location);
+        WildPokemonInitialiserOld[] list = getEncounterList(location);
 
         int totalEncounterLikelihood = 0; //add up the total Likelihood
         for (int i = 0; i < list.Length; i++)
@@ -307,7 +308,7 @@ public class MapSettings : MonoBehaviour
             totalEncounterLikelihood += list[i].encounterLikelihood;
         }
 
-        WildPokemonInitialiser[] chanceSplitList = new WildPokemonInitialiser[totalEncounterLikelihood];
+        WildPokemonInitialiserOld[] chanceSplitList = new WildPokemonInitialiserOld[totalEncounterLikelihood];
         int listIndex = 0;
         for (int i = 0; i < list.Length; i++)
         {
@@ -339,10 +340,10 @@ public class MapSettings : MonoBehaviour
     /// </summary>
     /// <param name="location"></param>
     /// <returns></returns>
-    public PokemonOld getRandomEncounter(WildPokemonInitialiser.Method location, string placeholder)
+    public PokemonOld getRandomEncounter(WildPokemonInitialiserOld.Method location, string placeholder)
     {
         //Get list of 100 pokemons for given (specific to this) encounter...
-        WildPokemonInitialiser[] list = getEncounterList(location);
+        WildPokemonInitialiserOld[] list = getEncounterList(location);
 
         //From list of 100 pokemons, select 1.
         int randomPokemon = Random.Range(0, 100);
@@ -385,69 +386,69 @@ public class MapSettings : MonoBehaviour
     /// </summary>
     /// <param name="location"></param>
     /// <returns></returns>
-    public WildPokemonInitialiser[] getEncounterList(int mapId, WildPokemonInitialiser.Method method, WildPokemonInitialiser.ConditionValue[] condition = null)
+    public WildPokemonInitialiserOld[] getEncounterList(int mapId, WildPokemonInitialiserOld.Method method, WildPokemonInitialiserOld.ConditionValue[] condition = null)
     {
-        WildPokemonInitialiser[] list = new WildPokemonInitialiser[100];
+        WildPokemonInitialiserOld[] list = new WildPokemonInitialiserOld[100];
         int listIndex = 0;
         int version = 0; //MapId will play a part of what version
         int slots = 0; //Maybe an Array, matching Slots to given %chance ratio
 
         switch (method) {
-            case WildPokemonInitialiser.Method.WALK:
+            case WildPokemonInitialiserOld.Method.WALK:
                 slots = 12;
                 for(int i = 0; i < list.Length; i++)
                 {
-                    list[i] = new WildPokemonInitialiser { ID = 0, minLevel = 0, maxLevel = 0 };
+                    list[i] = new WildPokemonInitialiserOld { ID = 0, minLevel = 0, maxLevel = 0 };
                 }
                 break;
-            case WildPokemonInitialiser.Method.GRASS_SPOTS:
+            case WildPokemonInitialiserOld.Method.GRASS_SPOTS:
                 //slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.CAVE_SPOTS:
+            case WildPokemonInitialiserOld.Method.CAVE_SPOTS:
                 //slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.BRIDGE_SPOTS:
+            case WildPokemonInitialiserOld.Method.BRIDGE_SPOTS:
                 //slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.DARK_GRASS:
+            case WildPokemonInitialiserOld.Method.DARK_GRASS:
                 //slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.YELLOW_FLOWERS:
+            case WildPokemonInitialiserOld.Method.YELLOW_FLOWERS:
                 slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.PURPLE_FLOWERS:
+            case WildPokemonInitialiserOld.Method.PURPLE_FLOWERS:
                 slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.RED_FLOWERS:
+            case WildPokemonInitialiserOld.Method.RED_FLOWERS:
                 slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.ROUGH_TERRAIN:
+            case WildPokemonInitialiserOld.Method.ROUGH_TERRAIN:
                 slots = 12;
                 break;
-            case WildPokemonInitialiser.Method.OLD_ROD:
+            case WildPokemonInitialiserOld.Method.OLD_ROD:
                 slots = 3;
                 break;
-            case WildPokemonInitialiser.Method.GOOD_ROD:
+            case WildPokemonInitialiserOld.Method.GOOD_ROD:
                 slots = 3;
                 break;
-            case WildPokemonInitialiser.Method.SUPER_ROD:
+            case WildPokemonInitialiserOld.Method.SUPER_ROD:
                 slots = 3;
                 break;
-            case WildPokemonInitialiser.Method.SUPER_ROD_SPOTS:
+            case WildPokemonInitialiserOld.Method.SUPER_ROD_SPOTS:
                 //slots = 5;
                 break;
-            case WildPokemonInitialiser.Method.SURF:
+            case WildPokemonInitialiserOld.Method.SURF:
                 if (version == 1 || version == 2) slots = 10;
                 else slots = 5;
                 break;
-            case WildPokemonInitialiser.Method.SURF_SPOTS:
+            case WildPokemonInitialiserOld.Method.SURF_SPOTS:
                 //slots = 5;
                 break;
-            case WildPokemonInitialiser.Method.ROCK_SMASH:
+            case WildPokemonInitialiserOld.Method.ROCK_SMASH:
                 if (version == 10) slots = 2;
                 else slots = 5;
                 break;
-            case WildPokemonInitialiser.Method.HEADBUTT:
+            case WildPokemonInitialiserOld.Method.HEADBUTT:
                 //slots = 12;
                 break;
             default:
@@ -490,7 +491,7 @@ public class MapSettings : MonoBehaviour
             }
         }
 
-        WildPokemonInitialiser[] packedList = new WildPokemonInitialiser[listIndex];
+        WildPokemonInitialiserOld[] packedList = new WildPokemonInitialiserOld[listIndex];
 
         for (int i = 0; i < packedList.Length; i++)
         {
@@ -502,7 +503,7 @@ public class MapSettings : MonoBehaviour
 }
 
 [System.Serializable]
-public class WildPokemonInitialiser
+public class WildPokemonInitialiserOld
 {
     /// <summary>
     /// Encounter method
