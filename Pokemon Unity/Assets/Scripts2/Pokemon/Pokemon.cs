@@ -186,6 +186,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		//IV = new int[] { 10, 10, 10, 10, 10, 10 };
 		IV = new int[] { Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32) };
 		EV = new int[6];
+		Exp = new Experience(GrowthRate);
 		moves = new Move[4];// { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 		pokerus = new int[2];
 		Markings = new bool[6]; //{ false, false, false, false, false, false };
@@ -406,14 +407,22 @@ public partial class Pokemon //: ePokemons //PokemonData
 	{
 		get
 		{
-			return 0;
-			// ToDo: return Experience.GetLevelFromExperience(this.exp, this.GrowthRate)
+			//return 1;
+			return Experience.GetLevelFromExperience(this.GrowthRate, this.Exp.Current);
 		}
 		set
 		{
 			if (value < 1 || value > 100) //Experience.MAXLEVEL
+				//ToDo: Instead if throwing exception error, do nothing?...
 				throw new Exception(string.Format("The level number {0} is invalid", value));
-			// ToDo: return Experience.GetStartExperience(value, this.GrowthRate)
+			if(value > this.Level)
+				this.Exp.AddExperience(this.GrowthRate, this.Exp.Current, Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
+			else
+			{
+				//ToDo: Not Designed to go backwards yet...
+				//Instead if throwing exception error, do nothing?...
+				throw new Exception(string.Format("The level number {0} is invalid", value));
+			}			
 		}
 	}
 
@@ -3090,7 +3099,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		/// <param name="experienceGain">Exp. Points to add</param>
 		/// <returns></returns>
 		/// Subtract ceiling exp for left over experience points remaining after level up?...
-		public static int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
+		public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
 		{
 			int exp = currentExperience + experienceGain;
 			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
@@ -3172,6 +3181,11 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 			return exp;
 		}*/
+
+		public Experience(LevelingRate rate)
+		{
+			Growth = rate;
+		}
 	}
 	#endregion
 }
