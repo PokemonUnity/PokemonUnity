@@ -229,23 +229,6 @@
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_10_EncounterConditions.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_11.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_12_AbilityText.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_13_CONSTRAINTS.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_14_BONUS_Optional.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_1_Essentials.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_2.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_3_PokemonMoves.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_4.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_5_MoveText.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_6.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_7_ItemText.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_8.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\Pokemon_9_EncounterMapping.sql" />
-    <Content Include="Assets\Resources\Database\SQL_DB\veekun-pokedex.sql" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
