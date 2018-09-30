@@ -175,6 +175,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	#region Constructor
 	public Pokemon()
 	{
+		_base = PokemonData.GetPokemon(Pokemons.NONE);
 		PersonalId = new Random().Next(256);
 		PersonalId |= new Random().Next(256) << 8;
 		PersonalId |= new Random().Next(256) << 16;
