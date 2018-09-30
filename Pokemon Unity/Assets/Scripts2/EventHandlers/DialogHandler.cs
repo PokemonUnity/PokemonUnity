@@ -355,6 +355,95 @@ public class DialogHandler : UnityEngine.MonoBehaviour
         DialogUIText.text = DialogUITextDump.text = DialogUIScrollText.text = DialogText = null;
     }
 	#endregion
+
+	#region Change a Pokémon's level
+	/*
+def pbChangeLevel(pokemon,newlevel,scene)
+  newlevel=1 if newlevel<1
+  newlevel=PBExperience::MAXLEVEL if newlevel>PBExperience::MAXLEVEL
+  if pokemon.level>newlevel
+    attackdiff=pokemon.attack
+    defensediff=pokemon.defense
+    speeddiff=pokemon.speed
+    spatkdiff=pokemon.spatk
+    spdefdiff=pokemon.spdef
+    totalhpdiff=pokemon.totalhp
+    pokemon.level=newlevel
+    pokemon.calcStats
+    scene.pbRefresh
+    Kernel.pbMessage(_INTL("{1} was downgraded to Level {2}!",pokemon.name,pokemon.level))
+    attackdiff=pokemon.attack-attackdiff
+    defensediff=pokemon.defense-defensediff
+    speeddiff=pokemon.speed-speeddiff
+    spatkdiff=pokemon.spatk-spatkdiff
+    spdefdiff=pokemon.spdef-spdefdiff
+    totalhpdiff=pokemon.totalhp-totalhpdiff
+    pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
+       totalhpdiff,attackdiff,defensediff,spatkdiff,spdefdiff,speeddiff))
+    pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
+       pokemon.totalhp,pokemon.attack,pokemon.defense,pokemon.spatk,pokemon.spdef,pokemon.speed))
+  elsif pokemon.level==newlevel
+    Kernel.pbMessage(_INTL("{1}'s level remained unchanged.",pokemon.name))
+  else
+    attackdiff=pokemon.attack
+    defensediff=pokemon.defense
+    speeddiff=pokemon.speed
+    spatkdiff=pokemon.spatk
+    spdefdiff=pokemon.spdef
+    totalhpdiff=pokemon.totalhp
+    oldlevel=pokemon.level
+    pokemon.level=newlevel
+    pokemon.changeHappiness("levelup")
+    pokemon.calcStats
+    scene.pbRefresh
+    Kernel.pbMessage(_INTL("{1} was elevated to Level {2}!",pokemon.name,pokemon.level))
+    attackdiff=pokemon.attack-attackdiff
+    defensediff=pokemon.defense-defensediff
+    speeddiff=pokemon.speed-speeddiff
+    spatkdiff=pokemon.spatk-spatkdiff
+    spdefdiff=pokemon.spdef-spdefdiff
+    totalhpdiff=pokemon.totalhp-totalhpdiff
+    pbTopRightWindow(_INTL("Max. HP<r>+{1}\r\nAttack<r>+{2}\r\nDefense<r>+{3}\r\nSp. Atk<r>+{4}\r\nSp. Def<r>+{5}\r\nSpeed<r>+{6}",
+       totalhpdiff,attackdiff,defensediff,spatkdiff,spdefdiff,speeddiff))
+    pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
+       pokemon.totalhp,pokemon.attack,pokemon.defense,pokemon.spatk,pokemon.spdef,pokemon.speed))
+    movelist=pokemon.getMoveList
+    for i in movelist
+      if i[0]==pokemon.level          # Learned a new move
+        pbLearnMove(pokemon,i[1],true)
+      end
+    end
+    newspecies=pbCheckEvolution(pokemon)
+    if newspecies>0
+      pbFadeOutInWithMusic(99999){
+         evo=PokemonEvolutionScene.new
+         evo.pbStartScreen(pokemon,newspecies)
+         evo.pbEvolution
+         evo.pbEndScreen
+      }
+    end
+  end
+end
+
+def pbTopRightWindow(text)
+  window=Window_AdvancedTextPokemon.new(text)
+  window.z=99999
+  window.width=198
+  window.y=0
+  window.x=Graphics.width-window.width
+  pbPlayDecisionSE()
+  loop do
+    Graphics.update
+    Input.update
+    window.update
+    if Input.trigger?(Input::C)
+      break
+    end
+  end
+  window.dispose
+end
+	 */
+	#endregion
 }
 
 public class DialogPromptHandler //: UnityEngine.MonoBehaviour
