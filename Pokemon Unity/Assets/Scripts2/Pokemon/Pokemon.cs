@@ -182,7 +182,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 		PersonalId |= new Random().Next(256) << 24;
 		Ability = Abilities.NONE;
         natureFlag = new Nature();//(Natures)(new Random().Next(0, 24));
-		shinyFlag = isShiny();
+		//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
+		//shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
 		//Gender = isMale();
 		//IV = new int[] { 10, 10, 10, 10, 10, 10 };
 		IV = new int[] { Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32) };
