@@ -1365,8 +1365,8 @@ public partial class Pokemon //: ePokemons //PokemonData
         get { return this.hp; } //ToDo: If greater than totalHP throw error?
         set
         {
-            this.hp = value < 0 ? 0 : value > this.TotalHP ? TotalHP : value;
-            if (this.hp == 0) this.Status = 0; // statusCount = 0; //ToDo: Fainted
+            this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
+            if (this.hp == 0) this.Status = Status.None; // statusCount = 0; //ToDo: Fainted
         }
     }
 

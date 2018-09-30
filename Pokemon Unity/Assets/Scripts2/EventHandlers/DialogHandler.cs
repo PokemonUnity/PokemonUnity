@@ -41,9 +41,10 @@ public class DialogHandler : UnityEngine.MonoBehaviour
             value = 1 / (16 + (txtSpd * txtSpd * 9));
         }
     }
-    #endregion
+	#endregion
 
-    void Awake()
+	#region Unity
+	void Awake()
     {
         DialogWindow = UnityEngine.GameObject.Find("DialogWindow");//.GetComponent<UnityEngine.UI.Text>();
         //DialogPrompt = UnityEngine.GameObject.Find("DialogPrompt");//.GetComponent<UnityEngine.UI.Text>();
@@ -77,7 +78,9 @@ public class DialogHandler : UnityEngine.MonoBehaviour
     {
 
     }
+	#endregion
 
+	#region Prompts
     public void PromptYesNo()
     {
         PromptOptions(new string[] { LanguageExtension.Translate(GameVariables.UserLanguage, "Yes"), LanguageExtension.Translate(GameVariables.UserLanguage, "No") });
@@ -115,7 +118,9 @@ public class DialogHandler : UnityEngine.MonoBehaviour
         }
         DialogPromptDump.SetActive(true);
     }
+	#endregion
 
+	#region Text and Message Display
     /// <summary>
     /// 
     /// </summary>
@@ -349,6 +354,7 @@ public class DialogHandler : UnityEngine.MonoBehaviour
     {
         DialogUIText.text = DialogUITextDump.text = DialogUIScrollText.text = DialogText = null;
     }
+	#endregion
 }
 
 public class DialogPromptHandler //: UnityEngine.MonoBehaviour

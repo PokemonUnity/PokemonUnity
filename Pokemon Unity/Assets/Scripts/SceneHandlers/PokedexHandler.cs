@@ -17,7 +17,7 @@ public class PokedexHandler : MonoBehaviour {
 	// GameObject like vars
 	private GUITexture cursor;
 	private GUITexture preview;
-	private GUIText name;
+	private new GUIText name;
 	private GUIText nameShadow;
 	private GUIText id;
 	private GUIText idShadow;
