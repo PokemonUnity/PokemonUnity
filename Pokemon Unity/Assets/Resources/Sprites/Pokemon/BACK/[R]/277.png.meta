@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 62a9c6170737ec04d8440cf0bf1ec592
-timeCreated: 1527296294
+timeCreated: 1538370699
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -140,6 +140,7 @@ TextureImporter:
     21300266: 277_133
     21300268: 277_134
     21300270: 277_135
+    21300272: 277_136
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -167,7 +168,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -2110,6 +2111,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 277_136
+      rect:
+        serializedVersion: 2
+        x: 960
         y: 0
         width: 160
         height: 160

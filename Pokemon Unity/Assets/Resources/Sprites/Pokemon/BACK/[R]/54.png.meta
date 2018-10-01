@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5e15777a1b7eca74ab815aa9a2afba4a
-timeCreated: 1527278021
+timeCreated: 1538370104
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -48,6 +48,8 @@ TextureImporter:
     21300082: 54_41
     21300084: 54_42
     21300086: 54_43
+    21300088: 54_44
+    21300090: 54_45
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -75,7 +77,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -730,6 +732,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 54_44
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 54_45
+      rect:
+        serializedVersion: 2
+        x: 800
         y: 0
         width: 160
         height: 160

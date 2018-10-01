@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 483bea996fbfbd645a1f24167a77c05b
-timeCreated: 1527278776
+timeCreated: 1538370197
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -156,7 +156,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1917,34 +1917,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 97_123
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 97_124
-      rect:
-        serializedVersion: 2
-        x: 640
         y: 0
         width: 160
         height: 160

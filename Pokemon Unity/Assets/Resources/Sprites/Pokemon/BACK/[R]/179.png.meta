@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 68d6a475c383da54e825c8707d9ffa21
-timeCreated: 1527282083
+timeCreated: 1538370384
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -101,6 +101,8 @@ TextureImporter:
     21300188: 179_94
     21300190: 179_95
     21300192: 179_96
+    21300194: 179_97
+    21300196: 179_98
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -128,7 +130,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1525,6 +1527,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 179_97
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 179_98
+      rect:
+        serializedVersion: 2
+        x: 1280
         y: 0
         width: 160
         height: 160

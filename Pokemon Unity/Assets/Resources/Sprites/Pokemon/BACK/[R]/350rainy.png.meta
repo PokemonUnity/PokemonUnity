@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 100261ad7e418ff44b57c0bf3163fb57
-timeCreated: 1527308360
+timeCreated: 1538370880
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -116,7 +116,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1317,34 +1317,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 350rainy_83
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 350rainy_84
-      rect:
-        serializedVersion: 2
-        x: 640
         y: 0
         width: 160
         height: 160

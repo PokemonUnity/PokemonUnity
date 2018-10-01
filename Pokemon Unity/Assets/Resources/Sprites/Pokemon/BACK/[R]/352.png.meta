@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4e073a6aa76f96545afe8b70d23c664b
-timeCreated: 1527309093
+timeCreated: 1538370888
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -89,6 +89,7 @@ TextureImporter:
     21300164: 352_82
     21300166: 352_83
     21300168: 352_84
+    21300170: 352_85
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -116,7 +117,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1345,6 +1346,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 352_85
+      rect:
+        serializedVersion: 2
+        x: 800
         y: 0
         width: 160
         height: 160

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1c27761488a758842b40712da2e2577e
-timeCreated: 1527294820
+timeCreated: 1538370674
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -195,7 +195,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -2502,34 +2502,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 269f_162
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 160
-        height: 160
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: 269f_163
-      rect:
-        serializedVersion: 2
-        x: 480
         y: 0
         width: 160
         height: 160
