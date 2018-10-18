@@ -18,6 +18,22 @@ public class PlayerMovement : MonoBehaviour
     public bool running = false;
     public bool surfing = false;
     public bool bike = false;
+    /// <summary>
+    /// Replaces <see cref="moving"/>, <see cref="still"/>, <see cref="running"/>, <see cref="surfing"/>, <see cref="bike"/> 
+    /// </summary>
+    private playerMoveMethod playerMoveAction = playerMoveMethod.Idle;
+    private enum playerMoveMethod
+    {
+        Idle,
+        Walking,
+        Running,
+        Biking,
+        Surfing,
+        /// <summary>
+        /// Could just be "surfing" but on "underwater" map...
+        /// </summary>
+        Diving 
+    }
     public bool strength = false;
     public bool enableJumping = false;
     public float walkSpeed = 0.3f; //time in seconds taken to walk 1 square.
@@ -127,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        if (!surfing)
+        if (!surfing)//playerMoveAction != playerMoveMethod.Surfing
         {
             updateMount(false);
         }
@@ -249,12 +265,12 @@ public class PlayerMovement : MonoBehaviour
         //DEBUG
         if (accessedMapSettings != null)
         {
-            WildPokemonInitialiser[] encounterList =
-                accessedMapSettings.getEncounterList(WildPokemonInitialiser.Location.Standard);
+            WildPokemonInitialiserOld[] encounterList =
+                accessedMapSettings.getEncounterList(WildPokemonInitialiserOld.Method.WALK);
             string namez = "";
             for (int i = 0; i < encounterList.Length; i++)
             {
-                namez += PokemonDatabase.getPokemon(encounterList[i].ID).getName() + ", ";
+                namez += PokemonDatabaseOld.getPokemon(encounterList[i].ID).getName() + ", ";
             }
             GlobalVariables.global.debug("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
             if(GlobalVariables.global.presence.largeImageKey != accessedMapSettings.discordImageKey || accessedMapSettings.discordDetails != "")
@@ -323,13 +339,13 @@ public class PlayerMovement : MonoBehaviour
         return directionHeld;
     }
 
-    private IEnumerator control()
+    private IEnumerator control() //ToDo: replace with enum
     {
-        bool still;
+        bool still;//replace with playerMoveAction
         while (true)
         {
             still = true;
-                //the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
+            //the player is still, but if they've just finished moving a space, moving is still true for this frame (see end of coroutine)
             if (canInput)
             {
                 if (!surfing && !bike)
@@ -446,6 +462,7 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
+<<<<<<< HEAD
 
                 //debug camera:
                 else if (Input.GetKeyDown("v") && SaveData.currentSave.debugMode)
@@ -461,6 +478,9 @@ public class PlayerMovement : MonoBehaviour
                     StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
                 }
                 else if (Input.GetKeyDown("t") && SaveData.currentSave.debugMode)
+=======
+                else if (Input.GetKeyDown("g") && SaveDataOld.currentSave.debugMode == true)
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
                 {
                     //DEBUG foward
                     CamPos.z++;
@@ -639,14 +659,14 @@ public class PlayerMovement : MonoBehaviour
         if (animationName != newAnimationName)
         {
             animationName = newAnimationName;
-            if(SaveData.currentSave.getPlayerSpritePrefix().Contains("custom")) {
-                WWW www = new WWW("file://" + System.IO.Path.Combine(Application.streamingAssetsPath, SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName));
+            if(SaveDataOld.currentSave.getPlayerSpritePrefix().Contains("custom")) {
+                WWW www = new WWW("file://" + System.IO.Path.Combine(Application.streamingAssetsPath, SaveDataOld.currentSave.getPlayerSpritePrefix() + newAnimationName));
  
                 if (!string.IsNullOrEmpty(www.error)) {
                     Debug.Log (www.error);
-                    SaveData.currentSave.playerOutfit = "hgss";
+                    SaveDataOld.currentSave.playerOutfit = "hgss";
                     PlayerPrefs.SetInt("customSprites", 0);
-                    if(SaveData.currentSave.getCVariable("male") == 1) {
+                    if(SaveDataOld.currentSave.getCVariable("male") == 1) {
                         spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
                     }
                     else {
@@ -672,8 +692,13 @@ public class PlayerMovement : MonoBehaviour
                     Sprite custom16 = Sprite.Create(www.texture, new Rect(96f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
                     spriteSheet = new Sprite[] {custom1,custom2,custom3,custom4,custom5,custom6,custom7,custom8,custom9,custom10,custom11,custom12,custom13,custom14,custom15,custom16};*/
                     //I highly doubt this is the correct way to do it
+<<<<<<< HEAD
                     GlobalVariables.global.debug("Not implemented");
                     if(SaveData.currentSave.getCVariable("male") == 1) {
+=======
+                    Debug.Log("Not implemented");
+                    if(SaveDataOld.currentSave.getCVariable("male") == 1) {
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
                         spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
                     }
                     else {
@@ -683,7 +708,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else {
                 spriteSheet =
-                    Resources.LoadAll<Sprite>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + newAnimationName);
+                    Resources.LoadAll<Sprite>("PlayerSprites/" + SaveDataOld.currentSave.getPlayerSpritePrefix() + newAnimationName);
                 //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
             }
             framesPerSec = fps;
@@ -1114,12 +1139,12 @@ public class PlayerMovement : MonoBehaviour
                     if (destinationTag == 2)
                     {
                         //surf tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Surfing));
+                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiserOld.Method.SURF));
                     }
                     else
                     {
                         //land tile
-                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiser.Location.Standard));
+                        StartCoroutine(PlayerMovement.player.wildEncounter(WildPokemonInitialiserOld.Method.WALK));
                     }
                 }
             }
@@ -1295,7 +1320,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator surfCheck()
     {
-        Pokemon targetPokemon = SaveData.currentSave.PC.getFirstFEUserInParty("Surf");
+        PokemonOld targetPokemon = SaveDataOld.currentSave.PC.getFirstFEUserInParty("Surf");
         if (targetPokemon != null)
         {
             if (getForwardVector(direction, false) != Vector3.zero)
@@ -1376,7 +1401,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
     }
 
-    public IEnumerator wildEncounter(WildPokemonInitialiser.Location encounterLocation)
+    public IEnumerator wildEncounter(WildPokemonInitialiserOld.Method encounterLocation)
     {
         if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
         {

@@ -1,7 +1,18 @@
+<<<<<<< HEAD
+=======
+# Create a Changelog without causing conflict errors
+/changelog.md	merge=union
+/NEWS			merge=union
+
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 # Auto detect text files and perform LF normalization
 * text=auto
 
 # Custom for Visual Studio
+<<<<<<< HEAD
+=======
+#*.cs		diff=csharp
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 *.sln		merge=union
 *.csproj	merge=union
 *.vbproj	merge=union
@@ -20,6 +31,30 @@
 *.rtf	diff=astextplain
 *.RTF	diff=astextplain
 
+<<<<<<< HEAD
+=======
+# Custom for Unity
+#*.meta		diff=astextplain
+#*.META		diff=astextplain
+#*.prefab	diff=astextplain
+#*.PREFAB	diff=astextplain
+#*.asset		diff=astextplain
+#*.ASSET		diff=astextplain
+#*.unity		diff=astextplain
+#*.UNITY 	diff=astextplain
+#*.anim		diff=astextplain
+#*.controller 	diff=astextplain
+
+# Ignores on Git Export/Download/Releases
+# Dont really need users configuring this... 
+/.gitattributes export-ignore  
+/.gitignore export-ignore
+/.github export-ignore 
+/UnitTestProject export-ignore
+/readme.md export-ignore
+/code_of_conduct.md export-ignore
+
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 ## Unity ##
 
 *.cs diff=csharp text
@@ -32,6 +67,58 @@
 *.prefab merge=unityyamlmerge eol=lf
 *.physicsMaterial2D merge=unityyamlmerge eol=lf
 *.physicsMaterial merge=unityyamlmerge eol=lf
+<<<<<<< HEAD
 #*.asset merge=unityyamlmerge eol=lf
 *.meta merge=unityyamlmerge eol=lf
 *.controller merge=unityyamlmerge eol=lf
+=======
+*.asset merge=unityyamlmerge eol=lf
+*.meta merge=unityyamlmerge eol=lf
+*.controller merge=unityyamlmerge eol=lf
+
+
+## git-lfs ##
+
+##Image
+#*.jpg filter=lfs diff=lfs merge=lfs -text
+#*.jpeg filter=lfs diff=lfs merge=lfs -text
+#*.png filter=lfs diff=lfs merge=lfs -text
+#*.gif filter=lfs diff=lfs merge=lfs -text
+#*.psd filter=lfs diff=lfs merge=lfs -text
+#*.ai filter=lfs diff=lfs merge=lfs -text
+
+##Audio
+#*.mp3 filter=lfs diff=lfs merge=lfs -text
+#*.wav filter=lfs diff=lfs merge=lfs -text
+#*.ogg filter=lfs diff=lfs merge=lfs -text
+
+##Video
+#*.mp4 filter=lfs diff=lfs merge=lfs -text
+#*.mov filter=lfs diff=lfs merge=lfs -text
+
+##3D Object
+#*.FBX filter=lfs diff=lfs merge=lfs -text
+#*.fbx filter=lfs diff=lfs merge=lfs -text
+#*.blend filter=lfs diff=lfs merge=lfs -text
+#*.obj filter=lfs diff=lfs merge=lfs -text
+
+##ETC
+#*.a filter=lfs diff=lfs merge=lfs -text
+#*.exr filter=lfs diff=lfs merge=lfs -text
+#*.tga filter=lfs diff=lfs merge=lfs -text
+#*.pdf filter=lfs diff=lfs merge=lfs -text
+#*.zip filter=lfs diff=lfs merge=lfs -text
+#*.dll filter=lfs diff=lfs merge=lfs -text
+#*.unitypackage filter=lfs diff=lfs merge=lfs -text
+#*.aif filter=lfs diff=lfs merge=lfs -text
+#*.ttf filter=lfs diff=lfs merge=lfs -text
+#*.rns filter=lfs diff=lfs merge=lfs -text
+#*.reason filter=lfs diff=lfs merge=lfs -text
+#*.lxo filter=lfs diff=lfs merge=lfs -text
+
+#/Assets/Terrains/*.asset filter=lfs diff=lfs merge=lfs -text
+##only if subfolders with terrains exist:
+#/Assets/Terrains/**/*.asset filter=lfs diff=lfs merge=lfs -text
+
+#*.asset merge=unityyamlmerge text=auto
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5

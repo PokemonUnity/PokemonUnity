@@ -7,21 +7,21 @@ using System.Collections;
 public class PC
 {
     //index 0: Party,    index >= 1: PC box
-    public Pokemon[][] boxes = new Pokemon[][]
+    public PokemonOld[][] boxes = new PokemonOld[][]
     {
-        new Pokemon[6], //Party
-        new Pokemon[30], //Boxes
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30],
-        new Pokemon[30]
+        new PokemonOld[6], //Party
+        new PokemonOld[30], //Boxes
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30],
+        new PokemonOld[30]
     }; //create an array of arrays of Pokemon. A List of Boxes.
 
     public string[] boxName = new string[13];
@@ -61,7 +61,7 @@ public class PC
 
     public void packParty()
     {
-        Pokemon[] packedArray = new Pokemon[6];
+        PokemonOld[] packedArray = new PokemonOld[6];
         int i2 = 0; //counter for packed array
         for (int i = 0; i < 6; i++)
         {
@@ -76,7 +76,7 @@ public class PC
     }
 
     //Add a new pokemon. If pokemon could not be added return false.
-    public bool addPokemon(Pokemon acquiredPokemon)
+    public bool addPokemon(PokemonOld acquiredPokemon)
     {
         //attempt to add to party first. pack the party array if space available.
         if (hasSpace(0))
@@ -110,7 +110,7 @@ public class PC
 
     public void swapPokemon(int box1, int pos1, int box2, int pos2)
     {
-        Pokemon temp = boxes[box1][pos1];
+        PokemonOld temp = boxes[box1][pos1];
         boxes[box1][pos1] = boxes[box2][pos2];
         boxes[box2][pos2] = temp;
     }
@@ -153,7 +153,7 @@ public class PC
         return result;
     }
 
-    public Pokemon getFirstFEUserInParty(string moveName)
+    public PokemonOld getFirstFEUserInParty(string moveName)
     {
         for (int i = 0; i < 6; i++)
         {

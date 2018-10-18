@@ -3,10 +3,10 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Trainer))]
+[RequireComponent(typeof(TrainerOld))]
 public class InteractTrainer : MonoBehaviour
 {
-    private Trainer trainer;
+    private TrainerOld trainer;
 
     public enum Gender
     {
@@ -73,7 +73,7 @@ public class InteractTrainer : MonoBehaviour
 
     void Awake()
     {
-        trainer = transform.GetComponent<Trainer>();
+        trainer = transform.GetComponent<TrainerOld>();
 
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 

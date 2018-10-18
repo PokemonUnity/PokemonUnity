@@ -3,7 +3,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Trainer : MonoBehaviour
+[System.Obsolete]
+public class TrainerOld : MonoBehaviour
 {
     public enum Class
     {
@@ -34,7 +35,7 @@ public class Trainer : MonoBehaviour
     public bool doubles = false;
 
     public PokemonInitialiser[] trainerParty = new PokemonInitialiser[1];
-    private Pokemon[] party;
+    private PokemonOld[] party;
 
     public AudioClip battleBGM;
     public int samplesLoopStart;
@@ -47,7 +48,7 @@ public class Trainer : MonoBehaviour
     public string[] playerVictoryDialog;
     public string[] playerLossDialog;
 
-    public Trainer(Pokemon[] party)
+    public TrainerOld(PokemonOld[] party)
     {
         this.trainerClass = Class.Trainer;
         this.trainerName = "";
@@ -57,20 +58,20 @@ public class Trainer : MonoBehaviour
 
     void Awake()
     {
-        party = new Pokemon[trainerParty.Length];
+        party = new PokemonOld[trainerParty.Length];
     }
 
     void Start()
     {
         for (int i = 0; i < trainerParty.Length; i++)
         {
-            party[i] = new Pokemon(trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
+            party[i] = new PokemonOld(trainerParty[i].ID, trainerParty[i].gender, trainerParty[i].level, "Poké Ball",
                 trainerParty[i].heldItem, trainerName, trainerParty[i].ability);
         }
     }
 
 
-    public Pokemon[] GetParty()
+    public PokemonOld[] GetParty()
     {
         return party;
     }
@@ -129,7 +130,7 @@ public class PokemonInitialiser
 {
     public int ID;
     public int level;
-    public Pokemon.Gender gender;
+    public PokemonOld.Gender gender;
     public string heldItem;
     public int ability;
 }

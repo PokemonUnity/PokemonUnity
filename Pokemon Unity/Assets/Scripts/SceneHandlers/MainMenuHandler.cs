@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class MainMenuHandler : MonoBehaviour {
 	public int selectedFile = 0;
 	public bool newGame = false;
 	public Sprite playerSprite;
-	public Pokemon.Gender playerGender;
+	public PokemonOld.Gender playerGender;
 	public Texture buttonSelected;
 	public Texture buttonDimmed;
 
@@ -45,7 +46,7 @@ public class MainMenuHandler : MonoBehaviour {
 
 	void Awake(){
 
-		SaveLoad.Load();
+		SaveLoadOld.Load();
 		
 		fileDataPanel = transform.Find("FileData").gameObject;
 		continueButton = transform.Find("Continue").gameObject;
@@ -108,28 +109,36 @@ public class MainMenuHandler : MonoBehaviour {
 		fileSelected.pixelOffset = highlightPositions[selectedFile];
 		fileSelected.text = ""+(selectedFile+1);
 
-		if(SaveLoad.savedGames[selectedFile] != null){
-			int badgeTotal = 0;
-			for(int i = 0; i < 12; i++){
-				if(SaveLoad.savedGames[selectedFile].gymsBeaten[i]){
-					badgeTotal += 1;}
-			}
-			string playerTime = ""+SaveLoad.savedGames[selectedFile].playerMinutes;
-			if(playerTime.Length == 1){
-				playerTime = "0" + playerTime;}
-			playerTime = SaveLoad.savedGames[selectedFile].playerHours +" : "+ playerTime;
-			int pokeDex = SaveLoad.savedGames[selectedFile].pokeDex;
-			mapNameText.text = SaveLoad.savedGames[selectedFile].mapName;
-			mapNameTextShadow.text = mapNameText.text;
-			dataText.text = SaveLoad.savedGames[selectedFile].playerName
-					 +"\n"+ badgeTotal
-					 +"\n"+ pokeDex //Pokedex not yet implemented
-					 +"\n"+ playerTime;
-			dataTextShadow.text = dataText.text;
+        if (SaveLoadOld.savedGames[selectedFile] != null)
+        {
+            int badgeTotal = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                if (SaveLoadOld.savedGames[selectedFile].gymsBeatTime[i] != null)//SaveLoad.savedGames[selectedFile].gymsBeaten[i]
+                {
+                    badgeTotal += 1;
+                }
+            }
+            /*string playerTime = "" + SaveLoad.savedGames[selectedFile].playerMinutes;
+            if (playerTime.Length == 1)
+            {
+                playerTime = "0" + playerTime;
+            }
+            playerTime = SaveLoad.savedGames[selectedFile].playerHours + " : " + playerTime;*/
+
+            mapNameText.text = SaveLoadOld.savedGames[selectedFile].mapName;
+            mapNameTextShadow.text = mapNameText.text;
+            Debug.Log(PokemonDatabaseOld.LoadPokedex().Length);
+            Debug.Log(SaveLoadOld.savedGames[selectedFile].pokedexCaught + "/" + SaveLoadOld.savedGames[selectedFile].pokedexSeen);
+            dataText.text = SaveLoadOld.savedGames[selectedFile].playerName
+                            + "\n" + badgeTotal
+                            + "\n" + "0" //Pokedex not yet implemented
+                            + "\n" + System.String.Format("{0} : {1:00}",SaveLoadOld.savedGames[selectedFile].playerTime.Hours, SaveLoadOld.savedGames[selectedFile].playerTime.Minutes);
+            dataTextShadow.text = dataText.text;
 
 			for(int i = 0; i < 6; i++){
-				if(SaveLoad.savedGames[selectedFile].PC.boxes[0][i] != null){
-					pokemon[i].texture = SaveLoad.savedGames[selectedFile].PC.boxes[0][i].GetIcons();}
+				if(SaveLoadOld.savedGames[selectedFile].PC.boxes[0][i] != null){
+					pokemon[i].texture = SaveLoadOld.savedGames[selectedFile].PC.boxes[0][i].GetIcons();}
 				else{
 					pokemon[i].texture = null;}
 			}
@@ -218,11 +227,11 @@ public class MainMenuHandler : MonoBehaviour {
 		yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 		Scene.main.Typing.gameObject.SetActive(true);
 		if(gender){
-			playerGender = Pokemon.Gender.MALE;
+			playerGender = PokemonOld.Gender.MALE;
 			playerSprite = null;
 		}
 		else {
-			playerGender = Pokemon.Gender.FEMALE;
+			playerGender = PokemonOld.Gender.FEMALE;
 			playerSprite = null;
 		}
 		StartCoroutine(Scene.main.Typing.control(7,playerName,playerGender,new Sprite[]{playerSprite}));
@@ -387,8 +396,13 @@ public class MainMenuHandler : MonoBehaviour {
 				Dialog.drawDialogBox();
 				yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 				
+<<<<<<< HEAD
 				BgmHandler.main.PlayMain(null, 0, false);
 				SaveData.currentSave = new SaveData(SaveLoad.getSavedGamesCount());
+=======
+				BgmHandler.main.PlayMain(null, 0);
+				SaveDataOld.currentSave = new SaveDataOld(SaveLoadOld.getSavedGamesCount());
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 
 				GlobalVariables.global.CreateFileData(playerName, gender); 
 
@@ -423,6 +437,7 @@ public class MainMenuHandler : MonoBehaviour {
 			transform.Find("Settings").position = new Vector3(-0.5f*increment, transform.Find("FileData").position.y, transform.Find("FileData").position.z);
 			if(transform.Find("FileData").position == new Vector3(0.5f, transform.Find("FileData").position.y, transform.Find("FileData").position.z)) {
 
+<<<<<<< HEAD
 				yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 				GlobalVariables.global.debug(SaveLoad.savedGames[0].ToString());
 				//GlobalVariables.global.debug(SaveLoad.savedGames[1].ToString());
@@ -441,15 +456,43 @@ public class MainMenuHandler : MonoBehaviour {
 				//yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 			}
 			yield return null;
+=======
+                //CONTINUE
+                #region CONTINUE
+                yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+				SaveDataOld.currentSave = SaveLoadOld.savedGames[selectedFile];
+
+				Debug.Log(SaveLoadOld.savedGames[0]);
+				Debug.Log(SaveLoadOld.savedGames[1]);
+				Debug.Log(SaveLoadOld.savedGames[2]);
+                SaveDataOld.currentSave.startTime = System.DateTime.UtcNow;
+                GlobalVariables.global.playerPosition = SaveDataOld.currentSave.playerPosition.v3;
+				GlobalVariables.global.playerDirection = SaveDataOld.currentSave.playerDirection;
+					
+				UnityEngine.SceneManagement.SceneManager.LoadScene(SaveDataOld.currentSave.levelName);
+                //yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
+                #endregion
+            }
+            yield return null;
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 		}
 	}
 
 	public IEnumerator control(){
+<<<<<<< HEAD
 		int fileCount = SaveLoad.getSavedGamesCount();
 		GlobalVariables.global.SetRPCLargeImageKey("main_menu","Main Menu");
 		if(fileCount == 0){
 			yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
 			BgmHandler.main.PlayMain(menuBGM, 0, true);
+=======
+		int fileCount = SaveLoadOld.getSavedGamesCount();
+
+        //NEW GAME
+        #region NEW GAME
+        if (fileCount == 0){
+			BgmHandler.main.PlayMain(menuBGM, 0);
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 			newGame = true;
 			importantThings.SetActive(true);
 			updateButton(1);
@@ -465,16 +508,28 @@ public class MainMenuHandler : MonoBehaviour {
 			transform.Find("Settings").gameObject.SetActive(false);
 			StartCoroutine("animBG");
 			yield return new WaitForSeconds(2f);
+<<<<<<< HEAD
+=======
+            SaveDataOld.currentSave.startTime = System.DateTime.UtcNow;
+            yield return StartCoroutine(ScreenFade.main.Fade(false, 0.4f));
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 			importantThings.SetActive(false);
 			transform.Find("OpeningLecture").gameObject.SetActive(true);
 			yield return StartCoroutine(ScreenFade.main.Fade(true, 0f));
 			yield return StartCoroutine("openAnimNewGame");
 		}
+<<<<<<< HEAD
 		else{
 			GlobalVariables.global.SetRPCDetails("In the Main Menu");
 			GlobalVariables.global.UpdatePresence();
 			yield return StartCoroutine(ScreenFade.main.Fade(true, 0.4f));
 			BgmHandler.main.PlayMain(menuBGM, 0, true);
+=======
+        #endregion
+        else
+        {
+			BgmHandler.main.PlayMain(menuBGM, 0);
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 			updateButton(0);
 			updateFile(0);
 
@@ -580,8 +635,13 @@ public class MainMenuHandler : MonoBehaviour {
 				yield return StartCoroutine(Dialog.choiceNavigateNo());
 				int chosenIndex = Dialog.chosenIndex;
 				if(chosenIndex == 1){
+<<<<<<< HEAD
 					SaveLoad.resetSaveGame(selectedFile);
 					GlobalVariables.global.debug("Save "+(selectedFile+1)+" was deleted!");
+=======
+					SaveLoadOld.resetSaveGame(selectedFile);
+					Debug.Log("Save "+(selectedFile+1)+" was deleted!");
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
 					Dialog.undrawDialogBox();
 					Dialog.undrawChoiceBox();
 					Dialog.drawDialogBox();

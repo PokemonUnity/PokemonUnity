@@ -3,13 +3,28 @@
 using UnityEngine;
 using System.Collections;
 
-public class NatureData
+[System.Obsolete]
+public class NatureDataOld 
 {
+    /// <summary>
+    /// not needed, can call <see cref="nature.ToString()"/>
+    /// </summary>
     private string name;
+    private NatureDatabaseOld.Nature nature;
     private float[] Stat_mod = new float[5];
     private string[] Stat_name = new string[] {"ATK", "DEF", "SPA", "SPD", "SPE"};
 
-    public NatureData(string name, float ATK_mod, float DEF_mod, float SPA_mod, float SPD_mod, float SPE_mod)
+    public NatureDataOld(NatureDatabaseOld.Nature name, float ATK_mod, float DEF_mod, float SPA_mod, float SPD_mod, float SPE_mod)
+    {
+        this.nature = name;
+        this.Stat_mod[0] = ATK_mod;
+        this.Stat_mod[1] = DEF_mod;
+        this.Stat_mod[2] = SPA_mod;
+        this.Stat_mod[3] = SPD_mod;
+        this.Stat_mod[4] = SPE_mod;
+    }
+
+    public NatureDataOld(string name, float ATK_mod, float DEF_mod, float SPA_mod, float SPD_mod, float SPE_mod)
     {
         this.name = name;
         this.Stat_mod[0] = ATK_mod;

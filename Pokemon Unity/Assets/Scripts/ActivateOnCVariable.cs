@@ -39,21 +39,21 @@ public class ActivateOnCVariable : MonoBehaviour
         bool checkResult = false;
         if (check == Check.Equal)
         {
-            if (SaveData.currentSave.getCVariable(cVariable) == cNumber)
+            if (SaveDataOld.currentSave.getCVariable(cVariable) == cNumber)
             {
                 checkResult = true;
             }
         }
         else if (check == Check.GreaterThan)
         {
-            if (SaveData.currentSave.getCVariable(cVariable) > cNumber)
+            if (SaveDataOld.currentSave.getCVariable(cVariable) > cNumber)
             {
                 checkResult = true;
             }
         }
         else if (check == Check.LessThan)
         {
-            if (SaveData.currentSave.getCVariable(cVariable) < cNumber)
+            if (SaveDataOld.currentSave.getCVariable(cVariable) < cNumber)
             {
                 checkResult = true;
             }

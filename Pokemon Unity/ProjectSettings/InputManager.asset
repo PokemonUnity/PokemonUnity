@@ -7,8 +7,8 @@ InputManager:
   m_Axes:
   - serializedVersion: 3
     m_Name: Horizontal
-    descriptiveName: 
-    descriptiveNegativeName: 
+    descriptiveName: Right
+    descriptiveNegativeName: Left
     negativeButton: a
     positiveButton: d
     altNegativeButton: left
@@ -16,15 +16,15 @@ InputManager:
     gravity: 100
     dead: 0.1
     sensitivity: 100
-    snap: 0
+    snap: 1
     invert: 0
     type: 0
     axis: 0
     joyNum: 0
   - serializedVersion: 3
     m_Name: Vertical
-    descriptiveName: 
-    descriptiveNegativeName: 
+    descriptiveName: Up
+    descriptiveNegativeName: Down
     negativeButton: s
     positiveButton: w
     altNegativeButton: down
@@ -33,7 +33,7 @@ InputManager:
     dead: 0.1
     sensitivity: 100
     snap: 0
-    invert: 0
+    invert: 1
     type: 0
     axis: 1
     joyNum: 0

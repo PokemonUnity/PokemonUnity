@@ -66,7 +66,7 @@ public class InteractPC : MonoBehaviour
                 SfxHandler.Play(onClip);
                 yield return StartCoroutine("onAnim");
                 Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawTextSilent", SaveData.currentSave.playerName + " turned on the PC!");
+                yield return Dialog.StartCoroutine("drawTextSilent", SaveDataOld.currentSave.playerName + " turned on the PC!");
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                 {
                     yield return null;
@@ -76,7 +76,7 @@ public class InteractPC : MonoBehaviour
                 {
                     Dialog.drawDialogBox();
                     yield return Dialog.StartCoroutine("drawText", "Which PC should be accessed?");
-                    if(SaveData.currentSave.getCVariable("meetBill") != 1) { //for use in fangames possibly?
+                    if(SaveDataOld.currentSave.getCVariable("meetBill") != 1) { //for use in fangames possibly?
                         Dialog.drawChoiceBox(new string[] {"Someone's", "Switch off"});
                     } else {
                         Dialog.drawChoiceBox(new string[] {"Bill's", "Switch off"});

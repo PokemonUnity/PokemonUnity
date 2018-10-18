@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pokedex
+  - DialogWindow
+  - CanvasUI
+  - CanvasScene
+  - PokemonIcon
   layers:
   - Default
   - TransparentFX

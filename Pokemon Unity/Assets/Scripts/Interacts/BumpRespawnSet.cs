@@ -11,10 +11,10 @@ public class BumpRespawnSet : MonoBehaviour
 
     private IEnumerator bump()
     {
-        SaveData.currentSave.respawnScenePosition = new SeriV3(transform.position + respawnPositionOffset);
-        SaveData.currentSave.respawnSceneDirection = respawnDirection;
-        SaveData.currentSave.respawnText = respawnText;
-        SaveData.currentSave.respawnSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        SaveDataOld.currentSave.respawnScenePosition = new SeriV3(transform.position + respawnPositionOffset);
+        SaveDataOld.currentSave.respawnSceneDirection = respawnDirection;
+        SaveDataOld.currentSave.respawnText = respawnText;
+        SaveDataOld.currentSave.respawnSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         yield return null;
     }
 }

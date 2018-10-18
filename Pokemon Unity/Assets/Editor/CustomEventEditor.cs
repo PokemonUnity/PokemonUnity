@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿/*using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -170,7 +170,7 @@ public class CustomEventEditor : Editor
         }
 
         EditorGUILayout.Space();
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
         EditorGUI.indentLevel = 0;
@@ -254,7 +254,7 @@ public class CustomEventEditor : Editor
         }
 
         EditorGUILayout.Space();
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
         EditorGUI.indentLevel = 0;
@@ -586,7 +586,7 @@ public class CustomEventEditor : Editor
 
             case CustomEventDetails.CustomEventType.ReceivePokemon:
                 eventDescription = "Receive a Lv. " + ints_Prop.GetArrayElementAtIndex(1).intValue + " \"";
-                PokemonData pkd = PokemonDatabase.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
+                PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
                 eventDescription += (pkd != null) ? pkd.getName() : "null";
                 eventDescription += "\" or Jump to " + int0_Prop.intValue + ".";
                 break;
@@ -681,7 +681,7 @@ public class CustomEventEditor : Editor
     {
         SetEventProps(currentSEvent);
 
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
 
         EditorGUILayout.PropertyField(eventType_Prop);
@@ -806,7 +806,7 @@ public class CustomEventEditor : Editor
 
                 ints_Prop.GetArrayElementAtIndex(0).intValue = EditorGUILayout.IntField(new GUIContent("Pokemon ID"),
                     ints_Prop.GetArrayElementAtIndex(0).intValue);
-                PokemonData pkd = PokemonDatabase.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
+                PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
                 string pokemonName = (pkd != null) ? pkd.getName() : "null";
                 EditorGUILayout.LabelField(new GUIContent(" "), new GUIContent(pokemonName));
                 EditorGUILayout.Space();
@@ -958,7 +958,7 @@ public class CustomEventEditor : Editor
                 break;
         }
 
-        /* Draw a line */
+        // Draw a line 
         GUILayout.Box("", new GUILayoutOption[] {GUILayout.ExpandWidth(true), GUILayout.Height(1)});
         EditorGUILayout.Space();
     }
@@ -994,4 +994,4 @@ public class CustomEventEditor : Editor
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space();
     }
-}
+}*/

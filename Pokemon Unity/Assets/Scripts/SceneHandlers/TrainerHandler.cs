@@ -5,6 +5,7 @@ using System.Collections;
 
 public class TrainerHandler : MonoBehaviour
 {
+    #region Variables
     private DialogBoxHandler Dialog;
 
     private GUITexture cancel;
@@ -85,6 +86,7 @@ public class TrainerHandler : MonoBehaviour
     private bool interactingScreen;
     private int currentBadge;
     private bool cancelSelected;
+    #endregion
 
     void Awake()
     {
@@ -298,18 +300,18 @@ public class TrainerHandler : MonoBehaviour
 
     private void updateData()
     {
-        IDnoData.text = "" + SaveData.currentSave.playerID;
+        IDnoData.text = "" + SaveDataOld.currentSave.playerID;
         IDnoDataShadow.text = IDnoData.text;
-        nameData.text = SaveData.currentSave.playerName;
+        nameData.text = SaveDataOld.currentSave.playerName;
         nameDataShadow.text = nameData.text;
-        if(SaveData.currentSave.playerOutfit != "custom") {
-            picture.texture = Resources.Load<Texture>("PlayerSprites/" + SaveData.currentSave.getPlayerSpritePrefix() + "front");
+        if(SaveDataOld.currentSave.playerOutfit != "custom") {
+            picture.texture = Resources.Load<Texture>("PlayerSprites/" + SaveDataOld.currentSave.getPlayerSpritePrefix() + "front");
         } else {
             picture.texture = null; //custom sprites not implemented
         }
-        string playerMoney = "" + SaveData.currentSave.playerMoney;
-        char[] playerMoneyChars = playerMoney.ToCharArray();
-        playerMoney = "";
+        //picture.texture = null; //player sprites not yet implemented.
+        string playerMoney = string.Empty;
+        char[] playerMoneyChars = SaveDataOld.currentSave.playerMoney.ToString().ToCharArray();
         //format playerMoney into a currency style (e.g. $1,000,000)
         for (int i = 0; i < playerMoneyChars.Length; i++)
         {
@@ -319,26 +321,37 @@ public class TrainerHandler : MonoBehaviour
                 playerMoney = "," + playerMoney;
             }
         }
-        moneyData.text = "$" + playerMoney;
+        moneyData.text = "$" + playerMoney;//¥
         moneyDataShadow.text = moneyData.text;
-        pokedexData.text = SaveData.currentSave.pokeDex.ToString(); //pokedex not yet implemented.
+        pokedexData.text = SaveDataOld.currentSave.pokedexCaught + "/" + SaveDataOld.currentSave.pokedexSeen;//"0"; //pokedex not yet implemented.
         pokedexDataShadow.text = pokedexData.text;
-        scoreData.text = "" + SaveData.currentSave.playerScore;
+        scoreData.text = SaveDataOld.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;
+<<<<<<< HEAD
         timeHour.text = SaveData.currentSave.playerTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;
         timeHourShadow.text = timeHour.text;
         timeMinute.text = SaveData.currentSave.playerTime.Minutes.ToString("00");//"" + SaveData.currentSave.playerMinutes;
+=======
+        System.TimeSpan playTime = SaveDataOld.currentSave.playerTime + SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+        timeHour.text = "";//playTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;
+        timeHourShadow.text = timeHour.text;
+        timeMinute.text = System.String.Format("{0}   {1:00}", playTime.Hours, playTime.Minutes); //playTime.Minutes.ToString("00");//"" + SaveData.currentSave.playerMinutes;
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
         /*if (timeMinute.text.Length == 1)
         {
             timeMinute.text = "0" + timeMinute.text;
         }*/
         timeMinuteShadow.text = timeMinute.text;
+<<<<<<< HEAD
         adventureData.text = SaveData.currentSave.fileCreationDate;//.Value.ToString("MMM d, yyyy");
+=======
+        adventureData.text = SaveDataOld.currentSave.fileCreationDate.Value.ToString("MMM d, yyyy");
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
         adventureDataShadow.text = adventureData.text;
 
         for (int i = 0; i < 12; i++)
         {
-            if (SaveData.currentSave.gymsBeaten[i])
+            if (SaveDataOld.currentSave.gymsBeaten[i])
             {
                 badges[i].enabled = true;
             }
@@ -356,7 +369,7 @@ public class TrainerHandler : MonoBehaviour
             GLNameBox.gameObject.SetActive(true);
             GLPictureBox.gameObject.SetActive(true);
             GLTypeBox.gameObject.SetActive(true);
-            if (SaveData.currentSave.gymsEncountered[currentBadge])
+            if (SaveDataOld.currentSave.gymsEncountered[currentBadge])
             {
                 /* There isnt a difference, but i just feel like it's visually cleaner on the eyes. Less confusing...
                 switch (currentBadge) 
@@ -445,10 +458,17 @@ public class TrainerHandler : MonoBehaviour
                     GLType.texture = Resources.Load<Texture>("PCSprites/typeDARK");
                 }
 
+<<<<<<< HEAD
                 if (SaveData.currentSave.gymsBeatTime[currentBadge] != null)
                 {
                     GLBeatenBox.gameObject.SetActive(true);
                     GLBeatenData.text = SaveData.currentSave.gymsBeatTime[currentBadge].Value.ToString("MMM d, yyyy");
+=======
+                if (SaveDataOld.currentSave.gymsBeatTime[currentBadge] != null)//(SaveData.currentSave.gymsBeaten[currentBadge])
+                {
+                    GLBeatenBox.gameObject.SetActive(true);
+                    GLBeatenData.text = SaveDataOld.currentSave.gymsBeatTime[currentBadge].Value.ToString("MMM d, yyyy");
+>>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
                 }
                 else
                 {
@@ -545,7 +565,6 @@ public class TrainerHandler : MonoBehaviour
             }
         }
     }
-
 
     public IEnumerator control()
     {

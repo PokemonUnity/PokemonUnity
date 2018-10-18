@@ -273,7 +273,7 @@ public class SummaryHandler : MonoBehaviour
     }
 
 
-    private void updateSelection(Pokemon selectedPokemon)
+    private void updateSelection(PokemonOld selectedPokemon)
     {
         frame = 0;
 
@@ -283,12 +283,12 @@ public class SummaryHandler : MonoBehaviour
         selectedCaughtBall.sprite = Resources.Load<Sprite>("PCSprites/summary" + selectedPokemon.getCaughtBall());
         selectedName.text = selectedPokemon.getName();
         selectedNameShadow.text = selectedName.text;
-        if (selectedPokemon.getGender() == Pokemon.Gender.FEMALE)
+        if (selectedPokemon.getGender() == PokemonOld.Gender.FEMALE)
         {
             selectedGender.text = "♀";
             selectedGender.color = new Color(1, 0.2f, 0.2f, 1);
         }
-        else if (selectedPokemon.getGender() == Pokemon.Gender.MALE)
+        else if (selectedPokemon.getGender() == PokemonOld.Gender.MALE)
         {
             selectedGender.text = "♂";
             selectedGender.color = new Color(0.2f, 0.4f, 1, 1);
@@ -314,7 +314,7 @@ public class SummaryHandler : MonoBehaviour
             selectedHeldItem.text = selectedPokemon.getHeldItem();
         }
         selectedHeldItemShadow.text = selectedHeldItem.text;
-        if (selectedPokemon.getStatus() != Pokemon.Status.NONE)
+        if (selectedPokemon.getStatus() != PokemonOld.Status.NONE)
         {
             selectedStatus.sprite = Resources.Load<Sprite>("PCSprites/status" + selectedPokemon.getStatus().ToString());
         }
@@ -334,10 +334,10 @@ public class SummaryHandler : MonoBehaviour
 
         dexNo.text = selectedPokemon.getLongID();
         dexNoShadow.text = dexNo.text;
-        species.text = PokemonDatabase.getPokemon(selectedPokemon.getID()).getName();
+        species.text = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getName();
         speciesShadow.text = species.text;
-        string type1string = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType1().ToString();
-        string type2string = PokemonDatabase.getPokemon(selectedPokemon.getID()).getType2().ToString();
+        string type1string = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType1().ToString();
+        string type2string = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getType2().ToString();
         type1.sprite = Resources.Load<Sprite>("null");
         type2.sprite = Resources.Load<Sprite>("null");
         if (type1string != "NONE")
@@ -361,10 +361,10 @@ public class SummaryHandler : MonoBehaviour
         expPoints.text = "" + selectedPokemon.getExp();
         expPointsShadow.text = expPoints.text;
         float expCurrentLevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+            PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel());
         float expNextlevel =
-            PokemonDatabase.getLevelExp(PokemonDatabase.getPokemon(selectedPokemon.getID()).getLevelingRate(),
+            PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getLevelingRate(),
                 selectedPokemon.getLevel() + 1);
         float expAlong = selectedPokemon.getExp() - expCurrentLevel;
         float expDistance = expAlong / (expNextlevel - expCurrentLevel);
@@ -437,11 +437,11 @@ public class SummaryHandler : MonoBehaviour
 
         float[] natureMod = new float[]
         {
-            NatureDatabase.getNature(selectedPokemon.getNature()).getATK(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getDEF(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getSPA(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getSPD(),
-            NatureDatabase.getNature(selectedPokemon.getNature()).getSPE()
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getATK(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getDEF(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getSPA(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getSPD(),
+            NatureDatabaseOld.getNature(selectedPokemon.getNature()).getSPE()
         };
         Stats.text =
             selectedPokemon.getATK() + "\n" +
@@ -470,7 +470,7 @@ public class SummaryHandler : MonoBehaviour
         }
 
 
-        abilityName.text = PokemonDatabase.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
+        abilityName.text = PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
         abilityNameShadow.text = abilityName.text;
         //abilities not yet implemented
         abilityDescription.text = "";
@@ -479,7 +479,7 @@ public class SummaryHandler : MonoBehaviour
         updateSelectionMoveset(selectedPokemon);
     }
 
-    private void updateSelectionMoveset(Pokemon selectedPokemon)
+    private void updateSelectionMoveset(PokemonOld selectedPokemon)
     {
         string[] moveset = selectedPokemon.getMoveset();
         int[] maxPP = selectedPokemon.getMaxPP();
@@ -651,23 +651,23 @@ public class SummaryHandler : MonoBehaviour
         }
     }
 
-    private void PlayCry(Pokemon pokemon)
+    private void PlayCry(PokemonOld pokemon)
     {
         SfxHandler.Play(pokemon.GetCry(), pokemon.GetCryPitch());
     }
 
 
-    public IEnumerator control(Pokemon[] pokemonList, int currentPosition)
+    public IEnumerator control(PokemonOld[] pokemonList, int currentPosition)
     {
         yield return StartCoroutine(control(pokemonList, currentPosition, false, null));
     }
 
-    public IEnumerator control(Pokemon pokemon, string newMoveString)
+    public IEnumerator control(PokemonOld pokemon, string newMoveString)
     {
-        yield return StartCoroutine(control(new Pokemon[] {pokemon}, 0, true, newMoveString));
+        yield return StartCoroutine(control(new PokemonOld[] {pokemon}, 0, true, newMoveString));
     }
 
-    public IEnumerator control(Pokemon[] pokemonList, int currentPosition, bool learning, string newMoveString)
+    public IEnumerator control(PokemonOld[] pokemonList, int currentPosition, bool learning, string newMoveString)
     {
         moves.localPosition = (learning) ? new Vector3(0, 32) : Vector3.zero;
         newMove.gameObject.SetActive(learning);
@@ -801,7 +801,7 @@ public class SummaryHandler : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private IEnumerator NavigateMoves(Pokemon pokemon, bool learning, string newMoveString)
+    private IEnumerator NavigateMoves(PokemonOld pokemon, bool learning, string newMoveString)
     {
         learnScreen.SetActive(learning);
         newMove.gameObject.SetActive(learning);
