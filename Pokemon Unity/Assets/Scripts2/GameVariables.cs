@@ -24,7 +24,16 @@ using PokemonUnity.Item;
 /// This class should be static...
 public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
-    public bool debugMode { get; set; }
+	public static bool debugMode { get; set; }
+	public static void DebugLog(string text) { Debug = text; }
+	public static string Debug {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.Log(value);
+#endif
+		}
+	}
 
     //public static Translator.Languages UserLanguage = Translator.Languages.English;
     public static Settings.Languages UserLanguage = Settings.Languages.English;
