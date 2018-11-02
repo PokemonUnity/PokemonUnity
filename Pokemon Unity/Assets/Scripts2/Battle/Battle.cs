@@ -621,6 +621,22 @@ public class Battle
 
 	public class Battler : Pokemon
 	{
+		#region Move to PokemonBattle Class
+		/// <summary>
+		/// Consumed held item (used in battle only)
+		/// </summary>
+		/// ToDo: Is it an int or a bool?
+		public Items itemRecycle { get; set; }
+		/// <summary>
+		/// Resulting held item (used in battle only)
+		/// </summary>
+		public Items itemInitial { get; set; }
+		/// <summary>
+		/// Where Pokemon can use Belch (used in battle only)
+		/// </summary>
+		/// ToDo: Move to pkemonBattle class
+		public bool belch { get; set; }
+		#endregion
 		private int? lastRoundMoved { get; set; }
 		public int lastHPLost { get; set; }
 		public bool tookDamage { get; set; }

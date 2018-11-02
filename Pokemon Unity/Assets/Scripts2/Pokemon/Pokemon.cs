@@ -90,21 +90,6 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// Held item
     /// </summary>
     public Items Item { get; private set; }
-	#region Move to PokemonBattle Class
-	/// <summary>
-	/// Consumed held item (used in battle only)
-	/// </summary>
-	private bool itemRecycle;
-    /// <summary>
-    /// Resulting held item (used in battle only)
-    /// </summary>
-    private bool itemInitial;
-    /// <summary>
-    /// Where Pokemon can use Belch (used in battle only)
-    /// </summary>
-	/// ToDo: Move to pkemonBattle class
-    private bool belch;
-	#endregion
 	/// <summary>
 	/// Current experience points
 	/// </summary>
@@ -756,7 +741,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Returns true if the Pokémon knows the given move.
 	/// </summary>
 	public bool hasMove(Moves move) {
-		//if (move <= 0) return false;//move == null ||
+		//Checking if pokemon has a NONE placeholder in moveset might come in handy
+		//if (move == Moves.NONE || move <= 0) return false;
 		for (int i = 0; i < 4; i++)
 		{
 			if (this.moves[i].MoveId == move) return true;
