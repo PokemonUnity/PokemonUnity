@@ -181,9 +181,10 @@ public class Translator
         /// </remarks>
         public class XmlLocalizationDictionary : LocalizationDictionary
         {
-            #region XML English Translate Variables
-            //private int nodeCount;
-            //private static List<string> nodeType = new List<string>(); //nodeType.GroupBy(i => i); foreach(){g.Key, g.Count()}
+			#region XML English Translate Variables
+			//private int nodeCount;
+			//private static List<string> nodeType = new List<string>(); //nodeType.GroupBy(i => i); foreach(){g.Key, g.Count()}
+			public static SortedList<string, IEnumerable<LocalizedString>> nodeType = new SortedList<string, IEnumerable<LocalizedString>>(); //{ get; set; }
             #endregion
 
             /// <summary>
@@ -253,6 +254,7 @@ public class Translator
                     {
                         if (nodes.HasChildNodes)
                         {
+							if(!nodeType.ContainsKey(nodes.Name.ToUpperInvariant())) nodeType.Add(nodes.Name.ToUpperInvariant(), new List<LocalizedString>());
                             foreach (XmlNode node in nodes)
                             {
                                 if (node.HasChildNodes && node.FirstChild.NodeType == XmlNodeType.Text /*node.NodeType != XmlNodeType.Comment*/)
@@ -271,7 +273,7 @@ public class Translator
 
                                     //dictionary[name] = (node.GetAttributeValueOrNull("value") ?? node.InnerText).NormalizeLineEndings();
                                     dictionary[id] = new LocalizedString() { Identifier = id };
-                                    dictionary[id].Value = node.InnerText;//.NormalizeLineEndings();
+                                    dictionary[id].Value = node.InnerText.TrimStart(new char[] { '\r', '\n' });//.NormalizeLineEndings();
                                     //dictionary[id].Name =  node.GetAttributeValueOrNull("name") ?? id;//.NormalizeLineEndings();
 
                                     #region MyRegion
@@ -295,8 +297,9 @@ public class Translator
                                     //nodeType.Add(node.LocalName.ToString());
                                     #endregion
                                 }
-                            }
-                        }
+							}
+							nodeType[nodes.Name.ToUpperInvariant()] = dictionary;
+						}
                     }
                 }
 
@@ -539,12 +542,14 @@ public class XmlFileLocalizationDictionaryProvider : LocalizationDictionaryProvi
         foreach (var fileName in fileNames)
         {
             var dictionary = CreateXmlLocalizationDictionary(fileName);
+			var nodeDic = new List<KeyValuePair<string, Translator.Language.XmlLocalizationDictionary>>() { new KeyValuePair<string, Translator.Language.XmlLocalizationDictionary>("", CreateXmlLocalizationDictionary(fileName)) }; 
             if (Dictionaries.ContainsKey(dictionary.CultureInfo.ToString() /*.Name*/))
             {
                 throw new Exception(sourceName + " source contains more than one dictionary for the culture: " + dictionary.CultureInfo.ToString() /*.Name*/);
             }
 
             Dictionaries[dictionary.CultureInfo.ToString() /*.Name*/] = (Translator.Language.XmlLocalizationDictionary)dictionary;
+            NodeDictionaries[dictionary.CultureInfo.ToString() /*.Name*/] = nodeDic;
 
             if (fileName.EndsWith(sourceName + ".xml"))
             {
@@ -554,6 +559,7 @@ public class XmlFileLocalizationDictionaryProvider : LocalizationDictionaryProvi
                 }
 
                 DefaultDictionary = (Translator.Language.XmlLocalizationDictionary)dictionary;
+                DefaultNodeDictionary = nodeDic;
             }
         }
     }
@@ -562,6 +568,12 @@ public class XmlFileLocalizationDictionaryProvider : LocalizationDictionaryProvi
     {
         return Translator.Language.XmlLocalizationDictionary.BuildFomFile(fileName);
     }
+    /*protected virtual KeyValuePair<string, Translator.Language.XmlLocalizationDictionary> CreateNodeXmlLocalizationDictionary(string fileName)
+    {
+		//KeyValuePair<string, Translator.Language.XmlLocalizationDictionary> x =
+		return new KeyValuePair<string, Translator.Language.XmlLocalizationDictionary>("",
+			Translator.Language.XmlLocalizationDictionary.BuildFomFile(fileName));
+    }*/
 }
 
 public abstract class LocalizationDictionaryProviderBase : ILocalizationDictionaryProvider
@@ -569,12 +581,15 @@ public abstract class LocalizationDictionaryProviderBase : ILocalizationDictiona
     public string SourceName { get; private set; }
 
     public Translator.Language.XmlLocalizationDictionary DefaultDictionary { get; protected set; }
+    public IEnumerable<KeyValuePair<string, Translator.Language.XmlLocalizationDictionary>> DefaultNodeDictionary { get; protected set; }
 
     public IDictionary<string, Translator.Language.XmlLocalizationDictionary> Dictionaries { get; private set; }
+    public IDictionary<string, IEnumerable<KeyValuePair<string, Translator.Language.XmlLocalizationDictionary>>> NodeDictionaries { get; private set; }
 
     protected LocalizationDictionaryProviderBase()
     {
         Dictionaries = new Dictionary<string, Translator.Language.XmlLocalizationDictionary>();
+        NodeDictionaries = new Dictionary<string, IEnumerable<KeyValuePair<string, Translator.Language.XmlLocalizationDictionary>>>();
     }
 
     public virtual void Initialize(string sourceName)

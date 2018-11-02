@@ -224,6 +224,103 @@ public class GameText : XmlFileLocalizationDictionaryProvider
 public static class LanguageExtension //: GameText
 {
     static LocalizationDictionaryProviderBase _dictionary { get { return GameText.Instance; } } //new GameText().Instance
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="text"></param>
+	/// <param name="textId"></param>
+	/// <param name="fieldValues"></param>
+	/// <returns></returns>
+	/// ToDo: Overload this where TextId can also be an Int?
+    public static Translator.Language.LocalizedString Translate(PokemonUnity.Text text, string textId, params string[] fieldValues)
+    {
+		var Failure = new Translator.Language.LocalizedString("Failed", "The contents of this dictionary were unable to be found", Settings.UserLanguage);
+        /*
+        if (_pokeTranslations == null) //should return english if player's default language is null
+        {
+            LoadPokedexTranslations(language);//, form
+        }
+
+        int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
+        if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
+        {
+            //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
+            throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
+            //return new PokedexTranslation();
+        }
+        //ToDo: Show english text for missing data on foreign languages 
+        else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
+        {
+            return _pokeEnglishTranslations[arrayId];
+        }*/
+        //return string.Format(textId, stringArray.ToArray());
+		
+        List<string> fieldvalues = new List<string>();
+		//For each NODE in TranslationDictionary.XML
+		foreach (var node in _dictionary.NodeDictionaries[Settings.UserLanguage.ToString()])
+		{
+			//And the Category.Id the translation string the Text.Id belongs to 
+			switch (text)
+			{
+				//IF the NODE and the Category.Id are the same
+				/* Only needed if the label in the .XML is different from Category.Id.ToString().ToUpper()
+				case PokemonUnity.Text.Species:
+				case PokemonUnity.Text.Kinds:
+				case PokemonUnity.Text.Entries:
+				case PokemonUnity.Text.FormNames:
+				case PokemonUnity.Text.Moves:
+				case PokemonUnity.Text.MoveDescriptions:
+				case PokemonUnity.Text.Items:
+				case PokemonUnity.Text.ItemPlurals:
+				case PokemonUnity.Text.ItemDescriptions:
+				case PokemonUnity.Text.Abilities:
+				case PokemonUnity.Text.AbilityDescs:
+				case PokemonUnity.Text.Types:
+				case PokemonUnity.Text.TrainerTypes:
+				case PokemonUnity.Text.TrainerNames:
+				case PokemonUnity.Text.BeginSpeech:
+				case PokemonUnity.Text.EndSpeechWin:
+				case PokemonUnity.Text.EndSpeechLose:
+				case PokemonUnity.Text.RegionNames:
+				case PokemonUnity.Text.PlaceNames:
+				case PokemonUnity.Text.PlaceDescriptions:
+				case PokemonUnity.Text.MapNames:
+				case PokemonUnity.Text.PhoneMessages:
+				case PokemonUnity.Text.ScriptTexts:*/
+				default:
+					if (node.Key == System.Enum.GetName(typeof(PokemonUnity.Text), text).ToUpper())
+					{
+						foreach (KeyValuePair<string, string> field in node.Value[textId].FieldNames)
+						{
+							if (field.Key != "id" || field.Key != "identifier" || field.Key != "language")// || field.Key != "name"
+							{
+								//fieldnames.Add(field);
+								/*if (field.Key.Contains("form")){
+									//_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+									//_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+									formvalues.Add(field.Value);
+								}*/
+								if (field.Key.Contains("field"))
+								{
+									fieldvalues.Add(field.Value);
+								}
+							}
+						}
+						if (fieldvalues.Count > 0)
+						{
+							node.Value[textId].Value = string.Format(node.Value[textId].Value, fieldValues);
+						}
+						return node.Value[textId];
+					}
+					else
+						return Failure;
+					//break;
+			}
+		}
+
+		return Failure;
+    }
+
     public static string Translate(this Settings.Languages language, string textId, params string[] fieldValues)
     {
         //Uses the langauge class that has the stored user's (current) language value
@@ -350,6 +447,9 @@ public static class LanguageExtension //: GameText
     }
 }
 
+/// <summary>
+/// This was used to debug translation when it kept crashing on null reference or some missing variables
+/// </summary>
 class TranslationLogger
 {
 	private static readonly string filename = GetTempPath() + "TranslationLog.txt";
@@ -384,6 +484,11 @@ class TranslationLogger
 #endregion
 
 #region 
+/// <summary>
+/// This was supposed to be used with UnityEngine to make text prettier in DialogWindow
+/// </summary>
+/// ToDo: Move to DialogEventHandler?
+/// Not sure if to hard code it into the game where the text are being called
 public static class gameTextExtension //: LanguageExtension
 {
     /// <summary>
@@ -451,3 +556,36 @@ public static class gameTextExtension //: LanguageExtension
     }
 }
 #endregion
+
+namespace PokemonUnity
+{
+	/// <summary>
+	/// Different category sections a piece of translated text could belong to
+	/// </summary>
+	public enum Text
+	{
+		Species           = 1	,
+		Kinds             = 2	,
+		Entries           = 3	,
+		FormNames         = 4	,
+		Moves             = 5	,
+		MoveDescriptions  = 6	,
+		Items             = 7	,
+		ItemPlurals       = 8	,
+		ItemDescriptions  = 9	,
+		Abilities         = 10,
+		AbilityDescs      = 11,
+		Types             = 12,
+		TrainerTypes      = 13,
+		TrainerNames      = 14,
+		BeginSpeech       = 15,
+		EndSpeechWin      = 16,
+		EndSpeechLose     = 17,
+		RegionNames       = 18,
+		PlaceNames        = 19,
+		PlaceDescriptions = 20,
+		MapNames          = 21,
+		PhoneMessages     = 22,
+		ScriptTexts       = 23
+	}
+}
