@@ -22,6 +22,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
             value = 1 / (16 + (txtSpd * txtSpd * 9));
         }
     }
+
     void Awake()
     {
         DialogUIText = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
@@ -107,6 +108,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         else return;
     }
     #endregion
+
     void ChangeScene(UICanvas scene)
     {
         if (ActiveCanvasUI == scene) return;
@@ -179,15 +181,25 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
             //foreach (string line in text[i].Split(new string[] { "\n" }, StringSplitOptions.None)){}
             //DialogText = text[i].Replace("\n", " "+Environment.NewLine);
             InstantLine = false;
-            //StartCoroutine(SetTextRoutine(text[i].Replace("\n", " " + Environment.NewLine)));
-            //UpdateTextLinesFrmDump();
-            InstantLine = false;
-            //turn on the bouncing cursor to represent waiting on user's response/action
-            //to continue the remaining dialog message
-            //if(i < text.Length && text.Length > 1) GameObject.Find...SetActive(true)
-            //wait for user input before continueing to the next set of text...
-            //Yield
-        }
+			//StartCoroutine(SetTextRoutine(text[i].Replace("\n", " " + Environment.NewLine)));
+			//UpdateTextLinesFrmDump();
+			IEnumerator e = SetTextRoutine(text[i].Replace("\n", " " + Environment.NewLine));
+			while (e.MoveNext())
+			{
+				// If they press 'Escape', skip the cutscene
+				//if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape))
+				if (UnityEngine.Input.anyKey)
+				{
+					InstantLine = true;
+					//break;
+				}
+			}
+			//turn on the bouncing cursor to represent waiting on user's response/action
+			//to continue the remaining dialog message
+			//if(i < text.Length && text.Length > 1) GameObject.Find...SetActive(true)
+			//wait for user input before continueing to the next set of text...
+			//Yield
+		}
         if (prompt)
         {
             if (promptOptions == null)
@@ -206,7 +218,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         else yield return -1;
         //Disable the dialog window
     }
-    public void drawTextInstant(string textLine)
+	public void drawTextInstant(string textLine)
     {
         //split textLine into an array of each character, so it may be printed 1 bit at a time
         char[] chars = textLine.ToCharArray();
@@ -225,6 +237,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
             //}
         }
     }
+
     /*public IEnumerator drawText(string textLine)
     {
         //SfxHandler.Play(selectClip);
@@ -262,10 +275,10 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 
         for (int i = 0; i < text.Length; i++)
         {
-            if (UnityEngine.Input.anyKeyDown)
-            {
-                InstantLine = true;
-            }
+            //if (UnityEngine.Input.anyKeyDown)
+            //{
+            //    InstantLine = true;
+            //}
 
             char c = text[i];
 
@@ -353,6 +366,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 
             yield return new UnityEngine.WaitForSeconds(secPerChar);
         }
+		//yield return null;
     }
     /// <summary>
     /// [Deprecated] Consider Scrolling Text Dialog.
@@ -436,7 +450,6 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         private UnityEngine.Animator _animator;
         //public UICanvas CanvasUITag { get; private set; }
 
-
         private bool _isActive
         {
             get
@@ -473,5 +486,4 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
             else _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
         }
     }
-
 }

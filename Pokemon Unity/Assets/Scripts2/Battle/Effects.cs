@@ -38,7 +38,7 @@ public class Effects
 		public int FollowMe           { get; set; }
 		public bool Foresight          { get; set; }
 		public int FuryCutter         { get; set; }
-		public bool FutureSight        { get; set; }
+		public int FutureSight        { get; set; }
 		public int FutureSightMove    { get; set; }
 		public int FutureSightUser    { get; set; }
 		public int FutureSightUserPos { get; set; }
@@ -131,6 +131,7 @@ public class Effects
 		public int WishMaker          { get; set; }
 		public int Yawn               { get; set; }
 
+		public Battler() : this (false) { }
 		public Battler(bool batonpass)
 		{
 			if (!batonpass)

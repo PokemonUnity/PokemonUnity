@@ -75,7 +75,7 @@ class Map : MonoBehaviour
                     Vector3 pos = new Vector3(x, y, z);
 
                     // instantiate the cube into a variable, so you can do other things with it
-                    GameObject clone = Instantiate(mapTile, pos, Quaternion.identity);
+                    GameObject clone = (GameObject)Instantiate(mapTile, pos, Quaternion.identity);
 
                     //ToDO: Add 'if(tile)' => collision-map
 

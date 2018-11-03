@@ -120,7 +120,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// Sleep count/Toxic flag
     /// </summary>
     /// ToDo: Add to Status Class or StatusTurn() method
-    public int statusCount { get; private set; }
+    public int StatusCount { get; protected set; }
     /// <summary>
     /// Steps to hatch egg, 0 if Pokemon is not an egg
     /// </summary>
@@ -140,7 +140,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Interface for Pokeball Only item?
 	/// ToDo: None?
 	public Items ballUsed { get; private set; }
-	private PokemonData _base { get; set; }
+	protected PokemonData _base { get; private set; }
 	/// <summary>
 	/// Max total EVs
 	/// </summary>
@@ -178,7 +178,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		pokerus = new int[2];
 		Markings = new bool[6]; //{ false, false, false, false, false, false };
 		Status = Status.None;
-		statusCount = 0;
+		StatusCount = 0;
 		ballUsed = Items.NONE;
 		Item = Items.NONE;
 		//calcStats();
@@ -1377,7 +1377,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public void HealStatus()
     {
         if (this.isEgg) return;
-        this.Status = 0; statusCount = 0; //remove status ailments
+        this.Status = 0; StatusCount = 0; //remove status ailments
     }
 
     /// <summary>

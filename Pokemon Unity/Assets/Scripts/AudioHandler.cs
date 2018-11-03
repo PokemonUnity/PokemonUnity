@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AudioHandler : MonoBehaviour
+public class AudioHandlerOld : MonoBehaviour
 {
     //FOREWORD ON ALL MUSIC FOR THIS PROJECT.
 
@@ -21,7 +21,7 @@ public class AudioHandler : MonoBehaviour
 
     public AudioSource source;
 
-    public static AudioHandler bgmHandler;
+    public static AudioHandlerOld bgmHandler;
 
     private AudioClip nextClip;
     private int currentLoopStartTimeSamples = 0;
