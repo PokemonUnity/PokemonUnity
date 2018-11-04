@@ -487,7 +487,7 @@ public class Battle
 
 		for (int i = 0; i < 4; i++)
 		{
-			battlers[i] = new Battler().Initialize(new Pokemon(), i);
+			battlers[i] = new Battler(new Pokemon(), i);
 		}
 
 		foreach (var i in party1)
@@ -568,7 +568,7 @@ public class Battle
 	#endregion
 
 	#region Get party info, manipulate parties.
-	public int PokemonCount(Pokemon[] party)
+	int PokemonCount(Pokemon[] party)
 	{
 		int count = 0;
 		for (int i = 0; i < party.Length; i++)
@@ -578,11 +578,11 @@ public class Battle
 		}
 		return count;
 	}
-	public bool AllFainted(Pokemon[] party)
+	bool AllFainted(Pokemon[] party)
 	{
 		return PokemonCount(party) == 0;
 	}
-	public int MaxLevel(Pokemon[] party)
+	int MaxLevel(Pokemon[] party)
 	{
 		int lv = 0;
 		for (int i = 0; i < party.Length; i++)
@@ -594,27 +594,23 @@ public class Battle
 	}
 	#endregion
 
-	/// <summary>
 	/// Check whether actions can be taken.
-	/// </summary>
-	/// <param name="idxPokemon"></param>
-	/// <returns></returns>
-	public bool CanShowCommands(int idxPokemon)
+	bool CanShowCommands(int idxPokemon)
 	{
 		//List<BattlerEffects> thispkmn = new List<PokemonUnity.Effects.BattlerEffects>(); //battlers[idxPokemon].
-		Battler thispkmn = battlers[idxPokemon];
+		Pokemon thispkmn = battlers[idxPokemon];
 		if (thispkmn.isFainted()) return false;
-		if (thispkmn.effects.TwoTurnAttack > 0) return false; 
-		if (thispkmn.effects.HyperBeam > 0) return false; 
-		if (thispkmn.effects.Rollout > 0) return false; 
-		if (thispkmn.effects.Outrage > 0) return false; 
-		if (thispkmn.effects.Uproar > 0) return false;
-		if (thispkmn.effects.Bide > 0) return false;
+		//if (thispkmn.Effects.Contains(BattlerEffects.TwoTurnAttack)) return false; 
+		//if (thispkmn.Effects.Contains(BattlerEffects.HyperBeam)) return false; 
+		//if (thispkmn.Effects.Contains(BattlerEffects.Rollout)) return false; 
+		//if (thispkmn.Effects.Contains(BattlerEffects.Outrage)) return false; 
+		//if (thispkmn.Effects.Contains(BattlerEffects.Uproar)) return false;
+		//if (thispkmn.Effects.Contains(BattlerEffects.Bide)) return false;
 		return true;
 	}
-	public bool CanShowFightMenu(int idxPokemon)
+	bool CanShowFightMenu(int idxPokemon)
 	{
-		Battler thispkmn = battlers[idxPokemon];
+		Pokemon thispkmn = battlers[idxPokemon];
 		if (!CanShowCommands(idxPokemon)) return false;
 
 		// No moves that can be chosen
@@ -625,31 +621,27 @@ public class Battle
 			return false;
 
 		// Encore
-		if (thispkmn.effects.Encore > 0) return false;
+		//if (thispkmn.Effects.Contains(BattlerEffects.Encore)) return false;
 		return true;
 	}
-	public bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
+	bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 	{
-		Battler thispkmn = battlers[idxPokemon];
+		/*Pokemon thispkmn = battlers[idxPokemon];
 		Move thismove = thispkmn.moves[idxMove];
 
 		//ToDo: Array for opposing pokemons, [i] changes based on if double battle
-		Battler opp1 = thispkmn.OppositeOpposing1;
-		Battler opp2 = thispkmn.OppositeOpposing2;
+		Pokemon opp1 = thispkmn.pbOpposing1;
+		Pokemon opp2 = thispkmn.pbOpposing2;
 		if (thismove != null || thismove.MoveId == 0) return false;
 		if (thismove.PP <= 0 && thismove.TotalPP > 0 && !sleeptalk) {
-			if (showMessages)
-				// "There's no PP left for this move!"
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "NoPP").Value, true);
+			//if (showMessages) pbDisplayPaused(_INTL("There's no PP left for this move!"));
 			return false;
 		}
 		if (thispkmn.Item == Items.ASSAULT_VEST) {// && thismove.IsStatus?
-			if (showMessages) 
-				// "The effects of the {1} prevent status moves from being used!", Items.getName(thispkmn.item)
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "EffectBlockMove", thispkmn.Item.ToString()).Value, true);
+			//if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", PBItems.getName(thispkmn.item)))
 			return false;
 		}
-		if (thispkmn.effects.ChoiceBand.Value >= 0 &&
+		if (//thispkmn.effects.ChoiceBand>=0 &&
 		   (thispkmn.Item == Items.CHOICE_BAND ||
 		   thispkmn.Item == Items.CHOICE_SPECS ||
 		   thispkmn.Item == Items.CHOICE_SCARF))
@@ -657,15 +649,14 @@ public class Battle
 			bool hasmove = false;
 			for (int i = 0; i < party.Length; i++)
 			{
-				if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand.Value) 
+				//if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand) 
 				hasmove = true; break;
 			}
-			if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand.Value) {
-				if (showMessages)
-					// "{1} allows the use of only {2}!", Items.getName(thispkmn.item), PBMoves.getName(thispkmn.effects.ChoiceBand)))
-					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "ItemOnlyMove", thispkmn.Item.ToString(), 
-						//ToDo: Fix this...
-						thispkmn.effects.ChoiceBand.Value.ToString()).Value, true);
+			if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand) {
+				//if (showMessages)
+				//	pbDisplayPaused(_INTL("{1} allows the use of only {2}!",
+				//		PBItems.getName(thispkmn.item),
+				//		PBMoves.getName(thispkmn.effects.ChoiceBand)))
 				return false;
 			}
 		}
@@ -676,77 +667,51 @@ public class Battle
 				thismove.MoveId == opp1.moves[2].MoveId ||
 				thismove.MoveId == opp1.moves[3].MoveId)
 			{
-				if (showMessages) 
-					//"{1} can't use the sealed {2}!", thispkmn, thismove.name
-					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed",thispkmn.ToString(), thismove.Name).Value, true);
-				//"[CanChoose][{opp1.pbThis} has: {opp1.moves[0].name}, {opp1.moves[1].name}, {opp1.moves[2].name}, {opp1.moves[3].name}]"
-				GameVariables.DebugLog(LanguageExtension.Translate(Text.Errors, "CanChoose", 
-						opp1.ToString(), 
-						opp1.moves[0].Name, 
-						opp1.moves[1].Name, 
-						opp1.moves[2].Name, 
-						opp1.moves[3].Name
-					).Value, true);
+				//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
+				//PBDebug.log("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]")
 				return false;
 			}
 		}
 		if (opp2.effects.Imprison)
 		{
 			if (thismove.MoveId == opp2.moves[0].MoveId ||
-				thismove.MoveId == opp2.moves[1].MoveId ||
-				thismove.MoveId == opp2.moves[2].MoveId ||
-				thismove.MoveId == opp2.moves[3].MoveId)
+				 thismove.MoveId == opp2.moves[1].MoveId ||
+				 thismove.MoveId == opp2.moves[2].MoveId ||
+				 thismove.MoveId == opp2.moves[3].MoveId)
 			{
-				if (showMessages) 
-					//"{1} can't use the sealed {2}!", thispkmn, thismove.name
-					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed",thispkmn.ToString(), thismove.Name).Value, true);
-				//"[CanChoose][{opp2.pbThis} has: {opp2.moves[0].name}, {opp2.moves[1].name}, {opp2.moves[2].name}, {opp2.moves[3].name}]"
-				GameVariables.DebugLog(LanguageExtension.Translate(Text.Errors, "CanChoose", 
-						opp2.ToString(), 
-						opp2.moves[0].Name, 
-						opp2.moves[1].Name, 
-						opp2.moves[2].Name, 
-						opp2.moves[3].Name
-					).Value, true);
+				//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
+				//PBDebug.log("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]")
 				return false;
 			}
 		}
-		if (thispkmn.effects.Taunt > 0 && thismove.BaseDamage == 0) {
-			if (showMessages)
-				//"{1} can't use {2} after the taunt!", thispkmn, thismove.name
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveTaunted", thispkmn.ToString(), thismove.Name).Value, true);
+		if (thispkmn.effects.Taunt > 0 && thismove.basedamage == 0) {
+			//if (showMessages)pbDisplayPaused(_INTL("{1} can't use {2} after the taunt!", thispkmn.pbThis, thismove.name))
 			return false;
 		}
 		if (thispkmn.effects.Torment){
 			if (thismove.MoveId==thispkmn.lastMoveUsed){
-				if (showMessages) 
-					//"{1} can't use the same move twice in a row due to the torment!", thispkmn
-					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed", thispkmn.ToString()).Value, true);
+				//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the same move twice in a row due to the torment!", thispkmn.pbThis))
 				return false;
 			}
 		}
 		if (thismove.MoveId==thispkmn.effects.DisableMove && !sleeptalk){
-			if (showMessages) 
-				//"{1}'s {2} is disabled!", thispkmn.pbThis, thismove.name
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveDisabled", thispkmn.ToString(), thismove.Name).Value, true);
+			//if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} is disabled!", thispkmn.pbThis, thismove.name))
 			return false;
 		}
-		if (thismove.FunctionAsString == "158" && // Belch 0x158
-		   (thispkmn.Species == Pokemons.NONE || !thispkmn.belch)){
-			if (showMessages) 
-				//"{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed", thispkmn.ToString()).Value, true);
+		if (thismove.function==0x158 && // Belch
+		   (!thispkmn.pokemon || !thispkmn.pokemon.belch)){
+			//if (showMessages) pbDisplayPaused(_INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.pbThis))
 			return false;
 		}
 		if (thispkmn.effects.Encore>0 && idxMove!=thispkmn.effects.EncoreIndex){
 			return false;
-		}
+		}*/
 		return true;
 	}
 
 	void MoveEffects(int who, int move)
 	{
-		//this.battlers[who].moves[move].effects
+		//this.battlers[who].moves[move].
 	}
 
 	/// <summary>
@@ -1052,7 +1017,7 @@ public class Battle
 			effects.BideDamage       = 0;
 			effects.BideTarget       = -1;
 			effects.Charge           = 0;
-			effects.ChoiceBand       = null;
+			effects.ChoiceBand       = -1;
 			effects.Counter          = -1;
 			effects.CounterTarget    = -1;
 			effects.DefenseCurl      = false;
@@ -1329,7 +1294,7 @@ public class Battle
 			if (string.IsNullOrEmpty(code)) return false;
 			for (int i = 0; i < moves.Length; i++)
 			{
-				if (moves[i].FunctionAsString == code) return true;
+				if (moves[i].Function == code) return true;
 			}
 			return false;
 		}
@@ -1535,11 +1500,7 @@ public class Battle
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon
 		/// </summary>
-		public Battler OppositeOpposing1 { get { return battle.battlers[(Index ^ 1)]; } }
-		/// <summary>
-		/// Returns the battler's first opposing Pokémon
-		/// </summary>
-		public Battler OppositeOpposing2 { get { return battle.battlers[(Index ^ 1)]; } }
+		public Battler OppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon Index
 		/// </summary>
@@ -1871,7 +1832,13 @@ namespace PokemonUnity
 		/// <summary>
 		/// Tall Grass
 		/// </summary>
-		TallGrass
+		TallGrass,
+		Forest,
+		Snow,
+		Volcano,
+		Graveyard,
+		Sky,
+		Space
 	}
 	namespace Effects
 	{
