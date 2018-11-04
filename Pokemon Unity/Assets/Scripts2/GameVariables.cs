@@ -24,14 +24,65 @@ using PokemonUnity.Item;
 /// This class should be static...
 public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
+	#region Debug Functions and Features
 	public static bool debugMode { get; set; }
-	public static void DebugLog(string text) { Debug = text; }
-	public static string Debug {
+	public static void DebugLog(string text, bool? error = null)
+	{
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}
+	private static string Debug {
 		set
 		{
 #if !DEBUG
 			UnityEngine.Debug.Log(value);
 #endif
+		}
+	}
+	private static string DebugWarning {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogWarning(value);
+#endif
+		}
+	}
+	private static string DebugError {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogError(value);
+#endif
+		}
+	}
+	#endregion
+
+	/// <summary>
+	/// In-game UI dialog window to prompt message to user
+	/// </summary>
+	/// ToDo: Allow game logic to pass npc scripts thru this
+	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
+	/// <param name="text"></param>
+	/// <param name="error">Maybe something about interupting coroutine</param>
+	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
+	{
+		//ToDo: Pass values directly to DialogEventHandler
+		//Consider adding a Queue to dialog text... so messages arent replaced but appended
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
 		}
 	}
 
