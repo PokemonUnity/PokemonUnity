@@ -734,7 +734,27 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 	#endregion
 
 	#region Active Battle and Misc Battle related Data
-	public static Battle battle { get; set; }
+	/// <summary>
+	/// Active Pokemon Battle the Player is currently involved in.
+	/// Matches being spectated would be pass thru a non-static method
+	/// </summary>
+	/// ToDo: On Set, trigger UnityEngine EventHandler,
+	/// Switch scenes, load rules, and animate pokemons
+	//public static Battle Battle { get; set; }
+	public static Battle battle
+	{
+		get
+		{
+			return _battle;
+		} 
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.Log(value);
+#endif
+		}
+	}
+	private static Battle _battle { get; set; }
 	#endregion
 }
 
