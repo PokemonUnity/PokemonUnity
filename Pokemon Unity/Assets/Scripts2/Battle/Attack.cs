@@ -11,12 +11,12 @@ using PokemonUnity.Move;
 
 public class Function
 {
-	public void UseMove (Effect function)
+	public void UseMove (ref Battle.InBattleMove move)
 	{
-		switch (function)
+		//Effect function;
+		switch ((Effect)move.Function)
 		{
 			case Effect.UnimplementedMove:
-			case Effect.FailedMove:
 			case Effect.Confusion:
 			case Effect.Struggle:
 			case Effect.x000:
@@ -351,7 +351,10 @@ public class Function
 			case Effect.x156:
 			case Effect.x157:
 			case Effect.x158:
+				break;
+			case Effect.FailedMove:
 			default:
+				//by default, both should result in failure
 				break;
 		}
 	}
@@ -10421,21 +10424,21 @@ public class Function
 		/// Damaging moves just do damage with no additional effect.
 		/// Non-damaging moves always fail.
 		/// <summary>
-		UnimplementedMove,
+		UnimplementedMove = -1,
 		/// <summary>
 		/// Superclass for a failed move. Always fails.
 		/// This class is unused.
 		/// <summary>
-		FailedMove,
+		FailedMove = -2,
 		/// <summary>
 		/// Pseudomove for confusion damage.
 		/// <summary>
-		Confusion,
+		Confusion = -3,
 		/// <summary>
 		/// Implements the move Struggle.
 		/// For cases where the real move named Struggle is not defined.
 		/// <summary>
-		Struggle,
+		Struggle = -4,
 		/// <summary>
 		/// No additional effect.
 		/// <summary>
