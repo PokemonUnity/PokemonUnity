@@ -16,7 +16,7 @@ public class Effects
 		public int BideDamage         { get; set; }
 		public int BideTarget         { get; set; }
 		public int Charge             { get; set; }
-		public int ChoiceBand         { get; set; }
+		public PokemonUnity.Move.Moves ChoiceBand         { get; set; }
 		public int Confusion          { get; set; }
 		public int Counter            { get; set; }
 		public int CounterTarget      { get; set; }
@@ -24,7 +24,7 @@ public class Effects
 		public bool DefenseCurl        { get; set; }
 		public bool DestinyBond        { get; set; }
 		public int Disable            { get; set; }
-		public int DisableMove        { get; set; }
+		public PokemonUnity.Move.Moves DisableMove        { get; set; }
 		public bool Electrify          { get; set; }
 		public int Embargo            { get; set; }
 		public int Encore             { get; set; }
