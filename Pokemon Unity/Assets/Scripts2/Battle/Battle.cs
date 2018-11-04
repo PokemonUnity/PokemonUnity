@@ -731,7 +731,7 @@ public class Battle
 				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveDisabled", thispkmn.ToString(), thismove.Name).Value, true);
 			return false;
 		}
-		if (thismove.Function == "158" && // Belch 0x158
+		if (thismove.FunctionAsString == "158" && // Belch 0x158
 		   (thispkmn.Species == Pokemons.NONE || !thispkmn.belch)){
 			if (showMessages) 
 				//"{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn
@@ -1329,7 +1329,7 @@ public class Battle
 			if (string.IsNullOrEmpty(code)) return false;
 			for (int i = 0; i < moves.Length; i++)
 			{
-				if (moves[i].Function == code) return true;
+				if (moves[i].FunctionAsString == code) return true;
 			}
 			return false;
 		}
