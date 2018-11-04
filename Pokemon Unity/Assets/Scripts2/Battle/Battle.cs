@@ -640,7 +640,7 @@ public class Battle
 			//if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", PBItems.getName(thispkmn.item)))
 			return false;
 		}
-		if (//thispkmn.effects.ChoiceBand>=0 &&
+		if (thispkmn.effects.ChoiceBand.Value >= 0 &&
 		   (thispkmn.Item == Items.CHOICE_BAND ||
 		   thispkmn.Item == Items.CHOICE_SPECS ||
 		   thispkmn.Item == Items.CHOICE_SCARF))
@@ -648,14 +648,15 @@ public class Battle
 			bool hasmove = false;
 			for (int i = 0; i < party.Length; i++)
 			{
-				//if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand) 
+				if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand.Value) 
 				hasmove = true; break;
 			}
-			if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand) {
-				//if (showMessages)
-				//	pbDisplayPaused(_INTL("{1} allows the use of only {2}!",
-				//		PBItems.getName(thispkmn.item),
-				//		PBMoves.getName(thispkmn.effects.ChoiceBand)))
+			if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand.Value) {
+				if (showMessages)
+					// "{1} allows the use of only {2}!", Items.getName(thispkmn.item), PBMoves.getName(thispkmn.effects.ChoiceBand)))
+					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "ItemOnlyMove", thispkmn.Item.ToString(), 
+						//ToDo: Fix this...
+						thispkmn.effects.ChoiceBand.Value.ToString()).Value, true);
 				return false;
 			}
 		}
@@ -1016,7 +1017,7 @@ public class Battle
 			effects.BideDamage       = 0;
 			effects.BideTarget       = -1;
 			effects.Charge           = 0;
-			effects.ChoiceBand       = -1;
+			effects.ChoiceBand       = null;
 			effects.Counter          = -1;
 			effects.CounterTarget    = -1;
 			effects.DefenseCurl      = false;

@@ -16,7 +16,7 @@ public class Effects
 		public int BideDamage         { get; set; }
 		public int BideTarget         { get; set; }
 		public int Charge             { get; set; }
-		public PokemonUnity.Move.Moves ChoiceBand         { get; set; }
+		public PokemonUnity.Move.Moves? ChoiceBand         { get; set; }
 		public int Confusion          { get; set; }
 		public int Counter            { get; set; }
 		public int CounterTarget      { get; set; }
@@ -205,7 +205,7 @@ public class Effects
 			this.BideDamage       = 0;
 			this.BideTarget       = -1;
 			this.Charge           = 0;
-			this.ChoiceBand       = -1;
+			this.ChoiceBand       = null;
 			this.Counter          = -1;
 			this.CounterTarget    = -1;
 			this.DefenseCurl      = false;
