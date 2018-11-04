@@ -337,6 +337,7 @@ public class Battle
 	public //async Task<Battle> 
 		void GenerateBattleTurn(System.Linq.Expressions.Expression<Func<Battle, Pokemon, Move, Battle>> predicate)
 	{
+		//return await _subscriptionPaymentRepository.GetAll().LastOrDefaultAsync(predicate);
 	}
 
 	#region Constructor
@@ -486,7 +487,7 @@ public class Battle
 
 		for (int i = 0; i < 4; i++)
 		{
-			battlers[i] = new Battler(new Pokemon(), i);
+			battlers[i] = new Battler().Initialize(new Pokemon(), i);
 		}
 
 		foreach (var i in party1)
@@ -567,7 +568,7 @@ public class Battle
 	#endregion
 
 	#region Get party info, manipulate parties.
-	int PokemonCount(Pokemon[] party)
+	public int PokemonCount(Pokemon[] party)
 	{
 		int count = 0;
 		for (int i = 0; i < party.Length; i++)
@@ -577,11 +578,11 @@ public class Battle
 		}
 		return count;
 	}
-	bool AllFainted(Pokemon[] party)
+	public bool AllFainted(Pokemon[] party)
 	{
 		return PokemonCount(party) == 0;
 	}
-	int MaxLevel(Pokemon[] party)
+	public int MaxLevel(Pokemon[] party)
 	{
 		int lv = 0;
 		for (int i = 0; i < party.Length; i++)
@@ -593,23 +594,27 @@ public class Battle
 	}
 	#endregion
 
+	/// <summary>
 	/// Check whether actions can be taken.
-	bool CanShowCommands(int idxPokemon)
+	/// </summary>
+	/// <param name="idxPokemon"></param>
+	/// <returns></returns>
+	public bool CanShowCommands(int idxPokemon)
 	{
 		//List<BattlerEffects> thispkmn = new List<PokemonUnity.Effects.BattlerEffects>(); //battlers[idxPokemon].
-		Pokemon thispkmn = battlers[idxPokemon];
+		Battler thispkmn = battlers[idxPokemon];
 		if (thispkmn.isFainted()) return false;
-		//if (thispkmn.Effects.Contains(BattlerEffects.TwoTurnAttack)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.HyperBeam)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.Rollout)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.Outrage)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.Uproar)) return false;
-		//if (thispkmn.Effects.Contains(BattlerEffects.Bide)) return false;
+		if (thispkmn.effects.TwoTurnAttack > 0) return false; 
+		if (thispkmn.effects.HyperBeam > 0) return false; 
+		if (thispkmn.effects.Rollout > 0) return false; 
+		if (thispkmn.effects.Outrage > 0) return false; 
+		if (thispkmn.effects.Uproar > 0) return false;
+		if (thispkmn.effects.Bide > 0) return false;
 		return true;
 	}
-	bool CanShowFightMenu(int idxPokemon)
+	public bool CanShowFightMenu(int idxPokemon)
 	{
-		Pokemon thispkmn = battlers[idxPokemon];
+		Battler thispkmn = battlers[idxPokemon];
 		if (!CanShowCommands(idxPokemon)) return false;
 
 		// No moves that can be chosen
@@ -620,24 +625,28 @@ public class Battle
 			return false;
 
 		// Encore
-		//if (thispkmn.Effects.Contains(BattlerEffects.Encore)) return false;
+		if (thispkmn.effects.Encore > 0) return false;
 		return true;
 	}
-	bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
+	public bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 	{
-		/*Pokemon thispkmn = battlers[idxPokemon];
+		Battler thispkmn = battlers[idxPokemon];
 		Move thismove = thispkmn.moves[idxMove];
 
 		//ToDo: Array for opposing pokemons, [i] changes based on if double battle
-		Pokemon opp1 = thispkmn.pbOpposing1;
-		Pokemon opp2 = thispkmn.pbOpposing2;
+		Battler opp1 = thispkmn.OppositeOpposing1;
+		Battler opp2 = thispkmn.OppositeOpposing2;
 		if (thismove != null || thismove.MoveId == 0) return false;
 		if (thismove.PP <= 0 && thismove.TotalPP > 0 && !sleeptalk) {
-			//if (showMessages) pbDisplayPaused(_INTL("There's no PP left for this move!"));
+			if (showMessages)
+				// "There's no PP left for this move!"
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "NoPP").Value, true);
 			return false;
 		}
 		if (thispkmn.Item == Items.ASSAULT_VEST) {// && thismove.IsStatus?
-			//if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", PBItems.getName(thispkmn.item)))
+			if (showMessages) 
+				// "The effects of the {1} prevent status moves from being used!", Items.getName(thispkmn.item)
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "EffectBlockMove", thispkmn.Item.ToString()).Value, true);
 			return false;
 		}
 		if (thispkmn.effects.ChoiceBand.Value >= 0 &&
@@ -667,51 +676,77 @@ public class Battle
 				thismove.MoveId == opp1.moves[2].MoveId ||
 				thismove.MoveId == opp1.moves[3].MoveId)
 			{
-				//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-				//PBDebug.log("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]")
+				if (showMessages) 
+					//"{1} can't use the sealed {2}!", thispkmn, thismove.name
+					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed",thispkmn.ToString(), thismove.Name).Value, true);
+				//"[CanChoose][{opp1.pbThis} has: {opp1.moves[0].name}, {opp1.moves[1].name}, {opp1.moves[2].name}, {opp1.moves[3].name}]"
+				GameVariables.DebugLog(LanguageExtension.Translate(Text.Errors, "CanChoose", 
+						opp1.ToString(), 
+						opp1.moves[0].Name, 
+						opp1.moves[1].Name, 
+						opp1.moves[2].Name, 
+						opp1.moves[3].Name
+					).Value, true);
 				return false;
 			}
 		}
 		if (opp2.effects.Imprison)
 		{
 			if (thismove.MoveId == opp2.moves[0].MoveId ||
-				 thismove.MoveId == opp2.moves[1].MoveId ||
-				 thismove.MoveId == opp2.moves[2].MoveId ||
-				 thismove.MoveId == opp2.moves[3].MoveId)
+				thismove.MoveId == opp2.moves[1].MoveId ||
+				thismove.MoveId == opp2.moves[2].MoveId ||
+				thismove.MoveId == opp2.moves[3].MoveId)
 			{
-				//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-				//PBDebug.log("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]")
+				if (showMessages) 
+					//"{1} can't use the sealed {2}!", thispkmn, thismove.name
+					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed",thispkmn.ToString(), thismove.Name).Value, true);
+				//"[CanChoose][{opp2.pbThis} has: {opp2.moves[0].name}, {opp2.moves[1].name}, {opp2.moves[2].name}, {opp2.moves[3].name}]"
+				GameVariables.DebugLog(LanguageExtension.Translate(Text.Errors, "CanChoose", 
+						opp2.ToString(), 
+						opp2.moves[0].Name, 
+						opp2.moves[1].Name, 
+						opp2.moves[2].Name, 
+						opp2.moves[3].Name
+					).Value, true);
 				return false;
 			}
 		}
-		if (thispkmn.effects.Taunt > 0 && thismove.basedamage == 0) {
-			//if (showMessages)pbDisplayPaused(_INTL("{1} can't use {2} after the taunt!", thispkmn.pbThis, thismove.name))
+		if (thispkmn.effects.Taunt > 0 && thismove.BaseDamage == 0) {
+			if (showMessages)
+				//"{1} can't use {2} after the taunt!", thispkmn, thismove.name
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveTaunted", thispkmn.ToString(), thismove.Name).Value, true);
 			return false;
 		}
 		if (thispkmn.effects.Torment){
 			if (thismove.MoveId==thispkmn.lastMoveUsed){
-				//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the same move twice in a row due to the torment!", thispkmn.pbThis))
+				if (showMessages) 
+					//"{1} can't use the same move twice in a row due to the torment!", thispkmn
+					GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed", thispkmn.ToString()).Value, true);
 				return false;
 			}
 		}
 		if (thismove.MoveId==thispkmn.effects.DisableMove && !sleeptalk){
-			//if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} is disabled!", thispkmn.pbThis, thismove.name))
+			if (showMessages) 
+				//"{1}'s {2} is disabled!", thispkmn.pbThis, thismove.name
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveDisabled", thispkmn.ToString(), thismove.Name).Value, true);
 			return false;
 		}
-		if (thismove.function==0x158 && // Belch
-		   (!thispkmn.pokemon || !thispkmn.pokemon.belch)){
-			//if (showMessages) pbDisplayPaused(_INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.pbThis))
+		if (thismove.Function == "158" && // Belch 0x158
+		   (thispkmn.Species == Pokemons.NONE || !thispkmn.belch)){
+			if (showMessages) 
+				//"{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "MoveSealed", thispkmn.ToString()).Value, true);
 			return false;
 		}
 		if (thispkmn.effects.Encore>0 && idxMove!=thispkmn.effects.EncoreIndex){
 			return false;
-		}*/
+		}
 		return true;
 	}
 
 	void MoveEffects(int who, int move)
 	{
-		//this.battlers[who].moves[move].
+		//this.battlers[who].moves[move].effects
 	}
 
 	/// <summary>
@@ -1253,31 +1288,6 @@ public class Battle
 			//return base.ToString();
 		}
 
-		void Update(bool fullchange = false)
-		{
-			/*if (pokemon)
-			{
-				//pokemon.calcStats
-				level     = pokemon.level;
-				hp        = pokemon.hp;
-				totalhp   = pokemon.totalhp;
-				if (!effects.Transform)
-				{
-					attack    = pokemon.attack;
-					defense   = pokemon.defense;
-					speed     = pokemon.speed;
-					spatk     = pokemon.spatk;
-					spdef     = pokemon.spdef;
-					if (fullchange)
-					{
-						ability = pokemon.ability;
-						type1   = pokemon.type1;
-						type2   = pokemon.type2;
-					}
-				}
-			}*/
-		}
-
 		public bool hasMovedThisRound(int turncount){
 			if (!lastRoundMoved.HasValue) return false;
 			//return lastRoundMoved.Value == battle.turncount;
@@ -1304,6 +1314,29 @@ public class Battle
 			bool ret = (this.Type1 == type || this.Type2 == type);
 			if (effects.Type3 >= 0) ret |= (effects.Type3 == (int)type);
 			return ret;
+		}
+
+		public bool HasMoveType(Types type) {
+			if (type == Types.NONE || type < 0) return false;
+			for (int i = 0; i < moves.Length; i++)
+			{
+				if (moves[i].Type == type) return true;
+			}
+			return false;
+		}
+
+		public bool HasMoveFunction(string code) {
+			if (string.IsNullOrEmpty(code)) return false;
+			for (int i = 0; i < moves.Length; i++)
+			{
+				if (moves[i].Function == code) return true;
+			}
+			return false;
+		}
+
+		public bool HasMovedThisRound() {
+			if (!lastRoundMoved.HasValue) return false;
+			return lastRoundMoved.Value == battle.turncount;
 		}
 
 		bool hasWorkingItem(Items item, bool ignorefainted= false) {
@@ -1335,7 +1368,223 @@ public class Battle
 			if (effects.Telekinesis > 0) return true;
 			return false;
 		}
+
+		int Speed()
+		{
+			int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
+			int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
+			int speed = 0;
+			int stage = stages[2] + 6;
+			speed = (int)Math.Floor(speed * (decimal)stagemul[stage] / stagediv[stage]);
+			int speedmult = 0x1000;
+			switch (battle.weather)
+			{
+				case PokemonUnity.Weather.RAINDANCE:
+				case PokemonUnity.Weather.HEAVYRAIN:
+					speedmult = hasWorkingAbility(Abilities.SWIFT_SWIM) ? speedmult * 2 : speedmult;
+					break;
+				case PokemonUnity.Weather.SUNNYDAY:
+				case PokemonUnity.Weather.HARSHSUN:
+					speedmult = hasWorkingAbility(Abilities.CHLOROPHYLL) ? speedmult * 2 : speedmult;
+					break;
+				case PokemonUnity.Weather.SANDSTORM:
+					speedmult = hasWorkingAbility(Abilities.SAND_RUSH) ? speedmult * 2 : speedmult;
+					break;
+				default:
+					break;
+			}
+			if (hasWorkingAbility(Abilities.QUICK_FEET) && Status > 0)
+				speedmult = (int)Math.Round(speedmult * 1.5);
+			if (hasWorkingAbility(Abilities.UNBURDEN) && effects.Unburden && Item == Items.NONE)
+				speedmult = speedmult * 2;
+			if (hasWorkingAbility(Abilities.SLOW_START) && battle.turncount > 0)
+				speedmult = (int)Math.Round(speedmult * 1.5);
+			if (hasWorkingItem(Items.MACHO_BRACE) || 
+				hasWorkingItem(Items.POWER_WEIGHT) ||
+				hasWorkingItem(Items.POWER_BRACER) ||
+				hasWorkingItem(Items.POWER_BELT) ||
+				hasWorkingItem(Items.POWER_ANKLET) ||
+				hasWorkingItem(Items.POWER_LENS) ||
+				hasWorkingItem(Items.POWER_BAND) ||
+				hasWorkingItem(Items.IRON_BALL))
+				speedmult = (int)Math.Round((decimal)speedmult / 2);
+			if (hasWorkingItem(Items.CHOICE_SCARF))
+				speedmult = (int)Math.Round(speedmult * 2f);
+			if (Item == Items.IRON_BALL)
+				speedmult = (int)Math.Round((decimal)speedmult / 2);
+			if (hasWorkingItem(Items.QUICK_POWDER) &&
+				Species == Pokemons.DITTO &&
+				!effects.Transform)
+				speedmult = (int)Math.Round(speedmult * 2f);
+			if (OwnSide.Tailwind > 0)
+				speedmult = (int)Math.Round(speedmult * 2f);
+			if (OwnSide.Swamp > 0)
+				speedmult = (int)Math.Round(speedmult / 2f);
+			if (!hasWorkingAbility(Abilities.QUICK_FEET) &&
+				Status == Status.Paralysis)
+				speedmult = (int)Math.Round(speedmult / 4f);
+			if (battle.internalbattle && 
+				//battle.OwnedByPlayer(Index) &&
+				battle.Player.BadgesCount >= Settings.BADGESBOOSTSPEED)
+				speedmult = (int)Math.Round(speedmult * 1.1f);
+			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
+			return Math.Max(speed, 1);
+		}
 		#endregion
+
+		#region Change HP
+		public int ReduceHP(int amt, bool animate = false, bool registerDamage = true)
+		{
+			if (amt >= HP)
+				amt = HP;
+			else if (amt < 1 && !isFainted())
+				amt = 1;
+			int oldhp = HP;
+			HP -= amt;
+			if (HP < 0)
+				//"HP less than 0"
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+			if (HP > TotalHP)
+				//"HP greater than total HP"
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+			//ToDo: Pass to UnityEngine
+			//if (amt > 0)
+			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
+			if (amt > 0 && registerDamage)
+				tookDamage = true;
+			return amt;
+		}
+
+		public void RecoverHP(int amount, bool animate = false)
+		{
+			// the checks here are redundant, cause they're also placed on HP { set; }
+			if (HP + amount > TotalHP)
+				amount = TotalHP - HP;
+			else if (amount < 1 && HP != TotalHP)
+				amount = 1;
+			int oldhp = HP;
+			HP += amount;
+			if (HP < 0)
+				//"HP less than 0"
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+			if (HP > TotalHP)
+				//"HP greater than total HP"
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+			//ToDo: Pass to UnityEngine
+			//if(amount > 0)
+			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
+		}
+
+		public void Faint(bool showMessage = true)
+		{
+			if(!isFainted() && HP > 0)
+			{
+				GameVariables.DebugLog("Can't faint with HP greater than 0", true);
+				//return true;
+			}
+			if(isFainted())
+			{
+				GameVariables.DebugLog("Can't faint if already fainted", false);
+				//return true;
+			}
+			//battle.scene.Fainted(Index);
+			InitEffects(false);
+			// Reset status
+			Status = 0;
+			StatusCount = 0;
+			if (pokemon != null && battle.internalbattle)
+				pokemon.ChangeHappiness(HappinessMethods.FAINT);
+			//if (IsMega)
+			//	pokemon.MakeUnmega;
+			//if (IsPrimal)
+			//	pokemon.MakeUnprimal;
+			//Fainted = true;
+			//reset choice
+			battle.choices[Index] = new Choice(ChoiceAction.NoAction);
+			OwnSide.LastRoundFainted = battle.turncount;
+			if (showMessage)
+				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
+			//return true;
+		}
+		#endregion
+
+		#region Find other battlers/sides in relation to this battler
+		/// <summary>
+		/// Returns the data structure for this battler's side
+		/// </summary>
+		/// Player: 0 and 2; Foe: 1 and 3
+		public Effects.Side OwnSide { get { return battle.sides[Index&1]; } }
+		/// <summary>
+		/// Returns the data structure for the opposing Pokémon's side
+		/// </summary>
+		/// Player: 1 and 3; Foe: 0 and 2
+		public Effects.Side OpposingSide { get { return battle.sides[(Index&1)^1]; } }
+		/// <summary>
+		/// Returns whether the position belongs to the opposing Pokémon's side
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
+		public bool IsOpposing(int i)
+		{
+			return (Index & 1) != (i & 1);
+		}
+		/// <summary>
+		/// Returns the battler's partner
+		/// </summary>
+		public Battler Partner { get { return battle.battlers[(Index & 1) | ((Index & 2) ^ 2)]; } }
+		/// <summary>
+		/// Returns the battler's first opposing Pokémon
+		/// </summary>
+		public Battler OppositeOpposing1 { get { return battle.battlers[(Index ^ 1)]; } }
+		/// <summary>
+		/// Returns the battler's first opposing Pokémon
+		/// </summary>
+		public Battler OppositeOpposing2 { get { return battle.battlers[(Index ^ 1)]; } }
+		/// <summary>
+		/// Returns the battler's first opposing Pokémon Index
+		/// </summary>
+		public int OpposingIndex { get { return (Index ^ 1) | ((Index & 2) ^ 2); } }
+		public int NonActivePokemonCount
+		{
+			get
+			{
+				int count = 0;
+				//Pokemon[] party;// = battle.party.([(Index & 1) | ((Index & 2) ^ 2)]
+				for (int i = 0; i < 6; i++)
+				{
+					if ((isFainted() || i != Index) &&
+						(Partner.isFainted() || i != Partner.Index) &&
+						battle.party[(Index & 1) | ((Index & 2) ^ 2), i].Species != Pokemons.NONE &&
+						!battle.party[(Index & 1) | ((Index & 2) ^ 2), i].isEgg &&
+						battle.party[(Index & 1) | ((Index & 2) ^ 2), i].HP > 0)
+							count += 1;
+				}
+				return count;
+			}
+		}
+		#endregion
+
+		/*public static implicit operator Battler[](Pokemon[] input)
+		{
+			Battler[] battlers = new Battler[input.Length];
+			return battlers;
+		}
+
+		public static implicit operator Battler(Pokemon input)
+		{
+			Battler[] battlers = new Battler[input.Length];
+			return battlers;
+		}*/
+
+		public static Battler[] GetBattlers(Pokemon[] input)
+		{
+			Battler[] battlers = new Battler[input.Length];
+			for (int i = 0; i < input.Length; i++)
+			{
+				battlers[i] = (Battler)input[i];
+			}
+			return battlers;
+		}
 	}
 
 	/// <summary>
