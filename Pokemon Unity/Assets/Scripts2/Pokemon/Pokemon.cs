@@ -438,6 +438,104 @@ public partial class Pokemon //: ePokemons //PokemonData
 	}
 	#endregion
 
+	#region Evolution
+	/// <summary>
+	/// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
+	/// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
+	/// </summary>
+	/// <returns>null means no evolves for pokemon, int[].Count == 0 means evolutions are not specific to leveling</returns>
+	public int[] GetEvolutionLevels()
+	{
+		if (_base.Evolutions.Length > 0)
+		{
+			List<int> levels = new List<int>();
+			foreach (IPokemonEvolution evolution in _base.Evolutions)
+			{
+				if (evolution.EvolveMethod == EvolutionMethod.Level ||
+					evolution.EvolveMethod == EvolutionMethod.LevelMale ||
+					evolution.EvolveMethod == EvolutionMethod.LevelFemale)
+				{
+					levels.Add((evolution as Pokemon.PokemonData.PokemonEvolution<int>).EvolveValue);
+				}
+			}
+			if (levels.Count == 0)// && _base.Evolutions.Length > 0
+				return new int[0];
+			else
+				return levels.ToArray();
+		}
+		else
+			return null;
+	}
+	/// <summary>
+	/// Returns true or false if evolution occurs during fight or after pokemon survives.
+	/// </summary>
+	public bool CanEvolveDuringBattle()
+	{
+		foreach (IPokemonEvolution item in _base.Evolutions)
+		{
+			switch (item.EvolveMethod)
+			{
+				case EvolutionMethod.Level:
+				case EvolutionMethod.LevelMale:
+				case EvolutionMethod.LevelFemale:
+				case EvolutionMethod.Beauty:
+				case EvolutionMethod.Move:
+				case EvolutionMethod.AttackGreater:
+				case EvolutionMethod.DefenseGreater:
+				case EvolutionMethod.AtkDefEqual:
+				case EvolutionMethod.Ninjask:
+				case EvolutionMethod.Shedinja:
+					return true;
+				case EvolutionMethod.Item:
+				case EvolutionMethod.ItemMale:
+				case EvolutionMethod.ItemFemale:
+				case EvolutionMethod.Trade:
+				case EvolutionMethod.TradeItem:
+				case EvolutionMethod.TradeSpecies:
+				case EvolutionMethod.Happiness:
+				case EvolutionMethod.HappinessDay:
+				case EvolutionMethod.HappinessNight:
+				case EvolutionMethod.Hatred:
+				case EvolutionMethod.Time:
+				case EvolutionMethod.Season:
+				case EvolutionMethod.HoldItem:
+				case EvolutionMethod.HoldItemDay:
+				case EvolutionMethod.HoldItemNight:
+				case EvolutionMethod.Party:
+				case EvolutionMethod.Type:
+				case EvolutionMethod.Location:
+				case EvolutionMethod.Weather:
+				case EvolutionMethod.Shiny:
+				case EvolutionMethod.Silcoon:
+				case EvolutionMethod.Cascoon:
+				case EvolutionMethod.Deaths:
+				default:
+					break;
+			}
+		}
+		return false;
+	}
+	public EvolutionMethod[] GetEvolutionMethods()
+	{
+		List<EvolutionMethod> methods = new List<EvolutionMethod>();
+		foreach (IPokemonEvolution item in _base.Evolutions)
+		{
+			if (!methods.Contains(item.EvolveMethod))
+				methods.Add(item.EvolveMethod);
+		}
+			return methods.ToArray();
+	} 
+	public bool hasEvolveMethod(EvolutionMethod method)
+	{
+		foreach (IPokemonEvolution item in _base.Evolutions)
+		{
+			if (item.EvolveMethod == method)
+				return true;
+		}
+		return false;
+	}
+	#endregion
+
 	#region Gender
 	//private bool? gender;
 	/// <summary>
@@ -2060,7 +2158,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//this.MovesetMoves = movesetMoves; 
             //this.tmList = tmList; 
 
-            this.Evolutions = evolution;
+            this.Evolutions = evolution ?? new IPokemonEvolution[0];
 			//this.EvolutionID = evolutionID;
 			//this.evolutionMethod = evolutionMethod; 
 			//this.evolutionRequirements = evolutionRequirements;
