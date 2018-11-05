@@ -160,6 +160,66 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
             }
         }
     }
+    public IEnumerator<byte?> DisplayDialogMessage(string message, params string[] promptOptions)
+    {
+        //Pause player/lock controller actions
+        ChangeScene(UICanvas.DialogWindow);
+        //DialogText = message.Trim("\r\n".ToCharArray());
+        string[] text = message.Trim("\r\n".ToCharArray()).Split(new string[] { "\r" }, StringSplitOptions.RemoveEmptyEntries);
+        for(int i = 0; i < text.Length; i++)
+        {
+            //At the start of every message, turn off the bouncing cursor 
+            //GameObject.Find...SetActive(false)
+            //foreach (string line in text[i].Split(new string[] { "\n" }, StringSplitOptions.None)){}
+            //DialogText = text[i].Replace("\n", " "+Environment.NewLine);
+            InstantLine = false;
+			//StartCoroutine(SetTextRoutine(text[i].Replace("\n", " " + Environment.NewLine)));
+			//UpdateTextLinesFrmDump();
+			IEnumerator e = SetTextRoutine(text[i].Replace("\n", " " + Environment.NewLine));
+			while (e.MoveNext())
+			{
+				// If they press 'Escape', skip the cutscene
+				//if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Escape))
+				if (UnityEngine.Input.anyKey)
+				{
+					InstantLine = true;
+					//break;
+				}
+			}
+			//turn on the bouncing cursor to represent waiting on user's response/action
+			//to continue the remaining dialog message
+			if(i == text.Length) //Or add a `If anyKey` when text == "\r" 
+			{
+				//Set bouncing cursor to true
+			}
+			//if(i < text.Length && text.Length > 1) GameObject.Find...SetActive(true)
+			//wait for user input before continueing to the next set of text...
+			//Yield
+		}
+		while (UnityEngine.Input.anyKey)
+		{
+			yield return null;
+		}
+        if (promptOptions == null)
+        {
+            //Display Yes/No prompt
+            //return int value based on user prompt selection
+            yield return 1;
+        }
+        else
+        {
+			//Display custom prompt options using stringArray
+			//return int value based on user prompt select
+			for (int i = 0; i < promptOptions.Length; i++)
+			{
+				//Create Text Option by duplicating Child GameObject
+				//promptOptions[i]
+				//Setting display to true, setting Component<OnSubmit>.Value to `i` 
+			}
+            yield return 0;
+        }
+        //Disable the dialog window
+    }
     /// <summary>
     /// 
     /// </summary>
