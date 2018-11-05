@@ -586,6 +586,7 @@ namespace PokemonUnity
 		PlaceDescriptions = 20,
 		MapNames          = 21,
 		PhoneMessages     = 22,
-		ScriptTexts       = 23
+		ScriptTexts       = 23,
+		Errors = 24
 	}
 }
