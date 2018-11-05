@@ -86,21 +86,21 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		}
 	}
 
-    //public static Translator.Languages UserLanguage = Translator.Languages.English;
-    public static Settings.Languages UserLanguage = Settings.Languages.English;
-    public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
+	//public static Translator.Languages UserLanguage = Translator.Languages.English;
+	public static Settings.Languages UserLanguage = Settings.Languages.English;
+    //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
-	public Player playerTrainer { get; set; }
+	public static Player playerTrainer { get; set; }
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#region Private Records of Player Storage Data
 	public static Pokemon[,] PC_Poke { get; set; }
 	public static string[] PC_boxNames { get; set; }
 	public static int[] PC_boxTexture { get; set; }
 	public static List<Item> PC_Items { get; set; }
-	public static List<Item> Bag_Items { get; set; }
+	public static List<Items> Bag_Items { get; set; }
 	#endregion
 
-	public static SaveDataOld currentSave;
+	//public static SaveDataOld currentSave;
 
 	#region Constructor
 	public GameVariables()
@@ -110,7 +110,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
 
 		PC_Items = new List<Item>();
-		Bag_Items = new List<Item>();
+		Bag_Items = new List<Items>();
 	}
 	#endregion
 
@@ -510,21 +510,27 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		/// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
 		/// <see cref="Items"/> stores quantity value
 		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
-		public List<Item> Misc { get; private set; }
-		public List<Item> Medicine { get; private set; }
-		public List<Item> Pokeball { get; private set; }
-		public List<Item> Machine { get; private set; }
-		public List<Item> Berry { get; private set; }
-		public List<Item> Mail { get; private set; }
-		public List<Item> Battle { get; private set; }
-		public List<Item> Key { get; private set; }
+		public SortedList<Item, byte> Misc		{ get; private set; }
+		public SortedList<Item, byte> Medicine	{ get; private set; }
+		public SortedList<Item, byte> Pokeball	{ get; private set; }
+		public SortedList<Item, byte> Machine	{ get; private set; }
+		public SortedList<Item, byte> Berry		{ get; private set; }
+		public SortedList<Item, byte> Mail		{ get; private set; }
+		public SortedList<Item, byte> Battle	{ get; private set; }
+		public SortedList<Item, byte> Key		{ get; private set; }
 		private int[] quantity;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		/// ToDo: Return KeyValuePair<Item, Quantity>?
 		public Item this[Items item]
 		{
 			get
 			{
-				return GameVariables.Bag_Items.FirstOrDefault(i => i.ItemId == item);
+				return global::Item.GetItem(GameVariables.Bag_Items.FirstOrDefault(i => i == item));
 			}
 		}
 
@@ -536,38 +542,75 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			}
 		}
 
-		public TrainerBag()
+		public void GetBag()
 		{
-			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new List<Item>();
+			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+			List<Items> misc, medicine, pokeball, machine, berry, mail, battle, key;// = new List<Item>();
+			misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
 			//orderString = new string[ItemDatabaseOld.getItemsLength()];
-			//quantity = new int[ItemDatabaseOld.getItemsLength()];
-			foreach (Item item in GameVariables.Bag_Items)
+			quantity = new int[Bag_Items.Count];
+			//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
+			foreach (Items Item in GameVariables.Bag_Items)
 			{
+				//Item item = global::Item.GetItem(Item.Key);
+				Item item = global::Item.GetItem(Item);
 				switch (item.ItemPocket)
 				{
 					case ItemPockets.MISC:
-						Misc.Add(item);
+						if(!misc.Contains(Item))
+						{
+							Misc.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							misc.Add(Item);
+						}
 						break;
 					case ItemPockets.MEDICINE:
-						Medicine.Add(item);
+						if (!machine.Contains(Item))
+						{
+							Medicine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							machine.Add(Item);
+						}
 						break;
 					case ItemPockets.POKEBALL:
-						Pokeball.Add(item);
+						if (!pokeball.Contains(Item))
+						{
+							Pokeball.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							pokeball.Add(Item);
+						}
 						break;
 					case ItemPockets.MACHINE:
-						Machine.Add(item);
+						if (!machine.Contains(Item))
+						{
+							Machine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							machine.Add(Item);
+						}
 						break;
 					case ItemPockets.BERRY:
-						Berry.Add(item);
+						if (!berry.Contains(Item))
+						{
+							Berry.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							berry.Add(Item);
+						}
 						break;
 					case ItemPockets.MAIL:
-						Mail.Add(item);
+						if (!mail.Contains(Item))
+						{
+							Mail.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							mail.Add(Item);
+						}
 						break;
 					case ItemPockets.BATTLE:
-						Battle.Add(item);
+						if (!battle.Contains(Item))
+						{
+							Battle.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							battle.Add(Item);
+						}
 						break;
 					case ItemPockets.KEY:
-						Key.Add(item);
+						if (!key.Contains(Item))
+						{
+							Key.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							key.Add(Item);
+						}
 						break;
 					default:
 						break;
@@ -578,6 +621,11 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		public TrainerBag(Player t) : this()
 		{
 			trainer = t;
+		}
+
+		public TrainerBag()
+		{
+			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
 		}
 
 		/*public int getIndexOf(Item name)
@@ -639,6 +687,8 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			orderString = packedOrder;
 		}
 
+		///ToDo: Add to global bag, then use GetBag to pack and sort
+		/// Max int count for a byte value is 255... Bag can hold more, but will only display max of 255?
 		public bool addItem(Item itemName)
 		{
 			//returns false if will exceed the quantity limit (999)
@@ -755,6 +805,12 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		}
 	}
 	private static Battle _battle { get; set; }
+	#endregion
+
+	#region Audio 
+	public static int? nextBattleBGM { get; set; }
+	public static int? nextBattleME { get; set; }
+	public static int? nextBattleBack { get; set; }
 	#endregion
 }
 
@@ -1297,6 +1353,13 @@ public class Settings //: Settings<Translations.Languages>
 	///    Evolving even if they otherwise could.
 	/// </summary>
 	public const bool NO_MEGA_EVOLUTION = true;
+	#endregion
+
+	#region Audio
+	public class Audio
+	{
+
+	}
 	#endregion
 }
 
