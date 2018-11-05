@@ -332,13 +332,13 @@ public class Battle
 	/// Uses current battle and manipulates the data then return the current battle with updated values.
 	/// </summary>
 	/// Pokemon variable should use the pokemon trainerid as hashvalue, or an int of where pokemon is on battle lineup
-	public Func<Battle, Pokemon, Move, Battle> Func { get; set; }
-	public Action<Battle, Pokemon, Move> Action { get; set; }
-	public //async Task<Battle> 
-		void GenerateBattleTurn(System.Linq.Expressions.Expression<Func<Battle, Pokemon, Move, Battle>> predicate)
-	{
-		//return await _subscriptionPaymentRepository.GetAll().LastOrDefaultAsync(predicate);
-	}
+	//public Func<Battle, Pokemon, Move, Battle> Func { get; set; }
+	//public Action<Battle, Pokemon, Move> Action { get; set; }
+	//public //async Task<Battle> 
+	//	void GenerateBattleTurn(System.Linq.Expressions.Expression<Func<Battle, Pokemon, Move, Battle>> predicate)
+	//{
+	//	//return await _subscriptionPaymentRepository.GetAll().LastOrDefaultAsync(predicate);
+	//}
 
 	#region Constructor
 	/// <summary>
@@ -487,7 +487,7 @@ public class Battle
 
 		for (int i = 0; i < 4; i++)
 		{
-			battlers[i] = new Battler(new Pokemon(), i);
+			battlers[i] = new Battler().Initialize(new Pokemon(), i);
 		}
 
 		foreach (var i in party1)
@@ -709,11 +709,12 @@ public class Battle
 		return true;
 	}
 
-	void MoveEffects(int who, int move)
-	{
-		//this.battlers[who].moves[move].
-	}
+	//void MoveEffects(int who, int move)
+	//{
+	//	//this.battlers[who].moves[move].
+	//}
 
+	#region Nested Classes
 	/// <summary>
 	/// A Pokemon placeholder class to be used while in-battle, 
 	/// to prevent changes from being permanent to original pokemon profile
@@ -1017,7 +1018,7 @@ public class Battle
 			effects.BideDamage       = 0;
 			effects.BideTarget       = -1;
 			effects.Charge           = 0;
-			effects.ChoiceBand       = -1;
+			effects.ChoiceBand       = null;
 			effects.Counter          = -1;
 			effects.CounterTarget    = -1;
 			effects.DefenseCurl      = false;
@@ -1294,7 +1295,25 @@ public class Battle
 			if (string.IsNullOrEmpty(code)) return false;
 			for (int i = 0; i < moves.Length; i++)
 			{
-				if (moves[i].Function == code) return true;
+				if (moves[i].FunctionAsString == code) return true;
+			}
+			return false;
+		}
+
+		public bool HasMoveFunction(short code) {
+			//if (string.IsNullOrEmpty(code)) return false;
+			for (int i = 0; i < moves.Length; i++)
+			{
+				if ((short)moves[i].Function == code) return true;
+			}
+			return false;
+		}
+
+		public bool HasMoveFunction(Function.Effect code) {
+			//if (string.IsNullOrEmpty(code)) return false;
+			for (int i = 0; i < moves.Length; i++)
+			{
+				if ((Function.Effect)moves[i].Function == code) return true;
 			}
 			return false;
 		}
@@ -1550,14 +1569,69 @@ public class Battle
 
 	/// <summary>
 	/// A Move placeholder class to be used while in-battle, 
-	/// to prevent changes from being permanent to original pokemon profile
+	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
 	public class InBattleMove : Move
 	{
-		public Battle battle { get { return GameVariables.battle; } }
+		#region Variables
+		public bool NOTYPE						{ get; set; } //= 0x01
+		public bool IGNOREPKMNTYPES				{ get; set; } //= 0x02
+		public bool NOWEIGHTING					{ get; set; } //= 0x04
+		public bool NOCRITICAL					{ get; set; } //= 0x08
+		public bool NOREFLECT					{ get; set; } //= 0x10
+		public bool SELFCONFUSE					{ get; set; } //= 0x20
+
+		public Category Category				{ get; set; }
+		new public Moves MoveId					{ get; set; }
+		new public Target Targets				{ get; set; }
+		new public Types Type					{ get; set; }
+		new public PokemonEssential.Flags Flag	{ get; set; }
+		new public int PP						{ get; set; }
+		new public int TotalPP					{ get; set; }
+		/// <summary>
+		/// The probability that the move's additional effect occurs, as a percentage. 
+		/// If the move has no additional effect (e.g. all status moves), this value is 0.
+		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
+		/// which is not the same thing as having an effect that will always occur. 
+		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
+		/// </summary>
+		public int AddlEffect					{ get; set; }
+		/// <summary>
+		/// The move's accuracy, as a percentage. 
+		/// An accuracy of 0 means the move doesn't perform an accuracy check 
+		/// (i.e. it cannot be evaded).
+		/// </summary>
+		public int Accuracy						{ get; set; }
+		public int BaseDamage					{ get; set; }
+		public int CritRatio					{ get; set; }
+		public int Priority						{ get; set; }
+		public bool IsPhysical					{ get { return Category == Category.PHYSICAL; } }
+		public bool IsSpecial					{ get { return Category == Category.SPECIAL; } }
+		#endregion
+
+		private Battle Battle { get { return GameVariables.battle; } }
 
 		public InBattleMove(Moves move) : base(move)
 		{
+			//battle	= battle
+			BaseDamage	= _base.BaseDamage;
+			Type		= _base.Type;
+			Accuracy	= _base.Accuracy;
+			PP			= base.PP;
+			TotalPP		= base.TotalPP;
+			AddlEffect	= _base.Effects;
+			Targets		= base.Targets;
+			Priority	= _base.Priority;
+			Flag		= base.Flag;
+			//thismove	= move
+			//name		= ""
+			MoveId		= base.MoveId;
+		}
+
+		public InBattleMove(Move move) : this(move.MoveId)
+		{
+			PP		= move.PP;
+			TotalPP = move.TotalPP;
 		}
 
 		/*public InBattleMove(Battle battle, Move move) : base(move.MoveId)
@@ -1631,121 +1705,78 @@ public class Battle
 			Endured       = false;
 			BerryWeakened = false;
 		}
-	}
 
-	/// <summary>
-	/// Success state (used for Battle Arena)
-	/// </summary>
-	public class SuccessState
-	{
-		/// <summary>
-		/// Type effectiveness
-		/// </summary>
-		public int TypeMod { get; set; }
-		/// <summary>
-		/// null - not used, 0 - failed, 1 - succeeded
-		/// </summary>
-		/// instead of an int or enum
-		/// 0 - not used, 1 - failed, 2 - succeeded
-		public bool? UseState { get; set; }
-		public bool Protected { get; set; }
-		public int Skill { get; private set; }
-
-		public SuccessState()
+		new public enum Effect
 		{
-			Clear();
-		}
+			/// <summary>
+			/// Superclass that handles moves using a non-existent function code.
+			/// Damaging moves just do damage with no additional effect.
+			/// Non-damaging moves always fail.
+			/// </summary>
+			UnimplementedMove = -1,
+			/// <summary>
+			/// Superclass for a failed move. Always fails.
+			/// This class is unused.
+			/// </summary>
+			FailedMove = -2,
+			/// <summary>
+			/// Pseudomove for confusion damage.
+			/// </summary>
+			Confusion = -3,
+			/// <summary>
+			/// Implements the move Struggle.
+			/// For cases where the real move named Struggle is not defined.
+			/// </summary>
+			Struggle = -4,
+			//[Description("0x000")]
+			/// <summary>
+			/// No additional effect.
+			/// </summary>
+			x000 = 0x000,
+			/// <summary>
+			/// Does absolutely nothing. (Splash)
+			/// </summary>
+			x001 = 0x001,
 
-		public void Clear()
-		{
-			TypeMod		= 4;
-			UseState	= null;
-			Protected	= false;
-			Skill		= 0;
-		}
+			/// <summary>
+			/// Struggle. Overrides the default Struggle effect above.
+			/// </summary>
+			x002 = 0x002,
 
-		public void UpdateSkill()
-		{
-			if (!UseState.Value && !Protected)
-				Skill -= 2;
-			else if (UseState.Value)
-			{
-				if (TypeMod > 4)
-					Skill += 2; // "Super effective"
-				else if (TypeMod >= 1 && TypeMod < 4)
-					Skill -= 1; // "Not very effective"
-				else if (TypeMod == 0)
-					Skill -= 2; // Ineffective
-				else
-					Skill += 1;
-			}
-			TypeMod = 4;
-			UseState = false;
-			Protected = false;
-		}
-	}
+			/// <summary>
+			/// Puts the target to sleep.
+			/// </summary>
+			x003 = 0x003,
 
-	/// <summary>
-	/// Options made on a given turn, per pokemon.
-	/// </summary>
-	/// ToDo: Make a logger of this as a List<> to document a match history.
-	/// ToDo: If making logger, consider documenting math/results as well...
-	public class Choice
-	{
-		public ChoiceAction Action { get; private set; }
-		/// <summary>
-		/// Index of Action being used
-		/// </summary>
-		public int Index { get; private set; }
-		public InBattleMove Move { get; private set; }
-		public int Target { get; private set; }
+			/// <summary>
+			/// Makes the target drowsy; it will fall asleep at the  of the next turn. (Yawn)
+			/// </summary>
+			x004 = 0x004,
 
-		/// <summary>
-		/// If action you're choosing to take is to Attack with a Move
-		/// </summary>
-		/// <param name="action"></param>
-		/// <param name="move"></param>
-		/// <param name="target"></param>
-		public Choice (ChoiceAction action, int moveIndex, InBattleMove move, int target = -1)
-		{
-			Action = action;
-			Index = moveIndex;
-			Move = move;
-			Target = target;
-		}
+			/// <summary>
+			/// Poisons the target.
+			/// </summary>
+			x005 = 0x005,
 
-		/// <summary>
-		/// If action you're choosing to take is to Switch Pkmns
-		/// </summary>
-		/// <param name="action"></param>
-		/// <param name="pkmnIndex"></param>
-		public Choice (ChoiceAction action, int pkmnIndex)
-		{
-			Action = action;
-			Index = pkmnIndex;
-		}
+			/// <summary>
+			/// Badly poisons the target. (Poison Fang, Toxic)
+			/// (Handled in Battler's pbSuccessCheck): Hits semi-invulnerable targets if user
+			/// is Poison-type and move is status move.
+			/// </summary>
+			x006 = 0x006,
 
-		/// <summary>
-		/// If action you're choosing to take is to Use an Item on a Pkmn
-		/// </summary>
-		/// <param name="action"></param>
-		/// <param name="itemIndex"></param>
-		/// <param name="pkmnTarget"></param>
-		public Choice (ChoiceAction action, int itemIndex, int pkmnTarget)
-		{
-			Action = action;
-			Index = itemIndex;
-			Target = pkmnTarget;
-		}
+			/// <summary>
+			/// Paralyzes the target.
+			/// Thunder Wave: Doesn't affect target if move's type has no effect on it.
+			/// Bolt Strike: Powers up the next Fusion Flare used this round.
+			/// </summary>
+			x007 = 0x007,
 
-		/// <summary>
-		/// If action you're choosing to take is to Flee, Call Pokemon, or Nothing
-		/// </summary>
-		public Choice (ChoiceAction action = 0)
-		{
-			Action = action;
-		}
-	}
+			/// <summary>
+			/// Paralyzes the target. Accuracy perfect in rain, 50% in sunshine. (Thunder)
+			/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+			/// </summary>
+			x008 = 0x008,
 
 	public enum ChoiceAction
 	{
@@ -1788,6 +1819,7 @@ public class Battle
 		/// </summary>
 		DRAW = 5
 	}
+	#endregion
 }
 namespace PokemonUnity
 {

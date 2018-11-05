@@ -10,33 +10,8 @@ using PokemonEssential;
 
 public class Move //: MoveData
 {
-	#region Variables
-	//private string name;
-	//private string description;
-	//private string fieldEffect;
-
-	//private int pp;
-	//private int ppups;
-	/*private Pokemon.PokemonData.Type type;
-	private Category category;
-	private int power;
-	private float accuracy;
-	private Target target;
-	private int priority;
-	private bool contact;
-	private bool protectable;
-	private bool magicCoatable;
-	private bool snatchable;
-	private Effect[] moveEffects;
-	private float[] moveParameters;
-	private Contest contest;
-	private int appeal;
-	private int jamming;*/
-	
-	private MoveDataDex _base { get; set; }
-	#endregion
-
 	#region Properties
+	protected MoveDataDex _base { get; private set; }
 	/// <summary>
 	/// The amount of PP remaining for this move
 	/// </summary>
@@ -63,7 +38,7 @@ public class Move //: MoveData
 	public Types Type { get { return _base.Type; } }
 	public Moves MoveId { get { return _base.ID; } }
 	public PokemonEssential.Flags Flag { get { return _base.Flags; } }
-	public short Function { get { return _base.Function; } }
+	public Function.Effect Function { get { return (Function.Effect)_base.Function; } }
 	public string FunctionAsString { get { return _base.FunctionAsString; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
@@ -21546,20 +21521,20 @@ namespace PokemonEssential
 			this.SoundBased = sound;
 		}
 	}
-	//NOTYPE          = 0x01
-	//IGNOREPKMNTYPES = 0x02
-	//NOWEIGHTING     = 0x04
-	//NOCRITICAL      = 0x08
-	//NOREFLECT       = 0x10
+	//NOTYPE          = 0x01,
+	//IGNOREPKMNTYPES = 0x02,
+	//NOWEIGHTING     = 0x04,
+	//NOCRITICAL      = 0x08,
+	//NOREFLECT       = 0x10,
 	//SELFCONFUSE     = 0x20
     public enum SpecialCondition
     {
-        NOTYPE,
-        IGNOREPKMNTYPES,
-        NOWEIGHTING,
-        NOCRITICAL,
-        NOREFLECT,
-        SELFCONFUSE
+        NOTYPE			= 0x01,
+        IGNOREPKMNTYPES	= 0x02,
+        NOWEIGHTING		= 0x04,
+        NOCRITICAL		= 0x08,
+        NOREFLECT		= 0x10,
+        SELFCONFUSE		= 0x20
     }
 	/// <summary>
 	/// </summary>
@@ -21650,7 +21625,6 @@ namespace PokemonEssential
 		public int PP { get; private set; }
 		public int Priority { get; private set; }
 		public Flags Flags { get; private set; }
-		public int critRatio { get; private set; }
 		public Target Target { get; private set; }
 		public Types Type { get; private set; }
 		public Contest ContestType { get; private set; }
@@ -21666,6 +21640,9 @@ namespace PokemonEssential
 		public int Effects { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
+		//ToDo: Missing from Database
+		public int Appeal { get; private set; }
+		public int Jamming { get; private set; }
 		#endregion
 
 		public MoveDataDex()
