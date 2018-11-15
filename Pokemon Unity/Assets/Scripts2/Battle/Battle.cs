@@ -1309,11 +1309,11 @@ public class Battle
 			return false;
 		}
 
-		public bool HasMoveFunction(Function.Effect code) {
+		public bool HasMoveFunction(Effect code) {
 			//if (string.IsNullOrEmpty(code)) return false;
 			for (int i = 0; i < moves.Length; i++)
 			{
-				if ((Function.Effect)moves[i].Function == code) return true;
+				if ((Effect)moves[i].Function == code) return true;
 			}
 			return false;
 		}
@@ -1706,77 +1706,15 @@ public class Battle
 			BerryWeakened = false;
 		}
 
-		new public enum Effect
 		{
-			/// <summary>
-			/// Superclass that handles moves using a non-existent function code.
-			/// Damaging moves just do damage with no additional effect.
-			/// Non-damaging moves always fail.
-			/// </summary>
-			UnimplementedMove = -1,
-			/// <summary>
-			/// Superclass for a failed move. Always fails.
-			/// This class is unused.
-			/// </summary>
-			FailedMove = -2,
-			/// <summary>
-			/// Pseudomove for confusion damage.
-			/// </summary>
-			Confusion = -3,
-			/// <summary>
-			/// Implements the move Struggle.
-			/// For cases where the real move named Struggle is not defined.
-			/// </summary>
-			Struggle = -4,
-			//[Description("0x000")]
-			/// <summary>
-			/// No additional effect.
-			/// </summary>
-			x000 = 0x000,
-			/// <summary>
-			/// Does absolutely nothing. (Splash)
-			/// </summary>
-			x001 = 0x001,
+			Clear();
 
-			/// <summary>
-			/// Struggle. Overrides the default Struggle effect above.
-			/// </summary>
-			x002 = 0x002,
 
-			/// <summary>
-			/// Puts the target to sleep.
-			/// </summary>
-			x003 = 0x003,
 
-			/// <summary>
-			/// Makes the target drowsy; it will fall asleep at the  of the next turn. (Yawn)
-			/// </summary>
-			x004 = 0x004,
 
-			/// <summary>
-			/// Poisons the target.
-			/// </summary>
-			x005 = 0x005,
 
-			/// <summary>
-			/// Badly poisons the target. (Poison Fang, Toxic)
-			/// (Handled in Battler's pbSuccessCheck): Hits semi-invulnerable targets if user
-			/// is Poison-type and move is status move.
-			/// </summary>
-			x006 = 0x006,
 
-			/// <summary>
-			/// Paralyzes the target.
-			/// Thunder Wave: Doesn't affect target if move's type has no effect on it.
-			/// Bolt Strike: Powers up the next Fusion Flare used this round.
-			/// </summary>
-			x007 = 0x007,
 
-			/// <summary>
-			/// Paralyzes the target. Accuracy perfect in rain, 50% in sunshine. (Thunder)
-			/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
-			/// </summary>
-			x008 = 0x008,
 
 	public enum ChoiceAction
 	{
