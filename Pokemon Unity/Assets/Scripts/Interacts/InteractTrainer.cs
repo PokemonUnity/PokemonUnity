@@ -3,10 +3,10 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(TrainerOld))]
+//[RequireComponent(typeof(TrainerOld))]
 public class InteractTrainer : MonoBehaviour
 {
-    private TrainerOld trainer;
+    //private TrainerOld trainer;
 
     public enum Gender
     {
@@ -73,7 +73,7 @@ public class InteractTrainer : MonoBehaviour
 
     void Awake()
     {
-        trainer = transform.GetComponent<TrainerOld>();
+        //trainer = transform.GetComponent<TrainerOld>();
 
         Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
 
@@ -601,7 +601,7 @@ public class InteractTrainer : MonoBehaviour
 
                 //Automatic LoopStart usage not yet implemented
                 Scene.main.Battle.gameObject.SetActive(true);
-                if (trainer.battleBGM != null)
+                /*if (trainer.battleBGM != null)
                 {
                     BgmHandler.main.PlayOverlay(trainer.battleBGM, trainer.samplesLoopStart);
                 }
@@ -609,12 +609,12 @@ public class InteractTrainer : MonoBehaviour
                 {
                     BgmHandler.main.PlayOverlay(Scene.main.Battle.defaultTrainerBGM,
                         Scene.main.Battle.defaultTrainerBGMLoopStart);
-                }
+                }*/
                 Scene.main.Battle.gameObject.SetActive(false);
                 yield return new WaitForSeconds(1.6f);
 
                 Scene.main.Battle.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Battle.control(trainer));
+                //StartCoroutine(Scene.main.Battle.control(trainer));
 
                 while (Scene.main.Battle.gameObject.activeSelf)
                 {

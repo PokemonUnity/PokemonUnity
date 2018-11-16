@@ -79,7 +79,7 @@ public class MoveData {
 
 	private string name;
 
-	private PokemonDataOld.Type type;
+	private PokemonDataOld.Type type { get; set; }
 	private Category category;
 	private int power;
 	private float accuracy;
@@ -97,150 +97,14 @@ public class MoveData {
 	private int jamming;
 	private string description;
 	private string fieldEffect;
-
-	public MoveData() { return; }
-
-	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, 
-	                int PP, Contest contest, int appeal, int jamming, string description){
-		this.name = name;
-		this.type = type;
-		this.category = category;
-		this.power = power;
-		this.accuracy = accuracy;
-		this.PP = PP;
-		this.contest = contest;
-		this.appeal = appeal;
-		this.jamming = jamming;
-		this.description = description;
-
-
-		//debug filler data
-		this.moveEffects = new Effect[0];
-		this.moveParameters = new float[0];
-		this.target = Target.ADJACENT;
-		if(category == Category.PHYSICAL){
-			this.contact = true;}
-		else{
-			this.contact = false;}
-		this.protectable = true;
-		if(category == Category.STATUS){
-			this.magicCoatable = true;}
-		else{
-			this.magicCoatable = false;}
-
-	}
-
-	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, 
-	                int PP, Contest contest, int appeal, int jamming, string description, string fieldEffect){
-		this.name = name;
-		this.type = type;
-		this.category = category;
-		this.power = power;
-		this.accuracy = accuracy;
-		this.PP = PP;
-		this.contest = contest;
-		this.appeal = appeal;
-		this.jamming = jamming;
-		this.fieldEffect = fieldEffect;
-		this.description = description;
-		
-
-		//debug filler data
-		this.moveEffects = new Effect[0];
-		this.moveParameters = new float[0];
-		this.target = Target.ADJACENT;
-		if(category == Category.PHYSICAL){
-			this.contact = true;}
-		else{
-			this.contact = false;}
-		this.protectable = true;
-		if(category == Category.STATUS){
-			this.magicCoatable = true;}
-		else{
-			this.magicCoatable = false;}
-
-	}
-
-
-	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, int PP, Target target,
-	                int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
-	                Effect[] moveEffects, float[] moveParameters,
-	                Contest contest, int appeal, int jamming, string description){
-		this.name = name;
-		this.type = type;
-		this.category = category;
-		this.power = power;
-		this.accuracy = accuracy;
-		this.PP = PP;
-		this.target = target;
-		this.priority = priority; 
-		this.contact = contact;
-		this.protectable = protectable;
-		this.magicCoatable = magicCoatable;
-		this.snatchable = snatchable;
-		this.moveEffects = moveEffects;
-		this.moveParameters = moveParameters;
-		this.contest = contest;
-		this.appeal = appeal;
-		this.jamming = jamming;
-		this.description = description;
-	}
-
-	public MoveData(string name, PokemonDataOld.Type type, Category category, int power, float accuracy, int PP, Target target,
-	                int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
-	                Effect[] moveEffects, float[] moveParameters,
-	                Contest contest, int appeal, int jamming, string description, string fieldEffect){
-		this.name = name;
-		this.type = type;
-		this.category = category;
-		this.power = power;
-		this.accuracy = accuracy;
-		this.PP = PP;
-		this.target = target;
-		this.priority = priority; 
-		this.contact = contact;
-		this.protectable = protectable;
-		this.magicCoatable = magicCoatable;
-		this.snatchable = snatchable;
-		this.moveEffects = moveEffects;
-		this.moveParameters = moveParameters;
-		this.contest = contest;
-		this.appeal = appeal;
-		this.jamming = jamming;
-		this.description = description;
-		this.fieldEffect = fieldEffect;
-	}
-
-	public MoveData(eMoves.Move internalName, PokemonDataOld.Type type, Category category, int power, float accuracy, int PP, Target target,
-	                int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
-	                Effect[] moveEffects, float[] moveParameters,
-	                Contest contest, int appeal, int jamming/*, string description, string fieldEffect*/){
-		//this.name = name;
-		this.type = type;
-		this.category = category;
-		this.power = power;
-		this.accuracy = accuracy;
-		this.PP = PP;
-		this.target = target;
-		this.priority = priority; 
-		this.contact = contact;
-		this.protectable = protectable;
-		this.magicCoatable = magicCoatable;
-		this.snatchable = snatchable;
-		this.moveEffects = moveEffects;
-		this.moveParameters = moveParameters;
-		this.contest = contest;
-		this.appeal = appeal;
-		this.jamming = jamming;
-		//this.description = description;
-		//this.fieldEffect = fieldEffect;
-	}
+	
 
 	public string getName(){
 		return name;}
 
 	public PokemonDataOld.Type getType(){
-		return type;}
+		return type;
+	}
 
 	public Category getCategory(){
 		return category;}

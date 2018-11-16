@@ -57,22 +57,22 @@ public class SaveDataOld
     //customizables not implemented
 
     public int playerMoney;
-    /// <summary>
-    /// Usage:<para>
-    /// <code>playerPokedex[1,0] == 0; means pokemonId #1 not seen</code>
-    /// </para>
-    /// <code>playerPokedex[1,1] == 0; means pokemonId #1 not captured</code>
-    /// </summary>
-    /// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
-    public int[,] playerPokedex2 = new int[PokemonDatabaseOld.LoadPokedex().Length, 2];//Pokedex.Count
-    /// <summary>
-    /// Usage:<para>
-    /// <code>playerPokedex[1] == false; means pokemonId #1 has been seen, and not captured</code>
-    /// </para>
-    /// <code>playerPokedex[1] == true; means pokemonId #1 has been captured</code>
-    /// </summary>
-    /// <remarks>if null, has not been seen or captured</remarks> 
-    public bool?[] playerPokedex = new bool?[PokemonDatabaseOld.LoadPokedex().Length]; 
+	/// <summary>
+	/// Usage:<para>
+	/// <code>playerPokedex[1,0] == 0; means pokemonId #1 not seen</code>
+	/// </para>
+	/// <code>playerPokedex[1,1] == 0; means pokemonId #1 not captured</code>
+	/// </summary>
+	/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
+	public int[,] playerPokedex2;// = new int[PokemonDatabaseOld.LoadPokedex().Length, 2];//Pokedex.Count
+	/// <summary>
+	/// Usage:<para>
+	/// <code>playerPokedex[1] == false; means pokemonId #1 has been seen, and not captured</code>
+	/// </para>
+	/// <code>playerPokedex[1] == true; means pokemonId #1 has been captured</code>
+	/// </summary>
+	/// <remarks>if null, has not been seen or captured</remarks> 
+	public bool?[] playerPokedex;// = new bool?[PokemonDatabaseOld.LoadPokedex().Length]; 
     public int pokedexCaught = (from caught in SaveDataOld.currentSave.playerPokedex where caught == true select caught).Count();
     public int pokedexSeen = (from seen in SaveDataOld.currentSave.playerPokedex where seen != null select seen).Count(); 
 

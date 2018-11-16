@@ -607,7 +607,7 @@ public class WildPokemonInitialiser
 		return packedList;
 	}
 
-	public PokemonOld getRandomEncounter(Method location)
+	public Pokemon getRandomEncounter(Method location)
 	{
 		WildPokemonInitialiser[] list = getEncounterList(location);
 
@@ -633,17 +633,18 @@ public class WildPokemonInitialiser
 		int encounterIndex = Settings.Rand.Next(0, chanceSplitList.Length);
 
 #if DEBUG
-		string debugtext = "";
+		//string debugtext = "";
 		for (int i = 0; i < chanceSplitList.Length; i++)
 		{
-			debugtext += PokemonDatabaseOld.getPokemon(chanceSplitList[i].ID).getName() + ", ";
+			//debugtext += PokemonDatabaseOld.getPokemon(chanceSplitList[i].ID).getName() + ", ";
 		}
-		Debug.Log(encounterIndex + ": " + debugtext + "(" + PokemonDatabaseOld.getPokemon(chanceSplitList[encounterIndex].ID).getName() + ")");
+		//Debug.Log(encounterIndex + ": " + debugtext + "(" + PokemonDatabaseOld.getPokemon(chanceSplitList[encounterIndex].ID).getName() + ")");
 #endif
 
-		return new PokemonOld(chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,
-			Settings.Rand.Next(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
-			null, null, null, -1);
+		return new Pokemon();
+			// chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,
+			//Settings.Rand.Next(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
+			//null, null, null, -1);
 	}
 
 	/// <summary>
@@ -652,7 +653,7 @@ public class WildPokemonInitialiser
 	/// </summary>
 	/// <param name="location"></param>
 	/// <returns></returns>
-	public PokemonOld getRandomEncounter(Method location, string placeholder)
+	public Pokemon getRandomEncounter(Method location, string placeholder)
 	{
 		//Get list of 100 pokemons for given (specific to this) encounter...
 		WildPokemonInitialiser[] list = getEncounterList(location);
@@ -688,9 +689,10 @@ public class WildPokemonInitialiser
             Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
 #endif
         */
-		return new PokemonOld(list[randomPokemon].ID, PokemonOld.Gender.CALCULATE,
-			Settings.Rand.Next(list[randomPokemon].minLevel, list[randomPokemon].maxLevel + 1),
-			null, null, null, -1);
+		return new Pokemon();
+			// list[randomPokemon].ID, PokemonOld.Gender.CALCULATE,
+			//Settings.Rand.Next(list[randomPokemon].minLevel, list[randomPokemon].maxLevel + 1),
+			//null, null, null, -1);
 	}
 
 	/// <summary>

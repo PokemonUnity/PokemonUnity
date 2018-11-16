@@ -298,57 +298,11 @@ public class MapSettings : MonoBehaviour
         return packedList;
     }
 
-    public PokemonOld getRandomEncounter(WildPokemonInitialiserOld.Method location)
+    public Pokemon getRandomEncounter(WildPokemonInitialiser location)
     {
-        WildPokemonInitialiserOld[] list = getEncounterList(location);
+		WildPokemonInitialiser[] list = new WildPokemonInitialiser[0];// getEncounterList(location);
 
         int totalEncounterLikelihood = 0; //add up the total Likelihood
-        for (int i = 0; i < list.Length; i++)
-        {
-            totalEncounterLikelihood += list[i].encounterLikelihood;
-        }
-
-        WildPokemonInitialiserOld[] chanceSplitList = new WildPokemonInitialiserOld[totalEncounterLikelihood];
-        int listIndex = 0;
-        for (int i = 0; i < list.Length; i++)
-        {
-            //loop through each position of list
-            for (int i2 = 0; i2 < list[i].encounterLikelihood; i2++)
-            {
-                //add encounter once for every Likelihood
-                chanceSplitList[listIndex] = list[i];
-                listIndex += 1;
-            }
-        }
-        //randomly pick a number from the list's length
-        int encounterIndex = Random.Range(0, chanceSplitList.Length);
-
-#if DEBUG
-        string debugtext = "";
-            for(int i = 0; i < chanceSplitList.Length; i++){
-                debugtext += PokemonDatabaseOld.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
-            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabaseOld.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
-#endif
-        
-        return new PokemonOld(chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,
-            Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
-            null, null, null, -1);
-    }
-
-    /// <summary>
-    /// Random Wild Pokemon Encounter 2.0
-    /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    public PokemonOld getRandomEncounter(WildPokemonInitialiserOld.Method location, string placeholder)
-    {
-        //Get list of 100 pokemons for given (specific to this) encounter...
-        WildPokemonInitialiserOld[] list = getEncounterList(location);
-
-        //From list of 100 pokemons, select 1.
-        int randomPokemon = Random.Range(0, 100);
-
-        /*int totalEncounterLikelihood = 0; //add up the total Likelihood
         for (int i = 0; i < list.Length; i++)
         {
             totalEncounterLikelihood += list[i].encounterLikelihood;
@@ -370,135 +324,15 @@ public class MapSettings : MonoBehaviour
         int encounterIndex = Random.Range(0, chanceSplitList.Length);
 
 #if DEBUG
-        string debugtext = "";
-            for(int i = 0; i < chanceSplitList.Length; i++){
-                debugtext += PokemonDatabase.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
-            Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabase.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
+        //string debugtext = "";
+		//for(int i = 0; i < chanceSplitList.Length; i++){
+		//    debugtext += PokemonDatabaseOld.getPokemon(chanceSplitList[i].ID).getName() + ", ";}
+		//Debug.Log(encounterIndex+": "+debugtext + "("+PokemonDatabaseOld.getPokemon(chanceSplitList[encounterIndex].ID).getName()+")");
 #endif
-        */
-        return new PokemonOld(list[randomPokemon].ID, PokemonOld.Gender.CALCULATE,
-            Random.Range(list[randomPokemon].minLevel, list[randomPokemon].maxLevel + 1),
-            null, null, null, -1);
-    }
 
-    /// <summary>
-    /// Random Encounter list for Pokemon Encounter 2.0
-    /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    public WildPokemonInitialiserOld[] getEncounterList(int mapId, WildPokemonInitialiserOld.Method method, WildPokemonInitialiserOld.ConditionValue[] condition = null)
-    {
-        WildPokemonInitialiserOld[] list = new WildPokemonInitialiserOld[100];
-        int listIndex = 0;
-        int version = 0; //MapId will play a part of what version
-        int slots = 0; //Maybe an Array, matching Slots to given %chance ratio
-
-        switch (method) {
-            case WildPokemonInitialiserOld.Method.WALK:
-                slots = 12;
-                for(int i = 0; i < list.Length; i++)
-                {
-                    list[i] = new WildPokemonInitialiserOld { ID = 0, minLevel = 0, maxLevel = 0 };
-                }
-                break;
-            case WildPokemonInitialiserOld.Method.GRASS_SPOTS:
-                //slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.CAVE_SPOTS:
-                //slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.BRIDGE_SPOTS:
-                //slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.DARK_GRASS:
-                //slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.YELLOW_FLOWERS:
-                slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.PURPLE_FLOWERS:
-                slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.RED_FLOWERS:
-                slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.ROUGH_TERRAIN:
-                slots = 12;
-                break;
-            case WildPokemonInitialiserOld.Method.OLD_ROD:
-                slots = 3;
-                break;
-            case WildPokemonInitialiserOld.Method.GOOD_ROD:
-                slots = 3;
-                break;
-            case WildPokemonInitialiserOld.Method.SUPER_ROD:
-                slots = 3;
-                break;
-            case WildPokemonInitialiserOld.Method.SUPER_ROD_SPOTS:
-                //slots = 5;
-                break;
-            case WildPokemonInitialiserOld.Method.SURF:
-                if (version == 1 || version == 2) slots = 10;
-                else slots = 5;
-                break;
-            case WildPokemonInitialiserOld.Method.SURF_SPOTS:
-                //slots = 5;
-                break;
-            case WildPokemonInitialiserOld.Method.ROCK_SMASH:
-                if (version == 10) slots = 2;
-                else slots = 5;
-                break;
-            case WildPokemonInitialiserOld.Method.HEADBUTT:
-                //slots = 12;
-                break;
-            default:
-                break;
-        }
-
-        float time = System.DateTime.Now.Hour + ((float)System.DateTime.Now.Minute / 60f);
-
-        for (int i = 0; i < encounters.Length; i++)
-        {
-            if (encounters[i].encounterLocation == method)
-            {
-                if (time >= 20 || time < 3.5f)
-                {
-                    //night
-                    if (encounters[i].encounterNight)
-                    {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
-                    }
-                }
-                else if (time < 10f)
-                {
-                    //morning
-                    if (encounters[i].encounterMorning)
-                    {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
-                    }
-                }
-                else
-                {
-                    //day
-                    if (encounters[i].encounterDay)
-                    {
-                        list[listIndex] = encounters[i];
-                        listIndex += 1;
-                    }
-                }
-            }
-        }
-
-        WildPokemonInitialiserOld[] packedList = new WildPokemonInitialiserOld[listIndex];
-
-        for (int i = 0; i < packedList.Length; i++)
-        {
-            packedList[i] = list[i];
-        }
-
-        return packedList;
+		return new Pokemon();//chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,
+            //Random.Range(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
+            //null, null, null, -1);
     }
 }
 

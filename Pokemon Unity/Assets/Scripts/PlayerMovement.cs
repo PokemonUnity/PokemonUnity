@@ -244,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //DEBUG
-        if (accessedMapSettings != null)
+        /*if (accessedMapSettings != null)
         {
             WildPokemonInitialiserOld[] encounterList =
                 accessedMapSettings.getEncounterList(WildPokemonInitialiserOld.Method.WALK);
@@ -254,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
                 namez += PokemonDatabaseOld.getPokemon(encounterList[i].ID).getName() + ", ";
             }
             Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
-        }
+        }*/
         //
 
         GlobalVariables.global.resetFollower();
@@ -1227,7 +1227,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator wildEncounter(WildPokemonInitialiserOld.Method encounterLocation)
     {
-        if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
+		/*if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
         {
             if (Random.value <= accessedMapSettings.getEncounterProbability())
             {
@@ -1241,7 +1241,7 @@ public class PlayerMovement : MonoBehaviour
                     yield return StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(1f));
                     Scene.main.Battle.gameObject.SetActive(true);
-                    StartCoroutine(Scene.main.Battle.control(accessedMapSettings.getRandomEncounter(encounterLocation)));
+                    //StartCoroutine(Scene.main.Battle.control(accessedMapSettings.getRandomEncounter(encounterLocation)));
 
                     while (Scene.main.Battle.gameObject.activeSelf)
                     {
@@ -1254,7 +1254,7 @@ public class PlayerMovement : MonoBehaviour
                     unsetCheckBusyWith(Scene.main.Battle.gameObject);
                 }
             }
-        }
+        }*/ yield return null;
     }
 
     private void playClip(AudioClip clip)

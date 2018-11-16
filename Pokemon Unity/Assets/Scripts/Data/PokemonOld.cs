@@ -228,650 +228,16 @@ public class PokemonOld {
 	private int[] PPups;//Also need log for "RareCandy" and "Vitamins"
 	private int[] maxPP;
 	private int[] PP;
-
-
-    /// <summary>
-	/// New Pokemon with: every specific detail
-    /// </summary>
-    /// <param name="pokemonID"></param>
-    /// <param name="nickname"></param>
-    /// <param name="gender"></param>
-    /// <param name="level"></param>
-    /// <param name="isShiny"></param>
-    /// <param name="caughtBall"></param>
-    /// <param name="heldItem"></param>
-    /// <param name="OT"></param>
-    /// <param name="IV_HP"></param>
-    /// <param name="IV_ATK"></param>
-    /// <param name="IV_DEF"></param>
-    /// <param name="IV_SPA"></param>
-    /// <param name="IV_SPD"></param>
-    /// <param name="IV_SPE"></param>
-    /// <param name="EV_HP"></param>
-    /// <param name="EV_ATK"></param>
-    /// <param name="EV_DEF"></param>
-    /// <param name="EV_SPA"></param>
-    /// <param name="EV_SPD"></param>
-    /// <param name="EV_SPE"></param>
-    /// <param name="nature"></param>
-    /// <param name="ability"></param>
-    /// <param name="moveset"></param>
-    /// <param name="PPups"></param>
-	public PokemonOld(int pokemonID, string nickname, Gender gender, int level, 
-	               bool isShiny, string caughtBall, string heldItem, string OT,
-	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
-	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
-	               string nature, int ability, string[] moveset, int[] PPups){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-
-		this.pokemonID = pokemonID;
-		this.nickname = nickname;
-		//SET UP FORMS LATER #####################################################################################
-		this.form = 0;
-		this.gender = gender;
-		//if gender is CALCULATE, then calculate gender using maleRatio
-		if(gender == Gender.CALCULATE){
-			if(thisPokemonData.getMaleRatio() < 0){
-				this.gender = Gender.NONE;}
-			else if(Random.Range(0f,100f) <= thisPokemonData.getMaleRatio()){
-				this.gender = Gender.MALE;}
-			else{
-				this.gender = Gender.FEMALE;}
-		}
-		this.level = level;
-		//Find exp for current level, and next level.
-		this.exp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
-		this.happiness = thisPokemonData.getBaseFriendship();
-
-		this.isShiny = isShiny;
-		if(isShiny){
-			this.rareValue = Random.Range(0,16);
-		}
-		else{
-			this.rareValue = Random.Range(16,65536);
-			if(this.rareValue < 19){
-				this.pokerus = true;
-			}
-		}
-	
-		this.status = Status.NONE;
-		this.sleepTurns = 0;
-		this.caughtBallString = caughtBall;
-		//this.heldItem = heldItem;
-
-		this.OT = string.IsNullOrEmpty(OT)? SaveDataOld.currentSave.playerName : OT;
-		if (this.OT != SaveDataOld.currentSave.playerName){
-			this.IDno = Random.Range (0,65536).ToString().PadLeft(6,'0'); //if owned by another trainer, assign a random number. 
-		}										//this way if they trade it to you, it will have a different number to the player's.
-		else{
-			this.IDno = SaveDataOld.currentSave.playerID.ToString().Substring(SaveDataOld.currentSave.playerID.ToString().Length-6,6);
-		}
-
-		this.metLevel = level;
-		if(PlayerMovement.player != null){
-			if(PlayerMovement.player.accessedMapSettings != null){
-				this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
-			else{
-				this.metMap = "Somewhere";}
-		}
-		else{
-			this.metMap = "Somewhere";}
-		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
-
-		//Set IVs 
-		this.IV_HP = IV_HP; 
-		this.IV_ATK = IV_ATK; 
-		this.IV_DEF = IV_DEF; 
-		this.IV_SPA = IV_SPA; 
-		this.IV_SPD = IV_SPD; 
-		this.IV_SPE = IV_SPE;
-		//set EVs
-		this.EV_HP = EV_HP;
-		this.EV_ATK = EV_ATK;
-		this.EV_DEF = EV_DEF;
-		this.EV_SPA = EV_SPA;
-		this.EV_SPD = EV_SPD;
-		this.EV_SPE = EV_SPE;
-		//set nature
-		this.natureString = nature;
-		//calculate stats
-		this.calculateStats();
-		//set currentHP to HP, as a new pokemon will be undamaged.
-		this.currentHP = HP;
-		this.ability = ability;
-
-		this.movesetString = moveset;
-		this.moveHistoryString = moveset;
-
-		this.PPups = PPups;
-		//set maxPP and PP to be the regular PP defined by the move in the database.
-		this.maxPP = new int[4];
-		this.PP = new int[4];
-		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
-				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP()*((this.PPups[i]*0.2f)+1));
-				this.PP[i] = this.maxPP[i];
-			}
-		}
-		packMoveset();
-
-	}
-	public PokemonOld(int pokemonID, string nickname, Gender gender, int level, 
-	               bool isShiny, eItems.Item caughtBall, eItems.Item heldItem, string OT,
-	               int IV_HP, int IV_ATK, int IV_DEF, int IV_SPA, int IV_SPD, int IV_SPE,
-	               int EV_HP, int EV_ATK, int EV_DEF, int EV_SPA, int EV_SPD, int EV_SPE,
-	               NatureDatabaseOld.Nature nature, int ability, string[] moveset, int[] PPups){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-
-		this.pokemonID = pokemonID;
-		this.nickname = nickname;
-		//SET UP FORMS LATER #####################################################################################
-		this.form = 0;
-		this.gender = gender;
-		//if gender is CALCULATE, then calculate gender using maleRatio
-		if(gender == Gender.CALCULATE){
-			if(thisPokemonData.getMaleRatio() < 0){
-				this.gender = Gender.NONE;}
-			else if(Random.Range(0f,100f) <= thisPokemonData.getMaleRatio()){
-				this.gender = Gender.MALE;}
-			else{
-				this.gender = Gender.FEMALE;}
-		}
-		this.level = level;
-		//Find exp for current level, and next level.
-		this.exp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
-		this.happiness = thisPokemonData.getBaseFriendship();
-
-		this.isShiny = isShiny;
-		if(isShiny){
-			this.rareValue = Random.Range(0,16);
-		}
-		else{
-			this.rareValue = Random.Range(16,65536);
-			if(this.rareValue < 19){
-				this.pokerus = true;
-			}
-		}
-	
-		this.status = Status.NONE;
-		this.sleepTurns = 0;
-		this.caughtBall = caughtBall;
-		this.heldItem = heldItem;
-
-		this.OT = (string.IsNullOrEmpty(OT))? SaveDataOld.currentSave.playerName : OT;
-		if (this.OT != SaveDataOld.currentSave.playerName){
-			this.IDno = Random.Range (0,65536).ToString(); //if owned by another trainer, assign a random number. 
-		}										            //this way if they trade it to you, it will have a different number to the player's.
-		else{
-			this.IDno = SaveDataOld.currentSave.playerID.ToString();
-		}
-
-		this.metLevel = level;
-		if(PlayerMovement.player != null){
-			if(PlayerMovement.player.accessedMapSettings != null){
-				this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
-			else{
-				this.metMap = "Somewhere";}
-		}
-		else{
-			this.metMap = "Somewhere";}
-		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
-
-		//Set IVs 
-		this.IV_HP = IV_HP; 
-		this.IV_ATK = IV_ATK; 
-		this.IV_DEF = IV_DEF; 
-		this.IV_SPA = IV_SPA; 
-		this.IV_SPD = IV_SPD; 
-		this.IV_SPE = IV_SPE;
-		//set EVs
-		this.EV_HP = EV_HP;
-		this.EV_ATK = EV_ATK;
-		this.EV_DEF = EV_DEF;
-		this.EV_SPA = EV_SPA;
-		this.EV_SPD = EV_SPD;
-		this.EV_SPE = EV_SPE;
-		//set nature
-		this.nature = nature;
-		//calculate stats
-		this.calculateStats();
-		//set currentHP to HP, as a new pokemon will be undamaged.
-		this.currentHP = HP;
-		this.ability = ability;
-
-		this.movesetString = moveset;
-		this.moveHistoryString = moveset;
-
-		this.PPups = PPups;
-		//set maxPP and PP to be the regular PP defined by the move in the database.
-		this.maxPP = new int[4];
-		this.PP = new int[4];
-		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
-				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP()*((this.PPups[i]*0.2f)+1));
-				this.PP[i] = this.maxPP[i];
-			}
-		}
-		packMoveset();
-
-	}
     
 
 	//New Pokemon with: random IVS, and Shininess 
 	//					default moveset, and EVS (0)
 	public PokemonOld(int pokemonID, Gender gender, int level, string caughtBall, string heldItem, string OT, int ability){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-
-		this.pokemonID = pokemonID;
-
-		//SET UP FORMS LATER #####################################################################################
-		this.form = 0;
-
-		this.gender = gender;
-		//if gender is CALCULATE, then calculate gender using maleRatio
-		if(gender == Gender.CALCULATE){
-			if(thisPokemonData.getMaleRatio() < 0){
-				this.gender = Gender.NONE;
-			}
-			else if(Random.Range(0f,100f) <= thisPokemonData.getMaleRatio()){
-				this.gender = Gender.MALE;
-			}
-			else{
-				this.gender = Gender.FEMALE;
-			}
-		}
-
-		this.level = level;
-		//Find exp for current level, and next level.
-		this.exp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabaseOld.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
-
-		this.happiness = thisPokemonData.getBaseFriendship();
-
-		//Set Shininess randomly. 16/65535 if not shiny, then pokerus. 3/65535
-		this.rareValue = Random.Range(0,65536);
-		if(this.rareValue < 16){
-			this.isShiny = true;
-		}
-		else if(this.rareValue < 19){
-			this.pokerus = true;
-		}
-
-		this.status = Status.NONE;
-		this.sleepTurns = 0;
-
-		this.caughtBallString = caughtBall;
-		//this.heldItem = heldItem;
-
-		this.metLevel = level;
-		if(PlayerMovement.player != null){
-			if(PlayerMovement.player.accessedMapSettings != null){
-				this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
-			else{
-				this.metMap = "Somewhere";}
-		}
-		else{
-			this.metMap = "Somewhere";}
-		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
-
-		this.OT = (string.IsNullOrEmpty(OT))? SaveDataOld.currentSave.playerName : OT;
-		if(this.OT != SaveDataOld.currentSave.playerName){
-			this.IDno = Random.Range (0,65536).ToString(); //if owned by another trainer, assign a random number. 
-		}										//this way if they trade it to you, it will have a different number to the player's.
-		else{
-			this.IDno = SaveDataOld.currentSave.playerID.ToString();
-		}
-
-		//Set IVs randomly between 0 and 32 (32 is exlcuded)
-		this.IV_HP = Random.Range(0,32); 
-		this.IV_ATK = Random.Range(0,32); 
-		this.IV_DEF = Random.Range(0,32); 
-		this.IV_SPA = Random.Range(0,32); 
-		this.IV_SPD = Random.Range(0,32); 
-		this.IV_SPE = Random.Range(0,32); 
-
-		//unless specified with a full new Pokemon constructor, set EVs to 0.
-		this.EV_HP = 0;
-		this.EV_ATK = 0;
-		this.EV_DEF = 0;
-		this.EV_SPA = 0;
-		this.EV_SPD = 0;
-		this.EV_SPE = 0;
-
-		//Randomize nature
-		this.natureString = NatureDatabaseOld.getRandomNature().getName();
-
-		//calculate stats
-		this.calculateStats();
-		//set currentHP to HP, as a new pokemon will be undamaged.
-		this.currentHP = HP;
-
-		//set ability 
-		if (ability < 0 || ability > 2){ //if ability out of range, randomize ability
-			this.ability = Random.Range(0,2);
-		}
-		else{
-			this.ability = ability;
-		}
-
-		//Set moveset based off of the highest level moves possible.
-		this.movesetString = thisPokemonData.GenerateMoveset(this.level);
-		this.moveHistoryString = this.movesetString;
-
-		//set maxPP and PP to be the regular PP defined by the move in the database.
-		this.PPups = new int[4];
-		this.maxPP = new int[4];
-		this.PP = new int[4];
-		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(this.movesetString[i])){
-				this.maxPP[i] = MoveDatabase.getMove(this.movesetString[i]).getPP();
-				this.PP[i] = this.maxPP[i];
-			}
-		}
-		packMoveset();
 	}
-
-	//adding a caught pokemon (only a few customizable details)
-	public PokemonOld(PokemonOld pokemon, string nickname, string caughtBall){
-
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemon.pokemonID);
-		
-		this.pokemonID = pokemon.pokemonID;
-		this.nickname = nickname;
-		//SET UP FORMS LATER #####################################################################################
-		this.form = 0;
-		this.gender = pokemon.gender;
-
-		this.level = pokemon.level;
-		//Find exp for current level, and next level.
-		this.exp = pokemon.exp;
-		this.nextLevelExp = pokemon.nextLevelExp;
-		this.happiness = pokemon.happiness;
-		
-		this.isShiny = pokemon.isShiny;
-		this.rareValue = pokemon.rareValue;
-		this.pokerus = pokemon.pokerus;
-
-		this.status = pokemon.status;
-		this.sleepTurns = pokemon.sleepTurns;
-		this.caughtBallString = caughtBall;
-		this.heldItem = pokemon.heldItem;
-
-		this.OT = SaveDataOld.currentSave.playerName;
-		this.IDno = SaveDataOld.currentSave.playerID.ToString(); //Only need last 6 digits...
-		
-		this.metLevel = level;
-		if(PlayerMovement.player.accessedMapSettings != null){
-			this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
-		else{
-			this.metMap = "Somewhere";}
-		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
-		
-		//Set IVs 
-		this.IV_HP = pokemon.IV_HP; 
-		this.IV_ATK = pokemon.IV_ATK; 
-		this.IV_DEF = pokemon.IV_DEF; 
-		this.IV_SPA = pokemon.IV_SPA; 
-		this.IV_SPD = pokemon.IV_SPD; 
-		this.IV_SPE = pokemon.IV_SPE;
-		//set EVs
-		this.EV_HP = pokemon.EV_HP;
-		this.EV_ATK = pokemon.EV_ATK;
-		this.EV_DEF = pokemon.EV_DEF;
-		this.EV_SPA = pokemon.EV_SPA;
-		this.EV_SPD = pokemon.EV_SPD;
-		this.EV_SPE = pokemon.EV_SPE;
-		//set nature
-		this.natureString = pokemon.natureString;
-		//calculate stats
-		this.calculateStats();
-		this.currentHP = pokemon.currentHP;
-
-		this.ability = pokemon.ability;
-		
-		this.movesetString = pokemon.movesetString;
-		this.moveHistoryString = pokemon.moveHistoryString;
-		
-		this.PPups = pokemon.PPups;
-		//set maxPP and PP to be the regular PP defined by the move in the database.
-		this.maxPP = new int[4];
-		this.PP = new int[4];
-		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(movesetString[i])){
-				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(movesetString[i]).getPP()*((this.PPups[i]*0.2f)+1));
-				this.PP[i] = this.maxPP[i];
-			}
-		}
-		packMoveset();
-
-	}
-
-    //New Pokemon with: every specific detail, from database
-    //commented out because sql connection inside pokemon class is bad idea
-    /*public Pokemon(int PokemonTrainerID){
-		DataTable t = new DataTable();
-		// Open connection
-		using(IDbConnection dbcon = new System.Data.SqlClient.SqlConnection(connectionString))
-		{
-			using(IDbCommand dbcmd = dbcon.CreateCommand())
-			{
-				dbcmd.CommandType = CommandType.StoredProcedure;
-				dbcmd.CommandText = "getTrainerPokemon";//procedureName;
-				foreach(SqlParameter parameter in parameters)
-				{
-					dbcmd.Parameters.Add(parameter);
-				}
-				dbcon.Open();
-				result = dbcmd.ExecuteScalar();
-				dbcon.Close();
-			}
-			using(SqlConnection c = new System.Data.SqlClient.SqlConnection(ConnectionString))
-		{
-			c.Open();
-			// 2
-			// Create new DataAdapter
-			using(SqlDataAdapter a = new SqlDataAdapter(
-				"SELECT * FROM EmployeeIDs",c))
-			{
-				// 3
-				// Use DataAdapter to fill DataTable
-				a.Fill(t);
-
-				// 4
-				// Render data onto the screen
-				// dataGridView1.DataSource = t; // <-- From your designer
-			}
-		}
-		int pokemonID; string nickname; Gender gender; int level;
-		bool isShiny; string caughtBall; string heldItem; string OT;
-		int IV_HP; int IV_ATK; int IV_DEF; int IV_SPA; int IV_SPD; int IV_SPE;
-		int EV_HP; int EV_ATK; int EV_DEF; int EV_SPA; int EV_SPD; int EV_SPE;
-		string nature; int ability; string[] moveset; int[] PPups;
-
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
-
-		this.pokemonID = pokemonID;
-		this.nickname = nickname;
-		//SET UP FORMS LATER #####################################################################################
-		this.form = 0;
-		this.gender = gender;
-		//if gender is CALCULATE, then calculate gender using maleRatio
-		if(gender == Gender.CALCULATE){
-			if(thisPokemonData.getMaleRatio() < 0){
-				this.gender = Gender.NONE;}
-			else if(Random.Range(0f,100f) <= thisPokemonData.getMaleRatio()){
-				this.gender = Gender.MALE;}
-			else{
-				this.gender = Gender.FEMALE;}
-		}
-		this.level = level;
-		//Find exp for current level, and next level.
-		this.exp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level);
-		this.nextLevelExp = PokemonDatabase.getLevelExp(thisPokemonData.getLevelingRate(), level+1);
-		this.friendship = thisPokemonData.getBaseFriendship();
-
-		this.isShiny = isShiny;
-		if(isShiny){
-			this.rareValue = Random.Range(0,16);
-		}
-		else{
-			this.rareValue = Random.Range(16,65536);
-			if(this.rareValue < 19){
-				this.pokerus = true;
-			}
-		}
-	
-		this.status = Status.NONE;
-		this.sleepTurns = 0;
-		this.caughtBall = caughtBall;
-		this.heldItem = heldItem;
-
-		this.OT = (string.IsNullOrEmpty(OT))? SaveData.currentSave.playerName : OT;
-		if (this.OT != SaveData.currentSave.playerName){
-			this.IDno = Random.Range (0,65536); //if owned by another trainer, assign a random number. 
-		}										//this way if they trade it to you, it will have a different number to the player's.
-		else{
-			this.IDno = SaveData.currentSave.playerID;
-		}
-
-		this.metLevel = level;
-		if(PlayerMovement.player != null){
-			if(PlayerMovement.player.accessedMapSettings != null){
-				this.metMap = PlayerMovement.player.accessedMapSettings.mapName;}
-			else{
-				this.metMap = "Somewhere";}
-		}
-		else{
-			this.metMap = "Somewhere";}
-		this.metDate = System.DateTime.Today.Day +"/"+ System.DateTime.Today.Month +"/"+ System.DateTime.Today.Year;
-
-		//Set IVs 
-		this.IV_HP = IV_HP; 
-		this.IV_ATK = IV_ATK; 
-		this.IV_DEF = IV_DEF; 
-		this.IV_SPA = IV_SPA; 
-		this.IV_SPD = IV_SPD; 
-		this.IV_SPE = IV_SPE;
-		//set EVs
-		this.EV_HP = EV_HP;
-		this.EV_ATK = EV_ATK;
-		this.EV_DEF = EV_DEF;
-		this.EV_SPA = EV_SPA;
-		this.EV_SPD = EV_SPD;
-		this.EV_SPE = EV_SPE;
-		//set nature
-		this.nature = nature;
-		//calculate stats
-		this.calculateStats();
-		//set currentHP to HP, as a new pokemon will be undamaged.
-		this.currentHP = HP;
-		this.ability = ability;
-
-		this.moveset = moveset;
-		this.moveHistory = moveset;
-
-		this.PPups = PPups;
-		//set maxPP and PP to be the regular PP defined by the move in the database.
-		this.maxPP = new int[4];
-		this.PP = new int[4];
-		for(int i = 0; i < 4; i++){
-			if(!string.IsNullOrEmpty(moveset[i])){
-				this.maxPP[i] = Mathf.FloorToInt(MoveDatabase.getMove(moveset[i]).getPP()*((this.PPups[i]*0.2f)+1));
-				this.PP[i] = this.maxPP[i];
-			}
-		}
-		packMoveset();
-
-	}*/
-
-    public void ChangeHappiness(HappinessMethods method) {
-        int gain = 0; bool luxury = false;
-        switch (method)
-        {
-            case HappinessMethods.WALKING:
-                gain = 1;
-                gain += happiness < 200 ? 1 : 0;
-                //gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
-                break;
-            case HappinessMethods.LEVELUP:
-                gain = 2;
-                if (happiness < 200) gain = 3;
-                if (happiness < 100) gain = 5;
-                luxury = true;
-                break;
-            case HappinessMethods.GROOM:
-                gain = 4;
-                if (happiness < 200) gain = 10;
-                luxury = true;
-                break;
-            case HappinessMethods.FAINT:
-                gain = -1;
-                break;
-            case HappinessMethods.VITAMIN:
-                gain = 2;
-                if (happiness < 200) gain = 3;
-                if (happiness < 100) gain = 5;
-                break;
-            case HappinessMethods.EVBERRY:
-                gain = 2;
-                if (happiness < 200) gain = 5;
-                if (happiness < 100) gain = 10;
-                break;
-            case HappinessMethods.POWDER:
-                gain = -10;
-                if (happiness < 200) gain = -5;
-                break;
-            case HappinessMethods.ENERGYROOT:
-                gain = -15;
-                if (happiness < 200) gain = -10;
-                break;
-            case HappinessMethods.REVIVALHERB:
-                gain = -20;
-                if (happiness < 200) gain = -15;
-                break;
-            default:
-                break;
-        }
-        gain += luxury && this.caughtBall == eItems.Item.LUXURY_BALL ? 1 : 0;
-        if (this.heldItem == eItems.Item.SOOTHE_BELL && gain > 0)
-            gain = (int)Mathf.Floor(gain * 1.5f);
-        happiness += gain;
-        happiness = happiness > 255 ? 255 : happiness < 0 ? 0 : happiness; //Max 255, Min 0
-    }
 
     #region Methods
     //Recalculate the pokemon's Stats.
     public void calculateStats(){
-		int[] baseStats = PokemonDatabaseOld.getPokemon(pokemonID).getBaseStats();
-		if(baseStats[0] == 1){
-			this.HP = 1;}
-		else{
-			int prevMaxHP = this.HP;
-			this.HP = Mathf.FloorToInt(((IV_HP+(2*baseStats[0])+(EV_HP/4)+100)*level)/100+10);
-			this.currentHP = (this.currentHP+(this.HP-prevMaxHP) < this.HP)? this.currentHP+(this.HP-prevMaxHP) : this.HP;
-		}
-		if(baseStats[1] == 1){
-			this.ATK = 1;}
-		else{
-			this.ATK = Mathf.FloorToInt(Mathf.FloorToInt(((IV_ATK+(2*baseStats[1])+(EV_ATK/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getATK());}
-		if(baseStats[2] == 1){
-			this.DEF = 1;}
-		else{
-			this.DEF = Mathf.FloorToInt(Mathf.FloorToInt(((IV_DEF+(2*baseStats[2])+(EV_DEF/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getDEF());}
-		if(baseStats[3] == 1){
-			this.SPA = 1;}
-		else{
-			this.SPA = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPA+(2*baseStats[3])+(EV_SPA/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getSPA());}
-		if(baseStats[4] == 1){
-			this.SPD = 1;}
-		else{
-			this.SPD = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPD+(2*baseStats[4])+(EV_SPD/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getSPD());}
-		if(baseStats[5] == 1){
-			this.SPE = 1;}
-		else{
-			this.SPE = Mathf.FloorToInt(Mathf.FloorToInt(((IV_SPE+(2*baseStats[5])+(EV_SPE/4))*level)/100+5)*NatureDatabaseOld.getNature(natureString).getSPE());}
 	}
 
 	//set Nickname
@@ -897,16 +263,6 @@ public class PokemonOld {
 	}
 
 	public void addExp(int expAdded){
-		if(level < 100){
-			this.exp += expAdded;
-			while(exp >= nextLevelExp){
-				this.level += 1;
-				this.nextLevelExp = PokemonDatabaseOld.getLevelExp(PokemonDatabaseOld.getPokemon(pokemonID).getLevelingRate(), level+1);
-				calculateStats();
-				if(this.HP > 0 && this.status == Status.FAINTED){
-					this.status = Status.NONE;}
-			}
-		}
 	}
 
 	public bool addEVs(string stat, float amount){
@@ -961,62 +317,13 @@ public class PokemonOld {
 		}
 		return false; //returns false if total or relevant EV cap was reached before running.
 	}
-	/*/idk y this is commented out...
-	public int getEvolutionID(string currentMethod){
-		PokemonData thisPokemonData = PokemonDatabase.getPokemon(pokemonID);
-		int[] evolutions = thisPokemonData.getEvolutions();
-		string[] evolutionRequirements = thisPokemonData.getEvolutionRequirements();
-		string[] evolutionRequirementsSplit = new string[evolutionRequirements.Length];
-
-		string[] methods = new string[evolutionRequirements.Length];
-		string[] parameters = new string[evolutionRequirements.Length];
-		for(int i = 0; i < evolutionRequirements.Length; i++){
-			evolutionRequirementsSplit = evolutionRequirements[i].Split(',');
-			methods[i] = evolutionRequirementsSplit[0];
-			if(evolutionRequirementsSplit.Length > 1){
-				parameters[i] = evolutionRequirementsSplit[1];}
-		}
-
-		string[] currentMethodSplit = currentMethod.Split(','); //if currentMethod needs a parameter attached, it will be separated by a ' , '
-
-		for(int i = 0; i < methods.Length; i++){ //check every method
-			if(methods[0] == currentMethodSplit[0]){ //if method name equals current method name...
-				if (checkEvolutionMethods(currentMethod, evolutionRequirements[i]) == true){ //if an evolution method was satisfied
-					return evolutions[i]; //do not check any others. (This prioritises the evolutions in order first to last)
-				}
-			}
-		}
-		return -1;
-	}
-//*/
 
 	public int getEvolutionID(string currentMethod){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-		int[] evolutions = thisPokemonData.getEvolutions();
-		string[] evolutionRequirements = thisPokemonData.getEvolutionRequirements();
-
-		for(int i = 0; i < evolutions.Length; i++){
-			//if an evolution method was satisfied, return true
-			if(checkEvolutionMethods(currentMethod, evolutionRequirements[i])){ 
-				Debug.Log("Relevant ID["+i+"] = "+evolutions[i]);
-				return evolutions[i];}
-		}
 		return -1;
 	}
 
 	//Check PokemonData.cs for list of evolution method names.
 	public bool canEvolve(string currentMethod){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-		int[] evolutions = thisPokemonData.getEvolutions();
-		string[] evolutionRequirements = thisPokemonData.getEvolutionRequirements();
-
-		for(int i = 0; i < evolutions.Length; i++){
-			//if an evolution method was satisfied, return true
-			if(checkEvolutionMethods(currentMethod, evolutionRequirements[i])){ 
-		//		Debug.Log("All Checks Passed");
-				return true;}
-		}
-		//Debug.Log("Check Failed");
 		return false;
 	}
 	
@@ -1106,24 +413,12 @@ public class PokemonOld {
 	}
 
 	public bool evolve(string currentMethod){
-		int[] evolutions = PokemonDatabaseOld.getPokemon(pokemonID).getEvolutions();
-		string[] evolutionRequirements = PokemonDatabaseOld.getPokemon(pokemonID).getEvolutionRequirements();
-		for(int i = 0; i < evolutions.Length; i++){
-			if(checkEvolutionMethods(currentMethod, evolutionRequirements[i])){
-				float hpPercent = ((float)this.currentHP/(float)this.HP);
-				this.pokemonID = evolutions[i];
-				calculateStats();
-				i = evolutions.Length;
-				currentHP = Mathf.RoundToInt(HP*hpPercent);
-				return true;
-			}
-		}
 		return false;
 	}
 
 	//return a string that contains all of this pokemon's data
 	public override string ToString(){
-		string result = pokemonID +": "+ this.getName() +"("+ PokemonDatabaseOld.getPokemon(pokemonID).getName() +"), "+
+		string result = pokemonID +": "+ this.getName() +"("+ Pokemon.PokemonData.GetPokemon((PokemonUnity.Pokemon.Pokemons)pokemonID).ToString() +"), "+
 				gender.ToString() +", Level "+ level +", EXP: "+ exp +", To next: "+ (nextLevelExp - exp) +
 				", Friendship: "+ happiness +", RareValue="+ rareValue +", Pokerus="+ pokerus.ToString() +", Shiny="+ isShiny.ToString() +
 				", Status: "+  status +", Ball: "+ caughtBallString +", Item: "+ heldItem +
@@ -1132,7 +427,7 @@ public class PokemonOld {
 				", IVs: "+ IV_HP +","+ IV_ATK +","+ IV_DEF +","+ IV_SPA +","+ IV_SPD +","+ IV_SPE +
 				", EVs: "+ EV_HP +","+ EV_ATK +","+ EV_DEF +","+ EV_SPA +","+ EV_SPD +","+ EV_SPE +
 				", Stats: "+ currentHP +"/"+ HP +","+ ATK +","+ DEF +","+ SPA +","+ SPD +","+ SPE +
-				", Nature: "+ natureString +", "+PokemonDatabaseOld.getPokemon(pokemonID).getAbility(ability);
+				", Nature: "+ natureString +", "+Pokemon.PokemonData.GetPokemon((PokemonUnity.Pokemon.Pokemons)pokemonID).Ability;
 		result += ", [";
 		for(int i = 0; i < 4; i++){
 			if(!string.IsNullOrEmpty(movesetString[i])){
@@ -1264,7 +559,7 @@ public class PokemonOld {
 	//Get the pokemon's nickname, or regular name if it has none.
 	public string getName(){
 		if (string.IsNullOrEmpty(nickname)){
-			return PokemonDatabaseOld.getPokemon(pokemonID).getName();
+			return Pokemon.PokemonData.GetPokemon((PokemonUnity.Pokemon.Pokemons)pokemonID).Name;
 		}
 		else{
 			return nickname;
@@ -1507,27 +802,10 @@ public class PokemonOld {
 	}
 
 	public bool CanLearnMove(string move){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-
-		string[] moves = thisPokemonData.getMovesetMoves();
-		for(int i = 0; i < moves.Length; i++){
-			if(moves[i] == move){ return true; }
-		}
-		moves = thisPokemonData.getTmList();
-		for(int i = 0; i < moves.Length; i++){
-			if(moves[i] == move){ return true; }
-		}
 		return false;
 	}
 
 	public string MoveLearnedAtLevel(int level){
-		PokemonDataOld thisPokemonData = PokemonDatabaseOld.getPokemon(pokemonID);
-
-		int[] movesetLevels = thisPokemonData.getMovesetLevels();
-		for(int i = 0; i < movesetLevels.Length; i++){
-			if(movesetLevels[i] == level){
-				return thisPokemonData.getMovesetMoves()[i];}
-		}
 		return null;
 	}
 
@@ -1589,7 +867,7 @@ public class PokemonOld {
 	}
 
 	public float GetCryPitch(){
-		return (status == PokemonOld.Status.FAINTED)? 0.9f : 1f-(0.06f*(1-getPercentHP()));}
+		return (true)? 0.9f : 1f-(0.06f*(1-getPercentHP()));}
 
 	public AudioClip GetCry(){
 		return GetCryFromID(pokemonID);}
@@ -1608,12 +886,6 @@ public class PokemonOld {
 
 	public Sprite[] GetSprite(bool getLight){
 		return GetSpriteFromID(pokemonID, isShiny, getLight);}
-
-	public static Texture[] GetFrontAnimFromID(int ID, Gender gender, bool isShiny){
-		return GetAnimFromID("PokemonSprites", ID, gender, isShiny);}
-	
-	public static Texture[] GetBackAnimFromID(int ID, Gender gender, bool isShiny){
-		return GetAnimFromID("PokemonBackSprites", ID, gender, isShiny);}
 
 	private static Texture[] GetAnimFromID(string folder, int ID, Gender gender, bool isShiny){
 		Texture[] animation;
