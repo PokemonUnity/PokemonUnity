@@ -63,6 +63,14 @@ public class EventHandlerTest {
 	#region Item Event Handler
 	#endregion
 
+	#region Battle Scene Test
+	[UnityTest]
+	public IEnumerator TestBattlePokemonHUD() {
+		//Not sure how to write a Unity Unit Test to display real-time feedback...
+		yield return null;
+	}
+	#endregion
+
 	#region Asset (3d Model) Test
 	[UnityTest]
 	public IEnumerator TestAssetModelExist() {
@@ -94,8 +102,8 @@ public class EventHandlerTest {
 				{
 					//string dirname = "Assets/Pokemons/" + dirinfo.Name + "/";
 					Object pok = (Object)AssetDatabase.LoadAssetAtPath(dirname + (f.Name), typeof(Object));
-					Pokemon = (GameObject)Instantiate(pok, SpawnPoint.position, SpawnPoint.rotation);
-					Pokemon.tag = "Pokemon";
+					//Pokemon = (GameObject)Instantiate(pok, SpawnPoint.position, SpawnPoint.rotation);
+					//Pokemon.tag = "Pokemon";
 				}
 			}
 		//}
@@ -127,9 +135,9 @@ public class EventHandlerTest {
 					//if (f.Name.Contains(".fbx") && !f.Name.Contains(".meta"))
 					//{
 						//ing dirname = "Assets/Pokemons/" + dirinfo.Name + "/";
-						Pokemon = Instantiate((GameObject)AssetDatabase.LoadAssetAtPath(dirname + f.Name, typeof(GameObject)), SpawnPoint.position, SpawnPoint.rotation);
-						Pokemon.AddComponent<Animator>();
-						Pokemon.tag = "Pokemon";
+					//	Pokemon = Instantiate((GameObject)AssetDatabase.LoadAssetAtPath(dirname + f.Name, typeof(GameObject)), SpawnPoint.position, SpawnPoint.rotation);
+					//	Pokemon.AddComponent<Animator>();
+					//	Pokemon.tag = "Pokemon";
 					//}
 				//}
 			}

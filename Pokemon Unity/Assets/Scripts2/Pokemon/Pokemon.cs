@@ -140,6 +140,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Interface for Pokeball Only item?
 	/// ToDo: None?
 	public Items ballUsed { get; private set; }
+	//public int[] EvolveLevels { get { return _base.Evolutions.} }
+	public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
 	protected PokemonData _base { get; private set; }
 	/// <summary>
 	/// Max total EVs
@@ -485,6 +487,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 				case EvolutionMethod.AtkDefEqual:
 				case EvolutionMethod.Ninjask:
 				case EvolutionMethod.Shedinja:
+				case EvolutionMethod.Party:
+				case EvolutionMethod.HoldItem:
+				case EvolutionMethod.Shiny:
+				case EvolutionMethod.Hatred:
+				case EvolutionMethod.Happiness:
+				case EvolutionMethod.Silcoon:
+				case EvolutionMethod.Cascoon:
 					return true;
 				case EvolutionMethod.Item:
 				case EvolutionMethod.ItemMale:
@@ -492,22 +501,15 @@ public partial class Pokemon //: ePokemons //PokemonData
 				case EvolutionMethod.Trade:
 				case EvolutionMethod.TradeItem:
 				case EvolutionMethod.TradeSpecies:
-				case EvolutionMethod.Happiness:
 				case EvolutionMethod.HappinessDay:
 				case EvolutionMethod.HappinessNight:
-				case EvolutionMethod.Hatred:
 				case EvolutionMethod.Time:
 				case EvolutionMethod.Season:
-				case EvolutionMethod.HoldItem:
 				case EvolutionMethod.HoldItemDay:
 				case EvolutionMethod.HoldItemNight:
-				case EvolutionMethod.Party:
 				case EvolutionMethod.Type:
 				case EvolutionMethod.Location:
 				case EvolutionMethod.Weather:
-				case EvolutionMethod.Shiny:
-				case EvolutionMethod.Silcoon:
-				case EvolutionMethod.Cascoon:
 				case EvolutionMethod.Deaths:
 				default:
 					break;
@@ -1399,7 +1401,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Fix Forms and uncomment
 	/// Maybe a method, where when a form is changed
 	/// checks pokemon value and overwrites name and stats
-    public int Form { set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+    public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 
     /// <summary>
     /// Returns the species name of this Pokemon
@@ -2293,7 +2295,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 			//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
-        string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+			string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
 			System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open);
 			xmlDoc.Load(fs);
@@ -4725,7 +4727,9 @@ namespace PokemonUnity
 			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
 			/// Shiny value? I thought it was based on "Friendship"
 			Silcoon,
-			///	<summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1</summary>
+			///	<summary>
+			///	Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1
+			///	</summary>
 			Cascoon,
 			///	<summary>
 			///	Unique evolution methods: 

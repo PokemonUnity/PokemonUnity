@@ -31,7 +31,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
         MenuOptions = MainMenu.transform.GetChild(1).gameObject;
 		//ToDo: Awake Audio Components
     }
-    void OnEnable1()
+    void OnEnable()
     {
         /* If no previous saved data was found: 
          * disable the right playerData window,

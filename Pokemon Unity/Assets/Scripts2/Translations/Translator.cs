@@ -315,23 +315,23 @@ public class Translator
     }
     #endregion
 
-    /* Tried to attempt a PokemonRNG for converting ints into bytes of data
-     * but since the engine will handle all the heavy lifting, i'll just 
-     * continue to build the logic out as normal and not worry or bother 
-     * with binary values
-    private static System.UInt16 seed = 0x0000; //{ get; set; }
-    public static UInt16 Seed { get { return seed; } } //readonly
-    void newSeed()
-    { seed = (UInt16)(seed * 0x41C64E6D + 0x6073); }*/
     #region Enumerators
-    public enum Languages //: IEnumerable
+    public enum Languages 
     {
         /// <summary>
         /// US English
         /// </summary>
         English = 9
-    }
-    #endregion
+	}
+	/*ToDo: Convert Enum into a class 
+	public class Languages //: IEnumerable
+	{
+		/// <summary>
+		/// US English
+		/// </summary>
+		public const int English = 9;
+	}*/
+	#endregion
 
 }
 

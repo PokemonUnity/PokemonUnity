@@ -22,10 +22,10 @@ using PokemonUnity.Item;
 /// GameVariables class will overwrite all the other class default values when player triggers a load state.
 /// </summary>
 /// This class should be static...
-public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
+public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
 	#region Debug Functions and Features
-	public static bool debugMode { get; set; }
+	/*public static bool debugMode { get; set; }
 	public static void DebugLog(string text, bool? error = null)
 	{
 		if(!error.HasValue)
@@ -61,30 +61,8 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			UnityEngine.Debug.LogError(value);
 #endif
 		}
-	}
+	}*/
 	#endregion
-
-	/// <summary>
-	/// In-game UI dialog window to prompt message to user
-	/// </summary>
-	/// ToDo: Allow game logic to pass npc scripts thru this
-	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
-	/// <param name="text"></param>
-	/// <param name="error">Maybe something about interupting coroutine</param>
-	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
-	{
-		//ToDo: Pass values directly to DialogEventHandler
-		//Consider adding a Queue to dialog text... so messages arent replaced but appended
-		if(!error.HasValue)
-			Debug = text;
-		else
-		{
-			if(error.Value)
-				DebugError = text;
-			else
-				DebugWarning = text;
-		}
-	}
 
 	//public static Translator.Languages UserLanguage = Translator.Languages.English;
 	public static Settings.Languages UserLanguage = Settings.Languages.English;
@@ -118,11 +96,44 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 	//Game UI
 	//public UnityEngine.Texture2D DialogWindowSkin;
 	//private UnityEngine.UI.Image DialogWindowSkin;
-	/// <summary>
+	/*/// <summary>
 	/// Frame Style
 	/// </summary>
 	public static UnityEngine.Sprite WindowSkin { get; private set; }
     public static UnityEngine.Sprite DialogSkin { get; private set; }
+	/// <summary>
+	/// In-game UI dialog window to prompt message to user
+	/// </summary>
+	/// ToDo: Allow game logic to pass npc scripts thru this
+	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
+	/// <param name="text"></param>
+	/// <param name="error">Maybe something about interupting coroutine</param>
+	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
+	{
+		//ToDo: Pass values directly to DialogEventHandler
+		//Consider adding a Queue to dialog text... so messages arent replaced but appended
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}*/
+	//public static void Display(string text)
+	//{
+	//
+	//}
+	//public static void DisplayPause(string text)
+	//{
+	//
+	//}
+	//public static void DisplayConfirm(string text)
+	//{
+	//
+	//}
 
     #region Resources
     public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
@@ -147,25 +158,24 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
     public static bool fullscreen;
     public static byte textSpeed = 2;
 
-
 	#region Global and map metadata
 	//ToDo: Each time map changes, new values are loaded/replaced below
-	class Global
+	public class Global
 	{
 		/// <summary>
 		/// Location you return to when you respawn
 		/// </summary>
-		string MetadataHome;
+		public string MetadataHome;
 		/// <summary>
 		/// 
 		/// </summary>
 		/// String below should point to Audio/Sound files
-		string MetadataWildBattleBGM;
-		string MetadataTrainerBattleBGM;
-		string MetadataWildVictoryME;
-		string MetadataTrainerVictoryME;
-		string MetadataSurfBGM;
-		string MetadataBicycleBGM;
+		public string MetadataWildBattleBGM;
+		public string MetadataTrainerBattleBGM;
+		public string MetadataWildVictoryME;
+		public string MetadataTrainerVictoryME;
+		public string MetadataSurfBGM;
+		public string MetadataBicycleBGM;
 		/* TrainerClass
 		Trainer MetadataPlayerA          ;
 		Trainer MetadataPlayerB          ;
@@ -177,7 +187,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		Trainer MetadataPlayerH;*/
 	}
 
-	class NonGlobalTypes
+	public class NonGlobalTypes : Global
 	{
 		bool MetadataOutdoor;
 		bool MetadataShowArea;
@@ -207,11 +217,11 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		/// 
 		/// </summary>
 		/// String below should point to Audio/Sound files
-		string MetadataBattleBack;
-		string MetadataMapWildBattleBGM;
-		string MetadataMapTrainerBattleBGM;
-		string MetadataMapWildVictoryME;
-		string MetadataMapTrainerVictoryME;
+		public string MetadataBattleBack;
+		//public string MetadataMapWildBattleBGM;
+		//public string MetadataMapTrainerBattleBGM;
+		//public string MetadataMapWildVictoryME;
+		//public string MetadataMapTrainerVictoryME;
 		int[,] MetadataMapSize;
 	}
 	#endregion
@@ -881,25 +891,6 @@ public class Settings //: Settings<Translations.Languages>
 	#endregion
 
 	#region Variables
-	/* Tried to attempt a PokemonRNG for converting ints into bytes of data
-     * but since the engine will handle all the heavy lifting, i'll just 
-     * continue to build the logic out as normal and not worry or bother 
-     * with binary values
-    public int seed;
-    public static bool useFixedSeed;
-	//private static Random rand = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue);
-    public static UInt16 Seed   { get {
-            if(seed == 0x0000) seed = (UInt16)rand.Next(0, UInt16.MaxValue);
-            if (!useFixedSeed) { 
-                if(true) seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-                //else {  
-                //seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-                //seed ^= (UInt16)System.DateTime.Now.Ticks;
-                //seed &= UInt16.MaxValue;}
-            }
-            return seed;
-        }
-    } //readonly*/
 	/// <summary>
 	/// Constantly revolving random, that won't repeat the same seed number twice, 
 	/// until it cycles thru all possible seed values
@@ -908,18 +899,19 @@ public class Settings //: Settings<Translations.Languages>
 	private static System.UInt16? seed;// = 0x0000; //{ get; set; }
 	public static UInt16 Seed(bool useFixedSeed = false)
     {
-		//Random t = new Random(seed);
-		if (!seed.HasValue) {
-			seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
-            //seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-            seed ^= (UInt16)System.DateTime.Now.Ticks;
-            seed &= UInt16.MaxValue;
+		lock (Rand)
+		{
+			if (!seed.HasValue) {
+				//seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+				seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
+				seed ^= (UInt16)System.DateTime.Now.Ticks;
+				seed &= UInt16.MaxValue;
+			}
+			if (!useFixedSeed) { 
+				seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
+			} 
+			return seed.Value;
 		}
-		//UInt16 rand = (UInt16)rand.Next(0, UInt16.MaxValue);
-        if (!useFixedSeed) { 
-            seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-        } 
-        return seed.Value;
     }
     #endregion
 
@@ -998,7 +990,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const int POKERUSCHANCE = 3;
 	#endregion
 
-	#region
+	#region OverWorld Rules
 	/// <summary>
 	/// Whether poisoned Pokémon will lose HP while walking around in the field.
 	/// </summary>
@@ -1030,7 +1022,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const bool INFINITETMS = true;
 	#endregion
 
-	#region
+	#region Battle Settings
 	/// <summary>
 	/// Whether a move's physical/special category depends on the move itself as in
 	///    newer Gens (true), or on its type as in older Gens (false).
@@ -1373,6 +1365,109 @@ public static class TransformExtension
         }
         return transform;
     }
+}
+
+/// <summary>
+/// This class will be inherited by all other classes, 
+/// and offer a direct link to Unity's Engine
+/// for ease of use utility and integration.
+/// </summary>
+public class UnityUtilityIntegration
+{
+	#region Debug Functions and Features
+	public static bool debugMode { get; set; }
+	public static void DebugLog(string text, bool? error = null)
+	{
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}
+	private static string Debug {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.Log(value);
+#endif
+		}
+	}
+	private static string DebugWarning {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogWarning(value);
+#endif
+		}
+	}
+	private static string DebugError {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogError(value);
+#endif
+		}
+	}
+	#endregion
+
+	#region Unity Canvas UI
+	//Game UI
+	//public UnityEngine.Texture2D DialogWindowSkin;
+	//private UnityEngine.UI.Image DialogWindowSkin;
+	/// <summary>
+	/// Frame Style for all System Prompts and Text Displays
+	/// </summary>
+	public static UnityEngine.Sprite WindowSkin { get; private set; }
+	/// <summary>
+	/// Frame Style for all player and non-playable characters Speech bubbles
+	/// </summary>
+	public static UnityEngine.Sprite DialogSkin { get; private set; }
+	/// <summary>
+	/// In-game UI dialog window to prompt message to user
+	/// </summary>
+	/// ToDo: Allow game logic to pass npc scripts thru this
+	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
+	/// <param name="text"></param>
+	/// <param name="error">Maybe something about interupting coroutine</param>
+	protected static void Dialog(string text, bool? error = null, params string[] promptOptions)
+	{
+		//ToDo: Pass values directly to DialogEventHandler
+		//Consider adding a Queue to dialog text... so messages arent replaced but appended
+		if (!error.HasValue)
+			Debug = text;
+		else
+		{
+			if (error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}
+	protected static void Display(string text)
+	{
+
+	}
+	protected static void DisplayBrief(string text)
+	{
+
+	}
+	protected static void DisplayPause(string text)
+	{
+
+	}
+	protected static void DisplayConfirm(string text)
+	{
+
+	}
+	protected static string L(Text text, string textid, params string[] vs)
+	{
+		return LanguageExtension.Translate(text, textid, vs).Value;
+	}
+	#endregion
 }
 
 namespace PokemonUnity
