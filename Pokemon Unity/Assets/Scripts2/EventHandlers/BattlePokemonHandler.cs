@@ -7,13 +7,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
-class BattlePokemonHandler : UnityEngine.MonoBehaviour
+public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 {
-
+	//private Battle ActiveBattle { get { return StartupSceneHandler.PersistantPlayerData.; } }
 	#region Unity's MonoBehavior Variables	
-	#region Pokemon Hit Points and Experience Meters
+	public float Exp {
+		//get { return expSlider.value; }
+		set
+		{
+			//hpSlider.value = value;
+			StopCoroutine("AnimateExpSlider");
+			StartCoroutine("AnimateExpSlider", value);
+		} }
 	public float HP {
-		get { return hpSlider.value; }
+		//get { return hpSlider.value; }
 		set
 		{
 			//hpSlider.value = value;
@@ -21,16 +28,60 @@ class BattlePokemonHandler : UnityEngine.MonoBehaviour
 			StartCoroutine("AnimateSlider", value);
 		} }
 	public float TotalHP { get { return hpSlider.maxValue; } set { hpSlider.maxValue = value; maxHP.text = hpSlider.maxValue.ToString(); } }
+	public bool? Gender
+	{
+		set
+		{
+			if (value.HasValue)
+			{
+				if (value.Value)
+				{
+					gender.text = "♀";
+					gender.color = new Color32(255, 34, 34, 255);	// Red
+				}
+				else
+				{
+					gender.text = "♀";
+					gender.color = new Color32(255, 34, 34, 255);	// Red
+				}
+			}
+			else
+				gender.text = string.Empty;
+		}
+	}
+	public PokemonUnity.Move.Status Status
+	{
+		set
+		{
+			switch (value)
+			{
+				case PokemonUnity.Move.Status.Sleep:
+				case PokemonUnity.Move.Status.Poison:
+				case PokemonUnity.Move.Status.Paralysis:
+				case PokemonUnity.Move.Status.Burn:
+				case PokemonUnity.Move.Status.Frozen:
+					StatusIcon.sprite = Resources.Load<Sprite>(string.Format("PCSprites/status{0}" + value.ToString()));
+					break;
+				case PokemonUnity.Move.Status.None:
+				default:
+					StatusIcon.sprite = Resources.Load<Sprite>("null");
+					break;
+			}
+		}
+	}
+	public bool Item { set { gameObject.transform.Find("HeldItem").gameObject.SetActive(value); } }
 	public Slider expSlider;                                    // Reference to the UI's experience bar.
 	public Slider hpSlider;                                     // Reference to the UI's health bar.
 	public Slider fadeSlider;									// Reference to the UI's 2nd health bar.
-	public Image Fill;
-	public Text currentHP, maxHP;
+	public Image Fill, StatusIcon;
+	public Text currentHP, maxHP, Name, Level, gender;
+	public int BattleIndex = -1;
 
 	/// <summary>
 	/// Green
 	/// </summary>
-	public Color hpzone0 = new Color32(112, 248, 168, 255);			// Green
+	//public Color hpzone0 = new Color32(112, 248, 168, 255);		// Green
+	public Color hpzone0 = new Color32(32, 160, 0, 255);			// Darker Green
 	/// <summary>
 	/// Yellow
 	/// </summary>
@@ -38,21 +89,28 @@ class BattlePokemonHandler : UnityEngine.MonoBehaviour
 	/// <summary>
 	/// Red
 	/// </summary>
-	public Color hpzone2 = new Color32(208, 40, 40, 255);			// Red
-	#endregion
+	public Color hpzone2 = new Color32(208, 40, 40, 255);           // Red
+	// <summary>
+	// Orange
+	// </summary>
+	//public Color fade = new Color32(255, 113, 0, 255);				// Orange
 	#endregion
 
-
+	#region Unity Engine Runtime Only
 	void Awake()
 	{
-		hpSlider.minValue = 0;
-		hpSlider.wholeNumbers = true;
+		hpSlider.minValue = expSlider.minValue = 0;
+		hpSlider.wholeNumbers = expSlider.wholeNumbers = true;
 		//Adds a listener to the main slider and invokes a method when the value changes.
 		hpSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+
+
+		if (BattleIndex > -1 && BattleIndex < GameVariables.battle.battlers.Length) GameVariables.battle.battlers[BattleIndex].BattlerUI(this);
 	}
 
     void OnEnable()
     {
+		//Refresh/Resync Variable Data, Either here, or OnUpdate
     }
 
     void Start()
@@ -62,6 +120,7 @@ class BattlePokemonHandler : UnityEngine.MonoBehaviour
     void Update()
     {
 	}
+	#endregion
 
 	/// <summary>
 	/// Invoked when the value of the slider changes.
@@ -95,8 +154,26 @@ class BattlePokemonHandler : UnityEngine.MonoBehaviour
 			yield return null;
 		}
 		//yield return 
-		new WaitForSeconds(.5f);
-		float hp = Mathf.Lerp(hpSlider.value + amount, hpSlider.value, 1f * Time.deltaTime);
-		yield return null;
+		new WaitForSeconds(1f);
+		fadeSlider.value = Mathf.Lerp(hpSlider.value, fadeSlider.value, .5f * Time.deltaTime);
+		//yield return null;
+	}
+	/// <summary>
+	/// Needs to flash white and blue when animating, and if makes it to 100% needs to chime, and begin again from 0.
+	/// </summary>
+	/// <param name="amount"></param>
+	/// <returns></returns>
+	System.Collections.IEnumerator AnimateExpSlider(int amount) //Slider as input?
+	{
+		Debug.Log(amount);
+		while (hpSlider.value != amount)
+		{
+			hpSlider.value = Mathf.Lerp(hpSlider.value + amount, hpSlider.value, 1f * Time.deltaTime);
+			yield return null;
+		}
+		//yield return 
+		new WaitForSeconds(1f);
+		fadeSlider.value = Mathf.Lerp(hpSlider.value, fadeSlider.value, .5f * Time.deltaTime);
+		//yield return null;
 	}
 }
