@@ -52,13 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts2\Battle\Effects.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\ItemHandler.cs" />
-    <Compile Include="Assets\Scripts2\Trainer.cs" />
-    <Compile Include="Assets\Scripts2\PhoneDatabase.cs" />
-    <Compile Include="Assets\Scripts2\Battle\Battle.cs" />
-    <Compile Include="Assets\Scripts2\Pokemon\PokemonDatabase.cs" />
-    <Compile Include="Assets\Scripts2\Player.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\BattlePokemonHandler.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\AudioHandler.cs" />
@@ -116,7 +110,6 @@
     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\MainMenuHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\PartyHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\PauseHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\PCHandler.cs" />
@@ -137,28 +130,44 @@
     <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
     <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
     <Compile Include="Assets\Scripts\WindowLight.cs" />
+    <Compile Include="Assets\Scripts2\AnimationEffect.cs" />
+    <Compile Include="Assets\Scripts2\Battle\Battle.cs" />
+    <Compile Include="Assets\Scripts2\Battle\Effects.cs" />
+    <Compile Include="Assets\Scripts2\Billboard.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\AudioHandler.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\BattleAnimationHandler.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\CanvasUIManager.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\DialogHandler.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\ItemHandler.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\StartupSceneHandler.cs" />
     <Compile Include="Assets\Scripts2\GameVariables.cs" />
     <Compile Include="Assets\Scripts2\Map.cs" />
+    <Compile Include="Assets\Scripts2\PhoneDatabase.cs" />
+    <Compile Include="Assets\Scripts2\Player.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Ability.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Item.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Mail.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Nature.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
+    <Compile Include="Assets\Scripts2\Pokemon\PokemonDatabase.cs" />
     <Compile Include="Assets\Scripts2\ReSkinAnimation.cs" />
+    <Compile Include="Assets\Scripts2\Trainer.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
-    <None Include="Assets\Materials\Shaders\RenderBehind.shader" />
+    <None Include="Assets\Scripts\Data\Database\Location\Pokemon_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Berry\Pokemon_en-us.xml" />
     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
-    <None Include="Assets\Materials\Shaders\Sprites-GUI.shader" />
-    <None Include="Assets\Materials\Shaders\Sprites-DiffuseMod.shader" />
+    <None Include="Assets\Scripts\Data\Database\Nature\Nature_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Type\Pokemon_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Pokemon\Pokemon_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Moves\Move_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Item\Item_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Data.xml" />
+    <None Include="Assets\Scripts\Data\Database\Ability\Ability_en-us.xml" />
     <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
-    <None Include="Assets\Materials\Shaders\Sprites-Tinted.shader" />
-    <None Include="Assets\Resources\Sprites\Animations\Animation.shader" />
+    <None Include="Assets\Scripts\Data\Database\Contest\Ribbon_en-us.xml" />
+    <None Include="Assets\Scripts\Data\Database\Menu\Pokemon_en-us.xml" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
