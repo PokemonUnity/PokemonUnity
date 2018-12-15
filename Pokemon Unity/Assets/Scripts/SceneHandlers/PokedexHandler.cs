@@ -21,7 +21,7 @@ public class PokedexHandler : MonoBehaviour {
 	public bool returnSelected;
 	public Rect cursorPixel;
 	public Rect cursor2Pixel;
-	public PokemonData[] alphabeticalOrder;
+	public PokemonDataOld[] alphabeticalOrder;
 
 	// GameObject like vars
 	private Texture cursor;
@@ -51,21 +51,20 @@ public class PokedexHandler : MonoBehaviour {
 
 	private void generateAlphabetical (){
 		
-		alphabeticalOrder = PokemonDatabase.pokedex;
+		/*alphabeticalOrder = PokemonDatabase.pokedex;
 
-		/*PokemonDatabase.pokedex.Sort(alphabeticalOrder, delegate(PokemonData pokemon1, PokemonData pokemon2) {
-			string name1 = pokemon1.getName();
-			string name2 = pokemon2.getName();
-			return -1;
-		});*/
+		//PokemonDatabase.pokedex.Sort(alphabeticalOrder, delegate(PokemonData pokemon1, PokemonData pokemon2) {
+		//	string name1 = pokemon1.getName();
+		//	string name2 = pokemon2.getName();
+		//	return -1;
+		//});
 		Array.Sort (alphabeticalOrder, delegate(PokemonData pokemon1, PokemonData pokemon2) {
 			try {
 				return pokemon1.getName().CompareTo(pokemon2.getName());
 			} catch {
 				return -1;
 			}
-		});
-
+		});*/
 	}
 
 	void Awake () {
@@ -209,7 +208,7 @@ public class PokedexHandler : MonoBehaviour {
 
 			// Cursor Position
 			if (screen2 != true) {
-				cursor2.gameObject.SetActive (false);
+				//cursor2.gameObject.SetActive (false);
 				if (cursorPosition.y == -1) {
 					//cursor.transform.position = new Vector3(200, 307, 13);
 				} else if (cursorPosition.y == 5) {
@@ -232,7 +231,7 @@ public class PokedexHandler : MonoBehaviour {
 						
 				}
 			} else {
-				cursor2.gameObject.SetActive(true);
+				//cursor2.gameObject.SetActive(true);
 
 				if (cursor2pos == 0) {
 					
@@ -243,14 +242,7 @@ public class PokedexHandler : MonoBehaviour {
 					yield return StartCoroutine (moveCursor2 (new Vector2 (290, 50)));
 				}
 
-
 			}
-
-		
-
-
-
-
 			yield return null;
 		}
 
@@ -263,8 +255,8 @@ public class PokedexHandler : MonoBehaviour {
 	}
 		
 	public void resetFilterPosition(){
-		filterType.pixelInset = filterTypeRect;
-		filterArrow.pixelInset = filterArrowRect;
+		//filterType.pixelInset = filterTypeRect;
+		//filterArrow.pixelInset = filterArrowRect;
 	}
 
 
@@ -283,8 +275,7 @@ public class PokedexHandler : MonoBehaviour {
 	}
 
 	public IEnumerator startInfoScreen(){
-		cursorPixel = cursor.pixelInset;
-
+		/*cursorPixel = cursor.pixelInset;
 
 		screen2 = true;
 		screenMoving = true;
@@ -309,18 +300,17 @@ public class PokedexHandler : MonoBehaviour {
 			}
 
 			selectedInfo.transform.position = new Vector3(starX + (disX * increment), selectedInfo.transform.position.y, selectedInfo.transform.position.z);
-			//cursor2.pixelInset = cursor2Pixel;
-
-		
+			//cursor2.pixelInset = cursor2Pixel;	
 
 			yield return null;
 		}
 
-		screenMoving = false;
+		screenMoving = false;*/
+		yield return null;
 	}
 
 	public IEnumerator stopInfoScreen(){
-		cursor2Pixel = cursor2.pixelInset;
+		/*cursor2Pixel = cursor2.pixelInset;
 		screenMoving = true;
 		float increment = 0;
 		float startX = background.pixelInset.x;
@@ -345,15 +335,12 @@ public class PokedexHandler : MonoBehaviour {
 			selectedInfo.transform.position = new Vector3(starX + (disX * increment), selectedInfo.transform.position.y, selectedInfo.transform.position.z);
 			cursor.pixelInset = cursorPixel;
 
-
-
-
-
 			yield return null;
 		}
 		screenMoving = false;
 		screen2 = false;
-		resetFilterPosition ();
+		resetFilterPosition ();*/
+		yield return null;
 	}
 
 	// Usability Functions
@@ -371,39 +358,35 @@ public class PokedexHandler : MonoBehaviour {
 	}
 
 	private void updateIcon(int id){
-
-		selectedIcon.texture = getIcon (id);
-
+		//selectedIcon.texture = getIcon (id);
 	}
 
 
 	private void updateStats(int id){
-		try {
-			string stats = PokemonDatabase.getPokemon (id).getHeight() + "m\n" + PokemonDatabase.getPokemon (id).getWeight() + "kg";
-			selectedStats.text = stats;
-			selectedStatsShadow.text = stats;
-		} catch {
-			string stats = "0m\n0kg";
-			selectedStats.text = stats;
-			selectedStatsShadow.text = stats;
-		}
+		//try {
+		//	string stats = PokemonDatabase.getPokemon (id).getHeight() + "m\n" + PokemonDatabase.getPokemon (id).getWeight() + "kg";
+		//	selectedStats.text = stats;
+		//	selectedStatsShadow.text = stats;
+		//} catch {
+		//	string stats = "0m\n0kg";
+		//	selectedStats.text = stats;
+		//	selectedStatsShadow.text = stats;
+		//}
 	}
 
 
 
 	private void updateEntry (int id){
-		PokemonData pokemon = PokemonDatabase.getPokemon (id);
-
-		if (pokemon != null) {
-			string s = wrapString (pokemon.getPokedexEntry (), 35);
-			selectedDex.text = s;
-			selectedDexShadow.text = s;
-		} else {
-
-			selectedDex.text = "None";
-			selectedDexShadow.text = "None";
-
-		}
+		//PokemonData pokemon = PokemonDatabase.getPokemon (id);
+		//
+		//if (pokemon != null) {
+		//	string s = wrapString (pokemon.getPokedexEntry (), 35);
+		//	selectedDex.text = s;
+		//	selectedDexShadow.text = s;
+		//} else {
+		//	selectedDex.text = "None";
+		//	selectedDexShadow.text = "None";
+		//}
 	}
 
 	string wrapString(string msg, int width) {
@@ -530,24 +513,23 @@ public class PokedexHandler : MonoBehaviour {
 
 	private IEnumerator moveCursor2(Vector2 destination)
 	{
-
-
-		float increment = 0;
-		float startX = cursor2.pixelInset.x;
-		float startY = cursor2.pixelInset.y;
-		float distanceX = destination.x - startX;
-		float distanceY = destination.y - startY;
-		while (increment < 1)
-		{
-			increment += (1 / moveSpeed) * Time.deltaTime;
-			if (increment > 1)
-			{
-				increment = 1;
-			}
-			cursor2.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor2.pixelInset.width, cursor2.pixelInset.height);
-
-			yield return null;
-		}
+		//float increment = 0;
+		//float startX = cursor2.pixelInset.x;
+		//float startY = cursor2.pixelInset.y;
+		//float distanceX = destination.x - startX;
+		//float distanceY = destination.y - startY;
+		//while (increment < 1)
+		//{
+		//	increment += (1 / moveSpeed) * Time.deltaTime;
+		//	if (increment > 1)
+		//	{
+		//		increment = 1;
+		//	}
+		//	cursor2.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor2.pixelInset.width, cursor2.pixelInset.height);
+		//
+		//	yield return null;
+		//}
+		yield return null;
 	}
 
 	private void setText(int i){
@@ -589,7 +571,6 @@ public class PokedexHandler : MonoBehaviour {
 		}
 
 		return icons[0];
-
 	}
 
 	private void updateBox(int boxNum){
@@ -599,13 +580,10 @@ public class PokedexHandler : MonoBehaviour {
 			boxLabelShadow.text = label;
 
 			for (int i = 0; i < 45; i++) {
-				pokePreview [i].texture = getIcon (boxNum * 45 + i + 1);
+				//pokePreview [i].texture = getIcon (boxNum * 45 + i + 1);
 				pokeSprites [i] = getSprite (boxNum * 45 + i + 1);
 				pokemon [i] = boxNum * 45 + i + 1;
-
 			}
-
-
 				
 		} else {
 			string label;
@@ -638,9 +616,6 @@ public class PokedexHandler : MonoBehaviour {
 				//
 				//}
 			}
-
-
-
 		}
 	}
 
@@ -685,8 +660,6 @@ public class PokedexHandler : MonoBehaviour {
 			return types [18];
 		} else {
 			return types [9];
-		}
-	
+		}	
 	}
-
 }
