@@ -11,6 +11,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 {
 	//private Battle ActiveBattle { get { return StartupSceneHandler.PersistantPlayerData.; } }
 	#region Unity's MonoBehavior Variables	
+	#region Pokemon HUD
 	public float Exp {
 		//get { return expSlider.value; }
 		set
@@ -70,6 +71,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 		}
 	}
 	public bool Item { set { gameObject.transform.Find("HeldItem").gameObject.SetActive(value); } }
+	public bool Caught { set { gameObject.transform.Find("Caught").gameObject.SetActive(value); } }
 	public Slider expSlider;                                    // Reference to the UI's experience bar.
 	public Slider hpSlider;                                     // Reference to the UI's health bar.
 	public Slider fadeSlider;									// Reference to the UI's 2nd health bar.
@@ -90,10 +92,16 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 	/// Red
 	/// </summary>
 	public Color hpzone2 = new Color32(208, 40, 40, 255);           // Red
-	// <summary>
-	// Orange
-	// </summary>
-	//public Color fade = new Color32(255, 113, 0, 255);				// Orange
+																	// <summary>
+																	// Orange
+																	// </summary>
+																	//public Color fade = new Color32(255, 113, 0, 255);				// Orange
+	#endregion
+	#region Pokemon Battler
+	//public PokemonUnity.Item.ItemCategory
+	public Sprite Pokemon, Shadow, Pokeball;
+	public AnimationClip BattlerAnim, PokeBallAnim;
+	#endregion
 	#endregion
 
 	#region Unity Engine Runtime Only
@@ -176,4 +184,62 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 		fadeSlider.value = Mathf.Lerp(hpSlider.value, fadeSlider.value, .5f * Time.deltaTime);
 		//yield return null;
 	}
+}
+
+/*[ExecuteInEditMode]
+public class BattlePartyHandler : UnityEngine.MonoBehaviour
+{
+	public Selectable slot;
+
+	
+
+	#region Unity Engine Runtime Only
+	void Awake()
+	{
+		//slot.spriteState = new SpriteState().
+	}
+
+    void OnEnable()
+    {
+    }
+
+    void Start()
+    {
+	}
+
+    void Update()
+    {
+	}
+	#endregion
+}*/
+
+[ExecuteInEditMode]
+public class BattleMoveHandler : UnityEngine.MonoBehaviour
+{
+	#region MOVE BUTTON DETAILS
+	public bool IsEnabled { get; set; }
+	public GameObject Move { get; private set; }
+	//private Image buttonMove { get; set; }
+	public Text MoveName, MovePP, MoveMaxPP;
+	public Image MoveType, MoveCover;
+	#endregion
+	
+
+	#region Unity Engine Runtime Only
+	void Awake()
+	{
+	}
+
+    void OnEnable()
+    {
+    }
+
+    void Start()
+    {
+	}
+
+    void Update()
+    {
+	}
+	#endregion
 }

@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonEssential;
 
-public class Battle
+public class Battle : UnityUtilityIntegration
 {
 	#region Variables
 	/// <summary>
@@ -103,6 +104,13 @@ public class Battle
 	public Battle CantEscape (bool cantEscape = true) { cantescape = cantEscape; return this; }
 	private bool cantescape { get; set; }
 	/// <summary>
+	/// If game cannot progress UNLESS the player is victor of match.
+	/// False if there are no consequences to player's defeat.
+	/// </summary>
+	/// (Ground Hogs day anyone?)
+	public Battle CanLose (bool canlose = true) { canLose = canlose; return this; }
+	public bool canLose { get; private set; }
+	/// <summary>
 	/// Shift/Set "battle style" option
 	/// </summary>
 	public bool shiftStyle { get; private set; }
@@ -188,7 +196,6 @@ public class Battle
 	/// </summary>
 	public Weather Weather { get
 		{
-			//for i in 0...4
 			for (int i = 0; i < battlers.Length; i++)
 			{
 				if (battlers[i].Ability == Abilities.CLOUD_NINE ||
@@ -283,7 +290,8 @@ public class Battle
 	//attr_accessor :controlPlayer
 	private Player Player { get; set; }
 
-	public string pbDisplay
+	public BattleAnimationHandler BattleScene { get; private set; }
+	new public string Display
 	{
 		/* Don't need a get, since value is not being stored/logged
 		 * there's no method or caller that's going to fetch value
@@ -300,7 +308,8 @@ public class Battle
 		}
 	}
 	//private string display { get; set; }
-	/*// <summary>
+	/* ToDo: Move to Battler? => Display on PokemonUI 
+	/// <summary>
 	/// </summary>
 	/// ToDo: Might need to be a method
 	public bool Seen {
@@ -516,6 +525,12 @@ public class Battle
 	{
 		Player = player;
 	}
+	//public Battle(UnityEngine.GameObject battleScene) //: this(player.Trainer, opponent)
+	//{
+	//	//ToDo: Register Unity UI instance to variables
+	//	//BattlePokemonHandler
+	//	//Player = player;
+	//}
 	/// <summary>
 	/// 
 	/// </summary>
@@ -567,6 +582,94 @@ public class Battle
 	}
 	#endregion
 
+	#region Catching and storing Pokémon.
+	public void StorePokemon(Battler pokemon)
+	{
+		//if(!pokemon.isShadow)
+		//	//"Would you like to give a nickname to {1}?"
+		//	if (DisplayConfirm(LanguageExtension.Translate(Text.ScriptTexts, "GiveNickname").Value))
+		//	{
+		//		//"{1}'s nickname?"
+		//		pokemon.SetNickname(scene.NameEntry(LanguageExtension.Translate(Text.ScriptTexts, "SetNick", pokemon.Name).Value, pokemon));
+		//	}
+		//int oldcurbox = GameVariables.CurrentBox;
+		//int storedbox = GameVariable.StorePokemon(GameVariable.Player,pokemon)
+		//string creator = GameVariable.GetStorageCreator()
+		//if (storedbox < 0) return;
+		//string curboxname = GameVariable.BoxName(oldcurbox)
+		//string boxname = GameVariable.BoxName(storedbox)
+		//if (storedbox!=oldcurbox) {
+		//	if (GameVariable.isCreator)
+		//		GameVariable.DisplayPaused("Box \"{1}\" on {2}'s PC was full.",curboxname,creator)
+		//	else
+		//		DisplayPaused("Box \"{1}\" on someone's PC was full.",curboxname)
+		//	DisplayPaused("{1} was transferred to box \"{2}\".",pokemon.name,boxname)
+		//}else
+		//{
+		//  if (GameVariable.isCreator)
+		//		DisplayPaused("{1} was transferred to {2}'s PC.",pokemon.name,creator)
+		//  else
+		//		DisplayPaused("{1} was transferred to someone's PC.",pokemon.name)
+		//	}
+		//	DisplayPaused("It was stored in box \"{1}\".",boxname)
+		//}		
+	}
+	public void ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
+	{
+		string itemname = LanguageExtension.Translate(Text.Items, ball.ToString()).Value;
+		Battler battler = null;
+		if (isOpposing(idxPokemon))
+			battler = battlers[idxPokemon];
+		else
+			battler = battlers[idxPokemon].OppositeOpposing;
+		if (battler.isFainted())
+			battler = battler.Partner;
+		//"{1} threw one {2}!"
+		DisplayBrief(L(Text.ScriptTexts,"ThrowBall", Player.PlayerName, itemname));
+		if (battler.isFainted())
+		{
+			//"But there was no target..."
+			Display(L(Text.ScriptTexts, "NoTarget"));
+			return;
+		}
+		if (opponent.ID != TrainerTypes.WildPokemon) 
+			//&& (!IsSnagBall(ball) || !battler.isShadow))
+		{
+			//scene.ThrowAndDeflect(ball, 1);
+			//"The Trainer blocked the Ball!\nDon't be a thief!"
+			Display(L(Text.ScriptTexts, "SnagRejected"));
+		}
+		else
+		{
+			if (!rareness.HasValue)
+			{
+				//get rareness for pokemon
+			}
+			int a = battler.TotalHP;
+			int b = battler.HP;
+			//ToDo: Ball Throwing Class?
+			//rareness = BallHandlers.ModifyCatchRate(ball, rareness, battler);
+			int x = (int)Math.Floor(((a * 3 - b * 2) * rareness.Value) / (a * 3f));
+			if (battler.Status == Status.Sleep || battler.Status == Status.Frozen)
+				x = (int)Math.Floor(x * 2.5);
+			else if (battler.Status != Status.None)
+				x = (int)Math.Floor(x * 1.5);
+			int c = 0;
+			if (GameVariables.playerTrainer.PokedexCaught > 600)
+				c = (int)Math.Floor(x * 2.5 / 6);
+			else if (GameVariables.playerTrainer.PokedexCaught > 450)
+				c = (int)Math.Floor(x * 2f / 6);
+			else if (GameVariables.playerTrainer.PokedexCaught > 300)
+				c = (int)Math.Floor(x * 1.5 / 6);
+			else if (GameVariables.playerTrainer.PokedexCaught > 150)
+				c = (int)Math.Floor(x * 1f / 6);
+			else if (GameVariables.playerTrainer.PokedexCaught > 30)
+				c = (int)Math.Floor(x * .5 / 6);
+		}
+
+	}
+	#endregion
+
 	#region Get party info, manipulate parties.
 	int PokemonCount(Pokemon[] party)
 	{
@@ -594,7 +697,11 @@ public class Battle
 	}
 	#endregion
 
+	/// <summary>
 	/// Check whether actions can be taken.
+	/// </summary>
+	/// <param name="idxPokemon"></param>
+	/// <returns></returns>
 	bool CanShowCommands(int idxPokemon)
 	{
 		//List<BattlerEffects> thispkmn = new List<PokemonUnity.Effects.BattlerEffects>(); //battlers[idxPokemon].
@@ -792,7 +899,9 @@ public class Battle
 		public override bool IsShiny { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.IsShiny;
-				return base.IsShiny; } }
+				return base.IsShiny; }
+		}
+		new public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 		new public Status Status
 		{
 			get
@@ -831,6 +940,8 @@ public class Battle
 		//public override bool hasMegaForm { get { if (effects.Transform) return false; return base.hasMegaForm; } }
 		public bool IsPrimal { get; private set; }
 		//public override bool hasPrimalForm { get { if (effects.Transform) return false; return base.hasPrimalForm; } }
+		public BattlePokemonHandler playerHUD { get; private set; }
+		public BattlePokemonHandler nonplayerHUD { get; private set; }
 		#endregion
 
 		#region Constructors
@@ -1136,8 +1247,12 @@ public class Battle
 		private void InitPokemon(Pokemon pkmn, int pkmnIndex)
 		{
 			if (pkmn.isEgg)
+			{
+				//Remove/Disable UI for Egg 
+				//Pause game to display error message?
 				//"An egg can't be an active Pokémon"
 				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "ActiveEgg").Value);
+			}
 			else
 			{
 				//Name			= pkmn.Name
@@ -1167,6 +1282,9 @@ public class Battle
 					(InBattleMove)base.moves[3]
 				};
 			}
+#if (DEBUG == false || UNITY_EDITOR == true)
+			UpdateUI();
+#endif
 		}
 		public Battler Update(bool fullchange = false)
 		{
@@ -1176,7 +1294,7 @@ public class Battle
 				//Level		= pokemon.Level;
 				//HP		= pokemon.HP;
 				//TotalHP	= pokemon.TotalHP;
-				//Battler = Pokemon, so not all stats need to be handpicked
+				//Battler	= Pokemon, so not all stats need to be handpicked
 				if (!effects.Transform) //Changed forms but did not transform?
 				{
 					//ATK		= pokemon.ATK;
@@ -1309,11 +1427,11 @@ public class Battle
 			return false;
 		}
 
-		public bool HasMoveFunction(Effect code) {
+		public bool HasMoveFunction(Move.Effect code) {
 			//if (string.IsNullOrEmpty(code)) return false;
 			for (int i = 0; i < moves.Length; i++)
 			{
-				if ((Effect)moves[i].Function == code) return true;
+				if ((Move.Effect)moves[i].Function == code) return true;
 			}
 			return false;
 		}
@@ -1544,6 +1662,285 @@ public class Battle
 		}
 		#endregion
 
+		#region Forms
+		/// <summary>
+		/// 
+		/// </summary>
+		/// ToDo: Changes stats on form changes here?
+		public void CheckForm()
+		{
+			if (effects.Transform) return;
+			if (isFainted()) return;
+			bool transformed = false;
+			//Forecast
+			if (Species == Pokemons.CASTFORM)
+			{
+				if (hasWorkingAbility(Abilities.FORECAST))
+				{
+					switch (battle.Weather)
+					{
+						case Weather.SUNNYDAY:
+						case Weather.HARSHSUN:
+							if(Form != 1)
+							{
+								Form = 1;
+								transformed = true;
+							}
+							break;
+						case Weather.RAINDANCE:
+						case Weather.HEAVYRAIN:
+							if(Form != 2)
+							{
+								Form = 2;
+								transformed = true;
+							}
+							break;
+						case Weather.HAIL:
+							if(Form != 3)
+							{
+								Form = 3;
+								transformed = true;
+							}
+							break;
+						case Weather.NONE:
+						default:
+							if(Form != 0)
+							{
+								Form = 0;
+								transformed = true;
+							}
+							break;
+					}
+				}
+			}
+			if (Species == Pokemons.SHAYMIN)
+			{
+				if (Form != pokemon.Form)
+				{
+					Form = pokemon.Form;
+					transformed = true;
+				}
+			}
+			if (Species == Pokemons.GIRATINA)
+			{
+				if (Form != pokemon.Form)
+				{
+					Form = pokemon.Form;
+					transformed = true;
+				}
+			}
+			if (Species == Pokemons.ARCEUS && Ability == Abilities.MULTITYPE)
+			{
+				if (Form != pokemon.Form)
+				{
+					Form = pokemon.Form;
+					transformed = true;
+				}
+			}
+			if (Species == Pokemons.DARMANITAN)
+			{
+				if(hasWorkingAbility(Abilities.ZEN_MODE) && HP <= Math.Floor(TotalHP/2f))
+					if (Form != 1)
+					{
+						Form = 1;
+						transformed = true;
+					}
+				else
+					if (Form != 0)
+					{
+						Form = 0;
+						transformed = true;
+					}
+			}
+			if (Species == Pokemons.KELDEO)
+			{
+				if (Form != pokemon.Form)
+				{
+					Form = pokemon.Form;
+					transformed = true;
+				}
+			}
+			if (Species == Pokemons.GENESECT)
+			{
+				if (Form != pokemon.Form)
+				{
+					Form = pokemon.Form;
+					transformed = true;
+				}
+			}
+			if (transformed)
+			{
+				Update(true);
+				//battle.scene.ChangePokemon();
+				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
+				GameVariables.DebugLog(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form));
+			}
+		}
+		public void ResetForm()
+		{
+			if (!effects.Transform)
+				if (Species == Pokemons.CASTFORM ||
+					Species == Pokemons.CHERRIM ||
+					Species == Pokemons.DARMANITAN ||
+					Species == Pokemons.MELOETTA ||
+					Species == Pokemons.AEGISLASH ||
+					Species == Pokemons.XERNEAS)
+					Form = 0;
+			Update(true);
+		}
+		#endregion
+
+		#region Ability Effects
+		public void AbilitiesOnSwitchIn(bool onactive)
+		{
+			if (isFainted()) return;
+			//if (onactive)
+			//	battle.PrimalReversion(Index);
+			///Weather
+			if (onactive)
+			{
+				if(hasWorkingAbility(Abilities.PRIMORDIAL_SEA) && battle.Weather != Weather.HEAVYRAIN)
+				{
+					battle.SetWeather(Weather.HEAVYRAIN);
+					battle.weatherduration = -1;
+					//battle.CommonAnimation("HeavyRain", null, null);
+					//"{1}'s {2} made a heavy rain begin to fall!"
+					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HeavyRainStart", ToString(), Ability.ToString().Translate().Value).Value);
+					GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Primordial Sea made it rain heavily", ToString()));
+				}
+				if(hasWorkingAbility(Abilities.DESOLATE_LAND) && battle.Weather != Weather.HARSHSUN)
+				{
+					battle.SetWeather(Weather.HARSHSUN);
+					battle.weatherduration = -1;
+					//battle.CommonAnimation("HarshSun", null, null);
+					//"{1}'s {2} turned the sunlight extremely harsh!"
+					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HarshSunStart", ToString(), Ability.ToString().Translate().Value).Value);
+					GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Desolate Land made the sun shine harshly", ToString()));
+				}
+				if(hasWorkingAbility(Abilities.DELTA_STREAM) && battle.Weather != Weather.STRONGWINDS)
+				{
+					battle.SetWeather(Weather.STRONGWINDS);
+					battle.weatherduration = -1;
+					//battle.CommonAnimation("StrongWinds", null, null);
+					//"{1}'s {2} caused a mysterious air current that protects Flying-type Pokémon!"
+					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "StrongWindsStart", ToString(), Ability.ToString().Translate().Value).Value);
+					GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Delta Stream made an air current blow", ToString()));
+				}
+				if (battle.Weather != Weather.HEAVYRAIN &&
+					battle.Weather != Weather.HARSHSUN &&
+					battle.Weather != Weather.STRONGWINDS)
+				{
+					if (hasWorkingAbility(Abilities.DRIZZLE) && 
+						(battle.Weather != Weather.RAINDANCE || battle.weatherduration != -1))
+					{
+						battle.SetWeather(Weather.RAINDANCE);
+						if (Settings.USENEWBATTLEMECHANICS)
+						{
+							battle.weatherduration = 5;
+							if (hasWorkingItem(Items.DAMP_ROCK))
+								battle.weatherduration = 8;
+						}
+						else
+							battle.weatherduration = -1;
+						//battle.CommonAnimation("Rain", null, null);
+						//"{1}'s {2} made it rain!"
+						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "RainStart", ToString(), Ability.ToString().Translate().Value).Value);
+						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Drizzle made it rain", ToString()));
+					}
+					if (hasWorkingAbility(Abilities.DROUGHT) && 
+						(battle.Weather != Weather.SUNNYDAY || battle.weatherduration != -1))
+					{
+						battle.SetWeather(Weather.SUNNYDAY);
+						if (Settings.USENEWBATTLEMECHANICS)
+						{
+							battle.weatherduration = 5;
+							if (hasWorkingItem(Items.HEAT_ROCK))
+								battle.weatherduration = 8;
+						}
+						else
+							battle.weatherduration = -1;
+						//battle.CommonAnimation("Sunny", null, null);
+						//"{1}'s {2} intensified the sun's rays!"
+						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SunnyStart", ToString(), Ability.ToString().Translate().Value).Value);
+						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Drought made it sunny", ToString()));
+					}
+					if (hasWorkingAbility(Abilities.SAND_STREAM) && 
+						(battle.Weather != Weather.SANDSTORM || battle.weatherduration != -1))
+					{
+						battle.SetWeather(Weather.SANDSTORM);
+						if (Settings.USENEWBATTLEMECHANICS)
+						{
+							battle.weatherduration = 5;
+							if (hasWorkingItem(Items.SMOOTH_ROCK))
+								battle.weatherduration = 8;
+						}
+						else
+							battle.weatherduration = -1;
+						//battle.CommonAnimation("Sandstorm", null, null);
+						//"{1}'s {2} whipped up a sandstorm!"
+						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SandstormStart", ToString(), Ability.ToString().Translate().Value).Value);
+						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Sand Stream made it sandstorm", ToString()));
+					}
+					if (hasWorkingAbility(Abilities.SNOW_WARNING) && 
+						(battle.Weather != Weather.HAIL || battle.weatherduration != -1))
+					{
+						battle.SetWeather(Weather.HAIL);
+						if (Settings.USENEWBATTLEMECHANICS)
+						{
+							battle.weatherduration = 5;
+							if (hasWorkingItem(Items.ICY_ROCK))
+								battle.weatherduration = 8;
+						}
+						else
+							battle.weatherduration = -1;
+						//battle.CommonAnimation("Hail", null, null);
+						//"{1}'s {2} madeit hail!"
+						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HailStart", ToString(), Ability.ToString().Translate().Value).Value);
+						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Snow Warning made it hail", ToString()));
+					}
+				}
+				if(hasWorkingAbility(Abilities.AIR_LOCK) || hasWorkingAbility(Abilities.CLOUD_NINE))
+				{
+					//battle.SetWeather(Weather.NONE);
+					//battle.weatherduration = 0;
+					//"{1} has {2}!"
+					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HasAbility", ToString(), Ability.ToString().Translate().Value).Value);
+					//"The effects of the weather disappeared."
+					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "WeatherNullified").Value);
+					GameVariables.DebugLog(string.Format("[Ability nullified] {0}'s Ability cancelled weather effects", ToString()));
+				}
+			}
+			//battle.PrimordialWeather();
+			///Trace
+			if (hasWorkingAbility(Abilities.TRACE))
+			{
+				//Choice[] choices = new Choice[4];
+				List<int> choices = new List<int>();
+				for (int i = 0; i < battle.battlers.Length; i++)
+				{
+					Battler foe = battle.battlers[i];
+					if (IsOpposing(i) && !foe.isFainted())
+					{
+						Abilities abil = foe.Ability;
+						if (abil > 0 &&
+							abil != Abilities.TRACE &&
+							abil != Abilities.MULTITYPE &&
+							abil != Abilities.ILLUSION &&
+							abil != Abilities.FLOWER_GIFT &&
+							abil != Abilities.IMPOSTER &&
+							abil != Abilities.STANCE_CHANGE)
+							choices.Add(i);
+					}
+				}
+				if (choices.Count > 0)
+				{
+					//ToDo: WIP; Finish from here...
+				}
+			}
+
+		}
+		#endregion
+
 		/*public static implicit operator Battler[](Pokemon[] input)
 		{
 			Battler[] battlers = new Battler[input.Length];
@@ -1565,6 +1962,31 @@ public class Battle
 			}
 			return battlers;
 		}
+		public void BattlerUI(BattlePokemonHandler gameObject, bool player = false)
+		{
+			if (player) playerHUD = gameObject;
+			else nonplayerHUD = gameObject;
+		}
+		/// <summary>
+		/// Refreshes the HUD of this Battler
+		/// </summary>
+		private void UpdateUI()
+		{
+			playerHUD.HP = nonplayerHUD.HP = HP;
+			playerHUD.TotalHP = nonplayerHUD.TotalHP = TotalHP;
+			playerHUD.expSlider.value = nonplayerHUD.expSlider.value = Exp.Current;
+			playerHUD.expSlider.maxValue = nonplayerHUD.expSlider.maxValue = Exp.NextLevel;
+			playerHUD.Level.text = nonplayerHUD.Level.text = Level.ToString();
+			playerHUD.Name.text = nonplayerHUD.Name.text = Name;
+			playerHUD.Gender = nonplayerHUD.Gender = Gender;
+			playerHUD.Status = nonplayerHUD.Status = Status;
+			playerHUD.Item = nonplayerHUD.Item = Item != Items.NONE;
+		}
+	}
+
+	private bool OwnedByPlayer(int index)
+	{
+		throw new NotImplementedException();
 	}
 
 	/// <summary>
@@ -1607,6 +2029,9 @@ public class Battle
 		public int Priority						{ get; set; }
 		public bool IsPhysical					{ get { return Category == Category.PHYSICAL; } }
 		public bool IsSpecial					{ get { return Category == Category.SPECIAL; } }
+		public bool UnuseableInGravity			{ get; set; }
+		public string EffectString				{ get; set; }
+		public string Nothing = "But nothing happened!";
 		#endregion
 
 		private Battle Battle { get { return GameVariables.battle; } }
@@ -1632,6 +2057,7 @@ public class Battle
 		{
 			PP		= move.PP;
 			TotalPP = move.TotalPP;
+			CalcMoveFunc();
 		}
 
 		/*public InBattleMove(Battle battle, Move move) : base(move.MoveId)
@@ -1647,6 +2073,374 @@ public class Battle
 		{
 
 		}*/
+		public void CalcMoveFunc()//(ref Battle.InBattleMove move)
+		{
+			//Effect function;
+			switch ((Effect)Function)
+			{
+				case Effect.Confusion:
+					//battle		= battle
+					BaseDamage = 40;
+					Type = Types.NONE;
+					Accuracy = 100;
+					PP = -1;
+					//TotalPP	= ;
+					AddlEffect = 0;
+					Targets = PokemonEssential.Target.NoTarget;
+					Priority = 0;
+					Flag = new PokemonEssential.Flags();
+					//thismove		= move
+					//name			= ""
+					MoveId = Moves.NONE;
+					Category = Category.PHYSICAL;
+					break;
+				case Effect.Struggle:
+				case Effect.x000:
+					break;
+				case Effect.x001:
+					UnuseableInGravity = true;
+					break;
+				case Effect.x002:
+				case Effect.x003:
+				case Effect.x004:
+				case Effect.x005:
+				case Effect.x006:
+				case Effect.x007:
+				case Effect.x008:
+				case Effect.x009:
+				case Effect.x00A:
+				case Effect.x00B:
+				case Effect.x00C:
+				case Effect.x00D:
+				case Effect.x00E:
+				case Effect.x00F:
+				case Effect.x010:
+				case Effect.x011:
+				case Effect.x012:
+				case Effect.x013:
+				case Effect.x014:
+				case Effect.x015:
+				case Effect.x016:
+				case Effect.x017:
+				case Effect.x018:
+				case Effect.x019:
+				case Effect.x01A:
+				case Effect.x01B:
+				case Effect.x01C:
+				case Effect.x01D:
+				case Effect.x01E:
+				case Effect.x01F:
+				case Effect.x020:
+				case Effect.x021:
+				case Effect.x022:
+				case Effect.x023:
+				case Effect.x024:
+				case Effect.x025:
+				case Effect.x026:
+				case Effect.x027:
+				case Effect.x028:
+				case Effect.x029:
+				case Effect.x02A:
+				case Effect.x02B:
+				case Effect.x02C:
+				case Effect.x02D:
+				case Effect.x02E:
+				case Effect.x02F:
+				case Effect.x030:
+				case Effect.x031:
+				case Effect.x032:
+				case Effect.x033:
+				case Effect.x034:
+				case Effect.x035:
+				case Effect.x036:
+				case Effect.x037:
+				case Effect.x038:
+				case Effect.x039:
+				case Effect.x03A:
+				case Effect.x03B:
+				case Effect.x03C:
+				case Effect.x03D:
+				case Effect.x03E:
+				case Effect.x03F:
+				case Effect.x040:
+				case Effect.x041:
+				case Effect.x042:
+				case Effect.x043:
+				case Effect.x044:
+				case Effect.x045:
+				case Effect.x046:
+				case Effect.x047:
+				case Effect.x048:
+				case Effect.x049:
+				case Effect.x04A:
+				case Effect.x04B:
+				case Effect.x04C:
+				case Effect.x04D:
+				case Effect.x04E:
+				case Effect.x04F:
+				case Effect.x050:
+				case Effect.x051:
+				case Effect.x052:
+				case Effect.x053:
+				case Effect.x054:
+				case Effect.x055:
+				case Effect.x056:
+				case Effect.x057:
+				case Effect.x058:
+				case Effect.x059:
+				case Effect.x05A:
+				case Effect.x05B:
+				case Effect.x05C:
+				case Effect.x05D:
+				case Effect.x05E:
+				case Effect.x05F:
+				case Effect.x060:
+				case Effect.x061:
+				case Effect.x062:
+				case Effect.x063:
+				case Effect.x064:
+				case Effect.x065:
+				case Effect.x066:
+				case Effect.x067:
+				case Effect.x068:
+				case Effect.x069:
+				case Effect.x06A:
+				case Effect.x06B:
+				case Effect.x06C:
+				case Effect.x06D:
+				case Effect.x06E:
+				case Effect.x06F:
+				case Effect.x070:
+				case Effect.x071:
+				case Effect.x072:
+				case Effect.x073:
+				case Effect.x074:
+				case Effect.x075:
+				case Effect.x076:
+				case Effect.x077:
+				case Effect.x078:
+				case Effect.x079:
+				case Effect.x07A:
+				case Effect.x07B:
+				case Effect.x07C:
+				case Effect.x07D:
+				case Effect.x07E:
+				case Effect.x07F:
+				case Effect.x080:
+				case Effect.x081:
+				case Effect.x082:
+				case Effect.x083:
+				case Effect.x084:
+				case Effect.x085:
+				case Effect.x086:
+				case Effect.x087:
+				case Effect.x088:
+				case Effect.x089:
+				case Effect.x08A:
+				case Effect.x08B:
+				case Effect.x08C:
+				case Effect.x08D:
+				case Effect.x08E:
+				case Effect.x08F:
+				case Effect.x090:
+				case Effect.x091:
+				case Effect.x092:
+				case Effect.x093:
+				case Effect.x094:
+				case Effect.x095:
+				case Effect.x096:
+				case Effect.x097:
+				case Effect.x098:
+				case Effect.x099:
+				case Effect.x09A:
+				case Effect.x09B:
+				case Effect.x09C:
+				case Effect.x09D:
+				case Effect.x09E:
+				case Effect.x09F:
+				case Effect.x0A0:
+				case Effect.x0A1:
+				case Effect.x0A2:
+				case Effect.x0A3:
+				case Effect.x0A4:
+				case Effect.x0A5:
+				case Effect.x0A6:
+				case Effect.x0A7:
+				case Effect.x0A8:
+				case Effect.x0A9:
+				case Effect.x0AA:
+				case Effect.x0AB:
+				case Effect.x0AC:
+				case Effect.x0AD:
+				case Effect.x0AE:
+				case Effect.x0AF:
+				case Effect.x0B0:
+				case Effect.x0B1:
+				case Effect.x0B2:
+				case Effect.x0B3:
+				case Effect.x0B4:
+				case Effect.x0B5:
+				case Effect.x0B6:
+				case Effect.x0B7:
+				case Effect.x0B8:
+				case Effect.x0B9:
+				case Effect.x0BA:
+				case Effect.x0BB:
+				case Effect.x0BC:
+				case Effect.x0BD:
+				case Effect.x0BE:
+				case Effect.x0BF:
+				case Effect.x0C0:
+				case Effect.x0C1:
+				case Effect.x0C2:
+				case Effect.x0C3:
+				case Effect.x0C4:
+				case Effect.x0C5:
+				case Effect.x0C6:
+				case Effect.x0C7:
+				case Effect.x0C8:
+				case Effect.x0C9:
+				case Effect.x0CA:
+				case Effect.x0CB:
+				case Effect.x0CC:
+				case Effect.x0CD:
+				case Effect.x0CE:
+				case Effect.x0CF:
+				case Effect.x0D0:
+				case Effect.x0D1:
+				case Effect.x0D2:
+				case Effect.x0D3:
+				case Effect.x0D4:
+				case Effect.x0D5:
+				case Effect.x0D6:
+				case Effect.x0D7:
+				case Effect.x0D8:
+				case Effect.x0D9:
+				case Effect.x0DA:
+				case Effect.x0DB:
+				case Effect.x0DC:
+				case Effect.x0DD:
+				case Effect.x0DE:
+				case Effect.x0DF:
+				case Effect.x0E0:
+				case Effect.x0E1:
+				case Effect.x0E2:
+				case Effect.x0E3:
+				case Effect.x0E4:
+				case Effect.x0E5:
+				case Effect.x0E6:
+				case Effect.x0E7:
+				case Effect.x0E8:
+				case Effect.x0E9:
+				case Effect.x0EA:
+				case Effect.x0EB:
+				case Effect.x0EC:
+				case Effect.x0ED:
+				case Effect.x0EE:
+				case Effect.x0EF:
+				case Effect.x0F0:
+				case Effect.x0F1:
+				case Effect.x0F2:
+				case Effect.x0F3:
+				case Effect.x0F4:
+				case Effect.x0F5:
+				case Effect.x0F6:
+				case Effect.x0F7:
+				case Effect.x0F8:
+				case Effect.x0F9:
+				case Effect.x0FA:
+				case Effect.x0FB:
+				case Effect.x0FC:
+				case Effect.x0FD:
+				case Effect.x0FE:
+				case Effect.x0FF:
+				case Effect.x100:
+				case Effect.x101:
+				case Effect.x102:
+				case Effect.x103:
+				case Effect.x104:
+				case Effect.x105:
+				case Effect.x106:
+				case Effect.x107:
+				case Effect.x108:
+				case Effect.x109:
+				case Effect.x10A:
+				case Effect.x10B:
+				case Effect.x10C:
+				case Effect.x10D:
+				case Effect.x10E:
+				case Effect.x10F:
+				case Effect.x110:
+				case Effect.x111:
+				case Effect.x112:
+				case Effect.x113:
+				case Effect.x114:
+				case Effect.x115:
+				case Effect.x116:
+				case Effect.x117:
+				case Effect.x118:
+				case Effect.x119:
+				case Effect.x11A:
+				case Effect.x11B:
+				case Effect.x11C:
+				case Effect.x11D:
+				case Effect.x11E:
+				case Effect.x11F:
+				case Effect.x120:
+				case Effect.x121:
+				case Effect.x122:
+				case Effect.x123:
+				case Effect.x124:
+				case Effect.x125:
+				case Effect.x133:
+				case Effect.x134:
+				case Effect.x135:
+				case Effect.x136:
+				case Effect.x137:
+				case Effect.x138:
+				case Effect.x139:
+				case Effect.x13A:
+				case Effect.x13B:
+				case Effect.x13C:
+				case Effect.x13D:
+				case Effect.x13E:
+				case Effect.x13F:
+				case Effect.x140:
+				case Effect.x141:
+				case Effect.x142:
+				case Effect.x143:
+				case Effect.x144:
+				case Effect.x145:
+				case Effect.x146:
+				case Effect.x147:
+				case Effect.x148:
+				case Effect.x149:
+				case Effect.x14A:
+				case Effect.x14B:
+				case Effect.x14C:
+				case Effect.x14D:
+				case Effect.x14E:
+				case Effect.x14F:
+				case Effect.x150:
+				case Effect.x151:
+				case Effect.x152:
+				case Effect.x153:
+				case Effect.x154:
+				case Effect.x155:
+				case Effect.x156:
+				case Effect.x157:
+				case Effect.x158:
+					break;
+				case Effect.FailedMove:
+					//by default, both should result in failure
+					//GameVariables.battle.pbDisplay("But it failed!");
+					break;
+				case Effect.UnimplementedMove:
+				default:
+					break;
+			}
+			//return move;
+		}
 	}
 
 	public class DamageState
@@ -1705,16 +2499,121 @@ public class Battle
 			Endured       = false;
 			BerryWeakened = false;
 		}
+	}
 
+	/// <summary>
+	/// Success state (used for Battle Arena)
+	/// </summary>
+	public class SuccessState
+	{
+		/// <summary>
+		/// Type effectiveness
+		/// </summary>
+		public int TypeMod { get; set; }
+		/// <summary>
+		/// null - not used, 0 - failed, 1 - succeeded
+		/// </summary>
+		/// instead of an int or enum
+		/// 0 - not used, 1 - failed, 2 - succeeded
+		public bool? UseState { get; set; }
+		public bool Protected { get; set; }
+		public int Skill { get; private set; }
+
+		public SuccessState()
 		{
 			Clear();
+		}
 
+		public void Clear()
+		{
+			TypeMod		= 4;
+			UseState	= null;
+			Protected	= false;
+			Skill		= 0;
+		}
 
+		public void UpdateSkill()
+		{
+			if (!UseState.Value && !Protected)
+				Skill -= 2;
+			else if (UseState.Value)
+			{
+				if (TypeMod > 4)
+					Skill += 2; // "Super effective"
+				else if (TypeMod >= 1 && TypeMod < 4)
+					Skill -= 1; // "Not very effective"
+				else if (TypeMod == 0)
+					Skill -= 2; // Ineffective
+				else
+					Skill += 1;
+			}
+			TypeMod = 4;
+			UseState = false;
+			Protected = false;
+		}
+	}
 
+	/// <summary>
+	/// Options made on a given turn, per pokemon.
+	/// </summary>
+	/// ToDo: Make a logger of this as a List<> to document a match history.
+	/// ToDo: If making logger, consider documenting math/results as well...
+	public class Choice
+	{
+		public ChoiceAction Action { get; private set; }
+		/// <summary>
+		/// Index of Action being used
+		/// </summary>
+		public int Index { get; private set; }
+		public InBattleMove Move { get; private set; }
+		public int Target { get; private set; }
 
+		/// <summary>
+		/// If action you're choosing to take is to Attack with a Move
+		/// </summary>
+		/// <param name="action"></param>
+		/// <param name="move"></param>
+		/// <param name="target"></param>
+		public Choice (ChoiceAction action, int moveIndex, InBattleMove move, int target = -1)
+		{
+			Action = action;
+			Index = moveIndex;
+			Move = move;
+			Target = target;
+		}
 
+		/// <summary>
+		/// If action you're choosing to take is to Switch Pkmns
+		/// </summary>
+		/// <param name="action"></param>
+		/// <param name="pkmnIndex"></param>
+		public Choice (ChoiceAction action, int pkmnIndex)
+		{
+			Action = action;
+			Index = pkmnIndex;
+		}
 
+		/// <summary>
+		/// If action you're choosing to take is to Use an Item on a Pkmn
+		/// </summary>
+		/// <param name="action"></param>
+		/// <param name="itemIndex"></param>
+		/// <param name="pkmnTarget"></param>
+		public Choice (ChoiceAction action, int itemIndex, int pkmnTarget)
+		{
+			Action = action;
+			Index = itemIndex;
+			Target = pkmnTarget;
+		}
 
+		/// <summary>
+		/// If action you're choosing to take is to Flee, Call Pokemon, or Nothing
+		/// </summary>
+		public Choice (ChoiceAction action = 0)
+		{
+			Action = action;
+		}
+	}
 
 	public enum ChoiceAction
 	{
@@ -1768,7 +2667,9 @@ namespace PokemonUnity
 		HEAVYRAIN,
 		SUNNYDAY,
 		HARSHSUN,
-		SANDSTORM
+		SANDSTORM,
+		STRONGWINDS,
+		HAIL
 	}
 	/// <summary>
 	/// Terrain Tags or Tiles a player can be stepping on;

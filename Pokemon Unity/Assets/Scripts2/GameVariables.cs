@@ -1373,6 +1373,10 @@ public static class TransformExtension
 /// for ease of use utility and integration.
 /// </summary>
 public class UnityUtilityIntegration
+#if (DEBUG == false || UNITY_EDITOR == true)
+	//Not sure if this is something i want inheriting monobehavior...
+	: UnityEngine.MonoBehaviour
+#endif
 {
 	#region Debug Functions and Features
 	public static bool debugMode { get; set; }

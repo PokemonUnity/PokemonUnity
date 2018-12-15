@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PokemonUnity.Item;
+using PokemonUnity.Pokemon;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 {
 	#region Variables
 	public static GameVariables PersistantPlayerData { get; private set; }
+	public UnityEngine.UI.Image DialogSkin, WindowSkin;
     private static UnityEngine.GameObject MainMenu;// = UnityEngine.GameObject.Find("MainMenu");
     /// <summary>
     /// This is the panel display that shows save data for currently selected CONTINUE option
@@ -205,6 +208,163 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		//ToDo: and save data to profile?... maybe that would be done from battle class
 		//return battle.decision;
 		return (e.Current != Battle.BattleResults.LOST && e.Current != Battle.BattleResults.DRAW);
+	}
+
+	public void AfterBattle()//Battle.BattleResults decision, bool canlose
+	{
+		Battle.BattleResults decision = GameVariables.battle.decision;
+		bool canlose = GameVariables.battle.canLose;
+		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+		{
+			//GameVariables.playerTrainer.Trainer.Party[i].MakeUnMega();
+			//GameVariables.playerTrainer.Trainer.Party[i].MakeUnPrimal();
+		}
+		//if () //In a party
+		//{
+		//	HealAll();
+		//	for (int i = 0; i < GameVariables.Partner.Trainer.Party.Length; i++)
+		//	{
+		//		//GameVariables.Partner.Trainer.Party[i].Heal();
+		//		//GameVariables.Partner.Trainer.Party[i].MakeUnMega();
+		//		//GameVariables.Partner.Trainer.Party[i].MakeUnPrimal();
+		//	}
+		//}
+		if (decision == Battle.BattleResults.LOST || decision == Battle.BattleResults.DRAW)
+		{
+			if (canlose)
+			{
+				for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+				{
+					GameVariables.playerTrainer.Trainer.Party[i].Heal();
+				}
+			}
+		}
+		//yield return new WaitWhile(() => OnEndBattle);
+	}
+
+	public System.Collections.IEnumerator OnEndBattle()
+	{
+		Battle.BattleResults decision = GameVariables.battle.decision;
+		bool canlose = GameVariables.battle.canLose;
+		//if (Settings.USENEWBATTLEMECHANICS || (decision == Battle.BattleResults.LOST || decision == Battle.BattleResults.DRAW))
+		//	if()
+		if(decision == Battle.BattleResults.WON)
+		{
+			for (int pkmn = 0; pkmn < GameVariables.playerTrainer.Trainer.Party.Length; pkmn++)
+			{
+				if (GameVariables.playerTrainer.Trainer.Party[pkmn].hasAbility(Abilities.HONEY_GATHER) &&
+					GameVariables.playerTrainer.Trainer.Party[pkmn].Item == Items.NONE)
+				{
+					int chance = 5 + (int)Math.Floor((GameVariables.playerTrainer.Trainer.Party[pkmn].Level - 1) / 10f) * 5;
+					if (Settings.Rand.Next(100) < chance)
+						//ToDo: Create class to give items to pokemon?... or maybe remove `private set`?
+						continue;//GameVariables.playerTrainer.Trainer.Party[pkmn].SetItem(Items.HONEY);						
+				}
+			}
+		}
+		if ((decision == Battle.BattleResults.LOST || decision == Battle.BattleResults.DRAW) && !canlose)
+		{
+			//Audio.BGM.UnPause
+			//Audio.BGS.UnPause
+			//Redo Fight
+			//StartOver(); 
+		}
+		return null;
+	}
+
+	public void EvolutionCheck(Pokemon[] currentlevels)
+	{
+		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+		{
+			Pokemon pokemon = GameVariables.playerTrainer.Trainer.Party[i];
+			if (pokemon.HP == 0 && !Settings.USENEWBATTLEMECHANICS) continue;
+			if(pokemon.Species != Pokemons.NONE &&
+				(currentlevels[i].Species == Pokemons.NONE
+			//|| pokemon.Level != currentlevels[i]
+			))
+			{
+				//newSpecies = CheckEvolution(pokemon);
+				//if (newSpecies > 0)
+				//{
+				//	//evo = new PokemonEvolutionScene();
+				//	//evo.StartScreen(pokemon, newSpecies)
+				//	//evo.Evolution();
+				//	//evo.EndScreen();
+				//}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
+	/// </summary>
+	public void Pickup(Pokemon pokemon)
+	{
+		if (pokemon.Ability == Abilities.PICKUP || pokemon.isEgg) return;
+		if (pokemon.Item != Items.NONE) return;
+		if (Settings.Rand.Next(10) != 0) return;
+		Items[] pickupList = new Items[]
+		{
+			Items.POTION,
+			Items.ANTIDOTE,
+			Items.SUPER_POTION,
+			Items.GREAT_BALL,
+			Items.REPEL,
+			Items.ESCAPE_ROPE,
+			Items.FULL_HEAL,
+			Items.HYPER_POTION,
+			Items.ULTRA_BALL,
+			Items.REVIVE,
+			Items.RARE_CANDY,
+			Items.SUN_STONE,
+			Items.MOON_STONE,
+			Items.HEART_SCALE,
+			Items.FULL_RESTORE,
+			Items.MAX_REVIVE,
+			Items.PP_UP,
+			Items.MAX_ELIXIR
+		};
+		Items[] pickupListRare = new Items[]
+		{
+			Items.HYPER_POTION,
+			Items.NUGGET,
+			Items.KINGS_ROCK,
+			Items.FULL_RESTORE,
+			Items.ETHER,
+			Items.IRON_BALL,
+			Items.DESTINY_KNOT,
+			Items.ELIXIR,
+			Items.DESTINY_KNOT,
+			Items.LEFTOVERS,
+			Items.DESTINY_KNOT
+		};
+		if (pickupList.Length < 18) return;
+		if (pickupListRare.Length < 11) return;
+		int[] randlist = new int[] { 30, 10, 10, 10, 10, 10, 10, 4, 4, 1, 1 };
+		List<Items> items = new List<Items>();
+		int plevel = Math.Min(100, pokemon.Level);
+		int itemstart = (plevel - 1) / 10;
+		if (itemstart < 0) itemstart = 0;
+		for (int i = 0; i < 9; i++)
+		{
+			items.Add(pickupList[itemstart + i]);
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			items.Add(pickupListRare[itemstart + i]);
+		}
+		int rand = Settings.Rand.Next(100);
+		int cumnumber = 0;
+		for (int i = 0; i < randlist.Length; i++)
+		{
+			cumnumber += randlist[i];
+			if (rand < cumnumber)
+			{
+				//ToDo: Uncomment after creating SetItem()
+				//pokemon.SetItem(items[i]);
+				break;
+			}
+		}
 	}
 	#endregion
 }

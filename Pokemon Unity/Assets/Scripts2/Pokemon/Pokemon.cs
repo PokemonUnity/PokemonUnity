@@ -686,7 +686,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	private bool isShiny()
 	{
 		if (shinyFlag.HasValue) return shinyFlag.Value;
-		int a = this.PersonalId ^ this.TrainerId; //Wild Pokemon TrainerId?
+		int a = this.PersonalId ^ this.OT.PlayerID;//this.TrainerId; //Wild Pokemon TrainerId?
 		int b = a & 0xFFFF;
 		int c = (a >> 16) & 0xFFFF;
 		int d = b ^ c;
@@ -1468,7 +1468,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public void HealHP()
     {
         if (this.isEgg) return;     //ToDo: Throw exception error on returns
-        this.HP = totalHP;          //ToDo: Return 'true' on success?
+        this.HP = TotalHP;          //ToDo: Return 'true' on success?
     }
 
     /// <summary>
