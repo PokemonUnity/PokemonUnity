@@ -90,21 +90,6 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// Held item
     /// </summary>
     public Items Item { get; private set; }
-	#region Move to PokemonBattle Class
-	/// <summary>
-	/// Consumed held item (used in battle only)
-	/// </summary>
-	private bool itemRecycle;
-    /// <summary>
-    /// Resulting held item (used in battle only)
-    /// </summary>
-    private bool itemInitial;
-    /// <summary>
-    /// Where Pokemon can use Belch (used in battle only)
-    /// </summary>
-	/// ToDo: Move to pkemonBattle class
-    private bool belch;
-	#endregion
 	/// <summary>
 	/// Current experience points
 	/// </summary>
@@ -135,7 +120,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// Sleep count/Toxic flag
     /// </summary>
     /// ToDo: Add to Status Class or StatusTurn() method
-    public int statusCount { get; private set; }
+    public int StatusCount { get; protected set; }
     /// <summary>
     /// Steps to hatch egg, 0 if Pokemon is not an egg
     /// </summary>
@@ -155,7 +140,9 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Interface for Pokeball Only item?
 	/// ToDo: None?
 	public Items ballUsed { get; private set; }
-	private PokemonData _base { get; set; }
+	//public int[] EvolveLevels { get { return _base.Evolutions.} }
+	public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
+	protected PokemonData _base { get; private set; }
 	/// <summary>
 	/// Max total EVs
 	/// </summary>
@@ -193,7 +180,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		pokerus = new int[2];
 		Markings = new bool[6]; //{ false, false, false, false, false, false };
 		Status = Status.None;
-		statusCount = 0;
+		StatusCount = 0;
 		ballUsed = Items.NONE;
 		Item = Items.NONE;
 		//calcStats();
@@ -453,6 +440,104 @@ public partial class Pokemon //: ePokemons //PokemonData
 	}
 	#endregion
 
+	#region Evolution
+	/// <summary>
+	/// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
+	/// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
+	/// </summary>
+	/// <returns>null means no evolves for pokemon, int[].Count == 0 means evolutions are not specific to leveling</returns>
+	public int[] GetEvolutionLevels()
+	{
+		if (_base.Evolutions.Length > 0)
+		{
+			List<int> levels = new List<int>();
+			foreach (IPokemonEvolution evolution in _base.Evolutions)
+			{
+				if (evolution.EvolveMethod == EvolutionMethod.Level ||
+					evolution.EvolveMethod == EvolutionMethod.LevelMale ||
+					evolution.EvolveMethod == EvolutionMethod.LevelFemale)
+				{
+					levels.Add((evolution as Pokemon.PokemonData.PokemonEvolution<int>).EvolveValue);
+				}
+			}
+			if (levels.Count == 0)// && _base.Evolutions.Length > 0
+				return new int[0];
+			else
+				return levels.ToArray();
+		}
+		else
+			return null;
+	}
+	/// <summary>
+	/// Returns true or false if evolution occurs during fight or after pokemon survives.
+	/// </summary>
+	public bool CanEvolveDuringBattle()
+	{
+		foreach (IPokemonEvolution item in _base.Evolutions)
+		{
+			switch (item.EvolveMethod)
+			{
+				case EvolutionMethod.Level:
+				case EvolutionMethod.LevelMale:
+				case EvolutionMethod.LevelFemale:
+				case EvolutionMethod.Beauty:
+				case EvolutionMethod.Move:
+				case EvolutionMethod.AttackGreater:
+				case EvolutionMethod.DefenseGreater:
+				case EvolutionMethod.AtkDefEqual:
+				case EvolutionMethod.Ninjask:
+				case EvolutionMethod.Shedinja:
+				case EvolutionMethod.Party:
+				case EvolutionMethod.HoldItem:
+				case EvolutionMethod.Shiny:
+				case EvolutionMethod.Hatred:
+				case EvolutionMethod.Happiness:
+				case EvolutionMethod.Silcoon:
+				case EvolutionMethod.Cascoon:
+					return true;
+				case EvolutionMethod.Item:
+				case EvolutionMethod.ItemMale:
+				case EvolutionMethod.ItemFemale:
+				case EvolutionMethod.Trade:
+				case EvolutionMethod.TradeItem:
+				case EvolutionMethod.TradeSpecies:
+				case EvolutionMethod.HappinessDay:
+				case EvolutionMethod.HappinessNight:
+				case EvolutionMethod.Time:
+				case EvolutionMethod.Season:
+				case EvolutionMethod.HoldItemDay:
+				case EvolutionMethod.HoldItemNight:
+				case EvolutionMethod.Type:
+				case EvolutionMethod.Location:
+				case EvolutionMethod.Weather:
+				case EvolutionMethod.Deaths:
+				default:
+					break;
+			}
+		}
+		return false;
+	}
+	public EvolutionMethod[] GetEvolutionMethods()
+	{
+		List<EvolutionMethod> methods = new List<EvolutionMethod>();
+		foreach (IPokemonEvolution item in _base.Evolutions)
+		{
+			if (!methods.Contains(item.EvolveMethod))
+				methods.Add(item.EvolveMethod);
+		}
+			return methods.ToArray();
+	} 
+	public bool hasEvolveMethod(EvolutionMethod method)
+	{
+		foreach (IPokemonEvolution item in _base.Evolutions)
+		{
+			if (item.EvolveMethod == method)
+				return true;
+		}
+		return false;
+	}
+	#endregion
+
 	#region Gender
 	//private bool? gender;
 	/// <summary>
@@ -601,7 +686,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	private bool isShiny()
 	{
 		if (shinyFlag.HasValue) return shinyFlag.Value;
-		int a = this.PersonalId ^ this.TrainerId; //Wild Pokemon TrainerId?
+		int a = this.PersonalId ^ this.OT.PlayerID;//this.TrainerId; //Wild Pokemon TrainerId?
 		int b = a & 0xFFFF;
 		int c = (a >> 16) & 0xFFFF;
 		int d = b ^ c;
@@ -756,7 +841,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Returns true if the Pokémon knows the given move.
 	/// </summary>
 	public bool hasMove(Moves move) {
-		//if (move <= 0) return false;//move == null ||
+		//Checking if pokemon has a NONE placeholder in moveset might come in handy
+		//if (move == Moves.NONE || move <= 0) return false;
 		for (int i = 0; i < 4; i++)
 		{
 			if (this.moves[i].MoveId == move) return true;
@@ -1315,7 +1401,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Fix Forms and uncomment
 	/// Maybe a method, where when a form is changed
 	/// checks pokemon value and overwrites name and stats
-    public int Form { set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+    public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 
     /// <summary>
     /// Returns the species name of this Pokemon
@@ -1382,7 +1468,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public void HealHP()
     {
         if (this.isEgg) return;     //ToDo: Throw exception error on returns
-        this.HP = totalHP;          //ToDo: Return 'true' on success?
+        this.HP = TotalHP;          //ToDo: Return 'true' on success?
     }
 
     /// <summary>
@@ -1391,7 +1477,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public void HealStatus()
     {
         if (this.isEgg) return;
-        this.Status = 0; statusCount = 0; //remove status ailments
+        this.Status = 0; StatusCount = 0; //remove status ailments
     }
 
     /// <summary>
@@ -2074,7 +2160,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//this.MovesetMoves = movesetMoves; 
             //this.tmList = tmList; 
 
-            this.Evolutions = evolution;
+            this.Evolutions = evolution ?? new IPokemonEvolution[0];
 			//this.EvolutionID = evolutionID;
 			//this.evolutionMethod = evolutionMethod; 
 			//this.evolutionRequirements = evolutionRequirements;
@@ -2209,7 +2295,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 			//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
-        string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
+			string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
 #endif
 			System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open);
 			xmlDoc.Load(fs);
@@ -4641,7 +4727,9 @@ namespace PokemonUnity
 			/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
 			/// Shiny value? I thought it was based on "Friendship"
 			Silcoon,
-			///	<summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1</summary>
+			///	<summary>
+			///	Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 1
+			///	</summary>
 			Cascoon,
 			///	<summary>
 			///	Unique evolution methods: 

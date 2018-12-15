@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f2f451614dac87a428be9a60dfd787e3
-timeCreated: 1527281724
+timeCreated: 1538370369
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -66,6 +66,8 @@ TextureImporter:
     21300118: 173_59
     21300120: 173_60
     21300122: 173_61
+    21300124: 173_62
+    21300126: 173_63
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -93,7 +95,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1000,6 +1002,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 173_62
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 173_63
+      rect:
+        serializedVersion: 2
+        x: 480
         y: 0
         width: 160
         height: 160

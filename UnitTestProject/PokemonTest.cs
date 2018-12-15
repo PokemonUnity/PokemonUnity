@@ -53,7 +53,7 @@ namespace Tests
             Pokemon pokemon = new Pokemon();
             pokemon.Status = Status.Sleep;
 			//If remaining turns for sleep is 0 then the pokemon would be awake.
-            Assert.AreNotEqual(0, pokemon.statusCount);
+            Assert.AreNotEqual(0, pokemon.StatusCount);
 		}
 
         [TestMethod]

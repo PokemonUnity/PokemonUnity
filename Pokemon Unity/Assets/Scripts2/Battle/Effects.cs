@@ -16,7 +16,7 @@ public class Effects
 		public int BideDamage         { get; set; }
 		public int BideTarget         { get; set; }
 		public int Charge             { get; set; }
-		public int ChoiceBand         { get; set; }
+		public PokemonUnity.Move.Moves? ChoiceBand         { get; set; }
 		public int Confusion          { get; set; }
 		public int Counter            { get; set; }
 		public int CounterTarget      { get; set; }
@@ -24,7 +24,7 @@ public class Effects
 		public bool DefenseCurl        { get; set; }
 		public bool DestinyBond        { get; set; }
 		public int Disable            { get; set; }
-		public int DisableMove        { get; set; }
+		public PokemonUnity.Move.Moves DisableMove        { get; set; }
 		public bool Electrify          { get; set; }
 		public int Embargo            { get; set; }
 		public int Encore             { get; set; }
@@ -38,7 +38,7 @@ public class Effects
 		public int FollowMe           { get; set; }
 		public bool Foresight          { get; set; }
 		public int FuryCutter         { get; set; }
-		public bool FutureSight        { get; set; }
+		public int FutureSight        { get; set; }
 		public int FutureSightMove    { get; set; }
 		public int FutureSightUser    { get; set; }
 		public int FutureSightUserPos { get; set; }
@@ -131,6 +131,7 @@ public class Effects
 		public int WishMaker          { get; set; }
 		public int Yawn               { get; set; }
 
+		public Battler() : this (false) { }
 		public Battler(bool batonpass)
 		{
 			if (!batonpass)
@@ -204,7 +205,7 @@ public class Effects
 			this.BideDamage       = 0;
 			this.BideTarget       = -1;
 			this.Charge           = 0;
-			this.ChoiceBand       = -1;
+			this.ChoiceBand       = null;
 			this.Counter          = -1;
 			this.CounterTarget    = -1;
 			this.DefenseCurl      = false;

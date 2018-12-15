@@ -89,6 +89,20 @@ public class Item
         //this.Price = ItemData.getIndexOf(itemId);
     }
 
+	public static Item GetItem(Items item)
+	{
+        for (int i = 0; i < Database.Length; i++)
+        {
+            if (Database[i].ItemId == item)
+            {
+                return Database[i];
+            }
+        }
+		//Zero is masterball; Items in enum dont matach database.
+		//return Database[0]; 
+		return new Item(Items.NONE);
+	}
+
     /// <summary>
     /// Returns int value of Pokemon from PokemonData[] <see cref="Database"/>
     /// </summary>
@@ -121,7 +135,9 @@ public class Item
                     return i;
                 }
             }
-            throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
+            //throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
+            GameVariables.DebugLog("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.", true);
+			return -1;
         }
     }
 

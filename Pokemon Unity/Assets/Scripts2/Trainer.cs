@@ -71,8 +71,27 @@ public class Trainer
 	/// </summary>
 	public int?	SkillCodes { get; private set; }
 
+	#region Wild Pokemon
+	/// <summary>
+	/// True is Double Battle, False is Single Battle, and Null is Wild Pokemon Encounter
+	/// </summary>
+	public bool? IsDouble { get; set; }
+	public bool IsSwarm { get; set; }
+	public Trainer(Pokemon[] wildPkmn, bool isSwarm = false)
+	{
+		ID = TrainerTypes.WildPokemon;
+		wildPkmn.PackParty();
+		IsSwarm = isSwarm;
+		if (wildPkmn.GetCount() > 1)
+			IsDouble = true;
+		else
+			IsDouble = null;
+	}
+	#endregion
+
 	public Trainer(TrainerTypes trainer)
     {
+		IsDouble = false;
 		Party = new Pokemon[6];
 		GetTrainer(trainer);
 	}
@@ -96,7 +115,7 @@ public class Trainer
 				return trainer;
 		}*/
 		#endregion
-		#region Gender
+		#region Gender & IsDouble
 		#endregion
 		#region Base Money
 		switch (type)
@@ -301,6 +320,7 @@ namespace PokemonUnity
 {
 	public enum TrainerTypes
 	{
+		WildPokemon = -1,
 		/// <summary>
 		/// Custom designs or just generic character played by another user
 		/// </summary>

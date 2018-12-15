@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 024ab6789f4b4ec439ce9d5c7f0d7995
-timeCreated: 1527278321
+timeCreated: 1538370146
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -107,6 +107,9 @@ TextureImporter:
     21300200: 74_100
     21300202: 74_101
     21300204: 74_102
+    21300206: 74_103
+    21300208: 74_104
+    21300210: 74_105
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -134,7 +137,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1615,6 +1618,48 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 74_103
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 74_104
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 74_105
+      rect:
+        serializedVersion: 2
+        x: 800
         y: 0
         width: 160
         height: 160

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 44f5c4197db9c784aaee9e260277f1f6
-timeCreated: 1527314139
+timeCreated: 1538370941
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -105,6 +105,8 @@ TextureImporter:
     21300196: 377_98
     21300198: 377_99
     21300200: 377_100
+    21300202: 377_101
+    21300204: 377_102
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -132,7 +134,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1585,6 +1587,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 377_101
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 377_102
+      rect:
+        serializedVersion: 2
+        x: 320
         y: 0
         width: 160
         height: 160

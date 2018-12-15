@@ -23,39 +23,23 @@ public class PokedexHandler : MonoBehaviour {
 	public Rect cursor2Pixel;
 	public PokemonData[] alphabeticalOrder;
 
-
 	// GameObject like vars
-	private GUITexture cursor;
-	private GUITexture preview;
-<<<<<<< HEAD
-	private GUIText guiname;
-=======
-	private new GUIText name;
->>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
-	private GUIText nameShadow;
-	private GUIText id;
-	private GUIText idShadow;
-	private GUIText boxLabel;
-	private GUIText boxLabelShadow;
-	public GUITexture[] pokePreview;
-	public GUITexture background;
-	private GUITexture type1;
-	private GUITexture type2;
-	private GUIText ability1;
-	private GUIText ability2;
-	private GUIText ability1shadow;
-	private GUIText ability2shadow;
-	public GameObject selectedInfo;
-	private GUIText selectedDex;
-	private GUIText selectedDexShadow;
-	private GUITexture selectedIcon;
-	private GUIText selectedStats;
-	private GUIText selectedStatsShadow;
-	public GUITexture cursor2;
-	public GUITexture filterArrow;
-	public GUITexture filterType;
-	public Rect filterArrowRect;
-	public Rect filterTypeRect;
+	private Texture cursor;
+	private Texture preview;
+	private new Text name;
+	private Text nameShadow;
+	private Text id;
+	private Text idShadow;
+	private Text boxLabel;
+	private Text boxLabelShadow;
+	public  Texture[] pokePreview;
+	public  Texture background;
+	private Texture type1;
+	private Texture type2;
+	private Text ability1;
+	private Text ability2;
+	private Text ability1shadow;
+	private Text ability2shadow;
 
 	[SerializeField]
 	private float moveSpeed = 0.16f;
@@ -86,43 +70,42 @@ public class PokedexHandler : MonoBehaviour {
 
 	void Awake () {
 		
-		filterArrowRect = filterArrow.pixelInset;
-		filterTypeRect = filterType.pixelInset;
-		returnSelected = true;
-		cursor = GameObject.Find ("Cursor").GetComponent<GUITexture>();
-		preview = GameObject.Find ("SelectedSprite").GetComponent<GUITexture> ();
-		guiname = GameObject.Find ("SelectedName").GetComponent<GUIText>();
-		nameShadow = GameObject.Find ("SelectedNameShadow").GetComponent<GUIText>();
-		id = GameObject.Find ("SelectedID").GetComponent<GUIText>();
-		idShadow = GameObject.Find ("SelectedIDShadow").GetComponent<GUIText>();
-		boxLabel = GameObject.Find ("BoxHeader").GetComponent<GUIText>();
-		boxLabelShadow = GameObject.Find ("BoxHeaderShadow").GetComponent<GUIText>();
-		pokeSprites = new Texture[45];
-		pokemon = new int[45];
-		for (int i = 0; i < 45; i++) {
-			pokePreview[i] = GameObject.Find ("Pokemon" + i).GetComponent<GUITexture>();
-		}
-		//background = GameObject.Find ("PokedexBackground").GetComponent<GUITexture> ();
-
-		type1 = GameObject.Find ("SelectedType1").GetComponent<GUITexture>();
-		type2 = GameObject.Find ("SelectedType2").GetComponent<GUITexture>();
-		ability1 = GameObject.Find ("SelectedAbility1").GetComponent<GUIText> ();
-		ability2 = GameObject.Find ("SelectedAbility2").GetComponent<GUIText> ();
-		ability1shadow = GameObject.Find ("SelectedAbility1Shadow").GetComponent<GUIText> ();
-		ability2shadow = GameObject.Find ("SelectedAbility2Shadow").GetComponent<GUIText> ();
-		selectedDex = GameObject.Find ("SelectedEntry").GetComponent<GUIText> ();
-		selectedDexShadow = GameObject.Find ("SelectedEntryShadow").GetComponent<GUIText> ();
-		selectedIcon = GameObject.Find ("SelectedIcon").GetComponent<GUITexture> ();
-		selectedStats = GameObject.Find ("Stats").GetComponent<GUIText> ();
-		selectedStatsShadow = GameObject.Find ("StatsShadow").GetComponent<GUIText> ();
-		cursor2pos = 0;
-		generateAlphabetical ();
+		//filterArrowRect = filterArrow.pixelInset;
+		//filterTypeRect = filterType.pixelInset;
+		//returnSelected = true;
+		//cursor = GameObject.Find ("Cursor").GetComponent<GUITexture>();
+		//preview = GameObject.Find ("SelectedSprite").GetComponent<GUITexture> ();
+		//guiname = GameObject.Find ("SelectedName").GetComponent<GUIText>();
+		//nameShadow = GameObject.Find ("SelectedNameShadow").GetComponent<GUIText>();
+		//id = GameObject.Find ("SelectedID").GetComponent<GUIText>();
+		//idShadow = GameObject.Find ("SelectedIDShadow").GetComponent<GUIText>();
+		//boxLabel = GameObject.Find ("BoxHeader").GetComponent<GUIText>();
+		//boxLabelShadow = GameObject.Find ("BoxHeaderShadow").GetComponent<GUIText>();
+		//pokeSprites = new Texture[45];
+		//pokemon = new int[45];
+		//for (int i = 0; i < 45; i++) {
+		//	pokePreview[i] = GameObject.Find ("Pokemon" + i).GetComponent<GUITexture>();
+		//}
+		////background = GameObject.Find ("PokedexBackground").GetComponent<GUITexture> ();
+		//
+		//type1 = GameObject.Find ("SelectedType1").GetComponent<GUITexture>();
+		//type2 = GameObject.Find ("SelectedType2").GetComponent<GUITexture>();
+		//ability1 = GameObject.Find ("SelectedAbility1").GetComponent<GUIText> ();
+		//ability2 = GameObject.Find ("SelectedAbility2").GetComponent<GUIText> ();
+		//ability1shadow = GameObject.Find ("SelectedAbility1Shadow").GetComponent<GUIText> ();
+		//ability2shadow = GameObject.Find ("SelectedAbility2Shadow").GetComponent<GUIText> ();
+		//selectedDex = GameObject.Find ("SelectedEntry").GetComponent<GUIText> ();
+		//selectedDexShadow = GameObject.Find ("SelectedEntryShadow").GetComponent<GUIText> ();
+		//selectedIcon = GameObject.Find ("SelectedIcon").GetComponent<GUITexture> ();
+		//selectedStats = GameObject.Find ("Stats").GetComponent<GUIText> ();
+		//selectedStatsShadow = GameObject.Find ("StatsShadow").GetComponent<GUIText> ();
+		//cursor2pos = 0;
+		//generateAlphabetical ();
 	}
 	void Start()
     {
         this.gameObject.SetActive(false);
     }
-
 
 	public IEnumerator control(){
 		cursorPosition = Vector2.zero;
@@ -356,7 +339,7 @@ public class PokedexHandler : MonoBehaviour {
 			GameObject[] pokedexUI = GameObject.FindGameObjectsWithTag ("Pokedex");
 
 			for (int x = 0; x < pokedexUI.Length; x++) {
-				pokedexUI [x].GetComponent<GUITexture> ().pixelInset = new Rect (startX + (distanceX * increment), startY, pokedexUI [x].GetComponent<GUITexture> ().pixelInset.width, pokedexUI [x].GetComponent<GUITexture> ().pixelInset.height);
+				//pokedexUI [x].GetComponent<GUITexture> ().pixelInset = new Rect (startX + (distanceX * increment), startY, pokedexUI [x].GetComponent<GUITexture> ().pixelInset.width, pokedexUI [x].GetComponent<GUITexture> ().pixelInset.height);
 			}
 
 			selectedInfo.transform.position = new Vector3(starX + (disX * increment), selectedInfo.transform.position.y, selectedInfo.transform.position.z);
@@ -377,8 +360,7 @@ public class PokedexHandler : MonoBehaviour {
 
 	private void updatePreview(int id, int num){
 		//setTyping (id);
-		id = pokemon[num];
-		preview.texture = pokeSprites[num];
+		//preview.texture = pokeSprites[num];
 		setText (id);
 		setTyping (id);
 		updateAbilities (id);
@@ -507,9 +489,8 @@ public class PokedexHandler : MonoBehaviour {
 
 	}
 
-	private void updateAbilities(int i){
-	
-		PokemonDataOld pokemon = PokemonDatabaseOld.getPokemon (i);
+	private void updateAbilities(int i){	
+		/*PokemonDataOld pokemon = PokemonDatabaseOld.getPokemon (i);
 		if (pokemon == null) {
 			ability1.text = "Unknown";
 			ability2.text = "Unknown";
@@ -524,17 +505,16 @@ public class PokedexHandler : MonoBehaviour {
 				ability2.text = "";
 				ability2shadow.text = "";
 			}
-		}
-	
+		}*/	
 	}
 
 	private IEnumerator moveCursor(Vector2 destination)
 	{
 		float increment = 0;
-		float startX = cursor.pixelInset.x;
-		float startY = cursor.pixelInset.y;
-		float distanceX = destination.x - startX;
-		float distanceY = destination.y - startY;
+		//float startX = cursor.pixelInset.x;
+		//float startY = cursor.pixelInset.y;
+		//float distanceX = destination.x - startX;
+		//float distanceY = destination.y - startY;
 		while (increment < 1)
 		{
 			increment += (1 / moveSpeed) * Time.deltaTime;
@@ -542,8 +522,8 @@ public class PokedexHandler : MonoBehaviour {
 			{
 				increment = 1;
 			}
-			cursor.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor.pixelInset.width, cursor.pixelInset.height);
-
+			//cursor.pixelInset = new Rect(startX + (distanceX * increment), startY + (distanceY * increment), cursor.pixelInset.width, cursor.pixelInset.height);
+			
 			yield return null;
 		}
 	}
@@ -573,19 +553,18 @@ public class PokedexHandler : MonoBehaviour {
 	private void setText(int i){
 		id.text = "#" + toNum (i);
 		idShadow.text = "#" + toNum (i);
-		PokemonDataOld pokemon = PokemonDatabaseOld.getPokemon (i);
+		/*PokemonDataOld pokemon = PokemonDatabaseOld.getPokemon (i);
 		if (pokemon == null) {
 			guiname.text = "None";
 			nameShadow.text = "None";
 		} else {
 			guiname.text = pokemon.getName ();
 			nameShadow.text = pokemon.getName ();
-		}
-
+		}*/
 	}
 
 	private void setTyping(int id){
-		if (PokemonDatabaseOld.getPokemon (id) != null) {
+		/*if (PokemonDatabaseOld.getPokemon (id) != null) {
 			type1.texture = typeToImage (PokemonDatabaseOld.getPokemon (id).getType1 ());
 
 			if (PokemonDatabaseOld.getPokemon (id).getType2 () == PokemonDataOld.Type.NONE) {
@@ -597,7 +576,7 @@ public class PokedexHandler : MonoBehaviour {
 		} else {
 			type1.texture = typeToImage (PokemonDataOld.Type.NONE);
 			type2.texture = typeToImage (PokemonDataOld.Type.NONE);
-		}
+		}*/
 	}
 
 	private Texture getIcon(int id){
@@ -647,18 +626,17 @@ public class PokedexHandler : MonoBehaviour {
 
 			for (int i = 0; i < 45; i++) {
 				//Debug.Log (alphabeticalOrder [boxNum * 45 + i + 1].getID ());
-				try {
-					pokePreview [i].texture = getIcon (alphabeticalOrder[boxNum * 45 + i + 1].getID());
-					pokeSprites [i] = getSprite (alphabeticalOrder[boxNum * 45 + i + 1].getID());
-					pokemon [i] = alphabeticalOrder[boxNum * 45 + i + 1].getID();
-				} catch {
-					
-					pokePreview [i].texture = getIcon (0);
-					pokeSprites [i] = getSprite (0);
-					pokemon [i] = 0;
-
-				}
-
+				//try {
+				//	pokePreview [i].texture = getIcon (alphabeticalOrder[boxNum * 45 + i + 1].getID());
+				//	pokeSprites [i] = getSprite (alphabeticalOrder[boxNum * 45 + i + 1].getID());
+				//	pokemon [i] = alphabeticalOrder[boxNum * 45 + i + 1].getID();
+				//} catch {
+				//	
+				//	pokePreview [i].texture = getIcon (0);
+				//	pokeSprites [i] = getSprite (0);
+				//	pokemon [i] = 0;
+				//
+				//}
 			}
 
 
@@ -666,55 +644,44 @@ public class PokedexHandler : MonoBehaviour {
 		}
 	}
 
-<<<<<<< HEAD
-
-
-
-	private Texture typeToImage(PokemonData.Type type){
-=======
-	private Texture typeToImage(PokemonDataOld.Type type){
->>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
-
-
-
-
-		if (type == PokemonDataOld.Type.NORMAL) {
+	private Texture typeToImage(PokemonUnity.Types type){
+		if (type == PokemonUnity.Types.NORMAL) {
 			return types [0];
-		} else if (type == PokemonDataOld.Type.FIGHTING) {
+		} else if (type == PokemonUnity.Types.FIGHTING) {
 			return types [1];
-		} else if (type == PokemonDataOld.Type.FLYING) {
+		} else if (type == PokemonUnity.Types.FLYING) {
 			return types [2];
-		} else if (type == PokemonDataOld.Type.POISON) {
+		} else if (type == PokemonUnity.Types.POISON) {
 			return types [3];
-		} else if (type == PokemonDataOld.Type.GROUND) {
+		} else if (type == PokemonUnity.Types.GROUND) {
 			return types [4];
-		} else if (type == PokemonDataOld.Type.ROCK) {
+		} else if (type == PokemonUnity.Types.ROCK) {
 			return types [5];
-		} else if (type == PokemonDataOld.Type.BUG) {
+		} else if (type == PokemonUnity.Types.BUG) {
 			return types [6];
-		} else if (type == PokemonDataOld.Type.GHOST) {
+		} else if (type == PokemonUnity.Types.GHOST) {
 			return types [7];
-		} else if (type == PokemonDataOld.Type.STEEL) {
+		} else if (type == PokemonUnity.Types.STEEL) {
 			return types [8];
-		} else if (type == PokemonDataOld.Type.NONE) {
+		} else if (type == PokemonUnity.Types.NONE) {
 			return types [9];
-		} else if (type == PokemonDataOld.Type.FIRE) {
+		} else if (type == PokemonUnity.Types.FIRE) {
 			return types [10];
-		} else if (type == PokemonDataOld.Type.WATER) {
+		} else if (type == PokemonUnity.Types.WATER) {
 			return types [11];
-		} else if (type == PokemonDataOld.Type.GRASS) {
+		} else if (type == PokemonUnity.Types.GRASS) {
 			return types [12];
-		} else if (type == PokemonDataOld.Type.ELECTRIC) {
+		} else if (type == PokemonUnity.Types.ELECTRIC) {
 			return types [13];
-		} else if (type == PokemonDataOld.Type.PSYCHIC) {
+		} else if (type == PokemonUnity.Types.PSYCHIC) {
 			return types [14];
-		} else if (type == PokemonDataOld.Type.ICE) {
+		} else if (type == PokemonUnity.Types.ICE) {
 			return types [15];
-		} else if (type == PokemonDataOld.Type.DRAGON) {
+		} else if (type == PokemonUnity.Types.DRAGON) {
 			return types [16];
-		} else if (type == PokemonDataOld.Type.DARK) {
+		} else if (type == PokemonUnity.Types.DARK) {
 			return types [17];
-		} else if (type == PokemonDataOld.Type.FAIRY) {
+		} else if (type == PokemonUnity.Types.FAIRY) {
 			return types [18];
 		} else {
 			return types [9];

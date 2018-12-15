@@ -10,33 +10,8 @@ using PokemonEssential;
 
 public class Move //: MoveData
 {
-	#region Variables
-	//private string name;
-	//private string description;
-	//private string fieldEffect;
-
-	//private int pp;
-	//private int ppups;
-	/*private Pokemon.PokemonData.Type type;
-	private Category category;
-	private int power;
-	private float accuracy;
-	private Target target;
-	private int priority;
-	private bool contact;
-	private bool protectable;
-	private bool magicCoatable;
-	private bool snatchable;
-	private Effect[] moveEffects;
-	private float[] moveParameters;
-	private Contest contest;
-	private int appeal;
-	private int jamming;*/
-
-	private MoveData _base;
-	#endregion
-
 	#region Properties
+	protected MoveDataDex _base { get; private set; }
 	/// <summary>
 	/// The amount of PP remaining for this move
 	/// </summary>
@@ -62,6 +37,9 @@ public class Move //: MoveData
 	public Target Targets { get { return _base.Target; } }
 	public Types Type { get { return _base.Type; } }
 	public Moves MoveId { get { return _base.ID; } }
+	public PokemonEssential.Flags Flag { get { return _base.Flags; } }
+	public Effect Function { get { return (Effect)_base.Function; } }
+	public string FunctionAsString { get { return _base.FunctionAsString; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
 	#endregion
@@ -71,53 +49,1863 @@ public class Move //: MoveData
 	/// <summary>
 	/// Initializes this object to the specified move ID.
 	/// </summary>
-	public Move(Moves move) { _base = new MoveData().getMove(move); PP = _base.PP; }
+	public Move(Moves move) { _base = new MoveDataDex().getMove(move); PP = _base.PP; }
 
 	#region Enumerator
-    [Obsolete("Will replace IIcolour's with Pokemon Showdown's version")]
 	public enum Effect
 	{
 		/// <summary>
-		/// if this check fails, no later effects will run
+		/// Superclass that handles moves using a non-existent function code.
+		/// Damaging moves just do damage with no additional effect.
+		/// Non-damaging moves always fail.
 		/// </summary>
-		Chance,
+		UnimplementedMove = -1,
 		/// <summary>
-		/// for the very specific move effects
+		/// Superclass for a failed move. Always fails.
+		/// This class is unused.
 		/// </summary>
-		Unique,
-		Sound, Punch, Powder,
+		FailedMove = -2,
 		/// <summary>
-		/// (only works on 0= opposite, 1= opposite or genderless)
+		/// Pseudomove for confusion damage.
 		/// </summary>
-		Gender,
-		Burn, Freeze, Paralyze, Poison, Sleep, Toxic,
+		Confusion = -3,
 		/// <summary>
-		/// (chance)
+		/// Implements the move Struggle.
+		/// For cases where the real move named Struggle is not defined.
 		/// </summary>
-		ATK, DEF, SPA, SPD, SPE, ACC, EVA,
-		ATKself, DEFself, SPAself, SPDself, SPEself, ACCself, EVAself,
+		Struggle = -4,
+		//[Description("0x000")]
 		/// <summary>
-		/// (x=set, 0=2-5)
+		/// No additional effect.
 		/// </summary>
-		xHits,
+		x000 = 0x000,
 		/// <summary>
-		/// (amount)
+		/// Does absolutely nothing. (Splash)
 		/// </summary>
-		Heal,
+		x001 = 0x001,
+
 		/// <summary>
-		/// (amount)
+		/// Struggle. Overrides the default Struggle effect above.
 		/// </summary>
-		HPDrain,
+		x002 = 0x002,
+
 		/// <summary>
-		/// (x=set, 0=level)
+		/// Puts the target to sleep.
 		/// </summary>
-		SetDamage,
+		x003 = 0x003,
+
 		/// <summary>
-		/// based off of user's maxHp
+		/// Makes the target drowsy; it will fall asleep at the  of the next turn. (Yawn)
 		/// </summary>
-		Critical, Recoil,
-		Flinch, RecoilMax //Added these 2
-	};
+		x004 = 0x004,
+
+		/// <summary>
+		/// Poisons the target.
+		/// </summary>
+		x005 = 0x005,
+
+		/// <summary>
+		/// Badly poisons the target. (Poison Fang, Toxic)
+		/// (Handled in Battler's pbSuccessCheck): Hits semi-invulnerable targets if user
+		/// is Poison-type and move is status move.
+		/// </summary>
+		x006 = 0x006,
+
+		/// <summary>
+		/// Paralyzes the target.
+		/// Thunder Wave: Doesn't affect target if move's type has no effect on it.
+		/// Bolt Strike: Powers up the next Fusion Flare used this round.
+		/// </summary>
+		x007 = 0x007,
+
+		/// <summary>
+		/// Paralyzes the target. Accuracy perfect in rain, 50% in sunshine. (Thunder)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x008 = 0x008,
+
+		/// <summary>
+		/// Paralyzes the target. May cause the target to flinch. (Thunder Fang)
+		/// </summary>
+		x009 = 0x009,
+
+		/// <summary>
+		/// Burns the target.
+		/// Blue Flare: Powers up the next Fusion Bolt used this round.
+		/// </summary>
+		x00A = 0x00A,
+
+		/// <summary>
+		/// Burns the target. May cause the target to flinch. (Fire Fang)
+		/// </summary>
+		x00B = 0x00B,
+
+		/// <summary>
+		/// Freezes the target.
+		/// </summary>
+		x00C = 0x00C,
+
+		/// <summary>
+		/// Freezes the target. Accuracy perfect in hail. (Blizzard)
+		/// </summary>
+		x00D = 0x00D,
+
+		/// <summary>
+		/// Freezes the target. May cause the target to flinch. (Ice Fang)
+		/// </summary>
+		x00E = 0x00E,
+
+		/// <summary>
+		/// Causes the target to flinch.
+		/// </summary>
+		x00F = 0x00F,
+
+		/// <summary>
+		/// Causes the target to flinch. Does double damage and has perfect accuracy if
+		/// the target is Minimized.
+		/// </summary>
+		x010 = 0x010,
+
+		/// <summary>
+		/// Causes the target to flinch. Fails if the user is not asleep. (Snore)
+		/// </summary>
+		x011 = 0x011,
+
+		/// <summary>
+		/// Causes the target to flinch. Fails if this isn't the user's first turn. (Fake Out)
+		/// </summary>
+		x012 = 0x012,
+
+		/// <summary>
+		/// Confuses the target.
+		/// </summary>
+		x013 = 0x013,
+
+		/// <summary>
+		/// Confuses the target. Chance of causing confusion depends on the cry's volume.
+		/// Confusion chance is 0% if user doesn't have a recorded cry. (Chatter)
+		/// TODO: Play the actual chatter cry as part of the move animation
+		///       @battle.scene.pbChatter(attacker,opponent) // Just plays cry
+		/// </summary>
+		x014 = 0x014,
+
+		/// <summary>
+		/// Confuses the target. Accuracy perfect in rain, 50% in sunshine. (Hurricane)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x015 = 0x015,
+
+		/// <summary>
+		/// Attracts the target. (Attract)
+		/// </summary>
+		x016 = 0x016,
+
+		/// <summary>
+		/// Burns, freezes or paralyzes the target. (Tri Attack)
+		/// </summary>
+		x017 = 0x017,
+
+		/// <summary>
+		/// Cures user of burn, poison and paralysis. (Refresh)
+		/// </summary>
+		x018 = 0x018,
+
+		/// <summary>
+		/// Cures all party Pokémon of permanent status problems. (Aromatherapy, Heal Bell)
+		/// </summary>
+		x019 = 0x019,
+
+		/// <summary>
+		/// Safeguards the user's side from being inflicted with status problems. (Safeguard)
+		/// </summary>
+		x01A = 0x01A,
+
+		/// <summary>
+		/// User passes its status problem to the target. (Psycho Shift)
+		/// </summary>
+		x01B = 0x01B,
+
+		/// <summary>
+		/// Increases the user's Attack by 1 stage.
+		/// </summary>
+		x01C = 0x01C,
+
+		/// <summary>
+		/// Increases the user's Defense by 1 stage.
+		/// </summary>
+		x01D = 0x01D,
+
+		/// <summary>
+		/// Increases the user's Defense by 1 stage. User curls up. (Defense Curl)
+		/// </summary>
+		x01E = 0x01E,
+
+		/// <summary>
+		/// Increases the user's Speed by 1 stage.
+		/// </summary>
+		x01F = 0x01F,
+
+		/// <summary>
+		/// Increases the user's Special Attack by 1 stage.
+		/// </summary>
+		x020 = 0x020,
+
+		/// <summary>
+		/// Increases the user's Special Defense by 1 stage.
+		/// Charges up user's next attack if it is Electric-type. (Charge)
+		/// </summary>
+		x021 = 0x021,
+
+		/// <summary>
+		/// Increases the user's evasion by 1 stage.
+		/// </summary>
+		x022 = 0x022,
+
+		/// <summary>
+		/// Increases the user's critical hit rate. (Focus Energy)
+		/// </summary>
+		x023 = 0x023,
+
+		/// <summary>
+		/// Increases the user's Attack and Defense by 1 stage each. (Bulk Up)
+		/// </summary>
+		x024 = 0x024,
+
+		/// <summary>
+		/// Increases the user's Attack, Defense and accuracy by 1 stage each. (Coil)
+		/// </summary>
+		x025 = 0x025,
+
+		/// <summary>
+		/// Increases the user's Attack and Speed by 1 stage each. (Dragon Dance)
+		/// </summary>
+		x026 = 0x026,
+
+		/// <summary>
+		/// Increases the user's Attack and Special Attack by 1 stage each. (Work Up)
+		/// </summary>
+		x027 = 0x027,
+
+		/// <summary>
+		/// Increases the user's Attack and Sp. Attack by 1 stage each.
+		/// In sunny weather, increase is 2 stages each instead. (Growth)
+		/// </summary>
+		x028 = 0x028,
+
+		/// <summary>
+		/// Increases the user's Attack and accuracy by 1 stage each. (Hone Claws)
+		/// </summary>
+		x029 = 0x029,
+
+		/// <summary>
+		/// Increases the user's Defense and Special Defense by 1 stage each. (Cosmic Power)
+		/// </summary>
+		x02A = 0x02A,
+
+		/// <summary>
+		/// Increases the user's Sp. Attack, Sp. Defense and Speed by 1 stage each. (Quiver Dance)
+		/// </summary>
+		x02B = 0x02B,
+
+		/// <summary>
+		/// Increases the user's Sp. Attack and Sp. Defense by 1 stage each. (Calm Mind)
+		/// </summary>
+		x02C = 0x02C,
+
+		/// <summary>
+		/// Increases the user's Attack, Defense, Speed, Special Attack and Special Defense
+		/// by 1 stage each. (AncientPower, Ominous Wind, Silver Wind)
+		/// </summary>
+		x02D = 0x02D,
+
+		/// <summary>
+		/// Increases the user's Attack by 2 stages.
+		/// </summary>
+		x02E = 0x02E,
+
+		/// <summary>
+		/// Increases the user's Defense by 2 stages.
+		/// </summary>
+		x02F = 0x02F,
+
+		/// <summary>
+		/// Increases the user's Speed by 2 stages.
+		/// </summary>
+		x030 = 0x030,
+
+		/// <summary>
+		/// Increases the user's Speed by 2 stages. Lowers user's weight by 100kg. (Autotomize)
+		/// </summary>
+		x031 = 0x031,
+
+		/// <summary>
+		/// Increases the user's Special Attack by 2 stages.
+		/// </summary>
+		x032 = 0x032,
+
+		/// <summary>
+		/// Increases the user's Special Defense by 2 stages.
+		/// </summary>
+		x033 = 0x033,
+
+		/// <summary>
+		/// Increases the user's evasion by 2 stages. Minimizes the user. (Minimize)
+		/// </summary>
+		x034 = 0x034,
+
+		/// <summary>
+		/// Decreases the user's Defense and Special Defense by 1 stage each. (Shell Smash)
+		/// Increases the user's Attack, Speed and Special Attack by 2 stages each.
+		/// </summary>
+		x035 = 0x035,
+
+		/// <summary>
+		/// Increases the user's Speed by 2 stages, and its Attack by 1 stage. (Shift Gear)
+		/// </summary>
+		x036 = 0x036,
+
+		/// <summary>
+		/// Increases one random stat of the user by 2 stages (except HP). (Acupressure)
+		/// </summary>
+		x037 = 0x037,
+
+		/// <summary>
+		/// Increases the user's Defense by 3 stages.
+		/// </summary>
+		x038 = 0x038,
+
+		/// <summary>
+		/// Increases the user's Special Attack by 3 stages.
+		/// </summary>
+		x039 = 0x039,
+
+		/// <summary>
+		/// Reduces the user's HP by half of max, and sets its Attack to maximum. (Belly Drum)
+		/// </summary>
+		x03A = 0x03A,
+
+		/// <summary>
+		/// Decreases the user's Attack and Defense by 1 stage each. (Superpower)
+		/// </summary>
+		x03B = 0x03B,
+
+		/// <summary>
+		/// Decreases the user's Defense and Special Defense by 1 stage each. (Close Combat)
+		/// </summary>
+		x03C = 0x03C,
+
+		/// <summary>
+		/// Decreases the user's Defense, Special Defense and Speed by 1 stage each.
+		/// User's ally loses 1/16 of its total HP. (V-create)
+		/// </summary>
+		x03D = 0x03D,
+
+		/// <summary>
+		/// Decreases the user's Speed by 1 stage.
+		/// </summary>
+		x03E = 0x03E,
+
+		/// <summary>
+		/// Decreases the user's Special Attack by 2 stages.
+		/// </summary>
+		x03F = 0x03F,
+
+		/// <summary>
+		/// Increases the target's Special Attack by 1 stage. Confuses the target. (Flatter)
+		/// </summary>
+		x040 = 0x040,
+
+		/// <summary>
+		/// Increases the target's Attack by 2 stages. Confuses the target. (Swagger)
+		/// </summary>
+		x041 = 0x041,
+
+		/// <summary>
+		/// Decreases the target's Attack by 1 stage.
+		/// </summary>
+		x042 = 0x042,
+
+		/// <summary>
+		/// Decreases the target's Defense by 1 stage.
+		/// </summary>
+		x043 = 0x043,
+
+		/// <summary>
+		/// Decreases the target's Speed by 1 stage.
+		/// </summary>
+		x044 = 0x044,
+
+		/// <summary>
+		/// Decreases the target's Special Attack by 1 stage.
+		/// </summary>
+		x045 = 0x045,
+
+		/// <summary>
+		/// Decreases the target's Special Defense by 1 stage.
+		/// </summary>
+		x046 = 0x046,
+
+		/// <summary>
+		/// Decreases the target's accuracy by 1 stage.
+		/// </summary>
+		x047 = 0x047,
+
+		/// <summary>
+		/// Decreases the target's evasion by 1 stage OR 2 stages. (Sweet Scent)
+		/// </summary>
+		x048 = 0x048,
+
+		/// <summary>
+		/// Decreases the target's evasion by 1 stage. Ends all barriers and entry
+		/// hazards for the target's side OR on both sides. (Defog)
+		/// </summary>
+		x049 = 0x049,
+
+		/// <summary>
+		/// Decreases the target's Attack and Defense by 1 stage each. (Tickle)
+		/// </summary>
+		x04A = 0x04A,
+
+		/// <summary>
+		/// Decreases the target's Attack by 2 stages.
+		/// </summary>
+		x04B = 0x04B,
+
+		/// <summary>
+		/// Decreases the target's Defense by 2 stages. (Screech)
+		/// </summary>
+		x04C = 0x04C,
+
+		/// <summary>
+		/// Decreases the target's Speed by 2 stages. (Cotton Spore, Scary Face, String Shot)
+		/// </summary>
+		x04D = 0x04D,
+
+		/// <summary>
+		/// Decreases the target's Special Attack by 2 stages. Only works on the opposite
+		/// gender. (Captivate)
+		/// </summary>
+		x04E = 0x04E,
+
+		/// <summary>
+		/// Decreases the target's Special Defense by 2 stages.
+		/// </summary>
+		x04F = 0x04F,
+
+		/// <summary>
+		/// Resets all target's stat stages to 0. (Clear Smog)
+		/// </summary>
+		x050 = 0x050,
+
+		/// <summary>
+		/// Resets all stat stages for all battlers to 0. (Haze)
+		/// </summary>
+		x051 = 0x051,
+
+		/// <summary>
+		/// User and target swap their Attack and Special Attack stat stages. (Power Swap)
+		/// </summary>
+		x052 = 0x052,
+
+		/// <summary>
+		/// User and target swap their Defense and Special Defense stat stages. (Guard Swap)
+		/// </summary>
+		x053 = 0x053,
+
+		/// <summary>
+		/// User and target swap all their stat stages. (Heart Swap)
+		/// </summary>
+		x054 = 0x054,
+
+		/// <summary>
+		/// User copies the target's stat stages. (Psych Up)
+		/// </summary>
+		x055 = 0x055,
+
+		/// <summary>
+		/// For 5 rounds, user's and ally's stat stages cannot be lowered by foes. (Mist)
+		/// </summary>
+		x056 = 0x056,
+
+		/// <summary>
+		/// Swaps the user's Attack and Defense stats. (Power Trick)
+		/// </summary>
+		x057 = 0x057,
+
+		/// <summary>
+		/// Averages the user's and target's Attack.
+		/// Averages the user's and target's Special Attack. (Power Split)
+		/// </summary>
+		x058 = 0x058,
+
+		/// <summary>
+		/// Averages the user's and target's Defense.
+		/// Averages the user's and target's Special Defense. (Guard Split)
+		/// </summary>
+		x059 = 0x059,
+
+		/// <summary>
+		/// Averages the user's and target's current HP. (Pain Split)
+		/// </summary>
+		x05A = 0x05A,
+
+		/// <summary>
+		/// For 4 rounds, doubles the Speed of all battlers on the user's side. (Tailwind)
+		/// </summary>
+		x05B = 0x05B,
+
+		/// <summary>
+		/// This move turns into the last move used by the target, until user switches
+		/// out. (Mimic)
+		/// </summary>
+		x05C = 0x05C,
+
+		/// <summary>
+		/// This move permanently turns into the last move used by the target. (Sketch)
+		/// </summary>
+		x05D = 0x05D,
+
+		/// <summary>
+		/// Changes user's type to that of a random user's move, except this one, OR the
+		/// user's first move's type. (Conversion)
+		/// </summary>
+		x05E = 0x05E,
+
+		/// <summary>
+		/// Changes user's type to a random one that resists/is immune to the last move
+		/// used by the target. (Conversion 2)
+		/// </summary>
+		x05F = 0x05F,
+
+		/// <summary>
+		/// Changes user's type depending on the environment. (Camouflage)
+		/// </summary>
+		x060 = 0x060,
+
+		/// <summary>
+		/// Target becomes Water type. (Soak)
+		/// </summary>
+		x061 = 0x061,
+
+		/// <summary>
+		/// User copes target's types. (Reflect Type)
+		/// </summary>
+		x062 = 0x062,
+
+		/// <summary>
+		/// Target's ability becomes Simple. (Simple Beam)
+		/// </summary>
+		x063 = 0x063,
+
+		/// <summary>
+		/// Target's ability becomes Insomnia. (Worry Seed)
+		/// </summary>
+		x064 = 0x064,
+
+		/// <summary>
+		/// User copies target's ability. (Role Play)
+		/// </summary>
+		x065 = 0x065,
+
+		/// <summary>
+		/// Target copies user's ability. (Entrainment)
+		/// </summary>
+		x066 = 0x066,
+
+		/// <summary>
+		/// User and target swap abilities. (Skill Swap)
+		/// </summary>
+		x067 = 0x067,
+
+		/// <summary>
+		/// Target's ability is negated. (Gastro Acid)
+		/// </summary>
+		x068 = 0x068,
+
+		/// <summary>
+		/// User transforms into the target. (Transform)
+		/// </summary>
+		x069 = 0x069,
+
+		/// <summary>
+		/// Inflicts a fixed 20HP damage. (SonicBoom)
+		/// </summary>
+		x06A = 0x06A,
+
+		/// <summary>
+		/// Inflicts a fixed 40HP damage. (Dragon Rage)
+		/// </summary>
+		x06B = 0x06B,
+
+		/// <summary>
+		/// Halves the target's current HP. (Super Fang)
+		/// </summary>
+		x06C = 0x06C,
+
+		/// <summary>
+		/// Inflicts damage equal to the user's level. (Night Shade, Seismic Toss)
+		/// </summary>
+		x06D = 0x06D,
+
+		/// <summary>
+		/// Inflicts damage to bring the target's HP down to equal the user's HP. (Endeavor)
+		/// </summary>
+		x06E = 0x06E,
+
+		/// <summary>
+		/// Inflicts damage between 0.5 and 1.5 times the user's level. (Psywave)
+		/// </summary>
+		x06F = 0x06F,
+
+		/// <summary>
+		/// OHKO. Accuracy increases by difference between levels of user and target.
+		/// </summary>
+		x070 = 0x070,
+
+		/// <summary>
+		/// Counters a physical move used against the user this round, with 2x the power. (Counter)
+		/// </summary>
+		x071 = 0x071,
+
+		/// <summary>
+		/// Counters a specical move used against the user this round, with 2x the power. (Mirror Coat)
+		/// </summary>
+		x072 = 0x072,
+
+		/// <summary>
+		/// Counters the last damaging move used against the user this round, with 1.5x
+		/// the power. (Metal Burst)
+		/// </summary>
+		x073 = 0x073,
+
+		/// <summary>
+		/// The target's ally loses 1/16 of its max HP. (Flame Burst)
+		/// </summary>
+		x074 = 0x074,
+
+		/// <summary>
+		/// Power is doubled if the target is using Dive. (Surf)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x075 = 0x075,
+
+		/// <summary>
+		/// Power is doubled if the target is using Dig. Power is halved if Grassy Terrain
+		/// is in effect. (Earthquake)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x076 = 0x076,
+
+		/// <summary>
+		/// Power is doubled if the target is using Bounce, Fly or Sky Drop. (Gust)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x077 = 0x077,
+
+		/// <summary>
+		/// Power is doubled if the target is using Bounce, Fly or Sky Drop. (Twister)
+		/// May make the target flinch.
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x078 = 0x078,
+
+		/// <summary>
+		/// Power is doubled if Fusion Flare has already been used this round. (Fusion Bolt)
+		/// </summary>
+		x079 = 0x079,
+
+		/// <summary>
+		/// Power is doubled if Fusion Bolt has already been used this round. (Fusion Flare)
+		/// </summary>
+		x07A = 0x07A,
+
+		/// <summary>
+		/// Power is doubled if the target is poisoned. (Venoshock)
+		/// </summary>
+		x07B = 0x07B,
+
+		/// <summary>
+		/// Power is doubled if the target is paralyzed. Cures the target of paralysis.
+		/// (SmellingSalt)
+		/// </summary>
+		x07C = 0x07C,
+
+		/// <summary>
+		/// Power is doubled if the target is asleep. Wakes the target up. (Wake-Up Slap)
+		/// </summary>
+		x07D = 0x07D,
+
+		/// <summary>
+		/// Power is doubled if the user is burned, poisoned or paralyzed. (Facade)
+		/// </summary>
+		x07E = 0x07E,
+
+		/// <summary>
+		/// Power is doubled if the target has a status problem. (Hex)
+		/// </summary>
+		x07F = 0x07F,
+
+		/// <summary>
+		/// Power is doubled if the target's HP is down to 1/2 or less. (Brine)
+		/// </summary>
+		x080 = 0x080,
+
+		/// <summary>
+		/// Power is doubled if the user has lost HP due to the target's move this round.
+		/// (Revenge, Avalanche)
+		/// </summary>
+		x081 = 0x081,
+
+		/// <summary>
+		/// Power is doubled if the target has already lost HP this round. (Assurance)
+		/// </summary>
+		x082 = 0x082,
+
+		/// <summary>
+		/// Power is doubled if a user's ally has already used this move this round. (Round)
+		/// If an ally is about to use the same move, make it go next, ignoring priority.
+		/// </summary>
+		x083 = 0x083,
+
+		/// <summary>
+		/// Power is doubled if the target has already moved this round. (Payback)
+		/// </summary>
+		x084 = 0x084,
+
+		/// <summary>
+		/// Power is doubled if a user's teammate fainted last round. (Retaliate)
+		/// </summary>
+		x085 = 0x085,
+
+		/// <summary>
+		/// Power is doubled if the user has no held item. (Acrobatics)
+		/// </summary>
+		x086 = 0x086,
+
+		/// <summary>
+		/// Power is doubled in weather. Type changes depending on the weather. (Weather Ball)
+		/// </summary>
+		x087 = 0x087,
+
+		/// <summary>
+		/// Power is doubled if a foe tries to switch out or use U-turn/Volt Switch/
+		/// Parting Shot. (Pursuit)
+		/// (Handled in Battle's pbAttackPhase): Makes this attack happen before switching.
+		/// </summary>
+		x088 = 0x088,
+
+		/// <summary>
+		/// Power increases with the user's happiness. (Return)
+		/// </summary>
+		x089 = 0x089,
+
+		/// <summary>
+		/// Power decreases with the user's happiness. (Frustration)
+		/// </summary>
+		x08A = 0x08A,
+
+		/// <summary>
+		/// Power increases with the user's HP. (Eruption, Water Spout)
+		/// </summary>
+		x08B = 0x08B,
+
+		/// <summary>
+		/// Power increases with the target's HP. (Crush Grip, Wring Out)
+		/// </summary>
+		x08C = 0x08C,
+
+		/// <summary>
+		/// Power increases the quicker the target is than the user. (Gyro Ball)
+		/// </summary>
+		x08D = 0x08D,
+
+		/// <summary>
+		/// Power increases with the user's positive stat changes (ignores negative ones).
+		/// (Stored Power)
+		/// </summary>
+		x08E = 0x08E,
+
+		/// <summary>
+		/// Power increases with the target's positive stat changes (ignores negative ones).
+		/// (Punishment)
+		/// </summary>
+		x08F = 0x08F,
+
+		/// <summary>
+		/// Power and type depends on the user's IVs. (Hidden Power)
+		/// </summary>
+		x090 = 0x090,
+
+		/// <summary>
+		/// Power doubles for each consecutive use. (Fury Cutter)
+		/// </summary>
+		x091 = 0x091,
+
+		/// <summary>
+		/// Power is multiplied by the number of consecutive rounds in which this move was
+		/// used by any Pokémon on the user's side. (Echoed Voice)
+		/// </summary>
+		x092 = 0x092,
+
+		/// <summary>
+		/// User rages until the start of a round in which they don't use this move. (Rage)
+		/// (Handled in Battler's pbProcessMoveAgainstTarget): Ups rager's Attack by 1
+		/// stage each time it loses HP due to a move.
+		/// </summary>
+		x093 = 0x093,
+
+		/// <summary>
+		/// Randomly damages or heals the target. (Present)
+		/// </summary>
+		x094 = 0x094,
+
+		/// <summary>
+		/// Power is chosen at random. Power is doubled if the target is using Dig. (Magnitude)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x095 = 0x095,
+
+		/// <summary>
+		/// Power and type depend on the user's held berry. Destroys the berry. (Natural Gift)
+		/// </summary>
+		x096 = 0x096,
+
+		/// <summary>
+		/// Power increases the less PP this move has. (Trump Card)
+		/// </summary>
+		x097 = 0x097,
+
+		/// <summary>
+		/// Power increases the less HP the user has. (Flail, Reversal)
+		/// </summary>
+		x098 = 0x098,
+
+		/// <summary>
+		/// Power increases the quicker the user is than the target. (Electro Ball)
+		/// </summary>
+		x099 = 0x099,
+
+		/// <summary>
+		/// Power increases the heavier the target is. (Grass Knot, Low Kick)
+		/// </summary>
+		x09A = 0x09A,
+
+		/// <summary>
+		/// Power increases the heavier the user is than the target. (Heat Crash, Heavy Slam)
+		/// </summary>
+		x09B = 0x09B,
+
+		/// <summary>
+		/// Powers up the ally's attack this round by 1.5. (Helping Hand)
+		/// </summary>
+		x09C = 0x09C,
+
+		/// <summary>
+		/// Weakens Electric attacks. (Mud Sport)
+		/// </summary>
+		x09D = 0x09D,
+
+		/// <summary>
+		/// Weakens Fire attacks. (Water Sport)
+		/// </summary>
+		x09E = 0x09E,
+
+		/// <summary>
+		/// Type depends on the user's held item. (Judgment, Techno Blast)
+		/// </summary>
+		x09F = 0x09F,
+
+		/// <summary>
+		/// This attack is always a critical hit. (Frost Breath, Storm Throw)
+		/// </summary>
+		x0A0 = 0x0A0,
+
+		/// <summary>
+		/// For 5 rounds, foes' attacks cannot become critical hits. (Lucky Chant)
+		/// </summary>
+		x0A1 = 0x0A1,
+
+		/// <summary>
+		/// For 5 rounds, lowers power of physical attacks against the user's side. (Reflect)
+		/// </summary>
+		x0A2 = 0x0A2,
+
+		/// <summary>
+		/// For 5 rounds, lowers power of special attacks against the user's side. (Light Screen)
+		/// </summary>
+		x0A3 = 0x0A3,
+
+		/// <summary>
+		/// Effect depends on the environment. (Secret Power)
+		/// </summary>
+		x0A4 = 0x0A4,
+
+		/// <summary>
+		/// Always hits.
+		/// </summary>
+		x0A5 = 0x0A5,
+
+		/// <summary>
+		/// User's attack next round against the target will definitely hit. (Lock-On, Mind Reader)
+		/// </summary>
+		x0A6 = 0x0A6,
+
+		/// <summary>
+		/// Target's evasion stat changes are ignored from now on. (Foresight, Odor Sleuth)
+		/// Normal and Fighting moves have normal effectiveness against the Ghost-type target.
+		/// </summary>
+		x0A7 = 0x0A7,
+
+		/// <summary>
+		/// Target's evasion stat changes are ignored from now on. (Miracle Eye)
+		/// Psychic moves have normal effectiveness against the Dark-type target.
+		/// </summary>
+		x0A8 = 0x0A8,
+
+		/// <summary>
+		/// This move ignores target's Defense, Special Defense and evasion stat changes.
+		/// (Chip Away, Sacred Sword)
+		/// </summary>
+		x0A9 = 0x0A9,
+		/// Handled in superclass public object pbAccuracyCheck and public object pbCalcDamage, do not edit!
+
+		/// <summary>
+		/// User is protected against moves with the "B" flag this round. (Detect, Protect)
+		/// </summary>
+		x0AA = 0x0AA,
+
+		/// <summary>
+		/// User's side is protected against moves with priority greater than 0 this round.
+		/// (Quick Guard)
+		/// </summary>
+		x0AB = 0x0AB,
+
+		/// <summary>
+		/// User's side is protected against moves that target multiple battlers this round.
+		/// (Wide Guard)
+		/// </summary>
+		x0AC = 0x0AC,
+
+		/// <summary>
+		/// Ignores target's protections. If successful, all other moves this round
+		/// ignore them too. (Feint)
+		/// </summary>
+		x0AD = 0x0AD,
+
+		/// <summary>
+		/// Uses the last move that the target used. (Mirror Move)
+		/// </summary>
+		x0AE = 0x0AE,
+
+		/// <summary>
+		/// Uses the last move that was used. (Copycat)
+		/// </summary>
+		x0AF = 0x0AF,
+
+		/// <summary>
+		/// Uses the move the target was about to use this round, with 1.5x power. (Me First)
+		/// </summary>
+		x0B0 = 0x0B0,
+
+		/// <summary>
+		/// This round, reflects all moves with the "C" flag targeting the user back at
+		/// their origin. (Magic Coat)
+		/// </summary>
+		x0B1 = 0x0B1,
+
+		/// <summary>
+		/// This round, snatches all used moves with the "D" flag. (Snatch)
+		/// </summary>
+		x0B2 = 0x0B2,
+
+		/// <summary>
+		/// Uses a different move depending on the environment. (Nature Power)
+		/// </summary>
+		x0B3 = 0x0B3,
+
+		/// <summary>
+		/// Uses a random move the user knows. Fails if user is not asleep. (Sleep Talk)
+		/// </summary>
+		x0B4 = 0x0B4,
+
+		/// <summary>
+		/// Uses a random move known by any non-user Pokémon in the user's party. (Assist)
+		/// </summary>
+		x0B5 = 0x0B5,
+
+		/// <summary>
+		/// Uses a random move that exists. (Metronome)
+		/// </summary>
+		x0B6 = 0x0B6,
+
+		/// <summary>
+		/// The target can no longer use the same move twice in a row. (Torment)
+		/// </summary>
+		x0B7 = 0x0B7,
+
+		/// <summary>
+		/// Disables all target's moves that the user also knows. (Imprison)
+		/// </summary>
+		x0B8 = 0x0B8,
+
+		/// <summary>
+		/// For 5 rounds, disables the last move the target used. (Disable)
+		/// </summary>
+		x0B9 = 0x0B9,
+
+		/// <summary>
+		/// For 4 rounds, disables the target's non-damaging moves. (Taunt)
+		/// </summary>
+		x0BA = 0x0BA,
+
+		/// <summary>
+		/// For 5 rounds, disables the target's healing moves. (Heal Block)
+		/// </summary>
+		x0BB = 0x0BB,
+
+		/// <summary>
+		/// For 4 rounds, the target must use the same move each round. (Encore)
+		/// </summary>
+		x0BC = 0x0BC,
+
+		/// <summary>
+		/// Hits twice.
+		/// </summary>
+		x0BD = 0x0BD,
+
+		/// <summary>
+		/// Hits twice. May poison the target on each hit. (Twineedle)
+		/// </summary>
+		x0BE = 0x0BE,
+
+		/// <summary>
+		/// Hits 3 times. Power is multiplied by the hit number. (Triple Kick)
+		/// An accuracy check is performed for each hit.
+		/// </summary>
+		x0BF = 0x0BF,
+
+		/// <summary>
+		/// Hits 2-5 times.
+		/// </summary>
+		x0C0 = 0x0C0,
+
+		/// <summary>
+		/// Hits X times, where X is 1 (the user) plus the number of non-user unfainted
+		/// status-free Pokémon in the user's party (the participants). Fails if X is 0.
+		/// Base power of each hit depends on the base Attack stat for the species of that
+		/// hit's participant. (Beat Up)
+		/// </summary>
+		x0C1 = 0x0C1,
+
+		/// <summary>
+		/// Two turn attack. Attacks first turn, skips second turn (if successful).
+		/// </summary>
+		x0C2 = 0x0C2,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Razor Wind)
+		/// </summary>
+		x0C3 = 0x0C3,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (SolarBeam)
+		/// Power halved in all weather except sunshine. In sunshine, takes 1 turn instead.
+		/// </summary>
+		x0C4 = 0x0C4,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Freeze Shock)
+		/// May paralyze the target.
+		/// </summary>
+		x0C5 = 0x0C5,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Ice Burn)
+		/// May burn the target.
+		/// </summary>
+		x0C6 = 0x0C6,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Sky Attack)
+		/// May make the target flinch.
+		/// </summary>
+		x0C7 = 0x0C7,
+
+		/// <summary>
+		/// Two turn attack. Ups user's Defense by 1 stage first turn, attacks second turn.
+		/// (Skull Bash)
+		/// </summary>
+		x0C8 = 0x0C8,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Fly)
+		/// (Handled in Battler's pbSuccessCheck): Is semi-invulnerable during use.
+		/// </summary>
+		x0C9 = 0x0C9,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Dig)
+		/// (Handled in Battler's pbSuccessCheck): Is semi-invulnerable during use.
+		/// </summary>
+		x0CA = 0x0CA,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Dive)
+		/// (Handled in Battler's pbSuccessCheck): Is semi-invulnerable during use.
+		/// </summary>
+		x0CB = 0x0CB,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Bounce)
+		/// May paralyze the target.
+		/// (Handled in Battler's pbSuccessCheck): Is semi-invulnerable during use.
+		/// </summary>
+		x0CC = 0x0CC,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Shadow Force)
+		/// Is invulnerable during use.
+		/// Ignores target's Detect, King's Shield, Mat Block, Protect and Spiky Shield
+		/// this round. If successful, negates them this round.
+		/// </summary>
+		x0CD = 0x0CD,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Sky Drop)
+		/// (Handled in Battler's pbSuccessCheck):  Is semi-invulnerable during use.
+		/// Target is also semi-invulnerable during use, and can't take any action.
+		/// Doesn't damage airborne Pokémon (but still makes them unable to move during).
+		/// </summary>
+		x0CE = 0x0CE,
+
+		/// <summary>
+		/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
+		/// at  of each round.
+		/// </summary>
+		x0CF = 0x0CF,
+
+		/// <summary>
+		/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
+		/// at  of each round. (Whirlpool)
+		/// Power is doubled if target is using Dive.
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x0D0 = 0x0D0,
+
+		/// <summary>
+		/// User must use this move for 2 more rounds. No battlers can sleep. (Uproar)
+		/// </summary>
+		x0D1 = 0x0D1,
+
+		/// <summary>
+		/// User must use this move for 1 or 2 more rounds. At , user becomes confused.
+		/// (Outrage, Petal Dange, Thrash)
+		/// </summary>
+		x0D2 = 0x0D2,
+
+		/// <summary>
+		/// User must use this move for 4 more rounds. Power doubles each round.
+		/// Power is also doubled if user has curled up. (Ice Ball, Rollout)
+		/// </summary>
+		x0D3 = 0x0D3,
+
+		/// <summary>
+		/// User bides its time this round and next round. The round after, deals 2x the
+		/// total damage it took while biding to the last battler that damaged it. (Bide)
+		/// </summary>
+		x0D4 = 0x0D4,
+
+		/// <summary>
+		/// Heals user by 1/2 of its max HP.
+		/// </summary>
+		x0D5 = 0x0D5,
+
+		/// <summary>
+		/// Heals user by 1/2 of its max HP. (Roost)
+		/// User roosts, and its Flying type is ignored for attacks used against it.
+		/// </summary>
+		x0D6 = 0x0D6,
+
+		/// <summary>
+		/// Battler in user's position is healed by 1/2 of its max HP, at the  of the
+		/// next round. (Wish)
+		/// </summary>
+		x0D7 = 0x0D7,
+
+		/// <summary>
+		/// Heals user by an amount depending on the weather. (Moonlight, Morning Sun,
+		/// Synthesis)
+		/// </summary>
+		x0D8 = 0x0D8,
+
+		/// <summary>
+		/// Heals user to full HP. User falls asleep for 2 more rounds. (Rest)
+		/// </summary>
+		x0D9 = 0x0D9,
+
+		/// <summary>
+		/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the  of each round.
+		/// (Aqua Ring)
+		/// </summary>
+		x0DA = 0x0DA,
+
+		/// <summary>
+		/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the  of each
+		/// round, and cannot flee or switch out. (Ingrain)
+		/// </summary>
+		x0DB = 0x0DB,
+
+		/// <summary>
+		/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the  of each round,
+		/// and the Pokémon in the user's position gains the same amount. (Leech Seed)
+		/// </summary>
+		x0DC = 0x0DC,
+
+		/// <summary>
+		/// User gains half the HP it inflicts as damage.
+		/// </summary>
+		x0DD = 0x0DD,
+
+		/// <summary>
+		/// User gains half the HP it inflicts as damage. (Dream Eater)
+		/// (Handled in Battler's pbSuccessCheck): Fails if target is not asleep.
+		/// </summary>
+		x0DE = 0x0DE,
+
+		/// <summary>
+		/// Heals target by 1/2 of its max HP. (Heal Pulse)
+		/// </summary>
+		x0DF = 0x0DF,
+
+		/// <summary>
+		/// User faints. (Explosion, Selfdestruct)
+		/// </summary>
+		x0E0 = 0x0E0,
+
+		/// <summary>
+		/// Inflicts fixed damage equal to user's current HP. (Final Gambit)
+		/// User faints (if successful).
+		/// </summary>
+		x0E1 = 0x0E1,
+
+		/// <summary>
+		/// Decreases the target's Attack and Special Attack by 2 stages each. (Memento)
+		/// User faints (even if effect does nothing).
+		/// </summary>
+		x0E2 = 0x0E2,
+
+		/// <summary>
+		/// User faints. The Pokémon that replaces the user is fully healed (HP and
+		/// status). Fails if user won't be replaced. (Healing Wish)
+		/// </summary>
+		x0E3 = 0x0E3,
+
+		/// <summary>
+		/// User faints. The Pokémon that replaces the user is fully healed (HP, PP and
+		/// status). Fails if user won't be replaced. (Lunar Dance)
+		/// </summary>
+		x0E4 = 0x0E4,
+
+		/// <summary>
+		/// All current battlers will perish after 3 more rounds. (Perish Song)
+		/// </summary>
+		x0E5 = 0x0E5,
+
+		/// <summary>
+		/// If user is KO'd before it next moves, the attack that caused it loses all PP.
+		/// (Grudge)
+		/// </summary>
+		x0E6 = 0x0E6,
+
+		/// <summary>
+		/// If user is KO'd before it next moves, the battler that caused it also faints.
+		/// (Destiny Bond)
+		/// </summary>
+		x0E7 = 0x0E7,
+
+		/// <summary>
+		/// If user would be KO'd this round, it survives with 1HP instead. (Endure)
+		/// </summary>
+		x0E8 = 0x0E8,
+
+		/// <summary>
+		/// If target would be KO'd by this attack, it survives with 1HP instead. (False Swipe)
+		/// </summary>
+		x0E9 = 0x0E9,
+		/// Handled in superclass public object pbReduceHPDamage, do not edit!
+
+		/// <summary>
+		/// User flees from battle. Fails in trainer battles. (Teleport)
+		/// </summary>
+		x0EA = 0x0EA,
+
+		/// <summary>
+		/// In wild battles, makes target flee. Fails if target is a higher level than the
+		/// user.
+		/// In trainer battles, target switches out.
+		/// For status moves. (Roar, Whirlwind)
+		/// </summary>
+		x0EB = 0x0EB,
+
+		/// <summary>
+		/// In wild battles, makes target flee. Fails if target is a higher level than the
+		/// user.
+		/// In trainer battles, target switches out.
+		/// For damaging moves. (Circle Throw, Dragon Tail)
+		/// </summary>
+		x0EC = 0x0EC,
+
+		/// <summary>
+		/// User switches out. Various effects affecting the user are passed to the
+		/// replacement. (Baton Pass)
+		/// </summary>
+		x0ED = 0x0ED,
+
+		/// <summary>
+		/// After inflicting damage, user switches out. Ignores trapping moves.
+		/// (U-turn, Volt Switch)
+		/// TODO: Pursuit should interrupt this move.
+		/// </summary>
+		x0EE = 0x0EE,
+
+		/// <summary>
+		/// Target can no longer switch out or flee, as long as the user remains active.
+		/// (Block, Mean Look, Spider Web, Thousand Waves)
+		/// </summary>
+		x0EF = 0x0EF,
+
+		/// <summary>
+		/// Target drops its item. It regains the item at the  of the battle. (Knock Off)
+		/// If target has a losable item, damage is multiplied by 1.5.
+		/// </summary>
+		x0F0 = 0x0F0,
+
+		/// <summary>
+		/// User steals the target's item, if the user has none itself. (Covet, Thief)
+		/// Items stolen from wild Pokémon are kept after the battle.
+		/// </summary>
+		x0F1 = 0x0F1,
+
+		/// <summary>
+		/// User and target swap items. They remain swapped after wild battles.
+		/// (Switcheroo, Trick)
+		/// </summary>
+		x0F2 = 0x0F2,
+
+		/// <summary>
+		/// User gives its item to the target. The item remains given after wild battles.
+		/// (Bestow)
+		/// </summary>
+		x0F3 = 0x0F3,
+
+		/// <summary>
+		/// User consumes target's berry and gains its effect. (Bug Bite, Pluck)
+		/// </summary>
+		x0F4 = 0x0F4,
+
+		/// <summary>
+		/// Target's berry is destroyed. (Incinerate)
+		/// </summary>
+		x0F5 = 0x0F5,
+
+		/// <summary>
+		/// User recovers the last item it held and consumed. (Recycle)
+		/// </summary>
+		x0F6 = 0x0F6,
+
+		/// <summary>
+		/// User flings its item at the target. Power and effect depend on the item. (Fling)
+		/// </summary>
+		x0F7 = 0x0F7,
+
+		/// <summary>
+		/// For 5 rounds, the target cannnot use its held item, its held item has no
+		/// effect, and no items can be used on it. (Embargo)
+		/// </summary>
+		x0F8 = 0x0F8,
+
+		/// <summary>
+		/// For 5 rounds, all held items cannot be used in any way and have no effect.
+		/// Held items can still change hands, but can't be thrown. (Magic Room)
+		/// </summary>
+		x0F9 = 0x0F9,
+
+		/// <summary>
+		/// User takes recoil damage equal to 1/4 of the damage this move dealt.
+		/// </summary>
+		x0FA = 0x0FA,
+
+		/// <summary>
+		/// User takes recoil damage equal to 1/3 of the damage this move dealt.
+		/// </summary>
+		x0FB = 0x0FB,
+
+		/// <summary>
+		/// User takes recoil damage equal to 1/2 of the damage this move dealt.
+		/// (Head Smash)
+		/// </summary>
+		x0FC = 0x0FC,
+
+		/// <summary>
+		/// User takes recoil damage equal to 1/3 of the damage this move dealt.
+		/// May paralyze the target. (Volt Tackle)
+		/// </summary>
+		x0FD = 0x0FD,
+
+		/// <summary>
+		/// User takes recoil damage equal to 1/3 of the damage this move dealt.
+		/// May burn the target. (Flare Blitz)
+		/// </summary>
+		x0FE = 0x0FE,
+
+		/// <summary>
+		/// Starts sunny weather. (Sunny Day)
+		/// </summary>
+		x0FF = 0x0FF,
+
+		/// <summary>
+		/// Starts rainy weather. (Rain Dance)
+		/// </summary>
+		x100 = 0x100,
+
+		/// <summary>
+		/// Starts sandstorm weather. (Sandstorm)
+		/// </summary>
+		x101 = 0x101,
+
+		/// <summary>
+		/// Starts hail weather. (Hail)
+		/// </summary>
+		x102 = 0x102,
+
+		/// <summary>
+		/// Entry hazard. Lays spikes on the opposing side (max. 3 layers). (Spikes)
+		/// </summary>
+		x103 = 0x103,
+
+		/// <summary>
+		/// Entry hazard. Lays poison spikes on the opposing side (max. 2 layers).
+		/// (Toxic Spikes)
+		/// </summary>
+		x104 = 0x104,
+
+		/// <summary>
+		/// Entry hazard. Lays stealth rocks on the opposing side. (Stealth Rock)
+		/// </summary>
+		x105 = 0x105,
+
+		/// <summary>
+		/// Forces ally's Pledge move to be used next, if it hasn't already. (Grass Pledge)
+		/// Combo's with ally's Pledge move if it was just used. Power is doubled, and
+		/// causes either a sea of fire or a swamp on the opposing side.
+		/// </summary>
+		x106 = 0x106,
+
+		/// <summary>
+		/// Forces ally's Pledge move to be used next, if it hasn't already. (Fire Pledge)
+		/// Combo's with ally's Pledge move if it was just used. Power is doubled, and
+		/// causes either a sea of fire on the opposing side or a rainbow on the user's side.
+		/// </summary>
+		x107 = 0x107,
+
+		/// <summary>
+		/// Forces ally's Pledge move to be used next, if it hasn't already. (Water Pledge)
+		/// Combo's with ally's Pledge move if it was just used. Power is doubled, and
+		/// causes either a swamp on the opposing side or a rainbow on the user's side.
+		/// </summary>
+		x108 = 0x108,
+
+		/// <summary>
+		/// Scatters coins that the player picks up after winning the battle. (Pay Day)
+		/// </summary>
+		x109 = 0x109,
+
+		/// <summary>
+		/// Ends the opposing side's Light Screen and Reflect. (Brick Break)
+		/// </summary>
+		x10A = 0x10A,
+
+		/// <summary>
+		/// If attack misses, user takes crash damage of 1/2 of max HP.
+		/// (Hi Jump Kick, Jump Kick)
+		/// </summary>
+		x10B = 0x10B,
+
+		/// <summary>
+		/// User turns 1/4 of max HP into a substitute. (Substitute)
+		/// </summary>
+		x10C = 0x10C,
+
+		/// <summary>
+		/// User is not Ghost: Decreases the user's Speed, increases the user's Attack &
+		/// Defense by 1 stage each.
+		/// User is Ghost: User loses 1/2 of max HP, and curses the target.
+		/// Cursed Pokémon lose 1/4 of their max HP at the  of each round.
+		/// (Curse)
+		/// </summary>
+		x10D = 0x10D,
+
+		/// <summary>
+		/// Target's last move used loses 4 PP. (Spite)
+		/// </summary>
+		x10E = 0x10E,
+
+		/// <summary>
+		/// Target will lose 1/4 of max HP at  of each round, while asleep. (Nightmare)
+		/// </summary>
+		x10F = 0x10F,
+
+		/// <summary>
+		/// Removes trapping moves, entry hazards and Leech Seed on user/user's side.
+		/// (Rapid Spin)
+		/// </summary>
+		x110 = 0x110,
+
+		/// <summary>
+		/// Attacks 2 rounds in the future. (Doom Desire, Future Sight)
+		/// </summary>
+		x111 = 0x111,
+
+		/// Attack is launched
+
+		/// <summary>
+		/// Increases the user's Defense and Special Defense by 1 stage each. Ups the
+		/// user's stockpile by 1 (max. 3). (Stockpile)
+		/// </summary>
+		x112 = 0x112,
+
+		/// <summary>
+		/// Power is 100 multiplied by the user's stockpile (X). Resets the stockpile to
+		/// 0. Decreases the user's Defense and Special Defense by X stages each. (Spit Up)
+		/// </summary>
+		x113 = 0x113,
+
+		/// <summary>
+		/// Heals user depending on the user's stockpile (X). Resets the stockpile to 0.
+		/// Decreases the user's Defense and Special Defense by X stages each. (Swallow)
+		/// </summary>
+		x114 = 0x114,
+
+		/// <summary>
+		/// Fails if user was hit by a damaging move this round. (Focus Punch)
+		/// </summary>
+		x115 = 0x115,
+
+		/// <summary>
+		/// Fails if the target didn't chose a damaging move to use this round, or has
+		/// already moved. (Sucker Punch)
+		/// </summary>
+		x116 = 0x116,
+
+		/// <summary>
+		/// This round, user becomes the target of attacks that have single targets.
+		/// (Follow Me, Rage Powder)
+		/// </summary>
+		x117 = 0x117,
+
+		/// <summary>
+		/// For 5 rounds, increases gravity on the field. Pokémon cannot become airborne.
+		/// (Gravity)
+		/// </summary>
+		x118 = 0x118,
+
+		/// <summary>
+		/// For 5 rounds, user becomes airborne. (Magnet Rise)
+		/// </summary>
+		x119 = 0x119,
+
+		/// <summary>
+		/// For 3 rounds, target becomes airborne and can always be hit. (Telekinesis)
+		/// </summary>
+		x11A = 0x11A,
+
+		/// <summary>
+		/// Hits airborne semi-invulnerable targets. (Sky Uppercut)
+		/// </summary>
+		x11B = 0x11B,
+		/// Handled in Battler's pbSuccessCheck, do not edit!
+
+		/// <summary>
+		/// Grounds the target while it remains active. (Smack Down, Thousand Arrows)
+		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
+		/// </summary>
+		x11C = 0x11C,
+
+		/// <summary>
+		/// Target moves immediately after the user, ignoring priority/speed. (After You)
+		/// </summary>
+		x11D = 0x11D,
+
+		/// <summary>
+		/// Target moves last this round, ignoring priority/speed. (Quash)
+		/// </summary>
+		x11E = 0x11E,
+
+		/// <summary>
+		/// For 5 rounds, for each priority bracket, slow Pokémon move before fast ones.
+		/// (Trick Room)
+		/// </summary>
+		x11F = 0x11F,
+
+		/// <summary>
+		/// User switches places with its ally. (Ally Switch)
+		/// </summary>
+		/// Swap effects that point at the position rather than the Pokémon
+		/// NOT PerishSongUser (no need to swap), Attract, MultiTurnUser
+		x120 = 0x120,
+
+		/// <summary>
+		/// Target's Attack is used instead of user's Attack for this move's calculations.
+		/// (Foul Play)
+		/// </summary>
+		/// Handled in superclass public object pbCalcDamage, do not edit!
+		x121 = 0x121,
+
+		/// <summary>
+		/// Target's Defense is used instead of its Special Defense for this move's
+		/// calculations. (Psyshock, Psystrike, Secret Sword)
+		/// </summary>
+		/// Handled in superclass public object pbCalcDamage, do not edit!
+		x122 = 0x122,
+
+		/// <summary>
+		/// Only damages Pokémon that share a type with the user. (Synchronoise)
+		/// </summary>
+		x123 = 0x123,
+
+		/// <summary>
+		/// For 5 rounds, swaps all battlers' base Defense with base Special Defense.
+		/// (Wonder Room)
+		/// </summary>
+		x124 = 0x124,
+
+		/// <summary>
+		/// Fails unless user has already used all other moves it knows. (Last Resort)
+		/// </summary>
+		x125 = 0x125,
+
+		//===============================================================================
+		// NOTE: Shadow moves use function codes 126-132 inclusive.
+		//===============================================================================
+
+		/// <summary>
+		/// Does absolutely nothing. (Hold Hands)
+		/// </summary>
+		x133 = 0x133,
+
+		/// <summary>
+		/// Does absolutely nothing. Shows a special message. (Celebrate)
+		/// </summary>
+		x134 = 0x134,
+
+		/// <summary>
+		/// Freezes the target. (Freeze-Dry)
+		/// (Superclass's pbTypeModifier): Effectiveness against Water-type is 2x.
+		/// </summary>
+		x135 = 0x135,
+
+		/// <summary>
+		/// Increases the user's Defense by 1 stage for each target hit. (Diamond Storm)
+		/// <summary>
+		/// ToDo: No difference to function code 01D. It may need to be separate in future.
+		/// Includes/Inherits <see cref="x01D"/>
+		x136 = 0x136,
+
+		/// <summary>
+		/// Increases the user's and its ally's Defense and Special Defense by 1 stage
+		/// each, if they have Plus or Minus. (Magnetic Flux)
+		/// </summary>
+		x137 = 0x137,
+
+		/// <summary>
+		/// Increases ally's Special Defense by 1 stage. (Aromatic Mist)
+		/// </summary>
+		x138 = 0x138,
+
+		/// <summary>
+		/// Decreases the target's Attack by 1 stage. Always hits. (Play Nice)
+		/// </summary>
+		x139 = 0x139,
+
+		/// <summary>
+		/// Decreases the target's Attack and Special Attack by 1 stage each. (Noble Roar)
+		/// </summary>
+		x13A = 0x13A,
+
+		/// <summary>
+		/// Decreases the target's Defense by 1 stage. Always hits. (Hyperspace Fury)
+		/// </summary>
+		x13B = 0x13B,
+
+		/// <summary>
+		/// Decreases the target's Special Attack by 1 stage. Always hits. (Confide)
+		/// </summary>
+		x13C = 0x13C,
+
+		/// <summary>
+		/// Decreases the target's Special Attack by 2 stages. (Eerie Impulse)
+		/// </summary>
+		x13D = 0x13D,
+
+		/// <summary>
+		/// Increases the Attack and Special Attack of all Grass-type Pokémon on the field
+		/// by 1 stage each. Doesn't affect airborne Pokémon. (Rototiller)
+		/// </summary>
+		x13E = 0x13E,
+
+		/// <summary>
+		/// Increases the Defense of all Grass-type Pokémon on the field by 1 stage each.
+		/// (Flower Shield)
+		/// </summary>
+		x13F = 0x13F,
+
+		/// <summary>
+		/// Decreases the Attack, Special Attack and Speed of all poisoned opponents by 1
+		/// stage each. (Venom Drench)
+		/// </summary>
+		x140 = 0x140,
+
+		/// <summary>
+		/// Reverses all stat changes of the target. (Topsy-Turvy)
+		/// </summary>
+		x141 = 0x141,
+
+		/// <summary>
+		/// Gives target the Ghost type. (Trick-or-Treat)
+		/// </summary>
+		x142 = 0x142,
+
+		/// <summary>
+		/// Gives target the Grass type. (Forest's Curse)
+		/// </summary>
+		x143 = 0x143,
+
+		/// <summary>
+		/// Damage is multiplied by Flying's effectiveness against the target. Does double
+		/// damage and has perfect accuracy if the target is Minimized. (Flying Press)
+		/// </summary>
+		x144 = 0x144,
+
+		/// <summary>
+		/// Target's moves become Electric-type for the rest of the round. (Electrify)
+		/// </summary>
+		x145 = 0x145,
+
+		/// <summary>
+		/// All Normal-type moves become Electric-type for the rest of the round.
+		/// (Ion Deluge)
+		/// </summary>
+		x146 = 0x146,
+
+		/// <summary>
+		/// Always hits. (Hyperspace Hole)
+		/// TODO: Hits through various shields.
+		/// </summary>
+		x147 = 0x147,
+
+		/// <summary>
+		/// Powders the foe. This round, if it uses a Fire move, it loses 1/4 of its max
+		/// HP instead. (Powder)
+		/// </summary>
+		x148 = 0x148,
+
+		/// <summary>
+		/// This round, the user's side is unaffected by damaging moves. (Mat Block)
+		/// </summary>
+		x149 = 0x149,
+
+		/// <summary>
+		/// User's side is protected against status moves this round. (Crafty Shield)
+		/// </summary>
+		x14A = 0x14A,
+
+		/// <summary>
+		/// User is protected against damaging moves this round. Decreases the Attack of
+		/// the user of a stopped contact move by 2 stages. (King's Shield)
+		/// </summary>
+		x14B = 0x14B,
+
+		/// <summary>
+		/// User is protected against moves that target it this round. Damages the user of
+		/// a stopped contact move by 1/8 of its max HP. (Spiky Shield)
+		/// </summary>
+		x14C = 0x14C,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, attacks second turn. (Phantom Force)
+		/// Is invulnerable during use.
+		/// Ignores target's Detect, King's Shield, Mat Block, Protect and Spiky Shield
+		/// this round. If successful, negates them this round.
+		/// Does double damage and has perfect accuracy if the target is Minimized.
+		/// </summary>
+		x14D = 0x14D,
+
+		/// <summary>
+		/// Two turn attack. Skips first turn, increases the user's Special Attack,
+		/// Special Defense and Speed by 2 stages each second turn. (Geomancy)
+		/// </summary>
+		x14E = 0x14E,
+
+		/// <summary>
+		/// User gains 3/4 the HP it inflicts as damage. (Draining Kiss, Oblivion Wing)
+		/// </summary>
+		x14F = 0x14F,
+
+		/// <summary>
+		/// If this move KO's the target, increases the user's Attack by 2 stages.
+		/// (Fell Stinger)
+		/// </summary>
+		x150 = 0x150,
+
+		/// <summary>
+		/// Decreases the target's Attack and Special Attack by 1 stage each. Then, user
+		/// switches out. Ignores trapping moves. (Parting Shot)
+		/// TODO: Pursuit should interrupt this move.
+		/// </summary>
+		x151 = 0x151,
+
+		/// <summary>
+		/// No Pokémon can switch out or flee until the  of the next round, as long as
+		/// the user remains active. (Fairy Lock)
+		/// </summary>
+		x152 = 0x152,
+
+		/// <summary>
+		/// Entry hazard. Lays stealth rocks on the opposing side. (Sticky Web)
+		/// </summary>
+		x153 = 0x153,
+
+		/// <summary>
+		/// For 5 rounds, creates an electric terrain which boosts Electric-type moves and
+		/// prevents Pokémon from falling asleep. Affects non-airborne Pokémon only.
+		/// (Electric Terrain)
+		/// </summary>
+		x154 = 0x154,
+
+		/// <summary>
+		/// For 5 rounds, creates a grassy terrain which boosts Grass-type moves and heals
+		/// Pokémon at the  of each round. Affects non-airborne Pokémon only.
+		/// (Grassy Terrain)
+		/// </summary>
+		x155 = 0x155,
+
+		/// <summary>
+		/// For 5 rounds, creates a misty terrain which weakens Dragon-type moves and
+		/// protects Pokémon from status problems. Affects non-airborne Pokémon only.
+		/// (Misty Terrain)
+		/// </summary>
+		x156 = 0x156,
+
+		/// <summary>
+		/// Doubles the prize money the player gets after winning the battle. (Happy Hour)
+		/// </summary>
+		x157 = 0x157,
+
+		/// <summary>
+		/// Fails unless user has consumed a berry at some point. (Belch)
+		/// </summary>
+		x158
+	}
 	#endregion
 
 	#region Methods
@@ -125,959 +1913,24 @@ public class Move //: MoveData
 	#endregion
 
 	#region Nested Classes
-	public class MoveData
-	{
-		#region Variables
-		//private int pp { get; set; }
-		//private Moves id { get; set; }
-		//private Types type;
-		//private Target target;
-        /// <summary>
-        /// [Deprecated]
-        /// </summary>
-        /// ToDo: Instead of an Enum;
-        /// Make into a class of bool values defaulted to false
-        /// OR find a way to set/default uncalled values in array
-        [Obsolete]
-		private Veekun.Flags[] flagsEnum;
-        private Flags flags = new Flags();
-        //everything below is influenced from pokemon-showdown
-        private bool secondary; // { int chance; boosts; status/effect }
-        public Contest ContestType { get; private set; }
-        //enum volatileStatus
-        //enum sideCondition
-        //class effect
-        //string isZ;
-        //accuracy == true | 0-100?
-        //boosts { int stats = 0; } else null?
-        //bool isViable = false
-        //enum zMoveEffect; int zMovePower; boost zMoveBoost 
-        #endregion
-
-        #region Properties
-		public Category Category { get; private set; }
-		/// <summary>
-		/// totalpp
-		/// </summary>
-        public int PP { get; private set; }
-		public Moves ID { get; private set; }
-		/// <summary>
-		/// The Pokémon that the move will strike.
-		/// </summary>
-		public Target Target { get; private set; }
-		public Types Type { get; private set; }
-		public string Name { get; private set; }
-		public string Description { get; private set; }
-        public Flags Flags { get { return this.flags; } }
-		/// <summary>
-		/// The move's base power value. Status moves have a base power of 0, 
-		/// while moves with a variable base power are defined here with a base power of 1. 
-		/// For multi-hit moves, this is the base power of a single hit.
-		/// </summary>
-		public int BaseDamage { get; private set; }
-		/// <summary>
-		/// The move's accuracy, as a percentage. 
-		/// An accuracy of 0 means the move doesn't perform an accuracy check 
-		/// (i.e. it cannot be evaded).
-		/// </summary>
-		public int Accuracy { get; private set; }
-		/// <summary>
-		/// The probability that the move's additional effect occurs, as a percentage. 
-		/// If the move has no additional effect (e.g. all status moves), this value is 0. 
-		/// <para></para>
-		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
-		/// which is not the same thing as having an effect that will always occur.
-		/// Abilities like Sheer Force and Shield Dust only affect additional effects, 
-		/// not regular effects.
-		/// </summary>
-		public float AddlEffect { get; private set; }
-		/// <summary>
-		/// The move's priority, between -6 and 6 inclusive. This is usually 0. 
-		/// A higher priority move will be used before all moves of lower priority, 
-		/// regardless of Speed calculations. 
-		/// Moves with equal priority will be used depending on which move user is faster.
-		/// <example>For example, Quick Attack has a priority of 1.</example>
-		/// </summary>
-		public int Priority { get; private set; }
-		#endregion
-
-		#region Enumerator
-		#endregion
-
-		#region Constructor
-		#region Database
-		private static readonly MoveData[] Database = new MoveData[]
-		{
-			//null,
-			CreateMoveData(Moves.NONE, Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
-				0, false, true, false, false, new Effect[] {Effect.HPDrain}, new float[] {1},
-				Contest.CLEVER, 4, 0),
-			CreateMoveData(Moves.ABSORB, Types.GRASS, Category.SPECIAL, 20, 1f, 25, TargetB.ADJACENT,
-				0, false, true, false, false, new Effect[] {Effect.HPDrain}, new float[] {1},
-				Contest.CLEVER, 4, 0),
-			CreateMoveData(Moves.ACROBATICS, Types.FLYING, Category.PHYSICAL, 55, 1f, 15, TargetB.ANY,
-				0, true, true, false, false, new Effect[] {}, new float[] {}, Contest.COOL, 1, 0)/*,
-			CreateMoveData(Move.Aerial_Ace, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 60, 0, 20, Contest.COOL,
-				2, 0),
-			CreateMoveData(Move.After_You, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 15, Contest.CUTE, 3,
-				0),
-			CreateMoveData(Move.Agility, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 30, TargetB.SELF, 0,
-				false, false, false, true, new Effect[] {Effect.SPEself}, new float[] {2},
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Air_Cutter, Pokemon.PokemonData.Type.FLYING, Category.SPECIAL, 60, 0.95f, 25,
-				Contest.COOL, 4, 0, "Cut"),
-			CreateMoveData(Move.Air_Slash, Pokemon.PokemonData.Type.FLYING, Category.SPECIAL, 75, 0.95f, 15,
-				Contest.COOL, 1, 4, "Cut"),
-			CreateMoveData(Move.Amnesia, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 20, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Ancient_Power, Pokemon.PokemonData.Type.ROCK, Category.SPECIAL, 60, 1f, 5,
-				Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Aqua_Jet, Pokemon.PokemonData.Type.WATER, Category.PHYSICAL, 40, 1f, 20,
-				TargetB.ADJACENT, 1, true, true, false, false, new Effect[] {}, new float[] {},
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Aqua_Ring, Pokemon.PokemonData.Type.WATER, Category.STATUS, 0, 0, 20, Contest.BEAUTIFUL,
-				1, 0),
-			CreateMoveData(Move.Aqua_Tail, Pokemon.PokemonData.Type.WATER, Category.PHYSICAL, 90, 0.90f, 10,
-				Contest.BEAUTIFUL, 4, 0),
-			CreateMoveData(Move.Arm_Thrust, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 15, 1f, 20,
-				Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Aromatherapy, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0, 5, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Assist, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CUTE, 1, 0),
-			CreateMoveData(Move.Assurance, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 60, 1f, 10, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Astonish, Pokemon.PokemonData.Type.GHOST, Category.PHYSICAL, 30, 1f, 15, Contest.CUTE,
-				2, 3),
-			CreateMoveData(Move.Attract, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 15, Contest.CUTE, 2,
-				0),
-			CreateMoveData(Move.Aura_Sphere, Pokemon.PokemonData.Type.FIGHTING, Category.SPECIAL, 80, 0, 20,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Baby_Doll_Eyes, Pokemon.PokemonData.Type.FAIRY, Category.STATUS, 0, 1f, 30,
-				TargetB.ADJACENT, 1, false, true, true, true, new Effect[] {Effect.ATK},
-				new float[] {-1}, Contest.CUTE, 3, 0),
-			CreateMoveData(Move.Baton_Pass, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 40, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Belly_Drum, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CUTE, 6,
-				0),
-			CreateMoveData(Move.Bestow, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 15, Contest.CUTE, 1, 0),
-			CreateMoveData(Move.Bide, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 0, 10, Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Bite, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 60, 1f, 25, Contest.TOUGH, 2, 3),
-			CreateMoveData(Move.Blaze_Kick, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 85, 0.90f, 10,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Block, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 5, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Body_Slam, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 85, 1f, 15,
-				Contest.TOUGH, 1, 4),
-			CreateMoveData(Move.Bone_Rush, Pokemon.PokemonData.Type.GROUND, Category.PHYSICAL, 25, 0.90f, 10,
-				Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Bounce, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 85, 0.85f, 5, Contest.CUTE,
-				1, 0),
-			CreateMoveData(Move.Brave_Bird, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 120, 1f, 15,
-				Contest.COOL, 6, 0),
-			CreateMoveData(Move.Brine, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 65, 1f, 10, Contest.TOUGH, 3,
-				0),
-			CreateMoveData(Move.Bubble, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 40, 1f, 30, Contest.CUTE, 4,
-				0),
-			CreateMoveData(Move.Bubble_Beam, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 65, 1f, 20,
-				Contest.BEAUTIFUL, 2, 3),
-			CreateMoveData(Move.Bug_Bite, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 60, 1f, 20, Contest.CUTE, 3,
-				0),
-			CreateMoveData(Move.Bug_Buzz, Pokemon.PokemonData.Type.BUG, Category.SPECIAL, 90, 1f, 10, Contest.BEAUTIFUL,
-				1, 4),
-			CreateMoveData(Move.Bulk_Up, Pokemon.PokemonData.Type.FIGHTING, Category.STATUS, 0, 0, 20, Contest.COOL, 1,
-				0),
-			CreateMoveData(Move.Calm_Mind, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 20, TargetB.SELF, 0,
-				false, false, false, true, new Effect[] {Effect.SPAself, Effect.SPDself},
-				new float[] {1, 1}, Contest.CLEVER, 1, 0),
-			CreateMoveData(Move.Captivate, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 20, TargetB.ADJACENT,
-				0, false, true, true, false, new Effect[] {Effect.Gender, Effect.SPA},
-				new float[] {1, -2}, Contest.CUTE, 4, 0),
-			CreateMoveData(Move.Charm, Pokemon.PokemonData.Type.FAIRY, Category.STATUS, 0, 1f, 20, TargetB.ADJACENT, 0,
-				false, true, true, false, new Effect[] {Effect.ATK}, new float[] {-2},
-				Contest.CUTE, 2, 1),
-			CreateMoveData(Move.Chip_Away, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 70, 1f, 20,
-				Contest.TOUGH, 2, 0),
-			CreateMoveData(Move.Clear_Smog, Pokemon.PokemonData.Type.POISON, Category.SPECIAL, 50, 0, 15,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Close_Combat, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 120, 1f, 5,
-				TargetB.ADJACENT, 0, true, true, false, false,
-				new Effect[] {Effect.DEFself, Effect.SPDself}, new float[] {-1, -1},
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Coil, Pokemon.PokemonData.Type.POISON, Category.STATUS, 0, 0, 20, TargetB.ADJACENT, 0,
-				false, false, false, true,
-				new Effect[] {Effect.ATKself, Effect.DEFself, Effect.ACCself},
-				new float[] {1, 1, 1}, Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Confuse_Ray, Pokemon.PokemonData.Type.GHOST, Category.STATUS, 0, 1f, 10, Contest.CLEVER,
-				2, 1),
-			CreateMoveData(Move.Confusion, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 50, 1f, 25,
-				Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Constrict, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 10, 1f, 35,
-				Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Copycat, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CUTE, 1, 0),
-			CreateMoveData(Move.Counter, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 0, 1f, 20, Contest.TOUGH,
-				2, 0),
-			CreateMoveData(Move.Covet, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 60, 1f, 25, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Cross_Chop, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 100, 0.80f, 5,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Cross_Poison, Pokemon.PokemonData.Type.POISON, Category.PHYSICAL, 70, 1f, 20,
-				Contest.COOL, 2, 1),
-			CreateMoveData(Move.Crunch, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 80, 1f, 15, Contest.TOUGH, 1,
-				4),
-			CreateMoveData(Move.Curse, Pokemon.PokemonData.Type.GHOST, Category.STATUS, 0, 0, 10, Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Dark_Pulse, Pokemon.PokemonData.Type.DARK, Category.SPECIAL, 80, 1f, 15, Contest.COOL,
-				3, 0),
-			CreateMoveData(Move.Defense_Curl, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 40, Contest.CUTE,
-				2, 0),
-			CreateMoveData(Move.Defog, Pokemon.PokemonData.Type.FLYING, Category.STATUS, 0, 0, 15, Contest.COOL, 2, 0),
-			CreateMoveData(Move.Detect, Pokemon.PokemonData.Type.FIGHTING, Category.STATUS, 0, 0, 5, Contest.COOL, 1, 0),
-			CreateMoveData(Move.Disarming_Voice, Pokemon.PokemonData.Type.FAIRY, Category.SPECIAL, 40, 1f, 15,
-				Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Dizzy_Punch, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 70, 1f, 10,
-				Contest.CUTE, 3, 0),
-			CreateMoveData(Move.Double_Edge, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 120, 1f, 15,
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Double_Kick, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 30, 1f, 30,
-				Contest.COOL, 2, 1),
-			CreateMoveData(Move.Double_Slap, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 15, 0.85f, 10,
-				Contest.CUTE, 1, 0),
-			CreateMoveData(Move.Double_Team, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 15, Contest.COOL,
-				1, 0),
-			CreateMoveData(Move.Dragon_Claw, Pokemon.PokemonData.Type.DRAGON, Category.PHYSICAL, 80, 1f, 15,
-				Contest.COOL, 4, 0, "Cut"),
-			CreateMoveData(Move.Dragon_Dance, Pokemon.PokemonData.Type.DRAGON, Category.STATUS, 0, 0, 20, Contest.COOL,
-				1, 0),
-			CreateMoveData(Move.Dragon_Rage, Pokemon.PokemonData.Type.DRAGON, Category.SPECIAL, 0, 1f, 10,
-				TargetB.ADJACENT, 0, false, true, false, false, new Effect[] {Effect.SetDamage},
-				new float[] {40}, Contest.COOL, 3, 0,
-				"The foe is stricken by a shock wave. This attack always inflicts 40 HP damage."),
-			CreateMoveData(Move.Dragon_Pulse, Pokemon.PokemonData.Type.DRAGON, Category.SPECIAL, 85, 1f, 10,
-				Contest.BEAUTIFUL, 4, 0),
-			CreateMoveData(Move.Dream_Eater, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 100, 1f, 15,
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Drill_Peck, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 80, 1f, 20,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Drill_Run, Pokemon.PokemonData.Type.GROUND, Category.PHYSICAL, 80, 0.95f, 10,
-				Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Dual_Chop, Pokemon.PokemonData.Type.DRAGON, Category.PHYSICAL, 40, 0.90f, 15,
-				Contest.TOUGH, 2, 1),
-			CreateMoveData(Move.Dynamic_Punch, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 100, 0.50f, 5,
-				Contest.COOL, 2, 1),
-			CreateMoveData(Move.Earth_Power, Pokemon.PokemonData.Type.GROUND, Category.SPECIAL, 90, 1f, 10,
-				Contest.BEAUTIFUL, 4, 0),
-			CreateMoveData(Move.Earthquake, Pokemon.PokemonData.Type.GROUND, Category.PHYSICAL, 100, 1f, 10,
-				Contest.TOUGH, 2, 1),
-			CreateMoveData(Move.Echoed_Voice, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 40, 1f, 15,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Ember, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 40, 1f, 25, Contest.CUTE, 4, 0),
-			CreateMoveData(Move.Encore, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 5, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Endeavor, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 1f, 5, Contest.TOUGH,
-				2, 1),
-			CreateMoveData(Move.Endure, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Entrainment, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 15, Contest.CUTE,
-				2, 1),
-			CreateMoveData(Move.Eruption, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 0, 1f, 5, Contest.BEAUTIFUL,
-				6, 0),
-			CreateMoveData(Move.Extrasensory, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 80, 1f, 20,
-				Contest.COOL, 2, 1),
-			CreateMoveData(Move.Extreme_Speed, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 80, 1f, 5,
-				TargetB.ADJACENT, 2, true, true, false, false, new Effect[] {}, new float[] {},
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Fake_Out, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 40, 1f, 10,
-				TargetB.ADJACENT, 3, false, true, false, false, new Effect[] {}, new float[] {},
-				Contest.CUTE, 2, 3),
-			CreateMoveData(Move.False_Swipe, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 40, 1f, 40,
-				Contest.COOL, 4, 0),
-			CreateMoveData(Move.Feather_Dance, Pokemon.PokemonData.Type.FLYING, Category.STATUS, 0, 1f, 15,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Feint, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 30, 1f, 10, Contest.CLEVER,
-				3, 0),
-			CreateMoveData(Move.Feint_Attack, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 60, 0, 20,
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Fell_Stinger, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 30, 1f, 25, Contest.COOL,
-				1, 0),
-			CreateMoveData(Move.Final_Gambit, Pokemon.PokemonData.Type.FIGHTING, Category.SPECIAL, 0, 1f, 5,
-				Contest.TOUGH, 8, 0),
-			CreateMoveData(Move.Fire_Blast, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 110, 0.85f, 5,
-				TargetB.ADJACENT, 0, false, true, false, false, new Effect[] {Effect.Burn},
-				new float[] {0.1f}, Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Fire_Punch, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 75, 1f, 15,
-				TargetB.ADJACENT, 0, true, true, false, false, new Effect[] {Effect.Burn},
-				new float[] {0.1f}, Contest.TOUGH, 4, 0),
-			CreateMoveData(Move.Fire_Fang, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 65, 0.95f, 15,
-				TargetB.ADJACENT, 0, true, true, false, false,
-				new Effect[] {Effect.Burn, Effect.Flinch}, new float[] {0.1f, 0.1f},
-				Contest.COOL, 4, 0,
-				"The user bites with flame-cloaked \nfangs. It may also make the foe \nflinch or sustain a burn."),
-			CreateMoveData(Move.Fire_Spin, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 35, 0.85f, 15,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Fissure, Pokemon.PokemonData.Type.GROUND, Category.PHYSICAL, 0, 0, 5, Contest.TOUGH, 2,
-				1),
-			CreateMoveData(Move.Flail, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 1f, 15, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Flame_Charge, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 50, 1f, 20,
-				TargetB.ADJACENT, 0, true, true, false, false, new Effect[] {Effect.SPEself},
-				new float[] {1}, Contest.COOL, 1, 0),
-			CreateMoveData(Move.Flame_Burst, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 70, 1f, 15,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Flamethrower, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 90, 1f, 15,
-				TargetB.ADJACENT, 0, false, true, false, false, new Effect[] {Effect.Burn},
-				new float[] {0.1f}, Contest.BEAUTIFUL, 4, 0),
-			CreateMoveData(Move.Flame_Wheel, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 60, 1f, 25,
-				TargetB.ADJACENT, 0, true, true, false, false, new Effect[] {Effect.Burn},
-				new float[] {0.1f}, Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Flare_Blitz, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 120, 1f, 15,
-				Contest.COOL, 6, 0),
-			CreateMoveData(Move.Flash_Cannon, Pokemon.PokemonData.Type.STEEL, Category.SPECIAL, 80, 1f, 10,
-				Contest.BEAUTIFUL, 4, 0),
-			CreateMoveData(Move.Flatter, Pokemon.PokemonData.Type.DARK, Category.STATUS, 0, 1f, 15, Contest.CLEVER, 2,
-				0),
-			CreateMoveData(Move.Focus_Energy, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 30, Contest.COOL,
-				1, 0),
-			CreateMoveData(Move.Follow_Me, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CUTE, 3,
-				0),
-			CreateMoveData(Move.Force_Palm, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 60, 1f, 10,
-				Contest.COOL, 4, 0),
-			CreateMoveData(Move.Foresight, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 40, Contest.CLEVER,
-				2, 1),
-			CreateMoveData(Move.Frustration, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 1f, 20,
-				Contest.CUTE, 2, 3),
-			CreateMoveData(Move.Fury_Attack, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 15, 0.85f, 20,
-				Contest.COOL, 1, 0),
-			CreateMoveData(Move.Fury_Cutter, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 40, 0.95f, 20,
-				Contest.COOL, 3, 0, "Cut"),
-			CreateMoveData(Move.Fury_Swipes, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 18, 0.80f, 15,
-				Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Future_Sight, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 120, 1f, 10,
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Gastro_Acid, Pokemon.PokemonData.Type.POISON, Category.STATUS, 0, 1f, 10, Contest.TOUGH,
-				3, 0),
-			CreateMoveData(Move.Giga_Drain, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 75, 1f, 10,
-				TargetB.ADJACENT, 0, false, true, false, false, new Effect[] {Effect.HPDrain},
-				new float[] {0.5f}, Contest.CLEVER, 1, 4),
-			CreateMoveData(Move.Giga_Impact, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 150, 0.90f, 5,
-				Contest.TOUGH, 4, 4),
-			CreateMoveData(Move.Grassy_Terrain, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0, 10,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Grass_Whistle, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0.55f, 15,
-				TargetB.ADJACENT, 0, false, true, true, false, new Effect[] {Effect.Sleep},
-				new float[] {1}, Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Growl, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 40,
-				TargetB.ALLADJACENTOPPONENT, 0, false, true, true, false,
-				new Effect[] {Effect.ATK, Effect.Sound}, new float[] {-1, 0},
-				Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Growth, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.BEAUTIFUL,
-				1, 0),
-			CreateMoveData(Move.Guard_Swap, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Gust, Pokemon.PokemonData.Type.FLYING, Category.SPECIAL, 40, 1f, 35, Contest.CLEVER, 2,
-				3),
-			CreateMoveData(Move.Gyro_Ball, Pokemon.PokemonData.Type.STEEL, Category.PHYSICAL, 0, 1f, 5, Contest.COOL, 1,
-				0),
-			CreateMoveData(Move.Hammer_Arm, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 100, 0.90f, 10,
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Harden, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 30, Contest.TOUGH, 2, 0),
-			CreateMoveData(Move.Haze, Pokemon.PokemonData.Type.ICE, Category.STATUS, 0, 0, 30, Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Headbutt, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 70, 1f, 15, Contest.TOUGH,
-				4, 0),
-			CreateMoveData(Move.Head_Smash, Pokemon.PokemonData.Type.ROCK, Category.PHYSICAL, 150, 0.80f, 5,
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Heal_Bell, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 5, Contest.BEAUTIFUL,
-				1, 0),
-			CreateMoveData(Move.Healing_Wish, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10,
-				Contest.BEAUTIFUL, 8, 0),
-			CreateMoveData(Move.Heal_Pulse, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, TargetB.ANY, 0,
-				false, true, true, false, new Effect[] {Effect.Heal}, new float[] {0.5f},
-				Contest.BEAUTIFUL, 2, 0,
-				"The user emits a healing pulse which restores the target's HP by up to half of its max HP."),
-			CreateMoveData(Move.Heat_Crash, Pokemon.PokemonData.Type.FIRE, Category.PHYSICAL, 0, 1f, 10, Contest.TOUGH,
-				3, 0),
-			CreateMoveData(Move.Heat_Wave, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 95, 0.90f, 10,
-				Contest.BEAUTIFUL, 2, 2),
-			//CreateMoveData(Move.Heavy_Crash, Pokemon.PokemonData.Type.STEEL, Category.PHYSICAL, 0, 1f, 10,
-			//	Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Helping_Hand, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20,
-				Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Hex, Pokemon.PokemonData.Type.GHOST, Category.SPECIAL, 6, 1f, 10, Contest.CLEVER, 2, 1),
-			CreateMoveData(Move.High_Jump_Kick, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 130, 0.90f, 10,
-				Contest.COOL, 6, 0),
-			CreateMoveData(Move.Horn_Attack, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 65, 1f, 25,
-				Contest.COOL, 4, 0),
-			CreateMoveData(Move.Horn_Drill, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 0.30f, 5,
-				Contest.COOL, 2, 0),
-			CreateMoveData(Move.Howl, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 40, Contest.COOL, 2, 0),
-			CreateMoveData(Move.Hurricane, Pokemon.PokemonData.Type.FLYING, Category.SPECIAL, 110, 0.70f, 10,
-				Contest.TOUGH, 2, 1),
-			CreateMoveData(Move.Hydro_Pump, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 110, 0.80f, 5,
-				Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Hyper_Beam, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 150, 0.90f, 5,
-				Contest.COOL, 4, 4),
-			CreateMoveData(Move.Hyper_Fang, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 80, 0.90f, 15,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Hyper_Voice, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 90, 1f, 10,
-				Contest.COOL, 2, 2),
-			CreateMoveData(Move.Hypnosis, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0.60f, 20,
-				TargetB.ADJACENT, 0, false, true, true, false, new Effect[] {Effect.Sleep},
-				new float[] {1}, Contest.CLEVER, 1, 3),
-			CreateMoveData(Move.Ice_Fang, Pokemon.PokemonData.Type.ICE, Category.PHYSICAL, 65, 0.95f, 15,
-				TargetB.ADJACENT, 0, true, true, false, false,
-				new Effect[] {Effect.Freeze, Effect.Flinch}, new float[] {0.1f, 0.1f},
-				Contest.COOL, 4, 0),
-			CreateMoveData(Move.Imprison, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, Contest.CLEVER,
-				3, 0),
-			CreateMoveData(Move.Incinerate, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 60, 1f, 15, Contest.TOUGH,
-				3, 0),
-			CreateMoveData(Move.Inferno, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 100, 0.5f, 5,
-				Contest.BEAUTIFUL, 1, 4),
-			CreateMoveData(Move.Ingrain, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0, 20, Contest.CLEVER, 1,
-				0),
-			CreateMoveData(Move.Iron_Defense, Pokemon.PokemonData.Type.STEEL, Category.STATUS, 0, 0, 15, Contest.TOUGH,
-				1, 0),
-			CreateMoveData(Move.Jump_Kick, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 100, 0.95f, 10,
-				Contest.COOL, 6, 0),
-			CreateMoveData(Move.Karate_Chop, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 50, 1f, 25,
-				Contest.TOUGH, 4, 0),
-			CreateMoveData(Move.Knock_Off, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 65, 1f, 25, Contest.CLEVER,
-				2, 3),
-			CreateMoveData(Move.Last_Resort, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 140, 1f, 5,
-				Contest.CUTE, 1, 0),
-			CreateMoveData(Move.Lava_Plume, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 80, 1f, 15, Contest.TOUGH,
-				2, 2),
-			CreateMoveData(Move.Leaf_Blade, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 90, 1f, 15, Contest.COOL,
-				3, 0, "Cut"),
-			CreateMoveData(Move.Leaf_Storm, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 130, 0.90f, 5,
-				Contest.BEAUTIFUL, 6, 0),
-			CreateMoveData(Move.Leaf_Tornado, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 65, 0.9f, 10,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Leech_Life, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 20, 1f, 15, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Leech_Seed, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0.9f, 10,
-				Contest.CLEVER, 1, 0),
-			CreateMoveData(Move.Leer, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 30, Contest.COOL, 2, 1),
-			CreateMoveData(Move.Lick, Pokemon.PokemonData.Type.GHOST, Category.PHYSICAL, 30, 1f, 30, Contest.TOUGH, 2,
-				3),
-			CreateMoveData(Move.Light_Screen, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 30,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Low_Kick, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 0, 1f, 20,
-				Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Low_Sweep, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 65, 1f, 20,
-				Contest.CLEVER, 2, 3),
-			CreateMoveData(Move.Lucky_Chant, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 30, Contest.CUTE,
-				1, 0),
-			CreateMoveData(Move.Mach_Punch, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 40, 1f, 30,
-				TargetB.ADJACENT, 1, true, true, false, false, new Effect[] {}, new float[] {},
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Magical_Leaf, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 60, 0, 20,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Magic_Coat, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 0, 1f, 20,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Magic_Room, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, Contest.CLEVER,
-				3, 0),
-			CreateMoveData(Move.Magnitude, Pokemon.PokemonData.Type.GROUND, Category.PHYSICAL, 0, 1f, 30, Contest.TOUGH,
-				1, 0),
-			CreateMoveData(Move.Mat_Block, Pokemon.PokemonData.Type.FIGHTING, Category.STATUS, 0, 0, 10, Contest.COOL,
-				1, 3),
-			CreateMoveData(Move.Me_First, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CLEVER, 3,
-				0),
-			CreateMoveData(Move.Mean_Look, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 5, Contest.BEAUTIFUL,
-				2, 0),
-			CreateMoveData(Move.Mega_Drain, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 40, 1f, 15,
-				Contest.CLEVER, 2, 3),
-			CreateMoveData(Move.Megahorn, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 120, 0.85f, 10, Contest.COOL,
-				3, 0),
-			CreateMoveData(Move.Memento, Pokemon.PokemonData.Type.DARK, Category.STATUS, 0, 1f, 10, Contest.TOUGH, 8, 0),
-			CreateMoveData(Move.Metal_Burst, Pokemon.PokemonData.Type.STEEL, Category.PHYSICAL, 0, 1f, 10, Contest.COOL,
-				2, 0),
-			CreateMoveData(Move.Metal_Claw, Pokemon.PokemonData.Type.STEEL, Category.PHYSICAL, 50, 0.95f, 35,
-				Contest.COOL, 4, 0, "Cut"),
-			CreateMoveData(Move.Metal_Sound, Pokemon.PokemonData.Type.STEEL, Category.STATUS, 0, 0.85f, 40,
-				Contest.CLEVER, 1, 3),
-			CreateMoveData(Move.Minimize, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Mirror_Coat, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 15,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Mirror_Move, Pokemon.PokemonData.Type.FLYING, Category.STATUS, 0, 0, 20, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Mist, Pokemon.PokemonData.Type.ICE, Category.STATUS, 0, 0, 30, Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Moonlight, Pokemon.PokemonData.Type.FAIRY, Category.STATUS, 0, 0, 5, TargetB.SELF, 0,
-				false, false, false, true, new Effect[] {Effect.Heal}, new float[] {0.5f},
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Morning_Sun, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 5, TargetB.SELF, 0,
-				false, false, false, true, new Effect[] {Effect.Heal}, new float[] {0.5f},
-				Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Mud_Bomb, Pokemon.PokemonData.Type.GROUND, Category.SPECIAL, 65, 0.85f, 10,
-				Contest.CUTE, 2, 3),
-			CreateMoveData(Move.Muddy_Water, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 90, 0.85f, 10,
-				Contest.TOUGH, 2, 2),
-			CreateMoveData(Move.Mud_Shot, Pokemon.PokemonData.Type.GROUND, Category.SPECIAL, 55, 0.95f, 15,
-				Contest.TOUGH, 4, 0),
-			CreateMoveData(Move.Mud_Slap, Pokemon.PokemonData.Type.GROUND, Category.SPECIAL, 20, 1f, 10, Contest.CUTE,
-				3, 0),
-			CreateMoveData(Move.Mud_Sport, Pokemon.PokemonData.Type.GROUND, Category.STATUS, 0, 0, 15, Contest.CUTE, 2,
-				0),
-			CreateMoveData(Move.Mystical_Fire, Pokemon.PokemonData.Type.FIRE, Category.SPECIAL, 65, 1f, 10,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Nasty_Plot, Pokemon.PokemonData.Type.DARK, Category.STATUS, 0, 0, 20, Contest.CLEVER, 1,
-				0),
-			CreateMoveData(Move.Natural_Gift, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 1f, 15,
-				Contest.CLEVER, 1, 0),
-			CreateMoveData(Move.Needle_Arm, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 60, 1f, 15,
-				Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Night_Shade, Pokemon.PokemonData.Type.GHOST, Category.SPECIAL, 0, 1f, 15,
-				TargetB.ADJACENT, 0, false, true, false, false, new Effect[] {Effect.SetDamage},
-				new float[] {0}, Contest.CLEVER, 3, 0),
-			CreateMoveData(Move.Night_Slash, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 70, 1f, 15, Contest.COOL,
-				3, 0, "Cut"),
-			CreateMoveData(Move.Odor_Sleuth, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 40, Contest.CLEVER,
-				2, 0),
-			CreateMoveData(Move.Ominous_Wind, Pokemon.PokemonData.Type.GHOST, Category.SPECIAL, 60, 1f, 5,
-				TargetB.ADJACENT, 0, false, true, false, false,
-				new Effect[]
-				{
-					Effect.Chance, Effect.ATKself, Effect.DEFself, Effect.SPAself,
-					Effect.SPDself, Effect.SPEself
-				}, new float[] {0.1f, 1, 1, 1, 1, 1},
-				Contest.BEAUTIFUL, 1, 0,
-				"The user creates a gust of repulsive wind. It may also raise all the user's stats at once."),
-			CreateMoveData(Move.Pain_Split, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Payback, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 50, 1f, 10, Contest.TOUGH, 2,
-				0),
-			CreateMoveData(Move.Peck, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 35, 1f, 35, Contest.COOL, 4,
-				0),
-			CreateMoveData(Move.Petal_Blizzard, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 90, 1f, 15,
-				Contest.BEAUTIFUL, 2, 2),
-			CreateMoveData(Move.Petal_Dance, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 120, 1f, 10,
-				Contest.BEAUTIFUL, 6, 0),
-			CreateMoveData(Move.Pin_Missile, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 25, 0.95f, 20,
-				Contest.COOL, 1, 0),
-			CreateMoveData(Move.Play_Rough, Pokemon.PokemonData.Type.FAIRY, Category.PHYSICAL, 90, 0.90f, 10,
-				Contest.CUTE, 3, 0),
-			CreateMoveData(Move.Pluck, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 60, 1f, 20, Contest.CUTE, 3,
-				0),
-			CreateMoveData(Move.Pound, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 40, 1f, 35, Contest.TOUGH, 4,
-				0),
-			CreateMoveData(Move.Poison_Jab, Pokemon.PokemonData.Type.POISON, Category.PHYSICAL, 80, 1f, 20,
-				Contest.TOUGH, 4, 0),
-			CreateMoveData(Move.Poison_Powder, Pokemon.PokemonData.Type.POISON, Category.STATUS, 0, 0.75f, 35,
-				Contest.CLEVER, 3, 0),
-			CreateMoveData(Move.Poison_Sting, Pokemon.PokemonData.Type.POISON, Category.PHYSICAL, 15, 1f, 35,
-				Contest.CLEVER, 2, 3),
-			CreateMoveData(Move.Power_Swap, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, Contest.CLEVER,
-				1, 0),
-			CreateMoveData(Move.Power_Up_Punch, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 4, 1f, 20,
-				TargetB.ADJACENT, 0, true, true, false, false, new Effect[] {Effect.ATKself},
-				new float[] {1}, Contest.TOUGH, 1, 0),
-			CreateMoveData(Move.Protect, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Psybeam, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 65, 1f, 20,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Psychic, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 90, 1f, 10, Contest.CLEVER,
-				4, 0),
-			CreateMoveData(Move.Psycho_Shift, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 1f, 10,
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Psych_Up, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CLEVER, 4,
-				0),
-			CreateMoveData(Move.Psyshock, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 80, 1f, 10,
-				Contest.BEAUTIFUL, 1, 4),
-			CreateMoveData(Move.Punishment, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 0, 1f, 5, Contest.COOL, 2,
-				1),
-			CreateMoveData(Move.Pursuit, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 40, 1f, 20, Contest.CLEVER,
-				2, 1),
-			CreateMoveData(Move.Quick_Attack, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 40, 1f, 30,
-				TargetB.ADJACENT, 1, true, true, false, false, new Effect[] {}, new float[] {},
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Quick_Guard, Pokemon.PokemonData.Type.FIGHTING, Category.STATUS, 0, 0, 15, Contest.COOL,
-				2, 0),
-			CreateMoveData(Move.Quiver_Dance, Pokemon.PokemonData.Type.BUG, Category.STATUS, 0, 0, 20,
-				Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Rage, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 20, 1f, 20, Contest.TOUGH, 1,
-				3),
-			CreateMoveData(Move.Rage_Powder, Pokemon.PokemonData.Type.BUG, Category.STATUS, 0, 0, 20, Contest.CLEVER, 3,
-				0),
-			CreateMoveData(Move.Rain_Dance, Pokemon.PokemonData.Type.WATER, Category.STATUS, 0, 0, 5, Contest.BEAUTIFUL,
-				1, 0),
-			CreateMoveData(Move.Rapid_Spin, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 20, 1f, 40,
-				Contest.COOL, 1, 0),
-			CreateMoveData(Move.Razor_Leaf, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 55, 0.95f, 25,
-				Contest.COOL, 4, 0, "Cut"),
-			CreateMoveData(Move.Razor_Shell, Pokemon.PokemonData.Type.WATER, Category.PHYSICAL, 75, 0.95f, 10,
-				Contest.COOL, 3, 0, "Cut"),
-			CreateMoveData(Move.Razor_Wind, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 80, 1f, 10, Contest.COOL,
-				3, 0, "Cut"),
-			CreateMoveData(Move.Recover, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, TargetB.SELF, 0,
-				false, false, false, true, new Effect[] {Effect.Heal}, new float[] {0.5f},
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Reflect, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 20, Contest.CLEVER, 2,
-				0),
-			CreateMoveData(Move.Refresh, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Rest, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, Contest.CUTE, 1, 0),
-			CreateMoveData(Move.Retaliate, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 70, 1f, 5, Contest.COOL,
-				3, 0),
-			CreateMoveData(Move.Return, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 1f, 20, Contest.CUTE, 4,
-				0),
-			CreateMoveData(Move.Revenge, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 60, 1f, 10,
-				Contest.TOUGH, 2, 0),
-			CreateMoveData(Move.Reversal, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 0, 1f, 15, Contest.COOL,
-				1, 0),
-			CreateMoveData(Move.Roar, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 20, Contest.COOL, 3, 0),
-			CreateMoveData(Move.Rock_Slide, Pokemon.PokemonData.Type.ROCK, Category.PHYSICAL, 75, 0.90f, 10,
-				Contest.TOUGH, 2, 2),
-			CreateMoveData(Move.Rock_Throw, Pokemon.PokemonData.Type.ROCK, Category.PHYSICAL, 50, 0.90f, 15,
-				Contest.TOUGH, 4, 0),
-			CreateMoveData(Move.Role_Play, Pokemon.PokemonData.Type.PSYCHIC, Category.STATUS, 0, 0, 10, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Rollout, Pokemon.PokemonData.Type.ROCK, Category.PHYSICAL, 30, 0.90f, 20, Contest.CUTE,
-				3, 0),
-			CreateMoveData(Move.Roost, Pokemon.PokemonData.Type.FLYING, Category.STATUS, 0, 0, 10, Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Rototiller, Pokemon.PokemonData.Type.GROUND, Category.STATUS, 0, 0, 10, Contest.TOUGH,
-				1, 0),
-			CreateMoveData(Move.Safe_Guard, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 25,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Sand_Attack, Pokemon.PokemonData.Type.GROUND, Category.STATUS, 0, 1f, 15, Contest.CUTE,
-				3, 0),
-			CreateMoveData(Move.Sandstorm, Pokemon.PokemonData.Type.ROCK, Category.STATUS, 0, 0, 10, Contest.TOUGH, 2,
-				1),
-			CreateMoveData(Move.Scary_Face, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 10, Contest.TOUGH,
-				3, 0),
-			CreateMoveData(Move.Scratch, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 40, 1f, 35, Contest.TOUGH,
-				4, 0),
-			CreateMoveData(Move.Screech, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0.85f, 40, Contest.CLEVER,
-				3, 0),
-			CreateMoveData(Move.Seed_Bomb, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 80, 1f, 15, Contest.TOUGH,
-				4, 0),
-			CreateMoveData(Move.Seismic_Toss, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 0, 1f, 20,
-				TargetB.ADJACENT, 0, true, true, false, false, new Effect[] {Effect.SetDamage},
-				new float[] {0}, Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Shadow_Ball, Pokemon.PokemonData.Type.GHOST, Category.SPECIAL, 80, 1f, 15,
-				Contest.CLEVER, 4, 0),
-			CreateMoveData(Move.Shadow_Claw, Pokemon.PokemonData.Type.GHOST, Category.PHYSICAL, 70, 1f, 15,
-				Contest.COOL, 4, 0, "Cut"),
-			CreateMoveData(Move.Shadow_Sneak, Pokemon.PokemonData.Type.GHOST, Category.PHYSICAL, 40, 1f, 30,
-				Contest.CLEVER, 3, 0),
-			CreateMoveData(Move.Shell_Smash, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 15, Contest.TOUGH,
-				3, 0),
-			CreateMoveData(Move.Silver_Wind, Pokemon.PokemonData.Type.BUG, Category.SPECIAL, 60, 1f, 5,
-				Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Sing, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0.55f, 15, TargetB.ADJACENT,
-				0, false, true, true, false, new Effect[] {Effect.Sleep}, new float[] {1},
-				Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Skull_Bash, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 130, 1f, 10,
-				Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Sky_Attack, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 140, 0.90f, 5,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Sky_Uppercut, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 85, 0.90f, 15,
-				Contest.COOL, 2, 1),
-			CreateMoveData(Move.Slack_Off, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CUTE, 4,
-				0),
-			CreateMoveData(Move.Slam, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 80, 0.75f, 20, Contest.TOUGH,
-				4, 0),
-			CreateMoveData(Move.Slash, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 70, 1f, 20, Contest.COOL, 4,
-				0, "Cut"),
-			CreateMoveData(Move.Sleep_Powder, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0.75f, 15,
-				Contest.CLEVER, 1, 3),
-			CreateMoveData(Move.Smog, Pokemon.PokemonData.Type.POISON, Category.SPECIAL, 30, 0.70f, 20, Contest.TOUGH,
-				2, 0),
-			CreateMoveData(Move.Smokescreen, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 40,
-				Contest.CLEVER, 2, 3),
-			CreateMoveData(Move.Snore, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 50, 1f, 15, Contest.CUTE, 1,
-				0),
-			CreateMoveData(Move.Soak, Pokemon.PokemonData.Type.WATER, Category.STATUS, 0, 1f, 20, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Solar_Beam, Pokemon.PokemonData.Type.GRASS, Category.SPECIAL, 120, 1f, 10, Contest.COOL,
-				3, 0),
-			CreateMoveData(Move.Spider_Web, Pokemon.PokemonData.Type.BUG, Category.STATUS, 0, 0, 10, Contest.CLEVER, 2,
-				0),
-			CreateMoveData(Move.Spikes, Pokemon.PokemonData.Type.GROUND, Category.STATUS, 0, 0, 20, Contest.CLEVER, 2,
-				0),
-			CreateMoveData(Move.Spiky_Shield, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0, 10, Contest.TOUGH,
-				1, 0),
-			CreateMoveData(Move.Spit_Up, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 0, 1f, 10, Contest.TOUGH, 1,
-				0),
-			CreateMoveData(Move.Splash, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 40, Contest.CUTE, 4, 0),
-			CreateMoveData(Move.Sticky_Web, Pokemon.PokemonData.Type.BUG, Category.STATUS, 0, 0, 20, Contest.TOUGH, 2,
-				1),
-			CreateMoveData(Move.Stockpile, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.COOL, 1,
-				0),
-			CreateMoveData(Move.Stone_Edge, Pokemon.PokemonData.Type.ROCK, Category.PHYSICAL, 100, 0.80f, 5,
-				Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.String_Shot, Pokemon.PokemonData.Type.BUG, Category.STATUS, 0, 0.95f, 40,
-				Contest.CLEVER, 2, 3),
-			CreateMoveData(Move.Struggle, Pokemon.PokemonData.Type.NONE, Category.PHYSICAL, 50, 0, 1,
-				TargetB.ADJACENTOPPONENT, 0, true, true, false, false,
-				new Effect[] {Effect.RecoilMax}, new float[] {0.25f}, Contest.COOL, 4, 0,
-				"An attack that is used in desperation only if the user has no PP. It also hurts the user slightly."),
-			CreateMoveData(Move.Stun_Spore, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0.75f, 30,
-				Contest.CLEVER, 2, 1),
-			CreateMoveData(Move.Submission, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 80, 0.80f, 25,
-				Contest.COOL, 6, 0),
-			CreateMoveData(Move.Substitute, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CUTE, 2,
-				0),
-			CreateMoveData(Move.Sucker_Punch, Pokemon.PokemonData.Type.DARK, Category.PHYSICAL, 80, 1f, 5,
-				TargetB.ADJACENT, 1, true, true, false, false, new Effect[] {Effect.Unique},
-				new float[] {0}, Contest.CLEVER, 3, 0),
-			CreateMoveData(Move.Sunny_Day, Pokemon.PokemonData.Type.FIRE, Category.STATUS, 0, 0, 5, Contest.BEAUTIFUL,
-				1, 0),
-			CreateMoveData(Move.Super_Fang, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 0, 0.90f, 10,
-				Contest.TOUGH, 2, 1),
-			CreateMoveData(Move.Superpower, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 120, 1f, 5,
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Supersonic, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0.55f, 20,
-				Contest.CLEVER, 3, 0),
-			CreateMoveData(Move.Surf, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 90, 1f, 15, Contest.BEAUTIFUL,
-				2, 2, "Surf"),
-			CreateMoveData(Move.Swagger, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0.90f, 15, Contest.CUTE,
-				3, 0),
-			CreateMoveData(Move.Swallow, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.TOUGH, 2,
-				0),
-			CreateMoveData(Move.Sweet_Scent, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 20, Contest.CUTE,
-				2, 0),
-			CreateMoveData(Move.Swift, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 60, 0, 20, Contest.COOL, 2, 0),
-			CreateMoveData(Move.Switcheroo, Pokemon.PokemonData.Type.DARK, Category.STATUS, 0, 1f, 10, Contest.CLEVER,
-				2, 1),
-			CreateMoveData(Move.Swords_Dance, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, TargetB.SELF,
-				0, false, false, false, true, new Effect[] {Effect.ATKself}, new float[] {2},
-				Contest.BEAUTIFUL, 1, 0),
-			CreateMoveData(Move.Synchronoise, Pokemon.PokemonData.Type.PSYCHIC, Category.SPECIAL, 120, 1f, 15,
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Synthesis, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 0, 5, Contest.CLEVER, 1,
-				0),
-			CreateMoveData(Move.Tackle, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 50, 1f, 35, Contest.TOUGH,
-				4, 0),
-			CreateMoveData(Move.Tail_Whip, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 30,
-				TargetB.ALLADJACENTOPPONENT, 0, false, true, true, false,
-				new Effect[] {Effect.DEF}, new float[] {-1}, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Tailwind, Pokemon.PokemonData.Type.FLYING, Category.STATUS, 0, 0, 15, Contest.COOL, 3,
-				0),
-			CreateMoveData(Move.Take_Down, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 90, 0.85f, 20,
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Taunt, Pokemon.PokemonData.Type.DARK, Category.STATUS, 0, 1f, 20, Contest.CLEVER, 2, 1),
-			CreateMoveData(Move.Thrash, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 120, 1f, 10, Contest.TOUGH,
-				6, 0),
-			CreateMoveData(Move.Thunder_Fang, Pokemon.PokemonData.Type.ELECTRIC, Category.PHYSICAL, 65, 0.95f, 15,
-				TargetB.ADJACENT, 0, true, true, false, false,
-				new Effect[] {Effect.Paralyze, Effect.Flinch}, new float[] {0.1f, 0.1f},
-				Contest.COOL, 4, 0),
-			CreateMoveData(Move.Thunder_Punch, Pokemon.PokemonData.Type.ELECTRIC, Category.PHYSICAL, 75, 1f, 15,
-				TargetB.ADJACENT, 0, true, true, false, false, new Effect[] {Effect.Paralyze},
-				new float[] {0.1f}, Contest.COOL, 4, 0),
-			CreateMoveData(Move.Tickle, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 1f, 20, Contest.CUTE, 3, 0),
-			CreateMoveData(Move.Toxic, Pokemon.PokemonData.Type.POISON, Category.STATUS, 0, 0.90f, 10, Contest.CLEVER,
-				3, 0),
-			CreateMoveData(Move.Toxic_Spikes, Pokemon.PokemonData.Type.POISON, Category.STATUS, 0, 0, 20,
-				Contest.CLEVER, 2, 0),
-			CreateMoveData(Move.Trump_Card, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 0, 0, 5, Contest.COOL, 1,
-				0),
-			CreateMoveData(Move.Twineedle, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 25, 1f, 20, Contest.COOL, 2,
-				1),
-			CreateMoveData(Move.Twister, Pokemon.PokemonData.Type.DRAGON, Category.SPECIAL, 40, 1f, 20, Contest.COOL, 4,
-				0),
-			CreateMoveData(Move.Uproar, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 90, 1f, 10, Contest.CUTE, 2,
-				1),
-			CreateMoveData(Move.Venom_Drench, Pokemon.PokemonData.Type.POISON, Category.STATUS, 0, 1f, 20,
-				Contest.CLEVER, 3, 0),
-			CreateMoveData(Move.Venoshock, Pokemon.PokemonData.Type.POISON, Category.SPECIAL, 65, 1f, 10,
-				Contest.BEAUTIFUL, 2, 0),
-			CreateMoveData(Move.Vine_Whip, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 45, 1f, 25, Contest.COOL,
-				4, 0),
-			CreateMoveData(Move.Vital_Throw, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 70, 0, 10,
-				TargetB.ADJACENT, -1, true, true, false, false, new Effect[] {}, new float[] {},
-				Contest.COOL, 2, 0, "Strength"),
-			CreateMoveData(Move.Wake_Up_Slap, Pokemon.PokemonData.Type.FIGHTING, Category.PHYSICAL, 70, 1f, 10,
-				Contest.TOUGH, 3, 0),
-			CreateMoveData(Move.Water_Gun, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 40, 1f, 25, Contest.CUTE,
-				4, 0),
-			CreateMoveData(Move.Water_Pulse, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 60, 1f, 20,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Water_Shuriken, Pokemon.PokemonData.Type.WATER, Category.PHYSICAL, 15, 1f, 20,
-				Contest.COOL, 3, 0),
-			CreateMoveData(Move.Water_Sport, Pokemon.PokemonData.Type.WATER, Category.STATUS, 0, 0, 15, Contest.CUTE, 2,
-				0),
-			CreateMoveData(Move.Weather_Ball, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 50, 1f, 10,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Whirlpool, Pokemon.PokemonData.Type.WATER, Category.SPECIAL, 35, 0.85f, 15,
-				Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Whirlwind, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 20, Contest.CLEVER,
-				3, 0),
-			CreateMoveData(Move.Wide_Guard, Pokemon.PokemonData.Type.ROCK, Category.STATUS, 0, 0, 10, Contest.TOUGH, 1,
-				0),
-			CreateMoveData(Move.Will_O_Wisp, Pokemon.PokemonData.Type.FIRE, Category.STATUS, 0, 0.85f, 15,
-				TargetB.ADJACENT, 0, false, true, true, false, new Effect[] {Effect.Burn},
-				new float[] {1}, Contest.BEAUTIFUL, 3, 0),
-			CreateMoveData(Move.Wing_Attack, Pokemon.PokemonData.Type.FLYING, Category.PHYSICAL, 60, 1f, 35,
-				Contest.COOL, 4, 0),
-			CreateMoveData(Move.Withdraw, Pokemon.PokemonData.Type.WATER, Category.STATUS, 0, 0, 40, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Wood_Hammer, Pokemon.PokemonData.Type.GRASS, Category.PHYSICAL, 120, 1f, 15,
-				Contest.TOUGH, 6, 0),
-			CreateMoveData(Move.Worry_Seed, Pokemon.PokemonData.Type.GRASS, Category.STATUS, 0, 1f, 10, Contest.CLEVER,
-				2, 0),
-			CreateMoveData(Move.Wrap, Pokemon.PokemonData.Type.NORMAL, Category.PHYSICAL, 15, 0.90f, 20, Contest.TOUGH,
-				3, 0),
-			CreateMoveData(Move.Wring_Out, Pokemon.PokemonData.Type.NORMAL, Category.SPECIAL, 0, 1f, 5, Contest.TOUGH,
-				2, 1),
-			CreateMoveData(Move.X_Scissor, Pokemon.PokemonData.Type.BUG, Category.PHYSICAL, 80, 1f, 15, Contest.COOL, 2,
-				1, "Cut"),
-			CreateMoveData(Move.Yawn, Pokemon.PokemonData.Type.NORMAL, Category.STATUS, 0, 0, 10, Contest.CUTE, 2, 0),
-			CreateMoveData(Move.Zen_Headbutt, Pokemon.PokemonData.Type.PSYCHIC, Category.PHYSICAL, 80, 0.90f, 15,
-				Contest.CLEVER, 4, 0)*/
-		};
-		#endregion
-		public static MoveData CreateMoveData(Moves internalName, Types type, Category category, int power, float accuracy, int PP, 
-					Target target, int priority, Veekun.Flags[] flag, float addlEffect, Effect[] moveEffects, float[] moveParameters,
-					Contest contest, int appeal, int jamming/*, string fieldEffect*/)
-		{
-			return new MoveData();
-			/*/this.name = name;
-			this.type = type;
-			this.category = category;
-			this.power = power;
-			this.accuracy = accuracy;
-			this.PP = PP;
-			this.target = target;
-			this.priority = priority;
-			this.contact = contact;
-			this.protectable = protectable;
-			this.magicCoatable = magicCoatable;
-			this.snatchable = snatchable;
-			this.moveEffects = moveEffects;
-			this.moveParameters = moveParameters;
-			this.contest = contest;
-			this.appeal = appeal;
-			this.jamming = jamming;
-			//this.description = description;
-			//this.fieldEffect = fieldEffect;*/
-		}
-		public static MoveData CreateMoveData(Moves internalName, Types type, Category category, int power, float accuracy, int PP, TargetB target,
-					int priority, bool contact, bool protectable, bool magicCoatable, bool snatchable,
-					Effect[] moveEffects, float[] moveParameters,
-					Contest contest, int appeal, int jamming/*, string description, string fieldEffect*/)
-		{
-			return new MoveData();
-			/*/this.name = name;
-			this.type = type;
-			this.category = category;
-			this.power = power;
-			this.accuracy = accuracy;
-			this.PP = PP;
-			this.target = target;
-			this.priority = priority;
-			this.contact = contact;
-			this.protectable = protectable;
-			this.magicCoatable = magicCoatable;
-			this.snatchable = snatchable;
-			this.moveEffects = moveEffects;
-			this.moveParameters = moveParameters;
-			this.contest = contest;
-			this.appeal = appeal;
-			this.jamming = jamming;
-			//this.description = description;
-			//this.fieldEffect = fieldEffect;*/
-		}
-		internal MoveData getMove(Moves ID)
-		{
-			foreach (MoveData move in Database)
-			{
-				if (move.ID == ID) return move;
-			}
-			throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
-		}
-
-        #region Deprecated/Obsolete		
-#if DEBUG
-		private static Dictionary<int, MoveTranslation> _moveTranslations;// = LoadMoveTranslations();
-#else
-		private static Dictionary<int, MoveTranslation> _moveTranslations;// = LoadMoveTranslations(SaveData.currentSave.playerLanguage | Settings.Language.English);
-#endif
-		/// <summary>
-		/// </summary> 
-		private static Dictionary<int, MoveTranslation> _moveEnglishTranslations;
-		/// <summary>
-		/// </summary>
-		public static void LoadMoveTranslations(Settings.Languages language = Settings.Languages.English)//, int form = 0
-		{
-			var data = new Dictionary<int, MoveTranslation>();
-
-			string fileLanguage;
-			switch (language)
-			{
-				case Settings.Languages.English:
-					fileLanguage = "en-us";
-					break;
-				default: //Default in case new language is added to game but not programmed ahead of time here...
-					fileLanguage = "en-us";
-					break;
-			}
-			System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-			//ToDo = Consider "/Resources/Database/MoveTranslations/Move_"
-#if DEBUG
-			string file = @"..\..\..\\Pokemon Unity\Assets\Resources\Database\Moves\Move" + fileLanguage + ".xml"; 
-#else
-			string file = UnityEngine.Application.dataPath + "/Resources/Database/Moves/Move" + fileLanguage + ".xml"; //Use for production
-#endif
-			System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open);
-			xmlDoc.Load(fs);
-
-			if (xmlDoc.HasChildNodes)
-			{
-				foreach (System.Xml.XmlNode node in xmlDoc.GetElementsByTagName("Move"))
-				{
-					var translation = new MoveTranslation();
-					translation.Name = node.Attributes["name"].Value; 
-					translation.Description = node.InnerText;
-					data.Add(int.Parse(node.Attributes["id"].Value), translation); //Is this safe? Possible overwritting of values with bad entries
-				}
-			}
-	
-			//ToDo = Is filestream still open or does it need to be closed and disposed of?
-			fs.Dispose(); fs.Close();
-			_moveTranslations = data;//return data;
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="language"></param>
-		/// <returns></returns>
-		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
-		public static MoveTranslation GetMoveTranslation(Moves id, Settings.Languages language = Settings.Languages.English)// int form = 0,
-		{
-			if (_moveTranslations == null) //should return english if player's default language is null
-			{
-				LoadMoveTranslations(language);//, form
-			}
-
-			int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-			if (!_moveTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
-			{
-				//Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
-				throw new System.Exception(string.Format("Failed to load move translation for move with id: {0}_{1}", (int)id, id.ToString()));
-			}
-			//ToDo = Show english text for missing data on foreign languages 
-			else if (!_moveTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
-			{
-				return _moveEnglishTranslations[arrayId];
-			}
-
-			return _moveTranslations[arrayId];// int id
-		}
-		#endregion
-	    #endregion
-	}
 	/// <summary>
-    /// Clones Pokemon's Move stats, and uses those values for pokemon battles.
+	/// Clones Pokemon's Move stats, and uses those values for pokemon battles.
 	/// </summary>
 	public class MoveBattle
 	{
 		#region Variables
-		private MoveData _baseData { get; set; }
+		private MoveDataDex _baseData { get; set; }
 		private Move _baseMove { get; set; }
         private string _baseBattle { get; set; }
 
-		//function   = movedata.function
+		//private string function { get { return _baseData.Function; } }		//= movedata.function
 		private int basedamage { get { return _baseData.BaseDamage; } }     //= movedata.BaseDamage
         private Types type { get { return _baseData.Type; } }               //= movedata.type
         private int accuracy { get { return _baseData.Accuracy; } }         //= movedata.accuracy
-        private float addlEffect { get { return _baseData.AddlEffect; } }   //= movedata.addlEffect
+        //private float addlEffect { get { return _baseData.AddlEffect; } }   //= movedata.addlEffect
         private Target target { get { return _baseData.Target; } }          //= movedata.target
         private int priority { get { return _baseData.Priority; } }         //= movedata.priority
-        private Flags flags { get { return _baseData.Flags; } }             //= movedata.flags
+        private PokemonEssential.Flags flags { get { return _baseData.Flags; } }             //= movedata.flags
 	    private Category category { get { return _baseData.Category; }  }	//= movedata.category
         private Move thismove { get; set; }	                                //= move
 		private int totalpp { get; set; }
@@ -21543,20 +22396,20 @@ namespace PokemonEssential
 			this.SoundBased = sound;
 		}
 	}
-	//NOTYPE          = 0x01
-	//IGNOREPKMNTYPES = 0x02
-	//NOWEIGHTING     = 0x04
-	//NOCRITICAL      = 0x08
-	//NOREFLECT       = 0x10
+	//NOTYPE          = 0x01,
+	//IGNOREPKMNTYPES = 0x02,
+	//NOWEIGHTING     = 0x04,
+	//NOCRITICAL      = 0x08,
+	//NOREFLECT       = 0x10,
 	//SELFCONFUSE     = 0x20
     public enum SpecialCondition
     {
-        NOTYPE,
-        IGNOREPKMNTYPES,
-        NOWEIGHTING,
-        NOCRITICAL,
-        NOREFLECT,
-        SELFCONFUSE
+        NOTYPE			= 0x01,
+        IGNOREPKMNTYPES	= 0x02,
+        NOWEIGHTING		= 0x04,
+        NOCRITICAL		= 0x08,
+        NOREFLECT		= 0x10,
+        SELFCONFUSE		= 0x20
     }
 	/// <summary>
 	/// </summary>
@@ -21634,24 +22487,24 @@ namespace PokemonEssential
 		private static readonly MoveDataDex[] Database;
 
 		#region Variables
-		public Category category { get; private set; }
+		public Category Category { get; private set; }
 		public int num { get; private set; }
-		public Moves id { get; private set; }
+		public Moves ID { get; private set; }
 		/// <summary>
 		/// The move's accuracy, as a percentage. 
 		/// An accuracy of 0 means the move doesn't perform an accuracy check 
 		/// (i.e. it cannot be evaded).
 		/// </summary>
-		public int accuracy { get; private set; }
-		public int basePower { get; private set; }
-		public int pp { get; private set; }
-		public int priority { get; private set; }
-		public Flags flags { get; private set; }
-		public int critRatio { get; private set; }
-		public Target target { get; private set; }
-		public Types type { get; private set; }
-		public Contest contestType { get; private set; }
-		//public Effects.Move function { get; private set; }
+		public int Accuracy { get; private set; }
+		public int BaseDamage { get; private set; }
+		public int PP { get; private set; }
+		public int Priority { get; private set; }
+		public Flags Flags { get; private set; }
+		public Target Target { get; private set; }
+		public Types Type { get; private set; }
+		public Contest ContestType { get; private set; }
+		public short Function { get; private set; }
+		public string FunctionAsString { get; private set; }
 		/// <summary>
 		/// The probability that the move's additional effect occurs, as a percentage. 
 		/// If the move has no additional effect (e.g. all status moves), this value is 0.
@@ -21659,23 +22512,28 @@ namespace PokemonEssential
 		/// which is not the same thing as having an effect that will always occur. 
 		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
 		/// </summary>
-		public int effects { get; private set; }
-		//public bool isViable { get; private set; }
-		//public string isZ { get; private set; }
-		//public Secondary secondary { get; private set; }
-		//public Boosts boosts { get; private set; }
-		//public int[] drain { get; private set; }
-		//public int[] multihit { get; private set; }
-		//public int[] heal { get; private set; }
-		
-		//public int zMovePower { get; private set; }
-		//public string zMoveEffect { get; private set; }
-		//public Boosts zMoveBoost { get; private set; }
-		//public string selfSwitch { get; private set; }
-		//public string volatileStatus { get; private set; }
+		public int Effects { get; private set; }
+		public string Name { get; private set; }
+		public string Description { get; private set; }
+		//ToDo: Missing from Database
+		public int Appeal { get; private set; }
+		public int Jamming { get; private set; }
 		#endregion
 
-		public MoveDataDex(){}
+		public MoveDataDex()
+		{
+			Name = LanguageExtension.Translate(Text.Moves, ID.ToString()).Name;
+			Description = LanguageExtension.Translate(Text.Moves, ID.ToString()).Value;
+		}
+
+		internal MoveDataDex getMove(Moves ID)
+		{
+			foreach (MoveDataDex move in Database)
+			{
+				if (move.ID == ID) return move;
+			}
+			throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
+		}
 
 		static MoveDataDex()
 		{
@@ -21686,8946 +22544,8946 @@ Database = new MoveDataDex[] {
 	#region Database
 new MoveDataDex() {
 	num = 1,
-	id = Moves.MEGAHORN, 
+	ID = Moves.MEGAHORN, 
 	//name = "Megahorn", 
-	//function = 000, 
-	basePower = 120,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 120,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Using its tough and impressive horn, the user rams into the target with no letup."
 },
 new MoveDataDex() {
 	num = 2,
-	id = Moves.ATTACK_ORDER, 
+	ID = Moves.ATTACK_ORDER, 
 	//name = "Attack Order", 
-	//function = 000, 
-	basePower = 90,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 90,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user calls out its underlings to pummel the target. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 3,
-	id = Moves.BUG_BUZZ, 
+	ID = Moves.BUG_BUZZ, 
 	//name = "Bug Buzz", 
-	//function = 046, 
-	basePower = 90,
-	type = Types.BUG,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,sound: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 90,
+	Type = Types.BUG,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,sound: true ) { }
 	//,description = "The user vibrates its wings to generate a damaging sound wave. It may also lower the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 4,
-	id = Moves.X_SCISSOR, 
+	ID = Moves.X_SCISSOR, 
 	//name = "X-Scissor", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slashes at the foe by crossing its scythes or claws as if they were a pair of scissors."
 },
 new MoveDataDex() {
 	num = 5,
-	id = Moves.SIGNAL_BEAM, 
+	ID = Moves.SIGNAL_BEAM, 
 	//name = "Signal Beam", 
-	//function = 013, 
-	basePower = 75,
-	type = Types.BUG,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 75,
+	Type = Types.BUG,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a sinister beam of light. It may also confuse the target."
 },
 new MoveDataDex() {
 	num = 6,
-	id = Moves.U_TURN, 
+	ID = Moves.U_TURN, 
 	//name = "U-turn", 
-	//function = 0EE, 
-	basePower = 70,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0EE, FunctionAsString = "0EE", 
+	BaseDamage = 70,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
 },
 new MoveDataDex() {
 	num = 7,
-	id = Moves.STEAMROLLER, 
+	ID = Moves.STEAMROLLER, 
 	//name = "Steamroller", 
-	//function = 010, 
-	basePower = 65,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x010, FunctionAsString = "010", 
+	BaseDamage = 65,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user crushes its foes by rolling over them. This attack may make the target flinch."
 },
 new MoveDataDex() {
 	num = 8,
-	id = Moves.BUG_BITE, 
+	ID = Moves.BUG_BITE, 
 	//name = "Bug Bite", 
-	//function = 0F4, 
-	basePower = 60,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0F4, FunctionAsString = "0F4", 
+	BaseDamage = 60,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites the target. If the target is holding a Berry, the user eats it and gains its effect."
 },
 new MoveDataDex() {
 	num = 9,
-	id = Moves.SILVER_WIND, 
+	ID = Moves.SILVER_WIND, 
 	//name = "Silver Wind", 
-	//function = 02D, 
-	basePower = 60,
-	type = Types.BUG,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x02D, FunctionAsString = "02D", 
+	BaseDamage = 60,
+	Type = Types.BUG,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The foe is attacked with powdery scales blown by wind. It may also raise all the user's stats."
 },
 new MoveDataDex() {
 	num = 10,
-	id = Moves.STRUGGLE_BUG, 
+	ID = Moves.STRUGGLE_BUG, 
 	//name = "Struggle Bug", 
-	//function = 045, 
-	basePower = 30,
-	type = Types.BUG,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 100,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x045, FunctionAsString = "045", 
+	BaseDamage = 30,
+	Type = Types.BUG,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 100,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "While resisting, the user attacks the opposing Pokémon. The targets' Sp. Atk stat is reduced."
 },
 new MoveDataDex() {
 	num = 11,
-	id = Moves.TWINEEDLE, 
+	ID = Moves.TWINEEDLE, 
 	//name = "Twineedle", 
-	//function = 0BE, 
-	basePower = 25,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0BE, FunctionAsString = "0BE", 
+	BaseDamage = 25,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is stabbed twice by a pair of stingers. It may also poison the target."
 },
 new MoveDataDex() {
 	num = 12,
-	id = Moves.FURY_CUTTER, 
+	ID = Moves.FURY_CUTTER, 
 	//name = "Fury Cutter", 
-	//function = 091, 
-	basePower = 20,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x091, FunctionAsString = "091", 
+	BaseDamage = 20,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slashed with scythes or claws. Its power increases if it hits in succession."
 },
 new MoveDataDex() {
 	num = 13,
-	id = Moves.LEECH_LIFE, 
+	ID = Moves.LEECH_LIFE, 
 	//name = "Leech Life", 
-	//function = 0DD, 
-	basePower = 20,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0DD, FunctionAsString = "0DD", 
+	BaseDamage = 20,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user drains the target's blood. The user's HP is restored by half the damage taken by the target."
 },
 new MoveDataDex() {
 	num = 14,
-	id = Moves.PIN_MISSILE, 
+	ID = Moves.PIN_MISSILE, 
 	//name = "Pin Missile", 
-	//function = 0C0, 
-	basePower = 14,
-	type = Types.BUG,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 14,
+	Type = Types.BUG,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Sharp spikes are shot at the target in rapid succession. They hit two to five times in a row."
 },
 new MoveDataDex() {
 	num = 15,
-	id = Moves.DEFEND_ORDER, 
+	ID = Moves.DEFEND_ORDER, 
 	//name = "Defend Order", 
-	//function = 02A, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02A, FunctionAsString = "02A", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user calls out its underlings to shield its body, raising its Defense and Sp. Def stats."
 },
 new MoveDataDex() {
 	num = 16,
-	id = Moves.HEAL_ORDER, 
+	ID = Moves.HEAL_ORDER, 
 	//name = "Heal Order", 
-	//function = 0D5, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true, bite: true ) { }
+	Function = 0x0D5, FunctionAsString = "0D5", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true, bite: true ) { }
 	//,description = "The user calls out its underlings to heal it. The user regains up to half of its max HP."
 },
 new MoveDataDex() {
 	num = 17,
-	id = Moves.QUIVER_DANCE, 
+	ID = Moves.QUIVER_DANCE, 
 	//name = "Quiver Dance", 
-	//function = 02B, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02B, FunctionAsString = "02B", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user performs a beautiful dance. It boosts the user's Sp. Atk, Sp. Def, and Speed stats."
 },
 new MoveDataDex() {
 	num = 18,
-	id = Moves.RAGE_POWDER, 
+	ID = Moves.RAGE_POWDER, 
 	//name = "Rage Powder", 
-	//function = 117, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 3,
-	flags = new Flags(  ) { } 
+	Function = 0x117, FunctionAsString = "117", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 3,
+	Flags = new Flags(  ) { } 
 	//,description = "The user scatters irritating powder to draw attention to itself. Opponents aim only at the user."
 },
 new MoveDataDex() {
 	num = 19,
-	id = Moves.SPIDER_WEB, 
+	ID = Moves.SPIDER_WEB, 
 	//name = "Spider Web", 
-	//function = 0EF, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0EF, FunctionAsString = "0EF", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user ensnares the target with thin, gooey silk so it can't flee from battle."
 },
 new MoveDataDex() {
 	num = 20,
-	id = Moves.STRING_SHOT, 
+	ID = Moves.STRING_SHOT, 
 	//name = "String Shot", 
-	//function = 044, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 95,
-	pp = 40,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 95,
+	PP = 40,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The foe is bound with silk blown from the user's mouth. This silk reduces the target's Speed."
 },
 new MoveDataDex() {
 	num = 21,
-	id = Moves.TAIL_GLOW, 
+	ID = Moves.TAIL_GLOW, 
 	//name = "Tail Glow", 
-	//function = 039, 
-	basePower = 0,
-	type = Types.BUG,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x039, FunctionAsString = "039", 
+	BaseDamage = 0,
+	Type = Types.BUG,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user stares at flashing lights to focus its mind, drastically raising its Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 22,
-	id = Moves.FOUL_PLAY, 
+	ID = Moves.FOUL_PLAY, 
 	//name = "Foul Play", 
-	//function = 121, 
-	basePower = 95,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x121, FunctionAsString = "121", 
+	BaseDamage = 95,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user turns the foe's power against it. It does more damage the higher the target's Attack stat."
 },
 new MoveDataDex() {
 	num = 23,
-	id = Moves.NIGHT_DAZE, 
+	ID = Moves.NIGHT_DAZE, 
 	//name = "Night Daze", 
-	//function = 047, 
-	basePower = 85,
-	type = Types.DARK,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 10,
-	effects = 40,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 85,
+	Type = Types.DARK,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 10,
+	Effects = 40,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lets loose a pitch-black shock wave at its target. It may also lower the target's accuracy."
 },
 new MoveDataDex() {
 	num = 24,
-	id = Moves.CRUNCH, 
+	ID = Moves.CRUNCH, 
 	//name = "Crunch", 
-	//function = 043, 
-	basePower = 80,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 80,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user crunches up the target with sharp fangs. It may also lower the target's Defense stat."
 },
 new MoveDataDex() {
 	num = 25,
-	id = Moves.DARK_PULSE, 
+	ID = Moves.DARK_PULSE, 
 	//name = "Dark Pulse", 
-	//function = 00F, 
-	basePower = 80,
-	type = Types.DARK,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 80,
+	Type = Types.DARK,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user releases a horrible aura imbued with dark thoughts. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 26,
-	id = Moves.SUCKER_PUNCH, 
+	ID = Moves.SUCKER_PUNCH, 
 	//name = "Sucker Punch", 
-	//function = 116, 
-	basePower = 80,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x116, FunctionAsString = "116", 
+	BaseDamage = 80,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This move enables the user to attack first. It fails if the target is not readying an attack, however."
 },
 new MoveDataDex() {
 	num = 27,
-	id = Moves.NIGHT_SLASH, 
+	ID = Moves.NIGHT_SLASH, 
 	//name = "Night Slash", 
-	//function = 000, 
-	basePower = 70,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 70,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user slashes the target the instant an opportunity arises. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 28,
-	id = Moves.BITE, 
+	ID = Moves.BITE, 
 	//name = "Bite", 
-	//function = 00F, 
-	basePower = 60,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 60,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is bitten with viciously sharp fangs. It may make the target flinch."
 },
 new MoveDataDex() {
 	num = 29,
-	id = Moves.FEINT_ATTACK, 
+	ID = Moves.FEINT_ATTACK, 
 	//name = "Faint Attack", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user draws up to the foe disarmingly, then throws a sucker punch. It hits without fail."
 },
 new MoveDataDex() {
 	num = 30,
-	id = Moves.SNARL, 
+	ID = Moves.SNARL, 
 	//name = "Snarl", 
-	//function = 045, 
-	basePower = 55,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 100,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
+	Function = 0x045, FunctionAsString = "045", 
+	BaseDamage = 55,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 100,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user yells as if it is ranting about something, making the target's Sp. Atk stat decrease."
 },
 new MoveDataDex() {
 	num = 31,
-	id = Moves.ASSURANCE, 
+	ID = Moves.ASSURANCE, 
 	//name = "Assurance", 
-	//function = 082, 
-	basePower = 50,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x082, FunctionAsString = "082", 
+	BaseDamage = 50,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "If the target has already taken some damage in the same turn, this attack's power is doubled."
 },
 new MoveDataDex() {
 	num = 32,
-	id = Moves.PAYBACK, 
+	ID = Moves.PAYBACK, 
 	//name = "Payback", 
-	//function = 084, 
-	basePower = 50,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x084, FunctionAsString = "084", 
+	BaseDamage = 50,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "If the user moves after the target, this attack's power will be doubled."
 },
 new MoveDataDex() {
 	num = 33,
-	id = Moves.PURSUIT, 
+	ID = Moves.PURSUIT, 
 	//name = "Pursuit", 
-	//function = 088, 
-	basePower = 40,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x088, FunctionAsString = "088", 
+	BaseDamage = 40,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "An attack move that inflicts double damage if used on a target that is switching out of battle."
 },
 new MoveDataDex() {
 	num = 34,
-	id = Moves.THIEF, 
+	ID = Moves.THIEF, 
 	//name = "Thief", 
-	//function = 0F1, 
-	basePower = 40,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0F1, FunctionAsString = "0F1", 
+	BaseDamage = 40,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks and steals the foe's held item simultaneously. It can't steal if the user holds an item."
 },
 new MoveDataDex() {
 	num = 35,
-	id = Moves.KNOCK_OFF, 
+	ID = Moves.KNOCK_OFF, 
 	//name = "Knock Off", 
-	//function = 0F0, 
-	basePower = 20,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0F0, FunctionAsString = "0F0", 
+	BaseDamage = 20,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user slaps down the target's held item, preventing that item from being used in the battle."
 },
 new MoveDataDex() {
 	num = 36,
-	id = Moves.BEAT_UP, 
+	ID = Moves.BEAT_UP, 
 	//name = "Beat Up", 
-	//function = 0C1, 
-	basePower = 1,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C1, FunctionAsString = "0C1", 
+	BaseDamage = 1,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user gets all the party Pokémon to attack the foe. The more party Pokémon, the more damage."
 },
 new MoveDataDex() {
 	num = 37,
-	id = Moves.FLING, 
+	ID = Moves.FLING, 
 	//name = "Fling", 
-	//function = 0F7, 
-	basePower = 1,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0F7, FunctionAsString = "0F7", 
+	BaseDamage = 1,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user flings its held item at the target to attack. Its power and effects depend on the item."
 },
 new MoveDataDex() {
 	num = 38,
-	id = Moves.PUNISHMENT, 
+	ID = Moves.PUNISHMENT, 
 	//name = "Punishment", 
-	//function = 08F, 
-	basePower = 1,
-	type = Types.DARK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08F, FunctionAsString = "08F", 
+	BaseDamage = 1,
+	Type = Types.DARK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This attack's power increases the more the target has powered up with stat changes."
 },
 new MoveDataDex() {
 	num = 39,
-	id = Moves.DARK_VOID, 
+	ID = Moves.DARK_VOID, 
 	//name = "Dark Void", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 80,
-	pp = 10,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 80,
+	PP = 10,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Opposing Pokémon are dragged into a world of total darkness that makes them sleep."
 },
 new MoveDataDex() {
 	num = 40,
-	id = Moves.EMBARGO, 
+	ID = Moves.EMBARGO, 
 	//name = "Embargo", 
-	//function = 0F8, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0F8, FunctionAsString = "0F8", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "It prevents the target from using its held item. Its Trainer is also prevented from using items on it."
 },
 new MoveDataDex() {
 	num = 41,
-	id = Moves.FAKE_TEARS, 
+	ID = Moves.FAKE_TEARS, 
 	//name = "Fake Tears", 
-	//function = 04F, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04F, FunctionAsString = "04F", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user feigns crying to fluster the target, harshly lowering its Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 42,
-	id = Moves.FLATTER, 
+	ID = Moves.FLATTER, 
 	//name = "Flatter", 
-	//function = 040, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x040, FunctionAsString = "040", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Flattery is used to confuse the target. However, it also raises the target's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 43,
-	id = Moves.HONE_CLAWS, 
+	ID = Moves.HONE_CLAWS, 
 	//name = "Hone Claws", 
-	//function = 029, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x029, FunctionAsString = "029", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user sharpens its claws to boost its Attack stat and accuracy."
 },
 new MoveDataDex() {
 	num = 44,
-	id = Moves.MEMENTO, 
+	ID = Moves.MEMENTO, 
 	//name = "Memento", 
-	//function = 0E2, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( mirror: true ) { }
+	Function = 0x0E2, FunctionAsString = "0E2", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( mirror: true ) { }
 	//,description = "The user faints when using this move. In return, it harshly lowers the target's Attack and Sp. Atk."
 },
 new MoveDataDex() {
 	num = 45,
-	id = Moves.NASTY_PLOT, 
+	ID = Moves.NASTY_PLOT, 
 	//name = "Nasty Plot", 
-	//function = 032, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x032, FunctionAsString = "032", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user stimulates its brain by thinking bad thoughts. It sharply raises the user's Sp. Atk."
 },
 new MoveDataDex() {
 	num = 46,
-	id = Moves.QUASH, 
+	ID = Moves.QUASH, 
 	//name = "Quash", 
-	//function = 11E, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x11E, FunctionAsString = "11E", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user suppresses the target and makes its move go last."
 },
 new MoveDataDex() {
 	num = 47,
-	id = Moves.SNATCH, 
+	ID = Moves.SNATCH, 
 	//name = "Snatch", 
-	//function = 0B2, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 4,
-	flags = new Flags(  ) { } 
+	Function = 0x0B2, FunctionAsString = "0B2", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 4,
+	Flags = new Flags(  ) { } 
 	//,description = "The user steals the effects of any healing or stat-changing move the foe attempts to use."
 },
 new MoveDataDex() {
 	num = 48,
-	id = Moves.SWITCHEROO, 
+	ID = Moves.SWITCHEROO, 
 	//name = "Switcheroo", 
-	//function = 0F2, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0F2, FunctionAsString = "0F2", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user trades held items with the target faster than the eye can follow."
 },
 new MoveDataDex() {
 	num = 49,
-	id = Moves.TAUNT, 
+	ID = Moves.TAUNT, 
 	//name = "Taunt", 
-	//function = 0BA, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0BA, FunctionAsString = "0BA", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The target is taunted into a rage that allows it to use only attack moves for three turns."
 },
 new MoveDataDex() {
 	num = 50,
-	id = Moves.TORMENT, 
+	ID = Moves.TORMENT, 
 	//name = "Torment", 
-	//function = 0B7, 
-	basePower = 0,
-	type = Types.DARK,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0B7, FunctionAsString = "0B7", 
+	BaseDamage = 0,
+	Type = Types.DARK,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user torments and enrages the foe, making it incapable of using the same move twice in a row."
 },
 new MoveDataDex() {
 	num = 51,
-	id = Moves.ROAR_OF_TIME, 
+	ID = Moves.ROAR_OF_TIME, 
 	//name = "Roar of Time", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blasts the target with power that distorts even time. The user must rest on the next turn."
 },
 new MoveDataDex() {
 	num = 52,
-	id = Moves.DRACO_METEOR, 
+	ID = Moves.DRACO_METEOR, 
 	//name = "Draco Meteor", 
-	//function = 03F, 
-	basePower = 140,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x03F, FunctionAsString = "03F", 
+	BaseDamage = 140,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Comets are summoned down from the sky. The attack's recoil harshly reduces the user's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 53,
-	id = Moves.OUTRAGE, 
+	ID = Moves.OUTRAGE, 
 	//name = "Outrage", 
-	//function = 0D2, 
-	basePower = 120,
-	type = Types.DRAGON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.RandomOpposing,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0D2, FunctionAsString = "0D2", 
+	BaseDamage = 120,
+	Type = Types.DRAGON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.RandomOpposing,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user rampages and attacks for two to three turns. It then becomes confused, however."
 },
 new MoveDataDex() {
 	num = 54,
-	id = Moves.DRAGON_RUSH, 
+	ID = Moves.DRAGON_RUSH, 
 	//name = "Dragon Rush", 
-	//function = 00F, 
-	basePower = 100,
-	type = Types.DRAGON,
-	category = Category.PHYSICAL,
-	accuracy = 75,
-	pp = 10,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 100,
+	Type = Types.DRAGON,
+	Category = Category.PHYSICAL,
+	Accuracy = 75,
+	PP = 10,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tackles the foe while exhibiting overwhelming menace. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 55,
-	id = Moves.SPACIAL_REND, 
+	ID = Moves.SPACIAL_REND, 
 	//name = "Spacial Rend", 
-	//function = 000, 
-	basePower = 100,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 100,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user tears the target along with the space around it. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 56,
-	id = Moves.DRAGON_PULSE, 
+	ID = Moves.DRAGON_PULSE, 
 	//name = "Dragon Pulse", 
-	//function = 000, 
-	basePower = 90,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 90,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked with a shock wave generated by the user's gaping mouth."
 },
 new MoveDataDex() {
 	num = 57,
-	id = Moves.DRAGON_CLAW, 
+	ID = Moves.DRAGON_CLAW, 
 	//name = "Dragon Claw", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.DRAGON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.DRAGON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slashes the target with huge, sharp claws."
 },
 new MoveDataDex() {
 	num = 58,
-	id = Moves.DRAGON_TAIL, 
+	ID = Moves.DRAGON_TAIL, 
 	//name = "Dragon Tail", 
-	//function = 0EC, 
-	basePower = 60,
-	type = Types.DRAGON,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -6,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0EC, FunctionAsString = "0EC", 
+	BaseDamage = 60,
+	Type = Types.DRAGON,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -6,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user knocks away the target and drags out another Pokémon in its party. In the wild, the battle ends."
 },
 new MoveDataDex() {
 	num = 59,
-	id = Moves.DRAGON_BREATH, 
+	ID = Moves.DRAGON_BREATH, 
 	//name = "DragonBreath", 
-	//function = 007, 
-	basePower = 60,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 60,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user exhales a mighty gust that inflicts damage. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 60,
-	id = Moves.DUAL_CHOP, 
+	ID = Moves.DUAL_CHOP, 
 	//name = "Dual Chop", 
-	//function = 0BD, 
-	basePower = 40,
-	type = Types.DRAGON,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0BD, FunctionAsString = "0BD", 
+	BaseDamage = 40,
+	Type = Types.DRAGON,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks its target by hitting it with brutal strikes. The target is hit twice in a row."
 },
 new MoveDataDex() {
 	num = 61,
-	id = Moves.TWISTER, 
+	ID = Moves.TWISTER, 
 	//name = "Twister", 
-	//function = 078, 
-	basePower = 40,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 20,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x078, FunctionAsString = "078", 
+	BaseDamage = 40,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 20,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user whips up a vicious tornado to tear at the opposing team. It may also make targets flinch."
 },
 new MoveDataDex() {
 	num = 62,
-	id = Moves.DRAGON_RAGE, 
+	ID = Moves.DRAGON_RAGE, 
 	//name = "Dragon Rage", 
-	//function = 06B, 
-	basePower = 1,
-	type = Types.DRAGON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x06B, FunctionAsString = "06B", 
+	BaseDamage = 1,
+	Type = Types.DRAGON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "This attack hits the target with a shock wave of pure rage. This attack always inflicts 40 HP damage."
 },
 new MoveDataDex() {
 	num = 63,
-	id = Moves.DRAGON_DANCE, 
+	ID = Moves.DRAGON_DANCE, 
 	//name = "Dragon Dance", 
-	//function = 026, 
-	basePower = 0,
-	type = Types.DRAGON,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x026, FunctionAsString = "026", 
+	BaseDamage = 0,
+	Type = Types.DRAGON,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user vigorously performs a mystic, powerful dance that boosts its Attack and Speed stats."
 },
 new MoveDataDex() {
 	num = 64,
-	id = Moves.BOLT_STRIKE, 
+	ID = Moves.BOLT_STRIKE, 
 	//name = "Bolt Strike", 
-	//function = 007, 
-	basePower = 130,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 5,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 130,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 5,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges at its foe, surrounding itself with lightning. It may also leave the target paralyzed."
 },
 new MoveDataDex() {
 	num = 65,
-	id = Moves.THUNDER, 
+	ID = Moves.THUNDER, 
 	//name = "Thunder", 
-	//function = 008, 
-	basePower = 120,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 70,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x008, FunctionAsString = "008", 
+	BaseDamage = 120,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 70,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A wicked thunderbolt is dropped on the foe to inflict damage. It may also leave the target paralyzed."
 },
 new MoveDataDex() {
 	num = 66,
-	id = Moves.VOLT_TACKLE, 
+	ID = Moves.VOLT_TACKLE, 
 	//name = "Volt Tackle", 
-	//function = 0FD, 
-	basePower = 120,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FD, FunctionAsString = "0FD", 
+	BaseDamage = 120,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user electrifies itself, then charges at the foe. It causes considerable damage to the user as well."
 },
 new MoveDataDex() {
 	num = 67,
-	id = Moves.ZAP_CANNON, 
+	ID = Moves.ZAP_CANNON, 
 	//name = "Zap Cannon", 
-	//function = 007, 
-	basePower = 120,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 50,
-	pp = 5,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 120,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 50,
+	PP = 5,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user fires an electric blast like a cannon to inflict damage and cause paralysis."
 },
 new MoveDataDex() {
 	num = 68,
-	id = Moves.FUSION_BOLT, 
+	ID = Moves.FUSION_BOLT, 
 	//name = "Fusion Bolt", 
-	//function = 079, 
-	basePower = 100,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x079, FunctionAsString = "079", 
+	BaseDamage = 100,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user throws down a giant thunderbolt. It does more damage if influenced by an enormous flame."
 },
 new MoveDataDex() {
 	num = 69,
-	id = Moves.THUNDERBOLT, 
+	ID = Moves.THUNDERBOLT, 
 	//name = "Thunderbolt", 
-	//function = 007, 
-	basePower = 95,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 95,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A strong electric blast is loosed at the target. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 70,
-	id = Moves.WILD_CHARGE, 
+	ID = Moves.WILD_CHARGE, 
 	//name = "Wild Charge", 
-	//function = 0FA, 
-	basePower = 90,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FA, FunctionAsString = "0FA", 
+	BaseDamage = 90,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user shrouds itself in electricity and smashes into its foe. It also damages the user a little."
 },
 new MoveDataDex() {
 	num = 71,
-	id = Moves.DISCHARGE, 
+	ID = Moves.DISCHARGE, 
 	//name = "Discharge", 
-	//function = 007, 
-	basePower = 80,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 80,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A flare of electricity is loosed to strike the area around the user. It may also cause paralysis."
 },
 new MoveDataDex() {
 	num = 72,
-	id = Moves.THUNDER_PUNCH, 
+	ID = Moves.THUNDER_PUNCH, 
 	//name = "ThunderPunch", 
-	//function = 007, 
-	basePower = 75,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 75,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is punched with an electrified fist. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 73,
-	id = Moves.VOLT_SWITCH, 
+	ID = Moves.VOLT_SWITCH, 
 	//name = "Volt Switch", 
-	//function = 0EE, 
-	basePower = 70,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0EE, FunctionAsString = "0EE", 
+	BaseDamage = 70,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
 },
 new MoveDataDex() {
 	num = 74,
-	id = Moves.SPARK, 
+	ID = Moves.SPARK, 
 	//name = "Spark", 
-	//function = 007, 
-	basePower = 65,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 65,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user throws an electrically charged tackle at the target. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 75,
-	id = Moves.THUNDER_FANG, 
+	ID = Moves.THUNDER_FANG, 
 	//name = "Thunder Fang", 
-	//function = 009, 
-	basePower = 65,
-	type = Types.ELECTRIC,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x009, FunctionAsString = "009", 
+	BaseDamage = 65,
+	Type = Types.ELECTRIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites with electrified fangs. It may also make the target flinch or leave it with paralysis."
 },
 new MoveDataDex() {
 	num = 76,
-	id = Moves.SHOCK_WAVE, 
+	ID = Moves.SHOCK_WAVE, 
 	//name = "Shock Wave", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes the target with a quick jolt of electricity. This attack cannot be evaded."
 },
 new MoveDataDex() {
 	num = 77,
-	id = Moves.ELECTROWEB, 
+	ID = Moves.ELECTROWEB, 
 	//name = "Electroweb", 
-	//function = 044, 
-	basePower = 55,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 100,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 55,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 100,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user captures and attacks foes by using an electric net, which lowers their Speed stat."
 },
 new MoveDataDex() {
 	num = 78,
-	id = Moves.CHARGE_BEAM, 
+	ID = Moves.CHARGE_BEAM, 
 	//name = "Charge Beam", 
-	//function = 020, 
-	basePower = 50,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 70,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x020, FunctionAsString = "020", 
+	BaseDamage = 50,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 70,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user fires a concentrated bundle of electricity. It may also raise the user's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 79,
-	id = Moves.THUNDER_SHOCK, 
+	ID = Moves.THUNDER_SHOCK, 
 	//name = "ThunderShock", 
-	//function = 007, 
-	basePower = 40,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 40,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A jolt of electricity is hurled at the foe to inflict damage. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 80,
-	id = Moves.ELECTRO_BALL, 
+	ID = Moves.ELECTRO_BALL, 
 	//name = "Electro Ball", 
-	//function = 099, 
-	basePower = 1,
-	type = Types.ELECTRIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x099, FunctionAsString = "099", 
+	BaseDamage = 1,
+	Type = Types.ELECTRIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user hurls an electric orb at the foe. It does more damage the faster the user is."
 },
 new MoveDataDex() {
 	num = 81,
-	id = Moves.CHARGE, 
+	ID = Moves.CHARGE, 
 	//name = "Charge", 
-	//function = 021, 
-	basePower = 0,
-	type = Types.ELECTRIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x021, FunctionAsString = "021", 
+	BaseDamage = 0,
+	Type = Types.ELECTRIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user boosts the power of the Electric move it uses next. It also raises the user's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 82,
-	id = Moves.MAGNET_RISE, 
+	ID = Moves.MAGNET_RISE, 
 	//name = "Magnet Rise", 
-	//function = 119, 
-	basePower = 0,
-	type = Types.ELECTRIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,powder: true ) { }
+	Function = 0x119, FunctionAsString = "119", 
+	BaseDamage = 0,
+	Type = Types.ELECTRIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,powder: true ) { }
 	//,description = "The user levitates using electrically generated magnetism for five turns."
 },
 new MoveDataDex() {
 	num = 83,
-	id = Moves.THUNDER_WAVE, 
+	ID = Moves.THUNDER_WAVE, 
 	//name = "Thunder Wave", 
-	//function = 007, 
-	basePower = 0,
-	type = Types.ELECTRIC,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 0,
+	Type = Types.ELECTRIC,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A weak electric charge is launched at the target. It causes paralysis if it hits."
 },
 new MoveDataDex() {
 	num = 84,
-	id = Moves.FOCUS_PUNCH, 
+	ID = Moves.FOCUS_PUNCH, 
 	//name = "Focus Punch", 
-	//function = 115, 
-	basePower = 150,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -3,
-	flags = new Flags( contact: true,protect: true,punch: true ) { }
+	Function = 0x115, FunctionAsString = "115", 
+	BaseDamage = 150,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -3,
+	Flags = new Flags( contact: true,protect: true,punch: true ) { }
 	//,description = "The user focuses its mind before launching a punch. It will fail if the user is hit before it is used."
 },
 new MoveDataDex() {
 	num = 85,
-	id = Moves.HIGH_JUMP_KICK, 
+	ID = Moves.HIGH_JUMP_KICK, 
 	//name = "Hi Jump Kick", 
-	//function = 10B, 
-	basePower = 130,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
+	Function = 0x10B, FunctionAsString = "10B", 
+	BaseDamage = 130,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The target is attacked with a knee kick from a jump. If it misses, the user is hurt instead."
 },
 new MoveDataDex() {
 	num = 86,
-	id = Moves.CLOSE_COMBAT, 
+	ID = Moves.CLOSE_COMBAT, 
 	//name = "Close Combat", 
-	//function = 03C, 
-	basePower = 120,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x03C, FunctionAsString = "03C", 
+	BaseDamage = 120,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user fights the foe up close without guarding itself. It also cuts the user's Defense and Sp. Def."
 },
 new MoveDataDex() {
 	num = 87,
-	id = Moves.FOCUS_BLAST, 
+	ID = Moves.FOCUS_BLAST, 
 	//name = "Focus Blast", 
-	//function = 046, 
-	basePower = 120,
-	type = Types.FIGHTING,
-	category = Category.SPECIAL,
-	accuracy = 70,
-	pp = 5,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 120,
+	Type = Types.FIGHTING,
+	Category = Category.SPECIAL,
+	Accuracy = 70,
+	PP = 5,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user heightens its mental focus and unleashes its power. It may also lower the target's Sp. Def."
 },
 new MoveDataDex() {
 	num = 88,
-	id = Moves.SUPERPOWER, 
+	ID = Moves.SUPERPOWER, 
 	//name = "Superpower", 
-	//function = 03B, 
-	basePower = 120,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x03B, FunctionAsString = "03B", 
+	BaseDamage = 120,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks the target with great power. However, it also lowers the user's Attack and Defense."
 },
 new MoveDataDex() {
 	num = 89,
-	id = Moves.CROSS_CHOP, 
+	ID = Moves.CROSS_CHOP, 
 	//name = "Cross Chop", 
-	//function = 000, 
-	basePower = 100,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 80,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 100,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 80,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user delivers a double chop with its forearms crossed. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 90,
-	id = Moves.DYNAMIC_PUNCH, 
+	ID = Moves.DYNAMIC_PUNCH, 
 	//name = "DynamicPunch", 
-	//function = 013, 
-	basePower = 100,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 50,
-	pp = 5,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 100,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 50,
+	PP = 5,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The user punches the target with full, concentrated power. It confuses the target if it hits."
 },
 new MoveDataDex() {
 	num = 91,
-	id = Moves.HAMMER_ARM, 
+	ID = Moves.HAMMER_ARM, 
 	//name = "Hammer Arm", 
-	//function = 03E, 
-	basePower = 100,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x03E, FunctionAsString = "03E", 
+	BaseDamage = 100,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user swings and hits with its strong and heavy fist. It lowers the user's Speed, however."
 },
 new MoveDataDex() {
 	num = 92,
-	id = Moves.JUMP_KICK, 
+	ID = Moves.JUMP_KICK, 
 	//name = "Jump Kick", 
-	//function = 10B, 
-	basePower = 100,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
+	Function = 0x10B, FunctionAsString = "10B", 
+	BaseDamage = 100,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user jumps up high, then strikes with a kick. If the kick misses, the user hurts itself."
 },
 new MoveDataDex() {
 	num = 93,
-	id = Moves.AURA_SPHERE, 
+	ID = Moves.AURA_SPHERE, 
 	//name = "Aura Sphere", 
-	//function = 0A5, 
-	basePower = 90,
-	type = Types.FIGHTING,
-	category = Category.SPECIAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 90,
+	Type = Types.FIGHTING,
+	Category = Category.SPECIAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a blast of aura power from deep within its body. This move is certain to hit."
 },
 new MoveDataDex() {
 	num = 94,
-	id = Moves.SACRED_SWORD, 
+	ID = Moves.SACRED_SWORD, 
 	//name = "Sacred Sword", 
-	//function = 0A9, 
-	basePower = 90,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A9, FunctionAsString = "0A9", 
+	BaseDamage = 90,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by slicing with its long horns. The target's stat changes don't affect the damage."
 },
 new MoveDataDex() {
 	num = 95,
-	id = Moves.SECRET_SWORD, 
+	ID = Moves.SECRET_SWORD, 
 	//name = "Secret Sword", 
-	//function = 122, 
-	basePower = 85,
-	type = Types.FIGHTING,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x122, FunctionAsString = "122", 
+	BaseDamage = 85,
+	Type = Types.FIGHTING,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user cuts with its long horn. The odd power contained in it does physical damage to the foe."
 },
 new MoveDataDex() {
 	num = 96,
-	id = Moves.SKY_UPPERCUT, 
+	ID = Moves.SKY_UPPERCUT, 
 	//name = "Sky Uppercut", 
-	//function = 11B, 
-	basePower = 85,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x11B, FunctionAsString = "11B", 
+	BaseDamage = 85,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user attacks the target with an uppercut thrown skyward with force."
 },
 new MoveDataDex() {
 	num = 97,
-	id = Moves.SUBMISSION, 
+	ID = Moves.SUBMISSION, 
 	//name = "Submission", 
-	//function = 0FA, 
-	basePower = 80,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 80,
-	pp = 25,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FA, FunctionAsString = "0FA", 
+	BaseDamage = 80,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 80,
+	PP = 25,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user grabs the target and recklessly dives for the ground. It also hurts the user slightly."
 },
 new MoveDataDex() {
 	num = 98,
-	id = Moves.BRICK_BREAK, 
+	ID = Moves.BRICK_BREAK, 
 	//name = "Brick Break", 
-	//function = 10A, 
-	basePower = 75,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x10A, FunctionAsString = "10A", 
+	BaseDamage = 75,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a swift chop. It can also break any barrier such as Light Screen and Reflect."
 },
 new MoveDataDex() {
 	num = 99,
-	id = Moves.DRAIN_PUNCH, 
+	ID = Moves.DRAIN_PUNCH, 
 	//name = "Drain Punch", 
-	//function = 0DD, 
-	basePower = 75,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x0DD, FunctionAsString = "0DD", 
+	BaseDamage = 75,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "An energy-draining punch. The user's HP is restored by half the damage taken by the target."
 },
 new MoveDataDex() {
 	num = 100,
-	id = Moves.VITAL_THROW, 
+	ID = Moves.VITAL_THROW, 
 	//name = "Vital Throw", 
-	//function = 0A5, 
-	basePower = 70,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 70,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks last. In return, this throw move is guaranteed not to miss."
 },
 new MoveDataDex() {
 	num = 101,
-	id = Moves.CIRCLE_THROW, 
+	ID = Moves.CIRCLE_THROW, 
 	//name = "Circle Throw", 
-	//function = 0EC, 
-	basePower = 60,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -6,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0EC, FunctionAsString = "0EC", 
+	BaseDamage = 60,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -6,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user throws the target and drags out another Pokémon in its party. In the wild, the battle ends."
 },
 new MoveDataDex() {
 	num = 102,
-	id = Moves.FORCE_PALM, 
+	ID = Moves.FORCE_PALM, 
 	//name = "Force Palm", 
-	//function = 007, 
-	basePower = 60,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 60,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked with a shock wave. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 103,
-	id = Moves.LOW_SWEEP, 
+	ID = Moves.LOW_SWEEP, 
 	//name = "Low Sweep", 
-	//function = 044, 
-	basePower = 60,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 60,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target's legs swiftly, reducing the target's Speed stat."
 },
 new MoveDataDex() {
 	num = 104,
-	id = Moves.REVENGE, 
+	ID = Moves.REVENGE, 
 	//name = "Revenge", 
-	//function = 081, 
-	basePower = 60,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -4,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x081, FunctionAsString = "081", 
+	BaseDamage = 60,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -4,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that inflicts double the damage if the user has been hurt by the foe in the same turn."
 },
 new MoveDataDex() {
 	num = 105,
-	id = Moves.ROLLING_KICK, 
+	ID = Moves.ROLLING_KICK, 
 	//name = "Rolling Kick", 
-	//function = 00F, 
-	basePower = 60,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 60,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lashes out with a quick, spinning kick. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 106,
-	id = Moves.WAKE_UP_SLAP, 
+	ID = Moves.WAKE_UP_SLAP, 
 	//name = "Wake-Up Slap", 
-	//function = 07D, 
-	basePower = 60,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x07D, FunctionAsString = "07D", 
+	BaseDamage = 60,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This attack inflicts big damage on a sleeping target. It also wakes the target up, however."
 },
 new MoveDataDex() {
 	num = 107,
-	id = Moves.KARATE_CHOP, 
+	ID = Moves.KARATE_CHOP, 
 	//name = "Karate Chop", 
-	//function = 000, 
-	basePower = 50,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 50,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The target is attacked with a sharp chop. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 108,
-	id = Moves.MACH_PUNCH, 
+	ID = Moves.MACH_PUNCH, 
 	//name = "Mach Punch", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user throws a punch at blinding speed. It is certain to strike first."
 },
 new MoveDataDex() {
 	num = 109,
-	id = Moves.ROCK_SMASH, 
+	ID = Moves.ROCK_SMASH, 
 	//name = "Rock Smash", 
-	//function = 043, 
-	basePower = 40,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 40,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat."
 },
 new MoveDataDex() {
 	num = 110,
-	id = Moves.STORM_THROW, 
+	ID = Moves.STORM_THROW, 
 	//name = "Storm Throw", 
-	//function = 0A0, 
-	basePower = 40,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A0, FunctionAsString = "0A0", 
+	BaseDamage = 40,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes the target with a fierce blow. This attack always results in a critical hit."
 },
 new MoveDataDex() {
 	num = 111,
-	id = Moves.VACUUM_WAVE, 
+	ID = Moves.VACUUM_WAVE, 
 	//name = "Vacuum Wave", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.FIGHTING,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.FIGHTING,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user whirls its fists to send a wave of pure vacuum at the target. This move always goes first."
 },
 new MoveDataDex() {
 	num = 112,
-	id = Moves.DOUBLE_KICK, 
+	ID = Moves.DOUBLE_KICK, 
 	//name = "Double Kick", 
-	//function = 0BD, 
-	basePower = 30,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0BD, FunctionAsString = "0BD", 
+	BaseDamage = 30,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is quickly kicked twice in succession using both feet."
 },
 new MoveDataDex() {
 	num = 113,
-	id = Moves.ARM_THRUST, 
+	ID = Moves.ARM_THRUST, 
 	//name = "Arm Thrust", 
-	//function = 0C0, 
-	basePower = 15,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 15,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a flurry of open-palmed arm thrusts that hit two to five times in a row."
 },
 new MoveDataDex() {
 	num = 114,
-	id = Moves.TRIPLE_KICK, 
+	ID = Moves.TRIPLE_KICK, 
 	//name = "Triple Kick", 
-	//function = 0BF, 
-	basePower = 10,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0BF, FunctionAsString = "0BF", 
+	BaseDamage = 10,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A consecutive three-kick attack that becomes more powerful with each successive hit."
 },
 new MoveDataDex() {
 	num = 115,
-	id = Moves.COUNTER, 
+	ID = Moves.COUNTER, 
 	//name = "Counter", 
-	//function = 071, 
-	basePower = 1,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = -5,
-	flags = new Flags( contact: true,protect: true ) { }
+	Function = 0x071, FunctionAsString = "071", 
+	BaseDamage = 1,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = -5,
+	Flags = new Flags( contact: true,protect: true ) { }
 	//,description = "A retaliation move that counters any physical attack, inflicting double the damage taken."
 },
 new MoveDataDex() {
 	num = 116,
-	id = Moves.FINAL_GAMBIT, 
+	ID = Moves.FINAL_GAMBIT, 
 	//name = "Final Gambit", 
-	//function = 0E1, 
-	basePower = 1,
-	type = Types.FIGHTING,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true ) { }
+	Function = 0x0E1, FunctionAsString = "0E1", 
+	BaseDamage = 1,
+	Type = Types.FIGHTING,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true ) { }
 	//,description = "The user risks all to attack the foe. The user faints but does damage equal to its HP."
 },
 new MoveDataDex() {
 	num = 117,
-	id = Moves.LOW_KICK, 
+	ID = Moves.LOW_KICK, 
 	//name = "Low Kick", 
-	//function = 09A, 
-	basePower = 1,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x09A, FunctionAsString = "09A", 
+	BaseDamage = 1,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A powerful low kick that makes the foe fall over. It inflicts greater damage on heavier foes."
 },
 new MoveDataDex() {
 	num = 118,
-	id = Moves.REVERSAL, 
+	ID = Moves.REVERSAL, 
 	//name = "Reversal", 
-	//function = 098, 
-	basePower = 1,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x098, FunctionAsString = "098", 
+	BaseDamage = 1,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An all-out attack that becomes more powerful the less HP the user has."
 },
 new MoveDataDex() {
 	num = 119,
-	id = Moves.SEISMIC_TOSS, 
+	ID = Moves.SEISMIC_TOSS, 
 	//name = "Seismic Toss", 
-	//function = 06D, 
-	basePower = 1,
-	type = Types.FIGHTING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x06D, FunctionAsString = "06D", 
+	BaseDamage = 1,
+	Type = Types.FIGHTING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is thrown using the power of gravity. It inflicts damage equal to the user's level."
 },
 new MoveDataDex() {
 	num = 120,
-	id = Moves.BULK_UP, 
+	ID = Moves.BULK_UP, 
 	//name = "Bulk Up", 
-	//function = 024, 
-	basePower = 0,
-	type = Types.FIGHTING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x024, FunctionAsString = "024", 
+	BaseDamage = 0,
+	Type = Types.FIGHTING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user tenses its muscles to bulk up its body, boosting both its Attack and Defense stats."
 },
 new MoveDataDex() {
 	num = 121,
-	id = Moves.DETECT, 
+	ID = Moves.DETECT, 
 	//name = "Detect", 
-	//function = 0AA, 
-	basePower = 0,
-	type = Types.FIGHTING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.User,
-	priority = 3,
-	flags = new Flags(  ) { } 
+	Function = 0x0AA, FunctionAsString = "0AA", 
+	BaseDamage = 0,
+	Type = Types.FIGHTING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 3,
+	Flags = new Flags(  ) { } 
 	//,description = "It enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
 },
 new MoveDataDex() {
 	num = 122,
-	id = Moves.QUICK_GUARD, 
+	ID = Moves.QUICK_GUARD, 
 	//name = "Quick Guard", 
-	//function = 0AB, 
-	basePower = 0,
-	type = Types.FIGHTING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 3,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0AB, FunctionAsString = "0AB", 
+	BaseDamage = 0,
+	Type = Types.FIGHTING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 3,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user protects itself and its allies from priority moves. If may fail if used in succession."
 },
 new MoveDataDex() {
 	num = 123,
-	id = Moves.V_CREATE, 
+	ID = Moves.V_CREATE, 
 	//name = "V-create", 
-	//function = 03D, 
-	basePower = 180,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x03D, FunctionAsString = "03D", 
+	BaseDamage = 180,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "With a fiery forehead, the user hurls itself at the foe. It lowers the user's Defense, Sp. Def, and Speed."
 },
 new MoveDataDex() {
 	num = 124,
-	id = Moves.BLAST_BURN, 
+	ID = Moves.BLAST_BURN, 
 	//name = "Blast Burn", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is razed by a fiery explosion. The user must rest on the next turn, however."
 },
 new MoveDataDex() {
 	num = 125,
-	id = Moves.ERUPTION, 
+	ID = Moves.ERUPTION, 
 	//name = "Eruption", 
-	//function = 08B, 
-	basePower = 150,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08B, FunctionAsString = "08B", 
+	BaseDamage = 150,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks in an explosive fury. The lower the user's HP, the less powerful this attack becomes."
 },
 new MoveDataDex() {
 	num = 126,
-	id = Moves.OVERHEAT, 
+	ID = Moves.OVERHEAT, 
 	//name = "Overheat", 
-	//function = 03F, 
-	basePower = 140,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x03F, FunctionAsString = "03F", 
+	BaseDamage = 140,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target at full power. The attack's recoil sharply reduces the user's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 127,
-	id = Moves.BLUE_FLARE, 
+	ID = Moves.BLUE_FLARE, 
 	//name = "Blue Flare", 
-	//function = 00A, 
-	basePower = 130,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 5,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 130,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 5,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by engulfing the foe in a beautiful, yet intense, blue flame. It may also burn the foe."
 },
 new MoveDataDex() {
 	num = 128,
-	id = Moves.FIRE_BLAST, 
+	ID = Moves.FIRE_BLAST, 
 	//name = "Fire Blast", 
-	//function = 00A, 
-	basePower = 120,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 5,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 120,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 5,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with an intense blast of all-consuming fire. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 129,
-	id = Moves.FLARE_BLITZ, 
+	ID = Moves.FLARE_BLITZ, 
 	//name = "Flare Blitz", 
-	//function = 0FE, 
-	basePower = 120,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,defrost: true ) { }
+	Function = 0x0FE, FunctionAsString = "0FE", 
+	BaseDamage = 120,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,defrost: true ) { }
 	//,description = "The user cloaks itself in fire and charges at the foe. The user also takes damage and may burn the target."
 },
 new MoveDataDex() {
 	num = 130,
-	id = Moves.MAGMA_STORM, 
+	ID = Moves.MAGMA_STORM, 
 	//name = "Magma Storm", 
-	//function = 0CF, 
-	basePower = 120,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 75,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CF, FunctionAsString = "0CF", 
+	BaseDamage = 120,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 75,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target becomes trapped within a maelstrom of fire that rages for four to five turns."
 },
 new MoveDataDex() {
 	num = 131,
-	id = Moves.FUSION_FLARE, 
+	ID = Moves.FUSION_FLARE, 
 	//name = "Fusion Flare", 
-	//function = 07A, 
-	basePower = 100,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,defrost: true ) { }
+	Function = 0x07A, FunctionAsString = "07A", 
+	BaseDamage = 100,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,defrost: true ) { }
 	//,description = "The user brings down a giant flame. It does more damage if influenced by an enormous thunderbolt."
 },
 new MoveDataDex() {
 	num = 132,
-	id = Moves.HEAT_WAVE, 
+	ID = Moves.HEAT_WAVE, 
 	//name = "Heat Wave", 
-	//function = 00A, 
-	basePower = 100,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 10,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 100,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 10,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by exhaling hot breath on the opposing team. It may also leave targets with a burn."
 },
 new MoveDataDex() {
 	num = 133,
-	id = Moves.INFERNO, 
+	ID = Moves.INFERNO, 
 	//name = "Inferno", 
-	//function = 00A, 
-	basePower = 100,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 50,
-	pp = 5,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 100,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 50,
+	PP = 5,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by engulfing the target in an intense fire. It leaves the target with a burn."
 },
 new MoveDataDex() {
 	num = 134,
-	id = Moves.SACRED_FIRE, 
+	ID = Moves.SACRED_FIRE, 
 	//name = "Sacred Fire", 
-	//function = 00A, 
-	basePower = 100,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 5,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,defrost: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 100,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 5,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,defrost: true ) { }
 	//,description = "The target is razed with a mystical fire of great intensity. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 135,
-	id = Moves.SEARING_SHOT, 
+	ID = Moves.SEARING_SHOT, 
 	//name = "Searing Shot", 
-	//function = 00A, 
-	basePower = 100,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 30,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 100,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 30,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "An inferno of scarlet flames torches everything around the user. It may leave the foe with a burn."
 },
 new MoveDataDex() {
 	num = 136,
-	id = Moves.FLAMETHROWER, 
+	ID = Moves.FLAMETHROWER, 
 	//name = "Flamethrower", 
-	//function = 00A, 
-	basePower = 95,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 95,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is scorched with an intense blast of fire. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 137,
-	id = Moves.BLAZE_KICK, 
+	ID = Moves.BLAZE_KICK, 
 	//name = "Blaze Kick", 
-	//function = 00A, 
-	basePower = 85,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,bite: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 85,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,bite: true ) { }
 	//,description = "The user launches a kick with a high critical-hit ratio. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 138,
-	id = Moves.FIERY_DANCE, 
+	ID = Moves.FIERY_DANCE, 
 	//name = "Fiery Dance", 
-	//function = 020, 
-	basePower = 80,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x020, FunctionAsString = "020", 
+	BaseDamage = 80,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Cloaked in flames, the user dances and flaps its wings. It may also raise the user's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 139,
-	id = Moves.LAVA_PLUME, 
+	ID = Moves.LAVA_PLUME, 
 	//name = "Lava Plume", 
-	//function = 00A, 
-	basePower = 80,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 80,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "An inferno of scarlet flames torches everything around the user. It may leave targets with a burn."
 },
 new MoveDataDex() {
 	num = 140,
-	id = Moves.FIRE_PUNCH, 
+	ID = Moves.FIRE_PUNCH, 
 	//name = "Fire Punch", 
-	//function = 00A, 
-	basePower = 75,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 75,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is punched with a fiery fist. It may leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 141,
-	id = Moves.FLAME_BURST, 
+	ID = Moves.FLAME_BURST, 
 	//name = "Flame Burst", 
-	//function = 074, 
-	basePower = 70,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x074, FunctionAsString = "074", 
+	BaseDamage = 70,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the foe with a bursting flame. It also damages Pokémon next to the target."
 },
 new MoveDataDex() {
 	num = 142,
-	id = Moves.FIRE_FANG, 
+	ID = Moves.FIRE_FANG, 
 	//name = "Fire Fang", 
-	//function = 00B, 
-	basePower = 65,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00B, FunctionAsString = "00B", 
+	BaseDamage = 65,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites with flame-cloaked fangs. It may also make the target flinch or leave it burned."
 },
 new MoveDataDex() {
 	num = 143,
-	id = Moves.FLAME_WHEEL, 
+	ID = Moves.FLAME_WHEEL, 
 	//name = "Flame Wheel", 
-	//function = 00A, 
-	basePower = 60,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,defrost: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 60,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,defrost: true ) { }
 	//,description = "The user cloaks itself in fire and charges at the target. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 144,
-	id = Moves.FIRE_PLEDGE, 
+	ID = Moves.FIRE_PLEDGE, 
 	//name = "Fire Pledge", 
-	//function = 107, 
-	basePower = 50,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x107, FunctionAsString = "107", 
+	BaseDamage = 50,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A column of fire hits opposing Pokémon. When used with its Grass equivalent, it makes a sea of fire."
 },
 new MoveDataDex() {
 	num = 145,
-	id = Moves.FLAME_CHARGE, 
+	ID = Moves.FLAME_CHARGE, 
 	//name = "Flame Charge", 
-	//function = 01F, 
-	basePower = 50,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x01F, FunctionAsString = "01F", 
+	BaseDamage = 50,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user cloaks itself with flame and attacks. Building up more power, it raises the user's Speed stat."
 },
 new MoveDataDex() {
 	num = 146,
-	id = Moves.EMBER, 
+	ID = Moves.EMBER, 
 	//name = "Ember", 
-	//function = 00A, 
-	basePower = 40,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 40,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is attacked with small flames. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 147,
-	id = Moves.FIRE_SPIN, 
+	ID = Moves.FIRE_SPIN, 
 	//name = "Fire Spin", 
-	//function = 0CF, 
-	basePower = 35,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CF, FunctionAsString = "0CF", 
+	BaseDamage = 35,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target becomes trapped within a fierce vortex of fire that rages for four to five turns."
 },
 new MoveDataDex() {
 	num = 148,
-	id = Moves.INCINERATE, 
+	ID = Moves.INCINERATE, 
 	//name = "Incinerate", 
-	//function = 0F5, 
-	basePower = 30,
-	type = Types.FIRE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0F5, FunctionAsString = "0F5", 
+	BaseDamage = 30,
+	Type = Types.FIRE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks the foe with fire. If the target is holding a Berry, it becomes burnt up and unusable."
 },
 new MoveDataDex() {
 	num = 149,
-	id = Moves.HEAT_CRASH, 
+	ID = Moves.HEAT_CRASH, 
 	//name = "Heat Crash", 
-	//function = 09B, 
-	basePower = 1,
-	type = Types.FIRE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x09B, FunctionAsString = "09B", 
+	BaseDamage = 1,
+	Type = Types.FIRE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams the foe with its flaming body. The heavier the user is, the greater the damage."
 },
 new MoveDataDex() {
 	num = 150,
-	id = Moves.SUNNY_DAY, 
+	ID = Moves.SUNNY_DAY, 
 	//name = "Sunny Day", 
-	//function = 0FF, 
-	basePower = 0,
-	type = Types.FIRE,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0FF, FunctionAsString = "0FF", 
+	BaseDamage = 0,
+	Type = Types.FIRE,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user intensifies the sun for five turns, powering up Fire-type moves."
 },
 new MoveDataDex() {
 	num = 151,
-	id = Moves.WILL_O_WISP, 
+	ID = Moves.WILL_O_WISP, 
 	//name = "Will-O-Wisp", 
-	//function = 00A, 
-	basePower = 0,
-	type = Types.FIRE,
-	category = Category.STATUS,
-	accuracy = 75,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 0,
+	Type = Types.FIRE,
+	Category = Category.STATUS,
+	Accuracy = 75,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user shoots a sinister, bluish-white flame at the target to inflict a burn."
 },
 new MoveDataDex() {
 	num = 152,
-	id = Moves.SKY_ATTACK, 
+	ID = Moves.SKY_ATTACK, 
 	//name = "Sky Attack", 
-	//function = 0C7, 
-	basePower = 140,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x0C7, FunctionAsString = "0C7", 
+	BaseDamage = 140,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A second-turn attack move where critical hits land more easily. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 153,
-	id = Moves.BRAVE_BIRD, 
+	ID = Moves.BRAVE_BIRD, 
 	//name = "Brave Bird", 
-	//function = 0FB, 
-	basePower = 120,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FB, FunctionAsString = "0FB", 
+	BaseDamage = 120,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tucks in its wings and charges from a low altitude. The user also takes serious damage."
 },
 new MoveDataDex() {
 	num = 154,
-	id = Moves.HURRICANE, 
+	ID = Moves.HURRICANE, 
 	//name = "Hurricane", 
-	//function = 015, 
-	basePower = 120,
-	type = Types.FLYING,
-	category = Category.SPECIAL,
-	accuracy = 70,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x015, FunctionAsString = "015", 
+	BaseDamage = 120,
+	Type = Types.FLYING,
+	Category = Category.SPECIAL,
+	Accuracy = 70,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user wraps its foe in a fierce wind that flies up into the sky. It may also confuse the foe."
 },
 new MoveDataDex() {
 	num = 155,
-	id = Moves.AEROBLAST, 
+	ID = Moves.AEROBLAST, 
 	//name = "Aeroblast", 
-	//function = 000, 
-	basePower = 100,
-	type = Types.FLYING,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 100,
+	Type = Types.FLYING,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A vortex of air is shot at the target to inflict damage. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 156,
-	id = Moves.FLY, 
+	ID = Moves.FLY, 
 	//name = "Fly", 
-	//function = 0C9, 
-	basePower = 90,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
+	Function = 0x0C9, FunctionAsString = "0C9", 
+	BaseDamage = 90,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user soars, then strikes on the second turn. It can also be used for flying to any familiar town."
 },
 new MoveDataDex() {
 	num = 157,
-	id = Moves.BOUNCE, 
+	ID = Moves.BOUNCE, 
 	//name = "Bounce", 
-	//function = 0CC, 
-	basePower = 85,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 5,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
+	Function = 0x0CC, FunctionAsString = "0CC", 
+	BaseDamage = 85,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 5,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user bounces up high, then drops on the foe on the second turn. It may also paralyze the foe."
 },
 new MoveDataDex() {
 	num = 158,
-	id = Moves.DRILL_PECK, 
+	ID = Moves.DRILL_PECK, 
 	//name = "Drill Peck", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A corkscrewing attack with the sharp beak acting as a drill."
 },
 new MoveDataDex() {
 	num = 159,
-	id = Moves.AIR_SLASH, 
+	ID = Moves.AIR_SLASH, 
 	//name = "Air Slash", 
-	//function = 00F, 
-	basePower = 75,
-	type = Types.FLYING,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 75,
+	Type = Types.FLYING,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a blade of air that slices even the sky. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 160,
-	id = Moves.AERIAL_ACE, 
+	ID = Moves.AERIAL_ACE, 
 	//name = "Aerial Ace", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user confounds the foe with speed, then slashes. The attack lands without fail."
 },
 new MoveDataDex() {
 	num = 161,
-	id = Moves.CHATTER, 
+	ID = Moves.CHATTER, 
 	//name = "Chatter", 
-	//function = 014, 
-	basePower = 60,
-	type = Types.FLYING,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,sound: true ) { }
+	Function = 0x014, FunctionAsString = "014", 
+	BaseDamage = 60,
+	Type = Types.FLYING,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,sound: true ) { }
 	//,description = "The user attacks using a sound wave based on words it has learned. It may also confuse the target."
 },
 new MoveDataDex() {
 	num = 162,
-	id = Moves.PLUCK, 
+	ID = Moves.PLUCK, 
 	//name = "Pluck", 
-	//function = 0F4, 
-	basePower = 60,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0F4, FunctionAsString = "0F4", 
+	BaseDamage = 60,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user pecks the target. If the target is holding a Berry, the user eats it and gains its effect."
 },
 new MoveDataDex() {
 	num = 163,
-	id = Moves.SKY_DROP, 
+	ID = Moves.SKY_DROP, 
 	//name = "Sky Drop", 
-	//function = 0CE, 
-	basePower = 60,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
+	Function = 0x0CE, FunctionAsString = "0CE", 
+	BaseDamage = 60,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user takes the foe into the sky, then drops it on the next turn. The foe cannot attack while airborne."
 },
 new MoveDataDex() {
 	num = 164,
-	id = Moves.WING_ATTACK, 
+	ID = Moves.WING_ATTACK, 
 	//name = "Wing Attack", 
-	//function = 000, 
-	basePower = 60,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 60,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is struck with large, imposing wings spread wide to inflict damage."
 },
 new MoveDataDex() {
 	num = 165,
-	id = Moves.ACROBATICS, 
+	ID = Moves.ACROBATICS, 
 	//name = "Acrobatics", 
-	//function = 086, 
-	basePower = 55,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x086, FunctionAsString = "086", 
+	BaseDamage = 55,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user nimbly strikes the foe. This attack does more damage if the user is not holding an item."
 },
 new MoveDataDex() {
 	num = 166,
-	id = Moves.AIR_CUTTER, 
+	ID = Moves.AIR_CUTTER, 
 	//name = "Air Cutter", 
-	//function = 000, 
-	basePower = 55,
-	type = Types.FLYING,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 25,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 55,
+	Type = Types.FLYING,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 25,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user launches razor-like wind to slash the opposing team. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 167,
-	id = Moves.GUST, 
+	ID = Moves.GUST, 
 	//name = "Gust", 
-	//function = 077, 
-	basePower = 40,
-	type = Types.FLYING,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x077, FunctionAsString = "077", 
+	BaseDamage = 40,
+	Type = Types.FLYING,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A gust of wind is whipped up by wings and launched at the target to inflict damage."
 },
 new MoveDataDex() {
 	num = 168,
-	id = Moves.PECK, 
+	ID = Moves.PECK, 
 	//name = "Peck", 
-	//function = 000, 
-	basePower = 35,
-	type = Types.FLYING,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 35,
+	Type = Types.FLYING,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is jabbed with a sharply pointed beak or horn."
 },
 new MoveDataDex() {
 	num = 169,
-	id = Moves.DEFOG, 
+	ID = Moves.DEFOG, 
 	//name = "Defog", 
-	//function = 049, 
-	basePower = 0,
-	type = Types.FLYING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x049, FunctionAsString = "049", 
+	BaseDamage = 0,
+	Type = Types.FLYING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A strong wind blows away the foe's obstacles such as Light Screen. It also lowers their evasion."
 },
 new MoveDataDex() {
 	num = 170,
-	id = Moves.FEATHER_DANCE, 
+	ID = Moves.FEATHER_DANCE, 
 	//name = "FeatherDance", 
-	//function = 04B, 
-	basePower = 0,
-	type = Types.FLYING,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04B, FunctionAsString = "04B", 
+	BaseDamage = 0,
+	Type = Types.FLYING,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user covers the target's body with a mass of down that harshly lowers its Attack stat."
 },
 new MoveDataDex() {
 	num = 171,
-	id = Moves.MIRROR_MOVE, 
+	ID = Moves.MIRROR_MOVE, 
 	//name = "Mirror Move", 
-	//function = 0AE, 
-	basePower = 0,
-	type = Types.FLYING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0AE, FunctionAsString = "0AE", 
+	BaseDamage = 0,
+	Type = Types.FLYING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user counters the target by mimicking the target's last move."
 },
 new MoveDataDex() {
 	num = 172,
-	id = Moves.ROOST, 
+	ID = Moves.ROOST, 
 	//name = "Roost", 
-	//function = 0D6, 
-	basePower = 0,
-	type = Types.FLYING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D6, FunctionAsString = "0D6", 
+	BaseDamage = 0,
+	Type = Types.FLYING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user lands and rests its body. It restores the user's HP by up to half of its max HP."
 },
 new MoveDataDex() {
 	num = 173,
-	id = Moves.TAILWIND, 
+	ID = Moves.TAILWIND, 
 	//name = "Tailwind", 
-	//function = 05B, 
-	basePower = 0,
-	type = Types.FLYING,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x05B, FunctionAsString = "05B", 
+	BaseDamage = 0,
+	Type = Types.FLYING,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user whips up a turbulent whirlwind that ups the Speed of all party Pokémon for four turns."
 },
 new MoveDataDex() {
 	num = 174,
-	id = Moves.SHADOW_FORCE, 
+	ID = Moves.SHADOW_FORCE, 
 	//name = "Shadow Force", 
-	//function = 0CD, 
-	basePower = 120,
-	type = Types.GHOST,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,mirror: true,flinch: true ) { }
+	Function = 0x0CD, FunctionAsString = "0CD", 
+	BaseDamage = 120,
+	Type = Types.GHOST,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,mirror: true,flinch: true ) { }
 	//,description = "The user disappears, then strikes the foe on the second turn. It hits even if the foe protects itself."
 },
 new MoveDataDex() {
 	num = 175,
-	id = Moves.SHADOW_BALL, 
+	ID = Moves.SHADOW_BALL, 
 	//name = "Shadow Ball", 
-	//function = 046, 
-	basePower = 80,
-	type = Types.GHOST,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 80,
+	Type = Types.GHOST,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user hurls a shadowy blob at the target. It may also lower the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 176,
-	id = Moves.SHADOW_CLAW, 
+	ID = Moves.SHADOW_CLAW, 
 	//name = "Shadow Claw", 
-	//function = 000, 
-	basePower = 70,
-	type = Types.GHOST,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 70,
+	Type = Types.GHOST,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user slashes with a sharp claw made from shadows. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 177,
-	id = Moves.OMINOUS_WIND, 
+	ID = Moves.OMINOUS_WIND, 
 	//name = "Ominous Wind", 
-	//function = 02D, 
-	basePower = 60,
-	type = Types.GHOST,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x02D, FunctionAsString = "02D", 
+	BaseDamage = 60,
+	Type = Types.GHOST,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blasts the target with a gust of repulsive wind. It may also raise all the user's stats at once."
 },
 new MoveDataDex() {
 	num = 178,
-	id = Moves.SHADOW_PUNCH, 
+	ID = Moves.SHADOW_PUNCH, 
 	//name = "Shadow Punch", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.GHOST,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.GHOST,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user throws a punch from the shadows. The punch lands without fail."
 },
 new MoveDataDex() {
 	num = 179,
-	id = Moves.HEX, 
+	ID = Moves.HEX, 
 	//name = "Hex", 
-	//function = 07F, 
-	basePower = 50,
-	type = Types.GHOST,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x07F, FunctionAsString = "07F", 
+	BaseDamage = 50,
+	Type = Types.GHOST,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "This relentless attack does massive damage to a target affected by status problems."
 },
 new MoveDataDex() {
 	num = 180,
-	id = Moves.SHADOW_SNEAK, 
+	ID = Moves.SHADOW_SNEAK, 
 	//name = "Shadow Sneak", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.GHOST,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.GHOST,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user extends its shadow and attacks the target from behind. This move always goes first."
 },
 new MoveDataDex() {
 	num = 181,
-	id = Moves.ASTONISH, 
+	ID = Moves.ASTONISH, 
 	//name = "Astonish", 
-	//function = 00F, 
-	basePower = 30,
-	type = Types.GHOST,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 30,
+	Type = Types.GHOST,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks the target while shouting in a startling fashion. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 182,
-	id = Moves.LICK, 
+	ID = Moves.LICK, 
 	//name = "Lick", 
-	//function = 007, 
-	basePower = 20,
-	type = Types.GHOST,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 20,
+	Type = Types.GHOST,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is licked with a long tongue, causing damage. It may also leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 183,
-	id = Moves.NIGHT_SHADE, 
+	ID = Moves.NIGHT_SHADE, 
 	//name = "Night Shade", 
-	//function = 06D, 
-	basePower = 1,
-	type = Types.GHOST,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x06D, FunctionAsString = "06D", 
+	BaseDamage = 1,
+	Type = Types.GHOST,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user makes the foe see a frightening mirage. It inflicts damage matching the user's level."
 },
 new MoveDataDex() {
 	num = 184,
-	id = Moves.CONFUSE_RAY, 
+	ID = Moves.CONFUSE_RAY, 
 	//name = "Confuse Ray", 
-	//function = 013, 
-	basePower = 0,
-	type = Types.GHOST,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 0,
+	Type = Types.GHOST,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The target is exposed to a sinister ray that triggers confusion."
 },
 new MoveDataDex() {
 	num = 185,
-	id = Moves.CURSE, 
+	ID = Moves.CURSE, 
 	//name = "Curse", 
-	//function = 10D, 
-	basePower = 0,
-	type = Types.GHOST,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x10D, FunctionAsString = "10D", 
+	BaseDamage = 0,
+	Type = Types.GHOST,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "A move that works differently for the Ghost type than for all the other types."
 },
 new MoveDataDex() {
 	num = 186,
-	id = Moves.DESTINY_BOND, 
+	ID = Moves.DESTINY_BOND, 
 	//name = "Destiny Bond", 
-	//function = 0E7, 
-	basePower = 0,
-	type = Types.GHOST,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0E7, FunctionAsString = "0E7", 
+	BaseDamage = 0,
+	Type = Types.GHOST,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "When this move is used, if the user faints, the foe that landed the knockout hit also faints."
 },
 new MoveDataDex() {
 	num = 187,
-	id = Moves.GRUDGE, 
+	ID = Moves.GRUDGE, 
 	//name = "Grudge", 
-	//function = 0E6, 
-	basePower = 0,
-	type = Types.GHOST,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0E6, FunctionAsString = "0E6", 
+	BaseDamage = 0,
+	Type = Types.GHOST,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "If the user faints, the user's grudge fully depletes the PP of the foe's move that knocked it out."
 },
 new MoveDataDex() {
 	num = 188,
-	id = Moves.NIGHTMARE, 
+	ID = Moves.NIGHTMARE, 
 	//name = "Nightmare", 
-	//function = 10F, 
-	basePower = 0,
-	type = Types.GHOST,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x10F, FunctionAsString = "10F", 
+	BaseDamage = 0,
+	Type = Types.GHOST,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A sleeping target sees a nightmare that inflicts some damage every turn."
 },
 new MoveDataDex() {
 	num = 189,
-	id = Moves.SPITE, 
+	ID = Moves.SPITE, 
 	//name = "Spite", 
-	//function = 10E, 
-	basePower = 0,
-	type = Types.GHOST,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x10E, FunctionAsString = "10E", 
+	BaseDamage = 0,
+	Type = Types.GHOST,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user unleashes its grudge on the move last used by the target by cutting 4 PP from it."
 },
 new MoveDataDex() {
 	num = 190,
-	id = Moves.FRENZY_PLANT, 
+	ID = Moves.FRENZY_PLANT, 
 	//name = "Frenzy Plant", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams the target with an enormous tree. The user can't move on the next turn."
 },
 new MoveDataDex() {
 	num = 191,
-	id = Moves.LEAF_STORM, 
+	ID = Moves.LEAF_STORM, 
 	//name = "Leaf Storm", 
-	//function = 03F, 
-	basePower = 140,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x03F, FunctionAsString = "03F", 
+	BaseDamage = 140,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A storm of sharp is whipped up. The attack's recoil harshly reduces the user's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 192,
-	id = Moves.PETAL_DANCE, 
+	ID = Moves.PETAL_DANCE, 
 	//name = "Petal Dance", 
-	//function = 0D2, 
-	basePower = 120,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.RandomOpposing,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0D2, FunctionAsString = "0D2", 
+	BaseDamage = 120,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.RandomOpposing,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by scattering petals for two to three turns. The user then becomes confused."
 },
 new MoveDataDex() {
 	num = 193,
-	id = Moves.POWER_WHIP, 
+	ID = Moves.POWER_WHIP, 
 	//name = "Power Whip", 
-	//function = 000, 
-	basePower = 120,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 120,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user violently whirls its vines or tentacles to harshly lash the target."
 },
 new MoveDataDex() {
 	num = 194,
-	id = Moves.SEED_FLARE, 
+	ID = Moves.SEED_FLARE, 
 	//name = "Seed Flare", 
-	//function = 04F, 
-	basePower = 120,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 5,
-	effects = 40,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x04F, FunctionAsString = "04F", 
+	BaseDamage = 120,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 5,
+	Effects = 40,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user generates a shock wave from within its body. It may harshly lower the target's Sp. Def."
 },
 new MoveDataDex() {
 	num = 195,
-	id = Moves.SOLAR_BEAM, 
+	ID = Moves.SOLAR_BEAM, 
 	//name = "SolarBeam", 
-	//function = 0C4, 
-	basePower = 120,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C4, FunctionAsString = "0C4", 
+	BaseDamage = 120,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A two-turn attack. The user gathers light, then blasts a bundled beam on the second turn."
 },
 new MoveDataDex() {
 	num = 196,
-	id = Moves.WOOD_HAMMER, 
+	ID = Moves.WOOD_HAMMER, 
 	//name = "Wood Hammer", 
-	//function = 0FB, 
-	basePower = 120,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FB, FunctionAsString = "0FB", 
+	BaseDamage = 120,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams its rugged body into the target to attack. The user also sustains serious damage."
 },
 new MoveDataDex() {
 	num = 197,
-	id = Moves.LEAF_BLADE, 
+	ID = Moves.LEAF_BLADE, 
 	//name = "Leaf Blade", 
-	//function = 000, 
-	basePower = 90,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 90,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user handles a sharp leaf like a sword and attacks by slashing. It has a high critical-hit ratio."
 },
 new MoveDataDex() {
 	num = 198,
-	id = Moves.ENERGY_BALL, 
+	ID = Moves.ENERGY_BALL, 
 	//name = "Energy Ball", 
-	//function = 046, 
-	basePower = 80,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 80,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user draws power from nature and fires it at the target. It may also lower the target's Sp. Def."
 },
 new MoveDataDex() {
 	num = 199,
-	id = Moves.SEED_BOMB, 
+	ID = Moves.SEED_BOMB, 
 	//name = "Seed Bomb", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams a barrage of hard-shelled seeds down on the target from above."
 },
 new MoveDataDex() {
 	num = 200,
-	id = Moves.GIGA_DRAIN, 
+	ID = Moves.GIGA_DRAIN, 
 	//name = "Giga Drain", 
-	//function = 0DD, 
-	basePower = 75,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0DD, FunctionAsString = "0DD", 
+	BaseDamage = 75,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
 },
 new MoveDataDex() {
 	num = 201,
-	id = Moves.HORN_LEECH, 
+	ID = Moves.HORN_LEECH, 
 	//name = "Horn Leech", 
-	//function = 0DD, 
-	basePower = 75,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0DD, FunctionAsString = "0DD", 
+	BaseDamage = 75,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user drains the foe's energy with its horns. The user's HP is restored by half the damage inflicted."
 },
 new MoveDataDex() {
 	num = 202,
-	id = Moves.LEAF_TORNADO, 
+	ID = Moves.LEAF_TORNADO, 
 	//name = "Leaf Tornado", 
-	//function = 047, 
-	basePower = 65,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 65,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks its foe by encircling it in sharp leaves. This attack may also lower the foe's accuracy."
 },
 new MoveDataDex() {
 	num = 203,
-	id = Moves.MAGICAL_LEAF, 
+	ID = Moves.MAGICAL_LEAF, 
 	//name = "Magical Leaf", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user scatters curious leaves that chase the target. This attack will not miss."
 },
 new MoveDataDex() {
 	num = 204,
-	id = Moves.NEEDLE_ARM, 
+	ID = Moves.NEEDLE_ARM, 
 	//name = "Needle Arm", 
-	//function = 00F, 
-	basePower = 60,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 60,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks by wildly swinging its thorny arms. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 205,
-	id = Moves.RAZOR_LEAF, 
+	ID = Moves.RAZOR_LEAF, 
 	//name = "Razor Leaf", 
-	//function = 000, 
-	basePower = 55,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 25,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 55,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 25,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "Sharp-edged leaves are launched to slash at the opposing team. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 206,
-	id = Moves.GRASS_PLEDGE, 
+	ID = Moves.GRASS_PLEDGE, 
 	//name = "Grass Pledge", 
-	//function = 106, 
-	basePower = 50,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x106, FunctionAsString = "106", 
+	BaseDamage = 50,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A column of grass hits the foes. When used with its water equivalent, it creates a vast swamp."
 },
 new MoveDataDex() {
 	num = 207,
-	id = Moves.MEGA_DRAIN, 
+	ID = Moves.MEGA_DRAIN, 
 	//name = "Mega Drain", 
-	//function = 0DD, 
-	basePower = 40,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0DD, FunctionAsString = "0DD", 
+	BaseDamage = 40,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
 },
 new MoveDataDex() {
 	num = 208,
-	id = Moves.VINE_WHIP, 
+	ID = Moves.VINE_WHIP, 
 	//name = "Vine Whip", 
-	//function = 000, 
-	basePower = 35,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 35,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is struck with slender, whiplike vines to inflict damage."
 },
 new MoveDataDex() {
 	num = 209,
-	id = Moves.BULLET_SEED, 
+	ID = Moves.BULLET_SEED, 
 	//name = "Bullet Seed", 
-	//function = 0C0, 
-	basePower = 25,
-	type = Types.GRASS,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 25,
+	Type = Types.GRASS,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user forcefully shoots seeds at the target. Two to five seeds are shot in rapid succession."
 },
 new MoveDataDex() {
 	num = 210,
-	id = Moves.ABSORB, 
+	ID = Moves.ABSORB, 
 	//name = "Absorb", 
-	//function = 0DD, 
-	basePower = 20,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0DD, FunctionAsString = "0DD", 
+	BaseDamage = 20,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
 },
 new MoveDataDex() {
 	num = 211,
-	id = Moves.GRASS_KNOT, 
+	ID = Moves.GRASS_KNOT, 
 	//name = "Grass Knot", 
-	//function = 09A, 
-	basePower = 1,
-	type = Types.GRASS,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x09A, FunctionAsString = "09A", 
+	BaseDamage = 1,
+	Type = Types.GRASS,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user snares the target with grass and trips it. The heavier the target, the greater the damage."
 },
 new MoveDataDex() {
 	num = 212,
-	id = Moves.AROMATHERAPY, 
+	ID = Moves.AROMATHERAPY, 
 	//name = "Aromatherapy", 
-	//function = 019, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true,sound: true ) { }
+	Function = 0x019, FunctionAsString = "019", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true,sound: true ) { }
 	//,description = "The user releases a soothing scent that heals all status problems affecting the user's party."
 },
 new MoveDataDex() {
 	num = 213,
-	id = Moves.COTTON_GUARD, 
+	ID = Moves.COTTON_GUARD, 
 	//name = "Cotton Guard", 
-	//function = 038, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x038, FunctionAsString = "038", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user protects itself by wrapping its body in soft cotton, drastically raising its Defense stat."
 },
 new MoveDataDex() {
 	num = 214,
-	id = Moves.COTTON_SPORE, 
+	ID = Moves.COTTON_SPORE, 
 	//name = "Cotton Spore", 
-	//function = 04D, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04D, FunctionAsString = "04D", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user releases cotton-like spores that cling to the foe, harshly reducing its Speed stat."
 },
 new MoveDataDex() {
 	num = 215,
-	id = Moves.GRASS_WHISTLE, 
+	ID = Moves.GRASS_WHISTLE, 
 	//name = "GrassWhistle", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 55,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 55,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The user plays a pleasant melody that lulls the target into a deep sleep."
 },
 new MoveDataDex() {
 	num = 216,
-	id = Moves.INGRAIN, 
+	ID = Moves.INGRAIN, 
 	//name = "Ingrain", 
-	//function = 0DB, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0DB, FunctionAsString = "0DB", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user lays roots that restore its HP on every turn. Because it is rooted, it can't switch out."
 },
 new MoveDataDex() {
 	num = 217,
-	id = Moves.LEECH_SEED, 
+	ID = Moves.LEECH_SEED, 
 	//name = "Leech Seed", 
-	//function = 0DC, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0DC, FunctionAsString = "0DC", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A seed is planted on the target. It steals some HP from the target every turn."
 },
 new MoveDataDex() {
 	num = 218,
-	id = Moves.SLEEP_POWDER, 
+	ID = Moves.SLEEP_POWDER, 
 	//name = "Sleep Powder", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 75,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 75,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters a big cloud of sleep-inducing dust around the target."
 },
 new MoveDataDex() {
 	num = 219,
-	id = Moves.SPORE, 
+	ID = Moves.SPORE, 
 	//name = "Spore", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters bursts of spores that induce sleep."
 },
 new MoveDataDex() {
 	num = 220,
-	id = Moves.STUN_SPORE, 
+	ID = Moves.STUN_SPORE, 
 	//name = "Stun Spore", 
-	//function = 007, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 75,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 75,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters a cloud of paralyzing powder. It may leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 221,
-	id = Moves.SYNTHESIS, 
+	ID = Moves.SYNTHESIS, 
 	//name = "Synthesis", 
-	//function = 0D8, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D8, FunctionAsString = "0D8", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
 new MoveDataDex() {
 	num = 222,
-	id = Moves.WORRY_SEED, 
+	ID = Moves.WORRY_SEED, 
 	//name = "Worry Seed", 
-	//function = 064, 
-	basePower = 0,
-	type = Types.GRASS,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x064, FunctionAsString = "064", 
+	BaseDamage = 0,
+	Type = Types.GRASS,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A seed that causes worry is planted on the foe. It prevents sleep by making its Ability Insomnia."
 },
 new MoveDataDex() {
 	num = 223,
-	id = Moves.EARTHQUAKE, 
+	ID = Moves.EARTHQUAKE, 
 	//name = "Earthquake", 
-	//function = 076, 
-	basePower = 100,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x076, FunctionAsString = "076", 
+	BaseDamage = 100,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user sets off an earthquake that strikes every Pokémon around it."
 },
 new MoveDataDex() {
 	num = 224,
-	id = Moves.EARTH_POWER, 
+	ID = Moves.EARTH_POWER, 
 	//name = "Earth Power", 
-	//function = 046, 
-	basePower = 90,
-	type = Types.GROUND,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 90,
+	Type = Types.GROUND,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
 },
 new MoveDataDex() {
 	num = 225,
-	id = Moves.DIG, 
+	ID = Moves.DIG, 
 	//name = "Dig", 
-	//function = 0CA, 
-	basePower = 80,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CA, FunctionAsString = "0CA", 
+	BaseDamage = 80,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user burrows, then attacks on the second turn. It can also be used to exit dungeons."
 },
 new MoveDataDex() {
 	num = 226,
-	id = Moves.DRILL_RUN, 
+	ID = Moves.DRILL_RUN, 
 	//name = "Drill Run", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user crashes into its target while rotating its body like a drill. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 227,
-	id = Moves.BONE_CLUB, 
+	ID = Moves.BONE_CLUB, 
 	//name = "Bone Club", 
-	//function = 00F, 
-	basePower = 65,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 65,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user clubs the target with a bone. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 228,
-	id = Moves.MUD_BOMB, 
+	ID = Moves.MUD_BOMB, 
 	//name = "Mud Bomb", 
-	//function = 047, 
-	basePower = 65,
-	type = Types.GROUND,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 65,
+	Type = Types.GROUND,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches a hard-packed mud ball to attack. It may also lower the target's accuracy."
 },
 new MoveDataDex() {
 	num = 229,
-	id = Moves.BULLDOZE, 
+	ID = Moves.BULLDOZE, 
 	//name = "Bulldoze", 
-	//function = 044, 
-	basePower = 60,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 100,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 60,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 100,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes everything around it by stomping on the ground. It reduces hit Pokémon's Speed."
 },
 new MoveDataDex() {
 	num = 230,
-	id = Moves.MUD_SHOT, 
+	ID = Moves.MUD_SHOT, 
 	//name = "Mud Shot", 
-	//function = 044, 
-	basePower = 55,
-	type = Types.GROUND,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 55,
+	Type = Types.GROUND,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by hurling a blob of mud at the target. It also reduces the target's Speed."
 },
 new MoveDataDex() {
 	num = 231,
-	id = Moves.BONEMERANG, 
+	ID = Moves.BONEMERANG, 
 	//name = "Bonemerang", 
-	//function = 0BD, 
-	basePower = 50,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0BD, FunctionAsString = "0BD", 
+	BaseDamage = 50,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user throws the bone it holds. The bone loops to hit the target twice, coming and going."
 },
 new MoveDataDex() {
 	num = 232,
-	id = Moves.SAND_TOMB, 
+	ID = Moves.SAND_TOMB, 
 	//name = "Sand Tomb", 
-	//function = 0CF, 
-	basePower = 35,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CF, FunctionAsString = "0CF", 
+	BaseDamage = 35,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user traps the target inside a harshly raging sandstorm for four to five turns."
 },
 new MoveDataDex() {
 	num = 233,
-	id = Moves.BONE_RUSH, 
+	ID = Moves.BONE_RUSH, 
 	//name = "Bone Rush", 
-	//function = 0C0, 
-	basePower = 25,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 25,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes the target with a hard bone two to five times in a row."
 },
 new MoveDataDex() {
 	num = 234,
-	id = Moves.MUD_SLAP, 
+	ID = Moves.MUD_SLAP, 
 	//name = "Mud-Slap", 
-	//function = 047, 
-	basePower = 20,
-	type = Types.GROUND,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 20,
+	Type = Types.GROUND,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user hurls mud in the target's face to inflict damage and lower its accuracy."
 },
 new MoveDataDex() {
 	num = 235,
-	id = Moves.FISSURE, 
+	ID = Moves.FISSURE, 
 	//name = "Fissure", 
-	//function = 070, 
-	basePower = 1,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 30,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x070, FunctionAsString = "070", 
+	BaseDamage = 1,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 30,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user opens up a fissure in the ground and drops the foe in. The target instantly faints if it hits."
 },
 new MoveDataDex() {
 	num = 236,
-	id = Moves.MAGNITUDE, 
+	ID = Moves.MAGNITUDE, 
 	//name = "Magnitude", 
-	//function = 095, 
-	basePower = 1,
-	type = Types.GROUND,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x095, FunctionAsString = "095", 
+	BaseDamage = 1,
+	Type = Types.GROUND,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a ground-shaking quake affecting everyone around the user. Its power varies."
 },
 new MoveDataDex() {
 	num = 237,
-	id = Moves.MUD_SPORT, 
+	ID = Moves.MUD_SPORT, 
 	//name = "Mud Sport", 
-	//function = 09D, 
-	basePower = 0,
-	type = Types.GROUND,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x09D, FunctionAsString = "09D", 
+	BaseDamage = 0,
+	Type = Types.GROUND,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user covers itself with mud. It weakens Electric-type moves while the user is in the battle."
 },
 new MoveDataDex() {
 	num = 238,
-	id = Moves.SAND_ATTACK, 
+	ID = Moves.SAND_ATTACK, 
 	//name = "Sand-Attack", 
-	//function = 047, 
-	basePower = 0,
-	type = Types.GROUND,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 0,
+	Type = Types.GROUND,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Sand is hurled in the target's face, reducing its accuracy."
 },
 new MoveDataDex() {
 	num = 239,
-	id = Moves.SPIKES, 
+	ID = Moves.SPIKES, 
 	//name = "Spikes", 
-	//function = 103, 
-	basePower = 0,
-	type = Types.GROUND,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.OpposingSide,
-	priority = 0,
-	flags = new Flags( reflectable: true ) { }
+	Function = 0x103, FunctionAsString = "103", 
+	BaseDamage = 0,
+	Type = Types.GROUND,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.OpposingSide,
+	Priority = 0,
+	Flags = new Flags( reflectable: true ) { }
 	//,description = "The user lays a trap of spikes at the foe's feet. The trap hurts foes that switch into battle."
 },
 new MoveDataDex() {
 	num = 240,
-	id = Moves.FREEZE_SHOCK, 
+	ID = Moves.FREEZE_SHOCK, 
 	//name = "Freeze Shock", 
-	//function = 0C5, 
-	basePower = 140,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C5, FunctionAsString = "0C5", 
+	BaseDamage = 140,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "On the second turn, the user hits the foe with electrically charged ice. It may also paralyze the foe."
 },
 new MoveDataDex() {
 	num = 241,
-	id = Moves.ICE_BURN, 
+	ID = Moves.ICE_BURN, 
 	//name = "Ice Burn", 
-	//function = 0C6, 
-	basePower = 140,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C6, FunctionAsString = "0C6", 
+	BaseDamage = 140,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "On the second turn, an ultracold, freezing wind surrounds the foe. This may leave it with a burn."
 },
 new MoveDataDex() {
 	num = 242,
-	id = Moves.BLIZZARD, 
+	ID = Moves.BLIZZARD, 
 	//name = "Blizzard", 
-	//function = 00D, 
-	basePower = 120,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 70,
-	pp = 5,
-	effects = 10,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00D, FunctionAsString = "00D", 
+	BaseDamage = 120,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 70,
+	PP = 5,
+	Effects = 10,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A howling blizzard is summoned to strike the opposing team. It may also freeze them solid."
 },
 new MoveDataDex() {
 	num = 243,
-	id = Moves.ICE_BEAM, 
+	ID = Moves.ICE_BEAM, 
 	//name = "Ice Beam", 
-	//function = 00C, 
-	basePower = 95,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00C, FunctionAsString = "00C", 
+	BaseDamage = 95,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is struck with an icy-cold beam of energy. It may also freeze the target solid."
 },
 new MoveDataDex() {
 	num = 244,
-	id = Moves.ICICLE_CRASH, 
+	ID = Moves.ICICLE_CRASH, 
 	//name = "Icicle Crash", 
-	//function = 00F, 
-	basePower = 85,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 85,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by harshly dropping an icicle onto the foe. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 245,
-	id = Moves.ICE_PUNCH, 
+	ID = Moves.ICE_PUNCH, 
 	//name = "Ice Punch", 
-	//function = 00C, 
-	basePower = 75,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
+	Function = 0x00C, FunctionAsString = "00C", 
+	BaseDamage = 75,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is punched with an icy fist. It may also leave the target frozen."
 },
 new MoveDataDex() {
 	num = 246,
-	id = Moves.AURORA_BEAM, 
+	ID = Moves.AURORA_BEAM, 
 	//name = "Aurora Beam", 
-	//function = 042, 
-	basePower = 65,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x042, FunctionAsString = "042", 
+	BaseDamage = 65,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is hit with a rainbow-colored beam. This may also lower the target's Attack stat."
 },
 new MoveDataDex() {
 	num = 247,
-	id = Moves.GLACIATE, 
+	ID = Moves.GLACIATE, 
 	//name = "Glaciate", 
-	//function = 044, 
-	basePower = 65,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 10,
-	effects = 100,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 65,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 10,
+	Effects = 100,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by blowing freezing cold air at the foe. This attack reduces the targets' Speed stat."
 },
 new MoveDataDex() {
 	num = 248,
-	id = Moves.ICE_FANG, 
+	ID = Moves.ICE_FANG, 
 	//name = "Ice Fang", 
-	//function = 00E, 
-	basePower = 65,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00E, FunctionAsString = "00E", 
+	BaseDamage = 65,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites with cold-infused fangs. It may also make the target flinch or leave it frozen."
 },
 new MoveDataDex() {
 	num = 249,
-	id = Moves.AVALANCHE, 
+	ID = Moves.AVALANCHE, 
 	//name = "Avalanche", 
-	//function = 081, 
-	basePower = 60,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -4,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x081, FunctionAsString = "081", 
+	BaseDamage = 60,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -4,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that inflicts double the damage if the user has been hurt by the foe in the same turn."
 },
 new MoveDataDex() {
 	num = 250,
-	id = Moves.ICY_WIND, 
+	ID = Moves.ICY_WIND, 
 	//name = "Icy Wind", 
-	//function = 044, 
-	basePower = 55,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 95,
-	pp = 15,
-	effects = 100,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 55,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 95,
+	PP = 15,
+	Effects = 100,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a gust of chilled air. It also lowers the targets' Speed stat."
 },
 new MoveDataDex() {
 	num = 251,
-	id = Moves.FROST_BREATH, 
+	ID = Moves.FROST_BREATH, 
 	//name = "Frost Breath", 
-	//function = 0A0, 
-	basePower = 40,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A0, FunctionAsString = "0A0", 
+	BaseDamage = 40,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blows a cold breath on the target. This attack always results in a critical hit."
 },
 new MoveDataDex() {
 	num = 252,
-	id = Moves.ICE_SHARD, 
+	ID = Moves.ICE_SHARD, 
 	//name = "Ice Shard", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user flash freezes chunks of ice and hurls them at the target. This move always goes first."
 },
 new MoveDataDex() {
 	num = 253,
-	id = Moves.POWDER_SNOW, 
+	ID = Moves.POWDER_SNOW, 
 	//name = "Powder Snow", 
-	//function = 00C, 
-	basePower = 40,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 10,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00C, FunctionAsString = "00C", 
+	BaseDamage = 40,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 10,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a chilling gust of powdery snow. It may also freeze the targets."
 },
 new MoveDataDex() {
 	num = 254,
-	id = Moves.ICE_BALL, 
+	ID = Moves.ICE_BALL, 
 	//name = "Ice Ball", 
-	//function = 0D3, 
-	basePower = 30,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0D3, FunctionAsString = "0D3", 
+	BaseDamage = 30,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user continually rolls into the target over five turns. It becomes stronger each time it hits."
 },
 new MoveDataDex() {
 	num = 255,
-	id = Moves.ICICLE_SPEAR, 
+	ID = Moves.ICICLE_SPEAR, 
 	//name = "Icicle Spear", 
-	//function = 0C0, 
-	basePower = 25,
-	type = Types.ICE,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 25,
+	Type = Types.ICE,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches sharp icicles at the target. It strikes two to five times in a row."
 },
 new MoveDataDex() {
 	num = 256,
-	id = Moves.SHEER_COLD, 
+	ID = Moves.SHEER_COLD, 
 	//name = "Sheer Cold", 
-	//function = 070, 
-	basePower = 1,
-	type = Types.ICE,
-	category = Category.SPECIAL,
-	accuracy = 30,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x070, FunctionAsString = "070", 
+	BaseDamage = 1,
+	Type = Types.ICE,
+	Category = Category.SPECIAL,
+	Accuracy = 30,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with a blast of absolute-zero cold. The target instantly faints if it hits."
 },
 new MoveDataDex() {
 	num = 257,
-	id = Moves.HAIL, 
+	ID = Moves.HAIL, 
 	//name = "Hail", 
-	//function = 102, 
-	basePower = 0,
-	type = Types.ICE,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x102, FunctionAsString = "102", 
+	BaseDamage = 0,
+	Type = Types.ICE,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user summons a hail storm lasting five turns. It damages all Pokémon except the Ice type."
 },
 new MoveDataDex() {
 	num = 258,
-	id = Moves.HAZE, 
+	ID = Moves.HAZE, 
 	//name = "Haze", 
-	//function = 051, 
-	basePower = 0,
-	type = Types.ICE,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x051, FunctionAsString = "051", 
+	BaseDamage = 0,
+	Type = Types.ICE,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user creates a haze that eliminates every stat change among all the Pokémon engaged in battle."
 },
 new MoveDataDex() {
 	num = 259,
-	id = Moves.MIST, 
+	ID = Moves.MIST, 
 	//name = "Mist", 
-	//function = 056, 
-	basePower = 0,
-	type = Types.ICE,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x056, FunctionAsString = "056", 
+	BaseDamage = 0,
+	Type = Types.ICE,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user cloaks its body with a white mist that prevents any of its stats from being cut for five turns."
 },
 new MoveDataDex() {
 	num = 260,
-	id = Moves.EXPLOSION, 
+	ID = Moves.EXPLOSION, 
 	//name = "Explosion", 
-	//function = 0E0, 
-	basePower = 250,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0E0, FunctionAsString = "0E0", 
+	BaseDamage = 250,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user explodes to inflict damage on those around it. The user faints upon using this move."
 },
 new MoveDataDex() {
 	num = 261,
-	id = Moves.SELF_DESTRUCT, 
+	ID = Moves.SELF_DESTRUCT, 
 	//name = "Selfdestruct", 
-	//function = 0E0, 
-	basePower = 200,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0E0, FunctionAsString = "0E0", 
+	BaseDamage = 200,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blows up to inflict damage on all Pokémon in battle. The user faints upon using this move."
 },
 new MoveDataDex() {
 	num = 262,
-	id = Moves.GIGA_IMPACT, 
+	ID = Moves.GIGA_IMPACT, 
 	//name = "Giga Impact", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges at the target using every bit of its power. The user must rest on the next turn."
 },
 new MoveDataDex() {
 	num = 263,
-	id = Moves.HYPER_BEAM, 
+	ID = Moves.HYPER_BEAM, 
 	//name = "Hyper Beam", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The foe is attacked with a powerful beam. The user must rest on the next turn to regain its energy."
 },
 new MoveDataDex() {
 	num = 264,
-	id = Moves.LAST_RESORT, 
+	ID = Moves.LAST_RESORT, 
 	//name = "Last Resort", 
-	//function = 125, 
-	basePower = 140,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x125, FunctionAsString = "125", 
+	BaseDamage = 140,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This move can be used only after the user has used all the other moves it knows in the battle."
 },
 new MoveDataDex() {
 	num = 265,
-	id = Moves.DOUBLE_EDGE, 
+	ID = Moves.DOUBLE_EDGE, 
 	//name = "Double-Edge", 
-	//function = 0FB, 
-	basePower = 120,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FB, FunctionAsString = "0FB", 
+	BaseDamage = 120,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A reckless, life-risking tackle. It also damages the user by a fairly large amount, however."
 },
 new MoveDataDex() {
 	num = 266,
-	id = Moves.HEAD_CHARGE, 
+	ID = Moves.HEAD_CHARGE, 
 	//name = "Head Charge", 
-	//function = 0FA, 
-	basePower = 120,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FA, FunctionAsString = "0FA", 
+	BaseDamage = 120,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges its head into the foe, using its powerful guard hair. The user also takes damage."
 },
 new MoveDataDex() {
 	num = 267,
-	id = Moves.MEGA_KICK, 
+	ID = Moves.MEGA_KICK, 
 	//name = "Mega Kick", 
-	//function = 000, 
-	basePower = 120,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 75,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 120,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 75,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked by a kick launched with muscle-packed power."
 },
 new MoveDataDex() {
 	num = 268,
-	id = Moves.THRASH, 
+	ID = Moves.THRASH, 
 	//name = "Thrash", 
-	//function = 0D2, 
-	basePower = 120,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.RandomOpposing,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0D2, FunctionAsString = "0D2", 
+	BaseDamage = 120,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.RandomOpposing,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user rampages and attacks for two to three turns. It then becomes confused, however."
 },
 new MoveDataDex() {
 	num = 269,
-	id = Moves.EGG_BOMB, 
+	ID = Moves.EGG_BOMB, 
 	//name = "Egg Bomb", 
-	//function = 000, 
-	basePower = 100,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 75,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 100,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 75,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A large egg is hurled at the target with maximum force to inflict damage."
 },
 new MoveDataDex() {
 	num = 270,
-	id = Moves.JUDGMENT, 
+	ID = Moves.JUDGMENT, 
 	//name = "Judgment", 
-	//function = 09F, 
-	basePower = 100,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x09F, FunctionAsString = "09F", 
+	BaseDamage = 100,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user releases countless shots of light. Its type varies with the kind of Plate the user is holding."
 },
 new MoveDataDex() {
 	num = 271,
-	id = Moves.SKULL_BASH, 
+	ID = Moves.SKULL_BASH, 
 	//name = "Skull Bash", 
-	//function = 0C8, 
-	basePower = 100,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C8, FunctionAsString = "0C8", 
+	BaseDamage = 100,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tucks in its head to raise its Defense in the first turn, then rams the foe on the next turn."
 },
 new MoveDataDex() {
 	num = 272,
-	id = Moves.HYPER_VOICE, 
+	ID = Moves.HYPER_VOICE, 
 	//name = "Hyper Voice", 
-	//function = 000, 
-	basePower = 90,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,sound: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 90,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,sound: true ) { }
 	//,description = "The user lets loose a horribly echoing shout with the power to inflict damage."
 },
 new MoveDataDex() {
 	num = 273,
-	id = Moves.ROCK_CLIMB, 
+	ID = Moves.ROCK_CLIMB, 
 	//name = "Rock Climb", 
-	//function = 013, 
-	basePower = 90,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 90,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target by smashing into it with incredible force. It may also confuse the target."
 },
 new MoveDataDex() {
 	num = 274,
-	id = Moves.TAKE_DOWN, 
+	ID = Moves.TAKE_DOWN, 
 	//name = "Take Down", 
-	//function = 0FA, 
-	basePower = 90,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FA, FunctionAsString = "0FA", 
+	BaseDamage = 90,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A reckless, full-body charge attack for slamming into the foe. It also damages the user a little."
 },
 new MoveDataDex() {
 	num = 275,
-	id = Moves.UPROAR, 
+	ID = Moves.UPROAR, 
 	//name = "Uproar", 
-	//function = 0D1, 
-	basePower = 90,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.RandomOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
+	Function = 0x0D1, FunctionAsString = "0D1", 
+	BaseDamage = 90,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.RandomOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user attacks in an uproar for three turns. Over that time, no one can fall asleep."
 },
 new MoveDataDex() {
 	num = 276,
-	id = Moves.BODY_SLAM, 
+	ID = Moves.BODY_SLAM, 
 	//name = "Body Slam", 
-	//function = 007, 
-	basePower = 85,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 85,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user drops onto the target with its full body weight. It may leave the target with paralysis."
 },
 new MoveDataDex() {
 	num = 277,
-	id = Moves.TECHNO_BLAST, 
+	ID = Moves.TECHNO_BLAST, 
 	//name = "Techno Blast", 
-	//function = 09F, 
-	basePower = 85,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x09F, FunctionAsString = "09F", 
+	BaseDamage = 85,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user fires a beam of light at its target. The type changes depending on the Drive the user holds."
 },
 new MoveDataDex() {
 	num = 278,
-	id = Moves.EXTREME_SPEED, 
+	ID = Moves.EXTREME_SPEED, 
 	//name = "ExtremeSpeed", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 2,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 2,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges the target at blinding speed. This attack always goes before any other move."
 },
 new MoveDataDex() {
 	num = 279,
-	id = Moves.HYPER_FANG, 
+	ID = Moves.HYPER_FANG, 
 	//name = "Hyper Fang", 
-	//function = 00F, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 15,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user bites hard on the target with its sharp front fangs. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 280,
-	id = Moves.MEGA_PUNCH, 
+	ID = Moves.MEGA_PUNCH, 
 	//name = "Mega Punch", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The target is slugged by a punch thrown with muscle-packed power."
 },
 new MoveDataDex() {
 	num = 281,
-	id = Moves.RAZOR_WIND, 
+	ID = Moves.RAZOR_WIND, 
 	//name = "Razor Wind", 
-	//function = 0C3, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x0C3, FunctionAsString = "0C3", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A two-turn attack. Blades of wind hit the foe on the second turn. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 282,
-	id = Moves.SLAM, 
+	ID = Moves.SLAM, 
 	//name = "Slam", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 75,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 75,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slammed with a long tail, vines, etc., to inflict damage."
 },
 new MoveDataDex() {
 	num = 283,
-	id = Moves.STRENGTH, 
+	ID = Moves.STRENGTH, 
 	//name = "Strength", 
-	//function = 000, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slugged with a punch thrown at maximum power. It can also be used to move heavy boulders."
 },
 new MoveDataDex() {
 	num = 284,
-	id = Moves.TRI_ATTACK, 
+	ID = Moves.TRI_ATTACK, 
 	//name = "Tri Attack", 
-	//function = 017, 
-	basePower = 80,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x017, FunctionAsString = "017", 
+	BaseDamage = 80,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user strikes with a simultaneous three-beam attack. May also paralyze, burn, or freeze the target."
 },
 new MoveDataDex() {
 	num = 285,
-	id = Moves.CRUSH_CLAW, 
+	ID = Moves.CRUSH_CLAW, 
 	//name = "Crush Claw", 
-	//function = 043, 
-	basePower = 75,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 10,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 75,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 10,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user slashes the target with hard and sharp claws. It may also lower the target's Defense."
 },
 new MoveDataDex() {
 	num = 286,
-	id = Moves.RELIC_SONG, 
+	ID = Moves.RELIC_SONG, 
 	//name = "Relic Song", 
-	//function = 003, 
-	basePower = 75,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 100,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,sound: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 75,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 100,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,sound: true ) { }
 	//,description = "An ancient song appeals to the hearts of those listening. It may also induce sleep."
 },
 new MoveDataDex() {
 	num = 287,
-	id = Moves.CHIP_AWAY, 
+	ID = Moves.CHIP_AWAY, 
 	//name = "Chip Away", 
-	//function = 0A9, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A9, FunctionAsString = "0A9", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Seeking an opening, the user strikes continually. The foe's stat changes don't affect the damage."
 },
 new MoveDataDex() {
 	num = 288,
-	id = Moves.DIZZY_PUNCH, 
+	ID = Moves.DIZZY_PUNCH, 
 	//name = "Dizzy Punch", 
-	//function = 013, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is hit with rhythmically launched punches that may also leave it confused."
 },
 new MoveDataDex() {
 	num = 289,
-	id = Moves.FACADE, 
+	ID = Moves.FACADE, 
 	//name = "Facade", 
-	//function = 07E, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x07E, FunctionAsString = "07E", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "An attack move that doubles its power if the user is poisoned, burned, or has paralysis."
 },
 new MoveDataDex() {
 	num = 290,
-	id = Moves.HEADBUTT, 
+	ID = Moves.HEADBUTT, 
 	//name = "Headbutt", 
-	//function = 00F, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user sticks out its head and attacks by charging into the foe. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 291,
-	id = Moves.RETALIATE, 
+	ID = Moves.RETALIATE, 
 	//name = "Retaliate", 
-	//function = 085, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x085, FunctionAsString = "085", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Gets revenge for a fainted ally. If an ally fainted in the last turn, this attack's damage increases."
 },
 new MoveDataDex() {
 	num = 292,
-	id = Moves.SECRET_POWER, 
+	ID = Moves.SECRET_POWER, 
 	//name = "Secret Power", 
-	//function = 0A4, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0A4, FunctionAsString = "0A4", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a secret power. Its added effects vary depending on the user's environment."
 },
 new MoveDataDex() {
 	num = 293,
-	id = Moves.SLASH, 
+	ID = Moves.SLASH, 
 	//name = "Slash", 
-	//function = 000, 
-	basePower = 70,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 70,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The target is attacked with a slash of claws or blades. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 294,
-	id = Moves.HORN_ATTACK, 
+	ID = Moves.HORN_ATTACK, 
 	//name = "Horn Attack", 
-	//function = 000, 
-	basePower = 65,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 65,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is jabbed with a sharply pointed horn to inflict damage."
 },
 new MoveDataDex() {
 	num = 295,
-	id = Moves.STOMP, 
+	ID = Moves.STOMP, 
 	//name = "Stomp", 
-	//function = 010, 
-	basePower = 65,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x010, FunctionAsString = "010", 
+	BaseDamage = 65,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is stomped with a big foot. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 296,
-	id = Moves.COVET, 
+	ID = Moves.COVET, 
 	//name = "Covet", 
-	//function = 0F1, 
-	basePower = 60,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x0F1, FunctionAsString = "0F1", 
+	BaseDamage = 60,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user endearingly approaches the target, then steals the target's held item."
 },
 new MoveDataDex() {
 	num = 297,
-	id = Moves.ROUND, 
+	ID = Moves.ROUND, 
 	//name = "Round", 
-	//function = 083, 
-	basePower = 60,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
+	Function = 0x083, FunctionAsString = "083", 
+	BaseDamage = 60,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user attacks with a song. Others can join in the Round and make the attack do greater damage."
 },
 new MoveDataDex() {
 	num = 298,
-	id = Moves.SMELLING_SALTS, 
+	ID = Moves.SMELLING_SALTS, 
 	//name = "SmellingSalt", 
-	//function = 07C, 
-	basePower = 60,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x07C, FunctionAsString = "07C", 
+	BaseDamage = 60,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "This attack inflicts double damage on a paralyzed foe. It also cures the target's paralysis, however."
 },
 new MoveDataDex() {
 	num = 299,
-	id = Moves.SWIFT, 
+	ID = Moves.SWIFT, 
 	//name = "Swift", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Star-shaped rays are shot at the opposing team. This attack never misses."
 },
 new MoveDataDex() {
 	num = 300,
-	id = Moves.VICE_GRIP, 
+	ID = Moves.VICE_GRIP, 
 	//name = "ViceGrip", 
-	//function = 000, 
-	basePower = 55,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 55,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is gripped and squeezed from both sides to inflict damage."
 },
 new MoveDataDex() {
 	num = 301,
-	id = Moves.CUT, 
+	ID = Moves.CUT, 
 	//name = "Cut", 
-	//function = 000, 
-	basePower = 50,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 50,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is cut with a scythe or a claw. It can also be used to cut down thin trees."
 },
 new MoveDataDex() {
 	num = 302,
-	id = Moves.STRUGGLE, 
+	ID = Moves.STRUGGLE, 
 	//name = "Struggle", 
-	//function = 002, 
-	basePower = 50,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 1,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,flinch: true ) { }
+	Function = 0x002, FunctionAsString = "002", 
+	BaseDamage = 50,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 1,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,flinch: true ) { }
 	//,description = "An attack that is used in desperation only if the user has no PP. It also hurts the user slightly."
 },
 new MoveDataDex() {
 	num = 303,
-	id = Moves.TACKLE, 
+	ID = Moves.TACKLE, 
 	//name = "Tackle", 
-	//function = 000, 
-	basePower = 50,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 50,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A physical attack in which the user charges and slams into the target with its whole body."
 },
 new MoveDataDex() {
 	num = 304,
-	id = Moves.WEATHER_BALL, 
+	ID = Moves.WEATHER_BALL, 
 	//name = "Weather Ball", 
-	//function = 087, 
-	basePower = 50,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x087, FunctionAsString = "087", 
+	BaseDamage = 50,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that varies in power and type depending on the weather."
 },
 new MoveDataDex() {
 	num = 305,
-	id = Moves.ECHOED_VOICE, 
+	ID = Moves.ECHOED_VOICE, 
 	//name = "Echoed Voice", 
-	//function = 092, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
+	Function = 0x092, FunctionAsString = "092", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user attacks the foe with an echoing voice. If this move is used every turn, it does greater damage."
 },
 new MoveDataDex() {
 	num = 306,
-	id = Moves.FAKE_OUT, 
+	ID = Moves.FAKE_OUT, 
 	//name = "Fake Out", 
-	//function = 012, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 3,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x012, FunctionAsString = "012", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 3,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "An attack that hits first and makes the target flinch. It only works the first turn the user is in battle."
 },
 new MoveDataDex() {
 	num = 307,
-	id = Moves.FALSE_SWIPE, 
+	ID = Moves.FALSE_SWIPE, 
 	//name = "False Swipe", 
-	//function = 0E9, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0E9, FunctionAsString = "0E9", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A restrained attack that prevents the target from fainting. The target is left with at least 1 HP."
 },
 new MoveDataDex() {
 	num = 308,
-	id = Moves.PAY_DAY, 
+	ID = Moves.PAY_DAY, 
 	//name = "Pay Day", 
-	//function = 109, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x109, FunctionAsString = "109", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Numerous coins are hurled at the target to inflict damage. Money is earned after battle."
 },
 new MoveDataDex() {
 	num = 309,
-	id = Moves.POUND, 
+	ID = Moves.POUND, 
 	//name = "Pound", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is physically pounded with a long tail or a foreleg, etc."
 },
 new MoveDataDex() {
 	num = 310,
-	id = Moves.QUICK_ATTACK, 
+	ID = Moves.QUICK_ATTACK, 
 	//name = "Quick Attack", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lunges at the target at a speed that makes it almost invisible. It is sure to strike first."
 },
 new MoveDataDex() {
 	num = 311,
-	id = Moves.SCRATCH, 
+	ID = Moves.SCRATCH, 
 	//name = "Scratch", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Hard, pointed, and sharp claws rake the target to inflict damage."
 },
 new MoveDataDex() {
 	num = 312,
-	id = Moves.SNORE, 
+	ID = Moves.SNORE, 
 	//name = "Snore", 
-	//function = 011, 
-	basePower = 40,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
+	Function = 0x011, FunctionAsString = "011", 
+	BaseDamage = 40,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "An attack that can be used only if the user is asleep. The harsh noise may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 313,
-	id = Moves.DOUBLE_HIT, 
+	ID = Moves.DOUBLE_HIT, 
 	//name = "Double Hit", 
-	//function = 0BD, 
-	basePower = 35,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0BD, FunctionAsString = "0BD", 
+	BaseDamage = 35,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams the target with a long tail, vines, or tentacle. The target is hit twice in a row."
 },
 new MoveDataDex() {
 	num = 314,
-	id = Moves.FEINT, 
+	ID = Moves.FEINT, 
 	//name = "Feint", 
-	//function = 0AD, 
-	basePower = 30,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 2,
-	flags = new Flags(  ) { } 
+	Function = 0x0AD, FunctionAsString = "0AD", 
+	BaseDamage = 30,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 2,
+	Flags = new Flags(  ) { } 
 	//,description = "An attack that hits a target using Protect or Detect. It also lifts the effects of those moves."
 },
 new MoveDataDex() {
 	num = 315,
-	id = Moves.TAIL_SLAP, 
+	ID = Moves.TAIL_SLAP, 
 	//name = "Tail Slap", 
-	//function = 0C0, 
-	basePower = 25,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 25,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by striking the target with its hard tail. It hits the Pokémon two to five times in a row."
 },
 new MoveDataDex() {
 	num = 316,
-	id = Moves.RAGE, 
+	ID = Moves.RAGE, 
 	//name = "Rage", 
-	//function = 093, 
-	basePower = 20,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x093, FunctionAsString = "093", 
+	BaseDamage = 20,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "As long as this move is in use, the user's Attack rises each time the user is hit in battle."
 },
 new MoveDataDex() {
 	num = 317,
-	id = Moves.RAPID_SPIN, 
+	ID = Moves.RAPID_SPIN, 
 	//name = "Rapid Spin", 
-	//function = 110, 
-	basePower = 20,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x110, FunctionAsString = "110", 
+	BaseDamage = 20,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
 },
 new MoveDataDex() {
 	num = 318,
-	id = Moves.SPIKE_CANNON, 
+	ID = Moves.SPIKE_CANNON, 
 	//name = "Spike Cannon", 
-	//function = 0C0, 
-	basePower = 20,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 20,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Sharp spikes are shot at the target in rapid succession. They hit two to five times in a row."
 },
 new MoveDataDex() {
 	num = 319,
-	id = Moves.COMET_PUNCH, 
+	ID = Moves.COMET_PUNCH, 
 	//name = "Comet Punch", 
-	//function = 0C0, 
-	basePower = 18,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 18,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The target is hit with a flurry of punches that strike two to five times in a row."
 },
 new MoveDataDex() {
 	num = 320,
-	id = Moves.FURY_SWIPES, 
+	ID = Moves.FURY_SWIPES, 
 	//name = "Fury Swipes", 
-	//function = 0C0, 
-	basePower = 18,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 80,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 18,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 80,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is raked with sharp claws or scythes for two to five times in quick succession."
 },
 new MoveDataDex() {
 	num = 321,
-	id = Moves.BARRAGE, 
+	ID = Moves.BARRAGE, 
 	//name = "Barrage", 
-	//function = 0C0, 
-	basePower = 15,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 15,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Round objects are hurled at the target to strike two to five times in a row."
 },
 new MoveDataDex() {
 	num = 322,
-	id = Moves.BIND, 
+	ID = Moves.BIND, 
 	//name = "Bind", 
-	//function = 0CF, 
-	basePower = 15,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CF, FunctionAsString = "0CF", 
+	BaseDamage = 15,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Things such as long bodies or tentacles are used to bind and squeeze the foe for four to five turns."
 },
 new MoveDataDex() {
 	num = 323,
-	id = Moves.DOUBLE_SLAP, 
+	ID = Moves.DOUBLE_SLAP, 
 	//name = "DoubleSlap", 
-	//function = 0C0, 
-	basePower = 15,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 15,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slapped repeatedly, back and forth, two to five times in a row."
 },
 new MoveDataDex() {
 	num = 324,
-	id = Moves.FURY_ATTACK, 
+	ID = Moves.FURY_ATTACK, 
 	//name = "Fury Attack", 
-	//function = 0C0, 
-	basePower = 15,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 15,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is jabbed repeatedly with a horn or beak two to five times in a row."
 },
 new MoveDataDex() {
 	num = 325,
-	id = Moves.WRAP, 
+	ID = Moves.WRAP, 
 	//name = "Wrap", 
-	//function = 0CF, 
-	basePower = 15,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CF, FunctionAsString = "0CF", 
+	BaseDamage = 15,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A long body or vines are used to wrap and squeeze the target for four to five turns."
 },
 new MoveDataDex() {
 	num = 326,
-	id = Moves.CONSTRICT, 
+	ID = Moves.CONSTRICT, 
 	//name = "Constrict", 
-	//function = 044, 
-	basePower = 10,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 10,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with long, creeping tentacles or vines. It may also lower the target's Speed."
 },
 new MoveDataDex() {
 	num = 327,
-	id = Moves.BIDE, 
+	ID = Moves.BIDE, 
 	//name = "Bide", 
-	//function = 0D4, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,flinch: true ) { }
+	Function = 0x0D4, FunctionAsString = "0D4", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,flinch: true ) { }
 	//,description = "The user endures attacks for two turns, then strikes back to cause double the damage taken."
 },
 new MoveDataDex() {
 	num = 328,
-	id = Moves.CRUSH_GRIP, 
+	ID = Moves.CRUSH_GRIP, 
 	//name = "Crush Grip", 
-	//function = 08C, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08C, FunctionAsString = "08C", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is crushed with great force. The attack is more powerful the more HP the target has left."
 },
 new MoveDataDex() {
 	num = 329,
-	id = Moves.ENDEAVOR, 
+	ID = Moves.ENDEAVOR, 
 	//name = "Endeavor", 
-	//function = 06E, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x06E, FunctionAsString = "06E", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that cuts down the target's HP to equal the user's HP."
 },
 new MoveDataDex() {
 	num = 330,
-	id = Moves.FLAIL, 
+	ID = Moves.FLAIL, 
 	//name = "Flail", 
-	//function = 098, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x098, FunctionAsString = "098", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user flails about aimlessly to attack. It becomes more powerful the less HP the user has."
 },
 new MoveDataDex() {
 	num = 331,
-	id = Moves.FRUSTRATION, 
+	ID = Moves.FRUSTRATION, 
 	//name = "Frustration", 
-	//function = 08A, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08A, FunctionAsString = "08A", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A full-power attack that grows more powerful the less the user likes its Trainer."
 },
 new MoveDataDex() {
 	num = 332,
-	id = Moves.GUILLOTINE, 
+	ID = Moves.GUILLOTINE, 
 	//name = "Guillotine", 
-	//function = 070, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 30,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x070, FunctionAsString = "070", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 30,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "A vicious, tearing attack with big pincers. The target will faint instantly if this attack hits."
 },
 new MoveDataDex() {
 	num = 333,
-	id = Moves.HIDDEN_POWER, 
+	ID = Moves.HIDDEN_POWER, 
 	//name = "Hidden Power", 
-	//function = 090, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x090, FunctionAsString = "090", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A unique attack that varies in type and intensity depending on the Pokémon using it."
 },
 new MoveDataDex() {
 	num = 334,
-	id = Moves.HORN_DRILL, 
+	ID = Moves.HORN_DRILL, 
 	//name = "Horn Drill", 
-	//function = 070, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 30,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x070, FunctionAsString = "070", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 30,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user stabs the foe with a horn that rotates like a drill. If it hits, the target faints instantly."
 },
 new MoveDataDex() {
 	num = 335,
-	id = Moves.NATURAL_GIFT, 
+	ID = Moves.NATURAL_GIFT, 
 	//name = "Natural Gift", 
-	//function = 096, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x096, FunctionAsString = "096", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user draws power to attack by using its held Berry. The Berry determines its type and power."
 },
 new MoveDataDex() {
 	num = 336,
-	id = Moves.PRESENT, 
+	ID = Moves.PRESENT, 
 	//name = "Present", 
-	//function = 094, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x094, FunctionAsString = "094", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by giving the target a gift with a hidden trap. It restores HP sometimes, however."
 },
 new MoveDataDex() {
 	num = 337,
-	id = Moves.RETURN, 
+	ID = Moves.RETURN, 
 	//name = "Return", 
-	//function = 089, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x089, FunctionAsString = "089", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A full-power attack that grows more powerful the more the user likes its Trainer."
 },
 new MoveDataDex() {
 	num = 338,
-	id = Moves.SONIC_BOOM, 
+	ID = Moves.SONIC_BOOM, 
 	//name = "SonicBoom", 
-	//function = 06A, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x06A, FunctionAsString = "06A", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is hit with a destructive shock wave that always inflicts 20 HP damage."
 },
 new MoveDataDex() {
 	num = 339,
-	id = Moves.SPIT_UP, 
+	ID = Moves.SPIT_UP, 
 	//name = "Spit Up", 
-	//function = 113, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,flinch: true ) { }
+	Function = 0x113, FunctionAsString = "113", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,flinch: true ) { }
 	//,description = "The power stored using the move Stockpile is released all at once in an attack."
 },
 new MoveDataDex() {
 	num = 340,
-	id = Moves.SUPER_FANG, 
+	ID = Moves.SUPER_FANG, 
 	//name = "Super Fang", 
-	//function = 06C, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x06C, FunctionAsString = "06C", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user chomps hard on the target with its sharp front fangs. It cuts the target's HP to half."
 },
 new MoveDataDex() {
 	num = 341,
-	id = Moves.TRUMP_CARD, 
+	ID = Moves.TRUMP_CARD, 
 	//name = "Trump Card", 
-	//function = 097, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x097, FunctionAsString = "097", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The fewer PP this move has, the greater its attack power."
 },
 new MoveDataDex() {
 	num = 342,
-	id = Moves.WRING_OUT, 
+	ID = Moves.WRING_OUT, 
 	//name = "Wring Out", 
-	//function = 08C, 
-	basePower = 1,
-	type = Types.NORMAL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08C, FunctionAsString = "08C", 
+	BaseDamage = 1,
+	Type = Types.NORMAL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user powerfully wrings the foe. The more HP the foe has, the greater this attack's power."
 },
 new MoveDataDex() {
 	num = 343,
-	id = Moves.ACUPRESSURE, 
+	ID = Moves.ACUPRESSURE, 
 	//name = "Acupressure", 
-	//function = 037, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.UserOrPartner,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x037, FunctionAsString = "037", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.UserOrPartner,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user applies pressure to stress points, sharply boosting one of its stats."
 },
 new MoveDataDex() {
 	num = 344,
-	id = Moves.AFTER_YOU, 
+	ID = Moves.AFTER_YOU, 
 	//name = "After You", 
-	//function = 11D, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x11D, FunctionAsString = "11D", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user helps the target and makes it use its move right after the user."
 },
 new MoveDataDex() {
 	num = 345,
-	id = Moves.ASSIST, 
+	ID = Moves.ASSIST, 
 	//name = "Assist", 
-	//function = 0B5, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0B5, FunctionAsString = "0B5", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user hurriedly and randomly uses a move among those known by other Pokémon in the party."
 },
 new MoveDataDex() {
 	num = 346,
-	id = Moves.ATTRACT, 
+	ID = Moves.ATTRACT, 
 	//name = "Attract", 
-	//function = 016, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x016, FunctionAsString = "016", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "If it is the opposite gender of the user, the target becomes infatuated and less likely to attack."
 },
 new MoveDataDex() {
 	num = 347,
-	id = Moves.BATON_PASS, 
+	ID = Moves.BATON_PASS, 
 	//name = "Baton Pass", 
-	//function = 0ED, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0ED, FunctionAsString = "0ED", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user switches places with a party Pokémon in waiting, passing along any stat changes."
 },
 new MoveDataDex() {
 	num = 348,
-	id = Moves.BELLY_DRUM, 
+	ID = Moves.BELLY_DRUM, 
 	//name = "Belly Drum", 
-	//function = 03A, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x03A, FunctionAsString = "03A", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user maximizes its Attack stat in exchange for HP equal to half its max HP."
 },
 new MoveDataDex() {
 	num = 349,
-	id = Moves.BESTOW, 
+	ID = Moves.BESTOW, 
 	//name = "Bestow", 
-	//function = 0F3, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0F3, FunctionAsString = "0F3", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user passes its held item to the target when the target isn't holding an item."
 },
 new MoveDataDex() {
 	num = 350,
-	id = Moves.BLOCK, 
+	ID = Moves.BLOCK, 
 	//name = "Block", 
-	//function = 0EF, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0EF, FunctionAsString = "0EF", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user blocks the target's way with arms spread wide to prevent escape."
 },
 new MoveDataDex() {
 	num = 351,
-	id = Moves.CAMOUFLAGE, 
+	ID = Moves.CAMOUFLAGE, 
 	//name = "Camouflage", 
-	//function = 060, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x060, FunctionAsString = "060", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user's type is changed depending on its environment, such as at water's edge, in grass, or in a cave."
 },
 new MoveDataDex() {
 	num = 352,
-	id = Moves.CAPTIVATE, 
+	ID = Moves.CAPTIVATE, 
 	//name = "Captivate", 
-	//function = 04E, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04E, FunctionAsString = "04E", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "If it is the opposite gender of the user, the target is charmed into harshly lowering its Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 353,
-	id = Moves.CHARM, 
+	ID = Moves.CHARM, 
 	//name = "Charm", 
-	//function = 04B, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04B, FunctionAsString = "04B", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user charmingly gazes at the foe, making it less wary. The target's Attack is harshly lowered."
 },
 new MoveDataDex() {
 	num = 354,
-	id = Moves.CONVERSION, 
+	ID = Moves.CONVERSION, 
 	//name = "Conversion", 
-	//function = 05E, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x05E, FunctionAsString = "05E", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user changes its type to become the same type as one of its moves."
 },
 new MoveDataDex() {
 	num = 355,
-	id = Moves.CONVERSION_2, 
+	ID = Moves.CONVERSION_2, 
 	//name = "Conversion 2", 
-	//function = 05F, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x05F, FunctionAsString = "05F", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user changes its type to make itself resistant to the type of the attack the opponent used last."
 },
 new MoveDataDex() {
 	num = 356,
-	id = Moves.COPYCAT, 
+	ID = Moves.COPYCAT, 
 	//name = "Copycat", 
-	//function = 0AF, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0AF, FunctionAsString = "0AF", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user mimics the move used immediately before it. The move fails if no other move has been used yet."
 },
 new MoveDataDex() {
 	num = 357,
-	id = Moves.DEFENSE_CURL, 
+	ID = Moves.DEFENSE_CURL, 
 	//name = "Defense Curl", 
-	//function = 01E, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01E, FunctionAsString = "01E", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user curls up to conceal weak spots and raise its Defense stat."
 },
 new MoveDataDex() {
 	num = 358,
-	id = Moves.DISABLE, 
+	ID = Moves.DISABLE, 
 	//name = "Disable", 
-	//function = 0B9, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0B9, FunctionAsString = "0B9", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "For four turns, this move prevents the target from using the move it last used."
 },
 new MoveDataDex() {
 	num = 359,
-	id = Moves.DOUBLE_TEAM, 
+	ID = Moves.DOUBLE_TEAM, 
 	//name = "Double Team", 
-	//function = 022, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x022, FunctionAsString = "022", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "By moving rapidly, the user makes illusory copies of itself to raise its evasiveness."
 },
 new MoveDataDex() {
 	num = 360,
-	id = Moves.ENCORE, 
+	ID = Moves.ENCORE, 
 	//name = "Encore", 
-	//function = 0BC, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0BC, FunctionAsString = "0BC", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user compels the target to keep using only the move it last used for three turns."
 },
 new MoveDataDex() {
 	num = 361,
-	id = Moves.ENDURE, 
+	ID = Moves.ENDURE, 
 	//name = "Endure", 
-	//function = 0E8, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 3,
-	flags = new Flags(  ) { } 
+	Function = 0x0E8, FunctionAsString = "0E8", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 3,
+	Flags = new Flags(  ) { } 
 	//,description = "The user endures any attack with at least 1 HP. Its chance of failing rises if it is used in succession."
 },
 new MoveDataDex() {
 	num = 362,
-	id = Moves.ENTRAINMENT, 
+	ID = Moves.ENTRAINMENT, 
 	//name = "Entrainment", 
-	//function = 066, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x066, FunctionAsString = "066", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user dances to compel the target to mimic it, making the target's Ability the same as the user's."
 },
 new MoveDataDex() {
 	num = 363,
-	id = Moves.FLASH, 
+	ID = Moves.FLASH, 
 	//name = "Flash", 
-	//function = 047, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user flashes a light that cuts the target's accuracy. It can also be used to illuminate caves."
 },
 new MoveDataDex() {
 	num = 364,
-	id = Moves.FOCUS_ENERGY, 
+	ID = Moves.FOCUS_ENERGY, 
 	//name = "Focus Energy", 
-	//function = 023, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x023, FunctionAsString = "023", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user takes a deep breath and focuses so that critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 365,
-	id = Moves.FOLLOW_ME, 
+	ID = Moves.FOLLOW_ME, 
 	//name = "Follow Me", 
-	//function = 117, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 3,
-	flags = new Flags(  ) { } 
+	Function = 0x117, FunctionAsString = "117", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 3,
+	Flags = new Flags(  ) { } 
 	//,description = "The user draws attention to itself, making all targets take aim only at the user."
 },
 new MoveDataDex() {
 	num = 366,
-	id = Moves.FORESIGHT, 
+	ID = Moves.FORESIGHT, 
 	//name = "Foresight", 
-	//function = 0A7, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0A7, FunctionAsString = "0A7", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Enables the user to hit a Ghost type with any kind of move. It also enables the user to hit an evasive foe."
 },
 new MoveDataDex() {
 	num = 367,
-	id = Moves.GLARE, 
+	ID = Moves.GLARE, 
 	//name = "Glare", 
-	//function = 007, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 90,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x007, FunctionAsString = "007", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 90,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user intimidates the target with the pattern on its belly to cause paralysis."
 },
 new MoveDataDex() {
 	num = 368,
-	id = Moves.GROWL, 
+	ID = Moves.GROWL, 
 	//name = "Growl", 
-	//function = 042, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 40,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x042, FunctionAsString = "042", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 40,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The user growls in an endearing way, making the foe less wary. The foe's Attack stat is lowered."
 },
 new MoveDataDex() {
 	num = 369,
-	id = Moves.GROWTH, 
+	ID = Moves.GROWTH, 
 	//name = "Growth", 
-	//function = 028, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x028, FunctionAsString = "028", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user's body grows all at once, raising the Atk and Sp. Atk stats."
 },
 new MoveDataDex() {
 	num = 370,
-	id = Moves.HARDEN, 
+	ID = Moves.HARDEN, 
 	//name = "Harden", 
-	//function = 01D, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01D, FunctionAsString = "01D", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user stiffens all the muscles in its body to raise its Defense stat."
 },
 new MoveDataDex() {
 	num = 371,
-	id = Moves.HEAL_BELL, 
+	ID = Moves.HEAL_BELL, 
 	//name = "Heal Bell", 
-	//function = 019, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x019, FunctionAsString = "019", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user makes a soothing bell chime to heal the status problems of all the party Pokémon."
 },
 new MoveDataDex() {
 	num = 372,
-	id = Moves.HELPING_HAND, 
+	ID = Moves.HELPING_HAND, 
 	//name = "Helping Hand", 
-	//function = 09C, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.Partner,
-	priority = 5,
-	flags = new Flags(  ) { } 
+	Function = 0x09C, FunctionAsString = "09C", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.Partner,
+	Priority = 5,
+	Flags = new Flags(  ) { } 
 	//,description = "The user assists an ally by boosting the power of its attack."
 },
 new MoveDataDex() {
 	num = 373,
-	id = Moves.HOWL, 
+	ID = Moves.HOWL, 
 	//name = "Howl", 
-	//function = 01C, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01C, FunctionAsString = "01C", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user howls loudly to raise its spirit, boosting its Attack stat."
 },
 new MoveDataDex() {
 	num = 374,
-	id = Moves.LEER, 
+	ID = Moves.LEER, 
 	//name = "Leer", 
-	//function = 043, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user gains an intimidating leer with sharp eyes. The target's Defense stat is reduced."
 },
 new MoveDataDex() {
 	num = 375,
-	id = Moves.LOCK_ON, 
+	ID = Moves.LOCK_ON, 
 	//name = "Lock-On", 
-	//function = 0A6, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0A6, FunctionAsString = "0A6", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user takes sure aim at the target. It ensures the next attack does not fail to hit the target."
 },
 new MoveDataDex() {
 	num = 376,
-	id = Moves.LOVELY_KISS, 
+	ID = Moves.LOVELY_KISS, 
 	//name = "Lovely Kiss", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 75,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 75,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "With a scary face, the user tries to force a kiss on the target. If it suceeds, the target falls asleep."
 },
 new MoveDataDex() {
 	num = 377,
-	id = Moves.LUCKY_CHANT, 
+	ID = Moves.LUCKY_CHANT, 
 	//name = "Lucky Chant", 
-	//function = 0A1, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0A1, FunctionAsString = "0A1", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user chants an incantation toward the sky, preventing the foe from landing critical hits."
 },
 new MoveDataDex() {
 	num = 378,
-	id = Moves.ME_FIRST, 
+	ID = Moves.ME_FIRST, 
 	//name = "Me First", 
-	//function = 0B0, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleOpposing,
-	priority = 0,
-	flags = new Flags( protect: true ) { }
+	Function = 0x0B0, FunctionAsString = "0B0", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true ) { }
 	//,description = "The user tries to cut ahead of the foe to steal and use the foe's intended move with greater power."
 },
 new MoveDataDex() {
 	num = 379,
-	id = Moves.MEAN_LOOK, 
+	ID = Moves.MEAN_LOOK, 
 	//name = "Mean Look", 
-	//function = 0EF, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0EF, FunctionAsString = "0EF", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user pins the target with a dark, arresting look. The target becomes unable to flee."
 },
 new MoveDataDex() {
 	num = 380,
-	id = Moves.METRONOME, 
+	ID = Moves.METRONOME, 
 	//name = "Metronome", 
-	//function = 0B6, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0B6, FunctionAsString = "0B6", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user waggles a finger and stimulates its brain into randomly using nearly any move."
 },
 new MoveDataDex() {
 	num = 381,
-	id = Moves.MILK_DRINK, 
+	ID = Moves.MILK_DRINK, 
 	//name = "Milk Drink", 
-	//function = 0D5, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D5, FunctionAsString = "0D5", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP."
 },
 new MoveDataDex() {
 	num = 382,
-	id = Moves.MIMIC, 
+	ID = Moves.MIMIC, 
 	//name = "Mimic", 
-	//function = 05C, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true ) { }
+	Function = 0x05C, FunctionAsString = "05C", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true ) { }
 	//,description = "The user copies the move last used by the foe. The move can be used until the user is switched out."
 },
 new MoveDataDex() {
 	num = 383,
-	id = Moves.MIND_READER, 
+	ID = Moves.MIND_READER, 
 	//name = "Mind Reader", 
-	//function = 0A6, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0A6, FunctionAsString = "0A6", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user senses the foe's movements with its mind to ensure its next attack does not miss the foe."
 },
 new MoveDataDex() {
 	num = 384,
-	id = Moves.MINIMIZE, 
+	ID = Moves.MINIMIZE, 
 	//name = "Minimize", 
-	//function = 034, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x034, FunctionAsString = "034", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user compresses its body to make itself look smaller, which sharply raises its evasiveness."
 },
 new MoveDataDex() {
 	num = 385,
-	id = Moves.MOONLIGHT, 
+	ID = Moves.MOONLIGHT, 
 	//name = "Moonlight", 
-	//function = 0D8, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D8, FunctionAsString = "0D8", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
 new MoveDataDex() {
 	num = 386,
-	id = Moves.MORNING_SUN, 
+	ID = Moves.MORNING_SUN, 
 	//name = "Morning Sun", 
-	//function = 0D8, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D8, FunctionAsString = "0D8", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
 new MoveDataDex() {
 	num = 387,
-	id = Moves.NATURE_POWER, 
+	ID = Moves.NATURE_POWER, 
 	//name = "Nature Power", 
-	//function = 0B3, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0B3, FunctionAsString = "0B3", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "An attack that makes use of nature's power. Its effects vary depending on the user's environment."
 },
 new MoveDataDex() {
 	num = 388,
-	id = Moves.ODOR_SLEUTH, 
+	ID = Moves.ODOR_SLEUTH, 
 	//name = "Odor Sleuth", 
-	//function = 0A7, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0A7, FunctionAsString = "0A7", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Enables the user to hit a Ghost type with any type of move. It also enables the user to hit an evasive foe."
 },
 new MoveDataDex() {
 	num = 389,
-	id = Moves.PAIN_SPLIT, 
+	ID = Moves.PAIN_SPLIT, 
 	//name = "Pain Split", 
-	//function = 05A, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x05A, FunctionAsString = "05A", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user adds its HP to the target's HP, then equally shares the combined HP with the target."
 },
 new MoveDataDex() {
 	num = 390,
-	id = Moves.PERISH_SONG, 
+	ID = Moves.PERISH_SONG, 
 	//name = "Perish Song", 
-	//function = 0E5, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags( sound: true ) { }
+	Function = 0x0E5, FunctionAsString = "0E5", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags( sound: true ) { }
 	//,description = "Any Pokémon that hears this song faints in three turns, unless it switches out of battle."
 },
 new MoveDataDex() {
 	num = 391,
-	id = Moves.PROTECT, 
+	ID = Moves.PROTECT, 
 	//name = "Protect", 
-	//function = 0AA, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 4,
-	flags = new Flags(  ) { } 
+	Function = 0x0AA, FunctionAsString = "0AA", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 4,
+	Flags = new Flags(  ) { } 
 	//,description = "It enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
 },
 new MoveDataDex() {
 	num = 392,
-	id = Moves.PSYCH_UP, 
+	ID = Moves.PSYCH_UP, 
 	//name = "Psych Up", 
-	//function = 055, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x055, FunctionAsString = "055", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user hypnotizes itself into copying any stat change made by the target."
 },
 new MoveDataDex() {
 	num = 393,
-	id = Moves.RECOVER, 
+	ID = Moves.RECOVER, 
 	//name = "Recover", 
-	//function = 0D5, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D5, FunctionAsString = "0D5", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "Restoring its own cells, the user restores its own HP by half of its max HP."
 },
 new MoveDataDex() {
 	num = 394,
-	id = Moves.RECYCLE, 
+	ID = Moves.RECYCLE, 
 	//name = "Recycle", 
-	//function = 0F6, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0F6, FunctionAsString = "0F6", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user recycles a held item that has been used in battle so it can be used again."
 },
 new MoveDataDex() {
 	num = 395,
-	id = Moves.REFLECT_TYPE, 
+	ID = Moves.REFLECT_TYPE, 
 	//name = "Reflect Type", 
-	//function = 062, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true ) { }
+	Function = 0x062, FunctionAsString = "062", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true ) { }
 	//,description = "The user reflects the target's type, making it the same type as the target."
 },
 new MoveDataDex() {
 	num = 396,
-	id = Moves.REFRESH, 
+	ID = Moves.REFRESH, 
 	//name = "Refresh", 
-	//function = 018, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x018, FunctionAsString = "018", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user rests to cure itself of a poisoning, burn, or paralysis."
 },
 new MoveDataDex() {
 	num = 397,
-	id = Moves.ROAR, 
+	ID = Moves.ROAR, 
 	//name = "Roar", 
-	//function = 0EB, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -6,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x0EB, FunctionAsString = "0EB", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -6,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends."
 },
 new MoveDataDex() {
 	num = 398,
-	id = Moves.SAFEGUARD, 
+	ID = Moves.SAFEGUARD, 
 	//name = "Safeguard", 
-	//function = 01A, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 25,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01A, FunctionAsString = "01A", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 25,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user creates a protective field that prevents status problems for five turns."
 },
 new MoveDataDex() {
 	num = 399,
-	id = Moves.SCARY_FACE, 
+	ID = Moves.SCARY_FACE, 
 	//name = "Scary Face", 
-	//function = 04D, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04D, FunctionAsString = "04D", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user frightens the target with a scary face to harshly reduce its Speed stat."
 },
 new MoveDataDex() {
 	num = 400,
-	id = Moves.SCREECH, 
+	ID = Moves.SCREECH, 
 	//name = "Screech", 
-	//function = 04C, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 85,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x04C, FunctionAsString = "04C", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 85,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "An earsplitting screech harshly reduces the target's Defense stat."
 },
 new MoveDataDex() {
 	num = 401,
-	id = Moves.SHARPEN, 
+	ID = Moves.SHARPEN, 
 	//name = "Sharpen", 
-	//function = 01C, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01C, FunctionAsString = "01C", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user reduces its polygon count to make itself more jagged, raising the Attack stat."
 },
 new MoveDataDex() {
 	num = 402,
-	id = Moves.SHELL_SMASH, 
+	ID = Moves.SHELL_SMASH, 
 	//name = "Shell Smash", 
-	//function = 035, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x035, FunctionAsString = "035", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user breaks its shell, lowering its defenses but sharply raising attacking and Speed stats."
 },
 new MoveDataDex() {
 	num = 403,
-	id = Moves.SIMPLE_BEAM, 
+	ID = Moves.SIMPLE_BEAM, 
 	//name = "Simple Beam", 
-	//function = 063, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 10,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x063, FunctionAsString = "063", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 10,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user's mysterious psychic wave changes the target's Ability to Simple."
 },
 new MoveDataDex() {
 	num = 404,
-	id = Moves.SING, 
+	ID = Moves.SING, 
 	//name = "Sing", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 55,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 55,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "A soothing lullaby is sung in a calming voice that puts the target into a deep slumber."
 },
 new MoveDataDex() {
 	num = 405,
-	id = Moves.SKETCH, 
+	ID = Moves.SKETCH, 
 	//name = "Sketch", 
-	//function = 05D, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 1,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x05D, FunctionAsString = "05D", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 1,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "It enables the user to permanently learn the move last used by the foe. Once used, Sketch disappears."
 },
 new MoveDataDex() {
 	num = 406,
-	id = Moves.SLACK_OFF, 
+	ID = Moves.SLACK_OFF, 
 	//name = "Slack Off", 
-	//function = 0D5, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D5, FunctionAsString = "0D5", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user slacks off, restoring its own HP by up to half of its maximum HP."
 },
 new MoveDataDex() {
 	num = 407,
-	id = Moves.SLEEP_TALK, 
+	ID = Moves.SLEEP_TALK, 
 	//name = "Sleep Talk", 
-	//function = 0B4, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0B4, FunctionAsString = "0B4", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "While it is asleep, the user randomly uses one of the moves it knows."
 },
 new MoveDataDex() {
 	num = 408,
-	id = Moves.SMOKESCREEN, 
+	ID = Moves.SMOKESCREEN, 
 	//name = "SmokeScreen", 
-	//function = 047, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user releases an obscuring cloud of smoke or ink. It reduces the target's accuracy."
 },
 new MoveDataDex() {
 	num = 409,
-	id = Moves.SOFT_BOILED, 
+	ID = Moves.SOFT_BOILED, 
 	//name = "Softboiled", 
-	//function = 0D5, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D5, FunctionAsString = "0D5", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP."
 },
 new MoveDataDex() {
 	num = 410,
-	id = Moves.SPLASH, 
+	ID = Moves.SPLASH, 
 	//name = "Splash", 
-	//function = 001, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( powder: true ) { }
+	Function = 0x001, FunctionAsString = "001", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( powder: true ) { }
 	//,description = "The user just flops and splashes around to no effect at all..."
 },
 new MoveDataDex() {
 	num = 411,
-	id = Moves.STOCKPILE, 
+	ID = Moves.STOCKPILE, 
 	//name = "Stockpile", 
-	//function = 112, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x112, FunctionAsString = "112", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user charges up power and raises both its Defense and Sp. Def. The move can be used three times."
 },
 new MoveDataDex() {
 	num = 412,
-	id = Moves.SUBSTITUTE, 
+	ID = Moves.SUBSTITUTE, 
 	//name = "Substitute", 
-	//function = 10C, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x10C, FunctionAsString = "10C", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user makes a copy of itself using some of its HP. The copy serves as the user's decoy."
 },
 new MoveDataDex() {
 	num = 413,
-	id = Moves.SUPERSONIC, 
+	ID = Moves.SUPERSONIC, 
 	//name = "Supersonic", 
-	//function = 013, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 55,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 55,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The user generates odd sound waves from its body. It may confuse the target."
 },
 new MoveDataDex() {
 	num = 414,
-	id = Moves.SWAGGER, 
+	ID = Moves.SWAGGER, 
 	//name = "Swagger", 
-	//function = 041, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 90,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x041, FunctionAsString = "041", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user enrages and confuses the target. However, it also sharply raises the target's Attack stat."
 },
 new MoveDataDex() {
 	num = 415,
-	id = Moves.SWALLOW, 
+	ID = Moves.SWALLOW, 
 	//name = "Swallow", 
-	//function = 114, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x114, FunctionAsString = "114", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The power stored using the move Stockpile is absorbed by the user to heal its HP."
 },
 new MoveDataDex() {
 	num = 416,
-	id = Moves.SWEET_KISS, 
+	ID = Moves.SWEET_KISS, 
 	//name = "Sweet Kiss", 
-	//function = 013, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 75,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 75,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user kisses the target with a sweet, angelic cuteness that causes confusion."
 },
 new MoveDataDex() {
 	num = 417,
-	id = Moves.SWEET_SCENT, 
+	ID = Moves.SWEET_SCENT, 
 	//name = "Sweet Scent", 
-	//function = 048, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x048, FunctionAsString = "048", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A sweet scent that lowers the foe's evasiveness. It also lures wild Pokémon if used in grass, etc."
 },
 new MoveDataDex() {
 	num = 418,
-	id = Moves.SWORDS_DANCE, 
+	ID = Moves.SWORDS_DANCE, 
 	//name = "Swords Dance", 
-	//function = 02E, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02E, FunctionAsString = "02E", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "A frenetic dance to uplift the fighting spirit. It sharply raises the user's Attack stat."
 },
 new MoveDataDex() {
 	num = 419,
-	id = Moves.TAIL_WHIP, 
+	ID = Moves.TAIL_WHIP, 
 	//name = "Tail Whip", 
-	//function = 043, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat."
 },
 new MoveDataDex() {
 	num = 420,
-	id = Moves.TEETER_DANCE, 
+	ID = Moves.TEETER_DANCE, 
 	//name = "Teeter Dance", 
-	//function = 013, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user performs a wobbly dance that confuses the Pokémon around it."
 },
 new MoveDataDex() {
 	num = 421,
-	id = Moves.TICKLE, 
+	ID = Moves.TICKLE, 
 	//name = "Tickle", 
-	//function = 04A, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x04A, FunctionAsString = "04A", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user tickles the target into laughing, reducing its Attack and Defense stats."
 },
 new MoveDataDex() {
 	num = 422,
-	id = Moves.TRANSFORM, 
+	ID = Moves.TRANSFORM, 
 	//name = "Transform", 
-	//function = 069, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x069, FunctionAsString = "069", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user transforms into a copy of the target right down to having the same move set."
 },
 new MoveDataDex() {
 	num = 423,
-	id = Moves.WHIRLWIND, 
+	ID = Moves.WHIRLWIND, 
 	//name = "Whirlwind", 
-	//function = 0EB, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = -6,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0EB, FunctionAsString = "0EB", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = -6,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The foe is blown away, to be replaced by another Pokémon in its party. In the wild, the battle ends."
 },
 new MoveDataDex() {
 	num = 424,
-	id = Moves.WISH, 
+	ID = Moves.WISH, 
 	//name = "Wish", 
-	//function = 0D7, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D7, FunctionAsString = "0D7", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "One turn after this move is used, the target's HP is restored by half the user's maximum HP."
 },
 new MoveDataDex() {
 	num = 425,
-	id = Moves.WORK_UP, 
+	ID = Moves.WORK_UP, 
 	//name = "Work Up", 
-	//function = 027, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x027, FunctionAsString = "027", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user is roused, and its Attack and Sp. Atk stats increase."
 },
 new MoveDataDex() {
 	num = 426,
-	id = Moves.YAWN, 
+	ID = Moves.YAWN, 
 	//name = "Yawn", 
-	//function = 004, 
-	basePower = 0,
-	type = Types.NORMAL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x004, FunctionAsString = "004", 
+	BaseDamage = 0,
+	Type = Types.NORMAL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user lets loose a huge yawn that lulls the target into falling asleep on the next turn."
 },
 new MoveDataDex() {
 	num = 427,
-	id = Moves.GUNK_SHOT, 
+	ID = Moves.GUNK_SHOT, 
 	//name = "Gunk Shot", 
-	//function = 005, 
-	basePower = 120,
-	type = Types.POISON,
-	category = Category.PHYSICAL,
-	accuracy = 70,
-	pp = 5,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 120,
+	Type = Types.POISON,
+	Category = Category.PHYSICAL,
+	Accuracy = 70,
+	PP = 5,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user shoots filthy garbage at the target to attack. It may also poison the target."
 },
 new MoveDataDex() {
 	num = 428,
-	id = Moves.SLUDGE_WAVE, 
+	ID = Moves.SLUDGE_WAVE, 
 	//name = "Sludge Wave", 
-	//function = 005, 
-	basePower = 95,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 95,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "It swamps the area around the user with a giant sludge wave. It may also poison those hit."
 },
 new MoveDataDex() {
 	num = 429,
-	id = Moves.SLUDGE_BOMB, 
+	ID = Moves.SLUDGE_BOMB, 
 	//name = "Sludge Bomb", 
-	//function = 005, 
-	basePower = 90,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 90,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Unsanitary sludge is hurled at the target. It may also poison the target."
 },
 new MoveDataDex() {
 	num = 430,
-	id = Moves.POISON_JAB, 
+	ID = Moves.POISON_JAB, 
 	//name = "Poison Jab", 
-	//function = 005, 
-	basePower = 80,
-	type = Types.POISON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 80,
+	Type = Types.POISON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is stabbed with a tentacle or arm seeped with poison. It may also poison the target."
 },
 new MoveDataDex() {
 	num = 431,
-	id = Moves.CROSS_POISON, 
+	ID = Moves.CROSS_POISON, 
 	//name = "Cross Poison", 
-	//function = 005, 
-	basePower = 70,
-	type = Types.POISON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 70,
+	Type = Types.POISON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A slashing attack with a poisonous blade that may also poison the foe. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 432,
-	id = Moves.SLUDGE, 
+	ID = Moves.SLUDGE, 
 	//name = "Sludge", 
-	//function = 005, 
-	basePower = 65,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 65,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Unsanitary sludge is hurled at the target. It may also poison the target."
 },
 new MoveDataDex() {
 	num = 433,
-	id = Moves.VENOSHOCK, 
+	ID = Moves.VENOSHOCK, 
 	//name = "Venoshock", 
-	//function = 07B, 
-	basePower = 65,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x07B, FunctionAsString = "07B", 
+	BaseDamage = 65,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user drenches the foe in a special poisonous liquid. Its power doubles if the target is poisoned."
 },
 new MoveDataDex() {
 	num = 434,
-	id = Moves.CLEAR_SMOG, 
+	ID = Moves.CLEAR_SMOG, 
 	//name = "Clear Smog", 
-	//function = 050, 
-	basePower = 50,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x050, FunctionAsString = "050", 
+	BaseDamage = 50,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by throwing a clump of special mud. All status changes are returned to normal."
 },
 new MoveDataDex() {
 	num = 435,
-	id = Moves.POISON_FANG, 
+	ID = Moves.POISON_FANG, 
 	//name = "Poison Fang", 
-	//function = 006, 
-	basePower = 50,
-	type = Types.POISON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x006, FunctionAsString = "006", 
+	BaseDamage = 50,
+	Type = Types.POISON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user bites the target with toxic fangs. It may also leave the target badly poisoned."
 },
 new MoveDataDex() {
 	num = 436,
-	id = Moves.POISON_TAIL, 
+	ID = Moves.POISON_TAIL, 
 	//name = "Poison Tail", 
-	//function = 005, 
-	basePower = 50,
-	type = Types.POISON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 50,
+	Type = Types.POISON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user hits the target with its tail. It may also poison the target. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 437,
-	id = Moves.ACID, 
+	ID = Moves.ACID, 
 	//name = "Acid", 
-	//function = 046, 
-	basePower = 40,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 10,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 40,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 10,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with a spray of harsh acid. It may also lower the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 438,
-	id = Moves.ACID_SPRAY, 
+	ID = Moves.ACID_SPRAY, 
 	//name = "Acid Spray", 
-	//function = 04F, 
-	basePower = 40,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x04F, FunctionAsString = "04F", 
+	BaseDamage = 40,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user spits fluid that works to melt the target. This harshly reduces the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 439,
-	id = Moves.SMOG, 
+	ID = Moves.SMOG, 
 	//name = "Smog", 
-	//function = 005, 
-	basePower = 20,
-	type = Types.POISON,
-	category = Category.SPECIAL,
-	accuracy = 70,
-	pp = 20,
-	effects = 40,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 20,
+	Type = Types.POISON,
+	Category = Category.SPECIAL,
+	Accuracy = 70,
+	PP = 20,
+	Effects = 40,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is attacked with a discharge of filthy gases. It may also poison the target."
 },
 new MoveDataDex() {
 	num = 440,
-	id = Moves.POISON_STING, 
+	ID = Moves.POISON_STING, 
 	//name = "Poison Sting", 
-	//function = 005, 
-	basePower = 15,
-	type = Types.POISON,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 35,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 15,
+	Type = Types.POISON,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 35,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user stabs the target with a poisonous stinger. This may also poison the target."
 },
 new MoveDataDex() {
 	num = 441,
-	id = Moves.ACID_ARMOR, 
+	ID = Moves.ACID_ARMOR, 
 	//name = "Acid Armor", 
-	//function = 02F, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02F, FunctionAsString = "02F", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user alters its cellular structure to liquefy itself, sharply raising its Defense stat."
 },
 new MoveDataDex() {
 	num = 442,
-	id = Moves.COIL, 
+	ID = Moves.COIL, 
 	//name = "Coil", 
-	//function = 025, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x025, FunctionAsString = "025", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user coils up and concentrates. This raises its Attack and Defense stats as well as its accuracy."
 },
 new MoveDataDex() {
 	num = 443,
-	id = Moves.GASTRO_ACID, 
+	ID = Moves.GASTRO_ACID, 
 	//name = "Gastro Acid", 
-	//function = 068, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x068, FunctionAsString = "068", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user hurls up its stomach acids on the foe. The fluid negates the effect of the target's Ability."
 },
 new MoveDataDex() {
 	num = 444,
-	id = Moves.POISON_GAS, 
+	ID = Moves.POISON_GAS, 
 	//name = "Poison Gas", 
-	//function = 005, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 80,
-	pp = 40,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 80,
+	PP = 40,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A cloud of poison gas is sprayed in the face of opposing Pokémon. It may poison those hit."
 },
 new MoveDataDex() {
 	num = 445,
-	id = Moves.POISON_POWDER, 
+	ID = Moves.POISON_POWDER, 
 	//name = "PoisonPowder", 
-	//function = 005, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 75,
-	pp = 35,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x005, FunctionAsString = "005", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 75,
+	PP = 35,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters a cloud of poisonous dust on the target. It may poison the target."
 },
 new MoveDataDex() {
 	num = 446,
-	id = Moves.TOXIC, 
+	ID = Moves.TOXIC, 
 	//name = "Toxic", 
-	//function = 006, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x006, FunctionAsString = "006", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A move that leaves the target badly poisoned. Its poison damage worsens every turn."
 },
 new MoveDataDex() {
 	num = 447,
-	id = Moves.TOXIC_SPIKES, 
+	ID = Moves.TOXIC_SPIKES, 
 	//name = "Toxic Spikes", 
-	//function = 104, 
-	basePower = 0,
-	type = Types.POISON,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.OpposingSide,
-	priority = 0,
-	flags = new Flags( reflectable: true ) { }
+	Function = 0x104, FunctionAsString = "104", 
+	BaseDamage = 0,
+	Type = Types.POISON,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.OpposingSide,
+	Priority = 0,
+	Flags = new Flags( reflectable: true ) { }
 	//,description = "The user lays a trap of poison spikes at the foe's feet. They poison foes that switch into battle."
 },
 new MoveDataDex() {
 	num = 448,
-	id = Moves.PSYCHO_BOOST, 
+	ID = Moves.PSYCHO_BOOST, 
 	//name = "Psycho Boost", 
-	//function = 03F, 
-	basePower = 140,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x03F, FunctionAsString = "03F", 
+	BaseDamage = 140,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target at full power. The attack's recoil harshly reduces the user's Sp. Atk stat."
 },
 new MoveDataDex() {
 	num = 449,
-	id = Moves.DREAM_EATER, 
+	ID = Moves.DREAM_EATER, 
 	//name = "Dream Eater", 
-	//function = 0DE, 
-	basePower = 100,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0DE, FunctionAsString = "0DE", 
+	BaseDamage = 100,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user eats the dreams of a sleeping foe. It absorbs half the damage caused to heal the user's HP."
 },
 new MoveDataDex() {
 	num = 450,
-	id = Moves.FUTURE_SIGHT, 
+	ID = Moves.FUTURE_SIGHT, 
 	//name = "Future Sight", 
-	//function = 111, 
-	basePower = 100,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x111, FunctionAsString = "111", 
+	BaseDamage = 100,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "Two turns after this move is used, a hunk of psychic energy attacks the target."
 },
 new MoveDataDex() {
 	num = 451,
-	id = Moves.PSYSTRIKE, 
+	ID = Moves.PSYSTRIKE, 
 	//name = "Psystrike", 
-	//function = 122, 
-	basePower = 100,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x122, FunctionAsString = "122", 
+	BaseDamage = 100,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user materializes an odd psychic wave to attack the target. This attack does physical damage."
 },
 new MoveDataDex() {
 	num = 452,
-	id = Moves.PSYCHIC, 
+	ID = Moves.PSYCHIC, 
 	//name = "Psychic", 
-	//function = 046, 
-	basePower = 90,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 90,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is hit by a strong telekinetic force. It may also reduce the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 453,
-	id = Moves.EXTRASENSORY, 
+	ID = Moves.EXTRASENSORY, 
 	//name = "Extrasensory", 
-	//function = 00F, 
-	basePower = 80,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 80,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with an odd, unseeable power. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 454,
-	id = Moves.PSYSHOCK, 
+	ID = Moves.PSYSHOCK, 
 	//name = "Psyshock", 
-	//function = 122, 
-	basePower = 80,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x122, FunctionAsString = "122", 
+	BaseDamage = 80,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user materializes an odd psychic wave to attack the target. This attack does physical damage."
 },
 new MoveDataDex() {
 	num = 455,
-	id = Moves.ZEN_HEADBUTT, 
+	ID = Moves.ZEN_HEADBUTT, 
 	//name = "Zen Headbutt", 
-	//function = 00F, 
-	basePower = 80,
-	type = Types.PSYCHIC,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 15,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 80,
+	Type = Types.PSYCHIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user focuses its willpower to its head and attacks the foe. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 456,
-	id = Moves.LUSTER_PURGE, 
+	ID = Moves.LUSTER_PURGE, 
 	//name = "Luster Purge", 
-	//function = 046, 
-	basePower = 70,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 70,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user lets loose a damaging burst of light. It may also reduce the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 457,
-	id = Moves.MIST_BALL, 
+	ID = Moves.MIST_BALL, 
 	//name = "Mist Ball", 
-	//function = 045, 
-	basePower = 70,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x045, FunctionAsString = "045", 
+	BaseDamage = 70,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A mistlike flurry of down envelops and damages the target. It may also lower the target's Sp. Atk."
 },
 new MoveDataDex() {
 	num = 458,
-	id = Moves.PSYCHO_CUT, 
+	ID = Moves.PSYCHO_CUT, 
 	//name = "Psycho Cut", 
-	//function = 000, 
-	basePower = 70,
-	type = Types.PSYCHIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 70,
+	Type = Types.PSYCHIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user tears at the target with blades formed by psychic power. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 459,
-	id = Moves.SYNCHRONOISE, 
+	ID = Moves.SYNCHRONOISE, 
 	//name = "Synchronoise", 
-	//function = 123, 
-	basePower = 70,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x123, FunctionAsString = "123", 
+	BaseDamage = 70,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Using an odd shock wave, the user damages any Pokémon of the same type as the user."
 },
 new MoveDataDex() {
 	num = 460,
-	id = Moves.PSYBEAM, 
+	ID = Moves.PSYBEAM, 
 	//name = "Psybeam", 
-	//function = 013, 
-	basePower = 65,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 65,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is attacked with a peculiar ray. It may also cause confusion."
 },
 new MoveDataDex() {
 	num = 461,
-	id = Moves.HEART_STAMP, 
+	ID = Moves.HEART_STAMP, 
 	//name = "Heart Stamp", 
-	//function = 00F, 
-	basePower = 60,
-	type = Types.PSYCHIC,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 60,
+	Type = Types.PSYCHIC,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user unleashes a vicious blow after its cute act makes the foe less wary. It may also cause flinching."
 },
 new MoveDataDex() {
 	num = 462,
-	id = Moves.CONFUSION, 
+	ID = Moves.CONFUSION, 
 	//name = "Confusion", 
-	//function = 013, 
-	basePower = 50,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 50,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is hit by a weak telekinetic force. It may also leave the target confused."
 },
 new MoveDataDex() {
 	num = 463,
-	id = Moves.MIRROR_COAT, 
+	ID = Moves.MIRROR_COAT, 
 	//name = "Mirror Coat", 
-	//function = 072, 
-	basePower = 1,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = -5,
-	flags = new Flags( protect: true ) { }
+	Function = 0x072, FunctionAsString = "072", 
+	BaseDamage = 1,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = -5,
+	Flags = new Flags( protect: true ) { }
 	//,description = "A retaliation move that counters any special attack, inflicting double the damage taken."
 },
 new MoveDataDex() {
 	num = 464,
-	id = Moves.PSYWAVE, 
+	ID = Moves.PSYWAVE, 
 	//name = "Psywave", 
-	//function = 06F, 
-	basePower = 1,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 80,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x06F, FunctionAsString = "06F", 
+	BaseDamage = 1,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 80,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked with an odd psychic wave. The attack varies in intensity."
 },
 new MoveDataDex() {
 	num = 465,
-	id = Moves.STORED_POWER, 
+	ID = Moves.STORED_POWER, 
 	//name = "Stored Power", 
-	//function = 08E, 
-	basePower = 1,
-	type = Types.PSYCHIC,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08E, FunctionAsString = "08E", 
+	BaseDamage = 1,
+	Type = Types.PSYCHIC,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with stored power. The more the user's stats are raised, the greater the damage."
 },
 new MoveDataDex() {
 	num = 466,
-	id = Moves.AGILITY, 
+	ID = Moves.AGILITY, 
 	//name = "Agility", 
-	//function = 030, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x030, FunctionAsString = "030", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user relaxes and lightens its body to move faster. It sharply boosts the Speed stat."
 },
 new MoveDataDex() {
 	num = 467,
-	id = Moves.ALLY_SWITCH, 
+	ID = Moves.ALLY_SWITCH, 
 	//name = "Ally Switch", 
-	//function = 120, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 1,
-	flags = new Flags(  ) { } 
+	Function = 0x120, FunctionAsString = "120", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 1,
+	Flags = new Flags(  ) { } 
 	//,description = "The user teleports using a strange power and switches its place with one of its allies."
 },
 new MoveDataDex() {
 	num = 468,
-	id = Moves.AMNESIA, 
+	ID = Moves.AMNESIA, 
 	//name = "Amnesia", 
-	//function = 033, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x033, FunctionAsString = "033", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user temporarily empties its mind to forget its concerns. It sharply raises the user's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 469,
-	id = Moves.BARRIER, 
+	ID = Moves.BARRIER, 
 	//name = "Barrier", 
-	//function = 02F, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02F, FunctionAsString = "02F", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user throws up a sturdy wall that sharply raises its Defense stat."
 },
 new MoveDataDex() {
 	num = 470,
-	id = Moves.CALM_MIND, 
+	ID = Moves.CALM_MIND, 
 	//name = "Calm Mind", 
-	//function = 02C, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02C, FunctionAsString = "02C", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user quietly focuses its mind and calms its spirit to raise its Sp. Atk and Sp. Def stats."
 },
 new MoveDataDex() {
 	num = 471,
-	id = Moves.COSMIC_POWER, 
+	ID = Moves.COSMIC_POWER, 
 	//name = "Cosmic Power", 
-	//function = 02A, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02A, FunctionAsString = "02A", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user absorbs a mystical power from space to raise its Defense and Sp. Def stats."
 },
 new MoveDataDex() {
 	num = 472,
-	id = Moves.GRAVITY, 
+	ID = Moves.GRAVITY, 
 	//name = "Gravity", 
-	//function = 118, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x118, FunctionAsString = "118", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "Gravity is intensified for five turns, making moves involving flying unusable and negating Levitation."
 },
 new MoveDataDex() {
 	num = 473,
-	id = Moves.GUARD_SPLIT, 
+	ID = Moves.GUARD_SPLIT, 
 	//name = "Guard Split", 
-	//function = 059, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true ) { }
+	Function = 0x059, FunctionAsString = "059", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true ) { }
 	//,description = "The user employs its psychic power to average its Defense and Sp. Def stats with those of its target's."
 },
 new MoveDataDex() {
 	num = 474,
-	id = Moves.GUARD_SWAP, 
+	ID = Moves.GUARD_SWAP, 
 	//name = "Guard Swap", 
-	//function = 053, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x053, FunctionAsString = "053", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to switch changes to its Defense and Sp. Def with the target."
 },
 new MoveDataDex() {
 	num = 475,
-	id = Moves.HEAL_BLOCK, 
+	ID = Moves.HEAL_BLOCK, 
 	//name = "Heal Block", 
-	//function = 0BB, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0BB, FunctionAsString = "0BB", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "For five turns, the foe is prevented from using any moves, Abilities, or held items that recover HP."
 },
 new MoveDataDex() {
 	num = 476,
-	id = Moves.HEAL_PULSE, 
+	ID = Moves.HEAL_PULSE, 
 	//name = "Heal Pulse", 
-	//function = 0DF, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,bite: true ) { }
+	Function = 0x0DF, FunctionAsString = "0DF", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,bite: true ) { }
 	//,description = "The user emits a healing pulse which restores the target's HP by up to half of its max HP."
 },
 new MoveDataDex() {
 	num = 477,
-	id = Moves.HEALING_WISH, 
+	ID = Moves.HEALING_WISH, 
 	//name = "Healing Wish", 
-	//function = 0E3, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0E3, FunctionAsString = "0E3", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user faints. In return, the Pokémon taking its place will have its HP restored and status cured."
 },
 new MoveDataDex() {
 	num = 478,
-	id = Moves.HEART_SWAP, 
+	ID = Moves.HEART_SWAP, 
 	//name = "Heart Swap", 
-	//function = 054, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x054, FunctionAsString = "054", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to switch stat changes with the target."
 },
 new MoveDataDex() {
 	num = 479,
-	id = Moves.HYPNOSIS, 
+	ID = Moves.HYPNOSIS, 
 	//name = "Hypnosis", 
-	//function = 003, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 60,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x003, FunctionAsString = "003", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 60,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user employs hypnotic suggestion to make the target fall into a deep sleep."
 },
 new MoveDataDex() {
 	num = 480,
-	id = Moves.IMPRISON, 
+	ID = Moves.IMPRISON, 
 	//name = "Imprison", 
-	//function = 0B8, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0B8, FunctionAsString = "0B8", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "If the foe knows any move also known by the user, the foe is prevented from using it."
 },
 new MoveDataDex() {
 	num = 481,
-	id = Moves.KINESIS, 
+	ID = Moves.KINESIS, 
 	//name = "Kinesis", 
-	//function = 047, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 80,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 80,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user distracts the target by bending a spoon. It lowers the target's accuracy."
 },
 new MoveDataDex() {
 	num = 482,
-	id = Moves.LIGHT_SCREEN, 
+	ID = Moves.LIGHT_SCREEN, 
 	//name = "Light Screen", 
-	//function = 0A3, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 30,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0A3, FunctionAsString = "0A3", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 30,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "A wondrous wall of light is put up to suppress damage from special attacks for five turns."
 },
 new MoveDataDex() {
 	num = 483,
-	id = Moves.LUNAR_DANCE, 
+	ID = Moves.LUNAR_DANCE, 
 	//name = "Lunar Dance", 
-	//function = 0E4, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0E4, FunctionAsString = "0E4", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user faints. In return, the Pokémon taking its place will have its status and HP fully restored."
 },
 new MoveDataDex() {
 	num = 484,
-	id = Moves.MAGIC_COAT, 
+	ID = Moves.MAGIC_COAT, 
 	//name = "Magic Coat", 
-	//function = 0B1, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 4,
-	flags = new Flags(  ) { } 
+	Function = 0x0B1, FunctionAsString = "0B1", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 4,
+	Flags = new Flags(  ) { } 
 	//,description = "A barrier reflects back to the target moves like Leech Seed and moves that damage status."
 },
 new MoveDataDex() {
 	num = 485,
-	id = Moves.MAGIC_ROOM, 
+	ID = Moves.MAGIC_ROOM, 
 	//name = "Magic Room", 
-	//function = 0F9, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.BothSides,
-	priority = -7,
-	flags = new Flags( mirror: true ) { }
+	Function = 0x0F9, FunctionAsString = "0F9", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = -7,
+	Flags = new Flags( mirror: true ) { }
 	//,description = "The user creates a bizarre area in which Pokémon's held items lose their effects for five turns."
 },
 new MoveDataDex() {
 	num = 486,
-	id = Moves.MEDITATE, 
+	ID = Moves.MEDITATE, 
 	//name = "Meditate", 
-	//function = 01C, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01C, FunctionAsString = "01C", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user meditates to awaken the power deep within its body and raise its Attack stat."
 },
 new MoveDataDex() {
 	num = 487,
-	id = Moves.MIRACLE_EYE, 
+	ID = Moves.MIRACLE_EYE, 
 	//name = "Miracle Eye", 
-	//function = 0A8, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x0A8, FunctionAsString = "0A8", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Enables the user to hit a Dark type with any type of move. It also enables the user to hit an evasive foe."
 },
 new MoveDataDex() {
 	num = 488,
-	id = Moves.POWER_SPLIT, 
+	ID = Moves.POWER_SPLIT, 
 	//name = "Power Split", 
-	//function = 058, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true ) { }
+	Function = 0x058, FunctionAsString = "058", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true ) { }
 	//,description = "The user employs its psychic power to average its Attack and Sp. Atk stats with those of the target's."
 },
 new MoveDataDex() {
 	num = 489,
-	id = Moves.POWER_SWAP, 
+	ID = Moves.POWER_SWAP, 
 	//name = "Power Swap", 
-	//function = 052, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x052, FunctionAsString = "052", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to switch changes to its Attack and Sp. Atk with the target."
 },
 new MoveDataDex() {
 	num = 490,
-	id = Moves.POWER_TRICK, 
+	ID = Moves.POWER_TRICK, 
 	//name = "Power Trick", 
-	//function = 057, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x057, FunctionAsString = "057", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user employs its psychic power to switch its Attack with its Defense stat."
 },
 new MoveDataDex() {
 	num = 491,
-	id = Moves.PSYCHO_SHIFT, 
+	ID = Moves.PSYCHO_SHIFT, 
 	//name = "Psycho Shift", 
-	//function = 01B, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x01B, FunctionAsString = "01B", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Using its psychic power of suggestion, the user transfers its status problems to the target."
 },
 new MoveDataDex() {
 	num = 492,
-	id = Moves.REFLECT, 
+	ID = Moves.REFLECT, 
 	//name = "Reflect", 
-	//function = 0A2, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0A2, FunctionAsString = "0A2", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "A wondrous wall of light is put up to suppress damage from physical attacks for five turns."
 },
 new MoveDataDex() {
 	num = 493,
-	id = Moves.REST, 
+	ID = Moves.REST, 
 	//name = "Rest", 
-	//function = 0D9, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0D9, FunctionAsString = "0D9", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user goes to sleep for two turns. It fully restores the user's HP and heals any status problem."
 },
 new MoveDataDex() {
 	num = 494,
-	id = Moves.ROLE_PLAY, 
+	ID = Moves.ROLE_PLAY, 
 	//name = "Role Play", 
-	//function = 065, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x065, FunctionAsString = "065", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user mimics the target completely, copying the target's natural Ability."
 },
 new MoveDataDex() {
 	num = 495,
-	id = Moves.SKILL_SWAP, 
+	ID = Moves.SKILL_SWAP, 
 	//name = "Skill Swap", 
-	//function = 067, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x067, FunctionAsString = "067", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to exchange Abilities with the target."
 },
 new MoveDataDex() {
 	num = 496,
-	id = Moves.TELEKINESIS, 
+	ID = Moves.TELEKINESIS, 
 	//name = "Telekinesis", 
-	//function = 11A, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,powder: true ) { }
+	Function = 0x11A, FunctionAsString = "11A", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,powder: true ) { }
 	//,description = "The user makes the target float with its psychic power. The target is easier to hit for three turns."
 },
 new MoveDataDex() {
 	num = 497,
-	id = Moves.TELEPORT, 
+	ID = Moves.TELEPORT, 
 	//name = "Teleport", 
-	//function = 0EA, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x0EA, FunctionAsString = "0EA", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "Use it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited."
 },
 new MoveDataDex() {
 	num = 498,
-	id = Moves.TRICK, 
+	ID = Moves.TRICK, 
 	//name = "Trick", 
-	//function = 0F2, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x0F2, FunctionAsString = "0F2", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user catches the target off guard and swaps its held item with its own."
 },
 new MoveDataDex() {
 	num = 499,
-	id = Moves.TRICK_ROOM, 
+	ID = Moves.TRICK_ROOM, 
 	//name = "Trick Room", 
-	//function = 11F, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.BothSides,
-	priority = -7,
-	flags = new Flags( mirror: true ) { }
+	Function = 0x11F, FunctionAsString = "11F", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = -7,
+	Flags = new Flags( mirror: true ) { }
 	//,description = "The user creates a bizarre area in which slower Pokémon get to move first for five turns."
 },
 new MoveDataDex() {
 	num = 500,
-	id = Moves.WONDER_ROOM, 
+	ID = Moves.WONDER_ROOM, 
 	//name = "Wonder Room", 
-	//function = 124, 
-	basePower = 0,
-	type = Types.PSYCHIC,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.BothSides,
-	priority = -7,
-	flags = new Flags( mirror: true ) { }
+	Function = 0x124, FunctionAsString = "124", 
+	BaseDamage = 0,
+	Type = Types.PSYCHIC,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = -7,
+	Flags = new Flags( mirror: true ) { }
 	//,description = "The user creates a bizarre area in which Pokémon's Defense and Sp. Def stats are swapped for 5 turns."
 },
 new MoveDataDex() {
 	num = 501,
-	id = Moves.HEAD_SMASH, 
+	ID = Moves.HEAD_SMASH, 
 	//name = "Head Smash", 
-	//function = 0FC, 
-	basePower = 150,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 80,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0FC, FunctionAsString = "0FC", 
+	BaseDamage = 150,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 80,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the foe with a hazardous, full-power headbutt. The user also takes terrible damage."
 },
 new MoveDataDex() {
 	num = 502,
-	id = Moves.ROCK_WRECKER, 
+	ID = Moves.ROCK_WRECKER, 
 	//name = "Rock Wrecker", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches a huge boulder at the target to attack. It must rest on the next turn, however."
 },
 new MoveDataDex() {
 	num = 503,
-	id = Moves.STONE_EDGE, 
+	ID = Moves.STONE_EDGE, 
 	//name = "Stone Edge", 
-	//function = 000, 
-	basePower = 100,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 80,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 100,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 80,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user stabs the foe with sharpened stones from below. It has a high critical-hit ratio."
 },
 new MoveDataDex() {
 	num = 504,
-	id = Moves.ROCK_SLIDE, 
+	ID = Moves.ROCK_SLIDE, 
 	//name = "Rock Slide", 
-	//function = 00F, 
-	basePower = 75,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 30,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 75,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 30,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Large boulders are hurled at the foes to inflict damage. It may also make the targets flinch."
 },
 new MoveDataDex() {
 	num = 505,
-	id = Moves.POWER_GEM, 
+	ID = Moves.POWER_GEM, 
 	//name = "Power Gem", 
-	//function = 000, 
-	basePower = 70,
-	type = Types.ROCK,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 70,
+	Type = Types.ROCK,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a ray of light that sparkles as if it were made of gemstones."
 },
 new MoveDataDex() {
 	num = 506,
-	id = Moves.ANCIENT_POWER, 
+	ID = Moves.ANCIENT_POWER, 
 	//name = "AncientPower", 
-	//function = 02D, 
-	basePower = 60,
-	type = Types.ROCK,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x02D, FunctionAsString = "02D", 
+	BaseDamage = 60,
+	Type = Types.ROCK,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a prehistoric power. It may also raise all the user's stats at once."
 },
 new MoveDataDex() {
 	num = 507,
-	id = Moves.ROCK_THROW, 
+	ID = Moves.ROCK_THROW, 
 	//name = "Rock Throw", 
-	//function = 000, 
-	basePower = 50,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 50,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user picks up and throws a small rock at the target to attack."
 },
 new MoveDataDex() {
 	num = 508,
-	id = Moves.ROCK_TOMB, 
+	ID = Moves.ROCK_TOMB, 
 	//name = "Rock Tomb", 
-	//function = 044, 
-	basePower = 50,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 80,
-	pp = 10,
-	effects = 100,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 50,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 80,
+	PP = 10,
+	Effects = 100,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Boulders are hurled at the target. It also lowers the target's Speed by preventing its movement."
 },
 new MoveDataDex() {
 	num = 509,
-	id = Moves.SMACK_DOWN, 
+	ID = Moves.SMACK_DOWN, 
 	//name = "Smack Down", 
-	//function = 11C, 
-	basePower = 50,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x11C, FunctionAsString = "11C", 
+	BaseDamage = 50,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user throws a stone or projectile to attack. A flying Pokémon will fall to the ground when hit."
 },
 new MoveDataDex() {
 	num = 510,
-	id = Moves.ROLLOUT, 
+	ID = Moves.ROLLOUT, 
 	//name = "Rollout", 
-	//function = 0D3, 
-	basePower = 30,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0D3, FunctionAsString = "0D3", 
+	BaseDamage = 30,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user continually rolls into the target over five turns. It becomes stronger each time it hits."
 },
 new MoveDataDex() {
 	num = 511,
-	id = Moves.ROCK_BLAST, 
+	ID = Moves.ROCK_BLAST, 
 	//name = "Rock Blast", 
-	//function = 0C0, 
-	basePower = 25,
-	type = Types.ROCK,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C0, FunctionAsString = "0C0", 
+	BaseDamage = 25,
+	Type = Types.ROCK,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user hurls hard rocks at the target. Two to five rocks are launched in quick succession."
 },
 new MoveDataDex() {
 	num = 512,
-	id = Moves.ROCK_POLISH, 
+	ID = Moves.ROCK_POLISH, 
 	//name = "Rock Polish", 
-	//function = 030, 
-	basePower = 0,
-	type = Types.ROCK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x030, FunctionAsString = "030", 
+	BaseDamage = 0,
+	Type = Types.ROCK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user polishes its body to reduce drag. It can sharply raise the Speed stat."
 },
 new MoveDataDex() {
 	num = 513,
-	id = Moves.SANDSTORM, 
+	ID = Moves.SANDSTORM, 
 	//name = "Sandstorm", 
-	//function = 101, 
-	basePower = 0,
-	type = Types.ROCK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x101, FunctionAsString = "101", 
+	BaseDamage = 0,
+	Type = Types.ROCK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "Summons a five-turn sandstorm to hurt all combatants except the Rock, Ground, and Steel types."
 },
 new MoveDataDex() {
 	num = 514,
-	id = Moves.STEALTH_ROCK, 
+	ID = Moves.STEALTH_ROCK, 
 	//name = "Stealth Rock", 
-	//function = 105, 
-	basePower = 0,
-	type = Types.ROCK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.OpposingSide,
-	priority = 0,
-	flags = new Flags( reflectable: true ) { }
+	Function = 0x105, FunctionAsString = "105", 
+	BaseDamage = 0,
+	Type = Types.ROCK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.OpposingSide,
+	Priority = 0,
+	Flags = new Flags( reflectable: true ) { }
 	//,description = "The user lays a trap of levitating stones around the foe. The trap hurts foes that switch into battle."
 },
 new MoveDataDex() {
 	num = 515,
-	id = Moves.WIDE_GUARD, 
+	ID = Moves.WIDE_GUARD, 
 	//name = "Wide Guard", 
-	//function = 0AC, 
-	basePower = 0,
-	type = Types.ROCK,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.UserSide,
-	priority = 3,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x0AC, FunctionAsString = "0AC", 
+	BaseDamage = 0,
+	Type = Types.ROCK,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.UserSide,
+	Priority = 3,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user and its allies are protected from wide-ranging attacks for a turn. May fail if used in succession."
 },
 new MoveDataDex() {
 	num = 516,
-	id = Moves.DOOM_DESIRE, 
+	ID = Moves.DOOM_DESIRE, 
 	//name = "Doom Desire", 
-	//function = 111, 
-	basePower = 140,
-	type = Types.STEEL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x111, FunctionAsString = "111", 
+	BaseDamage = 140,
+	Type = Types.STEEL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "Two turns after this move is used, the user blasts the target with a concentrated bundle of light."
 },
 new MoveDataDex() {
 	num = 517,
-	id = Moves.IRON_TAIL, 
+	ID = Moves.IRON_TAIL, 
 	//name = "Iron Tail", 
-	//function = 043, 
-	basePower = 100,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 75,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 100,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 75,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is slammed with a steel-hard tail. It may also lower the target's Defense stat."
 },
 new MoveDataDex() {
 	num = 518,
-	id = Moves.METEOR_MASH, 
+	ID = Moves.METEOR_MASH, 
 	//name = "Meteor Mash", 
-	//function = 01C, 
-	basePower = 100,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x01C, FunctionAsString = "01C", 
+	BaseDamage = 100,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The target is hit with a hard punch fired like a meteor. It may also raise the user's Attack."
 },
 new MoveDataDex() {
 	num = 519,
-	id = Moves.FLASH_CANNON, 
+	ID = Moves.FLASH_CANNON, 
 	//name = "Flash Cannon", 
-	//function = 046, 
-	basePower = 80,
-	type = Types.STEEL,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x046, FunctionAsString = "046", 
+	BaseDamage = 80,
+	Type = Types.STEEL,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user gathers all its light energy and releases it at once. It may also lower the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 520,
-	id = Moves.IRON_HEAD, 
+	ID = Moves.IRON_HEAD, 
 	//name = "Iron Head", 
-	//function = 00F, 
-	basePower = 80,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 80,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The foe slams the target with its steel-hard head. It may also make the target flinch."
 },
 new MoveDataDex() {
 	num = 521,
-	id = Moves.STEEL_WING, 
+	ID = Moves.STEEL_WING, 
 	//name = "Steel Wing", 
-	//function = 01D, 
-	basePower = 70,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 25,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x01D, FunctionAsString = "01D", 
+	BaseDamage = 70,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 25,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is hit with wings of steel. It may also raise the user's Defense stat."
 },
 new MoveDataDex() {
 	num = 522,
-	id = Moves.MIRROR_SHOT, 
+	ID = Moves.MIRROR_SHOT, 
 	//name = "Mirror Shot", 
-	//function = 047, 
-	basePower = 65,
-	type = Types.STEEL,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 65,
+	Type = Types.STEEL,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a flash of energy from its polished body. It may also lower the target's accuracy."
 },
 new MoveDataDex() {
 	num = 523,
-	id = Moves.MAGNET_BOMB, 
+	ID = Moves.MAGNET_BOMB, 
 	//name = "Magnet Bomb", 
-	//function = 0A5, 
-	basePower = 60,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0A5, FunctionAsString = "0A5", 
+	BaseDamage = 60,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches steel bombs that stick to the target. This attack will not miss."
 },
 new MoveDataDex() {
 	num = 524,
-	id = Moves.GEAR_GRIND, 
+	ID = Moves.GEAR_GRIND, 
 	//name = "Gear Grind", 
-	//function = 0BD, 
-	basePower = 50,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0BD, FunctionAsString = "0BD", 
+	BaseDamage = 50,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by throwing two steel gears at its target."
 },
 new MoveDataDex() {
 	num = 525,
-	id = Moves.METAL_CLAW, 
+	ID = Moves.METAL_CLAW, 
 	//name = "Metal Claw", 
-	//function = 01C, 
-	basePower = 50,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 35,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x01C, FunctionAsString = "01C", 
+	BaseDamage = 50,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 35,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is raked with steel claws. It may also raise the user's Attack stat."
 },
 new MoveDataDex() {
 	num = 526,
-	id = Moves.BULLET_PUNCH, 
+	ID = Moves.BULLET_PUNCH, 
 	//name = "Bullet Punch", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user strikes the target with tough punches as fast as bullets. This move always goes first."
 },
 new MoveDataDex() {
 	num = 527,
-	id = Moves.GYRO_BALL, 
+	ID = Moves.GYRO_BALL, 
 	//name = "Gyro Ball", 
-	//function = 08D, 
-	basePower = 1,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x08D, FunctionAsString = "08D", 
+	BaseDamage = 1,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tackles the target with a high-speed spin. The slower the user, the greater the damage."
 },
 new MoveDataDex() {
 	num = 528,
-	id = Moves.HEAVY_SLAM, 
+	ID = Moves.HEAVY_SLAM, 
 	//name = "Heavy Slam", 
-	//function = 09B, 
-	basePower = 1,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x09B, FunctionAsString = "09B", 
+	BaseDamage = 1,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams into the foe with its heavy body. The heavier the user, the greater the damage."
 },
 new MoveDataDex() {
 	num = 529,
-	id = Moves.METAL_BURST, 
+	ID = Moves.METAL_BURST, 
 	//name = "Metal Burst", 
-	//function = 073, 
-	basePower = 1,
-	type = Types.STEEL,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.NoTarget,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x073, FunctionAsString = "073", 
+	BaseDamage = 1,
+	Type = Types.STEEL,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user retaliates with much greater power against the target that last inflicted damage on it."
 },
 new MoveDataDex() {
 	num = 530,
-	id = Moves.AUTOTOMIZE, 
+	ID = Moves.AUTOTOMIZE, 
 	//name = "Autotomize", 
-	//function = 031, 
-	basePower = 0,
-	type = Types.STEEL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x031, FunctionAsString = "031", 
+	BaseDamage = 0,
+	Type = Types.STEEL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user sheds part of its body to make itself lighter and sharply raise its Speed stat."
 },
 new MoveDataDex() {
 	num = 531,
-	id = Moves.IRON_DEFENSE, 
+	ID = Moves.IRON_DEFENSE, 
 	//name = "Iron Defense", 
-	//function = 02F, 
-	basePower = 0,
-	type = Types.STEEL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x02F, FunctionAsString = "02F", 
+	BaseDamage = 0,
+	Type = Types.STEEL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user hardens its body's surface like iron, sharply raising its Defense stat."
 },
 new MoveDataDex() {
 	num = 532,
-	id = Moves.METAL_SOUND, 
+	ID = Moves.METAL_SOUND, 
 	//name = "Metal Sound", 
-	//function = 04F, 
-	basePower = 0,
-	type = Types.STEEL,
-	category = Category.STATUS,
-	accuracy = 85,
-	pp = 40,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
+	Function = 0x04F, FunctionAsString = "04F", 
+	BaseDamage = 0,
+	Type = Types.STEEL,
+	Category = Category.STATUS,
+	Accuracy = 85,
+	PP = 40,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "A horrible sound like scraping metal harshly reduces the target's Sp. Def stat."
 },
 new MoveDataDex() {
 	num = 533,
-	id = Moves.SHIFT_GEAR, 
+	ID = Moves.SHIFT_GEAR, 
 	//name = "Shift Gear", 
-	//function = 036, 
-	basePower = 0,
-	type = Types.STEEL,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 10,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x036, FunctionAsString = "036", 
+	BaseDamage = 0,
+	Type = Types.STEEL,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 10,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user rotates its gears, raising its Attack and sharply raising its Speed."
 },
 new MoveDataDex() {
 	num = 534,
-	id = Moves.HYDRO_CANNON, 
+	ID = Moves.HYDRO_CANNON, 
 	//name = "Hydro Cannon", 
-	//function = 0C2, 
-	basePower = 150,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 90,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0C2, FunctionAsString = "0C2", 
+	BaseDamage = 150,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 90,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is hit with a watery blast. The user must rest on the next turn, however."
 },
 new MoveDataDex() {
 	num = 535,
-	id = Moves.WATER_SPOUT, 
+	ID = Moves.WATER_SPOUT, 
 	//name = "Water Spout", 
-	//function = 08B, 
-	basePower = 150,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 5,
-	effects = 0,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x08B, FunctionAsString = "08B", 
+	BaseDamage = 150,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 5,
+	Effects = 0,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user spouts water to damage the foe. The lower the user's HP, the less powerful it becomes."
 },
 new MoveDataDex() {
 	num = 536,
-	id = Moves.HYDRO_PUMP, 
+	ID = Moves.HYDRO_PUMP, 
 	//name = "Hydro Pump", 
-	//function = 000, 
-	basePower = 120,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 80,
-	pp = 5,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 120,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 80,
+	PP = 5,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is blasted by a huge volume of water launched under great pressure."
 },
 new MoveDataDex() {
 	num = 537,
-	id = Moves.MUDDY_WATER, 
+	ID = Moves.MUDDY_WATER, 
 	//name = "Muddy Water", 
-	//function = 047, 
-	basePower = 95,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 30,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 95,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 30,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by shooting muddy water at the opposing team. It may also lower the target's accuracy."
 },
 new MoveDataDex() {
 	num = 538,
-	id = Moves.SURF, 
+	ID = Moves.SURF, 
 	//name = "Surf", 
-	//function = 075, 
-	basePower = 95,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 0,
-	target = Target.AllNonUsers,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x075, FunctionAsString = "075", 
+	BaseDamage = 95,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 0,
+	Target = Target.AllNonUsers,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "It swamps the area around the user with a giant wave. It can also be used for crossing water."
 },
 new MoveDataDex() {
 	num = 539,
-	id = Moves.AQUA_TAIL, 
+	ID = Moves.AQUA_TAIL, 
 	//name = "Aqua Tail", 
-	//function = 000, 
-	basePower = 90,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 90,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by swinging its tail as if it were a vicious wave in a raging storm."
 },
 new MoveDataDex() {
 	num = 540,
-	id = Moves.CRABHAMMER, 
+	ID = Moves.CRABHAMMER, 
 	//name = "Crabhammer", 
-	//function = 000, 
-	basePower = 90,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 90,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 90,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 90,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The target is hammered with a large pincer. Critical hits land more easily."
 },
 new MoveDataDex() {
 	num = 541,
-	id = Moves.DIVE, 
+	ID = Moves.DIVE, 
 	//name = "Dive", 
-	//function = 0CB, 
-	basePower = 80,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CB, FunctionAsString = "0CB", 
+	BaseDamage = 80,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Diving on the first turn, the user rises and hits on the next turn. It can be used to dive in the ocean."
 },
 new MoveDataDex() {
 	num = 542,
-	id = Moves.SCALD, 
+	ID = Moves.SCALD, 
 	//name = "Scald", 
-	//function = 00A, 
-	basePower = 80,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 30,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true,defrost: true ) { }
+	Function = 0x00A, FunctionAsString = "00A", 
+	BaseDamage = 80,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 30,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true,defrost: true ) { }
 	//,description = "The user shoots boiling hot water at its target. It may also leave the target with a burn."
 },
 new MoveDataDex() {
 	num = 543,
-	id = Moves.WATERFALL, 
+	ID = Moves.WATERFALL, 
 	//name = "Waterfall", 
-	//function = 00F, 
-	basePower = 80,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 15,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x00F, FunctionAsString = "00F", 
+	BaseDamage = 80,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 15,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges at the target and may make it flinch. It can also be used to climb a waterfall."
 },
 new MoveDataDex() {
 	num = 544,
-	id = Moves.RAZOR_SHELL, 
+	ID = Moves.RAZOR_SHELL, 
 	//name = "Razor Shell", 
-	//function = 043, 
-	basePower = 75,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 95,
-	pp = 10,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true ) { }
+	Function = 0x043, FunctionAsString = "043", 
+	BaseDamage = 75,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 95,
+	PP = 10,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user cuts the foe with sharp shells. It may also lower the target's Defense stat."
 },
 new MoveDataDex() {
 	num = 545,
-	id = Moves.BRINE, 
+	ID = Moves.BRINE, 
 	//name = "Brine", 
-	//function = 080, 
-	basePower = 65,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x080, FunctionAsString = "080", 
+	BaseDamage = 65,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "If the target's HP is down to about half, this attack will hit with double the power."
 },
 new MoveDataDex() {
 	num = 546,
-	id = Moves.BUBBLE_BEAM, 
+	ID = Moves.BUBBLE_BEAM, 
 	//name = "BubbleBeam", 
-	//function = 044, 
-	basePower = 65,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 10,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 65,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 10,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A spray of bubbles is forcefully ejected at the target. It may also lower its Speed stat."
 },
 new MoveDataDex() {
 	num = 547,
-	id = Moves.OCTAZOOKA, 
+	ID = Moves.OCTAZOOKA, 
 	//name = "Octazooka", 
-	//function = 047, 
-	basePower = 65,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 50,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x047, FunctionAsString = "047", 
+	BaseDamage = 65,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 50,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by spraying ink in the foe's face or eyes. It may also lower the target's accuracy."
 },
 new MoveDataDex() {
 	num = 548,
-	id = Moves.WATER_PULSE, 
+	ID = Moves.WATER_PULSE, 
 	//name = "Water Pulse", 
-	//function = 013, 
-	basePower = 60,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 20,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x013, FunctionAsString = "013", 
+	BaseDamage = 60,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 20,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target with a pulsing blast of water. It may also confuse the target."
 },
 new MoveDataDex() {
 	num = 549,
-	id = Moves.WATER_PLEDGE, 
+	ID = Moves.WATER_PLEDGE, 
 	//name = "Water Pledge", 
-	//function = 108, 
-	basePower = 50,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x108, FunctionAsString = "108", 
+	BaseDamage = 50,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A column of water strikes the target. When combined with its fire equivalent, it makes a rainbow."
 },
 new MoveDataDex() {
 	num = 550,
-	id = Moves.AQUA_JET, 
+	ID = Moves.AQUA_JET, 
 	//name = "Aqua Jet", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 100,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 1,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 100,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 1,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lunges at the target at a speed that makes it almost invisible. It is sure to strike first."
 },
 new MoveDataDex() {
 	num = 551,
-	id = Moves.WATER_GUN, 
+	ID = Moves.WATER_GUN, 
 	//name = "Water Gun", 
-	//function = 000, 
-	basePower = 40,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 25,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 40,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 25,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is blasted with a forceful shot of water."
 },
 new MoveDataDex() {
 	num = 552,
-	id = Moves.CLAMP, 
+	ID = Moves.CLAMP, 
 	//name = "Clamp", 
-	//function = 0CF, 
-	basePower = 35,
-	type = Types.WATER,
-	category = Category.PHYSICAL,
-	accuracy = 85,
-	pp = 10,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0CF, FunctionAsString = "0CF", 
+	BaseDamage = 35,
+	Type = Types.WATER,
+	Category = Category.PHYSICAL,
+	Accuracy = 85,
+	PP = 10,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is clamped and squeezed by the user's very thick and sturdy shell for four to five turns."
 },
 new MoveDataDex() {
 	num = 553,
-	id = Moves.WHIRLPOOL, 
+	ID = Moves.WHIRLPOOL, 
 	//name = "Whirlpool", 
-	//function = 0D0, 
-	basePower = 35,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 85,
-	pp = 15,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true,flinch: true ) { }
+	Function = 0x0D0, FunctionAsString = "0D0", 
+	BaseDamage = 35,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 85,
+	PP = 15,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Traps foes in a violent swirling whirlpool for four to five turns."
 },
 new MoveDataDex() {
 	num = 554,
-	id = Moves.BUBBLE, 
+	ID = Moves.BUBBLE, 
 	//name = "Bubble", 
-	//function = 044, 
-	basePower = 20,
-	type = Types.WATER,
-	category = Category.SPECIAL,
-	accuracy = 100,
-	pp = 30,
-	effects = 10,
-	target = Target.AllOpposing,
-	priority = 0,
-	flags = new Flags( protect: true,mirror: true ) { }
+	Function = 0x044, FunctionAsString = "044", 
+	BaseDamage = 20,
+	Type = Types.WATER,
+	Category = Category.SPECIAL,
+	Accuracy = 100,
+	PP = 30,
+	Effects = 10,
+	Target = Target.AllOpposing,
+	Priority = 0,
+	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A spray of countless bubbles is jetted at the opposing team. It may also lower the targets' Speed stats."
 },
 new MoveDataDex() {
 	num = 555,
-	id = Moves.AQUA_RING, 
+	ID = Moves.AQUA_RING, 
 	//name = "Aqua Ring", 
-	//function = 0DA, 
-	basePower = 0,
-	type = Types.WATER,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true,bite: true ) { }
+	Function = 0x0DA, FunctionAsString = "0DA", 
+	BaseDamage = 0,
+	Type = Types.WATER,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user envelops itself in a veil made of water. It regains some HP on every turn."
 },
 new MoveDataDex() {
 	num = 556,
-	id = Moves.RAIN_DANCE, 
+	ID = Moves.RAIN_DANCE, 
 	//name = "Rain Dance", 
-	//function = 100, 
-	basePower = 0,
-	type = Types.WATER,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 5,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x100, FunctionAsString = "100", 
+	BaseDamage = 0,
+	Type = Types.WATER,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 5,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user summons a heavy rain that falls for five turns, powering up Water-type moves."
 },
 new MoveDataDex() {
 	num = 557,
-	id = Moves.SOAK, 
+	ID = Moves.SOAK, 
 	//name = "Soak", 
-	//function = 061, 
-	basePower = 0,
-	type = Types.WATER,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 20,
-	effects = 0,
-	target = Target.SingleNonUser,
-	priority = 0,
-	flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
+	Function = 0x061, FunctionAsString = "061", 
+	BaseDamage = 0,
+	Type = Types.WATER,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 20,
+	Effects = 0,
+	Target = Target.SingleNonUser,
+	Priority = 0,
+	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user shoots a torrent of water at the target and changes the target's type to Water."
 },
 new MoveDataDex() {
 	num = 558,
-	id = Moves.WATER_SPORT, 
+	ID = Moves.WATER_SPORT, 
 	//name = "Water Sport", 
-	//function = 09E, 
-	basePower = 0,
-	type = Types.WATER,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 15,
-	effects = 0,
-	target = Target.BothSides,
-	priority = 0,
-	flags = new Flags(  ) { } 
+	Function = 0x09E, FunctionAsString = "09E", 
+	BaseDamage = 0,
+	Type = Types.WATER,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 15,
+	Effects = 0,
+	Target = Target.BothSides,
+	Priority = 0,
+	Flags = new Flags(  ) { } 
 	//,description = "The user soaks itself with water. The move weakens Fire-type moves while the user is in the battle."
 },
 new MoveDataDex() {
 	num = 559,
-	id = Moves.WITHDRAW, 
+	ID = Moves.WITHDRAW, 
 	//name = "Withdraw", 
-	//function = 01D, 
-	basePower = 0,
-	type = Types.WATER,
-	category = Category.STATUS,
-	accuracy = 0,
-	pp = 40,
-	effects = 0,
-	target = Target.User,
-	priority = 0,
-	flags = new Flags( snatch: true ) { }
+	Function = 0x01D, FunctionAsString = "01D", 
+	BaseDamage = 0,
+	Type = Types.WATER,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 40,
+	Effects = 0,
+	Target = Target.User,
+	Priority = 0,
+	Flags = new Flags( snatch: true ) { }
 	//,description = "The user withdraws its body into its hard shell, raising its Defense stat."
 }
 	#endregion

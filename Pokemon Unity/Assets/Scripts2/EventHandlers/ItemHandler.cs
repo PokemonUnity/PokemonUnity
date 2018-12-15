@@ -10,9 +10,10 @@ class ItemHandler : UnityEngine.MonoBehaviour
     {
     }
 
-    void OnEnable1()
+    void OnEnable()
     {
     }
+
     void Start()
     {        
     }

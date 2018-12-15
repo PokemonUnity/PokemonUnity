@@ -9,6 +9,7 @@ TagManager:
   - CanvasUI
   - CanvasScene
   - PokemonIcon
+  - BattlerHUD
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 81f4dfff3d28cf34282b10185147020f
-timeCreated: 1527278385
+timeCreated: 1538370154
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -51,6 +51,7 @@ TextureImporter:
     21300088: 78_44
     21300090: 78_45
     21300092: 78_46
+    21300094: 78_47
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,7 +79,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -775,6 +776,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 960
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 78_47
+      rect:
+        serializedVersion: 2
+        x: 1120
         y: 0
         width: 160
         height: 160

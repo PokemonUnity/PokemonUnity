@@ -58,9 +58,11 @@ public class Player
 	/// <code>playerPokedex[1,0] == 0; means pokemonId #1 not seen</code>
 	/// </para>
 	/// <code>playerPokedex[1,1] == 0; means pokemonId #1 not captured</code>
+	/// <para></para>
+	/// <code>playerPokedex[1,2] == 3; means the 3rd form of pokemonId was first to be scanned into pokedex</code>
 	/// </summary>
 	/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
-	public int[,] playerPokedex2 = new int[Pokemon.PokemonData.Database.Length, 2];
+	public byte[,] playerPokedex2 = new byte[Pokemon.PokemonData.Database.Length, 3];
 	/// <summary>
 	/// Usage:<para>
 	/// <code>playerPokedex[1] == false; means pokemonId #1 has been seen, and not captured</code>
@@ -72,6 +74,8 @@ public class Player
 	public bool?[] playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
 	public int pokedexCaught { get { return (from caught in playerPokedex where caught == true select caught).Count(); } }
 	public int pokedexSeen  { get { return (from seen in playerPokedex where seen != null select seen).Count(); } }
+	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, playerPokedex2.GetUpperBound(0)) select playerPokedex2[index, 1] == 1).Count(); } }
+	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, playerPokedex2.GetUpperBound(0)) select playerPokedex2[index, 0] == 1).Count(); } }
 
     public System.TimeSpan playerTime { get; private set; }
     //public int playerHours;
@@ -84,13 +88,23 @@ public class Player
     /// <remarks>I thought there were only 8 badges?</remarks>
     /// ToDo: Array[Region/MapId,GymBadge] / or Array[i,8]
     /// gymsEncountered[1,5] == 2nd gen/region, 6th gym badge
+	[Obsolete]
     public bool[,] gymsEncountered { get; private set; }
 	/// <summary>
 	/// if <see cref="gymsBeatTime"/> is null, then value is false.
 	/// </summary>
 	/// <remarks>This isnt needed...</remarks>
+	[Obsolete]
 	public bool[,] gymsBeaten { get; private set; }
+	public int BadgesCount { get { return (from gyms in GymsBeatTime where gyms.Value.HasValue select gyms).Count(); } }
+	[Obsolete]
 	public System.DateTime?[,] gymsBeatTime { get; private set; }
+	/// <summary>
+	/// Each Badge in <see cref="GymBadges"/> is a Key/Value,
+	/// regardless of how they're set in game. One value per badge.
+	/// </summary>
+	//public System.DateTime?[] GymsBeatTime { get; private set; }
+	public Dictionary<GymBadges, System.DateTime?> GymsBeatTime { get; private set; }
 	#endregion
 
 	#region Player Customization
@@ -134,14 +148,16 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 	{
 		//Party = new Pokemon[6];
 
-		List<GymBadges> gymBadges = new List<GymBadges>();
+		//List<GymBadges> gymBadges = new List<GymBadges>();
 		foreach(GymBadges i in (GymBadges[])Enum.GetValues(typeof(GymBadges)))
 		{
-			gymBadges.Add(i);
+			//gymBadges.Add(i);
+			GymsBeatTime.Add(i, null);
 		}
 		//gymsEncountered = new bool[gymBadges.Count];
 		//gymsBeaten = new bool[gymBadges.Count];
 		//gymsBeatTime = new System.DateTime?[gymBadges.Count];
+		//GymsBeatTime = new System.DateTime?[gymBadges.Count];
 	}
 
 	public void LoadTrainer(Player trainerSaveData)

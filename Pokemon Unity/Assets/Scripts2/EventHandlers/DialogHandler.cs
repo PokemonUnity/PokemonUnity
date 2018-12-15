@@ -30,7 +30,7 @@ public class DialogHandler : UnityEngine.MonoBehaviour
     private static UnityEngine.UI.Text DialogUIScrollText;// = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
     public static bool InstantLine { get; set; }
     public bool InstantLine2 { get; set; }
-    public bool InstantLine3;// { get; set; }
+    public bool InstantLine3 { get; set; }
     private int temp;
     private static float secPerChar
     {

@@ -263,7 +263,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //DEBUG
-        if (accessedMapSettings != null)
+        /*if (accessedMapSettings != null)
         {
             WildPokemonInitialiserOld[] encounterList =
                 accessedMapSettings.getEncounterList(WildPokemonInitialiserOld.Method.WALK);
@@ -273,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
                 namez += PokemonDatabaseOld.getPokemon(encounterList[i].ID).getName() + ", ";
             }
             GlobalVariables.global.debug("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
+            Debug.Log("Wild Pokemon for map \"" + accessedMapSettings.mapName + "\": " + namez);
             if(GlobalVariables.global.presence.largeImageKey != accessedMapSettings.discordImageKey || accessedMapSettings.discordDetails != "")
             {
                 if(GlobalVariables.global.presence.largeImageKey != accessedMapSettings.discordImageKey)
@@ -282,6 +283,8 @@ public class PlayerMovement : MonoBehaviour
                 GlobalVariables.global.UpdatePresence();
             }
         }
+        }*/
+
         GlobalVariables.global.resetFollower();
     }
 
@@ -462,7 +465,6 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-<<<<<<< HEAD
 
                 //debug camera:
                 else if (Input.GetKeyDown("v") && SaveData.currentSave.debugMode)
@@ -478,9 +480,6 @@ public class PlayerMovement : MonoBehaviour
                     StartCoroutine(player.moveCameraTo(CamPos, 0.2f));
                 }
                 else if (Input.GetKeyDown("t") && SaveData.currentSave.debugMode)
-=======
-                else if (Input.GetKeyDown("g") && SaveDataOld.currentSave.debugMode == true)
->>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
                 {
                     //DEBUG foward
                     CamPos.z++;
@@ -692,13 +691,8 @@ public class PlayerMovement : MonoBehaviour
                     Sprite custom16 = Sprite.Create(www.texture, new Rect(96f, 0f, 32f, 32f), new Vector2(0.5f, 0f));
                     spriteSheet = new Sprite[] {custom1,custom2,custom3,custom4,custom5,custom6,custom7,custom8,custom9,custom10,custom11,custom12,custom13,custom14,custom15,custom16};*/
                     //I highly doubt this is the correct way to do it
-<<<<<<< HEAD
-                    GlobalVariables.global.debug("Not implemented");
-                    if(SaveData.currentSave.getCVariable("male") == 1) {
-=======
                     Debug.Log("Not implemented");
                     if(SaveDataOld.currentSave.getCVariable("male") == 1) {
->>>>>>> a9ab54ddb317d13d4624c9affb897812e9672ce5
                         spriteSheet = Resources.LoadAll<Sprite>("PlayerSprites/m_hgss_" + newAnimationName);
                     }
                     else {
@@ -1403,7 +1397,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator wildEncounter(WildPokemonInitialiserOld.Method encounterLocation)
     {
-        if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
+		/*if (accessedMapSettings.getEncounterList(encounterLocation).Length > 0)
         {
             if (Random.value <= accessedMapSettings.getEncounterProbability())
             {
@@ -1417,7 +1411,7 @@ public class PlayerMovement : MonoBehaviour
                     yield return StartCoroutine(ScreenFade.main.FadeCutout(false, ScreenFade.slowedSpeed, null));
                     //yield return new WaitForSeconds(sceneTransition.FadeOut(1f));
                     Scene.main.Battle.gameObject.SetActive(true);
-                    StartCoroutine(Scene.main.Battle.control(accessedMapSettings.getRandomEncounter(encounterLocation)));
+                    //StartCoroutine(Scene.main.Battle.control(accessedMapSettings.getRandomEncounter(encounterLocation)));
 
                     while (Scene.main.Battle.gameObject.activeSelf)
                     {
@@ -1430,7 +1424,7 @@ public class PlayerMovement : MonoBehaviour
                     unsetCheckBusyWith(Scene.main.Battle.gameObject);
                 }
             }
-        }
+        }*/ yield return null;
     }
 
     private void playClip(AudioClip clip)

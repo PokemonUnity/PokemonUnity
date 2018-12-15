@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 16240e34f6d28a34ebc2bff52299b12d
-timeCreated: 1527297504
+timeCreated: 1538370723
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -92,6 +92,8 @@ TextureImporter:
     21300170: 288_85
     21300172: 288_86
     21300174: 288_87
+    21300176: 288_88
+    21300178: 288_89
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -119,7 +121,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -1390,6 +1392,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 288_88
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 288_89
+      rect:
+        serializedVersion: 2
+        x: 1440
         y: 0
         width: 160
         height: 160

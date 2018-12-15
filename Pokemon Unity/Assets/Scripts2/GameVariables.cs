@@ -22,25 +22,63 @@ using PokemonUnity.Item;
 /// GameVariables class will overwrite all the other class default values when player triggers a load state.
 /// </summary>
 /// This class should be static...
-public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
+public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
-    public bool debugMode { get; set; }
+	#region Debug Functions and Features
+	/*public static bool debugMode { get; set; }
+	public static void DebugLog(string text, bool? error = null)
+	{
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}
+	private static string Debug {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.Log(value);
+#endif
+		}
+	}
+	private static string DebugWarning {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogWarning(value);
+#endif
+		}
+	}
+	private static string DebugError {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogError(value);
+#endif
+		}
+	}*/
+	#endregion
 
-    //public static Translator.Languages UserLanguage = Translator.Languages.English;
-    public static Settings.Languages UserLanguage = Settings.Languages.English;
-    public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
+	//public static Translator.Languages UserLanguage = Translator.Languages.English;
+	public static Settings.Languages UserLanguage = Settings.Languages.English;
+    //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
-	public Player playerTrainer { get; set; }
+	public static Player playerTrainer { get; set; }
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#region Private Records of Player Storage Data
 	public static Pokemon[,] PC_Poke { get; set; }
 	public static string[] PC_boxNames { get; set; }
 	public static int[] PC_boxTexture { get; set; }
 	public static List<Item> PC_Items { get; set; }
-	public static List<Item> Bag_Items { get; set; }
+	public static List<Items> Bag_Items { get; set; }
 	#endregion
 
-	public static SaveDataOld currentSave;
+	//public static SaveDataOld currentSave;
 
 	#region Constructor
 	public GameVariables()
@@ -50,7 +88,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
 
 		PC_Items = new List<Item>();
-		Bag_Items = new List<Item>();
+		Bag_Items = new List<Items>();
 	}
 	#endregion
 
@@ -58,11 +96,44 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 	//Game UI
 	//public UnityEngine.Texture2D DialogWindowSkin;
 	//private UnityEngine.UI.Image DialogWindowSkin;
-	/// <summary>
+	/*/// <summary>
 	/// Frame Style
 	/// </summary>
 	public static UnityEngine.Sprite WindowSkin { get; private set; }
     public static UnityEngine.Sprite DialogSkin { get; private set; }
+	/// <summary>
+	/// In-game UI dialog window to prompt message to user
+	/// </summary>
+	/// ToDo: Allow game logic to pass npc scripts thru this
+	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
+	/// <param name="text"></param>
+	/// <param name="error">Maybe something about interupting coroutine</param>
+	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
+	{
+		//ToDo: Pass values directly to DialogEventHandler
+		//Consider adding a Queue to dialog text... so messages arent replaced but appended
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}*/
+	//public static void Display(string text)
+	//{
+	//
+	//}
+	//public static void DisplayPause(string text)
+	//{
+	//
+	//}
+	//public static void DisplayConfirm(string text)
+	//{
+	//
+	//}
 
     #region Resources
     public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
@@ -87,25 +158,24 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
     public static bool fullscreen;
     public static byte textSpeed = 2;
 
-
 	#region Global and map metadata
 	//ToDo: Each time map changes, new values are loaded/replaced below
-	class Global
+	public class Global
 	{
 		/// <summary>
 		/// Location you return to when you respawn
 		/// </summary>
-		string MetadataHome;
+		public string MetadataHome;
 		/// <summary>
 		/// 
 		/// </summary>
 		/// String below should point to Audio/Sound files
-		string MetadataWildBattleBGM;
-		string MetadataTrainerBattleBGM;
-		string MetadataWildVictoryME;
-		string MetadataTrainerVictoryME;
-		string MetadataSurfBGM;
-		string MetadataBicycleBGM;
+		public string MetadataWildBattleBGM;
+		public string MetadataTrainerBattleBGM;
+		public string MetadataWildVictoryME;
+		public string MetadataTrainerVictoryME;
+		public string MetadataSurfBGM;
+		public string MetadataBicycleBGM;
 		/* TrainerClass
 		Trainer MetadataPlayerA          ;
 		Trainer MetadataPlayerB          ;
@@ -117,7 +187,7 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		Trainer MetadataPlayerH;*/
 	}
 
-	class NonGlobalTypes
+	public class NonGlobalTypes : Global
 	{
 		bool MetadataOutdoor;
 		bool MetadataShowArea;
@@ -147,11 +217,11 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		/// 
 		/// </summary>
 		/// String below should point to Audio/Sound files
-		string MetadataBattleBack;
-		string MetadataMapWildBattleBGM;
-		string MetadataMapTrainerBattleBGM;
-		string MetadataMapWildVictoryME;
-		string MetadataMapTrainerVictoryME;
+		public string MetadataBattleBack;
+		//public string MetadataMapWildBattleBGM;
+		//public string MetadataMapTrainerBattleBGM;
+		//public string MetadataMapWildVictoryME;
+		//public string MetadataMapTrainerVictoryME;
 		int[,] MetadataMapSize;
 	}
 	#endregion
@@ -450,21 +520,27 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		/// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
 		/// <see cref="Items"/> stores quantity value
 		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
-		public List<Item> Misc { get; private set; }
-		public List<Item> Medicine { get; private set; }
-		public List<Item> Pokeball { get; private set; }
-		public List<Item> Machine { get; private set; }
-		public List<Item> Berry { get; private set; }
-		public List<Item> Mail { get; private set; }
-		public List<Item> Battle { get; private set; }
-		public List<Item> Key { get; private set; }
+		public SortedList<Item, byte> Misc		{ get; private set; }
+		public SortedList<Item, byte> Medicine	{ get; private set; }
+		public SortedList<Item, byte> Pokeball	{ get; private set; }
+		public SortedList<Item, byte> Machine	{ get; private set; }
+		public SortedList<Item, byte> Berry		{ get; private set; }
+		public SortedList<Item, byte> Mail		{ get; private set; }
+		public SortedList<Item, byte> Battle	{ get; private set; }
+		public SortedList<Item, byte> Key		{ get; private set; }
 		private int[] quantity;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		/// ToDo: Return KeyValuePair<Item, Quantity>?
 		public Item this[Items item]
 		{
 			get
 			{
-				return GameVariables.Bag_Items.FirstOrDefault(i => i.ItemId == item);
+				return global::Item.GetItem(GameVariables.Bag_Items.FirstOrDefault(i => i == item));
 			}
 		}
 
@@ -476,38 +552,75 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			}
 		}
 
-		public TrainerBag()
+		public void GetBag()
 		{
-			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new List<Item>();
+			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+			List<Items> misc, medicine, pokeball, machine, berry, mail, battle, key;// = new List<Item>();
+			misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
 			//orderString = new string[ItemDatabaseOld.getItemsLength()];
-			//quantity = new int[ItemDatabaseOld.getItemsLength()];
-			foreach (Item item in GameVariables.Bag_Items)
+			quantity = new int[Bag_Items.Count];
+			//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
+			foreach (Items Item in GameVariables.Bag_Items)
 			{
+				//Item item = global::Item.GetItem(Item.Key);
+				Item item = global::Item.GetItem(Item);
 				switch (item.ItemPocket)
 				{
 					case ItemPockets.MISC:
-						Misc.Add(item);
+						if(!misc.Contains(Item))
+						{
+							Misc.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							misc.Add(Item);
+						}
 						break;
 					case ItemPockets.MEDICINE:
-						Medicine.Add(item);
+						if (!machine.Contains(Item))
+						{
+							Medicine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							machine.Add(Item);
+						}
 						break;
 					case ItemPockets.POKEBALL:
-						Pokeball.Add(item);
+						if (!pokeball.Contains(Item))
+						{
+							Pokeball.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							pokeball.Add(Item);
+						}
 						break;
 					case ItemPockets.MACHINE:
-						Machine.Add(item);
+						if (!machine.Contains(Item))
+						{
+							Machine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							machine.Add(Item);
+						}
 						break;
 					case ItemPockets.BERRY:
-						Berry.Add(item);
+						if (!berry.Contains(Item))
+						{
+							Berry.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							berry.Add(Item);
+						}
 						break;
 					case ItemPockets.MAIL:
-						Mail.Add(item);
+						if (!mail.Contains(Item))
+						{
+							Mail.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							mail.Add(Item);
+						}
 						break;
 					case ItemPockets.BATTLE:
-						Battle.Add(item);
+						if (!battle.Contains(Item))
+						{
+							Battle.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							battle.Add(Item);
+						}
 						break;
 					case ItemPockets.KEY:
-						Key.Add(item);
+						if (!key.Contains(Item))
+						{
+							Key.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+							key.Add(Item);
+						}
 						break;
 					default:
 						break;
@@ -518,6 +631,11 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 		public TrainerBag(Player t) : this()
 		{
 			trainer = t;
+		}
+
+		public TrainerBag()
+		{
+			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
 		}
 
 		/*public int getIndexOf(Item name)
@@ -579,6 +697,8 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 			orderString = packedOrder;
 		}
 
+		///ToDo: Add to global bag, then use GetBag to pack and sort
+		/// Max int count for a byte value is 255... Bag can hold more, but will only display max of 255?
 		public bool addItem(Item itemName)
 		{
 			//returns false if will exceed the quantity limit (999)
@@ -674,7 +794,33 @@ public class GameVariables //: UnityEngine.MonoBehaviour//, UnityEngine.EventSys
 	#endregion
 
 	#region Active Battle and Misc Battle related Data
-	public static Battle battle { get; set; }
+	/// <summary>
+	/// Active Pokemon Battle the Player is currently involved in.
+	/// Matches being spectated would be pass thru a non-static method
+	/// </summary>
+	/// ToDo: On Set, trigger UnityEngine EventHandler,
+	/// Switch scenes, load rules, and animate pokemons
+	//public static Battle Battle { get; set; }
+	public static Battle battle
+	{
+		get
+		{
+			return _battle;
+		} 
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.Log(value);
+#endif
+		}
+	}
+	private static Battle _battle { get; set; }
+	#endregion
+
+	#region Audio 
+	public static int? nextBattleBGM { get; set; }
+	public static int? nextBattleME { get; set; }
+	public static int? nextBattleBack { get; set; }
 	#endregion
 }
 
@@ -745,25 +891,6 @@ public class Settings //: Settings<Translations.Languages>
 	#endregion
 
 	#region Variables
-	/* Tried to attempt a PokemonRNG for converting ints into bytes of data
-     * but since the engine will handle all the heavy lifting, i'll just 
-     * continue to build the logic out as normal and not worry or bother 
-     * with binary values
-    public int seed;
-    public static bool useFixedSeed;
-	//private static Random rand = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue);
-    public static UInt16 Seed   { get {
-            if(seed == 0x0000) seed = (UInt16)rand.Next(0, UInt16.MaxValue);
-            if (!useFixedSeed) { 
-                if(true) seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-                //else {  
-                //seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-                //seed ^= (UInt16)System.DateTime.Now.Ticks;
-                //seed &= UInt16.MaxValue;}
-            }
-            return seed;
-        }
-    } //readonly*/
 	/// <summary>
 	/// Constantly revolving random, that won't repeat the same seed number twice, 
 	/// until it cycles thru all possible seed values
@@ -772,18 +899,19 @@ public class Settings //: Settings<Translations.Languages>
 	private static System.UInt16? seed;// = 0x0000; //{ get; set; }
 	public static UInt16 Seed(bool useFixedSeed = false)
     {
-		//Random t = new Random(seed);
-		if (!seed.HasValue) {
-			seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
-            //seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
-            seed ^= (UInt16)System.DateTime.Now.Ticks;
-            seed &= UInt16.MaxValue;
+		lock (Rand)
+		{
+			if (!seed.HasValue) {
+				//seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
+				seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
+				seed ^= (UInt16)System.DateTime.Now.Ticks;
+				seed &= UInt16.MaxValue;
+			}
+			if (!useFixedSeed) { 
+				seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
+			} 
+			return seed.Value;
 		}
-		//UInt16 rand = (UInt16)rand.Next(0, UInt16.MaxValue);
-        if (!useFixedSeed) { 
-            seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
-        } 
-        return seed.Value;
     }
     #endregion
 
@@ -862,7 +990,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const int POKERUSCHANCE = 3;
 	#endregion
 
-	#region
+	#region OverWorld Rules
 	/// <summary>
 	/// Whether poisoned Pokémon will lose HP while walking around in the field.
 	/// </summary>
@@ -894,7 +1022,7 @@ public class Settings //: Settings<Translations.Languages>
 	public const bool INFINITETMS = true;
 	#endregion
 
-	#region
+	#region Battle Settings
 	/// <summary>
 	/// Whether a move's physical/special category depends on the move itself as in
 	///    newer Gens (true), or on its type as in older Gens (false).
@@ -1218,6 +1346,13 @@ public class Settings //: Settings<Translations.Languages>
 	/// </summary>
 	public const bool NO_MEGA_EVOLUTION = true;
 	#endregion
+
+	#region Audio
+	public class Audio
+	{
+
+	}
+	#endregion
 }
 
 public static class TransformExtension
@@ -1230,6 +1365,113 @@ public static class TransformExtension
         }
         return transform;
     }
+}
+
+/// <summary>
+/// This class will be inherited by all other classes, 
+/// and offer a direct link to Unity's Engine
+/// for ease of use utility and integration.
+/// </summary>
+public class UnityUtilityIntegration
+#if (DEBUG == false || UNITY_EDITOR == true)
+	//Not sure if this is something i want inheriting monobehavior...
+	: UnityEngine.MonoBehaviour
+#endif
+{
+	#region Debug Functions and Features
+	public static bool debugMode { get; set; }
+	public static void DebugLog(string text, bool? error = null)
+	{
+		if(!error.HasValue)
+			Debug = text;
+		else
+		{
+			if(error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}
+	private static string Debug {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.Log(value);
+#endif
+		}
+	}
+	private static string DebugWarning {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogWarning(value);
+#endif
+		}
+	}
+	private static string DebugError {
+		set
+		{
+#if !DEBUG
+			UnityEngine.Debug.LogError(value);
+#endif
+		}
+	}
+	#endregion
+
+	#region Unity Canvas UI
+	//Game UI
+	//public UnityEngine.Texture2D DialogWindowSkin;
+	//private UnityEngine.UI.Image DialogWindowSkin;
+	/// <summary>
+	/// Frame Style for all System Prompts and Text Displays
+	/// </summary>
+	public static UnityEngine.Sprite WindowSkin { get; private set; }
+	/// <summary>
+	/// Frame Style for all player and non-playable characters Speech bubbles
+	/// </summary>
+	public static UnityEngine.Sprite DialogSkin { get; private set; }
+	/// <summary>
+	/// In-game UI dialog window to prompt message to user
+	/// </summary>
+	/// ToDo: Allow game logic to pass npc scripts thru this
+	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
+	/// <param name="text"></param>
+	/// <param name="error">Maybe something about interupting coroutine</param>
+	protected static void Dialog(string text, bool? error = null, params string[] promptOptions)
+	{
+		//ToDo: Pass values directly to DialogEventHandler
+		//Consider adding a Queue to dialog text... so messages arent replaced but appended
+		if (!error.HasValue)
+			Debug = text;
+		else
+		{
+			if (error.Value)
+				DebugError = text;
+			else
+				DebugWarning = text;
+		}
+	}
+	protected static void Display(string text)
+	{
+
+	}
+	protected static void DisplayBrief(string text)
+	{
+
+	}
+	protected static void DisplayPause(string text)
+	{
+
+	}
+	protected static void DisplayConfirm(string text)
+	{
+
+	}
+	protected static string L(Text text, string textid, params string[] vs)
+	{
+		return LanguageExtension.Translate(text, textid, vs).Value;
+	}
+	#endregion
 }
 
 namespace PokemonUnity

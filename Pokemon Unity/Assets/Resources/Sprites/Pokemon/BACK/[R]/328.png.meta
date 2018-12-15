@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 239f59dd0eaa4244da0f823973af89e8
-timeCreated: 1527304057
+timeCreated: 1538370826
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -37,6 +37,10 @@ TextureImporter:
     21300060: 328_30
     21300062: 328_31
     21300064: 328_32
+    21300066: 328_33
+    21300068: 328_34
+    21300070: 328_35
+    21300072: 328_36
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -64,7 +68,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -565,6 +569,62 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 328_33
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 328_34
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 328_35
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 160
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 328_36
+      rect:
+        serializedVersion: 2
+        x: 960
         y: 0
         width: 160
         height: 160
