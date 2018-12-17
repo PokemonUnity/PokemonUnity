@@ -899,8 +899,8 @@ public class Settings //: Settings<Translations.Languages>
 	private static System.UInt16? seed;// = 0x0000; //{ get; set; }
 	public static UInt16 Seed(bool useFixedSeed = false)
     {
-		lock (Rand)
-		{
+		//lock (Rand)
+		//{
 			if (!seed.HasValue) {
 				//seed = (UInt16)new Random().Next(0, UInt16.MaxValue);
 				seed = (UInt16)new Random(DateTime.Now.Millisecond).Next(0, UInt16.MaxValue); 
@@ -911,7 +911,7 @@ public class Settings //: Settings<Translations.Languages>
 				seed = (UInt16)(seed * 0x41C64E6D + 0x6073);
 			} 
 			return seed.Value;
-		}
+		//}
     }
     #endregion
 
