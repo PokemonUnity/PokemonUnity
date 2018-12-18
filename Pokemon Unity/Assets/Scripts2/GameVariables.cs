@@ -52,6 +52,96 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 	}
 	#endregion
 
+	#region Unity Canvas UI
+	/// <summary>
+	/// Frame Style for all System Prompts and Text Displays
+	/// </summary>
+	public static byte WindowSkin { get; private set; }
+	/// <summary>
+	/// Frame Style for all player and non-playable characters Speech bubbles
+	/// </summary>
+	public static byte DialogSkin { get; private set; }
+	/// <summary>
+	/// Music Volume
+	/// </summary>
+	public static float mVol = (7f / 20f) * (7f / 20f);
+    /// <summary>
+    /// SFX (Sound Effects) Volume 
+    /// </summary>
+    public static float sVol = (14f / 20f) * (14f / 20f);
+    public static bool battleScene = true;
+    public static bool fullscreen;
+    public static byte textSpeed = 2;
+
+	#region Global and map metadata
+	//ToDo: Each time map changes, new values are loaded/replaced below
+	public class Global
+	{
+		/// <summary>
+		/// Location you return to when you respawn
+		/// </summary>
+		public string MetadataHome;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// String below should point to Audio/Sound files
+		public string MetadataWildBattleBGM;
+		public string MetadataTrainerBattleBGM;
+		public string MetadataWildVictoryME;
+		public string MetadataTrainerVictoryME;
+		public string MetadataSurfBGM;
+		public string MetadataBicycleBGM;
+		/* TrainerClass
+		Trainer MetadataPlayerA          ;
+		Trainer MetadataPlayerB          ;
+		Trainer MetadataPlayerC          ;
+		Trainer MetadataPlayerD          ;
+		Trainer MetadataPlayerE          ;
+		Trainer MetadataPlayerF          ;
+		Trainer MetadataPlayerG          ;
+		Trainer MetadataPlayerH;*/
+	}
+
+	public class NonGlobalTypes : Global
+	{
+		bool MetadataOutdoor;
+		bool MetadataShowArea;
+		bool MetadataBicycle;
+		bool MetadataBicycleAlways;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// "uuu"
+		int[,] MetadataHealingSpot; 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// return WeatherType
+		bool MetadataWeather;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// "uuu"
+		int[] MetadataMapPosition; 
+		int MetadataDiveMap;
+		bool MetadataDarkMap;
+		bool MetadataSafariMap;
+		bool MetadataSnapEdges;
+		bool MetadataDungeon;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// String below should point to Audio/Sound files
+		public string MetadataBattleBack;
+		//public string MetadataMapWildBattleBGM;
+		//public string MetadataMapTrainerBattleBGM;
+		//public string MetadataMapWildVictoryME;
+		//public string MetadataMapTrainerVictoryME;
+		int[,] MetadataMapSize;
+	}
+	#endregion
+	#endregion
+
 	#region Save/Load Data
 	private byte slotIndex { get; set; }
     private int fileIndex { get; set; }
@@ -1461,17 +1551,28 @@ public class UnityUtilityIntegration
 	#endregion
 
 	#region Unity Canvas UI
+	#region Resources
+	public static UnityEngine.Sprite[] LoadAllWindowSkinSprites()
+	{
+		return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
+	}
+
+	public static UnityEngine.Sprite[] LoadAllDialogSkinSprites()
+	{
+		return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
+	}
+	#endregion
 	//Game UI
 	//public UnityEngine.Texture2D DialogWindowSkin;
 	//private UnityEngine.UI.Image DialogWindowSkin;
 	/// <summary>
 	/// Frame Style for all System Prompts and Text Displays
 	/// </summary>
-	public static UnityEngine.Sprite WindowSkin { get; private set; }
+	public static UnityEngine.Sprite WindowSkinSprite { get { return LoadAllWindowSkinSprites()[GameVariables.WindowSkin]; } }
 	/// <summary>
 	/// Frame Style for all player and non-playable characters Speech bubbles
 	/// </summary>
-	public static UnityEngine.Sprite DialogSkin { get; private set; }
+	public static UnityEngine.Sprite DialogSkinSprite { get { return LoadAllDialogSkinSprites()[GameVariables.DialogSkin]; } }
 	/// <summary>
 	/// In-game UI dialog window to prompt message to user
 	/// </summary>
