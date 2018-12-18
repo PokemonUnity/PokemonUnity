@@ -913,6 +913,215 @@ public class Settings //: Settings<Translations.Languages>
 			return seed.Value;
 		//}
     }
+
+	/// <summary>
+	/// Converts the string of a Pokemon Type to a color's hex value
+	/// </summary>
+	/// <param name="PokemonType">string of pokemon type or name of a color</param>
+	/// <returns>return a Unity.Color</returns>
+	/// <example>StringToColor(Electric)</example>
+	/// <example>StringToColor(Yellow)</example>
+	/// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
+	/// ToDo: Convert to Unity's Color? 
+	public static string TypeToColorHEX (Types PokemonType) {
+		//private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
+		//http://www.epidemicjohto.com/t882-type-colors-hex-colors
+		switch (PokemonType)
+		{
+			case Types.NORMAL:
+				//Normal Type:		
+				return "A8A77A";
+			case Types.FIGHTING:
+				//Fighting Type:	
+				return "C22E28";
+			case Types.FLYING:
+				//Flying Type:		
+				return "A98FF3";
+			case Types.POISON:
+				//Poison Type:		
+				return "A33EA1";
+			case Types.GROUND:
+				//Ground Type:		
+				return "E2BF65";
+			case Types.ROCK:
+				//Rock Type:		
+				return "B6A136";
+			case Types.BUG:
+				//Bug Type:		
+				return "A6B91A";
+			case Types.GHOST:
+				//Ghost Type:		
+				return "735797";
+			case Types.STEEL:
+				//Steel Type:		
+				return "B7B7CE";
+			case Types.FIRE:
+				//Fire Type:		
+				return "EE8130";
+			case Types.WATER:
+				//Water Type:		
+				return "6390F0";
+			case Types.GRASS:
+				//Grass Type:		
+				return "7AC74C";
+			case Types.ELECTRIC:
+				//Electric Type:	
+				return "F7D02C";
+			case Types.PSYCHIC:
+				//Psychic Type:	
+				return "F95587";
+			case Types.ICE:
+				//Ice Type:		
+				return "96D9D6";
+			case Types.DRAGON:
+				//Dragon Type:		
+				return "6F35FC";
+			case Types.DARK:
+				//Dark Type:		
+				return "705746";
+			case Types.FAIRY:
+				//Fairy Type:		
+				return "D685AD";
+			case Types.NONE:
+			case Types.UNKNOWN:
+			case Types.SHADOW:
+			default:
+				//Black?
+				return string.Empty;
+		}
+	}
+	/*// <summary>
+	/// Converts the Pokemon Type to a Color for use in Unity. 
+	/// </summary>
+	/// <param name="PokemonType">pokemon type</param>
+	/// <returns>return a Unity.Color</returns>
+	/// <example>StringToColor(Electric)</example>
+	public Color TypeToColor(Types PokemonType) {
+		//http://www.serebiiforums.com/showthread.php?289595-Pokemon-type-color-associations
+		switch (PokemonType)
+		{
+			case Types.NORMAL:
+				//Normal Type:		
+				//Normal -white
+				return "A8A77A";
+			case Types.FIGHTING:
+				//Fighting Type:	
+				//Fighting - dark red
+				return "C22E28";
+			case Types.FLYING:
+				//Flying Type:		
+				//Flying - light blue
+				return "A98FF3";
+			case Types.POISON:
+				//Poison Type:		
+				//Poison -purple
+				return "A33EA1";
+			case Types.GROUND:
+				//Ground Type:		
+				//Ground - brown
+				return "E2BF65";
+			case Types.ROCK:
+				//Rock Type:		
+				//Rock - gray
+				return "B6A136";
+			case Types.BUG:
+				//Bug Type:		
+				//Bug - yellow green
+				return "A6B91A";
+			case Types.GHOST:
+				//Ghost Type:		
+				//Ghost - light purple
+				return "735797";
+			case Types.STEEL:
+				//Steel Type:		
+				//Steel - dark gray
+				return "B7B7CE";
+			case Types.FIRE:
+				//Fire Type:		
+				//Fire - red
+				return "EE8130";
+			case Types.WATER:
+				//Water Type:		
+				//Water -blue
+				return "6390F0";
+			case Types.GRASS:
+				//Grass Type:		
+				//Grass - green
+				return "7AC74C";
+			case Types.ELECTRIC:
+				//Electric Type:	
+				//Electric -yellow
+				return "F7D02C";
+			case Types.PSYCHIC:
+				//Psychic Type:	
+				//Psychic - magenta
+				return "F95587";
+			case Types.ICE:
+				//Ice Type:		
+				//Ice - cyan
+				return "96D9D6";
+			case Types.DRAGON:
+				//Dragon Type:		
+				//Dragon - orange
+				return "6F35FC";
+			case Types.DARK:
+				//Dark Type:		
+				//Dark - black
+				return "705746";
+			case Types.FAIRY:
+				//Fairy Type:		
+				return "D685AD";
+			case Types.NONE:
+			case Types.UNKNOWN:
+			case Types.SHADOW:
+			default:
+				//return string.Empty;
+				break;
+		}
+	}*/
+	/*/// <summary>
+	/// Only an example. Do not use, will  not work.
+	/// <para>Could be combined with database values 
+	/// and used with ints instead of strings</para>
+	/// <para>Convert the pokemon type into a color 
+	/// that can be used with Unity's color lighting</para>
+	/// </summary>
+	/// <param name="color"></param>
+	/// <returns></returns>
+	public UnityEngine.Color ColorToUnity(Color color) {
+		switch (color)
+		{
+			//case 1:
+			//	return StringToColorDic["text"];
+			default:
+				return StringToColor(color.ToString());
+				break;
+		}
+				
+		//{"Black",Color.black },//dark
+		//{"", new Color() },//dark blue -> dark, 
+		{ "Blue",Color.blue },//water
+		{ "Clear",Color.clear },
+		{ "Cyan",Color.cyan },
+		{ "Gray",Color.gray },//grAy-American
+		//{"Grey",Color.grey },//grEy-European
+		//{"Grey",Color.grey },//dark grey -> rock,
+		{ "Green",Color.green },//grass
+		//{"", new Color() },//dark green -> bug,
+		{ "Magenta",Color.magenta },//magenta, purple -> poison
+		{ "Red",Color.red },//orange, dark red -> fire
+		{ "White",Color.white },//normals
+		{ "Yellow",Color.yellow },//electric
+		{ "Purple", new Color() },//ghost
+		{ "Brown", new Color() },//fighting
+		{ "Pink", new Color() }//,//fairy
+		//{"", new Color() },//pink, lavender -> psychic, 
+		//{"", new Color() },//ocre, brown -> ground
+		//{"", new Color() },
+		//{"", new Color() },
+		//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
+		
+	}*/
     #endregion
 
     #region Custom Game Mode
