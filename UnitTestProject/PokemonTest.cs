@@ -176,6 +176,23 @@ namespace Tests
 		}
         #endregion
 
+        #region Evoling/evolution
+		//Use eevee to test different evolve code, as it's a perfect practice test
+        [TestMethod]
+		public void Pokemon_TestPokemon_CanEvolve()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			//Add exp
+			//Assert is true
+			Assert.Inconclusive();
+		}
+        [TestMethod]
+		public void Pokemon_TestPokemon_EvolvePokemon()
+		{
+			Assert.Inconclusive();
+		}
+		#endregion
+
         #region Misc
         [TestMethod]
         public void Pokemon_TestPokemon_SetForm_To_Form2()
@@ -264,19 +281,6 @@ namespace Tests
 		}
         [TestMethod]
 		public void Pokemon_TestPokemon_Shadow_Fail_To_Purify_If_HeartGuage_Not_Zero()
-		{
-			Assert.Inconclusive();
-		}
-        [TestMethod]
-		public void Pokemon_TestPokemon_CanEvolve()
-		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//Add exp
-			//Assert is true
-			Assert.Inconclusive();
-		}
-        [TestMethod]
-		public void Pokemon_TestPokemon_EvolvePokemon()
 		{
 			Assert.Inconclusive();
 		}
