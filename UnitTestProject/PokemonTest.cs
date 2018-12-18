@@ -122,22 +122,25 @@ namespace Tests
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			Assert.IsTrue(pokemon.countMoves() > 0);
 		}
-        [TestMethod]
-		public void Pokemon_Reseting_Moves_IsNotEqual()
-		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-			pokemon.resetMoves();
-			Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
-		}
+        //[TestMethod]
+		//public void Pokemon_Reseting_Moves_IsNotEqual()
+		//{
+		//	Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+		//	Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+		//	pokemon.resetMoves();
+		//	Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+		//}
 		/// <summary>
 		/// 
 		/// </summary>
 		/// ToDo: Resetting pokemon moves should randomly shuffle between all available that pokemon can possibly learn for their level
 		[TestMethod]
-		public void Pokemon_ResetMoves_NotEqual_DefaultMoves()
+		public void Pokemon_RNG_Moves_NotEqual_PreviousMoves()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+			pokemon.GenerateMoveset();
+			Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
 		public void Pokemon_Moves_Should_Not_Contain_Duplicates()
@@ -167,7 +170,7 @@ namespace Tests
 				)
 					Assert.Fail();
 				//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-				pokemon.resetMoves();
+				pokemon.GenerateMoveset();
 			}
 			//Assert.Inconclusive();
 			Assert.IsTrue(true);
@@ -175,7 +178,14 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_TeachMove_Add_NewMove()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			while (pokemon.countMoves() < 4)
+			{
+				pokemon.GenerateMoveset();
+			}
+			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+			pokemon.LearnMove(Moves.OVERHEAT,true);
+			Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
 		/// <summary>
@@ -183,7 +193,14 @@ namespace Tests
 		/// </summary>
 		public void Pokemon_TeachMove_Fail_NotCompatible()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			while (pokemon.countMoves() < 4)
+			{
+				pokemon.GenerateMoveset();
+			}
+			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+			pokemon.LearnMove(Moves.OVERHEAT);
+			Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
 		/// <summary>
@@ -191,7 +208,14 @@ namespace Tests
 		/// </summary>
 		public void Pokemon_Full_Moveset_Fail_TeachMove()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			while (pokemon.countMoves() != 4)
+			{
+				pokemon.GenerateMoveset();
+			}
+			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+			pokemon.LearnMove(Moves.OVERHEAT);
+			Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
 		/// <summary>
@@ -199,7 +223,15 @@ namespace Tests
 		/// </summary>
 		public void Pokemon_ForgetMove_Minus_Move()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			while (pokemon.countMoves() < 4)
+			{
+				pokemon.GenerateMoveset();
+			}
+			pokemon.LearnMove(Moves.OVERHEAT);
+			int before = pokemon.countMoves();
+			pokemon.DeleteMove(Moves.OVERHEAT);
+			Assert.IsTrue(pokemon.countMoves() == before - 1);
 		}
         [TestMethod]
 		public void Pokemon_Replace_Move_Return_Different_Moves()
@@ -214,8 +246,10 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_Return_MoveList_CanLearn_At_CurrentLevel()
 		{
+			//Pokemon pokemon = new Pokemon();
+			//Pokemon.PokemonData.GetPokemon(Pokemons.NONE).MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key)
 			//list of moves can learn at level
-			Assert.Inconclusive();
+			Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
 		}
 		[TestMethod]
 		public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()
