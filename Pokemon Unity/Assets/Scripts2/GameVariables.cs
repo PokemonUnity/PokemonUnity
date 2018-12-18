@@ -24,46 +24,6 @@ using PokemonUnity.Item;
 /// This class should be static...
 public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
-	#region Debug Functions and Features
-	/*public static bool debugMode { get; set; }
-	public static void DebugLog(string text, bool? error = null)
-	{
-		if(!error.HasValue)
-			Debug = text;
-		else
-		{
-			if(error.Value)
-				DebugError = text;
-			else
-				DebugWarning = text;
-		}
-	}
-	private static string Debug {
-		set
-		{
-#if !DEBUG
-			UnityEngine.Debug.Log(value);
-#endif
-		}
-	}
-	private static string DebugWarning {
-		set
-		{
-#if !DEBUG
-			UnityEngine.Debug.LogWarning(value);
-#endif
-		}
-	}
-	private static string DebugError {
-		set
-		{
-#if !DEBUG
-			UnityEngine.Debug.LogError(value);
-#endif
-		}
-	}*/
-	#endregion
-
 	//public static Translator.Languages UserLanguage = Translator.Languages.English;
 	public static Settings.Languages UserLanguage = Settings.Languages.English;
     //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
@@ -90,141 +50,6 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 		PC_Items = new List<Item>();
 		Bag_Items = new List<Items>();
 	}
-	#endregion
-
-	#region Unity Canvas UI
-	//Game UI
-	//public UnityEngine.Texture2D DialogWindowSkin;
-	//private UnityEngine.UI.Image DialogWindowSkin;
-	/*/// <summary>
-	/// Frame Style
-	/// </summary>
-	public static UnityEngine.Sprite WindowSkin { get; private set; }
-    public static UnityEngine.Sprite DialogSkin { get; private set; }
-	/// <summary>
-	/// In-game UI dialog window to prompt message to user
-	/// </summary>
-	/// ToDo: Allow game logic to pass npc scripts thru this
-	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
-	/// <param name="text"></param>
-	/// <param name="error">Maybe something about interupting coroutine</param>
-	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
-	{
-		//ToDo: Pass values directly to DialogEventHandler
-		//Consider adding a Queue to dialog text... so messages arent replaced but appended
-		if(!error.HasValue)
-			Debug = text;
-		else
-		{
-			if(error.Value)
-				DebugError = text;
-			else
-				DebugWarning = text;
-		}
-	}*/
-	//public static void Display(string text)
-	//{
-	//
-	//}
-	//public static void DisplayPause(string text)
-	//{
-	//
-	//}
-	//public static void DisplayConfirm(string text)
-	//{
-	//
-	//}
-
-    #region Resources
-    public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
-    {
-        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
-    }
-
-    public UnityEngine.Sprite[] LoadAllDialogSkinSprites()
-    {
-        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
-    }
-    #endregion
-    /// <summary>
-    /// Music Volume
-    /// </summary>
-    public static float mVol = (7f / 20f) * (7f / 20f);
-    /// <summary>
-    /// SFX (Sound Effects) Volume 
-    /// </summary>
-    public static float sVol = (14f / 20f) * (14f / 20f);
-    public static bool battleScene = true;
-    public static bool fullscreen;
-    public static byte textSpeed = 2;
-
-	#region Global and map metadata
-	//ToDo: Each time map changes, new values are loaded/replaced below
-	public class Global
-	{
-		/// <summary>
-		/// Location you return to when you respawn
-		/// </summary>
-		public string MetadataHome;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// String below should point to Audio/Sound files
-		public string MetadataWildBattleBGM;
-		public string MetadataTrainerBattleBGM;
-		public string MetadataWildVictoryME;
-		public string MetadataTrainerVictoryME;
-		public string MetadataSurfBGM;
-		public string MetadataBicycleBGM;
-		/* TrainerClass
-		Trainer MetadataPlayerA          ;
-		Trainer MetadataPlayerB          ;
-		Trainer MetadataPlayerC          ;
-		Trainer MetadataPlayerD          ;
-		Trainer MetadataPlayerE          ;
-		Trainer MetadataPlayerF          ;
-		Trainer MetadataPlayerG          ;
-		Trainer MetadataPlayerH;*/
-	}
-
-	public class NonGlobalTypes : Global
-	{
-		bool MetadataOutdoor;
-		bool MetadataShowArea;
-		bool MetadataBicycle;
-		bool MetadataBicycleAlways;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// "uuu"
-		int[,] MetadataHealingSpot; 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// return WeatherType
-		bool MetadataWeather;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// "uuu"
-		int[] MetadataMapPosition; 
-		int MetadataDiveMap;
-		bool MetadataDarkMap;
-		bool MetadataSafariMap;
-		bool MetadataSnapEdges;
-		bool MetadataDungeon;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// String below should point to Audio/Sound files
-		public string MetadataBattleBack;
-		//public string MetadataMapWildBattleBGM;
-		//public string MetadataMapTrainerBattleBGM;
-		//public string MetadataMapWildVictoryME;
-		//public string MetadataMapTrainerVictoryME;
-		int[,] MetadataMapSize;
-	}
-	#endregion
 	#endregion
 
 	#region Save/Load Data
@@ -1602,6 +1427,7 @@ public class UnityUtilityIntegration
 			Debug = text;
 		else
 		{
+			//ToDo: If during production and game logs an ERROR, or maybe a warning too, store to text file, and upload to dev team?
 			if(error.Value)
 				DebugError = text;
 			else
@@ -1624,7 +1450,6 @@ public class UnityUtilityIntegration
 #endif
 		}
 	}
-	//ToDo: If during production and game logs an ERROR, or maybe a warning too, store to text file, and upload to dev team?
 	private static string DebugError {
 		set
 		{
