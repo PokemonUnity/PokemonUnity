@@ -852,10 +852,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 	public bool knowsMove(Moves move) { return this.hasMove (move); }
 
-	/*// <summary>
+	/// <summary>
     /// Returns the list of moves this Pokémon can learn by leveling up.
     /// </summary>
-    public PokemonData.PokemonMoveTree getMoveList() {
+    public Moves[] getMoveList() {
 		//Move.MoveData.Move[] movelist = _base.MovesetMoves;
 		//for (int k = 0; k < movelist.Length - 1; k++)
 		//{
@@ -865,8 +865,11 @@ public partial class Pokemon //: ePokemons //PokemonData
 		//	//movelist([level, move])}
 		//}
 		//return movelist;
-		return _base.MoveTree;
-     }*/
+		//return _base.MoveTree;
+		//List<Moves> movelist = new List<Moves>();
+		//movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+		return _base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
+     }
 
 	public void GenerateMoveset(int? level){
 		if (level.Value < 0)
