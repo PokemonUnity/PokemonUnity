@@ -831,7 +831,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 /// but a series of const variables that will be used as rules or 
 /// placeholders for the game mechanics.
 /// </summary>
-public class Settings //: Settings<Translations.Languages>
+public static class Settings //: Settings<Translations.Languages>
 {
     #region Constant Values and Game Rules
     public static Translator.Languages UserLanguage = Translator.Languages.English;
@@ -1617,6 +1617,7 @@ public class UnityUtilityIntegration
 #endif
 		}
 	}
+	//ToDo: If during production and game logs an ERROR, or maybe a warning too, store to text file, and upload to dev team?
 	private static string DebugError {
 		set
 		{
