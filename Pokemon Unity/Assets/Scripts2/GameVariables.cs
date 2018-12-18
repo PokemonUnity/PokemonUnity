@@ -1122,10 +1122,16 @@ public static class Settings //: Settings<Translations.Languages>
 		//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
 		
 	}*/
-    #endregion
+	#endregion
 
-    #region Custom Game Mode
-    //Nuzlocke Challenge
+	#region Custom Game Mode
+	//Nuzlocke Challenge
+	/// <summary>
+	/// Basically, you use the Dexnav to find pokemon in the area, they appear as shadows in the grass, and you need to sneak up on them
+	/// these pokemon can have egg moves, or even their HiddenAbility
+	/// </summary>
+	/// Apparently you can use the Sneaking feature to helps with this. 
+	public static bool DexNavAllowsEggMoves { get; private set; }
     #endregion
 
     #region Enumerators
