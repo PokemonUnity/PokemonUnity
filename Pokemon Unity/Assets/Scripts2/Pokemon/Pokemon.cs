@@ -932,7 +932,7 @@ public partial class Pokemon //: ePokemons //PokemonData
                 movelist.Add(_base.MoveSet[i].MoveId);
             }
         }*/
-        if(Settings.DexNavAllowsEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+        if(Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
         movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
         //movelist|=[] // Remove duplicates
         int listend = movelist.Count - 4;

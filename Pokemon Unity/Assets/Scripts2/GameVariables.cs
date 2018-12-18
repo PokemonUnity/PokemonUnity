@@ -1131,7 +1131,8 @@ public static class Settings //: Settings<Translations.Languages>
 	/// these pokemon can have egg moves, or even their HiddenAbility
 	/// </summary>
 	/// Apparently you can use the Sneaking feature to helps with this. 
-	public static bool DexNavAllowsEggMoves { get; private set; }
+	/// ToDo: OnlyAllowEggMovesWhenUsingDexNav or DexNavAllowsEggMoves
+	public static bool CatchPokemonsWithEggMoves { get; private set; }
     #endregion
 
     #region Enumerators
