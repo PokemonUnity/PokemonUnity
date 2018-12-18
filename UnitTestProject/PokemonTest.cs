@@ -143,7 +143,7 @@ namespace Tests
 		public void Pokemon_Moves_Should_Not_Contain_Duplicates()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 30; i++)
 			{
 				if (pokemon.moves[0].MoveId != Moves.NONE &&
 					(
@@ -169,8 +169,8 @@ namespace Tests
 				//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 				pokemon.resetMoves();
 			}
-			Assert.Inconclusive();
-			//Assert.IsTrue(true);
+			//Assert.Inconclusive();
+			Assert.IsTrue(true);
 		}
         [TestMethod]
 		public void Pokemon_TeachMove_Add_NewMove()
