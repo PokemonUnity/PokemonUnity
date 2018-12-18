@@ -163,10 +163,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public Pokemon()
 	{
 		_base = PokemonData.GetPokemon(Pokemons.NONE);
-		PersonalId = new Random().Next(256);
-		PersonalId |= new Random().Next(256) << 8;
-		PersonalId |= new Random().Next(256) << 16;
-		PersonalId |= new Random().Next(256) << 24;
+		PersonalId = Settings.Rand.Next(256);
+		PersonalId |= Settings.Rand.Next(256) << 8;
+		PersonalId |= Settings.Rand.Next(256) << 16;
+		PersonalId |= Settings.Rand.Next(256) << 24;
 		Ability = Abilities.NONE;
         natureFlag = new Nature();//(Natures)(new Random().Next(0, 24));
 		//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
