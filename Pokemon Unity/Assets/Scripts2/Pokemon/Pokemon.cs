@@ -869,6 +869,56 @@ public partial class Pokemon //: ePokemons //PokemonData
 		return _base.MoveSet;
      }*/
 
+	public void GenerateMoveset(int? level){
+		if (level.Value < 0)
+			return;
+		int numMove = Settings.Rand.Next(4) + 1; //number of moves pokemon will have, between 1 and 4
+		switch (level)
+		{
+			//Level 0 is only there so i have a sample of how version.alpha would have handled code
+			case 0:
+				//Set moveset based off of the highest level moves possible.
+				//string[] moves = new string[4];
+				int i = _base.MoveTree.LevelUp.Count-1; //work backwards so that the highest level move possible is grabbed first
+				int[,] movesetLevels = new int[1,2]; //[index,{moveId,level}]
+				while(moves[3] == null){
+					if(movesetLevels[i,0] <= level){
+						//moves[3] = movesetMovesStrings[i];
+					}
+					i -= 1;
+				}
+				if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
+					//moves[2] = movesetMovesStrings[i];
+					i -= 1;
+					if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
+						//moves[1] = movesetMovesStrings[i];
+						i -= 1;
+						if(i >= 0){ //if i is at least 0 still, then you can grab the last move down.
+							//moves[0] = movesetMovesStrings[i];
+							i -= 1;
+						}
+					}
+				}
+				i = 0;
+				int i2 = 0;			//if the first move is null, then the array will need to be packed down
+				if (moves[0] == null){ 		//(nulls moved to the end of the array)
+					while(i < 3){ 
+						while(moves[i] == null){
+							i += 1;
+						}
+						moves[i2] = moves[i];
+						moves[i] = null;
+						i2 += 1;
+					}
+				}
+				//return moveset;
+				break;
+			case null:
+			default:
+				break;
+		}
+	}
+
 	/// <summary>
     /// Sets this Pokémon's movelist to the default movelist it originally had.
     /// </summary>
