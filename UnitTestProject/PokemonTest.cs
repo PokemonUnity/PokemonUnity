@@ -117,15 +117,79 @@ namespace Tests
 
         #region Moves...
         [TestMethod]
+		public void Pokemon_DefaultMoves_NotNull()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Assert.IsTrue(pokemon.countMoves() > 0);
+		}
+        [TestMethod]
+		public void Pokemon_Reseting_Moves_IsNotEqual()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+			pokemon.resetMoves();
+			Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// ToDo: Resetting pokemon moves should randomly shuffle between all available that pokemon can possibly learn for their level
+		[TestMethod]
+		public void Pokemon_ResetMoves_NotEqual_DefaultMoves()
+		{
+			Assert.Inconclusive();
+		}
+        [TestMethod]
+		public void Pokemon_Moves_Should_Not_Contain_Duplicates()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			for (int i = 0; i < 4; i++)
+			{
+				if (pokemon.moves[0].MoveId != Moves.NONE &&
+					(
+						(pokemon.moves[0].MoveId == pokemon.moves[1].MoveId) ||
+						(pokemon.moves[0].MoveId == pokemon.moves[2].MoveId) ||
+						(pokemon.moves[0].MoveId == pokemon.moves[3].MoveId)
+					) 
+				)
+					Assert.Fail();
+				if (pokemon.moves[1].MoveId != Moves.NONE &&
+					(
+						(pokemon.moves[1].MoveId == pokemon.moves[2].MoveId) ||
+						(pokemon.moves[1].MoveId == pokemon.moves[3].MoveId)
+					) 
+				)
+					Assert.Fail();
+				if (pokemon.moves[2].MoveId != Moves.NONE &&
+					(
+						(pokemon.moves[2].MoveId == pokemon.moves[3].MoveId)
+					) 
+				)
+					Assert.Fail();
+				//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+				pokemon.resetMoves();
+			}
+			Assert.Inconclusive();
+			//Assert.IsTrue(true);
+		}
+        [TestMethod]
 		public void Pokemon_TeachMove_Add_NewMove()
 		{
 			Assert.Inconclusive();
 		}
         [TestMethod]
 		/// <summary>
-		/// Move list should be full OR not compatible with pokemon
+		/// Move list should be compatible with pokemon
 		/// </summary>
-		public void Pokemon_Full_Moves_Fail_TeachMove()
+		public void Pokemon_TeachMove_Fail_NotCompatible()
+		{
+			Assert.Inconclusive();
+		}
+        [TestMethod]
+		/// <summary>
+		/// Move list should not be full to add move to pokemon
+		/// </summary>
+		public void Pokemon_Full_Moveset_Fail_TeachMove()
 		{
 			Assert.Inconclusive();
 		}
@@ -138,15 +202,6 @@ namespace Tests
 			Assert.Inconclusive();
 		}
         [TestMethod]
-		/// <summary>
-		/// 
-		/// </summary>
-		/// ToDo: Resetting pokemon moves should randomly shuffle between all available that pokemon can possibly learn for their level
-		public void Pokemon_ResetMoves_NotEqual_DefaultMoves()
-		{
-			Assert.Inconclusive();
-		}
-		[TestMethod]
 		public void Pokemon_Replace_Move_Return_Different_Moves()
 		{
 			Assert.Inconclusive();
