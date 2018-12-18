@@ -176,7 +176,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		IV = new int[] { Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32) };
 		EV = new int[6];
 		Exp = new Experience(GrowthRate);
-		moves = new Move[4];// { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
+		moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 		pokerus = new int[2];
 		Markings = new bool[6]; //{ false, false, false, false, false, false };
 		Status = Status.None;
@@ -828,7 +828,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Returns the number of moves known by the Pokémon.
 	/// </summary>
-	public int numMoves()
+	public int countMoves()
 	{
 		int ret = 0;
 		for (int i = 0; i < 4; i++) {//foreach(var move in this.moves){ 
@@ -853,10 +853,9 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public bool knowsMove(Moves move) { return this.hasMove (move); }
 
 	/*// <summary>
-    /// Returns the list of moves this Pokémon can learn by levelling up.
+    /// Returns the list of moves this Pokémon can learn by leveling up.
     /// </summary>
-    /// ToDo: Custom<int Level, eMove move> Class
-    public PokemonMoveset[] getMoveList() {
+    public PokemonData.PokemonMoveTree getMoveList() {
 		//Move.MoveData.Move[] movelist = _base.MovesetMoves;
 		//for (int k = 0; k < movelist.Length - 1; k++)
 		//{
@@ -866,7 +865,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		//	//movelist([level, move])}
 		//}
 		//return movelist;
-		return _base.MoveSet;
+		return _base.MoveTree;
      }*/
 
 	public void GenerateMoveset(int? level){
@@ -920,9 +919,9 @@ public partial class Pokemon //: ePokemons //PokemonData
 	}
 
 	/// <summary>
-    /// Sets this Pokémon's movelist to the default movelist it originally had.
-    /// </summary>
-    public void resetMoves()
+	/// Sets this Pokémon's movelist to the default movelist it originally had.
+	/// </summary>
+	public void resetMoves()
     {
 		//Move.MoveData.Move moves = this.getMoveList();
 		//Move.MoveData.Move[] movelist = new Move.MoveData.Move[4];
@@ -938,12 +937,20 @@ public partial class Pokemon //: ePokemons //PokemonData
         //movelist|=[] // Remove duplicates
         int listend = movelist.Count - 4;
         listend = listend < 0 ? 0 : listend;
-        int j = 0;
-        for (int i = 0; i < listend + 4; i++) { 
-            Moves moveid = (i >= movelist.Count) ? 0 : movelist[i];
-			this.moves[j] = new Move(moveid);
-            //moves[j] = (i >= movelist.Count) ? 0 : new Move(movelist[i]);
-            j += 1;
+		int j = 0; int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 1 and 4
+		for (int i = 0; i < listend + 4; i++) {
+			if (Convert.ToBoolean(Settings.Rand.Next(2)))
+			{
+				if (j < numMove)
+				{
+					Moves moveid = (i >= movelist.Count) ? 0 : movelist[i];
+					this.moves[j] = new Move(moveid);
+					//moves[j] = (i >= movelist.Count) ? 0 : new Move(movelist[i]);
+					j += 1;
+				}
+				else
+					break;
+			}
         }
     }
 
