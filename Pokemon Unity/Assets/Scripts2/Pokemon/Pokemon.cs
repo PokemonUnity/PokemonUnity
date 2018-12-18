@@ -828,10 +828,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Returns the number of moves known by the Pokémon.
 	/// </summary>
-	public int countMoves()
+	public byte countMoves()
 	{
-		int ret = 0;
-		for (int i = 0; i < 3; i++) {//foreach(var move in this.moves){ 
+		byte ret = 0;
+		for (byte i = 0; i < 3; i++) {//foreach(var move in this.moves){ 
 			if ((int)this.moves[i].MoveId != 0) ret += 1;//move.id
 		}
 		return ret;
@@ -871,13 +871,21 @@ public partial class Pokemon //: ePokemons //PokemonData
 		return _base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
      }
 
-	public void GenerateMoveset(int? level){
-		if (level.Value < 0)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="level"></param>
+	/// ToDo: Higher the pokemon's level, the greater the chances of generating a full moveset (4 moves)
+	public void GenerateMoveset(int? level = null){
+		if (level.HasValue && level.Value < 0)
 			return;
-		ClearFirstMoves();
-		int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 1 and 4
+		//if (!level.HasValue)
+		//	level = -1;
+		//ClearFirstMoves();
+		int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 0 and 3
 		switch (level)
 		{
+			#region sample from alpha version
 			//Level 0 is only there so i have a sample of how version.alpha would have handled code
 			case 0:
 				//Set moveset based off of the highest level moves possible.
@@ -885,7 +893,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 				int i = _base.MoveTree.LevelUp.Count-1; //work backwards so that the highest level move possible is grabbed first
 				int[,] movesetLevels = new int[1,2]; //[index,{moveId,level}]
 				while(moves[3] == null){
-					if(movesetLevels[i,0] <= level){
+					if(movesetLevels[i,0] <= level.Value){
 						//moves[3] = movesetMovesStrings[i];
 					}
 					i -= 1;
@@ -916,19 +924,21 @@ public partial class Pokemon //: ePokemons //PokemonData
 				}
 				//return moveset;
 				break;
+			#endregion
 			case null:
+			//case -1:
 			default:
 				List<Moves> movelist = new List<Moves>();
 				if (Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 				movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
-				int listend = movelist.Count - 4;
-				listend = listend < 0 ? 0 : listend;
+				//int listend = movelist.Count - 4;
+				//listend = listend < 0 ? 0 : listend + 4;
 				//int j = 0; 
-				for (int n = 0; n < listend + 4; n++)
+				for (int n = 0; n < movelist.Count; n++)
 				{
 					if (Convert.ToBoolean(Settings.Rand.Next(2)))
 					{
-						if (this.countMoves() < numMove) //j
+						if (this.countMoves() < numMove + 1) //j
 						{
 							//this.moves[j] = new Move(movelist[n]);
 							//j += 1;
