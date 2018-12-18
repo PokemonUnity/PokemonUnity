@@ -831,7 +831,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public int countMoves()
 	{
 		int ret = 0;
-		for (int i = 0; i < 4; i++) {//foreach(var move in this.moves){ 
+		for (int i = 0; i < 3; i++) {//foreach(var move in this.moves){ 
 			if ((int)this.moves[i].MoveId != 0) ret += 1;//move.id
 		}
 		return ret;
@@ -843,7 +843,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public bool hasMove(Moves move) {
 		//Checking if pokemon has a NONE placeholder in moveset might come in handy
 		//if (move == Moves.NONE || move <= 0) return false;
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			if (this.moves[i].MoveId == move) return true;
 		}
@@ -871,7 +871,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void GenerateMoveset(int? level){
 		if (level.Value < 0)
 			return;
-		int numMove = Settings.Rand.Next(4) + 1; //number of moves pokemon will have, between 1 and 4
+		ClearFirstMoves();
+		int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 1 and 4
 		switch (level)
 		{
 			//Level 0 is only there so i have a sample of how version.alpha would have handled code
@@ -914,8 +915,30 @@ public partial class Pokemon //: ePokemons //PokemonData
 				break;
 			case null:
 			default:
+				List<Moves> movelist = new List<Moves>();
+				if (Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+				movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+				int listend = movelist.Count - 4;
+				listend = listend < 0 ? 0 : listend;
+				//int j = 0; 
+				for (int n = 0; n < listend + 4; n++)
+				{
+					if (Convert.ToBoolean(Settings.Rand.Next(2)))
+					{
+						if (this.countMoves() < numMove) //j
+						{
+							//this.moves[j] = new Move(movelist[n]);
+							//j += 1;
+							LearnMove(movelist[n]);
+							//j += this.countMoves() < numMove ? 0 : 1;
+						}
+						else
+							break;
+					}
+				}
 				break;
 		}
+		RecordFirstMoves();
 	}
 
 	/// <summary>
@@ -923,34 +946,14 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	public void resetMoves()
     {
-		//Move.MoveData.Move moves = this.getMoveList();
-		//Move.MoveData.Move[] movelist = new Move.MoveData.Move[4];
-		List<Moves> movelist = new List<Moves>(); 
         /*for (int i = 0; i < _base.MoveSet.Length; i++){//foreach(var i in _base.MoveSet)
             if (_base.MoveSet[i].Level <= this.Level)
             {
                 movelist.Add(_base.MoveSet[i].MoveId);
             }
-        }*/
-        if(Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
-        movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
-        //movelist|=[] // Remove duplicates
-        int listend = movelist.Count - 4;
-        listend = listend < 0 ? 0 : listend;
-		int j = 0; int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 1 and 4
-		for (int i = 0; i < listend + 4; i++) {
-			if (Convert.ToBoolean(Settings.Rand.Next(2)))
-			{
-				if (j < numMove)
-				{
-					Moves moveid = (i >= movelist.Count) ? 0 : movelist[i];
-					this.moves[j] = new Move(moveid);
-					//moves[j] = (i >= movelist.Count) ? 0 : new Move(movelist[i]);
-					j += 1;
-				}
-				else
-					break;
-			}
+        }*/ 
+		for (int i = 0; i < 3; i++) {
+			this.moves[i] =  new Move((i >= firstMoves.Count) ? 0 : firstMoves[i]);
         }
     }
 
@@ -959,12 +962,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	public void LearnMove(Moves move) {
+	public void LearnMove(Moves move, bool silently = false) {
 		if ((int)move <= 0) return;
-		for (int i = 0; i < 4; i++) {
-			if (moves[i].MoveId == move) {
+		/*for (int i = 0; i < 3; i++) {
+			if (moves[i].MoveId == move) { //Switch ordering of moves?
 				int j = i + 1;
-				while (j < 4) {
+				while (j < 3) {
 					if (moves[j].MoveId == 0) break;
 					Move tmp = moves[j];
 					moves[j] = moves[j - 1];
@@ -973,17 +976,26 @@ public partial class Pokemon //: ePokemons //PokemonData
 				}
 				return;
 			}
+		}*/
+		if (hasMove(move)) { 
+			GameVariables.DebugLog("Already knows move...");
+			return;
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (moves[i].MoveId == 0) {
 				moves[i] = new Move(move);
 				return;
 			}
 		}
-		moves[0] = moves[1];
-		moves[1] = moves[2];
-		moves[2] = moves[3];
-		moves[3] = new Move(move);
+		if (!silently)
+			GameVariables.DebugLog("Cannot learn move, pokmeon moveset is full", false);
+		else
+		{
+			moves[0] = moves[1];
+			moves[1] = moves[2];
+			moves[2] = moves[3];
+			moves[3] = new Move(move);
+		}
 	}
 
 	/// <summary>
@@ -994,12 +1006,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void DeleteMove(Moves move) {
 		if (move <= 0) return;
 		List<Move> newmoves = new List<Move>();
-		for (int i = 0; i < 4; i++) { 
+		for (int i = 0; i < 3; i++) { 
 			if (moves[i].MoveId != move) newmoves.Add(moves[i]);
 		}
 
 		newmoves.Add(new Move(0));
-		for (int i = 0; i< 4; i++) {
+		for (int i = 0; i< 3; i++) {
 			moves[i] = newmoves[i];
 		}
 	 }
@@ -1012,13 +1024,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void DeleteMoveAtIndex(int index) {
 		List<Move> newmoves = new List<Move>();
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (i != index) newmoves.Add(moves[i]);
 		}
 		
 		newmoves.Add(new Move(0));
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			moves[i] = newmoves[i];
 		}
 	}
@@ -1028,7 +1040,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	public void DeleteAllMoves() { 
 		//moves = new Move.MoveData.Move[4];
-		for (int i = 0; i< 4; i++) { 
+		for (int i = 0; i< 3; i++) { 
 			moves[i]= new Move(0);
 		}
 	}
@@ -1037,12 +1049,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Copies currently known moves into a separate array, for Move Relearner.
 	/// </summary>
 	public void RecordFirstMoves() {
-		for (int i = 0; i < 4; i++) {
-			if (moves[i].MoveId > 0) firstMoves.Add(moves[i].MoveId);
+		for (int i = 0; i < 3; i++) {
+			if (moves[i].MoveId > 0) AddFirstMove(moves[i].MoveId);
 		}
 	}
 
-	public void AddFirstMove(Moves move) {
+	private void AddFirstMove(Moves move) {
 		if (move > 0 && !firstMoves.Contains(move)) firstMoves.Add(move);
 		return;
 	}
