@@ -269,7 +269,7 @@ namespace Tests
 		}
         [TestMethod]
 		/// <summary>
-		/// Move list should not be full to add move to pokemon
+		/// Move list must not be full to add move to pokemon
 		/// </summary>
 		public void Pokemon_Full_Moveset_Fail_TeachMove()
 		{
@@ -282,7 +282,7 @@ namespace Tests
 			}
 			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 			pokemon.LearnMove(Moves.OVERHEAT);
-			Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
 		/// <summary>
@@ -318,7 +318,8 @@ namespace Tests
 			//Pokemon pokemon = new Pokemon();
 			//Pokemon.PokemonData.GetPokemon(Pokemons.NONE).MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key)
 			//list of moves can learn at level
-			Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
+			//Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
+			Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR).getMoveList().Length > 0);
 		}
 		[TestMethod]
 		public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()
