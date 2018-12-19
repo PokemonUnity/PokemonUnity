@@ -80,10 +80,14 @@ namespace Tests
             pokemon.GivePokerus();
             Assert.IsTrue(pokemon.PokerusStage.Value);
         }
-        #endregion
+		#endregion
 
-        #region Level/stats...
-        [TestMethod]
+		#region Egg stuff...
+
+		#endregion
+
+		#region Level/stats...
+		[TestMethod]
 		public void Pokemon_Starting_Level_NotNegative()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
@@ -111,6 +115,38 @@ namespace Tests
 			//pokemon.exp = pokemon.TotalHP + 1;
 			Assert.AreSame(1,pokemon.Exp.Current);
 		}
+
+        //[TestMethod]
+		//public void Pokemon_TestPokemon_Set_To_Egg() //Fail set to egg after hatch?
+		//{
+		//	Pokemon pokemon = new Pokemon(Pokemons.NONE);
+		//	//If not egg
+		//	if (!pokemon.isEgg) Assert.Fail();
+		//	//else fail
+		//	//Set to egg
+		//
+		//	//Assert if egg
+		//	Assert.Inconclusive();
+		//}
+
+        //[TestMethod]
+		//public void Pokemon_TestPokemon_Hatch_Egg()
+		//{
+		//	//Set to egg
+		//	Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR)
+		//	{
+		//		//eggSteps = 5;
+		//	};
+		//	//If not egg fail
+		//	if (!pokemon.isEgg) Assert.Fail();
+		//	//for loop until egg hatches
+		//	//Assert if egg
+		//	Assert.Inconclusive();
+		//	//When egg hatches, values need to be set:
+		//	//pkmn.eggsteps = 0
+		//	//pkmn.hatchedMap = 0
+		//	//pkmn.obtainMode = 0
+		//}
 
         [TestMethod]
 		public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
@@ -247,7 +283,7 @@ namespace Tests
 				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-			pokemon.LearnMove(Moves.OVERHEAT,true);
+			pokemon.LearnMove(Moves.RAZOR_LEAF,true);
 			Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
@@ -402,36 +438,6 @@ namespace Tests
 			};
 			//bool[] marks = new bool[6]; marks[1] = marks[2] = true;
 			Assert.IsTrue(pokemon.Markings[2]);
-		}
-        [TestMethod]
-		public void Pokemon_TestPokemon_Set_To_Egg()
-		{
-			Pokemon pokemon = new Pokemon(Pokemons.NONE);
-			//If not egg
-			if (pokemon.isEgg) Assert.Fail();
-			//else fail
-			//Set to egg
-
-			//Assert if egg
-			Assert.Inconclusive();
-		}
-        [TestMethod]
-		public void Pokemon_TestPokemon_Hatch_Egg()
-		{
-			//Set to egg
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR)
-			{
-				//eggSteps = 5;
-			};
-			//If not egg fail
-			if (!pokemon.isEgg) Assert.Fail();
-			//for loop until egg hatches
-			//Assert if egg
-			Assert.Inconclusive();
-			//When egg hatches, values need to be set:
-			//pkmn.eggsteps = 0
-			//pkmn.hatchedMap = 0
-			//pkmn.obtainMode = 0
 		}
         [TestMethod]
 		public void Pokemon_TestPokemon_Set_To_Shadow()

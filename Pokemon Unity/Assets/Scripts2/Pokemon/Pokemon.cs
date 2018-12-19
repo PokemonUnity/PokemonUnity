@@ -573,23 +573,23 @@ public partial class Pokemon //: ePokemons //PokemonData
 	{
 		switch (_base.MaleRatio)
 		{
-			case GenderRatio.FemaleOneEighth:
-				break;
-			case GenderRatio.Female25Percent:
-				break;
-			case GenderRatio.Female50Percent:
-				break;
-			case GenderRatio.Female75Percent:
-				break;
-			case GenderRatio.FemaleSevenEighths:
-				break;
+			//case GenderRatio.FemaleOneEighth:
+			//	break;
+			//case GenderRatio.Female25Percent:
+			//	break;
+			//case GenderRatio.Female50Percent:
+			//	break;
+			//case GenderRatio.Female75Percent:
+			//	break;
+			//case GenderRatio.FemaleSevenEighths:
+			//	break;
 			case GenderRatio.AlwaysMale:
 				return true;
 			case GenderRatio.AlwaysFemale:
 				return false;
 			case GenderRatio.Genderless:
-			default:
 				return null;
+			default:				
 		}
 		return null;
 	}
