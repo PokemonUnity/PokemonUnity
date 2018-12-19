@@ -831,7 +831,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public byte countMoves()
 	{
 		byte ret = 0;
-		for (byte i = 0; i < 3; i++) {//foreach(var move in this.moves){ 
+		for (byte i = 0; i < 4; i++) {//foreach(var move in this.moves){ 
 			if ((int)this.moves[i].MoveId != 0) ret += 1;//move.id
 		}
 		return ret;
@@ -843,7 +843,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public bool hasMove(Moves move) {
 		//Checking if pokemon has a NONE placeholder in moveset might come in handy
 		//if (move == Moves.NONE || move <= 0) return false;
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			if (this.moves[i].MoveId == move) return true;
 		}
@@ -913,7 +913,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 				i = 0;
 				int i2 = 0;			//if the first move is null, then the array will need to be packed down
 				if (moves[0] == null){ 		//(nulls moved to the end of the array)
-					while(i < 3){ 
+					while(i < 4){ 
 						while(moves[i] == null){
 							i += 1;
 						}
@@ -965,7 +965,7 @@ public partial class Pokemon //: ePokemons //PokemonData
                 movelist.Add(_base.MoveSet[i].MoveId);
             }
         }*/ 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			this.moves[i] =  new Move((i >= firstMoves.Count) ? 0 : firstMoves[i]);
         }
     }
@@ -977,10 +977,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <returns></returns>
 	public void LearnMove(Moves move, bool silently = false) {
 		if ((int)move <= 0) return;
-		/*for (int i = 0; i < 3; i++) {
+		/*for (int i = 0; i < 4; i++) {
 			if (moves[i].MoveId == move) { //Switch ordering of moves?
 				int j = i + 1;
-				while (j < 3) {
+				while (j < 4) {
 					if (moves[j].MoveId == 0) break;
 					Move tmp = moves[j];
 					moves[j] = moves[j - 1];
@@ -994,7 +994,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 			GameVariables.DebugLog("Already knows move...");
 			return;
 		}
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (moves[i].MoveId == 0) {
 				moves[i] = new Move(move);
 				return;
@@ -1019,12 +1019,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void DeleteMove(Moves move) {
 		if (move <= 0) return;
 		List<Move> newmoves = new List<Move>();
-		for (int i = 0; i < 3; i++) { 
+		for (int i = 0; i < 4; i++) { 
 			if (moves[i].MoveId != move) newmoves.Add(moves[i]);
 		}
 
 		newmoves.Add(new Move(0));
-		for (int i = 0; i< 3; i++) {
+		for (int i = 0; i< 4; i++) {
 			moves[i] = newmoves[i];
 		}
 	 }
@@ -1037,13 +1037,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void DeleteMoveAtIndex(int index) {
 		List<Move> newmoves = new List<Move>();
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (i != index) newmoves.Add(moves[i]);
 		}
 		
 		newmoves.Add(new Move(0));
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			moves[i] = newmoves[i];
 		}
 	}
@@ -1053,7 +1053,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	public void DeleteAllMoves() { 
 		//moves = new Move.MoveData.Move[4];
-		for (int i = 0; i< 3; i++) { 
+		for (int i = 0; i< 4; i++) { 
 			moves[i]= new Move(0);
 		}
 	}
@@ -1062,7 +1062,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// Copies currently known moves into a separate array, for Move Relearner.
 	/// </summary>
 	public void RecordFirstMoves() {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (moves[i].MoveId > 0) AddFirstMove(moves[i].MoveId);
 		}
 	}
@@ -1573,7 +1573,7 @@ public partial class Pokemon //: ePokemons //PokemonData
         if (index >= 0) moves[index] = moves[index]; // ToDo: pp = totalpp
         else
         {
-            for (int i = 0; i < 3; i++){
+            for (int i = 0; i < 4; i++){
                 moves[index] = moves[index]; // ToDo: pp = totalpp
             }
         }
