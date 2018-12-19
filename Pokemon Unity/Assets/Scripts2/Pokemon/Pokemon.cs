@@ -168,7 +168,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		PersonalId |= Settings.Rand.Next(256) << 16;
 		PersonalId |= Settings.Rand.Next(256) << 24;
 		Ability = Abilities.NONE;
-        natureFlag = new Nature();//(Natures)(new Random().Next(0, 24));
+        natureFlag = new Nature();//(Natures)(Settings.Rand.Next(0, 24));
 		//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
 		//shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
 		//Gender = isMale();
@@ -780,7 +780,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void GivePokerus(int strain = 0)
 	{
 		if (this.PokerusStage.HasValue ? !this.PokerusStage.Value : false) return; // Cant re-infect a cured Pokemon
-		if (strain <= 0 || strain >= 16) strain = new Random().Next(1, 16);
+		if (strain <= 0 || strain >= 16) strain = Settings.Rand.Next(1, 16);
 		pokerus[1] = 1 + (strain % 4);
 		pokerus[0] |= strain; //strain << 4
 	}
