@@ -194,8 +194,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public Pokemon(Pokemons pokemon) : this()
 	{
 		_base = PokemonData.GetPokemon(pokemon);
-		Ability = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
 		//Gender = GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+		Ability = abilityFlag;
 		eggSteps = _base.HatchTime;
 		GenerateMoveset();
 
@@ -602,10 +602,25 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 	#region Ability
 	/// <summary>
-	/// Forces the first/second/hidden (0/1/2) ability
+	/// RNG forces the first/second/hidden (0/1/2) ability
 	/// </summary>
-	[Obsolete]
-	private Abilities abilityFlag;
+	private Abilities abilityFlag
+	{
+		get
+		{
+			return
+				//If is egg AND has hidden, include hidden in roll
+				isEgg && hasHiddenAbility() ? 
+					//if has three slots
+					(_base.Ability[1] != Abilities.NONE ? 
+						// roll between all 3
+						_base.Ability[Settings.Rand.Next(0, 3)]					
+					: //else skip over slot 2
+						_base.Ability[Settings.Rand.Next(0, 2) == 1 ? 2 : 0]) 
+				: //else just roll between slot 1 and 2
+					(_base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[Settings.Rand.Next(0, 2)]);
+		}
+	}
 	/// <summary>
 	/// Returns the ID of the Pokemons Ability.
 	/// </summary>
