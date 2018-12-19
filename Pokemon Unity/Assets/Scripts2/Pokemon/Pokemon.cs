@@ -883,8 +883,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 			return;
 		//if (!level.HasValue)
 		//	level = -1;
-		//ClearFirstMoves();
+		ClearFirstMoves();
 		int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 0 and 3
+		List<Moves> movelist = new List<Moves>();
+		if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 		switch (level)
 		{
 			#region sample from alpha version
@@ -929,10 +931,23 @@ public partial class Pokemon //: ePokemons //PokemonData
 			#endregion
 			case null:
 			//case -1:
-			default:
-				List<Moves> movelist = new List<Moves>();
-				if (Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 				movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+				for (int n = 0; n < movelist.Count; n++)
+				{
+					if (Convert.ToBoolean(Settings.Rand.Next(2)))
+					{
+						if (this.countMoves() < numMove + 1) 
+						{
+							LearnMove(movelist[n]);
+						}
+						else
+							break;
+					}
+				}
+				break;
+			default:
+				//if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+				movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
 				//int listend = movelist.Count - 4;
 				//listend = listend < 0 ? 0 : listend + 4;
 				//int j = 0; 
