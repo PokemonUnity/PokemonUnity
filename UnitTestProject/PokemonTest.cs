@@ -183,7 +183,7 @@ namespace Tests
 			while (pokemon.countMoves() < 4)
 			{
 				pokemon.GenerateMoveset(); i++;
-				if (i > 5) Assert.Fail();
+				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 			pokemon.LearnMove(Moves.OVERHEAT,true);
@@ -200,7 +200,7 @@ namespace Tests
 			while (pokemon.countMoves() < 4)
 			{
 				pokemon.GenerateMoveset(); i++;
-				if (i > 5) Assert.Fail();
+				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 			pokemon.LearnMove(Moves.OVERHEAT);
@@ -217,7 +217,7 @@ namespace Tests
 			while (pokemon.countMoves() != 4)
 			{
 				pokemon.GenerateMoveset(); i++;
-				if (i > 5) Assert.Fail();
+				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 			pokemon.LearnMove(Moves.OVERHEAT);
@@ -234,7 +234,7 @@ namespace Tests
 			while (pokemon.countMoves() < 4)
 			{
 				pokemon.GenerateMoveset(); i++;
-				if (i > 5) Assert.Fail();
+				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 			pokemon.LearnMove(Moves.OVERHEAT);
 			int before = pokemon.countMoves();
