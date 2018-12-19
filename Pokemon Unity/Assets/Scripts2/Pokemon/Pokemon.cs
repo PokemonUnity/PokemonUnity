@@ -194,8 +194,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public Pokemon(Pokemons pokemon) : this()
 	{
 		_base = PokemonData.GetPokemon(pokemon);
-		//Gender = GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 		Ability = abilityFlag;
+		Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 		eggSteps = _base.HatchTime;
 		GenerateMoveset();
 
@@ -569,7 +569,7 @@ public partial class Pokemon //: ePokemons //PokemonData
         }
     }
 
-	bool? getGender()
+	private bool? getGender()
 	{
 		switch (_base.MaleRatio)
 		{
@@ -597,7 +597,20 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
 	/// </summary>
-	public bool isSingleGendered { get { return true; } }
+	public bool isSingleGendered {
+		get
+		{
+			switch (_base.MaleRatio)
+			{
+				case GenderRatio.AlwaysMale:
+				case GenderRatio.AlwaysFemale:
+				case GenderRatio.Genderless:
+					return true;
+				default:
+					return false;
+			}
+		}
+	}
 	#endregion
 
 	#region Ability
