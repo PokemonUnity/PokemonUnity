@@ -196,6 +196,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		_base = PokemonData.GetPokemon(pokemon);
 		Ability = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
 		//Gender = GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+		eggSteps = _base.HatchTime;
 		GenerateMoveset();
 
 		//calcStats();
