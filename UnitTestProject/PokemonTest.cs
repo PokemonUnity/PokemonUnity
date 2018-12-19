@@ -84,9 +84,24 @@ namespace Tests
 
         #region Level/stats...
         [TestMethod]
+		public void Pokemon_Starting_Level_NotNegative()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Assert.IsTrue(pokemon.Level >= 0);
+		}
+
+        [TestMethod]
+		public void Pokemon_IsEgg_At_Default_Level()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Assert.IsTrue(pokemon.isEgg);
+		}
+
+        [TestMethod]
 		public void Pokemon_Set_ExperiencePoints_To_Match_Level()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Assert.AreSame(1,pokemon.Level);
 		}
 		
         [TestMethod]
@@ -94,7 +109,19 @@ namespace Tests
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			//pokemon.exp = pokemon.TotalHP + 1;
-			Assert.Inconclusive();
+			Assert.AreSame(1,pokemon.Exp.Current);
+		}
+
+        [TestMethod]
+		public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
+			//while (pokemon.eggSteps != 0)
+			//{
+			//	pokemon.eggSteps--; //goes down by 1
+			//}
+			Assert.AreSame(false,pokemon.isEgg);
 		}
 
 		//Test max value for pokemon stats
@@ -121,6 +148,28 @@ namespace Tests
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			Assert.IsTrue(pokemon.countMoves() > 0);
+		}
+		//[TestMethod]
+		//public void Pokemon_RNG_DefaultMoves_For_Egg()
+		//{
+		//	Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+		//	if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
+		//	Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+		//	pokemon.GenerateMoveset();
+		//	Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+		//}
+		[TestMethod]
+		public void Pokemon_RNG_Moves_IsDifferent_For_HatchingEgg() //_At_Levels_GreaterThan_Zero
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
+			//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+			//pokemon.GenerateMoveset();
+			//Hatch Egg Here...
+			//if(pokemon.Level <= 0) Assert.Fail("Pokemon is still level zero");
+			if (pokemon.isEgg) Assert.Fail("Pokemon is still an egg.");
+			//Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			//Assert.IsTrue if Pokemon.Move Contains exclusive egg-only moves.
 		}
         //[TestMethod]
 		//public void Pokemon_Reseting_Moves_IsNotEqual()
