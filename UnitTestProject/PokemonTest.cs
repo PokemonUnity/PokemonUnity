@@ -319,7 +319,7 @@ namespace Tests
 			//Pokemon.PokemonData.GetPokemon(Pokemons.NONE).MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key)
 			//list of moves can learn at level
 			//Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
-			Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR).getMoveList().Length > 0);
+			Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR).getMoveList(LearnMethod.levelup).Length > 0);
 		}
 		[TestMethod]
 		public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()

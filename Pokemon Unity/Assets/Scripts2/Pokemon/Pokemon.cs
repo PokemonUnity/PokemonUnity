@@ -885,20 +885,31 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
     /// Returns the list of moves this Pokémon can learn by leveling up.
     /// </summary>
-    public Moves[] getMoveList() {
-		//Move.MoveData.Move[] movelist = _base.MovesetMoves;
-		//for (int k = 0; k < movelist.Length - 1; k++)
-		//{
-		//	//Array to List/Dictionary
-		//	//separate into Move.value and Pokemon.Level 
-		//	//needed to learn the skill
-		//	//movelist([level, move])}
-		//}
-		//return movelist;
-		//return _base.MoveTree;
-		//List<Moves> movelist = new List<Moves>();
-		//movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
-		return _base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
+    public Moves[] getMoveList(LearnMethod? method = null) {
+		switch (method)
+		{
+			case LearnMethod.egg:
+				return _base.MoveTree.Egg;
+			case LearnMethod.levelup:
+				return _base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
+			case LearnMethod.machine:
+				return _base.MoveTree.Machine;
+			case LearnMethod.tutor:
+				return _base.MoveTree.Tutor;
+			case LearnMethod.shadow:
+			case LearnMethod.xd_shadow:
+				List<Moves> s = new List<Moves>();
+				s.AddRange(_base.MoveTree.Shadow);
+				s.AddRange(_base.MoveTree.Shadow.Where(x => !s.Contains(x)).Select(x => x));
+				return s.ToArray();
+			default:
+				List<Moves> list = new List<Moves>();
+				list.AddRange(_base.MoveTree.Egg);
+				list.AddRange(_base.MoveTree.Machine.Where(x => !list.Contains(x)).Select(x => x));
+				list.AddRange(_base.MoveTree.Tutor.Where(x => !list.Contains(x)).Select(x => x));
+				list.AddRange(_base.MoveTree.LevelUp.Where(x => !list.Contains(x.Key))/*(x => x.Value <= this.Level)*/.Select(x => x.Key));
+				return list.ToArray();
+		}
      }
 
 	/// <summary>
@@ -1022,6 +1033,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <returns></returns>
 	public void LearnMove(Moves move, bool silently = false) {
 		if ((int)move <= 0) return;
+		if (!getMoveList().Contains(move)) { 
+			GameVariables.DebugLog("Move is not compatible");
+			return;
+		}
 		/*for (int i = 0; i < 4; i++) {
 			if (moves[i].MoveId == move) { //Switch ordering of moves?
 				int j = i + 1;
