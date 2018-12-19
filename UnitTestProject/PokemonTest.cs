@@ -180,7 +180,7 @@ namespace Tests
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			int i = 0;
-			while (pokemon.countMoves() < 4)
+			while (pokemon.countMoves() == 4)
 			{
 				pokemon.GenerateMoveset(); i++;
 				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
@@ -197,14 +197,14 @@ namespace Tests
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			int i = 0;
-			while (pokemon.countMoves() < 4)
+			while (pokemon.countMoves() == 4)
 			{
 				pokemon.GenerateMoveset(); i++;
 				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 			Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 			pokemon.LearnMove(Moves.OVERHEAT);
-			Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
         [TestMethod]
 		/// <summary>
@@ -231,7 +231,7 @@ namespace Tests
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			int i = 0;
-			while (pokemon.countMoves() < 4)
+			while (pokemon.countMoves() == 4)
 			{
 				pokemon.GenerateMoveset(); i++;
 				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
