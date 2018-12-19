@@ -2952,6 +2952,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public class Experience
 	{
 		private int level { get { return GetLevelFromExperience(Growth, Current); } }
+		/// <summary>
+		/// Current accumalitive experience points gained (and collected) by this Pokemon.
+		/// </summary>
+		/// <remarks>Exp points should not be able to go into negatives?</remarks>
+		/// ToDo: Make shadow pokemons exp points negative?... 
+		/// no, cause they still need to level up after purified
+		/// ToDo: Make exp points less than 0 equal to 0
 		public int Current { get; private set; }
 		public int NextLevel { get { return GetExperience(Growth, level + 1); } }
 		private LevelingRate Growth { get; set; }
@@ -3147,6 +3154,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		/// <returns></returns>
 		public static int GetLevelFromExperience(LevelingRate levelingRate, int experiencePoints)
 		{
+			if (experiencePoints <= 0) return 0;
 			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
 			if (experiencePoints > maxexp) experiencePoints = maxexp;
 			for (int i = 0; i < Settings.MAXIMUMLEVEL; i++)
