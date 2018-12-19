@@ -123,6 +123,18 @@ namespace Tests
 			//}
 			Assert.AreSame(false,pokemon.isEgg);
 		}
+		
+        [TestMethod]
+		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
+		{
+			Pokemon pokemon = new Pokemon();
+			int i = 0;
+			while (true)
+			{
+				Assert.IsTrue(pokemon.Ability == Pokemon.PokemonData.GetPokemon(pokemon.Species).Ability[2]); i++;
+				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+			}
+		}
 
 		//Test max value for pokemon stats
         [TestMethod]
