@@ -440,10 +440,25 @@ namespace Tests
 		}
 
         [TestMethod]
-		public void Pokemon_GenderRatio_To_Gender()
+		public void Pokemon_GenderRatio_AlwaysFemale()
 		{
 			//Convert GenderRatio to Male/Female Results
-			Assert.Inconclusive();
+			//for loop, count to 100, if results is equal to or greater than threshold, fail
+			Pokemons pkmn = Pokemons.BULBASAUR;
+			GenderRatio genders = Pokemon.PokemonData.GetPokemon(pkmn).MaleRatio;
+			int females = 0;
+			//Confirm test criteria by making sure data fits
+			if (genders == GenderRatio.AlwaysFemale)
+				for (int i = 0; i < 100; i++)
+				{
+					Pokemon pokemon = new Pokemon(pkmn);
+					//Assert.IsTrue(pokemon.Ability == Pokemon.PokemonData.GetPokemon(pokemon.Species).Ability[2]); i++;
+					//if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+					if (pokemon.Gender.HasValue && !pokemon.Gender.Value) females++;
+				}
+			else
+				Assert.Fail("Testing for gender ratio of... but pokemon gender chances are {0}", genders.ToString());
+			Assert.IsTrue(females > 30);
 		}
 		#endregion
 	}
