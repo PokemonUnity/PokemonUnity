@@ -590,6 +590,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 			case GenderRatio.Genderless:
 				return null;
 			default:				
+				break;
 		}
 		return null;
 	}
