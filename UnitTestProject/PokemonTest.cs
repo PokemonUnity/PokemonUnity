@@ -180,12 +180,12 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
 		{
-			Pokemon pokemon = new Pokemon();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			int i = 0;
 			while (true)
 			{
 				Assert.IsTrue(pokemon.Ability == Pokemon.PokemonData.GetPokemon(pokemon.Species).Ability[2]); i++;
-				if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+				if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 		}
 
