@@ -102,6 +102,21 @@ namespace Tests
 		}
 
         [TestMethod]
+		public void Pokemon_HatchEgg()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			pokemon.HatchEgg();
+			Assert.IsFalse(pokemon.isEgg);
+		}
+
+        [TestMethod]
+		public void Pokemon_Spawn_Wild_Not_Egg()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, isEgg: false);
+			Assert.IsFalse(pokemon.isEgg);
+		}
+
+        [TestMethod]
 		public void Pokemon_Set_ExperiencePoints_To_Match_Level()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);

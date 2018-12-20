@@ -120,9 +120,33 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// ToDo: Add to Status Class or StatusTurn() method
     public int StatusCount { get; protected set; }
     /// <summary>
-    /// Steps to hatch egg, 0 if Pokemon is not an egg
+    /// Steps to hatch egg, 0 if Pokemon is not an egg.
+	/// Pokemon moves auto reset when egg counter reaches 0.
     /// </summary>
-    public int eggSteps { get; private set; }
+	/// ToDo: Sequence of events to occur when egg is hatching (roll dice for ability, moves, and animate hatching)
+    public int EggSteps
+	{
+		get
+		{
+			return eggSteps;
+		}
+		private set
+		{
+			if (eggSteps > 0 && value == 0)
+			{
+				this.GenerateMoveset();
+			}
+			eggSteps = 
+				//if egg hatch counter is going up in positive count
+				//eggSteps + 
+				value > eggSteps 
+				? //return the same value
+					eggSteps 
+				: //else return new value
+					value;
+		}
+	}
+    private int eggSteps { get; set; }
 	/// <summary>
 	/// Moves (PBMove)
 	/// </summary>
@@ -199,6 +223,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 		//calcStats();
 	}
+	
+	public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 
 	public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
 		int TPLEVEL = 10,
@@ -216,6 +242,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		int TPHAPPINESS = 70,
 		string TPNAME = null,
 		bool TPSHADOW = false,
+		//bool EGG = false,
 		Items TPBALL = Items.NONE) : this(TPSPECIES)
 	{
 		//Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
@@ -429,6 +456,24 @@ public partial class Pokemon //: ePokemons //PokemonData
 		{
 			return _base.BaseExpYield; //ToDo: 
 		}
+	}
+
+	public void AddSteps(byte steps = 1)
+	{
+		int i = EggSteps - steps;
+		//Set EggSteps to 0 first, to trigger the hatching process... 
+		EggSteps = i < 0 ? 0 : i;
+		//then if we want to continue beyond 0 and into negative values, we may continue...
+		if (i < 0) EggSteps = i;
+	}
+
+	public void HatchEgg()
+	{
+		if (!isEgg) return;
+		//bring value all the way down to 1, regardless of where it's set
+		EggSteps -= EggSteps > 1 ? EggSteps - 1 : 0;
+		//take final step on counter to trigger all the RNGs
+		AddSteps(); 
 	}
 	#endregion
 
