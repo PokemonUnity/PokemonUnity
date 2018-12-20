@@ -231,10 +231,32 @@ namespace Tests
 			//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
 			//pokemon.GenerateMoveset();
 			//Hatch Egg Here...
+			pokemon.HatchEgg();
 			//if(pokemon.Level <= 0) Assert.Fail("Pokemon is still level zero");
 			if (pokemon.isEgg) Assert.Fail("Pokemon is still an egg.");
+			System.Collections.Generic.List<Moves> egg = new System.Collections.Generic.List<Moves>(); //ml.AddRange(pokemon.getMoveList(LearnMethod.egg));
+			System.Collections.Generic.List<Moves> lv = new System.Collections.Generic.List<Moves>(pokemon.getMoveList(LearnMethod.levelup));
+			foreach (Moves item in pokemon.getMoveList(LearnMethod.egg))
+			{
+				if (!lv.Contains(item)) egg.Add(item);
+			}
+			for (int i = 0; i < 30; i++)
+			{
+				foreach (Move move in pokemon.moves)
+				{
+					if (move.MoveId != Moves.NONE &&
+						(
+							egg.Contains(move.MoveId) 
+						)
+					)
+						Assert.IsTrue(true,"Pokemon contains exclusive egg only move");
+				}
+				//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+				//pokemon.GenerateMoveset();
+			}
 			//Assert.AreNotSame(before,new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 			//Assert.IsTrue if Pokemon.Move Contains exclusive egg-only moves.
+			Assert.Fail("Pokemon does not contain egg-only move");
 		}
         //[TestMethod]
 		//public void Pokemon_Reseting_Moves_IsNotEqual()
