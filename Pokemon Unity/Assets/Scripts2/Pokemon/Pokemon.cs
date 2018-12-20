@@ -589,37 +589,18 @@ public partial class Pokemon //: ePokemons //PokemonData
 				return false;
 			case GenderRatio.Genderless:
 				return null;
-			default:				
+			default:
 				//byte n = (byte)(Settings.Rand.Next(0, 100) + 1);
 				double n = (Settings.Rand.NextDouble() * 100) + 1;
-				//if		(_base.MaleRatio == GenderRatio.AlwaysFemale		&& _base.maleRatioPercent > 0f		&& _base.maleRatioPercent < 12.5f)	return GenderRatio.AlwaysFemale;
-				//else if	(_base.MaleRatio == GenderRatio.FemaleSevenEighths	&& _base.maleRatioPercent >= 12.5f	&& _base.maleRatioPercent < 25f)	return GenderRatio.FemaleSevenEighths;
-				//else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& _base.maleRatioPercent >= 25f	&& _base.maleRatioPercent < 37.5f)	return GenderRatio.Female75Percent;
-				//else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& _base.maleRatioPercent >= 37.5f	&& _base.maleRatioPercent < 50f)	return GenderRatio.Female75Percent;
-				//else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& _base.maleRatioPercent >= 50f	&& _base.maleRatioPercent < 62.5f)	return GenderRatio.Female50Percent;
-				//else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& _base.maleRatioPercent >= 62.5f	&& _base.maleRatioPercent < 75f)	return GenderRatio.Female50Percent;
-				//else if	(_base.MaleRatio == GenderRatio.Female25Percent		&& _base.maleRatioPercent >= 75f	&& _base.maleRatioPercent < 87.5f)	return GenderRatio.Female25Percent;
-				//else if	(_base.MaleRatio == GenderRatio.FemaleOneEighth		&& _base.maleRatioPercent >= 87.5f	&& _base.maleRatioPercent < 100f)	return GenderRatio.FemaleOneEighth;
-				break;
-		}
-		return null;
-	}
-
-	/// <summary>
-	/// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
-	/// </summary>
-	public bool isSingleGendered {
-		get
-		{
-			switch (_base.MaleRatio)
-			{
-				case GenderRatio.AlwaysMale:
-				case GenderRatio.AlwaysFemale:
-				case GenderRatio.Genderless:
-					return true;
-				default:
-					return false;
-			}
+				if		(_base.MaleRatio == GenderRatio.AlwaysFemale		&& n > 0f		&& n < 12.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.FemaleSevenEighths	&& n >= 12.5f	&& n < 25f)		return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& n >= 25f		&& n < 37.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& n >= 37.5f	&& n < 50f)		return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& n >= 50f		&& n < 62.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& n >= 62.5f	&& n < 75f)		return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female25Percent		&& n >= 75f		&& n < 87.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.FemaleOneEighth		&& n >= 87.5f	&& n < 100f)	return false; 
+				else return true;
 		}
 	}
 	#endregion
@@ -2041,6 +2022,25 @@ public partial class Pokemon //: ePokemons //PokemonData
 		/// <value>-1f is interpreted as genderless</value>
 		/// </summary>
 		public GenderRatio MaleRatio { get; private set; }
+		/// <summary>
+		/// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
+		/// </summary>
+		public bool IsSingleGendered
+		{
+			get
+			{
+				switch (MaleRatio)
+				{
+					case GenderRatio.AlwaysMale:
+					case GenderRatio.AlwaysFemale:
+					case GenderRatio.Genderless:
+						return true;
+					default:
+						return false;
+				}
+			}
+		}
+
 		public float ShinyChance { get; set; }
 		/// <summary>
 		/// The catch rate of the species. 

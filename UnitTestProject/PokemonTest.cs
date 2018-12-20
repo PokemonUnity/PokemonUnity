@@ -459,7 +459,7 @@ namespace Tests
 		}
 
         [TestMethod]
-		public void Pokemon_GenderRatio_AlwaysFemale()
+		public void Pokemon_GenderRatio_NotSingleGendered()
 		{
 			//Convert GenderRatio to Male/Female Results
 			//for loop, count to 100, if results is equal to or greater than threshold, fail
@@ -467,7 +467,7 @@ namespace Tests
 			GenderRatio genders = Pokemon.PokemonData.GetPokemon(pkmn).MaleRatio;
 			int females = 0;
 			//Confirm test criteria by making sure data fits
-			if (genders == GenderRatio.AlwaysFemale)
+			if (genders == GenderRatio.FemaleOneEighth || Pokemon.PokemonData.GetPokemon(pkmn).IsSingleGendered) {
 				for (int i = 0; i < 100; i++)
 				{
 					Pokemon pokemon = new Pokemon(pkmn);
@@ -475,9 +475,10 @@ namespace Tests
 					//if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 					if (pokemon.Gender.HasValue && !pokemon.Gender.Value) females++;
 				}
+				Assert.IsTrue(100 - females < 100 - 15); //12.5 is 1/8th 
+			}
 			else
 				Assert.Fail("Testing for gender ratio of... but pokemon gender chances are {0}", genders.ToString());
-			Assert.IsTrue(females > 30);
 		}
 		#endregion
 	}
