@@ -590,6 +590,16 @@ public partial class Pokemon //: ePokemons //PokemonData
 			case GenderRatio.Genderless:
 				return null;
 			default:				
+				//byte n = (byte)(Settings.Rand.Next(0, 100) + 1);
+				double n = (Settings.Rand.NextDouble() * 100) + 1;
+				//if		(_base.MaleRatio == GenderRatio.AlwaysFemale		&& _base.maleRatioPercent > 0f		&& _base.maleRatioPercent < 12.5f)	return GenderRatio.AlwaysFemale;
+				//else if	(_base.MaleRatio == GenderRatio.FemaleSevenEighths	&& _base.maleRatioPercent >= 12.5f	&& _base.maleRatioPercent < 25f)	return GenderRatio.FemaleSevenEighths;
+				//else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& _base.maleRatioPercent >= 25f	&& _base.maleRatioPercent < 37.5f)	return GenderRatio.Female75Percent;
+				//else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& _base.maleRatioPercent >= 37.5f	&& _base.maleRatioPercent < 50f)	return GenderRatio.Female75Percent;
+				//else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& _base.maleRatioPercent >= 50f	&& _base.maleRatioPercent < 62.5f)	return GenderRatio.Female50Percent;
+				//else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& _base.maleRatioPercent >= 62.5f	&& _base.maleRatioPercent < 75f)	return GenderRatio.Female50Percent;
+				//else if	(_base.MaleRatio == GenderRatio.Female25Percent		&& _base.maleRatioPercent >= 75f	&& _base.maleRatioPercent < 87.5f)	return GenderRatio.Female25Percent;
+				//else if	(_base.MaleRatio == GenderRatio.FemaleOneEighth		&& _base.maleRatioPercent >= 87.5f	&& _base.maleRatioPercent < 100f)	return GenderRatio.FemaleOneEighth;
 				break;
 		}
 		return null;
