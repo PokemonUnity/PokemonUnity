@@ -21,8 +21,6 @@ public partial class Pokemon //: ePokemons //PokemonData
     public int TotalHP { get {
 			return //totalHP;
 				((2 * _base.BaseStatsHP + IV[0] + (EV[0] / 4)) * Level) / 100 + Level + 10; } }
-	[Obsolete("Default HP should be auto generated, and not provided thru placeholder value")]
-    private int totalHP = 1;
     /// <summary>
     /// Current HP
     /// </summary>
@@ -270,14 +268,6 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// </summary>
     /// ToDo: String value?
     public int PersonalId { get; private set; }
-    /// <summary>
-    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
-    /// Deprecated
-    /// </summary>
-    /// ToDo: Remove this, and fetch from Trainer Class?
-    /// Can also store hexadecimal/binary values in int
-	[Obsolete("Use <Trainer>Pokemon.OT to fetch trainer information.")]
-    public int TrainerId { get; private set; }
 
 	/// <summary>
 	/// Returns whether or not the specified Trainer is the NOT this Pokemon's original trainer
@@ -1076,7 +1066,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		}
 
 		newmoves.Add(new Move(0));
-		for (int i = 0; i< 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			moves[i] = newmoves[i];
 		}
 	 }
@@ -1149,14 +1139,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 	#endregion
 
 	#region Contest attributes, ribbons
-	/// <summary>
-	/// Deprecated; Array of ribbons
-	/// </summary>
-	/// <remarks>
-	/// Make 2d Array (Array[,]) separated by regions/Gens
-	/// </remarks>
-	[Obsolete]
-	private bool[] ribbon; //= new bool[numberOfRegions,RibbonsPerRegion];
 	private List<Ribbon> ribbons { get; set; } 
 	/// <summary>
 	/// Each region/ribbon sprite should have it's own Ribbon.EnumId
@@ -2057,8 +2039,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 		public float Weight { get; private set; }
 		/// ToDo: Make this an enum
 		public int ShapeID { get; private set; } 
-        [Obsolete("Please, just use a VOID call to solve color conversion")]
-		public UnityEngine.Color LightColor { get; private set; }
 		public LevelingRate GrowthRate { get; private set; }
 		public Color PokedexColor { get; private set; }
 
@@ -2097,110 +2077,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 		/// </remarks>
 		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
 		public int[,] HeldItem { get; private set; }
-        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
-		public int[] MovesetLevels { get; private set; }
-        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
-		public Moves[] MovesetMoves { get; private set; }
-        /// <summary>
-        /// </summary>
-        /// Pokemon.cs Line 725: ResetMoves()
-        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
-		public PokemonMoveset[] MoveSet { get; private set; }
 	    /// <summary>
 	    /// All the moves this pokemon species can learn, and the methods by which they learn them
 	    /// </summary>
 		public PokemonMoveTree MoveTree { get; private set; }
 		/// ToDo: Evolution class type array here
 		public IPokemonEvolution[] Evolutions { get; private set; }
-        [Obsolete("Please use IPokemonEvolution to query any pokemons that a pokemon can evolve into")]
-		public int[] EvolutionID { get; private set; }
-		/// <summary>
-		/// <example>
-		/// E.G.	Poliwhirl(61)
-		///		<code>new int[]{62,186},
-		///		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),</code>
-		/// <para>
-		/// E.G. to evolve to sylveon
-		///		<code>new int[]{..., 700},
-		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
-		/// </para> 
-		/// </example>
-		/// <list type="bullet"> 
-		/// <item>
-		/// <term>Level,int level</term>
-		///	<description>if pokemon's level is greater or equal to int level</description>
-		///	<item>
-		/// <term>Stone,string itemName</term>
-		///	<description>if name of stone is equal to string itemName</description>
-		///	</item>
-		/// <item>
-		/// <term>Trade</term>
-		///	<description>if currently trading pokemon</description>
-		///	</item>
-		/// <item>
-		/// <term>Friendship</term>
-		///	<description>if pokemon's friendship is greater or equal to 220</description>
-		///	</item>
-		/// <item>
-		/// <term>Item,string itemName</term>
-		///	<description>if pokemon's heldItem is equal to string itemName</description>
-		/// </item>
-		///	<item>
-		/// <term>Gender,Pokemon.Gender</term>
-		/// <description>if pokemon's gender is equal to Pokemon.Gender</description>
-		/// </item>
-		///	<item>
-		/// <term>Move,string moveName</term>
-		///	<description>if pokemon has a move thats name or typing is equal to string moveName</description>
-		/// </item>
-		///	<item>
-		///	<term>Map,string mapName</term>
-		///	<description>if currentMap is equal to string mapName</description>
-		/// </item>
-		///	<item>
-		///	<term>Time,string dayNight</term>
-		///	<description>if time is between 9PM and 4AM time is "Night". else time is "Day".
-		///	if time is equal to string dayNight (either Day, or Night)</description>
-		/// </item>
-		/// <listheader><term>Exceptions</term><description>
-		///		Unique evolution methods:
-		/// </description></listheader>
-		///	<item>
-		/// <term>Mantine</term>
-		///	<description>if party contains a Remoraid</description>
-		/// </item>
-		///	<item>
-		///	<term>Pangoro</term>
-		///	<description>if party contains a dark pokemon</description>
-		/// </item>
-		///	<item>
-		///	<term>Goodra</term>
-		///	<description>if currentMap's weather is rain</description>
-		/// </item>
-		///	<item>
-		///	<term>Hitmonlee</term>
-		///	<description>if pokemon's ATK is greater than DEF</description>
-		/// </item>
-		///	<item>
-		///	<term>Hitmonchan</term>
-		///	<description>if pokemon's ATK is lower than DEF</description>
-		/// </item>
-		///	<item>
-		///	<term>Hitmontop</term>
-		/// <description>if pokemon's ATK is equal to DEF</description>
-		/// </item>
-		///	<item>
-		///	<term>Silcoon</term>
-		/// <description>if pokemon's shinyValue divided by 2's remainder is equal to 0</description>
-		/// </item>
-		///	<item>
-		///	<term>Cascoon</term>
-		///	<description>if pokemon's shinyValue divided by 2's remainder is equal to 1</description>
-		/// </item>
-		/// </list>
-		/// </summary>
-        [Obsolete("Please use IPokemonEvolution to query any pokemons that a pokemon can evolve into")]
-		public string[] EvolutionRequirements { get; private set; }
 
 		/// <summary>
 		/// The item that needs to be held by a parent when breeding in order for the egg to be this species. 
@@ -2319,201 +2201,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//this.evolutionMethod = evolutionMethod; 
 			//this.evolutionRequirements = evolutionRequirements;
 		}
-
-        [Obsolete]
-		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
-							float maleRatio, int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
-							float height, float weight, int baseExpYield, int levelingRate,
-							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-							Color pokedexColor, int baseFriendship,//*/ string species, string pokedexEntry,
-							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
-							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
-							int[,] heldItem = null)
-		{
-			return CreatePokemonData(//new PokemonData(
-				(Pokemons)Id,
-				PokeId,
-				(Types)type1 | Types.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-				(Types)type2 | Types.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-                //new Abilities[] { 
-					(Abilities)ability1 | Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
-					(Abilities)ability2 | Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
-					(Abilities)hiddenAbility | Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
-                //}, 
-				0,//ToDo: maleRatio, 
-				catchRate,
-				(EggGroups)eggGroup1 | EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
-				(EggGroups)eggGroup2 | EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
-				hatchTime,
-				height,
-				weight,
-				baseExpYield,
-				(LevelingRate)levelingRate,
-				pokedexColor | Color.NONE,
-				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (Moves)move), tmList,
-				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
-		}
-        [Obsolete]
-		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, Types type1, Types type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility,
-							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
-							float height, float weight, int baseExpYield, LevelingRate levelingRate,
-							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-							Color pokedexColor, int baseFriendship,//*/ string species, string pokedexEntry,
-							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, Moves[] movesetMoves, int[] tmList,
-							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
-							int[,] heldItem = null)
-		{
-			return new PokemonData(
-				Id,
-				PokeId,
-				type1, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-				type2, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-				//new Abilities[] {
-				ability1, //| Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
-                ability2, //| Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
-                hiddenAbility, //| Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
-				//},
-				maleRatio,  //gender
-                0f,         //gender
-				catchRate,
-				eggGroup1, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
-				eggGroup2, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
-				hatchTime,
-				height,
-				weight,
-				baseExpYield,
-				levelingRate,
-                0,0,0,0,0,0,
-				pokedexColor | Color.NONE,
-				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, null, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList, null,
-				evolutionID, evolutionLevel, evolutionMethod, (Pokemons)forms, heldItem);//
-		}
-        #region Obsolete Database Values
-        /*// Not const because translation values
-        public static readonly PokemonData[] Database = new PokemonData[] {
-            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, ability1: Abilities.NONE, ability2: Abilities.NONE, hiddenAbility: Abilities.NONE,
-                        maleRatio: GenderRatio.AlwaysMale /*0f*, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
-                        height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
-                        //int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,
-                        pokedexColor: Color.NONE, baseFriendship: 50,
-                        baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
-                        luminance: 0f, 
-                        movesetmoves: new PokemonMoveset[] { new PokemonMoveset(moveId: Moves.ACID_ARMOR, method: LearnMethod.levelup, level: 15) },
-                        //movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
-                        evolution: new IPokemonEvolution[] {  new PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
-                        //evolutionID: null, evolutionLevel: null, evolutionMethod: null, 
-                        forms: 4, heldItem: null) //Test
-        };*/
-        #endregion
-
-        #region Obsolete Translation Method
-#if DEBUG
-        [Obsolete]
-		private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations();
-#else
-        [Obsolete]
-        private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations(SaveData.currentSave.playerLanguage | Settings.Language.English);
-#endif
-		/// <summary>
-		/// 
-		/// </summary>
-        [Obsolete]
-		private static Dictionary<int, PokedexTranslation> _pokeEnglishTranslations;// = LoadEnglishPokedexTranslations();
-		/// <summary>
-		/// 
-		/// </summary>
-		///ToDo: Should be a void that stores value to _pokeTranslations instead of returning...
-        [Obsolete]
-		public static void/*Dictionary<int, PokedexTranslation>*/ LoadPokedexTranslations(Settings.Languages language = Settings.Languages.English)//, int form = 0
-		{
-			var data = new Dictionary<int, PokedexTranslation>();
-
-			string fileLanguage;
-			switch (language)
-			{
-				case Settings.Languages.English:
-					fileLanguage = "en-us";
-					break;
-				default: //Default in case new language is added to game but not programmed ahead of time here...
-					fileLanguage = "en-us";
-					break;
-			}
-			System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-			//ToDo: Consider "/Resources/Database/PokemonTranslations/Pokemon_"
-#if DEBUG
-			string file = @"..\..\..\\Pokemon Unity\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-			//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-			//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
-#else
-			string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
-#endif
-			System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open);
-			xmlDoc.Load(fs);
-
-			if (xmlDoc.HasChildNodes)
-			{
-				foreach (System.Xml.XmlNode node in xmlDoc.GetElementsByTagName("Pokemon"))
-				{
-					var translation = new PokedexTranslation();
-					translation.Name = node.Attributes["name"].Value; //ToDo: Name = "name" Where formId == 0; else name = formId.name
-					//ToDo: Maybe add a forms array, and a new method for single name calls
-					translation.Forms = new string[node.Attributes.Count - 3]; int n = 1;//only count forms?
-					//int n = 1;translation.Forms[0] = node.Attributes["name"].Value;//that or return an empty array T[0]
-					for (int i = 4; i < node.Attributes.Count; i++)//foreach(System.Xml.XmlAttribute attr in node)
-					{
-						//Skipping first 4 values will save processing
-						if (node.Attributes[i].LocalName.Contains("form")) //Name vs LocalName?
-						{
-							//translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values 
-							translation.Forms[n] = node.Attributes[i].Value; n++;
-						}
-					}
-					translation.Species = node.Attributes["genus"].Value;
-					translation.PokedexEntry = node.InnerText;
-					data.Add(int.Parse(node.Attributes["id"].Value), translation); //Is this safe? Possible overwritting of values with bad entries
-				}
-			}
-
-			//ToDo: Is filestream still open or does it need to be closed and disposed of?
-			fs.Dispose(); fs.Close();
-			_pokeTranslations = data;//return data;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="language"></param>
-		/// <returns></returns>
-		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
-        [Obsolete]
-		public static PokedexTranslation GetPokedexTranslation(Pokemons id, Settings.Languages language = Settings.Languages.English)// int form = 0,
-		{
-			if (_pokeTranslations == null) //should return english if player's default language is null
-			{
-				LoadPokedexTranslations(language);//, form
-			}
-
-			int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-			if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
-			{
-				//Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
-				throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
-				//return new PokedexTranslation();
-			}
-			//ToDo: Show english text for missing data on foreign languages 
-			else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
-			{
-				return _pokeEnglishTranslations[arrayId];
-			}
-
-			return _pokeTranslations[arrayId];// int id
-		}
-		#endregion
         #endregion
 
 		#region Methods
