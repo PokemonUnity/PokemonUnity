@@ -166,12 +166,14 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Pokemon pokemon = new Pokemon();
 			if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
-			//while (pokemon.eggSteps != 0)
-			//{
-			//	pokemon.eggSteps--; //goes down by 1
-			//}
+			int i = 0;
+			while (pokemon.EggSteps != 0)//(pokemon.isEgg)
+			{
+				pokemon.AddSteps(); //goes down by 1
+				if (i > 1001) Assert.Fail("Infinite Loop; Results Undetermined");
+			}
 			Assert.AreSame(false,pokemon.isEgg);
 		}
 		
