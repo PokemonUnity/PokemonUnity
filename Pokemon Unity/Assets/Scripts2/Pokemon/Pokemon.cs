@@ -1520,20 +1520,22 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Mail?...
     /// </summary>
-    private Mail mail { get; set; }
+    private Item.Mail mail { get; set; }
     /// <summary>
     /// Perform a null check; if anything other than null, there is a message
     /// </summary>
     /// ToDo: Item category
     public string Mail
     {
-        get {
-            if (this.mail == null) return null; //If empty return null
-            if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
-            {
-                //mail = null;
-				return null;
-            }
+        get
+		{
+            if (this.mail == null || !global::Item.Mail.IsMail(this.Item)) return null; //If empty return null
+            //if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+            //{
+            //    //mail = null;
+			//	return null;
+            //}
+			//ToDo: Return the string or class?
             return mail.Message;
         }
         //set { mail = value; }
