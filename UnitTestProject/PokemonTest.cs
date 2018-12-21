@@ -48,13 +48,14 @@ namespace Tests
 			//Assert.Inconclusive();
 		}
 
-        [TestMethod]
-        public void Pokemon_Sleep_StatusTurn_Not_Zero() {
-            Pokemon pokemon = new Pokemon();
-            pokemon.Status = Status.Sleep;
-			//If remaining turns for sleep is 0 then the pokemon would be awake.
-            Assert.AreNotEqual(0, pokemon.StatusCount);
-		}
+        //[TestMethod]
+        //public void Pokemon_Sleep_StatusTurn_Not_Zero() {
+        //    Pokemon pokemon = new Pokemon();
+        //    pokemon.Status = Status.Sleep;
+		//	//If remaining turns for sleep is 0 then the pokemon would be awake.
+		//	//I think this test only works properly if done thru battle class
+        //    Assert.AreNotEqual(0, pokemon.StatusCount);
+		//}
 
         [TestMethod]
         public void Pokemon_FullyHeal() 
@@ -129,6 +130,13 @@ namespace Tests
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			//pokemon.exp = pokemon.TotalHP + 1;
 			Assert.AreSame(1,pokemon.Exp.Current);
+		}
+		
+        [TestMethod]
+		public void Pokemon_Spawn_At_Set_Level()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Assert.AreSame(5,pokemon.Level);
 		}
 
         //[TestMethod]
@@ -226,22 +234,24 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_RNG_Moves_IsDifferent_For_HatchingEgg() //_At_Levels_GreaterThan_Zero
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
-			//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-			//pokemon.GenerateMoveset();
-			//Hatch Egg Here...
-			pokemon.HatchEgg();
-			//if(pokemon.Level <= 0) Assert.Fail("Pokemon is still level zero");
-			if (pokemon.isEgg) Assert.Fail("Pokemon is still an egg.");
+			Pokemons pkmn = Pokemons.BULBASAUR;
 			System.Collections.Generic.List<Moves> egg = new System.Collections.Generic.List<Moves>(); //ml.AddRange(pokemon.getMoveList(LearnMethod.egg));
-			System.Collections.Generic.List<Moves> lv = new System.Collections.Generic.List<Moves>(pokemon.getMoveList(LearnMethod.levelup));
-			foreach (Moves item in pokemon.getMoveList(LearnMethod.egg))
+			System.Collections.Generic.List<Moves> lv = new System.Collections.Generic.List<Moves>(Pokemon.PokemonData.GetPokemon(pkmn).GetMoveList(LearnMethod.levelup));
+			foreach (Moves item in Pokemon.PokemonData.GetPokemon(pkmn).GetMoveList(LearnMethod.egg))
 			{
 				if (!lv.Contains(item)) egg.Add(item);
 			}
-			for (int i = 0; i < 30; i++)
+			if(egg.Count < 1) Assert.Fail("Pokemon does not any contain egg-only move");
+			for (int i = 0; i < 10; i++)
 			{
+				Pokemon pokemon = new Pokemon(pkmn);
+				if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
+				//Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
+				//pokemon.GenerateMoveset();
+				//Hatch Egg Here...
+				pokemon.HatchEgg();
+				//if(pokemon.Level <= 0) Assert.Fail("Pokemon is still level zero");
+				if (pokemon.isEgg) Assert.Fail("Pokemon is still an egg.");
 				foreach (Move move in pokemon.moves)
 				{
 					if (move.MoveId != Moves.NONE &&
@@ -342,6 +352,12 @@ namespace Tests
 			pokemon.LearnMove(Moves.OVERHEAT);
 			Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
 		}
+		//[TestMethod]
+		//public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()
+		//{
+		//	//list of moves can learn at level
+		//	Assert.Inconclusive();
+		//}
         [TestMethod]
 		/// <summary>
 		/// Move list must not be full to add move to pokemon
@@ -377,16 +393,17 @@ namespace Tests
 			pokemon.DeleteMove(Moves.OVERHEAT);
 			Assert.IsTrue(pokemon.countMoves() == before - 1);
 		}
-        [TestMethod]
-		public void Pokemon_Replace_Move_Return_Different_Moves()
-		{
-			Assert.Inconclusive();
-		}
-		[TestMethod]
-		public void Pokemon_Swap_Moves_Change_OrderOf_Moves()
-		{
-			Assert.Inconclusive();
-		}
+        //[TestMethod]
+		//public void Pokemon_Replace_Move_Return_Different_Moves()
+		//{
+		//	Assert.Inconclusive();
+		//}
+		//[TestMethod]
+		//public void Pokemon_Swap_Moves_Change_OrderOf_Moves()
+		//{
+		//	//Loop thru all moves, make sure they're all present
+		//	Assert.Inconclusive();
+		//}
 		[TestMethod]
 		public void Pokemon_Return_MoveList_CanLearn_At_CurrentLevel()
 		{
@@ -397,15 +414,11 @@ namespace Tests
 			Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR).getMoveList(LearnMethod.levelup).Length > 0);
 		}
 		[TestMethod]
-		public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()
-		{
-			//list of moves can learn at level
-			Assert.Inconclusive();
-		}
-		[TestMethod]
 		public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_TeachMethod()
 		{
-			//list of moves can learn at level
+			//list of moves a pokemon can learn for a given technique
+			//attempt to teach move
+			//confirm moves are unchanged 
 			Assert.Inconclusive();
 		}
         #endregion
@@ -423,7 +436,8 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_TestPokemon_EvolvePokemon()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Assert.AreEqual(Pokemons.IVYSAUR, pokemon.Species);
 		}
 		#endregion
 
@@ -444,11 +458,12 @@ namespace Tests
 			//Assert.AreNotEqual(Pokemon.PokemonData.GetPokemon(pokemon.Species).BaseStatsATK, pokemon.ATK);
 			Assert.Fail("Need to find way to compare Pokemon.baseStats to Form.baseStats");
         }
-        [TestMethod]
-		public void Pokemon_TestPokemon_GetPokemon_From_Form()
-		{
-			Assert.Inconclusive();
-		}
+        //[TestMethod]
+		//public void Pokemon_TestPokemon_GetPokemon_From_Form()
+		//{
+		//	//Maybe this one isnt needed?... 
+		//	Assert.Inconclusive();
+		//}
         [TestMethod]
 		public void Pokemon_TestPokemon_Set_Ribbons_Tier3_OutOf_4()
 		{
@@ -481,12 +496,15 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_TestPokemon_Set_To_Shadow()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.NONE);
+			Assert.IsTrue(pokemon.isShadow);
 		}
         [TestMethod]
 		public void Pokemon_TestPokemon_Shadow_Fail_To_Purify_If_HeartGuage_Not_Zero()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.NONE);
+			if (!pokemon.isShadow) Assert.Fail("Is not Shadow, cannot purify");
+			Assert.IsTrue(pokemon.isShadow);
 		}
         #endregion
 
@@ -494,8 +512,31 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_Mail_Test_Pokemon_HoldMessage()
 		{
-			Assert.Inconclusive();
+			Pokemon pokemon = new Pokemon(Pokemons.NONE);
+			Assert.IsNotNull(pokemon.Mail);
 		}
+
+		//[TestMethod]
+		//public void Pokemon_GenderRatio_To_Gender()
+		//{
+		//	//Convert GenderRatio to Male/Female Results
+		//	//for loop, count to 100, if results is equal to or greater than threshold, fail
+		//	Pokemons pkmn = Pokemons.BULBASAUR;
+		//	GenderRatio genders = Pokemon.PokemonData.GetPokemon(pkmn).MaleRatio;
+		//	int females = 0;
+		//	//Confirm test criteria by making sure data fits
+		//	if (genders == GenderRatio.AlwaysFemale)
+		//		for (int i = 0; i < 100; i++)
+		//		{
+		//			Pokemon pokemon = new Pokemon(pkmn);
+		//			//Assert.IsTrue(pokemon.Ability == Pokemon.PokemonData.GetPokemon(pokemon.Species).Ability[2]); i++;
+		//			//if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+		//			if (pokemon.Gender.HasValue && !pokemon.Gender.Value) females++;
+		//		}
+		//	else
+		//		Assert.Fail("Testing for gender ratio of... but pokemon gender chances are {0}", genders.ToString());
+		//	Assert.IsTrue(females > 30);
+		//}
 
         [TestMethod]
 		public void Pokemon_GenderRatio_NotSingleGendered()

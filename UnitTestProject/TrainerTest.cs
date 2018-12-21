@@ -14,32 +14,36 @@ namespace Tests
         [TestMethod]
 		public void Trainer_SetPokemon_Nickname()
 		{
-			Assert.Inconclusive();
+			Trainer trainer = new Trainer(TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
+			//Pokemon pokemon = new Pokemon(Pokemons.NONE);
+			//trainer.Party[0].Name
+			Assert.AreEqual("testname", trainer.Party[0].Name);
 		}
 
-		public void Trainer_() { 
-			/*SaveDataOld.currentSave.playerName = name;
-			SaveDataOld.currentSave.playerID = 29482; //not implemented
-			SaveDataOld.currentSave.isMale = isMale;
-			SaveDataOld.currentSave.playerMoney = 2481; 
-			SaveDataOld.currentSave.playerLanguage = Language.English;
-
-			SaveDataOld.currentSave.playerOutfit = "hgss";
-
-			SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
-			SaveDataOld.currentSave.playerMisc = null;
-			SaveDataOld.currentSave.playerHat = "Ethan's Hat";
-			//customizables not implemented
-
-			if(isMale == true){
-				SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
-			} else {
-				SaveDataOld.currentSave.setCVariable("male",0);
-			}*/
-		}
+		//public void Trainer_() { 
+		//	/*SaveDataOld.currentSave.playerName = name;
+		//	SaveDataOld.currentSave.playerID = 29482; //not implemented
+		//	SaveDataOld.currentSave.isMale = isMale;
+		//	SaveDataOld.currentSave.playerMoney = 2481; 
+		//	SaveDataOld.currentSave.playerLanguage = Language.English;
+		//
+		//	SaveDataOld.currentSave.playerOutfit = "hgss";
+		//
+		//	SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
+		//	SaveDataOld.currentSave.playerMisc = null;
+		//	SaveDataOld.currentSave.playerHat = "Ethan's Hat";
+		//	//customizables not implemented
+		//
+		//	if(isMale == true){
+		//		SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
+		//	} else {
+		//		SaveDataOld.currentSave.setCVariable("male",0);
+		//	}*/
+		//}
 
         [TestMethod]
         public void Trainer_Party_AddPokemon() {
+			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,
 				Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
@@ -61,7 +65,7 @@ namespace Tests
 				"", name,
 				31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
-			Assert.Inconclusive();
+			Assert.AreNotSame(new Pokemons[] { Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, trainer.Party );
 		}
 
         [TestMethod]
@@ -228,12 +232,12 @@ namespace Tests
 		}
         #endregion
 
-        [TestMethod]
-		public void Trainer_Trade_Pokemons()
-		{
-			//Swap pokemons between owners, and confirm original pokemon owners are different
-			Assert.Inconclusive();
-		}
+        //[TestMethod]
+		//public void Trainer_Trade_Pokemons()
+		//{
+		//	//Swap pokemons between owners, and confirm original pokemon owners are different
+		//	Assert.Inconclusive();
+		//}
 
         [TestMethod]
 		public void Trainer_RideBike_Fail_If_Item_NotInInventory()
