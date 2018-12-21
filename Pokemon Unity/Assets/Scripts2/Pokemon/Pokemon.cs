@@ -2285,6 +2285,37 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//return null;
 		}
 
+		/// <summary>
+		/// Returns the list of moves this Pokémon can learn by training method.
+		/// </summary>
+		public Moves[] GetMoveList(LearnMethod? method = null)
+		{
+			switch (method)
+			{
+				case LearnMethod.egg:
+					return MoveTree.Egg;
+				case LearnMethod.levelup:
+					return MoveTree.LevelUp.Select(x => x.Key).ToArray();
+				case LearnMethod.machine:
+					return MoveTree.Machine;
+				case LearnMethod.tutor:
+					return MoveTree.Tutor;
+				case LearnMethod.shadow:
+				case LearnMethod.xd_shadow:
+					List<Moves> s = new List<Moves>();
+					s.AddRange(MoveTree.Shadow);
+					s.AddRange(MoveTree.Shadow.Where(x => !s.Contains(x)).Select(x => x));
+					return s.ToArray();
+				default:
+					List<Moves> list = new List<Moves>();
+					list.AddRange(MoveTree.Egg);
+					list.AddRange(MoveTree.Machine.Where(x => !list.Contains(x)).Select(x => x));
+					list.AddRange(MoveTree.Tutor.Where(x => !list.Contains(x)).Select(x => x));
+					list.AddRange(MoveTree.LevelUp.Where(x => !list.Contains(x.Key))/*(x => x.Value <= this.Level)*/.Select(x => x.Key));
+					return list.ToArray();
+			}
+		}
+
 		static int getPokemonArrayId(Pokemons ID)
 		{
 			//Debug.Log("Get Pokemons");
