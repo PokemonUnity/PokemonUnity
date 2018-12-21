@@ -225,9 +225,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 	}
 	
 	public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
+	
+	public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) {  }
+	
+	//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
 	public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
-		int TPLEVEL = 10,
+		byte TPLEVEL = 10,
 		Items TPITEM = Items.NONE,
 		Moves TPMOVE1 = Moves.NONE,
 		Moves TPMOVE2 = Moves.NONE,
@@ -237,13 +241,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 		int? TPGENDER = null,
 		int TPFORM = 0,
 		bool TPSHINY = false,
-		//Natures TPNATURE,
+		Natures TPNATURE = Natures.UNSET,
 		int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
 		int TPHAPPINESS = 70,
 		string TPNAME = null,
 		bool TPSHADOW = false,
 		//bool EGG = false,
-		Items TPBALL = Items.NONE) : this(TPSPECIES)
+		Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL)
 	{
 		//Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
 		IV = TPIV ?? IV;
@@ -910,7 +914,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public bool knowsMove(Moves move) { return this.hasMove (move); }
 
 	/// <summary>
-    /// Returns the list of moves this Pokémon can learn by leveling up.
+    /// Returns the list of moves this Pokémon can learn by training method.
     /// </summary>
     public Moves[] getMoveList(LearnMethod? method = null) {
 		switch (method)
@@ -1269,6 +1273,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// This means that once a Shadow Pokémon is encountered for the first time, its Nature, IVs and gender will remain the same for the rest of the game, 
 	/// even if the player fails to capture it or is forced to re-battle it later.
 	/// </summary>
+	// ToDo: IsPurified, and "IsAbleToPurify" 
 	public bool isShadow { get
 		{
 			if (!ShadowLevel.HasValue || ShadowLevel.Value == -1) return false;
