@@ -547,18 +547,16 @@ namespace Tests
 			GenderRatio genders = Pokemon.PokemonData.GetPokemon(pkmn).MaleRatio;
 			int females = 0;
 			//Confirm test criteria by making sure data fits
-			if (genders == GenderRatio.FemaleOneEighth || Pokemon.PokemonData.GetPokemon(pkmn).IsSingleGendered) {
+			if (genders == GenderRatio.FemaleOneEighth || !Pokemon.PokemonData.GetPokemon(pkmn).IsSingleGendered) {
 				for (int i = 0; i < 100; i++)
 				{
 					Pokemon pokemon = new Pokemon(pkmn);
-					//Assert.IsTrue(pokemon.Ability == Pokemon.PokemonData.GetPokemon(pokemon.Species).Ability[2]); i++;
-					//if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
 					if (pokemon.Gender.HasValue && !pokemon.Gender.Value) females++;
 				}
-				Assert.IsTrue(100 - females < 100 - 15); //12.5 is 1/8th 
+				Assert.IsTrue(100 - females < 100 - 18); //12.5 is 1/8th 
 			}
 			else
-				Assert.Fail("Testing for gender ratio of... but pokemon gender chances are {0}", genders.ToString());
+				Assert.Fail("Testing for gender ratio of {0}; but pokemon gender chances are {1}", "One-Eighth Percent Females", genders.ToString());
 		}
 		#endregion
 	}
