@@ -127,9 +127,9 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_Set_Level_To_Match_ExperiencePoints()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			//pokemon.exp = pokemon.TotalHP + 1;
-			Assert.AreSame(1,pokemon.Exp.Current);
+			byte lv = 5;
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: lv);
+			Assert.AreSame(lv,Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
 		}
 		
         [TestMethod]
