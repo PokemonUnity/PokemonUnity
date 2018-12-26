@@ -83,10 +83,6 @@ namespace Tests
         }
 		#endregion
 
-		#region Egg stuff...
-
-		#endregion
-
 		#region Level/stats...
 		[TestMethod]
 		public void Pokemon_Starting_Level_NotNegative()
@@ -117,26 +113,33 @@ namespace Tests
 			Assert.IsFalse(pokemon.isEgg);
 		}
 
-        [TestMethod]
-		public void Pokemon_Set_ExperiencePoints_To_Match_Level()
-		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			Assert.AreSame(1,pokemon.Level);
-		}
+        //[TestMethod]
+		// Setting the pokemon levels controls the experience points
+		//public void Pokemon_Set_ExperiencePoints_To_Match_Level()
+		//{
+		//	byte lv = 7;
+		//	Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+		//	pokemon.Level = lv;
+		//	Assert.AreEqual(lv,Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
+		//}
 		
         [TestMethod]
+		// Setting the pokemon experience points controls the level
 		public void Pokemon_Set_Level_To_Match_ExperiencePoints()
 		{
-			byte lv = 5;
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: lv);
-			Assert.AreSame(lv,Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
+			byte lv = 7;
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: 3);
+			pokemon.Exp.AddExperience(Pokemon.Experience.GetStartExperience(pokemon.GrowthRate, 300));
+			pokemon.Exp.AddExperience(Pokemon.Experience.GetStartExperience(pokemon.GrowthRate, lv) - pokemon.Exp.Current);
+			Assert.AreEqual(lv, Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
 		}
 		
         [TestMethod]
 		public void Pokemon_Spawn_At_Set_Level()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-			Assert.AreSame(5,pokemon.Level);
+			byte lv = 5;
+			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR, level: lv);
+			Assert.AreEqual(lv, Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
 		}
 
         //[TestMethod]
@@ -174,7 +177,7 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
 		{
-			Pokemon pokemon = new Pokemon();
+			Pokemon pokemon = new Pokemon(Pokemons.CHARMANDER);
 			if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
 			int i = 0;
 			while (pokemon.EggSteps != 0)//(pokemon.isEgg)
@@ -182,17 +185,21 @@ namespace Tests
 				pokemon.AddSteps(); //goes down by 1
 				if (i > 1001) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
-			Assert.AreSame(false,pokemon.isEgg);
+			Assert.AreEqual(false,pokemon.isEgg);
 		}
 		
         [TestMethod]
 		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
 		{
-			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+			Pokemons pkmn = Pokemons.BULBASAUR;
+			Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
 			int i = 0;
 			while (true)
 			{
-				Assert.IsTrue(pokemon.Ability == Pokemon.PokemonData.GetPokemon(pokemon.Species).Ability[2]); i++;
+				Pokemon pokemon = new Pokemon(pkmn);
+				//pokemon.HatchEgg();
+				bool HA = pokemon.Ability == Hidden;
+				if(HA) Assert.IsTrue(HA); i++;
 				if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 		}
@@ -430,8 +437,11 @@ namespace Tests
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
 			//Add exp
+			pokemon.Exp.AddExperience(50000);
 			//Assert is true
-			Assert.Inconclusive();
+			if (pokemon.hasEvolveMethod(EvolutionMethod.Level))
+				Assert.IsTrue(false);
+			else Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
 		}
         [TestMethod]
 		public void Pokemon_TestPokemon_EvolvePokemon()
