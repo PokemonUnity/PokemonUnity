@@ -42,7 +42,7 @@ public class SaveDataOld
     public string mapName;
 
     public PC PC = new PC();
-    public Bag Bag = new Bag();
+    //public Bag Bag = new Bag();
 
 
     public string[] registeredItems = new string[4];

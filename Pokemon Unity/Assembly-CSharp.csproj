@@ -55,23 +55,11 @@
     <Compile Include="Assets\Scripts2\EventHandlers\BattlePokemonHandler.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
-    <Compile Include="Assets\Scripts\AudioHandler.cs" />
     <Compile Include="Assets\Scripts\BgmHandler.cs" />
     <Compile Include="Assets\Scripts\BridgeHandler.cs" />
-    <Compile Include="Assets\Scripts\Data\Bag.cs" />
-    <Compile Include="Assets\Scripts\Data\DataEnums.cs" />
-    <Compile Include="Assets\Scripts\Data\ItemData.cs" />
-    <Compile Include="Assets\Scripts\Data\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Data\MoveData.cs" />
     <Compile Include="Assets\Scripts\Data\MoveDatabase.cs" />
-    <Compile Include="Assets\Scripts\Data\NatureData.cs" />
-    <Compile Include="Assets\Scripts\Data\NatureDatabase.cs" />
     <Compile Include="Assets\Scripts\Data\PC.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonDatabaseOld.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonDataOld.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonHealth.cs" />
-    <Compile Include="Assets\Scripts\Data\PokemonOld.cs" />
-    <Compile Include="Assets\Scripts\Data\Trainer.cs" />
     <Compile Include="Assets\Scripts\DayNightCycle.cs" />
     <Compile Include="Assets\Scripts\DialogBoxHandler.cs" />
     <Compile Include="Assets\Scripts\DialogBoxHandlerNew.cs" />
@@ -106,7 +94,6 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
-    <Compile Include="Assets\Scripts\SaveLoad.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
@@ -123,7 +110,6 @@
     <Compile Include="Assets\Scripts\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\ScreenFade.cs" />
     <Compile Include="Assets\Scripts\SetMatTint.cs" />
-    <Compile Include="Assets\Scripts\SetResolution.cs" />
     <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
     <Compile Include="Assets\Scripts\SfxHandler.cs" />
     <Compile Include="Assets\Scripts\SpriteAnimation.cs" />
@@ -154,19 +140,8 @@
     <Compile Include="Assets\Scripts2\Trainer.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
-    <None Include="Assets\Scripts\Data\Database\Location\Pokemon_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Berry\Pokemon_en-us.xml" />
     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
-    <None Include="Assets\Scripts\Data\Database\Nature\Nature_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Type\Pokemon_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Pokemon\Pokemon_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Moves\Move_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Item\Item_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Data.xml" />
-    <None Include="Assets\Scripts\Data\Database\Ability\Ability_en-us.xml" />
     <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
-    <None Include="Assets\Scripts\Data\Database\Contest\Ribbon_en-us.xml" />
-    <None Include="Assets\Scripts\Data\Database\Menu\Pokemon_en-us.xml" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>

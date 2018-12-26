@@ -403,275 +403,275 @@ public class TypingHandler : MonoBehaviour
     }
 
 
-    public IEnumerator control(int typeSpaces, string defaultString, PokemonOld.Gender genderDisplay,
-        Sprite[] iconAnimation)
-    {
-        typeSpaceCount = typeSpaces;
-        iconAnim = iconAnimation;
-        if (iconAnimation == null)
-        {
-            icon.sprite = (iconAnimation.Length < 1) ? null : iconAnim[0];
-        }
-
-        selectorIndex = 0;
-        pageIndex = 0;
-
-        if (genderDisplay == PokemonOld.Gender.FEMALE)
-        {
-            genderText.text = "♀";
-            genderText.color = new Color(1, 0.2f, 0.2f, 1);
-        }
-        else if (genderDisplay == PokemonOld.Gender.MALE)
-        {
-            genderText.text = "♂";
-            genderText.color = new Color(0.2f, 0.4f, 1, 1);
-        }
-        else
-        {
-            genderText.text = null;
-        }
-        genderTextShadow.text = genderText.text;
-
-        for (int i = 0; i < typeSpaceCount; i++)
-        {
-            if (i < defaultString.Length)
-            {
-                typeSpaceText[i].text = defaultString.Substring(i, 1);
-                typeSpaceIndex = i + 1;
-            }
-            else
-            {
-                typeSpaceText[i].text = "";
-            }
-            typeSpaceTextShadow[i].text = typeSpaceText[i].text;
-        }
-
-        page[0].localPosition = new Vector3(0, -31, 0);
-        for (int i = 1; i < 4; i++)
-        {
-            page[i].localPosition = new Vector3(-300f, -31, 0);
-        }
-
-        panelButton[0].enabled = true;
-        for (int i = 1; i < 6; i++)
-        {
-            panelButton[i].enabled = false;
-        }
-
-        float buttonDelay = 0.15f;
-
-        StartCoroutine(animateSelector());
-        StartCoroutine(animateTypeSpace());
-        StartCoroutine(animateIcon());
-
-        StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
-
-        bool running = true;
-        while (running)
-        {
-            if (Input.GetAxisRaw("Horizontal") > 0)
-            {
-                if (selectorIndex < 5)
-                {
-                    setSelectorPosition(selectorIndex + 1);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (selectorIndex == 5)
-                {
-                    setSelectorPosition(selectorIndex - 5);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 < 12)
-                {
-                    setSelectorPosition(selectorIndex + 1);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 == 12)
-                {
-                    setSelectorPosition(selectorIndex - 12);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-            }
-            else if (Input.GetAxisRaw("Horizontal") < 0)
-            {
-                if (selectorIndex <= 5)
-                {
-                    if (selectorIndex == 0)
-                    {
-                        setSelectorPosition(selectorIndex + 5);
-                        yield return new WaitForSeconds(buttonDelay);
-                    }
-                    else if (selectorIndex > 0)
-                    {
-                        setSelectorPosition(selectorIndex - 1);
-                        yield return new WaitForSeconds(buttonDelay);
-                    }
-                }
-                else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 > 0)
-                {
-                    setSelectorPosition(selectorIndex - 1);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 == 0)
-                {
-                    setSelectorPosition(selectorIndex + 12);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-            }
-            if (Input.GetAxisRaw("Vertical") > 0)
-            {
-                if (pageIndex == 3)
-                {
-                    setSelectorPosition(3);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (selectorIndex > 5)
-                {
-                    //row 0 of keys
-                    if (selectorIndex < 19)
-                    {
-                        if (selectorIndex > 16)
-                        {
-                            setSelectorPosition(5);
-                        }
-                        else if (selectorIndex > 13)
-                        {
-                            setSelectorPosition(4);
-                        }
-                        else if (selectorIndex > 11)
-                        {
-                            setSelectorPosition(3);
-                        }
-                        else if (selectorIndex > 9)
-                        {
-                            setSelectorPosition(2);
-                        }
-                        else if (selectorIndex > 7)
-                        {
-                            setSelectorPosition(1);
-                        }
-                        else
-                        {
-                            setSelectorPosition(0);
-                        }
-                        yield return new WaitForSeconds(buttonDelay);
-                    }
-                    else
-                    {
-                        setSelectorPosition(selectorIndex - 13);
-                        yield return new WaitForSeconds(buttonDelay);
-                    }
-                }
-            }
-            else if (Input.GetAxisRaw("Vertical") < 0)
-            {
-                if (pageIndex == 3)
-                {
-                    setSelectorPosition(6);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (selectorIndex < 6)
-                {
-                    if (selectorIndex == 5)
-                    {
-                        setSelectorPosition(17);
-                    }
-                    else if (selectorIndex == 4)
-                    {
-                        setSelectorPosition(14);
-                    }
-                    else if (selectorIndex == 3)
-                    {
-                        setSelectorPosition(12);
-                    }
-                    else if (selectorIndex == 2)
-                    {
-                        setSelectorPosition(10);
-                    }
-                    else if (selectorIndex == 1)
-                    {
-                        setSelectorPosition(8);
-                    }
-                    else
-                    {
-                        setSelectorPosition(6);
-                    }
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-                else if (selectorIndex < 58)
-                {
-                    setSelectorPosition(selectorIndex + 13);
-                    yield return new WaitForSeconds(buttonDelay);
-                }
-            }
-            if (Input.GetButtonDown("Start"))
-            {
-                setSelectorPosition(5);
-                yield return new WaitForSeconds(buttonDelay);
-            }
-            else if (Input.GetButtonDown("Back") || Input.GetButtonDown("Run"))
-            {
-                yield return StartCoroutine(backspace());
-            }
-            else if (Input.GetButtonDown("Select"))
-            {
-                if (selectorIndex == 0)
-                {
-                    //Page0
-                    yield return StartCoroutine(swapPages(0));
-                }
-                else if (selectorIndex == 1)
-                {
-                    //Page1
-                    yield return StartCoroutine(swapPages(1));
-                }
-                else if (selectorIndex == 2)
-                {
-                    //Page2
-                    yield return StartCoroutine(swapPages(2));
-                }
-                else if (selectorIndex == 3)
-                {
-                    //Page3
-                    yield return StartCoroutine(swapPages(3));
-                }
-                else if (selectorIndex == 4)
-                {
-                    //Back
-                    yield return StartCoroutine(backspace());
-                }
-                else if (selectorIndex == 5)
-                {
-                    //OK
-                    panelButton[5].enabled = true;
-                    yield return new WaitForSeconds(0.1f);
-                    panelButton[5].enabled = false;
-                    compileString();
-                    running = false;
-                }
-                else
-                {
-                    if (pageIndex == 3)
-                    {
-                        //Keyboard
-                        yield return StartCoroutine(typeWithKeyboard());
-                    }
-                    else
-                    {
-                        //Keys
-                        addCurrentKeyToString();
-                    }
-                }
-            }
-
-            yield return null;
-        }
-
-        //yield return new WaitForSeconds(sceneTransition.FadeOut());
-        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-
-        gameObject.SetActive(false);
-    }
+    //public IEnumerator control(int typeSpaces, string defaultString, PokemonOld.Gender genderDisplay,
+    //    Sprite[] iconAnimation)
+    //{
+    //    typeSpaceCount = typeSpaces;
+    //    iconAnim = iconAnimation;
+    //    if (iconAnimation == null)
+    //    {
+    //        icon.sprite = (iconAnimation.Length < 1) ? null : iconAnim[0];
+    //    }
+	//
+    //    selectorIndex = 0;
+    //    pageIndex = 0;
+	//
+    //    if (genderDisplay == PokemonOld.Gender.FEMALE)
+    //    {
+    //        genderText.text = "♀";
+    //        genderText.color = new Color(1, 0.2f, 0.2f, 1);
+    //    }
+    //    else if (genderDisplay == PokemonOld.Gender.MALE)
+    //    {
+    //        genderText.text = "♂";
+    //        genderText.color = new Color(0.2f, 0.4f, 1, 1);
+    //    }
+    //    else
+    //    {
+    //        genderText.text = null;
+    //    }
+    //    genderTextShadow.text = genderText.text;
+	//
+    //    for (int i = 0; i < typeSpaceCount; i++)
+    //    {
+    //        if (i < defaultString.Length)
+    //        {
+    //            typeSpaceText[i].text = defaultString.Substring(i, 1);
+    //            typeSpaceIndex = i + 1;
+    //        }
+    //        else
+    //        {
+    //            typeSpaceText[i].text = "";
+    //        }
+    //        typeSpaceTextShadow[i].text = typeSpaceText[i].text;
+    //    }
+	//
+    //    page[0].localPosition = new Vector3(0, -31, 0);
+    //    for (int i = 1; i < 4; i++)
+    //    {
+    //        page[i].localPosition = new Vector3(-300f, -31, 0);
+    //    }
+	//
+    //    panelButton[0].enabled = true;
+    //    for (int i = 1; i < 6; i++)
+    //    {
+    //        panelButton[i].enabled = false;
+    //    }
+	//
+    //    float buttonDelay = 0.15f;
+	//
+    //    StartCoroutine(animateSelector());
+    //    StartCoroutine(animateTypeSpace());
+    //    StartCoroutine(animateIcon());
+	//
+    //    StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+	//
+    //    bool running = true;
+    //    while (running)
+    //    {
+    //        if (Input.GetAxisRaw("Horizontal") > 0)
+    //        {
+    //            if (selectorIndex < 5)
+    //            {
+    //                setSelectorPosition(selectorIndex + 1);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (selectorIndex == 5)
+    //            {
+    //                setSelectorPosition(selectorIndex - 5);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 < 12)
+    //            {
+    //                setSelectorPosition(selectorIndex + 1);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 == 12)
+    //            {
+    //                setSelectorPosition(selectorIndex - 12);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //        }
+    //        else if (Input.GetAxisRaw("Horizontal") < 0)
+    //        {
+    //            if (selectorIndex <= 5)
+    //            {
+    //                if (selectorIndex == 0)
+    //                {
+    //                    setSelectorPosition(selectorIndex + 5);
+    //                    yield return new WaitForSeconds(buttonDelay);
+    //                }
+    //                else if (selectorIndex > 0)
+    //                {
+    //                    setSelectorPosition(selectorIndex - 1);
+    //                    yield return new WaitForSeconds(buttonDelay);
+    //                }
+    //            }
+    //            else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 > 0)
+    //            {
+    //                setSelectorPosition(selectorIndex - 1);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (((selectorIndex - 6) - (Mathf.Floor((float) (selectorIndex - 6) / 13f) * 13)) % 13 == 0)
+    //            {
+    //                setSelectorPosition(selectorIndex + 12);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //        }
+    //        if (Input.GetAxisRaw("Vertical") > 0)
+    //        {
+    //            if (pageIndex == 3)
+    //            {
+    //                setSelectorPosition(3);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (selectorIndex > 5)
+    //            {
+    //                //row 0 of keys
+    //                if (selectorIndex < 19)
+    //                {
+    //                    if (selectorIndex > 16)
+    //                    {
+    //                        setSelectorPosition(5);
+    //                    }
+    //                    else if (selectorIndex > 13)
+    //                    {
+    //                        setSelectorPosition(4);
+    //                    }
+    //                    else if (selectorIndex > 11)
+    //                    {
+    //                        setSelectorPosition(3);
+    //                    }
+    //                    else if (selectorIndex > 9)
+    //                    {
+    //                        setSelectorPosition(2);
+    //                    }
+    //                    else if (selectorIndex > 7)
+    //                    {
+    //                        setSelectorPosition(1);
+    //                    }
+    //                    else
+    //                    {
+    //                        setSelectorPosition(0);
+    //                    }
+    //                    yield return new WaitForSeconds(buttonDelay);
+    //                }
+    //                else
+    //                {
+    //                    setSelectorPosition(selectorIndex - 13);
+    //                    yield return new WaitForSeconds(buttonDelay);
+    //                }
+    //            }
+    //        }
+    //        else if (Input.GetAxisRaw("Vertical") < 0)
+    //        {
+    //            if (pageIndex == 3)
+    //            {
+    //                setSelectorPosition(6);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (selectorIndex < 6)
+    //            {
+    //                if (selectorIndex == 5)
+    //                {
+    //                    setSelectorPosition(17);
+    //                }
+    //                else if (selectorIndex == 4)
+    //                {
+    //                    setSelectorPosition(14);
+    //                }
+    //                else if (selectorIndex == 3)
+    //                {
+    //                    setSelectorPosition(12);
+    //                }
+    //                else if (selectorIndex == 2)
+    //                {
+    //                    setSelectorPosition(10);
+    //                }
+    //                else if (selectorIndex == 1)
+    //                {
+    //                    setSelectorPosition(8);
+    //                }
+    //                else
+    //                {
+    //                    setSelectorPosition(6);
+    //                }
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //            else if (selectorIndex < 58)
+    //            {
+    //                setSelectorPosition(selectorIndex + 13);
+    //                yield return new WaitForSeconds(buttonDelay);
+    //            }
+    //        }
+    //        if (Input.GetButtonDown("Start"))
+    //        {
+    //            setSelectorPosition(5);
+    //            yield return new WaitForSeconds(buttonDelay);
+    //        }
+    //        else if (Input.GetButtonDown("Back") || Input.GetButtonDown("Run"))
+    //        {
+    //            yield return StartCoroutine(backspace());
+    //        }
+    //        else if (Input.GetButtonDown("Select"))
+    //        {
+    //            if (selectorIndex == 0)
+    //            {
+    //                //Page0
+    //                yield return StartCoroutine(swapPages(0));
+    //            }
+    //            else if (selectorIndex == 1)
+    //            {
+    //                //Page1
+    //                yield return StartCoroutine(swapPages(1));
+    //            }
+    //            else if (selectorIndex == 2)
+    //            {
+    //                //Page2
+    //                yield return StartCoroutine(swapPages(2));
+    //            }
+    //            else if (selectorIndex == 3)
+    //            {
+    //                //Page3
+    //                yield return StartCoroutine(swapPages(3));
+    //            }
+    //            else if (selectorIndex == 4)
+    //            {
+    //                //Back
+    //                yield return StartCoroutine(backspace());
+    //            }
+    //            else if (selectorIndex == 5)
+    //            {
+    //                //OK
+    //                panelButton[5].enabled = true;
+    //                yield return new WaitForSeconds(0.1f);
+    //                panelButton[5].enabled = false;
+    //                compileString();
+    //                running = false;
+    //            }
+    //            else
+    //            {
+    //                if (pageIndex == 3)
+    //                {
+    //                    //Keyboard
+    //                    yield return StartCoroutine(typeWithKeyboard());
+    //                }
+    //                else
+    //                {
+    //                    //Keys
+    //                    addCurrentKeyToString();
+    //                }
+    //            }
+    //        }
+	//
+    //        yield return null;
+    //    }
+	//
+    //    //yield return new WaitForSeconds(sceneTransition.FadeOut());
+    //    yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+	//
+    //    gameObject.SetActive(false);
+    //}
 
     private IEnumerator typeWithKeyboard()
     {

@@ -380,18 +380,18 @@ public class WildPokemonInitialiserOld
         /// Walking on rough terrain
         /// </summary>
         ROUGH_TERRAIN = 17,
-        /// <summary>
-        /// Fishing with an <see cref="eItems.Item.OLD_ROD"/>
-        /// </summary>
-        OLD_ROD = 2,
-        /// <summary>
-        /// Fishing with a <see cref="eItems.Item.GOOD_ROD"/> 
-        /// </summary>
-        GOOD_ROD = 3,
-        /// <summary>
-        /// Fishing with a <see cref="eItems.Item.SUPER_ROD"/> 
-        /// </summary>
-        SUPER_ROD = 4,
+		/// <summary>
+		/// Fishing with an <see cref="PokemonUnity.Item.Items.OLD_ROD"/>
+		/// </summary>
+		OLD_ROD = 2,
+		/// <summary>
+		/// Fishing with a <see cref="PokemonUnity.Item.Items.GOOD_ROD"/> 
+		/// </summary>
+		GOOD_ROD = 3,
+		/// <summary>
+		/// Fishing with a <see cref="PokemonUnity.Item.Items.SUPER_ROD"/> 
+		/// </summary>
+		SUPER_ROD = 4,
         /// <summary>
         /// Fishing in dark spots
         /// </summary>

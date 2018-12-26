@@ -62,28 +62,31 @@ public class InteractItem : MonoBehaviour
             if (TM)
             {
                 Dialog.StartCoroutine("drawText",
-                    SaveDataOld.currentSave.playerName + " found TM" + ItemDatabaseOld.getItem(item).getTMNo() + ": " + item +
+                    //SaveDataOld.currentSave.playerName + " found TM" + ItemDatabaseOld.getItem(item).getTMNo() + ": " + item +
                     "!");
             }
             else
             {
                 if (quantity > 1)
                 {
-                    Dialog.StartCoroutine("drawText", SaveDataOld.currentSave.playerName + " found " + item + "s!");
+                    Dialog.StartCoroutine("drawText", //SaveDataOld.currentSave.playerName + 
+						" found " + item + "s!");
                 }
                 else if (firstLetter == "a" || firstLetter == "e" || firstLetter == "i" || firstLetter == "o" ||
                          firstLetter == "u")
                 {
-                    Dialog.StartCoroutine("drawText", SaveDataOld.currentSave.playerName + " found an " + item + "!");
+                    Dialog.StartCoroutine("drawText", //SaveDataOld.currentSave.playerName + 
+						" found an " + item + "!");
                 }
                 else
                 {
-                    Dialog.StartCoroutine("drawText", SaveDataOld.currentSave.playerName + " found a " + item + "!");
+                    Dialog.StartCoroutine("drawText", //SaveDataOld.currentSave.playerName + 
+						" found a " + item + "!");
                 }
             }
             yield return new WaitForSeconds(itemGetMFX.length);
 
-            bool itemAdd = SaveDataOld.currentSave.Bag.addItem(item, quantity);
+			bool itemAdd = false;//SaveDataOld.currentSave.Bag.addItem(item, quantity);
 
             Dialog.drawDialogBox();
             if (itemAdd)
@@ -97,7 +100,7 @@ public class InteractItem : MonoBehaviour
                 {
                     yield return
                         Dialog.StartCoroutine("drawTextSilent",
-                            SaveDataOld.currentSave.playerName + " put the TM" + ItemDatabaseOld.getItem(item).getTMNo() +
+                            //SaveDataOld.currentSave.playerName + " put the TM" + ItemDatabaseOld.getItem(item).getTMNo() +
                             " \\away into the bag.");
                 }
                 else
@@ -106,13 +109,15 @@ public class InteractItem : MonoBehaviour
                     {
                         yield return
                             Dialog.StartCoroutine("drawTextSilent",
-                                SaveDataOld.currentSave.playerName + " put the " + item + "s \\away into the bag.");
+                                //SaveDataOld.currentSave.playerName + 
+								" put the " + item + "s \\away into the bag.");
                     }
                     else
                     {
                         yield return
                             Dialog.StartCoroutine("drawTextSilent",
-                                SaveDataOld.currentSave.playerName + " put the " + item + " \\away into the bag.");
+                                //SaveDataOld.currentSave.playerName + 
+								" put the " + item + " \\away into the bag.");
                     }
                 }
                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))

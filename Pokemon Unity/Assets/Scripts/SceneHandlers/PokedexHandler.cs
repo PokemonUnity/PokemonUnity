@@ -73,8 +73,6 @@ public class PokedexHandler : MonoBehaviour {
 		bool running = true;
 		while (running) {
 			// Input
-
-
 			if (cursorPosition.y == -1 && screen2 != true) {
 				if (Input.GetAxis ("Horizontal") > 0 && boxNum != 18) {
 					
@@ -132,12 +130,7 @@ public class PokedexHandler : MonoBehaviour {
 						
 				}
 			}
-
 		
-
-
-
-
 			yield return null;
 		}
 
@@ -154,7 +147,7 @@ public class PokedexHandler : MonoBehaviour {
 		float increment = 0;
 		//float startX = background.pixelInset.x;
 		//float startY = background.pixelInset.y;
-		float distanceX = -200;
+		//float distanceX = -200;
 
 		while (increment < 1)
 		{

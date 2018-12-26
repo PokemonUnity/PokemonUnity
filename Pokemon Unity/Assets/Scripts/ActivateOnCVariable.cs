@@ -30,40 +30,40 @@ public class ActivateOnCVariable : MonoBehaviour
 
     void Start()
     {
-        CheckActivation();
+        //CheckActivation();
     }
 
 
-    private void CheckActivation()
-    {
-        bool checkResult = false;
-        if (check == Check.Equal)
-        {
-            if (SaveDataOld.currentSave.getCVariable(cVariable) == cNumber)
-            {
-                checkResult = true;
-            }
-        }
-        else if (check == Check.GreaterThan)
-        {
-            if (SaveDataOld.currentSave.getCVariable(cVariable) > cNumber)
-            {
-                checkResult = true;
-            }
-        }
-        else if (check == Check.LessThan)
-        {
-            if (SaveDataOld.currentSave.getCVariable(cVariable) < cNumber)
-            {
-                checkResult = true;
-            }
-        }
-
-        if (not)
-        {
-            //invert bool
-            checkResult = (checkResult) ? false : true;
-        }
-        target.SetActive(checkResult);
-    }
+    //private void CheckActivation()
+    //{
+    //    bool checkResult = false;
+    //    if (check == Check.Equal)
+    //    {
+    //        if (SaveDataOld.currentSave.getCVariable(cVariable) == cNumber)
+    //        {
+    //            checkResult = true;
+    //        }
+    //    }
+    //    else if (check == Check.GreaterThan)
+    //    {
+    //        if (SaveDataOld.currentSave.getCVariable(cVariable) > cNumber)
+    //        {
+    //            checkResult = true;
+    //        }
+    //    }
+    //    else if (check == Check.LessThan)
+    //    {
+    //        if (SaveDataOld.currentSave.getCVariable(cVariable) < cNumber)
+    //        {
+    //            checkResult = true;
+    //        }
+    //    }
+	//
+    //    if (not)
+    //    {
+    //        //invert bool
+    //        checkResult = (checkResult) ? false : true;
+    //    }
+    //    target.SetActive(checkResult);
+    //}
 }

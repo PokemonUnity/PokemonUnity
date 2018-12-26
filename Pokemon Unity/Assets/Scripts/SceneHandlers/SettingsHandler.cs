@@ -2,14 +2,15 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SettingsHandler : MonoBehaviour
 {
     private DialogBoxHandler Dialog;
 
-    private GUITexture selectRow;
+    private Texture selectRow;
 
-    private GUIText
+    private Text
         textSpeed,
         textSpeedShadow,
         textSpeedHighlight,
@@ -63,45 +64,45 @@ public class SettingsHandler : MonoBehaviour
     public AudioClip selectClip;
 
     private GameObject DialogBox;
-    private GUIText DialogBoxText;
-    private GUIText DialogBoxTextShadow;
-    private GUITexture DialogBoxBorder;
+    private Text DialogBoxText;
+    private Text DialogBoxTextShadow;
+    private Texture DialogBoxBorder;
 
     void Awake()
     {
         SettingsAudio = transform.GetComponent<AudioSource>();
         Dialog = gameObject.GetComponent<DialogBoxHandler>();
 
-        selectRow = transform.Find("selectRow").GetComponent<GUITexture>();
+        //selectRow = transform.Find("selectRow").GetComponent<GUITexture>();
 
-        textSpeed = transform.Find("TextSpeed").GetComponent<GUIText>();
-        textSpeedShadow = textSpeed.transform.Find("TextSpeedShadow").GetComponent<GUIText>();
-        textSpeedHighlight = textSpeed.transform.Find("TextSpeedHighlight").GetComponent<GUIText>();
-        musicVolume = transform.Find("MusicVolume").GetComponent<GUIText>();
-        musicVolumeShadow = musicVolume.transform.Find("MusicVolumeShadow").GetComponent<GUIText>();
-        musicVolumeHighlight = musicVolume.transform.Find("MusicVolumeHighlight").GetComponent<GUIText>();
-        sfxVolume = transform.Find("SFXVolume").GetComponent<GUIText>();
-        sfxVolumeShadow = sfxVolume.transform.Find("SFXVolumeShadow").GetComponent<GUIText>();
-        sfxVolumeHighlight = sfxVolume.transform.Find("SFXVolumeHighlight").GetComponent<GUIText>();
-        frameStyle = transform.Find("FrameStyle").GetComponent<GUIText>();
-        frameStyleShadow = frameStyle.transform.Find("FrameStyleShadow").GetComponent<GUIText>();
-        battleScene = transform.Find("BattleScene").GetComponent<GUIText>();
-        battleSceneShadow = battleScene.transform.Find("BattleSceneShadow").GetComponent<GUIText>();
-        battleSceneHighlight = battleScene.transform.Find("BattleSceneHighlight").GetComponent<GUIText>();
-        customSprites = transform.Find("CustomSprites").GetComponent<GUIText>();
-        customSpritesShadow = customSprites.transform.Find("CustomSpritesShadow").GetComponent<GUIText>();
-        customSpritesHighlight = customSprites.transform.Find("CustomSpritesHighlight").GetComponent<GUIText>();
-        screenSize = transform.Find("ScreenSize").GetComponent<GUIText>();
-        screenSizeShadow = screenSize.transform.Find("ScreenSizeShadow").GetComponent<GUIText>();
-        screenSizeHighlight = screenSize.transform.Find("ScreenSizeHighlight").GetComponent<GUIText>();
-        fullscreen = transform.Find("Fullscreen").GetComponent<GUIText>();
-        fullscreenShadow = fullscreen.transform.Find("FullscreenShadow").GetComponent<GUIText>();
-        fullscreenHighlight = fullscreen.transform.Find("FullscreenHighlight").GetComponent<GUIText>();
+        //textSpeed = transform.Find("TextSpeed").GetComponent<GUIText>();
+        //textSpeedShadow = textSpeed.transform.Find("TextSpeedShadow").GetComponent<GUIText>();
+        //textSpeedHighlight = textSpeed.transform.Find("TextSpeedHighlight").GetComponent<GUIText>();
+        //musicVolume = transform.Find("MusicVolume").GetComponent<GUIText>();
+        //musicVolumeShadow = musicVolume.transform.Find("MusicVolumeShadow").GetComponent<GUIText>();
+        //musicVolumeHighlight = musicVolume.transform.Find("MusicVolumeHighlight").GetComponent<GUIText>();
+        //sfxVolume = transform.Find("SFXVolume").GetComponent<GUIText>();
+        //sfxVolumeShadow = sfxVolume.transform.Find("SFXVolumeShadow").GetComponent<GUIText>();
+        //sfxVolumeHighlight = sfxVolume.transform.Find("SFXVolumeHighlight").GetComponent<GUIText>();
+        //frameStyle = transform.Find("FrameStyle").GetComponent<GUIText>();
+        //frameStyleShadow = frameStyle.transform.Find("FrameStyleShadow").GetComponent<GUIText>();
+        //battleScene = transform.Find("BattleScene").GetComponent<GUIText>();
+        //battleSceneShadow = battleScene.transform.Find("BattleSceneShadow").GetComponent<GUIText>();
+        //battleSceneHighlight = battleScene.transform.Find("BattleSceneHighlight").GetComponent<GUIText>();
+        //customSprites = transform.Find("CustomSprites").GetComponent<GUIText>();
+        //customSpritesShadow = customSprites.transform.Find("CustomSpritesShadow").GetComponent<GUIText>();
+        //customSpritesHighlight = customSprites.transform.Find("CustomSpritesHighlight").GetComponent<GUIText>();
+        //screenSize = transform.Find("ScreenSize").GetComponent<GUIText>();
+        //screenSizeShadow = screenSize.transform.Find("ScreenSizeShadow").GetComponent<GUIText>();
+        //screenSizeHighlight = screenSize.transform.Find("ScreenSizeHighlight").GetComponent<GUIText>();
+        //fullscreen = transform.Find("Fullscreen").GetComponent<GUIText>();
+        //fullscreenShadow = fullscreen.transform.Find("FullscreenShadow").GetComponent<GUIText>();
+        //fullscreenHighlight = fullscreen.transform.Find("FullscreenHighlight").GetComponent<GUIText>();
 
         DialogBox = transform.Find("Description").gameObject;
-        DialogBoxText = DialogBox.transform.Find("DescriptionText").GetComponent<GUIText>();
-        DialogBoxTextShadow = DialogBox.transform.Find("DescriptionTextShadow").GetComponent<GUIText>();
-        DialogBoxBorder = DialogBox.transform.Find("DescriptionBorder").GetComponent<GUITexture>();
+        //DialogBoxText = DialogBox.transform.Find("DescriptionText").GetComponent<GUIText>();
+        //DialogBoxTextShadow = DialogBox.transform.Find("DescriptionTextShadow").GetComponent<GUIText>();
+        //DialogBoxBorder = DialogBox.transform.Find("DescriptionBorder").GetComponent<GUITexture>();
     }
 
     void Start()
@@ -188,7 +189,7 @@ public class SettingsHandler : MonoBehaviour
     {
         float increment = 0;
         float moveSpeed = 0.2f;
-        float startY = selectRow.pixelInset.y;
+        //float startY = selectRow.pixelInset.y;
         while (increment < 1)
         {
             increment += (1 / moveSpeed) * Time.deltaTime;
@@ -196,8 +197,8 @@ public class SettingsHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            selectRow.pixelInset = new Rect(selectRow.pixelInset.x, startY + (16 * increment * direction),
-                selectRow.pixelInset.width, selectRow.pixelInset.height);
+            //selectRow.pixelInset = new Rect(selectRow.pixelInset.x, startY + (16 * increment * direction),
+            //    selectRow.pixelInset.width, selectRow.pixelInset.height);
             yield return null;
         }
     }
@@ -240,19 +241,19 @@ public class SettingsHandler : MonoBehaviour
             if (selectedOptionIndex[selectedOption] == 0)
             {
                 textSpeedHighlight.text = "Slow";
-                textSpeedHighlight.pixelOffset = new Vector2(155, 159);
+                //textSpeedHighlight.pixelOffset = new Vector2(155, 159);
                 PlayerPrefs.SetInt("textSpeed", 0);
             }
             else if (selectedOptionIndex[selectedOption] == 1)
             {
                 textSpeedHighlight.text = "Medium";
-                textSpeedHighlight.pixelOffset = new Vector2(191, 159);
+                //textSpeedHighlight.pixelOffset = new Vector2(191, 159);
                 PlayerPrefs.SetInt("textSpeed", 1);
             }
             else
             {
                 textSpeedHighlight.text = "Fast";
-                textSpeedHighlight.pixelOffset = new Vector2(238, 159);
+                //textSpeedHighlight.pixelOffset = new Vector2(238, 159);
                 PlayerPrefs.SetInt("textSpeed", 2);
             }
         }
@@ -282,7 +283,7 @@ public class SettingsHandler : MonoBehaviour
         {
             frameStyle.text = "Style " + (selectedOptionIndex[selectedOption] + 1);
             frameStyleShadow.text = frameStyle.text;
-            DialogBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + (selectedOptionIndex[3] + 1));
+            //DialogBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + (selectedOptionIndex[3] + 1));
             PlayerPrefs.SetInt("frameStyle", selectedOptionIndex[3] + 1);
         }
         else if (selectedOption == 4)
@@ -290,12 +291,12 @@ public class SettingsHandler : MonoBehaviour
             if (selectedOptionIndex[selectedOption] == 0)
             {
                 battleSceneHighlight.text = "Off";
-                battleSceneHighlight.pixelOffset = new Vector2(186, 95);
+                //battleSceneHighlight.pixelOffset = new Vector2(186, 95);
             }
             else
             {
                 battleSceneHighlight.text = "On";
-                battleSceneHighlight.pixelOffset = new Vector2(217, 95);
+                //battleSceneHighlight.pixelOffset = new Vector2(217, 95);
             }
         }
         else if (selectedOption == 5)
@@ -303,18 +304,18 @@ public class SettingsHandler : MonoBehaviour
             if (selectedOptionIndex[selectedOption] == 0)
             {
                 customSpritesHighlight.text = "Off";
-                customSpritesHighlight.pixelOffset = new Vector2(186, 79);
+                //customSpritesHighlight.pixelOffset = new Vector2(186, 79);
                 PlayerPrefs.SetInt("customSprites", selectedOptionIndex[5]);
-                SaveDataOld.currentSave.playerOutfit = "hgss";
+                //SaveDataOld.currentSave.playerOutfit = "hgss";
                 PlayerMovement.player.updateAnimation("walk", 7);
                 Debug.Log("Disabled custom sprites");
             }
             else
             {
                 customSpritesHighlight.text = "On";
-                SaveDataOld.currentSave.playerOutfit = "custom";
+                //SaveDataOld.currentSave.playerOutfit = "custom";
                 PlayerMovement.player.updateAnimation("walk", 7);
-                customSpritesHighlight.pixelOffset = new Vector2(217, 79);
+                //customSpritesHighlight.pixelOffset = new Vector2(217, 79);
                 Debug.Log("Enabled custom sprites");
             }
         }
@@ -323,7 +324,7 @@ public class SettingsHandler : MonoBehaviour
             if (selectedOptionIndex[selectedOption] == 0)
             {
                 screenSizeHighlight.text = "x1";
-                screenSizeHighlight.pixelOffset = new Vector2(150, 63);
+                //screenSizeHighlight.pixelOffset = new Vector2(150, 63);
                 if (!Screen.fullScreen)
                 {
                     Screen.SetResolution(342, 192, Screen.fullScreen);
@@ -332,7 +333,7 @@ public class SettingsHandler : MonoBehaviour
             else if (selectedOptionIndex[selectedOption] == 1)
             {
                 screenSizeHighlight.text = "x2";
-                screenSizeHighlight.pixelOffset = new Vector2(177, 63);
+                //screenSizeHighlight.pixelOffset = new Vector2(177, 63);
                 if (!Screen.fullScreen)
                 {
                     Screen.SetResolution(684, 384, Screen.fullScreen);
@@ -341,7 +342,7 @@ public class SettingsHandler : MonoBehaviour
             else if (selectedOptionIndex[selectedOption] == 2)
             {
                 screenSizeHighlight.text = "x3";
-                screenSizeHighlight.pixelOffset = new Vector2(204, 63);
+                //screenSizeHighlight.pixelOffset = new Vector2(204, 63);
                 if (!Screen.fullScreen)
                 {
                     Screen.SetResolution(1026, 576, Screen.fullScreen);
@@ -350,7 +351,7 @@ public class SettingsHandler : MonoBehaviour
             else if (selectedOptionIndex[selectedOption] == 3)
             {
                 screenSizeHighlight.text = "x4";
-                screenSizeHighlight.pixelOffset = new Vector2(231, 63);
+                //screenSizeHighlight.pixelOffset = new Vector2(231, 63);
                 if (!Screen.fullScreen)
                 {
                     Screen.SetResolution(1368, 768, Screen.fullScreen);
@@ -359,7 +360,7 @@ public class SettingsHandler : MonoBehaviour
             else
             {
                 screenSizeHighlight.text = "x5";
-                screenSizeHighlight.pixelOffset = new Vector2(258, 63);
+                //screenSizeHighlight.pixelOffset = new Vector2(258, 63);
                 if (!Screen.fullScreen)
                 {
                     Screen.SetResolution(1710, 960, Screen.fullScreen);
@@ -371,19 +372,19 @@ public class SettingsHandler : MonoBehaviour
             if (selectedOptionIndex[selectedOption] == 0)
             {
                 fullscreenHighlight.text = "Off";
-                fullscreenHighlight.pixelOffset = new Vector2(149, 47);
+                //fullscreenHighlight.pixelOffset = new Vector2(149, 47);
                 Screen.SetResolution(342 * (selectedOptionIndex[6] + 1), 192 * (selectedOptionIndex[6] + 1), false);
             }
             else if (selectedOptionIndex[selectedOption] == 1)
             {
                 fullscreenHighlight.text = "Border";
-                fullscreenHighlight.pixelOffset = new Vector2(180, 47);
+                //fullscreenHighlight.pixelOffset = new Vector2(180, 47);
                 Screen.SetResolution(342 * (selectedOptionIndex[6] + 1), 192 * (selectedOptionIndex[6] + 1), true);
             }
             else if (selectedOptionIndex[selectedOption] == 2)
             {
                 fullscreenHighlight.text = "Stretch";
-                fullscreenHighlight.pixelOffset = new Vector2(231, 47);
+                //fullscreenHighlight.pixelOffset = new Vector2(231, 47);
                 Screen.SetResolution(342 * selectedOptionSize[6], 192 * selectedOptionSize[6], true);
             }
         }
@@ -459,9 +460,9 @@ public class SettingsHandler : MonoBehaviour
             selectedOptionIndex[7]
         };
         //	float originalMVol = PlayerPrefs.GetFloat("musicVolume");
-//		float originalSVol = PlayerPrefs.GetFloat("sfxVolume");
+		//float originalSVol = PlayerPrefs.GetFloat("sfxVolume");
         selectedOption = 0;
-        selectRow.pixelInset = new Rect(51, 144, selectRow.pixelInset.width, selectRow.pixelInset.height);
+        //selectRow.pixelInset = new Rect(51, 144, selectRow.pixelInset.width, selectRow.pixelInset.height);
         drawDialogBox();
         drawTextInstant(selectedOptionText[0]);
         while (running)

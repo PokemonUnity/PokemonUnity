@@ -71,11 +71,11 @@ public class NPCHandler : MonoBehaviour
         }
         else
         {
-            spriteSheet = PokemonOld.GetSpriteFromID(pokemonID, false, false);
-
-            npcLight.intensity = PokemonDatabaseOld.getPokemon(pokemonID).getLuminance();
-            npcLight.color = PokemonDatabaseOld.getPokemon(pokemonID).getLightColor();
-            lightSheet = PokemonOld.GetSpriteFromID(pokemonID, false, true);
+            //spriteSheet = PokemonOld.GetSpriteFromID(pokemonID, false, false);
+			//
+            //npcLight.intensity = PokemonDatabaseOld.getPokemon(pokemonID).getLuminance();
+            //npcLight.color = PokemonDatabaseOld.getPokemon(pokemonID).getLightColor();
+            //lightSheet = PokemonOld.GetSpriteFromID(pokemonID, false, true);
         }
 
         exclaim = transform.Find("Exclaim").gameObject;

@@ -79,7 +79,7 @@ public class MoveData {
 
 	private string name;
 
-	private PokemonDataOld.Type type { get; set; }
+	//private PokemonDataOld.Type type { get; set; }
 	private Category category;
 	private int power;
 	private float accuracy;
@@ -102,9 +102,9 @@ public class MoveData {
 	public string getName(){
 		return name;}
 
-	public PokemonDataOld.Type getType(){
-		return type;
-	}
+	//public PokemonDataOld.Type getType(){
+	//	return type;
+	//}
 
 	public Category getCategory(){
 		return category;}

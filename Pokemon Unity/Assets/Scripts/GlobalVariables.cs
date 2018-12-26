@@ -24,7 +24,7 @@ public class GlobalVariables : MonoBehaviour
 
     public int followerIndex = 0;
 
-    private double buildNum = 0.17;
+    //private double buildNum = 0.17;
     private GameObject Player;
     private FollowerMovement FollowerSettings;
 

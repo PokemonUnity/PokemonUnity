@@ -50,50 +50,50 @@ public class NonResettingHandler : MonoBehaviour
 
     void Start()
     {
-        int sceneNonResettingListIndex = SaveDataOld.currentSave.getNonResettingListIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-
-        //if entry is already in global, update everything to match
-        if (sceneNonResettingListIndex >= 0)
-        {
-            NonResettingList sceneNonResettingList = SaveDataOld.currentSave.nonResettingLists[sceneNonResettingListIndex];
-
-            for (int i = 0; i < trainers.Length; i++)
-            {
-                if (i < sceneNonResettingList.sceneTrainers.Length)
-                {
-                    trainers[i].defeated = sceneNonResettingList.sceneTrainers[i];
-                }
-                else
-                {
-                    Debug.Log("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
-                }
-            }
-            for (int i = 0; i < items.Length; i++)
-            {
-                if (i < sceneNonResettingList.sceneItems.Length)
-                {
-                    if (!sceneNonResettingList.sceneItems[i])
-                    {
-                        items[i].disableItem();
-                    }
-                }
-                else
-                {
-                    Debug.Log("NonResettingList Inconsistancy for" + items[i].name);
-                }
-            }
-            for (int i = 0; i < events.Length; i++)
-            {
-                if (i < sceneNonResettingList.sceneEvents.Length)
-                {
-                    events[i].SetActive(sceneNonResettingList.sceneEvents[i]);
-                }
-                else
-                {
-                    Debug.Log("NonResettingList Inconsistancy for" + events[i].name);
-                }
-            }
-        }
+        //int sceneNonResettingListIndex = SaveDataOld.currentSave.getNonResettingListIndex(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+		//
+        ////if entry is already in global, update everything to match
+        //if (sceneNonResettingListIndex >= 0)
+        //{
+        //    NonResettingList sceneNonResettingList = SaveDataOld.currentSave.nonResettingLists[sceneNonResettingListIndex];
+		//
+        //    for (int i = 0; i < trainers.Length; i++)
+        //    {
+        //        if (i < sceneNonResettingList.sceneTrainers.Length)
+        //        {
+        //            trainers[i].defeated = sceneNonResettingList.sceneTrainers[i];
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("NonResettingList Inconsistancy for" + trainers[i].gameObject.name);
+        //        }
+        //    }
+        //    for (int i = 0; i < items.Length; i++)
+        //    {
+        //        if (i < sceneNonResettingList.sceneItems.Length)
+        //        {
+        //            if (!sceneNonResettingList.sceneItems[i])
+        //            {
+        //                items[i].disableItem();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("NonResettingList Inconsistancy for" + items[i].name);
+        //        }
+        //    }
+        //    for (int i = 0; i < events.Length; i++)
+        //    {
+        //        if (i < sceneNonResettingList.sceneEvents.Length)
+        //        {
+        //            events[i].SetActive(sceneNonResettingList.sceneEvents[i]);
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("NonResettingList Inconsistancy for" + events[i].name);
+        //        }
+        //    }
+        //}
     }
 
     private NonResettingList compileListOfNonResetters()
@@ -130,20 +130,20 @@ public class NonResettingHandler : MonoBehaviour
 
             if (thisNonResettingList != null)
             {
-                bool listUpdated = false;
-                for (int i = 0; i < SaveDataOld.currentSave.nonResettingLists.Count; i++)
-                {
-                    if (SaveDataOld.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
-                    {
-                        SaveDataOld.currentSave.nonResettingLists[i] = thisNonResettingList;
-                        listUpdated = true;
-                        i = SaveDataOld.currentSave.nonResettingLists.Count;
-                    }
-                }
-                if (!listUpdated)
-                {
-                    SaveDataOld.currentSave.nonResettingLists.Add(thisNonResettingList);
-                }
+                //bool listUpdated = false;
+                //for (int i = 0; i < SaveDataOld.currentSave.nonResettingLists.Count; i++)
+                //{
+                //    if (SaveDataOld.currentSave.nonResettingLists[i].sceneName == thisNonResettingList.sceneName)
+                //    {
+                //        SaveDataOld.currentSave.nonResettingLists[i] = thisNonResettingList;
+                //        listUpdated = true;
+                //        i = SaveDataOld.currentSave.nonResettingLists.Count;
+                //    }
+                //}
+                //if (!listUpdated)
+                //{
+                //    SaveDataOld.currentSave.nonResettingLists.Add(thisNonResettingList);
+                //}
             }
         }
     }

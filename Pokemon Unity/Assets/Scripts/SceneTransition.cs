@@ -12,7 +12,7 @@ public class SceneTransition : MonoBehaviour
     private bool fadingOut = false;
     private float increment = 0.5f;
 
-    private GUITexture screenFader;
+    private Texture screenFader;
     public Texture defaultFadeTex;
     private RotatableGUIItem screenFaderOnGUI;
 
@@ -26,7 +26,7 @@ public class SceneTransition : MonoBehaviour
             gameScene = this;
         }
 
-        screenFader = transform.Find("ScreenFader").GetComponent<GUITexture>();
+        //screenFader = transform.Find("ScreenFader").GetComponent<GUITexture>();
         if (screenFader != null)
         {
             RotatableGUI = false;
@@ -37,7 +37,7 @@ public class SceneTransition : MonoBehaviour
         }
         if (!RotatableGUI)
         {
-            screenFader.pixelInset = new Rect(0, 0, 342, 192);
+            //screenFader.pixelInset = new Rect(0, 0, 342, 192);
         }
         else
         {
@@ -55,7 +55,7 @@ public class SceneTransition : MonoBehaviour
             {
                 if (!RotatableGUI)
                 {
-                    screenFader.enabled = false;
+                    //screenFader.enabled = false;
                 }
                 else
                 {
@@ -69,10 +69,10 @@ public class SceneTransition : MonoBehaviour
     {
         if (!RotatableGUI)
         {
-            if (screenFader.texture == null)
-            {
-                screenFader.texture = defaultFadeTex;
-            }
+            //if (screenFader.texture == null)
+            //{
+            //    screenFader.texture = defaultFadeTex;
+            //}
         }
         else
         {
@@ -88,8 +88,8 @@ public class SceneTransition : MonoBehaviour
             {
                 if (!RotatableGUI)
                 {
-                    screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
-                        (0f + increment) / 2);
+                    //screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
+                    //    (0f + increment) / 2);
                 }
                 else
                 {
@@ -101,8 +101,8 @@ public class SceneTransition : MonoBehaviour
             {
                 if (!RotatableGUI)
                 {
-                    screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
-                        (1f - increment) / 2);
+                    //screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
+                    //    (1f - increment) / 2);
                 }
                 else
                 {
@@ -118,8 +118,8 @@ public class SceneTransition : MonoBehaviour
             {
                 if (!RotatableGUI)
                 {
-                    screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
-                        (0f + increment) / 2);
+                    //screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
+                    //    (0f + increment) / 2);
                 }
                 else
                 {
@@ -131,8 +131,8 @@ public class SceneTransition : MonoBehaviour
             {
                 if (!RotatableGUI)
                 {
-                    screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
-                        (1f - increment) / 2);
+                    //screenFader.color = new Color(screenFader.color.r, screenFader.color.g, screenFader.color.b,
+                    //    (1f - increment) / 2);
                 }
                 else
                 {
@@ -147,7 +147,7 @@ public class SceneTransition : MonoBehaviour
             GlobalVariables.global.fadeTex = defaultFadeTex;
             if (!RotatableGUI)
             {
-                screenFader.enabled = false;
+                //screenFader.enabled = false;
             }
             else
             {
@@ -166,8 +166,8 @@ public class SceneTransition : MonoBehaviour
     {
         if (!RotatableGUI)
         {
-            screenFader.enabled = true;
-            screenFader.texture = GlobalVariables.global.fadeTex;
+            //screenFader.enabled = true;
+            //screenFader.texture = GlobalVariables.global.fadeTex;
         }
         else
         {
@@ -186,8 +186,8 @@ public class SceneTransition : MonoBehaviour
     {
         if (!RotatableGUI)
         {
-            screenFader.enabled = true;
-            screenFader.texture = GlobalVariables.global.fadeTex;
+            //screenFader.enabled = true;
+            //screenFader.texture = GlobalVariables.global.fadeTex;
         }
         else
         {
@@ -206,8 +206,8 @@ public class SceneTransition : MonoBehaviour
     {
         if (!RotatableGUI)
         {
-            screenFader.enabled = true;
-            screenFader.texture = GlobalVariables.global.fadeTex;
+            //screenFader.enabled = true;
+            //screenFader.texture = GlobalVariables.global.fadeTex;
         }
         else
         {

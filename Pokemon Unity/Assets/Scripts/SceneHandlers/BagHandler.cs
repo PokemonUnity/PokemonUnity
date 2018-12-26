@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BagHandler : MonoBehaviour
 {
@@ -11,72 +12,72 @@ public class BagHandler : MonoBehaviour
 
     private Transform party;
 
-    private GUITexture[] partySlot = new GUITexture[6];
-    private GUITexture[] partyIcon = new GUITexture[6];
-    private GUIText[] partyName = new GUIText[6];
-    private GUIText[] partyNameShadow = new GUIText[6];
-    private GUIText[] partyGender = new GUIText[6];
-    private GUIText[] partyGenderShadow = new GUIText[6];
+    private Texture[] partySlot			= new Texture[6];
+    private Texture[] partyIcon			= new Texture[6];
+    private Text[] partyName			= new Text[6];
+    private Text[] partyNameShadow		= new Text[6];
+    private Text[] partyGender			= new Text[6];
+    private Text[] partyGenderShadow	= new Text[6];
     private GameObject[] partyStandardDisplay = new GameObject[6];
-    private GUITexture[] partyHPBarBack = new GUITexture[6];
-    private GUITexture[] partyHPBar = new GUITexture[6];
-    private GUITexture[] partyLv = new GUITexture[6];
-    private GUIText[] partyLevel = new GUIText[6];
-    private GUIText[] partyLevelShadow = new GUIText[6];
-    private GUIText[] partyTextDisplay = new GUIText[6];
-    private GUIText[] partyTextDisplayShadow = new GUIText[6];
-    private GUITexture[] partyStatus = new GUITexture[6];
-    private GUITexture[] partyItem = new GUITexture[6];
+    private Texture[] partyHPBarBack		= new Texture[6];
+    private Texture[] partyHPBar			= new Texture[6];
+    private Texture[] partyLv				= new Texture[6];
+    private Text[] partyLevel				= new Text[6];
+    private Text[] partyLevelShadow			= new Text[6];
+    private Text[] partyTextDisplay			= new Text[6];
+    private Text[] partyTextDisplayShadow	= new Text[6];
+    private Texture[] partyStatus			= new Texture[6];
+    private Texture[] partyItem				= new Texture[6];
 
-    private GUITexture scrollBar;
+    private Texture scrollBar;
 
     private Transform itemList;
 
-    private GUITexture[] itemSlot = new GUITexture[8];
-    private GUIText[] itemName = new GUIText[8];
-    private GUIText[] itemNameShadow = new GUIText[8];
-    private GUITexture[] itemIcon = new GUITexture[8];
-    private GUIText[] itemX = new GUIText[8];
-    private GUIText[] itemXShadow = new GUIText[8];
-    private GUIText[] itemQuantity = new GUIText[8];
-    private GUIText[] itemQuantityShadow = new GUIText[8];
+    private Texture[] itemSlot			= new Texture[8];
+    private Text[] itemName				= new Text[8];
+    private Text[] itemNameShadow		= new Text[8];
+    private Texture[] itemIcon			= new Texture[8];
+    private Text[] itemX				= new Text[8];
+    private Text[] itemXShadow			= new Text[8];
+    private Text[] itemQuantity			= new Text[8];
+    private Text[] itemQuantityShadow	= new Text[8];
 
-    private GUIText itemDescription;
-    private GUIText itemDescriptionShadow;
+    private Text itemDescription;
+    private Text itemDescriptionShadow;
 
     private GameObject[] screens = new GameObject[6];
     private GameObject[] shopScreens = new GameObject[6];
 
     private GameObject numbersBox;
-    private GUITexture numbersBoxBorder;
-    private GUIText numbersBoxText;
-    private GUIText numbersBoxTextShadow;
-    private GUIText numbersBoxSelector;
-    private GUIText numbersBoxSelectorShadow;
+    private Texture numbersBoxBorder;
+    private Text numbersBoxText;
+    private Text numbersBoxTextShadow;
+    private Text numbersBoxSelector;
+    private Text numbersBoxSelectorShadow;
 
-    private GUIText shopName;
-    private GUIText shopNameShadow;
+    private Text shopName;
+    private Text shopNameShadow;
 
     private GameObject moneyBox;
-    private GUITexture moneyBoxBorder;
-    private GUIText moneyValueText;
-    private GUIText moneyValueTextShadow;
+    private Texture moneyBoxBorder;
+    private Text moneyValueText;
+    private Text moneyValueTextShadow;
 
     private GameObject dataBox;
-    private GUITexture dataBoxBorder;
-    private GUIText dataText;
-    private GUIText dataTextShadow;
-    private GUIText dataValueText;
-    private GUIText dataValueTextShadow;
+    private Texture dataBoxBorder;
+    private Text dataText;
+    private Text dataTextShadow;
+    private Text dataValueText;
+    private Text dataValueTextShadow;
 
-    private GUITexture tmType;
-    private GUITexture tmCategory;
-    private GUIText tmPower;
-    private GUIText tmPowerShadow;
-    private GUIText tmAccuracy;
-    private GUIText tmAccuracyShadow;
-    private GUIText tmDescription;
-    private GUIText tmDescriptionShadow;
+    private Texture tmType;
+    private Texture tmCategory;
+    private Text tmPower;
+    private Text tmPowerShadow;
+    private Text tmAccuracy;
+    private Text tmAccuracyShadow;
+    private Text tmDescription;
+    private Text tmDescriptionShadow;
 
     public Texture itemListTex;
     public Texture itemListHighlightTex;
@@ -88,19 +89,18 @@ public class BagHandler : MonoBehaviour
     public Texture partySlotSelectedTex;
 
     /// <summary>
-    /// This should be an <see cref="ItemDataOld.ItemPockets"/> enum;
+    /// This should be an <see cref="Item.ItemPockets"/> enum;
     /// Use <seealso cref="currentBagScreen"/>
     /// </summary>
     /// <remarks>Is there a way to find out which int is for what screen? So confused...</remarks>
     public int currentScreenInt = 1;
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <remarks>
-    /// currentMenuScreen? Also account for PC menu or even settings menu?
-    /// ...maybe not, since it's "BagHandler" class
-    /// </remarks>
-    public ItemDataOld.ItemPockets currentBagScreen = ItemDataOld.ItemPockets.MISC;
+    // <summary>
+    // </summary>
+    // <remarks>
+    // currentMenuScreen? Also account for PC menu or even settings menu?
+    // ...maybe not, since it's "BagHandler" class
+    // </remarks>
+    //public ItemDataOld.ItemPockets currentBagScreen = ItemDataOld.ItemPockets.MISC;
 
     public int[] currentPosition = new int[]
     {
@@ -128,7 +128,7 @@ public class BagHandler : MonoBehaviour
     public int partyLength;
 
     private string[] currentItemStringList;
-    private ItemDataOld[] currentItemList;
+    private Item[] currentItemList;
 
     private bool shopMode;
     private string[] shopItemList;
@@ -148,43 +148,43 @@ public class BagHandler : MonoBehaviour
         //BagAudio = transform.GetComponent<AudioSource>();
 
         party = transform.Find("Party");
-        for (int i = 0; i < 6; i++)
-        {
-            partySlot[i] = party.Find("Slot" + i).GetComponent<GUITexture>();
-            partyIcon[i] = partySlot[i].transform.Find("Icon").GetComponent<GUITexture>();
-            partyName[i] = partySlot[i].transform.Find("Name").GetComponent<GUIText>();
-            partyNameShadow[i] = partyName[i].transform.Find("NameShadow").GetComponent<GUIText>();
-            partyGender[i] = partySlot[i].transform.Find("Gender").GetComponent<GUIText>();
-            partyGenderShadow[i] = partyGender[i].transform.Find("GenderShadow").GetComponent<GUIText>();
-            partyStandardDisplay[i] = partySlot[i].transform.Find("StandardDisplay").gameObject;
-            partyHPBarBack[i] = partyStandardDisplay[i].transform.Find("HPBarBack").GetComponent<GUITexture>();
-            partyHPBar[i] = partyStandardDisplay[i].transform.Find("HPBar").GetComponent<GUITexture>();
-            partyLv[i] = partyStandardDisplay[i].transform.Find("Lv").GetComponent<GUITexture>();
-            partyLevel[i] = partyStandardDisplay[i].transform.Find("Level").GetComponent<GUIText>();
-            partyLevelShadow[i] = partyLevel[i].transform.Find("LevelShadow").GetComponent<GUIText>();
-            partyTextDisplay[i] = partySlot[i].transform.Find("TextDisplay").GetComponent<GUIText>();
-            partyTextDisplayShadow[i] =
-                partyTextDisplay[i].transform.Find("TextDisplayShadow").GetComponent<GUIText>();
-            partyStatus[i] = partySlot[i].transform.Find("Status").GetComponent<GUITexture>();
-            partyItem[i] = partySlot[i].transform.Find("Item").GetComponent<GUITexture>();
-        }
-        scrollBar = transform.Find("ScrollBar").GetComponent<GUITexture>();
+        //for (int i = 0; i < 6; i++)
+        //{
+        //    partySlot[i] = party.Find("Slot" + i).GetComponent<GUITexture>();
+        //    partyIcon[i] = partySlot[i].transform.Find("Icon").GetComponent<GUITexture>();
+        //    partyName[i] = partySlot[i].transform.Find("Name").GetComponent<GUIText>();
+        //    partyNameShadow[i] = partyName[i].transform.Find("NameShadow").GetComponent<GUIText>();
+        //    partyGender[i] = partySlot[i].transform.Find("Gender").GetComponent<GUIText>();
+        //    partyGenderShadow[i] = partyGender[i].transform.Find("GenderShadow").GetComponent<GUIText>();
+        //    partyStandardDisplay[i] = partySlot[i].transform.Find("StandardDisplay").gameObject;
+        //    partyHPBarBack[i] = partyStandardDisplay[i].transform.Find("HPBarBack").GetComponent<GUITexture>();
+        //    partyHPBar[i] = partyStandardDisplay[i].transform.Find("HPBar").GetComponent<GUITexture>();
+        //    partyLv[i] = partyStandardDisplay[i].transform.Find("Lv").GetComponent<GUITexture>();
+        //    partyLevel[i] = partyStandardDisplay[i].transform.Find("Level").GetComponent<GUIText>();
+        //    partyLevelShadow[i] = partyLevel[i].transform.Find("LevelShadow").GetComponent<GUIText>();
+        //    partyTextDisplay[i] = partySlot[i].transform.Find("TextDisplay").GetComponent<GUIText>();
+        //    partyTextDisplayShadow[i] =
+        //        partyTextDisplay[i].transform.Find("TextDisplayShadow").GetComponent<GUIText>();
+        //    partyStatus[i] = partySlot[i].transform.Find("Status").GetComponent<GUITexture>();
+        //    partyItem[i] = partySlot[i].transform.Find("Item").GetComponent<GUITexture>();
+        //}
+        //scrollBar = transform.Find("ScrollBar").GetComponent<GUITexture>();
 
         itemList = transform.Find("ItemList");
-        for (int i = 0; i < 8; i++)
-        {
-            itemSlot[i] = itemList.Find("Item" + i).GetComponent<GUITexture>();
-            itemName[i] = itemSlot[i].transform.Find("Name").GetComponent<GUIText>();
-            itemNameShadow[i] = itemSlot[i].transform.Find("NameShadow").GetComponent<GUIText>();
-            itemIcon[i] = itemSlot[i].transform.Find("Icon").GetComponent<GUITexture>();
-            itemX[i] = itemSlot[i].transform.Find("x").GetComponent<GUIText>();
-            itemXShadow[i] = itemX[i].transform.Find("xShadow").GetComponent<GUIText>();
-            itemQuantity[i] = itemSlot[i].transform.Find("Quantity").GetComponent<GUIText>();
-            itemQuantityShadow[i] = itemSlot[i].transform.Find("QuantityShadow").GetComponent<GUIText>();
-        }
-
-        itemDescription = transform.Find("ItemDescription").GetComponent<GUIText>();
-        itemDescriptionShadow = itemDescription.transform.Find("ItemDescriptionShadow").GetComponent<GUIText>();
+        //for (int i = 0; i < 8; i++)
+        //{
+        //    itemSlot[i] = itemList.Find("Item" + i).GetComponent<GUITexture>();
+        //    itemName[i] = itemSlot[i].transform.Find("Name").GetComponent<GUIText>();
+        //    itemNameShadow[i] = itemSlot[i].transform.Find("NameShadow").GetComponent<GUIText>();
+        //    itemIcon[i] = itemSlot[i].transform.Find("Icon").GetComponent<GUITexture>();
+        //    itemX[i] = itemSlot[i].transform.Find("x").GetComponent<GUIText>();
+        //    itemXShadow[i] = itemX[i].transform.Find("xShadow").GetComponent<GUIText>();
+        //    itemQuantity[i] = itemSlot[i].transform.Find("Quantity").GetComponent<GUIText>();
+        //    itemQuantityShadow[i] = itemSlot[i].transform.Find("QuantityShadow").GetComponent<GUIText>();
+        //}
+		//
+        //itemDescription = transform.Find("ItemDescription").GetComponent<GUIText>();
+        //itemDescriptionShadow = itemDescription.transform.Find("ItemDescriptionShadow").GetComponent<GUIText>();
 
         for (int i = 1; i < 6; i++)
         {
@@ -192,36 +192,36 @@ public class BagHandler : MonoBehaviour
             shopScreens[i] = transform.Find("shop" + i).gameObject;
         }
 
-        numbersBox = transform.Find("NumbersBox").gameObject;
-        numbersBoxBorder = numbersBox.transform.GetComponent<GUITexture>();
-        numbersBoxText = numbersBox.transform.Find("NumberText").GetComponent<GUIText>();
-        numbersBoxTextShadow = numbersBox.transform.Find("NumberTextShadow").GetComponent<GUIText>();
-        numbersBoxSelector = numbersBox.transform.Find("Selector").GetComponent<GUIText>();
-        numbersBoxSelectorShadow = numbersBox.transform.Find("SelectorShadow").GetComponent<GUIText>();
-
-        shopName = transform.Find("ShopName").GetComponent<GUIText>();
-        shopNameShadow = shopName.transform.Find("ShopNameShadow").GetComponent<GUIText>();
-
-        moneyBox = transform.Find("MoneyBox").gameObject;
-        moneyBoxBorder = moneyBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
-        moneyValueText = moneyBox.transform.Find("Money").GetComponent<GUIText>();
-        moneyValueTextShadow = moneyBox.transform.Find("MoneyShadow").GetComponent<GUIText>();
-
-        dataBox = transform.Find("DataBox").gameObject;
-        dataBoxBorder = dataBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
-        dataText = dataBox.transform.Find("DataText").GetComponent<GUIText>();
-        dataTextShadow = dataBox.transform.Find("DataTextShadow").GetComponent<GUIText>();
-        dataValueText = dataBox.transform.Find("Data").GetComponent<GUIText>();
-        dataValueTextShadow = dataBox.transform.Find("DataShadow").GetComponent<GUIText>();
-
-        tmType = screens[4].transform.Find("TMType").GetComponent<GUITexture>();
-        tmCategory = screens[4].transform.Find("TMCategory").GetComponent<GUITexture>();
-        tmPower = screens[4].transform.Find("TMPower").GetComponent<GUIText>();
-        tmPowerShadow = tmPower.transform.Find("TMPowerShadow").GetComponent<GUIText>();
-        tmAccuracy = screens[4].transform.Find("TMAccuracy").GetComponent<GUIText>();
-        tmAccuracyShadow = tmAccuracy.transform.Find("TMAccuracyShadow").GetComponent<GUIText>();
-        tmDescription = screens[4].transform.Find("TMDescription").GetComponent<GUIText>();
-        tmDescriptionShadow = tmDescription.transform.Find("TMDescriptionShadow").GetComponent<GUIText>();
+        //numbersBox = transform.Find("NumbersBox").gameObject;
+        //numbersBoxBorder = numbersBox.transform.GetComponent<GUITexture>();
+        //numbersBoxText = numbersBox.transform.Find("NumberText").GetComponent<GUIText>();
+        //numbersBoxTextShadow = numbersBox.transform.Find("NumberTextShadow").GetComponent<GUIText>();
+        //numbersBoxSelector = numbersBox.transform.Find("Selector").GetComponent<GUIText>();
+        //numbersBoxSelectorShadow = numbersBox.transform.Find("SelectorShadow").GetComponent<GUIText>();
+		//
+        //shopName = transform.Find("ShopName").GetComponent<GUIText>();
+        //shopNameShadow = shopName.transform.Find("ShopNameShadow").GetComponent<GUIText>();
+		//
+        //moneyBox = transform.Find("MoneyBox").gameObject;
+        //moneyBoxBorder = moneyBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
+        //moneyValueText = moneyBox.transform.Find("Money").GetComponent<GUIText>();
+        //moneyValueTextShadow = moneyBox.transform.Find("MoneyShadow").GetComponent<GUIText>();
+		//
+        //dataBox = transform.Find("DataBox").gameObject;
+        //dataBoxBorder = dataBox.transform.Find("BoxBorder").GetComponent<GUITexture>();
+        //dataText = dataBox.transform.Find("DataText").GetComponent<GUIText>();
+        //dataTextShadow = dataBox.transform.Find("DataTextShadow").GetComponent<GUIText>();
+        //dataValueText = dataBox.transform.Find("Data").GetComponent<GUIText>();
+        //dataValueTextShadow = dataBox.transform.Find("DataShadow").GetComponent<GUIText>();
+		//
+        //tmType = screens[4].transform.Find("TMType").GetComponent<GUITexture>();
+        //tmCategory = screens[4].transform.Find("TMCategory").GetComponent<GUITexture>();
+        //tmPower = screens[4].transform.Find("TMPower").GetComponent<GUIText>();
+        //tmPowerShadow = tmPower.transform.Find("TMPowerShadow").GetComponent<GUIText>();
+        //tmAccuracy = screens[4].transform.Find("TMAccuracy").GetComponent<GUIText>();
+        //tmAccuracyShadow = tmAccuracy.transform.Find("TMAccuracyShadow").GetComponent<GUIText>();
+        //tmDescription = screens[4].transform.Find("TMDescription").GetComponent<GUIText>();
+        //tmDescriptionShadow = tmDescription.transform.Find("TMDescriptionShadow").GetComponent<GUIText>();
     }
 
     void Start()
@@ -233,7 +233,7 @@ public class BagHandler : MonoBehaviour
     private void updateScrollBar()
     {
         float min = 18;
-        float topY = 141;
+        //float topY = 141;
         float itemsLength = currentItemStringList.Length;
         float maxHeight = 78;
         float maxView = visableSlots;
@@ -260,65 +260,65 @@ public class BagHandler : MonoBehaviour
         {
             heightOffset = 0;
         }
-        scrollBar.pixelInset = new Rect(scrollBar.pixelInset.x, topY - maxHeight + heightOffset,
-            scrollBar.pixelInset.width, barHeight);
+        //scrollBar.pixelInset = new Rect(scrollBar.pixelInset.x, topY - maxHeight + heightOffset,
+        //    scrollBar.pixelInset.width, barHeight);
     }
 
     private void updateSelectedItem()
     {
         for (int i = 0; i < 8; i++)
         {
-            if (currentPosition[currentScreenInt] == i)
-            {
-                if (switching)
-                {
-                    if (i == selected - currentTopPosition[currentScreenInt] + 1)
-                    {
-                        itemSlot[i].texture = itemListPlaceSelectedTex;
-                    }
-                    else
-                    {
-                        itemSlot[i].texture = itemListPlaceTex;
-                    }
-                }
-                else
-                {
-                    itemSlot[i].texture = itemListHighlightTex;
-                }
-                itemIcon[i].pixelInset = new Rect(unselectedItemIconX - 4, itemSlot[i].pixelInset.y - 4, 24, 24);
-                itemIcon[i].transform.localPosition = new Vector3(0, 0, 21.5f);
-                itemName[i].pixelOffset = new Vector2(unselectedItemNameX + 6, itemName[i].pixelOffset.y);
-                itemNameShadow[i].pixelOffset = new Vector2(unselectedItemNameX + 7, itemNameShadow[i].pixelOffset.y);
-            }
-            else
-            {
-                if (switching)
-                {
-                    if (i == selected - currentTopPosition[currentScreenInt] + 1)
-                    {
-                        itemSlot[i].texture = itemListSelectedTex;
-                    }
-                    else
-                    {
-                        itemSlot[i].texture = itemListTex;
-                    }
-                }
-                else
-                {
-                    itemSlot[i].texture = itemListTex;
-                }
-                itemIcon[i].pixelInset = new Rect(unselectedItemIconX, itemSlot[i].pixelInset.y, 16, 16);
-                itemIcon[i].transform.localPosition = new Vector3(0, 0, 20.5f);
-                itemName[i].pixelOffset = new Vector2(unselectedItemNameX, itemName[i].pixelOffset.y);
-                itemNameShadow[i].pixelOffset = new Vector2(unselectedItemNameX + 1, itemNameShadow[i].pixelOffset.y);
-            }
+            //if (currentPosition[currentScreenInt] == i)
+            //{
+            //    if (switching)
+            //    {
+            //        if (i == selected - currentTopPosition[currentScreenInt] + 1)
+            //        {
+            //            itemSlot[i].texture = itemListPlaceSelectedTex;
+            //        }
+            //        else
+            //        {
+            //            itemSlot[i].texture = itemListPlaceTex;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        itemSlot[i].texture = itemListHighlightTex;
+            //    }
+            //    itemIcon[i].pixelInset = new Rect(unselectedItemIconX - 4, itemSlot[i].pixelInset.y - 4, 24, 24);
+            //    itemIcon[i].transform.localPosition = new Vector3(0, 0, 21.5f);
+            //    itemName[i].pixelOffset = new Vector2(unselectedItemNameX + 6, itemName[i].pixelOffset.y);
+            //    itemNameShadow[i].pixelOffset = new Vector2(unselectedItemNameX + 7, itemNameShadow[i].pixelOffset.y);
+            //}
+            //else
+            //{
+            //    if (switching)
+            //    {
+            //        if (i == selected - currentTopPosition[currentScreenInt] + 1)
+            //        {
+            //            itemSlot[i].texture = itemListSelectedTex;
+            //        }
+            //        else
+            //        {
+            //            itemSlot[i].texture = itemListTex;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        itemSlot[i].texture = itemListTex;
+            //    }
+            //    itemIcon[i].pixelInset = new Rect(unselectedItemIconX, itemSlot[i].pixelInset.y, 16, 16);
+            //    itemIcon[i].transform.localPosition = new Vector3(0, 0, 20.5f);
+            //    itemName[i].pixelOffset = new Vector2(unselectedItemNameX, itemName[i].pixelOffset.y);
+            //    itemNameShadow[i].pixelOffset = new Vector2(unselectedItemNameX + 1, itemNameShadow[i].pixelOffset.y);
+            //}
         }
     }
 
     private void updateItemList()
     {
         string[] itemsString = new string[8];
-        ItemDataOld[] items = new ItemDataOld[8];
+        Item[] items = new Item[8];
 
         int index = 0;
         for (int i = 0; i < 8; i++)
@@ -334,50 +334,50 @@ public class BagHandler : MonoBehaviour
                 itemsString[i] = currentItemStringList[index];
                 items[i] = currentItemList[index];
             }
-            itemSlot[i].gameObject.SetActive(true);
-            itemNameShadow[i].text = itemName[i].text = items[i].getName()??null;//itemsString[i]; Just seeing if shorthand was possible
+            //itemSlot[i].gameObject.SetActive(true);
+            itemNameShadow[i].text = itemName[i].text = items[i].Name??null;//itemsString[i]; Just seeing if shorthand was possible
             //a switch would be perfect here, but cant make sense of everything yet
-            switch (items[i].getItemPocket()) {
-                /*case null: //it'll use default value; cant be null
-                    itemSlot[i].gameObject.SetActive(false);
-                    break;*/
-                case ItemDataOld.ItemPockets.MISC:
-                    itemX[i].gameObject.SetActive(true);
-                    if (shopMode && currentScreenInt == 1)
-                    {
-                        itemX[i].text = "$";
-                        itemQuantity[i].text = items[i].getPrice().ToString();
-                    }
-                    else
-                    {
-                        itemX[i].text = "   x";
-                        itemQuantity[i].text = SaveDataOld.currentSave.Bag.getQuantity(items[i]).ToString();
-                    }
-                    itemXShadow[i].text = itemX[i].text;
-                    break;
-                case ItemDataOld.ItemPockets.BATTLE:
-                case ItemDataOld.ItemPockets.BERRY:
-                case ItemDataOld.ItemPockets.MAIL:
-                case ItemDataOld.ItemPockets.MEDICINE:
-                case ItemDataOld.ItemPockets.POKEBALL:
-                case ItemDataOld.ItemPockets.MACHINE:
-                    itemX[i].gameObject.SetActive(false);
-                    itemQuantityShadow[i].text = itemQuantity[i].text = "No. " + items[i].getTMNo();
-                    //ToDo: Easier icon look-up
-                    itemIcon[i].texture = Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(items[i].getName()).getType().ToString());
-                    break;
-                case ItemDataOld.ItemPockets.KEY: 
-                    itemX[i].gameObject.SetActive(false);
-                    //if (items[i].getItemFlags()) { } else//if countable else quantity null
-                    itemQuantityShadow[i].text = itemQuantity[i].text = string.Empty;
-                    //ToDo: Easier icon look-up
-                    //itemIcon[i].texture = Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(items[i].getName()).getType().ToString());
-                    break;
-                default:
-                    itemNameShadow[i].text = itemName[i].text = null; //items[i].getName();
-                    itemSlot[i].gameObject.SetActive(false);
-                    break;
-            }
+            //switch (items[i].getItemPocket()) {
+            //    /*case null: //it'll use default value; cant be null
+            //        itemSlot[i].gameObject.SetActive(false);
+            //        break;*/
+            //    case ItemDataOld.ItemPockets.MISC:
+            //        itemX[i].gameObject.SetActive(true);
+            //        if (shopMode && currentScreenInt == 1)
+            //        {
+            //            itemX[i].text = "$";
+            //            itemQuantity[i].text = items[i].getPrice().ToString();
+            //        }
+            //        else
+            //        {
+            //            itemX[i].text = "   x";
+            //            itemQuantity[i].text = SaveDataOld.currentSave.Bag.getQuantity(items[i]).ToString();
+            //        }
+            //        itemXShadow[i].text = itemX[i].text;
+            //        break;
+            //    case ItemDataOld.ItemPockets.BATTLE:
+            //    case ItemDataOld.ItemPockets.BERRY:
+            //    case ItemDataOld.ItemPockets.MAIL:
+            //    case ItemDataOld.ItemPockets.MEDICINE:
+            //    case ItemDataOld.ItemPockets.POKEBALL:
+            //    case ItemDataOld.ItemPockets.MACHINE:
+            //        itemX[i].gameObject.SetActive(false);
+            //        itemQuantityShadow[i].text = itemQuantity[i].text = "No. " + items[i].getTMNo();
+            //        //ToDo: Easier icon look-up
+            //        itemIcon[i].texture = Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(items[i].getName()).getType().ToString());
+            //        break;
+            //    case ItemDataOld.ItemPockets.KEY: 
+            //        itemX[i].gameObject.SetActive(false);
+            //        //if (items[i].getItemFlags()) { } else//if countable else quantity null
+            //        itemQuantityShadow[i].text = itemQuantity[i].text = string.Empty;
+            //        //ToDo: Easier icon look-up
+            //        //itemIcon[i].texture = Resources.Load<Texture>("Items/tm" + MoveDatabase.getMove(items[i].getName()).getType().ToString());
+            //        break;
+            //    default:
+            //        itemNameShadow[i].text = itemName[i].text = null; //items[i].getName();
+            //        itemSlot[i].gameObject.SetActive(false);
+            //        break;
+            //}
             /*if (itemsString[i] == null)
             {
                 itemSlot[i].gameObject.SetActive(false);
@@ -436,14 +436,14 @@ public class BagHandler : MonoBehaviour
             string selectedItem = currentItemStringList[index];
             if (currentScreenInt != 4)
             {
-                itemDescription.text = ItemDatabaseOld.getItem(selectedItem).getDescription();
+                //itemDescription.text = ItemDatabaseOld.getItem(selectedItem).getDescription();
                 itemDescriptionShadow.text = itemDescription.text;
             }
             else if (!shopMode)
             {
                 MoveData selectedTM = MoveDatabase.getMove(selectedItem);
-                tmType.texture = Resources.Load<Texture>("PCSprites/type" + selectedTM.getType().ToString());
-                tmCategory.texture = Resources.Load<Texture>("PCSprites/category" + selectedTM.getCategory().ToString());
+                //tmType.texture = Resources.Load<Texture>("PCSprites/type" + selectedTM.getType().ToString());
+                //tmCategory.texture = Resources.Load<Texture>("PCSprites/category" + selectedTM.getCategory().ToString());
                 tmPower.text = "" + selectedTM.getPower();
                 if (tmPower.text == "0")
                 {
@@ -456,7 +456,7 @@ public class BagHandler : MonoBehaviour
                     tmAccuracy.text = "-";
                 }
                 tmAccuracyShadow.text = tmAccuracy.text;
-                tmDescription.text = ItemDatabaseOld.getItem(selectedItem).getDescription();
+                //tmDescription.text = ItemDatabaseOld.getItem(selectedItem).getDescription();
                 tmDescriptionShadow.text = tmDescription.text;
             }
         }
@@ -481,54 +481,54 @@ public class BagHandler : MonoBehaviour
         {
             itemDescription.gameObject.SetActive(false);
             visableSlots = 5;
-            currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.TM);
+            //currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.TM);
         }
         else
         {
             itemDescription.gameObject.SetActive(true);
             visableSlots = 6;
-            if (!shopMode)
-            {
-                if (currentScreenInt == 1)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
-                }
-                else if (currentScreenInt == 2)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.MEDICINE);
-                }
-                else if (currentScreenInt == 3)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.BERRY);
-                }
-                else if (currentScreenInt == 5)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.KEY);
-                }
-            }
-            else
-            {
-                if (currentScreenInt == 1)
-                {
-                    currentItemStringList = shopItemList;
-                }
-                else if (currentScreenInt == 2)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getSellableItemArray();
-                }
-                else if (currentScreenInt == 3)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
-                }
-                else if (currentScreenInt == 4)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.MEDICINE);
-                }
-                else if (currentScreenInt == 5)
-                {
-                    currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.BERRY);
-                }
-            }
+            //if (!shopMode)
+            //{
+            //    if (currentScreenInt == 1)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
+            //    }
+            //    else if (currentScreenInt == 2)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.MEDICINE);
+            //    }
+            //    else if (currentScreenInt == 3)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.BERRY);
+            //    }
+            //    else if (currentScreenInt == 5)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.KEY);
+            //    }
+            //}
+            //else
+            //{
+            //    if (currentScreenInt == 1)
+            //    {
+            //        currentItemStringList = shopItemList;
+            //    }
+            //    else if (currentScreenInt == 2)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getSellableItemArray();
+            //    }
+            //    else if (currentScreenInt == 3)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
+            //    }
+            //    else if (currentScreenInt == 4)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.MEDICINE);
+            //    }
+            //    else if (currentScreenInt == 5)
+            //    {
+            //        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.BERRY);
+            //    }
+            //}
         }
         if (!shopMode)
         {
@@ -550,78 +550,78 @@ public class BagHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator scrollScrollBar(int direction)
-    {
-        float maxBarHeight = 78f;
-        if (currentScreenInt == 4 && !shopMode)
-        {
-            maxBarHeight = 62;
-        }
-        float barInterval = ((maxBarHeight - scrollBar.pixelInset.height) / (currentItemStringList.Length - visableSlots));
-
-        float increment = 0f;
-        float speed = 0.16f;
-
-        float barYStart = scrollBar.pixelInset.y;
-
-        if (direction > 0)
-        {
-            //down one
-            while (increment < 1)
-            {
-                increment += (1 / speed) * Time.deltaTime;
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-                scrollBar.pixelInset = new Rect(scrollBar.pixelInset.x, barYStart - (barInterval * increment),
-                    scrollBar.pixelInset.width, scrollBar.pixelInset.height);
-                itemList.position = new Vector3(0, (0.083f * increment), 0);
-                yield return null;
-            }
-        }
-        else
-        {
-            //up one
-            while (increment < 1)
-            {
-                increment += (1 / speed) * Time.deltaTime;
-                if (increment > 1)
-                {
-                    increment = 1;
-                }
-                scrollBar.pixelInset = new Rect(scrollBar.pixelInset.x, barYStart + (barInterval * increment),
-                    scrollBar.pixelInset.width, scrollBar.pixelInset.height);
-                itemList.position = new Vector3(0, (-0.083f * increment), 0);
-                yield return null;
-            }
-        }
-
-        itemList.position = new Vector3(0, 0, 0);
-        updateItemList();
-    }
+    //private IEnumerator scrollScrollBar(int direction)
+    //{
+    //    float maxBarHeight = 78f;
+    //    if (currentScreenInt == 4 && !shopMode)
+    //    {
+    //        maxBarHeight = 62;
+    //    }
+    //    //float barInterval = ((maxBarHeight - scrollBar.pixelInset.height) / (currentItemStringList.Length - visableSlots));
+	//
+    //    float increment = 0f;
+    //    float speed = 0.16f;
+	//
+    //    //float barYStart = scrollBar.pixelInset.y;
+	//
+    //    if (direction > 0)
+    //    {
+    //        //down one
+    //        while (increment < 1)
+    //        {
+    //            increment += (1 / speed) * Time.deltaTime;
+    //            if (increment > 1)
+    //            {
+    //                increment = 1;
+    //            }
+    //            //scrollBar.pixelInset = new Rect(scrollBar.pixelInset.x, barYStart - (barInterval * increment),
+    //            //    scrollBar.pixelInset.width, scrollBar.pixelInset.height);
+    //            itemList.position = new Vector3(0, (0.083f * increment), 0);
+    //            yield return null;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //up one
+    //        while (increment < 1)
+    //        {
+    //            increment += (1 / speed) * Time.deltaTime;
+    //            if (increment > 1)
+    //            {
+    //                increment = 1;
+    //            }
+    //            //scrollBar.pixelInset = new Rect(scrollBar.pixelInset.x, barYStart + (barInterval * increment),
+    //            //    scrollBar.pixelInset.width, scrollBar.pixelInset.height);
+    //            itemList.position = new Vector3(0, (-0.083f * increment), 0);
+    //            yield return null;
+    //        }
+    //    }
+	//
+    //    itemList.position = new Vector3(0, 0, 0);
+    //    updateItemList();
+    //}
 
     private IEnumerator animateSelection(int selectionPosition, int deselectionPosition)
     {
         float increment = 0f;
         float speed = 0.16f;
 
-        GUITexture previousIcon = itemIcon[deselectionPosition];
-        GUITexture newIcon = itemIcon[selectionPosition];
+        Texture previousIcon = itemIcon[deselectionPosition];
+        Texture newIcon = itemIcon[selectionPosition];
 
-        Rect previousIconStart = previousIcon.pixelInset;
-        Rect newIconStart = newIcon.pixelInset;
+        //Rect previousIconStart = previousIcon.pixelInset;
+        //Rect newIconStart = newIcon.pixelInset;
 
-        GUIText previousItemName = itemName[deselectionPosition];
-        GUIText previousItemNameShadow = itemNameShadow[deselectionPosition];
-        GUIText newItemName = itemName[selectionPosition];
-        GUIText newItemNameShadow = itemNameShadow[selectionPosition];
+        Text previousItemName = itemName[deselectionPosition];
+        Text previousItemNameShadow = itemNameShadow[deselectionPosition];
+        Text newItemName = itemName[selectionPosition];
+        Text newItemNameShadow = itemNameShadow[selectionPosition];
 
-        float previousItemNameXStart = previousItemName.pixelOffset.x;
-        float newItemNameXStart = newItemName.pixelOffset.x;
+        //float previousItemNameXStart = previousItemName.pixelOffset.x;
+        //float newItemNameXStart = newItemName.pixelOffset.x;
 
-        newIcon.transform.localPosition = new Vector3(0, 0, 21.5f);
-        previousIcon.transform.localPosition = new Vector3(0, 0, 20.5f);
+        //newIcon.transform.localPosition = new Vector3(0, 0, 21.5f);
+        //previousIcon.transform.localPosition = new Vector3(0, 0, 20.5f);
 
         bool updatedListBackgrounds = false;
         int currentTopPositionOnStart = currentTopPosition[currentScreenInt];
@@ -634,47 +634,47 @@ public class BagHandler : MonoBehaviour
                 increment = 1;
             }
 
-            previousIcon.pixelInset = new Rect(previousIconStart.x + (4f * increment),
-                previousIconStart.y + (4f * increment), previousIconStart.width - (8f * increment),
-                previousIconStart.height - (8f * increment));
-            newIcon.pixelInset = new Rect(newIconStart.x - (4f * increment), newIconStart.y - (4f * increment),
-                newIconStart.width + (8f * increment), newIconStart.height + (8f * increment));
-
-            previousItemName.pixelOffset = new Vector2(previousItemNameXStart - (6f * increment),
-                previousItemName.pixelOffset.y);
-            newItemName.pixelOffset = new Vector2(newItemNameXStart + (6f * increment), newItemName.pixelOffset.y);
-            previousItemNameShadow.pixelOffset = new Vector2(previousItemNameXStart + 1 - (6f * increment),
-                previousItemNameShadow.pixelOffset.y);
-            newItemNameShadow.pixelOffset = new Vector2(newItemNameXStart + 1 + (6f * increment),
-                newItemNameShadow.pixelOffset.y);
+            //previousIcon.pixelInset = new Rect(previousIconStart.x + (4f * increment),
+            //    previousIconStart.y + (4f * increment), previousIconStart.width - (8f * increment),
+            //    previousIconStart.height - (8f * increment));
+            //newIcon.pixelInset = new Rect(newIconStart.x - (4f * increment), newIconStart.y - (4f * increment),
+            //    newIconStart.width + (8f * increment), newIconStart.height + (8f * increment));
+			//
+            //previousItemName.pixelOffset = new Vector2(previousItemNameXStart - (6f * increment),
+            //    previousItemName.pixelOffset.y);
+            //newItemName.pixelOffset = new Vector2(newItemNameXStart + (6f * increment), newItemName.pixelOffset.y);
+            //previousItemNameShadow.pixelOffset = new Vector2(previousItemNameXStart + 1 - (6f * increment),
+            //    previousItemNameShadow.pixelOffset.y);
+            //newItemNameShadow.pixelOffset = new Vector2(newItemNameXStart + 1 + (6f * increment),
+            //    newItemNameShadow.pixelOffset.y);
 
             if (increment >= 0.5f && !updatedListBackgrounds)
             {
                 updatedListBackgrounds = true;
-                if (switching)
-                {
-                    if (selectionPosition + currentTopPositionOnStart - 1 == selected)
-                    {
-                        itemSlot[selectionPosition].texture = itemListPlaceSelectedTex;
-                    }
-                    else
-                    {
-                        itemSlot[selectionPosition].texture = itemListPlaceTex;
-                    }
-                    if (deselectionPosition + currentTopPositionOnStart - 1 == selected)
-                    {
-                        itemSlot[deselectionPosition].texture = itemListSelectedTex;
-                    }
-                    else
-                    {
-                        itemSlot[deselectionPosition].texture = itemListTex;
-                    }
-                }
-                else
-                {
-                    itemSlot[deselectionPosition].texture = itemListTex;
-                    itemSlot[selectionPosition].texture = itemListHighlightTex;
-                }
+                //if (switching)
+                //{
+                //    if (selectionPosition + currentTopPositionOnStart - 1 == selected)
+                //    {
+                //        itemSlot[selectionPosition].texture = itemListPlaceSelectedTex;
+                //    }
+                //    else
+                //    {
+                //        itemSlot[selectionPosition].texture = itemListPlaceTex;
+                //    }
+                //    if (deselectionPosition + currentTopPositionOnStart - 1 == selected)
+                //    {
+                //        itemSlot[deselectionPosition].texture = itemListSelectedTex;
+                //    }
+                //    else
+                //    {
+                //        itemSlot[deselectionPosition].texture = itemListTex;
+                //    }
+                //}
+                //else
+                //{
+                //    itemSlot[deselectionPosition].texture = itemListTex;
+                //    itemSlot[selectionPosition].texture = itemListHighlightTex;
+                //}
             }
 
             yield return null;
@@ -685,74 +685,74 @@ public class BagHandler : MonoBehaviour
 
     private void updateParty()
     {
-        PokemonOld currentPokemon;
-        for (int i = 0; i < 6; i++)
-        {
-            currentPokemon = SaveDataOld.currentSave.PC.boxes[0][i];
-            if (currentPokemon == null)
-            {
-                partySlot[i].gameObject.SetActive(false);
-            }
-            else
-            {
-                partyIcon[i].texture = currentPokemon.GetIcons();
-
-                partyHPBar[i].pixelInset = new Rect(partyHPBar[i].pixelInset.x, partyHPBar[i].pixelInset.y,
-                    Mathf.FloorToInt(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())),
-                    partyHPBar[i].pixelInset.height);
-
-                if ((float) currentPokemon.getCurrentHP() < ((float) currentPokemon.getHP() / 4f))
-                {
-                    partyHPBar[i].color = new Color(1, 0.125f, 0, 1);
-                }
-                else if ((float) currentPokemon.getCurrentHP() < ((float) currentPokemon.getHP() / 2f))
-                {
-                    partyHPBar[i].color = new Color(1, 0.75f, 0, 1);
-                }
-                else
-                {
-                    partyHPBar[i].color = new Color(0.125f, 1, 0.065f, 1);
-                }
-
-                partyName[i].text = currentPokemon.getName();
-                partyNameShadow[i].text = partyName[i].text;
-                if (currentPokemon.getGender() == PokemonOld.Gender.FEMALE)
-                {
-                    partyGender[i].text = "♀";
-                    partyGender[i].color = new Color(1, 0.2f, 0.2f, 1);
-                }
-                else if (currentPokemon.getGender() == PokemonOld.Gender.MALE)
-                {
-                    partyGender[i].text = "♂";
-                    partyGender[i].color = new Color(0.2f, 0.4f, 1, 1);
-                }
-                else
-                {
-                    partyGender[i].text = null;
-                }
-                partyGenderShadow[i].text = partyGender[i].text;
-                partyLevel[i].text = "" + currentPokemon.getLevel();
-                partyLevelShadow[i].text = partyLevel[i].text;
-                if (currentPokemon.getStatus() != PokemonOld.Status.NONE)
-                {
-                    partyStatus[i].texture =
-                        Resources.Load<Texture>("PCSprites/status" + currentPokemon.getStatus().ToString());
-                }
-                else
-                {
-                    partyStatus[i].texture = null;
-                }
-                if (!string.IsNullOrEmpty(currentPokemon.getHeldItem()))
-                {
-                    partyItem[i].enabled = true;
-                }
-                else
-                {
-                    partyItem[i].enabled = false;
-                }
-            }
-        }
-        partyLength = SaveDataOld.currentSave.PC.getBoxLength(0);
+        //PokemonOld currentPokemon;
+        //for (int i = 0; i < 6; i++)
+        //{
+        //    currentPokemon = SaveDataOld.currentSave.PC.boxes[0][i];
+        //    if (currentPokemon == null)
+        //    {
+        //        partySlot[i].gameObject.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        partyIcon[i].texture = currentPokemon.GetIcons();
+		//
+        //        partyHPBar[i].pixelInset = new Rect(partyHPBar[i].pixelInset.x, partyHPBar[i].pixelInset.y,
+        //            Mathf.FloorToInt(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())),
+        //            partyHPBar[i].pixelInset.height);
+		//
+        //        if ((float) currentPokemon.getCurrentHP() < ((float) currentPokemon.getHP() / 4f))
+        //        {
+        //            partyHPBar[i].color = new Color(1, 0.125f, 0, 1);
+        //        }
+        //        else if ((float) currentPokemon.getCurrentHP() < ((float) currentPokemon.getHP() / 2f))
+        //        {
+        //            partyHPBar[i].color = new Color(1, 0.75f, 0, 1);
+        //        }
+        //        else
+        //        {
+        //            partyHPBar[i].color = new Color(0.125f, 1, 0.065f, 1);
+        //        }
+		//
+        //        partyName[i].text = currentPokemon.getName();
+        //        partyNameShadow[i].text = partyName[i].text;
+        //        if (currentPokemon.getGender() == PokemonOld.Gender.FEMALE)
+        //        {
+        //            partyGender[i].text = "♀";
+        //            partyGender[i].color = new Color(1, 0.2f, 0.2f, 1);
+        //        }
+        //        else if (currentPokemon.getGender() == PokemonOld.Gender.MALE)
+        //        {
+        //            partyGender[i].text = "♂";
+        //            partyGender[i].color = new Color(0.2f, 0.4f, 1, 1);
+        //        }
+        //        else
+        //        {
+        //            partyGender[i].text = null;
+        //        }
+        //        partyGenderShadow[i].text = partyGender[i].text;
+        //        partyLevel[i].text = "" + currentPokemon.getLevel();
+        //        partyLevelShadow[i].text = partyLevel[i].text;
+        //        if (currentPokemon.getStatus() != PokemonOld.Status.NONE)
+        //        {
+        //            partyStatus[i].texture =
+        //                Resources.Load<Texture>("PCSprites/status" + currentPokemon.getStatus().ToString());
+        //        }
+        //        else
+        //        {
+        //            partyStatus[i].texture = null;
+        //        }
+        //        if (!string.IsNullOrEmpty(currentPokemon.getHeldItem()))
+        //        {
+        //            partyItem[i].enabled = true;
+        //        }
+        //        else
+        //        {
+        //            partyItem[i].enabled = false;
+        //        }
+        //    }
+        //}
+        //partyLength = SaveDataOld.currentSave.PC.getBoxLength(0);
     }
 
     private void updatePartyDisplays()
@@ -789,66 +789,66 @@ public class BagHandler : MonoBehaviour
                 updateDescription();
             }
 
-            ItemDataOld selectedItem =
-                ItemDatabaseOld.getItem(
-                    currentItemStringList[currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1]);
-            if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    partyStandardDisplay[i].SetActive(false);
-                    partyTextDisplay[i].gameObject.SetActive(true);
-                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
-                    {
-                        if (SaveDataOld.currentSave.PC.boxes[0][i].canEvolve("Stone," + selectedItem.getName()))
-                        {
-                            partyTextDisplay[i].text = "ABLE!";
-                            partyTextDisplay[i].color = new Color(0, 0.5f, 1, 1);
-                        }
-                        else
-                        {
-                            partyTextDisplay[i].text = "UNABLE!";
-                            partyTextDisplay[i].color = new Color(1, 0.25f, 0, 1);
-                        }
-                        partyTextDisplayShadow[i].text = partyTextDisplay[i].text;
-                    }
-                }
-            }
-            else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    partyStandardDisplay[i].SetActive(false);
-                    partyTextDisplay[i].gameObject.SetActive(true);
-                    if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
-                    {
-                        if (SaveDataOld.currentSave.PC.boxes[0][i].HasMove(selectedItem.getName()))
-                        {
-                            partyTextDisplay[i].text = "LEARNED!";
-                            partyTextDisplay[i].color = new Color(1, 1, 1, 1);
-                        }
-                        else if (SaveDataOld.currentSave.PC.boxes[0][i].CanLearnMove(selectedItem.getName()))
-                        {
-                            partyTextDisplay[i].text = "ABLE!";
-                            partyTextDisplay[i].color = new Color(0, 0.5f, 1, 1);
-                        }
-                        else
-                        {
-                            partyTextDisplay[i].text = "UNABLE!";
-                            partyTextDisplay[i].color = new Color(1, 0.25f, 0, 1);
-                        }
-                        partyTextDisplayShadow[i].text = partyTextDisplay[i].text;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    partyStandardDisplay[i].SetActive(true);
-                    partyTextDisplay[i].gameObject.SetActive(false);
-                }
-            }
+            //ItemDataOld selectedItem =
+            //    ItemDatabaseOld.getItem(
+            //        currentItemStringList[currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1]);
+            //if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
+            //{
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        partyStandardDisplay[i].SetActive(false);
+            //        partyTextDisplay[i].gameObject.SetActive(true);
+            //        if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
+            //        {
+            //            if (SaveDataOld.currentSave.PC.boxes[0][i].canEvolve("Stone," + selectedItem.getName()))
+            //            {
+            //                partyTextDisplay[i].text = "ABLE!";
+            //                partyTextDisplay[i].color = new Color(0, 0.5f, 1, 1);
+            //            }
+            //            else
+            //            {
+            //                partyTextDisplay[i].text = "UNABLE!";
+            //                partyTextDisplay[i].color = new Color(1, 0.25f, 0, 1);
+            //            }
+            //            partyTextDisplayShadow[i].text = partyTextDisplay[i].text;
+            //        }
+            //    }
+            //}
+            //else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
+            //{
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        partyStandardDisplay[i].SetActive(false);
+            //        partyTextDisplay[i].gameObject.SetActive(true);
+            //        if (SaveDataOld.currentSave.PC.boxes[0][i] != null)
+            //        {
+            //            if (SaveDataOld.currentSave.PC.boxes[0][i].HasMove(selectedItem.getName()))
+            //            {
+            //                partyTextDisplay[i].text = "LEARNED!";
+            //                partyTextDisplay[i].color = new Color(1, 1, 1, 1);
+            //            }
+            //            else if (SaveDataOld.currentSave.PC.boxes[0][i].CanLearnMove(selectedItem.getName()))
+            //            {
+            //                partyTextDisplay[i].text = "ABLE!";
+            //                partyTextDisplay[i].color = new Color(0, 0.5f, 1, 1);
+            //            }
+            //            else
+            //            {
+            //                partyTextDisplay[i].text = "UNABLE!";
+            //                partyTextDisplay[i].color = new Color(1, 0.25f, 0, 1);
+            //            }
+            //            partyTextDisplayShadow[i].text = partyTextDisplay[i].text;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        partyStandardDisplay[i].SetActive(true);
+            //        partyTextDisplay[i].gameObject.SetActive(false);
+            //    }
+            //}
         }
         else
         {
@@ -864,14 +864,14 @@ public class BagHandler : MonoBehaviour
         }
         for (int i = 0; i < 6; i++)
         {
-            if (i != partyPosition)
-            {
-                partySlot[i].texture = partySlotTex;
-            }
-            else if (inParty)
-            {
-                partySlot[i].texture = partySlotSelectedTex;
-            }
+            //if (i != partyPosition)
+            //{
+            //    partySlot[i].texture = partySlotTex;
+            //}
+            //else if (inParty)
+            //{
+            //    partySlot[i].texture = partySlotSelectedTex;
+            //}
         }
     }
 
@@ -880,8 +880,8 @@ public class BagHandler : MonoBehaviour
         if (shopMode)
         {
             moneyBox.SetActive(true);
-            moneyBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
-            string playerMoney = "" + SaveDataOld.currentSave.playerMoney;
+			//moneyBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
+			string playerMoney = "";// + SaveDataOld.currentSave.playerMoney;
             char[] playerMoneyChars = playerMoney.ToCharArray();
             playerMoney = "";
             //format playerMoney into a currency style (e.g. $1,000,000)
@@ -907,16 +907,16 @@ public class BagHandler : MonoBehaviour
         if (shopMode)
         {
             dataBox.SetActive(true);
-            dataBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
+            //dataBoxBorder.texture = Resources.Load<Texture>("Frame/dialog" + PlayerPrefs.GetInt("frameStyle"));
             if (currentScreenInt == 1)
             {
                 dataText.text = "In Bag:";
                 if (currentItemStringList.Length > 0)
                 {
-                    dataValueText.text = "x " +
-                                         SaveDataOld.currentSave.Bag.getQuantity(
-                                             currentItemStringList[
-                                                 currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1]);
+					dataValueText.text = "x ";
+                                         //+ SaveDataOld.currentSave.Bag.getQuantity(
+                                         //    currentItemStringList[
+                                         //        currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] - 1]);
                 }
                 else
                 {
@@ -928,13 +928,13 @@ public class BagHandler : MonoBehaviour
                 dataText.text = "Offer:";
                 if (currentItemStringList.Length > 0)
                 {
-                    dataValueText.text = "$" +
-                                         Mathf.Floor(
-                                             (float)
-                                             ItemDatabaseOld.getItem(
-                                                 currentItemStringList[
-                                                     currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] -
-                                                     1]).getPrice() / 2f);
+					dataValueText.text = "$";
+                                         //+ Mathf.Floor(
+                                         //    (float)
+                                         //    ItemDatabaseOld.getItem(
+                                         //        currentItemStringList[
+                                         //            currentPosition[currentScreenInt] + currentTopPosition[currentScreenInt] -
+                                         //            1]).getPrice() / 2f);
                 }
                 else
                 {
@@ -953,78 +953,80 @@ public class BagHandler : MonoBehaviour
 
     private bool addItem(string itemName, int amount)
     {
-        bool result = SaveDataOld.currentSave.Bag.addItem(itemName, amount);
-        if (result)
-        {
-            ItemDataOld.ItemType itemType = ItemDatabaseOld.getItem(itemName).getItemType();
-            bool relevantScreen = false;
-            if (currentScreenInt == 1 && itemType == ItemDataOld.ItemType.ITEM)
-            {
-                relevantScreen = true;
-            }
-            else if (currentScreenInt == 2 && itemType == ItemDataOld.ItemType.MEDICINE)
-            {
-                relevantScreen = true;
-            }
-            else if (currentScreenInt == 3 && itemType == ItemDataOld.ItemType.BERRY)
-            {
-                relevantScreen = true;
-            }
-            else if (currentScreenInt == 4 && itemType == ItemDataOld.ItemType.TM)
-            {
-                relevantScreen = true;
-            }
-            else if (currentScreenInt == 5 && itemType == ItemDataOld.ItemType.KEY)
-            {
-                relevantScreen = true;
-            }
-            if (SaveDataOld.currentSave.Bag.getQuantity(itemName) == amount && relevantScreen)
-            {
-                if (currentPosition[currentScreenInt] > Mathf.Floor(visableSlots * 0.67f))
-                {
-                    currentTopPosition[currentScreenInt] += 1;
-                    currentPosition[currentScreenInt] -= 1;
-                }
-            }
-        }
-        return result;
+		//bool result = SaveDataOld.currentSave.Bag.addItem(itemName, amount);
+		//if (result)
+		//{
+		//    ItemDataOld.ItemType itemType = ItemDatabaseOld.getItem(itemName).getItemType();
+		//    bool relevantScreen = false;
+		//    if (currentScreenInt == 1 && itemType == ItemDataOld.ItemType.ITEM)
+		//    {
+		//        relevantScreen = true;
+		//    }
+		//    else if (currentScreenInt == 2 && itemType == ItemDataOld.ItemType.MEDICINE)
+		//    {
+		//        relevantScreen = true;
+		//    }
+		//    else if (currentScreenInt == 3 && itemType == ItemDataOld.ItemType.BERRY)
+		//    {
+		//        relevantScreen = true;
+		//    }
+		//    else if (currentScreenInt == 4 && itemType == ItemDataOld.ItemType.TM)
+		//    {
+		//        relevantScreen = true;
+		//    }
+		//    else if (currentScreenInt == 5 && itemType == ItemDataOld.ItemType.KEY)
+		//    {
+		//        relevantScreen = true;
+		//    }
+		//    if (SaveDataOld.currentSave.Bag.getQuantity(itemName) == amount && relevantScreen)
+		//    {
+		//        if (currentPosition[currentScreenInt] > Mathf.Floor(visableSlots * 0.67f))
+		//        {
+		//            currentTopPosition[currentScreenInt] += 1;
+		//            currentPosition[currentScreenInt] -= 1;
+		//        }
+		//    }
+		//}
+		//return result;
+		return false;
     }
 
     private bool removeItem(string itemName, int amount)
     {
-        bool result = SaveDataOld.currentSave.Bag.removeItem(itemName, amount);
-        if (result)
-        {
-            if (SaveDataOld.currentSave.Bag.getQuantity(itemName) == 0)
-            {
-                switching = false;
-                selected = -1;
-
-                updateScreen();
-
-                if (visableSlots + currentTopPosition[currentScreenInt] + 1 > currentItemStringList.Length)
-                {
-                    if (currentPosition[currentScreenInt] > 1)
-                    {
-                        if (currentItemStringList.Length < visableSlots)
-                        {
-                            currentPosition[currentScreenInt] -= 1;
-                        }
-                        else
-                        {
-                            currentTopPosition[currentScreenInt] -= 1;
-                        }
-                    }
-                }
-            }
-        }
+        //bool result = SaveDataOld.currentSave.Bag.removeItem(itemName, amount);
+        //if (result)
+        //{
+        //    if (SaveDataOld.currentSave.Bag.getQuantity(itemName) == 0)
+        //    {
+        //        switching = false;
+        //        selected = -1;
+		//
+        //        updateScreen();
+		//
+        //        if (visableSlots + currentTopPosition[currentScreenInt] + 1 > currentItemStringList.Length)
+        //        {
+        //            if (currentPosition[currentScreenInt] > 1)
+        //            {
+        //                if (currentItemStringList.Length < visableSlots)
+        //                {
+        //                    currentPosition[currentScreenInt] -= 1;
+        //                }
+        //                else
+        //                {
+        //                    currentTopPosition[currentScreenInt] -= 1;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         updateParty();
         updateItemList();
         updateSelectedItem();
         updateDescription();
         updatePartyDisplays();
         updateScrollBar();
-        return result;
+        //return result;
+        return false;
     }
 
 
@@ -1038,22 +1040,22 @@ public class BagHandler : MonoBehaviour
 
         numbersBoxText.text = "x " + numberString + "\n$" + (price * shopSelectedQuantity);
         numbersBoxTextShadow.text = numbersBoxText.text;
-        if (hoverOnTens)
-        {
-            numbersBoxSelector.pixelOffset = new Vector2(325, numbersBoxSelector.pixelOffset.y);
-        }
-        else
-        {
-            numbersBoxSelector.pixelOffset = new Vector2(331, numbersBoxSelector.pixelOffset.y);
-        }
-        numbersBoxSelectorShadow.pixelOffset = new Vector2(numbersBoxSelector.pixelOffset.x + 1,
-            numbersBoxSelector.pixelOffset.y);
+        //if (hoverOnTens)
+        //{
+        //    numbersBoxSelector.pixelOffset = new Vector2(325, numbersBoxSelector.pixelOffset.y);
+        //}
+        //else
+        //{
+        //    numbersBoxSelector.pixelOffset = new Vector2(331, numbersBoxSelector.pixelOffset.y);
+        //}
+        //numbersBoxSelectorShadow.pixelOffset = new Vector2(numbersBoxSelector.pixelOffset.x + 1,
+        //    numbersBoxSelector.pixelOffset.y);
     }
 
     private IEnumerator openNumbersBox(int price, int max)
     {
         numbersBox.SetActive(true);
-        numbersBoxBorder.texture = Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
+        //numbersBoxBorder.texture = Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
 
         if (max > 99)
         {
@@ -1200,7 +1202,7 @@ public class BagHandler : MonoBehaviour
         {
             -1, 0, 0, 0, 0, 0
         };
-        currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
+        //currentItemStringList = SaveDataOld.currentSave.Bag.getItemTypeArray(ItemDataOld.ItemType.ITEM);
         partyPosition = 0;
         inParty = false;
 
@@ -1216,7 +1218,7 @@ public class BagHandler : MonoBehaviour
         updateMoneyBox();
         updateDataBox();
 
-        bool running = true;
+        /*bool running = true;
 
         while (running)
         {
@@ -1251,9 +1253,9 @@ public class BagHandler : MonoBehaviour
                 {
                     if (partyPosition > 0)
                     {
-                        partySlot[partyPosition].texture = partySlotTex;
+                        //partySlot[partyPosition].texture = partySlotTex;
                         partyPosition -= 1;
-                        partySlot[partyPosition].texture = partySlotSelectedTex;
+                        //partySlot[partyPosition].texture = partySlotSelectedTex;
 
                         SfxHandler.Play(selectClip);
                         yield return new WaitForSeconds(0.16f);
@@ -1293,9 +1295,9 @@ public class BagHandler : MonoBehaviour
                 {
                     if (partyPosition < partyLength - 1)
                     {
-                        partySlot[partyPosition].texture = partySlotTex;
+                        //partySlot[partyPosition].texture = partySlotTex;
                         partyPosition += 1;
-                        partySlot[partyPosition].texture = partySlotSelectedTex;
+                        //partySlot[partyPosition].texture = partySlotSelectedTex;
 
                         SfxHandler.Play(selectClip);
                         yield return new WaitForSeconds(0.16f);
@@ -1307,7 +1309,7 @@ public class BagHandler : MonoBehaviour
                 if (inParty)
                 {
                     inParty = false;
-                    partySlot[partyPosition].texture = partySlotTex;
+                    //partySlot[partyPosition].texture = partySlotTex;
 
                     SfxHandler.Play(selectClip);
                     yield return new WaitForSeconds(0.2f);
@@ -1369,7 +1371,7 @@ public class BagHandler : MonoBehaviour
                     else if (partyLength > 0 && partyAccessible)
                     {
                         inParty = true;
-                        partySlot[partyPosition].texture = partySlotSelectedTex;
+                        //partySlot[partyPosition].texture = partySlotSelectedTex;
 
                         SfxHandler.Play(selectClip);
                         yield return new WaitForSeconds(0.2f);
@@ -1378,7 +1380,7 @@ public class BagHandler : MonoBehaviour
                 else if (!inParty && partyAccessible)
                 {
                     inParty = true;
-                    partySlot[partyPosition].texture = partySlotSelectedTex;
+                    //partySlot[partyPosition].texture = partySlotSelectedTex;
 
                     currentPosition[currentScreenInt] = selectedPosition;
                     currentTopPosition[currentScreenInt] = selectedTopPosition;
@@ -1416,7 +1418,7 @@ public class BagHandler : MonoBehaviour
                             {
                                 //BUY
                                 //custom prices not yet implemented
-                                if (SaveDataOld.currentSave.playerMoney >= selectedItem.getPrice())
+                                if (0 >= selectedItem.getPrice())// (SaveDataOld.currentSave.playerMoney >= selectedItem.getPrice())
                                 {
                                     Dialog.drawDialogBox(2);
                                     yield return
@@ -1426,7 +1428,7 @@ public class BagHandler : MonoBehaviour
 
                                     //quantity selection not yet implemented
                                     int maxQuantity =
-                                        Mathf.FloorToInt((float) SaveDataOld.currentSave.playerMoney /
+                                        Mathf.FloorToInt((float) 0 / //SaveDataOld.currentSave.playerMoney /
                                                          (float) selectedItem.getPrice());
                                     Debug.Log(maxQuantity);
                                     yield return StartCoroutine(openNumbersBox(selectedItem.getPrice(), maxQuantity));
@@ -1451,8 +1453,8 @@ public class BagHandler : MonoBehaviour
                                             SfxHandler.Play(saleClip);
 
                                             addItem(selectedItem.getName(), shopSelectedQuantity);
-                                            SaveDataOld.currentSave.playerMoney -= (shopSelectedQuantity *
-                                                                                 selectedItem.getPrice());
+                                            //SaveDataOld.currentSave.playerMoney -= (shopSelectedQuantity *
+                                            //                                     selectedItem.getPrice());
 
                                             updateMoneyBox();
                                             updateDataBox();
@@ -1489,8 +1491,8 @@ public class BagHandler : MonoBehaviour
                                         Dialog.drawText(selectedItem.getName() + "? \nHow many would you like to sell?"))
                                     ;
 
-                                //quantity selection not yet implemented
-                                int maxQuantity = SaveDataOld.currentSave.Bag.getQuantity(selectedItem.getName());
+								//quantity selection not yet implemented
+								int maxQuantity = 0;//SaveDataOld.currentSave.Bag.getQuantity(selectedItem.getName());
                                 Debug.Log(maxQuantity);
                                 yield return
                                     StartCoroutine(openNumbersBox(
@@ -1517,9 +1519,9 @@ public class BagHandler : MonoBehaviour
 
                                         removeItem(selectedItem.getName(), shopSelectedQuantity);
                                         //custom prices not yet implemented
-                                        SaveDataOld.currentSave.playerMoney += shopSelectedQuantity *
-                                                                            Mathf.FloorToInt(
-                                                                                (float) selectedItem.getPrice() / 2f);
+                                        //SaveDataOld.currentSave.playerMoney += shopSelectedQuantity *
+                                        //                                    Mathf.FloorToInt(
+                                        //                                        (float) selectedItem.getPrice() / 2f);
 
                                         updateMoneyBox();
                                         updateDataBox();
@@ -2095,7 +2097,7 @@ public class BagHandler : MonoBehaviour
                 }
             }
             yield return null;
-        }
+        }*/
 
         if (!shopMode)
         {
@@ -2113,740 +2115,739 @@ public class BagHandler : MonoBehaviour
 
 
     //RUN ITEM EFFECT.		This code handles the usage of items in the bag.
-    private IEnumerator runItemEffect(ItemDataOld selectedItem, PokemonOld currentPokemon)
-    {
-        yield return StartCoroutine(runItemEffect(selectedItem, currentPokemon, false));
-    }
+    //private IEnumerator runItemEffect(ItemDataOld selectedItem, PokemonOld currentPokemon)
+    //{
+    //    yield return StartCoroutine(runItemEffect(selectedItem, currentPokemon, false));
+    //}
 
-    private IEnumerator runItemEffect(ItemDataOld selectedItem, PokemonOld currentPokemon, bool booted)
-    {
-        if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.HP)
-        {
-            //HP
-            if (currentPokemon.getCurrentHP() < currentPokemon.getHP() &&
-                currentPokemon.getStatus() != PokemonOld.Status.FAINTED)
-            {
-                //determine amount / intialise HP Bar Animation variables
-                float amount = selectedItem.getFloatParameter();
-                if (amount <= 1)
-                {
-                    amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
-                }
-                else
-                {
-                    amount = currentPokemon.healHP(amount);
-                }
-                float startLength = partyHPBar[partyPosition].pixelInset.width;
-                float difference =
-                    Mathf.Floor(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())) -
-                    startLength;
-                float increment = 0;
-                float speed = 0.5f;
+    //private IEnumerator runItemEffect(ItemDataOld selectedItem, PokemonOld currentPokemon, bool booted)
+    //{
+    //    if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.HP)
+    //    {
+    //        //HP
+    //        if (currentPokemon.getCurrentHP() < currentPokemon.getHP() &&
+    //            currentPokemon.getStatus() != PokemonOld.Status.FAINTED)
+    //        {
+    //            //determine amount / intialise HP Bar Animation variables
+    //            float amount = selectedItem.getFloatParameter();
+    //            if (amount <= 1)
+    //            {
+    //                amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
+    //            }
+    //            else
+    //            {
+    //                amount = currentPokemon.healHP(amount);
+    //            }
+    //            float startLength = partyHPBar[partyPosition].pixelInset.width;
+    //            float difference =
+    //                Mathf.Floor(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())) -
+    //                startLength;
+    //            float increment = 0;
+    //            float speed = 0.5f;
+	//
+    //            SfxHandler.Play(healClip);
+    //            removeItem(selectedItem.getName(), 1);
+	//
+    //            //animate HP bar restoring
+    //            while (increment < 1)
+    //            {
+    //                increment += (1 / speed) * Time.deltaTime;
+    //                if (increment > 1)
+    //                {
+    //                    increment = 1;
+    //                }
+    //                partyHPBar[partyPosition].pixelInset = new Rect(partyHPBar[partyPosition].pixelInset.x,
+    //                    partyHPBar[partyPosition].pixelInset.y,
+    //                    startLength + (difference * increment), partyHPBar[partyPosition].pixelInset.height);
+    //                //Color the bar
+    //                if (partyHPBar[partyPosition].pixelInset.width < 12f)
+    //                {
+    //                    partyHPBar[partyPosition].color = new Color(1, 0.125f, 0, 1);
+    //                }
+    //                else if (partyHPBar[partyPosition].pixelInset.width < 24f)
+    //                {
+    //                    partyHPBar[partyPosition].color = new Color(1, 0.75f, 0, 1);
+    //                }
+    //                else
+    //                {
+    //                    partyHPBar[partyPosition].color = new Color(0.125f, 1, 0.065f, 1);
+    //                }
+	//
+    //                yield return null;
+    //            }
+	//
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            switching = false;
+    //            selected = -1;
+    //            updateSelectedItem();
+    //        }
+    //    }
+    //    else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.PP)
+    //    {
+    //        //PP
+    //        string[] currentPokemonMoveset = currentPokemon.getMoveset();
+    //        int[] currentPokemonPP = currentPokemon.getPP();
+    //        int[] currentPokemonMaxPP = currentPokemon.getMaxPP();
+    //        bool loweredPP = false;
+    //        for (int i = 0; i < 4; i++)
+    //        {
+    //            if (currentPokemonMoveset[i] != null)
+    //            {
+    //                if (currentPokemonPP[i] < currentPokemonMaxPP[i])
+    //                {
+    //                    loweredPP = true;
+    //                }
+    //                else
+    //                {
+    //                    //remove any move from the array that has full PP.
+    //                    currentPokemonMoveset[i] = null;
+    //                }
+    //            }
+    //        }
+    //        if (loweredPP)
+    //        {
+    //            //check that the item is not healing all PP
+    //            if (selectedItem.getStringParameter() == "All")
+    //            {
+    //                //heal PP for each move.
+    //                float amount = selectedItem.getFloatParameter();
+    //                for (int i = 0; i < 4; i++)
+    //                {
+    //                    if (currentPokemonMoveset[i] != null)
+    //                    {
+    //                        if (amount <= 1)
+    //                        {
+    //                            amount = currentPokemon.healPP(i,
+    //                                Mathf.RoundToInt(currentPokemon.getMaxPP()[i] * amount));
+    //                        }
+    //                        else
+    //                        {
+    //                            amount = currentPokemon.healPP(i, amount);
+    //                        }
+    //                    }
+    //                }
+	//
+    //                SfxHandler.Play(healClip);
+    //                removeItem(selectedItem.getName(), 1);
+	//
+    //                Dialog.drawDialogBox();
+    //                yield return Dialog.StartCoroutine("drawTextSilent", "Restored all moves.");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //            }
+    //            else
+    //            {
+    //                //Set up the choices string to only contain moves with lowered PP.
+    //                string[] choices = new string[]
+    //                {
+    //                    currentPokemonMoveset[0], currentPokemonMoveset[1],
+    //                    currentPokemonMoveset[2], currentPokemonMoveset[3], "Cancel"
+    //                };
+    //                string[] packedChoices = new string[5];
+    //                int packedIndex = 0;
+    //                for (int i = 0; i < 5; i++)
+    //                {
+    //                    if (choices[i] != null)
+    //                    {
+    //                        packedChoices[packedIndex] = choices[i];
+    //                        packedIndex += 1;
+    //                    }
+    //                }
+    //                choices = new string[packedIndex];
+    //                for (int i = 0; i < packedIndex; i++)
+    //                {
+    //                    choices[i] = packedChoices[i];
+    //                }
+	//
+    //                //Start the dialog, now that the choices have been set up.
+    //                Dialog.drawDialogBox();
+    //                yield return Dialog.StartCoroutine("drawText", "Restore which move's PP?");
+    //                Dialog.drawChoiceBoxWidth(choices, 110);
+    //                yield return StartCoroutine(Dialog.choiceNavigate(choices));
+    //                int chosenIndex = Dialog.chosenIndex;
+    //                if (chosenIndex != 0)
+    //                {
+    //                    //resolve move number
+    //                    int moveNumber = 0;
+    //                    for (int i = 0; i < 4; i++)
+    //                    {
+    //                        if (currentPokemonMoveset[i] == choices[choices.Length - chosenIndex - 1])
+    //                        {
+    //                            moveNumber = i;
+    //                        }
+    //                    }
+	//
+    //                    //heal PP for selected move.
+    //                    float amount = selectedItem.getFloatParameter();
+    //                    if (amount <= 1)
+    //                    {
+    //                        amount = currentPokemon.healPP(moveNumber,
+    //                            Mathf.RoundToInt(currentPokemon.getMaxPP()[moveNumber] * amount));
+    //                    }
+    //                    else
+    //                    {
+    //                        amount = currentPokemon.healPP(moveNumber, amount);
+    //                    }
+	//
+    //                    SfxHandler.Play(healClip);
+    //                    removeItem(selectedItem.getName(), 1);
+	//
+    //                    Dialog.drawDialogBox();
+    //                    yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
+    //                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                    {
+    //                        yield return null;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            switching = false;
+    //            selected = -1;
+    //            updateSelectedItem();
+    //        }
+    //    }
+    //    else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.STATUS)
+    //    {
+    //        //STATUS
+    //        //Check current pokemon has the status the item cures
+    //        string statusCurer = selectedItem.getStringParameter().ToUpper();
+    //        //if an ALL is used, set it to cure anything but FAINTED or NONE.
+    //        if (statusCurer == "ALL" && currentPokemon.getStatus().ToString() != "FAINTED" &&
+    //            currentPokemon.getStatus().ToString() != "NONE")
+    //        {
+    //            statusCurer = currentPokemon.getStatus().ToString();
+    //        }
+	//
+    //        if (currentPokemon.getStatus().ToString() == statusCurer)
+    //        {
+    //            if (statusCurer == "FAINTED")
+    //            {
+    //                //Revive
+    //                currentPokemon.setStatus(PokemonOld.Status.NONE);
+	//
+    //                //determine amount / intialise HP Bar Animation variables
+    //                float amount = selectedItem.getFloatParameter();
+    //                if (amount <= 1)
+    //                {
+    //                    amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
+    //                }
+    //                else
+    //                {
+    //                    amount = currentPokemon.healHP(amount);
+    //                }
+    //                float startLength = partyHPBar[partyPosition].pixelInset.width;
+    //                float difference =
+    //                    Mathf.Floor(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())) -
+    //                    startLength;
+    //                float increment = 0;
+    //                float speed = 0.5f;
+	//
+    //                SfxHandler.Play(healClip);
+    //                removeItem(selectedItem.getName(), 1);
+	//
+    //                //animate HP bar restoring
+    //                while (increment < 1)
+    //                {
+    //                    increment += (1 / speed) * Time.deltaTime;
+    //                    if (increment > 1)
+    //                    {
+    //                        increment = 1;
+    //                    }
+    //                    partyHPBar[partyPosition].pixelInset = new Rect(partyHPBar[partyPosition].pixelInset.x,
+    //                        partyHPBar[partyPosition].pixelInset.y,
+    //                        startLength + (difference * increment), partyHPBar[partyPosition].pixelInset.height);
+    //                    //Color the bar
+    //                    if (partyHPBar[partyPosition].pixelInset.width < 12f)
+    //                    {
+    //                        partyHPBar[partyPosition].color = new Color(1, 0.125f, 0, 1);
+    //                    }
+    //                    else if (partyHPBar[partyPosition].pixelInset.width < 24f)
+    //                    {
+    //                        partyHPBar[partyPosition].color = new Color(1, 0.75f, 0, 1);
+    //                    }
+    //                    else
+    //                    {
+    //                        partyHPBar[partyPosition].color = new Color(0.125f, 1, 0.065f, 1);
+    //                    }
+	//
+    //                    yield return null;
+    //                }
+	//
+    //                Dialog.drawDialogBox();
+    //                yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //            }
+    //            else
+    //            {
+    //                currentPokemon.setStatus(PokemonOld.Status.NONE);
+	//
+    //                SfxHandler.Play(healClip);
+    //                removeItem(selectedItem.getName(), 1);
+	//
+    //                Dialog.drawDialogBox();
+    //                if (statusCurer == "ASLEEP")
+    //                {
+    //                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " woke up!");
+    //                }
+    //                else if (statusCurer == "BURNED")
+    //                {
+    //                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was healed!");
+    //                }
+    //                else if (statusCurer == "FROZEN")
+    //                {
+    //                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " thawed out!");
+    //                }
+    //                else if (statusCurer == "PARALYZED")
+    //                {
+    //                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was cured!");
+    //                }
+    //                else if (statusCurer == "POISONED")
+    //                {
+    //                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was cured!");
+    //                }
+	//
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            switching = false;
+    //            selected = -1;
+    //            updateSelectedItem();
+    //        }
+    //    }
+    //    else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EV)
+    //    {
+    //        //EV
+    //        string statBooster = selectedItem.getStringParameter().ToUpper();
+    //        float amount = selectedItem.getFloatParameter();
+    //        bool evsAdded = currentPokemon.addEVs(statBooster, amount);
+    //        if (evsAdded)
+    //        {
+    //            SfxHandler.Play(healClip);
+    //            removeItem(selectedItem.getName(), 1);
+	//
+    //            Dialog.drawDialogBox();
+    //            if (statBooster == "HP")
+    //            {
+    //                yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s HP rose!");
+    //            }
+    //            else if (statBooster == "ATK")
+    //            {
+    //                yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Attack rose!");
+    //            }
+    //            else if (statBooster == "DEF")
+    //            {
+    //                yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Defense rose!");
+    //            }
+    //            else if (statBooster == "SPA")
+    //            {
+    //                yield return
+    //                    Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Special Attack rose!");
+    //            }
+    //            else if (statBooster == "SPD")
+    //            {
+    //                yield return
+    //                    Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Special Defense rose!");
+    //            }
+    //            else if (statBooster == "SPE")
+    //            {
+    //                yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Speed rose!");
+    //            }
+	//
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            updateSelectedItem();
+    //        }
+    //        else
+    //        {
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            switching = false;
+    //            selected = -1;
+    //            updateSelectedItem();
+    //        }
+    //    }
+    //    else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
+    //    {
+    //        //EVOLVE
+    //        if (currentPokemon.canEvolve("Stone," + selectedItem.getName()))
+    //        {
+    //            int oldID = currentPokemon.getID();
+    //            SfxHandler.Play(selectClip);
+    //            BgmHandler.main.PlayOverlay(null, 0, 0.5f);
+    //            //yield return new WaitForSeconds(sceneTransition.FadeOut());
+    //            yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+	//
+    //            //Set SceneEvolution to be active so that it appears
+    //            Scene.main.Evolution.gameObject.SetActive(true);
+    //            StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Stone," + selectedItem.getName()));
+    //            //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
+    //            while (Scene.main.Evolution.gameObject.activeSelf)
+    //            {
+    //                yield return null;
+    //            }
+	//
+    //            if (oldID != currentPokemon.getID())
+    //            {
+    //                //if evolved
+    //                removeItem(selectedItem.getName(), 1);
+    //            } //remove item
+	//
+    //            //yield return new WaitForSeconds(sceneTransition.FadeIn());
+    //            yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+    //            Dialog.undrawDialogBox();
+    //        }
+    //        else
+    //        {
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            switching = false;
+    //            selected = -1;
+    //            updateSelectedItem();
+    //        }
+    //    }
+    //    else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
+    //    {
+    //        //TM
+    //        if (currentPokemon.HasMove(selectedItem.getName()))
+    //        {
+    //            Dialog.drawDialogBox(2);
+    //            yield return
+    //                Dialog.StartCoroutine("drawText",
+    //                    currentPokemon.getName() + " already knows \n" + selectedItem.getName() + ".");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //        }
+    //        else if (currentPokemon.CanLearnMove(selectedItem.getName()))
+    //        {
+    //            //check if can learn move
+    //            if (!booted)
+    //            {
+    //                Dialog.drawDialogBox(2);
+    //                SfxHandler.Play(tmBootupClip);
+    //                yield return StartCoroutine(Dialog.drawTextSilent("Booted up a TM."));
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                Dialog.drawDialogBox(2);
+    //                yield return Dialog.StartCoroutine("drawText", "It contained " + selectedItem.getName() + ".");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                Dialog.drawDialogBox(2);
+    //                yield return
+    //                    Dialog.StartCoroutine("drawText",
+    //                        "Teach " + selectedItem.getName() + "\nto " + currentPokemon.getName() + "?");
+    //                Dialog.drawChoiceBox(14);
+    //                yield return StartCoroutine(Dialog.choiceNavigate());
+    //                Dialog.undrawChoiceBox();
+	//
+    //                if (Dialog.chosenIndex == 1)
+    //                {
+    //                    yield return StartCoroutine(LearnMove(currentPokemon, selectedItem.getName()));
+    //                }
+    //            }
+    //            else
+    //            {
+    //                yield return StartCoroutine(LearnMove(currentPokemon, selectedItem.getName()));
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Dialog.drawDialogBox();
+    //            yield return Dialog.StartCoroutine("drawText", currentPokemon.getName() + " can't learn that move.");
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //        }
+    //        Dialog.undrawDialogBox();
+    //        switching = false;
+    //        selected = -1;
+    //        updateSelectedItem();
+    //    }
+    //    else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.UNIQUE)
+    //    {
+    //        //UNIQUE
+    //        string selectedItemName = selectedItem.getName();
+    //        if (selectedItemName == "Rare Candy")
+    //        {
+    //            if (currentPokemon.getLevel() < 100)
+    //            {
+    //                currentPokemon.healHP(1);
+    //                currentPokemon.addExp(currentPokemon.getExpNext() - currentPokemon.getExp());
+    //                SfxHandler.Play(healClip);
+    //                updateParty();
+	//
+    //                removeItem(selectedItem.getName(), 1); //remove item
+    //                updateSelectedItem();
+	//
+    //                Dialog.drawDialogBox();
+    //                yield return
+    //                    Dialog.StartCoroutine("drawTextSilent",
+    //                        currentPokemon.getName() + "'s level rose to " + currentPokemon.getLevel() + "!");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+	//
+    //                //stat displays not yet implemented
+	//
+    //                int pkmnID = currentPokemon.getID();
+    //                //check for level evolution. EVOLVE
+    //                if (currentPokemon.canEvolve("Level"))
+    //                {
+    //                    SfxHandler.Play(selectClip);
+    //                    BgmHandler.main.PlayOverlay(null, 0, 0.5f);
+    //                    yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+	//
+    //                    //Set SceneEvolution to be active so that it appears
+    //                    Scene.main.Evolution.gameObject.SetActive(true);
+    //                    StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Level"));
+    //                    //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
+    //                    while (Scene.main.Evolution.gameObject.activeSelf)
+    //                    {
+    //                        yield return null;
+    //                    }
+	//
+    //                    updateParty();
+	//
+    //                    yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+    //                }
+    //                //if evolution not successful / wasn't called, check for moves to learn
+    //                if (pkmnID == currentPokemon.getID())
+    //                {
+    //                    string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.getLevel());
+    //                    Debug.Log(move);
+    //                    if (!string.IsNullOrEmpty(move) && !currentPokemon.HasMove(move))
+    //                    {
+    //                        yield return StartCoroutine(LearnMove(currentPokemon, move));
+    //                    }
+    //                }
+    //            }
+    //            else
+    //            {
+    //                Dialog.drawDialogBox();
+    //                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                switching = false;
+    //                selected = -1;
+    //                updateSelectedItem();
+    //            }
+    //        }
+    //    }
+    //}
 
-                SfxHandler.Play(healClip);
-                removeItem(selectedItem.getName(), 1);
-
-                //animate HP bar restoring
-                while (increment < 1)
-                {
-                    increment += (1 / speed) * Time.deltaTime;
-                    if (increment > 1)
-                    {
-                        increment = 1;
-                    }
-                    partyHPBar[partyPosition].pixelInset = new Rect(partyHPBar[partyPosition].pixelInset.x,
-                        partyHPBar[partyPosition].pixelInset.y,
-                        startLength + (difference * increment), partyHPBar[partyPosition].pixelInset.height);
-                    //Color the bar
-                    if (partyHPBar[partyPosition].pixelInset.width < 12f)
-                    {
-                        partyHPBar[partyPosition].color = new Color(1, 0.125f, 0, 1);
-                    }
-                    else if (partyHPBar[partyPosition].pixelInset.width < 24f)
-                    {
-                        partyHPBar[partyPosition].color = new Color(1, 0.75f, 0, 1);
-                    }
-                    else
-                    {
-                        partyHPBar[partyPosition].color = new Color(0.125f, 1, 0.065f, 1);
-                    }
-
-                    yield return null;
-                }
-
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.PP)
-        {
-            //PP
-            string[] currentPokemonMoveset = currentPokemon.getMoveset();
-            int[] currentPokemonPP = currentPokemon.getPP();
-            int[] currentPokemonMaxPP = currentPokemon.getMaxPP();
-            bool loweredPP = false;
-            for (int i = 0; i < 4; i++)
-            {
-                if (currentPokemonMoveset[i] != null)
-                {
-                    if (currentPokemonPP[i] < currentPokemonMaxPP[i])
-                    {
-                        loweredPP = true;
-                    }
-                    else
-                    {
-                        //remove any move from the array that has full PP.
-                        currentPokemonMoveset[i] = null;
-                    }
-                }
-            }
-            if (loweredPP)
-            {
-                //check that the item is not healing all PP
-                if (selectedItem.getStringParameter() == "All")
-                {
-                    //heal PP for each move.
-                    float amount = selectedItem.getFloatParameter();
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (currentPokemonMoveset[i] != null)
-                        {
-                            if (amount <= 1)
-                            {
-                                amount = currentPokemon.healPP(i,
-                                    Mathf.RoundToInt(currentPokemon.getMaxPP()[i] * amount));
-                            }
-                            else
-                            {
-                                amount = currentPokemon.healPP(i, amount);
-                            }
-                        }
-                    }
-
-                    SfxHandler.Play(healClip);
-                    removeItem(selectedItem.getName(), 1);
-
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawTextSilent", "Restored all moves.");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                }
-                else
-                {
-                    //Set up the choices string to only contain moves with lowered PP.
-                    string[] choices = new string[]
-                    {
-                        currentPokemonMoveset[0], currentPokemonMoveset[1],
-                        currentPokemonMoveset[2], currentPokemonMoveset[3], "Cancel"
-                    };
-                    string[] packedChoices = new string[5];
-                    int packedIndex = 0;
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (choices[i] != null)
-                        {
-                            packedChoices[packedIndex] = choices[i];
-                            packedIndex += 1;
-                        }
-                    }
-                    choices = new string[packedIndex];
-                    for (int i = 0; i < packedIndex; i++)
-                    {
-                        choices[i] = packedChoices[i];
-                    }
-
-                    //Start the dialog, now that the choices have been set up.
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", "Restore which move's PP?");
-                    Dialog.drawChoiceBoxWidth(choices, 110);
-                    yield return StartCoroutine(Dialog.choiceNavigate(choices));
-                    int chosenIndex = Dialog.chosenIndex;
-                    if (chosenIndex != 0)
-                    {
-                        //resolve move number
-                        int moveNumber = 0;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (currentPokemonMoveset[i] == choices[choices.Length - chosenIndex - 1])
-                            {
-                                moveNumber = i;
-                            }
-                        }
-
-                        //heal PP for selected move.
-                        float amount = selectedItem.getFloatParameter();
-                        if (amount <= 1)
-                        {
-                            amount = currentPokemon.healPP(moveNumber,
-                                Mathf.RoundToInt(currentPokemon.getMaxPP()[moveNumber] * amount));
-                        }
-                        else
-                        {
-                            amount = currentPokemon.healPP(moveNumber, amount);
-                        }
-
-                        SfxHandler.Play(healClip);
-                        removeItem(selectedItem.getName(), 1);
-
-                        Dialog.drawDialogBox();
-                        yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.STATUS)
-        {
-            //STATUS
-            //Check current pokemon has the status the item cures
-            string statusCurer = selectedItem.getStringParameter().ToUpper();
-            //if an ALL is used, set it to cure anything but FAINTED or NONE.
-            if (statusCurer == "ALL" && currentPokemon.getStatus().ToString() != "FAINTED" &&
-                currentPokemon.getStatus().ToString() != "NONE")
-            {
-                statusCurer = currentPokemon.getStatus().ToString();
-            }
-
-            if (currentPokemon.getStatus().ToString() == statusCurer)
-            {
-                if (statusCurer == "FAINTED")
-                {
-                    //Revive
-                    currentPokemon.setStatus(PokemonOld.Status.NONE);
-
-                    //determine amount / intialise HP Bar Animation variables
-                    float amount = selectedItem.getFloatParameter();
-                    if (amount <= 1)
-                    {
-                        amount = currentPokemon.healHP(currentPokemon.getHP() * amount);
-                    }
-                    else
-                    {
-                        amount = currentPokemon.healHP(amount);
-                    }
-                    float startLength = partyHPBar[partyPosition].pixelInset.width;
-                    float difference =
-                        Mathf.Floor(48f * ((float) currentPokemon.getCurrentHP() / (float) currentPokemon.getHP())) -
-                        startLength;
-                    float increment = 0;
-                    float speed = 0.5f;
-
-                    SfxHandler.Play(healClip);
-                    removeItem(selectedItem.getName(), 1);
-
-                    //animate HP bar restoring
-                    while (increment < 1)
-                    {
-                        increment += (1 / speed) * Time.deltaTime;
-                        if (increment > 1)
-                        {
-                            increment = 1;
-                        }
-                        partyHPBar[partyPosition].pixelInset = new Rect(partyHPBar[partyPosition].pixelInset.x,
-                            partyHPBar[partyPosition].pixelInset.y,
-                            startLength + (difference * increment), partyHPBar[partyPosition].pixelInset.height);
-                        //Color the bar
-                        if (partyHPBar[partyPosition].pixelInset.width < 12f)
-                        {
-                            partyHPBar[partyPosition].color = new Color(1, 0.125f, 0, 1);
-                        }
-                        else if (partyHPBar[partyPosition].pixelInset.width < 24f)
-                        {
-                            partyHPBar[partyPosition].color = new Color(1, 0.75f, 0, 1);
-                        }
-                        else
-                        {
-                            partyHPBar[partyPosition].color = new Color(0.125f, 1, 0.065f, 1);
-                        }
-
-                        yield return null;
-                    }
-
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawTextSilent", "It restored " + amount + " points.");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                }
-                else
-                {
-                    currentPokemon.setStatus(PokemonOld.Status.NONE);
-
-                    SfxHandler.Play(healClip);
-                    removeItem(selectedItem.getName(), 1);
-
-                    Dialog.drawDialogBox();
-                    if (statusCurer == "ASLEEP")
-                    {
-                        yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " woke up!");
-                    }
-                    else if (statusCurer == "BURNED")
-                    {
-                        yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was healed!");
-                    }
-                    else if (statusCurer == "FROZEN")
-                    {
-                        yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " thawed out!");
-                    }
-                    else if (statusCurer == "PARALYZED")
-                    {
-                        yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was cured!");
-                    }
-                    else if (statusCurer == "POISONED")
-                    {
-                        yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + " was cured!");
-                    }
-
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                }
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EV)
-        {
-            //EV
-            string statBooster = selectedItem.getStringParameter().ToUpper();
-            float amount = selectedItem.getFloatParameter();
-            bool evsAdded = currentPokemon.addEVs(statBooster, amount);
-            if (evsAdded)
-            {
-                SfxHandler.Play(healClip);
-                removeItem(selectedItem.getName(), 1);
-
-                Dialog.drawDialogBox();
-                if (statBooster == "HP")
-                {
-                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s HP rose!");
-                }
-                else if (statBooster == "ATK")
-                {
-                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Attack rose!");
-                }
-                else if (statBooster == "DEF")
-                {
-                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Defense rose!");
-                }
-                else if (statBooster == "SPA")
-                {
-                    yield return
-                        Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Special Attack rose!");
-                }
-                else if (statBooster == "SPD")
-                {
-                    yield return
-                        Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Special Defense rose!");
-                }
-                else if (statBooster == "SPE")
-                {
-                    yield return Dialog.StartCoroutine("drawTextSilent", currentPokemon.getName() + "'s Speed rose!");
-                }
-
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                updateSelectedItem();
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.EVOLVE)
-        {
-            //EVOLVE
-            if (currentPokemon.canEvolve("Stone," + selectedItem.getName()))
-            {
-                int oldID = currentPokemon.getID();
-                SfxHandler.Play(selectClip);
-                BgmHandler.main.PlayOverlay(null, 0, 0.5f);
-                //yield return new WaitForSeconds(sceneTransition.FadeOut());
-                yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-
-                //Set SceneEvolution to be active so that it appears
-                Scene.main.Evolution.gameObject.SetActive(true);
-                StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Stone," + selectedItem.getName()));
-                //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
-                while (Scene.main.Evolution.gameObject.activeSelf)
-                {
-                    yield return null;
-                }
-
-                if (oldID != currentPokemon.getID())
-                {
-                    //if evolved
-                    removeItem(selectedItem.getName(), 1);
-                } //remove item
-
-                //yield return new WaitForSeconds(sceneTransition.FadeIn());
-                yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
-                Dialog.undrawDialogBox();
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                switching = false;
-                selected = -1;
-                updateSelectedItem();
-            }
-        }
-        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.TM)
-        {
-            //TM
-            if (currentPokemon.HasMove(selectedItem.getName()))
-            {
-                Dialog.drawDialogBox(2);
-                yield return
-                    Dialog.StartCoroutine("drawText",
-                        currentPokemon.getName() + " already knows \n" + selectedItem.getName() + ".");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-            }
-            else if (currentPokemon.CanLearnMove(selectedItem.getName()))
-            {
-                //check if can learn move
-                if (!booted)
-                {
-                    Dialog.drawDialogBox(2);
-                    SfxHandler.Play(tmBootupClip);
-                    yield return StartCoroutine(Dialog.drawTextSilent("Booted up a TM."));
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.drawDialogBox(2);
-                    yield return Dialog.StartCoroutine("drawText", "It contained " + selectedItem.getName() + ".");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.drawDialogBox(2);
-                    yield return
-                        Dialog.StartCoroutine("drawText",
-                            "Teach " + selectedItem.getName() + "\nto " + currentPokemon.getName() + "?");
-                    Dialog.drawChoiceBox(14);
-                    yield return StartCoroutine(Dialog.choiceNavigate());
-                    Dialog.undrawChoiceBox();
-
-                    if (Dialog.chosenIndex == 1)
-                    {
-                        yield return StartCoroutine(LearnMove(currentPokemon, selectedItem.getName()));
-                    }
-                }
-                else
-                {
-                    yield return StartCoroutine(LearnMove(currentPokemon, selectedItem.getName()));
-                }
-            }
-            else
-            {
-                Dialog.drawDialogBox();
-                yield return Dialog.StartCoroutine("drawText", currentPokemon.getName() + " can't learn that move.");
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-            }
-            Dialog.undrawDialogBox();
-            switching = false;
-            selected = -1;
-            updateSelectedItem();
-        }
-        else if (selectedItem.getItemEffect() == ItemDataOld.ItemEffect.UNIQUE)
-        {
-            //UNIQUE
-            string selectedItemName = selectedItem.getName();
-            if (selectedItemName == "Rare Candy")
-            {
-                if (currentPokemon.getLevel() < 100)
-                {
-                    currentPokemon.healHP(1);
-                    currentPokemon.addExp(currentPokemon.getExpNext() - currentPokemon.getExp());
-                    SfxHandler.Play(healClip);
-                    updateParty();
-
-                    removeItem(selectedItem.getName(), 1); //remove item
-                    updateSelectedItem();
-
-                    Dialog.drawDialogBox();
-                    yield return
-                        Dialog.StartCoroutine("drawTextSilent",
-                            currentPokemon.getName() + "'s level rose to " + currentPokemon.getLevel() + "!");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-
-                    //stat displays not yet implemented
-
-                    int pkmnID = currentPokemon.getID();
-                    //check for level evolution. EVOLVE
-                    if (currentPokemon.canEvolve("Level"))
-                    {
-                        SfxHandler.Play(selectClip);
-                        BgmHandler.main.PlayOverlay(null, 0, 0.5f);
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-
-                        //Set SceneEvolution to be active so that it appears
-                        Scene.main.Evolution.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Evolution.control(currentPokemon, "Level"));
-                        //Start an empty loop that will only stop when SceneEvolution is no longer active (is closed)
-                        while (Scene.main.Evolution.gameObject.activeSelf)
-                        {
-                            yield return null;
-                        }
-
-                        updateParty();
-
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
-                    }
-                    //if evolution not successful / wasn't called, check for moves to learn
-                    if (pkmnID == currentPokemon.getID())
-                    {
-                        string move = currentPokemon.MoveLearnedAtLevel(currentPokemon.getLevel());
-                        Debug.Log(move);
-                        if (!string.IsNullOrEmpty(move) && !currentPokemon.HasMove(move))
-                        {
-                            yield return StartCoroutine(LearnMove(currentPokemon, move));
-                        }
-                    }
-                }
-                else
-                {
-                    Dialog.drawDialogBox();
-                    yield return Dialog.StartCoroutine("drawText", "It wouldn't have any effect.");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    switching = false;
-                    selected = -1;
-                    updateSelectedItem();
-                }
-            }
-        }
-    }
-
-    private IEnumerator LearnMove(PokemonOld selectedPokemon, string move)
-    {
-        int chosenIndex = 1;
-        if (chosenIndex == 1)
-        {
-            bool learning = true;
-            while (learning)
-            {
-                //Moveset is full
-                if (selectedPokemon.getMoveCount() == 4)
-                {
-                    Dialog.drawDialogBox(2);
-                    yield return
-                        Dialog.StartCoroutine("drawText",
-                            selectedPokemon.getName() + " wants to learn the \nmove " + move + ".");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.drawDialogBox(2);
-                    yield return
-                        Dialog.StartCoroutine("drawText",
-                            "However, " + selectedPokemon.getName() + " already \nknows four moves.");
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.drawDialogBox(2);
-                    yield return
-                        Dialog.StartCoroutine("drawText", "Should a move be deleted and \nreplaced with " + move + "?");
-
-                    Dialog.drawChoiceBox(14);
-                    yield return StartCoroutine(Dialog.choiceNavigate());
-                    chosenIndex = Dialog.chosenIndex;
-                    Dialog.undrawChoiceBox();
-                    if (chosenIndex == 1)
-                    {
-                        Dialog.drawDialogBox(2);
-                        yield return Dialog.StartCoroutine("drawText", "Which move should \nbe forgotten?");
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-
-                        yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
-
-                        //Set SceneSummary to be active so that it appears
-                        Scene.main.Summary.gameObject.SetActive(true);
-                        StartCoroutine(Scene.main.Summary.control(selectedPokemon, move));
-                        //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
-                        while (Scene.main.Summary.gameObject.activeSelf)
-                        {
-                            yield return null;
-                        }
-
-                        string replacedMove = Scene.main.Summary.replacedMove;
-                        yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
-
-                        if (!string.IsNullOrEmpty(replacedMove))
-                        {
-                            Dialog.drawDialogBox(2);
-                            yield return Dialog.StartCoroutine("drawTextSilent", "1, ");
-                            yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine("drawTextSilent", "2, ");
-                            yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine("drawTextSilent", "and... ");
-                            yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine("drawTextSilent", "... ");
-                            yield return new WaitForSeconds(0.4f);
-                            yield return Dialog.StartCoroutine("drawTextSilent", "... ");
-                            yield return new WaitForSeconds(0.4f);
-                            SfxHandler.Play(forgetMoveClip);
-                            yield return Dialog.StartCoroutine("drawTextSilent", "Poof!");
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                            {
-                                yield return null;
-                            }
-
-                            Dialog.drawDialogBox(2);
-                            yield return
-                                Dialog.StartCoroutine("drawText",
-                                    selectedPokemon.getName() + " forgot how to \nuse " + replacedMove + ".");
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                            {
-                                yield return null;
-                            }
-                            Dialog.drawDialogBox(2);
-                            yield return Dialog.StartCoroutine("drawText", "And...");
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                            {
-                                yield return null;
-                            }
-
-                            Dialog.drawDialogBox(2);
-                            AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                            BgmHandler.main.PlayMFX(mfx);
-                            StartCoroutine(Dialog.drawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
-                            yield return new WaitForSeconds(mfx.length);
-                            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                            {
-                                yield return null;
-                            }
-                            Dialog.undrawDialogBox();
-                            learning = false;
-                        }
-                        else
-                        {
-                            //give up?
-                            chosenIndex = 0;
-                        }
-                    }
-                    if (chosenIndex == 0)
-                    {
-                        //NOT ELSE because this may need to run after (chosenIndex == 1) runs
-                        Dialog.drawDialogBox(2);
-                        yield return Dialog.StartCoroutine("drawText", "Give up on learning the move \n" + move + "?");
-                        Dialog.drawChoiceBox(14);
-                        yield return StartCoroutine(Dialog.choiceNavigate());
-                        chosenIndex = Dialog.chosenIndex;
-                        Dialog.undrawChoiceBox();
-                        if (chosenIndex == 1)
-                        {
-                            learning = false;
-                            chosenIndex = 0;
-                        }
-                    }
-                }
-                //Moveset is not full, can fit the new move easily
-                else
-                {
-                    selectedPokemon.addMove(move);
-
-                    Dialog.drawDialogBox(2);
-                    AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
-                    BgmHandler.main.PlayMFX(mfx);
-                    StartCoroutine(Dialog.drawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
-                    yield return new WaitForSeconds(mfx.length);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.undrawDialogBox();
-                    learning = false;
-                }
-            }
-        }
-        if (chosenIndex == 0)
-        {
-            //NOT ELSE because this may need to run after (chosenIndex == 1) runs
-            //cancel learning loop
-            Dialog.drawDialogBox(2);
-            yield return Dialog.StartCoroutine("drawText", selectedPokemon.getName() + " did not learn \n" + move + ".")
-                ;
-            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-            {
-                yield return null;
-            }
-        }
-    }
+    //private IEnumerator LearnMove(PokemonOld selectedPokemon, string move)
+    //{
+    //    int chosenIndex = 1;
+    //    if (chosenIndex == 1)
+    //    {
+    //        bool learning = true;
+    //        while (learning)
+    //        {
+    //            //Moveset is full
+    //            if (selectedPokemon.getMoveCount() == 4)
+    //            {
+    //                Dialog.drawDialogBox(2);
+    //                yield return
+    //                    Dialog.StartCoroutine("drawText",
+    //                        selectedPokemon.getName() + " wants to learn the \nmove " + move + ".");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                Dialog.drawDialogBox(2);
+    //                yield return
+    //                    Dialog.StartCoroutine("drawText",
+    //                        "However, " + selectedPokemon.getName() + " already \nknows four moves.");
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                Dialog.drawDialogBox(2);
+    //                yield return
+    //                    Dialog.StartCoroutine("drawText", "Should a move be deleted and \nreplaced with " + move + "?");
+	//
+    //                Dialog.drawChoiceBox(14);
+    //                yield return StartCoroutine(Dialog.choiceNavigate());
+    //                chosenIndex = Dialog.chosenIndex;
+    //                Dialog.undrawChoiceBox();
+    //                if (chosenIndex == 1)
+    //                {
+    //                    Dialog.drawDialogBox(2);
+    //                    yield return Dialog.StartCoroutine("drawText", "Which move should \nbe forgotten?");
+    //                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                    {
+    //                        yield return null;
+    //                    }
+	//
+    //                    yield return StartCoroutine(ScreenFade.main.Fade(false, ScreenFade.defaultSpeed));
+	//
+    //                    //Set SceneSummary to be active so that it appears
+    //                    Scene.main.Summary.gameObject.SetActive(true);
+    //                    StartCoroutine(Scene.main.Summary.control(selectedPokemon, move));
+    //                    //Start an empty loop that will only stop when SceneSummary is no longer active (is closed)
+    //                    while (Scene.main.Summary.gameObject.activeSelf)
+    //                    {
+    //                        yield return null;
+    //                    }
+	//
+    //                    string replacedMove = Scene.main.Summary.replacedMove;
+    //                    yield return StartCoroutine(ScreenFade.main.Fade(true, ScreenFade.defaultSpeed));
+	//
+    //                    if (!string.IsNullOrEmpty(replacedMove))
+    //                    {
+    //                        Dialog.drawDialogBox(2);
+    //                        yield return Dialog.StartCoroutine("drawTextSilent", "1, ");
+    //                        yield return new WaitForSeconds(0.4f);
+    //                        yield return Dialog.StartCoroutine("drawTextSilent", "2, ");
+    //                        yield return new WaitForSeconds(0.4f);
+    //                        yield return Dialog.StartCoroutine("drawTextSilent", "and... ");
+    //                        yield return new WaitForSeconds(0.4f);
+    //                        yield return Dialog.StartCoroutine("drawTextSilent", "... ");
+    //                        yield return new WaitForSeconds(0.4f);
+    //                        yield return Dialog.StartCoroutine("drawTextSilent", "... ");
+    //                        yield return new WaitForSeconds(0.4f);
+    //                        SfxHandler.Play(forgetMoveClip);
+    //                        yield return Dialog.StartCoroutine("drawTextSilent", "Poof!");
+    //                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                        {
+    //                            yield return null;
+    //                        }
+	//
+    //                        Dialog.drawDialogBox(2);
+    //                        yield return
+    //                            Dialog.StartCoroutine("drawText",
+    //                                selectedPokemon.getName() + " forgot how to \nuse " + replacedMove + ".");
+    //                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                        {
+    //                            yield return null;
+    //                        }
+    //                        Dialog.drawDialogBox(2);
+    //                        yield return Dialog.StartCoroutine("drawText", "And...");
+    //                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                        {
+    //                            yield return null;
+    //                        }
+	//
+    //                        Dialog.drawDialogBox(2);
+    //                        AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
+    //                        BgmHandler.main.PlayMFX(mfx);
+    //                        StartCoroutine(Dialog.drawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
+    //                        yield return new WaitForSeconds(mfx.length);
+    //                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                        {
+    //                            yield return null;
+    //                        }
+    //                        Dialog.undrawDialogBox();
+    //                        learning = false;
+    //                    }
+    //                    else
+    //                    {
+    //                        //give up?
+    //                        chosenIndex = 0;
+    //                    }
+    //                }
+    //                if (chosenIndex == 0)
+    //                {
+    //                    //NOT ELSE because this may need to run after (chosenIndex == 1) runs
+    //                    Dialog.drawDialogBox(2);
+    //                    yield return Dialog.StartCoroutine("drawText", "Give up on learning the move \n" + move + "?");
+    //                    Dialog.drawChoiceBox(14);
+    //                    yield return StartCoroutine(Dialog.choiceNavigate());
+    //                    chosenIndex = Dialog.chosenIndex;
+    //                    Dialog.undrawChoiceBox();
+    //                    if (chosenIndex == 1)
+    //                    {
+    //                        learning = false;
+    //                        chosenIndex = 0;
+    //                    }
+    //                }
+    //            }
+    //            //Moveset is not full, can fit the new move easily
+    //            else
+    //            {
+    //                selectedPokemon.addMove(move);
+	//
+    //                Dialog.drawDialogBox(2);
+    //                AudioClip mfx = Resources.Load<AudioClip>("Audio/mfx/GetAverage");
+    //                BgmHandler.main.PlayMFX(mfx);
+    //                StartCoroutine(Dialog.drawTextSilent(selectedPokemon.getName() + " learned \n" + move + "!"));
+    //                yield return new WaitForSeconds(mfx.length);
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                Dialog.undrawDialogBox();
+    //                learning = false;
+    //            }
+    //        }
+    //    }
+    //    if (chosenIndex == 0)
+    //    {
+    //        //NOT ELSE because this may need to run after (chosenIndex == 1) runs
+    //        //cancel learning loop
+    //        Dialog.drawDialogBox(2);
+    //        yield return Dialog.StartCoroutine("drawText", selectedPokemon.getName() + " did not learn \n" + move + ".");
+    //        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //        {
+    //            yield return null;
+    //        }
+    //    }
+    //}
 }

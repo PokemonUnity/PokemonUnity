@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<Language name="English" id="9" identifier="en" iso639="en" iso3166="us">
-  <Species>
-    <!-- "^"(\d*)"\t"(\d*)"\t"([\w\S.\- ]*)"\t"([\w ’,-]*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"([\w\s\d.’,\-—“”!/():♀♂]*|[\r])"" | <Pokemon id="$1" language="$2" name="$3" genus="$4">$8</Pokemon> -->
-<Pokemon id="721" language="9" name="Volcanion" genus="Steam">It expels its internal steam from the
-arms on its back. It has enough
-power to blow away a mountain.</Pokemon>
-  </Species>
-</Language>

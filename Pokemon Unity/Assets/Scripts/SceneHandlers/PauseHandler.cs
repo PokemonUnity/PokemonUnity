@@ -2,14 +2,15 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PauseHandler : MonoBehaviour
 {
-    private GUITexture pauseTop;
-    private GUITexture pauseBottom;
+    private Texture pauseTop;
+    private Texture pauseBottom;
 
-    private GUIText selectedText;
-    private GUIText selectedTextShadow;
+    private Text selectedText;
+    private Text selectedTextShadow;
 
     public Texture2D iconPokedexTex;
     public Texture2D iconPartyTex;
@@ -25,11 +26,11 @@ public class PauseHandler : MonoBehaviour
     private RotatableGUIItem iconSave;
     private RotatableGUIItem iconSettings;
 
-    private GUITexture saveDataDisplay;
-    private GUIText mapName;
-    private GUIText mapNameShadow;
-    private GUIText dataText;
-    private GUIText dataTextShadow;
+    private Texture saveDataDisplay;
+    private Text mapName;
+    private Text mapNameShadow;
+    private Text dataText;
+    private Text dataTextShadow;
 
     private DialogBoxHandler Dialog;
 
@@ -50,11 +51,11 @@ public class PauseHandler : MonoBehaviour
 
         //PauseAudio = transform.GetComponent<AudioSource>();
 
-        pauseTop = transform.Find("PauseTop").GetComponent<GUITexture>();
-        pauseBottom = transform.Find("PauseBottom").GetComponent<GUITexture>();
-
-        selectedText = transform.Find("SelectedText").GetComponent<GUIText>();
-        selectedTextShadow = selectedText.transform.Find("SelectedTextShadow").GetComponent<GUIText>();
+        //pauseTop = transform.Find("PauseTop").GetComponent<GUITexture>();
+        //pauseBottom = transform.Find("PauseBottom").GetComponent<GUITexture>();
+		//
+        //selectedText = transform.Find("SelectedText").GetComponent<GUIText>();
+        //selectedTextShadow = selectedText.transform.Find("SelectedTextShadow").GetComponent<GUIText>();
 
         iconPokedex = transform.Find("IconPokedex").GetComponent<RotatableGUIItem>();
         iconParty = transform.Find("IconParty").GetComponent<RotatableGUIItem>();
@@ -63,17 +64,17 @@ public class PauseHandler : MonoBehaviour
         iconSave = transform.Find("IconSave").GetComponent<RotatableGUIItem>();
         iconSettings = transform.Find("IconSettings").GetComponent<RotatableGUIItem>();
 
-        saveDataDisplay = transform.Find("SaveDataDisplay").GetComponent<GUITexture>();
-        mapName = saveDataDisplay.transform.Find("MapName").GetComponent<GUIText>();
-        mapNameShadow = mapName.transform.Find("MapNameShadow").GetComponent<GUIText>();
-        dataText = saveDataDisplay.transform.Find("DataText").GetComponent<GUIText>();
-        dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<GUIText>();
+        //saveDataDisplay = transform.Find("SaveDataDisplay").GetComponent<GUITexture>();
+        //mapName = saveDataDisplay.transform.Find("MapName").GetComponent<GUIText>();
+        //mapNameShadow = mapName.transform.Find("MapNameShadow").GetComponent<GUIText>();
+        //dataText = saveDataDisplay.transform.Find("DataText").GetComponent<GUIText>();
+        //dataTextShadow = dataText.transform.Find("DataTextShadow").GetComponent<GUIText>();
     }
 
     void Start()
     {
-        pauseTop.pixelInset = new Rect(0, 192, pauseTop.pixelInset.width, pauseTop.pixelInset.height);
-        pauseBottom.pixelInset = new Rect(0, -96, pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
+        //pauseTop.pixelInset = new Rect(0, 192, pauseTop.pixelInset.width, pauseTop.pixelInset.height);
+        //pauseBottom.pixelInset = new Rect(0, -96, pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
 
         setSelectedText("");
 
@@ -86,7 +87,7 @@ public class PauseHandler : MonoBehaviour
 
         selectedIcon = 0;
 
-        saveDataDisplay.gameObject.SetActive(false);
+        //saveDataDisplay.gameObject.SetActive(false);
         this.gameObject.SetActive(false);
     }
 
@@ -106,10 +107,10 @@ public class PauseHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            pauseBottom.pixelInset = new Rect(pauseBottom.pixelInset.x, -96 + (increment * 96),
-                pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
-            pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, 192 - (increment * 96), pauseTop.pixelInset.width,
-                pauseTop.pixelInset.height);
+            //pauseBottom.pixelInset = new Rect(pauseBottom.pixelInset.x, -96 + (increment * 96),
+            //    pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
+            //pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, 192 - (increment * 96), pauseTop.pixelInset.width,
+            //    pauseTop.pixelInset.height);
             iconPokedex.transform.position = new Vector3(iconPokedex.transform.position.x,
                 -0.0833f + (increment * 0.4167f), 1);
             iconParty.transform.position = new Vector3(iconParty.transform.position.x, -0.0833f + (increment * 0.4167f),
@@ -135,10 +136,10 @@ public class PauseHandler : MonoBehaviour
             {
                 increment = 1;
             }
-            pauseBottom.pixelInset = new Rect(pauseBottom.pixelInset.x, 0 - (increment * 96),
-                pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
-            pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, 96 + (increment * 96), pauseTop.pixelInset.width,
-                pauseTop.pixelInset.height);
+            //pauseBottom.pixelInset = new Rect(pauseBottom.pixelInset.x, 0 - (increment * 96),
+            //    pauseBottom.pixelInset.width, pauseBottom.pixelInset.height);
+            //pauseTop.pixelInset = new Rect(pauseTop.pixelInset.x, 96 + (increment * 96), pauseTop.pixelInset.width,
+            //    pauseTop.pixelInset.height);
             iconPokedex.transform.position = new Vector3(iconPokedex.transform.position.x,
                 0.3333f - (increment * 0.4167f), 1);
             iconParty.transform.position = new Vector3(iconParty.transform.position.x, 0.3333f - (increment * 0.4167f),
@@ -205,7 +206,7 @@ public class PauseHandler : MonoBehaviour
         else if (selectedIcon == 4)
         {
             targetIcon = iconTrainer;
-            setSelectedText(SaveDataOld.currentSave.playerName);
+            //setSelectedText(SaveDataOld.currentSave.playerName);
         }
         else if (selectedIcon == 5)
         {
@@ -477,31 +478,31 @@ public class PauseHandler : MonoBehaviour
                     else if (selectedIcon == 5)
                     {
                         //Save
-                        saveDataDisplay.gameObject.SetActive(true);
-                        saveDataDisplay.texture =
-                            Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
+                        //saveDataDisplay.gameObject.SetActive(true);
+                        //saveDataDisplay.texture =
+                        //    Resources.Load<Texture>("Frame/choice" + PlayerPrefs.GetInt("frameStyle"));
                         iconPokedex.hide = true; //hide this icon as it is in the way
-                        int badgeTotal = 0;
-                        for (int i = 0; i < 12; i++)
-                        {
-                            if (SaveDataOld.currentSave.gymsBeaten[i])
-                            {
-                                badgeTotal += 1;
-                            }
-                        }
+                        //int badgeTotal = 0;
+                        //for (int i = 0; i < 12; i++)
+                        //{
+                        //    if (SaveDataOld.currentSave.gymsBeaten[i])
+                        //    {
+                        //        badgeTotal += 1;
+                        //    }
+                        //}
                         /*string playerTime = "" + SaveData.currentSave.playerMinutes;
                         if (playerTime.Length == 1)
                         {
                             playerTime = "0" + playerTime;
                         }
                         playerTime = SaveData.currentSave.playerHours + " : " + playerTime;*/
-                        System.TimeSpan playTime = SaveDataOld.currentSave.playerTime + SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+                        //System.TimeSpan playTime = SaveDataOld.currentSave.playerTime + SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
 
-                        mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
-                        dataText.text = SaveDataOld.currentSave.playerName + "\n" +
-                                        badgeTotal + "\n" +
-                                        "0" + "\n" + //pokedex not yet implemented
-                                        System.String.Format("{0} : {1:00}", playTime.Hours, playTime.Minutes); //playerTime
+                        //mapName.text = PlayerMovement.player.accessedMapSettings.mapName;
+                        //dataText.text = SaveDataOld.currentSave.playerName + "\n" +
+                        //                badgeTotal + "\n" +
+                        //                "0" + "\n" + //pokedex not yet implemented
+                        //                System.String.Format("{0} : {1:00}", playTime.Hours, playTime.Minutes); //playerTime
                         mapNameShadow.text = mapName.text;
                         dataTextShadow.text = dataText.text;
 
@@ -517,17 +518,17 @@ public class PauseHandler : MonoBehaviour
                                 Dialog.undrawChoiceBox();
                                 Dialog.drawDialogBox();
 
-                                SaveDataOld.currentSave.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-                                SaveDataOld.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
-                                SaveDataOld.currentSave.playerDirection = PlayerMovement.player.direction;
-                                SaveDataOld.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
+                                //SaveDataOld.currentSave.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                                //SaveDataOld.currentSave.playerPosition = new SeriV3(PlayerMovement.player.transform.position);
+                                //SaveDataOld.currentSave.playerDirection = PlayerMovement.player.direction;
+                                //SaveDataOld.currentSave.mapName = PlayerMovement.player.accessedMapSettings.mapName;
 
                                 NonResettingHandler.saveDataToGlobal();
 
-                                SaveLoadOld.Save();
+                                //SaveLoadOld.Save();
 
-                                yield return
-                                    StartCoroutine(Dialog.drawText(SaveDataOld.currentSave.playerName + " saved the game!"));
+                                //yield return
+                                //    StartCoroutine(Dialog.drawText(SaveDataOld.currentSave.playerName + " saved the game!"));
                                 while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
                                 {
                                     yield return null;
@@ -536,7 +537,7 @@ public class PauseHandler : MonoBehaviour
                             Dialog.undrawDialogBox();
                             Dialog.undrawChoiceBox();
                             iconPokedex.hide = false;
-                            saveDataDisplay.gameObject.SetActive(false);
+                            //saveDataDisplay.gameObject.SetActive(false);
                             yield return new WaitForSeconds(0.2f);
                         }
                         else {

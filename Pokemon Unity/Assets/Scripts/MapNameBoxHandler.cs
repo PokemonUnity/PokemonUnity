@@ -2,13 +2,14 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MapNameBoxHandler : MonoBehaviour
 {
     private Transform mapName;
-    private GUITexture mapNameBox;
-    private GUIText mapNameText;
-    private GUIText mapNameTextShadow;
+    private Texture mapNameBox;
+    private Text mapNameText;
+    private Text mapNameTextShadow;
 
     private Coroutine mainDisplay;
 
@@ -18,9 +19,9 @@ public class MapNameBoxHandler : MonoBehaviour
     void Awake()
     {
         mapName = transform.Find("MapName");
-        mapNameBox = mapName.GetComponent<GUITexture>();
-        mapNameText = mapName.Find("BoxText").GetComponent<GUIText>();
-        mapNameTextShadow = mapName.Find("BoxTextShadow").GetComponent<GUIText>();
+        //mapNameBox = mapName.GetComponent<GUITexture>();
+        //mapNameText = mapName.Find("BoxText").GetComponent<GUIText>();
+        //mapNameTextShadow = mapName.Find("BoxTextShadow").GetComponent<GUIText>();
     }
 
     void Start()
@@ -57,7 +58,7 @@ public class MapNameBoxHandler : MonoBehaviour
                 yield return null;
             }
         }
-        mapNameBox.texture = boxTexture;
+        //mapNameBox.texture = boxTexture;
         mapNameText.text = name;
         mapNameTextShadow.text = name;
         mapNameText.color = textColor;

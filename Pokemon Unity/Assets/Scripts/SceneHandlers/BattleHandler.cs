@@ -315,26 +315,26 @@ public class BattleHandler : MonoBehaviour
 
 
     //POSITIONS
-    private int
-        currentTask = 0,
-        // 0 = task choice, 1 = move choice, 2 = bag choice, 3 = pokemon choice
-        //								4 = item list,			  5 = summary, 6 = moves
-        taskPosition = 1,
-        // 0/3 = bag, 1 = fight, 2/5 = pokemon, 4 = run
-        movePosition = 1,
-        // 0 = Mega Evolution, 1/2/4/5 = move, 3 = back
-        bagCategoryPosition = 0,
-        // 0 = HPPP, 1 = Pokeballs, 2 = Status, 3 = Battle, 4 = Back
-        pokePartyPosition = 0,
-        // 0-5 = pokemon, 6 = Back
-        itemListPagePosition = 0,
-        //which item list page is currently open (displays +1 of variable)
-        itemListPageCount = 0;
+    //private int
+    //    currentTask = 0,
+    //    // 0 = task choice, 1 = move choice, 2 = bag choice, 3 = pokemon choice
+    //    //								4 = item list,			  5 = summary, 6 = moves
+    //    taskPosition = 1,
+    //    // 0/3 = bag, 1 = fight, 2/5 = pokemon, 4 = run
+    //    movePosition = 1,
+    //    // 0 = Mega Evolution, 1/2/4/5 = move, 3 = back
+    //    bagCategoryPosition = 0,
+    //    // 0 = HPPP, 1 = Pokeballs, 2 = Status, 3 = Battle, 4 = Back
+    //    pokePartyPosition = 0,
+    //    // 0-5 = pokemon, 6 = Back
+    //    itemListPagePosition = 0,
+    //    //which item list page is currently open (displays +1 of variable)
+    //    itemListPageCount = 0;
 
     private string[] itemListString;
 
 
-    private int pokemonPerSide = 1;
+    //private int pokemonPerSide = 1;
 	
     //[pokemonPosition][movePosition]
     private string[][] pokemonMoveset = new string[][]
@@ -409,10 +409,10 @@ public class BattleHandler : MonoBehaviour
     }
 
     private WeatherEffect weather = WeatherEffect.NONE; //unused
-    private int weatherTurns = 0; //unused
-    private TerrainEffect terrain = TerrainEffect.NONE; //unused
-    private int terrainTurns = 0; //unused
-    private int gravityTurns = 0; //unused
+   // private int weatherTurns = 0; //unused
+    //private TerrainEffect terrain = TerrainEffect.NONE; //unused
+    //private int terrainTurns = 0; //unused
+    //private int gravityTurns = 0; //unused
     private int[] reflectTurns = new int[2]; //unused
     private int[] lightScreenTurns = new int[2]; //unused
     private int[] tailwindTurns = new int[2]; //unused

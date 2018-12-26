@@ -44,76 +44,76 @@ public class InteractPush : MonoBehaviour
         Player = PlayerMovement.player;
     }
 
-    public IEnumerator interact()
-    {
-        if (!Player.strength)
-        {
-            PokemonOld targetPokemon = SaveDataOld.currentSave.PC.getFirstFEUserInParty("Strength");
-            if (targetPokemon != null)
-            {
-                if (Player.setCheckBusyWith(this.gameObject))
-                {
-                    Dialog.drawDialogBox();
-                        //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", interactText);
-                    Dialog.drawChoiceBox();
-
-                    //You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
-                    yield return Dialog.StartCoroutine(Dialog.choiceNavigate()); //it then assigns a value to that int
-                    Dialog.undrawChoiceBox();
-                    if (Dialog.chosenIndex == 1)
-                    {
-                        Dialog.drawDialogBox();
-                        yield return
-                            Dialog.StartCoroutine("drawText",
-                                targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!")
-                            ;
-                        while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                        {
-                            yield return null;
-                        }
-                        Dialog.undrawDialogBox();
-
-                        //Activate strength
-                        Player.activateStrength();
-
-                        yield return new WaitForSeconds(0.5f);
-                    }
-                    Dialog.undrawDialogBox();
-                }
-            }
-            else
-            {
-                if (Player.setCheckBusyWith(this.gameObject))
-                {
-                    Dialog.drawDialogBox();
-                        //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                    yield return Dialog.StartCoroutine("drawText", examineText);
-                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                    {
-                        yield return null;
-                    }
-                    Dialog.undrawDialogBox();
-                }
-            }
-        }
-        else
-        {
-            if (Player.setCheckBusyWith(this.gameObject))
-            {
-                Dialog.drawDialogBox();
-                    //yield return StartCoroutine blocks the next code from running until coroutine is done.
-                yield return Dialog.StartCoroutine("drawText", examineTextStrengthActive);
-                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
-                {
-                    yield return null;
-                }
-                Dialog.undrawDialogBox();
-            }
-        }
-        yield return new WaitForSeconds(0.2f);
-        Player.unsetCheckBusyWith(this.gameObject);
-    }
+    //public IEnumerator interact()
+    //{
+    //    if (!Player.strength)
+    //    {
+    //        PokemonOld targetPokemon = SaveDataOld.currentSave.PC.getFirstFEUserInParty("Strength");
+    //        if (targetPokemon != null)
+    //        {
+    //            if (Player.setCheckBusyWith(this.gameObject))
+    //            {
+    //                Dialog.drawDialogBox();
+    //                    //yield return StartCoroutine blocks the next code from running until coroutine is done.
+    //                yield return Dialog.StartCoroutine("drawText", interactText);
+    //                Dialog.drawChoiceBox();
+	//
+    //                //You CAN NOT get a value from a Coroutine. As a result, the coroutine runs and resets a public int in it's own script.
+    //                yield return Dialog.StartCoroutine(Dialog.choiceNavigate()); //it then assigns a value to that int
+    //                Dialog.undrawChoiceBox();
+    //                if (Dialog.chosenIndex == 1)
+    //                {
+    //                    Dialog.drawDialogBox();
+    //                    yield return
+    //                        Dialog.StartCoroutine("drawText",
+    //                            targetPokemon.getName() + " used " + targetPokemon.getFirstFEInstance("Strength") + "!")
+    //                        ;
+    //                    while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                    {
+    //                        yield return null;
+    //                    }
+    //                    Dialog.undrawDialogBox();
+	//
+    //                    //Activate strength
+    //                    Player.activateStrength();
+	//
+    //                    yield return new WaitForSeconds(0.5f);
+    //                }
+    //                Dialog.undrawDialogBox();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (Player.setCheckBusyWith(this.gameObject))
+    //            {
+    //                Dialog.drawDialogBox();
+    //                    //yield return StartCoroutine blocks the next code from running until coroutine is done.
+    //                yield return Dialog.StartCoroutine("drawText", examineText);
+    //                while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //                {
+    //                    yield return null;
+    //                }
+    //                Dialog.undrawDialogBox();
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (Player.setCheckBusyWith(this.gameObject))
+    //        {
+    //            Dialog.drawDialogBox();
+    //                //yield return StartCoroutine blocks the next code from running until coroutine is done.
+    //            yield return Dialog.StartCoroutine("drawText", examineTextStrengthActive);
+    //            while (!Input.GetButtonDown("Select") && !Input.GetButtonDown("Back"))
+    //            {
+    //                yield return null;
+    //            }
+    //            Dialog.undrawDialogBox();
+    //        }
+    //    }
+    //    yield return new WaitForSeconds(0.2f);
+    //    Player.unsetCheckBusyWith(this.gameObject);
+    //}
 
     public IEnumerator bump()
     {
