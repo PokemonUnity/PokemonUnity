@@ -427,15 +427,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 		private set
 		{
 			if (value < 1 || value > 100) //Experience.MAXLEVEL
-				//ToDo: Instead if throwing exception error, do nothing?...
-				throw new Exception(string.Format("The level number {0} is invalid", value));
+				GameVariables.DebugLog(string.Format("The level number {0} is invalid", value), true);
 			if(value > this.Level)
 				this.Exp.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
 			else
 			{
 				//ToDo: Not Designed to go backwards yet...
-				//Instead if throwing exception error, do nothing?...
-				throw new Exception(string.Format("The level number {0} is invalid", value));
+				GameVariables.DebugLog(string.Format("The level number {0} is invalid", value), true);
 			}			
 		}
 	}
@@ -1571,11 +1569,37 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public virtual string Name { get { return name ?? _base.Name; } }
 
 	/// <summary>
+	///	Used only for a few pokemon to specify what form it's in. 
 	/// </summary>
+	/// <remarks>
+	///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
+	///	<see cref="Pokemons.DEOXYS"/> = which of the four forms.
+	///	<see cref="Pokemons.BURMY"/>/<see cref="Pokemons.WORMADAM"/> = cloak type. Does not change for Wormadam.
+	///	<see cref="Pokemons.SHELLOS"/>/<see cref="Pokemons.GASTRODON"/> = west/east alt colours.
+	///	<see cref="Pokemons.ROTOM"/> = different possesed appliance forms.
+	///	<see cref="Pokemons.GIRATINA"/> = Origin/Altered form.
+	///	<see cref="Pokemons.SHAYMIN"/> = Land/Sky form.
+	///	<see cref="Pokemons.ARCEUS"/> = Type.
+	///	<see cref="Pokemons.BASCULIN"/> = appearance.
+	///	<see cref="Pokemons.DEERLING"/>/<see cref="Pokemons.SAWSBUCK"/> = appearance.
+	///	<see cref="Pokemons.TORNADUS"/>/<see cref="Pokemons.THUNDURUS"/>/<see cref="Pokemons.LANDORUS"/> = Incarnate/Therian forms.
+	///	<see cref="Pokemons.KYUREM"/> = Normal/White/Black forms.
+	///	<see cref="Pokemons.KELDEO"/> = Ordinary/Resolute forms.
+	///	<see cref="Pokemons.MELOETTA"/> = Aria/Pirouette forms.
+	///	<see cref="Pokemons.GENESECT"/> = different Drives.
+	///	<see cref="Pokemons.VIVILLON"/> = different Patterns.
+	///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower colour.
+	///	<see cref="Pokemons.FURFROU"/> = haircut.
+	///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
+	///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.
+	///	<see cref="Pokemons.CASTFORM"/>? = different weather forms
+	///	<see cref="Pokemons.PIKACHU"/>, and MegaEvolutions?
+	/// </remarks>
 	/// ToDo: Fix Forms and uncomment
 	/// Maybe a method, where when a form is changed
 	/// checks pokemon value and overwrites name and stats
-    public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+	/// Some forms have a SpeciesId and others are battle only
+	public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 
     /// <summary>
     /// Returns the species name of this Pokemon
@@ -1607,7 +1631,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <returns></returns>
     public char UnknownShape()
     {
-        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[_base.ArrayId]; //ToDo: FormId; "if pokemon is an Unknown"
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[Form]; //ToDo: FormId; "if pokemon is an Unknown"
     }
 
 	/// <summary>

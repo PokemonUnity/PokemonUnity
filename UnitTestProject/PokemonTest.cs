@@ -241,7 +241,7 @@ namespace Tests
 		[TestMethod]
 		public void Pokemon_RNG_Moves_IsDifferent_For_HatchingEgg() //_At_Levels_GreaterThan_Zero
 		{
-			Pokemons pkmn = Pokemons.BULBASAUR;
+			Pokemons pkmn = Pokemons.SQUIRTLE;
 			System.Collections.Generic.List<Moves> egg = new System.Collections.Generic.List<Moves>(); //ml.AddRange(pokemon.getMoveList(LearnMethod.egg));
 			System.Collections.Generic.List<Moves> lv = new System.Collections.Generic.List<Moves>(Pokemon.PokemonData.GetPokemon(pkmn).GetMoveList(LearnMethod.levelup));
 			foreach (Moves item in Pokemon.PokemonData.GetPokemon(pkmn).GetMoveList(LearnMethod.egg))
@@ -418,7 +418,7 @@ namespace Tests
 			//Pokemon.PokemonData.GetPokemon(Pokemons.NONE).MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key)
 			//list of moves can learn at level
 			//Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
-			Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR).getMoveList(LearnMethod.levelup).Length > 0);
+			Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR, level: 25).getMoveList(LearnMethod.levelup).Length > 0);
 		}
 		[TestMethod]
 		public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_TeachMethod()

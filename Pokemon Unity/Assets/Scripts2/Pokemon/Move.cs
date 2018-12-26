@@ -22330,7 +22330,7 @@ namespace PokemonEssential
         public bool Mirror;
         /// <summary>
         /// The move has a 10% chance of making the opponent flinch if the user is holding a 
-        /// <see cref="eItems.Item.KINGS_ROCK"/>/<see cref="eItems.Item.RAZOR_FANG"/>. 
+        /// <see cref="PokemonUnity.Item.Items.KINGS_ROCK"/>/<see cref="PokemonUnity.Item.Items.RAZOR_FANG"/>. 
         /// Use this flag for all damaging moves that don't already have a flinching effect.
         /// </summary>
         public bool Flinch;
@@ -31539,7 +31539,7 @@ namespace Veekun
 		MirrorMove,
 		/// <summary>
 		/// The move has a 10% chance of making the opponent flinch if the user is holding a 
-		/// <see cref="eItems.Item.KINGS_ROCK"/>/<see cref="eItems.Item.RAZOR_FANG"/>. 
+		/// <see cref="PokemonUnity.Item.Items.KINGS_ROCK"/>/<see cref="PokemonUnity.Item.Items.RAZOR_FANG"/>. 
 		/// Use this flag for all damaging moves THAT don't already have a flinching effect.
 		/// </summary>
 		TriggerFlinch,

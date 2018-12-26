@@ -856,15 +856,15 @@ namespace PokemonUnity
 		/// </summary>
 		ROUGH_TERRAIN = 17,
 		/// <summary>
-		/// Fishing with an <see cref="eItems.Item.OLD_ROD"/>
+		/// Fishing with an <see cref="PokemonUnity.Item.Items.OLD_ROD"/>
 		/// </summary>
 		OLD_ROD = 2,
 		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.GOOD_ROD"/> 
+		/// Fishing with a <see cref="PokemonUnity.Item.Items.GOOD_ROD"/> 
 		/// </summary>
 		GOOD_ROD = 3,
 		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.SUPER_ROD"/> 
+		/// Fishing with a <see cref="PokemonUnity.Item.Items.SUPER_ROD"/> 
 		/// </summary>
 		SUPER_ROD = 4,
 		/// <summary>

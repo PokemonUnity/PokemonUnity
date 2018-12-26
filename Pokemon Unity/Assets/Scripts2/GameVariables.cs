@@ -233,26 +233,26 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
             }
 		}
 
-		public static SaveDataOld[] savedGames = new SaveDataOld[]
-		{
-			null, null, null
-		};
+		//public static SaveDataOld[] savedGames = new SaveDataOld[]
+		//{
+		//	null, null, null
+		//};
 
 		public static void Save()
 		{
-			if (SaveDataOld.currentSave != null)
-			{
-				if (SaveDataOld.currentSave.getFileIndex() >= 0 && SaveDataOld.currentSave.getFileIndex() < savedGames.Length)
-				{
-					SaveDataOld.currentSave.playerTime += SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
-					SaveDataOld.currentSave.lastSave = System.DateTime.UtcNow;// new System.DateTime(,System.DateTimeKind.Utc);
-					savedGames[SaveDataOld.currentSave.getFileIndex()] = SaveDataOld.currentSave;
-					System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-					System.IO.FileStream file = System.IO.File.Create(FILE_NAME);//Application.persistentDataPath + "/playerData.pkud"
-					bf.Serialize(file, SaveLoad.savedGames);
-					file.Close();
-				}
-			}
+			//if (SaveDataOld.currentSave != null)
+			//{
+			//	if (SaveDataOld.currentSave.getFileIndex() >= 0 && SaveDataOld.currentSave.getFileIndex() < savedGames.Length)
+			//	{
+			//		SaveDataOld.currentSave.playerTime += SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+			//		SaveDataOld.currentSave.lastSave = System.DateTime.UtcNow;// new System.DateTime(,System.DateTimeKind.Utc);
+			//		savedGames[SaveDataOld.currentSave.getFileIndex()] = SaveDataOld.currentSave;
+			//		System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+			//		System.IO.FileStream file = System.IO.File.Create(FILE_NAME);//Application.persistentDataPath + "/playerData.pkud"
+			//		bf.Serialize(file, SaveLoad.savedGames);
+			//		file.Close();
+			//	}
+			//}
 		}
 
 		public static bool Load()
@@ -262,7 +262,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 			{
 				System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 				System.IO.FileStream file = System.IO.File.Open(FILE_NAME, System.IO.FileMode.Open);
-				SaveLoad.savedGames = (SaveDataOld[])bf.Deserialize(file);
+				//SaveLoad.savedGames = (SaveDataOld[])bf.Deserialize(file);
 
 				//playerTrainer = new Trainer().LoadTrainer(trainerSaveData: trainerData);
 
@@ -272,43 +272,43 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 			return false;
 		}
 
-		public static int getSavedGamesCount()
-		{
-			int count = 0;
-			for (int i = 0; i < savedGames.Length; i++)
-			{
-				if (savedGames[i] != null)
-				{
-					count += 1;
-				}
-			}
-			return count;
-		}
+		//public static int getSavedGamesCount()
+		//{
+		//	int count = 0;
+		//	for (int i = 0; i < savedGames.Length; i++)
+		//	{
+		//		if (savedGames[i] != null)
+		//		{
+		//			count += 1;
+		//		}
+		//	}
+		//	return count;
+		//}
 
-		public static void resetSaveGame(int index)
-		{
-			savedGames[index] = null;
-
-			if (index < 2)
-			{
-				for (int i = index; i < 2; i++)
-				{
-					SaveLoad.savedGames[i] = SaveLoad.savedGames[i + 1];
-					SaveLoad.savedGames[i + 1] = null;
-				}
-			}
-
-			bool sGN1 = savedGames[0] == null;
-			bool sGN2 = savedGames[1] == null;
-			bool sGN3 = savedGames[2] == null;
-
-			//Debug.Log(sGN1.ToString() + ", " + sGN2.ToString() + ", " + sGN3.ToString());
-
-			System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-			System.IO.FileStream file = System.IO.File.Create(FILE_NAME);//Application.persistentDataPath + "/playerData.pkud"
-			bf.Serialize(file, SaveLoad.savedGames);
-			file.Close();
-		}
+		//public static void resetSaveGame(int index)
+		//{
+		//	savedGames[index] = null;
+		//
+		//	if (index < 2)
+		//	{
+		//		for (int i = index; i < 2; i++)
+		//		{
+		//			SaveLoad.savedGames[i] = SaveLoad.savedGames[i + 1];
+		//			SaveLoad.savedGames[i + 1] = null;
+		//		}
+		//	}
+		//
+		//	bool sGN1 = savedGames[0] == null;
+		//	bool sGN2 = savedGames[1] == null;
+		//	bool sGN3 = savedGames[2] == null;
+		//
+		//	//Debug.Log(sGN1.ToString() + ", " + sGN2.ToString() + ", " + sGN3.ToString());
+		//
+		//	System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+		//	System.IO.FileStream file = System.IO.File.Create(FILE_NAME);//Application.persistentDataPath + "/playerData.pkud"
+		//	bf.Serialize(file, SaveLoad.savedGames);
+		//	file.Close();
+		//}
 	}
 	#endregion
 
@@ -1237,7 +1237,7 @@ public static class Settings //: Settings<Translations.Languages>
 	/// e.g. To require the second badge, put false and 1.
 	/// To require at least 2 badges, put true and 2.
 	/// </summary>
-	/// ToDo: Consider a mechanic that allows each region to have their own TM/HM #s Region[Generation,Badges] <see cref="eItems.Item"/>
+	/// ToDo: Consider a mechanic that allows each region to have their own TM/HM #s Region[Generation,Badges] <see cref="PokemonUnity.Item.Items"/>
 	/// <summary>
 	/// </summary>
 	public const int BADGEFORCUT = 1;
