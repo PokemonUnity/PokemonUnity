@@ -1110,11 +1110,11 @@ public static class Settings //: Settings<Translations.Languages>
 	/// <summary>
 	/// The maximum level Pokémon can reach.
 	/// </summary>
-	public const int MAXIMUMLEVEL = 100;
+	public const byte MAXIMUMLEVEL = 100;
 	/// <summary>
 	/// The level of newly hatched Pokémon.
 	/// </summary>
-	public const int EGGINITIALLEVEL = 1;
+	public const byte EGGINITIALLEVEL = 1;
 	/// <summary>
 	/// The odds of a newly generated Pokémon being shiny (out of 65536).
 	/// </summary>

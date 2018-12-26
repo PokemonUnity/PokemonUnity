@@ -134,6 +134,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		{
 			if (eggSteps > 0 && value == 0)
 			{
+				this.Level = Settings.EGGINITIALLEVEL;
 				this.GenerateMoveset();
 			}
 			eggSteps = 
@@ -216,6 +217,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public Pokemon(Pokemons pokemon) : this()
 	{
 		_base = PokemonData.GetPokemon(pokemon);
+		Exp = new Experience(GrowthRate);
 		Ability = abilityFlag;
 		Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 		eggSteps = _base.HatchTime;
@@ -226,7 +228,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	
 	public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 	
-	public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) {  }
+	public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; } //Exp.AddExperience(Experience.GetStartExperience(GrowthRate, level));
 	
 	//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
@@ -422,13 +424,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//return 1;
 			return Experience.GetLevelFromExperience(this.GrowthRate, this.Exp.Current);
 		}
-		set
+		private set
 		{
 			if (value < 1 || value > 100) //Experience.MAXLEVEL
 				//ToDo: Instead if throwing exception error, do nothing?...
 				throw new Exception(string.Format("The level number {0} is invalid", value));
 			if(value > this.Level)
-				this.Exp.AddExperience(this.GrowthRate, this.Exp.Current, Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
+				this.Exp.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
 			else
 			{
 				//ToDo: Not Designed to go backwards yet...
@@ -454,7 +456,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 		}
 	}
 
-	int baseExp
+	/// <summary>
+	/// When this pokemon is defeated, this is the amount of experience points it offers
+	/// </summary>
+	public int baseExp
 	{
 		get
 		{
@@ -2790,7 +2795,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Consider making Experience class a Pokemon extension class...
 	public class Experience
 	{
-		private int level { get { return GetLevelFromExperience(Growth, Current); } }
+		#region Variables
+		private byte level { get { return GetLevelFromExperience(Growth, Current); } }
 		/// <summary>
 		/// Current accumalitive experience points gained (and collected) by this Pokemon.
 		/// </summary>
@@ -2801,6 +2807,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 		public int Current { get; private set; }
 		public int NextLevel { get { return GetExperience(Growth, level + 1); } }
 		private LevelingRate Growth { get; set; }
+		#endregion
+
 		#region expTable
 		private static int[] expTableErratic = new int[]{
 			0,15,52,122,237,406,637,942,1326,1800,
@@ -2879,6 +2887,35 @@ public partial class Pokemon //: ePokemons //PokemonData
 			1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000};
 		#endregion
 
+		#region Methods
+		/// <summary>
+		/// Adds experience points to total Exp. Points.
+		/// </summary>
+		/// <param name="experienceGain">Exp. Points to add</param>
+		public void AddExperience(int experienceGain)
+		{
+			Current += experienceGain;
+			int maxexp = GetExperience(Growth, Settings.MAXIMUMLEVEL);
+			if (Current > maxexp) Current = maxexp;
+		}
+		// <summary>
+		// Adds experience points ensuring that the new total doesn't
+		// exceed the maximum Exp. Points for the given growth rate.
+		// </summary>
+		// <param name="levelingRate">Growth rate.</param>
+		// <param name="currentExperience">Current Exp Points.</param>
+		// <param name="experienceGain">Exp. Points to add</param>
+		// <returns></returns>
+		// Subtract ceiling exp for left over experience points remaining after level up?...
+		//public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
+		//{
+		//	int exp = currentExperience + experienceGain;
+		//	int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+		//	if (exp > maxexp) exp = maxexp;
+		//	return exp;
+		//}
+		
+		#region Static Methods
 		private static int GetExperience(LevelingRate levelingRate, int currentLevel)
 		{
 			int exp = 0;
@@ -2886,51 +2923,51 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL; 
 			if (levelingRate == LevelingRate.ERRATIC)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					//exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
 					exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (currentLevel * 6 / 10) / 100);
 				}
-				else exp = expTableErratic[currentLevel - 1]; //Because the array starts at 0, not 1.
+				else exp = expTableErratic[currentLevel]; //Because the array starts at 0, not 1.
 			}
 			else if (levelingRate == LevelingRate.FAST)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (4 / 5));
 				}
-				else exp = expTableFast[currentLevel - 1];
+				else exp = expTableFast[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.MEDIUMFAST)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3));
 				}
-				else exp = expTableMediumFast[currentLevel - 1];
+				else exp = expTableMediumFast[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.MEDIUMSLOW)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					//Dont remember why currentlevel minus 1 is in formula...
 					//I think it has to deal with formula table glitch for lvl 1-2 pokemons...
 					//exp = (int)System.Math.Floor(((6 / 5) * System.Math.Pow(currentLevel - 1, 3)) - (15 * System.Math.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
 					exp = (int)System.Math.Floor((6 * System.Math.Pow(currentLevel - 1, 3) / 5) - 15 * System.Math.Pow(currentLevel - 1, 2) + 100 * (currentLevel - 1) - 140);
 				}
-				else exp = expTableMediumSlow[currentLevel - 1];
+				else exp = expTableMediumSlow[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.SLOW)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (5 / 4));
 				}
-				else exp = expTableSlow[currentLevel - 1];
+				else exp = expTableSlow[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.FLUCTUATING)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					int rate = 82;
 					//Slow rate with increasing level
@@ -2940,12 +2977,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 					//exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * ((System.Math.Floor(System.Math.Pow(currentLevel, 3) / 2) + 32) / 50));
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (((currentLevel * rate / 100) / 50)));
 				}
-				else exp = expTableFluctuating[currentLevel - 1];
+				else exp = expTableFluctuating[currentLevel];
 			}
 
 			return exp;
-
-
 		}
 		/// <summary>
 		/// Gets the maximum Exp Points possible for the given growth rate.
@@ -2970,38 +3005,23 @@ public partial class Pokemon //: ePokemons //PokemonData
 			return GetExperience(levelingRate, currentLevel);
 		}
 		/// <summary>
-		/// Adds experience points ensuring that the new total doesn't
-		/// exceed the maximum Exp. Points for the given growth rate.
-		/// </summary>
-		/// <param name="levelingRate">Growth rate.</param>
-		/// <param name="currentExperience">Current Exp Points.</param>
-		/// <param name="experienceGain">Exp. Points to add</param>
-		/// <returns></returns>
-		/// Subtract ceiling exp for left over experience points remaining after level up?...
-		public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
-		{
-			int exp = currentExperience + experienceGain;
-			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
-			if (exp > maxexp) exp = maxexp;
-			return exp;
-		}
-		/// <summary>
 		/// Calculates a level given the number of Exp Points and growth rate.
 		/// </summary>
 		/// <param name="levelingRate">Growth rate.</param>
 		/// <param name="experiencePoints">Current Experience Points</param>
 		/// <returns></returns>
-		public static int GetLevelFromExperience(LevelingRate levelingRate, int experiencePoints)
+		public static byte GetLevelFromExperience(LevelingRate levelingRate, int experiencePoints)
 		{
 			if (experiencePoints <= 0) return 0;
 			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
 			if (experiencePoints > maxexp) experiencePoints = maxexp;
-			for (int i = 0; i < Settings.MAXIMUMLEVEL; i++)
+			for (byte i = 0; i < Settings.MAXIMUMLEVEL; i++)
 			{
-				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) == experiencePoints) return i;
-				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) > experiencePoints) return i-1;
+				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) == experiencePoints) return Settings.MAXIMUMLEVEL;
+				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) < experiencePoints) return Settings.MAXIMUMLEVEL;
+				if (GetExperience(levelingRate, i) > experiencePoints) return (byte)(i-1);
 			}
-			return Settings.MAXIMUMLEVEL;
+			return 0;
 		}
 		/*public static int GetLevelExperiencePoints(LevelingRate levelingRate, int currentLevel)
 		{
@@ -3061,6 +3081,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 			return exp;
 		}*/
+		#endregion
+		#endregion
 
 		public Experience(LevelingRate rate)
 		{
