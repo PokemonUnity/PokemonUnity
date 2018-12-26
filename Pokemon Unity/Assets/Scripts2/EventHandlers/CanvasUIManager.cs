@@ -80,12 +80,12 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     /// </summary>
     public static void RefreshWindowSkin()
     {
-        if (GameVariables.WindowSkin != null)
+        if (GameVariables.WindowSkinSprite != null)
         {
             UnityEngine.GameObject[] gos = UnityEngine.GameObject.FindGameObjectsWithTag("DialogWindow");
             foreach (UnityEngine.GameObject go in gos)
             {
-                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.WindowSkin;
+                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.WindowSkinSprite;
             }
         }
         else return;
@@ -97,12 +97,12 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     /// </summary>
     public static void RefreshDialogSkin()
     {
-        if (GameVariables.DialogSkin != null)
+        if (GameVariables.DialogSkinSprite != null)
         {
             UnityEngine.GameObject[] gos = UnityEngine.GameObject.FindGameObjectsWithTag("DialogWindow");
             foreach (UnityEngine.GameObject go in gos)
             {
-                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.DialogSkin;
+                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.DialogSkinSprite;
             }
         }
         else return;

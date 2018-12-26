@@ -49,7 +49,7 @@ public class Move //: MoveData
 	/// <summary>
 	/// Initializes this object to the specified move ID.
 	/// </summary>
-	public Move(Moves move) { _base = new MoveDataDex().getMove(move); PP = _base.PP; }
+	public Move(Moves move = Moves.NONE) { /*if (move != Moves.NONE)*/ _base = new MoveDataDex().getMove(move); PP = _base.PP; }
 
 	#region Enumerator
 	public enum Effect
@@ -22541,6 +22541,22 @@ Database = new MoveDataDex[] {
 	// ^(\d*),(\w*),([\w\s-]*),(\w*),(\d*),(\w*),(\w*),(\d*),(\d*),(\d*),(\d*),([-\d]*),(\w*),("[\w\s-,.'é]*")
 	// new MoveDataDex() {\n\tnum = $1, \n\tid = Moves.$2, \n\t//name = "$3", \n\t//function = $4, \n\tbasePower = $5, \n\ttype = Types.$6, \n\tcategory = Category.$7, \n\taccuracy = $8, \n\tpp = $9, \n\teffects = $10, \n\ttarget = Target.$11, \n\tpriority = $12, \n\tflags = new Flags() { $13 } \n\t//,description = $14\n},
 	//(flags = new Flags\(\) \{\s[\w]*)l([,]|[\w\s=,]*\s\}) 
+new MoveDataDex() {
+	num = 0,
+	ID = Moves.NONE, 
+	//name = "null", 
+	Function = 0x000, FunctionAsString = "000", 
+	BaseDamage = 0,
+	Type = Types.NONE,
+	Category = Category.STATUS,
+	Accuracy = 0,
+	PP = 0,
+	Effects = 0,
+	Target = Target.NoTarget,
+	Priority = 0,
+	Flags = new Flags( ) 
+	//,description = "Placeholder for empty/null moveset."
+},
 	#region Database
 new MoveDataDex() {
 	num = 1,

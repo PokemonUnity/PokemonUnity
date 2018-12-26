@@ -146,7 +146,6 @@
     <Compile Include="Assets\Scripts2\Player.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Ability.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Item.cs" />
-    <Compile Include="Assets\Scripts2\Pokemon\Mail.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Move.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Nature.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />

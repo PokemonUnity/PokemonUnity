@@ -15,7 +15,7 @@ public class Item
 	/// Should be a description of what it does when in battle,
 	/// but might be better as a bool
 	/// </summary>
-    public bool BattleUse { get; private set; }
+    public bool BattleUse { get { return this.ItemFlag.Useable_In_Battle; } }
     
     public Items ItemId { get; private set; }
     public ItemFlags ItemFlag { get; private set; }
@@ -62,7 +62,7 @@ public class Item
                 case ItemCategory.TYPE_PROTECTION:	//itemPocket = (ItemPockets)5; break;
                 case ItemCategory.BAKING_ONLY:		itemPocket = (ItemPockets)5; break;
 													
-                case ItemCategory.ALL_MAIL:			//itemPocket = (ItemPockets)6; break;
+                case ItemCategory.ALL_MAIL:			itemPocket = (ItemPockets)6; break;
 													
                 case ItemCategory.STAT_BOOSTS:		//itemPocket = (ItemPockets)7; break;
                 case ItemCategory.FLUTES:			//itemPocket = (ItemPockets)7; break;
@@ -86,7 +86,16 @@ public class Item
 
 	#region Constructor
     public Item(Items itemId) {
-        //this.Price = ItemData.getIndexOf(itemId);
+		ItemId = itemId;
+		Item item = GetItem(itemId);
+		this.Price				= item.Price;
+		this.ItemCategory		= item.ItemCategory;
+		this.ItemFlag			= item.ItemFlag;
+		this.ItemFlingEffect	= item.ItemFlingEffect;
+		//this.Name				= item.ItemPocket;
+		//this.Plural				= item.ItemPocket;
+		//this.Description		= item.ItemPocket;
+		if (IsMail) this.mail = new Mail(itemId);
     }
 
 	public static Item GetItem(Items item)
@@ -98,7 +107,7 @@ public class Item
                 return Database[i];
             }
         }
-		//Zero is masterball; Items in enum dont matach database.
+		//Zero is masterball; Items in enum dont match order of database.
 		//return Database[0]; 
 		return new Item(Items.NONE);
 	}
@@ -149,7 +158,7 @@ public class Item
         //this.battleType = battleType;
         //this.description = description;
         this.Price = price;
-        //this.itemEffect = itemEffect;
+        if (itemEffect.HasValue) this.ItemFlingEffect = itemEffect.Value;
         //this.stringParameter = stringParameter;
         //this.floatParameter = floatParameter;
     }
@@ -984,7 +993,109 @@ new Item(Items.TM99,				ItemCategory.ALL_MACHINES,     0, null, null, null    ),
 new Item(Items.TM100,				ItemCategory.ALL_MACHINES,     0, null, null, null    )
 };
 	}
-    #endregion    
+	#endregion
+
+	#region Mail
+	/// <summary>
+	/// Mail?...
+	/// </summary>
+	private Mail mail { get; set; }
+	public string MailText
+	{
+		get
+		{
+			//if (!IsMail) return null; //If empty return null
+			//if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+			//{
+			//	//mail = null;
+			//	return null;
+			//}
+			//if (Item)
+				return mail.Message;
+		}
+		set
+		{
+			if(IsMail)
+				mail.Message = value;
+		}
+	}
+	/// <summary>
+	/// Perform a null check; if anything other than null, there is a message
+	/// </summary>
+	/// ToDo: Item category
+	public bool IsMail
+	{
+		get
+		{
+			if (ItemPocket.Value != ItemPockets.MAIL) return false; //If empty return null
+			else return true;
+			//if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+			//{
+			//	//mail = null;
+			//	return null;
+			//}
+			//return mail.Message;
+		}
+	}
+
+	public class Mail
+	{
+		public int Background { get; private set; }
+		public string Message { get; set; }
+		public bool IsLetter { get; private set; }
+
+		public static bool IsMail (Items item) { return new Item(item).IsMail; }
+
+		public Mail (Items letter)
+		{
+			IsLetter = true;
+			//assign background art of letter based on item
+			switch (letter)
+			{
+				case Items.AIR_MAIL:
+				case Items.BEAD_MAIL:
+				case Items.BLOOM_MAIL:
+				case Items.BRICK_MAIL:
+				case Items.BRIDGE_MAIL_D:
+				case Items.BRIDGE_MAIL_M:
+				case Items.BRIDGE_MAIL_S:
+				case Items.BRIDGE_MAIL_T:
+				case Items.BRIDGE_MAIL_V:
+				case Items.BUBBLE_MAIL:
+				case Items.DREAM_MAIL:
+				case Items.FAB_MAIL:
+				case Items.FAVORED_MAIL:
+				case Items.FLAME_MAIL:
+				case Items.GLITTER_MAIL:
+				case Items.GRASS_MAIL:
+				case Items.GREET_MAIL:
+				case Items.HARBOR_MAIL:
+				case Items.HEART_MAIL:
+				case Items.INQUIRY_MAIL:
+				case Items.LIKE_MAIL:
+				case Items.MECH_MAIL:
+				case Items.MOSAIC_MAIL:
+				case Items.ORANGE_MAIL:
+				case Items.REPLY_MAIL:
+				case Items.RETRO_MAIL:
+				case Items.RSVP_MAIL:
+				case Items.SHADOW_MAIL:
+				case Items.SNOW_MAIL:
+				case Items.SPACE_MAIL:
+				case Items.STEEL_MAIL:
+				case Items.THANKS_MAIL:
+				case Items.TROPIC_MAIL:
+				case Items.TUNNEL_MAIL:
+				case Items.WAVE_MAIL:
+				case Items.WOOD_MAIL:
+					break;
+				default:
+					IsLetter = false;
+					break;
+			}
+		}
+	}
+	#endregion
 }
 
 namespace PokemonUnity.Item

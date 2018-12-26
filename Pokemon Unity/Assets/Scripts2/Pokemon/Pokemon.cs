@@ -21,8 +21,6 @@ public partial class Pokemon //: ePokemons //PokemonData
     public int TotalHP { get {
 			return //totalHP;
 				((2 * _base.BaseStatsHP + IV[0] + (EV[0] / 4)) * Level) / 100 + Level + 10; } }
-	[Obsolete("Default HP should be auto generated, and not provided thru placeholder value")]
-    private int totalHP = 1;
     /// <summary>
     /// Current HP
     /// </summary>
@@ -122,9 +120,34 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// ToDo: Add to Status Class or StatusTurn() method
     public int StatusCount { get; protected set; }
     /// <summary>
-    /// Steps to hatch egg, 0 if Pokemon is not an egg
+    /// Steps to hatch egg, 0 if Pokemon is not an egg.
+	/// Pokemon moves auto reset when egg counter reaches 0.
     /// </summary>
-    public int eggSteps { get; private set; }
+	/// ToDo: Sequence of events to occur when egg is hatching (roll dice for ability, moves, and animate hatching)
+    public int EggSteps
+	{
+		get
+		{
+			return eggSteps;
+		}
+		private set
+		{
+			if (eggSteps > 0 && value == 0)
+			{
+				this.Level = Settings.EGGINITIALLEVEL;
+				this.GenerateMoveset();
+			}
+			eggSteps = 
+				//if egg hatch counter is going up in positive count
+				//eggSteps + 
+				value > eggSteps 
+				? //return the same value
+					eggSteps 
+				: //else return new value
+					value;
+		}
+	}
+    private int eggSteps { get; set; }
 	/// <summary>
 	/// Moves (PBMove)
 	/// </summary>
@@ -168,7 +191,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		PersonalId |= Settings.Rand.Next(256) << 16;
 		PersonalId |= Settings.Rand.Next(256) << 24;
 		Ability = Abilities.NONE;
-        natureFlag = new Nature();//(Natures)(new Random().Next(0, 24));
+        natureFlag = new Nature();//(Natures)(Settings.Rand.Next(0, 24));
 		//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
 		//shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
 		//Gender = isMale();
@@ -176,7 +199,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		IV = new int[] { Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32) };
 		EV = new int[6];
 		Exp = new Experience(GrowthRate);
-		moves = new Move[4];// { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
+		moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 		pokerus = new int[2];
 		Markings = new bool[6]; //{ false, false, false, false, false, false };
 		Status = Status.None;
@@ -194,14 +217,23 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public Pokemon(Pokemons pokemon) : this()
 	{
 		_base = PokemonData.GetPokemon(pokemon);
-		Ability = _base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[new Random().Next(0, 2)];
-		//Gender = GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+		Exp = new Experience(GrowthRate);
+		Ability = abilityFlag;
+		Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+		eggSteps = _base.HatchTime;
+		GenerateMoveset();
 
 		//calcStats();
 	}
+	
+	public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
+	
+	public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; } //Exp.AddExperience(Experience.GetStartExperience(GrowthRate, level));
+	
+	//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
 	public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
-		int TPLEVEL = 10,
+		byte TPLEVEL = 10,
 		Items TPITEM = Items.NONE,
 		Moves TPMOVE1 = Moves.NONE,
 		Moves TPMOVE2 = Moves.NONE,
@@ -211,12 +243,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 		int? TPGENDER = null,
 		int TPFORM = 0,
 		bool TPSHINY = false,
-		//Natures TPNATURE,
+		Natures TPNATURE = Natures.UNSET,
 		int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
 		int TPHAPPINESS = 70,
 		string TPNAME = null,
 		bool TPSHADOW = false,
-		Items TPBALL = Items.NONE) : this(TPSPECIES)
+		//bool EGG = false,
+		Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL)
 	{
 		//Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
 		IV = TPIV ?? IV;
@@ -268,14 +301,6 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// </summary>
     /// ToDo: String value?
     public int PersonalId { get; private set; }
-    /// <summary>
-    /// 32-bit Trainer ID (the secret ID is in the upper 16-bits);
-    /// Deprecated
-    /// </summary>
-    /// ToDo: Remove this, and fetch from Trainer Class?
-    /// Can also store hexadecimal/binary values in int
-	[Obsolete("Use <Trainer>Pokemon.OT to fetch trainer information.")]
-    public int TrainerId { get; private set; }
 
 	/// <summary>
 	/// Returns whether or not the specified Trainer is the NOT this Pokemon's original trainer
@@ -399,13 +424,13 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//return 1;
 			return Experience.GetLevelFromExperience(this.GrowthRate, this.Exp.Current);
 		}
-		set
+		private set
 		{
 			if (value < 1 || value > 100) //Experience.MAXLEVEL
 				//ToDo: Instead if throwing exception error, do nothing?...
 				throw new Exception(string.Format("The level number {0} is invalid", value));
 			if(value > this.Level)
-				this.Exp.AddExperience(this.GrowthRate, this.Exp.Current, Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
+				this.Exp.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
 			else
 			{
 				//ToDo: Not Designed to go backwards yet...
@@ -431,12 +456,33 @@ public partial class Pokemon //: ePokemons //PokemonData
 		}
 	}
 
-	int baseExp
+	/// <summary>
+	/// When this pokemon is defeated, this is the amount of experience points it offers
+	/// </summary>
+	public int baseExp
 	{
 		get
 		{
 			return _base.BaseExpYield; //ToDo: 
 		}
+	}
+
+	public void AddSteps(byte steps = 1)
+	{
+		int i = EggSteps - steps;
+		//Set EggSteps to 0 first, to trigger the hatching process... 
+		EggSteps = i < 0 ? 0 : i;
+		//then if we want to continue beyond 0 and into negative values, we may continue...
+		if (i < 0) EggSteps = i;
+	}
+
+	public void HatchEgg()
+	{
+		if (!isEgg) return;
+		//bring value all the way down to 1, regardless of where it's set
+		EggSteps -= EggSteps > 1 ? EggSteps - 1 : 0;
+		//take final step on counter to trigger all the RNGs
+		AddSteps(); 
 	}
 	#endregion
 
@@ -567,43 +613,63 @@ public partial class Pokemon //: ePokemons //PokemonData
         }
     }
 
-	bool? getGender()
+	private bool? getGender()
 	{
 		switch (_base.MaleRatio)
 		{
-			case GenderRatio.FemaleOneEighth:
-				break;
-			case GenderRatio.Female25Percent:
-				break;
-			case GenderRatio.Female50Percent:
-				break;
-			case GenderRatio.Female75Percent:
-				break;
-			case GenderRatio.FemaleSevenEighths:
-				break;
+			//case GenderRatio.FemaleOneEighth:
+			//	break;
+			//case GenderRatio.Female25Percent:
+			//	break;
+			//case GenderRatio.Female50Percent:
+			//	break;
+			//case GenderRatio.Female75Percent:
+			//	break;
+			//case GenderRatio.FemaleSevenEighths:
+			//	break;
 			case GenderRatio.AlwaysMale:
 				return true;
 			case GenderRatio.AlwaysFemale:
 				return false;
 			case GenderRatio.Genderless:
-			default:
 				return null;
+			default:
+				//byte n = (byte)(Settings.Rand.Next(0, 100) + 1);
+				double n = (Settings.Rand.NextDouble() * 100) + 1;
+				if		(_base.MaleRatio == GenderRatio.AlwaysFemale		&& n > 0f		&& n < 12.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.FemaleSevenEighths	&& n >= 12.5f	&& n < 25f)		return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& n >= 25f		&& n < 37.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female75Percent		&& n >= 37.5f	&& n < 50f)		return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& n >= 50f		&& n < 62.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female50Percent		&& n >= 62.5f	&& n < 75f)		return false; 
+				else if	(_base.MaleRatio == GenderRatio.Female25Percent		&& n >= 75f		&& n < 87.5f)	return false; 
+				else if	(_base.MaleRatio == GenderRatio.FemaleOneEighth		&& n >= 87.5f	&& n < 100f)	return false; 
+				else return true;
 		}
-		return null;
 	}
-
-	/// <summary>
-	/// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
-	/// </summary>
-	public bool isSingleGendered { get { return true; } }
 	#endregion
 
 	#region Ability
 	/// <summary>
-	/// Forces the first/second/hidden (0/1/2) ability
+	/// RNG forces the first/second/hidden (0/1/2) ability
 	/// </summary>
-	[Obsolete]
-	private Abilities abilityFlag;
+	private Abilities abilityFlag
+	{
+		get
+		{
+			return
+				//If is egg AND has hidden, include hidden in roll
+				isEgg && hasHiddenAbility() ? 
+					//if has three slots
+					(_base.Ability[1] != Abilities.NONE ? 
+						// roll between all 3
+						_base.Ability[Settings.Rand.Next(0, 3)]					
+					: //else skip over slot 2
+						_base.Ability[Settings.Rand.Next(0, 2) == 1 ? 2 : 0]) 
+				: //else just roll between slot 1 and 2
+					(_base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[Settings.Rand.Next(0, 2)]);
+		}
+	}
 	/// <summary>
 	/// Returns the ID of the Pokemons Ability.
 	/// </summary>
@@ -778,7 +844,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	public void GivePokerus(int strain = 0)
 	{
 		if (this.PokerusStage.HasValue ? !this.PokerusStage.Value : false) return; // Cant re-infect a cured Pokemon
-		if (strain <= 0 || strain >= 16) strain = new Random().Next(1, 16);
+		if (strain <= 0 || strain >= 16) strain = Settings.Rand.Next(1, 16);
 		pokerus[1] = 1 + (strain % 4);
 		pokerus[0] |= strain; //strain << 4
 	}
@@ -828,10 +894,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Returns the number of moves known by the Pokémon.
 	/// </summary>
-	public int numMoves()
+	public byte countMoves()
 	{
-		int ret = 0;
-		for (int i = 0; i < 4; i++) {//foreach(var move in this.moves){ 
+		byte ret = 0;
+		for (byte i = 0; i < 4; i++) {//foreach(var move in this.moves){ 
 			if ((int)this.moves[i].MoveId != 0) ret += 1;//move.id
 		}
 		return ret;
@@ -852,47 +918,147 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 	public bool knowsMove(Moves move) { return this.hasMove (move); }
 
-	/*// <summary>
-    /// Returns the list of moves this Pokémon can learn by levelling up.
+	/// <summary>
+    /// Returns the list of moves this Pokémon can learn by training method.
     /// </summary>
-    /// ToDo: Custom<int Level, eMove move> Class
-    public PokemonMoveset[] getMoveList() {
-		//Move.MoveData.Move[] movelist = _base.MovesetMoves;
-		//for (int k = 0; k < movelist.Length - 1; k++)
-		//{
-		//	//Array to List/Dictionary
-		//	//separate into Move.value and Pokemon.Level 
-		//	//needed to learn the skill
-		//	//movelist([level, move])}
-		//}
-		//return movelist;
-		return _base.MoveSet;
-     }*/
+    public Moves[] getMoveList(LearnMethod? method = null) {
+		switch (method)
+		{
+			case LearnMethod.egg:
+				return _base.MoveTree.Egg;
+			case LearnMethod.levelup:
+				return _base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key).ToArray();
+			case LearnMethod.machine:
+				return _base.MoveTree.Machine;
+			case LearnMethod.tutor:
+				return _base.MoveTree.Tutor;
+			case LearnMethod.shadow:
+			case LearnMethod.xd_shadow:
+				List<Moves> s = new List<Moves>();
+				s.AddRange(_base.MoveTree.Shadow);
+				s.AddRange(_base.MoveTree.Shadow.Where(x => !s.Contains(x)).Select(x => x));
+				return s.ToArray();
+			default:
+				List<Moves> list = new List<Moves>();
+				list.AddRange(_base.MoveTree.Egg);
+				list.AddRange(_base.MoveTree.Machine.Where(x => !list.Contains(x)).Select(x => x));
+				list.AddRange(_base.MoveTree.Tutor.Where(x => !list.Contains(x)).Select(x => x));
+				list.AddRange(_base.MoveTree.LevelUp.Where(x => !list.Contains(x.Key))/*(x => x.Value <= this.Level)*/.Select(x => x.Key));
+				return list.ToArray();
+		}
+     }
 
 	/// <summary>
-    /// Sets this Pokémon's movelist to the default movelist it originally had.
-    /// </summary>
-    public void resetMoves()
+	/// 
+	/// </summary>
+	/// <param name="level"></param>
+	/// ToDo: Higher the pokemon's level, the greater the chances of generating a full moveset (4 moves)
+	public void GenerateMoveset(int? level = null){
+		if (level.HasValue && level.Value < 0)
+			return;
+		//if (!level.HasValue)
+		//	level = -1;
+		ClearFirstMoves();
+		int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 0 and 3
+		List<Moves> movelist = new List<Moves>();
+		if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+		switch (level)
+		{
+			#region sample from alpha version
+			//Level 0 is only there so i have a sample of how version.alpha would have handled code
+			case 0:
+				//Set moveset based off of the highest level moves possible.
+				//string[] moves = new string[4];
+				int i = _base.MoveTree.LevelUp.Count-1; //work backwards so that the highest level move possible is grabbed first
+				int[,] movesetLevels = new int[1,2]; //[index,{moveId,level}]
+				while(moves[3] == null){
+					if(movesetLevels[i,0] <= level.Value){
+						//moves[3] = movesetMovesStrings[i];
+					}
+					i -= 1;
+				}
+				if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
+					//moves[2] = movesetMovesStrings[i];
+					i -= 1;
+					if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
+						//moves[1] = movesetMovesStrings[i];
+						i -= 1;
+						if(i >= 0){ //if i is at least 0 still, then you can grab the last move down.
+							//moves[0] = movesetMovesStrings[i];
+							i -= 1;
+						}
+					}
+				}
+				i = 0;
+				int i2 = 0;			//if the first move is null, then the array will need to be packed down
+				if (moves[0] == null){ 		//(nulls moved to the end of the array)
+					while(i < 4){ 
+						while(moves[i] == null){
+							i += 1;
+						}
+						moves[i2] = moves[i];
+						moves[i] = null;
+						i2 += 1;
+					}
+				}
+				//return moveset;
+				break;
+			#endregion
+			case null:
+			//case -1:
+				movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+				for (int n = 0; n < movelist.Count; n++)
+				{
+					if (Convert.ToBoolean(Settings.Rand.Next(2)))
+					{
+						if (this.countMoves() < numMove + 1) 
+						{
+							LearnMove(movelist[n]);
+						}
+						else
+							break;
+					}
+				}
+				break;
+			default:
+				//if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+				movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
+				//int listend = movelist.Count - 4;
+				//listend = listend < 0 ? 0 : listend + 4;
+				//int j = 0; 
+				for (int n = 0; n < movelist.Count; n++)
+				{
+					if (Convert.ToBoolean(Settings.Rand.Next(2)))
+					{
+						if (this.countMoves() < numMove + 1) //j
+						{
+							//this.moves[j] = new Move(movelist[n]);
+							//j += 1;
+							LearnMove(movelist[n]);
+							//j += this.countMoves() < numMove ? 0 : 1;
+						}
+						else
+							break;
+					}
+				}
+				break;
+		}
+		RecordFirstMoves();
+	}
+
+	/// <summary>
+	/// Sets this Pokémon's movelist to the default movelist it originally had.
+	/// </summary>
+	public void resetMoves()
     {
-		//Move.MoveData.Move moves = this.getMoveList();
-		//Move.MoveData.Move[] movelist = new Move.MoveData.Move[4];
-		List<Moves> movelist = new List<Moves>(); 
         /*for (int i = 0; i < _base.MoveSet.Length; i++){//foreach(var i in _base.MoveSet)
             if (_base.MoveSet[i].Level <= this.Level)
             {
                 movelist.Add(_base.MoveSet[i].MoveId);
             }
-        }*/
-        movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
-        //movelist|=[] // Remove duplicates
-        int listend = movelist.Count - 4;
-        listend = listend < 0 ? 0 : listend;
-        int j = 0;
-        for (int i = 0; i < listend + 4; i++) { 
-            Moves moveid = (i >= movelist.Count) ? 0 : movelist[i];
-			this.moves[j] = new Move(moveid);
-            //moves[j] = (i >= movelist.Count) ? 0 : new Move(movelist[i]);
-            j += 1;
+        }*/ 
+		for (int i = 0; i < 4; i++) {
+			this.moves[i] =  new Move((i >= firstMoves.Count) ? 0 : firstMoves[i]);
         }
     }
 
@@ -901,10 +1067,14 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	public void LearnMove(Moves move) {
+	public void LearnMove(Moves move, bool silently = false) {
 		if ((int)move <= 0) return;
-		for (int i = 0; i < 4; i++) {
-			if (moves[i].MoveId == move) {
+		if (!getMoveList().Contains(move)) { 
+			GameVariables.DebugLog("Move is not compatible");
+			return;
+		}
+		/*for (int i = 0; i < 4; i++) {
+			if (moves[i].MoveId == move) { //Switch ordering of moves?
 				int j = i + 1;
 				while (j < 4) {
 					if (moves[j].MoveId == 0) break;
@@ -915,6 +1085,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 				}
 				return;
 			}
+		}*/
+		if (hasMove(move)) { 
+			GameVariables.DebugLog("Already knows move...");
+			return;
 		}
 		for (int i = 0; i < 4; i++) {
 			if (moves[i].MoveId == 0) {
@@ -922,10 +1096,15 @@ public partial class Pokemon //: ePokemons //PokemonData
 				return;
 			}
 		}
-		moves[0] = moves[1];
-		moves[1] = moves[2];
-		moves[2] = moves[3];
-		moves[3] = new Move(move);
+		if (!silently)
+			GameVariables.DebugLog("Cannot learn move, pokmeon moveset is full", false);
+		else
+		{
+			moves[0] = moves[1];
+			moves[1] = moves[2];
+			moves[2] = moves[3];
+			moves[3] = new Move(move);
+		}
 	}
 
 	/// <summary>
@@ -941,7 +1120,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		}
 
 		newmoves.Add(new Move(0));
-		for (int i = 0; i< 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			moves[i] = newmoves[i];
 		}
 	 }
@@ -980,11 +1159,11 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// </summary>
 	public void RecordFirstMoves() {
 		for (int i = 0; i < 4; i++) {
-			if (moves[i].MoveId > 0) firstMoves.Add(moves[i].MoveId);
+			if (moves[i].MoveId > 0) AddFirstMove(moves[i].MoveId);
 		}
 	}
 
-	public void AddFirstMove(Moves move) {
+	private void AddFirstMove(Moves move) {
 		if (move > 0 && !firstMoves.Contains(move)) firstMoves.Add(move);
 		return;
 	}
@@ -1014,14 +1193,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 	#endregion
 
 	#region Contest attributes, ribbons
-	/// <summary>
-	/// Deprecated; Array of ribbons
-	/// </summary>
-	/// <remarks>
-	/// Make 2d Array (Array[,]) separated by regions/Gens
-	/// </remarks>
-	[Obsolete]
-	private bool[] ribbon; //= new bool[numberOfRegions,RibbonsPerRegion];
 	private List<Ribbon> ribbons { get; set; } 
 	/// <summary>
 	/// Each region/ribbon sprite should have it's own Ribbon.EnumId
@@ -1107,6 +1278,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// This means that once a Shadow Pokémon is encountered for the first time, its Nature, IVs and gender will remain the same for the rest of the game, 
 	/// even if the player fails to capture it or is forced to re-battle it later.
 	/// </summary>
+	// ToDo: IsPurified, and "IsAbleToPurify" 
 	public bool isShadow { get
 		{
 			if (!ShadowLevel.HasValue || ShadowLevel.Value == -1) return false;
@@ -1358,20 +1530,22 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Mail?...
     /// </summary>
-    private Mail mail { get; set; }
+    private Item.Mail mail { get; set; }
     /// <summary>
     /// Perform a null check; if anything other than null, there is a message
     /// </summary>
     /// ToDo: Item category
     public string Mail
     {
-        get {
-            if (this.mail == null) return null; //If empty return null
-            if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
-            {
-                //mail = null;
-				return null;
-            }
+        get
+		{
+            if (this.mail == null || !global::Item.Mail.IsMail(this.Item)) return null; //If empty return null
+            //if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+            //{
+            //    //mail = null;
+			//	return null;
+            //}
+			//ToDo: Return the string or class?
             return mail.Message;
         }
         //set { mail = value; }
@@ -1490,7 +1664,7 @@ public partial class Pokemon //: ePokemons //PokemonData
         if (index >= 0) moves[index] = moves[index]; // ToDo: pp = totalpp
         else
         {
-            for (int i = 0; i < 3; i++){
+            for (int i = 0; i < 4; i++){
                 moves[index] = moves[index]; // ToDo: pp = totalpp
             }
         }
@@ -1887,6 +2061,25 @@ public partial class Pokemon //: ePokemons //PokemonData
 		/// <value>-1f is interpreted as genderless</value>
 		/// </summary>
 		public GenderRatio MaleRatio { get; private set; }
+		/// <summary>
+		/// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
+		/// </summary>
+		public bool IsSingleGendered
+		{
+			get
+			{
+				switch (MaleRatio)
+				{
+					case GenderRatio.AlwaysMale:
+					case GenderRatio.AlwaysFemale:
+					case GenderRatio.Genderless:
+						return true;
+					default:
+						return false;
+				}
+			}
+		}
+
 		public float ShinyChance { get; set; }
 		/// <summary>
 		/// The catch rate of the species. 
@@ -1903,8 +2096,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 		public float Weight { get; private set; }
 		/// ToDo: Make this an enum
 		public int ShapeID { get; private set; } 
-        [Obsolete("Please, just use a VOID call to solve color conversion")]
-		public UnityEngine.Color LightColor { get; private set; }
 		public LevelingRate GrowthRate { get; private set; }
 		public Color PokedexColor { get; private set; }
 
@@ -1943,110 +2134,12 @@ public partial class Pokemon //: ePokemons //PokemonData
 		/// </remarks>
 		/// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
 		public int[,] HeldItem { get; private set; }
-        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
-		public int[] MovesetLevels { get; private set; }
-        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
-		public Moves[] MovesetMoves { get; private set; }
-        /// <summary>
-        /// </summary>
-        /// Pokemon.cs Line 725: ResetMoves()
-        [Obsolete("Please use PokemonMoveTree to query any moves that a pokemon can learn")]
-		public PokemonMoveset[] MoveSet { get; private set; }
 	    /// <summary>
 	    /// All the moves this pokemon species can learn, and the methods by which they learn them
 	    /// </summary>
 		public PokemonMoveTree MoveTree { get; private set; }
 		/// ToDo: Evolution class type array here
 		public IPokemonEvolution[] Evolutions { get; private set; }
-        [Obsolete("Please use IPokemonEvolution to query any pokemons that a pokemon can evolve into")]
-		public int[] EvolutionID { get; private set; }
-		/// <summary>
-		/// <example>
-		/// E.G.	Poliwhirl(61)
-		///		<code>new int[]{62,186},
-		///		new string[]{"Stone,Water Stone","Trade\Item,King's Rock"}),</code>
-		/// <para>
-		/// E.G. to evolve to sylveon
-		///		<code>new int[]{..., 700},
-		///		new string[]{..., "Amie\Move,2\Fairy"}),</code>
-		/// </para> 
-		/// </example>
-		/// <list type="bullet"> 
-		/// <item>
-		/// <term>Level,int level</term>
-		///	<description>if pokemon's level is greater or equal to int level</description>
-		///	<item>
-		/// <term>Stone,string itemName</term>
-		///	<description>if name of stone is equal to string itemName</description>
-		///	</item>
-		/// <item>
-		/// <term>Trade</term>
-		///	<description>if currently trading pokemon</description>
-		///	</item>
-		/// <item>
-		/// <term>Friendship</term>
-		///	<description>if pokemon's friendship is greater or equal to 220</description>
-		///	</item>
-		/// <item>
-		/// <term>Item,string itemName</term>
-		///	<description>if pokemon's heldItem is equal to string itemName</description>
-		/// </item>
-		///	<item>
-		/// <term>Gender,Pokemon.Gender</term>
-		/// <description>if pokemon's gender is equal to Pokemon.Gender</description>
-		/// </item>
-		///	<item>
-		/// <term>Move,string moveName</term>
-		///	<description>if pokemon has a move thats name or typing is equal to string moveName</description>
-		/// </item>
-		///	<item>
-		///	<term>Map,string mapName</term>
-		///	<description>if currentMap is equal to string mapName</description>
-		/// </item>
-		///	<item>
-		///	<term>Time,string dayNight</term>
-		///	<description>if time is between 9PM and 4AM time is "Night". else time is "Day".
-		///	if time is equal to string dayNight (either Day, or Night)</description>
-		/// </item>
-		/// <listheader><term>Exceptions</term><description>
-		///		Unique evolution methods:
-		/// </description></listheader>
-		///	<item>
-		/// <term>Mantine</term>
-		///	<description>if party contains a Remoraid</description>
-		/// </item>
-		///	<item>
-		///	<term>Pangoro</term>
-		///	<description>if party contains a dark pokemon</description>
-		/// </item>
-		///	<item>
-		///	<term>Goodra</term>
-		///	<description>if currentMap's weather is rain</description>
-		/// </item>
-		///	<item>
-		///	<term>Hitmonlee</term>
-		///	<description>if pokemon's ATK is greater than DEF</description>
-		/// </item>
-		///	<item>
-		///	<term>Hitmonchan</term>
-		///	<description>if pokemon's ATK is lower than DEF</description>
-		/// </item>
-		///	<item>
-		///	<term>Hitmontop</term>
-		/// <description>if pokemon's ATK is equal to DEF</description>
-		/// </item>
-		///	<item>
-		///	<term>Silcoon</term>
-		/// <description>if pokemon's shinyValue divided by 2's remainder is equal to 0</description>
-		/// </item>
-		///	<item>
-		///	<term>Cascoon</term>
-		///	<description>if pokemon's shinyValue divided by 2's remainder is equal to 1</description>
-		/// </item>
-		/// </list>
-		/// </summary>
-        [Obsolete("Please use IPokemonEvolution to query any pokemons that a pokemon can evolve into")]
-		public string[] EvolutionRequirements { get; private set; }
 
 		/// <summary>
 		/// The item that needs to be held by a parent when breeding in order for the egg to be this species. 
@@ -2165,201 +2258,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//this.evolutionMethod = evolutionMethod; 
 			//this.evolutionRequirements = evolutionRequirements;
 		}
-
-        [Obsolete]
-		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, int? type1, int? type2, int? ability1, int? ability2, int? hiddenAbility,
-							float maleRatio, int catchRate, int? eggGroup1, int? eggGroup2, int hatchTime,
-							float height, float weight, int baseExpYield, int levelingRate,
-							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-							Color pokedexColor, int baseFriendship,//*/ string species, string pokedexEntry,
-							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, int[] movesetMoves, int[] tmList,
-							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
-							int[,] heldItem = null)
-		{
-			return CreatePokemonData(//new PokemonData(
-				(Pokemons)Id,
-				PokeId,
-				(Types)type1 | Types.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-				(Types)type2 | Types.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-                //new Abilities[] { 
-					(Abilities)ability1 | Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
-					(Abilities)ability2 | Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
-					(Abilities)hiddenAbility | Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
-                //}, 
-				0,//ToDo: maleRatio, 
-				catchRate,
-				(EggGroups)eggGroup1 | EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
-				(EggGroups)eggGroup2 | EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
-				hatchTime,
-				height,
-				weight,
-				baseExpYield,
-				(LevelingRate)levelingRate,
-				pokedexColor | Color.NONE,
-				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, movesetLevels, System.Array.ConvertAll(movesetMoves, move => (Moves)move), tmList,
-				evolutionID, evolutionLevel, evolutionMethod, forms, heldItem);//
-		}
-        [Obsolete]
-		public static PokemonData CreatePokemonData(Pokemons Id, int[] PokeId/*, string name*/, Types type1, Types type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility,
-							GenderRatio maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
-							float height, float weight, int baseExpYield, LevelingRate levelingRate,
-							/*int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,*/
-							Color pokedexColor, int baseFriendship,//*/ string species, string pokedexEntry,
-							int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
-							float luminance, /*Color lightColor,*/ int[] movesetLevels, Moves[] movesetMoves, int[] tmList,
-							int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, /*string[] evolutionRequirements,*/ int forms,
-							int[,] heldItem = null)
-		{
-			return new PokemonData(
-				Id,
-				PokeId,
-				type1, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type1 : PokemonData.Type.NONE,
-				type2, //| PokemonData.Type.NONE,//!= null ? (PokemonData.Type)type2 : PokemonData.Type.NONE,
-				//new Abilities[] {
-				ability1, //| Abilities.NONE,//!= null ? (Abilities)ability1 : Abilities.NONE,
-                ability2, //| Abilities.NONE,//!= null ? (Abilities)ability2 : Abilities.NONE,
-                hiddenAbility, //| Abilities.NONE,//!= null ? (Abilities)hiddenAbility : Abilities.NONE
-				//},
-				maleRatio,  //gender
-                0f,         //gender
-				catchRate,
-				eggGroup1, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup1 : PokemonData.EggGroup.NONE, 
-				eggGroup2, //| PokemonData.EggGroups.NONE,//!= null ? (EggGroups)eggGroup2 : PokemonData.EggGroup.NONE, 
-				hatchTime,
-				height,
-				weight,
-				baseExpYield,
-				levelingRate,
-                0,0,0,0,0,0,
-				pokedexColor | Color.NONE,
-				baseFriendship, baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
-				luminance, null, movesetLevels, movesetMoves, /*System.Array.ConvertAll(movesetMoves, move => (Move.MoveData.Move)move),*/ tmList, null,
-				evolutionID, evolutionLevel, evolutionMethod, (Pokemons)forms, heldItem);//
-		}
-        #region Obsolete Database Values
-        /*// Not const because translation values
-        public static readonly PokemonData[] Database = new PokemonData[] {
-            new PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, ability1: Abilities.NONE, ability2: Abilities.NONE, hiddenAbility: Abilities.NONE,
-                        maleRatio: GenderRatio.AlwaysMale /*0f*, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
-                        height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,
-                        //int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,
-                        pokedexColor: Color.NONE, baseFriendship: 50,
-                        baseStatsHP: 10, baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
-                        luminance: 0f, 
-                        movesetmoves: new PokemonMoveset[] { new PokemonMoveset(moveId: Moves.ACID_ARMOR, method: LearnMethod.levelup, level: 15) },
-                        //movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
-                        evolution: new IPokemonEvolution[] {  new PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
-                        //evolutionID: null, evolutionLevel: null, evolutionMethod: null, 
-                        forms: 4, heldItem: null) //Test
-        };*/
-        #endregion
-
-        #region Obsolete Translation Method
-#if DEBUG
-        [Obsolete]
-		private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations();
-#else
-        [Obsolete]
-        private static Dictionary<int, PokedexTranslation> _pokeTranslations;// = LoadPokedexTranslations(SaveData.currentSave.playerLanguage | Settings.Language.English);
-#endif
-		/// <summary>
-		/// 
-		/// </summary>
-        [Obsolete]
-		private static Dictionary<int, PokedexTranslation> _pokeEnglishTranslations;// = LoadEnglishPokedexTranslations();
-		/// <summary>
-		/// 
-		/// </summary>
-		///ToDo: Should be a void that stores value to _pokeTranslations instead of returning...
-        [Obsolete]
-		public static void/*Dictionary<int, PokedexTranslation>*/ LoadPokedexTranslations(Settings.Languages language = Settings.Languages.English)//, int form = 0
-		{
-			var data = new Dictionary<int, PokedexTranslation>();
-
-			string fileLanguage;
-			switch (language)
-			{
-				case Settings.Languages.English:
-					fileLanguage = "en-us";
-					break;
-				default: //Default in case new language is added to game but not programmed ahead of time here...
-					fileLanguage = "en-us";
-					break;
-			}
-			System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument(); // xmlDoc is the new xml document.
-			//ToDo: Consider "/Resources/Database/PokemonTranslations/Pokemon_"
-#if DEBUG
-			string file = @"..\..\..\\Pokemon Unity\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-			//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-			//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
-#else
-			string file = UnityEngine.Application.dataPath + "/Resources/Database/Pokemon/Pokemon_" + fileLanguage + ".xml"; //Use for production
-#endif
-			System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open);
-			xmlDoc.Load(fs);
-
-			if (xmlDoc.HasChildNodes)
-			{
-				foreach (System.Xml.XmlNode node in xmlDoc.GetElementsByTagName("Pokemon"))
-				{
-					var translation = new PokedexTranslation();
-					translation.Name = node.Attributes["name"].Value; //ToDo: Name = "name" Where formId == 0; else name = formId.name
-					//ToDo: Maybe add a forms array, and a new method for single name calls
-					translation.Forms = new string[node.Attributes.Count - 3]; int n = 1;//only count forms?
-					//int n = 1;translation.Forms[0] = node.Attributes["name"].Value;//that or return an empty array T[0]
-					for (int i = 4; i < node.Attributes.Count; i++)//foreach(System.Xml.XmlAttribute attr in node)
-					{
-						//Skipping first 4 values will save processing
-						if (node.Attributes[i].LocalName.Contains("form")) //Name vs LocalName?
-						{
-							//translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values 
-							translation.Forms[n] = node.Attributes[i].Value; n++;
-						}
-					}
-					translation.Species = node.Attributes["genus"].Value;
-					translation.PokedexEntry = node.InnerText;
-					data.Add(int.Parse(node.Attributes["id"].Value), translation); //Is this safe? Possible overwritting of values with bad entries
-				}
-			}
-
-			//ToDo: Is filestream still open or does it need to be closed and disposed of?
-			fs.Dispose(); fs.Close();
-			_pokeTranslations = data;//return data;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="language"></param>
-		/// <returns></returns>
-		/// <remarks>ToDo: If not in foreign language, check and load in English; else...</remarks>
-        [Obsolete]
-		public static PokedexTranslation GetPokedexTranslation(Pokemons id, Settings.Languages language = Settings.Languages.English)// int form = 0,
-		{
-			if (_pokeTranslations == null) //should return english if player's default language is null
-			{
-				LoadPokedexTranslations(language);//, form
-			}
-
-			int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-			if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
-			{
-				//Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
-				throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
-				//return new PokedexTranslation();
-			}
-			//ToDo: Show english text for missing data on foreign languages 
-			else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
-			{
-				return _pokeEnglishTranslations[arrayId];
-			}
-
-			return _pokeTranslations[arrayId];// int id
-		}
-		#endregion
         #endregion
 
 		#region Methods
@@ -2390,6 +2288,37 @@ public partial class Pokemon //: ePokemons //PokemonData
 			}
 			throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
 			//return null;
+		}
+
+		/// <summary>
+		/// Returns the list of moves this Pokémon can learn by training method.
+		/// </summary>
+		public Moves[] GetMoveList(LearnMethod? method = null)
+		{
+			switch (method)
+			{
+				case LearnMethod.egg:
+					return MoveTree.Egg;
+				case LearnMethod.levelup:
+					return MoveTree.LevelUp.Select(x => x.Key).ToArray();
+				case LearnMethod.machine:
+					return MoveTree.Machine;
+				case LearnMethod.tutor:
+					return MoveTree.Tutor;
+				case LearnMethod.shadow:
+				case LearnMethod.xd_shadow:
+					List<Moves> s = new List<Moves>();
+					s.AddRange(MoveTree.Shadow);
+					s.AddRange(MoveTree.Shadow.Where(x => !s.Contains(x)).Select(x => x));
+					return s.ToArray();
+				default:
+					List<Moves> list = new List<Moves>();
+					list.AddRange(MoveTree.Egg);
+					list.AddRange(MoveTree.Machine.Where(x => !list.Contains(x)).Select(x => x));
+					list.AddRange(MoveTree.Tutor.Where(x => !list.Contains(x)).Select(x => x));
+					list.AddRange(MoveTree.LevelUp.Where(x => !list.Contains(x.Key))/*(x => x.Value <= this.Level)*/.Select(x => x.Key));
+					return list.ToArray();
+			}
 		}
 
 		static int getPokemonArrayId(Pokemons ID)
@@ -2476,146 +2405,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 					return hiddenAbility;
 				default:
 					return null;
-			}
-		}
-
-		public string[] GenerateMoveset(int level){
-			//Set moveset based off of the highest level moves possible.
-			string[] moveset = new string[4];
-			int i = movesetLevels.Length-1; //work backwards so that the highest level move possible is grabbed first
-			while(moveset[3] == null){
-				if(movesetLevels[i] <= level){
-					moveset[3] = movesetMovesStrings[i];
-				}
-				i -= 1;
-			}
-			if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
-				moveset[2] = movesetMovesStrings[i];
-				i -= 1;
-				if(i >= 0){ //if i is at least 0 still, then you can grab the next move down.
-					moveset[1] = movesetMovesStrings[i];
-					i -= 1;
-					if(i >= 0){ //if i is at least 0 still, then you can grab the last move down.
-						moveset[0] = movesetMovesStrings[i];
-						i -= 1;
-					}
-				}
-			}
-			i = 0;
-			int i2 = 0;			//if the first move is null, then the array will need to be packed down
-			if (moveset[0] == null){ 		//(nulls moved to the end of the array)
-				while(i < 3){ 
-					while(moveset[i] == null){
-						i += 1;
-					}
-					moveset[i2] = moveset[i];
-					moveset[i] = null;
-					i2 += 1;
-				}
-			}
-			return moveset;
-		}
-
-		/// <summary>
-		/// Converts the string of a Pokemon Type to a Color in Unity. 
-		/// </summary>
-		/// <param name="PokemonType">string of pokemon type or name of a color</param>
-		/// <returns>return a Unity.Color</returns>
-		/// <example>StringToColor(Electric)</example>
-		/// <example>StringToColor(Yellow)</example>
-		/// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
-		public Color StringToColor(string PokemonType) {
-			//private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
-			//http://www.epidemicjohto.com/t882-type-colors-hex-colors
-			//Normal Type: A8A77A
-			//Fire Type:  EE8130
-			//Water Type: 6390F0
-			//Electric Type:  F7D02C
-			//Grass Type: 7AC74C
-			//Ice Type: 96D9D6
-			//Fighting Type:  C22E28
-			//Poison Type: A33EA1
-			//Ground Type: E2BF65
-			//Flying Type: A98FF3
-			//Psychic Type: F95587
-			//Bug Type: A6B91A
-			//Rock Type: B6A136
-			//Ghost Type: 735797
-			//Dragon Type:  6F35FC
-			//Dark Type: 705746
-			//Steel Type:  B7B7CE
-			//Fairy Type: D685AD
-
-			//http://www.serebiiforums.com/showthread.php?289595-Pokemon-type-color-associations
-			//Normal -white
-			//Fire - red
-			//Water -blue
-			//Electric -yellow
-			//Grass - green
-			//Ice - cyan
-			//Poison -purple
-			//Psychic - magenta
-			//Fighting - dark red
-			//Ground - brown
-			//Rock - gray
-			//Bug - yellow green
-			//Flying - light blue
-			//Dragon - orange
-			//Ghost - light purple
-			//Steel - dark gray
-			//Dark - black
-
-			/*
-			//{"Black",Color.black },//dark
-			//{"", new Color() },//dark blue -> dark, 
-			{ "Blue",Color.blue },//water
-			{ "Clear",Color.clear },
-			{ "Cyan",Color.cyan },
-			{ "Gray",Color.gray },//grAy-American
-			//{"Grey",Color.grey },//grEy-European
-			//{"Grey",Color.grey },//dark grey -> rock,
-			{ "Green",Color.green },//grass
-			//{"", new Color() },//dark green -> bug,
-			{ "Magenta",Color.magenta },//magenta, purple -> poison
-			{ "Red",Color.red },//orange, dark red -> fire
-			{ "White",Color.white },//normals
-			{ "Yellow",Color.yellow },//electric
-			{ "Purple", new Color() },//ghost
-			{ "Brown", new Color() },//fighting
-			{ "Pink", new Color() }//,//fairy
-			//{"", new Color() },//pink, lavender -> psychic, 
-			//{"", new Color() },//ocre, brown -> ground
-			//{"", new Color() },
-			//{"", new Color() },
-			//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
-			* /
-			return new UnityEngine.Color();//StringToColorDic[PokemonType];
-		}
-		/// <summary>
-		/// Converts the Pokemon Type to a Color in Unity. 
-		/// </summary>
-		/// <param name="PokemonType">pokemon type</param>
-		/// <returns>return a Unity.Color</returns>
-		/// <example>StringToColor(Electric)</example>
-		public Color StringToColor(PokemonData.Type PokemonType) {
-			return StringToColor(PokemonType.ToString()); //Will fix later
-		}
-		/// <summary>
-		/// Only an example. Do not use, will  not work.
-		/// <para>Could be combined with database values 
-		/// and used with ints instead of strings</para>
-		/// <para>Convert the pokemon type into a color 
-		/// that can be used with Unity's color lighting</para>
-		/// </summary>
-		/// <param name="color"></param>
-		/// <returns></returns>
-		public Color StringToColor(int color) {
-			switch (color)
-			{
-				//case 1:
-				//	return StringToColorDic["text"];
-				default:
-					return StringToColor(color.ToString());
 			}
 		}*/
 
@@ -3006,10 +2795,20 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Consider making Experience class a Pokemon extension class...
 	public class Experience
 	{
-		private int level { get { return GetLevelFromExperience(Growth, Current); } }
+		#region Variables
+		private byte level { get { return GetLevelFromExperience(Growth, Current); } }
+		/// <summary>
+		/// Current accumalitive experience points gained (and collected) by this Pokemon.
+		/// </summary>
+		/// <remarks>Exp points should not be able to go into negatives?</remarks>
+		/// ToDo: Make shadow pokemons exp points negative?... 
+		/// no, cause they still need to level up after purified
+		/// ToDo: Make exp points less than 0 equal to 0
 		public int Current { get; private set; }
 		public int NextLevel { get { return GetExperience(Growth, level + 1); } }
 		private LevelingRate Growth { get; set; }
+		#endregion
+
 		#region expTable
 		private static int[] expTableErratic = new int[]{
 			0,15,52,122,237,406,637,942,1326,1800,
@@ -3088,6 +2887,35 @@ public partial class Pokemon //: ePokemons //PokemonData
 			1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000};
 		#endregion
 
+		#region Methods
+		/// <summary>
+		/// Adds experience points to total Exp. Points.
+		/// </summary>
+		/// <param name="experienceGain">Exp. Points to add</param>
+		public void AddExperience(int experienceGain)
+		{
+			Current += experienceGain;
+			int maxexp = GetExperience(Growth, Settings.MAXIMUMLEVEL);
+			if (Current > maxexp) Current = maxexp;
+		}
+		// <summary>
+		// Adds experience points ensuring that the new total doesn't
+		// exceed the maximum Exp. Points for the given growth rate.
+		// </summary>
+		// <param name="levelingRate">Growth rate.</param>
+		// <param name="currentExperience">Current Exp Points.</param>
+		// <param name="experienceGain">Exp. Points to add</param>
+		// <returns></returns>
+		// Subtract ceiling exp for left over experience points remaining after level up?...
+		//public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
+		//{
+		//	int exp = currentExperience + experienceGain;
+		//	int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+		//	if (exp > maxexp) exp = maxexp;
+		//	return exp;
+		//}
+		
+		#region Static Methods
 		private static int GetExperience(LevelingRate levelingRate, int currentLevel)
 		{
 			int exp = 0;
@@ -3095,51 +2923,51 @@ public partial class Pokemon //: ePokemons //PokemonData
 			//if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL; 
 			if (levelingRate == LevelingRate.ERRATIC)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					//exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (160 - currentLevel) / 100);
 					exp = (int)System.Math.Floor((System.Math.Pow(currentLevel, 3)) * (currentLevel * 6 / 10) / 100);
 				}
-				else exp = expTableErratic[currentLevel - 1]; //Because the array starts at 0, not 1.
+				else exp = expTableErratic[currentLevel]; //Because the array starts at 0, not 1.
 			}
 			else if (levelingRate == LevelingRate.FAST)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (4 / 5));
 				}
-				else exp = expTableFast[currentLevel - 1];
+				else exp = expTableFast[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.MEDIUMFAST)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3));
 				}
-				else exp = expTableMediumFast[currentLevel - 1];
+				else exp = expTableMediumFast[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.MEDIUMSLOW)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					//Dont remember why currentlevel minus 1 is in formula...
 					//I think it has to deal with formula table glitch for lvl 1-2 pokemons...
 					//exp = (int)System.Math.Floor(((6 / 5) * System.Math.Pow(currentLevel - 1, 3)) - (15 * System.Math.Pow(currentLevel - 1, 3)) + (100 * (currentLevel - 1)) - 140);
 					exp = (int)System.Math.Floor((6 * System.Math.Pow(currentLevel - 1, 3) / 5) - 15 * System.Math.Pow(currentLevel - 1, 2) + 100 * (currentLevel - 1) - 140);
 				}
-				else exp = expTableMediumSlow[currentLevel - 1];
+				else exp = expTableMediumSlow[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.SLOW)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (5 / 4));
 				}
-				else exp = expTableSlow[currentLevel - 1];
+				else exp = expTableSlow[currentLevel];
 			}
 			else if (levelingRate == LevelingRate.FLUCTUATING)
 			{
-				if (currentLevel > 100)
+				if (currentLevel > 99)
 				{
 					int rate = 82;
 					//Slow rate with increasing level
@@ -3149,12 +2977,10 @@ public partial class Pokemon //: ePokemons //PokemonData
 					//exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * ((System.Math.Floor(System.Math.Pow(currentLevel, 3) / 2) + 32) / 50));
 					exp = (int)System.Math.Floor(System.Math.Pow(currentLevel, 3) * (((currentLevel * rate / 100) / 50)));
 				}
-				else exp = expTableFluctuating[currentLevel - 1];
+				else exp = expTableFluctuating[currentLevel];
 			}
 
 			return exp;
-
-
 		}
 		/// <summary>
 		/// Gets the maximum Exp Points possible for the given growth rate.
@@ -3179,37 +3005,23 @@ public partial class Pokemon //: ePokemons //PokemonData
 			return GetExperience(levelingRate, currentLevel);
 		}
 		/// <summary>
-		/// Adds experience points ensuring that the new total doesn't
-		/// exceed the maximum Exp. Points for the given growth rate.
-		/// </summary>
-		/// <param name="levelingRate">Growth rate.</param>
-		/// <param name="currentExperience">Current Exp Points.</param>
-		/// <param name="experienceGain">Exp. Points to add</param>
-		/// <returns></returns>
-		/// Subtract ceiling exp for left over experience points remaining after level up?...
-		public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
-		{
-			int exp = currentExperience + experienceGain;
-			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
-			if (exp > maxexp) exp = maxexp;
-			return exp;
-		}
-		/// <summary>
 		/// Calculates a level given the number of Exp Points and growth rate.
 		/// </summary>
 		/// <param name="levelingRate">Growth rate.</param>
 		/// <param name="experiencePoints">Current Experience Points</param>
 		/// <returns></returns>
-		public static int GetLevelFromExperience(LevelingRate levelingRate, int experiencePoints)
+		public static byte GetLevelFromExperience(LevelingRate levelingRate, int experiencePoints)
 		{
+			if (experiencePoints <= 0) return 0;
 			int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
 			if (experiencePoints > maxexp) experiencePoints = maxexp;
-			for (int i = 0; i < Settings.MAXIMUMLEVEL; i++)
+			for (byte i = 0; i < Settings.MAXIMUMLEVEL; i++)
 			{
-				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) == experiencePoints) return i;
-				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) > experiencePoints) return i-1;
+				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) == experiencePoints) return Settings.MAXIMUMLEVEL;
+				if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) < experiencePoints) return Settings.MAXIMUMLEVEL;
+				if (GetExperience(levelingRate, i) > experiencePoints) return (byte)(i-1);
 			}
-			return Settings.MAXIMUMLEVEL;
+			return 0;
 		}
 		/*public static int GetLevelExperiencePoints(LevelingRate levelingRate, int currentLevel)
 		{
@@ -3269,6 +3081,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 
 			return exp;
 		}*/
+		#endregion
+		#endregion
 
 		public Experience(LevelingRate rate)
 		{

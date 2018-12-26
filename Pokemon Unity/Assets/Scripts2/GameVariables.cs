@@ -24,46 +24,6 @@ using PokemonUnity.Item;
 /// This class should be static...
 public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
-	#region Debug Functions and Features
-	/*public static bool debugMode { get; set; }
-	public static void DebugLog(string text, bool? error = null)
-	{
-		if(!error.HasValue)
-			Debug = text;
-		else
-		{
-			if(error.Value)
-				DebugError = text;
-			else
-				DebugWarning = text;
-		}
-	}
-	private static string Debug {
-		set
-		{
-#if !DEBUG
-			UnityEngine.Debug.Log(value);
-#endif
-		}
-	}
-	private static string DebugWarning {
-		set
-		{
-#if !DEBUG
-			UnityEngine.Debug.LogWarning(value);
-#endif
-		}
-	}
-	private static string DebugError {
-		set
-		{
-#if !DEBUG
-			UnityEngine.Debug.LogError(value);
-#endif
-		}
-	}*/
-	#endregion
-
 	//public static Translator.Languages UserLanguage = Translator.Languages.English;
 	public static Settings.Languages UserLanguage = Settings.Languages.English;
     //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
@@ -93,63 +53,18 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 	#endregion
 
 	#region Unity Canvas UI
-	//Game UI
-	//public UnityEngine.Texture2D DialogWindowSkin;
-	//private UnityEngine.UI.Image DialogWindowSkin;
-	/*/// <summary>
-	/// Frame Style
-	/// </summary>
-	public static UnityEngine.Sprite WindowSkin { get; private set; }
-    public static UnityEngine.Sprite DialogSkin { get; private set; }
 	/// <summary>
-	/// In-game UI dialog window to prompt message to user
+	/// Frame Style for all System Prompts and Text Displays
 	/// </summary>
-	/// ToDo: Allow game logic to pass npc scripts thru this
-	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
-	/// <param name="text"></param>
-	/// <param name="error">Maybe something about interupting coroutine</param>
-	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
-	{
-		//ToDo: Pass values directly to DialogEventHandler
-		//Consider adding a Queue to dialog text... so messages arent replaced but appended
-		if(!error.HasValue)
-			Debug = text;
-		else
-		{
-			if(error.Value)
-				DebugError = text;
-			else
-				DebugWarning = text;
-		}
-	}*/
-	//public static void Display(string text)
-	//{
-	//
-	//}
-	//public static void DisplayPause(string text)
-	//{
-	//
-	//}
-	//public static void DisplayConfirm(string text)
-	//{
-	//
-	//}
-
-    #region Resources
-    public UnityEngine.Sprite[] LoadAllWindowSkinSprites()
-    {
-        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
-    }
-
-    public UnityEngine.Sprite[] LoadAllDialogSkinSprites()
-    {
-        return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
-    }
-    #endregion
-    /// <summary>
-    /// Music Volume
-    /// </summary>
-    public static float mVol = (7f / 20f) * (7f / 20f);
+	public static byte WindowSkin { get; private set; }
+	/// <summary>
+	/// Frame Style for all player and non-playable characters Speech bubbles
+	/// </summary>
+	public static byte DialogSkin { get; private set; }
+	/// <summary>
+	/// Music Volume
+	/// </summary>
+	public static float mVol = (7f / 20f) * (7f / 20f);
     /// <summary>
     /// SFX (Sound Effects) Volume 
     /// </summary>
@@ -831,7 +746,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 /// but a series of const variables that will be used as rules or 
 /// placeholders for the game mechanics.
 /// </summary>
-public class Settings //: Settings<Translations.Languages>
+public static class Settings //: Settings<Translations.Languages>
 {
     #region Constant Values and Game Rules
     public static Translator.Languages UserLanguage = Translator.Languages.English;
@@ -896,6 +811,10 @@ public class Settings //: Settings<Translations.Languages>
 	/// until it cycles thru all possible seed values
 	/// </summary>
 	public static Random Rand { get { return new Random(Seed()); } }
+	/// <summary>
+	/// Constantly revolving random, that uses the same seed number that was previously used
+	/// </summary>
+	public static Random RandWithSetSeed { get { return new Random(Seed(true)); } }
 	private static System.UInt16? seed;// = 0x0000; //{ get; set; }
 	public static UInt16 Seed(bool useFixedSeed = false)
     {
@@ -913,10 +832,226 @@ public class Settings //: Settings<Translations.Languages>
 			return seed.Value;
 		//}
     }
-    #endregion
 
-    #region Custom Game Mode
-    //Nuzlocke Challenge
+	/// <summary>
+	/// Converts the string of a Pokemon Type to a color's hex value
+	/// </summary>
+	/// <param name="PokemonType">string of pokemon type or name of a color</param>
+	/// <returns>return a Unity.Color</returns>
+	/// <example>StringToColor(Electric)</example>
+	/// <example>StringToColor(Yellow)</example>
+	/// <remarks>might need to make a new enum in PokemonData, type = x.Color...</remarks>
+	/// ToDo: Convert to Unity's Color? 
+	public static string TypeToColorHEX (Types PokemonType) {
+		//private System.Collections.Generic.Dictionary<string, Color> StringToColorDic = new System.Collections.Generic.Dictionary<string, Color>() {//Dictionary<PokemonData.Type, Color>
+		//http://www.epidemicjohto.com/t882-type-colors-hex-colors
+		switch (PokemonType)
+		{
+			case Types.NORMAL:
+				//Normal Type:		
+				return "A8A77A";
+			case Types.FIGHTING:
+				//Fighting Type:	
+				return "C22E28";
+			case Types.FLYING:
+				//Flying Type:		
+				return "A98FF3";
+			case Types.POISON:
+				//Poison Type:		
+				return "A33EA1";
+			case Types.GROUND:
+				//Ground Type:		
+				return "E2BF65";
+			case Types.ROCK:
+				//Rock Type:		
+				return "B6A136";
+			case Types.BUG:
+				//Bug Type:		
+				return "A6B91A";
+			case Types.GHOST:
+				//Ghost Type:		
+				return "735797";
+			case Types.STEEL:
+				//Steel Type:		
+				return "B7B7CE";
+			case Types.FIRE:
+				//Fire Type:		
+				return "EE8130";
+			case Types.WATER:
+				//Water Type:		
+				return "6390F0";
+			case Types.GRASS:
+				//Grass Type:		
+				return "7AC74C";
+			case Types.ELECTRIC:
+				//Electric Type:	
+				return "F7D02C";
+			case Types.PSYCHIC:
+				//Psychic Type:	
+				return "F95587";
+			case Types.ICE:
+				//Ice Type:		
+				return "96D9D6";
+			case Types.DRAGON:
+				//Dragon Type:		
+				return "6F35FC";
+			case Types.DARK:
+				//Dark Type:		
+				return "705746";
+			case Types.FAIRY:
+				//Fairy Type:		
+				return "D685AD";
+			case Types.NONE:
+			case Types.UNKNOWN:
+			case Types.SHADOW:
+			default:
+				//Black?
+				return string.Empty;
+		}
+	}
+	/*// <summary>
+	/// Converts the Pokemon Type to a Color for use in Unity. 
+	/// </summary>
+	/// <param name="PokemonType">pokemon type</param>
+	/// <returns>return a Unity.Color</returns>
+	/// <example>StringToColor(Electric)</example>
+	public Color TypeToColor(Types PokemonType) {
+		//http://www.serebiiforums.com/showthread.php?289595-Pokemon-type-color-associations
+		switch (PokemonType)
+		{
+			case Types.NORMAL:
+				//Normal Type:		
+				//Normal -white
+				return "A8A77A";
+			case Types.FIGHTING:
+				//Fighting Type:	
+				//Fighting - dark red
+				return "C22E28";
+			case Types.FLYING:
+				//Flying Type:		
+				//Flying - light blue
+				return "A98FF3";
+			case Types.POISON:
+				//Poison Type:		
+				//Poison -purple
+				return "A33EA1";
+			case Types.GROUND:
+				//Ground Type:		
+				//Ground - brown
+				return "E2BF65";
+			case Types.ROCK:
+				//Rock Type:		
+				//Rock - gray
+				return "B6A136";
+			case Types.BUG:
+				//Bug Type:		
+				//Bug - yellow green
+				return "A6B91A";
+			case Types.GHOST:
+				//Ghost Type:		
+				//Ghost - light purple
+				return "735797";
+			case Types.STEEL:
+				//Steel Type:		
+				//Steel - dark gray
+				return "B7B7CE";
+			case Types.FIRE:
+				//Fire Type:		
+				//Fire - red
+				return "EE8130";
+			case Types.WATER:
+				//Water Type:		
+				//Water -blue
+				return "6390F0";
+			case Types.GRASS:
+				//Grass Type:		
+				//Grass - green
+				return "7AC74C";
+			case Types.ELECTRIC:
+				//Electric Type:	
+				//Electric -yellow
+				return "F7D02C";
+			case Types.PSYCHIC:
+				//Psychic Type:	
+				//Psychic - magenta
+				return "F95587";
+			case Types.ICE:
+				//Ice Type:		
+				//Ice - cyan
+				return "96D9D6";
+			case Types.DRAGON:
+				//Dragon Type:		
+				//Dragon - orange
+				return "6F35FC";
+			case Types.DARK:
+				//Dark Type:		
+				//Dark - black
+				return "705746";
+			case Types.FAIRY:
+				//Fairy Type:		
+				return "D685AD";
+			case Types.NONE:
+			case Types.UNKNOWN:
+			case Types.SHADOW:
+			default:
+				//return string.Empty;
+				break;
+		}
+	}*/
+	/*/// <summary>
+	/// Only an example. Do not use, will  not work.
+	/// <para>Could be combined with database values 
+	/// and used with ints instead of strings</para>
+	/// <para>Convert the pokemon type into a color 
+	/// that can be used with Unity's color lighting</para>
+	/// </summary>
+	/// <param name="color"></param>
+	/// <returns></returns>
+	public UnityEngine.Color ColorToUnity(Color color) {
+		switch (color)
+		{
+			//case 1:
+			//	return StringToColorDic["text"];
+			default:
+				return StringToColor(color.ToString());
+				break;
+		}
+				
+		//{"Black",Color.black },//dark
+		//{"", new Color() },//dark blue -> dark, 
+		{ "Blue",Color.blue },//water
+		{ "Clear",Color.clear },
+		{ "Cyan",Color.cyan },
+		{ "Gray",Color.gray },//grAy-American
+		//{"Grey",Color.grey },//grEy-European
+		//{"Grey",Color.grey },//dark grey -> rock,
+		{ "Green",Color.green },//grass
+		//{"", new Color() },//dark green -> bug,
+		{ "Magenta",Color.magenta },//magenta, purple -> poison
+		{ "Red",Color.red },//orange, dark red -> fire
+		{ "White",Color.white },//normals
+		{ "Yellow",Color.yellow },//electric
+		{ "Purple", new Color() },//ghost
+		{ "Brown", new Color() },//fighting
+		{ "Pink", new Color() }//,//fairy
+		//{"", new Color() },//pink, lavender -> psychic, 
+		//{"", new Color() },//ocre, brown -> ground
+		//{"", new Color() },
+		//{"", new Color() },
+		//{"", new Color() }//fly, drag, steel, psychic, ice, shadow, unknown, bug, ground, poison?
+		
+	}*/
+	#endregion
+
+	#region Custom Game Mode
+	//Nuzlocke Challenge
+	/// <summary>
+	/// Basically, you use the Dexnav to find pokemon in the area, they appear as shadows in the grass, and you need to sneak up on them
+	/// these pokemon can have egg moves, or even their HiddenAbility
+	/// </summary>
+	/// Apparently you can use the Sneaking feature to helps with this. 
+	/// ToDo: OnlyAllowEggMovesWhenUsingDexNav or DexNavAllowsEggMoves
+	public static bool CatchPokemonsWithEggMoves { get; private set; }
     #endregion
 
     #region Enumerators
@@ -975,11 +1110,11 @@ public class Settings //: Settings<Translations.Languages>
 	/// <summary>
 	/// The maximum level Pokémon can reach.
 	/// </summary>
-	public const int MAXIMUMLEVEL = 100;
+	public const byte MAXIMUMLEVEL = 100;
 	/// <summary>
 	/// The level of newly hatched Pokémon.
 	/// </summary>
-	public const int EGGINITIALLEVEL = 1;
+	public const byte EGGINITIALLEVEL = 1;
 	/// <summary>
 	/// The odds of a newly generated Pokémon being shiny (out of 65536).
 	/// </summary>
@@ -1386,6 +1521,7 @@ public class UnityUtilityIntegration
 			Debug = text;
 		else
 		{
+			//ToDo: If during production and game logs an ERROR, or maybe a warning too, store to text file, and upload to dev team?
 			if(error.Value)
 				DebugError = text;
 			else
@@ -1419,17 +1555,28 @@ public class UnityUtilityIntegration
 	#endregion
 
 	#region Unity Canvas UI
+	#region Resources
+	public static UnityEngine.Sprite[] LoadAllWindowSkinSprites()
+	{
+		return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
+	}
+
+	public static UnityEngine.Sprite[] LoadAllDialogSkinSprites()
+	{
+		return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
+	}
+	#endregion
 	//Game UI
 	//public UnityEngine.Texture2D DialogWindowSkin;
 	//private UnityEngine.UI.Image DialogWindowSkin;
 	/// <summary>
 	/// Frame Style for all System Prompts and Text Displays
 	/// </summary>
-	public static UnityEngine.Sprite WindowSkin { get; private set; }
+	public static UnityEngine.Sprite WindowSkinSprite { get { return LoadAllWindowSkinSprites()[GameVariables.WindowSkin]; } }
 	/// <summary>
 	/// Frame Style for all player and non-playable characters Speech bubbles
 	/// </summary>
-	public static UnityEngine.Sprite DialogSkin { get; private set; }
+	public static UnityEngine.Sprite DialogSkinSprite { get { return LoadAllDialogSkinSprites()[GameVariables.DialogSkin]; } }
 	/// <summary>
 	/// In-game UI dialog window to prompt message to user
 	/// </summary>
