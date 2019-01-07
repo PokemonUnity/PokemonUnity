@@ -10,7 +10,7 @@ using PokemonEssential;
 public class Move //: MoveData
 {
 	#region Properties
-	protected MoveDataDex _base { get; private set; }
+	protected MoveData _base { get; private set; }
 	/// <summary>
 	/// The amount of PP remaining for this move
 	/// </summary>
@@ -48,7 +48,7 @@ public class Move //: MoveData
 	/// <summary>
 	/// Initializes this object to the specified move ID.
 	/// </summary>
-	public Move(Moves move = Moves.NONE) { /*if (move != Moves.NONE)*/ _base = new MoveDataDex().getMove(move); PP = _base.PP; }
+	public Move(Moves move = Moves.NONE) { /*if (move != Moves.NONE)*/ _base = new MoveData().getMove(move); PP = _base.PP; }
 
 	#region Enumerator
 	public enum Effect
@@ -1918,7 +1918,7 @@ public class Move //: MoveData
 	public class MoveBattle
 	{
 		#region Variables
-		private MoveDataDex _baseData { get; set; }
+		private MoveData _baseData { get; set; }
 		private Move _baseMove { get; set; }
         private string _baseBattle { get; set; }
 
@@ -2991,7 +2991,7 @@ namespace PokemonEssential
 		/// ALLALLYFIELD
 		UserSide
 	}
-	public partial class MoveDataDex
+	public partial class MoveData
 	{
 		#region Variables
 		public Category Category { get; private set; }
@@ -3027,15 +3027,15 @@ namespace PokemonEssential
 		public int Jamming { get; private set; }
 		#endregion
 
-		public MoveDataDex()
+		public MoveData()
 		{
 			Name = LanguageExtension.Translate(Text.Moves, ID.ToString()).Name;
 			Description = LanguageExtension.Translate(Text.Moves, ID.ToString()).Value;
 		}
 
-		internal MoveDataDex getMove(Moves ID)
+		internal MoveData getMove(Moves ID)
 		{
-			foreach (MoveDataDex move in Database)
+			foreach (MoveData move in Database)
 			{
 				if (move.ID == ID) return move;
 			}
