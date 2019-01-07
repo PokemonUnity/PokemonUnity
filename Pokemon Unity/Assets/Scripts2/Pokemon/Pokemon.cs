@@ -2031,7 +2031,11 @@ public partial class Pokemon //: ePokemons //PokemonData
         public int Form { get; set; }
 		/// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
 		public int Forms { get { return this.forms.Length; } }
-
+		/// <summary>
+		/// Best used in battle simulator. 
+		/// Check to see if pokemons are legendary, and exclude from battle
+		/// </summary>
+		public Rarity Rarity { get; set; }
 		public EggGroups[] EggGroup { get { return new EggGroups[] { this.eggGroup1, this.eggGroup2 }; } }
 		//public EggGroup EggGroup2 { get { return this.eggGroup2; } }
 		//public virtual Type Type1 { get { return this.type1; } }
@@ -2187,7 +2191,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 							int evHP = 0, int evATK = 0, int evDEF = 0, int evSPA = 0, int evSPD = 0, int evSPE = 0,
 							Color pokedexColor = Color.NONE, int baseFriendship = 0,//* / string species, string pokedexEntry,*/
 							int baseStatsHP = 0, int baseStatsATK = 0, int baseStatsDEF = 0, int baseStatsSPA = 0, int baseStatsSPD = 0, int baseStatsSPE = 0,
-							float luminance = 0f, //Color lightColor,
+							Rarity rarity = Rarity.Common, float luminance = 0f, //Color lightColor,
                             PokemonMoveset[] movesetmoves = null,
                             int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null, 
                             IPokemonEvolution[] evolution = null,
@@ -2232,8 +2236,9 @@ public partial class Pokemon //: ePokemons //PokemonData
 			this.BaseStatsSPA = baseStatsSPA;
 			this.BaseStatsSPD = baseStatsSPD;
 			this.BaseStatsSPE = baseStatsSPE;
-			this.BaseFriendship = baseFriendship; 
+			this.BaseFriendship = baseFriendship;
 
+			this.Rarity = rarity;
 			this.Luminance = luminance;
 			//this.lightColor = lightColor;
 			this.PokedexColor = pokedexColor | Color.NONE;
@@ -3092,6 +3097,18 @@ public interface IPokemonEvolution
 }
 namespace PokemonUnity
 {
+	public enum Rarity
+	{
+		Common,
+		/// <summary>
+		/// Legendary Pokémon are a group of incredibly rare and often very powerful Pokémon, generally featured prominently in the legends and myths of the Pokémon world.
+		/// </summary>
+		Legendary,
+		/// <summary>
+		/// Mythical Pokémon are a group of Pokémon, which are usually event-exclusive (similar to legendary, but separate) 
+		/// </summary>
+		Mythical
+	}
 	public enum Ribbon
 	{
 		NONE = 0,
