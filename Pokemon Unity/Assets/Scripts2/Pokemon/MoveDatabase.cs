@@ -9,16 +9,16 @@ using PokemonEssential;
 
 namespace PokemonEssential
 {
-	public partial class MoveData
+	public partial class MoveDataDex
 	{
-		private static readonly MoveData[] Database;
-		static MoveData()
+		private static readonly MoveDataDex[] Database;
+		static MoveDataDex()
 		{
-Database = new MoveData[] {
+Database = new MoveDataDex[] {
 	// ^(\d*),(\w*),([\w\s-]*),(\w*),(\d*),(\w*),(\w*),(\d*),(\d*),(\d*),(\d*),([-\d]*),(\w*),("[\w\s-,.'é]*")
-	// new MoveData() {\n\tnum = $1, \n\tid = Moves.$2, \n\t//name = "$3", \n\t//function = $4, \n\tbasePower = $5, \n\ttype = Types.$6, \n\tcategory = Category.$7, \n\taccuracy = $8, \n\tpp = $9, \n\teffects = $10, \n\ttarget = Target.$11, \n\tpriority = $12, \n\tflags = new Flags() { $13 } \n\t//,description = $14\n},
+	// new MoveDataDex() {\n\tnum = $1, \n\tid = Moves.$2, \n\t//name = "$3", \n\t//function = $4, \n\tbasePower = $5, \n\ttype = Types.$6, \n\tcategory = Category.$7, \n\taccuracy = $8, \n\tpp = $9, \n\teffects = $10, \n\ttarget = Target.$11, \n\tpriority = $12, \n\tflags = new Flags() { $13 } \n\t//,description = $14\n},
 	//(flags = new Flags\(\) \{\s[\w]*)l([,]|[\w\s=,]*\s\}) 
-new MoveData() {
+new MoveDataDex() {
 	num = 0,
 	ID = Moves.NONE, 
 	//name = "null", 
@@ -35,7 +35,7 @@ new MoveData() {
 	//,description = "Placeholder for empty/null moveset."
 },
 	#region Database
-new MoveData() {
+new MoveDataDex() {
 	num = 1,
 	ID = Moves.MEGAHORN, 
 	//name = "Megahorn", 
@@ -51,7 +51,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Using its tough and impressive horn, the user rams into the target with no letup."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 2,
 	ID = Moves.ATTACK_ORDER, 
 	//name = "Attack Order", 
@@ -67,7 +67,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user calls out its underlings to pummel the target. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 3,
 	ID = Moves.BUG_BUZZ, 
 	//name = "Bug Buzz", 
@@ -83,7 +83,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,sound: true ) { }
 	//,description = "The user vibrates its wings to generate a damaging sound wave. It may also lower the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 4,
 	ID = Moves.X_SCISSOR, 
 	//name = "X-Scissor", 
@@ -99,7 +99,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slashes at the foe by crossing its scythes or claws as if they were a pair of scissors."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 5,
 	ID = Moves.SIGNAL_BEAM, 
 	//name = "Signal Beam", 
@@ -115,7 +115,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a sinister beam of light. It may also confuse the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 6,
 	ID = Moves.U_TURN, 
 	//name = "U-turn", 
@@ -131,7 +131,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 7,
 	ID = Moves.STEAMROLLER, 
 	//name = "Steamroller", 
@@ -147,7 +147,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user crushes its foes by rolling over them. This attack may make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 8,
 	ID = Moves.BUG_BITE, 
 	//name = "Bug Bite", 
@@ -163,7 +163,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites the target. If the target is holding a Berry, the user eats it and gains its effect."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 9,
 	ID = Moves.SILVER_WIND, 
 	//name = "Silver Wind", 
@@ -179,7 +179,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The foe is attacked with powdery scales blown by wind. It may also raise all the user's stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 10,
 	ID = Moves.STRUGGLE_BUG, 
 	//name = "Struggle Bug", 
@@ -195,7 +195,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "While resisting, the user attacks the opposing Pokémon. The targets' Sp. Atk stat is reduced."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 11,
 	ID = Moves.TWINEEDLE, 
 	//name = "Twineedle", 
@@ -211,7 +211,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is stabbed twice by a pair of stingers. It may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 12,
 	ID = Moves.FURY_CUTTER, 
 	//name = "Fury Cutter", 
@@ -227,7 +227,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slashed with scythes or claws. Its power increases if it hits in succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 13,
 	ID = Moves.LEECH_LIFE, 
 	//name = "Leech Life", 
@@ -243,7 +243,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user drains the target's blood. The user's HP is restored by half the damage taken by the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 14,
 	ID = Moves.PIN_MISSILE, 
 	//name = "Pin Missile", 
@@ -259,7 +259,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Sharp spikes are shot at the target in rapid succession. They hit two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 15,
 	ID = Moves.DEFEND_ORDER, 
 	//name = "Defend Order", 
@@ -275,7 +275,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user calls out its underlings to shield its body, raising its Defense and Sp. Def stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 16,
 	ID = Moves.HEAL_ORDER, 
 	//name = "Heal Order", 
@@ -291,7 +291,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true, bite: true ) { }
 	//,description = "The user calls out its underlings to heal it. The user regains up to half of its max HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 17,
 	ID = Moves.QUIVER_DANCE, 
 	//name = "Quiver Dance", 
@@ -307,7 +307,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user performs a beautiful dance. It boosts the user's Sp. Atk, Sp. Def, and Speed stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 18,
 	ID = Moves.RAGE_POWDER, 
 	//name = "Rage Powder", 
@@ -323,7 +323,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user scatters irritating powder to draw attention to itself. Opponents aim only at the user."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 19,
 	ID = Moves.SPIDER_WEB, 
 	//name = "Spider Web", 
@@ -339,7 +339,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user ensnares the target with thin, gooey silk so it can't flee from battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 20,
 	ID = Moves.STRING_SHOT, 
 	//name = "String Shot", 
@@ -355,7 +355,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The foe is bound with silk blown from the user's mouth. This silk reduces the target's Speed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 21,
 	ID = Moves.TAIL_GLOW, 
 	//name = "Tail Glow", 
@@ -371,7 +371,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user stares at flashing lights to focus its mind, drastically raising its Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 22,
 	ID = Moves.FOUL_PLAY, 
 	//name = "Foul Play", 
@@ -387,7 +387,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user turns the foe's power against it. It does more damage the higher the target's Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 23,
 	ID = Moves.NIGHT_DAZE, 
 	//name = "Night Daze", 
@@ -403,7 +403,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lets loose a pitch-black shock wave at its target. It may also lower the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 24,
 	ID = Moves.CRUNCH, 
 	//name = "Crunch", 
@@ -419,7 +419,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user crunches up the target with sharp fangs. It may also lower the target's Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 25,
 	ID = Moves.DARK_PULSE, 
 	//name = "Dark Pulse", 
@@ -435,7 +435,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user releases a horrible aura imbued with dark thoughts. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 26,
 	ID = Moves.SUCKER_PUNCH, 
 	//name = "Sucker Punch", 
@@ -451,7 +451,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This move enables the user to attack first. It fails if the target is not readying an attack, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 27,
 	ID = Moves.NIGHT_SLASH, 
 	//name = "Night Slash", 
@@ -467,7 +467,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user slashes the target the instant an opportunity arises. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 28,
 	ID = Moves.BITE, 
 	//name = "Bite", 
@@ -483,7 +483,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is bitten with viciously sharp fangs. It may make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 29,
 	ID = Moves.FEINT_ATTACK, 
 	//name = "Faint Attack", 
@@ -499,7 +499,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user draws up to the foe disarmingly, then throws a sucker punch. It hits without fail."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 30,
 	ID = Moves.SNARL, 
 	//name = "Snarl", 
@@ -515,7 +515,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user yells as if it is ranting about something, making the target's Sp. Atk stat decrease."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 31,
 	ID = Moves.ASSURANCE, 
 	//name = "Assurance", 
@@ -531,7 +531,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "If the target has already taken some damage in the same turn, this attack's power is doubled."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 32,
 	ID = Moves.PAYBACK, 
 	//name = "Payback", 
@@ -547,7 +547,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "If the user moves after the target, this attack's power will be doubled."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 33,
 	ID = Moves.PURSUIT, 
 	//name = "Pursuit", 
@@ -563,7 +563,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "An attack move that inflicts double damage if used on a target that is switching out of battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 34,
 	ID = Moves.THIEF, 
 	//name = "Thief", 
@@ -579,7 +579,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks and steals the foe's held item simultaneously. It can't steal if the user holds an item."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 35,
 	ID = Moves.KNOCK_OFF, 
 	//name = "Knock Off", 
@@ -595,7 +595,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user slaps down the target's held item, preventing that item from being used in the battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 36,
 	ID = Moves.BEAT_UP, 
 	//name = "Beat Up", 
@@ -611,7 +611,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user gets all the party Pokémon to attack the foe. The more party Pokémon, the more damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 37,
 	ID = Moves.FLING, 
 	//name = "Fling", 
@@ -627,7 +627,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user flings its held item at the target to attack. Its power and effects depend on the item."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 38,
 	ID = Moves.PUNISHMENT, 
 	//name = "Punishment", 
@@ -643,7 +643,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This attack's power increases the more the target has powered up with stat changes."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 39,
 	ID = Moves.DARK_VOID, 
 	//name = "Dark Void", 
@@ -659,7 +659,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Opposing Pokémon are dragged into a world of total darkness that makes them sleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 40,
 	ID = Moves.EMBARGO, 
 	//name = "Embargo", 
@@ -675,7 +675,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "It prevents the target from using its held item. Its Trainer is also prevented from using items on it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 41,
 	ID = Moves.FAKE_TEARS, 
 	//name = "Fake Tears", 
@@ -691,7 +691,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user feigns crying to fluster the target, harshly lowering its Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 42,
 	ID = Moves.FLATTER, 
 	//name = "Flatter", 
@@ -707,7 +707,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Flattery is used to confuse the target. However, it also raises the target's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 43,
 	ID = Moves.HONE_CLAWS, 
 	//name = "Hone Claws", 
@@ -723,7 +723,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user sharpens its claws to boost its Attack stat and accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 44,
 	ID = Moves.MEMENTO, 
 	//name = "Memento", 
@@ -739,7 +739,7 @@ new MoveData() {
 	Flags = new Flags( mirror: true ) { }
 	//,description = "The user faints when using this move. In return, it harshly lowers the target's Attack and Sp. Atk."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 45,
 	ID = Moves.NASTY_PLOT, 
 	//name = "Nasty Plot", 
@@ -755,7 +755,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user stimulates its brain by thinking bad thoughts. It sharply raises the user's Sp. Atk."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 46,
 	ID = Moves.QUASH, 
 	//name = "Quash", 
@@ -771,7 +771,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user suppresses the target and makes its move go last."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 47,
 	ID = Moves.SNATCH, 
 	//name = "Snatch", 
@@ -787,7 +787,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user steals the effects of any healing or stat-changing move the foe attempts to use."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 48,
 	ID = Moves.SWITCHEROO, 
 	//name = "Switcheroo", 
@@ -803,7 +803,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user trades held items with the target faster than the eye can follow."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 49,
 	ID = Moves.TAUNT, 
 	//name = "Taunt", 
@@ -819,7 +819,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The target is taunted into a rage that allows it to use only attack moves for three turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 50,
 	ID = Moves.TORMENT, 
 	//name = "Torment", 
@@ -835,7 +835,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user torments and enrages the foe, making it incapable of using the same move twice in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 51,
 	ID = Moves.ROAR_OF_TIME, 
 	//name = "Roar of Time", 
@@ -851,7 +851,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blasts the target with power that distorts even time. The user must rest on the next turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 52,
 	ID = Moves.DRACO_METEOR, 
 	//name = "Draco Meteor", 
@@ -867,7 +867,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Comets are summoned down from the sky. The attack's recoil harshly reduces the user's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 53,
 	ID = Moves.OUTRAGE, 
 	//name = "Outrage", 
@@ -883,7 +883,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user rampages and attacks for two to three turns. It then becomes confused, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 54,
 	ID = Moves.DRAGON_RUSH, 
 	//name = "Dragon Rush", 
@@ -899,7 +899,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tackles the foe while exhibiting overwhelming menace. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 55,
 	ID = Moves.SPACIAL_REND, 
 	//name = "Spacial Rend", 
@@ -915,7 +915,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user tears the target along with the space around it. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 56,
 	ID = Moves.DRAGON_PULSE, 
 	//name = "Dragon Pulse", 
@@ -931,7 +931,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked with a shock wave generated by the user's gaping mouth."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 57,
 	ID = Moves.DRAGON_CLAW, 
 	//name = "Dragon Claw", 
@@ -947,7 +947,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slashes the target with huge, sharp claws."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 58,
 	ID = Moves.DRAGON_TAIL, 
 	//name = "Dragon Tail", 
@@ -963,7 +963,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user knocks away the target and drags out another Pokémon in its party. In the wild, the battle ends."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 59,
 	ID = Moves.DRAGON_BREATH, 
 	//name = "DragonBreath", 
@@ -979,7 +979,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user exhales a mighty gust that inflicts damage. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 60,
 	ID = Moves.DUAL_CHOP, 
 	//name = "Dual Chop", 
@@ -995,7 +995,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks its target by hitting it with brutal strikes. The target is hit twice in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 61,
 	ID = Moves.TWISTER, 
 	//name = "Twister", 
@@ -1011,7 +1011,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user whips up a vicious tornado to tear at the opposing team. It may also make targets flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 62,
 	ID = Moves.DRAGON_RAGE, 
 	//name = "Dragon Rage", 
@@ -1027,7 +1027,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "This attack hits the target with a shock wave of pure rage. This attack always inflicts 40 HP damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 63,
 	ID = Moves.DRAGON_DANCE, 
 	//name = "Dragon Dance", 
@@ -1043,7 +1043,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user vigorously performs a mystic, powerful dance that boosts its Attack and Speed stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 64,
 	ID = Moves.BOLT_STRIKE, 
 	//name = "Bolt Strike", 
@@ -1059,7 +1059,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges at its foe, surrounding itself with lightning. It may also leave the target paralyzed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 65,
 	ID = Moves.THUNDER, 
 	//name = "Thunder", 
@@ -1075,7 +1075,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A wicked thunderbolt is dropped on the foe to inflict damage. It may also leave the target paralyzed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 66,
 	ID = Moves.VOLT_TACKLE, 
 	//name = "Volt Tackle", 
@@ -1091,7 +1091,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user electrifies itself, then charges at the foe. It causes considerable damage to the user as well."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 67,
 	ID = Moves.ZAP_CANNON, 
 	//name = "Zap Cannon", 
@@ -1107,7 +1107,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user fires an electric blast like a cannon to inflict damage and cause paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 68,
 	ID = Moves.FUSION_BOLT, 
 	//name = "Fusion Bolt", 
@@ -1123,7 +1123,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user throws down a giant thunderbolt. It does more damage if influenced by an enormous flame."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 69,
 	ID = Moves.THUNDERBOLT, 
 	//name = "Thunderbolt", 
@@ -1139,7 +1139,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A strong electric blast is loosed at the target. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 70,
 	ID = Moves.WILD_CHARGE, 
 	//name = "Wild Charge", 
@@ -1155,7 +1155,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user shrouds itself in electricity and smashes into its foe. It also damages the user a little."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 71,
 	ID = Moves.DISCHARGE, 
 	//name = "Discharge", 
@@ -1171,7 +1171,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A flare of electricity is loosed to strike the area around the user. It may also cause paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 72,
 	ID = Moves.THUNDER_PUNCH, 
 	//name = "ThunderPunch", 
@@ -1187,7 +1187,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is punched with an electrified fist. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 73,
 	ID = Moves.VOLT_SWITCH, 
 	//name = "Volt Switch", 
@@ -1203,7 +1203,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 74,
 	ID = Moves.SPARK, 
 	//name = "Spark", 
@@ -1219,7 +1219,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user throws an electrically charged tackle at the target. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 75,
 	ID = Moves.THUNDER_FANG, 
 	//name = "Thunder Fang", 
@@ -1235,7 +1235,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites with electrified fangs. It may also make the target flinch or leave it with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 76,
 	ID = Moves.SHOCK_WAVE, 
 	//name = "Shock Wave", 
@@ -1251,7 +1251,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes the target with a quick jolt of electricity. This attack cannot be evaded."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 77,
 	ID = Moves.ELECTROWEB, 
 	//name = "Electroweb", 
@@ -1267,7 +1267,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user captures and attacks foes by using an electric net, which lowers their Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 78,
 	ID = Moves.CHARGE_BEAM, 
 	//name = "Charge Beam", 
@@ -1283,7 +1283,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user fires a concentrated bundle of electricity. It may also raise the user's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 79,
 	ID = Moves.THUNDER_SHOCK, 
 	//name = "ThunderShock", 
@@ -1299,7 +1299,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A jolt of electricity is hurled at the foe to inflict damage. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 80,
 	ID = Moves.ELECTRO_BALL, 
 	//name = "Electro Ball", 
@@ -1315,7 +1315,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user hurls an electric orb at the foe. It does more damage the faster the user is."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 81,
 	ID = Moves.CHARGE, 
 	//name = "Charge", 
@@ -1331,7 +1331,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user boosts the power of the Electric move it uses next. It also raises the user's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 82,
 	ID = Moves.MAGNET_RISE, 
 	//name = "Magnet Rise", 
@@ -1347,7 +1347,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,powder: true ) { }
 	//,description = "The user levitates using electrically generated magnetism for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 83,
 	ID = Moves.THUNDER_WAVE, 
 	//name = "Thunder Wave", 
@@ -1363,7 +1363,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A weak electric charge is launched at the target. It causes paralysis if it hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 84,
 	ID = Moves.FOCUS_PUNCH, 
 	//name = "Focus Punch", 
@@ -1379,7 +1379,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,punch: true ) { }
 	//,description = "The user focuses its mind before launching a punch. It will fail if the user is hit before it is used."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 85,
 	ID = Moves.HIGH_JUMP_KICK, 
 	//name = "Hi Jump Kick", 
@@ -1395,7 +1395,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The target is attacked with a knee kick from a jump. If it misses, the user is hurt instead."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 86,
 	ID = Moves.CLOSE_COMBAT, 
 	//name = "Close Combat", 
@@ -1411,7 +1411,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user fights the foe up close without guarding itself. It also cuts the user's Defense and Sp. Def."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 87,
 	ID = Moves.FOCUS_BLAST, 
 	//name = "Focus Blast", 
@@ -1427,7 +1427,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user heightens its mental focus and unleashes its power. It may also lower the target's Sp. Def."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 88,
 	ID = Moves.SUPERPOWER, 
 	//name = "Superpower", 
@@ -1443,7 +1443,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks the target with great power. However, it also lowers the user's Attack and Defense."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 89,
 	ID = Moves.CROSS_CHOP, 
 	//name = "Cross Chop", 
@@ -1459,7 +1459,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user delivers a double chop with its forearms crossed. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 90,
 	ID = Moves.DYNAMIC_PUNCH, 
 	//name = "DynamicPunch", 
@@ -1475,7 +1475,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The user punches the target with full, concentrated power. It confuses the target if it hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 91,
 	ID = Moves.HAMMER_ARM, 
 	//name = "Hammer Arm", 
@@ -1491,7 +1491,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user swings and hits with its strong and heavy fist. It lowers the user's Speed, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 92,
 	ID = Moves.JUMP_KICK, 
 	//name = "Jump Kick", 
@@ -1507,7 +1507,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user jumps up high, then strikes with a kick. If the kick misses, the user hurts itself."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 93,
 	ID = Moves.AURA_SPHERE, 
 	//name = "Aura Sphere", 
@@ -1523,7 +1523,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a blast of aura power from deep within its body. This move is certain to hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 94,
 	ID = Moves.SACRED_SWORD, 
 	//name = "Sacred Sword", 
@@ -1539,7 +1539,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by slicing with its long horns. The target's stat changes don't affect the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 95,
 	ID = Moves.SECRET_SWORD, 
 	//name = "Secret Sword", 
@@ -1555,7 +1555,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user cuts with its long horn. The odd power contained in it does physical damage to the foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 96,
 	ID = Moves.SKY_UPPERCUT, 
 	//name = "Sky Uppercut", 
@@ -1571,7 +1571,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user attacks the target with an uppercut thrown skyward with force."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 97,
 	ID = Moves.SUBMISSION, 
 	//name = "Submission", 
@@ -1587,7 +1587,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user grabs the target and recklessly dives for the ground. It also hurts the user slightly."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 98,
 	ID = Moves.BRICK_BREAK, 
 	//name = "Brick Break", 
@@ -1603,7 +1603,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a swift chop. It can also break any barrier such as Light Screen and Reflect."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 99,
 	ID = Moves.DRAIN_PUNCH, 
 	//name = "Drain Punch", 
@@ -1619,7 +1619,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "An energy-draining punch. The user's HP is restored by half the damage taken by the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 100,
 	ID = Moves.VITAL_THROW, 
 	//name = "Vital Throw", 
@@ -1635,7 +1635,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks last. In return, this throw move is guaranteed not to miss."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 101,
 	ID = Moves.CIRCLE_THROW, 
 	//name = "Circle Throw", 
@@ -1651,7 +1651,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user throws the target and drags out another Pokémon in its party. In the wild, the battle ends."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 102,
 	ID = Moves.FORCE_PALM, 
 	//name = "Force Palm", 
@@ -1667,7 +1667,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked with a shock wave. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 103,
 	ID = Moves.LOW_SWEEP, 
 	//name = "Low Sweep", 
@@ -1683,7 +1683,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target's legs swiftly, reducing the target's Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 104,
 	ID = Moves.REVENGE, 
 	//name = "Revenge", 
@@ -1699,7 +1699,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that inflicts double the damage if the user has been hurt by the foe in the same turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 105,
 	ID = Moves.ROLLING_KICK, 
 	//name = "Rolling Kick", 
@@ -1715,7 +1715,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lashes out with a quick, spinning kick. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 106,
 	ID = Moves.WAKE_UP_SLAP, 
 	//name = "Wake-Up Slap", 
@@ -1731,7 +1731,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This attack inflicts big damage on a sleeping target. It also wakes the target up, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 107,
 	ID = Moves.KARATE_CHOP, 
 	//name = "Karate Chop", 
@@ -1747,7 +1747,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The target is attacked with a sharp chop. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 108,
 	ID = Moves.MACH_PUNCH, 
 	//name = "Mach Punch", 
@@ -1763,7 +1763,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user throws a punch at blinding speed. It is certain to strike first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 109,
 	ID = Moves.ROCK_SMASH, 
 	//name = "Rock Smash", 
@@ -1779,7 +1779,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 110,
 	ID = Moves.STORM_THROW, 
 	//name = "Storm Throw", 
@@ -1795,7 +1795,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes the target with a fierce blow. This attack always results in a critical hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 111,
 	ID = Moves.VACUUM_WAVE, 
 	//name = "Vacuum Wave", 
@@ -1811,7 +1811,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user whirls its fists to send a wave of pure vacuum at the target. This move always goes first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 112,
 	ID = Moves.DOUBLE_KICK, 
 	//name = "Double Kick", 
@@ -1827,7 +1827,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is quickly kicked twice in succession using both feet."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 113,
 	ID = Moves.ARM_THRUST, 
 	//name = "Arm Thrust", 
@@ -1843,7 +1843,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a flurry of open-palmed arm thrusts that hit two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 114,
 	ID = Moves.TRIPLE_KICK, 
 	//name = "Triple Kick", 
@@ -1859,7 +1859,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A consecutive three-kick attack that becomes more powerful with each successive hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 115,
 	ID = Moves.COUNTER, 
 	//name = "Counter", 
@@ -1875,7 +1875,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true ) { }
 	//,description = "A retaliation move that counters any physical attack, inflicting double the damage taken."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 116,
 	ID = Moves.FINAL_GAMBIT, 
 	//name = "Final Gambit", 
@@ -1891,7 +1891,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true ) { }
 	//,description = "The user risks all to attack the foe. The user faints but does damage equal to its HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 117,
 	ID = Moves.LOW_KICK, 
 	//name = "Low Kick", 
@@ -1907,7 +1907,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A powerful low kick that makes the foe fall over. It inflicts greater damage on heavier foes."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 118,
 	ID = Moves.REVERSAL, 
 	//name = "Reversal", 
@@ -1923,7 +1923,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An all-out attack that becomes more powerful the less HP the user has."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 119,
 	ID = Moves.SEISMIC_TOSS, 
 	//name = "Seismic Toss", 
@@ -1939,7 +1939,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is thrown using the power of gravity. It inflicts damage equal to the user's level."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 120,
 	ID = Moves.BULK_UP, 
 	//name = "Bulk Up", 
@@ -1955,7 +1955,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user tenses its muscles to bulk up its body, boosting both its Attack and Defense stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 121,
 	ID = Moves.DETECT, 
 	//name = "Detect", 
@@ -1971,7 +1971,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "It enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 122,
 	ID = Moves.QUICK_GUARD, 
 	//name = "Quick Guard", 
@@ -1987,7 +1987,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user protects itself and its allies from priority moves. If may fail if used in succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 123,
 	ID = Moves.V_CREATE, 
 	//name = "V-create", 
@@ -2003,7 +2003,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "With a fiery forehead, the user hurls itself at the foe. It lowers the user's Defense, Sp. Def, and Speed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 124,
 	ID = Moves.BLAST_BURN, 
 	//name = "Blast Burn", 
@@ -2019,7 +2019,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is razed by a fiery explosion. The user must rest on the next turn, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 125,
 	ID = Moves.ERUPTION, 
 	//name = "Eruption", 
@@ -2035,7 +2035,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks in an explosive fury. The lower the user's HP, the less powerful this attack becomes."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 126,
 	ID = Moves.OVERHEAT, 
 	//name = "Overheat", 
@@ -2051,7 +2051,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target at full power. The attack's recoil sharply reduces the user's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 127,
 	ID = Moves.BLUE_FLARE, 
 	//name = "Blue Flare", 
@@ -2067,7 +2067,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by engulfing the foe in a beautiful, yet intense, blue flame. It may also burn the foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 128,
 	ID = Moves.FIRE_BLAST, 
 	//name = "Fire Blast", 
@@ -2083,7 +2083,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with an intense blast of all-consuming fire. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 129,
 	ID = Moves.FLARE_BLITZ, 
 	//name = "Flare Blitz", 
@@ -2099,7 +2099,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,defrost: true ) { }
 	//,description = "The user cloaks itself in fire and charges at the foe. The user also takes damage and may burn the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 130,
 	ID = Moves.MAGMA_STORM, 
 	//name = "Magma Storm", 
@@ -2115,7 +2115,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target becomes trapped within a maelstrom of fire that rages for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 131,
 	ID = Moves.FUSION_FLARE, 
 	//name = "Fusion Flare", 
@@ -2131,7 +2131,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,defrost: true ) { }
 	//,description = "The user brings down a giant flame. It does more damage if influenced by an enormous thunderbolt."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 132,
 	ID = Moves.HEAT_WAVE, 
 	//name = "Heat Wave", 
@@ -2147,7 +2147,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by exhaling hot breath on the opposing team. It may also leave targets with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 133,
 	ID = Moves.INFERNO, 
 	//name = "Inferno", 
@@ -2163,7 +2163,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by engulfing the target in an intense fire. It leaves the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 134,
 	ID = Moves.SACRED_FIRE, 
 	//name = "Sacred Fire", 
@@ -2179,7 +2179,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,defrost: true ) { }
 	//,description = "The target is razed with a mystical fire of great intensity. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 135,
 	ID = Moves.SEARING_SHOT, 
 	//name = "Searing Shot", 
@@ -2195,7 +2195,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "An inferno of scarlet flames torches everything around the user. It may leave the foe with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 136,
 	ID = Moves.FLAMETHROWER, 
 	//name = "Flamethrower", 
@@ -2211,7 +2211,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is scorched with an intense blast of fire. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 137,
 	ID = Moves.BLAZE_KICK, 
 	//name = "Blaze Kick", 
@@ -2227,7 +2227,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,bite: true ) { }
 	//,description = "The user launches a kick with a high critical-hit ratio. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 138,
 	ID = Moves.FIERY_DANCE, 
 	//name = "Fiery Dance", 
@@ -2243,7 +2243,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Cloaked in flames, the user dances and flaps its wings. It may also raise the user's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 139,
 	ID = Moves.LAVA_PLUME, 
 	//name = "Lava Plume", 
@@ -2259,7 +2259,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "An inferno of scarlet flames torches everything around the user. It may leave targets with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 140,
 	ID = Moves.FIRE_PUNCH, 
 	//name = "Fire Punch", 
@@ -2275,7 +2275,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is punched with a fiery fist. It may leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 141,
 	ID = Moves.FLAME_BURST, 
 	//name = "Flame Burst", 
@@ -2291,7 +2291,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the foe with a bursting flame. It also damages Pokémon next to the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 142,
 	ID = Moves.FIRE_FANG, 
 	//name = "Fire Fang", 
@@ -2307,7 +2307,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites with flame-cloaked fangs. It may also make the target flinch or leave it burned."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 143,
 	ID = Moves.FLAME_WHEEL, 
 	//name = "Flame Wheel", 
@@ -2323,7 +2323,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,defrost: true ) { }
 	//,description = "The user cloaks itself in fire and charges at the target. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 144,
 	ID = Moves.FIRE_PLEDGE, 
 	//name = "Fire Pledge", 
@@ -2339,7 +2339,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A column of fire hits opposing Pokémon. When used with its Grass equivalent, it makes a sea of fire."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 145,
 	ID = Moves.FLAME_CHARGE, 
 	//name = "Flame Charge", 
@@ -2355,7 +2355,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user cloaks itself with flame and attacks. Building up more power, it raises the user's Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 146,
 	ID = Moves.EMBER, 
 	//name = "Ember", 
@@ -2371,7 +2371,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is attacked with small flames. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 147,
 	ID = Moves.FIRE_SPIN, 
 	//name = "Fire Spin", 
@@ -2387,7 +2387,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target becomes trapped within a fierce vortex of fire that rages for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 148,
 	ID = Moves.INCINERATE, 
 	//name = "Incinerate", 
@@ -2403,7 +2403,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks the foe with fire. If the target is holding a Berry, it becomes burnt up and unusable."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 149,
 	ID = Moves.HEAT_CRASH, 
 	//name = "Heat Crash", 
@@ -2419,7 +2419,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams the foe with its flaming body. The heavier the user is, the greater the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 150,
 	ID = Moves.SUNNY_DAY, 
 	//name = "Sunny Day", 
@@ -2435,7 +2435,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user intensifies the sun for five turns, powering up Fire-type moves."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 151,
 	ID = Moves.WILL_O_WISP, 
 	//name = "Will-O-Wisp", 
@@ -2451,7 +2451,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user shoots a sinister, bluish-white flame at the target to inflict a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 152,
 	ID = Moves.SKY_ATTACK, 
 	//name = "Sky Attack", 
@@ -2467,7 +2467,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A second-turn attack move where critical hits land more easily. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 153,
 	ID = Moves.BRAVE_BIRD, 
 	//name = "Brave Bird", 
@@ -2483,7 +2483,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tucks in its wings and charges from a low altitude. The user also takes serious damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 154,
 	ID = Moves.HURRICANE, 
 	//name = "Hurricane", 
@@ -2499,7 +2499,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user wraps its foe in a fierce wind that flies up into the sky. It may also confuse the foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 155,
 	ID = Moves.AEROBLAST, 
 	//name = "Aeroblast", 
@@ -2515,7 +2515,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A vortex of air is shot at the target to inflict damage. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 156,
 	ID = Moves.FLY, 
 	//name = "Fly", 
@@ -2531,7 +2531,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user soars, then strikes on the second turn. It can also be used for flying to any familiar town."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 157,
 	ID = Moves.BOUNCE, 
 	//name = "Bounce", 
@@ -2547,7 +2547,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user bounces up high, then drops on the foe on the second turn. It may also paralyze the foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 158,
 	ID = Moves.DRILL_PECK, 
 	//name = "Drill Peck", 
@@ -2563,7 +2563,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A corkscrewing attack with the sharp beak acting as a drill."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 159,
 	ID = Moves.AIR_SLASH, 
 	//name = "Air Slash", 
@@ -2579,7 +2579,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a blade of air that slices even the sky. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 160,
 	ID = Moves.AERIAL_ACE, 
 	//name = "Aerial Ace", 
@@ -2595,7 +2595,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user confounds the foe with speed, then slashes. The attack lands without fail."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 161,
 	ID = Moves.CHATTER, 
 	//name = "Chatter", 
@@ -2611,7 +2611,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,sound: true ) { }
 	//,description = "The user attacks using a sound wave based on words it has learned. It may also confuse the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 162,
 	ID = Moves.PLUCK, 
 	//name = "Pluck", 
@@ -2627,7 +2627,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user pecks the target. If the target is holding a Berry, the user eats it and gains its effect."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 163,
 	ID = Moves.SKY_DROP, 
 	//name = "Sky Drop", 
@@ -2643,7 +2643,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,powder: true ) { }
 	//,description = "The user takes the foe into the sky, then drops it on the next turn. The foe cannot attack while airborne."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 164,
 	ID = Moves.WING_ATTACK, 
 	//name = "Wing Attack", 
@@ -2659,7 +2659,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is struck with large, imposing wings spread wide to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 165,
 	ID = Moves.ACROBATICS, 
 	//name = "Acrobatics", 
@@ -2675,7 +2675,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user nimbly strikes the foe. This attack does more damage if the user is not holding an item."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 166,
 	ID = Moves.AIR_CUTTER, 
 	//name = "Air Cutter", 
@@ -2691,7 +2691,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user launches razor-like wind to slash the opposing team. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 167,
 	ID = Moves.GUST, 
 	//name = "Gust", 
@@ -2707,7 +2707,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A gust of wind is whipped up by wings and launched at the target to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 168,
 	ID = Moves.PECK, 
 	//name = "Peck", 
@@ -2723,7 +2723,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is jabbed with a sharply pointed beak or horn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 169,
 	ID = Moves.DEFOG, 
 	//name = "Defog", 
@@ -2739,7 +2739,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A strong wind blows away the foe's obstacles such as Light Screen. It also lowers their evasion."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 170,
 	ID = Moves.FEATHER_DANCE, 
 	//name = "FeatherDance", 
@@ -2755,7 +2755,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user covers the target's body with a mass of down that harshly lowers its Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 171,
 	ID = Moves.MIRROR_MOVE, 
 	//name = "Mirror Move", 
@@ -2771,7 +2771,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user counters the target by mimicking the target's last move."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 172,
 	ID = Moves.ROOST, 
 	//name = "Roost", 
@@ -2787,7 +2787,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user lands and rests its body. It restores the user's HP by up to half of its max HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 173,
 	ID = Moves.TAILWIND, 
 	//name = "Tailwind", 
@@ -2803,7 +2803,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user whips up a turbulent whirlwind that ups the Speed of all party Pokémon for four turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 174,
 	ID = Moves.SHADOW_FORCE, 
 	//name = "Shadow Force", 
@@ -2819,7 +2819,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,mirror: true,flinch: true ) { }
 	//,description = "The user disappears, then strikes the foe on the second turn. It hits even if the foe protects itself."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 175,
 	ID = Moves.SHADOW_BALL, 
 	//name = "Shadow Ball", 
@@ -2835,7 +2835,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user hurls a shadowy blob at the target. It may also lower the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 176,
 	ID = Moves.SHADOW_CLAW, 
 	//name = "Shadow Claw", 
@@ -2851,7 +2851,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user slashes with a sharp claw made from shadows. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 177,
 	ID = Moves.OMINOUS_WIND, 
 	//name = "Ominous Wind", 
@@ -2867,7 +2867,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blasts the target with a gust of repulsive wind. It may also raise all the user's stats at once."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 178,
 	ID = Moves.SHADOW_PUNCH, 
 	//name = "Shadow Punch", 
@@ -2883,7 +2883,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user throws a punch from the shadows. The punch lands without fail."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 179,
 	ID = Moves.HEX, 
 	//name = "Hex", 
@@ -2899,7 +2899,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "This relentless attack does massive damage to a target affected by status problems."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 180,
 	ID = Moves.SHADOW_SNEAK, 
 	//name = "Shadow Sneak", 
@@ -2915,7 +2915,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user extends its shadow and attacks the target from behind. This move always goes first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 181,
 	ID = Moves.ASTONISH, 
 	//name = "Astonish", 
@@ -2931,7 +2931,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks the target while shouting in a startling fashion. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 182,
 	ID = Moves.LICK, 
 	//name = "Lick", 
@@ -2947,7 +2947,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is licked with a long tongue, causing damage. It may also leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 183,
 	ID = Moves.NIGHT_SHADE, 
 	//name = "Night Shade", 
@@ -2963,7 +2963,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user makes the foe see a frightening mirage. It inflicts damage matching the user's level."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 184,
 	ID = Moves.CONFUSE_RAY, 
 	//name = "Confuse Ray", 
@@ -2979,7 +2979,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The target is exposed to a sinister ray that triggers confusion."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 185,
 	ID = Moves.CURSE, 
 	//name = "Curse", 
@@ -2995,7 +2995,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "A move that works differently for the Ghost type than for all the other types."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 186,
 	ID = Moves.DESTINY_BOND, 
 	//name = "Destiny Bond", 
@@ -3011,7 +3011,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "When this move is used, if the user faints, the foe that landed the knockout hit also faints."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 187,
 	ID = Moves.GRUDGE, 
 	//name = "Grudge", 
@@ -3027,7 +3027,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "If the user faints, the user's grudge fully depletes the PP of the foe's move that knocked it out."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 188,
 	ID = Moves.NIGHTMARE, 
 	//name = "Nightmare", 
@@ -3043,7 +3043,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A sleeping target sees a nightmare that inflicts some damage every turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 189,
 	ID = Moves.SPITE, 
 	//name = "Spite", 
@@ -3059,7 +3059,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user unleashes its grudge on the move last used by the target by cutting 4 PP from it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 190,
 	ID = Moves.FRENZY_PLANT, 
 	//name = "Frenzy Plant", 
@@ -3075,7 +3075,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams the target with an enormous tree. The user can't move on the next turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 191,
 	ID = Moves.LEAF_STORM, 
 	//name = "Leaf Storm", 
@@ -3091,7 +3091,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A storm of sharp is whipped up. The attack's recoil harshly reduces the user's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 192,
 	ID = Moves.PETAL_DANCE, 
 	//name = "Petal Dance", 
@@ -3107,7 +3107,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by scattering petals for two to three turns. The user then becomes confused."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 193,
 	ID = Moves.POWER_WHIP, 
 	//name = "Power Whip", 
@@ -3123,7 +3123,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user violently whirls its vines or tentacles to harshly lash the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 194,
 	ID = Moves.SEED_FLARE, 
 	//name = "Seed Flare", 
@@ -3139,7 +3139,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user generates a shock wave from within its body. It may harshly lower the target's Sp. Def."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 195,
 	ID = Moves.SOLAR_BEAM, 
 	//name = "SolarBeam", 
@@ -3155,7 +3155,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A two-turn attack. The user gathers light, then blasts a bundled beam on the second turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 196,
 	ID = Moves.WOOD_HAMMER, 
 	//name = "Wood Hammer", 
@@ -3171,7 +3171,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams its rugged body into the target to attack. The user also sustains serious damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 197,
 	ID = Moves.LEAF_BLADE, 
 	//name = "Leaf Blade", 
@@ -3187,7 +3187,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user handles a sharp leaf like a sword and attacks by slashing. It has a high critical-hit ratio."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 198,
 	ID = Moves.ENERGY_BALL, 
 	//name = "Energy Ball", 
@@ -3203,7 +3203,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user draws power from nature and fires it at the target. It may also lower the target's Sp. Def."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 199,
 	ID = Moves.SEED_BOMB, 
 	//name = "Seed Bomb", 
@@ -3219,7 +3219,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams a barrage of hard-shelled seeds down on the target from above."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 200,
 	ID = Moves.GIGA_DRAIN, 
 	//name = "Giga Drain", 
@@ -3235,7 +3235,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 201,
 	ID = Moves.HORN_LEECH, 
 	//name = "Horn Leech", 
@@ -3251,7 +3251,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user drains the foe's energy with its horns. The user's HP is restored by half the damage inflicted."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 202,
 	ID = Moves.LEAF_TORNADO, 
 	//name = "Leaf Tornado", 
@@ -3267,7 +3267,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks its foe by encircling it in sharp leaves. This attack may also lower the foe's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 203,
 	ID = Moves.MAGICAL_LEAF, 
 	//name = "Magical Leaf", 
@@ -3283,7 +3283,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user scatters curious leaves that chase the target. This attack will not miss."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 204,
 	ID = Moves.NEEDLE_ARM, 
 	//name = "Needle Arm", 
@@ -3299,7 +3299,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user attacks by wildly swinging its thorny arms. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 205,
 	ID = Moves.RAZOR_LEAF, 
 	//name = "Razor Leaf", 
@@ -3315,7 +3315,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "Sharp-edged leaves are launched to slash at the opposing team. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 206,
 	ID = Moves.GRASS_PLEDGE, 
 	//name = "Grass Pledge", 
@@ -3331,7 +3331,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A column of grass hits the foes. When used with its water equivalent, it creates a vast swamp."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 207,
 	ID = Moves.MEGA_DRAIN, 
 	//name = "Mega Drain", 
@@ -3347,7 +3347,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 208,
 	ID = Moves.VINE_WHIP, 
 	//name = "Vine Whip", 
@@ -3363,7 +3363,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is struck with slender, whiplike vines to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 209,
 	ID = Moves.BULLET_SEED, 
 	//name = "Bullet Seed", 
@@ -3379,7 +3379,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user forcefully shoots seeds at the target. Two to five seeds are shot in rapid succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 210,
 	ID = Moves.ABSORB, 
 	//name = "Absorb", 
@@ -3395,7 +3395,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 211,
 	ID = Moves.GRASS_KNOT, 
 	//name = "Grass Knot", 
@@ -3411,7 +3411,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user snares the target with grass and trips it. The heavier the target, the greater the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 212,
 	ID = Moves.AROMATHERAPY, 
 	//name = "Aromatherapy", 
@@ -3427,7 +3427,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,sound: true ) { }
 	//,description = "The user releases a soothing scent that heals all status problems affecting the user's party."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 213,
 	ID = Moves.COTTON_GUARD, 
 	//name = "Cotton Guard", 
@@ -3443,7 +3443,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user protects itself by wrapping its body in soft cotton, drastically raising its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 214,
 	ID = Moves.COTTON_SPORE, 
 	//name = "Cotton Spore", 
@@ -3459,7 +3459,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user releases cotton-like spores that cling to the foe, harshly reducing its Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 215,
 	ID = Moves.GRASS_WHISTLE, 
 	//name = "GrassWhistle", 
@@ -3475,7 +3475,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The user plays a pleasant melody that lulls the target into a deep sleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 216,
 	ID = Moves.INGRAIN, 
 	//name = "Ingrain", 
@@ -3491,7 +3491,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user lays roots that restore its HP on every turn. Because it is rooted, it can't switch out."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 217,
 	ID = Moves.LEECH_SEED, 
 	//name = "Leech Seed", 
@@ -3507,7 +3507,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A seed is planted on the target. It steals some HP from the target every turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 218,
 	ID = Moves.SLEEP_POWDER, 
 	//name = "Sleep Powder", 
@@ -3523,7 +3523,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters a big cloud of sleep-inducing dust around the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 219,
 	ID = Moves.SPORE, 
 	//name = "Spore", 
@@ -3539,7 +3539,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters bursts of spores that induce sleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 220,
 	ID = Moves.STUN_SPORE, 
 	//name = "Stun Spore", 
@@ -3555,7 +3555,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters a cloud of paralyzing powder. It may leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 221,
 	ID = Moves.SYNTHESIS, 
 	//name = "Synthesis", 
@@ -3571,7 +3571,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 222,
 	ID = Moves.WORRY_SEED, 
 	//name = "Worry Seed", 
@@ -3587,7 +3587,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A seed that causes worry is planted on the foe. It prevents sleep by making its Ability Insomnia."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 223,
 	ID = Moves.EARTHQUAKE, 
 	//name = "Earthquake", 
@@ -3603,7 +3603,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user sets off an earthquake that strikes every Pokémon around it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 224,
 	ID = Moves.EARTH_POWER, 
 	//name = "Earth Power", 
@@ -3619,7 +3619,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 225,
 	ID = Moves.DIG, 
 	//name = "Dig", 
@@ -3635,7 +3635,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user burrows, then attacks on the second turn. It can also be used to exit dungeons."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 226,
 	ID = Moves.DRILL_RUN, 
 	//name = "Drill Run", 
@@ -3651,7 +3651,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user crashes into its target while rotating its body like a drill. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 227,
 	ID = Moves.BONE_CLUB, 
 	//name = "Bone Club", 
@@ -3667,7 +3667,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user clubs the target with a bone. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 228,
 	ID = Moves.MUD_BOMB, 
 	//name = "Mud Bomb", 
@@ -3683,7 +3683,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches a hard-packed mud ball to attack. It may also lower the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 229,
 	ID = Moves.BULLDOZE, 
 	//name = "Bulldoze", 
@@ -3699,7 +3699,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes everything around it by stomping on the ground. It reduces hit Pokémon's Speed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 230,
 	ID = Moves.MUD_SHOT, 
 	//name = "Mud Shot", 
@@ -3715,7 +3715,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by hurling a blob of mud at the target. It also reduces the target's Speed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 231,
 	ID = Moves.BONEMERANG, 
 	//name = "Bonemerang", 
@@ -3731,7 +3731,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user throws the bone it holds. The bone loops to hit the target twice, coming and going."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 232,
 	ID = Moves.SAND_TOMB, 
 	//name = "Sand Tomb", 
@@ -3747,7 +3747,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user traps the target inside a harshly raging sandstorm for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 233,
 	ID = Moves.BONE_RUSH, 
 	//name = "Bone Rush", 
@@ -3763,7 +3763,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user strikes the target with a hard bone two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 234,
 	ID = Moves.MUD_SLAP, 
 	//name = "Mud-Slap", 
@@ -3779,7 +3779,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user hurls mud in the target's face to inflict damage and lower its accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 235,
 	ID = Moves.FISSURE, 
 	//name = "Fissure", 
@@ -3795,7 +3795,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user opens up a fissure in the ground and drops the foe in. The target instantly faints if it hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 236,
 	ID = Moves.MAGNITUDE, 
 	//name = "Magnitude", 
@@ -3811,7 +3811,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a ground-shaking quake affecting everyone around the user. Its power varies."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 237,
 	ID = Moves.MUD_SPORT, 
 	//name = "Mud Sport", 
@@ -3827,7 +3827,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user covers itself with mud. It weakens Electric-type moves while the user is in the battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 238,
 	ID = Moves.SAND_ATTACK, 
 	//name = "Sand-Attack", 
@@ -3843,7 +3843,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Sand is hurled in the target's face, reducing its accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 239,
 	ID = Moves.SPIKES, 
 	//name = "Spikes", 
@@ -3859,7 +3859,7 @@ new MoveData() {
 	Flags = new Flags( reflectable: true ) { }
 	//,description = "The user lays a trap of spikes at the foe's feet. The trap hurts foes that switch into battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 240,
 	ID = Moves.FREEZE_SHOCK, 
 	//name = "Freeze Shock", 
@@ -3875,7 +3875,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "On the second turn, the user hits the foe with electrically charged ice. It may also paralyze the foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 241,
 	ID = Moves.ICE_BURN, 
 	//name = "Ice Burn", 
@@ -3891,7 +3891,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "On the second turn, an ultracold, freezing wind surrounds the foe. This may leave it with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 242,
 	ID = Moves.BLIZZARD, 
 	//name = "Blizzard", 
@@ -3907,7 +3907,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A howling blizzard is summoned to strike the opposing team. It may also freeze them solid."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 243,
 	ID = Moves.ICE_BEAM, 
 	//name = "Ice Beam", 
@@ -3923,7 +3923,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is struck with an icy-cold beam of energy. It may also freeze the target solid."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 244,
 	ID = Moves.ICICLE_CRASH, 
 	//name = "Icicle Crash", 
@@ -3939,7 +3939,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by harshly dropping an icicle onto the foe. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 245,
 	ID = Moves.ICE_PUNCH, 
 	//name = "Ice Punch", 
@@ -3955,7 +3955,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is punched with an icy fist. It may also leave the target frozen."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 246,
 	ID = Moves.AURORA_BEAM, 
 	//name = "Aurora Beam", 
@@ -3971,7 +3971,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is hit with a rainbow-colored beam. This may also lower the target's Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 247,
 	ID = Moves.GLACIATE, 
 	//name = "Glaciate", 
@@ -3987,7 +3987,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by blowing freezing cold air at the foe. This attack reduces the targets' Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 248,
 	ID = Moves.ICE_FANG, 
 	//name = "Ice Fang", 
@@ -4003,7 +4003,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user bites with cold-infused fangs. It may also make the target flinch or leave it frozen."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 249,
 	ID = Moves.AVALANCHE, 
 	//name = "Avalanche", 
@@ -4019,7 +4019,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that inflicts double the damage if the user has been hurt by the foe in the same turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 250,
 	ID = Moves.ICY_WIND, 
 	//name = "Icy Wind", 
@@ -4035,7 +4035,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a gust of chilled air. It also lowers the targets' Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 251,
 	ID = Moves.FROST_BREATH, 
 	//name = "Frost Breath", 
@@ -4051,7 +4051,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blows a cold breath on the target. This attack always results in a critical hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 252,
 	ID = Moves.ICE_SHARD, 
 	//name = "Ice Shard", 
@@ -4067,7 +4067,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user flash freezes chunks of ice and hurls them at the target. This move always goes first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 253,
 	ID = Moves.POWDER_SNOW, 
 	//name = "Powder Snow", 
@@ -4083,7 +4083,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a chilling gust of powdery snow. It may also freeze the targets."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 254,
 	ID = Moves.ICE_BALL, 
 	//name = "Ice Ball", 
@@ -4099,7 +4099,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user continually rolls into the target over five turns. It becomes stronger each time it hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 255,
 	ID = Moves.ICICLE_SPEAR, 
 	//name = "Icicle Spear", 
@@ -4115,7 +4115,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches sharp icicles at the target. It strikes two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 256,
 	ID = Moves.SHEER_COLD, 
 	//name = "Sheer Cold", 
@@ -4131,7 +4131,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with a blast of absolute-zero cold. The target instantly faints if it hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 257,
 	ID = Moves.HAIL, 
 	//name = "Hail", 
@@ -4147,7 +4147,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user summons a hail storm lasting five turns. It damages all Pokémon except the Ice type."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 258,
 	ID = Moves.HAZE, 
 	//name = "Haze", 
@@ -4163,7 +4163,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user creates a haze that eliminates every stat change among all the Pokémon engaged in battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 259,
 	ID = Moves.MIST, 
 	//name = "Mist", 
@@ -4179,7 +4179,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user cloaks its body with a white mist that prevents any of its stats from being cut for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 260,
 	ID = Moves.EXPLOSION, 
 	//name = "Explosion", 
@@ -4195,7 +4195,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user explodes to inflict damage on those around it. The user faints upon using this move."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 261,
 	ID = Moves.SELF_DESTRUCT, 
 	//name = "Selfdestruct", 
@@ -4211,7 +4211,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user blows up to inflict damage on all Pokémon in battle. The user faints upon using this move."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 262,
 	ID = Moves.GIGA_IMPACT, 
 	//name = "Giga Impact", 
@@ -4227,7 +4227,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges at the target using every bit of its power. The user must rest on the next turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 263,
 	ID = Moves.HYPER_BEAM, 
 	//name = "Hyper Beam", 
@@ -4243,7 +4243,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The foe is attacked with a powerful beam. The user must rest on the next turn to regain its energy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 264,
 	ID = Moves.LAST_RESORT, 
 	//name = "Last Resort", 
@@ -4259,7 +4259,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "This move can be used only after the user has used all the other moves it knows in the battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 265,
 	ID = Moves.DOUBLE_EDGE, 
 	//name = "Double-Edge", 
@@ -4275,7 +4275,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A reckless, life-risking tackle. It also damages the user by a fairly large amount, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 266,
 	ID = Moves.HEAD_CHARGE, 
 	//name = "Head Charge", 
@@ -4291,7 +4291,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges its head into the foe, using its powerful guard hair. The user also takes damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 267,
 	ID = Moves.MEGA_KICK, 
 	//name = "Mega Kick", 
@@ -4307,7 +4307,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked by a kick launched with muscle-packed power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 268,
 	ID = Moves.THRASH, 
 	//name = "Thrash", 
@@ -4323,7 +4323,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user rampages and attacks for two to three turns. It then becomes confused, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 269,
 	ID = Moves.EGG_BOMB, 
 	//name = "Egg Bomb", 
@@ -4339,7 +4339,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A large egg is hurled at the target with maximum force to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 270,
 	ID = Moves.JUDGMENT, 
 	//name = "Judgment", 
@@ -4355,7 +4355,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user releases countless shots of light. Its type varies with the kind of Plate the user is holding."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 271,
 	ID = Moves.SKULL_BASH, 
 	//name = "Skull Bash", 
@@ -4371,7 +4371,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tucks in its head to raise its Defense in the first turn, then rams the foe on the next turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 272,
 	ID = Moves.HYPER_VOICE, 
 	//name = "Hyper Voice", 
@@ -4387,7 +4387,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,sound: true ) { }
 	//,description = "The user lets loose a horribly echoing shout with the power to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 273,
 	ID = Moves.ROCK_CLIMB, 
 	//name = "Rock Climb", 
@@ -4403,7 +4403,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target by smashing into it with incredible force. It may also confuse the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 274,
 	ID = Moves.TAKE_DOWN, 
 	//name = "Take Down", 
@@ -4419,7 +4419,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A reckless, full-body charge attack for slamming into the foe. It also damages the user a little."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 275,
 	ID = Moves.UPROAR, 
 	//name = "Uproar", 
@@ -4435,7 +4435,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user attacks in an uproar for three turns. Over that time, no one can fall asleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 276,
 	ID = Moves.BODY_SLAM, 
 	//name = "Body Slam", 
@@ -4451,7 +4451,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user drops onto the target with its full body weight. It may leave the target with paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 277,
 	ID = Moves.TECHNO_BLAST, 
 	//name = "Techno Blast", 
@@ -4467,7 +4467,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user fires a beam of light at its target. The type changes depending on the Drive the user holds."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 278,
 	ID = Moves.EXTREME_SPEED, 
 	//name = "ExtremeSpeed", 
@@ -4483,7 +4483,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges the target at blinding speed. This attack always goes before any other move."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 279,
 	ID = Moves.HYPER_FANG, 
 	//name = "Hyper Fang", 
@@ -4499,7 +4499,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user bites hard on the target with its sharp front fangs. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 280,
 	ID = Moves.MEGA_PUNCH, 
 	//name = "Mega Punch", 
@@ -4515,7 +4515,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The target is slugged by a punch thrown with muscle-packed power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 281,
 	ID = Moves.RAZOR_WIND, 
 	//name = "Razor Wind", 
@@ -4531,7 +4531,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A two-turn attack. Blades of wind hit the foe on the second turn. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 282,
 	ID = Moves.SLAM, 
 	//name = "Slam", 
@@ -4547,7 +4547,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slammed with a long tail, vines, etc., to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 283,
 	ID = Moves.STRENGTH, 
 	//name = "Strength", 
@@ -4563,7 +4563,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slugged with a punch thrown at maximum power. It can also be used to move heavy boulders."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 284,
 	ID = Moves.TRI_ATTACK, 
 	//name = "Tri Attack", 
@@ -4579,7 +4579,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user strikes with a simultaneous three-beam attack. May also paralyze, burn, or freeze the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 285,
 	ID = Moves.CRUSH_CLAW, 
 	//name = "Crush Claw", 
@@ -4595,7 +4595,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user slashes the target with hard and sharp claws. It may also lower the target's Defense."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 286,
 	ID = Moves.RELIC_SONG, 
 	//name = "Relic Song", 
@@ -4611,7 +4611,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,sound: true ) { }
 	//,description = "An ancient song appeals to the hearts of those listening. It may also induce sleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 287,
 	ID = Moves.CHIP_AWAY, 
 	//name = "Chip Away", 
@@ -4627,7 +4627,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Seeking an opening, the user strikes continually. The foe's stat changes don't affect the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 288,
 	ID = Moves.DIZZY_PUNCH, 
 	//name = "Dizzy Punch", 
@@ -4643,7 +4643,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,punch: true ) { }
 	//,description = "The target is hit with rhythmically launched punches that may also leave it confused."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 289,
 	ID = Moves.FACADE, 
 	//name = "Facade", 
@@ -4659,7 +4659,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "An attack move that doubles its power if the user is poisoned, burned, or has paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 290,
 	ID = Moves.HEADBUTT, 
 	//name = "Headbutt", 
@@ -4675,7 +4675,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user sticks out its head and attacks by charging into the foe. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 291,
 	ID = Moves.RETALIATE, 
 	//name = "Retaliate", 
@@ -4691,7 +4691,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Gets revenge for a fainted ally. If an ally fainted in the last turn, this attack's damage increases."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 292,
 	ID = Moves.SECRET_POWER, 
 	//name = "Secret Power", 
@@ -4707,7 +4707,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a secret power. Its added effects vary depending on the user's environment."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 293,
 	ID = Moves.SLASH, 
 	//name = "Slash", 
@@ -4723,7 +4723,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The target is attacked with a slash of claws or blades. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 294,
 	ID = Moves.HORN_ATTACK, 
 	//name = "Horn Attack", 
@@ -4739,7 +4739,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is jabbed with a sharply pointed horn to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 295,
 	ID = Moves.STOMP, 
 	//name = "Stomp", 
@@ -4755,7 +4755,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is stomped with a big foot. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 296,
 	ID = Moves.COVET, 
 	//name = "Covet", 
@@ -4771,7 +4771,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user endearingly approaches the target, then steals the target's held item."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 297,
 	ID = Moves.ROUND, 
 	//name = "Round", 
@@ -4787,7 +4787,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user attacks with a song. Others can join in the Round and make the attack do greater damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 298,
 	ID = Moves.SMELLING_SALTS, 
 	//name = "SmellingSalt", 
@@ -4803,7 +4803,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "This attack inflicts double damage on a paralyzed foe. It also cures the target's paralysis, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 299,
 	ID = Moves.SWIFT, 
 	//name = "Swift", 
@@ -4819,7 +4819,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Star-shaped rays are shot at the opposing team. This attack never misses."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 300,
 	ID = Moves.VICE_GRIP, 
 	//name = "ViceGrip", 
@@ -4835,7 +4835,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is gripped and squeezed from both sides to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 301,
 	ID = Moves.CUT, 
 	//name = "Cut", 
@@ -4851,7 +4851,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is cut with a scythe or a claw. It can also be used to cut down thin trees."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 302,
 	ID = Moves.STRUGGLE, 
 	//name = "Struggle", 
@@ -4867,7 +4867,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,flinch: true ) { }
 	//,description = "An attack that is used in desperation only if the user has no PP. It also hurts the user slightly."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 303,
 	ID = Moves.TACKLE, 
 	//name = "Tackle", 
@@ -4883,7 +4883,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A physical attack in which the user charges and slams into the target with its whole body."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 304,
 	ID = Moves.WEATHER_BALL, 
 	//name = "Weather Ball", 
@@ -4899,7 +4899,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that varies in power and type depending on the weather."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 305,
 	ID = Moves.ECHOED_VOICE, 
 	//name = "Echoed Voice", 
@@ -4915,7 +4915,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "The user attacks the foe with an echoing voice. If this move is used every turn, it does greater damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 306,
 	ID = Moves.FAKE_OUT, 
 	//name = "Fake Out", 
@@ -4931,7 +4931,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "An attack that hits first and makes the target flinch. It only works the first turn the user is in battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 307,
 	ID = Moves.FALSE_SWIPE, 
 	//name = "False Swipe", 
@@ -4947,7 +4947,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A restrained attack that prevents the target from fainting. The target is left with at least 1 HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 308,
 	ID = Moves.PAY_DAY, 
 	//name = "Pay Day", 
@@ -4963,7 +4963,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Numerous coins are hurled at the target to inflict damage. Money is earned after battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 309,
 	ID = Moves.POUND, 
 	//name = "Pound", 
@@ -4979,7 +4979,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is physically pounded with a long tail or a foreleg, etc."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 310,
 	ID = Moves.QUICK_ATTACK, 
 	//name = "Quick Attack", 
@@ -4995,7 +4995,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lunges at the target at a speed that makes it almost invisible. It is sure to strike first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 311,
 	ID = Moves.SCRATCH, 
 	//name = "Scratch", 
@@ -5011,7 +5011,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Hard, pointed, and sharp claws rake the target to inflict damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 312,
 	ID = Moves.SNORE, 
 	//name = "Snore", 
@@ -5027,7 +5027,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,sound: true ) { }
 	//,description = "An attack that can be used only if the user is asleep. The harsh noise may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 313,
 	ID = Moves.DOUBLE_HIT, 
 	//name = "Double Hit", 
@@ -5043,7 +5043,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams the target with a long tail, vines, or tentacle. The target is hit twice in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 314,
 	ID = Moves.FEINT, 
 	//name = "Feint", 
@@ -5059,7 +5059,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "An attack that hits a target using Protect or Detect. It also lifts the effects of those moves."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 315,
 	ID = Moves.TAIL_SLAP, 
 	//name = "Tail Slap", 
@@ -5075,7 +5075,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by striking the target with its hard tail. It hits the Pokémon two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 316,
 	ID = Moves.RAGE, 
 	//name = "Rage", 
@@ -5091,7 +5091,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "As long as this move is in use, the user's Attack rises each time the user is hit in battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 317,
 	ID = Moves.RAPID_SPIN, 
 	//name = "Rapid Spin", 
@@ -5107,7 +5107,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 318,
 	ID = Moves.SPIKE_CANNON, 
 	//name = "Spike Cannon", 
@@ -5123,7 +5123,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Sharp spikes are shot at the target in rapid succession. They hit two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 319,
 	ID = Moves.COMET_PUNCH, 
 	//name = "Comet Punch", 
@@ -5139,7 +5139,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The target is hit with a flurry of punches that strike two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 320,
 	ID = Moves.FURY_SWIPES, 
 	//name = "Fury Swipes", 
@@ -5155,7 +5155,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is raked with sharp claws or scythes for two to five times in quick succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 321,
 	ID = Moves.BARRAGE, 
 	//name = "Barrage", 
@@ -5171,7 +5171,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Round objects are hurled at the target to strike two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 322,
 	ID = Moves.BIND, 
 	//name = "Bind", 
@@ -5187,7 +5187,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Things such as long bodies or tentacles are used to bind and squeeze the foe for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 323,
 	ID = Moves.DOUBLE_SLAP, 
 	//name = "DoubleSlap", 
@@ -5203,7 +5203,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is slapped repeatedly, back and forth, two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 324,
 	ID = Moves.FURY_ATTACK, 
 	//name = "Fury Attack", 
@@ -5219,7 +5219,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is jabbed repeatedly with a horn or beak two to five times in a row."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 325,
 	ID = Moves.WRAP, 
 	//name = "Wrap", 
@@ -5235,7 +5235,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A long body or vines are used to wrap and squeeze the target for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 326,
 	ID = Moves.CONSTRICT, 
 	//name = "Constrict", 
@@ -5251,7 +5251,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with long, creeping tentacles or vines. It may also lower the target's Speed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 327,
 	ID = Moves.BIDE, 
 	//name = "Bide", 
@@ -5267,7 +5267,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,flinch: true ) { }
 	//,description = "The user endures attacks for two turns, then strikes back to cause double the damage taken."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 328,
 	ID = Moves.CRUSH_GRIP, 
 	//name = "Crush Grip", 
@@ -5283,7 +5283,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is crushed with great force. The attack is more powerful the more HP the target has left."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 329,
 	ID = Moves.ENDEAVOR, 
 	//name = "Endeavor", 
@@ -5299,7 +5299,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "An attack move that cuts down the target's HP to equal the user's HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 330,
 	ID = Moves.FLAIL, 
 	//name = "Flail", 
@@ -5315,7 +5315,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user flails about aimlessly to attack. It becomes more powerful the less HP the user has."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 331,
 	ID = Moves.FRUSTRATION, 
 	//name = "Frustration", 
@@ -5331,7 +5331,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A full-power attack that grows more powerful the less the user likes its Trainer."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 332,
 	ID = Moves.GUILLOTINE, 
 	//name = "Guillotine", 
@@ -5347,7 +5347,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "A vicious, tearing attack with big pincers. The target will faint instantly if this attack hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 333,
 	ID = Moves.HIDDEN_POWER, 
 	//name = "Hidden Power", 
@@ -5363,7 +5363,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A unique attack that varies in type and intensity depending on the Pokémon using it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 334,
 	ID = Moves.HORN_DRILL, 
 	//name = "Horn Drill", 
@@ -5379,7 +5379,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user stabs the foe with a horn that rotates like a drill. If it hits, the target faints instantly."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 335,
 	ID = Moves.NATURAL_GIFT, 
 	//name = "Natural Gift", 
@@ -5395,7 +5395,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user draws power to attack by using its held Berry. The Berry determines its type and power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 336,
 	ID = Moves.PRESENT, 
 	//name = "Present", 
@@ -5411,7 +5411,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by giving the target a gift with a hidden trap. It restores HP sometimes, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 337,
 	ID = Moves.RETURN, 
 	//name = "Return", 
@@ -5427,7 +5427,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "A full-power attack that grows more powerful the more the user likes its Trainer."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 338,
 	ID = Moves.SONIC_BOOM, 
 	//name = "SonicBoom", 
@@ -5443,7 +5443,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is hit with a destructive shock wave that always inflicts 20 HP damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 339,
 	ID = Moves.SPIT_UP, 
 	//name = "Spit Up", 
@@ -5459,7 +5459,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,flinch: true ) { }
 	//,description = "The power stored using the move Stockpile is released all at once in an attack."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 340,
 	ID = Moves.SUPER_FANG, 
 	//name = "Super Fang", 
@@ -5475,7 +5475,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user chomps hard on the target with its sharp front fangs. It cuts the target's HP to half."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 341,
 	ID = Moves.TRUMP_CARD, 
 	//name = "Trump Card", 
@@ -5491,7 +5491,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The fewer PP this move has, the greater its attack power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 342,
 	ID = Moves.WRING_OUT, 
 	//name = "Wring Out", 
@@ -5507,7 +5507,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user powerfully wrings the foe. The more HP the foe has, the greater this attack's power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 343,
 	ID = Moves.ACUPRESSURE, 
 	//name = "Acupressure", 
@@ -5523,7 +5523,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user applies pressure to stress points, sharply boosting one of its stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 344,
 	ID = Moves.AFTER_YOU, 
 	//name = "After You", 
@@ -5539,7 +5539,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user helps the target and makes it use its move right after the user."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 345,
 	ID = Moves.ASSIST, 
 	//name = "Assist", 
@@ -5555,7 +5555,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user hurriedly and randomly uses a move among those known by other Pokémon in the party."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 346,
 	ID = Moves.ATTRACT, 
 	//name = "Attract", 
@@ -5571,7 +5571,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "If it is the opposite gender of the user, the target becomes infatuated and less likely to attack."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 347,
 	ID = Moves.BATON_PASS, 
 	//name = "Baton Pass", 
@@ -5587,7 +5587,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user switches places with a party Pokémon in waiting, passing along any stat changes."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 348,
 	ID = Moves.BELLY_DRUM, 
 	//name = "Belly Drum", 
@@ -5603,7 +5603,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user maximizes its Attack stat in exchange for HP equal to half its max HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 349,
 	ID = Moves.BESTOW, 
 	//name = "Bestow", 
@@ -5619,7 +5619,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user passes its held item to the target when the target isn't holding an item."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 350,
 	ID = Moves.BLOCK, 
 	//name = "Block", 
@@ -5635,7 +5635,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user blocks the target's way with arms spread wide to prevent escape."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 351,
 	ID = Moves.CAMOUFLAGE, 
 	//name = "Camouflage", 
@@ -5651,7 +5651,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user's type is changed depending on its environment, such as at water's edge, in grass, or in a cave."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 352,
 	ID = Moves.CAPTIVATE, 
 	//name = "Captivate", 
@@ -5667,7 +5667,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "If it is the opposite gender of the user, the target is charmed into harshly lowering its Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 353,
 	ID = Moves.CHARM, 
 	//name = "Charm", 
@@ -5683,7 +5683,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user charmingly gazes at the foe, making it less wary. The target's Attack is harshly lowered."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 354,
 	ID = Moves.CONVERSION, 
 	//name = "Conversion", 
@@ -5699,7 +5699,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user changes its type to become the same type as one of its moves."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 355,
 	ID = Moves.CONVERSION_2, 
 	//name = "Conversion 2", 
@@ -5715,7 +5715,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user changes its type to make itself resistant to the type of the attack the opponent used last."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 356,
 	ID = Moves.COPYCAT, 
 	//name = "Copycat", 
@@ -5731,7 +5731,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user mimics the move used immediately before it. The move fails if no other move has been used yet."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 357,
 	ID = Moves.DEFENSE_CURL, 
 	//name = "Defense Curl", 
@@ -5747,7 +5747,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user curls up to conceal weak spots and raise its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 358,
 	ID = Moves.DISABLE, 
 	//name = "Disable", 
@@ -5763,7 +5763,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "For four turns, this move prevents the target from using the move it last used."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 359,
 	ID = Moves.DOUBLE_TEAM, 
 	//name = "Double Team", 
@@ -5779,7 +5779,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "By moving rapidly, the user makes illusory copies of itself to raise its evasiveness."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 360,
 	ID = Moves.ENCORE, 
 	//name = "Encore", 
@@ -5795,7 +5795,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user compels the target to keep using only the move it last used for three turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 361,
 	ID = Moves.ENDURE, 
 	//name = "Endure", 
@@ -5811,7 +5811,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user endures any attack with at least 1 HP. Its chance of failing rises if it is used in succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 362,
 	ID = Moves.ENTRAINMENT, 
 	//name = "Entrainment", 
@@ -5827,7 +5827,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user dances to compel the target to mimic it, making the target's Ability the same as the user's."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 363,
 	ID = Moves.FLASH, 
 	//name = "Flash", 
@@ -5843,7 +5843,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user flashes a light that cuts the target's accuracy. It can also be used to illuminate caves."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 364,
 	ID = Moves.FOCUS_ENERGY, 
 	//name = "Focus Energy", 
@@ -5859,7 +5859,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user takes a deep breath and focuses so that critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 365,
 	ID = Moves.FOLLOW_ME, 
 	//name = "Follow Me", 
@@ -5875,7 +5875,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user draws attention to itself, making all targets take aim only at the user."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 366,
 	ID = Moves.FORESIGHT, 
 	//name = "Foresight", 
@@ -5891,7 +5891,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Enables the user to hit a Ghost type with any kind of move. It also enables the user to hit an evasive foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 367,
 	ID = Moves.GLARE, 
 	//name = "Glare", 
@@ -5907,7 +5907,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user intimidates the target with the pattern on its belly to cause paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 368,
 	ID = Moves.GROWL, 
 	//name = "Growl", 
@@ -5923,7 +5923,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The user growls in an endearing way, making the foe less wary. The foe's Attack stat is lowered."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 369,
 	ID = Moves.GROWTH, 
 	//name = "Growth", 
@@ -5939,7 +5939,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user's body grows all at once, raising the Atk and Sp. Atk stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 370,
 	ID = Moves.HARDEN, 
 	//name = "Harden", 
@@ -5955,7 +5955,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user stiffens all the muscles in its body to raise its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 371,
 	ID = Moves.HEAL_BELL, 
 	//name = "Heal Bell", 
@@ -5971,7 +5971,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user makes a soothing bell chime to heal the status problems of all the party Pokémon."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 372,
 	ID = Moves.HELPING_HAND, 
 	//name = "Helping Hand", 
@@ -5987,7 +5987,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user assists an ally by boosting the power of its attack."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 373,
 	ID = Moves.HOWL, 
 	//name = "Howl", 
@@ -6003,7 +6003,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user howls loudly to raise its spirit, boosting its Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 374,
 	ID = Moves.LEER, 
 	//name = "Leer", 
@@ -6019,7 +6019,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user gains an intimidating leer with sharp eyes. The target's Defense stat is reduced."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 375,
 	ID = Moves.LOCK_ON, 
 	//name = "Lock-On", 
@@ -6035,7 +6035,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user takes sure aim at the target. It ensures the next attack does not fail to hit the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 376,
 	ID = Moves.LOVELY_KISS, 
 	//name = "Lovely Kiss", 
@@ -6051,7 +6051,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "With a scary face, the user tries to force a kiss on the target. If it suceeds, the target falls asleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 377,
 	ID = Moves.LUCKY_CHANT, 
 	//name = "Lucky Chant", 
@@ -6067,7 +6067,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user chants an incantation toward the sky, preventing the foe from landing critical hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 378,
 	ID = Moves.ME_FIRST, 
 	//name = "Me First", 
@@ -6083,7 +6083,7 @@ new MoveData() {
 	Flags = new Flags( protect: true ) { }
 	//,description = "The user tries to cut ahead of the foe to steal and use the foe's intended move with greater power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 379,
 	ID = Moves.MEAN_LOOK, 
 	//name = "Mean Look", 
@@ -6099,7 +6099,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user pins the target with a dark, arresting look. The target becomes unable to flee."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 380,
 	ID = Moves.METRONOME, 
 	//name = "Metronome", 
@@ -6115,7 +6115,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user waggles a finger and stimulates its brain into randomly using nearly any move."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 381,
 	ID = Moves.MILK_DRINK, 
 	//name = "Milk Drink", 
@@ -6131,7 +6131,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 382,
 	ID = Moves.MIMIC, 
 	//name = "Mimic", 
@@ -6147,7 +6147,7 @@ new MoveData() {
 	Flags = new Flags( protect: true ) { }
 	//,description = "The user copies the move last used by the foe. The move can be used until the user is switched out."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 383,
 	ID = Moves.MIND_READER, 
 	//name = "Mind Reader", 
@@ -6163,7 +6163,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user senses the foe's movements with its mind to ensure its next attack does not miss the foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 384,
 	ID = Moves.MINIMIZE, 
 	//name = "Minimize", 
@@ -6179,7 +6179,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user compresses its body to make itself look smaller, which sharply raises its evasiveness."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 385,
 	ID = Moves.MOONLIGHT, 
 	//name = "Moonlight", 
@@ -6195,7 +6195,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 386,
 	ID = Moves.MORNING_SUN, 
 	//name = "Morning Sun", 
@@ -6211,7 +6211,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP. The amount of HP regained varies with the weather."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 387,
 	ID = Moves.NATURE_POWER, 
 	//name = "Nature Power", 
@@ -6227,7 +6227,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "An attack that makes use of nature's power. Its effects vary depending on the user's environment."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 388,
 	ID = Moves.ODOR_SLEUTH, 
 	//name = "Odor Sleuth", 
@@ -6243,7 +6243,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Enables the user to hit a Ghost type with any type of move. It also enables the user to hit an evasive foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 389,
 	ID = Moves.PAIN_SPLIT, 
 	//name = "Pain Split", 
@@ -6259,7 +6259,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user adds its HP to the target's HP, then equally shares the combined HP with the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 390,
 	ID = Moves.PERISH_SONG, 
 	//name = "Perish Song", 
@@ -6275,7 +6275,7 @@ new MoveData() {
 	Flags = new Flags( sound: true ) { }
 	//,description = "Any Pokémon that hears this song faints in three turns, unless it switches out of battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 391,
 	ID = Moves.PROTECT, 
 	//name = "Protect", 
@@ -6291,7 +6291,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "It enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 392,
 	ID = Moves.PSYCH_UP, 
 	//name = "Psych Up", 
@@ -6307,7 +6307,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user hypnotizes itself into copying any stat change made by the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 393,
 	ID = Moves.RECOVER, 
 	//name = "Recover", 
@@ -6323,7 +6323,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "Restoring its own cells, the user restores its own HP by half of its max HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 394,
 	ID = Moves.RECYCLE, 
 	//name = "Recycle", 
@@ -6339,7 +6339,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user recycles a held item that has been used in battle so it can be used again."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 395,
 	ID = Moves.REFLECT_TYPE, 
 	//name = "Reflect Type", 
@@ -6355,7 +6355,7 @@ new MoveData() {
 	Flags = new Flags( protect: true ) { }
 	//,description = "The user reflects the target's type, making it the same type as the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 396,
 	ID = Moves.REFRESH, 
 	//name = "Refresh", 
@@ -6371,7 +6371,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user rests to cure itself of a poisoning, burn, or paralysis."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 397,
 	ID = Moves.ROAR, 
 	//name = "Roar", 
@@ -6387,7 +6387,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 398,
 	ID = Moves.SAFEGUARD, 
 	//name = "Safeguard", 
@@ -6403,7 +6403,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user creates a protective field that prevents status problems for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 399,
 	ID = Moves.SCARY_FACE, 
 	//name = "Scary Face", 
@@ -6419,7 +6419,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user frightens the target with a scary face to harshly reduce its Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 400,
 	ID = Moves.SCREECH, 
 	//name = "Screech", 
@@ -6435,7 +6435,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "An earsplitting screech harshly reduces the target's Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 401,
 	ID = Moves.SHARPEN, 
 	//name = "Sharpen", 
@@ -6451,7 +6451,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user reduces its polygon count to make itself more jagged, raising the Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 402,
 	ID = Moves.SHELL_SMASH, 
 	//name = "Shell Smash", 
@@ -6467,7 +6467,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user breaks its shell, lowering its defenses but sharply raising attacking and Speed stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 403,
 	ID = Moves.SIMPLE_BEAM, 
 	//name = "Simple Beam", 
@@ -6483,7 +6483,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user's mysterious psychic wave changes the target's Ability to Simple."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 404,
 	ID = Moves.SING, 
 	//name = "Sing", 
@@ -6499,7 +6499,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "A soothing lullaby is sung in a calming voice that puts the target into a deep slumber."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 405,
 	ID = Moves.SKETCH, 
 	//name = "Sketch", 
@@ -6515,7 +6515,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "It enables the user to permanently learn the move last used by the foe. Once used, Sketch disappears."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 406,
 	ID = Moves.SLACK_OFF, 
 	//name = "Slack Off", 
@@ -6531,7 +6531,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user slacks off, restoring its own HP by up to half of its maximum HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 407,
 	ID = Moves.SLEEP_TALK, 
 	//name = "Sleep Talk", 
@@ -6547,7 +6547,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "While it is asleep, the user randomly uses one of the moves it knows."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 408,
 	ID = Moves.SMOKESCREEN, 
 	//name = "SmokeScreen", 
@@ -6563,7 +6563,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user releases an obscuring cloud of smoke or ink. It reduces the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 409,
 	ID = Moves.SOFT_BOILED, 
 	//name = "Softboiled", 
@@ -6579,7 +6579,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 410,
 	ID = Moves.SPLASH, 
 	//name = "Splash", 
@@ -6595,7 +6595,7 @@ new MoveData() {
 	Flags = new Flags( powder: true ) { }
 	//,description = "The user just flops and splashes around to no effect at all..."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 411,
 	ID = Moves.STOCKPILE, 
 	//name = "Stockpile", 
@@ -6611,7 +6611,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user charges up power and raises both its Defense and Sp. Def. The move can be used three times."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 412,
 	ID = Moves.SUBSTITUTE, 
 	//name = "Substitute", 
@@ -6627,7 +6627,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user makes a copy of itself using some of its HP. The copy serves as the user's decoy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 413,
 	ID = Moves.SUPERSONIC, 
 	//name = "Supersonic", 
@@ -6643,7 +6643,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "The user generates odd sound waves from its body. It may confuse the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 414,
 	ID = Moves.SWAGGER, 
 	//name = "Swagger", 
@@ -6659,7 +6659,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user enrages and confuses the target. However, it also sharply raises the target's Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 415,
 	ID = Moves.SWALLOW, 
 	//name = "Swallow", 
@@ -6675,7 +6675,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The power stored using the move Stockpile is absorbed by the user to heal its HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 416,
 	ID = Moves.SWEET_KISS, 
 	//name = "Sweet Kiss", 
@@ -6691,7 +6691,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user kisses the target with a sweet, angelic cuteness that causes confusion."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 417,
 	ID = Moves.SWEET_SCENT, 
 	//name = "Sweet Scent", 
@@ -6707,7 +6707,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A sweet scent that lowers the foe's evasiveness. It also lures wild Pokémon if used in grass, etc."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 418,
 	ID = Moves.SWORDS_DANCE, 
 	//name = "Swords Dance", 
@@ -6723,7 +6723,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "A frenetic dance to uplift the fighting spirit. It sharply raises the user's Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 419,
 	ID = Moves.TAIL_WHIP, 
 	//name = "Tail Whip", 
@@ -6739,7 +6739,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 420,
 	ID = Moves.TEETER_DANCE, 
 	//name = "Teeter Dance", 
@@ -6755,7 +6755,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user performs a wobbly dance that confuses the Pokémon around it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 421,
 	ID = Moves.TICKLE, 
 	//name = "Tickle", 
@@ -6771,7 +6771,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user tickles the target into laughing, reducing its Attack and Defense stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 422,
 	ID = Moves.TRANSFORM, 
 	//name = "Transform", 
@@ -6787,7 +6787,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user transforms into a copy of the target right down to having the same move set."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 423,
 	ID = Moves.WHIRLWIND, 
 	//name = "Whirlwind", 
@@ -6803,7 +6803,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The foe is blown away, to be replaced by another Pokémon in its party. In the wild, the battle ends."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 424,
 	ID = Moves.WISH, 
 	//name = "Wish", 
@@ -6819,7 +6819,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "One turn after this move is used, the target's HP is restored by half the user's maximum HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 425,
 	ID = Moves.WORK_UP, 
 	//name = "Work Up", 
@@ -6835,7 +6835,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user is roused, and its Attack and Sp. Atk stats increase."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 426,
 	ID = Moves.YAWN, 
 	//name = "Yawn", 
@@ -6851,7 +6851,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user lets loose a huge yawn that lulls the target into falling asleep on the next turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 427,
 	ID = Moves.GUNK_SHOT, 
 	//name = "Gunk Shot", 
@@ -6867,7 +6867,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user shoots filthy garbage at the target to attack. It may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 428,
 	ID = Moves.SLUDGE_WAVE, 
 	//name = "Sludge Wave", 
@@ -6883,7 +6883,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "It swamps the area around the user with a giant sludge wave. It may also poison those hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 429,
 	ID = Moves.SLUDGE_BOMB, 
 	//name = "Sludge Bomb", 
@@ -6899,7 +6899,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Unsanitary sludge is hurled at the target. It may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 430,
 	ID = Moves.POISON_JAB, 
 	//name = "Poison Jab", 
@@ -6915,7 +6915,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is stabbed with a tentacle or arm seeped with poison. It may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 431,
 	ID = Moves.CROSS_POISON, 
 	//name = "Cross Poison", 
@@ -6931,7 +6931,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "A slashing attack with a poisonous blade that may also poison the foe. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 432,
 	ID = Moves.SLUDGE, 
 	//name = "Sludge", 
@@ -6947,7 +6947,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Unsanitary sludge is hurled at the target. It may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 433,
 	ID = Moves.VENOSHOCK, 
 	//name = "Venoshock", 
@@ -6963,7 +6963,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user drenches the foe in a special poisonous liquid. Its power doubles if the target is poisoned."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 434,
 	ID = Moves.CLEAR_SMOG, 
 	//name = "Clear Smog", 
@@ -6979,7 +6979,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by throwing a clump of special mud. All status changes are returned to normal."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 435,
 	ID = Moves.POISON_FANG, 
 	//name = "Poison Fang", 
@@ -6995,7 +6995,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user bites the target with toxic fangs. It may also leave the target badly poisoned."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 436,
 	ID = Moves.POISON_TAIL, 
 	//name = "Poison Tail", 
@@ -7011,7 +7011,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user hits the target with its tail. It may also poison the target. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 437,
 	ID = Moves.ACID, 
 	//name = "Acid", 
@@ -7027,7 +7027,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The foe is attacked with a spray of harsh acid. It may also lower the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 438,
 	ID = Moves.ACID_SPRAY, 
 	//name = "Acid Spray", 
@@ -7043,7 +7043,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user spits fluid that works to melt the target. This harshly reduces the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 439,
 	ID = Moves.SMOG, 
 	//name = "Smog", 
@@ -7059,7 +7059,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is attacked with a discharge of filthy gases. It may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 440,
 	ID = Moves.POISON_STING, 
 	//name = "Poison Sting", 
@@ -7075,7 +7075,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user stabs the target with a poisonous stinger. This may also poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 441,
 	ID = Moves.ACID_ARMOR, 
 	//name = "Acid Armor", 
@@ -7091,7 +7091,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user alters its cellular structure to liquefy itself, sharply raising its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 442,
 	ID = Moves.COIL, 
 	//name = "Coil", 
@@ -7107,7 +7107,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user coils up and concentrates. This raises its Attack and Defense stats as well as its accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 443,
 	ID = Moves.GASTRO_ACID, 
 	//name = "Gastro Acid", 
@@ -7123,7 +7123,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user hurls up its stomach acids on the foe. The fluid negates the effect of the target's Ability."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 444,
 	ID = Moves.POISON_GAS, 
 	//name = "Poison Gas", 
@@ -7139,7 +7139,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A cloud of poison gas is sprayed in the face of opposing Pokémon. It may poison those hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 445,
 	ID = Moves.POISON_POWDER, 
 	//name = "PoisonPowder", 
@@ -7155,7 +7155,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user scatters a cloud of poisonous dust on the target. It may poison the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 446,
 	ID = Moves.TOXIC, 
 	//name = "Toxic", 
@@ -7171,7 +7171,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "A move that leaves the target badly poisoned. Its poison damage worsens every turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 447,
 	ID = Moves.TOXIC_SPIKES, 
 	//name = "Toxic Spikes", 
@@ -7187,7 +7187,7 @@ new MoveData() {
 	Flags = new Flags( reflectable: true ) { }
 	//,description = "The user lays a trap of poison spikes at the foe's feet. They poison foes that switch into battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 448,
 	ID = Moves.PSYCHO_BOOST, 
 	//name = "Psycho Boost", 
@@ -7203,7 +7203,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target at full power. The attack's recoil harshly reduces the user's Sp. Atk stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 449,
 	ID = Moves.DREAM_EATER, 
 	//name = "Dream Eater", 
@@ -7219,7 +7219,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user eats the dreams of a sleeping foe. It absorbs half the damage caused to heal the user's HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 450,
 	ID = Moves.FUTURE_SIGHT, 
 	//name = "Future Sight", 
@@ -7235,7 +7235,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "Two turns after this move is used, a hunk of psychic energy attacks the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 451,
 	ID = Moves.PSYSTRIKE, 
 	//name = "Psystrike", 
@@ -7251,7 +7251,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user materializes an odd psychic wave to attack the target. This attack does physical damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 452,
 	ID = Moves.PSYCHIC, 
 	//name = "Psychic", 
@@ -7267,7 +7267,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is hit by a strong telekinetic force. It may also reduce the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 453,
 	ID = Moves.EXTRASENSORY, 
 	//name = "Extrasensory", 
@@ -7283,7 +7283,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with an odd, unseeable power. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 454,
 	ID = Moves.PSYSHOCK, 
 	//name = "Psyshock", 
@@ -7299,7 +7299,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user materializes an odd psychic wave to attack the target. This attack does physical damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 455,
 	ID = Moves.ZEN_HEADBUTT, 
 	//name = "Zen Headbutt", 
@@ -7315,7 +7315,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user focuses its willpower to its head and attacks the foe. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 456,
 	ID = Moves.LUSTER_PURGE, 
 	//name = "Luster Purge", 
@@ -7331,7 +7331,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user lets loose a damaging burst of light. It may also reduce the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 457,
 	ID = Moves.MIST_BALL, 
 	//name = "Mist Ball", 
@@ -7347,7 +7347,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A mistlike flurry of down envelops and damages the target. It may also lower the target's Sp. Atk."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 458,
 	ID = Moves.PSYCHO_CUT, 
 	//name = "Psycho Cut", 
@@ -7363,7 +7363,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user tears at the target with blades formed by psychic power. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 459,
 	ID = Moves.SYNCHRONOISE, 
 	//name = "Synchronoise", 
@@ -7379,7 +7379,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Using an odd shock wave, the user damages any Pokémon of the same type as the user."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 460,
 	ID = Moves.PSYBEAM, 
 	//name = "Psybeam", 
@@ -7395,7 +7395,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is attacked with a peculiar ray. It may also cause confusion."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 461,
 	ID = Moves.HEART_STAMP, 
 	//name = "Heart Stamp", 
@@ -7411,7 +7411,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user unleashes a vicious blow after its cute act makes the foe less wary. It may also cause flinching."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 462,
 	ID = Moves.CONFUSION, 
 	//name = "Confusion", 
@@ -7427,7 +7427,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The target is hit by a weak telekinetic force. It may also leave the target confused."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 463,
 	ID = Moves.MIRROR_COAT, 
 	//name = "Mirror Coat", 
@@ -7443,7 +7443,7 @@ new MoveData() {
 	Flags = new Flags( protect: true ) { }
 	//,description = "A retaliation move that counters any special attack, inflicting double the damage taken."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 464,
 	ID = Moves.PSYWAVE, 
 	//name = "Psywave", 
@@ -7459,7 +7459,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is attacked with an odd psychic wave. The attack varies in intensity."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 465,
 	ID = Moves.STORED_POWER, 
 	//name = "Stored Power", 
@@ -7475,7 +7475,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with stored power. The more the user's stats are raised, the greater the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 466,
 	ID = Moves.AGILITY, 
 	//name = "Agility", 
@@ -7491,7 +7491,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user relaxes and lightens its body to move faster. It sharply boosts the Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 467,
 	ID = Moves.ALLY_SWITCH, 
 	//name = "Ally Switch", 
@@ -7507,7 +7507,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user teleports using a strange power and switches its place with one of its allies."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 468,
 	ID = Moves.AMNESIA, 
 	//name = "Amnesia", 
@@ -7523,7 +7523,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user temporarily empties its mind to forget its concerns. It sharply raises the user's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 469,
 	ID = Moves.BARRIER, 
 	//name = "Barrier", 
@@ -7539,7 +7539,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user throws up a sturdy wall that sharply raises its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 470,
 	ID = Moves.CALM_MIND, 
 	//name = "Calm Mind", 
@@ -7555,7 +7555,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user quietly focuses its mind and calms its spirit to raise its Sp. Atk and Sp. Def stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 471,
 	ID = Moves.COSMIC_POWER, 
 	//name = "Cosmic Power", 
@@ -7571,7 +7571,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user absorbs a mystical power from space to raise its Defense and Sp. Def stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 472,
 	ID = Moves.GRAVITY, 
 	//name = "Gravity", 
@@ -7587,7 +7587,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "Gravity is intensified for five turns, making moves involving flying unusable and negating Levitation."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 473,
 	ID = Moves.GUARD_SPLIT, 
 	//name = "Guard Split", 
@@ -7603,7 +7603,7 @@ new MoveData() {
 	Flags = new Flags( protect: true ) { }
 	//,description = "The user employs its psychic power to average its Defense and Sp. Def stats with those of its target's."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 474,
 	ID = Moves.GUARD_SWAP, 
 	//name = "Guard Swap", 
@@ -7619,7 +7619,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to switch changes to its Defense and Sp. Def with the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 475,
 	ID = Moves.HEAL_BLOCK, 
 	//name = "Heal Block", 
@@ -7635,7 +7635,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "For five turns, the foe is prevented from using any moves, Abilities, or held items that recover HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 476,
 	ID = Moves.HEAL_PULSE, 
 	//name = "Heal Pulse", 
@@ -7651,7 +7651,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,bite: true ) { }
 	//,description = "The user emits a healing pulse which restores the target's HP by up to half of its max HP."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 477,
 	ID = Moves.HEALING_WISH, 
 	//name = "Healing Wish", 
@@ -7667,7 +7667,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user faints. In return, the Pokémon taking its place will have its HP restored and status cured."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 478,
 	ID = Moves.HEART_SWAP, 
 	//name = "Heart Swap", 
@@ -7683,7 +7683,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to switch stat changes with the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 479,
 	ID = Moves.HYPNOSIS, 
 	//name = "Hypnosis", 
@@ -7699,7 +7699,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user employs hypnotic suggestion to make the target fall into a deep sleep."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 480,
 	ID = Moves.IMPRISON, 
 	//name = "Imprison", 
@@ -7715,7 +7715,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "If the foe knows any move also known by the user, the foe is prevented from using it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 481,
 	ID = Moves.KINESIS, 
 	//name = "Kinesis", 
@@ -7731,7 +7731,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user distracts the target by bending a spoon. It lowers the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 482,
 	ID = Moves.LIGHT_SCREEN, 
 	//name = "Light Screen", 
@@ -7747,7 +7747,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "A wondrous wall of light is put up to suppress damage from special attacks for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 483,
 	ID = Moves.LUNAR_DANCE, 
 	//name = "Lunar Dance", 
@@ -7763,7 +7763,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user faints. In return, the Pokémon taking its place will have its status and HP fully restored."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 484,
 	ID = Moves.MAGIC_COAT, 
 	//name = "Magic Coat", 
@@ -7779,7 +7779,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "A barrier reflects back to the target moves like Leech Seed and moves that damage status."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 485,
 	ID = Moves.MAGIC_ROOM, 
 	//name = "Magic Room", 
@@ -7795,7 +7795,7 @@ new MoveData() {
 	Flags = new Flags( mirror: true ) { }
 	//,description = "The user creates a bizarre area in which Pokémon's held items lose their effects for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 486,
 	ID = Moves.MEDITATE, 
 	//name = "Meditate", 
@@ -7811,7 +7811,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user meditates to awaken the power deep within its body and raise its Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 487,
 	ID = Moves.MIRACLE_EYE, 
 	//name = "Miracle Eye", 
@@ -7827,7 +7827,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "Enables the user to hit a Dark type with any type of move. It also enables the user to hit an evasive foe."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 488,
 	ID = Moves.POWER_SPLIT, 
 	//name = "Power Split", 
@@ -7843,7 +7843,7 @@ new MoveData() {
 	Flags = new Flags( protect: true ) { }
 	//,description = "The user employs its psychic power to average its Attack and Sp. Atk stats with those of the target's."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 489,
 	ID = Moves.POWER_SWAP, 
 	//name = "Power Swap", 
@@ -7859,7 +7859,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to switch changes to its Attack and Sp. Atk with the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 490,
 	ID = Moves.POWER_TRICK, 
 	//name = "Power Trick", 
@@ -7875,7 +7875,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user employs its psychic power to switch its Attack with its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 491,
 	ID = Moves.PSYCHO_SHIFT, 
 	//name = "Psycho Shift", 
@@ -7891,7 +7891,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Using its psychic power of suggestion, the user transfers its status problems to the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 492,
 	ID = Moves.REFLECT, 
 	//name = "Reflect", 
@@ -7907,7 +7907,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "A wondrous wall of light is put up to suppress damage from physical attacks for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 493,
 	ID = Moves.REST, 
 	//name = "Rest", 
@@ -7923,7 +7923,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user goes to sleep for two turns. It fully restores the user's HP and heals any status problem."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 494,
 	ID = Moves.ROLE_PLAY, 
 	//name = "Role Play", 
@@ -7939,7 +7939,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user mimics the target completely, copying the target's natural Ability."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 495,
 	ID = Moves.SKILL_SWAP, 
 	//name = "Skill Swap", 
@@ -7955,7 +7955,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user employs its psychic power to exchange Abilities with the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 496,
 	ID = Moves.TELEKINESIS, 
 	//name = "Telekinesis", 
@@ -7971,7 +7971,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,powder: true ) { }
 	//,description = "The user makes the target float with its psychic power. The target is easier to hit for three turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 497,
 	ID = Moves.TELEPORT, 
 	//name = "Teleport", 
@@ -7987,7 +7987,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "Use it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 498,
 	ID = Moves.TRICK, 
 	//name = "Trick", 
@@ -8003,7 +8003,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user catches the target off guard and swaps its held item with its own."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 499,
 	ID = Moves.TRICK_ROOM, 
 	//name = "Trick Room", 
@@ -8019,7 +8019,7 @@ new MoveData() {
 	Flags = new Flags( mirror: true ) { }
 	//,description = "The user creates a bizarre area in which slower Pokémon get to move first for five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 500,
 	ID = Moves.WONDER_ROOM, 
 	//name = "Wonder Room", 
@@ -8035,7 +8035,7 @@ new MoveData() {
 	Flags = new Flags( mirror: true ) { }
 	//,description = "The user creates a bizarre area in which Pokémon's Defense and Sp. Def stats are swapped for 5 turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 501,
 	ID = Moves.HEAD_SMASH, 
 	//name = "Head Smash", 
@@ -8051,7 +8051,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the foe with a hazardous, full-power headbutt. The user also takes terrible damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 502,
 	ID = Moves.ROCK_WRECKER, 
 	//name = "Rock Wrecker", 
@@ -8067,7 +8067,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches a huge boulder at the target to attack. It must rest on the next turn, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 503,
 	ID = Moves.STONE_EDGE, 
 	//name = "Stone Edge", 
@@ -8083,7 +8083,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The user stabs the foe with sharpened stones from below. It has a high critical-hit ratio."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 504,
 	ID = Moves.ROCK_SLIDE, 
 	//name = "Rock Slide", 
@@ -8099,7 +8099,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Large boulders are hurled at the foes to inflict damage. It may also make the targets flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 505,
 	ID = Moves.POWER_GEM, 
 	//name = "Power Gem", 
@@ -8115,7 +8115,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks with a ray of light that sparkles as if it were made of gemstones."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 506,
 	ID = Moves.ANCIENT_POWER, 
 	//name = "AncientPower", 
@@ -8131,7 +8131,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks with a prehistoric power. It may also raise all the user's stats at once."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 507,
 	ID = Moves.ROCK_THROW, 
 	//name = "Rock Throw", 
@@ -8147,7 +8147,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user picks up and throws a small rock at the target to attack."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 508,
 	ID = Moves.ROCK_TOMB, 
 	//name = "Rock Tomb", 
@@ -8163,7 +8163,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "Boulders are hurled at the target. It also lowers the target's Speed by preventing its movement."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 509,
 	ID = Moves.SMACK_DOWN, 
 	//name = "Smack Down", 
@@ -8179,7 +8179,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user throws a stone or projectile to attack. A flying Pokémon will fall to the ground when hit."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 510,
 	ID = Moves.ROLLOUT, 
 	//name = "Rollout", 
@@ -8195,7 +8195,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user continually rolls into the target over five turns. It becomes stronger each time it hits."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 511,
 	ID = Moves.ROCK_BLAST, 
 	//name = "Rock Blast", 
@@ -8211,7 +8211,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user hurls hard rocks at the target. Two to five rocks are launched in quick succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 512,
 	ID = Moves.ROCK_POLISH, 
 	//name = "Rock Polish", 
@@ -8227,7 +8227,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user polishes its body to reduce drag. It can sharply raise the Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 513,
 	ID = Moves.SANDSTORM, 
 	//name = "Sandstorm", 
@@ -8243,7 +8243,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "Summons a five-turn sandstorm to hurt all combatants except the Rock, Ground, and Steel types."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 514,
 	ID = Moves.STEALTH_ROCK, 
 	//name = "Stealth Rock", 
@@ -8259,7 +8259,7 @@ new MoveData() {
 	Flags = new Flags( reflectable: true ) { }
 	//,description = "The user lays a trap of levitating stones around the foe. The trap hurts foes that switch into battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 515,
 	ID = Moves.WIDE_GUARD, 
 	//name = "Wide Guard", 
@@ -8275,7 +8275,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user and its allies are protected from wide-ranging attacks for a turn. May fail if used in succession."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 516,
 	ID = Moves.DOOM_DESIRE, 
 	//name = "Doom Desire", 
@@ -8291,7 +8291,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "Two turns after this move is used, the user blasts the target with a concentrated bundle of light."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 517,
 	ID = Moves.IRON_TAIL, 
 	//name = "Iron Tail", 
@@ -8307,7 +8307,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is slammed with a steel-hard tail. It may also lower the target's Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 518,
 	ID = Moves.METEOR_MASH, 
 	//name = "Meteor Mash", 
@@ -8323,7 +8323,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The target is hit with a hard punch fired like a meteor. It may also raise the user's Attack."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 519,
 	ID = Moves.FLASH_CANNON, 
 	//name = "Flash Cannon", 
@@ -8339,7 +8339,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user gathers all its light energy and releases it at once. It may also lower the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 520,
 	ID = Moves.IRON_HEAD, 
 	//name = "Iron Head", 
@@ -8355,7 +8355,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The foe slams the target with its steel-hard head. It may also make the target flinch."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 521,
 	ID = Moves.STEEL_WING, 
 	//name = "Steel Wing", 
@@ -8371,7 +8371,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is hit with wings of steel. It may also raise the user's Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 522,
 	ID = Moves.MIRROR_SHOT, 
 	//name = "Mirror Shot", 
@@ -8387,7 +8387,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user looses a flash of energy from its polished body. It may also lower the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 523,
 	ID = Moves.MAGNET_BOMB, 
 	//name = "Magnet Bomb", 
@@ -8403,7 +8403,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user launches steel bombs that stick to the target. This attack will not miss."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 524,
 	ID = Moves.GEAR_GRIND, 
 	//name = "Gear Grind", 
@@ -8419,7 +8419,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by throwing two steel gears at its target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 525,
 	ID = Moves.METAL_CLAW, 
 	//name = "Metal Claw", 
@@ -8435,7 +8435,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The target is raked with steel claws. It may also raise the user's Attack stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 526,
 	ID = Moves.BULLET_PUNCH, 
 	//name = "Bullet Punch", 
@@ -8451,7 +8451,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,punch: true ) { }
 	//,description = "The user strikes the target with tough punches as fast as bullets. This move always goes first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 527,
 	ID = Moves.GYRO_BALL, 
 	//name = "Gyro Ball", 
@@ -8467,7 +8467,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user tackles the target with a high-speed spin. The slower the user, the greater the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 528,
 	ID = Moves.HEAVY_SLAM, 
 	//name = "Heavy Slam", 
@@ -8483,7 +8483,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user slams into the foe with its heavy body. The heavier the user, the greater the damage."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 529,
 	ID = Moves.METAL_BURST, 
 	//name = "Metal Burst", 
@@ -8499,7 +8499,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user retaliates with much greater power against the target that last inflicted damage on it."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 530,
 	ID = Moves.AUTOTOMIZE, 
 	//name = "Autotomize", 
@@ -8515,7 +8515,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user sheds part of its body to make itself lighter and sharply raise its Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 531,
 	ID = Moves.IRON_DEFENSE, 
 	//name = "Iron Defense", 
@@ -8531,7 +8531,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user hardens its body's surface like iron, sharply raising its Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 532,
 	ID = Moves.METAL_SOUND, 
 	//name = "Metal Sound", 
@@ -8547,7 +8547,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true,sound: true ) { }
 	//,description = "A horrible sound like scraping metal harshly reduces the target's Sp. Def stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 533,
 	ID = Moves.SHIFT_GEAR, 
 	//name = "Shift Gear", 
@@ -8563,7 +8563,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true ) { }
 	//,description = "The user rotates its gears, raising its Attack and sharply raising its Speed."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 534,
 	ID = Moves.HYDRO_CANNON, 
 	//name = "Hydro Cannon", 
@@ -8579,7 +8579,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is hit with a watery blast. The user must rest on the next turn, however."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 535,
 	ID = Moves.WATER_SPOUT, 
 	//name = "Water Spout", 
@@ -8595,7 +8595,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user spouts water to damage the foe. The lower the user's HP, the less powerful it becomes."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 536,
 	ID = Moves.HYDRO_PUMP, 
 	//name = "Hydro Pump", 
@@ -8611,7 +8611,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is blasted by a huge volume of water launched under great pressure."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 537,
 	ID = Moves.MUDDY_WATER, 
 	//name = "Muddy Water", 
@@ -8627,7 +8627,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by shooting muddy water at the opposing team. It may also lower the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 538,
 	ID = Moves.SURF, 
 	//name = "Surf", 
@@ -8643,7 +8643,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "It swamps the area around the user with a giant wave. It can also be used for crossing water."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 539,
 	ID = Moves.AQUA_TAIL, 
 	//name = "Aqua Tail", 
@@ -8659,7 +8659,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks by swinging its tail as if it were a vicious wave in a raging storm."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 540,
 	ID = Moves.CRABHAMMER, 
 	//name = "Crabhammer", 
@@ -8675,7 +8675,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true,bite: true ) { }
 	//,description = "The target is hammered with a large pincer. Critical hits land more easily."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 541,
 	ID = Moves.DIVE, 
 	//name = "Dive", 
@@ -8691,7 +8691,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "Diving on the first turn, the user rises and hits on the next turn. It can be used to dive in the ocean."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 542,
 	ID = Moves.SCALD, 
 	//name = "Scald", 
@@ -8707,7 +8707,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true,defrost: true ) { }
 	//,description = "The user shoots boiling hot water at its target. It may also leave the target with a burn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 543,
 	ID = Moves.WATERFALL, 
 	//name = "Waterfall", 
@@ -8723,7 +8723,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user charges at the target and may make it flinch. It can also be used to climb a waterfall."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 544,
 	ID = Moves.RAZOR_SHELL, 
 	//name = "Razor Shell", 
@@ -8739,7 +8739,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true ) { }
 	//,description = "The user cuts the foe with sharp shells. It may also lower the target's Defense stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 545,
 	ID = Moves.BRINE, 
 	//name = "Brine", 
@@ -8755,7 +8755,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "If the target's HP is down to about half, this attack will hit with double the power."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 546,
 	ID = Moves.BUBBLE_BEAM, 
 	//name = "BubbleBeam", 
@@ -8771,7 +8771,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A spray of bubbles is forcefully ejected at the target. It may also lower its Speed stat."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 547,
 	ID = Moves.OCTAZOOKA, 
 	//name = "Octazooka", 
@@ -8787,7 +8787,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "The user attacks by spraying ink in the foe's face or eyes. It may also lower the target's accuracy."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 548,
 	ID = Moves.WATER_PULSE, 
 	//name = "Water Pulse", 
@@ -8803,7 +8803,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user attacks the target with a pulsing blast of water. It may also confuse the target."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 549,
 	ID = Moves.WATER_PLEDGE, 
 	//name = "Water Pledge", 
@@ -8819,7 +8819,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "A column of water strikes the target. When combined with its fire equivalent, it makes a rainbow."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 550,
 	ID = Moves.AQUA_JET, 
 	//name = "Aqua Jet", 
@@ -8835,7 +8835,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The user lunges at the target at a speed that makes it almost invisible. It is sure to strike first."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 551,
 	ID = Moves.WATER_GUN, 
 	//name = "Water Gun", 
@@ -8851,7 +8851,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is blasted with a forceful shot of water."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 552,
 	ID = Moves.CLAMP, 
 	//name = "Clamp", 
@@ -8867,7 +8867,7 @@ new MoveData() {
 	Flags = new Flags( contact: true,protect: true,mirror: true,flinch: true ) { }
 	//,description = "The target is clamped and squeezed by the user's very thick and sturdy shell for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 553,
 	ID = Moves.WHIRLPOOL, 
 	//name = "Whirlpool", 
@@ -8883,7 +8883,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true,flinch: true ) { }
 	//,description = "Traps foes in a violent swirling whirlpool for four to five turns."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 554,
 	ID = Moves.BUBBLE, 
 	//name = "Bubble", 
@@ -8899,7 +8899,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,mirror: true ) { }
 	//,description = "A spray of countless bubbles is jetted at the opposing team. It may also lower the targets' Speed stats."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 555,
 	ID = Moves.AQUA_RING, 
 	//name = "Aqua Ring", 
@@ -8915,7 +8915,7 @@ new MoveData() {
 	Flags = new Flags( snatch: true,bite: true ) { }
 	//,description = "The user envelops itself in a veil made of water. It regains some HP on every turn."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 556,
 	ID = Moves.RAIN_DANCE, 
 	//name = "Rain Dance", 
@@ -8931,7 +8931,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user summons a heavy rain that falls for five turns, powering up Water-type moves."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 557,
 	ID = Moves.SOAK, 
 	//name = "Soak", 
@@ -8947,7 +8947,7 @@ new MoveData() {
 	Flags = new Flags( protect: true,reflectable: true,mirror: true ) { }
 	//,description = "The user shoots a torrent of water at the target and changes the target's type to Water."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 558,
 	ID = Moves.WATER_SPORT, 
 	//name = "Water Sport", 
@@ -8963,7 +8963,7 @@ new MoveData() {
 	Flags = new Flags(  ) { } 
 	//,description = "The user soaks itself with water. The move weakens Fire-type moves while the user is in the battle."
 },
-new MoveData() {
+new MoveDataDex() {
 	num = 559,
 	ID = Moves.WITHDRAW, 
 	//name = "Withdraw", 
