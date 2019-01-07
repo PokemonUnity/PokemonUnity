@@ -5,9 +5,8 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
-using PokemonEssential;
 
-namespace PokemonEssential
+public partial class Move
 {
 	public partial class MoveData
 	{

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PokemonEssential;
 
 public class Battle : UnityUtilityIntegration
 {
@@ -2008,7 +2007,7 @@ public class Battle : UnityUtilityIntegration
 		new public Moves MoveId					{ get; set; }
 		new public Target Targets				{ get; set; }
 		new public Types Type					{ get; set; }
-		new public PokemonEssential.Flags Flag	{ get; set; }
+		new public Flags Flag	{ get; set; }
 		new public int PP						{ get; set; }
 		new public int TotalPP					{ get; set; }
 		/// <summary>
@@ -2087,9 +2086,9 @@ public class Battle : UnityUtilityIntegration
 					PP = -1;
 					//TotalPP	= ;
 					AddlEffect = 0;
-					Targets = PokemonEssential.Target.NoTarget;
+					Targets = Target.NoTarget;
 					Priority = 0;
-					Flag = new PokemonEssential.Flags();
+					Flag = new Flags();
 					//thismove		= move
 					//name			= ""
 					MoveId = Moves.NONE;

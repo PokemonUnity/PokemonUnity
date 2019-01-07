@@ -5,9 +5,8 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
-using PokemonEssential;
 
-public class Move //: MoveData
+public partial class Move //: MoveData
 {
 	#region Properties
 	protected MoveData _base { get; private set; }
@@ -36,7 +35,7 @@ public class Move //: MoveData
 	public Target Targets { get { return _base.Target; } }
 	public Types Type { get { return _base.Type; } }
 	public Moves MoveId { get { return _base.ID; } }
-	public PokemonEssential.Flags Flag { get { return _base.Flags; } }
+	public Flags Flag { get { return _base.Flags; } }
 	public Effect Function { get { return (Effect)_base.Function; } }
 	public string FunctionAsString { get { return _base.FunctionAsString; } }
 	public string Name { get { return _base.Name; } }
@@ -1912,6 +1911,151 @@ public class Move //: MoveData
 	#endregion
 
 	#region Nested Classes
+	public partial class MoveData
+	{
+		#region Variables
+		public Category Category { get; private set; }
+		public int num { get; private set; }
+		public Moves ID { get; private set; }
+		/// <summary>
+		/// The move's accuracy, as a percentage. 
+		/// An accuracy of 0 means the move doesn't perform an accuracy check 
+		/// (i.e. it cannot be evaded).
+		/// </summary>
+		public int Accuracy { get; private set; }
+		public int BaseDamage { get; private set; }
+		public int PP { get; private set; }
+		public int Priority { get; private set; }
+		public Flags Flags { get; private set; }
+		public Target Target { get; private set; }
+		public Types Type { get; private set; }
+		public Contest ContestType { get; private set; }
+		public short Function { get; private set; }
+		public string FunctionAsString { get; private set; }
+		/// <summary>
+		/// The probability that the move's additional effect occurs, as a percentage. 
+		/// If the move has no additional effect (e.g. all status moves), this value is 0.
+		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
+		/// which is not the same thing as having an effect that will always occur. 
+		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
+		/// </summary>
+		public int Effects { get; private set; }
+		public string Name { get; private set; }
+		public string Description { get; private set; }
+		//ToDo: Missing from Database
+		public int Appeal { get; private set; }
+		public int Jamming { get; private set; }
+		#endregion
+
+		public MoveData()
+		{
+			Name = LanguageExtension.Translate(Text.Moves, ID.ToString()).Name;
+			Description = LanguageExtension.Translate(Text.Moves, ID.ToString()).Value;
+		}
+
+		internal MoveData getMove(Moves ID)
+		{
+			foreach (MoveData move in Database)
+			{
+				if (move.ID == ID) return move;
+			}
+			throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
+		}
+	}
+    public class Flags
+    {
+        /// <summary>
+        /// The move makes physical contact with the target
+        /// </summary>
+        public bool Contact;
+        /// <summary>
+        /// The target can use <see cref="Moves.Protect"/> or <see cref="Moves.Detect"/> to protect itself from the move
+        /// </summary>
+        public bool Protectable;
+        /// <summary>
+        /// The target can use <see cref="Moves.Magic_Coat"/> to redirect the effect of the move. 
+        /// Use this flag if the move deals no damage but causes a negative effect on the target.
+        /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
+        /// </summary>
+        public bool Reflectable;
+        /// <summary>
+        /// The target can use <see cref="Moves.Snatch"/> to steal the effect of the move. 
+        /// Use this flag for most moves that target the user.
+        /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
+        /// </summary>
+        public bool Snatch;
+        /// <summary>
+        /// The move can be copied by <see cref="Moves.Mirror_Move"/>.
+        /// </summary>
+        public bool Mirror;
+        /// <summary>
+        /// The move has a 10% chance of making the opponent flinch if the user is holding a 
+        /// <see cref="PokemonUnity.Item.Items.KINGS_ROCK"/>/<see cref="PokemonUnity.Item.Items.RAZOR_FANG"/>. 
+        /// Use this flag for all damaging moves that don't already have a flinching effect.
+        /// </summary>
+        public bool Flinch;
+        /// <summary>
+        /// If the user is <see cref="Status.Frozen"/>, the move will thaw it out before it is used.
+        /// </summary>
+        /// Thaw
+        public bool Defrost;
+        /// <summary>
+        /// The move has a high critical hit rate.
+        /// </summary>
+        public bool Crit;
+        /// <summary>
+        /// The move is a biting move (powered up by the ability Strong Jaw).
+        /// </summary>
+        public bool Bite;
+        /// <summary>
+        /// The move is a punching move (powered up by the ability Iron Fist).
+        /// </summary>
+        public bool Punching;
+        /// <summary>
+        /// The move is a sound-based move.
+        /// </summary>
+        public bool SoundBased;
+        /// <summary>
+        /// The move is a powder-based move (Grass-type Pokémon are immune to them).
+        /// </summary>
+        public bool PowderBased;
+        /// <summary>
+        /// The move is a pulse-based move (powered up by the ability Mega Launcher).
+        /// </summary>
+        public bool PulseBased;
+        /// <summary>
+        /// The move is a bomb-based move (resisted by the ability Bulletproof).
+        /// </summary>
+        public bool BombBased;
+		public Flags(bool authentic = false, bool bite = false, bool bullet = false, bool charge = false, bool contact = false, bool crit = false, bool dance = false, bool defrost = false,
+					bool distance = false, bool flinch = false, bool gravity = false, bool heal = false, bool mirror = false, bool mystery = false, bool nonsky = false, bool powder = false,
+					bool protect = false, bool pulse = false, bool punch = false, bool recharge = false, bool reflectable = false, bool snatch = false, bool sound = false)
+		{
+			//this.Authentic = authentic;
+			this.Bite = bite;
+			this.BombBased = bullet;
+			//this.Charge = charge;
+			this.Contact = contact;
+			this.Crit = crit;
+			//this.Dance = dance;
+			this.Defrost = defrost;
+			//this.Distance = distance;
+			this.Flinch = flinch;
+			//this.Gravity = gravity;
+			//this.Heal = heal;
+			this.Mirror = mirror;
+			//this.Mystery = mystery;
+			//this.Nonsky = nonsky;
+			this.PowderBased = powder;
+			this.Protectable = protect;
+			this.PulseBased = pulse;
+			this.Punching = punch;
+			//this.Recharge = recharge;
+			this.Reflectable = reflectable;
+			this.Snatch = snatch;
+			this.SoundBased = sound;
+		}
+	}
 	/// <summary>
 	/// Clones Pokemon's Move stats, and uses those values for pokemon battles.
 	/// </summary>
@@ -1929,7 +2073,7 @@ public class Move //: MoveData
         //private float addlEffect { get { return _baseData.AddlEffect; } }   //= movedata.addlEffect
         private Target target { get { return _baseData.Target; } }          //= movedata.target
         private int priority { get { return _baseData.Priority; } }         //= movedata.priority
-        private PokemonEssential.Flags flags { get { return _baseData.Flags; } }             //= movedata.flags
+        private Flags flags { get { return _baseData.Flags; } }             //= movedata.flags
 	    private Category category { get { return _baseData.Category; }  }	//= movedata.category
         private Move thismove { get; set; }	                                //= move
 		private int totalpp { get; set; }
@@ -2807,104 +2951,6 @@ namespace PokemonUnity.Move
 		CLEVER,
 		TOUGH
 	}
-}
-
-namespace PokemonEssential
-{
-    public class Flags
-    {
-        /// <summary>
-        /// The move makes physical contact with the target
-        /// </summary>
-        public bool Contact;
-        /// <summary>
-        /// The target can use <see cref="Moves.Protect"/> or <see cref="Moves.Detect"/> to protect itself from the move
-        /// </summary>
-        public bool Protectable;
-        /// <summary>
-        /// The target can use <see cref="Moves.Magic_Coat"/> to redirect the effect of the move. 
-        /// Use this flag if the move deals no damage but causes a negative effect on the target.
-        /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
-        /// </summary>
-        public bool Reflectable;
-        /// <summary>
-        /// The target can use <see cref="Moves.Snatch"/> to steal the effect of the move. 
-        /// Use this flag for most moves that target the user.
-        /// (Flags <see cref="MagicCoat"/> and <see cref="Snatch"/> are mutually exclusive.)
-        /// </summary>
-        public bool Snatch;
-        /// <summary>
-        /// The move can be copied by <see cref="Moves.Mirror_Move"/>.
-        /// </summary>
-        public bool Mirror;
-        /// <summary>
-        /// The move has a 10% chance of making the opponent flinch if the user is holding a 
-        /// <see cref="PokemonUnity.Item.Items.KINGS_ROCK"/>/<see cref="PokemonUnity.Item.Items.RAZOR_FANG"/>. 
-        /// Use this flag for all damaging moves that don't already have a flinching effect.
-        /// </summary>
-        public bool Flinch;
-        /// <summary>
-        /// If the user is <see cref="Status.Frozen"/>, the move will thaw it out before it is used.
-        /// </summary>
-        /// Thaw
-        public bool Defrost;
-        /// <summary>
-        /// The move has a high critical hit rate.
-        /// </summary>
-        public bool Crit;
-        /// <summary>
-        /// The move is a biting move (powered up by the ability Strong Jaw).
-        /// </summary>
-        public bool Bite;
-        /// <summary>
-        /// The move is a punching move (powered up by the ability Iron Fist).
-        /// </summary>
-        public bool Punching;
-        /// <summary>
-        /// The move is a sound-based move.
-        /// </summary>
-        public bool SoundBased;
-        /// <summary>
-        /// The move is a powder-based move (Grass-type Pokémon are immune to them).
-        /// </summary>
-        public bool PowderBased;
-        /// <summary>
-        /// The move is a pulse-based move (powered up by the ability Mega Launcher).
-        /// </summary>
-        public bool PulseBased;
-        /// <summary>
-        /// The move is a bomb-based move (resisted by the ability Bulletproof).
-        /// </summary>
-        public bool BombBased;
-		public Flags(bool authentic = false, bool bite = false, bool bullet = false, bool charge = false, bool contact = false, bool crit = false, bool dance = false, bool defrost = false,
-					bool distance = false, bool flinch = false, bool gravity = false, bool heal = false, bool mirror = false, bool mystery = false, bool nonsky = false, bool powder = false,
-					bool protect = false, bool pulse = false, bool punch = false, bool recharge = false, bool reflectable = false, bool snatch = false, bool sound = false)
-		{
-			//this.Authentic = authentic;
-			this.Bite = bite;
-			this.BombBased = bullet;
-			//this.Charge = charge;
-			this.Contact = contact;
-			this.Crit = crit;
-			//this.Dance = dance;
-			this.Defrost = defrost;
-			//this.Distance = distance;
-			this.Flinch = flinch;
-			//this.Gravity = gravity;
-			//this.Heal = heal;
-			this.Mirror = mirror;
-			//this.Mystery = mystery;
-			//this.Nonsky = nonsky;
-			this.PowderBased = powder;
-			this.Protectable = protect;
-			this.PulseBased = pulse;
-			this.Punching = punch;
-			//this.Recharge = recharge;
-			this.Reflectable = reflectable;
-			this.Snatch = snatch;
-			this.SoundBased = sound;
-		}
-	}
 	//NOTYPE          = 0x01,
 	//IGNOREPKMNTYPES = 0x02,
 	//NOWEIGHTING     = 0x04,
@@ -2990,56 +3036,5 @@ namespace PokemonEssential
 		/// </summary>
 		/// ALLALLYFIELD
 		UserSide
-	}
-	public partial class MoveData
-	{
-		#region Variables
-		public Category Category { get; private set; }
-		public int num { get; private set; }
-		public Moves ID { get; private set; }
-		/// <summary>
-		/// The move's accuracy, as a percentage. 
-		/// An accuracy of 0 means the move doesn't perform an accuracy check 
-		/// (i.e. it cannot be evaded).
-		/// </summary>
-		public int Accuracy { get; private set; }
-		public int BaseDamage { get; private set; }
-		public int PP { get; private set; }
-		public int Priority { get; private set; }
-		public Flags Flags { get; private set; }
-		public Target Target { get; private set; }
-		public Types Type { get; private set; }
-		public Contest ContestType { get; private set; }
-		public short Function { get; private set; }
-		public string FunctionAsString { get; private set; }
-		/// <summary>
-		/// The probability that the move's additional effect occurs, as a percentage. 
-		/// If the move has no additional effect (e.g. all status moves), this value is 0.
-		/// Note that some moves have an additional effect chance of 100 (e.g.Acid Spray), 
-		/// which is not the same thing as having an effect that will always occur. 
-		/// Abilities like Sheer Force and Shield Dust only affect additional effects, not regular effects.
-		/// </summary>
-		public int Effects { get; private set; }
-		public string Name { get; private set; }
-		public string Description { get; private set; }
-		//ToDo: Missing from Database
-		public int Appeal { get; private set; }
-		public int Jamming { get; private set; }
-		#endregion
-
-		public MoveData()
-		{
-			Name = LanguageExtension.Translate(Text.Moves, ID.ToString()).Name;
-			Description = LanguageExtension.Translate(Text.Moves, ID.ToString()).Value;
-		}
-
-		internal MoveData getMove(Moves ID)
-		{
-			foreach (MoveData move in Database)
-			{
-				if (move.ID == ID) return move;
-			}
-			throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
-		}
 	}
 }
