@@ -30,9 +30,9 @@
 #*.META		diff=astextplain
 #*.prefab	diff=astextplain
 #*.PREFAB	diff=astextplain
-#*.asset		diff=astextplain
-#*.ASSET		diff=astextplain
-#*.unity		diff=astextplain
+#*.asset	diff=astextplain
+#*.ASSET	diff=astextplain
+#*.unity	diff=astextplain
 #*.UNITY 	diff=astextplain
 #*.anim		diff=astextplain
 #*.controller 	diff=astextplain
