@@ -574,7 +574,7 @@ public class SummaryHandler : MonoBehaviour
 
     private void updateMoveToLearn(string moveName)
     {
-        MoveData move = MoveDatabase.getMove(moveName);
+        MoveDataOld move = MoveDatabase.getMove(moveName);
         moveNewName.text = moveName;
         moveNewNameShadow.text = moveNewName.text;
         //moveNewType.sprite = Resources.Load<Sprite>("PCSprites/type" + move.getType().ToString());
@@ -598,7 +598,7 @@ public class SummaryHandler : MonoBehaviour
         }
         else
         {
-            MoveData selectedMove = MoveDatabase.getMove(moveName);
+            MoveDataOld selectedMove = MoveDatabase.getMove(moveName);
             selectedCategory.sprite =
                 Resources.Load<Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
             selectedPower.text = "" + selectedMove.getPower();

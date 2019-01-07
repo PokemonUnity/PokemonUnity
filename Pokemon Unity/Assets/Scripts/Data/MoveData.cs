@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MoveData {
+public class MoveDataOld {
 
     /// <summary>
     /// comments in brackets are the float parameters

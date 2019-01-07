@@ -385,7 +385,7 @@ public class BattleHandler : MonoBehaviour
 
     private CommandType[] command = new CommandType[6];
     private int[] commandTarget = new int[6];
-    private MoveData[] commandMove = new MoveData[6];
+    private MoveDataOld[] commandMove = new MoveDataOld[6];
 
     //Field effects
     private enum WeatherEffect

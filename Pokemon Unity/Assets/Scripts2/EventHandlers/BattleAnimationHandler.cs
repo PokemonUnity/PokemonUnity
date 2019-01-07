@@ -2172,7 +2172,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 			}
 			else
 			{
-				MoveData selectedMove = MoveDatabase.getMove(moveset[newPosition]);
+				MoveDataOld selectedMove = MoveDatabase.getMove(moveset[newPosition]);
 				pokemonMovesSelectedCategory.sprite =
 					Resources.Load<Sprite>("PCSprites/category" + selectedMove.getCategory().ToString());
 				pokemonMovesSelectedPower.text = "" + selectedMove.getPower();
@@ -2275,16 +2275,16 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 	/// BATTLE DATA MANAGEMENT
 	//
 	/// Calculates the base damage of an attack (before modifiers are applied).
-	private float calculateDamage(int attackerPosition, int targetPosition, MoveData move)
+	private float calculateDamage(int attackerPosition, int targetPosition, MoveDataOld move)
 	{
 		float baseDamage = 0;
-		if (move.getCategory() == MoveData.Category.PHYSICAL)
+		if (move.getCategory() == MoveDataOld.Category.PHYSICAL)
 		{
 			baseDamage = ((2f * (float)pokemon[attackerPosition].getLevel() + 10f) / 250f) *
 						 ((float)pokemonStats[0][attackerPosition] / (float)pokemonStats[1][targetPosition]) *
 						 (float)move.getPower() + 2f;
 		}
-		else if (move.getCategory() == MoveData.Category.SPECIAL)
+		else if (move.getCategory() == MoveDataOld.Category.SPECIAL)
 		{
 			baseDamage = ((2f * (float)pokemon[attackerPosition].getLevel() + 10f) / 250f) *
 						 ((float)pokemonStats[2][attackerPosition] / (float)pokemonStats[3][targetPosition]) *
@@ -2296,7 +2296,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 	}
 
 	/// Uses the attacker's total critical ratio to randomly determine whether a Critical Hit should happen or not
-	private bool calculateCritical(int attackerPosition, int targetPosition, MoveData move)
+	private bool calculateCritical(int attackerPosition, int targetPosition, MoveDataOld move)
 	{
 		int attackerCriticalRatio = 0;
 		if (focusEnergy[attackerPosition])
@@ -2304,13 +2304,13 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 			attackerCriticalRatio += 1;
 		}
 
-		if (move.hasMoveEffect(MoveData.Effect.Critical))
+		if (move.hasMoveEffect(MoveDataOld.Effect.Critical))
 		{
 			attackerCriticalRatio += 1;
 		}
 
 		bool applyCritical = false;
-		if (move.getCategory() != MoveData.Category.STATUS)
+		if (move.getCategory() != MoveDataOld.Category.STATUS)
 		{
 			if (attackerCriticalRatio == 0)
 			{
@@ -2344,7 +2344,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 
 
 	/// TEMPORARILY USED FOR EVERYTHING NOT COVERED BY AN EXISTING METHOD
-	private float calculateModifiedDamage(int attackerPosition, int targetPosition, MoveData move, float baseDamage,
+	private float calculateModifiedDamage(int attackerPosition, int targetPosition, MoveDataOld move, float baseDamage,
 		bool applyCritical)
 	{
 		float modifiedDamage = baseDamage;
@@ -2358,7 +2358,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		}
 
 		//apply Offence/Defence boosts 
-		if (move.getCategory() == MoveData.Category.PHYSICAL)
+		if (move.getCategory() == MoveDataOld.Category.PHYSICAL)
 		{
 			modifiedDamage *= calculateStatModifier(pokemonStatsMod[0][attackerPosition]);
 			if (!applyCritical)
@@ -2367,7 +2367,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 				modifiedDamage /= calculateStatModifier(pokemonStatsMod[1][targetPosition]);
 			}
 		}
-		else if (move.getCategory() == MoveData.Category.SPECIAL)
+		else if (move.getCategory() == MoveDataOld.Category.SPECIAL)
 		{
 			modifiedDamage *= calculateStatModifier(pokemonStatsMod[2][attackerPosition]);
 			if (!applyCritical)
@@ -2385,14 +2385,14 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		//reflect/lightScreen
 		if (!applyCritical)
 		{
-			if (move.getCategory() == MoveData.Category.PHYSICAL)
+			if (move.getCategory() == MoveDataOld.Category.PHYSICAL)
 			{
 				if (reflectTurns[Mathf.FloorToInt((float)targetPosition / 3f)] > 0)
 				{
 					modifiedDamage *= 0.5f;
 				}
 			}
-			else if (move.getCategory() == MoveData.Category.SPECIAL)
+			else if (move.getCategory() == MoveDataOld.Category.SPECIAL)
 			{
 				if (lightScreenTurns[Mathf.FloorToInt((float)targetPosition / 3f)] > 0)
 				{
@@ -3057,13 +3057,13 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 
 
 	/// Apply the Move Effect to the target pokemon if possible (with animation)
-	private IEnumerator applyEffect(int attackerPosition, int targetPosition, MoveData.Effect effect, float parameter)
+	private IEnumerator applyEffect(int attackerPosition, int targetPosition, MoveDataOld.Effect effect, float parameter)
 	{
 		yield return StartCoroutine(applyEffect(attackerPosition, targetPosition, effect, parameter, true));
 	}
 
 	/// Apply the Move Effect to the target pokemon if possible
-	private IEnumerator applyEffect(int attackerPosition, int targetPosition, MoveData.Effect effect, float parameter,
+	private IEnumerator applyEffect(int attackerPosition, int targetPosition, MoveDataOld.Effect effect, float parameter,
 		bool animate)
 	{
 		//most effects won't happen if a target has fainted.
@@ -3071,35 +3071,35 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		{
 			if (pokemon[targetPosition].getStatus() != PokemonOld.Status.FAINTED)
 			{
-				if (effect == MoveData.Effect.ATK)
+				if (effect == MoveDataOld.Effect.ATK)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 0, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.DEF)
+				else if (effect == MoveDataOld.Effect.DEF)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 1, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.SPA)
+				else if (effect == MoveDataOld.Effect.SPA)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 2, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.SPD)
+				else if (effect == MoveDataOld.Effect.SPD)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 3, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.SPE)
+				else if (effect == MoveDataOld.Effect.SPE)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 4, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.ACC)
+				else if (effect == MoveDataOld.Effect.ACC)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 5, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.EVA)
+				else if (effect == MoveDataOld.Effect.EVA)
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 6, parameter, animate));
 				}
-				else if (effect == MoveData.Effect.Burn)
+				else if (effect == MoveDataOld.Effect.Burn)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3113,7 +3113,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveData.Effect.Freeze)
+				else if (effect == MoveDataOld.Effect.Freeze)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3127,7 +3127,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveData.Effect.Paralyze)
+				else if (effect == MoveDataOld.Effect.Paralyze)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3141,7 +3141,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveData.Effect.Poison)
+				else if (effect == MoveDataOld.Effect.Poison)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3155,7 +3155,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveData.Effect.Toxic)
+				else if (effect == MoveDataOld.Effect.Toxic)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3169,7 +3169,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveData.Effect.Sleep)
+				else if (effect == MoveDataOld.Effect.Sleep)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3186,31 +3186,31 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 			}
 		}
 		//effects that happen regardless of target fainting or not
-		if (effect == MoveData.Effect.ATKself)
+		if (effect == MoveDataOld.Effect.ATKself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 0, parameter, animate));
 		}
-		else if (effect == MoveData.Effect.DEFself)
+		else if (effect == MoveDataOld.Effect.DEFself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 1, parameter, animate));
 		}
-		else if (effect == MoveData.Effect.SPAself)
+		else if (effect == MoveDataOld.Effect.SPAself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 2, parameter, animate));
 		}
-		else if (effect == MoveData.Effect.SPDself)
+		else if (effect == MoveDataOld.Effect.SPDself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 3, parameter, animate));
 		}
-		else if (effect == MoveData.Effect.SPEself)
+		else if (effect == MoveDataOld.Effect.SPEself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 4, parameter, animate));
 		}
-		else if (effect == MoveData.Effect.ACCself)
+		else if (effect == MoveDataOld.Effect.ACCself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 5, parameter, animate));
 		}
-		else if (effect == MoveData.Effect.EVAself)
+		else if (effect == MoveDataOld.Effect.EVAself)
 		{
 			yield return StartCoroutine(ModifyStat(attackerPosition, 6, parameter, animate));
 		}
@@ -3722,7 +3722,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		{
 			//Reset Turn Tasks
 			command = new CommandType[6];
-			commandMove = new MoveData[6];
+			commandMove = new MoveDataOld[6];
 			commandTarget = new int[6];
 			commandItem = new ItemDataOld[6];
 			commandPokemon = new PokemonOld[6];
@@ -4982,8 +4982,8 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 							//MOVE
 							//debug autoselect targetIndex (target selection not yet implemented)
 							int targetIndex = 3;
-							if (commandMove[movingPokemon].getTarget() == MoveData.Target.SELF ||
-								commandMove[movingPokemon].getTarget() == MoveData.Target.ADJACENTALLYSELF)
+							if (commandMove[movingPokemon].getTarget() == MoveDataOld.Target.SELF ||
+								commandMove[movingPokemon].getTarget() == MoveDataOld.Target.ADJACENTALLYSELF)
 							{
 								targetIndex = movingPokemon;
 							}
@@ -5091,16 +5091,16 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 									float superEffectiveModifier = -1;
 
 									//check for move effects that change how damage is calculated (Heal / Set Damage / etc.) (not yet implemented fully)
-									if (commandMove[movingPokemon].hasMoveEffect(MoveData.Effect.Heal))
+									if (commandMove[movingPokemon].hasMoveEffect(MoveDataOld.Effect.Heal))
 									{
 										yield return
 											StartCoroutine(Heal(targetIndex,
-												commandMove[movingPokemon].getMoveParameter(MoveData.Effect.Heal)));
+												commandMove[movingPokemon].getMoveParameter(MoveDataOld.Effect.Heal)));
 									}
-									else if (commandMove[movingPokemon].hasMoveEffect(MoveData.Effect.SetDamage))
+									else if (commandMove[movingPokemon].hasMoveEffect(MoveDataOld.Effect.SetDamage))
 									{
 										damageToDeal =
-											commandMove[movingPokemon].getMoveParameter(MoveData.Effect.SetDamage);
+											commandMove[movingPokemon].getMoveParameter(MoveDataOld.Effect.SetDamage);
 										//if parameter is 0, then use the pokemon's level
 										if (damageToDeal == 0)
 										{
@@ -5141,7 +5141,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 										damageToDeal *= superEffectiveModifier;
 										//apply offense/defense boosts.
 										//float damageBeforeMods = damageToDeal;
-										if (commandMove[movingPokemon].getCategory() == MoveData.Category.PHYSICAL)
+										if (commandMove[movingPokemon].getCategory() == MoveDataOld.Category.PHYSICAL)
 										{
 											if (applyCritical)
 											{
@@ -5170,7 +5170,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 												}
 											}
 										}
-										else if (commandMove[movingPokemon].getCategory() == MoveData.Category.SPECIAL)
+										else if (commandMove[movingPokemon].getCategory() == MoveDataOld.Category.SPECIAL)
 										{
 											if (applyCritical)
 											{
@@ -5241,7 +5241,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 									{
 										yield return StartCoroutine(drawTextAndWait("It had no effect...", 2.4f));
 									}
-									else if (commandMove[movingPokemon].getCategory() != MoveData.Category.STATUS)
+									else if (commandMove[movingPokemon].getCategory() != MoveDataOld.Category.STATUS)
 									{
 										if (applyCritical)
 										{
@@ -5327,7 +5327,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 									//Move effects should not apply to those pokemon that are immune to that move. not yet implemented
 
 									//apply move effects
-									MoveData.Effect[] moveEffects = commandMove[movingPokemon].getMoveEffects();
+									MoveDataOld.Effect[] moveEffects = commandMove[movingPokemon].getMoveEffects();
 									float[] moveEffectParameters = commandMove[movingPokemon].getMoveParameters();
 
 									//track these and prevent multiple statUp/Down anims
@@ -5338,7 +5338,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 									for (int i2 = 0; i2 < moveEffects.Length; i2++)
 									{
 										//Check for Chance effect. if failed, no further effects will run
-										if (moveEffects[i2] == MoveData.Effect.Chance)
+										if (moveEffects[i2] == MoveDataOld.Effect.Chance)
 										{
 											if (Random.value > moveEffectParameters[i2])
 											{
@@ -5350,13 +5350,13 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 											//Check these booleans to prevent running an animation twice for one pokemon.
 											bool animate = false;
 											//check if statUp/Down Effect
-											if (moveEffects[i2] == MoveData.Effect.ATK ||
-												moveEffects[i2] == MoveData.Effect.DEF ||
-												moveEffects[i2] == MoveData.Effect.SPA ||
-												moveEffects[i2] == MoveData.Effect.SPD ||
-												moveEffects[i2] == MoveData.Effect.SPE ||
-												moveEffects[i2] == MoveData.Effect.ACC ||
-												moveEffects[i2] == MoveData.Effect.EVA)
+											if (moveEffects[i2] == MoveDataOld.Effect.ATK ||
+												moveEffects[i2] == MoveDataOld.Effect.DEF ||
+												moveEffects[i2] == MoveDataOld.Effect.SPA ||
+												moveEffects[i2] == MoveDataOld.Effect.SPD ||
+												moveEffects[i2] == MoveDataOld.Effect.SPE ||
+												moveEffects[i2] == MoveDataOld.Effect.ACC ||
+												moveEffects[i2] == MoveDataOld.Effect.EVA)
 											{
 												//if statUp, and haven't run statUp yet, set statUpRun bool to true;
 												if (moveEffectParameters[i2] > 0 && !statUpRun)
@@ -5371,13 +5371,13 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 												}
 											}
 											//check if Self statUp/Down Effect
-											else if (moveEffects[i2] == MoveData.Effect.ATKself ||
-													 moveEffects[i2] == MoveData.Effect.DEFself ||
-													 moveEffects[i2] == MoveData.Effect.SPAself ||
-													 moveEffects[i2] == MoveData.Effect.SPDself ||
-													 moveEffects[i2] == MoveData.Effect.SPEself ||
-													 moveEffects[i2] == MoveData.Effect.ACCself ||
-													 moveEffects[i2] == MoveData.Effect.EVAself)
+											else if (moveEffects[i2] == MoveDataOld.Effect.ATKself ||
+													 moveEffects[i2] == MoveDataOld.Effect.DEFself ||
+													 moveEffects[i2] == MoveDataOld.Effect.SPAself ||
+													 moveEffects[i2] == MoveDataOld.Effect.SPDself ||
+													 moveEffects[i2] == MoveDataOld.Effect.SPEself ||
+													 moveEffects[i2] == MoveDataOld.Effect.ACCself ||
+													 moveEffects[i2] == MoveDataOld.Effect.EVAself)
 											{
 												//if statUp, and haven't run statUp yet, set statUpRun bool to true;
 												if (moveEffectParameters[i2] > 0 && !statUpSelfRun)

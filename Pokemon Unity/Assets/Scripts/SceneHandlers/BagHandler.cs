@@ -441,7 +441,7 @@ public class BagHandler : MonoBehaviour
             }
             else if (!shopMode)
             {
-                MoveData selectedTM = MoveDatabase.getMove(selectedItem);
+                MoveDataOld selectedTM = MoveDatabase.getMove(selectedItem);
                 //tmType.texture = Resources.Load<Texture>("PCSprites/type" + selectedTM.getType().ToString());
                 //tmCategory.texture = Resources.Load<Texture>("PCSprites/category" + selectedTM.getCategory().ToString());
                 tmPower.text = "" + selectedTM.getPower();
