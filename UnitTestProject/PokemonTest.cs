@@ -453,6 +453,12 @@ namespace Tests
 
         #region Misc
         [TestMethod]
+		public void Pokemon_WildPokemon_With_Item()
+		{
+			//Maybe this one isnt needed?... 
+			Assert.Fail();
+		}
+        [TestMethod]
         public void Pokemon_TestPokemon_SetForm_To_Form2()
         {
             Pokemon pokemon = new Pokemon(Pokemons.NONE);
