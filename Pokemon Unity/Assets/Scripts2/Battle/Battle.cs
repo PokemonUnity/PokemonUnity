@@ -1290,7 +1290,7 @@ public class Battle : UnityUtilityIntegration
 		{
 			if(Species != Pokemons.NONE)
 			{
-				calcStats();
+				//calcStats(); //Not needed since fetching stats from base ( Battler => Pokemon )
 				//ToDo: Uncomment and fetch data from baseClass
 				//Level		= pokemon.Level;
 				//HP		= pokemon.HP;

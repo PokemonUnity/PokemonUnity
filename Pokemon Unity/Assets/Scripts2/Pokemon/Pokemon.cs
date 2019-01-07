@@ -19,19 +19,20 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// Current Total HP
     /// </summary>
     public int TotalHP { get {
+			if (_base.BaseStatsHP == 1) return 1;
 			return //totalHP;
 				((2 * _base.BaseStatsHP + IV[0] + (EV[0] / 4)) * Level) / 100 + Level + 10; } }
     /// <summary>
     /// Current HP
     /// </summary>
-    private int hp = 1;
+    private int hp { get; set; }
     /// <summary>
     /// Current Attack Stat
     /// </summary>
     public virtual int ATK {
 		get
 		{
-			return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
+			return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[1] + (EV[1] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
 		}
 	}
     /// <summary>
@@ -39,7 +40,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// </summary>
     public virtual int DEF { get
 		{
-			return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
+			return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[2] + (EV[2] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
 		}
 	}
     /// <summary>
@@ -48,7 +49,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public virtual int SPA {
 		get
 		{
-			return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
+			return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[4] + (EV[4] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
 		}
 	}
     /// <summary>
@@ -57,7 +58,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public virtual int SPD {
 		get
 		{
-			return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
+			return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[5] + (EV[5] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
 		}
 	}
     /// <summary>
@@ -66,7 +67,7 @@ public partial class Pokemon //: ePokemons //PokemonData
     public virtual int SPE {
 		get
 		{
-			return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[0] + (EV[0] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
+			return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[3] + (EV[3] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
 		}
 	}
     /// <summary>
@@ -82,7 +83,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// <summary>
 	/// Species (National Pokedex number)
 	/// </summary>
-	/// ToDo: Fetch from PokemonData : _base.PokeId
 	public Pokemons Species { get { return _base.ID; } }
     /// <summary>
     /// Held item
@@ -1863,37 +1863,6 @@ public partial class Pokemon //: ePokemons //PokemonData
 		}
 		return false; //returns false if total or relevant EV cap was reached before running.
 	}*/
-	/// <summary>
-	/// Returns the maximum HP of this Pokémon.
-	/// </summary>
-	/// <param name="baseHP"></param>
-	/// <param name="level"></param>
-	/// <param name="iv"></param>
-	/// <param name="ev"></param>
-	/// <returns></returns>
-	public int calcHP(int baseHP, int level, int iv, int ev)
-	{
-		if (baseHP == 1) return 1;
-		return (int)Math.Floor((decimal)(baseHP * 2 + iv + (ev >> 2)) * level / 100) + level + 10;
-	}
-	/// <summary>
-	/// Returns the specified stat of this Pokémon (not used for total HP).
-	/// </summary>
-	/// <param name="baseStat"></param>
-	/// <param name="level"></param>
-	/// <param name="iv"></param>
-	/// <param name="ev"></param>
-	/// <param name="pv"></param>
-	/// <returns></returns>
-	public int calcStat(int baseStat, int level, int iv, int ev, int pv)
-	{
-		return (int)Math.Floor((Math.Floor((decimal)(baseStat * 2 + iv + (ev >> 2)) * level / 100) + 5) * pv / 100);
-	}
-	public void calcStats()
-	{
-		int[] pvalues = new int[] { 100, 100, 100, 100, 100 };
-		//Nature
-	}
 	#endregion
 
 	#region Nested Classes
