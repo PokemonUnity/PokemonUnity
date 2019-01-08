@@ -5,7 +5,6 @@ using System.Text;
 //using System.ComponentModel.DataAnnotations;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
-using PokemonUnity.Effects;
 using PokemonUnity.Item;
 using PokemonUnity.Move;
 
@@ -123,7 +122,7 @@ public class Function
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage>0)
 			{
-				attacker.pbReduceHP((int)Math.Round(attacker.TotalHP / 4.0));
+				attacker.pbReduceHP((int)Math.Round(attacker.TotalHP / 4.0f));
 				//battle.pbDisplay(_INTL("{1} is damaged by recoil!", attacker.pbThis));
 			}
 		}
@@ -1991,7 +1990,7 @@ public class Function
 	  public object pbModifyDamage(damagemult, attacker, opponent){
 		if isConst? (@id, PBMoves,:BULLDOZE) &&
 		   @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  return (int)Math.Round(damagemult/2.0)
+		  return (int)Math.Round(damagemult/2.0f)
 		}
 		return damagemult
 	  }
@@ -3485,7 +3484,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		ret = pbEffectFixedDamage([(attacker.lastHPLost * 1.5).floor, 1].max, attacker, opponent, hitnum, alltargets, showanimation)
+		ret = pbEffectFixedDamage([(attacker.lastHPLost * 1.5f).floor, 1].max, attacker, opponent, hitnum, alltargets, showanimation)
 		return ret
 	  }
 	}
@@ -3521,7 +3520,7 @@ public class Function
 	{
 		public object pbModifyDamage(damagemult, attacker, opponent){
 		if PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCB // Dive
-		  return (int)Math.Round(damagemult*2.0)
+		  return (int)Math.Round(damagemult*2.0f)
 		}
 		return damagemult
 	  }
@@ -3540,10 +3539,10 @@ public class Function
 
 		ret=damagemult
 		if PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCA // Dig
-		  ret= (int)Math.Round(damagemult*2.0)
+		  ret= (int)Math.Round(damagemult*2.0f)
 		}
 		if @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  ret=(int)Math.Round(damagemult/2.0)
+		  ret=(int)Math.Round(damagemult/2.0f)
 		}
 		return ret
 	  }
@@ -3605,7 +3604,7 @@ public class Function
 		  @battle.field.effects[PBEffects::FusionBolt]= false
 
 		  @doubled= true
-		  return (int)Math.Round(damagemult*2.0)
+		  return (int)Math.Round(damagemult*2.0f)
 		}
 		return damagemult
 	  }
@@ -3638,7 +3637,7 @@ public class Function
 		public object pbBaseDamageMultiplier(damagemult, attacker, opponent){
 		if @battle.field.effects[PBEffects::FusionFlare]
 		  @battle.field.effects[PBEffects::FusionFlare]= false
-		  return (int)Math.Round(damagemult*2.0)
+		  return (int)Math.Round(damagemult*2.0f)
 		}
 		return damagemult
 	  }
@@ -3886,7 +3885,7 @@ public class Function
 	{
 		public object pbBaseDamageMultiplier(damagemult, attacker, opponent){
 		if attacker.item==0
-		  return (int)Math.Round(damagemult*2.0)
+		  return (int)Math.Round(damagemult*2.0f)
 		}
 		return damagemult
 	  }
@@ -4221,7 +4220,7 @@ public class Function
 		  ret*=2
 		}
 		if @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  ret=(int)Math.Round(ret/2.0)
+		  ret=(int)Math.Round(ret/2.0f)
 		}
 		return ret
 	  }
@@ -5895,7 +5894,7 @@ public class Function
 		if @battle.pbWeather!=0 &&
 		   @battle.pbWeather!=PBWeather::SUNNYDAY &&
 		   @battle.pbWeather!=PBWeather::HARSHSUN
-		  return (int)Math.Round(damagemult*0.5)
+		  return (int)Math.Round(damagemult*0.5f)
 		}
 		return damagemult
 	  }
@@ -6386,7 +6385,7 @@ public class Function
 
 	  public object pbModifyDamage(damagemult, attacker, opponent){
 		if PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCB // Dive
-		  return (int)Math.Round(damagemult*2.0)
+		  return (int)Math.Round(damagemult*2.0f)
 		}
 		return damagemult
 	  }
@@ -6784,7 +6783,7 @@ public class Function
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  else if attacker.effects[PBEffects::HealBlock]==0
 
-			hpgain= (hpgain * 1.3).floor if attacker.hasWorkingItem(:BIGROOT)
+			hpgain= (hpgain * 1.3f).floor if attacker.hasWorkingItem(:BIGROOT)
 
 			attacker.pbRecoverHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
@@ -6815,7 +6814,7 @@ public class Function
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  else if attacker.effects[PBEffects::HealBlock]==0
 
-			hpgain= (hpgain * 1.3).floor if attacker.hasWorkingItem(:BIGROOT)
+			hpgain= (hpgain * 1.3f).floor if attacker.hasWorkingItem(:BIGROOT)
 
 			attacker.pbRecoverHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
@@ -7329,7 +7328,7 @@ public class Function
 		if USENEWBATTLEMECHANICS &&
 		   !@battle.pbIsUnlosableItem(opponent, opponent.item)
 		   // Still boosts damage even if opponent has Sticky Hold
-		  return (int)Math.Round(damagemult*1.5)
+		  return (int)Math.Round(damagemult*1.5f)
 		}
 		return damagemult
 	  }
@@ -7833,7 +7832,7 @@ public class Function
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
-			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/4.0))
+			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/4.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7855,7 +7854,7 @@ public class Function
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
-			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/3.0))
+			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7878,7 +7877,7 @@ public class Function
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
-			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/2.0))
+			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/2.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7901,7 +7900,7 @@ public class Function
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
-			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/3.0))
+			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7931,7 +7930,7 @@ public class Function
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
-			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/3.0))
+			attacker.pbReduceHP((int)Math.Round(turneffects[PBEffects::TotalDamage]/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -10173,7 +10172,7 @@ public class Function
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  else if attacker.effects[PBEffects::HealBlock]==0
 
-			hpgain= (hpgain * 1.3).floor if attacker.hasWorkingItem(:BIGROOT)
+			hpgain= (hpgain * 1.3f).floor if attacker.hasWorkingItem(:BIGROOT)
 
 			attacker.pbRecoverHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
