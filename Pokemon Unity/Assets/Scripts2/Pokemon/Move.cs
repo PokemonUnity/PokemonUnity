@@ -93,7 +93,7 @@ public partial class Move //: MoveData
 		x003 = 0x003,
 
 		/// <summary>
-		/// Makes the target drowsy; it will fall asleep at the  of the next turn. (Yawn)
+		/// Makes the target drowsy; it will fall asleep at the end of the next turn. (Yawn)
 		/// </summary>
 		x004 = 0x004,
 
@@ -1178,13 +1178,13 @@ public partial class Move //: MoveData
 
 		/// <summary>
 		/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
-		/// at  of each round.
+		/// at end of each round.
 		/// </summary>
 		x0CF = 0x0CF,
 
 		/// <summary>
 		/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
-		/// at  of each round. (Whirlpool)
+		/// at end of each round. (Whirlpool)
 		/// Power is doubled if target is using Dive.
 		/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
 		/// </summary>
@@ -1196,7 +1196,7 @@ public partial class Move //: MoveData
 		x0D1 = 0x0D1,
 
 		/// <summary>
-		/// User must use this move for 1 or 2 more rounds. At , user becomes confused.
+		/// User must use this move for 1 or 2 more rounds. At end, user becomes confused.
 		/// (Outrage, Petal Dange, Thrash)
 		/// </summary>
 		x0D2 = 0x0D2,
@@ -1225,7 +1225,7 @@ public partial class Move //: MoveData
 		x0D6 = 0x0D6,
 
 		/// <summary>
-		/// Battler in user's position is healed by 1/2 of its max HP, at the  of the
+		/// Battler in user's position is healed by 1/2 of its max HP, at the end of the
 		/// next round. (Wish)
 		/// </summary>
 		x0D7 = 0x0D7,
@@ -1242,19 +1242,19 @@ public partial class Move //: MoveData
 		x0D9 = 0x0D9,
 
 		/// <summary>
-		/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the  of each round.
+		/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the end of each round.
 		/// (Aqua Ring)
 		/// </summary>
 		x0DA = 0x0DA,
 
 		/// <summary>
-		/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the  of each
+		/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the end of each
 		/// round, and cannot flee or switch out. (Ingrain)
 		/// </summary>
 		x0DB = 0x0DB,
 
 		/// <summary>
-		/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the  of each round,
+		/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the end of each round,
 		/// and the Pokémon in the user's position gains the same amount. (Leech Seed)
 		/// </summary>
 		x0DC = 0x0DC,
@@ -1373,7 +1373,7 @@ public partial class Move //: MoveData
 		x0EF = 0x0EF,
 
 		/// <summary>
-		/// Target drops its item. It regains the item at the  of the battle. (Knock Off)
+		/// Target drops its item. It regains the item at the end of the battle. (Knock Off)
 		/// If target has a losable item, damage is multiplied by 1.5.
 		/// </summary>
 		x0F0 = 0x0F0,
@@ -1538,7 +1538,7 @@ public partial class Move //: MoveData
 		/// User is not Ghost: Decreases the user's Speed, increases the user's Attack &
 		/// Defense by 1 stage each.
 		/// User is Ghost: User loses 1/2 of max HP, and curses the target.
-		/// Cursed Pokémon lose 1/4 of their max HP at the  of each round.
+		/// Cursed Pokémon lose 1/4 of their max HP at the end of each round.
 		/// (Curse)
 		/// </summary>
 		x10D = 0x10D,
@@ -1549,7 +1549,7 @@ public partial class Move //: MoveData
 		x10E = 0x10E,
 
 		/// <summary>
-		/// Target will lose 1/4 of max HP at  of each round, while asleep. (Nightmare)
+		/// Target will lose 1/4 of max HP at end of each round, while asleep. (Nightmare)
 		/// </summary>
 		x10F = 0x10F,
 
@@ -1620,8 +1620,8 @@ public partial class Move //: MoveData
 		/// <summary>
 		/// Hits airborne semi-invulnerable targets. (Sky Uppercut)
 		/// </summary>
-		x11B = 0x11B,
 		/// Handled in Battler's pbSuccessCheck, do not edit!
+		x11B = 0x11B,
 
 		/// <summary>
 		/// Grounds the target while it remains active. (Smack Down, Thousand Arrows)
@@ -1863,7 +1863,7 @@ public partial class Move //: MoveData
 		x151 = 0x151,
 
 		/// <summary>
-		/// No Pokémon can switch out or flee until the  of the next round, as long as
+		/// No Pokémon can switch out or flee until the end of the next round, as long as
 		/// the user remains active. (Fairy Lock)
 		/// </summary>
 		x152 = 0x152,
@@ -1882,7 +1882,7 @@ public partial class Move //: MoveData
 
 		/// <summary>
 		/// For 5 rounds, creates a grassy terrain which boosts Grass-type moves and heals
-		/// Pokémon at the  of each round. Affects non-airborne Pokémon only.
+		/// Pokémon at the end of each round. Affects non-airborne Pokémon only.
 		/// (Grassy Terrain)
 		/// </summary>
 		x155 = 0x155,

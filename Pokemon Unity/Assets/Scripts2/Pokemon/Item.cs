@@ -92,10 +92,10 @@ public class Item
 		this.ItemCategory		= item.ItemCategory;
 		this.ItemFlag			= item.ItemFlag;
 		this.ItemFlingEffect	= item.ItemFlingEffect;
-		//this.Name				= item.ItemPocket;
-		//this.Plural				= item.ItemPocket;
-		//this.Description		= item.ItemPocket;
-		if (IsMail) this.mail = new Mail(itemId);
+		//this.Name				= ToDo: load from translation
+		//this.Plural			= ToDo: load from translation
+		//this.Description		= ToDo: load from translation
+		if (IsMail) this.mail	= new Mail(itemId);
     }
 
 	public static Item GetItem(Items item)

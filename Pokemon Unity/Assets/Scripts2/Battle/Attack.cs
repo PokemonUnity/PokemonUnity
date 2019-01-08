@@ -218,7 +218,7 @@ public class Function
 
 
 	/// <summary>
-	/// Makes the target drowsy; it will fall asleep at the } of the next turn. (Yawn)
+	/// Makes the target drowsy; it will fall asleep at the end of the next turn. (Yawn)
 	/// <summary>
 	public class PokeBattle_Move_004 : PokeBattle_Move
 	{
@@ -755,6 +755,7 @@ public class Function
 			//battle.pbDisplay(_INTL("{1} healed its burn!", attacker.pbThis))  
 		  else if t==PBStatuses::POISON
 			//battle.pbDisplay(_INTL("{1} cured its poisoning!", attacker.pbThis))  
+		  else if t==PBStatuses::PARALYSIS
 			//battle.pbDisplay(_INTL("{1} cured its paralysis!", attacker.pbThis))  
 		  }
 		  return 0
@@ -2216,6 +2217,7 @@ public class Function
 		   abilityname = PBAbilities.getName(opponent.ability)
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!",opponent.pbThis,abilityname))
+		else if opponent.pbReduceStat(PBStats::ATTACK,1, attacker,false, self, showanim)
 
 		  ret=0; showanim=false
 		}
@@ -2224,6 +2226,7 @@ public class Function
 		   abilityname = PBAbilities.getName(opponent.ability)
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Defense loss!",opponent.pbThis,abilityname))
+		else if opponent.pbReduceStat(PBStats::DEFENSE,1, attacker,false, self, showanim)
 
 		  ret=0; showanim=false
 		}
@@ -2888,6 +2891,7 @@ public class Function
 		}
 		if @battle.field.effects[PBEffects::ElectricTerrain]>0
 		  type=getConst(PBTypes,:ELECTRIC) if hasConst? (PBTypes,:ELECTRIC)
+		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
 
 		  type= getConst(PBTypes,:GRASS) if hasConst?(PBTypes,:GRASS)
 
@@ -4171,7 +4175,7 @@ public class Function
 
 		  @calcbasedmg=80
 
-		elsif r<8
+		else if r<8
 
 		  @calcbasedmg=120
 		else
@@ -4553,7 +4557,7 @@ public class Function
 		  if (isConst? (attacker.item, PBItems,:DRACOPLATE)) return (getConst(PBTypes,:DRAGON) || 0)  ;
 		  if (isConst? (attacker.item, PBItems,:DREADPLATE)) return (getConst(PBTypes,:DARK) || 0)    ;
 		  if (isConst? (attacker.item, PBItems,:PIXIEPLATE)) return (getConst(PBTypes,:FAIRY) || 0)   ;
-		elsif isConst? (@id, PBMoves,:TECHNOBLAST)
+		else if isConst? (@id, PBMoves,:TECHNOBLAST)
 		  if (isConst? (attacker.item, PBItems,:SHOCKDRIVE)) return getConst(PBTypes,:ELECTRIC);
 		  if (isConst? (attacker.item, PBItems,:BURNDRIVE)) return getConst(PBTypes,:FIRE)    ;
 		  if (isConst? (attacker.item, PBItems,:CHILLDRIVE)) return getConst(PBTypes,:ICE)     ;
@@ -4675,7 +4679,7 @@ public class Function
 			opponent.pbParalyze(attacker)
 		  }
 		  return
-		elsif @battle.field.effects[PBEffects::GrassyTerrain]>0
+		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
 		  if opponent.pbCanSleep?(attacker,false, self)
 
 			opponent.pbSleep
@@ -7590,7 +7594,7 @@ public class Function
 	public class PokeBattle_Move_0F7 : PokeBattle_Move
 	{
 		public object flingarray
-		return {
+		return { //keyvaluepair<item,byte>
 		   130 => [:IRONBALL],
 		   100 => [:ARMORFOSSIL,:CLAWFOSSIL,:COVERFOSSIL,:DOMEFOSSIL,:HARDSTONE,
 				   :HELIXFOSSIL,:JAWFOSSIL,:OLDAMBER,:PLUMEFOSSIL,:RAREBONE,
