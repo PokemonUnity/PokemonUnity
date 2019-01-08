@@ -6301,7 +6301,7 @@ public class Function
 	  }
 
 	  public object pbTypeModifier(type, attacker, opponent){
-		if (opponent.pbHasType? (:FLYING)) return 0;
+		if (opponent.hasType(Types.FLYING)) return 0;
 		if (!attacker.hasMoldBreaker &&
 		   opponent.hasWorkingAbility(Abilities.LEVITATE) && 
 		   !opponent.effects[PBEffects::SmackDown]) return 0;
@@ -6751,7 +6751,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} evaded the attack!",opponent.pbThis))
 		  return -1
 		}
-		if opponent.pbHasType? (:GRASS)
+		if opponent.hasType(Types.GRASS)
 		  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 		  return -1
 		}
@@ -7275,7 +7275,7 @@ public class Function
 		  if opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute &&
 			 !opponent.isFainted()
 			if opponent.effects[PBEffects::MeanLook]<0 &&
-			   (!USENEWBATTLEMECHANICS || !opponent.pbHasType? (:GHOST))
+			   (!USENEWBATTLEMECHANICS || !opponent.hasType(Types.GHOST))
 			  opponent.effects[PBEffects::MeanLook]=attacker.index
 			  //battle.pbDisplay(_INTL("{1} can no longer escape!", opponent.pbThis))
 			}
@@ -7287,7 +7287,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if USENEWBATTLEMECHANICS && opponent.pbHasType? (:GHOST)
+		if USENEWBATTLEMECHANICS && opponent.hasType(Types.GHOST)
 		  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 		  return -1
 		}
@@ -8608,7 +8608,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		failed=false
-		if attacker.pbHasType? (:GHOST)
+		if attacker.hasType(Types.GHOST)
 		  if opponent.effects[PBEffects::Curse] ||
 			 opponent.pbOwnSide.effects[PBEffects::CraftyShield]
 			failed = true
@@ -9601,7 +9601,7 @@ public class Function
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	 if (!i || i.isFainted()) continue; //next
-	 if (!i.pbHasType? (:GRASS)) continue; //next
+	 if (!i.hasType(Types.GRASS)) continue; //next
 		  next if i.isAirborne? (attacker.hasMoldBreaker)
 		    if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 				  !i.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)) continue;//next
@@ -9638,7 +9638,7 @@ public class Function
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	next if !i || i.isFainted()
-	next if !i.pbHasType? (:GRASS)
+	next if !i.hasType(Types.GRASS)
 		  next if !i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
 			   didsomething = true
@@ -9736,7 +9736,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)) ||
-		   !hasConst? (PBTypes,:GHOST) || opponent.pbHasType? (:GHOST) ||
+		   !hasConst? (PBTypes,:GHOST) || opponent.hasType(Types.GHOST) ||
 		   isConst? (opponent.ability, PBAbilities,:MULTITYPE)
 		  //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -9768,7 +9768,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} evaded the attack!",opponent.pbThis))
 		  return -1
 		}
-		if !hasConst? (PBTypes,:GRASS) || opponent.pbHasType? (:GRASS) ||
+		if !hasConst? (PBTypes,:GRASS) || opponent.hasType(Types.GRASS) ||
 		   isConst? (opponent.ability, PBAbilities,:MULTITYPE)
 		  //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
