@@ -775,10 +775,10 @@ public class Function
 		}
 		activepkmn =[]
 		for i in @battle.battlers
-		  next if attacker.pbIsOpposing? (i.index) || i.isFainted()
+		  if (attacker.pbIsOpposing? (i.index) || i.isFainted()) continue; //next
 		   activepkmn.push(i.pokemonIndex)
 
-		  next if USENEWBATTLEMECHANICS && i.index!=attacker.index && 
+		  if (USENEWBATTLEMECHANICS && i.index!=attacker.index && ) continue; //next
 			 pbTypeImmunityByAbility(pbType(@type, attacker, i), attacker, i)
 		  case i.status
 		  when PBStatuses::PARALYSIS
@@ -801,8 +801,8 @@ public class Function
 		}
 		party = @battle.pbParty(attacker.index) // NOTE: Considers both parties in multi battles
 		for (int i = 0; i < party.length; i++){ 
-		  next if activepkmn.include? (i)
-		   next if !party[i] || party[i].egg? || party[i].hp<=0
+		  if (activepkmn.include? (i)) continue; //next
+		   if (!party[i] || party[i].egg? || party[i].hp<=0) continue; //next
 		  case party[i].status
 		  when PBStatuses::PARALYSIS
 			//battle.pbDisplay(_INTL("{1} was cured of paralysis.", party[i].name))
@@ -2773,9 +2773,9 @@ public class Function
 		}
 		types =[]
 		foreach (var i in attacker.moves){ 
-		  next if i.id==@id
-		  next if PBTypes.isPseudoType? (i.type)
-		   next if attacker.pbHasType? (i.type)
+		  if (i.id==@id) continue; //next
+		  if (PBTypes.isPseudoType? (i.type)) continue; //next
+		   if (attacker.pbHasType? (i.type)) continue; //next
 		  if (!types.include? (i.type)){
 			 types.push(i.type)
 			break if USENEWBATTLEMECHANICS
@@ -2831,8 +2831,8 @@ public class Function
 		  return -1
 		}
 		for (int i = 0; i < BTypes.maxValue; i++){ 
-		  next if PBTypes.isPseudoType? (i)
-		   next if attacker.pbHasType? (i)
+		  if (PBTypes.isPseudoType? (i)) continue; //next
+		   if (attacker.pbHasType? (i)) continue; //next
 			types.push(i) if PBTypes.getEffectiveness(atype, i)<2 
 		}
 		if (types.length==0){
@@ -4876,7 +4876,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -4924,7 +4924,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -4976,7 +4976,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -5273,9 +5273,9 @@ public class Function
 		choices=[]
 		for (int i = 0; i < 4; i++){ 
 		  found=false
-		  next if attacker.moves[i].id==0
+		  if (attacker.moves[i].id==0) continue; //next
 		  found=true if blacklist.include? (attacker.moves[i].function)
-		  next if found
+		  if (found) continue; //next
 		  choices.push(i) if @battle.pbCanChooseMove? (attacker.index, i,false,true)
 		}
 		if (choices.length==0){
@@ -5359,8 +5359,8 @@ public class Function
 		for (int i = 0; i < party.length; i++){ 
 		  if (i!=attacker.pokemonIndex && party[i] && !(USENEWBATTLEMECHANICS && party[i].egg?)){
 			foreach (var i in party[i].moves){ 
-			  next if isConst? (j.type, PBTypes,:SHADOW)
-			  next if j.id==0
+			  if (isConst? (j.type, PBTypes,:SHADOW)) continue; //next
+			  if (j.id==0) continue; //next
 			  found=false
 			  moves.push(j.id) if !blacklist.include? (PBMoveData.new(j.id).function)
 			}
@@ -5432,7 +5432,7 @@ public class Function
 	]
 	i=0; loop do break unless i<1000
 		  move=@battle.pbRandom(PBMoves.maxValue)+1
-		  next if isConst? (PBMoveData.new(move).type,PBTypes,:SHADOW)
+		  if (isConst? (PBMoveData.new(move).type,PBTypes,:SHADOW)) continue; //next
 		  found=false
 		  if (blacklist.include? (PBMoveData.new(move).function)){
 			found=true
@@ -7084,7 +7084,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -9000,7 +9000,7 @@ public class Function
 		@battle.field.effects[PBEffects::Gravity]=5
 		for (int i = 0; i < 4; i++){ 
 		  poke=@battle.battlers[i]
-		  next if !poke
+		  if (!poke) continue; //next
 		  if (PBMoveData.new(poke.effects[PBEffects::TwoTurnAttack]).function==0xC9 || // Fly){
 			 PBMoveData.new(poke.effects[PBEffects::TwoTurnAttack]).function==0xCC || // Bounce
 			 PBMoveData.new(poke.effects[PBEffects::TwoTurnAttack]).function==0xCE    // Sky Drop
@@ -9320,7 +9320,7 @@ public class Function
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		counter = 0; nummoves=0
 		for move in attacker.moves
-		  next if move.id<=0
+		  if (move.id<=0) continue; //next
 		  counter+=1 if move.id!=@id && !attacker.movesUsed.include? (move.id)
 		   nummoves+=1
 		}
@@ -9601,7 +9601,7 @@ public class Function
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	 if (!i || i.isFainted()) continue; //next
 	 if (!i.hasType(Types.GRASS)) continue; //next
-		  next if i.isAirborne? (attacker.hasMoldBreaker)
+		  if (i.isAirborne? (attacker.hasMoldBreaker)) continue; //next
 		    if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 				  !i.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)) continue;//next
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
@@ -9636,9 +9636,9 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
-	next if !i || i.isFainted()
-	next if !i.hasType(Types.GRASS)
-		  next if !i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
+	if (!i || i.isFainted()) continue; //next
+	if (!i.hasType(Types.GRASS)) continue; //next
+		  if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)) continue; //next
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
 			   didsomething = true
 
@@ -9667,9 +9667,9 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
-	next if !i || i.isFainted()
-	next if !i.status==PBStatuses::POISON
-	next if !i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self) &&
+	if (!i || i.isFainted()) continue; //next
+	if (!i.status==PBStatuses::POISON) continue; //next
+	if (!i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self) &&) continue; //next
 				  !i.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,self) &&
 				  !i.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
@@ -9846,7 +9846,7 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		unmoved=false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -9932,7 +9932,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -9980,7 +9980,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
@@ -10028,7 +10028,7 @@ public class Function
 		}
 		unmoved = false
 		for poke in @battle.battlers
-		  next if poke.index==attacker.index
+		  if (poke.index==attacker.index) continue; //next
 		  if (@battle.choices[poke.index][0]==1 && // Chose a move){
 			 !poke.hasMovedThisRound?
 			unmoved = true; break
