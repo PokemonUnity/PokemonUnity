@@ -805,7 +805,7 @@ public class Function
 
 		}
 		party = @battle.pbParty(attacker.index) // NOTE: Considers both parties in multi battles
-		for i in 0...party.length
+		for (int i = 0; i < party.length; i++){ 
 		  next if activepkmn.include? (i)
 		   next if !party[i] || party[i].egg? || party[i].hp<=0
 		  case party[i].status
@@ -1651,8 +1651,8 @@ public class Function
 		}
 
 		array=[]
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		array.push(i) if opponent.pbCanIncreaseStatStage? (i, attacker,false,self)
 		}
 		if array.length==0
@@ -2411,7 +2411,7 @@ public class Function
 	public class PokeBattle_Move_051 : PokeBattle_Move
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 		  @battle.battlers[i].stages[PBStats::ATTACK]   = 0
 		  @battle.battlers[i].stages[PBStats::DEFENSE]  = 0
 		  @battle.battlers[i].stages[PBStats::SPEED]    = 0
@@ -2481,8 +2481,8 @@ public class Function
 		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		attacker.stages[i],opponent.stages[i]=opponent.stages[i],attacker.stages[i]
 	  }
 
@@ -2504,8 +2504,8 @@ public class Function
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		attacker.stages[i]=opponent.stages[i]
 	  }
 
@@ -2685,7 +2685,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		for i in attacker.moves
+		foreach (var i in attacker.moves){ 
 		  if i.id==opponent.lastMoveUsed
 			//battle.pbDisplay(_INTL("But it failed!"))
 			return -1 
@@ -2693,7 +2693,7 @@ public class Function
 		}
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
-		for i in 0...attacker.moves.length
+		for (int i = 0; i < attacker.moves.length; i++){ 
 		  if attacker.moves[i].id==@id
 			newmove = PBMove.new(opponent.lastMoveUsed)
 			  attacker.moves[i]= PokeBattle_Move.pbFromPBMove(@battle, newmove)
@@ -2731,7 +2731,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		for i in attacker.moves
+		foreach (var i in attacker.moves){ 
 		  if i.id==opponent.lastMoveUsedSketch
 			//battle.pbDisplay(_INTL("But it failed!"))
 			return -1 
@@ -2742,7 +2742,7 @@ public class Function
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
-		for i in 0...attacker.moves.length
+		for (int i = 0; i < attacker.moves.length; i++){ 
 		  if attacker.moves[i].id==@id
 			newmove = PBMove.new(opponent.lastMoveUsedSketch)
 			  attacker.moves[i]= PokeBattle_Move.pbFromPBMove(@battle, newmove)
@@ -2777,7 +2777,7 @@ public class Function
 		  return -1
 		}
 		types =[]
-		for i in attacker.moves
+		foreach (var i in attacker.moves){ 
 		  next if i.id==@id
 		  next if PBTypes.isPseudoType? (i.type)
 		   next if attacker.pbHasType? (i.type)
@@ -2835,7 +2835,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		for i in 0..PBTypes.maxValue
+		for (int i = 0; i < BTypes.maxValue; i++){ 
 		  next if PBTypes.isPseudoType? (i)
 		   next if attacker.pbHasType? (i)
 			types.push(i) if PBTypes.getEffectiveness(atype, i)<2 
@@ -3279,12 +3279,12 @@ public class Function
 		attacker.spatk= opponent.spatk
 
 		attacker.spdef= opponent.spdef
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		  attacker.stages[i]= opponent.stages[i]
 
 		}
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 
 		  attacker.moves[i]= PokeBattle_Move.pbFromPBMove(
 			 @battle, PBMove.new (opponent.moves[i].id))
@@ -4023,8 +4023,8 @@ public class Function
 		public object pbBaseDamage(basedmg, attacker, opponent){
 
 		mult=1
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		mult+=attacker.stages[i] if attacker.stages[i]>0
 		}
 		return 20*mult
@@ -4042,8 +4042,8 @@ public class Function
 		public object pbBaseDamage(basedmg, attacker, opponent){
 
 		mult=3
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		mult+=opponent.stages[i] if opponent.stages[i]>0
 		}
 		return [20*mult,200].min
@@ -4077,7 +4077,7 @@ public class Function
 	  powermax=70
 	  type=0; base=0
 	  types=[]
-	  for i in 0..PBTypes.maxValue
+	  for (int i = 0; i < BTypes.maxValue; i++){ 
 		types.push(i) if !PBTypes.isPseudoType? (i) &&
 						 !isConst? (i, PBTypes,:NORMAL) && !isConst? (i, PBTypes,:SHADOW)
 	  }
@@ -4276,11 +4276,11 @@ public class Function
 				  :SALACBERRY,:PETAYABERRY,:APICOTBERRY,:LANSATBERRY,:STARFBERRY,
 				  :ENIGMABERRY,:MICLEBERRY,:CUSTAPBERRY,:JABOCABERRY,:ROWAPBERRY,
 				  :KEEBERRY,:MARANGABERRY]
-	}
-		for i in damagearray.keys
+		}
+		foreach (var i in damagearray.keys){ 
 		  data = damagearray[i]
 		  if data
-			for j in data
+			foreach (var i in data){ 
 			  if isConst? (@berry, PBItems, j)
 				 ret = i
 
@@ -4318,10 +4318,10 @@ public class Function
 		   :STEEL    => [:RAZZBERRY,:PAMTREBERRY,:BABIRIBERRY],
 		   :FAIRY    => [:ROSELIBERRY,:KEEBERRY]
 		}
-		for i in typearray.keys
+		foreach (var i in typearray.keys){ 
 		  data = typearray[i]
 		  if data
-			for j in data
+			foreach (var i in data){ 
 			  if isConst? (@berry, PBItems, j)
 				 type = getConst(PBTypes, i) || type
 
@@ -4479,7 +4479,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("Electricity's power was weakened!"))
 		  return 0
 		else
-		  for i in 0...4
+		  for (int i = 0; i < 4; i++){ 
 			if attacker.battle.battlers[i].effects[PBEffects::MudSport]
 			  //battle.pbDisplay(_INTL("But it failed!"))
 			  return -1
@@ -4515,7 +4515,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("Fire's power was weakened!"))
 		  return 0
 		else
-		  for i in 0...4
+		  for (int i = 0; i < 4; i++){ 
 			if attacker.battle.battlers[i].effects[PBEffects::WaterSport]
 			  //battle.pbDisplay(_INTL("But it failed!"))
 			  return -1
@@ -5282,7 +5282,7 @@ public class Function
 		]
 
 		choices=[]
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 		  found=false
 		  next if attacker.moves[i].id==0
 		  found=true if blacklist.include? (attacker.moves[i].function)
@@ -5367,9 +5367,9 @@ public class Function
 		moves =[]
 
 		party=@battle.pbParty(attacker.index) // NOTE: pbParty is common to both allies in multi battles
-		for i in 0...party.length
+		for (int i = 0; i < party.length; i++){ 
 		  if i!=attacker.pokemonIndex && party[i] && !(USENEWBATTLEMECHANICS && party[i].egg?)
-			for j in party[i].moves
+			foreach (var i in party[i].moves){ 
 			  next if isConst? (j.type, PBTypes,:SHADOW)
 			  next if j.id==0
 			  found=false
@@ -5448,7 +5448,7 @@ public class Function
 		  if blacklist.include? (PBMoveData.new(move).function)
 			found=true
 		  else
-			for j in blacklistmoves
+			foreach (var i in blacklistmoves){ 
 			  if isConst? (move, PBMoves, j)
 				 found = true
 				break
@@ -5546,7 +5546,7 @@ public class Function
 			return -1
 		  }
 		}
-		for i in opponent.moves
+		foreach (var i in opponent.moves){ 
 		  if i.id>0 && i.id==opponent.lastMoveUsed && (i.pp>0 || i.totalpp==0)
 			pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -5667,7 +5667,7 @@ public class Function
 			return -1
 		  }
 		}
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 		  if opponent.lastMoveUsed==opponent.moves[i].id &&
 			 (opponent.moves[i].pp>0 || opponent.moves[i].totalpp==0)
 			pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -5802,7 +5802,7 @@ public class Function
 
 		party=@battle.pbParty(attacker.index)
 		@participants =[]
-		for i in 0...party.length
+		for (int i = 0; i < party.length; i++){ 
 		  if attacker.pokemonIndex==i
 			@participants.push(i)
 
@@ -7009,7 +7009,7 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		failed=true
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 		  if @battle.battlers[i].effects[PBEffects::PerishSong]==0 &&
 			 (attacker.hasMoldBreaker ||
 			 !@battle.battlers[i].hasWorkingAbility(:SOUNDPROOF))
@@ -7023,7 +7023,7 @@ public class Function
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		//battle.pbDisplay(_INTL("All Pokémon that hear the song will faint in three turns!"))
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 		  if @battle.battlers[i].effects[PBEffects::PerishSong]==0
 			if !attacker.hasMoldBreaker && @battle.battlers[i].hasWorkingAbility(:SOUNDPROOF)
 
@@ -7178,7 +7178,7 @@ public class Function
 		else
 		  choices=false
 		  party=@battle.pbParty(opponent.index)
-		  for i in 0...party.length
+		  for (int i = 0; i < party.length; i++){ 
 			if @battle.pbCanSwitch? (opponent.index, i,false,true)
 			  choices=true
 			  break
@@ -7218,7 +7218,7 @@ public class Function
 		  else
 
 			party= @battle.pbParty(opponent.index)
-			for i in 0..party.length-1
+			for (int i = 0; i < arty.length; i++){ -1
 			  if @battle.pbCanSwitch?(opponent.index, i,false)
 
 				opponent.effects[PBEffects::Roar]=true
@@ -7670,9 +7670,9 @@ public class Function
 					   @battle.field.effects[PBEffects::MagicRoom]>0 ||
 					   attacker.hasWorkingAbility(:KLUTZ) ||
 					   attacker.effects[PBEffects::Embargo]>0) return true;
-		for i in flingarray.keys
+		foreach (var i in flingarray.keys){ 
 		  if flingarray[i]
-			for j in flingarray[i]
+			foreach (var i in flingarray[i]){ 
 			  if (isConst? (attacker.item, PBItems, j)) return false;
 			 }
 
@@ -7687,9 +7687,9 @@ public class Function
 	  public object pbBaseDamage(basedmg, attacker, opponent){
 		if (pbIsBerry? (attacker.item)) return 10;
 		if (pbIsMegaStone? (attacker.item)) return 80;
-		for i in flingarray.keys
+		foreach (var i in flingarray.keys){ 
 		  if flingarray[i]
-			for j in flingarray[i]
+			foreach (var i in flingarray[i]){ 
 			  if (isConst? (attacker.item, PBItems, j)) return i;
 			 }
 
@@ -7765,10 +7765,10 @@ public class Function
 		  else if attacker.hasWorkingItem(:WHITEHERB)
 			while true
 			  reducedstats=false
-			  for i in [PBStats::ATTACK, PBStats::DEFENSE,
+			  foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE,
 						PBStats::SPEED, PBStats::SPATK, PBStats::SPDEF,
-						PBStats::EVASION, PBStats::ACCURACY]
-				if opponent.stages[i]<0
+						PBStats::EVASION, PBStats::ACCURACY]){ 
+				if (opponent.stages[i]<0){
 				  opponent.stages[i]=0; reducedstats=true
 				}
 			  }
@@ -8670,7 +8670,7 @@ public class Function
 	public class PokeBattle_Move_10E : PokeBattle_Move
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
-		for i in opponent.moves
+		foreach (var i in opponent.moves){ 
 		  if i.id==opponent.lastMoveUsed && i.id>0 && i.pp>0
 			pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -9009,7 +9009,7 @@ public class Function
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
 		@battle.field.effects[PBEffects::Gravity]=5
-		for i in 0...4
+		for (int i = 0; i < 4; i++){ 
 		  poke=@battle.battlers[i]
 		  next if !poke
 		  if PBMoveData.new(poke.effects[PBEffects::TwoTurnAttack]).function==0xC9 || // Fly
@@ -9248,7 +9248,7 @@ public class Function
 					   PBEffects::LockOnPos,
 					   PBEffects::MeanLook,
 					   PBEffects::MirrorCoatTarget]
-		for i in effectstoswap
+		foreach (var i in effectstoswap){ 
 		  a.effects[i], b.effects[i]= b.effects[i], a.effects[i]
 		}
 
@@ -9414,7 +9414,7 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		didsomething=false
-		for i in [attacker, attacker.pbPartner]
+		foreach (var i in [attacker, attacker.pbPartner]){ 
 		if (!i || i.fainted?) continue; //next
 		if (!i.hasWorkingAbility(:PLUS) && !i.hasWorkingAbility(:MINUS)) continue; //next 
 		  if (!i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self) &&
@@ -9609,7 +9609,7 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		didsomething=false
-		for i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]
+		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	 if (!i || i.fainted?) continue; //next
 	 if (!i.pbHasType? (:GRASS)) continue; //next
 		  next if i.isAirborne? (attacker.hasMoldBreaker)
@@ -9646,7 +9646,7 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		didsomething=false
-		for i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]
+		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	next if !i || i.fainted?
 	next if !i.pbHasType? (:GRASS)
 		  next if !i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
@@ -9677,7 +9677,7 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		didsomething=false
-		for i in [attacker.pbOpposing1, attacker.pbOpposing2]
+		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	next if !i || i.fainted?
 	next if !i.status==PBStatuses::POISON
 	next if !i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self) &&
@@ -9717,8 +9717,8 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		nonzero=false
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED, 
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){
 		  if opponent.stages[i]!=0
 			nonzero=true; break
 		  }
@@ -9728,8 +9728,8 @@ public class Function
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
-		for i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]
+		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
+				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 	opponent.stages[i]*=-1
 		}
 		//battle.pbDisplay(_INTL("{1}'s stats were reversed!", opponent.pbThis))
