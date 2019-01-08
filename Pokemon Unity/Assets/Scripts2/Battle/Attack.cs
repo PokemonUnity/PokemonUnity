@@ -11,7 +11,6 @@ using PokemonUnity.Move;
 /// <summary>
 /// During battle, the moves used are modified by these classes before calculations are applied
 /// </summary>
-/// ToDo: Switch `Pokemon` "attacker" to Battler
 public class Function
 {
 	
@@ -22,7 +21,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_UnimplementedMove : PokeBattle_Move
 	{
-		public override object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true)
+		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true)
 		{
 			if (IsDamaging())
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -40,7 +39,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_FailedMove : PokeBattle_Move
 	{
-		public override object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true)
+		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true)
 		{
 			//battle.pbDisplay("But it failed!");
 			return -1;
@@ -74,12 +73,12 @@ public class Function
 		public bool IsPhysical(){ return true; }
 		public bool IsSpecial(){ return false; }
 
-		public override object pbCalcDamage(Pokemon attacker, Pokemon opponent){
+		public override object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent){
     		return base.pbCalcDamage(attacker, opponent,
 	   			thismove.NOCRITICAL|thismove.SELFCONFUSE|thismove.NOTYPE|thismove.NOWEIGHTING);
   		}
 
- 		public object pbEffectMessages(Pokemon attacker, Pokemon opponent, bool ignoretype= false){
+ 		public object pbEffectMessages(Battle.Battler attacker, Battle.Battler opponent, bool ignoretype= false){
     		return base.pbEffectMessages(attacker, opponent,true);
   		}
 	}
@@ -118,7 +117,7 @@ public class Function
 		public bool IsPhysical(){ return true; }
 		public bool IsSpecial(){ return false; }
 
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
+		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage>0)
 			{
@@ -127,7 +126,7 @@ public class Function
 			}
 		}
 
-		public object pbCalcDamage(Pokemon attacker, Pokemon opponent)
+		public object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return base.pbCalcDamage(attacker, opponent, thismove.IGNOREPKMNTYPES);
 		}
@@ -153,7 +152,7 @@ public class Function
 			return true;
 		}
 
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 		{
 			pbShowAnimation(id, attacker, null, hitnum, alltargets, showanimation);
 			//battle.pbDisplay(_INTL("But nothing happened!"));
@@ -176,7 +175,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_003 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true) { 
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true) { 
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(@type, attacker, opponent), attacker, opponent)) return -1;
 		if opponent.pbCanSleep? (attacker,true,self)
@@ -188,14 +187,14 @@ public class Function
 		return -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanSleep? (attacker,false,self)
 		  opponent.pbSleep
 		}
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if isConst? (@id, PBMoves,:RELICSONG)
 		  if isConst? (attacker.species, PBSpecies,:MELOETTA) &&
 			 !attacker.effects[PBEffects::Transform] &&
@@ -218,7 +217,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_004 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (!opponent.pbCanSleep? (attacker,true,self)) return -1;
 		if opponent.effects[PBEffects::Yawn]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -239,7 +238,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_005 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true) { 
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true) { 
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanPoison? (attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -248,7 +247,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanPoison? (attacker,false,self)
 		  opponent.pbPoison(attacker)
@@ -265,7 +264,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_006 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanPoison? (attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -274,7 +273,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanPoison? (attacker,false,self)
 		  opponent.pbPoison(attacker, null,true)
@@ -291,7 +290,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_007 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if pbIsDamaging?
 		  ret = super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0 && isConst? (@id, PBMoves,:BOLTSTRIKE)
@@ -315,7 +314,7 @@ public class Function
 		return -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanParalyze? (attacker,false,self)
 		  opponent.pbParalyze(attacker)
@@ -331,7 +330,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_008 : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanParalyze? (attacker,false,self)
 		  opponent.pbParalyze(attacker)
@@ -357,7 +356,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_009 : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if @battle.pbRandom(10)==0
 		  if opponent.pbCanParalyze? (attacker,false,self)
@@ -379,7 +378,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_00A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if pbIsDamaging?
 		  ret = super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0 && isConst? (@id, PBMoves,:BLUEFLARE)
@@ -397,7 +396,7 @@ public class Function
 		return -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanBurn? (attacker,false,self)
 		  opponent.pbBurn(attacker)
@@ -412,7 +411,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_00B : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if @battle.pbRandom(10)==0
 		  if opponent.pbCanBurn? (attacker,false,self)
@@ -433,7 +432,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_00C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanFreeze? (attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -442,7 +441,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanFreeze? (attacker,false,self)
 		  opponent.pbFreeze
@@ -457,7 +456,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_00D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanFreeze? (attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -466,7 +465,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanFreeze? (attacker,false,self)
 		  opponent.pbFreeze
@@ -488,7 +487,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_00E : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if @battle.pbRandom(10)==0
 		  if opponent.pbCanFreeze? (attacker,false,self)
@@ -509,7 +508,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_00F : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		opponent.pbFlinch(attacker)
 	  }
@@ -523,7 +522,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_010 : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		opponent.pbFlinch(attacker)
 	  }
@@ -547,11 +546,11 @@ public class Function
 		return true
 	  }
 
-	  public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+	  public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return (attacker.status!=PBStatuses::SLEEP)
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		opponent.pbFlinch(attacker)
 	  }
@@ -564,11 +563,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_012 : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return (attacker.turncount>1)
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		opponent.pbFlinch(attacker)
 	  }
@@ -581,7 +580,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_013 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if opponent.pbCanConfuse? (attacker,true,self)
 		  pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -593,7 +592,7 @@ public class Function
 		return -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanConfuse? (attacker,false,self)
 		  opponent.pbConfuse
@@ -620,7 +619,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanConfuse? (attacker,false,self)
 		  opponent.pbConfuse
@@ -637,7 +636,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_015 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if opponent.pbCanConfuse? (attacker,true,self)
 		  pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -649,7 +648,7 @@ public class Function
 		return -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanConfuse? (attacker,false,self)
 		  opponent.pbConfuse
@@ -676,7 +675,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_016 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !opponent.pbCanAttract? (attacker)
 		  return -1
 		}
@@ -707,7 +706,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_017 : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		case @battle.pbRandom(3)
 		when 0
@@ -736,7 +735,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_018 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.status!=PBStatuses::BURN &&
 		   attacker.status!=PBStatuses::POISON &&
 		   attacker.status!=PBStatuses::PARALYSIS
@@ -766,7 +765,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_019 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 		if isConst? (@id, PBMoves,:AROMATHERAPY)
@@ -834,7 +833,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_01A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.pbOwnSide.effects[PBEffects::Safeguard]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -858,7 +857,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_01B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.status==0 ||
 		  (attacker.status==PBStatuses::PARALYSIS && !opponent.pbCanParalyze? (attacker,false,self)) ||
 		  (attacker.status==PBStatuses::SLEEP && !opponent.pbCanSleep? (attacker,false,self)) ||
@@ -918,7 +917,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_01C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -927,7 +926,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,self)
 		}
@@ -941,7 +940,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_01D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -950,7 +949,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,self)
 		}
@@ -964,7 +963,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_01E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		attacker.effects[PBEffects::DefenseCurl]=true
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,self)) return -1;
@@ -982,7 +981,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_01F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -991,7 +990,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,self)
 		}
@@ -1005,7 +1004,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_020 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1014,7 +1013,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,self)
 		}
@@ -1029,7 +1028,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_021 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		attacker.effects[PBEffects::Charge]=2
 		//battle.pbDisplay(_INTL("{1} began charging power!",attacker.pbThis))
@@ -1049,7 +1048,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_022 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::EVASION, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1058,7 +1057,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::EVASION, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::EVASION,1,attacker,false,self)
 		}
@@ -1072,7 +1071,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_023 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if attacker.effects[PBEffects::FocusEnergy]>=2
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -1085,7 +1084,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.effects[PBEffects::FocusEnergy]<2
 		  attacker.effects[PBEffects::FocusEnergy]=2
 		  //battle.pbDisplay(_INTL("{1} is getting pumped!",attacker.pbThis))
@@ -1100,7 +1099,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_024 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1128,7 +1127,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_025 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::ACCURACY, attacker,false,self)
@@ -1161,7 +1160,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_026 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1189,7 +1188,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_027 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1218,7 +1217,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_028 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1252,7 +1251,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_029 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::ACCURACY, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1280,7 +1279,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_02A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1308,7 +1307,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_02B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,self)
@@ -1341,7 +1340,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_02C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1370,7 +1369,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_02D : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 
 		showanim=true
 		if attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
@@ -1403,7 +1402,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_02E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1412,7 +1411,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,self)
 		}
@@ -1426,7 +1425,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_02F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1435,7 +1434,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::DEFENSE,2,attacker,false,self)
 		}
@@ -1449,7 +1448,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_030 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1458,7 +1457,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,self)
 		}
@@ -1472,7 +1471,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_031 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -1493,7 +1492,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_032 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1502,7 +1501,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::SPATK,2,attacker,false,self)
 		}
@@ -1516,7 +1515,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_033 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1525,7 +1524,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::SPDEF,2,attacker,false,self)
 		}
@@ -1539,7 +1538,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_034 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 			attacker.effects[PBEffects::Minimize]= true
 		if (!attacker.pbCanIncreaseStatStage?(PBStats::EVASION, attacker,true, self)) return -1;
@@ -1550,7 +1549,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 
 		attacker.effects[PBEffects::Minimize]=true
 		if attacker.pbCanIncreaseStatStage? (PBStats::EVASION, attacker,false,self)
@@ -1567,7 +1566,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_035 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,self)
@@ -1609,7 +1608,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_036 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
 		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,self)
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
@@ -1637,7 +1636,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_037 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.index!=opponent.index 
 		  if (opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)) ||
 			 opponent.pbOwnSide.effects[PBEffects::CraftyShield]
@@ -1671,7 +1670,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_038 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1680,7 +1679,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::DEFENSE,3,attacker,false,self)
 		}
@@ -1694,7 +1693,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_039 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1703,7 +1702,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  attacker.pbIncreaseStat(PBStats::SPATK,3,attacker,false,self)
 		}
@@ -1717,7 +1716,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_03A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.hp<=(attacker.TotalHP/2).floor ||
 		   !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -1746,7 +1745,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_03B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -1771,7 +1770,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_03C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -1797,7 +1796,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_03D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -1829,7 +1828,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_03E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -1848,7 +1847,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_03F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -1867,7 +1866,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_040 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
 		  return -1
@@ -1895,7 +1894,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_041 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
 		  return -1
@@ -1923,7 +1922,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_042 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1932,7 +1931,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,self)
@@ -1947,7 +1946,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_043 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1956,7 +1955,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::DEFENSE,1,attacker,false,self)
@@ -1971,7 +1970,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_044 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -1980,7 +1979,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,self)
@@ -2003,7 +2002,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_045 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2012,7 +2011,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,self)
@@ -2027,7 +2026,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_046 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2036,7 +2035,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::SPDEF,1,attacker,false,self)
@@ -2051,7 +2050,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_047 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2060,7 +2059,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,self)
@@ -2075,7 +2074,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_048 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::EVASION, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2085,7 +2084,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::EVASION, attacker,false,self)
 		  increment=(USENEWBATTLEMECHANICS)? 2 : 1
@@ -2102,7 +2101,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_049 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 			pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -2136,7 +2135,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if !opponent.damagestate.substitute
 		  if opponent.pbCanReduceStatStage?(PBStats::EVASION, attacker,false, self)
 
@@ -2180,7 +2179,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_04A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 		// Replicates public object pbCanReduceStatStage? so that certain messages aren't shown
 		// multiple times
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
@@ -2237,7 +2236,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_04B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2246,7 +2245,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::ATTACK,2,attacker,false,self)
@@ -2261,7 +2260,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_04C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2270,7 +2269,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::DEFENSE,2,attacker,false,self)
@@ -2285,7 +2284,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_04D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(@type, attacker, opponent), attacker, opponent)) return -1;
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,true,self)) return -1;
@@ -2296,7 +2295,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
 		  increment=(isConst?(@id, PBMoves,:STRINGSHOT) && !USENEWBATTLEMECHANICS) ? 1 : 2
@@ -2313,7 +2312,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_04E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
 		if attacker.gender==2 || opponent.gender==2 || attacker.gender==opponent.gender
@@ -2331,7 +2330,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if attacker.gender!=2 && opponent.gender!=2 && attacker.gender!=opponent.gender
 		  if attacker.hasMoldBreaker || !opponent.hasWorkingAbility(Abilities.OBLIVIOUS)
@@ -2351,7 +2350,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_04F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -2360,7 +2359,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::SPDEF,2,attacker,false,self)
@@ -2375,7 +2374,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_050 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
@@ -2406,7 +2405,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_051 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		for (int i = 0; i < 4; i++){ 
 		  @battle.battlers[i].stages[PBStats::ATTACK]   = 0
 		  @battle.battlers[i].stages[PBStats::DEFENSE]  = 0
@@ -2430,7 +2429,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_052 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -2452,7 +2451,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_053 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -2474,7 +2473,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_054 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
@@ -2494,7 +2493,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_055 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.pbOwnSide.effects[PBEffects::CraftyShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2517,7 +2516,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_056 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.pbOwnSide.effects[PBEffects::Mist]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2541,7 +2540,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_057 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
@@ -2561,7 +2560,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_058 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -2587,7 +2586,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_059 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -2612,7 +2611,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_05A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -2640,7 +2639,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_05B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.pbOwnSide.effects[PBEffects::Tailwind]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2665,7 +2664,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_05C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		blacklist=[
 		   0x02,   // Struggle
@@ -2713,7 +2712,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_05D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		blacklist=[
 		   0x02,   // Struggle
@@ -2767,7 +2766,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_05E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if isConst? (attacker.ability, PBAbilities,:MULTITYPE)
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2809,7 +2808,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_05F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if isConst? (attacker.ability, PBAbilities,:MULTITYPE)
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2862,7 +2861,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_060 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if isConst? (attacker.ability, PBAbilities,:MULTITYPE)
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2920,7 +2919,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_061 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -2956,7 +2955,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_062 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if isConst? (attacker.ability, PBAbilities,:MULTITYPE)
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -2988,7 +2987,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_063 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -3024,7 +3023,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_064 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -3061,7 +3060,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_065 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.pbOwnSide.effects[PBEffects::CraftyShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -3107,7 +3106,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_066 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -3161,7 +3160,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_067 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (attacker.ability==0 && opponent.ability==0) ||
 		   (attacker.ability==opponent.ability && !USENEWBATTLEMECHANICS) ||
 		   isConst? (attacker.ability, PBAbilities,:ILLUSION) ||
@@ -3197,7 +3196,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_068 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -3233,7 +3232,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_069 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		blacklist=[
 		   0xC9,   // Fly
@@ -3304,7 +3303,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_06A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		return pbEffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 	}
@@ -3316,7 +3315,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_06B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		return pbEffectFixedDamage(40, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 	}
@@ -3328,7 +3327,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_06C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		return pbEffectFixedDamage([(opponent.hp / 2).floor,1].max, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 	}
@@ -3340,7 +3339,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_06D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		return pbEffectFixedDamage(attacker.level, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 	}
@@ -3352,7 +3351,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_06E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.hp>=opponent.hp
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -3368,7 +3367,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_06F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		dmg=[(attacker.level * (@battle.pbRandom(101) + 50) / 100).floor,1].max
 		return pbEffectFixedDamage(dmg, attacker, opponent, hitnum, alltargets, showanimation)
@@ -3382,7 +3381,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_070 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.STURDY)
 		  //battle.pbDisplay(_INTL("{1} was protected by {2}!",opponent.pbThis,PBAbilities.getName(opponent.ability)))  
 		  return false
@@ -3395,7 +3394,7 @@ public class Function
 		return @battle.pbRandom(100)<acc
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		damage=pbEffectFixedDamage(opponent.TotalHP, attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.isFainted()
@@ -3421,7 +3420,7 @@ public class Function
 		}
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.effects[PBEffects::Counter]<0 || !opponent
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -3448,7 +3447,7 @@ public class Function
 		}
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.effects[PBEffects::MirrorCoat]<0 || !opponent
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -3479,7 +3478,7 @@ public class Function
 		}
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.lastHPLost==0 || !opponent
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -3496,7 +3495,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_074 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -3586,7 +3585,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		opponent.pbFlinch(attacker)
 	  }
@@ -3609,7 +3608,7 @@ public class Function
 		return damagemult
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 
 		@doubled=false
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
@@ -3642,7 +3641,7 @@ public class Function
 		return damagemult
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -3691,7 +3690,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !opponent.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   !opponent.damagestate.substitute && opponent.status==PBStatuses::PARALYSIS
 		  opponent.pbCureStatus
@@ -3715,7 +3714,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !opponent.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   !opponent.damagestate.substitute && opponent.status==PBStatuses::SLEEP
 		  opponent.pbCureStatus
@@ -3822,7 +3821,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
@@ -3942,7 +3941,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+	  public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.switching) return true;
 		return super(attacker, opponent)
 	  }
@@ -4129,7 +4128,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_093 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -4157,7 +4156,7 @@ public class Function
 		return @calcbasedmg
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 	  {
 		@calcbasedmg=1
 		r=@battle.pbRandom((@forcedamage)? 8 : 10)
@@ -4322,7 +4321,7 @@ public class Function
 		return type
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if turneffects[PBEffects::TotalDamage]>0
 		  attacker.pbConsumeItem
 		}
@@ -4433,7 +4432,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.doublebattle || opponent.isFainted() ||
 		   @battle.choices[opponent.index][0]!=1 || // Didn't choose a move
 		   opponent.hasMovedThisRound? ||
@@ -4456,7 +4455,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if USENEWBATTLEMECHANICS
 		  if @battle.field.effects[PBEffects::MudSportField]>0
 			//battle.pbDisplay(_INTL("But it failed!"))
@@ -4492,7 +4491,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if USENEWBATTLEMECHANICS
 		  if @battle.field.effects[PBEffects::WaterSportField]>0
 			//battle.pbDisplay(_INTL("But it failed!"))
@@ -4575,7 +4574,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A0 : PokeBattle_Move
 	{
-		public object pbCritialOverride(Pokemon attacker, Pokemon opponent){
+		public object pbCritialOverride(Battle.Battler attacker, Battle.Battler opponent){
 		return true
 	  }
 	}
@@ -4587,7 +4586,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A1 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOwnSide.effects[PBEffects::LuckyChant]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -4611,7 +4610,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A2 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOwnSide.effects[PBEffects::Reflect]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -4636,7 +4635,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A3 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOwnSide.effects[PBEffects::LightScreen]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -4661,7 +4660,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A4 : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if @battle.field.effects[PBEffects::ElectricTerrain]>0
 		  if opponent.pbCanParalyze? (attacker,false,self)
@@ -4777,7 +4776,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A5 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		return true
 	  }
 	}
@@ -4789,7 +4788,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A6 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -4811,7 +4810,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A7 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.pbOwnSide.effects[PBEffects::CraftyShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -4832,7 +4831,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A8 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.pbOwnSide.effects[PBEffects::CraftyShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -4863,7 +4862,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0AA : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ratesharers=[
 		   0xAA,   // Detect, Protect
 		   0xAB,   // Quick Guard
@@ -4907,7 +4906,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0AB : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOwnSide.effects[PBEffects::QuickGuard]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -4959,7 +4958,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0AC : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOwnSide.effects[PBEffects::WideGuard]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -5011,7 +5010,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0AD : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if ret>0
 		  opponent.effects[PBEffects::ProtectNegation]=true
@@ -5028,7 +5027,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0AE : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.lastMoveUsed<=0 ||
 		   (PBMoveData.new(opponent.lastMoveUsed).flags&0x10)==0 // flag e: Copyable by Mirror Move
 		  //battle.pbDisplay(_INTL("The mirror move failed!"))
@@ -5046,7 +5045,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0AF : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		blacklist=[
 		   0x02,    // Struggle
 		   0x69,    // Transform
@@ -5106,7 +5105,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B0 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		blacklist=[
 		   0x02,    // Struggle
 		   0x14,    // Chatter
@@ -5143,7 +5142,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B1 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects[PBEffects::MagicCoat]=true
@@ -5159,7 +5158,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B2 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects[PBEffects::Snatch]=true
@@ -5175,7 +5174,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		move=getConst(PBMoves,:TRIATTACK) || 0
 		case @battle.environment
 		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
@@ -5234,7 +5233,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.status!=PBStatuses::SLEEP
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -5298,7 +5297,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B5 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		blacklist=[
 		   0x02,    // Struggle
 		   0x14,    // Chatter
@@ -5387,7 +5386,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B6 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		blacklist=[
 		   0x02,    // Struggle
 		   0x11,    // Snore
@@ -5466,7 +5465,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B7 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Torment]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -5499,7 +5498,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B8 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::Imprison]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1  
@@ -5519,7 +5518,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B9 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Disable]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -5559,7 +5558,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0BA : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Taunt]>0 ||
 		   (USENEWBATTLEMECHANICS &&
 		   !attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.OBLIVIOUS))
@@ -5594,7 +5593,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0BB : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::HealBlock]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -5627,7 +5626,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0BC : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		blacklist=[
 		   0x02,    // Struggle
 		   0x5C,    // Mimic
@@ -5707,7 +5706,7 @@ public class Function
 		return 2
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanPoison? (attacker,false,self)
 		  opponent.pbPoison(attacker)
@@ -5825,7 +5824,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C2 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
 		  attacker.effects[PBEffects::HyperBeam]=2
@@ -5851,7 +5850,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} whipped up a whirlwind!",attacker.pbThis))
@@ -5899,7 +5898,7 @@ public class Function
 		return damagemult
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} took in sunlight!",attacker.pbThis))
@@ -5933,7 +5932,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} became cloaked in a freezing light!",attacker.pbThis))
@@ -5948,7 +5947,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanParalyze? (attacker,false,self)
 		  opponent.pbParalyze(attacker)
@@ -5973,7 +5972,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} became cloaked in freezing air!",attacker.pbThis))
@@ -5988,7 +5987,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanBurn? (attacker,false,self)
 		  opponent.pbBurn(attacker)
@@ -6013,7 +6012,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} became cloaked in a harsh light!",attacker.pbThis))
@@ -6028,7 +6027,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		opponent.pbFlinch(attacker)
 	  }
@@ -6051,7 +6050,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} tucked in its head!",attacker.pbThis))
@@ -6091,7 +6090,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} flew up high!",attacker.pbThis))
@@ -6124,7 +6123,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} burrowed its way under the ground!",attacker.pbThis))
@@ -6157,7 +6156,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} hid underwater!",attacker.pbThis))
@@ -6195,7 +6194,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} sprang up!",attacker.pbThis))
@@ -6210,7 +6209,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanParalyze? (attacker,false,self)
 		  opponent.pbParalyze(attacker)
@@ -6237,7 +6236,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} vanished instantly!",attacker.pbThis))
@@ -6272,7 +6271,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+	  public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		ret = false
 
 		ret=true if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
@@ -6287,7 +6286,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} took {2} into the sky!",attacker.pbThis,opponent.pbThis(true)))
@@ -6317,7 +6316,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0CF : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0 && !opponent.isFainted() &&
 		   !opponent.damagestate.substitute
@@ -6364,7 +6363,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D0 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0 && !opponent.isFainted() &&
 		   !opponent.damagestate.substitute
@@ -6398,7 +6397,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D1 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
 		  if attacker.effects[PBEffects::Uproar]==0
@@ -6420,7 +6419,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D2 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0 &&
 		   attacker.effects[PBEffects::Outrage]==0 && 
@@ -6462,7 +6461,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		attacker.effects[PBEffects::Rollout]=5 if attacker.effects[PBEffects::Rollout]==0
 		attacker.effects[PBEffects::Rollout]-=1
@@ -6519,7 +6518,7 @@ public class Function
 		}
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.effects[PBEffects::BideDamage]==0 || !opponent
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6548,7 +6547,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
@@ -6573,7 +6572,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
@@ -6599,7 +6598,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::Wish]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6625,7 +6624,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
@@ -6661,7 +6660,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !attacker.pbCanSleep? (attacker,true,self,true)
 		  return -1
 		}
@@ -6695,7 +6694,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::AquaRing]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6720,7 +6719,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::Ingrain]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6741,7 +6740,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0DC : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -6774,7 +6773,7 @@ public class Function
 		return USENEWBATTLEMECHANICS
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
 		  hpgain= (int)Math.Round(opponent.damagestate.hplost/2)
@@ -6805,7 +6804,7 @@ public class Function
 		return USENEWBATTLEMECHANICS
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
 		  hpgain= (int)Math.Round(opponent.damagestate.hplost/2)
@@ -6835,7 +6834,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -6892,7 +6891,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E1 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		typemod=pbTypeModifier(pbType(@type, attacker, opponent), attacker, opponent)
 		if typemod==0
 		  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
@@ -6921,7 +6920,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E2 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6952,7 +6951,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.pbCanChooseNonActive? (attacker.index)
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6977,7 +6976,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.pbCanChooseNonActive? (attacker.index)
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6997,7 +6996,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E5 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		failed=true
 		for (int i = 0; i < 4; i++){ 
 		  if @battle.battlers[i].effects[PBEffects::PerishSong]==0 &&
@@ -7038,7 +7037,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E6 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects[PBEffects::Grudge]=true
@@ -7055,7 +7054,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E7 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects[PBEffects::DestinyBond]=true
@@ -7071,7 +7070,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E8 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ratesharers=[
 		   0xAA,   // Detect, Protect
 		   0xAB,   // Quick Guard
@@ -7123,7 +7122,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0EA : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.opponent ||
 		   !@battle.pbCanRun? (attacker.index)
 		   //battle.pbDisplay(_INTL("But it failed!"))
@@ -7147,7 +7146,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0EB : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.SUCTIONCUPS)
 		  //battle.pbDisplay(_INTL("{1} anchored itself with {2}!",opponent.pbThis,PBAbilities.getName(opponent.ability)))  
 		  return -1
@@ -7196,7 +7195,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0EC : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && !opponent.isFainted() &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute && 
 		   (attacker.hasMoldBreaker || !opponent.hasWorkingAbility(Abilities.SUCTIONCUPS)) &&
@@ -7229,7 +7228,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0ED : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.pbCanChooseNonActive? (attacker.index)
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -7250,7 +7249,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0EE : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if !attacker.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   @battle.pbCanChooseNonActive? (attacker.index) &&
@@ -7269,7 +7268,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0EF : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if pbIsDamaging?
 		  ret = super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute &&
@@ -7307,7 +7306,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && !opponent.isFainted() && opponent.item!=0 &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
 		  if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.STICKYHOLD)
@@ -7342,7 +7341,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && !opponent.isFainted() && opponent.item!=0 &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
 		  if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.STICKYHOLD)
@@ -7382,7 +7381,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F2 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)) ||
 		   (attacker.item==0 && opponent.item==0) ||
 		   (!@battle.opponent && @battle.pbIsOpposing? (attacker.index))
@@ -7444,7 +7443,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F3 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)) ||
 		   attacker.item==0 || opponent.item!=0
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -7485,7 +7484,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.item) &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
 		  if attacker.hasMoldBreaker || !opponent.hasWorkingAbility(Abilities.STICKYHOLD)
@@ -7529,7 +7528,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F5 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if !attacker.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   !opponent.damagestate.substitute &&
@@ -7550,7 +7549,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F6 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !attacker.pokemon || attacker.pokemon.itemRecycle==0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -7653,7 +7652,7 @@ public class Function
 		}
 	}
 
-	public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+	public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (attacker.item==0 ||
 					   @battle.pbIsUnlosableItem(attacker, attacker.item) ||
 					   pbIsPokeBall? (attacker.item) ||
@@ -7688,7 +7687,7 @@ public class Function
 		return 1
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if attacker.item==0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return 0
@@ -7782,7 +7781,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F8 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Embargo]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -7803,7 +7802,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F9 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::MagicRoom]>0
 		  @battle.field.effects[PBEffects::MagicRoom]=0
 		  //battle.pbDisplay(_INTL("The area returned to normal!"))
@@ -7828,7 +7827,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
@@ -7850,7 +7849,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
@@ -7873,7 +7872,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
@@ -7896,7 +7895,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
@@ -7906,7 +7905,7 @@ public class Function
 		}
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanParalyze? (attacker,false,self)
 		  opponent.pbParalyze(attacker)
@@ -7926,7 +7925,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
@@ -7936,7 +7935,7 @@ public class Function
 		}
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanBurn? (attacker,false,self)
 		  opponent.pbBurn(attacker)
@@ -7951,7 +7950,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0FF : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case @battle.weather
 		when PBWeather::HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
@@ -7988,7 +7987,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_100 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case @battle.weather
 		when PBWeather::HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
@@ -8025,7 +8024,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_101 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case @battle.weather
 		when PBWeather::HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
@@ -8062,7 +8061,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_102 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case @battle.weather
 		when PBWeather::HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
@@ -8099,7 +8098,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_103 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOpposingSide.effects[PBEffects::Spikes]>=3
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -8124,7 +8123,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_104 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOpposingSide.effects[PBEffects::ToxicSpikes]>=2
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -8148,7 +8147,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_105 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOpposingSide.effects[PBEffects::StealthRock]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -8202,7 +8201,7 @@ public class Function
 		return super(type, attacker, opponent)
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  attacker.effects[PBEffects::FirstPledge]= 0
 		  return super(attacker, opponent, hitnum, alltargets, showanimation)
@@ -8309,7 +8308,7 @@ public class Function
 		return super(type, attacker, opponent)
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  attacker.effects[PBEffects::FirstPledge]= 0
 		  return super(attacker, opponent, hitnum, alltargets, showanimation)
@@ -8416,7 +8415,7 @@ public class Function
 		return super(type, attacker, opponent)
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  attacker.effects[PBEffects::FirstPledge]= 0
 		  return super(attacker, opponent, hitnum, alltargets, showanimation)
@@ -8493,7 +8492,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_109 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
 		  if @battle.pbOwnedByPlayer? (attacker.index)
@@ -8514,11 +8513,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10A : PokeBattle_Move
 	{
-		public object pbCalcDamage(Pokemon attacker, Pokemon opponent){
+		public object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent){
 		return base.pbCalcDamage(attacker, opponent, thismove.NOREFLECT);
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if attacker.pbOpposingSide.effects[PBEffects::Reflect]>0
@@ -8573,7 +8572,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::Substitute]>0
 		  //battle.pbDisplay(_INTL("{1} already has a substitute!",attacker.pbThis))
 		  return -1
@@ -8606,7 +8605,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		failed=false
 		if attacker.hasType(Types.GHOST)
 		  if opponent.effects[PBEffects::Curse] ||
@@ -8659,7 +8658,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		foreach (var i in opponent.moves){ 
 		  if i.id==opponent.lastMoveUsed && i.id>0 && i.pp>0
 			pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -8684,7 +8683,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.status!=PBStatuses::SLEEP || opponent.effects[PBEffects::Nightmare] ||
 		   (opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker))
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -8706,7 +8705,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_110 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if attacker.effects[PBEffects::MultiTurn]>0
 			mtattack=PBMoves.getName(attacker.effects[PBEffects::MultiTurnAttack])
@@ -8755,7 +8754,7 @@ public class Function
 		return super(attacker)
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if opponent.effects[PBEffects::FutureSight]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -8798,7 +8797,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_112 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::Stockpile]>=3
 		  //battle.pbDisplay(_INTL("{1} can't stockpile any more!",attacker.pbThis))
 		  return -1
@@ -8831,7 +8830,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_113 : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return (attacker.effects[PBEffects::Stockpile]==0)
 	  }
 
@@ -8839,7 +8838,7 @@ public class Function
 		return 100* attacker.effects[PBEffects::Stockpile]
 	  }
 
-	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 
 		  showanim= true
@@ -8879,7 +8878,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		hpgain=0
 		case attacker.effects[PBEffects::Stockpile]
 		when 0
@@ -8950,7 +8949,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_116 : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.choices[opponent.index][0]!=1 // Didn't choose a move
 		oppmove=@battle.choices[opponent.index][2]) return true;
 		if (!oppmove || oppmove.id<=0 || oppmove.pbIsStatus?) return true;
@@ -8967,7 +8966,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_117 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.doublebattle
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -8991,7 +8990,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_118 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::Gravity]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -9039,7 +9038,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::Ingrain] ||
 		   attacker.effects[PBEffects::SmackDown] ||
 		   attacker.effects[PBEffects::MagnetRise]>0
@@ -9065,7 +9064,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Ingrain] ||
 		   opponent.effects[PBEffects::SmackDown] ||
 		   opponent.effects[PBEffects::Telekinesis]>0
@@ -9108,7 +9107,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if (opponent.damagestate.calcdamage>0 && 
@@ -9141,7 +9140,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_11D : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.effects[PBEffects::MoveNext]) return true;
 		if (@battle.choices[opponent.index][0]!=1 // Didn't choose a move
 		oppmove=@battle.choices[opponent.index][2]) return true;
@@ -9150,7 +9149,7 @@ public class Function
 		return false
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -9168,7 +9167,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_11E : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.effects[PBEffects::Quash]) return true;
 		if (@battle.choices[opponent.index][0]!=1 // Didn't choose a move
 		oppmove=@battle.choices[opponent.index][2]) return true;
@@ -9177,7 +9176,7 @@ public class Function
 		return false
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -9196,7 +9195,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_11F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::TrickRoom]>0
 		  @battle.field.effects[PBEffects::TrickRoom]=0
 		  //battle.pbDisplay(_INTL("{1} reverted the dimensions!",attacker.pbThis))
@@ -9217,7 +9216,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_120 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if(!@battle.doublebattle ||
 		   !attacker.pbPartner || 
 		   attacker.pbPartner.isFainted()){
@@ -9278,7 +9277,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_123 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !opponent.pbHasType? (attacker.type1) &&
 		   !opponent.pbHasType? (attacker.type2) &&
 		   !opponent.pbHasType? (attacker.effects[PBEffects::Type3])
@@ -9297,7 +9296,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_124 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::WonderRoom]>0
 		  @battle.field.effects[PBEffects::WonderRoom]=0
 		  //battle.pbDisplay(_INTL("Wonder Room wore off, and the Defense and Sp. Def stats returned to normal!"))
@@ -9318,7 +9317,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_125 : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		counter = 0; nummoves=0
 		for move in attacker.moves
 		  next if move.id<=0
@@ -9342,7 +9341,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_133 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.doublebattle ||
 		   !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -9360,7 +9359,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_134 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		//battle.pbDisplay(_INTL("Congratulations, {1}!",@battle.pbGetOwner(attacker.index).name))
@@ -9376,7 +9375,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_135 : PokeBattle_Move
 	{
-		public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanFreeze? (attacker,false,self)
 		  opponent.pbFreeze
@@ -9402,7 +9401,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_137 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner]){ 
 		if (!i || i.isFainted()) continue; //next
@@ -9437,7 +9436,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_138 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.doublebattle || !opponent ||
 		   !opponent.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -9457,11 +9456,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_139 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (!opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -9477,7 +9476,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true)
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true)
 		// Replicates public object pbCanReduceStatStage? so that certain messages aren't shown
 		// multiple times
 		if(opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)){
@@ -9526,17 +9525,17 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13B : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (!isConst? (attacker.species, PBSpecies,:HOOPA)) return true;
 		if (attacker.form!=1) return true;
 		return false
 	  }
 
-	  public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+	  public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		return true
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::DEFENSE,1,attacker,false,self)
@@ -9551,11 +9550,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13C : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		return true
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
@@ -9571,7 +9570,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13D : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(@type, attacker, opponent), attacker, opponent)) return -1;
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,self)) return -1;
@@ -9581,7 +9580,7 @@ public class Function
 		return ret? 0 : -1
 	  }
 
-	  public object pbAdditionalEffect(Pokemon attacker, Pokemon opponent){
+	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,self)
 		  opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,self)
@@ -9597,7 +9596,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13E : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	 if (!i || i.isFainted()) continue; //next
@@ -9634,7 +9633,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13F : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	next if !i || i.isFainted()
@@ -9665,7 +9664,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_140 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	next if !i || i.isFainted()
@@ -9705,7 +9704,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_141 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		nonzero=false
 		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED, 
 				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){
@@ -9734,7 +9733,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_142 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)) ||
 		   !hasConst? (PBTypes,:GHOST) || opponent.hasType(Types.GHOST) ||
 		   isConst? (opponent.ability, PBAbilities,:MULTITYPE)
@@ -9758,7 +9757,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_143 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
@@ -9815,7 +9814,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_145 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (pbTypeImmunityByAbility(pbType(@type, attacker, opponent), attacker, opponent)) return -1;
 		if (opponent.effects[PBEffects::Electrify]){
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -9844,7 +9843,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_146 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		unmoved=false
 		for poke in @battle.battlers
 		  next if poke.index==attacker.index
@@ -9873,7 +9872,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_147 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Pokemon attacker, Pokemon opponent){
+		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		return true
 	  }
 	}
@@ -9885,7 +9884,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_148 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if opponent.effects[PBEffects::Powder]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -9905,11 +9904,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_149 : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return (attacker.turncount>1)
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		attacker.pbOwnSide.effects[PBEffects::MatBlock]=true
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
@@ -9926,7 +9925,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_14A : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOwnSide.effects[PBEffects::CraftyShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -9963,7 +9962,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_14B : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::KingsShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10011,7 +10010,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_14C : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.effects[PBEffects::SpikyShield]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10071,7 +10070,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} vanished instantly!",attacker.pbThis))
@@ -10115,7 +10114,7 @@ public class Function
 		return attacker.effects[PBEffects::TwoTurnAttack]==0
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if @immediate || attacker.effects[PBEffects::TwoTurnAttack]>0
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Charging anim
 		  //battle.pbDisplay(_INTL("{1} is absorbing power!",attacker.pbThis))
@@ -10163,7 +10162,7 @@ public class Function
 		return USENEWBATTLEMECHANICS
 	  }
 
-	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
 		  hpgain= (int)Math.Round(opponent.damagestate.hplost*3/4)
@@ -10190,7 +10189,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_150 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0 && opponent.isFainted()
 		  if attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
@@ -10210,7 +10209,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_151 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=-1
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 		if !self.isSoundBased? ||
@@ -10240,7 +10239,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_152 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::FairyLock]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10260,7 +10259,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_153 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if attacker.pbOpposingSide.effects[PBEffects::StickyWeb]
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10286,7 +10285,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_154 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::ElectricTerrain]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10310,7 +10309,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_155 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::GrassyTerrain]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10334,7 +10333,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_156 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.field.effects[PBEffects::MistyTerrain]>0
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10356,7 +10355,7 @@ public class Function
 	/// </summary>
 	public class PokeBattle_Move_157 : PokeBattle_Move
 	{
-		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if @battle.pbIsOpposing? (attacker.index) || @battle.doublemoney
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10376,7 +10375,7 @@ public class Function
 	/// </summary>
 	public class PokeBattle_Move_158 : PokeBattle_Move
 	{
-		public object pbMoveFailed(Pokemon attacker, Pokemon opponent){
+		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return !attacker.pokemon || !attacker.pokemon.belch
 	  }
 	}
@@ -10403,23 +10402,23 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 		return true;
 	}
 
-	public virtual object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum = 0, byte? alltargets = null, bool showanimation = true)
+	public virtual object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum = 0, byte? alltargets = null, bool showanimation = true)
 	{
 		return null;
 	}
-	public virtual object pbEffectMessages(Pokemon attacker, Pokemon opponent, bool ignoretype = false)
+	public virtual object pbEffectMessages(Battle.Battler attacker, Battle.Battler opponent, bool ignoretype = false)
 	{
 		return null;
 	}
-	public virtual object pbCalcDamage(Pokemon attacker, Pokemon opponent)
+	public virtual object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
 	{
 		return null;
 	}
-	public virtual object pbCalcDamage(Pokemon attacker, Pokemon opponent, bool somethinghere) //ToDo: Fix this
+	public virtual object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent, bool somethinghere) //ToDo: Fix this
 	{
 		return null;
 	}
-	public virtual object pbShowAnimation(int id, Pokemon attacker, Pokemon opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true)
+	public virtual object pbShowAnimation(int id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true)
 	{
 		return null;
 	}
