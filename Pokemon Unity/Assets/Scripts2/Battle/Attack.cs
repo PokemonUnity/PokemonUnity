@@ -23,7 +23,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_UnimplementedMove : PokeBattle_Move
 	{
-		public override object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
+		public override object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true)
 		{
 			if (IsDamaging())
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -41,7 +41,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_FailedMove : PokeBattle_Move
 	{
-		public override object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
+		public override object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true)
 		{
 			//battle.pbDisplay("But it failed!");
 			return -1;
@@ -85,8 +85,6 @@ public class Function
   		}
 	}
 
-
-
 	/// <summary>
 	/// Implements the move Struggle.
 	/// For cases where the real move named Struggle is not defined.
@@ -121,11 +119,11 @@ public class Function
 		public bool IsPhysical(){ return true; }
 		public bool IsSpecial(){ return false; }
 
-		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects)
+		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects)
 		{
-			if (!attacker.fainted? && turneffects[PBEffects::TotalDamage]>0)
+			if (!attacker.isFainted() && turneffects.TotalDamage>0)
 			{
-				attacker.pbReduceHP((attacker.totalhp / 4.0).round);
+				attacker.pbReduceHP((attacker.TotalHP / 4.0).round);
 				//battle.pbDisplay(_INTL("{1} is damaged by recoil!", attacker.pbThis));
 			}
 		}
@@ -203,7 +201,7 @@ public class Function
 		  if isConst? (attacker.species, PBSpecies,:MELOETTA) &&
 			 !attacker.effects[PBEffects::Transform] &&
 			 !(attacker.hasWorkingAbility(:SHEERFORCE) && self.addlEffect>0) &&
-			 !attacker.fainted?
+			 !attacker.isFainted()
 			attacker.form=(attacker.form+1)%2
 			attacker.pbUpdate(true)
 			@battle.scene.pbChangePokemon(attacker, attacker.pokemon)
@@ -779,7 +777,7 @@ public class Function
 		}
 		activepkmn =[]
 		for i in @battle.battlers
-		  next if attacker.pbIsOpposing? (i.index) || i.fainted?
+		  next if attacker.pbIsOpposing? (i.index) || i.isFainted()
 		   activepkmn.push(i.pokemonIndex)
 
 		  next if USENEWBATTLEMECHANICS && i.index!=attacker.index && 
@@ -1721,14 +1719,14 @@ public class Function
 	public class PokeBattle_Move_03A : PokeBattle_Move
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
-		if attacker.hp<=(attacker.totalhp/2).floor ||
+		if attacker.hp<=(attacker.TotalHP/2).floor ||
 		   !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		attacker.pbReduceHP((attacker.totalhp/2).floor)
+		attacker.pbReduceHP((attacker.TotalHP/2).floor)
 		if attacker.hasWorkingAbility(:CONTRARY)
 		  attacker.stages[PBStats::ATTACK]=-6
 		  @battle.pbCommonAnimation("StatDown",attacker,null)
@@ -1804,8 +1802,8 @@ public class Function
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
-		  if attacker.pbPartner && !attacker.pbPartner.fainted?
-			attacker.pbPartner.pbReduceHP((attacker.pbPartner.totalhp/16).floor,true)
+		  if attacker.pbPartner && !attacker.pbPartner.isFainted()
+			attacker.pbPartner.pbReduceHP((attacker.pbPartner.TotalHP/16).floor,true)
 		  }
 		  showanim = true
 		  if attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
@@ -2626,8 +2624,8 @@ public class Function
 		oldo = opponent.hp
 
 		avhp=((attacker.hp+opponent.hp)/2).floor
-		attacker.hp=[avhp, attacker.totalhp].min
-		opponent.hp=[avhp, opponent.totalhp].min
+		attacker.hp=[avhp, attacker.TotalHP].min
+		opponent.hp=[avhp, opponent.TotalHP].min
 
 		@battle.scene.pbHPChanged(attacker, olda)
 		@battle.scene.pbHPChanged(opponent, oldo)
@@ -3400,8 +3398,8 @@ public class Function
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 
-		damage=pbEffectFixedDamage(opponent.totalhp, attacker, opponent, hitnum, alltargets, showanimation)
-		if opponent.fainted?
+		damage=pbEffectFixedDamage(opponent.TotalHP, attacker, opponent, hitnum, alltargets, showanimation)
+		if opponent.isFainted()
 		  //battle.pbDisplay(_INTL("It's a one-hit KO!"))
 		}
 		return damage
@@ -3503,9 +3501,9 @@ public class Function
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if opponent.damagestate.calcdamage>0
-		  if opponent.pbPartner && !opponent.pbPartner.fainted? &&
+		  if opponent.pbPartner && !opponent.pbPartner.isFainted() &&
 			 !opponent.pbPartner.hasWorkingAbility(:MAGICGUARD)
-			opponent.pbPartner.pbReduceHP((opponent.pbPartner.totalhp/16).floor)
+			opponent.pbPartner.pbReduceHP((opponent.pbPartner.TotalHP/16).floor)
 			//battle.pbDisplay(_INTL("The bursting flame hit {1}!",opponent.pbPartner.pbThis(true)))
 		  }
 		}
@@ -3695,7 +3693,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !opponent.fainted? && opponent.damagestate.calcdamage>0 &&
+		if !opponent.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   !opponent.damagestate.substitute && opponent.status==PBStatuses::PARALYSIS
 		  opponent.pbCureStatus
 
@@ -3719,7 +3717,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !opponent.fainted? && opponent.damagestate.calcdamage>0 &&
+		if !opponent.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   !opponent.damagestate.substitute && opponent.status==PBStatuses::SLEEP
 		  opponent.pbCureStatus
 
@@ -3768,7 +3766,7 @@ public class Function
 	public class PokeBattle_Move_080 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, attacker, opponent){
-		if opponent.hp<=opponent.totalhp/2
+		if opponent.hp<=opponent.TotalHP/2
 		  return basedmg*2
 		}
 		return basedmg
@@ -3983,7 +3981,7 @@ public class Function
 	public class PokeBattle_Move_08B : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, attacker, opponent){
-			return [(150 * attacker.hp / attacker.totalhp).floor,1].max
+			return [(150 * attacker.hp / attacker.TotalHP).floor,1].max
 		}
 	}
 
@@ -3995,7 +3993,7 @@ public class Function
 	public class PokeBattle_Move_08C : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, attacker, opponent){
-			return [(120 * opponent.hp / opponent.totalhp).floor,1].max
+			return [(120 * opponent.hp / opponent.TotalHP).floor,1].max
 		}
 	}
 
@@ -4175,13 +4173,13 @@ public class Function
 			//battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 			return -1
 		  }
-		  if opponent.hp==opponent.totalhp
+		  if opponent.hp==opponent.TotalHP
 			//battle.pbDisplay(_INTL("But it failed!"))
 			return -1
 		  }
 		  damage = pbCalcDamage(attacker, opponent) // Consumes Gems even if it will heal
 		  pbShowAnimation(@id, attacker, opponent,1, alltargets, showanimation) // Healing animation
-		  opponent.pbRecoverHP((opponent.totalhp/4).floor,true)
+		  opponent.pbRecoverHP((opponent.TotalHP/4).floor,true)
 		  //battle.pbDisplay(_INTL("{1} had its HP restored.",opponent.pbThis))   
 		  return 0
 		}
@@ -4356,7 +4354,7 @@ public class Function
 	public class PokeBattle_Move_098 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, attacker, opponent){
-		n = (48 * attacker.hp / attacker.totalhp).floor
+		n = (48 * attacker.hp / attacker.TotalHP).floor
 
 		ret=20
 		ret=40 if n<33
@@ -4437,7 +4435,7 @@ public class Function
 	public class PokeBattle_Move_09C : PokeBattle_Move
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if !@battle.doublebattle || opponent.fainted? ||
+		if !@battle.doublebattle || opponent.isFainted() ||
 		   @battle.choices[opponent.index][0]!=1 || // Didn't choose a move
 		   opponent.hasMovedThisRound? ||
 		   opponent.effects[PBEffects::HelpingHand]
@@ -6322,7 +6320,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if opponent.damagestate.calcdamage>0 && !opponent.fainted? &&
+		if opponent.damagestate.calcdamage>0 && !opponent.isFainted() &&
 		   !opponent.damagestate.substitute
 		  if opponent.effects[PBEffects::MultiTurn]==0
 			opponent.effects[PBEffects::MultiTurn]=5+@battle.pbRandom(2)
@@ -6369,7 +6367,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if opponent.damagestate.calcdamage>0 && !opponent.fainted? &&
+		if opponent.damagestate.calcdamage>0 && !opponent.isFainted() &&
 		   !opponent.damagestate.substitute
 		  if opponent.effects[PBEffects::MultiTurn]==0
 			opponent.effects[PBEffects::MultiTurn]=5+@battle.pbRandom(2)
@@ -6552,13 +6550,13 @@ public class Function
 	  }
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if attacker.hp==attacker.totalhp
+		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
-		attacker.pbRecoverHP(((attacker.totalhp+1)/2).floor,true)
+		attacker.pbRecoverHP(((attacker.TotalHP+1)/2).floor,true)
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0
 	  }
@@ -6577,13 +6575,13 @@ public class Function
 	  }
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if attacker.hp==attacker.totalhp
+		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
-		attacker.pbRecoverHP(((attacker.totalhp+1)/2).floor,true)
+		attacker.pbRecoverHP(((attacker.TotalHP+1)/2).floor,true)
 		attacker.effects[PBEffects::Roost]=true
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0
@@ -6610,7 +6608,7 @@ public class Function
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects[PBEffects::Wish]=2
-		attacker.effects[PBEffects::WishAmount]=((attacker.totalhp+1)/2).floor
+		attacker.effects[PBEffects::WishAmount]=((attacker.TotalHP+1)/2).floor
 		attacker.effects[PBEffects::WishMaker]= attacker.pokemonIndex
 		return 0
 	  }
@@ -6629,20 +6627,20 @@ public class Function
 	  }
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if attacker.hp==attacker.totalhp
+		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
 		}
 		hpgain = 0
 		if @battle.pbWeather==PBWeather::SUNNYDAY ||
 		   @battle.pbWeather==PBWeather::HARSHSUN
-		  hpgain = (attacker.totalhp * 2 / 3).floor
+		  hpgain = (attacker.TotalHP * 2 / 3).floor
 
 		else if @battle.pbWeather!=0
-		  hpgain= (attacker.totalhp / 4).floor
+		  hpgain= (attacker.TotalHP / 4).floor
 		else
 
-		  hpgain= (attacker.totalhp / 2).floor
+		  hpgain= (attacker.TotalHP / 2).floor
 
 		}
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
@@ -6672,7 +6670,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if attacker.hp==attacker.totalhp
+		if attacker.hp==attacker.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", attacker.pbThis))
 		  return -1
 		}
@@ -6680,7 +6678,7 @@ public class Function
 
 		attacker.pbSleepSelf(3)
 		//battle.pbDisplay(_INTL("{1} slept and became healthy!",attacker.pbThis))
-		hp=attacker.pbRecoverHP(attacker.totalhp-attacker.hp,true)
+		hp=attacker.pbRecoverHP(attacker.TotalHP-attacker.hp,true)
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis)) if hp>0
 		return 0
 	  }
@@ -6843,14 +6841,14 @@ public class Function
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
 		}
-		if opponent.hp==opponent.totalhp
+		if opponent.hp==opponent.TotalHP
 		  //battle.pbDisplay(_INTL("{1}'s HP is full!", opponent.pbThis))  
 		  return -1
 		}
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		hpgain=((opponent.totalhp+1)/2).floor
-		hpgain = (opponent.totalhp * 3 / 4).round if attacker.hasWorkingAbility(:MEGALAUNCHER)
+		hpgain=((opponent.TotalHP+1)/2).floor
+		hpgain = (opponent.TotalHP * 3 / 4).round if attacker.hasWorkingAbility(:MEGALAUNCHER)
 		opponent.pbRecoverHP(hpgain,true)
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",opponent.pbThis))  
 		return 0
@@ -6879,10 +6877,10 @@ public class Function
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		super(id, attacker, opponent, hitnum, alltargets, showanimation)
-		if !attacker.fainted?
+		if !attacker.isFainted()
 		  attacker.pbReduceHP(attacker.hp)
 
-		  attacker.pbFaint if attacker.fainted?
+		  attacker.pbFaint if attacker.isFainted()
 		}
 	  }
 	}
@@ -6908,10 +6906,10 @@ public class Function
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		super(id, attacker, opponent, hitnum, alltargets, showanimation)
-		if !attacker.fainted?
+		if !attacker.isFainted()
 		  attacker.pbReduceHP(attacker.hp)
 
-		  attacker.pbFaint if attacker.fainted?
+		  attacker.pbFaint if attacker.isFainted()
 		}
 	  }
 	}
@@ -7200,7 +7198,7 @@ public class Function
 	public class PokeBattle_Move_0EC : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && !opponent.fainted? &&
+		if !attacker.isFainted() && !opponent.isFainted() &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute && 
 		   (attacker.hasMoldBreaker || !opponent.hasWorkingAbility(:SUCTIONCUPS)) &&
 		   !opponent.effects[PBEffects::Ingrain]
@@ -7255,7 +7253,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if !attacker.fainted? && opponent.damagestate.calcdamage>0 &&
+		if !attacker.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   @battle.pbCanChooseNonActive? (attacker.index) &&
 		   !@battle.pbAllFainted? (@battle.pbParty(opponent.index))
 		  attacker.effects[PBEffects::Uturn]=true
@@ -7276,7 +7274,7 @@ public class Function
 		if pbIsDamaging?
 		  ret = super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute &&
-			 !opponent.fainted?
+			 !opponent.isFainted()
 			if opponent.effects[PBEffects::MeanLook]<0 &&
 			   (!USENEWBATTLEMECHANICS || !opponent.pbHasType? (:GHOST))
 			  opponent.effects[PBEffects::MeanLook]=attacker.index
@@ -7311,7 +7309,7 @@ public class Function
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && !opponent.fainted? && opponent.item!=0 &&
+		if !attacker.isFainted() && !opponent.isFainted() && opponent.item!=0 &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
 		  if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(:STICKYHOLD)
 			abilityname=PBAbilities.getName(opponent.ability)
@@ -7346,7 +7344,7 @@ public class Function
 	public class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && !opponent.fainted? && opponent.item!=0 &&
+		if !attacker.isFainted() && !opponent.isFainted() && opponent.item!=0 &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
 		  if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(:STICKYHOLD)
 			abilityname=PBAbilities.getName(opponent.ability)
@@ -7489,7 +7487,7 @@ public class Function
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && !opponent.fainted? && pbIsBerry? (opponent.item) &&
+		if !attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.item) &&
 		   opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
 		  if attacker.hasMoldBreaker || !opponent.hasWorkingAbility(:STICKYHOLD)
 			item=opponent.item
@@ -7534,7 +7532,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if !attacker.fainted? && opponent.damagestate.calcdamage>0 &&
+		if !attacker.isFainted() && opponent.damagestate.calcdamage>0 &&
 		   !opponent.damagestate.substitute &&
 		   (pbIsBerry?(opponent.item) || (USENEWBATTLEMECHANICS && pbIsGem? (opponent.item)))
 		  itemname=PBItems.getName(opponent.item)
@@ -7832,7 +7830,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
 			attacker.pbReduceHP((turneffects[PBEffects::TotalDamage]/4.0).round)
@@ -7854,7 +7852,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
 			attacker.pbReduceHP((turneffects[PBEffects::TotalDamage]/3.0).round)
@@ -7877,7 +7875,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
 			attacker.pbReduceHP((turneffects[PBEffects::TotalDamage]/2.0).round)
@@ -7900,7 +7898,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
 			attacker.pbReduceHP((turneffects[PBEffects::TotalDamage]/3.0).round)
@@ -7930,7 +7928,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if !attacker.hasWorkingAbility(:ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(:MAGICGUARD)
 			attacker.pbReduceHP((turneffects[PBEffects::TotalDamage]/3.0).round)
@@ -8206,7 +8204,7 @@ public class Function
 	  }
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
-		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.fainted?
+		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  attacker.effects[PBEffects::FirstPledge]= 0
 		  return super(attacker, opponent, hitnum, alltargets, showanimation)
 		}
@@ -8313,7 +8311,7 @@ public class Function
 	  }
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
-		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.fainted?
+		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  attacker.effects[PBEffects::FirstPledge]= 0
 		  return super(attacker, opponent, hitnum, alltargets, showanimation)
 		}
@@ -8420,7 +8418,7 @@ public class Function
 	  }
 
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
-		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.fainted?
+		if !@battle.doublebattle || !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  attacker.effects[PBEffects::FirstPledge]= 0
 		  return super(attacker, opponent, hitnum, alltargets, showanimation)
 		}
@@ -8581,7 +8579,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} already has a substitute!",attacker.pbThis))
 		  return -1
 		}
-		sublife =[(attacker.totalhp / 4).floor, 1].max
+		sublife =[(attacker.TotalHP / 4).floor, 1].max
 		if attacker.hp<=sublife
 		  //battle.pbDisplay(_INTL("It was too weak to make a substitute!"))
 		  return -1  
@@ -8620,7 +8618,7 @@ public class Function
 
 			//battle.pbDisplay(_INTL("{1} cut its own HP and laid a curse on {2}!",attacker.pbThis,opponent.pbThis(true)))
 			opponent.effects[PBEffects::Curse]=true
-			attacker.pbReduceHP((attacker.totalhp/2).floor)
+			attacker.pbReduceHP((attacker.TotalHP/2).floor)
 		  }
 		else
 		  lowerspeed=attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
@@ -8710,7 +8708,7 @@ public class Function
 	public class PokeBattle_Move_110 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 		  if attacker.effects[PBEffects::MultiTurn]>0
 			mtattack=PBMoves.getName(attacker.effects[PBEffects::MultiTurnAttack])
 			mtuser = @battle.battlers[attacker.effects[PBEffects::MultiTurnUser]]
@@ -8843,7 +8841,7 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Pokemon attacker, Pokemon opponent, turneffects){
-		if !attacker.fainted? && turneffects[PBEffects::TotalDamage]>0
+		if !attacker.isFainted() && turneffects[PBEffects::TotalDamage]>0
 
 		  showanim= true
 		  if attacker.effects[PBEffects::StockpileDef]>0
@@ -8889,13 +8887,13 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed to swallow a thing!"))
 		  return -1
 		when 1
-		  hpgain=(attacker.totalhp/4).floor
+		  hpgain=(attacker.TotalHP/4).floor
 		when 2
-		  hpgain=(attacker.totalhp/2).floor
+		  hpgain=(attacker.TotalHP/2).floor
 		when 3
-		  hpgain=attacker.totalhp
+		  hpgain=attacker.TotalHP
 		}
-		if attacker.hp==attacker.totalhp &&
+		if attacker.hp==attacker.TotalHP &&
 		   attacker.effects[PBEffects::StockpileDef]==0 &&
 		   attacker.effects[PBEffects::StockpileSpDef]==0
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -8978,7 +8976,7 @@ public class Function
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects[PBEffects::FollowMe]=1
-		if !attacker.pbPartner.fainted? && attacker.pbPartner.effects[PBEffects::FollowMe]>0
+		if !attacker.pbPartner.isFainted() && attacker.pbPartner.effects[PBEffects::FollowMe]>0
 		  attacker.effects[PBEffects::FollowMe]=attacker.pbPartner.effects[PBEffects::FollowMe]+1
 		}
 		//battle.pbDisplay(_INTL("{1} became the center of attention!", attacker.pbThis))
@@ -9223,7 +9221,7 @@ public class Function
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if(!@battle.doublebattle ||
 		   !attacker.pbPartner || 
-		   attacker.pbPartner.fainted?){
+		   attacker.pbPartner.isFainted()){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -9347,7 +9345,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if !@battle.doublebattle ||
-		   !attacker.pbPartner || attacker.pbPartner.fainted?
+		   !attacker.pbPartner || attacker.pbPartner.isFainted()
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -9408,7 +9406,7 @@ public class Function
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner]){ 
-		if (!i || i.fainted?) continue; //next
+		if (!i || i.isFainted()) continue; //next
 		if (!i.hasWorkingAbility(:PLUS) && !i.hasWorkingAbility(:MINUS)) continue; //next 
 		  if (!i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self) &&
 				  !i.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)) continue; //next 
@@ -9603,7 +9601,7 @@ public class Function
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
-	 if (!i || i.fainted?) continue; //next
+	 if (!i || i.isFainted()) continue; //next
 	 if (!i.pbHasType? (:GRASS)) continue; //next
 		  next if i.isAirborne? (attacker.hasMoldBreaker)
 		    if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
@@ -9640,7 +9638,7 @@ public class Function
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
-	next if !i || i.fainted?
+	next if !i || i.isFainted()
 	next if !i.pbHasType? (:GRASS)
 		  next if !i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
@@ -9671,7 +9669,7 @@ public class Function
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		didsomething=false
 		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
-	next if !i || i.fainted?
+	next if !i || i.isFainted()
 	next if !i.status==PBStatuses::POISON
 	next if !i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self) &&
 				  !i.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,self) &&
@@ -10195,7 +10193,7 @@ public class Function
 	{
 		public object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if opponent.damagestate.calcdamage>0 && opponent.fainted?
+		if opponent.damagestate.calcdamage>0 && opponent.isFainted()
 		  if attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)
 			attacker.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,self)
 		  }
@@ -10226,7 +10224,7 @@ public class Function
 			showanim=false; ret=0
 		  }
 		}
-		if !attacker.fainted? &&
+		if !attacker.isFainted() &&
 		   @battle.pbCanChooseNonActive? (attacker.index) &&
 		   !@battle.pbAllFainted? (@battle.pbParty(opponent.index))
 		  attacker.effects[PBEffects::Uturn]=true; ret=0
