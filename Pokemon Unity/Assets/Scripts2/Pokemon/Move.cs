@@ -2951,21 +2951,6 @@ namespace PokemonUnity.Move
 		CLEVER,
 		TOUGH
 	}
-	//NOTYPE          = 0x01,
-	//IGNOREPKMNTYPES = 0x02,
-	//NOWEIGHTING     = 0x04,
-	//NOCRITICAL      = 0x08,
-	//NOREFLECT       = 0x10,
-	//SELFCONFUSE     = 0x20
-    public enum SpecialCondition
-    {
-        NOTYPE			= 0x01,
-        IGNOREPKMNTYPES	= 0x02,
-        NOWEIGHTING		= 0x04,
-        NOCRITICAL		= 0x08,
-        NOREFLECT		= 0x10,
-        SELFCONFUSE		= 0x20
-    }
 	/// <summary>
 	/// </summary>
     /// ToDo = Create Pokemon Showdown Move class
