@@ -689,7 +689,7 @@ public class Function
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbThis,PBAbilities.getName(opponent.ability)))
 			return -1
-		  elsif opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
+		  else if opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbPartner.pbThis,PBAbilities.getName(opponent.pbPartner.ability)))
@@ -753,9 +753,8 @@ public class Function
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
 		  if t==PBStatuses::BURN
 			//battle.pbDisplay(_INTL("{1} healed its burn!", attacker.pbThis))  
-		  elsif t==PBStatuses::POISON
+		  else if t==PBStatuses::POISON
 			//battle.pbDisplay(_INTL("{1} cured its poisoning!", attacker.pbThis))  
-		  elsif t==PBStatuses::PARALYSIS
 			//battle.pbDisplay(_INTL("{1} cured its paralysis!", attacker.pbThis))  
 		  }
 		  return 0
@@ -2217,7 +2216,6 @@ public class Function
 		   abilityname = PBAbilities.getName(opponent.ability)
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!",opponent.pbThis,abilityname))
-		elsif opponent.pbReduceStat(PBStats::ATTACK,1, attacker,false, self, showanim)
 
 		  ret=0; showanim=false
 		}
@@ -2226,7 +2224,6 @@ public class Function
 		   abilityname = PBAbilities.getName(opponent.ability)
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Defense loss!",opponent.pbThis,abilityname))
-		elsif opponent.pbReduceStat(PBStats::DEFENSE,1, attacker,false, self, showanim)
 
 		  ret=0; showanim=false
 		}
@@ -2891,11 +2888,10 @@ public class Function
 		}
 		if @battle.field.effects[PBEffects::ElectricTerrain]>0
 		  type=getConst(PBTypes,:ELECTRIC) if hasConst? (PBTypes,:ELECTRIC)
-		elsif @battle.field.effects[PBEffects::GrassyTerrain]>0
 
 		  type= getConst(PBTypes,:GRASS) if hasConst?(PBTypes,:GRASS)
 
-		elsif @battle.field.effects[PBEffects::MistyTerrain]>0
+		else if @battle.field.effects[PBEffects::MistyTerrain]>0
 
 		  type= getConst(PBTypes,:FAIRY) if hasConst?(PBTypes,:FAIRY)
 
@@ -4171,7 +4167,7 @@ public class Function
 
 		  @calcbasedmg=40
 
-		elsif r<7
+		else if r<7
 
 		  @calcbasedmg=80
 
@@ -4685,7 +4681,7 @@ public class Function
 			opponent.pbSleep
 		  }
 		  return
-		elsif @battle.field.effects[PBEffects::MistyTerrain]>0
+		else if @battle.field.effects[PBEffects::MistyTerrain]>0
 		  if opponent.pbCanReduceStatStage?(PBStats::SPATK, attacker,false, self)
 
 			opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,self)
@@ -4752,9 +4748,9 @@ public class Function
 		id=getConst(PBMoves,:BODYSLAM)
 		if @battle.field.effects[PBEffects::ElectricTerrain]>0
 		  id=getConst(PBMoves,:THUNDERSHOCK) || id
-		elsif @battle.field.effects[PBEffects::GrassyTerrain]>0
+		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
 		  id=getConst(PBMoves,:VINEWHIP) || id
-		elsif @battle.field.effects[PBEffects::MistyTerrain]>0
+		else if @battle.field.effects[PBEffects::MistyTerrain]>0
 		  id=getConst(PBMoves,:FAIRYWIND) || id
 		else
 		  case @battle.environment
@@ -5214,9 +5210,9 @@ public class Function
 	}
 		if @battle.field.effects[PBEffects::ElectricTerrain]>0
 		  move=getConst(PBMoves,:THUNDERBOLT) || move
-		elsif @battle.field.effects[PBEffects::GrassyTerrain]>0
+		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
 		  move=getConst(PBMoves,:ENERGYBALL) || move
-		elsif @battle.field.effects[PBEffects::MistyTerrain]>0
+		else if @battle.field.effects[PBEffects::MistyTerrain]>0
 		  move=getConst(PBMoves,:MOONBLAST) || move
 		}
 		if move==0
@@ -5486,7 +5482,7 @@ public class Function
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbThis,PBAbilities.getName(opponent.ability)))
 			return -1
-		  elsif opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
+		  else if opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbPartner.pbThis,PBAbilities.getName(opponent.pbPartner.ability)))
@@ -5539,7 +5535,7 @@ public class Function
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbThis,PBAbilities.getName(opponent.ability)))
 			return -1
-		  elsif opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
+		  else if opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbPartner.pbThis,PBAbilities.getName(opponent.pbPartner.ability)))
@@ -5581,7 +5577,7 @@ public class Function
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbThis,PBAbilities.getName(opponent.ability)))
 			return -1
-		  elsif opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
+		  else if opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbPartner.pbThis,PBAbilities.getName(opponent.pbPartner.ability)))
@@ -5614,7 +5610,7 @@ public class Function
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbThis,PBAbilities.getName(opponent.ability)))
 			return -1
-		  elsif opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
+		  else if opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbPartner.pbThis,PBAbilities.getName(opponent.pbPartner.ability)))
@@ -5660,7 +5656,7 @@ public class Function
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbThis,PBAbilities.getName(opponent.ability)))
 			return -1
-		  elsif opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
+		  else if opponent.pbPartner.hasWorkingAbility(:AROMAVEIL)
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			   opponent.pbPartner.pbThis,PBAbilities.getName(opponent.pbPartner.ability)))
@@ -5806,7 +5802,7 @@ public class Function
 		  if attacker.pokemonIndex==i
 			@participants.push(i)
 
-		  elsif party[i] && !party[i].egg? && party[i].hp>0 && party[i].status==0
+		  else if party[i] && !party[i].egg? && party[i].hp>0 && party[i].status==0
 			@participants.push(i)
 		  }
 
@@ -6311,9 +6307,10 @@ public class Function
 	  }
 
 	  public object pbTypeModifier(type, attacker, opponent){
-		return 0 if !attacker.hasMoldBreaker &&
 		if (opponent.pbHasType? (:FLYING)) return 0;
-		   opponent.hasWorkingAbility(:LEVITATE) && !opponent.effects[PBEffects::SmackDown]
+		if (!attacker.hasMoldBreaker &&
+		   opponent.hasWorkingAbility(:LEVITATE) && 
+		   !opponent.effects[PBEffects::SmackDown]) return 0;
 		return super
 	  }
 	}
@@ -6322,7 +6319,7 @@ public class Function
 
 	/// <summary>
 	/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
-	/// at } of each round.
+	/// at end of each round.
 	/// <summary>
 	public class PokeBattle_Move_0CF : PokeBattle_Move
 	{
@@ -6341,17 +6338,17 @@ public class Function
 			if isConst?(@id, PBMoves,:BIND)
 
 			  //battle.pbDisplay(_INTL("{1} was squeezed by {2}!",opponent.pbThis,attacker.pbThis(true)))
-			elsif isConst? (@id, PBMoves,:CLAMP)
+			else if isConst? (@id, PBMoves,:CLAMP)
 			  //battle.pbDisplay(_INTL("{1} clamped {2}!",attacker.pbThis,opponent.pbThis(true)))
-			elsif isConst? (@id, PBMoves,:FIRESPIN)
+			else if isConst? (@id, PBMoves,:FIRESPIN)
 			  //battle.pbDisplay(_INTL("{1} was trapped in the fiery vortex!",opponent.pbThis))
-			elsif isConst? (@id, PBMoves,:MAGMASTORM)
+			else if isConst? (@id, PBMoves,:MAGMASTORM)
 			  //battle.pbDisplay(_INTL("{1} became trapped by Magma Storm!",opponent.pbThis))
-			elsif isConst? (@id, PBMoves,:SANDTOMB)
+			else if isConst? (@id, PBMoves,:SANDTOMB)
 			  //battle.pbDisplay(_INTL("{1} became trapped by Sand Tomb!",opponent.pbThis))
-			elsif isConst? (@id, PBMoves,:WRAP)
+			else if isConst? (@id, PBMoves,:WRAP)
 			  //battle.pbDisplay(_INTL("{1} was wrapped by {2}!",opponent.pbThis,attacker.pbThis(true)))
-			elsif isConst? (@id, PBMoves,:INFESTATION)
+			else if isConst? (@id, PBMoves,:INFESTATION)
 			  //battle.pbDisplay(_INTL("{1} has been afflicted with an infestation by {2}!",opponent.pbThis,attacker.pbThis(true)))
 			else
 			  //battle.pbDisplay(_INTL("{1} was trapped in the vortex!",opponent.pbThis))
@@ -6367,7 +6364,7 @@ public class Function
 
 	/// <summary>
 	/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
-	/// at } of each round. (Whirlpool)
+	/// at end of each round. (Whirlpool)
 	/// Power is doubled if target is using Dive.
 	/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
 	/// <summary>
@@ -6424,7 +6421,7 @@ public class Function
 
 
 	/// <summary>
-	/// User must use this move for 1 or 2 more rounds. At }, user becomes confused.
+	/// User must use this move for 1 or 2 more rounds. At end, user becomes confused.
 	/// (Outrage, Petal Dange, Thrash)
 	/// <summary>
 	public class PokeBattle_Move_0D2 : PokeBattle_Move
@@ -6438,7 +6435,7 @@ public class Function
 
 		  attacker.currentMove= @id
 
-		elsif pbTypeModifier(@type, attacker, opponent)==0
+		else if pbTypeModifier(@type, attacker, opponent)==0
 		  // Cancel effect if attack is ineffective
 		  attacker.effects[PBEffects::Outrage]= 0
 
@@ -6599,7 +6596,7 @@ public class Function
 
 
 	/// <summary>
-	/// Battler in user's position is healed by 1/2 of its max HP, at the } of the
+	/// Battler in user's position is healed by 1/2 of its max HP, at the end of the
 	/// next round. (Wish)
 	/// <summary>
 	public class PokeBattle_Move_0D7 : PokeBattle_Move
@@ -6644,7 +6641,7 @@ public class Function
 		   @battle.pbWeather==PBWeather::HARSHSUN
 		  hpgain = (attacker.totalhp * 2 / 3).floor
 
-		elsif @battle.pbWeather!=0
+		else if @battle.pbWeather!=0
 		  hpgain= (attacker.totalhp / 4).floor
 		else
 
@@ -6695,7 +6692,7 @@ public class Function
 
 
 	/// <summary>
-	/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the } of each round.
+	/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the end of each round.
 	/// (Aqua Ring)
 	/// <summary>
 	public class PokeBattle_Move_0DA : PokeBattle_Move
@@ -6720,7 +6717,7 @@ public class Function
 
 
 	/// <summary>
-	/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the } of each
+	/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the end of each
 	/// round, and cannot flee or switch out. (Ingrain)
 	/// <summary>
 	public class PokeBattle_Move_0DB : PokeBattle_Move
@@ -6745,7 +6742,7 @@ public class Function
 
 
 	/// <summary>
-	/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the } of each round,
+	/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the end of each round,
 	/// and the Pokémon in the user's position gains the same amount. (Leech Seed)
 	/// <summary>
 	public class PokeBattle_Move_0DC : PokeBattle_Move
@@ -6790,7 +6787,7 @@ public class Function
 		  if opponent.hasWorkingAbility(:LIQUIDOOZE)
 			attacker.pbReduceHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
-		  elsif attacker.effects[PBEffects::HealBlock]==0
+		  else if attacker.effects[PBEffects::HealBlock]==0
 
 			hpgain= (hpgain * 1.3).floor if attacker.hasWorkingItem(:BIGROOT)
 
@@ -6821,7 +6818,7 @@ public class Function
 		  if opponent.hasWorkingAbility(:LIQUIDOOZE)
 			attacker.pbReduceHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
-		  elsif attacker.effects[PBEffects::HealBlock]==0
+		  else if attacker.effects[PBEffects::HealBlock]==0
 
 			hpgain= (hpgain * 1.3).floor if attacker.hasWorkingItem(:BIGROOT)
 
@@ -7311,7 +7308,7 @@ public class Function
 
 
 	/// <summary>
-	/// Target drops its item. It regains the item at the } of the battle. (Knock Off)
+	/// Target drops its item. It regains the item at the end of the battle. (Knock Off)
 	/// If target has a losable item, damage is multiplied by 1.5.
 	/// <summary>
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
@@ -7322,7 +7319,7 @@ public class Function
 		  if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(:STICKYHOLD)
 			abilityname=PBAbilities.getName(opponent.ability)
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, @name))
-		  elsif !@battle.pbIsUnlosableItem(opponent, opponent.item)
+		  else if !@battle.pbIsUnlosableItem(opponent, opponent.item)
 			itemname = PBItems.getName(opponent.item)
 
 			opponent.item=0
@@ -7357,7 +7354,7 @@ public class Function
 		  if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(:STICKYHOLD)
 			abilityname=PBAbilities.getName(opponent.ability)
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, @name))
-		  elsif !@battle.pbIsUnlosableItem(opponent, opponent.item) &&
+		  else if !@battle.pbIsUnlosableItem(opponent, opponent.item) &&
 				!@battle.pbIsUnlosableItem(attacker, opponent.item) &&
 				attacker.item==0 &&
 				(@battle.opponent || !@battle.pbIsOpposing? (attacker.index))
@@ -7659,16 +7656,16 @@ public class Function
 				   :ROSEINCENSE,:SEAINCENSE,:SHEDSHELL,:SILKSCARF,:SILVERPOWDER,
 				   :SMOOTHROCK,:SOFTSAND,:SOOTHEBELL,:WAVEINCENSE,:WHITEHERB,
 				   :WIDELENS,:WISEGLASSES,:YELLOWSCARF,:ZOOMLENS]
-	}
+		}
 	}
 
 	public object pbMoveFailed(attacker, opponent){
-		return true if attacker.item==0 ||
+		if (attacker.item==0 ||
 					   @battle.pbIsUnlosableItem(attacker, attacker.item) ||
 					   pbIsPokeBall? (attacker.item) ||
 					   @battle.field.effects[PBEffects::MagicRoom]>0 ||
 					   attacker.hasWorkingAbility(:KLUTZ) ||
-					   attacker.effects[PBEffects::Embargo]>0
+					   attacker.effects[PBEffects::Embargo]>0) return true;
 		for i in flingarray.keys
 		  if flingarray[i]
 			for j in flingarray[i]
@@ -7677,9 +7674,9 @@ public class Function
 
 		  }
 		}
-		return false if pbIsBerry? (attacker.item) &&
+		if (pbIsBerry? (attacker.item) &&
 						!attacker.pbOpposing1.hasWorkingAbility(:UNNERVE) &&
-						!attacker.pbOpposing2.hasWorkingAbility(:UNNERVE)
+						!attacker.pbOpposing2.hasWorkingAbility(:UNNERVE)) return false;
 		return true
 	  }
 
@@ -7711,20 +7708,20 @@ public class Function
 		  if attacker.hasWorkingBerry
 			opponent.pbActivateBerryEffect(attacker.item,false)
 
-		  elsif attacker.hasWorkingItem(:FLAMEORB)
+		  else if attacker.hasWorkingItem(:FLAMEORB)
 			if opponent.pbCanBurn? (attacker,false,self)
 			  opponent.pbBurn(attacker)
 			}
 
-		  elsif attacker.hasWorkingItem(:KINGSROCK) ||
+		  else if attacker.hasWorkingItem(:KINGSROCK) ||
 				attacker.hasWorkingItem(:RAZORFANG)
 			opponent.pbFlinch(attacker)
-		  elsif attacker.hasWorkingItem(:LIGHTBALL)
+		  else if attacker.hasWorkingItem(:LIGHTBALL)
 			if opponent.pbCanParalyze? (attacker,false,self)
 			  opponent.pbParalyze(attacker)
 			}
 
-		  elsif attacker.hasWorkingItem(:MENTALHERB)
+		  else if attacker.hasWorkingItem(:MENTALHERB)
 			if opponent.effects[PBEffects::Attract]>=0
 			  opponent.pbCureAttract
 			  //battle.pbDisplay(_INTL("{1} got over its infatuation.", opponent.pbThis))
@@ -7752,16 +7749,16 @@ public class Function
 			  opponent.effects[PBEffects::HealBlock]=0
 			  //battle.pbDisplay(_INTL("{1}'s Heal Block wore off!",opponent.pbThis))
 			}
-		  elsif attacker.hasWorkingItem(:POISONBARB)
+		  else if attacker.hasWorkingItem(:POISONBARB)
 			if opponent.pbCanPoison? (attacker,false,self)
 			  opponent.pbPoison(attacker)
 			}
 
-		  elsif attacker.hasWorkingItem(:TOXICORB)
+		  else if attacker.hasWorkingItem(:TOXICORB)
 			if opponent.pbCanPoison? (attacker,false,self)
 			  opponent.pbPoison(attacker, null,true)
 			}
-		  elsif attacker.hasWorkingItem(:WHITEHERB)
+		  else if attacker.hasWorkingItem(:WHITEHERB)
 			while true
 			  reducedstats=false
 			  for i in [PBStats::ATTACK, PBStats::DEFENSE,
@@ -8233,7 +8230,7 @@ public class Function
 
 		  attacker.effects[PBEffects::FirstPledge]=0
 		  return ret
-		elsif attacker.effects[PBEffects::FirstPledge]==0x108   // Water Pledge
+		else if attacker.effects[PBEffects::FirstPledge]==0x108   // Water Pledge
 		  ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0
 			attacker.pbOpposingSide.effects[PBEffects::Swamp]=4
@@ -8340,7 +8337,7 @@ public class Function
 
 		  attacker.effects[PBEffects::FirstPledge]=0
 		  return ret
-		elsif attacker.effects[PBEffects::FirstPledge]==0x108   // Water Pledge
+		else if attacker.effects[PBEffects::FirstPledge]==0x108   // Water Pledge
 		  ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0
 			attacker.pbOwnSide.effects[PBEffects::Rainbow]=4
@@ -8447,7 +8444,7 @@ public class Function
 
 		  attacker.effects[PBEffects::FirstPledge]=0
 		  return ret
-		elsif attacker.effects[PBEffects::FirstPledge]==0x107   // Fire Pledge
+		else if attacker.effects[PBEffects::FirstPledge]==0x107   // Fire Pledge
 		  ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		  if opponent.damagestate.calcdamage>0
 			attacker.pbOwnSide.effects[PBEffects::Rainbow]=4
@@ -8610,7 +8607,7 @@ public class Function
 	/// User is not Ghost: Decreases the user's Speed, increases the user's Attack &
 	/// Defense by 1 stage each.
 	/// User is Ghost: User loses 1/2 of max HP, and curses the target.
-	/// Cursed Pokémon lose 1/4 of their max HP at the } of each round.
+	/// Cursed Pokémon lose 1/4 of their max HP at the end of each round.
 	/// (Curse)
 	/// <summary>
 	public class PokeBattle_Move_10D : PokeBattle_Move
@@ -8689,7 +8686,7 @@ public class Function
 
 
 	/// <summary>
-	/// Target will lose 1/4 of max HP at } of each round, while asleep. (Nightmare)
+	/// Target will lose 1/4 of max HP at end of each round, while asleep. (Nightmare)
 	/// <summary>
 	public class PokeBattle_Move_10F : PokeBattle_Move
 	{
@@ -8960,10 +8957,10 @@ public class Function
 	public class PokeBattle_Move_116 : PokeBattle_Move
 	{
 		public object pbMoveFailed(attacker, opponent){
-		return true if @battle.choices[opponent.index][0]!=1 // Didn't choose a move
-		oppmove=@battle.choices[opponent.index][2]
-		return true if opponent.hasMovedThisRound? && oppmove.function!=0xB0 // Me First
+		if (@battle.choices[opponent.index][0]!=1 // Didn't choose a move
+		oppmove=@battle.choices[opponent.index][2]) return true;
 		if (!oppmove || oppmove.id<=0 || oppmove.pbIsStatus?) return true;
+		if (opponent.hasMovedThisRound? && oppmove.function!=0xB0) return true; // Me First
 		return false
 	  }
 	}
@@ -9108,10 +9105,10 @@ public class Function
 	public class PokeBattle_Move_11C : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, attacker, opponent){
-		if PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xC9 || // Fly
+		if(PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xC9 || // Fly
 		   PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCC || // Bounce
 		   PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCE || // Sky Drop
-		   opponent.effects[PBEffects::SkyDrop]
+		   opponent.effects[PBEffects::SkyDrop])
 		  return basedmg*2
 		}
 		return basedmg
@@ -9120,20 +9117,21 @@ public class Function
 	  public object pbEffect(Pokemon attacker, Pokemon opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true)
 
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute &&
-		   !opponent.effects[PBEffects::Roost]
+		if (opponent.damagestate.calcdamage>0 && 
+			!opponent.damagestate.substitute &&
+			!opponent.effects[PBEffects::Roost])
 		  opponent.effects[PBEffects::SmackDown]= true
 
-		  showmsg= (opponent.pbHasType ? (: FLYING) ||
+		  showmsg= (opponent.pbHasType ? (:FLYING) ||
 				   opponent.hasWorkingAbility(:LEVITATE))
-		  if PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xC9 || // Fly
-			 PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCC    // Bounce
+		  if(PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xC9 || // Fly
+			 PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCC)    // Bounce
 			opponent.effects[PBEffects::TwoTurnAttack]=0; showmsg=true
 		  }
-		  if opponent.effects[PBEffects::MagnetRise]>0
+		  if (opponent.effects[PBEffects::MagnetRise]>0)
 			opponent.effects[PBEffects::MagnetRise]=0; showmsg=true
 		  }
-		  if opponent.effects[PBEffects::Telekinesis]>0
+		  if (opponent.effects[PBEffects::Telekinesis]>0)
 			opponent.effects[PBEffects::Telekinesis]=0; showmsg=true
 		  }
 		  //battle.pbDisplay(_INTL("{1} fell straight down!", opponent.pbThis)) if showmsg
@@ -9150,9 +9148,9 @@ public class Function
 	public class PokeBattle_Move_11D : PokeBattle_Move
 	{
 		public object pbMoveFailed(attacker, opponent){
-		return true if @battle.choices[opponent.index][0]!=1 // Didn't choose a move
 		if (opponent.effects[PBEffects::MoveNext]) return true;
-		oppmove=@battle.choices[opponent.index][2]
+		if (@battle.choices[opponent.index][0]!=1 // Didn't choose a move
+		oppmove=@battle.choices[opponent.index][2]) return true;
 		if (!oppmove || oppmove.id<=0) return true;
 		if (opponent.hasMovedThisRound?) return true;
 		return false
@@ -9177,9 +9175,9 @@ public class Function
 	public class PokeBattle_Move_11E : PokeBattle_Move
 	{
 		public object pbMoveFailed(attacker, opponent){
-		return true if @battle.choices[opponent.index][0]!=1 // Didn't choose a move
 		if (opponent.effects[PBEffects::Quash]) return true;
-		oppmove=@battle.choices[opponent.index][2]
+		if (@battle.choices[opponent.index][0]!=1 // Didn't choose a move
+		oppmove=@battle.choices[opponent.index][2]) return true;
 		if (!oppmove || oppmove.id<=0) return true;
 		if (opponent.hasMovedThisRound?) return true;
 		return false
@@ -9226,8 +9224,9 @@ public class Function
 	public class PokeBattle_Move_120 : PokeBattle_Move
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
-		if !@battle.doublebattle ||
-		   !attacker.pbPartner || attacker.pbPartner.fainted?
+		if(!@battle.doublebattle ||
+		   !attacker.pbPartner || 
+		   attacker.pbPartner.fainted?){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -9237,8 +9236,8 @@ public class Function
 		b = @battle.battlers[attacker.pbPartner.index]
 
 		temp=a; a=b; b=temp
-	/// Swap effects that point at the position rather than the Pokémon
-	/// NOT PerishSongUser (no need to swap), Attract, MultiTurnUser
+		// Swap effects that point at the position rather than the Pokémon
+		// NOT PerishSongUser (no need to swap), Attract, MultiTurnUser
 		effectstoswap =[PBEffects::BideTarget,
 					   PBEffects::CounterTarget,
 					   PBEffects::LeechSeed,
@@ -9263,7 +9262,8 @@ public class Function
 	/// (Foul Play)
 	/// <summary>
 	public class PokeBattle_Move_121 : PokeBattle_Move
-	/// Handled in superclass public object pbCalcDamage, do not edit!
+	{
+		// Handled in superclass public object pbCalcDamage, do not edit!
 	}
 
 
@@ -9273,7 +9273,8 @@ public class Function
 	/// calculations. (Psyshock, Psystrike, Secret Sword)
 	/// <summary>
 	public class PokeBattle_Move_122 : PokeBattle_Move
-	/// Handled in superclass public object pbCalcDamage, do not edit!
+	{
+		// Handled in superclass public object pbCalcDamage, do not edit!
 	}
 
 
@@ -9395,7 +9396,8 @@ public class Function
 	/// Increases the user's Defense by 1 stage for each target hit. (Diamond Storm)
 	/// <summary>
 	public class PokeBattle_Move_136 : PokeBattle_Move_01D
-	/// No difference to function code 01D. It may need to be separate in future.
+	{
+		// No difference to function code 01D. It may need to be separate in future.
 	}
 
 
@@ -9409,24 +9411,24 @@ public class Function
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		didsomething=false
 		for i in [attacker, attacker.pbPartner]
-	next if !i || i.fainted?
-	next if !i.hasWorkingAbility(:PLUS) && !i.hasWorkingAbility(:MINUS)
-		  next if !i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self) &&
-				  !i.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)
+		if (!i || i.fainted?) continue; //next
+		if (!i.hasWorkingAbility(:PLUS) && !i.hasWorkingAbility(:MINUS)) continue; //next 
+		  if (!i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self) &&
+				  !i.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)) continue; //next 
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
 			   didsomething = true
 
 		  showanim=true
 		  if i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,self)
 			i.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,self,showanim)
-			showanim=false
+			showanim=false;
 		  }
 		  if i.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,self)
 			i.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,self,showanim)
-			showanim=false
+			showanim=false;
 		  }
 		}
-		if !didsomething
+		if (!didsomething){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -9470,7 +9472,7 @@ public class Function
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
 		ret=opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,self)
-		return ret? 0 : -1
+		return ret ? 0 : -1;
 	  }
 	}
 
@@ -9484,24 +9486,24 @@ public class Function
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true)
 		// Replicates public object pbCanReduceStatStage? so that certain messages aren't shown
 		// multiple times
-		if opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)
+		if(opponent.effects[PBEffects::Substitute]>0 && !ignoresSubstitute? (attacker)){
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
 		  return -1
 		}
-		if opponent.pbTooLow? (PBStats::ATTACK) &&
-		   opponent.pbTooLow? (PBStats::SPATK)
+		if(opponent.pbTooLow? (PBStats::ATTACK) &&
+		   opponent.pbTooLow? (PBStats::SPATK)){
 		   //battle.pbDisplay(_INTL("{1}'s stats won't go any lower!", opponent.pbThis))
 		  return -1
 		}
-		if opponent.pbOwnSide.effects[PBEffects::Mist]>0
+		if(opponent.pbOwnSide.effects[PBEffects::Mist]>0){
 		  //battle.pbDisplay(_INTL("{1} is protected by Mist!",opponent.pbThis))
 		  return -1
 		}
-		if !attacker.hasMoldBreaker
-		  if opponent.hasWorkingAbility(:CLEARBODY) ||
-			 opponent.hasWorkingAbility(:WHITESMOKE)
+		if(!attacker.hasMoldBreaker){
+		  if(opponent.hasWorkingAbility(:CLEARBODY) ||
+			 opponent.hasWorkingAbility(:WHITESMOKE)){
 			//battle.pbDisplay(_INTL("{1}'s {2} prevents stat loss!",opponent.pbThis,
-			   PBAbilities.getName(opponent.ability)))
+			//   PBAbilities.getName(opponent.ability)))
 			return -1
 		  }
 		}
@@ -9509,14 +9511,14 @@ public class Function
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
 		ret=-1; showanim=true
-		if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(:HYPERCUTTER)
-		  abilityname=PBAbilities.getName(opponent.ability)
+		if (!attacker.hasMoldBreaker && opponent.hasWorkingAbility(:HYPERCUTTER)
+		  abilityname=PBAbilities.getName(opponent.ability)){
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!", opponent.pbThis, abilityname))
-		elsif opponent.pbReduceStat(PBStats::ATTACK,1, attacker,false, self, showanim)
-
+		}
+		else if (opponent.pbReduceStat(PBStats::ATTACK,1, attacker,false, self, showanim)){
 		  ret=0; showanim=false
 		}
-		if opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,self,showanim)
+		if (opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,self,showanim)){
 		  ret=0; showanim=false
 		}
 		return ret
@@ -9604,11 +9606,11 @@ public class Function
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		didsomething=false
 		for i in [attacker, attacker.pbPartner, attacker.pbOpposing1, attacker.pbOpposing2]
-	next if !i || i.fainted?
-	next if !i.pbHasType? (:GRASS)
+	 if (!i || i.fainted?) continue; //next
+	 if (!i.pbHasType? (:GRASS)) continue; //next
 		  next if i.isAirborne? (attacker.hasMoldBreaker)
-		   next if !i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
-				  !i.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)
+		    if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
+				  !i.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)) continue;//next
 		  pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation) if !didsomething
 			   didsomething = true
 
@@ -9805,9 +9807,9 @@ public class Function
 		return damagemult
 	  }
 
-	  public object tramplesMinimize? (param=1)
-		return true if param==1 && USENEWBATTLEMECHANICS // Perfect accuracy
-		return true if param==2 // Double damage
+	  public object tramplesMinimize? (param=1){
+		if (param==1 && USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+		if (param==2) return true; // Double damage
 		return false
 	  }
 	}
@@ -9821,14 +9823,14 @@ public class Function
 	{
 		public object pbEffect(attacker, opponent, hitnum=0,alltargets=null,showanimation=true){
 		if (pbTypeImmunityByAbility(pbType(@type, attacker, opponent), attacker, opponent)) return -1;
-		if opponent.effects[PBEffects::Electrify]
+		if (opponent.effects[PBEffects::Electrify]){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if @battle.choices[opponent.index][0]!=1 || // Didn't choose a move
+		if(@battle.choices[opponent.index][0]!=1 || // Didn't choose a move
 		   !@battle.choices[opponent.index][2] ||
 		   @battle.choices[opponent.index][2].id<=0 ||
-		   opponent.hasMovedThisRound?
+		   opponent.hasMovedThisRound?){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -10095,9 +10097,9 @@ public class Function
 		return ret
 	  }
 
-	  public object tramplesMinimize? (param=1)
-		return true if param==1 && USENEWBATTLEMECHANICS // Perfect accuracy
-		return true if param==2 // Double damage
+	  public object tramplesMinimize? (param=1){
+		if (param==1 && USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+		if (param==2) return true; // Double damage
 		return false
 	  }
 	}
@@ -10174,7 +10176,7 @@ public class Function
 		  if opponent.hasWorkingAbility(:LIQUIDOOZE)
 			attacker.pbReduceHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
-		  elsif attacker.effects[PBEffects::HealBlock]==0
+		  else if attacker.effects[PBEffects::HealBlock]==0
 
 			hpgain= (hpgain * 1.3).floor if attacker.hasWorkingItem(:BIGROOT)
 
@@ -10239,7 +10241,7 @@ public class Function
 
 
 	/// <summary>
-	/// No Pokémon can switch out or flee until the } of the next round, as long as
+	/// No Pokémon can switch out or flee until the end of the next round, as long as
 	/// the user remains active. (Fairy Lock)
 	/// <summary>
 	public class PokeBattle_Move_152 : PokeBattle_Move
@@ -10309,7 +10311,7 @@ public class Function
 
 	/// <summary>
 	/// For 5 rounds, creates a grassy terrain which boosts Grass-type moves and heals
-	/// Pokémon at the } of each round. Affects non-airborne Pokémon only.
+	/// Pokémon at the end of each round. Affects non-airborne Pokémon only.
 	/// (Grassy Terrain)
 	/// <summary>
 	public class PokeBattle_Move_155 : PokeBattle_Move
