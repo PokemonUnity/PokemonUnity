@@ -120,7 +120,7 @@ public class Effects
 		public bool Transform          { get; set; }
 		public bool Truant             { get; set; }
 		public int TwoTurnAttack      { get; set; }
-		public int Type3              { get; set; }
+		public PokemonUnity.Types Type3              { get; set; }
 		public bool Unburden           { get; set; }
 		public int Uproar             { get; set; }
 		public bool Uturn              { get; set; }
@@ -294,7 +294,7 @@ public class Effects
 			this.Transform        = false;
 			this.Truant           = false;
 			this.TwoTurnAttack    = 0;
-			this.Type3            = -1;
+			this.Type3            = PokemonUnity.Types.NONE;//-1; ToDo: What's difference between "None" and "null"?
 			this.Unburden         = false;
 			this.Uproar           = 0;
 			this.Uturn            = false;

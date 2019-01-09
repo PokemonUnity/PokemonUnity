@@ -186,8 +186,8 @@ public class Battle : UnityUtilityIntegration
 	/// </summary>
 	/// ToDo: Should be enum value
 	/// ToDo: Might be a static get value from global/map variables.
-	public void Environment (PokemonUnity.Environment environment) { this.environment = environment; }
-	private PokemonUnity.Environment environment { get; set; }
+	//public void Environment (PokemonUnity.Environment environment) { this.environment = environment; }
+	public PokemonUnity.Environment environment { get; set; }
 	private Weather weather { get; set; }
 	/// <summary>
 	/// Current weather, custom methods should use <see cref="SetWeather"/>  instead
@@ -201,12 +201,13 @@ public class Battle : UnityUtilityIntegration
 					return 0;
 			}
 			return weather;
-		} }
+		}
+	}
 	public void SetWeather (Weather weather) { this.weather = weather; }
 	/// <summary>
 	/// Duration of current weather, or -1 if indefinite
 	/// </summary>
-	public int weatherduration { get; private set; }
+	public int weatherduration { get; set; }
 	/// <summary>
 	/// True if during the switching phase of the round
 	/// </summary>

@@ -673,17 +673,17 @@ public class Function
 		public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
 		case this.battle.pbRandom(3)
-		when 0
+		case 0:
 		  if (opponent.pbCanBurn (attacker,false,this)){
 			opponent.pbBurn(attacker);
 		  }
 
-		when 1
+		case 1:
 		  if (opponent.pbCanFreeze (attacker,false,this)){
 			opponent.pbFreeze();
 		  }
 
-		when 2
+		case 2:
 		  if (opponent.pbCanParalyze (attacker,false,this)){
 			opponent.pbParalyze(attacker);
 		  }
@@ -738,54 +738,67 @@ public class Function
 		else { 
 		  //battle.pbDisplay(_INTL("A bell chimed!"))
 		}
-		activepkmn =[]
-		for i in this.battle.battlers
-		  if (attacker.pbIsOpposing? (i.index) || i.isFainted()) continue; //next
-		   activepkmn.push(i.pokemonIndex)
+		List<byte> activepkmn =new List<byte>();
+		foreach (Battle.Battler i in this.battle.battlers) { 
+		  if (attacker.pbIsOpposing? (i.Index) || i.isFainted()) continue; //next
+		   activepkmn.Add(i.pokemonIndex);
 
-		  if (Settings.USENEWBATTLEMECHANICS && i.index!=attacker.index && ) continue; //next
-			 pbTypeImmunityByAbility(pbType(this.type, attacker, i), attacker, i)
-		  case i.status
-		  when Status.PARALYSIS
+		  if (Settings.USENEWBATTLEMECHANICS && i.Index!=attacker.Index && 
+			 pbTypeImmunityByAbility(pbType(this.type, attacker, i), attacker, i)) continue; //next
+		  switch (i.Status) {
+		  case Status.PARALYSIS:
 			//battle.pbDisplay(_INTL("{1} was cured of paralysis.", i.pbThis))
-		  when Status.SLEEP
+			break;
+		  case Status.SLEEP:
 
 			//battle.pbDisplay(_INTL("{1}'s sleep was woken.", i.pbThis))
-		  when Status.POISON
+			break;
+		  case Status.POISON:
 
 			//battle.pbDisplay(_INTL("{1} was cured of its poisoning.", i.pbThis))
-		  when Status.BURN
+			break;
+		  case Status.BURN:
 
 			//battle.pbDisplay(_INTL("{1}'s burn was healed.", i.pbThis))
-		  when Status.FROZEN
+			break;
+		  case Status.FROZEN:
 
 			//battle.pbDisplay(_INTL("{1} was thawed out.", i.pbThis))
+			break;
+			default:break;
 		  }
-		  i.pbCureStatus(false)
+		i.pbCureStatus(false);
 
 		}
-		party = this.battle.pbParty(attacker.index) // NOTE: Considers both parties in multi battles
+		party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
 		for (int i = 0; i < party.length; i++){ 
 		  if (activepkmn.include? (i)) continue; //next
 		   if (!party[i] || party[i].egg? || party[i].HP<=0) continue; //next
-		  case party[i].status
-		  when Status.PARALYSIS
+		  switch (party[i].Status) {
+		  case Status.PARALYSIS:
 			//battle.pbDisplay(_INTL("{1} was cured of paralysis.", party[i].name))
-		  when Status.SLEEP
+				break;
+		  case Status.SLEEP:
 
 			//battle.pbDisplay(_INTL("{1} was woken from its sleep.", party[i].name))
-		  when Status.POISON
+				break;
+		  case Status.POISON:
 
 			//battle.pbDisplay(_INTL("{1} was cured of its poisoning.", party[i].name))
-		  when Status.BURN
+				break;
+		  case Status.BURN:
 
 			//battle.pbDisplay(_INTL("{1}'s burn was healed.", party[i].name))
-		  when Status.FROZEN
+				break;
+		  case Status.FROZEN:
 
 			//battle.pbDisplay(_INTL("{1} was thawed out.", party[i].name))
+				break;
+			default:
+				break;
 		  }
-		  party[i].status=0
-		  party[i].statusCount=0
+		  party[i].Status=0;
+		  party[i].statusCount=0;
 		}
 		return 0;
 	  }
@@ -806,9 +819,9 @@ public class Function
 		attacker.OwnSide.Safeguard= 5;
 
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
-		if (!this.battle.pbIsOpposing?(attacker.index)){
-		  //battle.pbDisplay(_INTL("Your team became cloaked in a mystical veil!"))
-		else
+		if (!this.battle.pbIsOpposing ? (attacker.index)) {
+			//battle.pbDisplay(_INTL("Your team became cloaked in a mystical veil!"))
+		} else { 
 		  //battle.pbDisplay(_INTL("The opposing team became cloaked in a mystical veil!"))
 		}
 		return 0;
@@ -833,22 +846,24 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		case attacker.Status
-		when Status.PARALYSIS
+		switch (attacker.Status) {
+		case Status.PARALYSIS:
 		  opponent.pbParalyze(attacker);
 
 		  opponent.pbAbilityCureCheck;
 		  attacker.pbCureStatus(false);
 
 		  //battle.pbDisplay(_INTL("{1} was cured of paralysis.",attacker.pbThis))
-		when Status.SLEEP
+		  break;
+		case Status.SLEEP:
 
 		  opponent.pbSleep;
 		  opponent.pbAbilityCureCheck;
 		  attacker.pbCureStatus(false);
 
 		  //battle.pbDisplay(_INTL("{1} woke up.",attacker.pbThis))
-		when Status.POISON
+		  break;
+		case Status.POISON:
 
 		  opponent.pbPoison(attacker, null, attacker.StatusCount!=0);
 
@@ -856,20 +871,23 @@ public class Function
 		  attacker.pbCureStatus(false);
 
 		  //battle.pbDisplay(_INTL("{1} was cured of its poisoning.",attacker.pbThis))
-		when Status.BURN
+		  break;
+		case Status.BURN:
 
 		  opponent.pbBurn(attacker);
 		  opponent.pbAbilityCureCheck;
 		  attacker.pbCureStatus(false);
 
 		  //battle.pbDisplay(_INTL("{1}'s burn was healed.",attacker.pbThis))
-		when Status.FROZEN
+		  break;
+		case Status.FROZEN:
 
 		  opponent.pbFreeze();
 		  opponent.pbAbilityCureCheck;
 		  attacker.pbCureStatus(false);
 
 		  //battle.pbDisplay(_INTL("{1} was thawed out.",attacker.pbThis))
+		  break;
 		}
 		return 0;
 	  }
@@ -2825,46 +2843,43 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		type = Types.NORMAL
-		case this.battle.environment
-		when PBEnvironment::None;        type=Types.NORMAL
-		when PBEnvironment::Grass; type=Types.GRASS
-		when PBEnvironment::TallGrass; type=Types.GRASS
-		when PBEnvironment::MovingWater; type=Types.WATER
-		when PBEnvironment::StillWater; type=Types.WATER
-		when PBEnvironment::Underwater; type=Types.WATER
-		when PBEnvironment::Cave; type=Types.ROCK
-		when PBEnvironment::Rock; type=Types.GROUND
-		when PBEnvironment::Sand; type=Types.GROUND
-		when PBEnvironment::Forest; type=Types.BUG
-		when PBEnvironment::Snow; type=Types.ICE
-		when PBEnvironment::Volcano; type=Types.FIRE
-		when PBEnvironment::Graveyard; type=Types.GHOST
-		when PBEnvironment::Sky; type=Types.FLYING
-		when PBEnvironment::Space; type=Types.DRAGON
+		Types type = Types.NORMAL;
+		switch (this.battle.environment) {
+		case PokemonUnity.Environment.None:        type = Types.NORMAL; break;
+		case PokemonUnity.Environment.Grass: type=Types.GRASS; break;
+			case PokemonUnity.Environment.TallGrass: type=Types.GRASS; break;
+			case PokemonUnity.Environment.MovingWater: type=Types.WATER; break;
+			case PokemonUnity.Environment.StillWater: type=Types.WATER; break;
+			case PokemonUnity.Environment.Underwater: type=Types.WATER; break;
+			case PokemonUnity.Environment.Cave: type=Types.ROCK; break;
+			case PokemonUnity.Environment.Rock: type=Types.GROUND; break;
+			case PokemonUnity.Environment.Sand: type=Types.GROUND; break;
+			case PokemonUnity.Environment.Forest: type=Types.BUG; break;
+			case PokemonUnity.Environment.Snow: type=Types.ICE; break;
+			case PokemonUnity.Environment.Volcano: type=Types.FIRE; break;
+			case PokemonUnity.Environment.Graveyard: type=Types.GHOST; break;
+			case PokemonUnity.Environment.Sky: type=Types.FLYING; break;
+			case PokemonUnity.Environment.Space: type=Types.DRAGON; break;
+			default: break;
 		}
 		if (this.battle.field.ElectricTerrain>0){
-		  type=Types.ELECTRIC if hasConst? (PBTypes,:ELECTRIC)
-		else if this.battle.field.GrassyTerrain>0
-
-		  type= Types.GRASS if hasConst?(PBTypes,:GRASS)
-
-		else if this.battle.field.MistyTerrain>0
-
-		  type= Types.FAIRY if hasConst?(PBTypes,:FAIRY)
-
+		  type=Types.ELECTRIC;
+		}else if (this.battle.field.GrassyTerrain>0){
+		  type= Types.GRASS;
+		}else if (this.battle.field.MistyTerrain>0){
+		  type= Types.FAIRY; 
 		}
 		if (attacker.pbHasType? (type)){
 		   //battle.pbDisplay(_INTL("But it failed!"))
-		  return -1  ;
+		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.type1=type;
-		attacker.type2=type;
+		attacker.Type1=type;
+		attacker.Type2=type;
 		attacker.effects.Type3= -1;
 
-		typename= PBTypes.getName(type)
+		typename = PBTypes.getName(type);
 
 		//battle.pbDisplay(_INTL("{1} transformed into the {2} type!", attacker.pbThis, typename))  
 		return 0;
@@ -2889,8 +2904,8 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		if (opponent.type1==Types.WATER &&
-		   opponent.type2==Types.WATER &&
+		if (opponent.Type1==Types.WATER &&
+		   opponent.Type2==Types.WATER &&
 		   (opponent.effects.Type3<0 ||
 		   opponent.effects.Type3==Types.WATER)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -2901,7 +2916,7 @@ public class Function
 		opponent.type2=Types.WATER;
 
 		opponent.effects.Type3=-1;
-		typename=PBTypes.getName(Types.WATER)
+		typename = PBTypes.getName(Types.WATER);
 		//battle.pbDisplay(_INTL("{1} transformed into the {2} type!",opponent.pbThis,typename))
 		return 0;
 	  }
@@ -2960,9 +2975,9 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		oldabil=opponent.ability
+		Abilities oldabil = opponent.ability;
 		opponent.ability=Abilities.SIMPLE;
-		abilityname=PBAbilities.getName(Abilities.SIMPLE)
+		string abilityname = PBAbilities.getName(Abilities.SIMPLE);
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
@@ -2997,9 +3012,9 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		oldabil=opponent.ability
+		Abilities oldabil = opponent.ability;
 		opponent.ability=Abilities.INSOMNIA;
-		abilityname=PBAbilities.getName(Abilities.INSOMNIA)
+		string abilityname = PBAbilities.getName(Abilities.INSOMNIA);
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
@@ -3042,9 +3057,9 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		oldabil=attacker.ability
+		Abilities oldabil = attacker.ability;
 		attacker.ability=opponent.ability;
-		abilityname = PBAbilities.getName(opponent.ability)
+		string abilityname = PBAbilities.getName(opponent.ability);
 
 		//battle.pbDisplay(_INTL("{1} copied {2}'s {3}!", attacker.pbThis, opponent.pbThis(true),abilityname))
 		if (attacker.effects.Illusion && oldabil == Abilities.ILLUSION){
@@ -3096,9 +3111,9 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		oldabil=opponent.ability
+		Abilities oldabil = opponent.ability;
 		opponent.ability=attacker.ability;
-		abilityname = PBAbilities.getName(attacker.ability)
+		string abilityname = PBAbilities.getName(attacker.ability);
 
 		//battle.pbDisplay(_INTL("{1} acquired {2}!", opponent.pbThis, abilityname))
 		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
@@ -3120,7 +3135,7 @@ public class Function
 	public class PokeBattle_Move_067 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (attacker.ability==0 && opponent.ability==0) ||
+		if ((attacker.ability==0 && opponent.ability==0) ||
 		   (attacker.ability==opponent.ability && !Settings.USENEWBATTLEMECHANICS) ||
 		   attacker.Ability == Abilities.ILLUSION ||
 		   opponent.Ability == Abilities.ILLUSION ||
@@ -3129,13 +3144,13 @@ public class Function
 		   attacker.Ability == Abilities.STANCECHANGE ||
 		   opponent.Ability == Abilities.STANCECHANGE ||
 		   attacker.Ability == Abilities.WONDERGUARD ||
-		   opponent.Ability == Abilities.WONDERGUARD;
+		   opponent.Ability == Abilities.WONDERGUARD) { 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		tmp=attacker.ability
+		Abilities tmp = attacker.ability;
 		attacker.ability=opponent.ability;
 		opponent.ability= tmp;
 
@@ -3167,7 +3182,7 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		oldabil=opponent.ability
+		Abilities oldabil = opponent.ability;
 		opponent.effects.GastroAcid= true;
 
 		opponent.effects.Truant= false;
@@ -3866,19 +3881,19 @@ public class Function
 	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 
 		type = Types.NORMAL;
-		case this.battle.Weather
-		when Weather.SUNNYDAY, Weather.HARSHSUN
-		  type = (Types.FIRE)
+		switch (this.battle.Weather) {
+		case Weather.SUNNYDAY: case Weather.HARSHSUN:
+				type = (Types.FIRE);break;
 
-		when Weather.RAINDANCE, Weather.HEAVYRAIN
-		  type = (Types.WATER)
+		case Weather.RAINDANCE: case Weather.HEAVYRAIN:
+				type = (Types.WATER); break;
 
-		when Weather.SANDSTORM
-		  type = (Types.ROCK)
+			case Weather.SANDSTORM:
+				type = (Types.ROCK); break;
 
-		when Weather.HAIL
-		  type = (Types.ICE)
-
+			case Weather.HAIL:
+				type = (Types.ICE); break;
+			default: break;
 		}
 		return type;
 	  }
@@ -3900,9 +3915,9 @@ public class Function
 		return basedmg;
 	  }
 
-	  public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
+	  public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		if (this.battle.switching) return true;
-		return super(attacker, opponent);
+		return base.pbAccuracyCheck(attacker, opponent);
 	  }
 	}
 
@@ -4635,49 +4650,54 @@ public class Function
 		  }
 		  return;
 		}
-		case this.battle.environment
-		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
+		switch (this.battle.environment) {
+		case PokemonUnity.Environment.Grass: case PokemonUnity.Environment.TallGrass: case PokemonUnity.Environment.Forest:
 		  if (opponent.pbCanSleep? (attacker,false,this)){
 			opponent.pbSleep;
 		  }
-
-		when PBEnvironment::MovingWater, PBEnvironment::Underwater
+				break;
+		case PokemonUnity.Environment.MovingWater: case PokemonUnity.Environment.Underwater:
 		  if (opponent.pbCanReduceStatStage?(PBStats::ATTACK, attacker,false, this)){
 
 			opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,this);
 		  }
-		when PBEnvironment::StillWater, PBEnvironment::Sky
+				break;
+		case PokemonUnity.Environment.StillWater: case PokemonUnity.Environment.Sky:
 		  if (opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
 			opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,this);
 		  }
-		when PBEnvironment::Sand
+				break;
+		case PokemonUnity.Environment.Sand:
 		  if (opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,this)){
 			opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,this);
 		  }
-		when PBEnvironment::Rock
+				break;
+		case PokemonUnity.Environment.Rock:
 		  if (Settings.USENEWBATTLEMECHANICS){
 			if (opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,this)){
 			  opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,this);
 			}
-		  else
+		  }else
 			if (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker)){
 			   opponent.pbFlinch(attacker);
 
 			}
-		  }
+				break;
 
-		when PBEnvironment::Cave, PBEnvironment::Graveyard, PBEnvironment::Space
+		case PokemonUnity.Environment.Cave: case PokemonUnity.Environment.Graveyard: case PokemonUnity.Environment.Space:
 		  if (opponent.effects.Substitute==0 || ignoresSubstitute?(attacker)){
 			opponent.pbFlinch(attacker);
 		  }
+				break;
 
-		when PBEnvironment::Snow
+		case PokemonUnity.Environment.Snow:
 		  if (opponent.pbCanFreeze(attacker,false, this)){
 
 			opponent.pbFreeze();
 		  }
+				break;
 
-		when PBEnvironment::Volcano
+		case PokemonUnity.Environment.Volcano:
 		  if (opponent.pbCanBurn(attacker,false, this)){
 
 			opponent.pbBurn(attacker);
@@ -4686,41 +4706,43 @@ public class Function
 		  if (opponent.pbCanParalyze (attacker,false,this)){
 			opponent.pbParalyze(attacker);
 		  }
-
+				break;
+			default:
+				break;
+			}
 		}
-	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		id=Moves.BODYSLAM
-		if (this.battle.field.ElectricTerrain>0){
-		  id=Moves.THUNDERSHOCK
-		else if this.battle.field.GrassyTerrain>0
-		  id=Moves.VINEWHIP
-		else if this.battle.field.MistyTerrain>0
-		  id=Moves.FAIRYWIND
+		id = Moves.BODYSLAM;
+		if (this.battle.field.ElectricTerrain>0)
+		  id=Moves.THUNDERSHOCK;
+		else if (this.battle.field.GrassyTerrain>0)
+		  id=Moves.VINEWHIP;
+		else if (this.battle.field.MistyTerrain>0)
+		  id=Moves.FAIRYWIND;
 		else
-		  case this.battle.environment
-		  when PBEnvironment::Grass, PBEnvironment::TallGrass
-			id = ((Settings.USENEWBATTLEMECHANICS) ? Moves.VINEWHIP : Moves.NEEDLEARM) || id
+		  switch (this.battle.environment) {
+		  case PokemonUnity.Environment.Grass: case PokemonUnity.Environment.TallGrass:
+			id = (Settings.USENEWBATTLEMECHANICS) ? Moves.VINEWHIP : Moves.NEEDLEARM; break;
 
-		  when PBEnvironment::MovingWater; id=Moves.WATERPULSE
-		  when PBEnvironment::StillWater;  id=Moves.MUDSHOT
-		  when PBEnvironment::Underwater;  id=Moves.WATERPULSE
-		  when PBEnvironment::Cave;        id=Moves.ROCKTHROW
-		  when PBEnvironment::Rock;        id=Moves.MUDSLAP
-		  when PBEnvironment::Sand;        id=Moves.MUDSLAP
-		  when PBEnvironment::Forest;      id=Moves.RAZORLEAF
-		// Ice tiles in Gen 6 should be Ice Shard
-		  when PBEnvironment::Snow;        id=Moves.AVALANCHE
-		  when PBEnvironment::Volcano;     id=Moves.INCINERATE
-		  when PBEnvironment::Graveyard;   id=Moves.SHADOWSNEAK
-		  when PBEnvironment::Sky;         id=Moves.GUST
-		  when PBEnvironment::Space;       id=Moves.SWIFT
-		  }
-
-		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation); // Environment-specific anim;
+		  case PokemonUnity.Environment.MovingWater:	id=Moves.WATERPULSE; break;
+				case PokemonUnity.Environment.StillWater:		id=Moves.MUDSHOT; break;
+				case PokemonUnity.Environment.Underwater:		id=Moves.WATERPULSE; break;
+				case PokemonUnity.Environment.Cave:			id=Moves.ROCKTHROW; break;
+				case PokemonUnity.Environment.Rock:			id=Moves.MUDSLAP; break;
+				case PokemonUnity.Environment.Sand:			id=Moves.MUDSLAP; break;
+				case PokemonUnity.Environment.Forest:			id=Moves.RAZORLEAF; break;
+				// Ice tiles in Gen 6 should be Ice Shard
+				case PokemonUnity.Environment.Snow:			id=Moves.AVALANCHE; break;
+				case PokemonUnity.Environment.Volcano:		id=Moves.INCINERATE; break;
+				case PokemonUnity.Environment.Graveyard:		id=Moves.SHADOWSNEAK; break;
+				case PokemonUnity.Environment.Sky:			id=Moves.GUST; break;
+				case PokemonUnity.Environment.Space:			id=Moves.SWIFT; break;
+				default: break;
+			}
+		
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation); // Environment-specific anim;
 	  }
 	}
 
@@ -5130,32 +5152,32 @@ public class Function
 	public class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		move=Moves.TRIATTACK
-		case this.battle.environment
-		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
-		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB) || move
+		Moves move = Moves.TRIATTACK;
+		switch (this.battle.environment) {
+		case PokemonUnity.Environment.Grass: case PokemonUnity.Environment.TallGrass: case PokemonUnity.Environment.Forest:
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB; break;
 
-		when PBEnvironment::MovingWater; move=Moves.HYDROPUMP
-		when PBEnvironment::StillWater;  move=Moves.MUDBOMB
-		when PBEnvironment::Underwater;  move=Moves.HYDROPUMP
-		when PBEnvironment::Cave
-		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE) || move
+		case PokemonUnity.Environment.MovingWater: move = Moves.HYDROPUMP;  break;
+			case PokemonUnity.Environment.StillWater:  move = Moves.MUDBOMB; break;
+			case PokemonUnity.Environment.Underwater:  move = Moves.HYDROPUMP; break;
+			case PokemonUnity.Environment.Cave:
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE; break;
 
-		when PBEnvironment::Rock
+		case PokemonUnity.Environment.Rock:
 
-		  move= ((Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.ROCKSLIDE) || move
+		  move= (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.ROCKSLIDE; break;
 
-		when PBEnvironment::Sand
-		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.EARTHQUAKE) || move
+		case PokemonUnity.Environment.Sand:
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.EARTHQUAKE; break;
 		// Ice tiles in Gen 6 should be Ice Beam
-		when PBEnvironment::Snow
-		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM) || move
+		case PokemonUnity.Environment.Snow:
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM; break;
 
-		when PBEnvironment::Volcano; move=Moves.LAVAPLUME
-	when PBEnvironment::Graveyard;   move=Moves.SHADOWBALL
-	when PBEnvironment::Sky;         move=Moves.AIRSLASH
-	when PBEnvironment::Space;       move=Moves.DRACOMETEOR
-	}
+		case PokemonUnity.Environment.Volcano: move = Moves.LAVAPLUME;  break;
+			case PokemonUnity.Environment.Graveyard:   move = Moves.SHADOWBALL; break;
+			case PokemonUnity.Environment.Sky:         move = Moves.AIRSLASH;  break;
+			case PokemonUnity.Environment.Space:       move = Moves.DRACOMETEOR; break;
+		}
 		if (this.battle.field.ElectricTerrain>0){
 		  move=Moves.THUNDERBOLT
 		else if this.battle.field.GrassyTerrain>0
@@ -7905,19 +7927,19 @@ public class Function
 	public class PokeBattle_Move_0FF : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		case this.battle.weather
-		when Weather.HEAVYRAIN
+		switch (this.battle.Weather) {
+		case Weather.HEAVYRAIN:
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1;
-		when Weather.HARSHSUN
+		case Weather.HARSHSUN:
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1;
-		when Weather.STRONGWINDS
+		case Weather.STRONGWINDS:
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1;
-		when Weather.SUNNYDAY
+		case Weather.SUNNYDAY:
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -7926,7 +7948,7 @@ public class Function
 
 		this.battle.weather=Weather.SUNNYDAY;
 		this.battle.weatherduration=5;
-		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.HEATROCK);
+		if (attacker.hasWorkingItem(Items.HEATROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Sunny",null,null);
 		//battle.pbDisplay(_INTL("The sunlight turned harsh!"))
@@ -7942,28 +7964,29 @@ public class Function
 	public class PokeBattle_Move_100 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		case this.battle.weather
-		when Weather.HEAVYRAIN
+		switch (this.battle.weather) {
+		case Weather.HEAVYRAIN:
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1;
-		when Weather.HARSHSUN
+		case Weather.HARSHSUN:
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1;
-		when Weather.STRONGWINDS
+		case Weather.STRONGWINDS:
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1;
-		when Weather.RAINDANCE
+		case Weather.RAINDANCE:
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
+			default: break;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		this.battle.weather=Weather.RAINDANCE;
 		this.battle.weatherduration=5;
-		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.DAMPROCK);
+		if (attacker.hasWorkingItem(Items.DAMPROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Rain",null,null);
 		//battle.pbDisplay(_INTL("It started to rain!"))
@@ -7979,28 +8002,29 @@ public class Function
 	public class PokeBattle_Move_101 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		case this.battle.Weather
-		when Weather.HEAVYRAIN
+		switch (this.battle.Weather) {
+		case Weather.HEAVYRAIN:
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1;
-		when Weather.HARSHSUN
+		case Weather.HARSHSUN:
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1;
-		when Weather.STRONGWINDS
+		case Weather.STRONGWINDS:
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1;
-		when Weather.SANDSTORM
+		case Weather.SANDSTORM:
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
+			default: break;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		this.battle.weather=Weather.SANDSTORM;
 		this.battle.weatherduration=5;
-		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.SMOOTHROCK);
+		if (attacker.hasWorkingItem(Items.SMOOTHROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Sandstorm",null,null);
 		//battle.pbDisplay(_INTL("A sandstorm brewed!"))
@@ -8016,28 +8040,29 @@ public class Function
 	public class PokeBattle_Move_102 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		case this.battle.weather
-		when Weather.HEAVYRAIN
+		switch (this.battle.weather) {
+		case Weather.HEAVYRAIN:
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1;
-		when Weather.HARSHSUN
+		case Weather.HARSHSUN:
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1;
-		when Weather.STRONGWINDS
+		case Weather.STRONGWINDS:
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1;
-		when Weather.HAIL
+		case Weather.HAIL:
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
+			default: break;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		this.battle.weather=Weather.HAIL;
 		this.battle.weatherduration=5;
-		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.ICYROCK);
+		if (attacker.hasWorkingItem(Items.ICYROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Hail",null,null);
 		//battle.pbDisplay(_INTL("It started to hail!"))
@@ -8828,22 +8853,23 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_114 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public object isHealingMove() { 
 		return true;
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		hpgain=0
-		case attacker.effects.Stockpile
-		when 0
+	int hpgain = 0;
+		switch (attacker.effects.Stockpile) {
+		case 0:
 		  //battle.pbDisplay(_INTL("But it failed to swallow a thing!"))
 		  return -1;
-		when 1
-		  hpgain= Math.Floor(attacker.TotalHP/4)
-		when 2
-		  hpgain= Math.Floor(attacker.TotalHP/2)
-		when 3
-		  hpgain=attacker.TotalHP
+		case 1:
+			hpgain = (int)Math.Floor(attacker.TotalHP / 4f); break;
+		case 2:
+			hpgain = (int)Math.Floor(attacker.TotalHP / 2f); break;
+		case 3:
+			hpgain = attacker.TotalHP; break;
+		default: break;
 		}
 		if (attacker.HP==attacker.TotalHP &&
 		   attacker.effects.StockpileDef==0 &&
@@ -8855,19 +8881,19 @@ public class Function
 		if (attacker.pbRecoverHP(hpgain,true)>0){
 		  //battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		}
-		showanim = true
+	bool showanim = true;
 		if (attacker.effects.StockpileDef>0){
 		  if (attacker.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
 			attacker.pbReduceStat(PBStats::DEFENSE, attacker.effects.StockpileDef,
 			   attacker,false,this,showanim);
-			showanim=false
+			showanim = false;
 		  }
 		}
 		if (attacker.effects.StockpileSpDef>0){
 		  if (attacker.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
 			attacker.pbReduceStat(PBStats::SPDEF, attacker.effects.StockpileSpDef,
 			   attacker,false,this,showanim);
-			showanim=false
+			showanim = false;
 		  }
 		}
 
@@ -8891,7 +8917,7 @@ public class Function
 		  //battle.pbDisplayBrief(_INTL("{1} lost its focus and couldn't move!",attacker.pbThis))
 		  return -1;
 		}
-		return super(attacker);
+		return base.pbDisplayUseMessage(attacker);
 	  }
 	}
 
@@ -8904,8 +8930,8 @@ public class Function
 	public class PokeBattle_Move_116 : PokeBattle_Move
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
-		if (this.battle.choices[opponent.index][0]!=1 // Didn't choose a move
-		oppmove=this.battle.choices[opponent.index][2]) return true;
+		if (this.battle.choices[opponent.index][0]!=1) return true; // Didn't choose a move
+		oppmove = this.battle.choices[opponent.index][2];
 		if (!oppmove || oppmove.id<=0 || oppmove.pbIsStatus?) return true;
 		if (opponent.hasMovedThisRound? && oppmove.function!=0xB0) return true; // Me First
 		return false;
@@ -8953,25 +8979,25 @@ public class Function
 
 		this.battle.field.Gravity=5;
 		for (int i = 0; i < 4; i++){ 
-		  poke=this.battle.battlers[i]
-		  if (!poke) continue; //next
-		  if (PBMoveData.new(poke.effects.TwoTurnAttack).function==0xC9 || // Fly){
+		  Battle.Battler poke=this.battle.battlers[i];
+		  if (poke.Species == Pokemons.NONE) continue; //next
+		  if ((int)new Move ((Moves)poke.effects.TwoTurnAttack).Function==0xC9 || // Fly
 			 PBMoveData.new(poke.effects.TwoTurnAttack).function==0xCC || // Bounce
-			 PBMoveData.new(poke.effects.TwoTurnAttack).function==0xCE    // Sky Drop
-			poke.effects.TwoTurnAttack=0
+			 PBMoveData.new(poke.effects.TwoTurnAttack).function==0xCE){    // Sky Drop
+			poke.effects.TwoTurnAttack = 0;
 		  }
 		  if (poke.effects.SkyDrop){
-			poke.effects.SkyDrop= false
+			poke.effects.SkyDrop = false;
 
 		  }
 		  if (poke.effects.MagnetRise>0){
 
-			poke.effects.MagnetRise= 0
+			poke.effects.MagnetRise = 0;
 
 		  }
 		  if (poke.effects.Telekinesis>0){
 
-			poke.effects.Telekinesis= 0
+			poke.effects.Telekinesis = 0;
 
 		  }
 		}
