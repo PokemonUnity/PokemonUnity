@@ -308,27 +308,27 @@ public class Effects
 	/// These effects apply to a side
 	/// </summary>
 	public class Side { 
-		public int CraftyShield       { get; set; }
-		public int EchoedVoiceCounter { get; set; }
-		public int EchoedVoiceUsed    { get; set; }
-		public int LastRoundFainted   { get; set; }
-		public int LightScreen        { get; set; }
-		public int LuckyChant         { get; set; }
-		public int MatBlock           { get; set; }
-		public int Mist               { get; set; }
-		public int QuickGuard         { get; set; }
-		public int Rainbow            { get; set; }
-		public int Reflect            { get; set; }
-		public int Round              { get; set; }
-		public int Safeguard          { get; set; }
-		public int SeaOfFire          { get; set; }
-		public int Spikes             { get; set; }
-		public int StealthRock        { get; set; }
-		public int StickyWeb          { get; set; }
-		public int Swamp              { get; set; }
-		public int Tailwind           { get; set; }
-		public int ToxicSpikes        { get; set; }
-		public int WideGuard          { get; set; }
+		public bool CraftyShield		{ get; set; }
+		public byte EchoedVoiceCounter	{ get; set; }
+		public bool EchoedVoiceUsed		{ get; set; }
+		public byte LastRoundFainted	{ get; set; }
+		public byte LightScreen			{ get; set; }
+		public byte LuckyChant			{ get; set; }
+		public bool MatBlock			{ get; set; }
+		public byte Mist				{ get; set; }
+		public bool QuickGuard			{ get; set; }
+		public byte Rainbow				{ get; set; }
+		public byte Reflect				{ get; set; }
+		public byte Round				{ get; set; }
+		public byte Safeguard			{ get; set; }
+		public bool SeaOfFire			{ get; set; }
+		public byte Spikes				{ get; set; }
+		public bool StealthRock			{ get; set; }
+		public bool StickyWeb			{ get; set; }
+		public byte Swamp				{ get; set; }
+		public byte Tailwind			{ get; set; }
+		public byte ToxicSpikes			{ get; set; }
+		public bool WideGuard			{ get; set; }
 	}
     					   
 	/// <summary>
