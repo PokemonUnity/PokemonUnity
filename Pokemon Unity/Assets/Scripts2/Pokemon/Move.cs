@@ -2142,12 +2142,12 @@ namespace PokemonUnity.Move
 {
 	public enum Status
 	{
-		None,
-		Sleep,
-		Poison,
-		Paralysis,
-		Burn,
-		Frozen
+		NONE,
+		SLEEP,
+		POISON,
+		PARALYSIS,
+		BURN,
+		FROZEN
 	}
 	/// <summary>
 	/// Move ids are connected to XML file.

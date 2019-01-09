@@ -56,14 +56,14 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 		{
 			switch (value)
 			{
-				case PokemonUnity.Move.Status.Sleep:
-				case PokemonUnity.Move.Status.Poison:
-				case PokemonUnity.Move.Status.Paralysis:
-				case PokemonUnity.Move.Status.Burn:
-				case PokemonUnity.Move.Status.Frozen:
+				case PokemonUnity.Move.Status.SLEEP:
+				case PokemonUnity.Move.Status.POISON:
+				case PokemonUnity.Move.Status.PARALYSIS:
+				case PokemonUnity.Move.Status.BURN:
+				case PokemonUnity.Move.Status.FROZEN:
 					StatusIcon.sprite = Resources.Load<Sprite>(string.Format("PCSprites/status{0}" + value.ToString()));
 					break;
-				case PokemonUnity.Move.Status.None:
+				case PokemonUnity.Move.Status.NONE:
 				default:
 					StatusIcon.sprite = Resources.Load<Sprite>("null");
 					break;

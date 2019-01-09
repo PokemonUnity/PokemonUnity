@@ -648,9 +648,9 @@ public class Battle : UnityUtilityIntegration
 			//ToDo: Ball Throwing Class?
 			//rareness = BallHandlers.ModifyCatchRate(ball, rareness, battler);
 			int x = (int)Math.Floor(((a * 3 - b * 2) * rareness.Value) / (a * 3f));
-			if (battler.Status == Status.Sleep || battler.Status == Status.Frozen)
+			if (battler.Status == Status.SLEEP || battler.Status == Status.FROZEN)
 				x = (int)Math.Floor(x * 2.5);
-			else if (battler.Status != Status.None)
+			else if (battler.Status != Status.NONE)
 				x = (int)Math.Floor(x * 1.5);
 			int c = 0;
 			if (GameVariables.playerTrainer.PokedexCaught > 600)
@@ -908,12 +908,12 @@ public class Battle : UnityUtilityIntegration
 			}
 			set
 			{
-				if (base.Status == Status.Sleep && value == 0)
+				if (base.Status == Status.SLEEP && value == 0)
 					effects.Truant = false;
 				base.Status = value;
-				if (value != Status.Poison)
+				if (value != Status.POISON)
 					effects.Toxic = 0;
-				if (value != Status.Poison && value != Status.Sleep)
+				if (value != Status.POISON && value != Status.SLEEP)
 					base.StatusCount = 0;
 			}
 		}
@@ -1319,7 +1319,7 @@ public class Battle : UnityUtilityIntegration
 			Index		= -1;
 			InitEffects(false);
 			//reset status
-			Status		= Status.None;
+			Status		= Status.NONE;
 			StatusCount	= 0;
 			//IsFainted	= true;
 			//reset choice
@@ -1522,7 +1522,7 @@ public class Battle : UnityUtilityIntegration
 			if (OwnSide.Swamp > 0)
 				speedmult = (int)Math.Round(speedmult / 2f);
 			if (!hasWorkingAbility(Abilities.QUICK_FEET) &&
-				Status == Status.Paralysis)
+				Status == Status.PARALYSIS)
 				speedmult = (int)Math.Round(speedmult / 4f);
 			if (battle.internalbattle && 
 				//battle.OwnedByPlayer(Index) &&

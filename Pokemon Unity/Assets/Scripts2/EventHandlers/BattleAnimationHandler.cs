@@ -608,14 +608,14 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 				var status = pkmn.Status;
 				switch (status)
 				{
-					case PokemonUnity.Move.Status.Sleep:
-					case PokemonUnity.Move.Status.Poison:
-					case PokemonUnity.Move.Status.Paralysis:
-					case PokemonUnity.Move.Status.Burn:
-					case PokemonUnity.Move.Status.Frozen:
+					case PokemonUnity.Move.Status.SLEEP:
+					case PokemonUnity.Move.Status.POISON:
+					case PokemonUnity.Move.Status.PARALYSIS:
+					case PokemonUnity.Move.Status.BURN:
+					case PokemonUnity.Move.Status.FROZEN:
 						playerParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.pressedSprite;
 						break;
-					case PokemonUnity.Move.Status.None:
+					case PokemonUnity.Move.Status.NONE:
 					default:
 						playerParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.highlightedSprite;
 						break;
@@ -635,14 +635,14 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 				var status = pkmn.Status;
 				switch (status)
 				{
-					case PokemonUnity.Move.Status.Sleep:
-					case PokemonUnity.Move.Status.Poison:
-					case PokemonUnity.Move.Status.Paralysis:
-					case PokemonUnity.Move.Status.Burn:
-					case PokemonUnity.Move.Status.Frozen:
+					case PokemonUnity.Move.Status.SLEEP:
+					case PokemonUnity.Move.Status.POISON:
+					case PokemonUnity.Move.Status.PARALYSIS:
+					case PokemonUnity.Move.Status.BURN:
+					case PokemonUnity.Move.Status.FROZEN:
 						opponentParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.pressedSprite;
 						break;
-					case PokemonUnity.Move.Status.None:
+					case PokemonUnity.Move.Status.NONE:
 					default:
 						opponentParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.highlightedSprite;
 						break;
@@ -3099,7 +3099,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 				{
 					yield return StartCoroutine(ModifyStat(targetPosition, 6, parameter, animate));
 				}
-				else if (effect == MoveDataOld.Effect.Burn)
+				else if (effect == MoveDataOld.Effect.BURN)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3141,7 +3141,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveDataOld.Effect.Poison)
+				else if (effect == MoveDataOld.Effect.POISON)
 				{
 					if (Random.value <= parameter)
 					{
@@ -3169,7 +3169,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 						}
 					}
 				}
-				else if (effect == MoveDataOld.Effect.Sleep)
+				else if (effect == MoveDataOld.Effect.SLEEP)
 				{
 					if (Random.value <= parameter)
 					{

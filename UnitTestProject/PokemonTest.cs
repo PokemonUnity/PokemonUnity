@@ -43,15 +43,15 @@ namespace Tests
         [TestMethod]
         public void Pokemon_SetStatus_To_Burn() {
             Pokemon pokemon = new Pokemon();
-            pokemon.Status = Status.Burn;
-            Assert.AreEqual(Status.Burn, pokemon.Status);
+            pokemon.Status = Status.BURN;
+            Assert.AreEqual(Status.BURN, pokemon.Status);
 			//Assert.Inconclusive();
 		}
 
         //[TestMethod]
         //public void Pokemon_Sleep_StatusTurn_Not_Zero() {
         //    Pokemon pokemon = new Pokemon();
-        //    pokemon.Status = Status.Sleep;
+        //    pokemon.Status = Status.SLEEP;
 		//	//If remaining turns for sleep is 0 then the pokemon would be awake.
 		//	//I think this test only works properly if done thru battle class
         //    Assert.AreNotEqual(0, pokemon.StatusCount);

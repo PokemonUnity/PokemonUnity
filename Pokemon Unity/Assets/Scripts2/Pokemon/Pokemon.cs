@@ -202,7 +202,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 		pokerus = new int[2];
 		Markings = new bool[6]; //{ false, false, false, false, false, false };
-		Status = Status.None;
+		Status = Status.NONE;
 		StatusCount = 0;
 		ballUsed = Items.NONE;
 		Item = Items.NONE;
@@ -1650,7 +1650,7 @@ public partial class Pokemon //: ePokemons //PokemonData
         set
         {
             this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
-            if (this.hp == 0) this.Status = Status.None; // statusCount = 0; //ToDo: Fainted
+            if (this.hp == 0) this.Status = Status.NONE; // statusCount = 0; //ToDo: Fainted
         }
     }
 
