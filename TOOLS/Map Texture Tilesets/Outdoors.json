@@ -1,5 +1,5 @@
 { "columns":8,
- "image":"..\/Downloads\/overworld.png",
+ "image":"..\/..\/..\/..\/..\/Downloads\/overworld.png",
  "imageheight":2048,
  "imagewidth":256,
  "margin":0,
@@ -11,7174 +11,4102 @@
     {
      "0":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "1":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "10":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "100":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "101":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "102":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "103":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "104":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "105":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "106":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "107":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "108":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "109":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "11":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "110":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "111":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "112":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "113":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "114":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "115":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "116":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "117":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "118":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "119":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "12":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "120":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "121":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "122":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "123":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "124":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "125":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "126":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "127":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "128":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "129":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":true
+         "Type":2
         },
      "13":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "130":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "131":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "132":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "133":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "134":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "135":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "136":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "137":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "138":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":false
+         "Type":2
         },
      "139":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "14":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "140":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "141":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "142":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "143":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "144":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":2,
-         "Water":true
+         "Type":2
         },
      "145":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "146":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "147":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "148":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "149":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "15":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "150":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "151":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "152":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "153":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "154":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "155":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "156":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "157":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "158":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "159":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "16":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "160":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "161":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "162":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "163":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "164":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "165":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "166":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "167":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "168":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "169":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "17":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "170":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "171":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "172":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "173":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "174":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "175":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "176":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "177":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "178":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "179":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "18":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "180":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "181":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "182":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "183":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "184":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "185":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "186":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "187":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "188":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "189":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "19":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "190":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "191":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "192":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "193":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "194":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "195":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "196":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "197":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "198":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "199":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "2":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "20":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "200":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "201":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "202":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "203":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "204":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "205":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "206":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "207":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "208":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "209":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "21":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "210":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "211":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "212":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "213":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "214":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "215":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "216":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "217":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "218":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "219":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "22":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "220":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "221":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "222":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "223":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "224":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "225":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "226":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "227":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "228":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "229":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "23":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "230":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "231":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "232":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "233":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "234":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "235":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "236":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "237":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "238":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "239":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "24":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "240":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "241":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "242":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "243":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "244":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "245":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "246":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "247":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "248":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "249":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "25":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "250":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "251":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "252":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "253":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "254":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "255":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "256":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "257":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "258":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "259":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "26":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "260":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "261":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "262":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "263":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "264":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "265":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "266":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "267":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "268":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "269":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "27":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "270":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "271":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "272":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "273":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "274":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "275":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "276":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "277":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "278":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "279":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "28":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "280":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "281":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "282":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "283":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "284":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "285":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "286":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "287":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "288":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "289":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "29":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "290":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "291":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "292":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "293":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "294":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "295":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "296":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "297":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "298":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "299":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "3":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "30":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "300":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "301":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "302":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "303":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "304":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "305":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "306":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "307":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "308":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "309":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "31":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "310":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "311":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "312":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "313":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "314":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "315":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "316":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "317":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "318":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "319":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "32":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "320":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "321":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "322":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "323":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "324":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "325":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "326":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "327":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "328":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "329":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "33":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "330":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "331":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "332":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "333":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "334":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "335":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "336":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "337":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "338":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "339":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "34":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "340":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "341":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "342":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "343":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "344":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "345":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "346":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "347":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "348":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "349":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "35":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "350":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "351":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "352":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "353":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "354":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "355":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "356":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "357":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "358":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "359":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "36":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "360":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "361":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "362":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "363":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "364":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "365":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "366":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "367":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "368":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "369":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "37":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "370":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "371":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "372":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "373":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "374":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "375":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "376":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "377":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "378":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "379":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "38":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "380":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "381":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "382":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "383":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "384":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "385":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "386":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "387":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "388":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "389":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "39":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "390":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "391":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "392":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "393":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "394":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "395":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "396":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "397":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "398":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "399":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "4":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "40":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "400":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "401":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "402":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "403":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "404":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "405":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "406":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "407":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "408":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "409":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "41":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "410":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "411":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "412":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "413":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "414":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "415":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "416":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "417":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "418":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "419":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "42":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "420":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "421":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "422":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "423":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "424":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "425":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "426":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "427":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "428":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "429":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "43":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "430":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "431":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "432":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "433":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "434":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "435":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "436":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "437":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "438":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "439":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "44":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "440":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "441":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "442":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "443":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "444":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "445":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "446":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "447":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "448":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "449":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "45":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "450":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "451":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "452":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "453":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "454":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "455":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "456":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "457":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "458":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "459":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "46":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "460":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "461":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "462":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "463":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "464":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "465":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "466":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "467":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "468":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "469":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "47":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "470":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "471":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "472":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "473":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "474":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "475":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "476":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "477":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "478":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "479":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "48":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "480":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "481":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "482":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "483":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "484":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "485":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "486":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "487":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "488":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "489":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "49":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "490":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "491":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "492":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "493":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "494":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "495":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "496":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "497":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "498":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "499":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "5":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "50":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "500":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "501":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "502":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "503":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "504":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "505":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "506":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "507":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "508":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "509":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "51":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "510":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "511":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "52":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "53":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "54":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "55":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "56":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "57":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "58":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "59":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "6":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "60":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "61":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "62":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "63":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "64":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "65":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "66":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "67":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "68":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "69":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "7":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "70":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "71":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "72":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "73":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "74":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "75":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "76":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "77":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "78":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "79":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "8":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "80":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "81":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "82":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "83":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "84":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "85":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "86":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "87":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "88":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "89":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "9":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "90":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "91":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "92":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "93":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "94":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "95":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         },
      "96":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "97":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "98":
         {
-         "Collision":true,
-         "Environment2":false,
-         "Type":1,
-         "Water":false
+         "Type":1
         },
      "99":
         {
-         "Collision":false,
-         "Environment2":false,
-         "Type":0,
-         "Water":false
+         "Type":0
         }
     },
  "tilepropertytypes":
     {
      "0":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "1":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "10":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "100":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "101":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "102":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "103":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "104":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "105":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "106":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "107":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "108":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "109":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "11":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "110":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "111":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "112":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "113":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "114":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "115":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "116":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "117":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "118":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "119":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "12":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "120":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "121":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "122":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "123":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "124":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "125":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "126":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "127":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "128":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "129":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "13":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "130":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "131":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "132":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "133":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "134":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "135":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "136":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "137":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "138":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "139":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "14":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "140":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "141":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "142":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "143":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "144":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "145":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "146":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "147":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "148":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "149":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "15":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "150":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "151":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "152":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "153":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "154":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "155":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "156":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "157":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "158":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "159":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "16":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "160":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "161":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "162":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "163":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "164":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "165":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "166":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "167":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "168":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "169":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "17":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "170":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "171":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "172":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "173":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "174":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "175":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "176":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "177":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "178":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "179":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "18":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "180":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "181":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "182":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "183":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "184":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "185":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "186":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "187":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "188":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "189":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "19":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "190":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "191":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "192":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "193":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "194":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "195":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "196":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "197":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "198":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "199":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "2":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "20":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "200":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "201":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "202":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "203":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "204":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "205":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "206":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "207":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "208":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "209":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "21":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "210":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "211":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "212":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "213":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "214":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "215":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "216":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "217":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "218":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "219":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "22":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "220":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "221":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "222":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "223":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "224":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "225":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "226":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "227":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "228":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "229":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "23":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "230":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "231":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "232":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "233":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "234":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "235":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "236":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "237":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "238":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "239":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "24":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "240":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "241":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "242":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "243":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "244":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "245":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "246":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "247":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "248":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "249":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "25":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "250":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "251":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "252":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "253":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "254":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "255":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "256":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "257":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "258":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "259":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "26":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "260":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "261":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "262":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "263":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "264":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "265":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "266":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "267":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "268":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "269":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "27":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "270":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "271":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "272":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "273":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "274":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "275":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "276":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "277":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "278":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "279":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "28":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "280":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "281":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "282":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "283":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "284":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "285":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "286":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "287":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "288":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "289":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "29":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "290":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "291":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "292":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "293":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "294":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "295":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "296":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "297":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "298":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "299":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "3":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "30":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "300":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "301":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "302":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "303":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "304":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "305":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "306":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "307":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "308":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "309":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "31":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "310":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "311":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "312":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "313":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "314":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "315":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "316":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "317":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "318":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "319":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "32":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "320":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "321":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "322":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "323":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "324":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "325":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "326":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "327":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "328":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "329":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "33":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "330":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "331":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "332":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "333":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "334":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "335":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "336":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "337":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "338":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "339":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "34":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "340":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "341":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "342":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "343":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "344":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "345":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "346":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "347":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "348":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "349":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "35":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "350":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "351":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "352":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "353":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "354":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "355":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "356":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "357":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "358":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "359":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "36":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "360":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "361":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "362":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "363":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "364":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "365":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "366":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "367":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "368":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "369":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "37":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "370":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "371":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "372":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "373":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "374":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "375":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "376":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "377":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "378":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "379":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "38":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "380":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "381":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "382":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "383":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "384":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "385":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "386":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "387":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "388":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "389":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "39":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "390":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "391":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "392":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "393":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "394":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "395":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "396":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "397":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "398":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "399":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "4":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "40":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "400":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "401":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "402":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "403":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "404":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "405":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "406":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "407":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "408":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "409":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "41":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "410":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "411":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "412":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "413":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "414":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "415":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "416":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "417":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "418":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "419":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "42":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "420":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "421":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "422":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "423":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "424":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "425":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "426":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "427":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "428":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "429":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "43":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "430":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "431":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "432":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "433":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "434":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "435":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "436":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "437":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "438":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "439":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "44":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "440":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "441":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "442":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "443":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "444":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "445":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "446":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "447":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "448":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "449":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "45":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "450":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "451":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "452":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "453":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "454":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "455":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "456":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "457":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "458":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "459":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "46":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "460":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "461":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "462":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "463":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "464":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "465":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "466":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "467":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "468":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "469":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "47":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "470":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "471":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "472":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "473":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "474":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "475":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "476":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "477":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "478":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "479":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "48":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "480":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "481":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "482":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "483":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "484":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "485":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "486":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "487":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "488":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "489":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "49":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "490":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "491":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "492":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "493":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "494":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "495":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "496":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "497":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "498":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "499":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "5":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "50":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "500":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "501":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "502":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "503":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "504":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "505":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "506":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "507":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "508":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "509":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "51":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "510":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "511":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "52":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "53":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "54":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "55":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "56":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "57":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "58":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "59":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "6":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "60":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "61":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "62":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "63":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "64":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "65":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "66":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "67":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "68":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "69":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "7":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "70":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "71":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "72":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "73":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "74":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "75":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "76":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "77":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "78":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "79":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "8":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "80":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "81":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "82":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "83":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "84":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "85":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "86":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "87":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "88":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "89":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "9":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "90":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "91":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "92":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "93":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "94":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "95":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "96":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "97":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "98":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         },
      "99":
         {
-         "Collision":"bool",
-         "Environment2":"bool",
-         "Type":"int",
-         "Water":"bool"
+         "Type":"int"
         }
     },
  "tilewidth":32,
