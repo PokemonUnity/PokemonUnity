@@ -3884,7 +3884,7 @@ public class Function
 	public class PokeBattle_Move_086 : PokeBattle_Move
 	{
 		public object pbBaseDamageMultiplier(damagemult, Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.item==0){
+		if (attacker.Item==0){
 		  return (int)Math.Round(damagemult*2.0f)
 		}
 		return damagemult
@@ -4234,7 +4234,7 @@ public class Function
 	public class PokeBattle_Move_096 : PokeBattle_Move
 	{
 		public object pbOnStartUse(Battle.Battler attacker){
-		if (!pbIsBerry? (attacker.item) ||){
+		if (!pbIsBerry? (attacker.Item) ||){
 		   attacker.effects.Embargo>0 ||
 		   this.battle.field.MagicRoom>0 ||
 		   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
@@ -4243,7 +4243,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return false
 		}
-		this.berry = attacker.item
+		this.berry = attacker.Item
 		return true
 	  }
 
@@ -4527,32 +4527,32 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09F : PokeBattle_Move
 	{
-		public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
-		if (id == Moves.JUDGMENT){
-		  if (isConst? (attacker.item, PBItems,:FISTPLATE)) return (Types.FIGHTING);
-		  if (isConst? (attacker.item, PBItems,:SKYPLATE)) return (Types.FLYING)  ;
-		  if (isConst? (attacker.item, PBItems,:TOXICPLATE)) return (Types.POISON)  ;
-		  if (isConst? (attacker.item, PBItems,:EARTHPLATE)) return (Types.GROUND)  ;
-		  if (isConst? (attacker.item, PBItems,:STONEPLATE)) return (Types.ROCK)    ;
-		  if (isConst? (attacker.item, PBItems,:INSECTPLATE)) return (Types.BUG)     ;
-		  if (isConst? (attacker.item, PBItems,:SPOOKYPLATE)) return (Types.GHOST)   ;
-		  if (isConst? (attacker.item, PBItems,:IRONPLATE)) return (Types.STEEL)   ;
-		  if (isConst? (attacker.item, PBItems,:FLAMEPLATE)) return (Types.FIRE)    ;
-		  if (isConst? (attacker.item, PBItems,:SPLASHPLATE)) return (Types.WATER)   ;
-		  if (isConst? (attacker.item, PBItems,:MEADOWPLATE)) return (Types.GRASS)   ;
-		  if (isConst? (attacker.item, PBItems,:ZAPPLATE)) return (Types.ELECTRIC);
-		  if (isConst? (attacker.item, PBItems,:MINDPLATE)) return (Types.PSYCHIC) ;
-		  if (isConst? (attacker.item, PBItems,:ICICLEPLATE)) return (Types.ICE)     ;
-		  if (isConst? (attacker.item, PBItems,:DRACOPLATE)) return (Types.DRAGON)  ;
-		  if (isConst? (attacker.item, PBItems,:DREADPLATE)) return (Types.DARK)    ;
-		  if (isConst? (attacker.item, PBItems,:PIXIEPLATE)) return (Types.FAIRY)   ;
-		else if id == Moves.TECHNOBLAST
-		  if (isConst? (attacker.item, PBItems,:SHOCKDRIVE)) return Types.ELECTRIC;
-		  if (isConst? (attacker.item, PBItems,:BURNDRIVE)) return Types.FIRE    ;
-		  if (isConst? (attacker.item, PBItems,:CHILLDRIVE)) return Types.ICE     ;
-		  if (isConst? (attacker.item, PBItems,:DOUSEDRIVE)) return Types.WATER   ;
+		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
+		if (this.id == Moves.JUDGMENT){
+		  if (attacker.Item == Items.FISTPLATE) return (Types.FIGHTING);
+		  if (attacker.Item == Items.SKYPLATE) return (Types.FLYING)  ;
+		  if (attacker.Item == Items.TOXICPLATE) return (Types.POISON)  ;
+		  if (attacker.Item == Items.EARTHPLATE) return (Types.GROUND)  ;
+		  if (attacker.Item == Items.STONEPLATE) return (Types.ROCK)    ;
+		  if (attacker.Item == Items.INSECTPLATE) return (Types.BUG)     ;
+		  if (attacker.Item == Items.SPOOKYPLATE) return (Types.GHOST)   ;
+		  if (attacker.Item == Items.IRONPLATE) return (Types.STEEL)   ;
+		  if (attacker.Item == Items.FLAMEPLATE) return (Types.FIRE)    ;
+		  if (attacker.Item == Items.SPLASHPLATE) return (Types.WATER)   ;
+		  if (attacker.Item == Items.MEADOWPLATE) return (Types.GRASS)   ;
+		  if (attacker.Item == Items.ZAPPLATE) return (Types.ELECTRIC);
+		  if (attacker.Item == Items.MINDPLATE) return (Types.PSYCHIC) ;
+		  if (attacker.Item == Items.ICICLEPLATE) return (Types.ICE)     ;
+		  if (attacker.Item == Items.DRACOPLATE) return (Types.DRAGON)  ;
+		  if (attacker.Item == Items.DREADPLATE) return (Types.DARK)    ;
+		  if (attacker.Item == Items.PIXIEPLATE) return (Types.FAIRY)   ;
+		else if (this.id == Moves.TECHNOBLAST) { 
+		  if (attacker.Item == Items.SHOCKDRIVE) return Types.ELECTRIC;
+		  if (attacker.Item == Items.BURNDRIVE) return Types.FIRE    ;
+		  if (attacker.Item == Items.CHILLDRIVE) return Types.ICE     ;
+		  if (attacker.Item == Items.DOUSEDRIVE) return Types.WATER   ;
 		}
-		return (Types.NORMAL)
+		return (Types.NORMAL);
 	  }
 
 	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
@@ -7308,15 +7308,15 @@ public class Function
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
-		if (!attacker.isFainted() && !opponent.isFainted() && opponent.item!=0 &&){
+		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&){
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute
 		  if (!attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
 			abilityname=PBAbilities.getName(opponent.ability)
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, this.name))
-		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.item)
-			itemname = PBItems.getName(opponent.item)
+		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.Item)
+			itemname = PBItems.getName(opponent.Item)
 
-			opponent.item=0
+			opponent.Item=0
 			opponent.effects.ChoiceBand=-1
 			opponent.effects.Unburden=true
 			//battle.pbDisplay(_INTL("{1} dropped its {2}!",opponent.pbThis,itemname))
@@ -7326,7 +7326,7 @@ public class Function
 
 	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (USENEWBATTLEMECHANICS &&){
-		   !this.battle.pbIsUnlosableItem(opponent, opponent.item)
+		   !this.battle.pbIsUnlosableItem(opponent, opponent.Item)
 		   // Still boosts damage even if opponent has Sticky Hold
 		  return (int)Math.Round(damagemult*1.5f)
 		}
@@ -7343,18 +7343,18 @@ public class Function
 	public class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
-		if (!attacker.isFainted() && !opponent.isFainted() && opponent.item!=0 &&){
+		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&){
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute
 		  if (!attacker.hasMoldBreaker && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
 			abilityname=PBAbilities.getName(opponent.ability)
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, this.name))
-		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.item) &&
-				!this.battle.pbIsUnlosableItem(attacker, opponent.item) &&
-				attacker.item==0 &&
+		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
+				!this.battle.pbIsUnlosableItem(attacker, opponent.Item) &&
+				attacker.Item==0 &&
 				(this.battle.opponent || !this.battle.pbIsOpposing? (attacker.index))
-			itemname=PBItems.getName(opponent.item)
-			attacker.item=opponent.item
-			opponent.item= 0
+			itemname=PBItems.getName(opponent.Item)
+			attacker.Item=opponent.Item
+			opponent.Item= 0
 
 			opponent.effects.ChoiceBand= -1
 
@@ -7362,8 +7362,8 @@ public class Function
 			if (!this.battle.opponent && // In a wild battle){
 			   attacker.pokemon.itemInitial==0 &&
 
-			   opponent.pokemon.itemInitial==attacker.item
-			  attacker.pokemon.itemInitial= attacker.item
+			   opponent.pokemon.itemInitial==attacker.Item
+			  attacker.pokemon.itemInitial= attacker.Item
 
 			  opponent.pokemon.itemInitial= 0
 
@@ -7384,15 +7384,15 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)) ||
-		   (attacker.item==0 && opponent.item==0) ||
-		   (!this.battle.opponent && this.battle.pbIsOpposing? (attacker.index))
+		   (attacker.Item==0 && opponent.Item==0) ||
+		   (!this.battle.opponent && this.battle.pbIsOpposing? (attacker.index)){ 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if (this.battle.pbIsUnlosableItem(opponent, opponent.item) ||){
-		   this.battle.pbIsUnlosableItem(attacker, opponent.item) ||
-		   this.battle.pbIsUnlosableItem(opponent, attacker.item) ||
-		   this.battle.pbIsUnlosableItem(attacker, attacker.item)
+		if (this.battle.pbIsUnlosableItem(opponent, opponent.Item) ||
+		   this.battle.pbIsUnlosableItem(attacker, opponent.Item) ||
+		   this.battle.pbIsUnlosableItem(opponent, attacker.Item) ||
+		   this.battle.pbIsUnlosableItem(attacker, attacker.Item)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -7401,21 +7401,21 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, name))
 		  return -1
 		}
-		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
+		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		oldattitem=attacker.item
-		oldoppitem = opponent.item
+		Items oldattitem=attacker.Item
+		Items oldoppitem = opponent.Item
 
-		oldattitemname=PBItems.getName(oldattitem)
-		oldoppitemname = PBItems.getName(oldoppitem)
+		string oldattitemname=PBItems.getName(oldattitem)
+		string oldoppitemname = PBItems.getName(oldoppitem)
 
-		tmpitem=attacker.item
-		attacker.item=opponent.item
-		opponent.item= tmpitem
-		if (!this.battle.opponent && // In a wild battle){
+		tmpitem=attacker.Item
+		attacker.Item=opponent.Item
+		opponent.Item= tmpitem
+		if (!this.battle.opponent && // In a wild battle
 		   attacker.pokemon.itemInitial==oldattitem &&
 
-		   opponent.pokemon.itemInitial==oldoppitem
+		   opponent.pokemon.itemInitial==oldoppitem){
 		  attacker.pokemon.itemInitial= oldoppitem
 
 		  opponent.pokemon.itemInitial= oldattitem
@@ -7425,7 +7425,7 @@ public class Function
 		if (oldoppitem>0 && oldattitem>0){
 		  //battle.pbDisplayPaused(_INTL("{1} obtained {2}.",attacker.pbThis,oldoppitemname))
 		  //battle.pbDisplay(_INTL("{1} obtained {2}.",opponent.pbThis,oldattitemname))
-		else
+		}else{
 		  //battle.pbDisplay(_INTL("{1} obtained {2}.",attacker.pbThis,oldoppitemname)) if oldoppitem>0
 		  //battle.pbDisplay(_INTL("{1} obtained {2}.",opponent.pbThis,oldattitemname)) if oldattitem>0
 		}
@@ -7446,29 +7446,29 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)) ||
-		   attacker.item==0 || opponent.item!=0
+		   attacker.Item==0 || opponent.Item!=0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if (this.battle.pbIsUnlosableItem(attacker, attacker.item) ||){
-		   this.battle.pbIsUnlosableItem(opponent, attacker.item)
+		if (this.battle.pbIsUnlosableItem(attacker, attacker.Item) ||
+		   this.battle.pbIsUnlosableItem(opponent, attacker.Item)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		itemname=PBItems.getName(attacker.item)
-		opponent.item=attacker.item
-		attacker.item= 0
+		itemname=PBItems.getName(attacker.Item)
+		opponent.Item=attacker.Item
+		attacker.Item= 0
 
 		attacker.effects.ChoiceBand= -1
 
 		attacker.effects.Unburden= true
-		if (!this.battle.opponent && // In a wild battle){
+		if (!this.battle.opponent && // In a wild battle
 		   opponent.pokemon.itemInitial==0 &&
 
-		   attacker.pokemon.itemInitial==opponent.item
-		  opponent.pokemon.itemInitial= opponent.item
+		   attacker.pokemon.itemInitial==opponent.Item){
+		  opponent.pokemon.itemInitial= opponent.Item
 
 		  attacker.pokemon.itemInitial= 0
 
@@ -7486,29 +7486,29 @@ public class Function
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
 		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
-		if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.item) &&){
-		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute
+		if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.Item) &&
+		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (attacker.hasMoldBreaker || !opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-			item=opponent.item
+			item=opponent.Item
 			itemname = PBItems.getName(item)
 
 			opponent.pbConsumeItem(false,false)
 			//battle.pbDisplay(_INTL("{1} stole and ate its target's {2}!",attacker.pbThis,itemname))
-			if (!attacker.hasWorkingAbility(Abilities.KLUTZ) &&){
-			   attacker.effects.Embargo==0
+			if (!attacker.hasWorkingAbility(Abilities.KLUTZ) &&
+			   attacker.effects.Embargo==0){
 			  attacker.pbActivateBerryEffect(item,false)
 			}
 			// Symbiosis
-			if (attacker.item==0 &&){
-			   attacker.pbPartner && attacker.pbPartner.hasWorkingAbility(Abilities.SYMBIOSIS)
+			if (attacker.Item==0 &&
+			   attacker.pbPartner && attacker.pbPartner.hasWorkingAbility(Abilities.SYMBIOSIS)){
 			  partner=attacker.pbPartner
-			  if (partner.item>0 &&){
+			  if (partner.item>0 &&
 				 !this.battle.pbIsUnlosableItem(partner, partner.item) &&
-				 !this.battle.pbIsUnlosableItem(attacker, partner.item)
+				 !this.battle.pbIsUnlosableItem(attacker, partner.item)){
 				//battle.pbDisplay(_INTL("{1}'s {2} let it share its {3} with {4}!",
-				   partner.pbThis, PBAbilities.getName(partner.ability),
-				   PBItems.getName(partner.item), attacker.pbThis(true)))
-				attacker.item=partner.item
+				//   partner.pbThis, PBAbilities.getName(partner.ability),
+				//   PBItems.getName(partner.item), attacker.pbThis(true)));
+				attacker.Item=partner.item
 				partner.item=0
 				partner.effects.Unburden= true
 
@@ -7531,10 +7531,10 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if (!attacker.isFainted() && opponent.damagestate.CalcDamage>0 &&){
+		if (!attacker.isFainted() && opponent.damagestate.CalcDamage>0 &&
 		   !opponent.damagestate.Substitute &&
-		   (pbIsBerry?(opponent.item) || (USENEWBATTLEMECHANICS && pbIsGem? (opponent.item)))
-		  itemname=PBItems.getName(opponent.item)
+		   (pbIsBerry?(opponent.Item) || (USENEWBATTLEMECHANICS && pbIsGem? (opponent.Item)))){
+		  itemname=PBItems.getName(opponent.Item)
 		  opponent.pbConsumeItem(false,false)
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} was incinerated!",opponent.pbThis,itemname))
@@ -7560,9 +7560,9 @@ public class Function
 		item=attacker.pokemon.itemRecycle
 		itemname = PBItems.getName(item)
 
-		attacker.item=item
-		if (!this.battle.opponent // In a wild battle){
-		  attacker.pokemon.itemInitial=item if attacker.pokemon.itemInitial==0
+		attacker.Item=item
+		if (!this.battle.opponent){ // In a wild battle
+		   if (attacker.pokemon.itemInitial==0) attacker.pokemon.itemInitial=item
 
 		}
 		attacker.pokemon.itemRecycle= 0
@@ -7654,33 +7654,33 @@ public class Function
 	}
 
 	public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.item==0 ||
-					   this.battle.pbIsUnlosableItem(attacker, attacker.item) ||
-					   pbIsPokeBall? (attacker.item) ||
+		if (attacker.Item==0 ||
+					   this.battle.pbIsUnlosableItem(attacker, attacker.Item) ||
+					   pbIsPokeBall? (attacker.Item) ||
 					   this.battle.field.MagicRoom>0 ||
 					   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
 					   attacker.effects.Embargo>0) return true;
 		foreach (var i in flingarray.keys){ 
 		  if (flingarray[i]){
 			foreach (var i in flingarray[i]){ 
-			  if (isConst? (attacker.item, PBItems, j)) return false;
+			  if (isConst? (attacker.Item, PBItems, j)) return false;
 			 }
 
 		  }
 		}
-		if (pbIsBerry? (attacker.item) &&
+		if (pbIsBerry? (attacker.Item) &&
 						!attacker.pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
 						!attacker.pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)) return false;
 		return true
 	  }
 
 	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (pbIsBerry? (attacker.item)) return 10;
-		if (pbIsMegaStone? (attacker.item)) return 80;
+		if (pbIsBerry? (attacker.Item)) return 10;
+		if (pbIsMegaStone? (attacker.Item)) return 80;
 		foreach (var i in flingarray.keys){ 
 		  if (flingarray[i]){
 			foreach (var i in flingarray[i]){ 
-			  if (isConst? (attacker.item, PBItems, j)) return i;
+			  if (isConst? (attacker.Item, PBItems, j)) return i;
 			 }
 
 		  }
@@ -7689,33 +7689,33 @@ public class Function
 	  }
 
 	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (attacker.item==0){
+		if (attacker.Item==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return 0
 		}
 		attacker.effects.Unburden= true
 
-		//battle.pbDisplay(_INTL("{1} flung its {2}!", attacker.pbThis, PBItems.getName(attacker.item)))
+		//battle.pbDisplay(_INTL("{1} flung its {2}!", attacker.pbThis, PBItems.getName(attacker.Item)))
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
-		if (opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute &&){
-		   (attacker.hasMoldBreaker || !opponent.hasWorkingAbility(Abilities.SHIELDDUST))
+		if (opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute &&
+		   (attacker.hasMoldBreaker || !opponent.hasWorkingAbility(Abilities.SHIELDDUST))){
 		  if (attacker.hasWorkingBerry){
-			opponent.pbActivateBerryEffect(attacker.item,false)
+			opponent.pbActivateBerryEffect(attacker.Item,false)
 
-		  else if attacker.hasWorkingItem(Items.FLAMEORB)
+		  }else if (attacker.hasWorkingItem(Items.FLAMEORB)){
 			if (opponent.pbCanBurn? (attacker,false,self)){
 			  opponent.pbBurn(attacker)
 			}
 
-		  else if attacker.hasWorkingItem(Items.KINGSROCK) ||
-				attacker.hasWorkingItem(Items.RAZORFANG)
+		  }else if (attacker.hasWorkingItem(Items.KINGSROCK) ||
+				attacker.hasWorkingItem(Items.RAZORFANG)){
 			opponent.pbFlinch(attacker)
-		  else if attacker.hasWorkingItem(Items.LIGHTBALL)
+		  }else if (attacker.hasWorkingItem(Items.LIGHTBALL)){
 			if (opponent.pbCanParalyze? (attacker,false,self)){
 			  opponent.pbParalyze(attacker)
 			}
 
-		  else if attacker.hasWorkingItem(Items.MENTALHERB)
+		 } else if (attacker.hasWorkingItem(Items.MENTALHERB)){
 			if (opponent.effects.Attract>=0){
 			  opponent.pbCureAttract
 			  //battle.pbDisplay(_INTL("{1} got over its infatuation.", opponent.pbThis))
@@ -7743,17 +7743,17 @@ public class Function
 			  opponent.effects.HealBlock=0
 			  //battle.pbDisplay(_INTL("{1}'s Heal Block wore off!",opponent.pbThis))
 			}
-		  else if attacker.hasWorkingItem(Items.POISONBARB)
+		 } else if (attacker.hasWorkingItem(Items.POISONBARB)){
 			if (opponent.pbCanPoison? (attacker,false,self)){
 			  opponent.pbPoison(attacker)
 			}
 
-		  else if attacker.hasWorkingItem(Items.TOXICORB)
+		  }else if (attacker.hasWorkingItem(Items.TOXICORB)){
 			if (opponent.pbCanPoison? (attacker,false,self)){
 			  opponent.pbPoison(attacker, null,true)
 			}
-		  else if attacker.hasWorkingItem(Items.WHITEHERB)
-			while true
+		 } else if (attacker.hasWorkingItem(Items.WHITEHERB)){
+			while (true) { 
 			  reducedstats=false
 			  foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE,
 						PBStats::SPEED, PBStats::SPATK, PBStats::SPDEF,
@@ -7762,9 +7762,9 @@ public class Function
 				  opponent.stages[i]=0; reducedstats=true
 				}
 			  }
-			  break if !reducedstats
-			  //battle.pbDisplay(_INTL("{1}'s status is returned to normal!",
-				 opponent.pbThis(true)))
+				if (!reducedstats) break;
+				//battle.pbDisplay(_INTL("{1}'s status is returned to normal!",
+				//	opponent.pbThis(true)))
 			}
 		  }
 
@@ -7850,10 +7850,10 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&){
-			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
+		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
+			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
 			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
@@ -7873,10 +7873,10 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&){
-			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
+		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
+			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
 			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/2.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
@@ -7896,10 +7896,10 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&){
-			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
+		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
+			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
 			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
@@ -7926,10 +7926,10 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&){
-			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)
+		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
+			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
 			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
@@ -8026,7 +8026,7 @@ public class Function
 	public class PokeBattle_Move_101 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		case this.battle.weather
+		case this.battle.Weather
 		when PBWeather::HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1

@@ -274,7 +274,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Counter to track number of turns for battle
 	/// </summary>
-	public int turncount { get; private set; }
+	public byte turncount { get; private set; }
 	public int[] priority { get; private set; }
 	public List<int> snaggedpokemon { get; private set; }
 	/// <summary>
@@ -1440,7 +1440,7 @@ public class Battle : UnityUtilityIntegration
 			return lastRoundMoved.Value == battle.turncount;
 		}
 
-		bool hasWorkingItem(Items item, bool ignorefainted= false) {
+		public bool hasWorkingItem(Items item, bool ignorefainted= false) {
 			//Pokemon pkmn = null;
 			if (this.isFainted() && !ignorefainted) return false;
 			if (effects.Embargo > 0) return false;
@@ -1449,7 +1449,7 @@ public class Battle : UnityUtilityIntegration
 			return this.Item != item;
 		}
 
-		bool hasWorkingBerry(bool ignorefainted= false) {
+		public bool hasWorkingBerry(bool ignorefainted= false) {
 			if (this.isFainted() && !ignorefainted) return false;
 			if (effects.Embargo > 0) return false;
 			if (battle.field.MagicRoom > 0) return false;
