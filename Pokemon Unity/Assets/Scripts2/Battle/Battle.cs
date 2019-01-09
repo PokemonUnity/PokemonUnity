@@ -566,7 +566,11 @@ public class Battle : UnityUtilityIntegration
 		}
 		//return this;
 	}
-	bool isOpposing(int index)
+	public int pbRandom(int index)
+	{
+		return Settings.Rand.Next(index);
+	}
+	public bool isOpposing(int index)
 	{
 		return (index % 2) == 1;
 	}
@@ -1942,9 +1946,16 @@ public class Battle : UnityUtilityIntegration
 
 		#region ToDo: Everything here needs to be implemented
 		public void pbSleep() { }
+		public void pbFreeze() { }
+		public void pbFlinch(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public void pbPoison(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public void pbParalyze(Battler pkmn, byte? uh = null, bool uh2 = false) { }
+		public void pbBurn(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public bool pbCanSleep(Battler pkmn, bool uh, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbCanFreeze(Battler pkmn, bool uh, PokeBattle_Move atk)
 		{
 			return false;
 		}
@@ -1953,6 +1964,10 @@ public class Battle : UnityUtilityIntegration
 			return false;
 		}
 		public bool pbCanParalyze(Battler pkmn, bool uh, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbCanBurn(Battler pkmn, bool uh, PokeBattle_Move atk)
 		{
 			return false;
 		}
