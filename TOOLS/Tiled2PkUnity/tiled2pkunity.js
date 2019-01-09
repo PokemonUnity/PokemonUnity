@@ -1,4 +1,4 @@
-//Tiled2PkUnity Version 2.0: "I should have redone this last month" Edition
+//Tiled2PkUnity Version 2.1: "There was a typo" Edition
 //Do not edit or save this JS file using Notepad or any other non-code text editor.
 //Please use a formatted editor such as Visual Studio Code (NOT Visual Studio) or Notepad++ in order to modify this file.
 //This app was developed in Node.js by TeamPopplio.
