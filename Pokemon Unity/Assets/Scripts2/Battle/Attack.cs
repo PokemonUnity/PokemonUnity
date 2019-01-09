@@ -2762,7 +2762,7 @@ public class Function
 	public class PokeBattle_Move_05E : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (isConst? (attacker.ability, PBAbilities,:MULTITYPE)){
+		if (attacker.Ability == Abilities.MULTITYPE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -2804,7 +2804,7 @@ public class Function
 	public class PokeBattle_Move_05F : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (isConst? (attacker.ability, PBAbilities,:MULTITYPE)){
+		if (attacker.Ability == Abilities.MULTITYPE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -2857,7 +2857,7 @@ public class Function
 	public class PokeBattle_Move_060 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (isConst? (attacker.ability, PBAbilities,:MULTITYPE)){
+		if (attacker.Ability == Abilities.MULTITYPE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -2920,7 +2920,7 @@ public class Function
 		  return -1
 		}
 		if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-		if (isConst? (opponent.ability, PBAbilities,:MULTITYPE)){
+		if (opponent.Ability == Abilities.MULTITYPE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -2951,7 +2951,7 @@ public class Function
 	public class PokeBattle_Move_062 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (isConst? (attacker.ability, PBAbilities,:MULTITYPE)){
+		if (attacker.Ability == Abilities.MULTITYPE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -2987,10 +2987,10 @@ public class Function
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
 		}
-		if (isConst? (opponent.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (opponent.ability, PBAbilities,:SIMPLE) ||
-		   isConst? (opponent.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (opponent.ability, PBAbilities,:TRUANT)){
+		if (opponent.Ability == Abilities.MULTITYPE ||
+		   opponent.Ability == Abilities.SIMPLE ||
+		   opponent.Ability == Abilities.STANCECHANGE ||
+		   opponent.Ability == Abilities.TRUANT){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -3000,7 +3000,7 @@ public class Function
 		opponent.ability=Abilities.SIMPLE
 		abilityname=PBAbilities.getName(Abilities.SIMPLE)
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
-		if (opponent.effects.Illusion && isConst? (oldabil, PBAbilities,:ILLUSION)){
+		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 		  opponent.effects.Illusion=null
 		  this.battle.scene.pbChangePokemon(opponent, opponent.pokemon)
@@ -3024,10 +3024,10 @@ public class Function
 		  return -1
 		}
 		if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-		if (isConst? (opponent.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (opponent.ability, PBAbilities,:INSOMNIA) ||
-		   isConst? (opponent.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (opponent.ability, PBAbilities,:TRUANT)){
+		if (opponent.Ability == Abilities.MULTITYPE ||
+		   opponent.Ability == Abilities.INSOMNIA ||
+		   opponent.Ability == Abilities.STANCECHANGE ||
+		   opponent.Ability == Abilities.TRUANT){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -3037,7 +3037,7 @@ public class Function
 		opponent.ability=Abilities.INSOMNIA
 		abilityname=PBAbilities.getName(Abilities.INSOMNIA)
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
-		if (opponent.effects.Illusion && isConst? (oldabil, PBAbilities,:ILLUSION)){
+		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 		  opponent.effects.Illusion=null
 		  this.battle.scene.pbChangePokemon(opponent, opponent.pokemon)
@@ -3062,17 +3062,17 @@ public class Function
 		}
 		if (opponent.ability==0 ||
 		   attacker.ability==opponent.ability ||
-		   isConst? (attacker.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (attacker.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (opponent.ability, PBAbilities,:FLOWERGIFT) ||
-		   isConst? (opponent.ability, PBAbilities,:FORECAST) ||
-		   isConst? (opponent.ability, PBAbilities,:ILLUSION) ||
-		   isConst? (opponent.ability, PBAbilities,:IMPOSTER) ||
-		   isConst? (opponent.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (opponent.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (opponent.ability, PBAbilities,:TRACE) ||
-		   isConst? (opponent.ability, PBAbilities,:WONDERGUARD) ||
-		   isConst? (opponent.ability, PBAbilities,:ZENMODE)){
+		   attacker.Ability == Abilities.MULTITYPE ||
+		   attacker.Ability == Abilities.STANCECHANGE ||
+		   opponent.Ability == Abilities.FLOWERGIFT ||
+		   opponent.Ability == Abilities.FORECAST ||
+		   opponent.Ability == Abilities.ILLUSION ||
+		   opponent.Ability == Abilities.IMPOSTER ||
+		   opponent.Ability == Abilities.MULTITYPE ||
+		   opponent.Ability == Abilities.STANCECHANGE ||
+		   opponent.Ability == Abilities.TRACE ||
+		   opponent.Ability == Abilities.WONDERGUARD ||
+		   opponent.Ability == Abilities.ZENMODE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -3083,7 +3083,7 @@ public class Function
 		abilityname = PBAbilities.getName(opponent.ability)
 
 		//battle.pbDisplay(_INTL("{1} copied {2}'s {3}!", attacker.pbThis, opponent.pbThis(true),abilityname))
-		if (attacker.effects.Illusion && isConst? (oldabil, PBAbilities,:ILLUSION)){
+		if (attacker.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{attacker.pbThis}'s Illusion ended")    
 		  attacker.effects.Illusion=null
 		  this.battle.scene.pbChangePokemon(attacker, attacker.pokemon)
@@ -3112,21 +3112,21 @@ public class Function
 		}
 		if (attacker.ability==0 ||
 		   attacker.ability==opponent.ability ||
-		   isConst? (opponent.ability, PBAbilities,:FLOWERGIFT) ||
-		   isConst? (opponent.ability, PBAbilities,:IMPOSTER) ||
-		   isConst? (opponent.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (opponent.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (opponent.ability, PBAbilities,:TRACE) ||
-		   isConst? (opponent.ability, PBAbilities,:TRUANT) ||
-		   isConst? (opponent.ability, PBAbilities,:ZENMODE) ||
-		   isConst? (attacker.ability, PBAbilities,:FLOWERGIFT) ||
-		   isConst? (attacker.ability, PBAbilities,:FORECAST) ||
-		   isConst? (attacker.ability, PBAbilities,:ILLUSION) ||
-		   isConst? (attacker.ability, PBAbilities,:IMPOSTER) ||
-		   isConst? (attacker.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (attacker.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (attacker.ability, PBAbilities,:TRACE) ||
-		   isConst? (attacker.ability, PBAbilities,:ZENMODE)){
+		   opponent.Ability == Abilities.FLOWERGIFT ||
+		   opponent.Ability == Abilities.IMPOSTER ||
+		   opponent.Ability == Abilities.MULTITYPE ||
+		   opponent.Ability == Abilities.STANCECHANGE ||
+		   opponent.Ability == Abilities.TRACE ||
+		   opponent.Ability == Abilities.TRUANT ||
+		   opponent.Ability == Abilities.ZENMODE ||
+		   attacker.Ability == Abilities.FLOWERGIFT ||
+		   attacker.Ability == Abilities.FORECAST ||
+		   attacker.Ability == Abilities.ILLUSION ||
+		   attacker.Ability == Abilities.IMPOSTER ||
+		   attacker.Ability == Abilities.MULTITYPE ||
+		   attacker.Ability == Abilities.STANCECHANGE ||
+		   attacker.Ability == Abilities.TRACE ||
+		   attacker.Ability == Abilities.ZENMODE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -3137,7 +3137,7 @@ public class Function
 		abilityname = PBAbilities.getName(attacker.ability)
 
 		//battle.pbDisplay(_INTL("{1} acquired {2}!", opponent.pbThis, abilityname))
-		if (opponent.effects.Illusion && isConst? (oldabil, PBAbilities,:ILLUSION)){
+		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 		  opponent.effects.Illusion=null
 		  this.battle.scene.pbChangePokemon(opponent, opponent.pokemon)
@@ -3158,14 +3158,14 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (attacker.ability==0 && opponent.ability==0) ||
 		   (attacker.ability==opponent.ability && !USENEWBATTLEMECHANICS) ||
-		   isConst? (attacker.ability, PBAbilities,:ILLUSION) ||
-		   isConst? (opponent.ability, PBAbilities,:ILLUSION) ||
-		   isConst? (attacker.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (opponent.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (attacker.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (opponent.ability, PBAbilities,:STANCECHANGE) ||
-		   isConst? (attacker.ability, PBAbilities,:WONDERGUARD) ||
-		   isConst? (opponent.ability, PBAbilities,:WONDERGUARD)
+		   attacker.Ability == Abilities.ILLUSION ||
+		   opponent.Ability == Abilities.ILLUSION ||
+		   attacker.Ability == Abilities.MULTITYPE ||
+		   opponent.Ability == Abilities.MULTITYPE ||
+		   attacker.Ability == Abilities.STANCECHANGE ||
+		   opponent.Ability == Abilities.STANCECHANGE ||
+		   attacker.Ability == Abilities.WONDERGUARD ||
+		   opponent.Ability == Abilities.WONDERGUARD
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -3196,8 +3196,8 @@ public class Function
 		   //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
 		}
-		if (isConst? (opponent.ability, PBAbilities,:MULTITYPE) ||
-		   isConst? (opponent.ability, PBAbilities,:STANCECHANGE)){
+		if (opponent.Ability == Abilities.MULTITYPE ||
+		   opponent.Ability == Abilities.STANCECHANGE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -3209,7 +3209,7 @@ public class Function
 		opponent.effects.Truant= false
 
 		//battle.pbDisplay(_INTL("{1}'s Ability was suppressed!", opponent.pbThis)) 
-		if (opponent.effects.Illusion && isConst? (oldabil, PBAbilities,:ILLUSION)){
+		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
 		  //PBDebug.log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 		  opponent.effects.Illusion=null
 		  this.battle.scene.pbChangePokemon(opponent, opponent.pokemon)
@@ -9325,9 +9325,9 @@ public class Function
 
 
 
-	#===============================================================================
-	/// NOTE: Shadow moves use function codes 126-132 inclusive.
-	#===============================================================================
+	//===============================================================================
+	// NOTE: Shadow moves use function codes 126-132 inclusive.
+	//===============================================================================
 
 
 
@@ -9731,7 +9731,7 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)) ||
 		   !hasConst? (PBTypes,:GHOST) || opponent.hasType(Types.GHOST) ||
-		   isConst? (opponent.ability, PBAbilities,:MULTITYPE)
+		   opponent.Ability == Abilities.MULTITYPE
 		  //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
 		}
@@ -9763,7 +9763,7 @@ public class Function
 		  return -1
 		}
 		if (!hasConst? (PBTypes,:GRASS) || opponent.hasType(Types.GRASS) ||
-		   isConst? (opponent.ability, PBAbilities,:MULTITYPE)){
+		   opponent.Ability == Abilities.MULTITYPE){
 		  //battle.pbDisplay(_INTL("But it failed!"))  
 		  return -1
 		}
