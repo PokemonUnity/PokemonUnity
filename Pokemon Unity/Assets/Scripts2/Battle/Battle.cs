@@ -13,8 +13,8 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Scene object for this battle
 	/// </summary>
-	public void Scene (int scene) { this.scene = scene; }
-	private int scene { get; set; }
+	//public void Scene (int scene) { this.scene = scene; }
+	public int scene { get; private set; }
 	/// <summary>
 	/// Decision: 0=undecided; 1=win; 2=loss; 3=escaped; 4=caught
 	/// </summary>
@@ -1937,6 +1937,24 @@ public class Battle : UnityUtilityIntegration
 				}
 			}
 
+		}
+		#endregion
+
+		#region ToDo: Everything here needs to be implemented
+		public void pbSleep() { }
+		public void pbPoison(Battler pkmn, byte? uh = null, bool uh2 = false) { }
+		public void pbParalyze(Battler pkmn, byte? uh = null, bool uh2 = false) { }
+		public bool pbCanSleep(Battler pkmn, bool uh, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbCanPoison(Battler pkmn, bool uh, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbCanParalyze(Battler pkmn, bool uh, PokeBattle_Move atk)
+		{
+			return false;
 		}
 		#endregion
 
