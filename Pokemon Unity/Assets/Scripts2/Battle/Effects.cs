@@ -335,19 +335,19 @@ public class Effects
 	/// These effects apply to the battle (i.e. both sides)
 	/// </summary>
 	public class Field { 
-		public int ElectricTerrain { get; set; }
-		public int FairyLock       { get; set; }
-		public int FusionBolt      { get; set; }
-		public int FusionFlare     { get; set; }
-		public int GrassyTerrain   { get; set; }
-		public int Gravity         { get; set; }
-		public int IonDeluge       { get; set; }
-		public int MagicRoom       { get; set; }
-		public int MistyTerrain    { get; set; }
-		public int MudSportField   { get; set; }
-		public int TrickRoom       { get; set; }
-		public int WaterSportField { get; set; }
-		public int WonderRoom      { get; set; }
+		public byte ElectricTerrain	{ get; set; }
+		public byte FairyLock		{ get; set; }
+		public bool FusionBolt		{ get; set; }
+		public bool FusionFlare		{ get; set; }
+		public byte GrassyTerrain	{ get; set; }
+		public byte Gravity			{ get; set; }
+		public byte IonDeluge		{ get; set; }
+		public byte MagicRoom		{ get; set; }
+		public byte MistyTerrain		{ get; set; }
+		public byte MudSportField	{ get; set; }
+		public byte TrickRoom		{ get; set; }
+		public byte WaterSportField	{ get; set; }
+		public byte WonderRoom		{ get; set; }
 	}
     					   
 	/// <summary>
