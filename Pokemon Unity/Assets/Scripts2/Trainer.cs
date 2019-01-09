@@ -56,20 +56,6 @@ public class Trainer
 	/// Optional. If undefined, the default is "Mixed".
 	/// </summary>
 	public bool? Gender { get; private set; }
-	/// <summary>
-	/// The skill level of all trainers of this type, used for battle AI. 
-	/// Higher numbers represent higher skill levels. 
-	/// Must be a number between 0 and 255.	
-	/// Optional. If undefined, default is equal to the base money value.
-	/// </summary>
-	public byte	SkillLevel { get; private set; }
-	/// <summary>
-	/// A text field which can be used to modify the AI behaviour of all trainers of this type. 
-	/// No such modifiers are defined by default, and there is no standard format. 
-	/// See the page Battle AI for more details.
-	/// Optional. If undefined, the default is blank.
-	/// </summary>
-	public int?	SkillCodes { get; private set; }
 
 	#region Wild Pokemon
 	/// <summary>
@@ -89,6 +75,35 @@ public class Trainer
 	}
 	#endregion
 
+	#region NPC Details
+	/// <summary>
+	/// The skill level of all trainers of this type, used for battle AI. 
+	/// Higher numbers represent higher skill levels. 
+	/// Must be a number between 0 and 255.	
+	/// Optional. If undefined, default is equal to the base money value.
+	/// </summary>
+	public byte	SkillLevel { get; private set; }
+	/// <summary>
+	/// A text field which can be used to modify the AI behaviour of all trainers of this type. 
+	/// No such modifiers are defined by default, and there is no standard format. 
+	/// See the page Battle AI for more details.
+	/// Optional. If undefined, the default is blank.
+	/// </summary>
+	public int?	SkillCodes { get; private set; }
+	/// <summary>
+	/// After having defeated the trainer, when speaking to him/her again
+	/// </summary>
+	public string ScriptIdle { get; private set; }
+	/// <summary>
+	/// Start of trainer encounter
+	/// </summary>
+	public string ScriptBattleIntro { get; private set; }
+	/// <summary>
+	/// End of battle
+	/// </summary>
+	public string ScriptBattleEnd { get; private set; }
+	#endregion
+
 	public Trainer(TrainerTypes trainer)
     {
 		IsDouble = false;
@@ -96,7 +111,20 @@ public class Trainer
 		GetTrainer(trainer);
 	}
 
-	public Trainer(Player trainer) : this(TrainerTypes.PLAYER)
+	public Trainer(TrainerTypes trainer, Pokemon[] party, int? intro = null, int? end = null, int? idle = null, byte? baseMoney = null, byte? skillLevel = null, int? battleMusic = null, int? victoryMusic = null, int? introMusic = null) : this(TrainerTypes.PLAYER)
+    {
+		Party = party;
+		BaseMoney = baseMoney ?? BaseMoney;
+		SkillLevel = skillLevel ?? SkillLevel;
+		BattleBGM = battleMusic ?? BattleBGM;
+		VictoryBGM = victoryMusic ?? VictoryBGM;
+		IntroME = introMusic ?? IntroME;
+		//ScriptIdle = 
+		//ScriptBattleIntro = 
+		//ScriptBattleEnd = 
+	}
+
+	public Trainer(Player trainer) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
     {
 		//if trainer is another player
 		//Change name being loaded
@@ -256,6 +284,7 @@ public class Trainer
 				SkillLevel = 32;
 				break;
 			default:
+				SkillLevel = BaseMoney;
 				break;
 		}
 		#endregion
