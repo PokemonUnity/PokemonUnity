@@ -2867,23 +2867,23 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		type = Types.NORMAL || 0
+		type = Types.NORMAL
 		case @battle.environment
-		when PBEnvironment::None;        type=Types.NORMAL || 0
-		when PBEnvironment::Grass; type=Types.GRASS || 0
-		when PBEnvironment::TallGrass; type=Types.GRASS || 0
-		when PBEnvironment::MovingWater; type=Types.WATER || 0
-		when PBEnvironment::StillWater; type=Types.WATER || 0
-		when PBEnvironment::Underwater; type=Types.WATER || 0
-		when PBEnvironment::Cave; type=Types.ROCK || 0
-		when PBEnvironment::Rock; type=Types.GROUND || 0
-		when PBEnvironment::Sand; type=Types.GROUND || 0
-		when PBEnvironment::Forest; type=Types.BUG || 0
-		when PBEnvironment::Snow; type=Types.ICE || 0
-		when PBEnvironment::Volcano; type=Types.FIRE || 0
-		when PBEnvironment::Graveyard; type=Types.GHOST || 0
-		when PBEnvironment::Sky; type=Types.FLYING || 0
-		when PBEnvironment::Space; type=Types.DRAGON || 0
+		when PBEnvironment::None;        type=Types.NORMAL
+		when PBEnvironment::Grass; type=Types.GRASS
+		when PBEnvironment::TallGrass; type=Types.GRASS
+		when PBEnvironment::MovingWater; type=Types.WATER
+		when PBEnvironment::StillWater; type=Types.WATER
+		when PBEnvironment::Underwater; type=Types.WATER
+		when PBEnvironment::Cave; type=Types.ROCK
+		when PBEnvironment::Rock; type=Types.GROUND
+		when PBEnvironment::Sand; type=Types.GROUND
+		when PBEnvironment::Forest; type=Types.BUG
+		when PBEnvironment::Snow; type=Types.ICE
+		when PBEnvironment::Volcano; type=Types.FIRE
+		when PBEnvironment::Graveyard; type=Types.GHOST
+		when PBEnvironment::Sky; type=Types.FLYING
+		when PBEnvironment::Space; type=Types.DRAGON
 		}
 		if (@battle.field.effects[PBEffects::ElectricTerrain]>0){
 		  type=Types.ELECTRIC if hasConst? (PBTypes,:ELECTRIC)
@@ -3003,7 +3003,7 @@ public class Function
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
 		oldabil=opponent.ability
-		opponent.ability=Abilities.SIMPLE || 0
+		opponent.ability=Abilities.SIMPLE
 		abilityname=PBAbilities.getName(Abilities.SIMPLE)
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 		if (opponent.effects[PBEffects::Illusion] && isConst? (oldabil, PBAbilities,:ILLUSION)){
@@ -3040,7 +3040,7 @@ public class Function
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
 		oldabil=opponent.ability
-		opponent.ability=Abilities.INSOMNIA || 0
+		opponent.ability=Abilities.INSOMNIA
 		abilityname=PBAbilities.getName(Abilities.INSOMNIA)
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 		if (opponent.effects[PBEffects::Illusion] && isConst? (oldabil, PBAbilities,:ILLUSION)){
@@ -3900,26 +3900,26 @@ public class Function
 	{
 		public object pbBaseDamage(basedmg, attacker, opponent){
 		if (@battle.pbWeather!=0){
-		  return basedmg*2
+			return basedmg * 2;
 		}
-		return basedmg
+		return basedmg;
 	  }
 
-	  public object pbModifyType(type, attacker, opponent){
+	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 
-		type=Types.NORMAL || 0
+		type = Types.NORMAL;
 		case @battle.pbWeather
 		when PBWeather::SUNNYDAY, PBWeather::HARSHSUN
-		  type = (Types.FIRE || type)
+		  type = (Types.FIRE)
 
 		when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
-		  type = (Types.WATER || type)
+		  type = (Types.WATER)
 
 		when PBWeather::SANDSTORM
-		  type = (Types.ROCK || type)
+		  type = (Types.ROCK)
 
 		when PBWeather::HAIL
-		  type = (Types.ICE || type)
+		  type = (Types.ICE)
 
 		}
 		return type
@@ -4286,7 +4286,7 @@ public class Function
 
 	  public object pbModifyType(type, attacker, opponent){
 
-		type=Types.NORMAL || 0
+		type=Types.NORMAL
 		typearray={
 		   :NORMAL   => [:CHILANBERRY],
 		   :FIRE     => [:CHERIBERRY,:BLUKBERRY,:WATMELBERRY,:OCCABERRY],
@@ -4529,30 +4529,30 @@ public class Function
 	{
 		public object pbModifyType(type, attacker, opponent){
 		if (id == Moves.JUDGMENT){
-		  if (isConst? (attacker.item, PBItems,:FISTPLATE)) return (Types.FIGHTING || 0);
-		  if (isConst? (attacker.item, PBItems,:SKYPLATE)) return (Types.FLYING || 0)  ;
-		  if (isConst? (attacker.item, PBItems,:TOXICPLATE)) return (Types.POISON || 0)  ;
-		  if (isConst? (attacker.item, PBItems,:EARTHPLATE)) return (Types.GROUND || 0)  ;
-		  if (isConst? (attacker.item, PBItems,:STONEPLATE)) return (Types.ROCK || 0)    ;
-		  if (isConst? (attacker.item, PBItems,:INSECTPLATE)) return (Types.BUG || 0)     ;
-		  if (isConst? (attacker.item, PBItems,:SPOOKYPLATE)) return (Types.GHOST || 0)   ;
-		  if (isConst? (attacker.item, PBItems,:IRONPLATE)) return (Types.STEEL || 0)   ;
-		  if (isConst? (attacker.item, PBItems,:FLAMEPLATE)) return (Types.FIRE || 0)    ;
-		  if (isConst? (attacker.item, PBItems,:SPLASHPLATE)) return (Types.WATER || 0)   ;
-		  if (isConst? (attacker.item, PBItems,:MEADOWPLATE)) return (Types.GRASS || 0)   ;
-		  if (isConst? (attacker.item, PBItems,:ZAPPLATE)) return (Types.ELECTRIC || 0);
-		  if (isConst? (attacker.item, PBItems,:MINDPLATE)) return (Types.PSYCHIC || 0) ;
-		  if (isConst? (attacker.item, PBItems,:ICICLEPLATE)) return (Types.ICE || 0)     ;
-		  if (isConst? (attacker.item, PBItems,:DRACOPLATE)) return (Types.DRAGON || 0)  ;
-		  if (isConst? (attacker.item, PBItems,:DREADPLATE)) return (Types.DARK || 0)    ;
-		  if (isConst? (attacker.item, PBItems,:PIXIEPLATE)) return (Types.FAIRY || 0)   ;
+		  if (isConst? (attacker.item, PBItems,:FISTPLATE)) return (Types.FIGHTING);
+		  if (isConst? (attacker.item, PBItems,:SKYPLATE)) return (Types.FLYING)  ;
+		  if (isConst? (attacker.item, PBItems,:TOXICPLATE)) return (Types.POISON)  ;
+		  if (isConst? (attacker.item, PBItems,:EARTHPLATE)) return (Types.GROUND)  ;
+		  if (isConst? (attacker.item, PBItems,:STONEPLATE)) return (Types.ROCK)    ;
+		  if (isConst? (attacker.item, PBItems,:INSECTPLATE)) return (Types.BUG)     ;
+		  if (isConst? (attacker.item, PBItems,:SPOOKYPLATE)) return (Types.GHOST)   ;
+		  if (isConst? (attacker.item, PBItems,:IRONPLATE)) return (Types.STEEL)   ;
+		  if (isConst? (attacker.item, PBItems,:FLAMEPLATE)) return (Types.FIRE)    ;
+		  if (isConst? (attacker.item, PBItems,:SPLASHPLATE)) return (Types.WATER)   ;
+		  if (isConst? (attacker.item, PBItems,:MEADOWPLATE)) return (Types.GRASS)   ;
+		  if (isConst? (attacker.item, PBItems,:ZAPPLATE)) return (Types.ELECTRIC);
+		  if (isConst? (attacker.item, PBItems,:MINDPLATE)) return (Types.PSYCHIC) ;
+		  if (isConst? (attacker.item, PBItems,:ICICLEPLATE)) return (Types.ICE)     ;
+		  if (isConst? (attacker.item, PBItems,:DRACOPLATE)) return (Types.DRAGON)  ;
+		  if (isConst? (attacker.item, PBItems,:DREADPLATE)) return (Types.DARK)    ;
+		  if (isConst? (attacker.item, PBItems,:PIXIEPLATE)) return (Types.FAIRY)   ;
 		else if id == Moves.TECHNOBLAST
 		  if (isConst? (attacker.item, PBItems,:SHOCKDRIVE)) return Types.ELECTRIC;
 		  if (isConst? (attacker.item, PBItems,:BURNDRIVE)) return Types.FIRE    ;
 		  if (isConst? (attacker.item, PBItems,:CHILLDRIVE)) return Types.ICE     ;
 		  if (isConst? (attacker.item, PBItems,:DOUSEDRIVE)) return Types.WATER   ;
 		}
-		return (Types.NORMAL || 0)
+		return (Types.NORMAL)
 	  }
 
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
@@ -5176,7 +5176,7 @@ public class Function
 	public class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		move=Moves.TRIATTACK || 0
+		move=Moves.TRIATTACK
 		case @battle.environment
 		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
 		  move = ((USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB) || move
@@ -8196,7 +8196,7 @@ public class Function
 
 	  public object pbModifyType(type, attacker, opponent){
 		if (@overridetype){
-		  type = Types.FIRE || 0
+		  type = Types.FIRE
 
 		}
 		return super(type, attacker, opponent)
@@ -8303,7 +8303,7 @@ public class Function
 
 	  public object pbModifyType(type, attacker, opponent){
 		if (@overridetype){
-		  type = Types.WATER || 0
+		  type = Types.WATER
 
 		}
 		return super(type, attacker, opponent)
@@ -8410,7 +8410,7 @@ public class Function
 
 	  public object pbModifyType(type, attacker, opponent){
 		if (@overridetype){
-		  type = Types.GRASS || 0
+		  type = Types.GRASS
 
 		}
 		return super(type, attacker, opponent)
