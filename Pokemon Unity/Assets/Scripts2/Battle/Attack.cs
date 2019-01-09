@@ -547,7 +547,7 @@ public class Function
 	  }
 
 	  public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
-		return (attacker.status!=PBStatuses::SLEEP)
+		return (attacker.Status!=Status.SLEEP)
 	  }
 
 	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
@@ -736,21 +736,21 @@ public class Function
 	public class PokeBattle_Move_018 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (attacker.status!=PBStatuses::BURN &&){
-		   attacker.status!=PBStatuses::POISON &&
-		   attacker.status!=PBStatuses::PARALYSIS
+		if (attacker.Status!=Status.BURN &&){
+		   attacker.Status!=Status.POISON &&
+		   attacker.Status!=Status.PARALYSIS
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		else
-		  t=attacker.status
+		  t=attacker.Status
 		  attacker.pbCureStatus(false)
 
 		  pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
-		  if (t==PBStatuses::BURN){
+		  if (t==Status.BURN){
 			//battle.pbDisplay(_INTL("{1} healed its burn!", attacker.pbThis))  
-		  else if t==PBStatuses::POISON
+		  else if t==Status.POISON
 			//battle.pbDisplay(_INTL("{1} cured its poisoning!", attacker.pbThis))  
-		  else if t==PBStatuses::PARALYSIS
+		  else if t==Status.PARALYSIS
 			//battle.pbDisplay(_INTL("{1} cured its paralysis!", attacker.pbThis))  
 		  }
 		  return 0
@@ -782,18 +782,18 @@ public class Function
 		  if (USENEWBATTLEMECHANICS && i.index!=attacker.index && ) continue; //next
 			 pbTypeImmunityByAbility(pbType(this.type, attacker, i), attacker, i)
 		  case i.status
-		  when PBStatuses::PARALYSIS
+		  when Status.PARALYSIS
 			//battle.pbDisplay(_INTL("{1} was cured of paralysis.", i.pbThis))
-		  when PBStatuses::SLEEP
+		  when Status.SLEEP
 
 			//battle.pbDisplay(_INTL("{1}'s sleep was woken.", i.pbThis))
-		  when PBStatuses::POISON
+		  when Status.POISON
 
 			//battle.pbDisplay(_INTL("{1} was cured of its poisoning.", i.pbThis))
-		  when PBStatuses::BURN
+		  when Status.BURN
 
 			//battle.pbDisplay(_INTL("{1}'s burn was healed.", i.pbThis))
-		  when PBStatuses::FROZEN
+		  when Status.FROZEN
 
 			//battle.pbDisplay(_INTL("{1} was thawed out.", i.pbThis))
 		  }
@@ -805,18 +805,18 @@ public class Function
 		  if (activepkmn.include? (i)) continue; //next
 		   if (!party[i] || party[i].egg? || party[i].HP<=0) continue; //next
 		  case party[i].status
-		  when PBStatuses::PARALYSIS
+		  when Status.PARALYSIS
 			//battle.pbDisplay(_INTL("{1} was cured of paralysis.", party[i].name))
-		  when PBStatuses::SLEEP
+		  when Status.SLEEP
 
 			//battle.pbDisplay(_INTL("{1} was woken from its sleep.", party[i].name))
-		  when PBStatuses::POISON
+		  when Status.POISON
 
 			//battle.pbDisplay(_INTL("{1} was cured of its poisoning.", party[i].name))
-		  when PBStatuses::BURN
+		  when Status.BURN
 
 			//battle.pbDisplay(_INTL("{1}'s burn was healed.", party[i].name))
-		  when PBStatuses::FROZEN
+		  when Status.FROZEN
 
 			//battle.pbDisplay(_INTL("{1} was thawed out.", party[i].name))
 		  }
@@ -859,47 +859,47 @@ public class Function
 	public class PokeBattle_Move_01B : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (attacker.status==0 ||){
-		  (attacker.status==PBStatuses::PARALYSIS && !opponent.pbCanParalyze? (attacker,false,self)) ||
-		  (attacker.status==PBStatuses::SLEEP && !opponent.pbCanSleep? (attacker,false,self)) ||
-		  (attacker.status==PBStatuses::POISON && !opponent.pbCanPoison? (attacker,false,self)) ||
-		  (attacker.status==PBStatuses::BURN && !opponent.pbCanBurn? (attacker,false,self)) ||
-		  (attacker.status==PBStatuses::FROZEN && !opponent.pbCanFreeze? (attacker,false,self))
+		if (attacker.Status==0 ||){
+		  (attacker.Status==Status.PARALYSIS && !opponent.pbCanParalyze? (attacker,false,self)) ||
+		  (attacker.Status==Status.SLEEP && !opponent.pbCanSleep? (attacker,false,self)) ||
+		  (attacker.Status==Status.POISON && !opponent.pbCanPoison? (attacker,false,self)) ||
+		  (attacker.Status==Status.BURN && !opponent.pbCanBurn? (attacker,false,self)) ||
+		  (attacker.Status==Status.FROZEN && !opponent.pbCanFreeze? (attacker,false,self))
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
-		case attacker.status
-		when PBStatuses::PARALYSIS
+		case attacker.Status
+		when Status.PARALYSIS
 		  opponent.pbParalyze(attacker)
 
 		  opponent.pbAbilityCureCheck
 		  attacker.pbCureStatus(false)
 
 		  //battle.pbDisplay(_INTL("{1} was cured of paralysis.",attacker.pbThis))
-		when PBStatuses::SLEEP
+		when Status.SLEEP
 
 		  opponent.pbSleep
 		  opponent.pbAbilityCureCheck
 		  attacker.pbCureStatus(false)
 
 		  //battle.pbDisplay(_INTL("{1} woke up.",attacker.pbThis))
-		when PBStatuses::POISON
+		when Status.POISON
 
-		  opponent.pbPoison(attacker, null, attacker.statusCount!=0)
+		  opponent.pbPoison(attacker, null, attacker.StatusCount!=0)
 
 		  opponent.pbAbilityCureCheck
 		  attacker.pbCureStatus(false)
 
 		  //battle.pbDisplay(_INTL("{1} was cured of its poisoning.",attacker.pbThis))
-		when PBStatuses::BURN
+		when Status.BURN
 
 		  opponent.pbBurn(attacker)
 		  opponent.pbAbilityCureCheck
 		  attacker.pbCureStatus(false)
 
 		  //battle.pbDisplay(_INTL("{1}'s burn was healed.",attacker.pbThis))
-		when PBStatuses::FROZEN
+		when Status.FROZEN
 
 		  opponent.pbFreeze
 		  opponent.pbAbilityCureCheck
@@ -2375,23 +2375,17 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_050 : PokeBattle_Move
 	{
-		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
+		ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
-		  opponent.stages[PBStats::ATTACK]   = 0
-
-		  opponent.stages[PBStats::DEFENSE]  = 0
-
-		  opponent.stages[PBStats::SPEED]    = 0
-
-		  opponent.stages[PBStats::SPATK]    = 0
-
-		  opponent.stages[PBStats::SPDEF]    = 0
-
-		  opponent.stages[PBStats::ACCURACY] = 0
-
-		  opponent.stages[PBStats::EVASION]  = 0
+		  opponent.stages[(byte)Stats.ATTACK]   = 0;
+		  opponent.stages[(byte)Stats.DEFENSE]  = 0;
+		  opponent.stages[(byte)Stats.SPEED]    = 0;
+		  opponent.stages[(byte)Stats.SPATK]    = 0;
+		  opponent.stages[(byte)Stats.SPDEF]    = 0;
+		  opponent.stages[(byte)Stats.ACCURACY] = 0;
+		  opponent.stages[(byte)Stats.EVASION]  = 0;
 
 		  //battle.pbDisplay(_INTL("{1}'s stat changes were removed!", opponent.pbThis))
 		}
@@ -2436,7 +2430,7 @@ public class Function
 
 		astage=attacker.stages
 		ostage = opponent.stages
-
+		//create temp variables then override source
 		astage[PBStats::ATTACK],ostage[PBStats::ATTACK]=ostage[PBStats::ATTACK],astage[PBStats::ATTACK]
 		astage[PBStats::SPATK], ostage[PBStats::SPATK] = ostage[PBStats::SPATK], astage[PBStats::SPATK]
 
@@ -3667,8 +3661,8 @@ public class Function
 	public class PokeBattle_Move_07B : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (opponent.status==PBStatuses::POISON &&){
-		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
+		if (opponent.Status==Status.POISON &&
+		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))){
 		  return basedmg*2
 		}
 		return basedmg
@@ -3684,8 +3678,8 @@ public class Function
 	public class PokeBattle_Move_07C : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (opponent.status==PBStatuses::PARALYSIS &&){
-		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
+		if (opponent.Status==Status.PARALYSIS &&
+		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))){
 		  return basedmg*2
 		}
 		return basedmg
@@ -3693,7 +3687,7 @@ public class Function
 
 	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if (!opponent.isFainted() && opponent.damagestate.CalcDamage>0 &&){
-		   !opponent.damagestate.Substitute && opponent.status==PBStatuses::PARALYSIS
+		   !opponent.damagestate.Substitute && opponent.Status==Status.PARALYSIS
 		  opponent.pbCureStatus
 
 		}
@@ -3708,7 +3702,7 @@ public class Function
 	public class PokeBattle_Move_07D : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (opponent.status==PBStatuses::SLEEP &&){
+		if (opponent.Status==Status.SLEEP &&){
 		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
 		  return basedmg*2
 		}
@@ -3717,7 +3711,7 @@ public class Function
 
 	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
 		if (!opponent.isFainted() && opponent.damagestate.CalcDamage>0 &&){
-		   !opponent.damagestate.Substitute && opponent.status==PBStatuses::SLEEP
+		   !opponent.damagestate.Substitute && opponent.Status==Status.SLEEP
 		  opponent.pbCureStatus
 
 		}
@@ -3732,9 +3726,9 @@ public class Function
 	public class PokeBattle_Move_07E : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.status==PBStatuses::POISON ||){
-		   attacker.status==PBStatuses::BURN ||
-		   attacker.status==PBStatuses::PARALYSIS
+		if (attacker.Status==Status.POISON ||){
+		   attacker.Status==Status.BURN ||
+		   attacker.Status==Status.PARALYSIS
 		  return basedmg*2
 		}
 		return basedmg
@@ -3749,7 +3743,7 @@ public class Function
 	public class PokeBattle_Move_07F : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (opponent.status>0 &&){
+		if (opponent.Status>0 &&){
 		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
 		  return basedmg*2
 		}
@@ -5235,7 +5229,7 @@ public class Function
 	  }
 
 	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (attacker.status!=PBStatuses::SLEEP){
+		if (attacker.Status!=Status.SLEEP){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -6424,7 +6418,7 @@ public class Function
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if (opponent.damagestate.CalcDamage>0 &&){
 		   attacker.effects.Outrage==0 && 
-		   attacker.status!=PBStatuses::SLEEP
+		   attacker.Status!=Status.SLEEP
 		  attacker.effects.Outrage= 2 + this.battle.pbRandom(2)
 
 		  attacker.currentMove= this.id
@@ -6470,7 +6464,7 @@ public class Function
 		ret = super(attacker, opponent, hitnum, alltargets, showanimation)
 		if (opponent.damagestate.CalcDamage==0 ||){
 		   pbTypeModifier(this.type, attacker, opponent)==0 || 
-		   attacker.status==PBStatuses::SLEEP
+		   attacker.Status==Status.SLEEP
 	/// Cancel effect if attack is ineffective
 		  attacker.effects.Rollout= 0
 
@@ -6665,7 +6659,7 @@ public class Function
 		if (!attacker.pbCanSleep? (attacker,true,self,true)){
 		  return -1
 		}
-		if (attacker.status==PBStatuses::SLEEP){
+		if (attacker.Status==Status.SLEEP){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
@@ -8685,7 +8679,7 @@ public class Function
 	public class PokeBattle_Move_10F : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (opponent.status!=PBStatuses::SLEEP || opponent.effects.Nightmare ||){
+		if (opponent.Status!=Status.SLEEP || opponent.effects.Nightmare ||){
 		   (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker))
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -9669,7 +9663,7 @@ public class Function
 		didsomething=false
 		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	if (!i || i.isFainted()) continue; //next
-	if (!i.status==PBStatuses::POISON) continue; //next
+	if (!i.status==Status.POISON) continue; //next
 	if (!i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,self) &&) continue; //next
 				  !i.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,self) &&
 				  !i.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
