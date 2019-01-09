@@ -121,7 +121,7 @@ public class Function
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage>0)
 			{
-				attacker.pbReduceHP((int)Math.Round(attacker.TotalHP / 4.0f));
+				attacker.ReduceHP((int)Math.Round(attacker.TotalHP / 4.0f));
 				//battle.pbDisplay(_INTL("{1} is damaged by recoil!", attacker.pbThis));
 			}
 		}
@@ -1718,14 +1718,14 @@ public class Function
 	public class PokeBattle_Move_03A : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (attacker.HP<=(attacker.TotalHP/2).floor ||
+		if (attacker.HP<= Math.Floor(attacker.TotalHP/2) ||
 		   !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		attacker.pbReduceHP((attacker.TotalHP/2).floor)
+		attacker.ReduceHP(Math.Floor(attacker.TotalHP/2))
 		if (attacker.hasWorkingAbility(Abilities.CONTRARY)){
 		  attacker.stages[PBStats::ATTACK]=-6
 		  this.battle.pbCommonAnimation("StatDown",attacker,null)
@@ -1802,7 +1802,7 @@ public class Function
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if (opponent.damagestate.CalcDamage>0){
 		  if (attacker.pbPartner && !attacker.pbPartner.isFainted()){
-			attacker.pbPartner.pbReduceHP((attacker.pbPartner.TotalHP/16).floor,true)
+			attacker.pbPartner.ReduceHP(Math.Floor(attacker.pbPartner.TotalHP/16),true)
 		  }
 		  showanim = true
 		  if (attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)){
@@ -2562,8 +2562,8 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		avatk=((attacker.attack+opponent.attack)/2).floor
-		avspatk = ((attacker.spatk + opponent.spatk) / 2).floor
+		avatk= Math.Floor((attacker.attack+opponent.attack)/2)
+		avspatk = Math.Floor((attacker.spatk + opponent.spatk) / 2)
 
 		attacker.attack=opponent.attack=avatk
 		attacker.spatk=opponent.spatk= avspatk
@@ -2588,8 +2588,8 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		avdef=((attacker.defense+opponent.defense)/2).floor
-		avspdef = ((attacker.spdef + opponent.spdef) / 2).floor
+		avdef= Math.Floor((attacker.defense+opponent.defense)/2)
+		avspdef = Math.Floor((attacker.spdef + opponent.spdef) / 2)
 
 		attacker.defense=opponent.defense=avdef
 		attacker.spdef=opponent.spdef= avspdef
@@ -2616,7 +2616,7 @@ public class Function
 		olda=attacker.HP
 		oldo = opponent.HP
 
-		avhp=((attacker.HP+opponent.HP)/2).floor
+		avhp= Math.Floor((attacker.HP+opponent.HP)/2)
 		attacker.HP=[avhp, attacker.TotalHP].min
 		opponent.HP=[avhp, opponent.TotalHP].min
 
@@ -3323,7 +3323,7 @@ public class Function
 	public class PokeBattle_Move_06C : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		return pbEffectFixedDamage([(opponent.HP / 2).floor,1].max, attacker, opponent, hitnum, alltargets, showanimation)
+		return pbEffectFixedDamage([Math.Floor(opponent.HP / 2),1].max, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 	}
 
@@ -3364,7 +3364,7 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
-		dmg=[(attacker.level * (this.battle.pbRandom(101) + 50) / 100).floor,1].max
+		dmg=[(attacker.level * Math.Floor(this.battle.pbRandom(101) + 50) / 100),1].max
 		return pbEffectFixedDamage(dmg, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 	}
@@ -3478,7 +3478,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		ret = pbEffectFixedDamage([(attacker.lastHPLost * 1.5f).floor, 1].max, attacker, opponent, hitnum, alltargets, showanimation)
+		ret = pbEffectFixedDamage([Math.Floor(attacker.lastHPLost * 1.5f), 1].max, attacker, opponent, hitnum, alltargets, showanimation)
 		return ret
 	  }
 	}
@@ -3496,7 +3496,7 @@ public class Function
 		if (opponent.damagestate.CalcDamage>0){
 		  if (opponent.pbPartner && !opponent.pbPartner.isFainted() &&
 			 !opponent.pbPartner.hasWorkingAbility(Abilities.MAGICGUARD)){
-			opponent.pbPartner.pbReduceHP((opponent.pbPartner.TotalHP/16).floor)
+			opponent.pbPartner.ReduceHP(Math.Floor(opponent.pbPartner.TotalHP/16))
 			//battle.pbDisplay(_INTL("The bursting flame hit {1}!",opponent.pbPartner.pbThis(true)))
 		  }
 		}
@@ -3950,7 +3950,7 @@ public class Function
 	public class PokeBattle_Move_089 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [(attacker.happiness * 2 / 5).floor,1].max
+			return [Math.Floor(attacker.happiness * 2 / 5),1].max
 		}
 	}
 
@@ -3962,7 +3962,7 @@ public class Function
 	public class PokeBattle_Move_08A : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [((255 - attacker.happiness) * 2 / 5).floor,1].max
+			return [Math.Floor((255 - attacker.happiness) * 2 / 5),1].max
 		}
 	}
 
@@ -3974,7 +3974,7 @@ public class Function
 	public class PokeBattle_Move_08B : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [(150 * attacker.HP / attacker.TotalHP).floor,1].max
+			return [Math.Floor(150 * attacker.HP / attacker.TotalHP),1].max
 		}
 	}
 
@@ -3986,7 +3986,7 @@ public class Function
 	public class PokeBattle_Move_08C : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [(120 * opponent.HP / opponent.TotalHP).floor,1].max
+			return [Math.Floor(120 * opponent.HP / opponent.TotalHP),1].max
 		}
 	}
 
@@ -3998,7 +3998,7 @@ public class Function
 	public class PokeBattle_Move_08D : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [[(25 * opponent.pbSpeed / attacker.pbSpeed).floor,150].min,1].max
+			return [[Math.Floor(25 * opponent.pbSpeed / attacker.pbSpeed),150].min,1].max
 		}
 	}
 
@@ -4075,7 +4075,7 @@ public class Function
 	  type|=(iv[PBStats::SPEED]&1)<<3
 	  type|=(iv[PBStats::SPATK]&1)<<4
 	  type|=(iv[PBStats::SPDEF]&1)<<5
-	  type=(type*(types.length-1)/63).floor
+	  type= Math.Floor(type*(types.length-1)/63)
 	  hptype = types[type]
 	  base|=(iv[PBStats::HP]&2)>>1
 	  base|=(iv[PBStats::ATTACK]&2)
@@ -4083,7 +4083,7 @@ public class Function
 	  base|=(iv[PBStats::SPEED]&2)<<2
 	  base|=(iv[PBStats::SPATK]&2)<<3
 	  base|=(iv[PBStats::SPDEF]&2)<<4
-	  base=(base*(powermax-powermin)/63).floor+powermin
+	  base= Math.Floor(base*(powermax-powermin)/63)+powermin
 	  return [hptype,base]
 		}
 
@@ -4172,7 +4172,7 @@ public class Function
 		  }
 		  damage = pbCalcDamage(attacker, opponent) // Consumes Gems even if it will heal
 		  pbShowAnimation(this.id, attacker, opponent,1, alltargets, showanimation) // Healing animation
-		  opponent.pbRecoverHP((opponent.TotalHP/4).floor,true)
+		  opponent.pbRecoverHP(Math.Floor(opponent.TotalHP/4),true)
 		  //battle.pbDisplay(_INTL("{1} had its HP restored.",opponent.pbThis))   
 			return 0;
 		}
@@ -4347,7 +4347,7 @@ public class Function
 	public class PokeBattle_Move_098 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		n = (48 * attacker.HP / attacker.TotalHP).floor
+		n = Math.Floor(48 * attacker.HP / attacker.TotalHP)
 
 		ret=20
 		ret=40 if n<33
@@ -4371,7 +4371,7 @@ public class Function
 	public class PokeBattle_Move_099 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		n = ([attacker.pbSpeed, 1].max /[opponent.pbSpeed, 1].max).floor
+		n = Math.Floor([attacker.pbSpeed, 1].max /[opponent.pbSpeed, 1].max)
 
 		ret=60
 		ret=80 if n>=2
@@ -4409,7 +4409,7 @@ public class Function
 	public class PokeBattle_Move_09B : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		n = (attacker.weight / opponent.weight(attacker)).floor
+		n = Math.Floor(attacker.weight / opponent.weight(attacker))
 
 		ret=40
 		ret=60 if n>=2
@@ -4878,7 +4878,7 @@ public class Function
 		  }
 		}
 		if (!unmoved ||
-		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate)){
 		  attacker.effects.ProtectRate= 1
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -4927,7 +4927,7 @@ public class Function
 		}
 		if (!unmoved ||
 		   (!Settings.USENEWBATTLEMECHANICS &&
-		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor)){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate))){
 		  attacker.effects.ProtectRate=1
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -4979,7 +4979,7 @@ public class Function
 		}
 		if (!unmoved ||
 		   (!Settings.USENEWBATTLEMECHANICS &&
-		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor)){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate))){
 		  attacker.effects.ProtectRate=1
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6549,7 +6549,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		attacker.pbRecoverHP(((attacker.TotalHP+1)/2).floor,true)
+		attacker.pbRecoverHP(Math.Floor((attacker.TotalHP+1)/2),true)
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0
 	  }
@@ -6574,7 +6574,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		attacker.pbRecoverHP(((attacker.TotalHP+1)/2).floor,true)
+		attacker.pbRecoverHP(Math.Floor((attacker.TotalHP+1)/2),true)
 		attacker.effects.Roost=true
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0
@@ -6601,7 +6601,7 @@ public class Function
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
 		attacker.effects.Wish=2
-		attacker.effects.WishAmount=((attacker.TotalHP+1)/2).floor
+		attacker.effects.WishAmount= Math.Floor((attacker.TotalHP+1)/2)
 		attacker.effects.WishMaker= attacker.pokemonIndex
 		return 0
 	  }
@@ -6627,13 +6627,13 @@ public class Function
 		hpgain = 0
 		if (this.battle.Weather==Weather.SUNNYDAY ||
 		   this.battle.Weather==Weather.HARSHSUN){
-		  hpgain = (attacker.TotalHP * 2 / 3).floor
+		  hpgain = Math.Floor(attacker.TotalHP * 2 / 3)
 
 		else if this.battle.Weather!=0
-		  hpgain= (attacker.TotalHP / 4).floor
+		  hpgain= Math.Floor(attacker.TotalHP / 4)
 		else
 
-		  hpgain= (attacker.TotalHP / 2).floor
+		  hpgain= Math.Floor(attacker.TotalHP / 2)
 
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
@@ -6773,11 +6773,11 @@ public class Function
 		if (opponent.damagestate.CalcDamage>0){
 		  hpgain= (int)Math.Round(opponent.damagestate.HPLost/2)
 		  if (opponent.hasWorkingAbility(Abilities.LIQUIDOOZE)){
-			attacker.pbReduceHP(hpgain,true)
+			attacker.ReduceHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  else if attacker.effects.HealBlock==0
 
-			hpgain= (hpgain * 1.3f).floor if attacker.hasWorkingItem(Items.BIGROOT)
+			hpgain= Math.Floor(hpgain * 1.3f) if attacker.hasWorkingItem(Items.BIGROOT)
 
 			attacker.pbRecoverHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
@@ -6804,11 +6804,11 @@ public class Function
 		if (opponent.damagestate.CalcDamage>0){
 		  hpgain= (int)Math.Round(opponent.damagestate.HPLost/2)
 		  if (opponent.hasWorkingAbility(Abilities.LIQUIDOOZE)){
-			attacker.pbReduceHP(hpgain,true)
+			attacker.ReduceHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  else if attacker.effects.HealBlock==0
 
-			hpgain= (hpgain * 1.3f).floor if attacker.hasWorkingItem(Items.BIGROOT)
+			hpgain= Math.Floor(hpgain * 1.3f) if attacker.hasWorkingItem(Items.BIGROOT)
 
 			attacker.pbRecoverHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
@@ -6840,7 +6840,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		hpgain=((opponent.TotalHP+1)/2).floor
+		hpgain= Math.Floor((opponent.TotalHP+1)/2)
 		if (attacker.hasWorkingAbility(Abilities.MEGALAUNCHER))hpgain = (int)Math.Round(opponent.TotalHP * 3 / 4) 
 		opponent.pbRecoverHP(hpgain,true)
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",opponent.pbThis))  
@@ -6871,7 +6871,7 @@ public class Function
 
 		super(id, attacker, opponent, hitnum, alltargets, showanimation)
 		if (!attacker.isFainted()){
-		  attacker.pbReduceHP(attacker.HP)
+		  attacker.ReduceHP(attacker.HP)
 
 		  attacker.pbFaint if attacker.isFainted()
 		}
@@ -6900,7 +6900,7 @@ public class Function
 
 		super(id, attacker, opponent, hitnum, alltargets, showanimation)
 		if (!attacker.isFainted()){
-		  attacker.pbReduceHP(attacker.HP)
+		  attacker.ReduceHP(attacker.HP)
 
 		  attacker.pbFaint if attacker.isFainted()
 		}
@@ -6929,7 +6929,7 @@ public class Function
 		if (opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,self,showanim)){
 		  ret=0; showanim=false
 		}
-		attacker.pbReduceHP(attacker.HP)
+		attacker.ReduceHP(attacker.HP)
 		return ret
 	  }
 	}
@@ -6953,7 +6953,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		attacker.pbReduceHP(attacker.HP)
+		attacker.ReduceHP(attacker.HP)
 		attacker.effects.HealingWish= true
 		return 0
 	  }
@@ -6978,7 +6978,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		attacker.pbReduceHP(attacker.HP)
+		attacker.ReduceHP(attacker.HP)
 		attacker.effects.LunarDance= true
 		return 0
 	  }
@@ -7086,7 +7086,7 @@ public class Function
 		  }
 		}
 		if (!unmoved ||
-		   this.battle.pbRandom(65536)>(65536/attacker.effects.ProtectRate).floor){
+		   this.battle.pbRandom(65536)>Math.Floor(65536/attacker.effects.ProtectRate)){
 		  attacker.effects.ProtectRate= 1
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -7107,7 +7107,7 @@ public class Function
 	/// If target would be KO'd by this attack, it survives with 1HP instead. (False Swipe)
 	/// <summary>
 	public class PokeBattle_Move_0E9 : PokeBattle_Move
-	/// Handled in superclass public object pbReduceHPDamage, do not edit!
+	/// Handled in superclass public object ReduceHPDamage, do not edit!
 	}
 
 
@@ -7826,7 +7826,7 @@ public class Function
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
-			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/4.0f))
+			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/4.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7848,7 +7848,7 @@ public class Function
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
-			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
+			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7871,7 +7871,7 @@ public class Function
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
-			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/2.0f))
+			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/2.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7894,7 +7894,7 @@ public class Function
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
-			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
+			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -7924,7 +7924,7 @@ public class Function
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
-			attacker.pbReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
+			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f))
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
 		  }
 		}
@@ -8572,12 +8572,12 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} already has a substitute!",attacker.pbThis))
 		  return -1
 		}
-		sublife =[(attacker.TotalHP / 4).floor, 1].max
+		sublife =[Math.Floor(attacker.TotalHP / 4), 1].max
 		if (attacker.HP<=sublife){
 		  //battle.pbDisplay(_INTL("It was too weak to make a substitute!"))
 		  return -1  
 		}
-		attacker.pbReduceHP(sublife,false,false)
+		attacker.ReduceHP(sublife,false,false)
 
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
@@ -8611,7 +8611,7 @@ public class Function
 
 			//battle.pbDisplay(_INTL("{1} cut its own HP and laid a curse on {2}!",attacker.pbThis,opponent.pbThis(true)))
 			opponent.effects.Curse=true
-			attacker.pbReduceHP((attacker.TotalHP/2).floor)
+			attacker.ReduceHP(Math.Floor(attacker.TotalHP/2))
 		  }
 		else
 		  lowerspeed=attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)
@@ -8880,9 +8880,9 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed to swallow a thing!"))
 		  return -1
 		when 1
-		  hpgain=(attacker.TotalHP/4).floor
+		  hpgain= Math.Floor(attacker.TotalHP/4)
 		when 2
-		  hpgain=(attacker.TotalHP/2).floor
+		  hpgain= Math.Floor(attacker.TotalHP/2)
 		when 3
 		  hpgain=attacker.TotalHP
 		}
@@ -9983,7 +9983,7 @@ public class Function
 		}
 		if (!unmoved ||
 		   (!Settings.USENEWBATTLEMECHANICS &&
-		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor)){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate))){
 		  attacker.effects.ProtectRate=1
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -10030,7 +10030,7 @@ public class Function
 		  }
 		}
 		if (!unmoved ||
-		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate)){
 		  attacker.effects.ProtectRate= 1
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -10162,11 +10162,11 @@ public class Function
 		if (opponent.damagestate.CalcDamage>0){
 		  hpgain= (int)Math.Round(opponent.damagestate.HPLost*3/4)
 		  if (opponent.hasWorkingAbility(Abilities.LIQUIDOOZE)){
-			attacker.pbReduceHP(hpgain,true)
+			attacker.ReduceHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  else if attacker.effects.HealBlock==0
 
-			hpgain= (hpgain * 1.3f).floor if attacker.hasWorkingItem(Items.BIGROOT)
+			hpgain= Math.Floor(hpgain * 1.3f) if attacker.hasWorkingItem(Items.BIGROOT)
 
 			attacker.pbRecoverHP(hpgain,true)
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
