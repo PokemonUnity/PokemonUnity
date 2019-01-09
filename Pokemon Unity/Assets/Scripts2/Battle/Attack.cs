@@ -612,7 +612,7 @@ public class Function
 	public class PokeBattle_Move_014 : PokeBattle_Move
 	{
 		public object addlEffect
-		if (USENEWBATTLEMECHANICS) return 100;
+		if (Settings.USENEWBATTLEMECHANICS) return 100;
 		if (attacker.pokemon && attacker.pokemon.chatter){
 		  return attacker.pokemon.chatter.intensity*10/127
 		}
@@ -779,7 +779,7 @@ public class Function
 		  if (attacker.pbIsOpposing? (i.index) || i.isFainted()) continue; //next
 		   activepkmn.push(i.pokemonIndex)
 
-		  if (USENEWBATTLEMECHANICS && i.index!=attacker.index && ) continue; //next
+		  if (Settings.USENEWBATTLEMECHANICS && i.index!=attacker.index && ) continue; //next
 			 pbTypeImmunityByAbility(pbType(this.type, attacker, i), attacker, i)
 		  case i.status
 		  when Status.PARALYSIS
@@ -2080,7 +2080,7 @@ public class Function
 		if (!opponent.pbCanReduceStatStage? (PBStats::EVASION, attacker,true,self)) return -1;
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		increment=(USENEWBATTLEMECHANICS)? 2 : 1
+		increment=(Settings.USENEWBATTLEMECHANICS)? 2 : 1
 		ret=opponent.pbReduceStat(PBStats::EVASION, increment, attacker,false,self)
 		return ret? 0 : -1
 	  }
@@ -2088,7 +2088,7 @@ public class Function
 	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
 		if (opponent.pbCanReduceStatStage? (PBStats::EVASION, attacker,false,self)){
-		  increment=(USENEWBATTLEMECHANICS)? 2 : 1
+		  increment=(Settings.USENEWBATTLEMECHANICS)? 2 : 1
 		  opponent.pbReduceStat(PBStats::EVASION, increment, attacker,false,self)
 		}
 	  }
@@ -2115,7 +2115,7 @@ public class Function
 		opponent.OwnSide.StealthRock = false
 		opponent.OwnSide.StickyWeb   = false
 		opponent.OwnSide.ToxicSpikes = 0
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  opponent.pbOpposingSide.effects.Reflect     = 0
 
 		  opponent.pbOpposingSide.effects.LightScreen = 0
@@ -2152,7 +2152,7 @@ public class Function
 		opponent.OwnSide.StealthRock = false
 		opponent.OwnSide.StickyWeb   = false
 		opponent.OwnSide.ToxicSpikes = 0
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  opponent.pbOpposingSide.effects.Reflect     = 0
 
 		  opponent.pbOpposingSide.effects.LightScreen = 0
@@ -2773,7 +2773,7 @@ public class Function
 		   if (attacker.pbHasType? (i.type)) continue; //next
 		  if (!types.include? (i.type)){
 			 types.push(i.type)
-			break if USENEWBATTLEMECHANICS
+			break if Settings.USENEWBATTLEMECHANICS
 		  }
 
 		}
@@ -3157,7 +3157,7 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (attacker.ability==0 && opponent.ability==0) ||
-		   (attacker.ability==opponent.ability && !USENEWBATTLEMECHANICS) ||
+		   (attacker.ability==opponent.ability && !Settings.USENEWBATTLEMECHANICS) ||
 		   attacker.Ability == Abilities.ILLUSION ||
 		   opponent.Ability == Abilities.ILLUSION ||
 		   attacker.Ability == Abilities.MULTITYPE ||
@@ -4054,7 +4054,7 @@ public class Function
 		  }
 
 	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			if (USENEWBATTLEMECHANICS) return 60;
+			if (Settings.USENEWBATTLEMECHANICS) return 60;
 			hp = pbHiddenPower(attacker.iv)
 			return hp[1]
 		  }
@@ -4267,7 +4267,7 @@ public class Function
 			  if (isConst? (this.berry, PBItems, j)){
 				 ret = i
 
-				ret+=20 if USENEWBATTLEMECHANICS
+				ret+=20 if Settings.USENEWBATTLEMECHANICS
 				return ret
 			  }
 
@@ -4451,7 +4451,7 @@ public class Function
 	public class PokeBattle_Move_09D : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  if (this.battle.field.MudSportField>0){
 			//battle.pbDisplay(_INTL("But it failed!"))
 			return -1
@@ -4487,7 +4487,7 @@ public class Function
 	public class PokeBattle_Move_09E : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  if (this.battle.field.WaterSportField>0){
 			//battle.pbDisplay(_INTL("But it failed!"))
 			return -1
@@ -4695,7 +4695,7 @@ public class Function
 			opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,self)
 		  }
 		when PBEnvironment::Rock
-		  if (USENEWBATTLEMECHANICS){
+		  if (Settings.USENEWBATTLEMECHANICS){
 			if (opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,self)){
 			  opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,self)
 			}
@@ -4742,7 +4742,7 @@ public class Function
 		else
 		  case this.battle.environment
 		  when PBEnvironment::Grass, PBEnvironment::TallGrass
-			id = ((USENEWBATTLEMECHANICS) ? Moves.VINEWHIP : Moves.NEEDLEARM) || id
+			id = ((Settings.USENEWBATTLEMECHANICS) ? Moves.VINEWHIP : Moves.NEEDLEARM) || id
 
 		  when PBEnvironment::MovingWater; id=Moves.WATERPULSE
 		  when PBEnvironment::StillWater;  id=Moves.MUDSHOT
@@ -4926,7 +4926,7 @@ public class Function
 		  }
 		}
 		if (!unmoved ||
-		   (!USENEWBATTLEMECHANICS &&
+		   (!Settings.USENEWBATTLEMECHANICS &&
 		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor)){
 		  attacker.effects.ProtectRate=1
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -4978,7 +4978,7 @@ public class Function
 		  }
 		}
 		if (!unmoved ||
-		   (!USENEWBATTLEMECHANICS &&
+		   (!Settings.USENEWBATTLEMECHANICS &&
 		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor)){
 		  attacker.effects.ProtectRate=1
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -5063,7 +5063,7 @@ public class Function
 		   0x117,   // Follow Me, Rage Powder
 		   0x158    // Belch
 		]
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  blacklist+=[
 			 0xEB,    // Roar, Whirlwind
 			 // Two-turn attacks
@@ -5173,23 +5173,23 @@ public class Function
 		move=Moves.TRIATTACK
 		case this.battle.environment
 		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
-		  move = ((USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB) || move
+		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB) || move
 
 		when PBEnvironment::MovingWater; move=Moves.HYDROPUMP
 		when PBEnvironment::StillWater;  move=Moves.MUDBOMB
 		when PBEnvironment::Underwater;  move=Moves.HYDROPUMP
 		when PBEnvironment::Cave
-		  move = ((USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE) || move
+		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE) || move
 
 		when PBEnvironment::Rock
 
-		  move= ((USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.ROCKSLIDE) || move
+		  move= ((Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.ROCKSLIDE) || move
 
 		when PBEnvironment::Sand
-		  move = ((USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.EARTHQUAKE) || move
+		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.EARTHQUAKE) || move
 		// Ice tiles in Gen 6 should be Ice Beam
 		when PBEnvironment::Snow
-		  move = ((USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM) || move
+		  move = ((Settings.USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM) || move
 
 		when PBEnvironment::Volcano; move=Moves.LAVAPLUME
 	when PBEnvironment::Graveyard;   move=Moves.SHADOWBALL
@@ -5211,7 +5211,7 @@ public class Function
 
 		movename=PBMoves.getName(move)
 		//battle.pbDisplay(_INTL("{1} turned into {2}!", thismovename, movename))
-		target=(USENEWBATTLEMECHANICS && opponent) ? opponent.index : -1
+		target=(Settings.USENEWBATTLEMECHANICS && opponent) ? opponent.index : -1
 		attacker.pbUseMoveSimple(move,-1, target)
 		return 0
 	  }
@@ -5329,7 +5329,7 @@ public class Function
 		   0x14D,   // Phantom Force
 		   0x158    // Belch
 		]
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  blacklist+=[
 			 // Two-turn attacks
 			 0xC3,    // Razor Wind
@@ -5352,7 +5352,7 @@ public class Function
 
 		party=this.battle.pbParty(attacker.index) // NOTE: pbParty is common to both allies in multi battles
 		for (int i = 0; i < party.length; i++){ 
-		  if (i!=attacker.pokemonIndex && party[i] && !(USENEWBATTLEMECHANICS && party[i].egg?)){
+		  if (i!=attacker.pokemonIndex && party[i] && !(Settings.USENEWBATTLEMECHANICS && party[i].egg?)){
 			foreach (var i in party[i].moves){ 
 			  if (isConst? (j.type, PBTypes,:SHADOW)) continue; //next
 			  if (j.id==0) continue; //next
@@ -5555,7 +5555,7 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects.Taunt>0 ||
-		   (USENEWBATTLEMECHANICS &&
+		   (Settings.USENEWBATTLEMECHANICS &&
 		   !attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS))){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
@@ -6273,7 +6273,7 @@ public class Function
 		 ret = true if opponent.effects.TwoTurnAttack>0
 		ret=true if opponent.effects.SkyDrop && attacker.effects.TwoTurnAttack>0
 		ret=true if !opponent.pbIsOpposing? (attacker.index)
-		 ret = true if USENEWBATTLEMECHANICS && opponent.weight(attacker)>=2000
+		 ret = true if Settings.USENEWBATTLEMECHANICS && opponent.weight(attacker)>=2000
 		return ret
 	  }
 
@@ -6318,7 +6318,7 @@ public class Function
 		  if (opponent.effects.MultiTurn==0){
 			opponent.effects.MultiTurn=5+this.battle.pbRandom(2)
 			if (attacker.hasWorkingItem(Items.GRIPCLAW)){
-			  opponent.effects.MultiTurn=(USENEWBATTLEMECHANICS)? 8 : 6
+			  opponent.effects.MultiTurn=(Settings.USENEWBATTLEMECHANICS)? 8 : 6
 			}
 			opponent.effects.MultiTurnAttack= this.id
 
@@ -6365,7 +6365,7 @@ public class Function
 		  if (opponent.effects.MultiTurn==0){
 			opponent.effects.MultiTurn=5+this.battle.pbRandom(2)
 			if (attacker.hasWorkingItem(Items.GRIPCLAW)){
-			  opponent.effects.MultiTurn=(USENEWBATTLEMECHANICS)? 8 : 6
+			  opponent.effects.MultiTurn=(Settings.USENEWBATTLEMECHANICS)? 8 : 6
 			}
 			opponent.effects.MultiTurnAttack= this.id
 
@@ -6518,7 +6518,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if (USENEWBATTLEMECHANICS){
+		if (Settings.USENEWBATTLEMECHANICS){
 		  typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent)
 		  if (typemod==0){
 			//battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
@@ -6765,7 +6765,7 @@ public class Function
 	public class PokeBattle_Move_0DD : PokeBattle_Move
 	{
 		public object isHealingMove?
-		return USENEWBATTLEMECHANICS
+		return Settings.USENEWBATTLEMECHANICS
 	  }
 
 	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
@@ -6796,7 +6796,7 @@ public class Function
 	public class PokeBattle_Move_0DE : PokeBattle_Move
 	{
 		public object isHealingMove?
-		return USENEWBATTLEMECHANICS
+		return Settings.USENEWBATTLEMECHANICS
 	  }
 
 	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
@@ -7269,7 +7269,7 @@ public class Function
 		  if (opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute &&
 			 !opponent.isFainted()){
 			if (opponent.effects.MeanLook<0 &&
-			   (!USENEWBATTLEMECHANICS || !opponent.hasType(Types.GHOST))){
+			   (!Settings.USENEWBATTLEMECHANICS || !opponent.hasType(Types.GHOST))){
 			  opponent.effects.MeanLook=attacker.index
 			  //battle.pbDisplay(_INTL("{1} can no longer escape!", opponent.pbThis))
 			}
@@ -7281,7 +7281,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
-		if (USENEWBATTLEMECHANICS && opponent.hasType(Types.GHOST)){
+		if (Settings.USENEWBATTLEMECHANICS && opponent.hasType(Types.GHOST)){
 		  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 		  return -1
 		}
@@ -7319,7 +7319,7 @@ public class Function
 	  }
 
 	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
-		if (USENEWBATTLEMECHANICS &&
+		if (Settings.USENEWBATTLEMECHANICS &&
 		   !this.battle.pbIsUnlosableItem(opponent, opponent.Item)){
 		   // Still boosts damage even if opponent has Sticky Hold
 		  return (int)Math.Round(damagemult*1.5f)
@@ -7527,7 +7527,7 @@ public class Function
 		ret=super(attacker, opponent, hitnum, alltargets, showanimation)
 		if (!attacker.isFainted() && opponent.damagestate.CalcDamage>0 &&
 		   !opponent.damagestate.Substitute &&
-		   (pbIsBerry?(opponent.Item) || (USENEWBATTLEMECHANICS && pbIsGem? (opponent.Item)))){
+		   (pbIsBerry?(opponent.Item) || (Settings.USENEWBATTLEMECHANICS && pbIsGem? (opponent.Item)))){
 		  itemname=PBItems.getName(opponent.Item)
 		  opponent.pbConsumeItem(false,false)
 
@@ -9796,7 +9796,7 @@ public class Function
 	  }
 
 	  public object tramplesMinimize? (param=1){
-		if (param==1 && USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
 		return false
 	  }
@@ -9982,7 +9982,7 @@ public class Function
 		  }
 		}
 		if (!unmoved ||
-		   (!USENEWBATTLEMECHANICS &&
+		   (!Settings.USENEWBATTLEMECHANICS &&
 		   this.battle.pbRandom(65536)>=(65536/attacker.effects.ProtectRate).floor)){
 		  attacker.effects.ProtectRate=1
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -10086,7 +10086,7 @@ public class Function
 	  }
 
 	  public object tramplesMinimize? (param=1){
-		if (param==1 && USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
 		return false
 	  }
@@ -10154,7 +10154,7 @@ public class Function
 	public class PokeBattle_Move_14F : PokeBattle_Move
 	{
 		public object isHealingMove?
-		return USENEWBATTLEMECHANICS
+		return Settings.USENEWBATTLEMECHANICS
 	  }
 
 	  public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
