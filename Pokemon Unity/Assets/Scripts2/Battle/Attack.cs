@@ -337,7 +337,7 @@ public class Function
 		}
 	  }
 
-	  public object pbModifyBaseAccuracy(baseaccuracy, attacker, opponent){
+	  public object pbModifyBaseAccuracy(baseaccuracy, Battle.Battler attacker, Battle.Battler opponent){
 		case @battle.pbWeather
 		when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
 		  return 0
@@ -472,7 +472,7 @@ public class Function
 		}
 	  }
 
-	  public object pbModifyBaseAccuracy(baseaccuracy, attacker, opponent){
+	  public object pbModifyBaseAccuracy(baseaccuracy, Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.pbWeather==PBWeather::HAIL){
 		  return 0
 		}
@@ -656,7 +656,7 @@ public class Function
 		}
 	  }
 
-	  public object pbModifyBaseAccuracy(baseaccuracy, attacker, opponent){
+	  public object pbModifyBaseAccuracy(baseaccuracy, Battle.Battler attacker, Battle.Battler opponent){
 		case @battle.pbWeather
 		when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
 		  return 0
@@ -1987,7 +1987,7 @@ public class Function
 		}
 	  }
 
-	  public object pbModifyDamage(damagemult, attacker, opponent){
+	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (id == Moves.BULLDOZE &&){
 		   @battle.field.GrassyTerrain>0
 		  return (int)Math.Round(damagemult/2.0f)
@@ -3411,7 +3411,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_071 : PokeBattle_Move
 	{
-		public object pbAddTarget(targets, attacker){
+		public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.effects.CounterTarget>=0 &&){
 		   attacker.pbIsOpposing? (attacker.effects.CounterTarget)
 		  if (!attacker.pbAddTarget(targets, @battle.battlers[attacker.effects.CounterTarget])){
@@ -3438,7 +3438,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_072 : PokeBattle_Move
 	{
-		public object pbAddTarget(targets, attacker){
+		public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.effects.MirrorCoatTarget>=0 && ){
 		   attacker.pbIsOpposing? (attacker.effects.MirrorCoatTarget)
 		  if (!attacker.pbAddTarget(targets, @battle.battlers[attacker.effects.MirrorCoatTarget])){
@@ -3466,7 +3466,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_073 : PokeBattle_Move
 	{
-		public object pbAddTarget(targets, attacker){
+		public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.lastAttacker.length>0){
 		  lastattacker=attacker.lastAttacker[attacker.lastAttacker.length - 1]
 		  if (lastattacker>=0 && attacker.pbIsOpposing? (lastattacker)){
@@ -3518,7 +3518,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_075 : PokeBattle_Move
 	{
-		public object pbModifyDamage(damagemult, attacker, opponent){
+		public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCB // Dive){
 		  return (int)Math.Round(damagemult*2.0f)
 		}
@@ -3535,7 +3535,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_076 : PokeBattle_Move
 	{
-		public object pbModifyDamage(damagemult, attacker, opponent){
+		public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 
 		ret=damagemult
 		if (PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCA // Dig){
@@ -3556,7 +3556,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_077 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xC9 || // Fly){
 		   PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCC || // Bounce
 		   PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCE || // Sky Drop
@@ -3576,7 +3576,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_078 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xC9 || // Fly){
 		   PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCC || // Bounce
 		   PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCE || // Sky Drop
@@ -3599,7 +3599,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_079 : PokeBattle_Move
 	{
-		public object pbBaseDamageMultiplier(damagemult, attacker, opponent){
+		public object pbBaseDamageMultiplier(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.field.FusionBolt){
 		  @battle.field.FusionBolt= false
 
@@ -3619,7 +3619,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (opponent.damagestate.Critical || @doubled){
 		  return super(id, attacker, opponent,1, alltargets, showanimation) // Charged anim
 		}
@@ -3634,7 +3634,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_07A : PokeBattle_Move
 	{
-		public object pbBaseDamageMultiplier(damagemult, attacker, opponent){
+		public object pbBaseDamageMultiplier(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (battle.field.FusionFlare){
 		  @battle.field.FusionFlare= false
 		  return (int)Math.Round(damagemult*2.0f)
@@ -3651,7 +3651,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (opponent.damagestate.Critical || @doubled){
 		  return super(id, attacker, opponent,1, alltargets, showanimation) // Charged anim
 		}
@@ -3666,7 +3666,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_07B : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.status==PBStatuses::POISON &&){
 		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
 		  return basedmg*2
@@ -3683,7 +3683,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_07C : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.status==PBStatuses::PARALYSIS &&){
 		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
 		  return basedmg*2
@@ -3707,7 +3707,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_07D : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.status==PBStatuses::SLEEP &&){
 		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
 		  return basedmg*2
@@ -3731,7 +3731,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_07E : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (attacker.status==PBStatuses::POISON ||){
 		   attacker.status==PBStatuses::BURN ||
 		   attacker.status==PBStatuses::PARALYSIS
@@ -3748,7 +3748,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_07F : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.status>0 &&){
 		   (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker))
 		  return basedmg*2
@@ -3764,7 +3764,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_080 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.hp<=opponent.TotalHP/2){
 		  return basedmg*2
 		}
@@ -3780,7 +3780,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_081 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (attacker.lastHPLost>0 && attacker.lastAttacker.include? (opponent.index)){
 		  return basedmg*2
 		}
@@ -3795,7 +3795,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_082 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.tookDamage){
 		  return basedmg*2
 		}
@@ -3811,7 +3811,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_083 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		ret=basedmg
 		attacker.OwnSide.Round.times do
@@ -3851,7 +3851,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_084 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.choices[opponent.index][0]!=1 || // Didn){'t choose a move
 		   opponent.hasMovedThisRound? // Used a move already
 		  return basedmg*2
@@ -3867,9 +3867,9 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_085 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
-		if (attacker.OwnSide.LastRoundFainted>=0 &&){
-		   attacker.OwnSide.LastRoundFainted==@battle.turncount-1
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
+		if (attacker.OwnSide.LastRoundFainted>=0 &&
+		   attacker.OwnSide.LastRoundFainted==@battle.turncount-1){
 		  return basedmg*2
 		}
 		return basedmg
@@ -3883,7 +3883,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_086 : PokeBattle_Move
 	{
-		public object pbBaseDamageMultiplier(damagemult, attacker, opponent){
+		public object pbBaseDamageMultiplier(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (attacker.item==0){
 		  return (int)Math.Round(damagemult*2.0f)
 		}
@@ -3898,7 +3898,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_087 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.pbWeather!=0){
 			return basedmg * 2;
 		}
@@ -3935,7 +3935,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_088 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.switching){
 		  return basedmg*2
 		}
@@ -3955,7 +3955,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_089 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			return [(attacker.happiness * 2 / 5).floor,1].max
 		}
 	}
@@ -3967,7 +3967,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_08A : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			return [((255 - attacker.happiness) * 2 / 5).floor,1].max
 		}
 	}
@@ -3979,7 +3979,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_08B : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			return [(150 * attacker.hp / attacker.TotalHP).floor,1].max
 		}
 	}
@@ -3991,7 +3991,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_08C : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			return [(120 * opponent.hp / opponent.TotalHP).floor,1].max
 		}
 	}
@@ -4003,7 +4003,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_08D : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			return [[(25 * opponent.pbSpeed / attacker.pbSpeed).floor,150].min,1].max
 		}
 	}
@@ -4016,7 +4016,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_08E : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		mult=1
 		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
@@ -4035,7 +4035,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_08F : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			mult=3
 			foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
 					  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
@@ -4052,14 +4052,14 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_090 : PokeBattle_Move
 	{
-		public object pbModifyType(type, attacker, opponent){
+		public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
 			hp=pbHiddenPower(attacker.iv)
 
 			type=hp[0]
 			return type
 		  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			if (USENEWBATTLEMECHANICS) return 60;
 			hp = pbHiddenPower(attacker.iv)
 			return hp[1]
@@ -4098,7 +4098,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_091 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		basedmg=basedmg<<(attacker.effects.FuryCutter-1) // can be 1 to 4
 		return basedmg
@@ -4113,7 +4113,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_092 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		basedmg*=attacker.OwnSide.EchoedVoiceCounter // can be 1 to 5
 		return basedmg
@@ -4151,7 +4151,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent)
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent)
 	  {
 		@forcedamage=true
 		return @calcbasedmg
@@ -4213,7 +4213,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		ret=@calcbasedmg
 		if (PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCA // Dig){
@@ -4247,7 +4247,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		damagearray={
 		   60 => [:CHERIBERRY,:CHESTOBERRY,:PECHABERRY,:RAWSTBERRY,:ASPEARBERRY,
@@ -4284,7 +4284,7 @@ public class Function
 		return 1
 	  }
 
-	  public object pbModifyType(type, attacker, opponent){
+	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
 
 		type=Types.NORMAL
 		typearray={
@@ -4336,7 +4336,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_097 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		dmgs =[200, 80, 60, 50, 40]
 
 		ppleft=[@pp,4].min   // PP is reduced before the move is used
@@ -4352,7 +4352,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_098 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		n = (48 * attacker.hp / attacker.TotalHP).floor
 
 		ret=20
@@ -4376,7 +4376,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_099 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		n = ([attacker.pbSpeed, 1].max /[opponent.pbSpeed, 1].max).floor
 
 		ret=60
@@ -4394,7 +4394,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09A : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		weight = opponent.weight(attacker)
 
 		ret=20
@@ -4414,7 +4414,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09B : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		n = (attacker.weight / opponent.weight(attacker)).floor
 
 		ret=40
@@ -4527,7 +4527,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09F : PokeBattle_Move
 	{
-		public object pbModifyType(type, attacker, opponent){
+		public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
 		if (id == Moves.JUDGMENT){
 		  if (isConst? (attacker.item, PBItems,:FISTPLATE)) return (Types.FIGHTING);
 		  if (isConst? (attacker.item, PBItems,:SKYPLATE)) return (Types.FLYING)  ;
@@ -4555,7 +4555,7 @@ public class Function
 		return (Types.NORMAL)
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (id == Moves.TECHNOBLAST){
 		  anim = 0
 		  anim = 1 if isConst? (pbType(@type, attacker, opponent),PBTypes,:ELECTRIC)
@@ -4736,7 +4736,7 @@ public class Function
 		}
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		id=Moves.BODYSLAM
 		if (@battle.field.ElectricTerrain>0){
@@ -5742,7 +5742,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		ret=@calcbasedmg
 		@calcbasedmg+=basedmg
@@ -5808,7 +5808,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		party=@battle.pbParty(attacker.index)
 		atk = party[@participants[0]].baseStats[1]
@@ -5890,7 +5890,7 @@ public class Function
 		return attacker.effects.TwoTurnAttack==0
 	  }
 
-	  public object pbBaseDamageMultiplier(damagemult, attacker, opponent){
+	  public object pbBaseDamageMultiplier(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (@battle.pbWeather!=0 &&){
 		   @battle.pbWeather!=PBWeather::SUNNYDAY &&
 		   @battle.pbWeather!=PBWeather::HARSHSUN
@@ -6300,7 +6300,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbTypeModifier(type, attacker, opponent){
+	  public object pbTypeModifier(type, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.hasType(Types.FLYING)) return 0;
 		if (!attacker.hasMoldBreaker &&
 		   opponent.hasWorkingAbility(Abilities.LEVITATE) && 
@@ -6383,7 +6383,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbModifyDamage(damagemult, attacker, opponent){
+	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCB // Dive){
 		  return (int)Math.Round(damagemult*2.0f)
 		}
@@ -6455,7 +6455,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D3 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		shift = (4 - attacker.effects.Rollout) // from 0 through 4, 0 is most powerful
 		shift+=1 if attacker.effects.DefenseCurl
 		basedmg = basedmg << shift
@@ -6508,7 +6508,7 @@ public class Function
 		}
 	  }
 
-	  public object pbAddTarget(targets, attacker){
+	  public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.effects.BideTarget>=0){
 		  if (!attacker.pbAddTarget(targets, @battle.battlers[attacker.effects.BideTarget])){
 			attacker.pbRandomTarget(targets)
@@ -6873,7 +6873,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		super(id, attacker, opponent, hitnum, alltargets, showanimation)
 		if (!attacker.isFainted()){
@@ -6902,7 +6902,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		super(id, attacker, opponent, hitnum, alltargets, showanimation)
 		if (!attacker.isFainted()){
@@ -7324,7 +7324,7 @@ public class Function
 		}
 	  }
 
-	  public object pbModifyDamage(damagemult, attacker, opponent){
+	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (USENEWBATTLEMECHANICS &&){
 		   !@battle.pbIsUnlosableItem(opponent, opponent.item)
 		   // Still boosts damage even if opponent has Sticky Hold
@@ -7674,7 +7674,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (pbIsBerry? (attacker.item)) return 10;
 		if (pbIsMegaStone? (attacker.item)) return 80;
 		foreach (var i in flingarray.keys){ 
@@ -8187,14 +8187,14 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (@doubledamage){
 		  return basedmg*2
 		}
 		return basedmg
 	  }
 
-	  public object pbModifyType(type, attacker, opponent){
+	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
 		if (@overridetype){
 		  type = Types.FIRE
 
@@ -8264,7 +8264,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@overridetype){
 		  return super(Moves.FIREPLEDGE,attacker,opponent,hitnum,alltargets,showanimation)
 		}
@@ -8294,14 +8294,14 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (@doubledamage){
 		  return basedmg*2
 		}
 		return basedmg
 	  }
 
-	  public object pbModifyType(type, attacker, opponent){
+	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
 		if (@overridetype){
 		  type = Types.WATER
 
@@ -8371,7 +8371,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@overridetype){
 		  return super(Moves.WATERPLEDGE,attacker,opponent,hitnum,alltargets,showanimation)
 		}
@@ -8401,14 +8401,14 @@ public class Function
 		return true
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (@doubledamage){
 		  return basedmg*2
 		}
 		return basedmg
 	  }
 
-	  public object pbModifyType(type, attacker, opponent){
+	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
 		if (@overridetype){
 		  type = Types.GRASS
 
@@ -8478,7 +8478,7 @@ public class Function
 		return super(attacker, opponent, hitnum, alltargets, showanimation)
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@overridetype){
 		  return super(Moves.GRASSPLEDGE,attacker,opponent,hitnum,alltargets,showanimation)
 		}
@@ -8540,7 +8540,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (attacker.pbOpposingSide.effects.Reflect>0 ||){
 		   attacker.pbOpposingSide.effects.LightScreen>0
 		  return super(id, attacker, opponent,1, alltargets, showanimation) // Wall-breaking anim
@@ -8782,7 +8782,7 @@ public class Function
 		return 0
 	  }
 
-	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@battle.futuresight){
 		  return super(id, attacker, opponent,1, alltargets, showanimation) // Hit opponent anim
 		}
@@ -8835,7 +8835,7 @@ public class Function
 		return (attacker.effects.Stockpile==0)
 	  }
 
-	  public object pbBaseDamage(basedmg, attacker, opponent){
+	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		return 100* attacker.effects.Stockpile
 	  }
 
@@ -9098,7 +9098,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_11C : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, attacker, opponent){
+		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if(PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xC9 || // Fly
 		   PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCC || // Bounce
 		   PBMoveData.new(opponent.effects.TwoTurnAttack).function==0xCE || // Sky Drop
@@ -9791,7 +9791,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_144 : PokeBattle_Move
 	{
-		public object pbModifyDamage(damagemult, attacker, opponent){
+		public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		type = Types.FLYING || -1
 		if (type>=0){
 		  mult=PBTypes.getCombinedEffectiveness(type,
