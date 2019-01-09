@@ -117,7 +117,7 @@ public class Function
 		public bool IsPhysical(){ return true; }
 		public bool IsSpecial(){ return false; }
 
-		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects)
+		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects)
 		{
 			if (!attacker.isFainted() && turneffects.TotalDamage>0)
 			{
@@ -194,7 +194,7 @@ public class Function
 		}
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (id == Moves.RELIC_SONG){
 		  if (attacker.Species == Pokemons.MELOETTA &&
 			 !attacker.effects.Transform &&
@@ -3685,7 +3685,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!opponent.isFainted() && opponent.damagestate.CalcDamage>0 &&
 		   !opponent.damagestate.Substitute && opponent.Status==Status.PARALYSIS){
 		  opponent.pbCureStatus
@@ -3709,7 +3709,7 @@ public class Function
 		return basedmg
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!opponent.isFainted() && opponent.damagestate.CalcDamage>0 &&
 		   !opponent.damagestate.Substitute && opponent.Status==Status.SLEEP){
 		  opponent.pbCureStatus
@@ -4316,7 +4316,7 @@ public class Function
 		return type
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (turneffects.TotalDamage>0){
 		  attacker.pbConsumeItem
 		}
@@ -7190,7 +7190,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0EC : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute && 
 		   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTIONCUPS)) &&
@@ -7301,7 +7301,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F0 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
@@ -7336,7 +7336,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F1 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
@@ -7479,7 +7479,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.Item) &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
@@ -7822,7 +7822,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
@@ -7844,7 +7844,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
@@ -7867,7 +7867,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
@@ -7890,7 +7890,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
@@ -7920,7 +7920,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGICGUARD)){
@@ -8700,11 +8700,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_110 : PokeBattle_Move
 	{
-		public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 		  if (attacker.effects.MultiTurn>0){
-			mtattack=PBMoves.getName(attacker.effects.MultiTurnAttack)
-			mtuser = this.battle.battlers[attacker.effects.MultiTurnUser]
+			string mtattack=PBMoves.getName(attacker.effects.MultiTurnAttack)
+			Battle.Battler mtuser = this.battle.battlers[attacker.effects.MultiTurnUser]
 
 			//battle.pbDisplay(_INTL("{1} got free of {2}'s {3}!",attacker.pbThis,mtuser.pbThis(true),mtattack))
 			attacker.effects.MultiTurn=0
@@ -8833,7 +8833,7 @@ public class Function
 		return 100* attacker.effects.Stockpile
 	  }
 
-	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
+	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
 
 		  showanim= true
