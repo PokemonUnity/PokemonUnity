@@ -338,10 +338,10 @@ public class Function
 	  }
 
 	  public object pbModifyBaseAccuracy(baseaccuracy, Battle.Battler attacker, Battle.Battler opponent){
-		case this.battle.pbWeather
-		when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
+		case this.battle.Weather
+		when Weather.RAINDANCE, Weather.HEAVYRAIN
 		  return 0
-		when PBWeather::SUNNYDAY, PBWeather::HARSHSUN
+		when Weather.SUNNYDAY, Weather.HARSHSUN
 		  return 50
 
 		}
@@ -473,7 +473,7 @@ public class Function
 	  }
 
 	  public object pbModifyBaseAccuracy(baseaccuracy, Battle.Battler attacker, Battle.Battler opponent){
-		if (this.battle.pbWeather==PBWeather::HAIL){
+		if (this.battle.Weather==Weather.HAIL){
 		  return 0
 		}
 		return baseaccuracy
@@ -657,10 +657,10 @@ public class Function
 	  }
 
 	  public object pbModifyBaseAccuracy(baseaccuracy, Battle.Battler attacker, Battle.Battler opponent){
-		case this.battle.pbWeather
-		when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
+		case this.battle.Weather
+		when Weather.RAINDANCE, Weather.HEAVYRAIN
 		  return 0
-		when PBWeather::SUNNYDAY, PBWeather::HARSHSUN
+		when Weather.SUNNYDAY, Weather.HARSHSUN
 		  return 50
 
 		}
@@ -1219,8 +1219,8 @@ public class Function
 	public class PokeBattle_Move_028 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&){
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)
+		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,self) &&
+		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,self)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1
 		}
@@ -1228,8 +1228,8 @@ public class Function
 
 		showanim=true
 		increment=1
-		if (this.battle.pbWeather==PBWeather::SUNNYDAY ||){
-		   this.battle.pbWeather==PBWeather::HARSHSUN
+		if (this.battle.Weather==Weather.SUNNYDAY ||
+		   this.battle.Weather==Weather.HARSHSUN){
 		  increment = 2
 
 		}
@@ -3899,7 +3899,7 @@ public class Function
 	public class PokeBattle_Move_087 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (this.battle.pbWeather!=0){
+		if (this.battle.Weather!=0){
 			return basedmg * 2;
 		}
 		return basedmg;
@@ -3908,17 +3908,17 @@ public class Function
 	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 
 		type = Types.NORMAL;
-		case this.battle.pbWeather
-		when PBWeather::SUNNYDAY, PBWeather::HARSHSUN
+		case this.battle.Weather
+		when Weather.SUNNYDAY, Weather.HARSHSUN
 		  type = (Types.FIRE)
 
-		when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
+		when Weather.RAINDANCE, Weather.HEAVYRAIN
 		  type = (Types.WATER)
 
-		when PBWeather::SANDSTORM
+		when Weather.SANDSTORM
 		  type = (Types.ROCK)
 
-		when PBWeather::HAIL
+		when Weather.HAIL
 		  type = (Types.ICE)
 
 		}
@@ -5878,8 +5878,8 @@ public class Function
 		public object pbTwoTurnAttack(Battle.Battler attacker)
 		this.immediate = false; this.sunny=false
 		if (attacker.effects.TwoTurnAttack==0){
-		  if (this.battle.pbWeather==PBWeather::SUNNYDAY ||){
-			 this.battle.pbWeather==PBWeather::HARSHSUN
+		  if (this.battle.Weather==Weather.SUNNYDAY ||){
+			 this.battle.Weather==Weather.HARSHSUN
 			this.immediate = true; this.sunny=true
 		  }
 		}
@@ -5891,9 +5891,9 @@ public class Function
 	  }
 
 	  public object pbBaseDamageMultiplier(damagemult, Battle.Battler attacker, Battle.Battler opponent){
-		if (this.battle.pbWeather!=0 &&){
-		   this.battle.pbWeather!=PBWeather::SUNNYDAY &&
-		   this.battle.pbWeather!=PBWeather::HARSHSUN
+		if (this.battle.Weather!=0 &&){
+		   this.battle.Weather!=Weather.SUNNYDAY &&
+		   this.battle.Weather!=Weather.HARSHSUN
 		  return (int)Math.Round(damagemult*0.5f)
 		}
 		return damagemult
@@ -6631,11 +6631,11 @@ public class Function
 		  return -1
 		}
 		hpgain = 0
-		if (this.battle.pbWeather==PBWeather::SUNNYDAY ||){
-		   this.battle.pbWeather==PBWeather::HARSHSUN
+		if (this.battle.Weather==Weather.SUNNYDAY ||){
+		   this.battle.Weather==Weather.HARSHSUN
 		  hpgain = (attacker.TotalHP * 2 / 3).floor
 
-		else if this.battle.pbWeather!=0
+		else if this.battle.Weather!=0
 		  hpgain= (attacker.TotalHP / 4).floor
 		else
 
@@ -7953,25 +7953,25 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case this.battle.weather
-		when PBWeather::HEAVYRAIN
+		when Weather.HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1
-		when PBWeather::HARSHSUN
+		when Weather.HARSHSUN
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1
-		when PBWeather::STRONGWINDS
+		when Weather.STRONGWINDS
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1
-		when PBWeather::SUNNYDAY
+		when Weather.SUNNYDAY
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		this.battle.weather=PBWeather::SUNNYDAY
+		this.battle.weather=Weather.SUNNYDAY
 		this.battle.weatherduration=5
 		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.HEATROCK)
 
@@ -7990,25 +7990,25 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case this.battle.weather
-		when PBWeather::HEAVYRAIN
+		when Weather.HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1
-		when PBWeather::HARSHSUN
+		when Weather.HARSHSUN
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1
-		when PBWeather::STRONGWINDS
+		when Weather.STRONGWINDS
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1
-		when PBWeather::RAINDANCE
+		when Weather.RAINDANCE
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		this.battle.weather=PBWeather::RAINDANCE
+		this.battle.weather=Weather.RAINDANCE
 		this.battle.weatherduration=5
 		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.DAMPROCK)
 
@@ -8027,25 +8027,25 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case this.battle.Weather
-		when PBWeather::HEAVYRAIN
+		when Weather.HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1
-		when PBWeather::HARSHSUN
+		when Weather.HARSHSUN
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1
-		when PBWeather::STRONGWINDS
+		when Weather.STRONGWINDS
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1
-		when PBWeather::SANDSTORM
+		when Weather.SANDSTORM
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		this.battle.weather=PBWeather::SANDSTORM
+		this.battle.weather=Weather.SANDSTORM
 		this.battle.weatherduration=5
 		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.SMOOTHROCK)
 
@@ -8064,25 +8064,25 @@ public class Function
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		case this.battle.weather
-		when PBWeather::HEAVYRAIN
+		when Weather.HEAVYRAIN
 		  //battle.pbDisplay(_INTL("There is no relief from this heavy rain!"))
 		  return -1
-		when PBWeather::HARSHSUN
+		when Weather.HARSHSUN
 
 		  //battle.pbDisplay(_INTL("The extremely harsh sunlight was not lessened at all!"))
 		  return -1
-		when PBWeather::STRONGWINDS
+		when Weather.STRONGWINDS
 
 		  //battle.pbDisplay(_INTL("The mysterious air current blows on regardless!"))
 		  return -1
-		when PBWeather::HAIL
+		when Weather.HAIL
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation)
 
-		this.battle.weather=PBWeather::HAIL
+		this.battle.weather=Weather.HAIL
 		this.battle.weatherduration=5
 		this.battle.weatherduration= 8 if attacker.hasWorkingItem(Items.ICYROCK)
 
