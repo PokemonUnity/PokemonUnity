@@ -4738,31 +4738,31 @@ public class Function
 
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		id=getConst(PBMoves,:BODYSLAM)
+		id=Moves.BODYSLAM
 		if (@battle.field.effects[PBEffects::ElectricTerrain]>0){
-		  id=getConst(PBMoves,:THUNDERSHOCK) || id
+		  id=Moves.THUNDERSHOCK || id
 		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  id=getConst(PBMoves,:VINEWHIP) || id
+		  id=Moves.VINEWHIP || id
 		else if @battle.field.effects[PBEffects::MistyTerrain]>0
-		  id=getConst(PBMoves,:FAIRYWIND) || id
+		  id=Moves.FAIRYWIND || id
 		else
 		  case @battle.environment
 		  when PBEnvironment::Grass, PBEnvironment::TallGrass
-			id = ((USENEWBATTLEMECHANICS) ? getConst(PBMoves,:VINEWHIP) : getConst(PBMoves,:NEEDLEARM)) || id
+			id = ((USENEWBATTLEMECHANICS) ? Moves.VINEWHIP : Moves.NEEDLEARM) || id
 
-		  when PBEnvironment::MovingWater; id=getConst(PBMoves,:WATERPULSE) || id
-		  when PBEnvironment::StillWater;  id=getConst(PBMoves,:MUDSHOT) || id
-		  when PBEnvironment::Underwater;  id=getConst(PBMoves,:WATERPULSE) || id
-		  when PBEnvironment::Cave;        id=getConst(PBMoves,:ROCKTHROW) || id
-		  when PBEnvironment::Rock;        id=getConst(PBMoves,:MUDSLAP) || id
-		  when PBEnvironment::Sand;        id=getConst(PBMoves,:MUDSLAP) || id
-		  when PBEnvironment::Forest;      id=getConst(PBMoves,:RAZORLEAF) || id
-	/// Ice tiles in Gen 6 should be Ice Shard
-		  when PBEnvironment::Snow;        id=getConst(PBMoves,:AVALANCHE) || id
-		  when PBEnvironment::Volcano;     id=getConst(PBMoves,:INCINERATE) || id
-		  when PBEnvironment::Graveyard;   id=getConst(PBMoves,:SHADOWSNEAK) || id
-		  when PBEnvironment::Sky;         id=getConst(PBMoves,:GUST) || id
-		  when PBEnvironment::Space;       id=getConst(PBMoves,:SWIFT) || id
+		  when PBEnvironment::MovingWater; id=Moves.WATERPULSE || id
+		  when PBEnvironment::StillWater;  id=Moves.MUDSHOT || id
+		  when PBEnvironment::Underwater;  id=Moves.WATERPULSE || id
+		  when PBEnvironment::Cave;        id=Moves.ROCKTHROW || id
+		  when PBEnvironment::Rock;        id=Moves.MUDSLAP || id
+		  when PBEnvironment::Sand;        id=Moves.MUDSLAP || id
+		  when PBEnvironment::Forest;      id=Moves.RAZORLEAF || id
+		// Ice tiles in Gen 6 should be Ice Shard
+		  when PBEnvironment::Snow;        id=Moves.AVALANCHE || id
+		  when PBEnvironment::Volcano;     id=Moves.INCINERATE || id
+		  when PBEnvironment::Graveyard;   id=Moves.SHADOWSNEAK || id
+		  when PBEnvironment::Sky;         id=Moves.GUST || id
+		  when PBEnvironment::Space;       id=Moves.SWIFT || id
 		  }
 
 		}
@@ -5176,38 +5176,38 @@ public class Function
 	public class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		move=getConst(PBMoves,:TRIATTACK) || 0
+		move=Moves.TRIATTACK || 0
 		case @battle.environment
 		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
-		  move = ((USENEWBATTLEMECHANICS) ? getConst(PBMoves,:ENERGYBALL) : getConst(PBMoves,:SEEDBOMB)) || move
+		  move = ((USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB) || move
 
-		when PBEnvironment::MovingWater; move=getConst(PBMoves,:HYDROPUMP) || move
-		when PBEnvironment::StillWater;  move=getConst(PBMoves,:MUDBOMB) || move
-		when PBEnvironment::Underwater;  move=getConst(PBMoves,:HYDROPUMP) || move
+		when PBEnvironment::MovingWater; move=Moves.HYDROPUMP || move
+		when PBEnvironment::StillWater;  move=Moves.MUDBOMB || move
+		when PBEnvironment::Underwater;  move=Moves.HYDROPUMP || move
 		when PBEnvironment::Cave
-		  move = ((USENEWBATTLEMECHANICS) ? getConst(PBMoves,:POWERGEM) : getConst(PBMoves,:ROCKSLIDE)) || move
+		  move = ((USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE) || move
 
 		when PBEnvironment::Rock
 
-		  move= ((USENEWBATTLEMECHANICS) ? getConst(PBMoves,:EARTHPOWER) : getConst(PBMoves,:ROCKSLIDE)) || move
+		  move= ((USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.ROCKSLIDE) || move
 
 		when PBEnvironment::Sand
-		  move = ((USENEWBATTLEMECHANICS) ? getConst(PBMoves,:EARTHPOWER) : getConst(PBMoves,:EARTHQUAKE)) || move
+		  move = ((USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.EARTHQUAKE) || move
 		// Ice tiles in Gen 6 should be Ice Beam
 		when PBEnvironment::Snow
-		  move = ((USENEWBATTLEMECHANICS) ? getConst(PBMoves,:FROSTBREATH) : getConst(PBMoves,:ICEBEAM)) || move
+		  move = ((USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM) || move
 
-		when PBEnvironment::Volcano; move=getConst(PBMoves,:LAVAPLUME) || move
-	when PBEnvironment::Graveyard;   move=getConst(PBMoves,:SHADOWBALL) || move
-	when PBEnvironment::Sky;         move=getConst(PBMoves,:AIRSLASH) || move
-	when PBEnvironment::Space;       move=getConst(PBMoves,:DRACOMETEOR) || move
+		when PBEnvironment::Volcano; move=Moves.LAVAPLUME || move
+	when PBEnvironment::Graveyard;   move=Moves.SHADOWBALL || move
+	when PBEnvironment::Sky;         move=Moves.AIRSLASH || move
+	when PBEnvironment::Space;       move=Moves.DRACOMETEOR || move
 	}
 		if (@battle.field.effects[PBEffects::ElectricTerrain]>0){
-		  move=getConst(PBMoves,:THUNDERBOLT) || move
+		  move=Moves.THUNDERBOLT || move
 		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  move=getConst(PBMoves,:ENERGYBALL) || move
+		  move=Moves.ENERGYBALL || move
 		else if @battle.field.effects[PBEffects::MistyTerrain]>0
-		  move=getConst(PBMoves,:MOONBLAST) || move
+		  move=Moves.MOONBLAST || move
 		}
 		if (move==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -8266,7 +8266,7 @@ public class Function
 
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@overridetype){
-		  return super(getConst(PBMoves,:FIREPLEDGE),attacker,opponent,hitnum,alltargets,showanimation)
+		  return super(Moves.FIREPLEDGE,attacker,opponent,hitnum,alltargets,showanimation)
 		}
 		return super(id, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
@@ -8373,7 +8373,7 @@ public class Function
 
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@overridetype){
-		  return super(getConst(PBMoves,:WATERPLEDGE),attacker,opponent,hitnum,alltargets,showanimation)
+		  return super(Moves.WATERPLEDGE,attacker,opponent,hitnum,alltargets,showanimation)
 		}
 		return super(id, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
@@ -8480,7 +8480,7 @@ public class Function
 
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (@overridetype){
-		  return super(getConst(PBMoves,:GRASSPLEDGE),attacker,opponent,hitnum,alltargets,showanimation)
+		  return super(Moves.GRASSPLEDGE,attacker,opponent,hitnum,alltargets,showanimation)
 		}
 		return super(id, attacker, opponent, hitnum, alltargets, showanimation)
 	  }
