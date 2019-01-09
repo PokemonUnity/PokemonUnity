@@ -1,4 +1,4 @@
-//Tiled2PkUnity Version 2.0: "I should have redone this last month" Edition
+//Tiled2PkUnity Version 2.1: "There was a typo" Edition
 //Do not edit or save this JS file using Notepad or any other non-code text editor.
 //Please use a formatted editor such as Visual Studio Code (NOT Visual Studio) or Notepad++ in order to modify this file.
 //This app was developed in Node.js by TeamPopplio.
@@ -13,7 +13,7 @@ var fs, //Filesystem module, if installed
     compiled = [], //Compiled map data
     p1 = true; //For the phases in the compilation
 if(!filename) filename = process.argv.slice(2)[0].replace(".json","_cmap.txt") //If you did not provide a filename
-try{fs = require('fa')}
+try{fs = require('fs')}
 catch(e) {
     if (e.code == 'MODULE_NOT_FOUND') {
         console.log("You do not have the FS module installed.\nCollision data will instead be outputted via the console.\n")
