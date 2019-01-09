@@ -1948,10 +1948,15 @@ public class Battle : UnityUtilityIntegration
 		public void pbConfuse() { }
 		public void pbSleep() { }
 		public void pbFreeze() { }
+		public void pbAttract(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public void pbFlinch(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public void pbPoison(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public void pbParalyze(Battler pkmn, byte? uh = null, bool uh2 = false) { }
 		public void pbBurn(Battler pkmn, byte? uh = null, bool uh2 = false) { }
+		public bool pbCanAttract(Battler pkmn)
+		{
+			return false;
+		}
 		public bool pbCanConfuse(Battler pkmn, bool uh, PokeBattle_Move atk)
 		{
 			return false;
