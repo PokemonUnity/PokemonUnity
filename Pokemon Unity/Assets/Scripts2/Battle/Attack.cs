@@ -4145,7 +4145,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_094 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker)
+		public object pbOnStartUse(Battle.Battler attacker) { 
 		// Just to ensure that Parental Bond's second hit damages if the first hit does
 		@forcedamage=false
 		return true
@@ -4194,7 +4194,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_095 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker){
+		public object pbOnStartUse(Battle.Battler attacker){
 
 		basedmg=[10,30,50,70,90,110,150]
 		magnitudes=[
@@ -4233,7 +4233,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_096 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker){
+		public object pbOnStartUse(Battle.Battler attacker){
 		if (!pbIsBerry? (attacker.item) ||){
 		   attacker.effects.Embargo>0 ||
 		   @battle.field.MagicRoom>0 ||
@@ -5687,7 +5687,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbNumHits(attacker){
+	  public object pbNumHits(Battle.Battler attacker){
 		return 2
 	  }
 	}
@@ -5703,7 +5703,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbNumHits(attacker){
+	  public object pbNumHits(Battle.Battler attacker){
 		return 2
 	  }
 
@@ -5727,7 +5727,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbNumHits(attacker){
+	  public object pbNumHits(Battle.Battler attacker){
 		return 3
 	  }
 
@@ -5735,7 +5735,7 @@ public class Function
 		return @checks
 	  }
 
-	  public object pbOnStartUse(attacker)
+	  public object pbOnStartUse(Battle.Battler attacker)
 
 		@calcbasedmg=@basedamage
 		@checks = !attacker.hasWorkingAbility(Abilities.SKILLLINK)
@@ -5761,7 +5761,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbNumHits(attacker){
+	  public object pbNumHits(Battle.Battler attacker){
 		hitchances =[2, 2, 3, 3, 4, 5]
 
 		ret=hitchances[@battle.pbRandom(hitchances.length)]
@@ -5784,11 +5784,11 @@ public class Function
 		return true
 	  }
 
-	  public object pbNumHits(attacker){
+	  public object pbNumHits(Battle.Battler attacker){
 		return @participants.length
 	  }
 
-	  public object pbOnStartUse(attacker){
+	  public object pbOnStartUse(Battle.Battler attacker){
 
 		party=@battle.pbParty(attacker.index)
 		@participants =[]
@@ -5842,7 +5842,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C3 : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -5875,7 +5875,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C4 : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false; @sunny=false
 		if (attacker.effects.TwoTurnAttack==0){
 		  if (@battle.pbWeather==PBWeather::SUNNYDAY ||){
@@ -5924,7 +5924,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C5 : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -5964,7 +5964,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C6 : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6004,7 +6004,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C7 : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6042,7 +6042,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C8 : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6082,7 +6082,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbTwoTurnAttack(attacker)
+	  public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6115,7 +6115,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0CA : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6148,7 +6148,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0CB : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6186,7 +6186,7 @@ public class Function
 		return true
 	  }
 
-	  public object pbTwoTurnAttack(attacker)
+	  public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6228,7 +6228,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0CD : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -6283,7 +6283,7 @@ public class Function
 		return ret
 	  }
 
-	  public object pbTwoTurnAttack(attacker){
+	  public object pbTwoTurnAttack(Battle.Battler attacker){
 		return attacker.effects.TwoTurnAttack==0
 	  }
 
@@ -6487,7 +6487,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D4 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(attacker){
+		public object pbDisplayUseMessage(Battle.Battler attacker){
 		if (attacker.effects.Bide==0){
 		  //battle.pbDisplayBrief(_INTL("{1} used\r\n{2}!",attacker.pbThis,name))
 		  attacker.effects.Bide=2
@@ -6861,7 +6861,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E0 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker){
+		public object pbOnStartUse(Battle.Battler attacker){
 		if (!attacker.hasMoldBreaker){
 		  bearer = @battle.pbCheckGlobalAbility(:DAMP)
 		  if (bearer!=null){
@@ -8174,7 +8174,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_106 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker)
+		public object pbOnStartUse(Battle.Battler attacker)
 		@doubledamage = false; @overridetype=false
 		if (attacker.effects.FirstPledge==0x107 ||   // Fire Pledge){
 		   attacker.effects.FirstPledge==0x108      // Water Pledge
@@ -8281,7 +8281,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_107 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker)
+		public object pbOnStartUse(Battle.Battler attacker)
 		@doubledamage = false; @overridetype=false
 		if (attacker.effects.FirstPledge==0x106 ||   // Grass Pledge){
 		   attacker.effects.FirstPledge==0x108      // Water Pledge
@@ -8388,7 +8388,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_108 : PokeBattle_Move
 	{
-		public object pbOnStartUse(attacker)
+		public object pbOnStartUse(Battle.Battler attacker)
 		@doubledamage = false; @overridetype=false
 		if (attacker.effects.FirstPledge==0x106 ||   // Grass Pledge){
 		   attacker.effects.FirstPledge==0x107      // Fire Pledge
@@ -8750,7 +8750,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_111 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(attacker){
+		public object pbDisplayUseMessage(Battle.Battler attacker){
 		if (@battle.futuresight) return 0;
 		return super(attacker)
 	  }
@@ -8933,7 +8933,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_115 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(attacker){
+		public object pbDisplayUseMessage(Battle.Battler attacker){
 		if (attacker.lastHPLost>0){
 		  //battle.pbDisplayBrief(_INTL("{1} lost its focus and couldn't move!",attacker.pbThis))
 		  return -1
@@ -10062,7 +10062,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_14D : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
@@ -10106,7 +10106,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_14E : PokeBattle_Move
 	{
-		public object pbTwoTurnAttack(attacker)
+		public object pbTwoTurnAttack(Battle.Battler attacker)
 		@immediate = false
 		if (!@immediate && attacker.hasWorkingItem(Items.POWERHERB)){
 		  @immediate=true
