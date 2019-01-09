@@ -175,8 +175,8 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_003 : PokeBattle_Move
 	{
-		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true) { 
-		if (pbIsDamaging()) return super(attacker, opponent, hitnum, alltargets, showanimation);
+		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, byte? alltargets= null, bool showanimation= true) { 
+		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(@type, attacker, opponent), attacker, opponent)) return -1;
 		if (opponent.pbCanSleep? (attacker,true,self)){
 		  pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
@@ -195,11 +195,11 @@ public class Function
 	  }
 
 	  public object pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, turneffects){
-		if (isConst? (@id, PBMoves,:RELICSONG)){
-		  if (isConst? (attacker.species, PBSpecies,:MELOETTA) &&){
+		if (id == Moves.RELIC_SONG){
+		  if (attacker.Species == Pokemons.MELOETTA &&
 			 !attacker.effects[PBEffects::Transform] &&
-			 !(attacker.hasWorkingAbility(Abilities.SHEERFORCE) && self.addlEffect>0) &&
-			 !attacker.isFainted()
+			 !(attacker.hasWorkingAbility(Abilities.SHEER_FORCE) && self.addlEffect>0) &&
+			 !attacker.isFainted()){
 			attacker.form=(attacker.form+1)%2
 			attacker.pbUpdate(true)
 			@battle.scene.pbChangePokemon(attacker, attacker.pokemon)
@@ -293,12 +293,12 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging?){
 		  ret = super(attacker, opponent, hitnum, alltargets, showanimation)
-		  if (opponent.damagestate.calcdamage>0 && isConst? (@id, PBMoves,:BOLTSTRIKE)){
+		  if (opponent.damagestate.calcdamage>0 && id == Moves.BOLT_STRIKE){
 			@battle.field.effects[PBEffects::FusionFlare]=true
 		  }
 		  return ret
 		else
-		  if (isConst? (@id, PBMoves,:THUNDERWAVE)){
+		  if (Id == Moves.THUNDER_WAVE){
 			if (pbTypeModifier(type, attacker, opponent)==0){
 			  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 			  return -1
@@ -381,7 +381,7 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging?){
 		  ret = super(attacker, opponent, hitnum, alltargets, showanimation)
-		  if (opponent.damagestate.calcdamage>0 && isConst? (@id, PBMoves,:BLUEFLARE)){
+		  if (opponent.damagestate.calcdamage>0 && id == Moves.BLUE_FLARE){
 			@battle.field.effects[PBEffects::FusionBolt]=true
 		  }
 		  return ret
@@ -524,14 +524,14 @@ public class Function
 	{
 		public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
-		opponent.pbFlinch(attacker)
+		opponent.pbFlinch(attacker);
 	  }
 
-	  public object tramplesMinimize? (param=1)
-		if (isConst? (@id, PBMoves,:DRAGONRUSH) && !USENEWBATTLEMECHANICS) return false;
-		if (param==1 && USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+	  public object tramplesMinimize (byte param=1){
+		if (id == Moves.DRAGON_RUSH && !Settings.USENEWBATTLEMECHANICS) return false;
+		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
-		return false
+		return false;
 	  }
 	}
 
@@ -768,9 +768,10 @@ public class Function
 		public object pbEffect(Battle.Battler attacker, Battle.Battler opponent, int hitnum= 0, int? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(@id, attacker, null, hitnum, alltargets, showanimation)
-		if (isConst? (@id, PBMoves,:AROMATHERAPY)){
-		  //battle.pbDisplay(_INTL("A soothing aroma wafted through the area!"))
-		else
+		if (id == Moves.AROMATHERAPY) {
+			//battle.pbDisplay(_INTL("A soothing aroma wafted through the area!"))
+		}
+		else { 
 		  //battle.pbDisplay(_INTL("A bell chimed!"))
 		}
 		activepkmn =[]
@@ -1987,7 +1988,7 @@ public class Function
 	  }
 
 	  public object pbModifyDamage(damagemult, attacker, opponent){
-		if (isConst? (@id, PBMoves,:BULLDOZE) &&){
+		if (id == Moves.BULLDOZE &&){
 		   @battle.field.effects[PBEffects::GrassyTerrain]>0
 		  return (int)Math.Round(damagemult/2.0f)
 		}
@@ -4527,7 +4528,7 @@ public class Function
 	public class PokeBattle_Move_09F : PokeBattle_Move
 	{
 		public object pbModifyType(type, attacker, opponent){
-		if (isConst? (@id, PBMoves,:JUDGMENT)){
+		if (id == Moves.JUDGMENT){
 		  if (isConst? (attacker.item, PBItems,:FISTPLATE)) return (getConst(PBTypes,:FIGHTING) || 0);
 		  if (isConst? (attacker.item, PBItems,:SKYPLATE)) return (getConst(PBTypes,:FLYING) || 0)  ;
 		  if (isConst? (attacker.item, PBItems,:TOXICPLATE)) return (getConst(PBTypes,:POISON) || 0)  ;
@@ -4545,7 +4546,7 @@ public class Function
 		  if (isConst? (attacker.item, PBItems,:DRACOPLATE)) return (getConst(PBTypes,:DRAGON) || 0)  ;
 		  if (isConst? (attacker.item, PBItems,:DREADPLATE)) return (getConst(PBTypes,:DARK) || 0)    ;
 		  if (isConst? (attacker.item, PBItems,:PIXIEPLATE)) return (getConst(PBTypes,:FAIRY) || 0)   ;
-		else if isConst? (@id, PBMoves,:TECHNOBLAST)
+		else if id == Moves.TECHNOBLAST
 		  if (isConst? (attacker.item, PBItems,:SHOCKDRIVE)) return getConst(PBTypes,:ELECTRIC);
 		  if (isConst? (attacker.item, PBItems,:BURNDRIVE)) return getConst(PBTypes,:FIRE)    ;
 		  if (isConst? (attacker.item, PBItems,:CHILLDRIVE)) return getConst(PBTypes,:ICE)     ;
@@ -4555,7 +4556,7 @@ public class Function
 	  }
 
 	  public object pbShowAnimation(id, attacker, opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (isConst? (@id, PBMoves,:TECHNOBLAST)){
+		if (id == Moves.TECHNOBLAST){
 		  anim = 0
 		  anim = 1 if isConst? (pbType(@type, attacker, opponent),PBTypes,:ELECTRIC)
 		  anim = 2 if isConst? (pbType(@type, attacker, opponent),PBTypes,:FIRE)
@@ -6331,17 +6332,17 @@ public class Function
 			if (isConst?(@id, PBMoves,:BIND)){
 
 			  //battle.pbDisplay(_INTL("{1} was squeezed by {2}!",opponent.pbThis,attacker.pbThis(true)))
-			else if isConst? (@id, PBMoves,:CLAMP)
+			else if id == Moves.CLAMP
 			  //battle.pbDisplay(_INTL("{1} clamped {2}!",attacker.pbThis,opponent.pbThis(true)))
-			else if isConst? (@id, PBMoves,:FIRESPIN)
+			else if id == Moves.FIRESPIN
 			  //battle.pbDisplay(_INTL("{1} was trapped in the fiery vortex!",opponent.pbThis))
-			else if isConst? (@id, PBMoves,:MAGMASTORM)
+			else if id == Moves.MAGMASTORM
 			  //battle.pbDisplay(_INTL("{1} became trapped by Magma Storm!",opponent.pbThis))
-			else if isConst? (@id, PBMoves,:SANDTOMB)
+			else if id == Moves.SANDTOMB
 			  //battle.pbDisplay(_INTL("{1} became trapped by Sand Tomb!",opponent.pbThis))
-			else if isConst? (@id, PBMoves,:WRAP)
+			else if id == Moves.WRAP
 			  //battle.pbDisplay(_INTL("{1} was wrapped by {2}!",opponent.pbThis,attacker.pbThis(true)))
-			else if isConst? (@id, PBMoves,:INFESTATION)
+			else if id == Moves.INFESTATION
 			  //battle.pbDisplay(_INTL("{1} has been afflicted with an infestation by {2}!",opponent.pbThis,attacker.pbThis(true)))
 			else
 			  //battle.pbDisplay(_INTL("{1} was trapped in the vortex!",opponent.pbThis))
@@ -9526,7 +9527,7 @@ public class Function
 	public class PokeBattle_Move_13B : PokeBattle_Move
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
-		if (!isConst? (attacker.species, PBSpecies,:HOOPA)) return true;
+		if (attacker.Species == Pokemons.HOOPA) return true;
 		if (attacker.form!=1) return true;
 		return false
 	  }

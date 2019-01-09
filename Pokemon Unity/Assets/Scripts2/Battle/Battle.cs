@@ -2006,7 +2006,7 @@ public class Battle : UnityUtilityIntegration
 		new public Moves MoveId					{ get; set; }
 		new public Target Targets				{ get; set; }
 		new public Types Type					{ get; set; }
-		new public Flags Flag	{ get; set; }
+		new public Flags Flag					{ get; set; }
 		new public int PP						{ get; set; }
 		new public int TotalPP					{ get; set; }
 		/// <summary>
