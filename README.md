@@ -30,6 +30,7 @@ There are demos for Windows, Linux, and Mac zipped in [Releases](https://github.
 
 ## Credits
 
+* Project lead: [TeamPopplio](https://github.com/TeamPopplio/)
 * Project author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
 * Project maintainer: [superusercode](https://www.reddit.com/user/Lucas_One/)
 * Logo author: [Kaihatsu](https://twitter.com/KaihatsuYT)
