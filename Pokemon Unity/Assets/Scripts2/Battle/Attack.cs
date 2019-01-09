@@ -4740,29 +4740,29 @@ public class Function
 
 		id=Moves.BODYSLAM
 		if (@battle.field.effects[PBEffects::ElectricTerrain]>0){
-		  id=Moves.THUNDERSHOCK || id
+		  id=Moves.THUNDERSHOCK
 		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  id=Moves.VINEWHIP || id
+		  id=Moves.VINEWHIP
 		else if @battle.field.effects[PBEffects::MistyTerrain]>0
-		  id=Moves.FAIRYWIND || id
+		  id=Moves.FAIRYWIND
 		else
 		  case @battle.environment
 		  when PBEnvironment::Grass, PBEnvironment::TallGrass
 			id = ((USENEWBATTLEMECHANICS) ? Moves.VINEWHIP : Moves.NEEDLEARM) || id
 
-		  when PBEnvironment::MovingWater; id=Moves.WATERPULSE || id
-		  when PBEnvironment::StillWater;  id=Moves.MUDSHOT || id
-		  when PBEnvironment::Underwater;  id=Moves.WATERPULSE || id
-		  when PBEnvironment::Cave;        id=Moves.ROCKTHROW || id
-		  when PBEnvironment::Rock;        id=Moves.MUDSLAP || id
-		  when PBEnvironment::Sand;        id=Moves.MUDSLAP || id
-		  when PBEnvironment::Forest;      id=Moves.RAZORLEAF || id
+		  when PBEnvironment::MovingWater; id=Moves.WATERPULSE
+		  when PBEnvironment::StillWater;  id=Moves.MUDSHOT
+		  when PBEnvironment::Underwater;  id=Moves.WATERPULSE
+		  when PBEnvironment::Cave;        id=Moves.ROCKTHROW
+		  when PBEnvironment::Rock;        id=Moves.MUDSLAP
+		  when PBEnvironment::Sand;        id=Moves.MUDSLAP
+		  when PBEnvironment::Forest;      id=Moves.RAZORLEAF
 		// Ice tiles in Gen 6 should be Ice Shard
-		  when PBEnvironment::Snow;        id=Moves.AVALANCHE || id
-		  when PBEnvironment::Volcano;     id=Moves.INCINERATE || id
-		  when PBEnvironment::Graveyard;   id=Moves.SHADOWSNEAK || id
-		  when PBEnvironment::Sky;         id=Moves.GUST || id
-		  when PBEnvironment::Space;       id=Moves.SWIFT || id
+		  when PBEnvironment::Snow;        id=Moves.AVALANCHE
+		  when PBEnvironment::Volcano;     id=Moves.INCINERATE
+		  when PBEnvironment::Graveyard;   id=Moves.SHADOWSNEAK
+		  when PBEnvironment::Sky;         id=Moves.GUST
+		  when PBEnvironment::Space;       id=Moves.SWIFT
 		  }
 
 		}
@@ -5181,9 +5181,9 @@ public class Function
 		when PBEnvironment::Grass, PBEnvironment::TallGrass, PBEnvironment::Forest
 		  move = ((USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB) || move
 
-		when PBEnvironment::MovingWater; move=Moves.HYDROPUMP || move
-		when PBEnvironment::StillWater;  move=Moves.MUDBOMB || move
-		when PBEnvironment::Underwater;  move=Moves.HYDROPUMP || move
+		when PBEnvironment::MovingWater; move=Moves.HYDROPUMP
+		when PBEnvironment::StillWater;  move=Moves.MUDBOMB
+		when PBEnvironment::Underwater;  move=Moves.HYDROPUMP
 		when PBEnvironment::Cave
 		  move = ((USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE) || move
 
@@ -5197,17 +5197,17 @@ public class Function
 		when PBEnvironment::Snow
 		  move = ((USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM) || move
 
-		when PBEnvironment::Volcano; move=Moves.LAVAPLUME || move
-	when PBEnvironment::Graveyard;   move=Moves.SHADOWBALL || move
-	when PBEnvironment::Sky;         move=Moves.AIRSLASH || move
-	when PBEnvironment::Space;       move=Moves.DRACOMETEOR || move
+		when PBEnvironment::Volcano; move=Moves.LAVAPLUME
+	when PBEnvironment::Graveyard;   move=Moves.SHADOWBALL
+	when PBEnvironment::Sky;         move=Moves.AIRSLASH
+	when PBEnvironment::Space;       move=Moves.DRACOMETEOR
 	}
 		if (@battle.field.effects[PBEffects::ElectricTerrain]>0){
-		  move=Moves.THUNDERBOLT || move
+		  move=Moves.THUNDERBOLT
 		else if @battle.field.effects[PBEffects::GrassyTerrain]>0
-		  move=Moves.ENERGYBALL || move
+		  move=Moves.ENERGYBALL
 		else if @battle.field.effects[PBEffects::MistyTerrain]>0
-		  move=Moves.MOONBLAST || move
+		  move=Moves.MOONBLAST
 		}
 		if (move==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
