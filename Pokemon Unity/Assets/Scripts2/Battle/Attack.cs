@@ -2291,7 +2291,7 @@ public class Function
 		if (!opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,true,self)) return -1;
 		pbShowAnimation(@id, attacker, opponent, hitnum, alltargets, showanimation)
 
-		increment=(isConst?(@id, PBMoves,:STRINGSHOT) && !USENEWBATTLEMECHANICS) ? 1 : 2
+		increment=(id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? 1 : 2
 		ret=opponent.pbReduceStat(PBStats::SPEED, increment, attacker,false,self)
 		return ret? 0 : -1
 	  }
@@ -2299,7 +2299,7 @@ public class Function
 	  public object pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.substitute) return;
 		if (opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,self)){
-		  increment=(isConst?(@id, PBMoves,:STRINGSHOT) && !USENEWBATTLEMECHANICS) ? 1 : 2
+		  increment=(id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? 1 : 2
 		  opponent.pbReduceStat(PBStats::SPEED, increment, attacker,false,self)
 		}
 	  }
@@ -6329,7 +6329,7 @@ public class Function
 			opponent.effects[PBEffects::MultiTurnAttack]= @id
 
 			opponent.effects[PBEffects::MultiTurnUser]= attacker.index
-			if (isConst?(@id, PBMoves,:BIND)){
+			if (id == Moves.BIND){
 
 			  //battle.pbDisplay(_INTL("{1} was squeezed by {2}!",opponent.pbThis,attacker.pbThis(true)))
 			else if id == Moves.CLAMP
@@ -8773,7 +8773,7 @@ public class Function
 		opponent.effects[PBEffects::FutureSightUser]= attacker.pokemonIndex
 
 		opponent.effects[PBEffects::FutureSightUserPos]= attacker.index
-		if (isConst?(@id, PBMoves,:FUTURESIGHT)){
+		if (id == Moves.FUTURESIGHT){
 
 		  //battle.pbDisplay(_INTL("{1} foresaw an attack!",attacker.pbThis))
 		else
