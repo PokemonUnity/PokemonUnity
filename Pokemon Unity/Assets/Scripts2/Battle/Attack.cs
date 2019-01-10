@@ -764,8 +764,8 @@ public class Function
 		i.pbCureStatus(false);
 
 		}
-		party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
-		for (int i = 0; i < party.length; i++){ 
+		Battler[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
+		for (int i = 0; i < party.Length; i++){ 
 		  if (activepkmn.Contains(i)) continue; //next
 		   if (!party[i] || party[i].egg? || party[i].HP<=0) continue; //next
 		  switch (party[i].Status) {
@@ -1627,11 +1627,11 @@ public class Function
 				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 		array.push(i) if opponent.pbCanIncreaseStatStage? (i, attacker,false,this)
 		}
-		if (array.length==0){
+		if (array.Length==0){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",opponent.pbThis))
 		  return -1;
 		}
-		stat = array[this.battle.pbRandom(array.length)]
+		stat = array[this.battle.pbRandom(array.Length)]
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
@@ -3436,8 +3436,8 @@ public class Function
 	public class PokeBattle_Move_073 : PokeBattle_Move
 	{
 		public object pbAddTarget(targets, Battle.Battler attacker){
-		if (attacker.lastAttacker.length>0){
-		  lastattacker=attacker.lastAttacker[attacker.lastAttacker.length - 1]
+		if (attacker.lastAttacker.Length>0){
+		  lastattacker=attacker.lastAttacker[attacker.lastAttacker.Length - 1]
 		  if (lastattacker>=0 && attacker.IsOpposing(lastattacker)){
 			if (!attacker.pbAddTarget(targets, this.battle.battlers[lastattacker])){
 			  attacker.pbRandomTarget(targets);
@@ -5251,13 +5251,13 @@ public class Function
 		  if (found) continue; //next
 		  choices.push(i) if this.battle.pbCanChooseMove? (attacker.index, i,false,true)
 		}
-		if (choices.length==0){
+		if (choices.Length==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		choice=choices[this.battle.pbRandom(choices.length)]
+		choice=choices[this.battle.pbRandom(choices.Length)]
 		attacker.pbUseMoveSimple(attacker.moves[choice].id,-1, attacker.pbOppositeOpposing.index);
 		return 0;
 	  }
@@ -5328,25 +5328,25 @@ public class Function
 	}
 		List<Moves> moves = new List<Moves>();
 
-		party=this.battle.pbParty(attacker.Index) // NOTE: pbParty is common to both allies in multi battles
-		for (int i = 0; i < party.length; i++){ 
+		Battle.Battler[] party = this.battle.pbParty(attacker.Index); // NOTE: pbParty is common to both allies in multi battles
+		for (int i = 0; i < party.Length; i++){ 
 		  if (i!=attacker.pokemonIndex && party[i] && !(Settings.USENEWBATTLEMECHANICS && party[i].egg?)){
 			foreach (var j in party[i].moves){ 
-			  if (j.type == Types.SHADOW) continue; //next
-			  if (j.id==0) continue; //next
+			  if (j.Type == Types.SHADOW) continue; //next
+			  if (j.MoveId==0) continue; //next
 			  bool found=false;
 			  if (!blacklist.Contains((int)new Move ((Moves)j.id).Function)) moves.Add(j.id);
 			}
 		  }
 
 		}
-		if (moves.length==0){
+		if (moves.Count==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		Moves move=moves[this.battle.pbRandom(moves.length)]
+		Moves move=moves[this.battle.pbRandom(moves.Count)]
 		attacker.pbUseMoveSimple(move);
 		return 0;
 	  }
@@ -5444,11 +5444,11 @@ public class Function
 		  return -1;
 		}
 		if (!attacker.hasMoldBreaker()){
-		  if (opponent.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
 			return -1;
-		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
@@ -5497,11 +5497,11 @@ public class Function
 		  return -1;
 		}
 		if (!attacker.hasMoldBreaker()){
-		  if (opponent.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
 			return -1;
-		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
@@ -5539,11 +5539,11 @@ public class Function
 		  return -1;
 		}
 		if (!attacker.hasMoldBreaker()){
-		  if (opponent.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
 			return -1;
-		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
@@ -5572,11 +5572,11 @@ public class Function
 		  return -1;
 		}
 		if (!attacker.hasMoldBreaker()){
-		  if (opponent.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
 			return -1;
-		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
@@ -5618,11 +5618,11 @@ public class Function
 		  return -1;
 		}
 		if (!attacker.hasMoldBreaker()){
-		  if (opponent.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
 			return -1;
-		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMAVEIL)){
+		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
 			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
@@ -5736,7 +5736,7 @@ public class Function
 	  public object pbNumHits(Battle.Battler attacker){
 		hitchances =[2, 2, 3, 3, 4, 5]
 
-		ret=hitchances[this.battle.pbRandom(hitchances.length)];
+		ret=hitchances[this.battle.pbRandom(hitchances.Length)];
 		if (attacker.hasWorkingAbility(Abilities.SKILLLINK)) ret = 5; 
 		return ret;
 	  }
@@ -5757,14 +5757,14 @@ public class Function
 	  }
 
 	  public object pbNumHits(Battle.Battler attacker){
-		return this.participants.length;
+		return this.participants.Length;
 	  }
 
 	  public object pbOnStartUse(Battle.Battler attacker){
 
 		party=this.battle.pbParty(attacker.index)
 		this.participants =[];
-		for (int i = 0; i < party.length; i++){ 
+		for (int i = 0; i < party.Length; i++){ 
 		  if (attacker.pokemonIndex==i){
 			this.participants.push(i);
 
@@ -5773,7 +5773,7 @@ public class Function
 		  }
 
 		}
-		if (this.participants.length==0){
+		if (this.participants.Length==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return false;
 		}
@@ -7139,7 +7139,7 @@ public class Function
 		}else{
 			choices = false;
 			party = this.battle.pbParty(opponent.index);
-		  for (int i = 0; i < party.length; i++){ 
+		  for (int i = 0; i < party.Length; i++){ 
 			if (this.battle.pbCanSwitch? (opponent.index, i,false,true)){
 				choices = true;
 				break;
@@ -7179,7 +7179,7 @@ public class Function
 		  }else{
 
 			party= this.battle.pbParty(opponent.index)
-			for (int i = 0; i < arty.length; i++){ -1
+			for (int i = 0; i < arty.Length; i++){ -1
 			  if (this.battle.pbCanSwitch?(opponent.index, i,false)){
 
 				opponent.effects.Roar=true;
