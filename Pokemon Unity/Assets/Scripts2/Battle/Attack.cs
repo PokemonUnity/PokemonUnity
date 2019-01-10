@@ -5210,7 +5210,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0B4 : PokeBattle_Move
 	{
-		public object pbCanUseWhileAsleep?
+		public bool pbCanUseWhileAsleep(){
 		return true;
 	  }
 
@@ -5711,7 +5711,7 @@ public class Function
 		return 3;
 	  }
 
-	  public object successCheckPerHit?
+	  public bool successCheckPerHit(){
 		return this.checks;
 	  }
 
@@ -6058,7 +6058,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0C9 : PokeBattle_Move
 	{
-		public object unusableInGravity?
+		public bool unusableInGravity(){
 		return true;
 	  }
 
@@ -6162,7 +6162,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0CC : PokeBattle_Move
 	{
-		public object unusableInGravity?
+		public bool unusableInGravity(){
 		return true;
 	  }
 
@@ -6248,7 +6248,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0CE : PokeBattle_Move
 	{
-		public object unusableInGravity?
+		public bool unusableInGravity(){
 		return true;
 	  }
 
@@ -6523,7 +6523,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D5 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6548,7 +6548,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D6 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6574,7 +6574,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D7 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6600,7 +6600,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D8 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6636,7 +6636,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D9 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6670,7 +6670,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0DA : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6695,7 +6695,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0DB : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6749,7 +6749,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0DD : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return Settings.USENEWBATTLEMECHANICS;
 	  }
 
@@ -6780,7 +6780,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0DE : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return Settings.USENEWBATTLEMECHANICS;
 	  }
 
@@ -6810,7 +6810,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0DF : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6927,7 +6927,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E3 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -6952,7 +6952,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0E4 : PokeBattle_Move
 	{
-		public object isHealingMove?
+		public bool isHealingMove(){
 		return true;
 	  }
 
@@ -7803,7 +7803,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0FA : PokeBattle_Move
 	{
-		public object isRecoilMove?
+		public bool isRecoilMove(){
 		return true;
 	  }
 
@@ -7825,7 +7825,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0FB : PokeBattle_Move
 	{
-		public object isRecoilMove?
+		public bool isRecoilMove(){
 		return true;
 	  }
 
@@ -7848,7 +7848,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0FC : PokeBattle_Move
 	{
-		public object isRecoilMove?
+		public bool isRecoilMove(){
 		return true;
 	  }
 
@@ -7871,7 +7871,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0FD : PokeBattle_Move
 	{
-		public object isRecoilMove?
+		public bool isRecoilMove(){
 		return true;
 	  }
 
@@ -7901,7 +7901,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0FE : PokeBattle_Move
 	{
-		public object isRecoilMove?
+		public bool isRecoilMove(){
 		return true;
 	  }
 
@@ -8539,11 +8539,11 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10B : PokeBattle_Move
 	{
-		public object isRecoilMove?
+		public bool isRecoilMove(){
 		return true;
 	  }
 
-	  public object unusableInGravity?
+	  public bool unusableInGravity(){
 		return true;
 	  }
 	}
@@ -9018,7 +9018,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_119 : PokeBattle_Move
 	{
-		public object unusableInGravity?
+		public bool unusableInGravity(){
 		return true;
 	  }
 
@@ -9044,7 +9044,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_11A : PokeBattle_Move
 	{
-		public object unusableInGravity?
+		public bool unusableInGravity(){
 		return true;
 	  }
 
@@ -9787,7 +9787,7 @@ public class Function
 		return damagemult;
 	  }
 
-	  public object tramplesMinimize (byte param=1){
+	  public bool tramplesMinimize (byte param=1){
 		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
 		return false;
@@ -10077,7 +10077,7 @@ public class Function
 		return ret;
 	  }
 
-	  public object tramplesMinimize (byte param=1){
+	  public bool tramplesMinimize (byte param=1){
 		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
 		return false;
