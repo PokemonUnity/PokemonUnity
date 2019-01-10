@@ -2009,6 +2009,10 @@ public class Battle : UnityUtilityIntegration
 		{
 			return false;
 		}
+		public void pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk)
+		{
+			//return false;
+		}
 		public void pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
 		{
 			//return false;
