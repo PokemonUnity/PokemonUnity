@@ -896,16 +896,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this);
 		}
 	  }
 	}
@@ -919,16 +919,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		}
 	  }
 	}
@@ -943,10 +943,10 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		attacker.effects.DefenseCurl=true;
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 	}
@@ -960,16 +960,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this);
 		}
 	  }
 	}
@@ -983,16 +983,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
 		}
 	  }
 	}
@@ -1009,10 +1009,10 @@ public class Function
 
 		attacker.effects.Charge=2;
 		//battle.pbDisplay(_INTL("{1} began charging power!",attacker.pbThis))
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,true,this)){
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,true,this)){
 		  pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		  attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this);
+		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this);
 		}
 		return 0;
 	  }
@@ -1027,16 +1027,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::EVASION, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.EVASION, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::EVASION,1,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.EVASION,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::EVASION, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::EVASION,1,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.EVASION, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.EVASION,1,attacker,false,this);
 		}
 	  }
 	}
@@ -1077,20 +1077,20 @@ public class Function
 	public class PokeBattle_Move_024 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1105,25 +1105,25 @@ public class Function
 	public class PokeBattle_Move_025 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::ACCURACY, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ACCURACY, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ACCURACY,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ACCURACY,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1138,20 +1138,20 @@ public class Function
 	public class PokeBattle_Move_026 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1166,20 +1166,20 @@ public class Function
 	public class PokeBattle_Move_027 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1195,8 +1195,8 @@ public class Function
 	public class PokeBattle_Move_028 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
@@ -1209,12 +1209,12 @@ public class Function
 		  increment = 2
 
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK, increment, attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK, increment, attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK, increment, attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK, increment, attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1229,20 +1229,20 @@ public class Function
 	public class PokeBattle_Move_029 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::ACCURACY, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ACCURACY, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ACCURACY,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ACCURACY,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1257,20 +1257,20 @@ public class Function
 	public class PokeBattle_Move_02A : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1285,25 +1285,25 @@ public class Function
 	public class PokeBattle_Move_02B : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1318,20 +1318,20 @@ public class Function
 	public class PokeBattle_Move_02C : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1349,24 +1349,24 @@ public class Function
 		public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 	  }
@@ -1381,16 +1381,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		}
 	  }
 	}
@@ -1404,16 +1404,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::DEFENSE,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.DEFENSE,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,2,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,2,attacker,false,this);
 		}
 	  }
 	}
@@ -1427,16 +1427,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this);
 		}
 	  }
 	}
@@ -1449,10 +1449,10 @@ public class Function
 	public class PokeBattle_Move_031 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this);
 		if (ret){
 		  attacker.effects.WeightChange-=1000;
 
@@ -1471,16 +1471,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPATK,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,2,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this);
 		}
 	  }
 	}
@@ -1494,16 +1494,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPDEF,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPDEF,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,2,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,2,attacker,false,this);
 		}
 	  }
 	}
@@ -1518,19 +1518,19 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			attacker.effects.Minimize= true;
-		if (!attacker.pbCanIncreaseStatStage?(PBStats::EVASION, attacker,true, this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage?(Stats.EVASION, attacker,true, this)) return -1;
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::EVASION,2,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.EVASION,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 
 		attacker.effects.Minimize=true;
-		if (attacker.pbCanIncreaseStatStage? (PBStats::EVASION, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::EVASION,2,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.EVASION, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.EVASION,2,attacker,false,this);
 		}
 	  }
 	}
@@ -1544,34 +1544,34 @@ public class Function
 	public class PokeBattle_Move_035 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbReduceStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		showanim = true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1586,20 +1586,20 @@ public class Function
 	public class PokeBattle_Move_036 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -1623,8 +1623,8 @@ public class Function
 		}
 
 		array=[]
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
 		array.push(i) if opponent.pbCanIncreaseStatStage? (i, attacker,false,this)
 		}
 		if (array.Length==0){
@@ -1649,16 +1649,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::DEFENSE,3,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.DEFENSE,3,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,3,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,3,attacker,false,this);
 		}
 	  }
 	}
@@ -1672,16 +1672,16 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(PBStats::SPATK,3,attacker,false,this);
+		ret=attacker.pbIncreaseStat(Stats.SPATK,3,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,3,attacker,false,this);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,3,attacker,false,this);
 		}
 	  }
 	}
@@ -1695,7 +1695,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (attacker.HP<= Math.Floor(attacker.TotalHP/2f) ||
-		   !attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
+		   !attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -1703,11 +1703,11 @@ public class Function
 
 		attacker.ReduceHP(Math.Floor(attacker.TotalHP/2f));
 		if (attacker.hasWorkingAbility(Abilities.CONTRARY)){
-		  attacker.stages[PBStats::ATTACK]=-6;
+		  attacker.stages[Stats.ATTACK]=-6;
 		  this.battle.pbCommonAnimation("StatDown",attacker,null);
 		  //battle.pbDisplay(_INTL("{1} cut its own HP and minimized its Attack!",attacker.pbThis))
 		}else{
-		  attacker.stages[PBStats::ATTACK]=6;
+		  attacker.stages[Stats.ATTACK]=6;
 		  this.battle.pbCommonAnimation("StatUp",attacker,null);
 		  //battle.pbDisplay(_INTL("{1} cut its own HP and maximized its Attack!",attacker.pbThis))
 		}
@@ -1727,12 +1727,12 @@ public class Function
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
 		  bool showanim=true
-		  if (attacker.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::ATTACK,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+			attacker.pbReduceStat(Stats.ATTACK,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+			attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
 		}
@@ -1752,12 +1752,12 @@ public class Function
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
 			bool showanim = true;
-		  if (attacker.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+			attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+			attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
 		}
@@ -1781,16 +1781,16 @@ public class Function
 			attacker.Partner.ReduceHP(Math.Floor(attacker.Partner.TotalHP/16f),true);
 		  }
 			bool showanim = true;
-		  if (attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::SPEED,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+			attacker.pbReduceStat(Stats.SPEED,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+			attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		  if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+			attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
 		}
@@ -1809,8 +1809,8 @@ public class Function
 
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
-		  if (attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::SPEED,1,attacker,false,this);
+		  if (attacker.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+			attacker.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		  }
 		}
 		return ret;
@@ -1828,8 +1828,8 @@ public class Function
 
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
-		  if (attacker.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::SPATK,2,attacker,false,this);
+		  if (attacker.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+			attacker.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 		  }
 		}
 		return ret;
@@ -1851,8 +1851,8 @@ public class Function
 		ret = -1;
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		if (opponent.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  opponent.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this);
+		if (opponent.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  opponent.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
 		  ret=0;
 		}
 		if (opponent.pbCanConfuse (attacker,true,this)){
@@ -1879,8 +1879,8 @@ public class Function
 		ret = -1;
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		if (opponent.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  opponent.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,this);
+		if (opponent.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  opponent.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		  ret=0;
 		}
 		if (opponent.pbCanConfuse (attacker,true,this)){
@@ -1901,17 +1901,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		}
 	  }
 	}
@@ -1925,17 +1925,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.DEFENSE,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.DEFENSE,1,attacker,false,this);
 		}
 	  }
 	}
@@ -1949,17 +1949,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		}
 	  }
 
@@ -1981,17 +1981,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
 		}
 	  }
 	}
@@ -2005,17 +2005,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPDEF,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPDEF,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::SPDEF,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.SPDEF,1,attacker,false,this);
 		}
 	  }
 	}
@@ -2029,17 +2029,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 		}
 	  }
 	}
@@ -2053,19 +2053,19 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::EVASION, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.EVASION, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		increment=(Settings.USENEWBATTLEMECHANICS)? 2 : 1
-		ret=opponent.pbReduceStat(PBStats::EVASION, increment, attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.EVASION, increment, attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::EVASION, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage? (Stats.EVASION, attacker,false,this)){
 		  increment=(Settings.USENEWBATTLEMECHANICS)? 2 : 1
-		  opponent.pbReduceStat(PBStats::EVASION, increment, attacker,false,this);
+		  opponent.pbReduceStat(Stats.EVASION, increment, attacker,false,this);
 		}
 	  }
 	}
@@ -2082,7 +2082,7 @@ public class Function
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		opponent.pbReduceStat(PBStats::EVASION,1,attacker,false,this);
+		opponent.pbReduceStat(Stats.EVASION,1,attacker,false,this);
 		opponent.OwnSide.Reflect     = 0;
 		opponent.OwnSide.LightScreen = 0;
 		opponent.OwnSide.Mist        = 0;
@@ -2114,9 +2114,9 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (!opponent.damagestate.Substitute){
-		  if (opponent.pbCanReduceStatStage?(PBStats::EVASION, attacker,false, this)){
+		  if (opponent.pbCanReduceStatStage?(Stats.EVASION, attacker,false, this)){
 
-			opponent.pbReduceStat(PBStats::EVASION,1,attacker,false,this);
+			opponent.pbReduceStat(Stats.EVASION,1,attacker,false,this);
 		  }
 		}
 
@@ -2163,8 +2163,8 @@ public class Function
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
 		  return -1;
 		}
-		if (opponent.pbTooLow? (PBStats::ATTACK) &&
-		   opponent.pbTooLow? (PBStats::DEFENSE)){
+		if (opponent.pbTooLow? (Stats.ATTACK) &&
+		   opponent.pbTooLow? (Stats.DEFENSE)){
 		   //battle.pbDisplay(_INTL("{1}'s stats won't go any lower!", opponent.pbThis))
 		  return -1;
 		}
@@ -2185,20 +2185,20 @@ public class Function
 
 		ret=-1; showanim=true;
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.HYPERCUTTER) &&
-		   !opponent.pbTooLow? (PBStats::ATTACK)){
+		   !opponent.pbTooLow? (Stats.ATTACK)){
 			string abilityname = PBAbilities.getName(opponent.ability);
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!",opponent.pbThis,abilityname))
-		} else if (opponent.pbReduceStat(PBStats::ATTACK,1, attacker,false, this, showanim)) {
+		} else if (opponent.pbReduceStat(Stats.ATTACK,1, attacker,false, this, showanim)) {
 
 		  ret=0; showanim=false;
 		}
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.BIGPECKS) &&
-		   !opponent.pbTooLow? (PBStats::DEFENSE)){
+		   !opponent.pbTooLow? (Stats.DEFENSE)){
 			string abilityname = PBAbilities.getName(opponent.ability);
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Defense loss!",opponent.pbThis,abilityname))
-		} else if (opponent.pbReduceStat(PBStats::DEFENSE,1, attacker,false, this, showanim)) {
+		} else if (opponent.pbReduceStat(Stats.DEFENSE,1, attacker,false, this, showanim)) {
 
 		  ret=0; showanim=false;
 		}
@@ -2215,17 +2215,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::ATTACK,2,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.ATTACK,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::ATTACK,2,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.ATTACK,2,attacker,false,this);
 		}
 	  }
 	}
@@ -2239,17 +2239,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::DEFENSE,2,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.DEFENSE,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::DEFENSE,2,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.DEFENSE,2,attacker,false,this);
 		}
 	  }
 	}
@@ -2264,19 +2264,19 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		increment=(id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? 1 : 2
-		ret=opponent.pbReduceStat(PBStats::SPEED, increment, attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPEED, increment, attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
 		  increment=(id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? 1 : 2
-		  opponent.pbReduceStat(PBStats::SPEED, increment, attacker,false,this);
+		  opponent.pbReduceStat(Stats.SPEED, increment, attacker,false,this);
 		}
 	  }
 	}
@@ -2291,7 +2291,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		if (attacker.gender==2 || opponent.gender==2 || attacker.gender==opponent.gender){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -2303,7 +2303,7 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
@@ -2311,8 +2311,8 @@ public class Function
 		if (opponent.damagestate.Substitute) return;
 		if (attacker.gender!=2 && opponent.gender!=2 && attacker.gender!=opponent.gender){
 		  if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.OBLIVIOUS)){
-			if (opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,this)){
-			  opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,this);
+			if (opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+			  opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 			}
 		  }
 
@@ -2329,17 +2329,17 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPDEF,2,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPDEF,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::SPDEF,2,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.SPDEF,2,attacker,false,this);
 		}
 	  }
 	}
@@ -2378,13 +2378,13 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		for (int i = 0; i < 4; i++){ 
-		  this.battle.battlers[i].stages[PBStats::ATTACK]   = 0;
-		  this.battle.battlers[i].stages[PBStats::DEFENSE]  = 0;
-		  this.battle.battlers[i].stages[PBStats::SPEED]    = 0;
-		  this.battle.battlers[i].stages[PBStats::SPATK]    = 0;
-		  this.battle.battlers[i].stages[PBStats::SPDEF]    = 0;
-		  this.battle.battlers[i].stages[PBStats::ACCURACY] = 0;
-		  this.battle.battlers[i].stages[PBStats::EVASION]  = 0;
+		  this.battle.battlers[i].stages[Stats.ATTACK]   = 0;
+		  this.battle.battlers[i].stages[Stats.DEFENSE]  = 0;
+		  this.battle.battlers[i].stages[Stats.SPEED]    = 0;
+		  this.battle.battlers[i].stages[Stats.SPATK]    = 0;
+		  this.battle.battlers[i].stages[Stats.SPDEF]    = 0;
+		  this.battle.battlers[i].stages[Stats.ACCURACY] = 0;
+		  this.battle.battlers[i].stages[Stats.EVASION]  = 0;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
@@ -2407,8 +2407,8 @@ public class Function
 		astage=attacker.stages
 		ostage = opponent.stages
 		//create temp variables then override source
-		astage[PBStats::ATTACK],ostage[PBStats::ATTACK]=ostage[PBStats::ATTACK],astage[PBStats::ATTACK]
-		astage[PBStats::SPATK], ostage[PBStats::SPATK] = ostage[PBStats::SPATK], astage[PBStats::SPATK]
+		astage[Stats.ATTACK],ostage[Stats.ATTACK]=ostage[Stats.ATTACK],astage[Stats.ATTACK]
+		astage[Stats.SPATK], ostage[Stats.SPATK] = ostage[Stats.SPATK], astage[Stats.SPATK]
 
 		//battle.pbDisplay(_INTL("{1} switched all changes to its Attack and Sp. Atk with the target!",attacker.pbThis))
 		return 0;
@@ -2429,8 +2429,8 @@ public class Function
 		astage=attacker.stages
 		ostage = opponent.stages
 
-		astage[PBStats::DEFENSE],ostage[PBStats::DEFENSE]=ostage[PBStats::DEFENSE],astage[PBStats::DEFENSE]
-		astage[PBStats::SPDEF], ostage[PBStats::SPDEF] = ostage[PBStats::SPDEF], astage[PBStats::SPDEF]
+		astage[Stats.DEFENSE],ostage[Stats.DEFENSE]=ostage[Stats.DEFENSE],astage[Stats.DEFENSE]
+		astage[Stats.SPDEF], ostage[Stats.SPDEF] = ostage[Stats.SPDEF], astage[Stats.SPDEF]
 
 		//battle.pbDisplay(_INTL("{1} switched all changes to its Defense and Sp. Def with the target!",attacker.pbThis))
 		return 0;
@@ -2447,8 +2447,8 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
 		attacker.stages[i],opponent.stages[i]=opponent.stages[i],attacker.stages[i];
 	  }
 
@@ -2470,8 +2470,8 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
 		attacker.stages[i]=opponent.stages[i];
 	  }
 
@@ -3244,8 +3244,8 @@ public class Function
 		attacker.spatk= opponent.spatk;
 
 		attacker.spdef= opponent.spdef;
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
 		  attacker.stages[i]= opponent.stages[i];
 
 		}
@@ -3988,8 +3988,8 @@ public class Function
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		byte mult = 1;
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){
 			if (attacker.stages[i] > 0) mult += attacker.stages[i]; 
 		}
 		return 20*mult;
@@ -4006,8 +4006,8 @@ public class Function
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		byte mult = 3;
-			foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-					  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){
+			foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+					  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){
 			if (opponent.stages[i] > 0) mult += opponent.stages[i];
 			}
 			return Math.Min(20*mult,200);
@@ -4044,20 +4044,20 @@ public class Function
 		if (//!PBTypes.isPseudoType ? (i) &&
 			(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i); 
 	  }
-	type |= (iv[PBStats::HP] & 1);
-	type |= (iv[PBStats::ATTACK] & 1) << 1;
-	type |= (iv[PBStats::DEFENSE] & 1) << 2;
-	type |= (iv[PBStats::SPEED] & 1) << 3;
-	type |= (iv[PBStats::SPATK] & 1) << 4;
-	type |= (iv[PBStats::SPDEF] & 1) << 5;
+	type |= (iv[Stats.HP] & 1);
+	type |= (iv[Stats.ATTACK] & 1) << 1;
+	type |= (iv[Stats.DEFENSE] & 1) << 2;
+	type |= (iv[Stats.SPEED] & 1) << 3;
+	type |= (iv[Stats.SPATK] & 1) << 4;
+	type |= (iv[Stats.SPDEF] & 1) << 5;
 	type = (int)Math.Floor(type * (types.Count - 1f) / 63f);
 	Types hptype = types[type];
-	baseY |= (iv[PBStats::HP] & 2) >> 1;
-	baseY |= (iv[PBStats::ATTACK] & 2);
-	baseY |= (iv[PBStats::DEFENSE] & 2) << 1;
-	baseY |= (iv[PBStats::SPEED] & 2) << 2;
-	baseY |= (iv[PBStats::SPATK] & 2) << 3;
-	baseY |= (iv[PBStats::SPDEF] & 2) << 4;
+	baseY |= (iv[Stats.HP] & 2) >> 1;
+	baseY |= (iv[Stats.ATTACK] & 2);
+	baseY |= (iv[Stats.DEFENSE] & 2) << 1;
+	baseY |= (iv[Stats.SPEED] & 2) << 2;
+	baseY |= (iv[Stats.SPATK] & 2) << 3;
+	baseY |= (iv[Stats.SPDEF] & 2) << 4;
 	  baseY = (int)Math.Floor(baseY * (powermax - powermin) / 63f) + powermin;
 	  return new int[] { (int)hptype, baseY }; //return type, and power
 		}
@@ -4640,9 +4640,9 @@ public class Function
 		  }
 		  return;
 		}else if (this.battle.field.MistyTerrain>0){
-		  if (opponent.pbCanReduceStatStage?(PBStats::SPATK, attacker,false, this)){
+		  if (opponent.pbCanReduceStatStage?(Stats.SPATK, attacker,false, this)){
 
-			opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,this);
+			opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
 		  }
 		  return;
 		}
@@ -4653,25 +4653,25 @@ public class Function
 		  }
 				break;
 		case PokemonUnity.Environment.MovingWater: case PokemonUnity.Environment.Underwater:
-		  if (opponent.pbCanReduceStatStage?(PBStats::ATTACK, attacker,false, this)){
+		  if (opponent.pbCanReduceStatStage?(Stats.ATTACK, attacker,false, this)){
 
-			opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,this);
+			opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		  }
 				break;
 		case PokemonUnity.Environment.StillWater: case PokemonUnity.Environment.Sky:
-		  if (opponent.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
-			opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,this);
+		  if (opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+			opponent.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		  }
 				break;
 		case PokemonUnity.Environment.Sand:
-		  if (opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,this)){
-			opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,this);
+		  if (opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,false,this)){
+			opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 		  }
 				break;
 		case PokemonUnity.Environment.Rock:
 		  if (Settings.USENEWBATTLEMECHANICS){
-			if (opponent.pbCanReduceStatStage? (PBStats::ACCURACY, attacker,false,this)){
-			  opponent.pbReduceStat(PBStats::ACCURACY,1,attacker,false,this);
+			if (opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,false,this)){
+			  opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 			}
 		  }else
 			if (opponent.effects.Substitute==0 || ignoresSubstitute? (attacker)){
@@ -6027,8 +6027,8 @@ public class Function
 		if (this.immediate || attacker.effects.TwoTurnAttack>0){
 		  pbShowAnimation((int)this.id, attacker, opponent,1, alltargets, showanimation); // Charging anim
 		  //battle.pbDisplay(_INTL("{1} tucked in its head!",attacker.pbThis))
-		  if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this);
+		  if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+			attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		  }
 		}
 		if (this.immediate){
@@ -6900,10 +6900,10 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=-1; showanim=true;
-		if (opponent.pbReduceStat(PBStats::ATTACK,2,attacker,false,this,showanim)){
+		if (opponent.pbReduceStat(Stats.ATTACK,2,attacker,false,this,showanim)){
 		  ret=0; showanim=false;
 		}
-		if (opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,this,showanim)){
+		if (opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this,showanim)){
 		  ret=0; showanim=false;
 		}
 		attacker.ReduceHP(attacker.HP);
@@ -7726,9 +7726,9 @@ public class Function
 		 } else if (attacker.hasWorkingItem(Items.WHITEHERB)){
 			while (true) { 
 			  reducedstats=false
-			  foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE,
-						PBStats::SPEED, PBStats::SPATK, PBStats::SPDEF,
-						PBStats::EVASION, PBStats::ACCURACY]){ 
+			  foreach (var i in [Stats.ATTACK, Stats.DEFENSE,
+						Stats.SPEED, Stats.SPATK, Stats.SPDEF,
+						Stats.EVASION, Stats.ACCURACY]){ 
 				if (opponent.stages[i]<0){
 				  opponent.stages[i]=0; reducedstats=true;
 				}
@@ -8594,25 +8594,25 @@ public class Function
 			attacker.ReduceHP(Math.Floor(attacker.TotalHP/2f));
 		  }
 		}else{
-		  lowerspeed=attacker.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this);
-		  raiseatk=attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this);
-		  raisedef=attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this);
+		  lowerspeed=attacker.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this);
+		  raiseatk=attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this);
+		  raisedef=attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this);
 		  if (!lowerspeed && !raiseatk && !raisedef){
 				failed = true;
 		  }else{
 				pbShowAnimation((int)this.id, attacker, null, 1, alltargets, showanimation); // Non-Ghost move animation;
 			if (lowerspeed){
-			  attacker.pbReduceStat(PBStats::SPEED,1, attacker,false, this);
+			  attacker.pbReduceStat(Stats.SPEED,1, attacker,false, this);
 
 			}
 				showanim = true;
 			if (raiseatk){
-			  attacker.pbIncreaseStat(PBStats::ATTACK,1, attacker,false, this, showanim);
+			  attacker.pbIncreaseStat(Stats.ATTACK,1, attacker,false, this, showanim);
 
 					showanim = false;
 			}
 			if (raisedef){
-			  attacker.pbIncreaseStat(PBStats::DEFENSE,1, attacker,false, this, showanim);
+			  attacker.pbIncreaseStat(Stats.DEFENSE,1, attacker,false, this, showanim);
 
 					showanim = false;
 			}
@@ -8783,13 +8783,13 @@ public class Function
 		//battle.pbDisplay(_INTL("{1} stockpiled {2}!",attacker.pbThis,
 			attacker.effects.Stockpile));
 		bool showanim = true;
-		if (attacker.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  attacker.effects.StockpileDef+=1;
 			showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  attacker.effects.StockpileSpDef+=1;
 			showanim = false;
 		}
@@ -8818,16 +8818,16 @@ public class Function
 
 			bool showanim = true;
 		  if (attacker.effects.StockpileDef>0){
-			if (attacker.pbCanReduceStatStage?(PBStats::DEFENSE, attacker,false, this)){
+			if (attacker.pbCanReduceStatStage?(Stats.DEFENSE, attacker,false, this)){
 
-			  attacker.pbReduceStat(PBStats::DEFENSE, attacker.effects.StockpileDef,
+			  attacker.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
 				 attacker,false,this,showanim);
 					showanim = false;
 			}
 		  }
 		  if (attacker.effects.StockpileSpDef>0){
-			if (attacker.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-			  attacker.pbReduceStat(PBStats::SPDEF, attacker.effects.StockpileSpDef,
+			if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+			  attacker.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
 				 attacker,false,this,showanim);
 					showanim = false;
 			}
@@ -8879,15 +8879,15 @@ public class Function
 		}
 	bool showanim = true;
 		if (attacker.effects.StockpileDef>0){
-		  if (attacker.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::DEFENSE, attacker.effects.StockpileDef,
+		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+			attacker.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
 			   attacker,false,this,showanim);
 			showanim = false;
 		  }
 		}
 		if (attacker.effects.StockpileSpDef>0){
-		  if (attacker.pbCanReduceStatStage? (PBStats::SPDEF, attacker,false,this)){
-			attacker.pbReduceStat(PBStats::SPDEF, attacker.effects.StockpileSpDef,
+		  if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+			attacker.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
 			   attacker,false,this,showanim);
 			showanim = false;
 		  }
@@ -9385,18 +9385,18 @@ public class Function
 		foreach (var i in [attacker, attacker.Partner]){ 
 		if (!i || i.isFainted()) continue; //next
 		if (!i.hasWorkingAbility(Abilities.PLUS) && !i.hasWorkingAbility(Abilities.MINUS)) continue; //next 
-		  if (!i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this) &&
-				  !i.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)) continue; //next 
+		  if (!i.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this) &&
+				  !i.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)) continue; //next 
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation) ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			i.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+			i.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim)
 			showanim=false;
 		  }
-		  if (i.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-			i.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+			i.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim)
 			showanim=false;
 		  }
 		}
@@ -9417,13 +9417,13 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (!this.battle.doublebattle || opponent.Species == Pokemons.NONE ||
-		   !opponent.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
+		   !opponent.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		onject ret=attacker.pbIncreaseStat(PBStats::SPDEF,1,attacker,false,this);
+		onject ret=attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 	}
@@ -9440,10 +9440,10 @@ public class Function
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!opponent.pbCanReduceStatStage? (PBStats::ATTACK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		return ret ? 0 : -1;
 	  }
 	}
@@ -9462,8 +9462,8 @@ public class Function
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
 		  return -1;
 		}
-		if(opponent.pbTooLow? (PBStats::ATTACK) &&
-		   opponent.pbTooLow? (PBStats::SPATK)){
+		if(opponent.pbTooLow? (Stats.ATTACK) &&
+		   opponent.pbTooLow? (Stats.SPATK)){
 		   //battle.pbDisplay(_INTL("{1}'s stats won't go any lower!", opponent.pbThis))
 		  return -1;
 		}
@@ -9487,10 +9487,10 @@ public class Function
 			string abilityname = PBAbilities.getName(opponent.ability);
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!", opponent.pbThis, abilityname))
 		}
-		else if (opponent.pbReduceStat(PBStats::ATTACK,1, attacker,false, this, showanim)){
+		else if (opponent.pbReduceStat(Stats.ATTACK,1, attacker,false, this, showanim)){
 		  ret=0; showanim=false;
 		}
-		if (opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,this,showanim)){
+		if (opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this,showanim)){
 		  ret=0; showanim=false;
 		}
 		return ret;
@@ -9516,8 +9516,8 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::DEFENSE, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::DEFENSE,1,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.DEFENSE,1,attacker,false,this);
 		}
 	  }
 	}
@@ -9534,10 +9534,10 @@ public class Function
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 	}
@@ -9552,17 +9552,17 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-		if (!opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,this);
+		ret=opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,this)){
-		  opponent.pbReduceStat(PBStats::SPATK,2,attacker,false,this);
+		if (opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+		  opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 		}
 	  }
 	}
@@ -9581,18 +9581,18 @@ public class Function
 	 if (!i || i.isFainted()) continue; //next
 	 if (!i.hasType(Types.GRASS)) continue; //next
 		  if (i.isAirborne? (attacker.hasMoldBreaker())) continue; //next
-		    if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this) &&
-				  !i.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)) continue;//next
+		    if (!i.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
+				  !i.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)) continue;//next
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation) ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-			i.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			i.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim)
 			showanim = false;
 		  }
-		  if (i.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-			i.pbIncreaseStat(PBStats::SPATK,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+			i.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim)
 			showanim = false;
 		  }
 		}
@@ -9617,13 +9617,13 @@ public class Function
 		foreach (var i in [attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	if (!i || i.isFainted()) continue; //next
 	if (!i.hasType(Types.GRASS)) continue; //next
-		  if (!i.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)) continue; //next
+		  if (!i.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)) continue; //next
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation) ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanIncreaseStatStage? (PBStats::DEFENSE, attacker,false,this)){
-			i.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+			i.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim)
 			showanim = false;
 		  }
 		}
@@ -9648,23 +9648,23 @@ public class Function
 		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	if (!i || i.isFainted()) continue; //next
 	if (!i.status==Status.POISON) continue; //next
-	if (!i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,this) &&) continue; //next
-				  !i.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,this) &&
-				  !i.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)
+	if (!i.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this) &&) continue; //next
+				  !i.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this) &&
+				  !i.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation)  ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanReduceStatStage? (PBStats::ATTACK, attacker,false,this)){
-			i.pbReduceStat(PBStats::ATTACK,1,attacker,false,this,showanim)
+		  if (i.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+			i.pbReduceStat(Stats.ATTACK,1,attacker,false,this,showanim)
 			showanim = false;
 		  }
-		  if (i.pbCanReduceStatStage? (PBStats::SPATK, attacker,false,this)){
-			i.pbReduceStat(PBStats::SPATK,1,attacker,false,this,showanim)
+		  if (i.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+			i.pbReduceStat(Stats.SPATK,1,attacker,false,this,showanim)
 			showanim = false;
 		  }
-		  if (i.pbCanReduceStatStage? (PBStats::SPEED, attacker,false,this)){
-			i.pbReduceStat(PBStats::SPEED,1,attacker,false,this,showanim)
+		  if (i.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+			i.pbReduceStat(Stats.SPEED,1,attacker,false,this,showanim)
 			showanim = false;
 		  }
 		}
@@ -9685,8 +9685,8 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool nonzero = false;
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED, 
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED, 
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){
 		  if (opponent.stages[i]!=0){
 			nonzero=true; break;
 		  }
@@ -9696,8 +9696,8 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		foreach (var i in [PBStats::ATTACK, PBStats::DEFENSE, PBStats::SPEED,
-				  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
+		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
 	opponent.stages[i]*=-1;
 		}
 		//battle.pbDisplay(_INTL("{1}'s stats were reversed!", opponent.pbThis))
@@ -10105,25 +10105,25 @@ public class Function
 		  attacker.pbConsumeItem;
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
-		if (!attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPATK, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPATK,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPDEF, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPDEF,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPDEF,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (PBStats::SPEED, attacker,false,this)){
-		  attacker.pbIncreaseStat(PBStats::SPEED,2,attacker,false,this,showanim);
+		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this,showanim);
 		  showanim=false
 		}
 		return 0;
@@ -10171,8 +10171,8 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0 && opponent.isFainted()){
-		  if (attacker.pbCanIncreaseStatStage? (PBStats::ATTACK, attacker,false,this)){
-			attacker.pbIncreaseStat(PBStats::ATTACK,2,attacker,false,this);
+		  if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		  }
 		}
 		return ret;
@@ -10194,10 +10194,10 @@ public class Function
 		if (!this.isSoundBased? ||
 		   attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SOUNDPROOF)){
 			bool showanim = true;
-		  if (opponent.pbReduceStat(PBStats::ATTACK,1,attacker,false,this,showanim)){
+		  if (opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this,showanim)){
 			showanim=false; ret = 0;
 		  }
-		  if (opponent.pbReduceStat(PBStats::SPATK,1,attacker,false,this,showanim)){
+		  if (opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this,showanim)){
 			showanim=false; ret = 0;
 		  }
 		}
