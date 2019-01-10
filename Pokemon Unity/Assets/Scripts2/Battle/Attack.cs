@@ -774,7 +774,7 @@ public class Function
 		}
 		party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
 		for (int i = 0; i < party.length; i++){ 
-		  if (activepkmn.include? (i)) continue; //next
+		  if (activepkmn.Contains(i)) continue; //next
 		   if (!party[i] || party[i].egg? || party[i].HP<=0) continue; //next
 		  switch (party[i].Status) {
 		  case Status.PARALYSIS:
@@ -2165,7 +2165,7 @@ public class Function
 	public class PokeBattle_Move_04A : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true) { 
-		// Replicates public object pbCanReduceStatStage? so that certain messages aren't shown
+		// Replicates pbCanReduceStatStage? so that certain messages aren't shown
 		// multiple times
 		if (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)){
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
@@ -2755,10 +2755,10 @@ public class Function
 		List<Types> types = new List<Types>(); //[]
 		foreach (var i in attacker.moves){ 
 		  if (i.id==this.id) continue; //next
-		  if (PBTypes.isPseudoType? (i.type)) continue; //next
-		   if (attacker.pbHasType? (i.type)) continue; //next
-		  if (!types.Contains(i.type)){
-				types.Add(i.type);
+		  if (PBTypes.isPseudoType? (i.Type)) continue; //next
+		   if (attacker.pbHasType? (i.Type)) continue; //next
+		  if (!types.Contains(i.Type)){
+				types.Add(i.Type);
 			 if (Settings.USENEWBATTLEMECHANICS) break;
 		  }
 
@@ -2770,8 +2770,8 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		Types newtype = types[this.battle.pbRandom(types.Count)];
-		attacker.type1=newtype;
-		attacker.type2= newtype;
+		attacker.Type1=newtype;
+		attacker.Type2= newtype;
 
 		attacker.effects.Type3 = Types.NONE; //-1;
 
@@ -2823,8 +2823,8 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		Types newtype = types[this.battle.pbRandom(types.Count)];
-		attacker.type1=newtype;
-		attacker.type2= newtype;
+		attacker.Type1=newtype;
+		attacker.Type2= newtype;
 
 		attacker.effects.Type3 = Types.NONE; //-1;
 
@@ -2915,9 +2915,9 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		opponent.type1=Types.WATER;
+		opponent.Type1=Types.WATER;
 
-		opponent.type2=Types.WATER;
+		opponent.Type2=Types.WATER;
 
 		opponent.effects.Type3=-1;
 		typename = PBTypes.getName(Types.WATER);
@@ -2938,20 +2938,20 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		if (attacker.pbHasType? (opponent.type1) &&
-		   attacker.pbHasType? (opponent.type2) &&
+		if (attacker.pbHasType? (opponent.Type1) &&
+		   attacker.pbHasType? (opponent.Type2) &&
 		   attacker.pbHasType? (opponent.effects.Type3) &&
-		   opponent.pbHasType? (attacker.type1) &&
-		   opponent.pbHasType? (attacker.type2) &&
+		   opponent.pbHasType? (attacker.Type1) &&
+		   opponent.pbHasType? (attacker.Type2) &&
 		   opponent.pbHasType? (attacker.effects.Type3)){
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		attacker.type1=opponent.type1;
-		attacker.type2=opponent.type2;
-		attacker.effects.Type3= -1;
+		attacker.Type1=opponent.Type1;
+		attacker.Type2=opponent.Type2;
+		attacker.effects.Type3 = Types.NONE; //-1;
 
 		//battle.pbDisplay(_INTL("{1}'s type changed to match {2}'s!", attacker.pbThis, opponent.pbThis(true)))
 		return 0;
@@ -3226,7 +3226,7 @@ public class Function
 		   opponent.effects.Illusion ||
 		   (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)) ||
 		   opponent.effects.SkyDrop ||
-		   blacklist.include? ((int)new Move ((Moves)opponent.effects.TwoTurnAttack).Function)){
+		   blacklist.Contains(new Move ((Moves)opponent.effects.TwoTurnAttack).Function)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -3237,9 +3237,9 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		attacker.effects.Transform=true;
-		attacker.type1=opponent.type1;
-		attacker.type2=opponent.type2;
-		attacker.effects.Type3= -1;
+		attacker.Type1=opponent.Type1;
+		attacker.Type2=opponent.Type2;
+		attacker.effects.Type3 = Types.NONE; //-1;
 
 		attacker.ability= opponent.ability;
 
@@ -3758,7 +3758,7 @@ public class Function
 	public class PokeBattle_Move_081 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.lastHPLost>0 && attacker.lastAttacker.include? (opponent.index)){
+		if (attacker.lastHPLost>0 && attacker.lastAttacker.Contains(opponent.index)){
 		  return basedmg*2;
 		}
 		return basedmg;
@@ -4137,7 +4137,7 @@ public class Function
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true)
 	  {
 		this.calcbasedmg = 1;
-		r = this.battle.pbRandom((this.forcedamage) ? 8 : 10);
+		byte r = this.battle.pbRandom((this.forcedamage) ? 8 : 10);
 		if (r < 4)
 			this.calcbasedmg = 40;
 		else if (r < 7)
@@ -4153,9 +4153,9 @@ public class Function
 				//battle.pbDisplay(_INTL("But it failed!"))
 				return -1;
 		  }
-		  damage = pbCalcDamage(attacker, opponent) // Consumes Gems even if it will heal
-		  pbShowAnimation((int)this.id, attacker, opponent,1, alltargets, showanimation) // Healing animation;
-		  opponent.pbRecoverHP(Math.Floor(opponent.TotalHP/4),true);
+			int damage = pbCalcDamage(attacker, opponent); // Consumes Gems even if it will heal
+			pbShowAnimation((int)this.id, attacker, opponent, 1, alltargets, showanimation); // Healing animation;
+		  opponent.pbRecoverHP(Math.Floor(opponent.TotalHP/4f),true);
 		  //battle.pbDisplay(_INTL("{1} had its HP restored.",opponent.pbThis))   
 			return 0;
 		}
@@ -4173,8 +4173,8 @@ public class Function
 	{
 		public object pbOnStartUse(Battle.Battler attacker){
 
-		basedmg=[10,30,50,70,90,110,150]
-		magnitudes=[
+		byte[] basedmg = new byte[] { 10, 30, 50, 70, 90, 110, 150 };
+		byte[] magnitudes = new byte[] {
 		   4,
 		   5,5,
 		   6,6,6,6,
@@ -4182,8 +4182,8 @@ public class Function
 		   8,8,8,8,
 		   9,9,
 		   10
-		]
-		magni=magnitudes[this.battle.pbRandom(magnitudes.length)]
+		};
+		byte magni=magnitudes[this.battle.pbRandom(magnitudes.length)]
 		this.calcbasedmg = basedmg[magni - 4];
 
 		//battle.pbDisplay(_INTL("Magnitude {1}!",magni))
@@ -4192,7 +4192,7 @@ public class Function
 
 	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
-		ret=this.calcbasedmg;
+		object ret=this.calcbasedmg;
 		if ((int)new Move ((Moves)opponent.effects.TwoTurnAttack).Function==0xCA){ // Dig
 		  ret*=2;
 		}
@@ -4852,7 +4852,7 @@ public class Function
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
 		]
-		if (!ratesharers.include? ((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
+		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
 		unmoved = false;
@@ -4900,7 +4900,7 @@ public class Function
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
 		]
-		if (!ratesharers.include? ((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
+		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
 		unmoved = false;
@@ -4952,7 +4952,7 @@ public class Function
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
 		]
-		if (!ratesharers.include? ((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
+		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
 		unmoved = false;
@@ -5070,7 +5070,7 @@ public class Function
 		  ]
 	}
 		if (this.battle.lastMoveUsed<=0 ||
-		   blacklist.include? ((int)new Move ((Moves)this.battle.lastMoveUsed).Function)){
+		   blacklist.Contains((int)new Move ((Moves)this.battle.lastMoveUsed).Function)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -5103,7 +5103,7 @@ public class Function
 		   opponent.hasMovedThisRound? ||
 		   !oppmove || oppmove.id<=0 ||
 		   oppmove.pbIsStatus? ||
-		   blacklist.include? (oppmove.function)){
+		   blacklist.Contains(oppmove.function)){
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -5255,7 +5255,7 @@ public class Function
 		for (int i = 0; i < 4; i++){ 
 		  found=false
 		  if (attacker.moves[i].id==0) continue; //next
-		  found=true if blacklist.include? (attacker.moves[i].function)
+		  found=true if blacklist.Contains(attacker.moves[i].function)
 		  if (found) continue; //next
 		  choices.push(i) if this.battle.pbCanChooseMove? (attacker.index, i,false,true)
 		}
@@ -6434,19 +6434,19 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D3 : PokeBattle_Move
 	{
-		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		shift = (4 - attacker.effects.Rollout) // from 0 through 4, 0 is most powerful
-		shift+=1 if attacker.effects.DefenseCurl
-		basedmg = basedmg << shift
+		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
+		byte shift = (byte)(4 - attacker.effects.Rollout); // from 0 through 4, 0 is most powerful
+		if (attacker.effects.DefenseCurl) shift += 1;
+		basedmg = basedmg << shift;
 		return basedmg;
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		attacker.effects.Rollout=5 if attacker.effects.Rollout==0;
+		if (attacker.effects.Rollout==0)attacker.effects.Rollout=5 ;
 		attacker.effects.Rollout-=1;
 		attacker.currentMove=thismove.id;
-		ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage==0 ||
 		   pbTypeModifier(this.type, attacker, opponent)==0 || 
 		   attacker.Status==Status.SLEEP){
@@ -6475,19 +6475,19 @@ public class Function
 		  attacker.currentMove=this.id;
 		  pbShowAnimation((int)this.id, attacker, null);
 		  return 1;
-		else
+		}else{
 		  attacker.effects.Bide-=1;
 		  if (attacker.effects.Bide==0){
 			//battle.pbDisplayBrief(_INTL("{1} unleashed energy!",attacker.pbThis))
 			return 0;
-		  else
+		  }else{
 			//battle.pbDisplayBrief(_INTL("{1} is storing energy!",attacker.pbThis))
 			return 2;
 		  }
 		}
 	  }
 
-	  public object pbAddTarget(targets, Battle.Battler attacker){
+	  public object pbAddTarget(byte targets, Battle.Battler attacker){
 		if (attacker.effects.BideTarget>=0){
 		  if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.BideTarget])){
 			attacker.pbRandomTarget(targets);
@@ -6499,19 +6499,19 @@ public class Function
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (attacker.effects.BideDamage==0 || !opponent){
+		if (attacker.effects.BideDamage==0 || opponent.Species == Pokemons.NONE){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		if (Settings.USENEWBATTLEMECHANICS){
-		  typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent)
+			Types typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent);
 		  if (typemod==0){
 			//battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 			return -1;
 		  }
 		}
 
-		ret=pbEffectFixedDamage(attacker.effects.BideDamage*2, attacker, opponent, hitnum, alltargets, showanimation);
+		object ret=pbEffectFixedDamage(attacker.effects.BideDamage*2, attacker, opponent, hitnum, alltargets, showanimation);
 		return ret;
 	  }
 	}
@@ -9265,8 +9265,8 @@ public class Function
 	public class PokeBattle_Move_123 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (!opponent.pbHasType? (attacker.type1) &&
-		   !opponent.pbHasType? (attacker.type2) &&
+		if (!opponent.pbHasType? (attacker.Type1) &&
+		   !opponent.pbHasType? (attacker.Type2) &&
 		   !opponent.pbHasType? (attacker.effects.Type3)){
 		   //battle.pbDisplay(_INTL("{1} was unaffected!", opponent.pbThis))
 		  return -1;
@@ -9464,7 +9464,7 @@ public class Function
 	public class PokeBattle_Move_13A : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation = true) { 
-		// Replicates public object pbCanReduceStatStage? so that certain messages aren't shown
+		// Replicates pbCanReduceStatStage? so that certain messages aren't shown
 		// multiple times
 		if(opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)){
 		   //battle.pbDisplay(_INTL("{1}'s attack missed!", attacker.pbThis))
@@ -9781,13 +9781,13 @@ public class Function
 		type = Types.FLYING || -1
 		if (type>=0){
 		  mult=PBTypes.getCombinedEffectiveness(type,
-			 opponent.type1, opponent.type2, opponent.effects.Type3);
+			 opponent.Type1, opponent.Type2, opponent.effects.Type3);
 		  return (int)Math.Round((damagemult* mult)/8);
 		 }
 		return damagemult;
 	  }
 
-	  public object tramplesMinimize? (param=1){
+	  public object tramplesMinimize (byte param=1){
 		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
 		return false;
@@ -10077,7 +10077,7 @@ public class Function
 		return ret;
 	  }
 
-	  public object tramplesMinimize? (byte param=1){
+	  public object tramplesMinimize (byte param=1){
 		if (param==1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 		if (param==2) return true; // Double damage
 		return false;

@@ -99,7 +99,7 @@ public class Effects
 		public bool Rage               { get; set; }
 		public int Revenge            { get; set; }
 		public bool Roar               { get; set; }
-		public int Rollout            { get; set; }
+		public byte Rollout            { get; set; }
 		public bool Roost              { get; set; }
 		/// <summary>
 		/// For when using Poké Balls/Poké Dolls

@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+/// <summary>
+/// </summary>
+/// ToDo: Create a battle namespace?
 public class Battle : UnityUtilityIntegration
 {
 	#region Variables
@@ -830,6 +833,7 @@ public class Battle : UnityUtilityIntegration
 	/// to prevent changes from being permanent to original pokemon profile
 	/// </summary>
 	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
+	/// ToDo: If battle namespace, rename back to pokemon? is "battler" (battle only) too confusing?
 	public class Battler : Pokemon
 	{
 		#region Variables
@@ -880,7 +884,8 @@ public class Battle : UnityUtilityIntegration
 		public InBattleMove currentMove { get; private set; }
 		public Moves lastMoveUsed { get; private set; }
 		public Types lastMoveUsedType { get; private set; }
-
+		//ToDo: Types public get;set;
+		//ToDo: create private fields of stats
 		public override int ATK { get { return effects.PowerTrick ? DEF : base.ATK; } }
 		public override int DEF {
 			get
