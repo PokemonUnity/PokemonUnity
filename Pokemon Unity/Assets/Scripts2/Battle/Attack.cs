@@ -2601,8 +2601,8 @@ public class Function
 		oldo = opponent.HP
 
 		avhp= Math.Floor((attacker.HP+opponent.HP)/2)
-		attacker.HP=[avhp, attacker.TotalHP].min;
-		opponent.HP=[avhp, opponent.TotalHP].min;
+		attacker.HP=Math.Min(avhp, attacker.TotalHP);
+		opponent.HP=Math.Min(avhp, opponent.TotalHP);
 
 		this.battle.scene.pbHPChanged(attacker, olda);
 		this.battle.scene.pbHPChanged(opponent, oldo);
@@ -3306,7 +3306,7 @@ public class Function
 	public class PokeBattle_Move_06C : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		return pbEffectFixedDamage([Math.Floor(opponent.HP / 2),1].max, attacker, opponent, hitnum, alltargets, showanimation);
+		return pbEffectFixedDamage(Math.Max(Math.Floor(opponent.HP / 2f),1), attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -3403,7 +3403,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		ret = pbEffectFixedDamage([attacker.effects.Counter * 2, 1].max, attacker, opponent, hitnum, alltargets, showanimation);
+		ret = pbEffectFixedDamage(Math.Max(attacker.effects.Counter * 2, 1), attacker, opponent, hitnum, alltargets, showanimation);
 		return ret;
 	  }
 	}
@@ -3430,7 +3430,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		ret = pbEffectFixedDamage([attacker.effects.MirrorCoat * 2, 1].max, attacker, opponent, hitnum, alltargets, showanimation);
+		ret = pbEffectFixedDamage(Math.Max(attacker.effects.MirrorCoat * 2, 1), attacker, opponent, hitnum, alltargets, showanimation);
 		return ret;
 	  }
 	}
@@ -3461,7 +3461,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		ret = pbEffectFixedDamage([Math.Floor(attacker.lastHPLost * 1.5f), 1].max, attacker, opponent, hitnum, alltargets, showanimation);
+		ret = pbEffectFixedDamage(Math.Max(Math.Floor(attacker.lastHPLost * 1.5f), 1), attacker, opponent, hitnum, alltargets, showanimation);
 		return ret;
 	  }
 	}
@@ -3933,7 +3933,7 @@ public class Function
 	public class PokeBattle_Move_089 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [Math.Floor(attacker.happiness * 2 / 5),1].max;
+			return Math.Max(Math.Floor(attacker.happiness * 2 / 5),1);
 		}
 	}
 
@@ -3945,7 +3945,7 @@ public class Function
 	public class PokeBattle_Move_08A : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [Math.Floor((255 - attacker.happiness) * 2 / 5),1].max;
+			return Math.Max(Math.Floor((255 - attacker.happiness) * 2 / 5),1);
 		}
 	}
 
@@ -3957,7 +3957,7 @@ public class Function
 	public class PokeBattle_Move_08B : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [Math.Floor(150 * attacker.HP / attacker.TotalHP),1].max;
+			return Math.Max(Math.Floor(150 * attacker.HP / attacker.TotalHP),1);
 		}
 	}
 
@@ -3969,7 +3969,7 @@ public class Function
 	public class PokeBattle_Move_08C : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [Math.Floor(120 * opponent.HP / opponent.TotalHP),1].max;
+			return Math.Max(Math.Floor(120 * opponent.HP / opponent.TotalHP),1);
 		}
 	}
 
@@ -3981,7 +3981,7 @@ public class Function
 	public class PokeBattle_Move_08D : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-			return [[Math.Floor(25 * opponent.pbSpeed / attacker.pbSpeed),150].min,1].max;
+			return Math.Max(Math.Min(Math.Floor(25 * opponent.pbSpeed / attacker.pbSpeed),150),1);
 		}
 	}
 
@@ -4018,7 +4018,7 @@ public class Function
 					  PBStats::SPATK, PBStats::SPDEF, PBStats::ACCURACY, PBStats::EVASION]){ 
 				mult+=opponent.stages[i] if opponent.stages[i]>0
 			}
-			return [20*mult,200].min;
+			return Math.Min(20*mult,200);
 		}
 	}
 
@@ -4316,7 +4316,7 @@ public class Function
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		dmgs =[200, 80, 60, 50, 40]
 
-		ppleft=[this.pp,4].min   // PP is reduced before the move is used
+		ppleft = Math.Min(this.pp, 4);  // PP is reduced before the move is used
 		basedmg = dmgs[ppleft]
 		return basedmg;
 	  }
@@ -4330,7 +4330,7 @@ public class Function
 	public class PokeBattle_Move_098 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		n = Math.Floor(48 * attacker.HP / attacker.TotalHP)
+		byte n = (byte)Math.Floor(48f * attacker.HP / attacker.TotalHP);
 
 		ret=20;
 		if (n<33) ret=40 ; 
@@ -4350,7 +4350,7 @@ public class Function
 	public class PokeBattle_Move_099 : PokeBattle_Move
 	{
 		public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		n = Math.Floor([attacker.pbSpeed, 1].max /[opponent.pbSpeed, 1].max)
+		n = Math.Floor(Math.Max(attacker.pbSpeed, 1) /Math.Max(opponent.pbSpeed, 1))
 
 		ret=60;
 		if (n>=2) ret=80 ;
@@ -8560,7 +8560,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} already has a substitute!",attacker.pbThis))
 		  return -1;
 		}
-		sublife =[Math.Floor(attacker.TotalHP / 4), 1].max
+		sublife =Math.Max(Math.Floor(attacker.TotalHP / 4f), 1)
 		if (attacker.HP<=sublife){
 		  //battle.pbDisplay(_INTL("It was too weak to make a substitute!"))
 		  return -1  ;
@@ -8646,7 +8646,7 @@ public class Function
 		  if (i.id==opponent.lastMoveUsed && i.id>0 && i.pp>0){
 			pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			reduction=[4, i.pp].min
+			reduction=Math.Min(4, i.pp)
 	opponent.pbSetPP(i, i.pp-reduction);
 
 			//battle.pbDisplay(_INTL("It reduced the PP of {1}'s {2} by {3}!",opponent.pbThis(true),i.name,reduction))
