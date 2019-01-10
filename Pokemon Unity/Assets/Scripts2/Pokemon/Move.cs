@@ -13,7 +13,7 @@ public partial class Move //: MoveData
 	/// <summary>
 	/// The amount of PP remaining for this move
 	/// </summary>
-	public int PP { get; private set; }
+	public byte PP { get; private set; }
 	/// <summary>
 	/// Gets the maximum PP for this move.
 	/// </summary>
@@ -1925,7 +1925,7 @@ public partial class Move //: MoveData
 		/// </summary>
 		public int Accuracy { get; private set; }
 		public int BaseDamage { get; private set; }
-		public int PP { get; private set; }
+		public byte PP { get; private set; }
 		public int Priority { get; private set; }
 		public Flags Flags { get; private set; }
 		public Target Target { get; private set; }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PokemonUnity;
+using PokemonUnity.Move;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +41,7 @@ public class Effects
 		public bool Foresight          { get; set; }
 		public int FuryCutter         { get; set; }
 		public int FutureSight        { get; set; }
-		public int FutureSightMove    { get; set; }
+		public Moves FutureSightMove    { get; set; }
 		public int FutureSightUser    { get; set; }
 		public int FutureSightUserPos { get; set; }
 		public bool GastroAcid         { get; set; }
@@ -120,7 +122,7 @@ public class Effects
 		public bool Transform          { get; set; }
 		public bool Truant             { get; set; }
 		public int TwoTurnAttack      { get; set; }
-		public PokemonUnity.Types Type3              { get; set; }
+		public Types Type3              { get; set; }
 		public bool Unburden           { get; set; }
 		public int Uproar             { get; set; }
 		public bool Uturn              { get; set; }

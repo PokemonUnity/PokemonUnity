@@ -2062,7 +2062,7 @@ public class Battle : UnityUtilityIntegration
 		new public Target Targets				{ get; set; }
 		new public Types Type					{ get; set; }
 		new public Flags Flag					{ get; set; }
-		new public int PP						{ get; set; }
+		new public byte PP						{ get; set; }
 		new public int TotalPP					{ get; set; }
 		/// <summary>
 		/// The probability that the move's additional effect occurs, as a percentage. 
@@ -2156,7 +2156,7 @@ public class Battle : UnityUtilityIntegration
 					BaseDamage = 40;
 					Type = Types.NONE;
 					Accuracy = 100;
-					PP = -1;
+					PP = 0; //-1;
 					//TotalPP	= ;
 					AddlEffect = 0;
 					Targets = Target.NoTarget;
