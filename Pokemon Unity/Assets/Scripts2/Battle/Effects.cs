@@ -93,7 +93,7 @@ public class Effects
 		public bool PowerTrick         { get; set; }
 		public bool Protect            { get; set; }
 		public bool ProtectNegation    { get; set; }
-		public int ProtectRate        { get; set; }
+		public short ProtectRate        { get; set; }
 		public bool Pursuit            { get; set; }
 		public bool Quash              { get; set; }
 		public bool Rage               { get; set; }

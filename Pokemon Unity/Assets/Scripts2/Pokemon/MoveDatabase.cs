@@ -10,6 +10,7 @@ public partial class Move
 {
 	public partial class MoveData
 	{
+		public static int Count { get { return Database.Length; } }
 		private static readonly MoveData[] Database;
 		static MoveData()
 		{

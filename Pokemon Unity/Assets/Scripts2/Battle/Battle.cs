@@ -167,7 +167,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Items held by opponents
 	/// </summary>
-	public string items { get; private set; }
+	public List<Items> items { get; private set; }
 	/// <summary>
 	/// Effects common to each side of a battle
 	/// </summary>
@@ -188,7 +188,7 @@ public class Battle : UnityUtilityIntegration
 	/// ToDo: Might be a static get value from global/map variables.
 	//public void Environment (PokemonUnity.Environment environment) { this.environment = environment; }
 	public PokemonUnity.Environment environment { get; set; }
-	private Weather weather { get; set; }
+	public Weather weather { get; set; }
 	/// <summary>
 	/// Current weather, custom methods should use <see cref="SetWeather"/>  instead
 	/// </summary>
@@ -239,7 +239,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Battle index of each trainer's Pokémon to Mega Evolve
 	/// </summary>
-	public string megaEvolution { get; private set; }
+	public sbyte[] megaEvolution { get; private set; }
 	/// <summary>
 	/// Whether Amulet Coin's effect applies
 	/// </summary>
@@ -255,7 +255,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Speech by opponent when player wins
 	/// </summary>
-	public string endspeech { get; private set; }
+	public string endspeech { get { return opponent.ScriptBattleEnd; } }
 	/// <summary>
 	/// Speech by opponent when player wins
 	/// </summary>
@@ -277,15 +277,15 @@ public class Battle : UnityUtilityIntegration
 	/// </summary>
 	public byte turncount { get; private set; }
 	public int[] priority { get; private set; }
-	public List<int> snaggedpokemon { get; private set; }
+	public List<byte> snaggedpokemon { get; private set; }
 	/// <summary>
 	/// Each time you use the option to flee, the counter goes up.
 	/// </summary>
-	public int runCommand { get; private set; }
+	public byte runCommand { get; private set; }
 	/// <summary>
 	/// Another counter that has something to do with tracking items picked up during a battle
 	/// </summary>
-	public int nextPickupUse { get; private set; }
+	public byte nextPickupUse { get; private set; }
 	//attr_accessor :controlPlayer
 	private Player Player { get; set; }
 
@@ -419,13 +419,13 @@ public class Battle : UnityUtilityIntegration
 
 		battlers = new Battler[4];
 
-		items = null;
+		items = new List<Items>(); //null;
 
 		//sides = [PokeBattle_ActiveSide.new,				// Player's side
 		//                   PokeBattle_ActiveSide.new]		// Foe's side
-		sides = new Effects.Side[4];                  //ToDo: Not sure if it's 2 sides, or 4 sides (foreach pokemon)
-		field = new Effects.Field();						// Whole field (gravity/rooms)
-		//environment     = PBEnvironment::None				// e.g. Tall grass, cave, still water
+		sides = new Effects.Side[4];						//ToDo: Not sure if it's 2 sides, or 4 sides (foreach pokemon)
+		field = new Effects.Field();                        // Whole field (gravity/rooms)
+		environment = PokemonUnity.Environment.None;		// e.g. Tall grass, cave, still water
 		weather = 0;
 
 		weatherduration = 0;
@@ -447,17 +447,17 @@ public class Battle : UnityUtilityIntegration
 
 		lastMoveUser = -1;
 
-		//nextPickupUse = 0
+		nextPickupUse = 0;
 
-		//megaEvolution = []
-		//if player.is_a ? (Array)
-		//	megaEvolution[0] =[-1] * player.Length
+		//megaEvolution = [] //list, [2,], or [2][]...
+		//if player.is_a ? (Array) //ToDo: single/double or party?
+		//	megaEvolution[0] =[-1] * player.Length;
 		//else
-		//	megaEvolution[0] =[-1]
+		//	megaEvolution[0] =[-1];
 		//if opponent.is_a ? (Array)
-		//	megaEvolution[1] =[-1] * opponent.Length
+		//	megaEvolution[1] =[-1] * opponent.Length;
 		//else
-		//	megaEvolution[1] =[-1]
+		//	megaEvolution[1] =[-1];
 
 		amuletcoin = false;
 
@@ -465,13 +465,13 @@ public class Battle : UnityUtilityIntegration
 
 		doublemoney = false;
 
-		endspeech = "";
-
-		endspeech2 = "";
-
-		endspeechwin = "";
-
-		endspeechwin2 = "";
+		//endspeech = opponent.ScriptBattleEnd;
+		//
+		//endspeech2 = "";
+		//
+		//endspeechwin = "";
+		//
+		//endspeechwin2 = "";
 
 		rules = new List<string>() { };
 		turncount = 0;
@@ -482,9 +482,9 @@ public class Battle : UnityUtilityIntegration
 
 		//usepriority = false
 
-		snaggedpokemon = new List<int>();
+		snaggedpokemon = new List<byte>();
 
-		//runCommand = 0;
+		runCommand = 0;
 
 		if (Moves.STRUGGLE.GetType() == typeof(Moves))
 			struggle = new InBattleMove(Moves.STRUGGLE);//PokeBattle_Move.pbFromPBMove(Moves.STRUGGLE);
@@ -493,9 +493,9 @@ public class Battle : UnityUtilityIntegration
 
 		//struggle.PP = -1;
 
-		for (int i = 0; i < 4; i++)
+		for (byte i = 0; i < 4; i++)
 		{
-			battlers[i] = new Battler().Initialize(new Pokemon(), i);
+			battlers[i] = new Battler().Initialize(new Pokemon(), (sbyte)i);
 		}
 
 		foreach (var i in party1)
@@ -837,7 +837,7 @@ public class Battle : UnityUtilityIntegration
 		/// <summary>
 		/// Participants will earn Exp. Points if this battler is defeated
 		/// </summary>
-		public List<int> participants { get; private set; }
+		public List<byte> participants { get; private set; }
 		#region Move to PokemonBattle Class
 		/// <summary>
 		/// Consumed held item (used in battle only)
@@ -872,14 +872,14 @@ public class Battle : UnityUtilityIntegration
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
-		public int Index { get; private set; }
+		public sbyte Index { get; private set; }
 		//[Obsolete]
 		//private int Index { get { return this.battle.battlers.Length; } }
 		public bool IsOwned { get { return battle.Player.playerPokedex2[_base.ArrayId, 1] == 1; } }
 		private Pokemon pokemon { get; set; }
 		public InBattleMove currentMove { get; private set; }
 		public Moves lastMoveUsed { get; private set; }
-		public int lastMoveUsedType { get; private set; }
+		public Types lastMoveUsedType { get; private set; }
 
 		public override int ATK { get { return effects.PowerTrick ? DEF : base.ATK; } }
 		public override int DEF {
@@ -975,7 +975,7 @@ public class Battle : UnityUtilityIntegration
 		/// <param name="index"></param>
 		/// <param name="batonpass"></param>
 		/// <returns></returns>
-		public Battler Initialize(Pokemon pkmn, int index, bool batonpass = false) //: base(pkmn)
+		public Battler Initialize(Pokemon pkmn, sbyte index, bool batonpass = false) //: base(pkmn)
 		{
 			//Cure status of previous Pokemon with Natural Cure
 			if (this.hasWorkingAbility(Abilities.NATURAL_CURE))
@@ -1059,7 +1059,7 @@ public class Battle : UnityUtilityIntegration
 			//Pokemon blank = new Pokemon();
 			//Level = 0;
 			//pokemonIndex = -1;
-			participants = new List<int>();
+			participants = new List<byte>();
 		}
 		private void InitEffects(bool batonpass)
 		{
@@ -1122,7 +1122,7 @@ public class Battle : UnityUtilityIntegration
 			lastHPLost				 = 0;
 			tookDamage				 = false;
 			lastMoveUsed			 = Moves.NONE;
-			lastMoveUsedType		 = -1;
+			lastMoveUsedType		 = Types.NONE; //-1;
 			lastRoundMoved			 = -1;
 			movesUsed				 = new List<Moves>();
 			battle.turncount		 = 0;
@@ -1202,7 +1202,7 @@ public class Battle : UnityUtilityIntegration
 			effects.Transform        = false;
 			effects.Truant           = false;
 			effects.TwoTurnAttack    = 0;
-			effects.Type3            = -1;
+			effects.Type3            = Types.NONE; //-1;
 			effects.Unburden         = false;
 			effects.Uproar           = 0;
 			effects.Uturn            = false;
@@ -1247,7 +1247,7 @@ public class Battle : UnityUtilityIntegration
 			effects.WishAmount         = 0	  ;
 			effects.WishMaker          = -1	  ;
 		}
-		private void InitPokemon(Pokemon pkmn, int pkmnIndex)
+		private void InitPokemon(Pokemon pkmn, sbyte pkmnIndex)
 		{
 			if (pkmn.isEgg)
 			{
@@ -1277,7 +1277,7 @@ public class Battle : UnityUtilityIntegration
 				//StatusCount	= pkmn.StatusCount
 				pokemon			= pkmn;
 				Index			= pkmnIndex;
-				participants	= new List<int>();
+				participants	= new List<byte>();
 				moves			= new InBattleMove[] {
 					(InBattleMove)base.moves[0],
 					(InBattleMove)base.moves[1],
@@ -1348,9 +1348,9 @@ public class Battle : UnityUtilityIntegration
 						if (participants[i] == battle.battlers[4].Index) found2 = true;
 					}
 					if (!found1 && !battle.battlers[3].isFainted())
-						participants.Add(battle.battlers[3].Index);
+						participants.Add((byte)battle.battlers[3].Index);
 					if (!found2 && !battle.battlers[4].isFainted())
-						participants.Add(battle.battlers[4].Index);
+						participants.Add((byte)battle.battlers[4].Index);
 				}
 			}
 		}
@@ -1400,7 +1400,7 @@ public class Battle : UnityUtilityIntegration
 		public new bool hasType(Types type) {
 			if (type == Types.NONE || type < 0) return false;
 			bool ret = (this.Type1 == type || this.Type2 == type);
-			if (effects.Type3 >= 0) ret |= (effects.Type3 == (int)type);
+			if (effects.Type3 >= 0) ret |= (effects.Type3 == type);
 			return ret;
 		}
 

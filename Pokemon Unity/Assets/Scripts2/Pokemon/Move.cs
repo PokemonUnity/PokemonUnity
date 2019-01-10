@@ -40,6 +40,7 @@ public partial class Move //: MoveData
 	public string FunctionAsString { get { return _base.FunctionAsString; } }
 	public string Name { get { return _base.Name; } }
 	public string Description { get { return _base.Description; } }
+	public static int MaxValue { get { return MoveData.Count; } }
 	#endregion
 
 	//public Move() { }
