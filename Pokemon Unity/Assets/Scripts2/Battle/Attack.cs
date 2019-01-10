@@ -2100,21 +2100,21 @@ public class Function
 		opponent.OwnSide.StickyWeb   = false;
 		opponent.OwnSide.ToxicSpikes = 0;
 		if (Settings.USENEWBATTLEMECHANICS){
-		  opponent.pbOpposingSide.effects.Reflect     = 0;
+		  opponent.OpposingSide.effects.Reflect     = 0;
 
-		  opponent.pbOpposingSide.effects.LightScreen = 0;
+		  opponent.OpposingSide.effects.LightScreen = 0;
 
-		  opponent.pbOpposingSide.effects.Mist        = 0;
+		  opponent.OpposingSide.effects.Mist        = 0;
 
-		  opponent.pbOpposingSide.effects.Safeguard   = 0;
+		  opponent.OpposingSide.effects.Safeguard   = 0;
 
-		  opponent.pbOpposingSide.effects.Spikes      = 0;
+		  opponent.OpposingSide.effects.Spikes      = 0;
 
-		  opponent.pbOpposingSide.effects.StealthRock = false;
+		  opponent.OpposingSide.effects.StealthRock = false;
 
-		  opponent.pbOpposingSide.effects.StickyWeb   = false;
+		  opponent.OpposingSide.effects.StickyWeb   = false;
 
-		  opponent.pbOpposingSide.effects.ToxicSpikes = 0;
+		  opponent.OpposingSide.effects.ToxicSpikes = 0;
 
 		}
 		return 0;
@@ -2137,21 +2137,21 @@ public class Function
 		opponent.OwnSide.StickyWeb   = false;
 		opponent.OwnSide.ToxicSpikes = 0;
 		if (Settings.USENEWBATTLEMECHANICS){
-		  opponent.pbOpposingSide.effects.Reflect     = 0;
+		  opponent.OpposingSide.effects.Reflect     = 0;
 
-		  opponent.pbOpposingSide.effects.LightScreen = 0;
+		  opponent.OpposingSide.effects.LightScreen = 0;
 
-		  opponent.pbOpposingSide.effects.Mist        = 0;
+		  opponent.OpposingSide.effects.Mist        = 0;
 
-		  opponent.pbOpposingSide.effects.Safeguard   = 0;
+		  opponent.OpposingSide.effects.Safeguard   = 0;
 
-		  opponent.pbOpposingSide.effects.Spikes      = 0;
+		  opponent.OpposingSide.effects.Spikes      = 0;
 
-		  opponent.pbOpposingSide.effects.StealthRock = false;
+		  opponent.OpposingSide.effects.StealthRock = false;
 
-		  opponent.pbOpposingSide.effects.StickyWeb   = false;
+		  opponent.OpposingSide.effects.StickyWeb   = false;
 
-		  opponent.pbOpposingSide.effects.ToxicSpikes = 0;
+		  opponent.OpposingSide.effects.ToxicSpikes = 0;
 
 		}
 	  }
@@ -3587,7 +3587,7 @@ public class Function
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true)
-
+	{ 
 		this.doubled=false;
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
@@ -3596,11 +3596,11 @@ public class Function
 		return ret;
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (opponent.damagestate.Critical || this.doubled){
-		  return super(id, attacker, opponent,1, alltargets, showanimation); // Charged anim;
+		  return base.pbShowAnimation(id, attacker, opponent,1, alltargets, showanimation); // Charged anim;
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -3628,11 +3628,11 @@ public class Function
 		return ret;
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (opponent.damagestate.Critical || this.doubled){
-		  return super(id, attacker, opponent,1, alltargets, showanimation); // Charged anim;
+		  return base.pbShowAnimation(id, attacker, opponent,1, alltargets, showanimation); // Charged anim;
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -6842,23 +6842,23 @@ public class Function
 	{
 		public object pbOnStartUse(Battle.Battler attacker){
 		if (!attacker.hasMoldBreaker()){
-		  bearer = this.battle.pbCheckGlobalAbility(:DAMP)
+			bearer = this.battle.pbCheckGlobalAbility(Abilities.DAMP);
 		  if (bearer!=null){
 			//battle.pbDisplay(_INTL("{1}'s {2} prevents {3} from using {4}!",
-			   bearer.pbThis, PBAbilities.getName(bearer.ability), attacker.pbThis(true),this.name))
+			//   bearer.pbThis, PBAbilities.getName(bearer.ability), attacker.pbThis(true),this.name))
 			return false;
 		  }
 		}
 		return true;
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		super(id, attacker, opponent, hitnum, alltargets, showanimation)
+		base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted()){
 		  attacker.ReduceHP(attacker.HP);
 
-		  attacker.pbFaint if attacker.isFainted();
+		  if (attacker.isFainted())attacker.pbFaint();
 		}
 	  }
 	}
@@ -6872,22 +6872,22 @@ public class Function
 	public class PokeBattle_Move_0E1 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		typemod=pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent)
+		typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent);
 		if (typemod==0){
 		  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 		  return -1;
 		}
-		ret = pbEffectFixedDamage(attacker.HP, attacker, opponent, hitnum, alltargets, showanimation);
+		object ret = pbEffectFixedDamage(attacker.HP, attacker, opponent, hitnum, alltargets, showanimation);
 		return ret;
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Movesid, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		super(id, attacker, opponent, hitnum, alltargets, showanimation)
+		base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted()){
 		  attacker.ReduceHP(attacker.HP);
 
-		  attacker.pbFaint if attacker.isFainted();
+		   if (attacker.isFainted())attacker.pbFaint();
 		}
 	  }
 	}
@@ -8082,13 +8082,13 @@ public class Function
 	public class PokeBattle_Move_103 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (attacker.pbOpposingSide.effects.Spikes>=3){
+		if (attacker.OpposingSide.effects.Spikes>=3){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.pbOpposingSide.effects.Spikes+=1;
+		attacker.OpposingSide.effects.Spikes+=1;
 		if (!this.battle.pbIsOpposing? (attacker.index)){
 		   //battle.pbDisplay(_INTL("Spikes were scattered all around the opposing team's feet!"))
 		else
@@ -8107,16 +8107,16 @@ public class Function
 	public class PokeBattle_Move_104 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (attacker.pbOpposingSide.effects.ToxicSpikes>=2){
+		if (attacker.OpposingSide.effects.ToxicSpikes>=2){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.pbOpposingSide.effects.ToxicSpikes+=1;
+		attacker.OpposingSide.effects.ToxicSpikes+=1;
 		if (!this.battle.pbIsOpposing? (attacker.index)){
 		   //battle.pbDisplay(_INTL("Poison spikes were scattered all around the opposing team's feet!"))
-		else
+		}else{
 		  //battle.pbDisplay(_INTL("Poison spikes were scattered all around your team's feet!"))
 		}
 		return 0;
@@ -8131,16 +8131,16 @@ public class Function
 	public class PokeBattle_Move_105 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (attacker.pbOpposingSide.effects.StealthRock){
+		if (attacker.OpposingSide.effects.StealthRock){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.pbOpposingSide.effects.StealthRock=true;
+		attacker.OpposingSide.effects.StealthRock=true;
 		if (!this.battle.pbIsOpposing? (attacker.index)){
 		   //battle.pbDisplay(_INTL("Pointed stones float in the air around the opposing team!"))
-		else
+		}else{
 		  //battle.pbDisplay(_INTL("Pointed stones float in the air around your team!"))
 		}
 		return 0;
@@ -8156,49 +8156,49 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_106 : PokeBattle_Move
 	{
-		public object pbOnStartUse(Battle.Battler attacker)
+		public object pbOnStartUse(Battle.Battler attacker) { 
 		this.doubledamage = false; this.overridetype=false;
-		if (attacker.effects.FirstPledge==0x107 ||   // Fire Pledge){
-		   attacker.effects.FirstPledge==0x108      // Water Pledge;
+		if (attacker.effects.FirstPledge==0x107 ||   // Fire Pledge
+		   attacker.effects.FirstPledge==0x108 ){     // Water Pledge
 		  //battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
 		  this.doubledamage=true;
-		  if (attacker.effects.FirstPledge==0x107   // Fire Pledge){
+		  if (attacker.effects.FirstPledge==0x107){   // Fire Pledge
 			this.overridetype=true;
 		  }
 		}
 		return true;
 	  }
 
-	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (this.doubledamage){
 		  return basedmg*2;
 		}
 		return basedmg;
 	  }
 
-	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 		if (this.overridetype){
-		  type = Types.FIRE
+		type = Types.FIRE;
 
 		}
-		return super(type, attacker, opponent);
+		return base.pbModifyType(type, attacker, opponent);
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!this.battle.doublebattle || !attacker.Partner || attacker.Partner.isFainted()){
+		if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted()){
 		  attacker.effects.FirstPledge= 0;
 		  return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 		// Combined move's effect
-		if (attacker.effects.FirstPledge==0x107   // Fire Pledge){
-		  ret= base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		if (attacker.effects.FirstPledge==0x107){   // Fire Pledge
+		  object ret= base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 
-			attacker.pbOpposingSide.effects.SeaOfFire= 4;
+			attacker.OpposingSide.effects.SeaOfFire= 4;
 			if (!this.battle.pbIsOpposing?(attacker.index)){
 			  //battle.pbDisplay(_INTL("A sea of fire enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SeaOfFireOpp",null,null);
-			else
+			}else{
 			  //battle.pbDisplay(_INTL("A sea of fire enveloped your team!"))
 			  this.battle.pbCommonAnimation("SeaOfFire",null,null);
 			}
@@ -8206,14 +8206,14 @@ public class Function
 
 		  attacker.effects.FirstPledge=0;
 		  return ret;
-		else if attacker.effects.FirstPledge==0x108   // Water Pledge
-		  ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		}else if (attacker.effects.FirstPledge==0x108){   // Water Pledge
+		  object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
-			attacker.pbOpposingSide.effects.Swamp=4;
+			attacker.OpposingSide.effects.Swamp=4;
 			if (!this.battle.pbIsOpposing? (attacker.index)){
 			   //battle.pbDisplay(_INTL("A swamp enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SwampOpp",null,null);
-			else
+			}else{
 			  //battle.pbDisplay(_INTL("A swamp enveloped your team!"))
 			  this.battle.pbCommonAnimation("Swamp",null,null);
 			}
@@ -8224,20 +8224,20 @@ public class Function
 		}
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
-		partnermove=-1
-		if (this.battle.choices[attacker.Partner.index][0]==1 // Chose a move){
+		Move.Effect partnermove=-1;
+		if (this.battle.choices[attacker.Partner.index][0]==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound?){
-			move = this.battle.choices[attacker.Partner.index][2]
+			Moves move = this.battle.choices[attacker.Partner.index][2];
 			if (move && move.id>0){
-			  partnermove=this.battle.choices[attacker.Partner.index][2].function
+				partnermove = this.battle.choices[attacker.Partner.index][2].Function;
 			}
 
 		  }
 		}
-		if (partnermove==0x107 ||   // Fire Pledge){
+		if (partnermove==0x107 ||   // Fire Pledge
 		   partnermove==0x108      // Water Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
-		  attacker.Partner.effects.FirstPledge==this.function;
+		  attacker.Partner.effects.FirstPledge==this.function){
 		  attacker.Partner.effects.MoveNext= true;
 		  return 0;
 
@@ -8246,11 +8246,11 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.overridetype){
-		  return super(Moves.FIREPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
+		  return base.pbShowAnimation(Moves.FIREPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -8263,49 +8263,49 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_107 : PokeBattle_Move
 	{
-		public object pbOnStartUse(Battle.Battler attacker)
+		public object pbOnStartUse(Battle.Battler attacker) { 
 		this.doubledamage = false; this.overridetype=false;
-		if (attacker.effects.FirstPledge==0x106 ||   // Grass Pledge){
-		   attacker.effects.FirstPledge==0x108      // Water Pledge
+		if (attacker.effects.FirstPledge==0x106 ||   // Grass Pledge
+		   attacker.effects.FirstPledge==0x108) {       // Water Pledge
 		  //battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
 		  this.doubledamage=true;
-		  if (attacker.effects.FirstPledge==0x108   // Water Pledge){
+		  if (attacker.effects.FirstPledge==0x108){   // Water Pledge
 			this.overridetype=true;
 		  }
 		}
 		return true;
 	  }
 
-	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (this.doubledamage){
 		  return basedmg*2;
 		}
 		return basedmg;
 	  }
 
-	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 		if (this.overridetype){
-		  type = Types.WATER
+			type = Types.WATER;
 
 		}
-		return super(type, attacker, opponent);
+		return base.pbModifyType(type, attacker, opponent);
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!this.battle.doublebattle || !attacker.Partner || attacker.Partner.isFainted()){
+		if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted()){
 		  attacker.effects.FirstPledge= 0;
 		  return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 		// Combined move's effect
-		if (attacker.effects.FirstPledge==0x106   // Grass Pledge){
-		  ret= base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		if (attacker.effects.FirstPledge==0x106){   // Grass Pledge
+		  object ret= base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 
-			attacker.pbOpposingSide.effects.SeaOfFire= 4;
+			attacker.OpposingSide.effects.SeaOfFire= 4;
 			if (!this.battle.pbIsOpposing?(attacker.index)){
 			  //battle.pbDisplay(_INTL("A sea of fire enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SeaOfFireOpp",null,null);
-			else
+			}else{
 			  //battle.pbDisplay(_INTL("A sea of fire enveloped your team!"))
 			  this.battle.pbCommonAnimation("SeaOfFire",null,null);
 			}
@@ -8313,14 +8313,14 @@ public class Function
 
 		  attacker.effects.FirstPledge=0;
 		  return ret;
-		else if attacker.effects.FirstPledge==0x108   // Water Pledge
-		  ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		}else if (attacker.effects.FirstPledge==0x108){   // Water Pledge
+		  object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 			attacker.OwnSide.Rainbow=4;
 			if (!this.battle.pbIsOpposing? (attacker.index)){
 			   //battle.pbDisplay(_INTL("A rainbow appeared in the sky on your team's side!"))
 			  this.battle.pbCommonAnimation("Rainbow",null,null);
-			else
+			}else{
 			  //battle.pbDisplay(_INTL("A rainbow appeared in the sky on the opposing team's side!"))
 			  this.battle.pbCommonAnimation("RainbowOpp",null,null);
 			}
@@ -8331,18 +8331,18 @@ public class Function
 		}
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
-		partnermove=-1
-		if (this.battle.choices[attacker.Partner.index][0]==1 // Chose a move){
+		Move.Effect partnermove = -1;
+		if (this.battle.choices[attacker.Partner.index][0]==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound?){
-			move = this.battle.choices[attacker.Partner.index][2]
-			if (move && move.id>0){
-			  partnermove=this.battle.choices[attacker.Partner.index][2].function
+				move = this.battle.choices[attacker.Partner.index][2];
+			if (move.id>0){//move && 
+					partnermove = this.battle.choices[attacker.Partner.index][2].function;
 			}
 
 		  }
 		}
-		if (partnermove==0x106 ||   // Grass Pledge){
-		   partnermove==0x108      // Water Pledge
+		if (partnermove==0x106 ||   // Grass Pledge
+		   partnermove==0x108){      // Water Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 		  attacker.Partner.effects.FirstPledge==this.function;
 		  attacker.Partner.effects.MoveNext= true;
@@ -8353,11 +8353,11 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.overridetype){
-		  return super(Moves.WATERPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
+		  return base.pbShowAnimation(Moves.WATERPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -8370,45 +8370,45 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_108 : PokeBattle_Move
 	{
-		public object pbOnStartUse(Battle.Battler attacker)
+		public object pbOnStartUse(Battle.Battler attacker) { 
 		this.doubledamage = false; this.overridetype=false;
-		if (attacker.effects.FirstPledge==0x106 ||   // Grass Pledge){
-		   attacker.effects.FirstPledge==0x107      // Fire Pledge
+		if (attacker.effects.FirstPledge==0x106 ||   // Grass Pledge
+		   attacker.effects.FirstPledge==0x107){      // Fire Pledge
 		  //battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
 		  this.doubledamage=true;
-		  if (attacker.effects.FirstPledge==0x106   // Grass Pledge){
+		  if (attacker.effects.FirstPledge==0x106){   // Grass Pledge
 			this.overridetype=true;
 		  }
 		}
 		return true;
 	  }
 
-	  public object pbBaseDamage(basedmg, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (this.doubledamage){
 		  return basedmg*2;
 		}
 		return basedmg;
 	  }
 
-	  public object pbModifyType(type, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 		if (this.overridetype){
-		  type = Types.GRASS
+			type = Types.GRASS;
 
 		}
-		return super(type, attacker, opponent);
+		return base.pbModifyType(type, attacker, opponent);
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!this.battle.doublebattle || !attacker.Partner || attacker.Partner.isFainted()){
+		if (!this.battle.doublebattle || attacker.Partner.Species == Pokemons.NONE || attacker.Partner.isFainted()){
 		  attacker.effects.FirstPledge= 0;
 		  return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 		// Combined move's effect
-		if (attacker.effects.FirstPledge==0x106   // Grass Pledge){
-		  ret= base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		if (attacker.effects.FirstPledge==0x106){   // Grass Pledge
+		  object ret= base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 
-			attacker.pbOpposingSide.effects.Swamp= 4;
+			attacker.OpposingSide.effects.Swamp= 4;
 			if (!this.battle.pbIsOpposing?(attacker.index)){
 			  //battle.pbDisplay(_INTL("A swamp enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SwampOpp",null,null);
@@ -8420,7 +8420,7 @@ public class Function
 
 		  attacker.effects.FirstPledge=0;
 		  return ret;
-		else if attacker.effects.FirstPledge==0x107   // Fire Pledge
+		}else if (attacker.effects.FirstPledge==0x107){   // Fire Pledge
 		  ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 			attacker.OwnSide.Rainbow=4;
@@ -8438,18 +8438,18 @@ public class Function
 		}
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
-		partnermove=-1
-		if (this.battle.choices[attacker.Partner.index][0]==1 // Chose a move){
+		Move.Effect partnermove = -1;
+		if (this.battle.choices[attacker.Partner.index][0]==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound?){
-			move = this.battle.choices[attacker.Partner.index][2]
-			if (move && move.id>0){
-			  partnermove=this.battle.choices[attacker.Partner.index][2].function
+				move = this.battle.choices[attacker.Partner.index][2];
+			if (move.id>0){//move && 
+					partnermove = this.battle.choices[attacker.Partner.index][2].function;
 			}
 
 		  }
 		}
-		if (partnermove==0x106 ||   // Grass Pledge){
-		   partnermove==0x107      // Fire Pledge
+		if (partnermove==0x106 ||   // Grass Pledge
+		   partnermove==0x107){      // Fire Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 		  attacker.Partner.effects.FirstPledge==this.function;
 		  attacker.Partner.effects.MoveNext= true;
@@ -8460,11 +8460,11 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.overridetype){
-		  return super(Moves.GRASSPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
+		  return base.pbShowAnimation(Moves.GRASSPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -8503,16 +8503,16 @@ public class Function
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (attacker.pbOpposingSide.effects.Reflect>0){
-		  attacker.pbOpposingSide.effects.Reflect=0;
+		if (attacker.OpposingSide.effects.Reflect>0){
+		  attacker.OpposingSide.effects.Reflect=0;
 		  if (!this.battle.pbIsOpposing? (attacker.index)){
 			 //battle.pbDisplay(_INTL("The opposing team's Reflect wore off!"))
 		  else
 			//battle.pbDisplayPaused(_INTL("Your team's Reflect wore off!"))
 		  }
 		}
-		if (attacker.pbOpposingSide.effects.LightScreen>0){
-		  attacker.pbOpposingSide.effects.LightScreen=0;
+		if (attacker.OpposingSide.effects.LightScreen>0){
+		  attacker.OpposingSide.effects.LightScreen=0;
 		  if (!this.battle.pbIsOpposing? (attacker.index)){
 			 //battle.pbDisplay(_INTL("The opposing team's Light Screen wore off!"))
 		  else
@@ -8522,12 +8522,12 @@ public class Function
 		return ret;
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (attacker.pbOpposingSide.effects.Reflect>0 ||
-		   attacker.pbOpposingSide.effects.LightScreen>0){
-		  return super(id, attacker, opponent,1, alltargets, showanimation) // Wall-breaking anim;
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+		if (attacker.OpposingSide.effects.Reflect>0 ||
+		   attacker.OpposingSide.effects.LightScreen>0){
+			return base.pbShowAnimation(id, attacker, opponent, 1, alltargets, showanimation); // Wall-breaking anim;
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -8764,11 +8764,11 @@ public class Function
 		return 0;
 	  }
 
-	  public object pbShowAnimation(id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.battle.futuresight){
-		  return super(id, attacker, opponent,1, alltargets, showanimation) // Hit opponent anim;
+			return base.pbShowAnimation(id, attacker, opponent, 1, alltargets, showanimation); // Hit opponent anim;
 		}
-		return super(id, attacker, opponent, hitnum, alltargets, showanimation);
+		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -10247,13 +10247,13 @@ public class Function
 	public class PokeBattle_Move_153 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (attacker.pbOpposingSide.effects.StickyWeb){
+		if (attacker.OpposingSide.effects.StickyWeb){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.pbOpposingSide.effects.StickyWeb=true;
+		attacker.OpposingSide.effects.StickyWeb=true;
 		if (!this.battle.pbIsOpposing? (attacker.index)){
 		   //battle.pbDisplay(_INTL("A sticky web has been laid out beneath the opposing team's feet!"))
 		else

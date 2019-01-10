@@ -1951,6 +1951,12 @@ public class Battle : UnityUtilityIntegration
 		#endregion
 
 		#region ToDo: Everything here needs to be implemented
+		/// <summary>
+		/// Does faint animation 
+		/// (doesn't have to lower hp, as hp will be done by other set of code. 
+		/// But just to be safe... do it anyways)
+		/// </summary>
+		public void pbFaint() { }
 		public void pbConfuse() { }
 		public void pbSleep() { }
 		public void pbFreeze() { }
