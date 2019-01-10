@@ -734,7 +734,7 @@ public class Function
 		}
 		List<byte> activepkmn =new List<byte>();
 		foreach (Battle.Battler i in this.battle.battlers) { 
-		  if (attacker.pbIsOpposing? (i.Index) || i.isFainted()) continue; //next
+		  if (attacker.IsOpposing(i.Index) || i.isFainted()) continue; //next
 		   activepkmn.Add(i.pokemonIndex);
 
 		  if (Settings.USENEWBATTLEMECHANICS && i.Index!=attacker.Index && 
@@ -813,7 +813,7 @@ public class Function
 		attacker.OwnSide.Safeguard= 5;
 
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
-		if (!this.battle.pbIsOpposing ? (attacker.index)) {
+		if (!this.battle.IsOpposing(attacker.index)) {
 			//battle.pbDisplay(_INTL("Your team became cloaked in a mystical veil!"))
 		} else { 
 		  //battle.pbDisplay(_INTL("The opposing team became cloaked in a mystical veil!"))
@@ -2495,7 +2495,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		attacker.OwnSide.Mist=5;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Your team became shrouded in mist!"))
 		}else{
 		  //battle.pbDisplay(_INTL("The opposing team became shrouded in mist!"))
@@ -2618,7 +2618,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		attacker.OwnSide.Tailwind=4;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("The tailwind blew from behind your team!"))
 		}else{
 		  //battle.pbDisplay(_INTL("The tailwind blew from behind the opposing team!"))
@@ -3382,7 +3382,7 @@ public class Function
 	{
 		public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.effects.CounterTarget>=0 &&
-		   attacker.pbIsOpposing? (attacker.effects.CounterTarget)){
+		   attacker.IsOpposing(attacker.effects.CounterTarget)){
 		  if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.CounterTarget])){
 			attacker.pbRandomTarget(targets);
 
@@ -3409,7 +3409,7 @@ public class Function
 	{
 		public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.effects.MirrorCoatTarget>=0 && ){
-		   attacker.pbIsOpposing? (attacker.effects.MirrorCoatTarget);
+		   attacker.IsOpposing(attacker.effects.MirrorCoatTarget);
 		  if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.MirrorCoatTarget])){
 			attacker.pbRandomTarget(targets);
 
@@ -3438,7 +3438,7 @@ public class Function
 		public object pbAddTarget(targets, Battle.Battler attacker){
 		if (attacker.lastAttacker.length>0){
 		  lastattacker=attacker.lastAttacker[attacker.lastAttacker.length - 1]
-		  if (lastattacker>=0 && attacker.pbIsOpposing? (lastattacker)){
+		  if (lastattacker>=0 && attacker.IsOpposing(lastattacker)){
 			if (!attacker.pbAddTarget(targets, this.battle.battlers[lastattacker])){
 			  attacker.pbRandomTarget(targets);
 
@@ -4560,7 +4560,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		attacker.OwnSide.LuckyChant=5;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("The Lucky Chant shielded your team from critical hits!"))
 		} else{
 		  //battle.pbDisplay(_INTL("The Lucky Chant shielded the opposing team from critical hits!"))
@@ -4585,7 +4585,7 @@ public class Function
 
 		attacker.OwnSide.Reflect=5;
 		if (attacker.hasWorkingItem(Items.LIGHTCLAY)) attacker.OwnSide.Reflect=8;
-		if (!this.battle.pbIsOpposing? (attacker.index){
+		if (!this.battle.IsOpposing(attacker.index){
 		   //battle.pbDisplay(_INTL("Reflect raised your team's Defense!"))
 		}  else{
 		  //battle.pbDisplay(_INTL("Reflect raised the opposing team's Defense!"))
@@ -4610,7 +4610,7 @@ public class Function
 
 		attacker.OwnSide.LightScreen=5;
 		if (attacker.hasWorkingItem(Items.LIGHTCLAY)) attacker.OwnSide.Reflect=8;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Light Screen raised your team's Special Defense!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Light Screen raised the opposing team's Special Defense!"))
@@ -4914,7 +4914,7 @@ public class Function
 
 		attacker.OwnSide.QuickGuard=true;
 		attacker.effects.ProtectRate*=2;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Quick Guard protected your team!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Quick Guard protected the opposing team!"))
@@ -4966,7 +4966,7 @@ public class Function
 
 		attacker.OwnSide.WideGuard=true;
 		attacker.effects.ProtectRate*=2;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Wide Guard protected your team!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Wide Guard protected the opposing team!"))
@@ -6250,7 +6250,7 @@ public class Function
 		if (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker))  ret = true; 
 		if (opponent.effects.TwoTurnAttack>0								  )  ret = true; 
 		if (opponent.effects.SkyDrop && attacker.effects.TwoTurnAttack>0	  )  ret = true; 
-		if (!opponent.pbIsOpposing? (attacker.index)						  )  ret = true; 
+		if (!opponent.IsOpposing(attacker.index)						  )  ret = true; 
 		if (Settings.USENEWBATTLEMECHANICS && opponent.weight(attacker)>=2000)ret = true; 
 		return ret;
 	  }
@@ -7322,7 +7322,7 @@ public class Function
 		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
 				!this.battle.pbIsUnlosableItem(attacker, opponent.Item) &&
 				attacker.Item==0 &&
-				(this.battle.opponent || !this.battle.pbIsOpposing? (attacker.index))
+				(this.battle.opponent || !this.battle.IsOpposing(attacker.index))
 			itemname=PBItems.getName(opponent.Item)
 			attacker.Item=opponent.Item;
 			opponent.Item= 0;
@@ -7356,7 +7356,7 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (opponent.effects.Substitute>0 && !ignoresSubstitute? (attacker)) ||
 		   (attacker.Item==0 && opponent.Item==0) ||
-		   (!this.battle.opponent && this.battle.pbIsOpposing? (attacker.index)){ 
+		   (!this.battle.opponent && this.battle.IsOpposing(attacker.index)){ 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -8081,7 +8081,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		attacker.OpposingSide.effects.Spikes+=1;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Spikes were scattered all around the opposing team's feet!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Spikes were scattered all around your team's feet!"))
@@ -8106,7 +8106,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		attacker.OpposingSide.effects.ToxicSpikes+=1;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Poison spikes were scattered all around the opposing team's feet!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Poison spikes were scattered all around your team's feet!"))
@@ -8130,7 +8130,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		attacker.OpposingSide.effects.StealthRock=true;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Pointed stones float in the air around the opposing team!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Pointed stones float in the air around your team!"))
@@ -8187,7 +8187,7 @@ public class Function
 		  if (opponent.damagestate.CalcDamage>0){
 
 			attacker.OpposingSide.effects.SeaOfFire= 4;
-			if (!this.battle.pbIsOpposing?(attacker.index)){
+			if (!this.battle.IsOpposing(attacker.index)){
 			  //battle.pbDisplay(_INTL("A sea of fire enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SeaOfFireOpp",null,null);
 			}else{
@@ -8202,7 +8202,7 @@ public class Function
 		  object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 			attacker.OpposingSide.effects.Swamp=4;
-			if (!this.battle.pbIsOpposing? (attacker.index)){
+			if (!this.battle.IsOpposing(attacker.index)){
 			   //battle.pbDisplay(_INTL("A swamp enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SwampOpp",null,null);
 			}else{
@@ -8294,7 +8294,7 @@ public class Function
 		  if (opponent.damagestate.CalcDamage>0){
 
 			attacker.OpposingSide.effects.SeaOfFire= 4;
-			if (!this.battle.pbIsOpposing?(attacker.index)){
+			if (!this.battle.IsOpposing(attacker.index)){
 			  //battle.pbDisplay(_INTL("A sea of fire enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SeaOfFireOpp",null,null);
 			}else{
@@ -8309,7 +8309,7 @@ public class Function
 		  object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 			attacker.OwnSide.Rainbow=4;
-			if (!this.battle.pbIsOpposing? (attacker.index)){
+			if (!this.battle.IsOpposing(attacker.index)){
 			   //battle.pbDisplay(_INTL("A rainbow appeared in the sky on your team's side!"))
 			  this.battle.pbCommonAnimation("Rainbow",null,null);
 			}else{
@@ -8401,7 +8401,7 @@ public class Function
 		  if (opponent.damagestate.CalcDamage>0){
 
 			attacker.OpposingSide.effects.Swamp= 4;
-			if (!this.battle.pbIsOpposing?(attacker.index)){
+			if (!this.battle.IsOpposing(attacker.index)){
 			  //battle.pbDisplay(_INTL("A swamp enveloped the opposing team!"))
 			  this.battle.pbCommonAnimation("SwampOpp",null,null);
 			}else{
@@ -8416,7 +8416,7 @@ public class Function
 		  ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 			attacker.OwnSide.Rainbow=4;
-			if (!this.battle.pbIsOpposing? (attacker.index)){
+			if (!this.battle.IsOpposing(attacker.index)){
 			   //battle.pbDisplay(_INTL("A rainbow appeared in the sky on your team's side!"))
 			  this.battle.pbCommonAnimation("Rainbow",null,null);
 			}else{
@@ -8497,7 +8497,7 @@ public class Function
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (attacker.OpposingSide.effects.Reflect>0){
 		  attacker.OpposingSide.effects.Reflect=0;
-		  if (!this.battle.pbIsOpposing? (attacker.index)){
+		  if (!this.battle.IsOpposing(attacker.index)){
 			 //battle.pbDisplay(_INTL("The opposing team's Reflect wore off!"))
 		  }else{
 			//battle.pbDisplayPaused(_INTL("Your team's Reflect wore off!"))
@@ -8505,7 +8505,7 @@ public class Function
 		}
 		if (attacker.OpposingSide.effects.LightScreen>0){
 		  attacker.OpposingSide.effects.LightScreen=0;
-		  if (!this.battle.pbIsOpposing? (attacker.index)){
+		  if (!this.battle.IsOpposing(attacker.index)){
 			 //battle.pbDisplay(_INTL("The opposing team's Light Screen wore off!"))
 		  }else{
 			//battle.pbDisplay(_INTL("Your team's Light Screen wore off!"))
@@ -9924,7 +9924,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		attacker.OwnSide.CraftyShield=true;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("Crafty Shield protected your team!"))
 		}else{
 		  //battle.pbDisplay(_INTL("Crafty Shield protected the opposing team!"))
@@ -10246,7 +10246,7 @@ public class Function
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
 		attacker.OpposingSide.effects.StickyWeb=true;
-		if (!this.battle.pbIsOpposing? (attacker.index)){
+		if (!this.battle.IsOpposing(attacker.index)){
 		   //battle.pbDisplay(_INTL("A sticky web has been laid out beneath the opposing team's feet!"))
 		}else{
 		  //battle.pbDisplay(_INTL("A sticky web has been laid out beneath your team's feet!"))
@@ -10335,7 +10335,7 @@ public class Function
 	public class PokeBattle_Move_157 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (this.battle.pbIsOpposing? (attacker.index) || this.battle.doublemoney){
+		if (this.battle.IsOpposing(attacker.index) || this.battle.doublemoney){
 		   //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
