@@ -1960,38 +1960,58 @@ public class Battle : UnityUtilityIntegration
 		public void pbConfuse() { }
 		public void pbSleep() { }
 		public void pbFreeze() { }
-		public void pbAttract(Battler pkmn, byte? uh = null, bool uh2 = false) { }
-		public void pbFlinch(Battler pkmn, byte? uh = null, bool uh2 = false) { }
-		public void pbPoison(Battler pkmn, byte? uh = null, bool uh2 = false) { }
-		public void pbParalyze(Battler pkmn, byte? uh = null, bool uh2 = false) { }
-		public void pbBurn(Battler pkmn, byte? uh = null, bool uh2 = false) { }
+		public void pbAttract(Battler pkmn, byte? uh = null, bool animate = false) { }
+		public void pbFlinch(Battler pkmn, byte? uh = null, bool animate = false) { }
+		public void pbPoison(Battler pkmn, byte? uh = null, bool animate = false) { }
+		public void pbParalyze(Battler pkmn, byte? uh = null, bool animate = false) { }
+		public void pbBurn(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public bool pbCanAttract(Battler pkmn)
 		{
 			return false;
 		}
-		public bool pbCanConfuse(Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbCanConfuse(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanSleep(Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbCanSleep(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanFreeze(Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbCanFreeze(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanPoison(Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbCanPoison(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanParalyze(Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbCanParalyze(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanBurn(Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbCanBurn(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
+		}
+		public bool pbCanIncreaseStatStage(Stats stat, Battler pkmn, bool animate, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbCanReduceStatStage(Stats stat, Battler pkmn, bool animate, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public object pbIncreaseStat(Stats stat, int num, Battler pkmn, bool animate, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public object pbIncreaseStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		{
+			return false;
+		}
+		public void pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		{
+			//return false;
 		}
 		#endregion
 

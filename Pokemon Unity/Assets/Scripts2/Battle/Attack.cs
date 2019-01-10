@@ -764,7 +764,7 @@ public class Function
 		i.pbCureStatus(false);
 
 		}
-		Battler[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
+		Battle.Battler[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
 		for (int i = 0; i < party.Length; i++){ 
 		  if (activepkmn.Contains(i)) continue; //next
 		   if (!party[i] || party[i].egg? || party[i].HP<=0) continue; //next
@@ -798,8 +798,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Safeguards the user's side from being inflicted with status problems. (Safeguard)
 	/// <summary>
@@ -821,8 +819,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User passes its status problem to the target. (Psycho Shift)
@@ -887,8 +883,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Attack by 1 stage.
 	/// <summary>
@@ -896,21 +890,19 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this);
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Defense by 1 stage.
@@ -919,21 +911,19 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Defense by 1 stage. User curls up. (Defense Curl)
@@ -943,15 +933,13 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		attacker.effects.DefenseCurl=true;
-		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Speed by 1 stage.
@@ -960,21 +948,19 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this);
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Special Attack by 1 stage.
@@ -983,21 +969,19 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Special Defense by 1 stage.
@@ -1009,7 +993,7 @@ public class Function
 
 		attacker.effects.Charge=2;
 		//battle.pbDisplay(_INTL("{1} began charging power!",attacker.pbThis))
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,true,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,true,this)){
 		  pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this);
@@ -1018,8 +1002,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's evasion by 1 stage.
 	/// <summary>
@@ -1027,21 +1009,19 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.EVASION, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=attacker.pbIncreaseStat(Stats.EVASION,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.EVASION,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.EVASION, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.EVASION,1,attacker,false,this);
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's critical hit rate. (Focus Energy)
@@ -1069,35 +1049,31 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Attack and Defense by 1 stage each. (Bulk Up)
 	/// <summary>
 	public class PokeBattle_Move_024 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			bool showanim = true;
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Attack, Defense and accuracy by 1 stage each. (Coil)
@@ -1105,32 +1081,30 @@ public class Function
 	public class PokeBattle_Move_025 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			bool showanim = true;
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ACCURACY,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Attack and Speed by 1 stage each. (Dragon Dance)
@@ -1138,27 +1112,25 @@ public class Function
 	public class PokeBattle_Move_026 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
-		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
+		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			bool showanim = true;
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Attack and Special Attack by 1 stage each. (Work Up)
@@ -1166,27 +1138,25 @@ public class Function
 	public class PokeBattle_Move_027 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			bool showanim = true;
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Attack and Sp. Attack by 1 stage each.
@@ -1195,33 +1165,31 @@ public class Function
 	public class PokeBattle_Move_028 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		increment=1
+			bool showanim = true;
+			byte increment = 1;
 		if (this.battle.Weather==Weather.SUNNYDAY ||
 		   this.battle.Weather==Weather.HARSHSUN){
-		  increment = 2
+				increment = 2;
 
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK, increment, attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK, increment, attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Attack and accuracy by 1 stage each. (Hone Claws)
@@ -1229,21 +1197,21 @@ public class Function
 	public class PokeBattle_Move_029 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+			bool showanim = true;
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.ACCURACY, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ACCURACY, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ACCURACY,1,attacker,false,this,showanim);
-		  showanim=false
+				showanim = false;
 		}
 		return 0;
 	  }
@@ -1257,19 +1225,19 @@ public class Function
 	public class PokeBattle_Move_02A : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
@@ -1285,24 +1253,24 @@ public class Function
 	public class PokeBattle_Move_02B : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this,showanim);
 		  showanim=false
 		}
@@ -1318,19 +1286,19 @@ public class Function
 	public class PokeBattle_Move_02C : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
@@ -1349,23 +1317,23 @@ public class Function
 		public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,1,attacker,false,this,showanim);
 		  showanim=false
 		}
@@ -1381,7 +1349,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
@@ -1389,7 +1357,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		}
 	  }
@@ -1404,7 +1372,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.DEFENSE,2,attacker,false,this);
@@ -1412,7 +1380,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,2,attacker,false,this);
 		}
 	  }
@@ -1427,7 +1395,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this);
@@ -1435,7 +1403,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this);
 		}
 	  }
@@ -1449,7 +1417,7 @@ public class Function
 	public class PokeBattle_Move_031 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this);
@@ -1471,7 +1439,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this);
@@ -1479,7 +1447,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this);
 		}
 	  }
@@ -1494,7 +1462,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.SPDEF,2,attacker,false,this);
@@ -1502,7 +1470,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,2,attacker,false,this);
 		}
 	  }
@@ -1518,7 +1486,7 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			attacker.effects.Minimize= true;
-		if (!attacker.pbCanIncreaseStatStage?(Stats.EVASION, attacker,true, this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker,true, this)) return -1;
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
@@ -1529,7 +1497,7 @@ public class Function
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 
 		attacker.effects.Minimize=true;
-		if (attacker.pbCanIncreaseStatStage? (Stats.EVASION, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.EVASION, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.EVASION,2,attacker,false,this);
 		}
 	  }
@@ -1544,33 +1512,33 @@ public class Function
 	public class PokeBattle_Move_035 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false
 		}
 		showanim = true
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this,showanim);
 		  showanim=false
 		}
@@ -1586,19 +1554,19 @@ public class Function
 	public class PokeBattle_Move_036 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this,showanim);
 		  showanim=false
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim);
 		  showanim=false
 		}
@@ -1625,7 +1593,7 @@ public class Function
 		array=[]
 		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
 				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
-		array.push(i) if opponent.pbCanIncreaseStatStage? (i, attacker,false,this)
+		array.push(i) if opponent.pbCanIncreaseStatStage(i, attacker,false,this)
 		}
 		if (array.Length==0){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",opponent.pbThis))
@@ -1649,7 +1617,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.DEFENSE,3,attacker,false,this);
@@ -1657,7 +1625,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,3,attacker,false,this);
 		}
 	  }
@@ -1672,7 +1640,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=attacker.pbIncreaseStat(Stats.SPATK,3,attacker,false,this);
@@ -1680,7 +1648,7 @@ public class Function
 	  }
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,3,attacker,false,this);
 		}
 	  }
@@ -1695,7 +1663,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (attacker.HP<= Math.Floor(attacker.TotalHP/2f) ||
-		   !attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		   !attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -1727,11 +1695,11 @@ public class Function
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
 		  bool showanim=true
-		  if (attacker.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.ATTACK, attacker,false,this)){
 			attacker.pbReduceStat(Stats.ATTACK,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 			attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
@@ -1752,11 +1720,11 @@ public class Function
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
 			bool showanim = true;
-		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 			attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 			attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
@@ -1781,15 +1749,15 @@ public class Function
 			attacker.Partner.ReduceHP(Math.Floor(attacker.Partner.TotalHP/16f),true);
 		  }
 			bool showanim = true;
-		  if (attacker.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)){
 			attacker.pbReduceStat(Stats.SPEED,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 			attacker.pbReduceStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
-		  if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 			attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 				showanim = false;
 		  }
@@ -1809,7 +1777,7 @@ public class Function
 
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
-		  if (attacker.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)){
 			attacker.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		  }
 		}
@@ -1828,7 +1796,7 @@ public class Function
 
 		ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
-		  if (attacker.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.SPATK, attacker,false,this)){
 			attacker.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 		  }
 		}
@@ -1851,7 +1819,7 @@ public class Function
 		ret = -1;
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		if (opponent.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		if (opponent.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  opponent.pbIncreaseStat(Stats.SPATK,1,attacker,false,this);
 		  ret=0;
 		}
@@ -1879,7 +1847,7 @@ public class Function
 		ret = -1;
 
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		if (opponent.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (opponent.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  opponent.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		  ret=0;
 		}
@@ -1901,7 +1869,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
@@ -1910,7 +1878,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.ATTACK, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		}
 	  }
@@ -1925,7 +1893,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.DEFENSE,1,attacker,false,this);
@@ -1934,7 +1902,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.DEFENSE,1,attacker,false,this);
 		}
 	  }
@@ -1949,7 +1917,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.SPEED,1,attacker,false,this);
@@ -1958,7 +1926,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		}
 	  }
@@ -1981,7 +1949,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
@@ -1990,7 +1958,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
 		}
 	  }
@@ -2005,7 +1973,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPDEF, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.SPDEF,1,attacker,false,this);
@@ -2014,7 +1982,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.SPDEF,1,attacker,false,this);
 		}
 	  }
@@ -2029,7 +1997,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
@@ -2038,7 +2006,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 		}
 	  }
@@ -2053,7 +2021,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.EVASION, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.EVASION, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		increment=(Settings.USENEWBATTLEMECHANICS)? 2 : 1
@@ -2063,7 +2031,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.EVASION, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker,false,this)){
 		  increment=(Settings.USENEWBATTLEMECHANICS)? 2 : 1
 		  opponent.pbReduceStat(Stats.EVASION, increment, attacker,false,this);
 		}
@@ -2114,7 +2082,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (!opponent.damagestate.Substitute){
-		  if (opponent.pbCanReduceStatStage?(Stats.EVASION, attacker,false, this)){
+		  if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker,false, this)){
 
 			opponent.pbReduceStat(Stats.EVASION,1,attacker,false,this);
 		  }
@@ -2215,7 +2183,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.ATTACK,2,attacker,false,this);
@@ -2224,7 +2192,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.ATTACK, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.ATTACK,2,attacker,false,this);
 		}
 	  }
@@ -2239,7 +2207,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.DEFENSE,2,attacker,false,this);
@@ -2248,7 +2216,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.DEFENSE,2,attacker,false,this);
 		}
 	  }
@@ -2264,7 +2232,7 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-		if (!opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPEED, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		increment=(id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? 1 : 2
@@ -2274,7 +2242,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)){
 		  increment=(id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? 1 : 2
 		  opponent.pbReduceStat(Stats.SPEED, increment, attacker,false,this);
 		}
@@ -2291,7 +2259,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		if (attacker.gender==2 || opponent.gender==2 || attacker.gender==opponent.gender){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -2311,7 +2279,7 @@ public class Function
 		if (opponent.damagestate.Substitute) return;
 		if (attacker.gender!=2 && opponent.gender!=2 && attacker.gender!=opponent.gender){
 		  if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.OBLIVIOUS)){
-			if (opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+			if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker,false,this)){
 			  opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 			}
 		  }
@@ -2329,7 +2297,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
-		if (!opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPDEF, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.SPDEF,2,attacker,false,this);
@@ -2338,7 +2306,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.SPDEF,2,attacker,false,this);
 		}
 	  }
@@ -4147,7 +4115,7 @@ public class Function
 		  }
 			int damage = pbCalcDamage(attacker, opponent); // Consumes Gems even if it will heal
 			pbShowAnimation((int)this.id, attacker, opponent, 1, alltargets, showanimation); // Healing animation;
-		  opponent.pbRecoverHP(Math.Floor(opponent.TotalHP/4f),true);
+		  opponent.RecoverHP(Math.Floor(opponent.TotalHP/4f),true);
 		  //battle.pbDisplay(_INTL("{1} had its HP restored.",opponent.pbThis))   
 			return 0;
 		}
@@ -4640,7 +4608,7 @@ public class Function
 		  }
 		  return;
 		}else if (this.battle.field.MistyTerrain>0){
-		  if (opponent.pbCanReduceStatStage?(Stats.SPATK, attacker,false, this)){
+		  if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker,false, this)){
 
 			opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
 		  }
@@ -4653,24 +4621,24 @@ public class Function
 		  }
 				break;
 		case PokemonUnity.Environment.MovingWater: case PokemonUnity.Environment.Underwater:
-		  if (opponent.pbCanReduceStatStage?(Stats.ATTACK, attacker,false, this)){
+		  if (opponent.pbCanReduceStatStage(Stats.ATTACK, attacker,false, this)){
 
 			opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		  }
 				break;
 		case PokemonUnity.Environment.StillWater: case PokemonUnity.Environment.Sky:
-		  if (opponent.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
+		  if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)){
 			opponent.pbReduceStat(Stats.SPEED,1,attacker,false,this);
 		  }
 				break;
 		case PokemonUnity.Environment.Sand:
-		  if (opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,false,this)){
+		  if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker,false,this)){
 			opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 		  }
 				break;
 		case PokemonUnity.Environment.Rock:
 		  if (Settings.USENEWBATTLEMECHANICS){
-			if (opponent.pbCanReduceStatStage? (Stats.ACCURACY, attacker,false,this)){
+			if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker,false,this)){
 			  opponent.pbReduceStat(Stats.ACCURACY,1,attacker,false,this);
 			}
 		  }else
@@ -6027,7 +5995,7 @@ public class Function
 		if (this.immediate || attacker.effects.TwoTurnAttack>0){
 		  pbShowAnimation((int)this.id, attacker, opponent,1, alltargets, showanimation); // Charging anim
 		  //battle.pbDisplay(_INTL("{1} tucked in its head!",attacker.pbThis))
-		  if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 			attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this);
 		  }
 		}
@@ -6526,7 +6494,7 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.pbRecoverHP(Math.Floor((attacker.TotalHP+1)/2),true);
+		attacker.RecoverHP(Math.Floor((attacker.TotalHP+1)/2),true);
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0;
 	  }
@@ -6551,7 +6519,7 @@ public class Function
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		attacker.pbRecoverHP(Math.Floor((attacker.TotalHP+1)/2),true);
+		attacker.RecoverHP(Math.Floor((attacker.TotalHP+1)/2),true);
 		attacker.effects.Roost=true;
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0;
@@ -6614,7 +6582,7 @@ public class Function
 
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
-		attacker.pbRecoverHP(hpgain,true);
+		attacker.RecoverHP(hpgain,true);
 
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		return 0;
@@ -6648,7 +6616,7 @@ public class Function
 
 		attacker.pbSleepSelf(3);
 		//battle.pbDisplay(_INTL("{1} slept and became healthy!",attacker.pbThis))
-		hp=attacker.pbRecoverHP(attacker.TotalHP-attacker.HP,true)
+		hp=attacker.RecoverHP(attacker.TotalHP-attacker.HP,true)
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis)) if hp>0
 		return 0;
 	  }
@@ -6756,7 +6724,7 @@ public class Function
 
 			hpgain= Math.Floor(hpgain * 1.3f) if attacker.hasWorkingItem(Items.BIGROOT)
 
-			attacker.pbRecoverHP(hpgain,true);
+			attacker.RecoverHP(hpgain,true);
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
 		  }
 		}
@@ -6787,7 +6755,7 @@ public class Function
 
 			hpgain= Math.Floor(hpgain * 1.3f) if attacker.hasWorkingItem(Items.BIGROOT)
 
-			attacker.pbRecoverHP(hpgain,true);
+			attacker.RecoverHP(hpgain,true);
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
 		  }
 		}
@@ -6819,7 +6787,7 @@ public class Function
 
 		hpgain= Math.Floor((opponent.TotalHP+1)/2)
 		if (attacker.hasWorkingAbility(Abilities.MEGALAUNCHER))hpgain = (int)Math.Round(opponent.TotalHP * 3 / 4) 
-		opponent.pbRecoverHP(hpgain,true);
+		opponent.RecoverHP(hpgain,true);
 		//battle.pbDisplay(_INTL("{1}'s HP was restored.",opponent.pbThis))  
 		return 0;
 	  }
@@ -8594,9 +8562,9 @@ public class Function
 			attacker.ReduceHP(Math.Floor(attacker.TotalHP/2f));
 		  }
 		}else{
-		  lowerspeed=attacker.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this);
-		  raiseatk=attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this);
-		  raisedef=attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this);
+		  lowerspeed=attacker.pbCanReduceStatStage(Stats.SPEED, attacker,false,this);
+		  raiseatk=attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this);
+		  raisedef=attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this);
 		  if (!lowerspeed && !raiseatk && !raisedef){
 				failed = true;
 		  }else{
@@ -8783,12 +8751,12 @@ public class Function
 		//battle.pbDisplay(_INTL("{1} stockpiled {2}!",attacker.pbThis,
 			attacker.effects.Stockpile));
 		bool showanim = true;
-		if (attacker.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
 		  attacker.effects.StockpileDef+=1;
 			showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  attacker.effects.StockpileSpDef+=1;
 			showanim = false;
@@ -8818,7 +8786,7 @@ public class Function
 
 			bool showanim = true;
 		  if (attacker.effects.StockpileDef>0){
-			if (attacker.pbCanReduceStatStage?(Stats.DEFENSE, attacker,false, this)){
+			if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker,false, this)){
 
 			  attacker.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
 				 attacker,false,this,showanim);
@@ -8826,7 +8794,7 @@ public class Function
 			}
 		  }
 		  if (attacker.effects.StockpileSpDef>0){
-			if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+			if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 			  attacker.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
 				 attacker,false,this,showanim);
 					showanim = false;
@@ -8874,19 +8842,19 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation);
-		if (attacker.pbRecoverHP(hpgain,true)>0){
+		if (attacker.RecoverHP(hpgain,true)>0){
 		  //battle.pbDisplay(_INTL("{1}'s HP was restored.",attacker.pbThis))
 		}
 	bool showanim = true;
 		if (attacker.effects.StockpileDef>0){
-		  if (attacker.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 			attacker.pbReduceStat(Stats.DEFENSE, attacker.effects.StockpileDef,
 			   attacker,false,this,showanim);
 			showanim = false;
 		  }
 		}
 		if (attacker.effects.StockpileSpDef>0){
-		  if (attacker.pbCanReduceStatStage? (Stats.SPDEF, attacker,false,this)){
+		  if (attacker.pbCanReduceStatStage(Stats.SPDEF, attacker,false,this)){
 			attacker.pbReduceStat(Stats.SPDEF, attacker.effects.StockpileSpDef,
 			   attacker,false,this,showanim);
 			showanim = false;
@@ -9061,8 +9029,8 @@ public class Function
 	/// <summary>
 	/// Hits airborne semi-invulnerable targets. (Sky Uppercut)
 	/// <summary>
-	public class PokeBattle_Move_11B : PokeBattle_Move
-	/// Handled in Battler's pbSuccessCheck, do not edit!
+	public class PokeBattle_Move_11B : PokeBattle_Move { 
+		// Handled in Battler's pbSuccessCheck, do not edit!
 	}
 
 
@@ -9382,21 +9350,21 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool didsomething = false;
-		foreach (var i in [attacker, attacker.Partner]){ 
-		if (!i || i.isFainted()) continue; //next
+		foreach (Battle.Battler i in new Battle.Battler[] { attacker, attacker.Partner }){ 
+		if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 		if (!i.hasWorkingAbility(Abilities.PLUS) && !i.hasWorkingAbility(Abilities.MINUS)) continue; //next 
-		  if (!i.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this) &&
-				  !i.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)) continue; //next 
+		  if (!i.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this) &&
+				  !i.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)) continue; //next 
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation) ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
-			i.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
+				i.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 			showanim=false;
 		  }
-		  if (i.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
-			i.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
+				i.pbIncreaseStat(Stats.SPDEF, 1, attacker, false, this, showanim);
 			showanim=false;
 		  }
 		}
@@ -9417,13 +9385,13 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (!this.battle.doublebattle || opponent.Species == Pokemons.NONE ||
-		   !opponent.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		   !opponent.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		onject ret=attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this);
+		object ret=attacker.pbIncreaseStat(Stats.SPDEF,1,attacker,false,this);
 		return ret? 0 : -1;
 	  }
 	}
@@ -9440,10 +9408,10 @@ public class Function
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!opponent.pbCanReduceStatStage? (Stats.ATTACK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.ATTACK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		ret=opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
+		object ret=opponent.pbReduceStat(Stats.ATTACK,1,attacker,false,this);
 		return ret ? 0 : -1;
 	  }
 	}
@@ -9516,7 +9484,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.DEFENSE, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.DEFENSE, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.DEFENSE,1,attacker,false,this);
 		}
 	  }
@@ -9534,7 +9502,7 @@ public class Function
 	  }
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.SPATK,1,attacker,false,this);
@@ -9552,7 +9520,7 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (pbIsDamaging()) return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (pbTypeImmunityByAbility(pbType(this.type, attacker, opponent), attacker, opponent)) return -1;
-		if (!opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,true,this)) return -1;
+		if (!opponent.pbCanReduceStatStage(Stats.SPATK, attacker,true,this)) return -1;
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		ret=opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
@@ -9561,7 +9529,7 @@ public class Function
 
 	  public void pbAdditionalEffect(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.damagestate.Substitute) return;
-		if (opponent.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
+		if (opponent.pbCanReduceStatStage(Stats.SPATK, attacker,false,this)){
 		  opponent.pbReduceStat(Stats.SPATK,2,attacker,false,this);
 		}
 	  }
@@ -9581,18 +9549,18 @@ public class Function
 	 if (!i || i.isFainted()) continue; //next
 	 if (!i.hasType(Types.GRASS)) continue; //next
 		  if (i.isAirborne? (attacker.hasMoldBreaker())) continue; //next
-		    if (!i.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this) &&
-				  !i.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)) continue;//next
+		    if (!i.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
+				  !i.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)) continue;//next
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation) ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
-			i.pbIncreaseStat(Stats.ATTACK,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
+				i.pbIncreaseStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 			showanim = false;
 		  }
-		  if (i.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
-			i.pbIncreaseStat(Stats.SPATK,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
+				i.pbIncreaseStat(Stats.SPATK, 1, attacker, false, this, showanim);
 			showanim = false;
 		  }
 		}
@@ -9617,13 +9585,13 @@ public class Function
 		foreach (var i in [attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	if (!i || i.isFainted()) continue; //next
 	if (!i.hasType(Types.GRASS)) continue; //next
-		  if (!i.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)) continue; //next
+		  if (!i.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)) continue; //next
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation) ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanIncreaseStatStage? (Stats.DEFENSE, attacker,false,this)){
-			i.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim)
+		  if (i.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
+				i.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this, showanim);
 			showanim = false;
 		  }
 		}
@@ -9648,23 +9616,23 @@ public class Function
 		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
 	if (!i || i.isFainted()) continue; //next
 	if (!i.status==Status.POISON) continue; //next
-	if (!i.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this) &&) continue; //next
-				  !i.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this) &&
-				  !i.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)
+	if (!i.pbCanReduceStatStage(Stats.ATTACK, attacker,false,this) &&
+				  !i.pbCanReduceStatStage(Stats.SPATK, attacker,false,this) &&
+				  !i.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)) continue; //next
 		  if (!didsomething)pbShowAnimation((int)this.id, attacker, null, hitnum, alltargets, showanimation)  ;
 			didsomething = true;
 
 			bool showanim = true;
-		  if (i.pbCanReduceStatStage? (Stats.ATTACK, attacker,false,this)){
-			i.pbReduceStat(Stats.ATTACK,1,attacker,false,this,showanim)
+		  if (i.pbCanReduceStatStage(Stats.ATTACK, attacker,false,this)){
+				i.pbReduceStat(Stats.ATTACK, 1, attacker, false, this, showanim);
 			showanim = false;
 		  }
-		  if (i.pbCanReduceStatStage? (Stats.SPATK, attacker,false,this)){
-			i.pbReduceStat(Stats.SPATK,1,attacker,false,this,showanim)
+		  if (i.pbCanReduceStatStage(Stats.SPATK, attacker,false,this)){
+				i.pbReduceStat(Stats.SPATK, 1, attacker, false, this, showanim);
 			showanim = false;
 		  }
-		  if (i.pbCanReduceStatStage? (Stats.SPEED, attacker,false,this)){
-			i.pbReduceStat(Stats.SPEED,1,attacker,false,this,showanim)
+		  if (i.pbCanReduceStatStage(Stats.SPEED, attacker,false,this)){
+				i.pbReduceStat(Stats.SPEED, 1, attacker, false, this, showanim);
 			showanim = false;
 		  }
 		}
@@ -9769,12 +9737,12 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_144 : PokeBattle_Move
 	{
-		public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
-		type = Types.FLYING || -1
+		public object pbModifyDamage(int damagemult, Battle.Battler attacker, Battle.Battler opponent){
+		type = Types.FLYING;// || -1
 		if (type>=0){
-		  mult=PBTypes.getCombinedEffectiveness(type,
+		  int mult=PBTypes.getCombinedEffectiveness(type,
 			 opponent.Type1, opponent.Type2, opponent.effects.Type3);
-		  return (int)Math.Round((damagemult* mult)/8);
+		  return (int)Math.Round((damagemult* mult)/8f);
 		 }
 		return damagemult;
 	  }
@@ -9823,12 +9791,12 @@ public class Function
 	public class PokeBattle_Move_146 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		unmoved=false
-		for poke in this.battle.battlers
+		bool unmoved = false;
+		foreach (Battle.Battler poke in this.battle.battlers) { 
 		  if (poke.index==attacker.index) continue; //next
-		  if (this.battle.choices[poke.index][0]==1 && // Chose a move){
-			 !poke.hasMovedThisRound?
-			unmoved = true; break
+		  if (this.battle.choices[poke.index][0]==1 && // Chose a move
+			 !poke.hasMovedThisRound?){
+			unmoved = true; break;
 		  }
 		}
 		if (!unmoved || this.battle.field.IonDeluge){
@@ -9909,12 +9877,12 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		unmoved = false
+		unmoved = false;
 		for poke in this.battle.battlers
 		  if (poke.index==attacker.index) continue; //next
-		  if (this.battle.choices[poke.index][0]==1 && // Chose a move){
-			 !poke.hasMovedThisRound?
-			unmoved = true; break
+		  if (this.battle.choices[poke.index][0]==1 && // Chose a move
+			 !poke.hasMovedThisRound?){
+			unmoved = true; break;
 		  }
 		}
 		if (!unmoved){
@@ -9946,7 +9914,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		List<Move.Effect> ratesharers = new <Move.Effect> {
+		List<Move.Effect> ratesharers = new List <Move.Effect> {
 			(Move.Effect)0xAA,   // Detect, Protect
 			(Move.Effect)0xAB,   // Quick Guard
 			(Move.Effect)0xAC,   // Wide Guard
@@ -10105,26 +10073,26 @@ public class Function
 		  attacker.pbConsumeItem;
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
-		if (!attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this) &&
-		   !attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this) &&
+		   !attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  //battle.pbDisplay(_INTL("{1}'s stats won't go any higher!",attacker.pbThis))
 		  return -1;
 		}
 		pbShowAnimation((int)this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		showanim=true
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPATK, attacker,false,this)){
+		bool showanim = true;
+		if (attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPATK,2,attacker,false,this,showanim);
-		  showanim=false
+			showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPDEF, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPDEF, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPDEF,2,attacker,false,this,showanim);
-		  showanim=false
+			showanim = false;
 		}
-		if (attacker.pbCanIncreaseStatStage? (Stats.SPEED, attacker,false,this)){
+		if (attacker.pbCanIncreaseStatStage(Stats.SPEED, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.SPEED,2,attacker,false,this,showanim);
-		  showanim=false
+			showanim = false;
 		}
 		return 0;
 	  }
@@ -10144,15 +10112,15 @@ public class Function
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
-		int hpgain = (int)Math.Round(opponent.damagestate.HPLost * 3 / 4);
+		int hpgain = (int)Math.Round(opponent.damagestate.HPLost * 3 / 4f);
 		  if (opponent.hasWorkingAbility(Abilities.LIQUIDOOZE)){
 			attacker.ReduceHP(hpgain,true);
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
 		  }else if (attacker.effects.HealBlock == 0){
 
-			if (attacker.hasWorkingItem(Items.BIGROOT)) hpgain = Math.Floor(hpgain * 1.3f);
+			if (attacker.hasWorkingItem(Items.BIGROOT)) hpgain = (int)Math.Floor(hpgain * 1.3f);
 
-			attacker.pbRecoverHP(hpgain,true);
+			attacker.RecoverHP(hpgain,true);
 			//battle.pbDisplay(_INTL("{1} had its energy drained!",opponent.pbThis))
 		  }
 		}
@@ -10171,7 +10139,7 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0 && opponent.isFainted()){
-		  if (attacker.pbCanIncreaseStatStage? (Stats.ATTACK, attacker,false,this)){
+		  if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 			attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this);
 		  }
 		}
