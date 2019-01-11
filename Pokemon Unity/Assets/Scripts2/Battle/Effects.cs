@@ -53,7 +53,7 @@ public class Effects
 		/// <summary>
 		/// Takes image of last person on team
 		/// </summary>
-		public Pokemon Illusion           { get; set; }
+		public Battle.Battler Illusion           { get; set; }
 		public bool Imprison           { get; set; }
 		public bool Ingrain            { get; set; }
 		public bool KingsShield        { get; set; }
