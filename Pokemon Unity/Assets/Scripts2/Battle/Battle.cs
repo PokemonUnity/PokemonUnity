@@ -597,6 +597,10 @@ public class Battle : UnityUtilityIntegration
 		return null;
 	}
 	//ToDo: Everything below
+	public bool pbOwnedByPlayer(int index)
+	{
+		return false;
+	}
 	public bool pbCanChooseNonActive(int index)
 	{
 		return false;
@@ -606,6 +610,10 @@ public class Battle : UnityUtilityIntegration
 		return false;
 	}
 	public bool pbAllFainted(Battler[] party)
+	{
+		return false;
+	}
+	public bool pbIsUnlosableItem(Battler party, Items item)
 	{
 		return false;
 	}
@@ -1604,7 +1612,7 @@ public class Battle : UnityUtilityIntegration
 			return amt;
 		}
 
-		public void RecoverHP(int amount, bool animate = false)
+		public int RecoverHP(int amount, bool animate = false)
 		{
 			// the checks here are redundant, cause they're also placed on HP { set; }
 			if (HP + amount > TotalHP)
@@ -1622,6 +1630,8 @@ public class Battle : UnityUtilityIntegration
 			//ToDo: Pass to UnityEngine
 			//if(amount > 0)
 			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
+			//ToDo: Fix return
+			return amount;
 		}
 
 		public void Faint(bool showMessage = true)
@@ -1997,7 +2007,9 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		public void pbFaint() { }
 		public void pbConsumeItem() { }
+		public void pbBerryCureCheck() { }
 		public void pbAbilityCureCheck() { }
+		public void pbActivateBerryEffect(Items item, bool something) { }
 		public void pbConfuse() { }
 		public void pbSleep() { }
 		public void pbSleepSelf(int turns) { }
@@ -2008,11 +2020,16 @@ public class Battle : UnityUtilityIntegration
 		public void pbParalyze(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbBurn(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbCureStatus(bool animate = false) { }
+		public void pbCureAttract(bool animate = false) { }
 		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
 		public void pbUseMoveSimple(Moves move) { }
 		public float Weight(Battler pkmn)
 		{
 			return 0f;
+		}
+		public bool pbHasType(Types type)
+		{
+			return false;
 		}
 		public bool pbTooLow(Stats stat)
 		{
@@ -2086,6 +2103,12 @@ public class Battle : UnityUtilityIntegration
 		{
 			//return false;
 		}
+		public void pbSetPP(Moves move, int index)
+		{
+			//return false;
+		}
+		public Battler pbOpposing1 { get; set; }
+		public Battler pbOpposing2 { get; set; }
 		#endregion
 
 		/*public static implicit operator Battler[](Pokemon[] input)
@@ -2614,7 +2637,7 @@ public class Battle : UnityUtilityIntegration
 		/// <summary>
 		/// HP lost by opponent, inc. HP lost by a substitute
 		/// </summary>
-		public int HpLost { get; set; }
+		public int HPLost { get; set; }
 		/// <summary>
 		/// Critical hit flag
 		/// </summary>
@@ -2654,7 +2677,7 @@ public class Battle : UnityUtilityIntegration
 
 		public void Reset()
 		{
-			HpLost        = 0;
+			HPLost        = 0;
 			Critical      = false;
 			CalcDamage    = 0;
 			TypeMod       = 0;

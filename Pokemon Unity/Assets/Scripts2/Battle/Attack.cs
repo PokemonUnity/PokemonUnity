@@ -31,7 +31,7 @@ public class Function
 			}
 		}
 	}
-	
+
 	/// <summary>
 	/// Superclass for a failed move. Always fails.
 	/// This class is unused.
@@ -44,7 +44,7 @@ public class Function
 			return -1;
 		}
 	}
-	
+
 	/// <summary>
 	/// Pseudomove for confusion damage.
 	/// <summary>
@@ -796,7 +796,7 @@ public class Function
 		return 0;
 	  }
 	}
-	
+
 	/// <summary>
 	/// Safeguards the user's side from being inflicted with status problems. (Safeguard)
 	/// <summary>
@@ -1242,8 +1242,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Sp. Attack, Sp. Defense and Speed by 1 stage each. (Quiver Dance)
 	/// <summary>
@@ -1275,8 +1273,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Sp. Attack and Sp. Defense by 1 stage each. (Calm Mind)
 	/// <summary>
@@ -1302,8 +1298,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Attack, Defense, Speed, Special Attack and Special Defense
@@ -1337,8 +1331,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Attack by 2 stages.
 	/// <summary>
@@ -1359,8 +1351,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Defense by 2 stages.
@@ -1383,8 +1373,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Speed by 2 stages.
 	/// <summary>
@@ -1406,8 +1394,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Speed by 2 stages. Lowers user's weight by 100kg. (Autotomize)
 	/// <summary>
@@ -1426,8 +1412,6 @@ public class Function
 		return ret? 0 : -1;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Special Attack by 2 stages.
@@ -1450,8 +1434,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Special Defense by 2 stages.
 	/// <summary>
@@ -1472,8 +1454,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's evasion by 2 stages. Minimizes the user. (Minimize)
@@ -1499,8 +1479,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the user's Defense and Special Defense by 1 stage each. (Shell Smash)
@@ -1543,8 +1521,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Speed by 2 stages, and its Attack by 1 stage. (Shift Gear)
 	/// <summary>
@@ -1570,8 +1546,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases one random stat of the user by 2 stages (except HP). (Acupressure)
@@ -1605,8 +1579,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Defense by 3 stages.
 	/// <summary>
@@ -1628,8 +1600,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Special Attack by 3 stages.
 	/// <summary>
@@ -1650,8 +1620,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Reduces the user's HP by half of max, and sets its Attack to maximum. (Belly Drum)
@@ -1680,8 +1648,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the user's Attack and Defense by 1 stage each. (Superpower)
 	/// <summary>
@@ -1705,8 +1671,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the user's Defense and Special Defense by 1 stage each. (Close Combat)
 	/// <summary>
@@ -1729,8 +1693,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the user's Defense, Special Defense and Speed by 1 stage each.
@@ -1763,8 +1725,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the user's Speed by 1 stage.
 	/// <summary>
@@ -1782,8 +1742,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the user's Special Attack by 2 stages.
 	/// <summary>
@@ -1800,8 +1758,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the target's Special Attack by 1 stage. Confuses the target. (Flatter)
@@ -1829,8 +1785,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the target's Attack by 2 stages. Confuses the target. (Swagger)
 	/// <summary>
@@ -1857,8 +1811,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Attack by 1 stage.
 	/// <summary>
@@ -1880,8 +1832,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Defense by 1 stage.
@@ -1905,8 +1855,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Speed by 1 stage.
 	/// <summary>
@@ -1928,7 +1876,7 @@ public class Function
 		}
 	  }
 
-	  public object pbModifyDamage(intdamagemult, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbModifyDamage(int damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (id == Moves.BULLDOZE &&
 		   this.battle.field.GrassyTerrain>0){
 		  return (int)Math.Round(damagemult/2.0f);
@@ -1936,8 +1884,6 @@ public class Function
 		return damagemult;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Special Attack by 1 stage.
@@ -1961,8 +1907,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Special Defense by 1 stage.
 	/// <summary>
@@ -1985,8 +1929,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's accuracy by 1 stage.
 	/// <summary>
@@ -2008,8 +1950,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's evasion by 1 stage OR 2 stages. (Sweet Scent)
@@ -2034,8 +1974,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's evasion by 1 stage. Ends all barriers and entry
@@ -2114,8 +2052,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Attack and Defense by 1 stage each. (Tickle)
 	/// <summary>
@@ -2171,8 +2107,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Attack by 2 stages.
 	/// <summary>
@@ -2195,8 +2129,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Defense by 2 stages. (Screech)
 	/// <summary>
@@ -2218,8 +2150,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Speed by 2 stages. (Cotton Spore, Scary Face, String Shot)
@@ -2245,8 +2175,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Special Attack by 2 stages. Only works on the opposite
@@ -2284,8 +2212,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Special Defense by 2 stages.
@@ -2472,8 +2398,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Averages the user's and target's Attack.
 	/// Averages the user's and target's Special Attack. (Power Split)
@@ -2498,8 +2422,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Averages the user's and target's Defense.
 	/// Averages the user's and target's Special Defense. (Guard Split)
@@ -2523,8 +2445,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Averages the user's and target's current HP. (Pain Split)
@@ -2552,8 +2472,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 4 rounds, doubles the Speed of all battlers on the user's side. (Tailwind)
 	/// <summary>
@@ -2575,8 +2493,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// This move turns into the last move used by the target, until user switches
@@ -2625,8 +2541,6 @@ public class Function
 		return -1;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// This move permanently turns into the last move used by the target. (Sketch)
@@ -2682,8 +2596,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Changes user's type to that of a random user's move, except this one, OR the
 	/// user's first move's type. (Conversion)
@@ -2723,8 +2635,6 @@ public class Function
 		//battle.pbDisplay(_INTL("{1} transformed into the {2} type!", attacker.pbThis, typename))
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Changes user's type to a random one that resists/is immune to the last move
@@ -2779,8 +2689,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Changes user's type depending on the environment. (Camouflage)
 	/// <summary>
@@ -2834,8 +2742,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target becomes Water type. (Soak)
 	/// <summary>
@@ -2870,8 +2776,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User copes target's types. (Reflect Type)
 	/// <summary>
@@ -2901,8 +2805,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Target's ability becomes Simple. (Simple Beam)
@@ -2938,8 +2840,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target's ability becomes Insomnia. (Worry Seed)
 	/// <summary>
@@ -2974,8 +2874,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User copies target's ability. (Role Play)
@@ -3020,8 +2918,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Target copies user's ability. (Entrainment)
@@ -3075,8 +2971,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User and target swap abilities. (Skill Swap)
 	/// <summary>
@@ -3111,8 +3005,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target's ability is negated. (Gastro Acid)
 	/// <summary>
@@ -3146,8 +3038,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User transforms into the target. (Transform)
@@ -3218,8 +3108,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Inflicts a fixed 20HP damage. (SonicBoom)
 	/// <summary>
@@ -3229,8 +3117,6 @@ public class Function
 		return pbEffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Inflicts a fixed 40HP damage. (Dragon Rage)
@@ -3242,8 +3128,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Halves the target's current HP. (Super Fang)
 	/// <summary>
@@ -3254,8 +3138,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Inflicts damage equal to the user's level. (Night Shade, Seismic Toss)
 	/// <summary>
@@ -3265,8 +3147,6 @@ public class Function
 		return pbEffectFixedDamage(attacker.level, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Inflicts damage to bring the target's HP down to equal the user's HP. (Endeavor)
@@ -3282,8 +3162,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Inflicts damage between 0.5 and 1.5 times the user's level. (Psywave)
 	/// <summary>
@@ -3295,8 +3173,6 @@ public class Function
 		return pbEffectFixedDamage(dmg, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// OHKO. Accuracy increases by difference between levels of user and target.
@@ -3326,7 +3202,6 @@ public class Function
 	  }
 	}
 
-
 	/// <summary>
 	/// Counters a physical move used against the user this round, with 2x the power. (Counter)
 	/// <summary>
@@ -3352,8 +3227,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Counters a specical move used against the user this round, with 2x the power. (Mirror Coat)
 	/// <summary>
@@ -3378,8 +3251,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Counters the last damaging move used against the user this round, with 1.5x
@@ -3410,8 +3281,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// The target's ally loses 1/16 of its max HP. (Flame Burst)
 	/// <summary>
@@ -3431,8 +3300,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target is using Dive. (Surf)
 	/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
@@ -3446,8 +3313,6 @@ public class Function
 		return damagemult;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if the target is using Dig. Power is halved if Grassy Terrain
@@ -3469,8 +3334,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target is using Bounce, Fly or Sky Drop. (Gust)
 	/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
@@ -3487,8 +3350,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if the target is using Bounce, Fly or Sky Drop. (Twister)
@@ -3512,8 +3373,6 @@ public class Function
 		opponent.pbFlinch(attacker);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if Fusion Flare has already been used this round. (Fusion Bolt)
@@ -3548,8 +3407,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if Fusion Bolt has already been used this round. (Fusion Flare)
 	/// <summary>
@@ -3580,8 +3437,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target is poisoned. (Venoshock)
 	/// <summary>
@@ -3595,8 +3450,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if the target is paralyzed. Cures the target of paralysis.
@@ -3621,8 +3474,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target is asleep. Wakes the target up. (Wake-Up Slap)
 	/// <summary>
@@ -3645,8 +3496,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the user is burned, poisoned or paralyzed. (Facade)
 	/// <summary>
@@ -3662,8 +3511,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target has a status problem. (Hex)
 	/// <summary>
@@ -3678,8 +3525,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target's HP is down to 1/2 or less. (Brine)
 	/// <summary>
@@ -3692,8 +3537,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if the user has lost HP due to the target's move this round.
@@ -3709,8 +3552,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target has already lost HP this round. (Assurance)
 	/// <summary>
@@ -3723,8 +3564,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if a user's ally has already used this move this round. (Round)
@@ -3765,8 +3604,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target has already moved this round. (Payback)
 	/// <summary>
@@ -3780,8 +3617,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled if a user's teammate fainted last round. (Retaliate)
@@ -3797,8 +3632,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the user has no held item. (Acrobatics)
 	/// <summary>
@@ -3811,8 +3644,6 @@ public class Function
 		return damagemult;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is doubled in weather. Type changes depending on the weather. (Weather Ball)
@@ -3847,8 +3678,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if a foe tries to switch out or use U-turn/Volt Switch/
 	/// Parting Shot. (Pursuit)
@@ -3869,8 +3698,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power increases with the user's happiness. (Return)
 	/// <summary>
@@ -3880,8 +3707,6 @@ public class Function
 			return Math.Max(Math.Floor(attacker.happiness * 2 / 5f),1);
 		}
 	}
-
-
 
 	/// <summary>
 	/// Power decreases with the user's happiness. (Frustration)
@@ -3893,8 +3718,6 @@ public class Function
 		}
 	}
 
-
-
 	/// <summary>
 	/// Power increases with the user's HP. (Eruption, Water Spout)
 	/// <summary>
@@ -3904,8 +3727,6 @@ public class Function
 			return Math.Max(Math.Floor(150f * attacker.HP / attacker.TotalHP),1);
 		}
 	}
-
-
 
 	/// <summary>
 	/// Power increases with the target's HP. (Crush Grip, Wring Out)
@@ -3917,8 +3738,6 @@ public class Function
 		}
 	}
 
-
-
 	/// <summary>
 	/// Power increases the quicker the target is than the user. (Gyro Ball)
 	/// <summary>
@@ -3928,8 +3747,6 @@ public class Function
 			return Math.Max(Math.Min(Math.Floor(25f * opponent.pbSpeed / attacker.pbSpeed),150),1);
 		}
 	}
-
-
 
 	/// <summary>
 	/// Power increases with the user's positive stat changes (ignores negative ones).
@@ -3948,8 +3765,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power increases with the target's positive stat changes (ignores negative ones).
 	/// (Punishment)
@@ -3965,8 +3780,6 @@ public class Function
 			return Math.Min(20*mult,200);
 		}
 	}
-
-
 
 	/// <summary>
 	/// Power and type depends on the user's IVs. (Hidden Power)
@@ -4026,8 +3839,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is multiplied by the number of consecutive rounds in which this move was
 	/// used by any Pokémon on the user's side. (Echoed Voice)
@@ -4040,8 +3851,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User rages until the start of a round in which they don't use this move. (Rage)
@@ -4058,8 +3867,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Randomly damages or heals the target. (Present)
@@ -4107,8 +3914,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power is chosen at random. Power is doubled if the target is using Dig. (Magnitude)
 	/// (Handled in Battler's pbSuccessCheck): Hits some semi-invulnerable targets.
@@ -4146,8 +3951,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power and type depend on the user's held berry. Destroys the berry. (Natural Gift)
@@ -4250,8 +4053,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power increases the less PP this move has. (Trump Card)
 	/// <summary>
@@ -4265,8 +4066,6 @@ public class Function
 		return basedmg;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power increases the less HP the user has. (Flail, Reversal)
@@ -4286,8 +4085,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power increases the quicker the user is than the target. (Electro Ball)
 	/// <summary>
@@ -4303,8 +4100,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power increases the heavier the target is. (Grass Knot, Low Kick)
@@ -4324,8 +4119,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Power increases the heavier the user is than the target. (Heat Crash, Heavy Slam)
 	/// <summary>
@@ -4342,8 +4135,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Powers up the ally's attack this round by 1.5. (Helping Hand)
@@ -4365,8 +4156,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Weakens Electric attacks. (Mud Sport)
@@ -4402,8 +4191,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Weakens Fire attacks. (Water Sport)
 	/// <summary>
@@ -4436,8 +4223,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Type depends on the user's held item. (Judgment, Techno Blast)
@@ -4485,8 +4270,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// This attack is always a critical hit. (Frost Breath, Storm Throw)
 	/// <summary>
@@ -4496,8 +4279,6 @@ public class Function
 		return true;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, foes' attacks cannot become critical hits. (Lucky Chant)
@@ -4520,8 +4301,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, lowers power of physical attacks against the user's side. (Reflect)
@@ -4546,8 +4325,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 5 rounds, lowers power of special attacks against the user's side. (Light Screen)
 	/// <summary>
@@ -4570,8 +4347,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Effect depends on the environment. (Secret Power)
@@ -4694,8 +4469,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Always hits.
 	/// <summary>
@@ -4705,8 +4478,6 @@ public class Function
 		return true;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User's attack next round against the target will definitely hit. (Lock-On, Mind Reader)
@@ -4727,8 +4498,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target's evasion stat changes are ignored from now on. (Foresight, Odor Sleuth)
 	/// Normal and Fighting moves have normal effectiveness against the Ghost-type target.
@@ -4747,8 +4516,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Target's evasion stat changes are ignored from now on. (Miracle Eye)
@@ -4769,8 +4536,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// This move ignores target's Defense, Special Defense and evasion stat changes.
 	/// (Chip Away, Sacred Sword)
@@ -4779,8 +4544,6 @@ public class Function
 	{
 		// Handled in superclass public object pbAccuracyCheck and public object pbCalcDamage, do not edit!
 	}
-
-
 
 	/// <summary>
 	/// User is protected against moves with the "B" flag this round. (Detect, Protect)
@@ -4822,8 +4585,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User's side is protected against moves with priority greater than 0 this round.
@@ -4875,8 +4636,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User's side is protected against moves that target multiple battlers this round.
 	/// (Wide Guard)
@@ -4927,8 +4686,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Ignores target's protections. If successful, all other moves this round
 	/// ignore them too. (Feint)
@@ -4945,8 +4702,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Uses the last move that the target used. (Mirror Move)
 	/// <summary>
@@ -4962,8 +4717,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Uses the last move that was used. (Copycat)
@@ -5023,8 +4776,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Uses the move the target was about to use this round, with 1.5x power. (Me First)
 	/// <summary>
@@ -5059,8 +4810,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// This round, reflects all moves with the "C" flag targeting the user back at
 	/// their origin. (Magic Coat)
@@ -5076,8 +4825,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// This round, snatches all used moves with the "D" flag. (Snatch)
 	/// <summary>
@@ -5091,8 +4838,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Uses a different move depending on the environment. (Nature Power)
@@ -5146,8 +4891,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Uses a random move the user knows. Fails if user is not asleep. (Sleep Talk)
@@ -5214,8 +4957,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Uses a random move known by any non-user Pokémon in the user's party. (Assist)
@@ -5304,8 +5045,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Uses a random move that exists. (Metronome)
 	/// <summary>
@@ -5383,8 +5122,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// The target can no longer use the same move twice in a row. (Torment)
 	/// <summary>
@@ -5416,8 +5153,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Disables all target's moves that the user also knows. (Imprison)
 	/// <summary>
@@ -5435,8 +5170,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, disables the last move the target used. (Disable)
@@ -5476,8 +5209,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 4 rounds, disables the target's non-damaging moves. (Taunt)
 	/// <summary>
@@ -5511,8 +5242,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 5 rounds, disables the target's healing moves. (Heal Block)
 	/// <summary>
@@ -5543,8 +5272,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 4 rounds, the target must use the same move each round. (Encore)
@@ -5600,8 +5327,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Hits twice.
 	/// <summary>
@@ -5615,8 +5340,6 @@ public class Function
 		return 2;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Hits twice. May poison the target on each hit. (Twineedle)
@@ -5638,8 +5361,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Hits 3 times. Power is multiplied by the hit number. (Triple Kick)
@@ -5674,8 +5395,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Hits 2-5 times.
 	/// <summary>
@@ -5693,8 +5412,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Hits X times, where X is 1 (the user) plus the number of non-user unfainted
@@ -5742,8 +5459,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Attacks first turn, skips second turn (if successful).
 	/// <summary>
@@ -5758,8 +5473,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Razor Wind)
@@ -5790,8 +5503,6 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (SolarBeam)
@@ -5839,9 +5550,6 @@ public class Function
 	  }
 	}
 
-
-
-
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Freeze Shock)
 	/// May paralyze the target.
@@ -5879,8 +5587,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Ice Burn)
@@ -5920,8 +5626,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Sky Attack)
 	/// May make the target flinch.
@@ -5958,8 +5662,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Ups user's Defense by 1 stage first turn, attacks second turn.
 	/// (Skull Bash)
@@ -5993,8 +5695,6 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Fly)
@@ -6031,8 +5731,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Dig)
 	/// (Handled in Battler's pbSuccessCheck): Is semi-invulnerable during use.
@@ -6064,8 +5762,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Dive)
 	/// (Handled in Battler's pbSuccessCheck): Is semi-invulnerable during use.
@@ -6096,8 +5792,6 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Bounce)
@@ -6142,8 +5836,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Shadow Force)
 	/// Is invulnerable during use.
@@ -6181,8 +5873,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Sky Drop)
@@ -6233,8 +5923,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
 	/// at end of each round.
@@ -6277,8 +5965,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Trapping move. Traps for 5 or 6 rounds. Trapped Pokémon lose 1/16 of max HP
 	/// at end of each round. (Whirlpool)
@@ -6306,15 +5992,13 @@ public class Function
 		return ret;
 	  }
 
-	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbModifyDamage(int damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if ((int)new Move ((Moves)opponent.effects.TwoTurnAttack).Function==0xCB){ // Dive
 		  return (int)Math.Round(damagemult*2.0f);
 		}
 		return damagemult;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User must use this move for 2 more rounds. No battlers can sleep. (Uproar)
@@ -6334,8 +6018,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User must use this move for 1 or 2 more rounds. At end, user becomes confused.
@@ -6370,8 +6052,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User must use this move for 4 more rounds. Power doubles each round.
 	/// Power is also doubled if user has curled up. (Ice Ball, Rollout)
@@ -6401,8 +6081,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User bides its time this round and next round. The round after, deals 2x the
@@ -6460,8 +6138,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Heals user by 1/2 of its max HP.
 	/// <summary>
@@ -6483,8 +6159,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Heals user by 1/2 of its max HP. (Roost)
@@ -6510,8 +6184,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Battler in user's position is healed by 1/2 of its max HP, at the end of the
 	/// next round. (Wish)
@@ -6535,8 +6207,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Heals user by an amount depending on the weather. (Moonlight, Morning Sun,
@@ -6573,8 +6243,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Heals user to full HP. User falls asleep for 2 more rounds. (Rest)
 	/// <summary>
@@ -6606,8 +6274,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Rings the user. Ringed Pokémon gain 1/16 of max HP at the end of each round.
 	/// (Aqua Ring)
@@ -6631,8 +6297,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Ingrains the user. Ingrained Pokémon gain 1/16 of max HP at the end of each
 	/// round, and cannot flee or switch out. (Ingrain)
@@ -6655,8 +6319,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Seeds the target. Seeded Pokémon lose 1/8 of max HP at the end of each round,
@@ -6686,8 +6348,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User gains half the HP it inflicts as damage.
 	/// <summary>
@@ -6715,8 +6375,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User gains half the HP it inflicts as damage. (Dream Eater)
@@ -6747,8 +6405,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Heals target by 1/2 of its max HP. (Heal Pulse)
 	/// <summary>
@@ -6776,8 +6432,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User faints. (Explosion, Selfdestruct)
@@ -6807,8 +6461,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Inflicts fixed damage equal to user's current HP. (Final Gambit)
 	/// User faints (if successful).
@@ -6836,8 +6488,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Attack and Special Attack by 2 stages each. (Memento)
 	/// User faints (even if effect does nothing).
@@ -6863,8 +6513,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User faints. The Pokémon that replaces the user is fully healed (HP and
 	/// status). Fails if user won't be replaced. (Healing Wish)
@@ -6888,8 +6536,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User faints. The Pokémon that replaces the user is fully healed (HP, PP and
 	/// status). Fails if user won't be replaced. (Lunar Dance)
@@ -6912,8 +6558,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// All current battlers will perish after 3 more rounds. (Perish Song)
@@ -6953,8 +6597,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// If user is KO'd before it next moves, the attack that caused it loses all PP.
 	/// (Grudge)
@@ -6970,8 +6612,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// If user is KO'd before it next moves, the battler that caused it also faints.
 	/// (Destiny Bond)
@@ -6986,8 +6626,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// If user would be KO'd this round, it survives with 1HP instead. (Endure)
@@ -7030,16 +6668,12 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// If target would be KO'd by this attack, it survives with 1HP instead. (False Swipe)
 	/// <summary>
 	public class PokeBattle_Move_0E9 : PokeBattle_Move
 	/// Handled in superclass public object ReduceHPDamage, do not edit!
 	}
-
-
 
 	/// <summary>
 	/// User flees from battle. Fails in trainer battles. (Teleport)
@@ -7059,8 +6693,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// In wild battles, makes target flee. Fails if target is a higher level than the
@@ -7109,8 +6741,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// In wild battles, makes target flee. Fails if target is a higher level than the
 	/// user.
@@ -7144,8 +6774,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User switches out. Various effects affecting the user are passed to the
 	/// replacement. (Baton Pass)
@@ -7164,8 +6792,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// After inflicting damage, user switches out. Ignores trapping moves.
 	/// (U-turn, Volt Switch)
@@ -7183,8 +6809,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Target can no longer switch out or flee, as long as the user remains active.
@@ -7222,8 +6846,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target drops its item. It regains the item at the end of the battle. (Knock Off)
 	/// If target has a losable item, damage is multiplied by 1.5.
@@ -7233,21 +6855,21 @@ public class Function
 		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
-		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
+		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD)){
 				string abilityname = PBAbilities.getName(opponent.Ability);
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, this.name))
 		  } else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item)) {
 				string itemname = PBItems.getName(opponent.Item);
 
 			opponent.Item=0;
-			opponent.effects.ChoiceBand=-1;
+			opponent.effects.ChoiceBand=Moves.NONE;//-1;
 			opponent.effects.Unburden=true;
 			//battle.pbDisplay(_INTL("{1} dropped its {2}!",opponent.pbThis,itemname))
 		  }
 		}
 	  }
 
-	  public object pbModifyDamage(damagemult, Battle.Battler attacker, Battle.Battler opponent){
+	  public object pbModifyDamage(int damagemult, Battle.Battler attacker, Battle.Battler opponent){
 		if (Settings.USENEWBATTLEMECHANICS &&
 		   !this.battle.pbIsUnlosableItem(opponent, opponent.Item)){
 		   // Still boosts damage even if opponent has Sticky Hold
@@ -7256,8 +6878,6 @@ public class Function
 		return damagemult;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User steals the target's item, if the user has none itself. (Covet, Thief)
@@ -7268,24 +6888,24 @@ public class Function
 		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
-		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-			abilityname=PBAbilities.getName(opponent.Ability)
+		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD)){
+				string abilityname = PBAbilities.getName(opponent.Ability);
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, this.name))
-		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
+		  } else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
 				!this.battle.pbIsUnlosableItem(attacker, opponent.Item) &&
 				attacker.Item==0 &&
-				(this.battle.opponent || !this.battle.isOpposing(attacker.Index))
-			itemname=PBItems.getName(opponent.Item)
+				(this.battle.opponent || !this.battle.isOpposing(attacker.Index))){
+				string itemname = PBItems.getName(opponent.Item);
 			attacker.Item=opponent.Item;
 			opponent.Item= 0;
 
-			opponent.effects.ChoiceBand= -1;
+			opponent.effects.ChoiceBand= Moves.NONE;//-1;
 
 			opponent.effects.Unburden= true;
-			if (!this.battle.opponent && // In a wild battle){
+			if (!this.battle.opponent && // In a wild battle
 			   attacker.pokemon.itemInitial==0 &&
 
-			   opponent.pokemon.itemInitial==attacker.Item;
+			   opponent.pokemon.itemInitial==attacker.Item){
 			  attacker.pokemon.itemInitial= attacker.Item;
 
 			  opponent.pokemon.itemInitial= 0;
@@ -7297,8 +6917,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User and target swap items. They remain swapped after wild battles.
 	/// (Switcheroo, Trick)
@@ -7306,7 +6924,7 @@ public class Function
 	public class PokeBattle_Move_0F2 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (opponent.effects.Substitute>0 && !ignoresSubstitute(attacker)) ||
+		if ((opponent.effects.Substitute>0 && !ignoresSubstitute(attacker)) ||
 		   (attacker.Item==0 && opponent.Item==0) ||
 		   (!this.battle.opponent && this.battle.isOpposing(attacker.Index)){ 
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -7319,20 +6937,20 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-		  abilityname=PBAbilities.getName(opponent.Ability)
+		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKY_HOLD)){
+			string abilityname = PBAbilities.getName(opponent.Ability);
 		  //battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, name))
 		  return -1;
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Items oldattitem=attacker.Item
-		Items oldoppitem = opponent.Item
+		Items oldattitem = attacker.Item;
+		Items oldoppitem = opponent.Item;
 
-		string oldattitemname=PBItems.getName(oldattitem)
-		string oldoppitemname = PBItems.getName(oldoppitem)
+		string oldattitemname = PBItems.getName(oldattitem);
+		string oldoppitemname = PBItems.getName(oldoppitem);
 
-		tmpitem=attacker.Item
+		Items tmpitem = attacker.Item;
 		attacker.Item=opponent.Item;
 		opponent.Item= tmpitem;
 		if (!this.battle.opponent && // In a wild battle
@@ -7352,14 +6970,12 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} obtained {2}.",attacker.pbThis,oldoppitemname)) if oldoppitem>0
 		  //battle.pbDisplay(_INTL("{1} obtained {2}.",opponent.pbThis,oldattitemname)) if oldattitem>0
 		}
-		attacker.effects.ChoiceBand= -1;
+		attacker.effects.ChoiceBand= Moves.NONE;//-1;
 
-		opponent.effects.ChoiceBand= -1;
+		opponent.effects.ChoiceBand= Moves.NONE;//-1;
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User gives its item to the target. The item remains given after wild battles.
@@ -7368,7 +6984,7 @@ public class Function
 	public class PokeBattle_Move_0F3 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (opponent.effects.Substitute>0 && !ignoresSubstitute(attacker)) ||
+		if ((opponent.effects.Substitute>0 && !ignoresSubstitute(attacker)) ||
 		   attacker.Item==0 || opponent.Item!=0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -7380,11 +6996,11 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		itemname=PBItems.getName(attacker.Item)
+		string itemname = PBItems.getName(attacker.Item);
 		opponent.Item=attacker.Item;
 		attacker.Item= 0;
 
-		attacker.effects.ChoiceBand= -1;
+		attacker.effects.ChoiceBand= Moves.NONE;//-1;
 
 		attacker.effects.Unburden= true;
 		if (!this.battle.opponent && // In a wild battle
@@ -7401,8 +7017,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User consumes target's berry and gains its effect. (Bug Bite, Pluck)
 	/// <summary>
@@ -7411,9 +7025,9 @@ public class Function
 		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.Item) &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
-		  if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-			item=opponent.Item
-			itemname = PBItems.getName(item)
+		  if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKY_HOLD)){
+				Items item = opponent.Item;
+				string itemname = PBItems.getName(item);
 
 			opponent.pbConsumeItem(false,false);
 			//battle.pbDisplay(_INTL("{1} stole and ate its target's {2}!",attacker.pbThis,itemname))
@@ -7424,7 +7038,7 @@ public class Function
 			// Symbiosis
 			if (attacker.Item==0 &&
 			   attacker.Partner && attacker.Partner.hasWorkingAbility(Abilities.SYMBIOSIS)){
-			  partner=attacker.Partner
+					Battle.Battler partner = attacker.Partner;
 			  if (partner.item>0 &&
 				 !this.battle.pbIsUnlosableItem(partner, partner.item) &&
 				 !this.battle.pbIsUnlosableItem(attacker, partner.item)){
@@ -7432,10 +7046,10 @@ public class Function
 				//   partner.pbThis, PBAbilities.getName(partner.Ability),
 				//   PBItems.getName(partner.item), attacker.pbThis(true)));
 				attacker.Item=partner.item;
-				partner.item=0
-				partner.effects.Unburden= true
+						partner.item = 0;
+				partner.effects.Unburden = true;
 
-				attacker.pbBerryCureCheck;
+				attacker.pbBerryCureCheck();
 			  }
 
 			}
@@ -7444,8 +7058,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Target's berry is destroyed. (Incinerate)
@@ -7466,8 +7078,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User recovers the last item it held and consumed. (Recycle)
 	/// <summary>
@@ -7480,12 +7090,12 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		item=attacker.pokemon.itemRecycle
-		itemname = PBItems.getName(item)
+		Items item = attacker.pokemon.itemRecycle;
+		string itemname = PBItems.getName(item);
 
 		attacker.Item=item;
 		if (!this.battle.opponent){ // In a wild battle
-		   if (attacker.pokemon.itemInitial==0) attacker.pokemon.itemInitial=item
+			if (attacker.pokemon.itemInitial == 0) attacker.pokemon.itemInitial = item;
 
 		}
 		attacker.pokemon.itemRecycle= 0;
@@ -7499,80 +7109,79 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User flings its item at the target. Power and effect depend on the item. (Fling)
 	/// <summary>
 	public class PokeBattle_Move_0F7 : PokeBattle_Move
 	{
-		public object flingarray
-		return { //keyvaluepair<item,byte>;
-		   130 => [:IRONBALL],
-		   100 => [:ARMORFOSSIL,:CLAWFOSSIL,:COVERFOSSIL,:DOMEFOSSIL,:HARDSTONE,
-				   :HELIXFOSSIL,:JAWFOSSIL,:OLDAMBER,:PLUMEFOSSIL,:RAREBONE,
-				   :ROOTFOSSIL,:SAILFOSSIL,:SKULLFOSSIL],
-			90 => [:DEEPSEATOOTH,:DRACOPLATE,:DREADPLATE,:EARTHPLATE,:FISTPLATE,
-				   :FLAMEPLATE,:GRIPCLAW,:ICICLEPLATE,:INSECTPLATE,:IRONPLATE,
-				   :MEADOWPLATE,:MINDPLATE,:PIXIEPLATE,:SKYPLATE,:SPLASHPLATE,
-				   :SPOOKYPLATE,:STONEPLATE,:THICKCLUB,:TOXICPLATE,:ZAPPLATE],
-			80 => [:ASSAULTVEST,:DAWNSTONE,:DUSKSTONE,:ELECTIRIZER,:MAGMARIZER,
-				   :ODDKEYSTONE,:OVALSTONE,:PROTECTOR,:QUICKCLAW,:RAZORCLAW,
-				   :SAFETYGOGGLES,:SHINYSTONE,:STICKYBARB,:WEAKNESSPOLICY],
-			70 => [:BURNDRIVE,:CHILLDRIVE,:DOUSEDRIVE,:DRAGONFANG,:POISONBARB,
-				   :POWERANKLET,:POWERBAND,:POWERBELT,:POWERBRACER,:POWERLENS,
-				   :POWERWEIGHT,:SHOCKDRIVE],
-			60 => [:ADAMANTORB,:DAMPROCK,:GRISEOUSORB,:HEATROCK,:LUSTROUSORB,
-				   :MACHOBRACE,:ROCKYHELMET,:STICK],
-			50 => [:DUBIOUSDISC,:SHARPBEAK],
-			40 => [:EVIOLITE,:ICYROCK,:LUCKYPUNCH],
-			30 => [:ABILITYCAPSULE,:ABILITYURGE,:ABSORBBULB,:AMAZEMULCH,:AMULETCOIN,
-				   :ANTIDOTE,:AWAKENING,:BALMMUSHROOM,:BERRYJUICE,:BIGMUSHROOM,
-				   :BIGNUGGET,:BIGPEARL,:BINDINGBAND,:BLACKBELT,:BLACKFLUTE,
-				   :BLACKGLASSES,:BLACKSLUDGE,:BLUEFLUTE,:BLUESHARD,:BOOSTMULCH,
-				   :BURNHEAL,:CALCIUM,:CARBOS,:CASTELIACONE,:CELLBATTERY,
-				   :CHARCOAL,:CLEANSETAG,:COMETSHARD,:DAMPMULCH,:DEEPSEASCALE,
-				   :DIREHIT,:DIREHIT2,:DIREHIT3,:DRAGONSCALE,:EJECTBUTTON,
-				   :ELIXIR,:ENERGYPOWDER,:ENERGYROOT,:ESCAPEROPE,:ETHER,
-				   :EVERSTONE,:EXPSHARE,:FIRESTONE,:FLAMEORB,:FLOATSTONE,
-				   :FLUFFYTAIL,:FRESHWATER,:FULLHEAL,:FULLRESTORE,:GOOEYMULCH,
-				   :GREENSHARD,:GROWTHMULCH,:GUARDSPEC,:HEALPOWDER,:HEARTSCALE,
-				   :HONEY,:HPUP,:HYPERPOTION,:ICEHEAL,:IRON,
-				   :ITEMDROP,:ITEMURGE,:KINGSROCK,:LAVACOOKIE,:LEAFSTONE,
-				   :LEMONADE,:LIFEORB,:LIGHTBALL,:LIGHTCLAY,:LUCKYEGG,
-				   :LUMINOUSMOSS,:LUMIOSEGALETTE,:MAGNET,:MAXELIXIR,:MAXETHER,
-				   :MAXPOTION,:MAXREPEL,:MAXREVIVE,:METALCOAT,:METRONOME,
-				   :MIRACLESEED,:MOOMOOMILK,:MOONSTONE,:MYSTICWATER,:NEVERMELTICE,
-				   :NUGGET,:OLDGATEAU,:PARALYZEHEAL,:PARLYZHEAL,:PASSORB,
-				   :PEARL,:PEARLSTRING,:POKEDOLL,:POKETOY,:POTION,
-				   :PPMAX,:PPUP,:PRISMSCALE,:PROTEIN,:RAGECANDYBAR,
-				   :RARECANDY,:RAZORFANG,:REDFLUTE,:REDSHARD,:RELICBAND,
-				   :RELICCOPPER,:RELICCROWN,:RELICGOLD,:RELICSILVER,:RELICSTATUE,
-				   :RELICVASE,:REPEL,:RESETURGE,:REVIVALHERB,:REVIVE,
-				   :RICHMULCH,:SACHET,:SACREDASH,:SCOPELENS,:SHALOURSABLE,
-				   :SHELLBELL,:SHOALSALT,:SHOALSHELL,:SMOKEBALL,:SNOWBALL,
-				   :SODAPOP,:SOULDEW,:SPELLTAG,:STABLEMULCH,:STARDUST,
-				   :STARPIECE,:SUNSTONE,:SUPERPOTION,:SUPERREPEL,:SURPRISEMULCH,
-				   :SWEETHEART,:THUNDERSTONE,:TINYMUSHROOM,:TOXICORB,:TWISTEDSPOON,
-				   :UPGRADE,:WATERSTONE,:WHIPPEDDREAM,:WHITEFLUTE,:XACCURACY,
-				   :XACCURACY2,:XACCURACY3,:XACCURACY6,:XATTACK,:XATTACK2,
-				   :XATTACK3,:XATTACK6,:XDEFEND,:XDEFEND2,:XDEFEND3,
-				   :XDEFEND6,:XDEFENSE,:XDEFENSE2,:XDEFENSE3,:XDEFENSE6,
-				   :XSPDEF,:XSPDEF2,:XSPDEF3,:XSPDEF6,:XSPATK,
-				   :XSPATK2,:XSPATK3,:XSPATK6,:XSPECIAL,:XSPECIAL2,
-				   :XSPECIAL3,:XSPECIAL6,:XSPEED,:XSPEED2,:XSPEED3,
-				   :XSPEED6,:YELLOWFLUTE,:YELLOWSHARD,:ZINC],
-			20 => [:CLEVERWING,:GENIUSWING,:HEALTHWING,:MUSCLEWING,:PRETTYWING,
-				   :RESISTWING,:SWIFTWING],
-			10 => [:AIRBALLOON,:BIGROOT,:BLUESCARF,:BRIGHTPOWDER,:CHOICEBAND,
-				   :CHOICESCARF,:CHOICESPECS,:DESTINYKNOT,:EXPERTBELT,:FOCUSBAND,
-				   :FOCUSSASH,:FULLINCENSE,:GREENSCARF,:LAGGINGTAIL,:LAXINCENSE,
-				   :LEFTOVERS,:LUCKINCENSE,:MENTALHERB,:METALPOWDER,:MUSCLEBAND,
-				   :ODDINCENSE,:PINKSCARF,:POWERHERB,:PUREINCENSE,:QUICKPOWDER,
-				   :REAPERCLOTH,:REDCARD,:REDSCARF,:RINGTARGET,:ROCKINCENSE,
-				   :ROSEINCENSE,:SEAINCENSE,:SHEDSHELL,:SILKSCARF,:SILVERPOWDER,
-				   :SMOOTHROCK,:SOFTSAND,:SOOTHEBELL,:WAVEINCENSE,:WHITEHERB,
-				   :WIDELENS,:WISEGLASSES,:YELLOWSCARF,:ZOOMLENS]
+		public KeyValuePair<Items, byte> flingarray { get {  
+		return { //KeyValuePair<Items,byte>;
+		   130 => [Items.IRONBALL],
+		   100 => [Items.ARMORFOSSIL,Items.CLAWFOSSIL,Items.COVERFOSSIL,Items.DOMEFOSSIL,Items.HARDSTONE,
+				   Items.HELIXFOSSIL,Items.JAWFOSSIL,Items.OLDAMBER,Items.PLUMEFOSSIL,Items.RAREBONE,
+				   Items.ROOTFOSSIL,Items.SAILFOSSIL,Items.SKULLFOSSIL],
+			90 => [Items.DEEPSEATOOTH,Items.DRACOPLATE,Items.DREADPLATE,Items.EARTHPLATE,Items.FISTPLATE,
+				   Items.FLAMEPLATE,Items.GRIPCLAW,Items.ICICLEPLATE,Items.INSECTPLATE,Items.IRONPLATE,
+				   Items.MEADOWPLATE,Items.MINDPLATE,Items.PIXIEPLATE,Items.SKYPLATE,Items.SPLASHPLATE,
+				   Items.SPOOKYPLATE,Items.STONEPLATE,Items.THICKCLUB,Items.TOXICPLATE,Items.ZAPPLATE],
+			80 => [Items.ASSAULTVEST,Items.DAWNSTONE,Items.DUSKSTONE,Items.ELECTIRIZER,Items.MAGMARIZER,
+				   Items.ODDKEYSTONE,Items.OVALSTONE,Items.PROTECTOR,Items.QUICKCLAW,Items.RAZORCLAW,
+				   Items.SAFETYGOGGLES,Items.SHINYSTONE,Items.STICKYBARB,Items.WEAKNESSPOLICY],
+			70 => [Items.BURNDRIVE,Items.CHILLDRIVE,Items.DOUSEDRIVE,Items.DRAGONFANG,Items.POISON_BARB,
+				   Items.POWERANKLET,Items.POWERBAND,Items.POWERBELT,Items.POWERBRACER,Items.POWERLENS,
+				   Items.POWERWEIGHT,Items.SHOCKDRIVE],
+			60 => [Items.ADAMANTORB,Items.DAMP_ROCK,Items.GRISEOUSORB,Items.HEAT_ROCK,Items.LUSTROUSORB,
+				   Items.MACHOBRACE,Items.ROCKYHELMET,Items.STICK],
+			50 => [Items.DUBIOUSDISC,Items.SHARPBEAK],
+			40 => [Items.EVIOLITE,Items.ICYROCK,Items.LUCKYPUNCH],
+			30 => [Items.ABILITYCAPSULE,Items.ABILITYURGE,Items.ABSORBBULB,Items.AMAZEMULCH,Items.AMULETCOIN,
+				   Items.ANTIDOTE,Items.AWAKENING,Items.BALMMUSHROOM,Items.BERRYJUICE,Items.BIGMUSHROOM,
+				   Items.BIGNUGGET,Items.BIGPEARL,Items.BINDINGBAND,Items.BLACKBELT,Items.BLACKFLUTE,
+				   Items.BLACKGLASSES,Items.BLACKSLUDGE,Items.BLUEFLUTE,Items.BLUESHARD,Items.BOOSTMULCH,
+				   Items.BURNHEAL,Items.CALCIUM,Items.CARBOS,Items.CASTELIACONE,Items.CELLBATTERY,
+				   Items.CHARCOAL,Items.CLEANSETAG,Items.COMETSHARD,Items.DAMPMULCH,Items.DEEPSEASCALE,
+				   Items.DIREHIT,Items.DIREHIT2,Items.DIREHIT3,Items.DRAGONSCALE,Items.EJECTBUTTON,
+				   Items.ELIXIR,Items.ENERGYPOWDER,Items.ENERGYROOT,Items.ESCAPEROPE,Items.ETHER,
+				   Items.EVERSTONE,Items.EXPSHARE,Items.FIRESTONE,Items.FLAME_ORB,Items.FLOATSTONE,
+				   Items.FLUFFYTAIL,Items.FRESHWATER,Items.FULLHEAL,Items.FULLRESTORE,Items.GOOEYMULCH,
+				   Items.GREENSHARD,Items.GROWTHMULCH,Items.GUARDSPEC,Items.HEALPOWDER,Items.HEARTSCALE,
+				   Items.HONEY,Items.HPUP,Items.HYPERPOTION,Items.ICEHEAL,Items.IRON,
+				   Items.ITEMDROP,Items.ITEMURGE,Items.KINGS_ROCK,Items.LAVACOOKIE,Items.LEAFSTONE,
+				   Items.LEMONADE,Items.LIFEORB,Items.LIGHT_BALL,Items.LIGHTCLAY,Items.LUCKYEGG,
+				   Items.LUMINOUSMOSS,Items.LUMIOSEGALETTE,Items.MAGNET,Items.MAXELIXIR,Items.MAXETHER,
+				   Items.MAXPOTION,Items.MAXREPEL,Items.MAXREVIVE,Items.METALCOAT,Items.METRONOME,
+				   Items.MIRACLESEED,Items.MOOMOOMILK,Items.MOONSTONE,Items.MYSTICWATER,Items.NEVERMELTICE,
+				   Items.NUGGET,Items.OLDGATEAU,Items.PARALYZEHEAL,Items.PARLYZHEAL,Items.PASSORB,
+				   Items.PEARL,Items.PEARLSTRING,Items.POKEDOLL,Items.POKETOY,Items.POTION,
+				   Items.PPMAX,Items.PPUP,Items.PRISMSCALE,Items.PROTEIN,Items.RAGECANDYBAR,
+				   Items.RARECANDY,Items.RAZOR_FANG,Items.REDFLUTE,Items.REDSHARD,Items.RELICBAND,
+				   Items.RELICCOPPER,Items.RELICCROWN,Items.RELICGOLD,Items.RELICSILVER,Items.RELICSTATUE,
+				   Items.RELICVASE,Items.REPEL,Items.RESETURGE,Items.REVIVALHERB,Items.REVIVE,
+				   Items.RICHMULCH,Items.SACHET,Items.SACREDASH,Items.SCOPELENS,Items.SHALOURSABLE,
+				   Items.SHELLBELL,Items.SHOALSALT,Items.SHOALSHELL,Items.SMOKEBALL,Items.SNOWBALL,
+				   Items.SODAPOP,Items.SOULDEW,Items.SPELLTAG,Items.STABLEMULCH,Items.STARDUST,
+				   Items.STARPIECE,Items.SUNSTONE,Items.SUPERPOTION,Items.SUPERREPEL,Items.SURPRISEMULCH,
+				   Items.SWEETHEART,Items.THUNDERSTONE,Items.TINYMUSHROOM,Items.TOXIC_ORB,Items.TWISTEDSPOON,
+				   Items.UPGRADE,Items.WATERSTONE,Items.WHIPPEDDREAM,Items.WHITEFLUTE,Items.XACCURACY,
+				   Items.XACCURACY2,Items.XACCURACY3,Items.XACCURACY6,Items.XATTACK,Items.XATTACK2,
+				   Items.XATTACK3,Items.XATTACK6,Items.XDEFEND,Items.XDEFEND2,Items.XDEFEND3,
+				   Items.XDEFEND6,Items.XDEFENSE,Items.XDEFENSE2,Items.XDEFENSE3,Items.XDEFENSE6,
+				   Items.XSPDEF,Items.XSPDEF2,Items.XSPDEF3,Items.XSPDEF6,Items.XSPATK,
+				   Items.XSPATK2,Items.XSPATK3,Items.XSPATK6,Items.XSPECIAL,Items.XSPECIAL2,
+				   Items.XSPECIAL3,Items.XSPECIAL6,Items.XSPEED,Items.XSPEED2,Items.XSPEED3,
+				   Items.XSPEED6,Items.YELLOWFLUTE,Items.YELLOWSHARD,Items.ZINC],
+			20 => [Items.CLEVERWING,Items.GENIUSWING,Items.HEALTHWING,Items.MUSCLEWING,Items.PRETTYWING,
+				   Items.RESISTWING,Items.SWIFTWING],
+			10 => [Items.AIRBALLOON,Items.BIGROOT,Items.BLUESCARF,Items.BRIGHTPOWDER,Items.CHOICEBAND,
+				   Items.CHOICESCARF,Items.CHOICESPECS,Items.DESTINYKNOT,Items.EXPERTBELT,Items.FOCUSBAND,
+				   Items.FOCUSSASH,Items.FULLINCENSE,Items.GREENSCARF,Items.LAGGINGTAIL,Items.LAXINCENSE,
+				   Items.LEFTOVERS,Items.LUCKINCENSE,Items.MENTAL_HERB,Items.METALPOWDER,Items.MUSCLEBAND,
+				   Items.ODDINCENSE,Items.PINKSCARF,Items.POWERHERB,Items.PUREINCENSE,Items.QUICKPOWDER,
+				   Items.REAPERCLOTH,Items.REDCARD,Items.REDSCARF,Items.RINGTARGET,Items.ROCKINCENSE,
+				   Items.ROSEINCENSE,Items.SEAINCENSE,Items.SHEDSHELL,Items.SILKSCARF,Items.SILVERPOWDER,
+				   Items.SMOOTH_ROCK,Items.SOFTSAND,Items.SOOTHEBELL,Items.WAVEINCENSE,Items.WHITE_HERB,
+				   Items.WIDELENS,Items.WISEGLASSES,Items.YELLOWSCARF,Items.ZOOMLENS]
+			};
 		}
 	}
 
@@ -7583,10 +7192,10 @@ public class Function
 					   this.battle.field.MagicRoom>0 ||
 					   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
 					   attacker.effects.Embargo>0) return true;
-		foreach (var i in flingarray.keys){ 
+		foreach (var i in flingarray.Key){ 
 		  if (flingarray[i]){
-			foreach (var i in flingarray[i]){ 
-			  if (isConst? (attacker.Item, PBItems, j)) return false;
+			foreach (var j in flingarray[i]){ 
+			  if (attacker.Item == j) return false;
 			 }
 
 		  }
@@ -7600,10 +7209,10 @@ public class Function
 	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (pbIsBerry? (attacker.Item)) return 10;
 		if (pbIsMegaStone? (attacker.Item)) return 80;
-		foreach (var i in flingarray.keys){ 
+		foreach (var i in flingarray.Key){ 
 		  if (flingarray[i]){
-			foreach (var i in flingarray[i]){ 
-			  if (isConst? (attacker.Item, PBItems, j)) return i;
+			foreach (var j in flingarray[i]){ 
+			  if (attacker.Item == j) return i;
 			 }
 
 		  }
@@ -7621,26 +7230,26 @@ public class Function
 		//battle.pbDisplay(_INTL("{1} flung its {2}!", attacker.pbThis, PBItems.getName(attacker.Item)))
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute &&
-		   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELDDUST))){
-		  if (attacker.hasWorkingBerry){
+		   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SHIELD_DUST))){
+		  if (attacker.hasWorkingBerry()){
 			opponent.pbActivateBerryEffect(attacker.Item,false);
 
-		  }else if (attacker.hasWorkingItem(Items.FLAMEORB)){
+		  }else if (attacker.hasWorkingItem(Items.FLAME_ORB)){
 			if (opponent.pbCanBurn (attacker,false,this)){
 			  opponent.pbBurn(attacker);
 			}
 
-		  }else if (attacker.hasWorkingItem(Items.KINGSROCK) ||
-				attacker.hasWorkingItem(Items.RAZORFANG)){
+		  }else if (attacker.hasWorkingItem(Items.KINGS_ROCK) ||
+				attacker.hasWorkingItem(Items.RAZOR_FANG)){
 			opponent.pbFlinch(attacker);
-		  }else if (attacker.hasWorkingItem(Items.LIGHTBALL)){
+		  }else if (attacker.hasWorkingItem(Items.LIGHT_BALL)){
 			if (opponent.pbCanParalyze (attacker,false,this)){
 			  opponent.pbParalyze(attacker);
 			}
 
-		 } else if (attacker.hasWorkingItem(Items.MENTALHERB)){
+		 } else if (attacker.hasWorkingItem(Items.MENTAL_HERB)){
 			if (opponent.effects.Attract>=0){
-			  opponent.pbCureAttract;
+			  opponent.pbCureAttract();
 			  //battle.pbDisplay(_INTL("{1} got over its infatuation.", opponent.pbThis))
 			}
 			if (opponent.effects.Taunt>0){
@@ -7666,16 +7275,16 @@ public class Function
 			  opponent.effects.HealBlock=0;
 			  //battle.pbDisplay(_INTL("{1}'s Heal Block wore off!",opponent.pbThis))
 			}
-		 } else if (attacker.hasWorkingItem(Items.POISONBARB)){
+		 } else if (attacker.hasWorkingItem(Items.POISON_BARB)){
 			if (opponent.pbCanPoison (attacker,false,this)){
 			  opponent.pbPoison(attacker);
 			}
 
-		  }else if (attacker.hasWorkingItem(Items.TOXICORB)){
+		  }else if (attacker.hasWorkingItem(Items.TOXIC_ORB)){
 			if (opponent.pbCanPoison (attacker,false,this)){
 			  opponent.pbPoison(attacker, null,true);
 			}
-		 } else if (attacker.hasWorkingItem(Items.WHITEHERB)){
+		 } else if (attacker.hasWorkingItem(Items.WHITE_HERB)){
 			while (true) {
 				bool reducedstats = false;
 			  foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE,
@@ -7692,12 +7301,10 @@ public class Function
 		  }
 
 		}
-		attacker.pbConsumeItem;
+		attacker.pbConsumeItem();
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, the target cannnot use its held item, its held item has no
@@ -7717,8 +7324,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, all held items cannot be used in any way and have no effect.
@@ -7740,8 +7345,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User takes recoil damage equal to 1/4 of the damage this move dealt.
 	/// <summary>
@@ -7753,7 +7356,7 @@ public class Function
 
 	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
+		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
 			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/4.0f));
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
@@ -7761,8 +7364,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User takes recoil damage equal to 1/3 of the damage this move dealt.
@@ -7783,8 +7384,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User takes recoil damage equal to 1/2 of the damage this move dealt.
@@ -7807,8 +7406,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User takes recoil damage equal to 1/3 of the damage this move dealt.
 	/// May paralyze the target. (Volt Tackle)
@@ -7821,7 +7418,7 @@ public class Function
 
 	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
+		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
 			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f));
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
@@ -7837,8 +7434,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User takes recoil damage equal to 1/3 of the damage this move dealt.
 	/// May burn the target. (Flare Blitz)
@@ -7851,7 +7446,7 @@ public class Function
 
 	  public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && turneffects.TotalDamage>0){
-		  if (!attacker.hasWorkingAbility(Abilities.ROCKHEAD) &&
+		  if (!attacker.hasWorkingAbility(Abilities.ROCK_HEAD) &&
 			 !attacker.hasWorkingAbility(Abilities.MAGIC_GUARD)){
 			attacker.ReduceHP((int)Math.Round(turneffects.TotalDamage/3.0f));
 			//battle.pbDisplay(_INTL("{1} is damaged by recoil!",attacker.pbThis))
@@ -7866,8 +7461,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Starts sunny weather. (Sunny Day)
@@ -7896,15 +7489,13 @@ public class Function
 
 		this.battle.weather=Weather.SUNNYDAY;
 		this.battle.weatherduration=5;
-		if (attacker.hasWorkingItem(Items.HEATROCK))this.battle.weatherduration= 8 ;
+		if (attacker.hasWorkingItem(Items.HEAT_ROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Sunny",null,null);
 		//battle.pbDisplay(_INTL("The sunlight turned harsh!"))
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Starts rainy weather. (Rain Dance)
@@ -7934,15 +7525,13 @@ public class Function
 
 		this.battle.weather=Weather.RAINDANCE;
 		this.battle.weatherduration=5;
-		if (attacker.hasWorkingItem(Items.DAMPROCK))this.battle.weatherduration= 8 ;
+		if (attacker.hasWorkingItem(Items.DAMP_ROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Rain",null,null);
 		//battle.pbDisplay(_INTL("It started to rain!"))
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Starts sandstorm weather. (Sandstorm)
@@ -7972,15 +7561,13 @@ public class Function
 
 		this.battle.weather=Weather.SANDSTORM;
 		this.battle.weatherduration=5;
-		if (attacker.hasWorkingItem(Items.SMOOTHROCK))this.battle.weatherduration= 8 ;
+		if (attacker.hasWorkingItem(Items.SMOOTH_ROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Sandstorm",null,null);
 		//battle.pbDisplay(_INTL("A sandstorm brewed!"))
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Starts hail weather. (Hail)
@@ -8010,15 +7597,13 @@ public class Function
 
 		this.battle.weather=Weather.HAIL;
 		this.battle.weatherduration=5;
-		if (attacker.hasWorkingItem(Items.ICYROCK))this.battle.weatherduration= 8 ;
+		if (attacker.hasWorkingItem(Items.ICY_ROCK))this.battle.weatherduration= 8 ;
 
 		this.battle.pbCommonAnimation("Hail",null,null);
 		//battle.pbDisplay(_INTL("It started to hail!"))
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Entry hazard. Lays spikes on the opposing side (max. 3 layers). (Spikes)
@@ -8041,8 +7626,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Entry hazard. Lays poison spikes on the opposing side (max. 2 layers).
@@ -8067,8 +7650,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Entry hazard. Lays stealth rocks on the opposing side. (Stealth Rock)
 	/// <summary>
@@ -8090,8 +7671,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Forces ally's Pledge move to be used next, if it hasn't already. (Grass Pledge)
@@ -8168,18 +7747,18 @@ public class Function
 		}
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
-		Move.Effect partnermove=-1;
+		Move.Effect partnermove = Move.Effect.UnimplementedMove; //-1;
 		if ((int)this.battle.choices[attacker.Partner.Index].Action==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound()){
-			Moves move = this.battle.choices[attacker.Partner.Index].Move;
-			if (move && move.id>0){
+			Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
+			if (move>0){
 				partnermove = this.battle.choices[attacker.Partner.Index].Move.Function;
 			}
 
 		  }
 		}
-		if (partnermove==0x107 ||   // Fire Pledge
-		   partnermove==0x108      // Water Pledge
+		if ((int)partnermove==0x107 ||   // Fire Pledge
+		   (int)partnermove==0x108      // Water Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 		  attacker.Partner.effects.FirstPledge==this.function){
 		  attacker.Partner.effects.MoveNext= true;
@@ -8192,13 +7771,11 @@ public class Function
 
 	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.overridetype){
-		  return base.pbShowAnimation(Moves.FIREPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
+		  return base.pbShowAnimation(Moves.FIRE_PLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
 		}
 		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Forces ally's Pledge move to be used next, if it hasn't already. (Fire Pledge)
@@ -8275,20 +7852,20 @@ public class Function
 		}
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
-		Move.Effect partnermove = -1;
+		Move.Effect partnermove = Move.Effect.UnimplementedMove; //-1;
 		if ((int)this.battle.choices[attacker.Partner.Index].Action==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound()){
-				move = this.battle.choices[attacker.Partner.Index].Move;
-			if (move.id>0){//move && 
-					partnermove = this.battle.choices[attacker.Partner.Index].Move.function;
+				Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
+			if (move>0){//move && 
+					partnermove = this.battle.choices[attacker.Partner.Index].Move.Function;
 			}
 
 		  }
 		}
-		if (partnermove==0x106 ||   // Grass Pledge
-		   partnermove==0x108){      // Water Pledge
+		if ((int)partnermove==0x106 ||   // Grass Pledge
+		   (int)partnermove==0x108      // Water Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
-		  attacker.Partner.effects.FirstPledge==this.function;
+		  attacker.Partner.effects.FirstPledge==this.function){
 		  attacker.Partner.effects.MoveNext= true;
 		  return 0;
 
@@ -8299,13 +7876,11 @@ public class Function
 
 	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.overridetype){
-		  return base.pbShowAnimation(Moves.WATERPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
+		  return base.pbShowAnimation(Moves.WATER_PLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
 		}
 		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Forces ally's Pledge move to be used next, if it hasn't already. (Water Pledge)
@@ -8365,7 +7940,7 @@ public class Function
 		  attacker.effects.FirstPledge=0;
 		  return ret;
 		}else if (attacker.effects.FirstPledge==0x107){   // Fire Pledge
-		  ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		  object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		  if (opponent.damagestate.CalcDamage>0){
 			attacker.OwnSide.Rainbow=4;
 			if (!this.battle.isOpposing(attacker.Index)){
@@ -8382,18 +7957,18 @@ public class Function
 		}
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
-		Move.Effect partnermove = -1;
+		Move.Effect partnermove = Move.Effect.UnimplementedMove; //-1;
 		if ((int)this.battle.choices[attacker.Partner.Index].Action==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound()){
-				move = this.battle.choices[attacker.Partner.Index].Move;
-			if (move.id>0){//move && 
-					partnermove = this.battle.choices[attacker.Partner.Index].Move.function;
+				Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
+			if (move>0){//move && 
+					partnermove = this.battle.choices[attacker.Partner.Index].Move.Function;
 			}
 
 		  }
 		}
-		if (partnermove==0x106 ||   // Grass Pledge
-		   partnermove==0x107){      // Fire Pledge
+		if ((int)partnermove==0x106 ||   // Grass Pledge
+		   (int)partnermove==0x107){      // Fire Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 		  attacker.Partner.effects.FirstPledge==this.function;
 		  attacker.Partner.effects.MoveNext= true;
@@ -8406,13 +7981,11 @@ public class Function
 
 	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.overridetype){
-		  return base.pbShowAnimation(Moves.GRASSPLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
+		  return base.pbShowAnimation(Moves.GRASS_PLEDGE,attacker,opponent,hitnum,alltargets,showanimation);
 		}
 		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Scatters coins that the player picks up after winning the battle. (Pay Day)
@@ -8424,7 +7997,7 @@ public class Function
 		if (opponent.damagestate.CalcDamage>0){
 		  if (this.battle.pbOwnedByPlayer(attacker.Index)){
 			 this.battle.extramoney+=5*attacker.level;
-			 this.battle.extramoney= MAXMONEY if this.battle.extramoney>MAXMONEY;
+			 if (this.battle.extramoney>Settings.MAXMONEY)this.battle.extramoney= Settings.MAXMONEY ;
 		   }
  
 		   //battle.pbDisplay(_INTL("Coins were scattered everywhere!"))
@@ -8432,8 +8005,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Ends the opposing side's Light Screen and Reflect. (Brick Break)
@@ -8475,8 +8046,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// If attack misses, user takes crash damage of 1/2 of max HP.
 	/// (Hi Jump Kick, Jump Kick)
@@ -8492,8 +8061,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User turns 1/4 of max HP into a substitute. (Substitute)
 	/// <summary>
@@ -8504,7 +8071,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("{1} already has a substitute!",attacker.pbThis))
 		  return -1;
 		}
-		sublife =Math.Max(Math.Floor(attacker.TotalHP / 4f), 1)
+		int sublife = (int)Math.Max(Math.Floor(attacker.TotalHP / 4f), 1);
 		if (attacker.HP<=sublife){
 		  //battle.pbDisplay(_INTL("It was too weak to make a substitute!"))
 		  return -1  ;
@@ -8521,8 +8088,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User is not Ghost: Decreases the user's Speed, increases the user's Attack &
 	/// Defense by 1 stage each.
@@ -8533,7 +8098,7 @@ public class Function
 	public class PokeBattle_Move_10D : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		failed = false;
+		bool failed = false;
 		if (attacker.hasType(Types.GHOST)){
 		  if (opponent.effects.Curse ||
 			 opponent.OwnSide.CraftyShield){
@@ -8543,12 +8108,12 @@ public class Function
 
 			//battle.pbDisplay(_INTL("{1} cut its own HP and laid a curse on {2}!",attacker.pbThis,opponent.pbThis(true)))
 			opponent.effects.Curse=true;
-			attacker.ReduceHP(Math.Floor(attacker.TotalHP/2f));
+			attacker.ReduceHP((int)Math.Floor(attacker.TotalHP/2f));
 		  }
 		}else{
-		  lowerspeed=attacker.pbCanReduceStatStage(Stats.SPEED, attacker,false,this);
-		  raiseatk=attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this);
-		  raisedef=attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this);
+		  bool lowerspeed=attacker.pbCanReduceStatStage(Stats.SPEED, attacker,false,this);
+		  bool raiseatk=attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this);
+		  bool raisedef=attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this);
 		  if (!lowerspeed && !raiseatk && !raisedef){
 				failed = true;
 		  }else{
@@ -8557,7 +8122,7 @@ public class Function
 			  attacker.pbReduceStat(Stats.SPEED,1, attacker,false, this);
 
 			}
-				showanim = true;
+				bool showanim = true;
 			if (raiseatk){
 			  attacker.pbIncreaseStat(Stats.ATTACK,1, attacker,false, this, showanim);
 
@@ -8578,8 +8143,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target's last move used loses 4 PP. (Spite)
 	/// <summary>
@@ -8591,7 +8154,7 @@ public class Function
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 				byte reduction = Math.Min((byte)4, i.PP);
-	opponent.pbSetPP(i, i.PP-reduction);
+	opponent.pbSetPP(i.MoveId, i.PP-reduction);
 
 			//battle.pbDisplay(_INTL("It reduced the PP of {1}'s {2} by {3}!",opponent.pbThis(true),i.name,reduction))
 			return 0;
@@ -8602,8 +8165,6 @@ public class Function
 		return -1;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Target will lose 1/4 of max HP at end of each round, while asleep. (Nightmare)
@@ -8623,8 +8184,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Removes trapping moves, entry hazards and Leech Seed on user/user's side.
@@ -8669,8 +8228,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Attacks 2 rounds in the future. (Doom Desire, Future Sight)
 	/// <summary>
@@ -8699,7 +8256,7 @@ public class Function
 		opponent.effects.FutureSightUser= attacker.pokemonIndex;
 
 		opponent.effects.FutureSightUserPos= attacker.Index;
-		if (id == Moves.FUTURESIGHT){
+		if (id == Moves.FUTURE_SIGHT){
 
 		  //battle.pbDisplay(_INTL("{1} foresaw an attack!",attacker.pbThis))
 		}else{
@@ -8715,8 +8272,6 @@ public class Function
 		return base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's Defense and Special Defense by 1 stage each. Ups the
@@ -8748,8 +8303,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Power is 100 multiplied by the user's stockpile (X). Resets the stockpile to
@@ -8792,8 +8345,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Heals user depending on the user's stockpile (X). Resets the stockpile to 0.
@@ -8853,8 +8404,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Fails if user was hit by a damaging move this round. (Focus Punch)
 	/// <summary>
@@ -8869,8 +8418,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Fails if the target didn't chose a damaging move to use this round, or has
 	/// already moved. (Sucker Punch)
@@ -8879,14 +8426,12 @@ public class Function
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if ((int)this.battle.choices[opponent.Index].Action!=1) return true; // Didn't choose a move
-		oppmove = this.battle.choices[opponent.Index].Move;
-		if (!oppmove || oppmove.id<=0 || oppmove.pbIsStatus()) return true;
-		if (opponent.hasMovedThisRound() && oppmove.function!=0xB0) return true; // Me First
+		Battle.InBattleMove oppmove = this.battle.choices[opponent.Index].Move;
+		if (oppmove.MoveId<=0 || oppmove.pbIsStatus()) return true;
+		if (opponent.hasMovedThisRound() && (int)oppmove.Function!=0xB0) return true; // Me First
 		return false;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// This round, user becomes the target of attacks that have single targets.
@@ -8909,8 +8454,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, increases gravity on the field. Pokémon cannot become airborne.
@@ -8955,8 +8498,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 5 rounds, user becomes airborne. (Magnet Rise)
 	/// <summary>
@@ -8980,8 +8521,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 3 rounds, target becomes airborne and can always be hit. (Telekinesis)
@@ -9007,17 +8546,12 @@ public class Function
 	  }
 	}
 
-
-
-
 	/// <summary>
 	/// Hits airborne semi-invulnerable targets. (Sky Uppercut)
 	/// <summary>
 	public class PokeBattle_Move_11B : PokeBattle_Move { 
 		// Handled in Battler's pbSuccessCheck, do not edit!
 	}
-
-
 
 	/// <summary>
 	/// Grounds the target while it remains active. (Smack Down, Thousand Arrows)
@@ -9061,8 +8595,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target moves immediately after the user, ignoring priority/speed. (After You)
 	/// <summary>
@@ -9071,8 +8603,8 @@ public class Function
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.effects.MoveNext) return true;
 		if ((int)this.battle.choices[opponent.Index].Action!=1) return true; // Didn't choose a move
-		oppmove = this.battle.choices[opponent.Index].Move;
-		if (!oppmove || oppmove.id<=0) return true;
+		Moves oppmove = this.battle.choices[opponent.Index].Move.MoveId;
+		if (oppmove<=0) return true;
 		if (opponent.hasMovedThisRound()) return true;
 		return false;
 	  }
@@ -9088,8 +8620,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target moves last this round, ignoring priority/speed. (Quash)
 	/// <summary>
@@ -9098,8 +8628,8 @@ public class Function
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.effects.Quash) return true;
 		if ((int)this.battle.choices[opponent.Index].Action!=1) return true; // Didn't choose a move
-		oppmove = this.battle.choices[opponent.Index].Move;
-		if (!oppmove || oppmove.id<=0) return true;
+		Moves oppmove = this.battle.choices[opponent.Index].Move.MoveId;
+		if (oppmove<=0) return true;
 		if (opponent.hasMovedThisRound()) return true;
 		return false;
 	  }
@@ -9114,8 +8644,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, for each priority bracket, slow Pokémon move before fast ones.
@@ -9136,8 +8664,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User switches places with its ally. (Ally Switch)
@@ -9179,8 +8705,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target's Attack is used instead of user's Attack for this move's calculations.
 	/// (Foul Play)
@@ -9190,8 +8714,6 @@ public class Function
 		// Handled in superclass public object pbCalcDamage, do not edit!
 	}
 
-
-
 	/// <summary>
 	/// Target's Defense is used instead of its Special Defense for this move's
 	/// calculations. (Psyshock, Psystrike, Secret Sword)
@@ -9200,8 +8722,6 @@ public class Function
 	{
 		// Handled in superclass public object pbCalcDamage, do not edit!
 	}
-
-
 
 	/// <summary>
 	/// Only damages Pokémon that share a type with the user. (Synchronoise)
@@ -9218,8 +8738,6 @@ public class Function
 		return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, swaps all battlers' base Defense with base Special Defense.
@@ -9241,8 +8759,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Fails unless user has already used all other moves it knows. (Last Resort)
 	/// <summary>
@@ -9250,22 +8766,18 @@ public class Function
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		byte counter = 0; byte nummoves = 0;
-		foreach (Moves move in attacker.moves) { 
-		  if (move.id<=0) continue; //next
-			if (move.id != this.id && !attacker.movesUsed.Contains(move.id)) counter += 1;
+		foreach (var move in attacker.moves) { 
+		  if (move.MoveId<=0) continue; //next
+			if (move.MoveId != this.id && !attacker.movesUsed.Contains(move.MoveId)) counter += 1;
 		   nummoves += 1;
 		}
 		return counter!=0 || nummoves==1;
 	  }
 	}
 
-
-
 	//===============================================================================
 	// NOTE: Shadow moves use function codes 126-132 inclusive.
 	//===============================================================================
-
-
 
 	/// <summary>
 	/// Does absolutely nothing. (Hold Hands)
@@ -9283,8 +8795,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Does absolutely nothing. Shows a special message. (Celebrate)
 	/// <summary>
@@ -9297,8 +8807,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Freezes the target. (Freeze-Dry)
@@ -9314,17 +8822,13 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the user's Defense by 1 stage for each target hit. (Diamond Storm)
 	/// <summary>
-	public class PokeBattle_Move_136 : PokeBattle_Move_01D
+	public class PokeBattle_Move_136 : Function.PokeBattle_Move_01D
 	{
 		// No difference to function code 01D. It may need to be separate in future.
 	}
-
-
 
 	/// <summary>
 	/// Increases the user's and its ally's Defense and Special Defense by 1 stage
@@ -9360,8 +8864,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases ally's Special Defense by 1 stage. (Aromatic Mist)
 	/// <summary>
@@ -9380,8 +8882,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Attack by 1 stage. Always hits. (Play Nice)
 	/// <summary>
@@ -9399,8 +8899,6 @@ public class Function
 		return ret ? 0 : -1;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Attack and Special Attack by 1 stage each. (Noble Roar)
@@ -9449,8 +8947,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Defense by 1 stage. Always hits. (Hyperspace Fury)
 	/// <summary>
@@ -9474,8 +8970,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Special Attack by 1 stage. Always hits. (Confide)
 	/// <summary>
@@ -9493,8 +8987,6 @@ public class Function
 		return ret? 0 : -1;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Special Attack by 2 stages. (Eerie Impulse)
@@ -9518,8 +9010,6 @@ public class Function
 		}
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Increases the Attack and Special Attack of all Grass-type Pokémon on the field
@@ -9556,8 +9046,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Increases the Defense of all Grass-type Pokémon on the field by 1 stage each.
 	/// (Flower Shield)
@@ -9586,8 +9074,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the Attack, Special Attack and Speed of all poisoned opponents by 1
@@ -9628,8 +9114,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Reverses all stat changes of the target. (Topsy-Turvy)
 	/// <summary>
@@ -9657,8 +9141,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Gives target the Ghost type. (Trick-or-Treat)
 	/// <summary>
@@ -9680,8 +9162,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Gives target the Grass type. (Forest's Curse)
@@ -9713,8 +9193,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Damage is multiplied by Flying's effectiveness against the target. Does double
 	/// damage and has perfect accuracy if the target is Minimized. (Flying Press)
@@ -9738,8 +9216,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Target's moves become Electric-type for the rest of the round. (Electrify)
 	/// <summary>
@@ -9752,8 +9228,8 @@ public class Function
 		  return -1;
 		}
 		if((int)this.battle.choices[opponent.Index].Action!=1 || // Didn't choose a move
-		   !this.battle.choices[opponent.Index].Move ||
-		   this.battle.choices[opponent.Index].Move.id<=0 ||
+		   //!this.battle.choices[opponent.Index].Move ||
+		   this.battle.choices[opponent.Index].Move.MoveId<=0 ||
 		   opponent.hasMovedThisRound()){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -9765,8 +9241,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// All Normal-type moves become Electric-type for the rest of the round.
@@ -9795,8 +9269,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Always hits. (Hyperspace Hole)
 	/// TODO: Hits through various shields.
@@ -9807,7 +9279,6 @@ public class Function
 		return true;
 	  }
 	}
-
 
 	/// <summary>
 	/// Powders the foe. This round, if it uses a Fire move, it loses 1/4 of its max
@@ -9828,8 +9299,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// This round, the user's side is unaffected by damaging moves. (Mat Block)
 	/// <summary>
@@ -9849,8 +9318,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User's side is protected against status moves this round. (Crafty Shield)
 	/// <summary>
@@ -9861,7 +9328,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		unmoved = false;
+		bool unmoved = false;
 		foreach (Battle.Battler poke in this.battle.battlers) {
 		  if (poke.Index==attacker.Index) continue; //next
 		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
@@ -9884,8 +9351,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User is protected against damaging moves this round. Decreases the Attack of
@@ -9933,8 +9398,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// User is protected against moves that target it this round. Damages the user of
 	/// a stopped contact move by 1/8 of its max HP. (Spiky Shield)
@@ -9981,8 +9444,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Two turn attack. Skips first turn, attacks second turn. (Phantom Force)
 	/// Is invulnerable during use.
@@ -10010,7 +9471,7 @@ public class Function
 		  this.battle.pbCommonAnimation("UseItem", attacker, null);
 
 		  //battle.pbDisplay(_INTL("{1} became fully charged due to its Power Herb!",attacker.pbThis))
-		  attacker.pbConsumeItem;
+		  attacker.pbConsumeItem();
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
@@ -10027,8 +9488,6 @@ public class Function
 		return false;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack. Skips first turn, increases the user's Special Attack,
@@ -10054,7 +9513,7 @@ public class Function
 		  this.battle.pbCommonAnimation("UseItem", attacker, null);
 
 		  //battle.pbDisplay(_INTL("{1} became fully charged due to its Power Herb!",attacker.pbThis))
-		  attacker.pbConsumeItem;
+		  attacker.pbConsumeItem();
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
 		if (!attacker.pbCanIncreaseStatStage(Stats.SPATK, attacker,false,this) &&
@@ -10081,8 +9540,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// User gains 3/4 the HP it inflicts as damage. (Draining Kiss, Oblivion Wing)
@@ -10112,8 +9569,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// If this move KO's the target, increases the user's Attack by 2 stages.
 	/// (Fell Stinger)
@@ -10130,8 +9585,6 @@ public class Function
 		return ret;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's Attack and Special Attack by 1 stage each. Then, user
@@ -10162,8 +9615,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// No Pokémon can switch out or flee until the end of the next round, as long as
 	/// the user remains active. (Fairy Lock)
@@ -10182,8 +9633,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Entry hazard. Lays stealth rocks on the opposing side. (Sticky Web)
@@ -10207,8 +9656,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 5 rounds, creates an electric terrain which boosts Electric-type moves and
 	/// prevents Pokémon from falling asleep. Affects non-airborne Pokémon only.
@@ -10230,8 +9677,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// For 5 rounds, creates a grassy terrain which boosts Grass-type moves and heals
@@ -10255,8 +9700,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// For 5 rounds, creates a misty terrain which weakens Dragon-type moves and
 	/// protects Pokémon from status problems. Affects non-airborne Pokémon only.
@@ -10279,8 +9722,6 @@ public class Function
 	  }
 	}
 
-
-
 	/// <summary>
 	/// Doubles the prize money the player gets after winning the battle. (Happy Hour)
 	/// </summary>
@@ -10298,8 +9739,6 @@ public class Function
 		return 0;
 	  }
 	}
-
-
 
 	/// <summary>
 	/// Fails unless user has consumed a berry at some point. (Belch)
@@ -10319,6 +9758,7 @@ public class Function
 //ToDo: Inhereit from InBattleMove
 public abstract class PokeBattle_Move : IPokeBattle_Move
 {
+	public bool immediate { get; set; }
 	public Moves id { get; set; }
 	public Types type { get; set; }
 	public Battle battle { get; set; }

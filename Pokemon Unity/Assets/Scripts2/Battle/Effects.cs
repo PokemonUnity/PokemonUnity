@@ -323,7 +323,7 @@ public class Effects
 		public byte Reflect				{ get; set; }
 		public byte Round				{ get; set; }
 		public byte Safeguard			{ get; set; }
-		public bool SeaOfFire			{ get; set; }
+		public byte SeaOfFire			{ get; set; }
 		public byte Spikes				{ get; set; }
 		public bool StealthRock			{ get; set; }
 		public bool StickyWeb			{ get; set; }
@@ -343,9 +343,9 @@ public class Effects
 		public bool FusionFlare		{ get; set; }
 		public byte GrassyTerrain	{ get; set; }
 		public byte Gravity			{ get; set; }
-		public byte IonDeluge		{ get; set; }
+		public bool IonDeluge		{ get; set; }
 		public byte MagicRoom		{ get; set; }
-		public byte MistyTerrain		{ get; set; }
+		public byte MistyTerrain	{ get; set; }
 		public byte MudSportField	{ get; set; }
 		public byte TrickRoom		{ get; set; }
 		public byte WaterSportField	{ get; set; }
