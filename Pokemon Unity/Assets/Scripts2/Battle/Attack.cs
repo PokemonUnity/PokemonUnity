@@ -3746,8 +3746,8 @@ public class Function
 		if (opponent.damagestate.CalcDamage>0){
 		  attacker.OwnSide.Round+=1;
 		  if (attacker.Partner && !attacker.Partner.hasMovedThisRound?){
-			if (this.battle.choices[attacker.Partner.Index][0]==1){ // Will use a move
-					partnermove = this.battle.choices[attacker.Partner.Index][2];
+			if (this.battle.choices[attacker.Partner.Index].Action==1){ // Will use a move
+					partnermove = this.battle.choices[attacker.Partner.Index].Move;
 			  if (partnermove.function==this.function){
 				attacker.Partner.effects.MoveNext= true;
 
@@ -3770,7 +3770,7 @@ public class Function
 	public class PokeBattle_Move_084 : PokeBattle_Move
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (this.battle.choices[opponent.Index][0]!=1 || // Didn't choose a move
+		if ((int)this.battle.choices[opponent.Index].Action!=1 || // Didn't choose a move
 		   opponent.hasMovedThisRound?){ // Used a move already;
 		  return basedmg*2;
 		}
@@ -4349,7 +4349,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (!this.battle.doublebattle || opponent.isFainted() ||
-		   this.battle.choices[opponent.Index][0]!=1 || // Didn't choose a move;
+		   (int)this.battle.choices[opponent.Index].Action!=1 || // Didn't choose a move;
 		   opponent.hasMovedThisRound? ||
 		   opponent.effects.HelpingHand){
 		  //battle.pbDisplay(_INTL("But it failed!"))  
@@ -4793,19 +4793,19 @@ public class Function
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
 		]
-		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
+		if (!ratesharers.Contains(new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
-		unmoved = false;
-		for poke in this.battle.battlers
+		bool unmoved = false;
+		foreach (Battle.Battler poke in this.battle.battlers) {
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
 		}
 		if (!unmoved ||
-		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate)){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536f/attacker.effects.ProtectRate)){
 		  attacker.effects.ProtectRate= 1;
 
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -4841,20 +4841,20 @@ public class Function
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
 		]
-		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
+		if (!ratesharers.Contains(new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
-		unmoved = false;
-		for poke in this.battle.battlers
+		bool unmoved = false;
+		foreach (Battle.Battler poke in this.battle.battlers) {
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
 		}
 		if (!unmoved ||
 		   (!Settings.USENEWBATTLEMECHANICS &&
-		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate))){
+		   this.battle.pbRandom(65536)>=Math.Floor(65536f/attacker.effects.ProtectRate))){
 		  attacker.effects.ProtectRate=1;
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -4897,9 +4897,9 @@ public class Function
 		  attacker.effects.ProtectRate=1;
 		}
 		unmoved = false;
-		for poke in this.battle.battlers
+		foreach (Battle.Battler poke in this.battle.battlers) {
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
@@ -5039,8 +5039,8 @@ public class Function
 		   0x115,   // Focus Punch
 		   0x158    // Belch
 		]
-	oppmove=this.battle.choices[opponent.Index][2]
-		if (this.battle.choices[opponent.Index][0]!=1 || // Didn't choose a move
+	oppmove=this.battle.choices[opponent.Index].Move
+		if ((int)this.battle.choices[opponent.Index].Action!=1 || // Didn't choose a move
 		   opponent.hasMovedThisRound? ||
 		   !oppmove || oppmove.id<=0 ||
 		   oppmove.pbIsStatus? ||
@@ -7006,7 +7006,7 @@ public class Function
 		bool unmoved = false;
 		foreach (Battle.Battler poke in this.battle.battlers) { 
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
@@ -8166,11 +8166,11 @@ public class Function
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
 		Move.Effect partnermove=-1;
-		if (this.battle.choices[attacker.Partner.Index][0]==1){ // Chose a move
+		if ((int)this.battle.choices[attacker.Partner.Index].Action==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound?){
-			Moves move = this.battle.choices[attacker.Partner.Index][2];
+			Moves move = this.battle.choices[attacker.Partner.Index].Move;
 			if (move && move.id>0){
-				partnermove = this.battle.choices[attacker.Partner.Index][2].Function;
+				partnermove = this.battle.choices[attacker.Partner.Index].Move.Function;
 			}
 
 		  }
@@ -8273,11 +8273,11 @@ public class Function
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
 		Move.Effect partnermove = -1;
-		if (this.battle.choices[attacker.Partner.Index][0]==1){ // Chose a move
+		if ((int)this.battle.choices[attacker.Partner.Index].Action==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound?){
-				move = this.battle.choices[attacker.Partner.Index][2];
+				move = this.battle.choices[attacker.Partner.Index].Move;
 			if (move.id>0){//move && 
-					partnermove = this.battle.choices[attacker.Partner.Index][2].function;
+					partnermove = this.battle.choices[attacker.Partner.Index].Move.function;
 			}
 
 		  }
@@ -8380,11 +8380,11 @@ public class Function
 		// Set up partner for a combined move
 		attacker.effects.FirstPledge=0;
 		Move.Effect partnermove = -1;
-		if (this.battle.choices[attacker.Partner.Index][0]==1){ // Chose a move
+		if ((int)this.battle.choices[attacker.Partner.Index].Action==1){ // Chose a move
 		  if (!attacker.Partner.hasMovedThisRound?){
-				move = this.battle.choices[attacker.Partner.Index][2];
+				move = this.battle.choices[attacker.Partner.Index].Move;
 			if (move.id>0){//move && 
-					partnermove = this.battle.choices[attacker.Partner.Index][2].function;
+					partnermove = this.battle.choices[attacker.Partner.Index].Move.function;
 			}
 
 		  }
@@ -8875,8 +8875,8 @@ public class Function
 	public class PokeBattle_Move_116 : PokeBattle_Move
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
-		if (this.battle.choices[opponent.Index][0]!=1) return true; // Didn't choose a move
-		oppmove = this.battle.choices[opponent.Index][2];
+		if ((int)this.battle.choices[opponent.Index].Action!=1) return true; // Didn't choose a move
+		oppmove = this.battle.choices[opponent.Index].Move;
 		if (!oppmove || oppmove.id<=0 || oppmove.pbIsStatus?) return true;
 		if (opponent.hasMovedThisRound? && oppmove.function!=0xB0) return true; // Me First
 		return false;
@@ -9067,8 +9067,8 @@ public class Function
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.effects.MoveNext) return true;
-		if (this.battle.choices[opponent.Index][0]!=1) return true; // Didn't choose a move
-		oppmove = this.battle.choices[opponent.Index][2];
+		if ((int)this.battle.choices[opponent.Index].Action!=1) return true; // Didn't choose a move
+		oppmove = this.battle.choices[opponent.Index].Move;
 		if (!oppmove || oppmove.id<=0) return true;
 		if (opponent.hasMovedThisRound?) return true;
 		return false;
@@ -9094,8 +9094,8 @@ public class Function
 	{
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.effects.Quash) return true;
-		if (this.battle.choices[opponent.Index][0]!=1) return true; // Didn't choose a move
-		oppmove = this.battle.choices[opponent.Index][2];
+		if ((int)this.battle.choices[opponent.Index].Action!=1) return true; // Didn't choose a move
+		oppmove = this.battle.choices[opponent.Index].Move;
 		if (!oppmove || oppmove.id<=0) return true;
 		if (opponent.hasMovedThisRound?) return true;
 		return false;
@@ -9748,9 +9748,9 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		if(this.battle.choices[opponent.Index][0]!=1 || // Didn't choose a move
-		   !this.battle.choices[opponent.Index][2] ||
-		   this.battle.choices[opponent.Index][2].id<=0 ||
+		if((int)this.battle.choices[opponent.Index].Action!=1 || // Didn't choose a move
+		   !this.battle.choices[opponent.Index].Move ||
+		   this.battle.choices[opponent.Index].Move.id<=0 ||
 		   opponent.hasMovedThisRound?){
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -9775,7 +9775,7 @@ public class Function
 		bool unmoved = false;
 		foreach (Battle.Battler poke in this.battle.battlers) { 
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
@@ -9859,9 +9859,9 @@ public class Function
 		  return -1;
 		}
 		unmoved = false;
-		for poke in this.battle.battlers
+		foreach (Battle.Battler poke in this.battle.battlers) {
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
@@ -9909,7 +9909,7 @@ public class Function
 		bool unmoved = false;
 		foreach (Battle.Battler poke in this.battle.battlers){
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
@@ -9957,7 +9957,7 @@ public class Function
 		bool unmoved = false;
 		foreach (Battle.Battler poke in this.battle.battlers){
 		  if (poke.Index==attacker.Index) continue; //next
-		  if (this.battle.choices[poke.Index][0]==1 && // Chose a move
+		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
 			 !poke.hasMovedThisRound?){
 			unmoved = true; break;
 		  }
