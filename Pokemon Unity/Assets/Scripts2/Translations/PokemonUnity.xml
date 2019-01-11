@@ -19,6 +19,7 @@
   BeginSpeech       = 15
   EndSpeechWin      = 16
   EndSpeechLose     = 17
+  AfterBattleSpeech = ScriptTexts?
   RegionNames       = 18
   PlaceNames        = 19
   PlaceDescriptions = 20
@@ -55,9 +56,282 @@ one line, while utilizing:
 <Idea id="0" name="HealBlock"  identifier="HealBlock" language="9" field="pokemonName" field="abilityName">{0}'s {1} restored its HP!</Idea>-->
 </Sample>
 <Scenes>
-<TextPrompt id="0" identifier="No" language="9">No</TextPrompt>
-<TextPrompt id="1" identifier="Yes" language="9">Yes</TextPrompt>
-<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">Continue</CanvasUI>
+<TextPrompt id="0" identifier="No" language="9">NO</TextPrompt>
+<TextPrompt id="1" identifier="Yes" language="9">YES</TextPrompt>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">CONTINUE</CanvasUI>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">POKÉMON LINK</CanvasUI>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">MYSTERY GIFT</CanvasUI>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">LIVE COMPETITION</CanvasUI>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">The saved data was erased!</CanvasUI>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">Delete all saved data?</CanvasUI>
+<CanvasUI id="0" name="StartupMainMenu" identifier="Continue" language="9">Once the data has been deleted, there is no way to recover it. Is it really OK to delete this saved data?</CanvasUI>
+<CanvasUI id="0" name="StartMenu" identifier="Continue" language="9">POKÉMON</CanvasUI>
+<CanvasUI id="0" name="StartMenu" identifier="Continue" language="9">POKÉDEX</CanvasUI>
+<CanvasUI id="0" name="StartMenu" identifier="Continue" language="9">BAG</CanvasUI>
+<CanvasUI id="0" name="StartMenu" identifier="Continue" language="9">[VAR TRNAME(0000)]</CanvasUI>
+<CanvasUI id="0" name="StartMenu" identifier="Continue" language="9">SAVE</CanvasUI>
+<CanvasUI id="0" name="StartMenu" identifier="Continue" language="9">OPTIONS</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Your name?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">[VAR PKNAME(0000)]’s nickname?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Box name?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Your greeting to everyone?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Your nickname?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What brief message do you want to share with your trade partner?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Pokémon you want to find?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What do you say when you are happy?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What do you have to say?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What will you go with?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What do you say when you’re happy?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What do you say to encourage others?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What message would you like to share?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What will you write?</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">You can’t enter that word.</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">You can only enter up to five numbers.</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">You can’t enter that name.</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Please enter a nickname.</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Please enter a name.</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">Please enter a response of some kind!</CanvasUI>
+<CanvasUI id="0" name="NewGameQuiz" identifier="Continue" language="9">What kind of Pokémon do you want?</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Gym Badges:</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Pokédex:</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Time:</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Last saved on</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Would you like to save the game?</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Saving... Don’t turn off the power.</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">[VAR TRNAME(0000)] saved the game.</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">There’s already a saved game file, so you can’t save now. Refer to the electronic manual for details.</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Failed to save the game.</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">Game Sync is in progress... Don’t turn off the power.</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">The server is busy. Quitting Game Sync...</CanvasUI>
+<CanvasUI id="0" name="SaveGameMenu" identifier="Continue" language="9">The data necessary for the Internet connection has been obtained. Would you like to save the game?</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Pokéblock Case</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Berry Blender</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Give a Pokéblock</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Give</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Make Pokéblocks</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Make</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Color</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Which Pokémon would you like to give it to?</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">You gave the Pokéblock to [VAR PKNICK(0000)]!</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Choose the color to filter by.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Choose a Pokéblock.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">What would you like to do with the Pokéblock?</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Choose Berries to blend.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">You created [VAR NUM1(0001)] [VAR 01A3(0000)]![VAR BE05(0000)][VAR BE05(0001)]</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Give the Pokéblock to [VAR PKNICK(0000)]?</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">An Egg can’t eat a Pokéblock!</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">You can’t blend more than four Berries!</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Filtered by red.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Filtered by blue.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Filtered by pink.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Filtered by green.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Filtered by yellow.</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Start blending!</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">Return Berry</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">{0} Pokéblock + {1} Pokéblock</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">{0} Pokéblocks + {1} Pokéblocks</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">{0} Pokéblock + {1} Pokéblocks</CanvasUI>
+<CanvasUI id="0" name="PokeBlockMenu" identifier="Continue" language="9">{0} Pokéblocks + {1} Pokéblock</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Choose a Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Move which Pokémon?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Move which item?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Move to where?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Give to which Pokémon?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Use on which Pokémon?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Teach which Pokémon?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Choose Pokémon and confirm.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Deposit which Pokémon?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Do what with [VAR PKNICK(0000)]?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Which move should [VAR PKNICK(0000)] use?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Restore PP to which move?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Boost the PP of which move?</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">You can choose an item in the Bag and use it or give it to a Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">You can take an item that a Pokémon is holding and put it back in the Bag.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">You can move an item that a Pokémon is holding.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">[VAR PKNICK(0000)]’s HP was restored by [VAR NUM3(0001)] point[VAR NUMBRNCH(0001,0100)]s.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">This can’t be used until a new Gym Badge is obtained.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">[VAR PKNICK(0000)] isn’t holding anything.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">Received the [VAR ITEM2(0001)] from [VAR PKNICK(0000)].</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">You can’t carry any more of this item.</CanvasUI>
+<CanvasUI id="0" name="BagMenu" identifier="Continue" language="9">The [VAR ITEM2(0001)] w[VAR NUMBRNCH(0001,0302)]asere taken and replaced with the [VAR ITEM2(0002)].</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">You’re already surfing.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">You can’t use that here.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">It won’t have any effect.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">This can’t be used on the fainted Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">You have no room to separate the Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">It cannot be fused with that Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">It cannot be fused with that fainted Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">It cannot be fused with an Egg.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Two Pokémon are needed.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">A Griseous Orb cannot be given to Giratina!</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Cancel your challenge?</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Choose a Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Three Pokémon are needed.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Four Pokémon are needed.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Five Pokémon are needed.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Six Pokémon are needed.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">No more than one Pokémon may enter.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">No more than two Pokémon may enter.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">No more than three Pokémon may enter.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">No more than four Pokémon may enter.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">No more than five Pokémon may enter.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Identical Pokémon are not permitted.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Some Pokémon are holding identical items.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">The total of all party members’ levels has gone over [VAR NUM3(0000)].</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">There are three or more Legendary Pokémon.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">The Pokémon that must participate is not selected.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">The number of special Pokémon exceeds the limit.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">You can’t use it now.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">[VAR PKNAME(0000)] changed Forme!</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">[VAR PKNICK(0000)] cannot hold the [VAR ITEM2(0001)]!</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Communicating. Please wait.</CanvasUI>
+<CanvasUI id="0" name="BattleChallengeMenu" identifier="Continue" language="9">Standing by...</CanvasUI>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like, totally! It’s Trouble Talk time! Lessee... Our letter today is from “Pretty Wurmple.” Yo, thanks for watching, Pretty Wurmple! Now whatta we got here... “I love stroking my Wurmple along its belly. You know, it’s just amazing! Depending on where and when you catch one, it totally changes how glossy it is and how it feels! Totally! Don’t you think that’s mysterious? But if I try to talk to my friends about any of this, they say I’m strange... Am I really just a weirdo?” Roman: My answer is... No way, José! It’s awesome to have something you really love. You know Roxanne, who’s the Gym Leader in Rustboro City? That girl loves Fossils so much she runs around Hoenn with a hammer in her hand, excavating everything in sight! She’s even been written up in specialist magazines a whole bunch of times! It’s cool to focus on the thing you love like that! Go for it, future Bug-type professor! I’ll be your number-one fan! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Our letter today comes from “Shooting for the Stars.” Yo, thanks for watching, Shooting for the Stars! Now whatta we got here... “I want to get buff and look cool so all the girls will like me! Tell me a cool-looking sport to do!” Roman: Whoa, whoa, whoa! You are some kinda shallow guy! But, hey, I never said I didn’t like it! So, uh, lemme see... Have you thought about surfing? Yo, tons of cool surfing spots around Dewford, here in Hoenn. They say that Gym Leader Brawly moved from Kanto ’cause you can surf all year! Brawly loves it, and he’s sure got one ripped body, so I think it’ll make you fit and buff, little dude! Whether girls will like you, though, that’s really up to you! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today, our letter’s from “Feeling Cramped.” Yo, thanks for watching, Feeling Cramped! Now whatta we got here... “Sharing a room with my little brother is getting to be pretty tough lately. Our house is too small for me to get a room of my own. How can I make this more bearable?” Roman: Whoa. That’s a tough one, all right! How about you rearrange the furniture to make sort of a wall between the two of you? Gym Leader Wattson—man, is he amazing— traveled all over the world and learned all kinds of city-planning things, and he used ’em to make Mauville two stories tall! Counting the roof, he tripled the area of the city. And the population has QUADRUPLED! Maybe you can make smart use of your vertical space like he did! If that doesn’t work, plan on spending a lot of time in your Secret Base, I guess! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today, our letter’s from “Ma Chérie Macherie.” Yo, thanks for watching, Ma Chérie Macherie! Now whatta we got here... “Every morning I check myself out in the mirror. Today I discovered a huge pimple on my face! I can’t be seen with a pimple on my forehead! I am Lisia’s number-one rival—destined to be a great Contest Spectacular star! It’s a disaster! It’s totally unacceptable! Can you give me an effective beauty treatment to prevent further tragedies?” Roman: I feel the searing pain in this letter! Speaking of searing, maybe heat would help. Have you tried going to hot springs? That new Gym Leader Flannery goes in the hot springs every day, and she’s never had a single skin problem, according to interviews. But really, the most important things have gotta be a balanced diet and enough sleep. I’m backing you all the way, so hold on tight to your dreams! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Our letter today comes from “Special Ball.” Yo, thanks for watching, Special Ball! Now whatta we got here... “I’m applying for college soon, but I don’t know what to major in. I want to study both battling and Pokémon research, and I can’t pick just one!” Roman: Whoaaa... You are one hardworking kid! I know ’cause I hated to study anything! I really admire you, you know? Say... Professor Birch and the Petalburg Gym Leader, that new guy Norman, went to college together. If you could find a place like the one they went to, you could study both battling and Pokémon research! But it’s crazy to ask me about something big like this! Talk to your guidance counselor! Good luck with your applications, and I’ll keep my fingers crossed for you! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today, we’ll look at a letter from “I Love Roselia.” Yo, thanks for watching, I Love Roselia! Now whatta we got here... “I’m going on holiday in Hoenn next month with some friends of mine! Please recommend a city where we can really experience nature to the max!” Roman: Ooooh! Thanks for thinking of Hoenn. We’d love to see you! Check out somewhere like Fortree! Staying in their tree houses feels like camping! Oh, and maybe a tour with Winona, where she takes you to observe the wild bird Pokémon in the area! Winona can tell you everything about ’em, so you’ll really learn a lot! Have a great trip, and we look forward to hosting you in Hoenn! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today we hear from “Ultra Plusle.” Yo, thanks for watching, Ultra Plusle! Now whatta we got here... “My little sister and I don’t get along. We fight all the time, but I’m always the one who gets in trouble from our mom. What can I do?” Roman: Whoa-ho-ho! Siblings fighting, huh? Yeah, it happens. I’ve got a little brother, too, so I know eeeee-zackly what you mean, friend! How about this? You know the Gym Leaders in Mossdeep, Liza and Tate? Fact is, those two are complete opposites when it comes to personality and tastes and whatnot! Tate is a calm kid and loves to eat sweets, while rambunctious Liza loves spicy food! That’s just how they are! But they each rely on the other’s strengths to the fullest in Double Battles! Spending time with someone who likes different stuff than you is a chance to experience more and have a richer life! Sorry for dropping philosophy on you, but together, you can both grow more! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today’s letter comes from “Rainbow Soda.” Yo, thanks for watching, Rainbow Soda! Now whatta we got here... “I want to ask out a girl I like, but where’s a good place for a date?” Roman: Smoooooth! Young love, huh? I’ve got it! The hottest date spot these days has gotta be Sootopolis City! Rumor has it that any couple who watches the water illusion show that Wallace puts on with his Luvdisc will be together forever! Strictly a rumor, of course. Wallace only does those shows when he feels like it, so there’s no guarantee you and your would-be sweetie can catch one... Guess you’ll have to trust to luck! I’ve got my fingers crossed for you! See ya next time!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Water Pulse. First, let me explain what kind of move Water Pulse is. It attacks the target with a pulsing blast of water. It’s a surprisingly healthy move. Guest: How strong is the pulsing water? James Movesworth: Good. That’s a very good question... Actually, it’s so strong that it can confuse the target. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Some fathers come home feeling very tired, right? At times like that, use this move, and you can massage him to sleep. It works very well. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Leech Seed. First, let me explain what kind of move Leech Seed is. It plants a seed on the target and absorbs its HP every turn just little by little. It’s a surprisingly violent move. Guest: Where does the absorbed HP go? James Movesworth: Good. That’s a very good question... Actually, the user can restore its HP with the HP the move absorbed. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Use this move on a small plant pot, then look forward to checking its growth every day. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Flame Charge. First, let me explain what kind of move Flame Charge is. The user cloaks itself with flame and then attacks. It’s quite a hard-core move. Guest: Cloaking itself with flame... Won’t its body get hot? James Movesworth: Good. That’s a very good question... Actually, the move warms up the body nicely, and the Speed of the user goes up. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Let’s say you’re stranded on a snowy mountain. At times like that, it would be a good idea to use this move. Putting the clothes you’re wearing aside, the move has very wonderful effects. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Psybeam. First, let me explain what kind of move Psybeam is. The user emits a beam of mysterious light. It’s a mildly psychedelic move. Guest: Psychedelic... Doesn’t it sound a bit dangerous? James Movesworth: Good. That’s a very good question... Actually, it can leave the target confused, too. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... When you want to concentrate, like to prepare for an exam, use this move. It has great effects, except for the people around you. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Pin Missile. First, let me explain what kind of move Pin Missile is. The user shoots sharp spikes at the target in rapid succession. It’s a wonderfully relaxing move. Guest: In succession... How long does it last? James Movesworth: Good. That’s a very good question... Actually, the user can attack two to five times in a row. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... When the target has a severe shoulder ache or backache, use this move for acupuncture. It’s very soothing, except when it hits a wrong spot. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Quick Attack. First, let me explain what kind of move Quick Attack is. The user can strike first for sure. It’s a plainly natural move. Guest: What if both parties use this move? James Movesworth: Good. That’s a very good question... Actually, the one with higher Speed can strike first. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... When there is only one seat left in a train, casually use this move. If you don’t care what other people think, the move has very good effects. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Facade. First, let me explain what kind of move Facade is. James Movesworth’s Facade! That’s how you use this move. Guest: Well... Of course, it has a meaning, doesn’t it? James Movesworth: Good. That’s a very good question... Actually, if you use it when you’re poisoned, paralyzed, or burned, the power will be doubled. It’s a very heroic move. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... You sometimes don’t feel good when you have an appointment, right? At times like that, use this move. Apart from the fact that you won’t feel good the next day, the move has great effects, at least on the surface. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Round. First, let me explain what kind of move Round is. The user attacks the target with a song. It’s a very rocking move. Guest: Attack with a song... It doesn’t sound like a strong move. James Movesworth: Whooah— ♪ Good. That’s a very good point... Actually, if somebody uses this move, others can join in the Round, and the power goes up. In fact, it’s a very powerful move. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Sometimes you and your friend like the same person. If you use this move after your friend tells how he feels to the person, your friendship will be over, but the move is very effective. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Incinerate. First, let me explain what kind of move Incinerate is. The user attacks the target with fire. It’s a gracious yet dirty move. Guest: Which part of the move is dirty? James Movesworth: Good. That’s a very good question... Actually, this move burns certain items the target holds, such as a Gem or Berry. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Sometimes you’re anticipating a bad grade from an exam. At times like that, use this move. It will burn away the bad grade, but only on the paper you get back, just not in your permanent records! That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Payback. First, let me explain what kind of move Payback is. If the user attacks after the target, the power will be doubled. It’s a moderately stoic move. Guest: What will happen if both parties use this move? James Movesworth: Good. That’s a very good question... Actually, the slower your Speed is, the more advantage this move has. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... If you use this move on a person who helped you out previously... you’ll repay kindness with injury. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Acrobatics. First, let me explain what kind of move Acrobatics is. The user nimbly strikes the target. It’s a technical move. Guest: When is the right time to use the move? James Movesworth: Good. That’s a very good question... Actually, when the user isn’t holding any items, the power goes up. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Sometimes you are late for your friend’s party, right? If you use this move, it may have a huge effect depending on your efforts. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Fling. First, let me explain what kind of move Fling is. The user quickly flings its held item at the target to attack. It’s a surprisingly sloppy move. Guest: Its power and effects may vary, correct? James Movesworth: Good. That’s a very good question... Actually, its power and effects depend on the held item. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Sometimes you have huge worries that you can’t handle just by yourself, right? Use this move, and it will relieve the tension, especially when your target isn’t preoccupied. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about False Swipe. Let’s start by looking at what kind of move False Swipe is. The user restrains the move’s power, so the target won’t be wiped out and maintains at least 1 HP. It’s an obviously provocative move. Guest: When is the right time to use the move? James Movesworth: Good. That’s a very good question... Actually, it’s most effectively used on a Pokémon you want to catch. Guest: Would you say we can use it in daily life? James Movesworth: Indeed! For example... Let’s say you have a person whom you secretly admire. If you use this move, you may get the result you want...or not. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about Retaliate. Let’s start by taking a look at what kind of move Retaliate is. The user gets revenge for an ally that fainted. It’s an unexpectedly heroic move. Guest: When is the right time to use this move? James Movesworth: Good. That’s a very good question... Actually, if an ally fainted in the previous turn, the user’s power will be doubled. Guest: Would you say it’s something we could use in everyday life? James Movesworth: Indeed! For example... Sometimes, say in a judo tournament, the teammate ahead of you loses, even though [VAR GENDBR(00FF,0100)]she tried h[VAR GENDBR(00FF,0202)]iser best, right? If you use this move at a time like that, the anger you feel enhances your power. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about Grass Knot. First, let’s take a look at what kind of move Grass Knot is. The user snares the target with grass and causes it to trip. It’s something of a petty move. Guest: When is the right time to use this move? James Movesworth: Good. That’s a very good question... Actually, it’s best used when the target is heavier than the user! Guest: Would you say there’s any way we can use it in everyday life? James Movesworth: Indeed! For example... Take yourself to the riverside and use this move. Stare at the knotted grass... You’ll feel a weight of melancholy settle on you. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about U-turn. First, let’s take a look at what kind of move U-turn is. After making its attack, the user rushes back and switches places with another Pokémon. It’s a brisk and impetuous move. Guest: When is the right time to use this move? James Movesworth: Good. That’s a very good question... It’s particularly effective when the user can’t switch places with a party Pokémon due to an opposing Pokémon’s Ability. Guest: Would you say there’s any way we can use it in daily life? James Movesworth: Indeed! For example... Sometimes you get assigned an extra shift when you’re doing a part-time job. Use this move, and at least you can enjoy a relaxing day off. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about Mystical Fire. First, let’s take a look at what kind of move Mystical Fire is. The user attacks the target with flame from its mouth. It’s an undoubtedly fantastic move. Guest: Which part of the move is fantastic? James Movesworth: Good. That’s a very good question... Actually, the move lowers the target’s Special Attack when it’s used to attack. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... When people celebrate your birthday, you blow out candles on a cake, right? Use this move to drag out the party so that you won’t feel lonely. That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about Spiky Shield. First, let’s take a look at what kind of move Spiky Shield is. The user protects itself from the opposing Pokémon’s attack while lowering the opposing Pokémon’s HP on contact. Guest: Is there anything you should be careful about when you use it? James Movesworth: Good. That’s a very good question... Actually, if you use this move again immediately after you successfully use it, the success rate will drop to one third. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... You sometimes play goalie in soccer, right? During a game, use this move. You’ll have no problem catching and holding on to the ball! That’s all for today. See you next week. Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, let’s learn about Mat Block. First, let me explain what kind of move Mat Block is. The user uses a flipped tatami mat as a shield to protect against the opposing Pokémon moves. This is a remarkably skillful move. Guest: Is there anything that I should be careful about when I use it? James Movesworth: Good. That’s a very good question... Actually, it can’t protect from status moves, so you can’t let your guard down. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... Let’s say you have tatamis in your martial arts or yoga classroom. Use this move immediately, and you might find something extraordinary, or not. That’s all for today. See you next week. Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Thank you for tuning in to I-See News. James Movesworth reporting. Today, we’ll learn about Water Shuriken. First, let’s take a look at what kind of move Water Shuriken is. Shurikens are made of compressed sticky liquid, and the user throws them at the target in succession. It’s a critical move in a way. Guest: In succession... How long does it last? James Movesworth: Good. That’s a very good question... Actually, the user can attack two to five times in a row. Guest: It seems we can use it in everyday life, doesn’t it? James Movesworth: That’s right. For example... You know how when you’re washing your hair, sometimes the water pressure isn’t strong enough? That’s when you can use this move, and then you don’t have to rinse your hair! That’s all for today. See you next week! Until then, good-bye.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 3 A tragedy of Overgrow Man! Poké Ranger: Here you are! Ability Villain! Overgrow Man: Grass! I’m Overgrow Man! When my HP gets low, the power of Grass-type moves goes up! Poké Ranger: Wow. I shouldn’t take the Ability lightly. Overgrow Man: But! I can’t use any Grass-type moves. Still, I’ll thrive on this challenge and fight you! Narration: Overgrow Man, who doesn’t have Grass-type moves, was no match for the Poké Ranger. Don’t get beaten! Fight! Poké Ranger! Types are important, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 5 A tactician, Torrent Woman! Poké Ranger: Here you are! Ability Villain! Torrent Woman: SPLASH! I’m Torrent Woman! When my HP gets low, the power of Water-type moves goes up. But...you look quite strong. I’m scared... Ohh... Sniffle... Sob...sob... WAAAH! Poké Ranger: What?! S-sorry. I didn’t mean to make you cry... Torrent Woman: Haha! You let your guard down! Poké Ranger: GAAAH! Narration: The Poké Ranger fell for Torrent Woman’s trap! Don’t get beaten! Fight! Poké Ranger! You’re too nice, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 7 Explosion! Mr. Blaze! Poké Ranger: Here you are! Ability Villain! Mr. Blaze: Hahaha! I’m Mr. Blaze! When my HP gets low, the power of Fire-type moves goes up! Do you wanna receive my boosted Fire-type moves? Here I go! Hah! Poké Ranger: ... Mr. Blaze: ... Poké Ranger: Hah? Mr. Blaze: Hah! Argh! I need PP—short for Power Points— to use a move, but I don’t have it! Argh! Narration: The Poké Ranger luckily defeated the scatterbrained Mr. Blaze. Don’t get beaten! Fight! Poké Ranger! PP is also important, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 10 The power of eyes! Mr. Keen Eye. Poké Ranger: Here you are! Ability Villain! Mr. Keen Eye: KEEN! My name is Mr. Keen Eye! My accuracy won’t be lowered, and I can ignore my opponent’s evasiveness! I’m always accurate! ACCURATE! Poké Ranger: OK, then I’ll ask you! What did I eat for breakfast? You’re always accurate, right? Mr. Keen Eye: Ugh... I...I lost... Narration: Those who have too much pride are vulnerable when they lose it. Don’t get beaten! Fight! Poké Ranger! You’re good at the game of wits, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 13 Nifty! Infiltrator Woman! Poké Ranger: Here you are! Ability Villain! Infiltrator Woman: Tee hee! I’m Infiltrator Woman! Infiltrator allows me to ignore the opponent’s moves to protect itself, such as Light Screen, Reflect, Safeguard, Mist, and Substitute, so that I can use moves. Poké Ranger: Hah? What did you say? Sorry. I was lost in thought... Infiltrator Woman: Don’t ignore ME! Narration: She politely explained it in detail yet she was ignored. Poor Infiltrator Woman! Don’t get beaten! Fight! Poké Ranger! Be a good listener, Poké Ranger!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 14 Bizarre! Shield Dust Man! Poké Ranger: Here you are! Ability Villain! Shield Dust Man: Heheheh! I’m Shield Dust Man! Shield Dust blocks additional effects of opponents’ attack moves! It’s an awesome Ability that prevents burns from Ember or paralysis from Thunder Shock! Poké Ranger: Then, how about...Thunder Wave? Shield Dust Man: Oh no... Even with the Shield Dust Ability, I feel the additional effect of status moves! I feel...so...numb... Narration: The Poké Ranger’s great idea led him to a victory against Shield Dust Man! Don’t get beaten! Fight! Poké Ranger! Use status moves, Poké Ranger! To be continued...\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 16 Ferocious! Intimidate Man! Poké Ranger: Here you are! Ability Villain! Intimidate Man: YAAA! Who am I? I’m Intimidate Man! Intimidate is the Ability to lower the opponent’s Attack stat! Poké Ranger: I see. It’s a formidable Ability. But I thought something like this might happen. So, I prepared special moves this time! Even if Intimidate lowers the Attack stat, the Special Attack stat won’t change! Intimidate Man: Yaaa?! You—you’re pretty good, Poké Ranger! Narration: Poké Ranger—he knows the difference between physical and special attacks. Don’t get beaten! Fight! Poké Ranger! Well prepared means no worries, Poké Ranger! To be continued...\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 18 Hot blooded! Flame Body Man! Poké Ranger: Here you are! Ability Villain! Flame Body Man: No! I’m Flame Body Man! I’m also a hero of justice. Poké Ranger: What? I guess I had the wrong idea... All right, then, as a peace offering, let’s shake hands... AAAH! HOT! Flame Body Man: S-sorry! Flame Body is the Ability that can burn an opponent who touches me... Narration: The Poké Ranger learned a lesson that he should just bow for a greeting next time. Don’t get beaten! Fight! Poké Ranger! Carry a Rawst Berry, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 21 Formidable Enemy! Compound Eyes Man! Poké Ranger: Here you are! Ability Villain! Compound Eyes Man: Heh heh heh! I’m Compound Eyes Man! The Ability boosts the accuracy of moves by 30%. Heh heh. Take this! Sleep Powder! Poké Ranger: That means... The accuracy of Sleep Powder, which is 75, will be 97.5...?! Oh no! Zzz... Zzz... Compound Eyes: Heh heh heh! Poké Ranger, you underestimated the move, huh? Narration: The Poké Ranger is facing an uphill battle against Compound Eyes Man, who raises the accuracy of moves with low accuracy! Don’t get beaten! Fight! Poké Ranger! Don’t let your guard down, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 25 Here comes Mr. Inner Focus! Poké Ranger: Here you are! Ability Villain! Mr. Inner Focus: Hey! I, Mr. Inner Focus, will never ever flinch and be unable to move from your pathetic moves! Haaah! Poké Ranger! On the contrary, I’ll make you flinch! HAAAH! Poké Ranger: Haah? Well... I can act before you, so I won’t flinch... Mr. Inner Focus: Well, er... What I said is just an example, or a remark in the heat of the moment... Narration: Inner Focus Man was not supposed to flinch, but the Poké Ranger successfully made him flinch with his logical arguments. Don’t get beaten! Fight! Poké Ranger! Is he just a serious guy? Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 27 Steadfast! Poké Ranger! Poké Ranger: Hi, kids! How have you been? Today’s Poké Ranger’s episode is a summary episode... It’s a special episode! I’ll tell Poké Ranger’s secret to you! I, Poké Ranger, am an Ability Warrior of Justice, who has the Steadfast Ability! Steadfast increases the Speed stat every time when flinched. It’s the Ability that teaches you the importance of never giving up! I, Poké Ranger, change my fear to courage and protect justice! Well, now you can enjoy Poké Ranger as a card game! Find the Poké Ranger cards at your nearest toy store! The regular price for one pack is...\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 31 Out of control! Sap Sipper Man! Poké Ranger: Here you are! Ability Villain! Sap Sipper Man: I’m...munch...munch... mumble...mumble...Sap Sipper... munch...mumble...Sap Sipper Man! Munch...mumble...munch...when I take... munch...mumble...a Grass-type move... my Attack...munch...mumble... goes...mumble...up. Poké Ranger: I don’t know what you’re saying! Narration: Speaking while eating is bad manners! Kids, don’t imitate him! Don’t get beaten! Fight! Poké Ranger! Defend good manners, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 32 Mysterious! Synchronize Girl! Poké Ranger: Here you are! Ability Villain! Synchronize Girl: Hee hee! I’m Synchronize Girl... When I get a status condition... You’ll get the same status condition as mine. Because...our spirits are destined to be connected from the previous life! Poké Ranger: What—? S-scary... Narration: By the way, if your lead Pokémon has the Synchronize Ability, you have a better chance to encounter Pokémon with the same Nature as the Pokémon! Don’t get beaten! Fight! Poké Ranger! Personality clash, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 35 Troublemaker! Own Tempo Man! Poké Ranger: Here you are! Ability Villain! Own Tempo Man: I kinda feel hungry... Narration: Please let me explain. Own Tempo is the Ability which prevents confusion by the effect of moves. Own Tempo Man: Yawn... I’m tired. I’ll go home... Poké Ranger: What? Wh-what? I’m getting confused... Narration: The perplexing Own Tempo Man’s behavior confused the Poké Ranger. Don’t get beaten! Fight! Poké Ranger! Go your own way, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 37 Versatile! Sand Veil Phantom! Poké Ranger: Here you are! Ability Villain! Sand Veil Phantom: Graaah! I’m Sand Veil Phantom! During a sandstorm, the Ability increases evasiveness. Poké Ranger: Oh boy, what should I do? If he keeps hiding in sand, I don’t know what to do... Sand Veil Phantom: Oh no... If I keep hiding in sand, I can’t tell where Poké Ranger is, either... Narration: Both the Poké Ranger and Sand Veil Phantom got stranded in the blinding sandstorm! Don’t get beaten! Fight! Poké Ranger! Do something! The screen looks too boring, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 40 Ice cold! Mr. Ice Body! Poké Ranger: Here you are! Ability Villain! Mr. Ice Body: Heh heh heh... I am Mr. Ice Body. I recover my HP each turn while it’s hailing. Poké Ranger: What?! B-b-b-but... Mr. Ice Body: That’s right! Today is a clear day without a speck of cloud. I’ve had enough of this! I’ll go home! Poké Ranger: What? Come on! I’m a superhero. I have to fight villains! Narration: Ignoring the rule of superhero TV, Mr. Ice Body went home! Don’t get beaten! Fight! Poké Ranger! He’s feeling a snowstorm in his heart, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 42 Science! Magnet Pull Phantom! Poké Ranger: Here you are! Ability Villain! Magnet Pull Phantom: Maggggggg... I am Magnet Pull Phantom! Magnet Pull is the Ability that traps a Steel-type opponent and won’t let it go, mag. Poké Ranger: Oops! My specially made suit is made of steel! That means... Magnet Pull Phantom: Maggggggg... You can’t escape, mag! Poké Ranger: I’ll take off my suit and come back again. Farewell, Magnet Pull Phantom! Magnet Pull Phantom: Mag?! Narration: Heroes sometimes want to run away. Don’t get beaten! Fight! Poké Ranger! U-turn, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 43 Annoying! Static Man! Poké Ranger: Here you are! Ability Villain! Static Man: Bzzzzz! I am Static Man. Bzz! Static is the Ability that can paralyze an opponent that makes contact. Bzz! What do you think? Bzz. You can’t carelessly touch me, huh? Bzz. Poké Ranger: Hyper Beam! Static Man: Bzzzzzzz?! Poké Ranger: As long as I don’t touch you, I’m fine! Narration: Some moves make contact, and some don’t. Don’t get beaten! Fight! Poké Ranger! Shockingly strong, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 45 Spooky! Pickup Hag! Poké Ranger: Here you are! Ability Villain! Pickup Hag: Wha—? I’m a Pickup Hag. I pick up an item that someone used after a turn, or I pick up an item from somewhere after a battle. That’s all I do... Poké Ranger: Oh, I see... Please forgive me for being rude. Pickup Hag: Young people these days scatter trash all over. They just leave used-up items laying around after battles, too. And then there’s... And besides that... Narration: Poké Ranger had to listen to Pickup Hag’s lecturing for two hours! Don’t get beaten! Fight! Poké Ranger! Put trash in a trash can, Poké Ranger! To be continued.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">The superhero comic series The Ability Warrior: Poké Ranger! Episode 48 Adolescent! Dry Skin Girl! Poké Ranger: Here you are! Ability Villain! Dry Skin Girl: Wait! I’m Dry Skin Girl... My HP is restored when I get hit by Water-type moves or when it’s raining, but I take a lot of damage from Fire-type moves and when it’s sunny. I just have to take good care of my skin! Poké Ranger: Really? Your skin looks amazing just as it is... Dry Skin Girl: Wha—? Er...well... Narration: What is this turn of events? Watch your step, Poké Ranger! Fight, already! To be continued...\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Lucky Egg. A Lucky Egg is an excellent item! Let a Pokémon hold it, and the Pokémon can earn slightly more Exp. Points! I wish it had the same effect on me... Then I’d be an Ace Trainer already and really show my friend what I can do! Kidding. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is Luminous Moss. Luminous Moss is a very fresh item! When a Pokémon that holds it is hit by a Water-type move, Special Defense goes up. I wish it had the same effect on me, too... Then I would absorb a lot of water and keep my skin very hydrated and supple. But, unfortunately, this item is single use. So be careful! Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is an Amulet Coin. An Amulet Coin is a very useful item! Let a Pokémon hold it and fight, and you can get more prize money when you win the battle! I’m always losing lots of prize money. Sniffle... Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Snowball. A Snowball is a very cool item! When a Pokémon that holds it is hit by an Ice-type move, its Attack goes up! I wish it had the same effect on me... But I don’t want to be attacked... Hmm... Maybe snow cones have the same effect? But I can’t eat that many snow cones. A Snowball is for single use, so that’s fine! Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Destiny Knot. A Destiny Knot is a very lovely item! When Attract is used on a Pokémon that holds it and the Pokémon becomes infatuated, it can make the attacker infatuated, too. I wish it had the same effect on me... Then my friend would fall in love with... Oh, but he has to use Attract first. In that case, I’ll use Trick to swap items first, then... Oh no... Where did my Destiny Knot go?\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Quick Claw. A Quick Claw is a very nifty item! Let a Pokémon hold it and fight, and it can sometimes act fast! I wish it had the same effect on me... Then I could finish my homework in a flash! But it doesn’t always have that effect, so I’ll just have to guess how much time I’ll truly need to finish my homework. Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is an Assault Vest. An Assault Vest is a very aggressive item! A Pokémon that holds it can’t use status moves, but its Special Defense goes up! I wish it had the same effect on me, too... Then I would make a move on my friend without being afraid of the status change! And even if he turned me down, I would endure with my Special Defense. What? That’s not goo-oo-ood! I don’t like it at all! Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Cleanse Tag. A Cleanse Tag is a very spiritual item! Let your lead Pokémon hold it, and you won’t encounter wild Pokémon very much! I wish it had the same effect on me, too... I would say that bad things won’t happen to me, thanks to the Cleanse Tag, and I would sell this much-appreciated tag for $10,000. Then I would be rich! Kidding! Telling a lie is a bad thing. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is Heat Rock. Heat Rock is a marvelous item! Let a Pokémon hold it and use the move Sunny Day, and the sunny weather will last longer! I wish it had the same effect on me, too... To make tomorrow’s date nice and sunny, I would keep using Sunny Day starting tonight! Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is Safety Goggles. Safety Goggles are very useful! Let a Pokémon hold them, and they protect the holder from both weather-related damage and powder. I wish they had the same effect on me, too... When my mom scolds me, I will protect myself with the Safety Goggles. ...They won’t work unless they block noise?! I-I know that! I’m just acting silly! And now. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Smoke Ball. A Smoke Ball is a mysterious item! Let a Pokémon hold it, and the Pokémon can flee for sure! I wish it had the same effect on me, too... When I’m about to lose against an opposing Trainer, I would escape by the Smoke Ball! Then the number of lost battles would not increase... Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Weakness Policy. A Weakness Policy is a very reassuring item! When a weak point of a Pokémon that holds it is stricken, its Attack and Special Attack go up a lot! I wish it had the same effect on me, too... Nadia, have you gained weight lately? Then my Attack and Special Attack would go up! Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Nadia: Ciao! My name is Nadia. I’m a Rising Star! What I have in my Bag today is a Soothe Bell. A Soothe Bell is a very heartwarming item! Let a Pokémon hold it, and the Pokémon will become friendly more easily! I wish it had the same effect on me, too... Hi, my friend! Let’s walk together! Oh, I’ll give you this Soothe Bell. Please keep it! ...It won’t work unless you catch him first? Argh! I know that! Haha. ♪ Let’s have a great day, everybody!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Metronome! Watchy Watchog, have you heard of the Metronome? Watchy: Tch tch cha! (...I’ve heard of the name, at least...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Holding the Metronome and using the same move continuously makes that move do more and more damage! If the holder uses the same move six times in a row, the damage can double! So, here we go! Once, twice... Watchy: Tch tch cha! (...Hey! Stop the music!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about Leftovers! Watchy Watchog, do you know about Leftovers? Watchy: Tch tch cha! (...I always clean my plate, so...) Lady: Don’t spill it! OK, well, I’ll explain it anyway! When a Pokémon is holding Leftovers, a small fraction of its HP is healed every turn! Isn’t that neat?! Oh! That thing on the floor there... Could it be? Watchy: Tch tch cha! (...Hey! Why are you picking that up?...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Shell Bell! Watchy Watchog, have you heard of the Shell Bell? Watchy: Tch tch cha! (...Come on! Like I’d know...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Suppose you land an attack while holding the Shell Bell. Your HP would be restored by one-eighth of the damage done! The Shell Bell sure has a pretty sound, doesn’t it? Watchy: Tch tch cha! (...Hey! That’s it? Just listening to it?...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Expert Belt! Watchy Watchog, have you heard of the Expert Belt? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Holding the Expert Belt when attacking makes that attack do more damage when it’s super effective! An amazing 20% more, in fact! OK, then... Watchy: Tch tch cha! (...Hey! Why are you putting that on?!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Bright Powder! Watchy Watchog, have you heard of the Bright Powder? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Holding the Bright Powder drops your opponent’s accuracy to 90%! Oh, by the way, Lax Incense has the same effect as well! OK, Watchy! Come at me! Watchy: Tch tch cha! (...Ooh, shiny!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Big Root! Watchy Watchog, have you heard of the Big Root? Watchy: Tch tch cha! (...Come on! It’s big and it’s a root!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Holding the Big Root boosts the effect of moves that absorb HP by 30%! OK! Shall we go? Watchy: Tch tch cha! (...Hey! What’s the deal with the trowel?...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Shed Shell! Watchy Watchog, have you heard of the Shed Shell? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! When a Pokémon is holding the Shed Shell, it can switch out of battle, even when it usually wouldn’t be able to! Still, I wonder what kind of Pokémon this shell came from... Watchy: Tch tch cha! (...Hey! What are you looking at me for?...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Scope Lens! Watchy Watchog, have you heard of the Scope Lens? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Holding the Scope Lens makes critical hits land more easily! The Razor Claw also makes critical hits land more easily! OK, Watchy! Pick whichever one you want! Watchy: Tch tch cha! (...Hey! Are we going to duel?!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Focus Band! Watchy Watchog, have you heard of the Focus Band? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! The Focus Band gives the holder a 10% chance of withstanding any attack! It’s a little different from the Focus Sash, so don’t get them confused! So, Watchy, which do you like better, sashes or bands? Watchy: Tch tch cha! (...Hey! I don’t want either one!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Grip Claw! Watchy Watchog, have you heard of the Grip Claw? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Grip Claw makes moves like Wrap and Bind last longer. Up to seven turns! It also works with moves like Clamp, Fire Spin, Sand Tomb, Whirlpool, and Magma Storm! Watchy: Tch tch cha! (...Hey! That’s pretty persistent!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the King’s Rock! Watchy Watchog, have you heard of the King’s Rock? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Hold the King’s Rock and strike a target for a 10% chance of making that Pokémon flinch! The item Razor Fang has the same effect! So let’s give it a try! Watchy, want a Hertz Doughnut? Watchy: Tch tch cha! (...Hey! I know that trick!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Lagging Tail! Watchy Watchog, have you heard of the Lagging Tail? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! Holding a Lagging Tail makes the holder use its moves last. By the way, Full Incense is an item that has the same effect! Using it with moves like Reversal might be a good idea! Here, Watchy! I’ll hold this! Let’s play rock-paper-scissors! Ready? Watchy: Tch tch cha! (...Hey! Going late is no fair!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Eviolite! Watchy Watchog, have you heard of the Eviolite? Watchy: Tch tch cha! (...Come on! Like I’d know!...) Lady: Amazing! You know it! OK, well, I’ll explain it anyway! When you give the Eviolite to a Pokémon that can still evolve... Its Defense and Special Defense both rise sharply! Isn’t that amazing?! So, we’ll see you later, then! Watchy: Tch tch cha! (...What? That was a really short show!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Float Stone! Watchy Watchog, have you heard of the Float Stone? Watchy: Tch tch cha! (...Come on! Of course I haven’t!...) Lady: Amazing! You do know it! OK, well, I’ll explain it anyway! When you give the Float Stone to a Pokémon, its weight decreases! Let’s try giving one to Watchy right now! Watchy: Tch tch cha! (...Hey! Are you calling me fat?!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Rocky Helmet! Watchy Watchog, have you heard of the Rocky Helmet? Watchy: Tch tch cha! (...Come on! Of course I haven’t!...) Lady: Amazing! You do know it! OK, well, I’ll explain it anyway! When an attack does physical damage to a Pokémon holding the Rocky Helmet, the attacker takes damage, too. I’ll try it! So I put it on, like so, and... OK, Watchy, hit me with your best shot! Watchy: Tch tch cha! (...No fair! You’re not a Pokémon!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Ring Target! Watchy Watchog, have you heard of the Ring Target? Watchy: Tch tch cha! (...Come on! Of course I haven’t!...) Lady: Amazing! You do know it! OK, well, I’ll explain it anyway! If a Pokémon holds the Ring Target, even attacks that would usually have no effect will hit it! That reminds me! I have a present for you, Watchy! Your very own Ring Target! Watchy: Tch tch cha! (...Hey! That’s not very nice!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Lady: Hello! It’s time for the “What’s That?” show, where we talk about wonderful items! Today we are talking about the Binding Band! Watchy Watchog, have you heard of the Binding Band? Watchy: Tch tch cha! (...Come on! Of course I haven’t!...) Lady: Amazing! You do know it! OK, well, I’ll explain it anyway! The Binding Band increases the power of binding moves, like Wrap! Well, that’s it for today! Watchy: Tch tch cha! (...Hey! That’s it?!...)\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like, totally! It’s Trouble Talk time! Lessee... Our letter today is from “Pretty Wurmple.” Yo, thanks for watching, Pretty Wurmple! Now whatta we got here... “I love stroking my Wurmple along its belly. You know, it’s just amazing! Depending on where and when you catch one, it totally changes how glossy it is and how it feels! Totally! Don’t you think that’s mysterious? But if I try to talk to my friends about any of this, they say I’m strange... Am I really just a weirdo?” Roman: My answer is... No way, José! It’s awesome to have something you really love. You know Roxanne, who’s the Gym Leader in Rustboro City? That girl loves Fossils so much she runs around Hoenn with a hammer in her hand, excavating everything in sight! She’s even been written up in specialist magazines a whole bunch of times! It’s cool to focus on the thing you love like that! Go for it, future Bug-type professor! I’ll be your number-one fan! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Our letter today comes from “Shooting for the Stars.” Yo, thanks for watching, Shooting for the Stars! Now whatta we got here... “I want to get buff and look cool so all the girls will like me! Tell me a cool-looking sport to do!” Roman: Whoa, whoa, whoa! You are some kinda shallow guy! But, hey, I never said I didn’t like it! So, uh, lemme see... Have you thought about surfing? Yo, tons of cool surfing spots around Dewford, here in Hoenn. They say that Gym Leader Brawly moved from Kanto ’cause you can surf all year! Brawly loves it, and he’s sure got one ripped body, so I think it’ll make you fit and buff, little dude! Whether girls will like you, though, that’s really up to you! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today, our letter’s from “Feeling Cramped.” Yo, thanks for watching, Feeling Cramped! Now whatta we got here... “Sharing a room with my little brother is getting to be pretty tough lately. Our house is too small for me to get a room of my own. How can I make this more bearable?” Roman: Whoa. That’s a tough one, all right! How about you rearrange the furniture to make sort of a wall between the two of you? Gym Leader Wattson—man, is he amazing— traveled all over the world and learned all kinds of city-planning things, and he used ’em to make Mauville two stories tall! Counting the roof, he tripled the area of the city. And the population has QUADRUPLED! Maybe you can make smart use of your vertical space like he did! If that doesn’t work, plan on spending a lot of time in your Secret Base, I guess! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today, our letter’s from “Ma Chérie Macherie.” Yo, thanks for watching, Ma Chérie Macherie! Now whatta we got here... “Every morning I check myself out in the mirror. Today I discovered a huge pimple on my face! I can’t go out with a zit smack on my forehead! I am Lisia’s number-one rival—destined to be a great Contest Spectacular star! It’s a disaster! It’s totally unacceptable! Can you give me an effective beauty treatment to prevent further tragedies?” Roman: I feel the searing pain in this letter! Speaking of searing, maybe heat would help. Have you tried going to hot springs? That new Gym Leader Flannery goes in the hot springs every day, and she’s never had a single skin problem, according to interviews. But really, the most important things have gotta be a balanced diet and enough sleep. I’m backing you all the way, so hold on tight to your dreams! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Our letter today comes from “Special Ball.” Yo, thanks for watching, Special Ball! Now whatta we got here... “I’m applying for college soon, but I don’t know what to major in. I want to study both battling and Pokémon research, and I can’t pick just one!” Roman: Whoaaa... You are one hardworking kid! I know ’cause I hated to study anything! I really admire you, you know? Say... Professor Birch and the Petalburg Gym Leader, that new guy Norman, went to college together. If you could find a place like the one they went to, you could study both battling and Pokémon research! But it’s crazy to ask me about something big like this! Talk to your guidance counselor! Good luck with your applications, and I’ll keep my fingers crossed for you! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today, we’ll look at a letter from “I Love Roselia.” Yo, thanks for watching, I Love Roselia! Now whatta we got here... “I’m going on holiday in Hoenn next month with some friends of mine! Please recommend a city where we can really experience nature to the max!” Roman: Ooooh! Thanks for thinking of Hoenn. We’d love to see you! Check out somewhere like Fortree! Staying in their tree houses feels like camping! Oh, and maybe a tour with Winona, where she takes you to observe the wild bird Pokémon in the area! Winona can tell you everything about ’em, so you’ll really learn a lot! Have a great trip, and we look forward to hosting you in Hoenn! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today we hear from “Ultra Plusle.” Yo, thanks for watching, Ultra Plusle! Now whatta we got here... “My little sister and I don’t get along. We fight all the time, but I’m always the one who gets in trouble from our mom. What can I do?” Roman: Whoa-ho-ho! Siblings fighting, huh? Yeah, it happens. I’ve got a little brother, too, so I know eeeee-zackly what you mean, friend! How about this? You know the Gym Leaders in Mossdeep, Liza and Tate? Fact is, those two are complete opposites when it comes to personality and tastes and whatnot! Tate is a calm kid and loves to eat sweets, while rambunctious Liza loves spicy food! That’s just how they are! But they each rely on the other’s strengths to the fullest in Double Battles! Spending time with someone who likes different stuff than you is a chance to experience more and have a richer life! Sorry for dropping philosophy on you, but together, you can both grow more! See ya!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Roman: ’Suuuuuup, y’all! It’s time for me to help all y’all troubled teens with your traumas, like totally! It’s Trouble Talk time! Lessee... Today’s letter comes from “Rainbow Soda.” Yo, thanks for watching, Rainbow Soda! Now whatta we got here... “I want to ask out a girl I like, but where’s a good place for a date?” Roman: Smoooooth! Young love, huh? I’ve got it! The hottest date spot these days has gotta be Sootopolis City! Rumor has it that any couple who watches the water illusion show that Wallace puts on with his Luvdisc will be together forever! Strictly a rumor, of course. Wallace only does those shows when he feels like it, so there’s no guarantee you and your would-be sweetie can catch one... Guess you’ll have to trust to luck! I’ve got my fingers crossed for you! See ya next time!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: KONNICHIWA, yo! Are you overflowing with GENKI? It’s time for this week’s highly anticipated “KOUKAN TALK”! This is today’s phrase: “Your Pokémon is cute!” This is a phrase you want to try out! So, what’s the right way to say it? “Kawaii Pokémon da ne!” Ka-wah-ii po-kay-mo-n da nay! With this you can flatter that person you like! YATTA! Trading Pokémon internationally is sure great! Tee hee! OK, be sure to watch again! MATA KONDO!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: OSSU, everybody! Are you so GENKI it’s causing everyone else trouble? It’s time for this week’s highly anticipated “KOUKAN TALK”! This is today’s phrase: “Where did you come from?” This is handy! You’ll want to know where your opponent is from! If you want to say this in Japanese, it’s like this! “Doko kara kita no?” Do-ko ka-ra kee-ta no? After that, there’s no doubt you’ll have fun talking about where you’re from! Yeah! OK, so, MATA NE! Bye-bye!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: Yoo-hoo, MINNA! Today I’m a little wound up, so let’s get this “KOUKAN TALK” started! This week’s phrase is this: “What’s your favorite Pokémon?” So what will this sound like in Japanese? “Ichiban suki na Pokémon wa?” Ii-chee-ban su-kee nah po-kay-mo-n wah? Then both of you will know about the other’s favorite! By the way, my favorite Pokémon is [VAR PKNAME(0003)]! OK, see you later! JA NE! Have a good day! Mwah!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: Meowdy, MINNA! It’s time for “KOUKAN TALK”! Today’s one phrase for communication is this: “Where did you find that?” This phrase can be useful whenever you need it! HAI! So this useful phrase goes like this in Japanese! “Sore doko de mitsuketano?” So-re do-ko de mee-tsu-kay-ta no? When I meet Trainers with a cute [VAR PKNAME(0003)], I ask them that right away! So with that, MATA ITSUKA AIMASHO! And adios!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: Hello, MINNA! It’s time for “KOUKAN TALK”! This week’s phrase is: “Nice meeting you”! Use this when parting with someone you just met! At times like this, I say: “Shiri aete yokatta!” Shee-ree ah-e-te yo-ka ta! It’s even better when you say this along with a firm handshake! OK, that’s it for today! JA NE!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: OSSU, MINNA! Yesterday, I fell in love with a TOTTEMO KAWAII Pokémon in the Musical! This is what you say at that time! “I became your fan!” After that, I told it this in Japanese. “Anata no fan ni narimashita!” Ah-nah-ta no fa-n nee na-ri-ma-shee-ta! It was cute! So utterly KAWAII! My beloved [VAR PKNAME(0003)]! Your double-flip jump is just too adorable to be legal! On that note, I’m going to the Musical again today! JA NE!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: HAAAI! For good kids and even kids that are a little bad... It’s time for “KOUKAN TALK”! Today’s phrase is perfect for when two people’s thoughts match up, as if by telepathy! “I was thinking the same thing!” “Chodo onaji koto kangaeteta!” Choh-do o-na-gee ko-to ka-n-ga-eh-te-ta! When I say this, the conversation always picks up steam, and then it can’t stop! For that reason, that’s it for today! JA MATA NE!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: Hello, MINNA! It’s time for “KOUKAN TALK”! Another day, another step closer to mastering global communication! Recently, on the way back from the Musical, someone said this to me: “Your Pokémon looks different!” “Kawatta Pokémon da ne!” Ka-wa ta po-kay-mo-n da nay! I thought it could be a joke, but when I looked at [VAR PKNAME(0003)]...BIKKURI! It was still wearing Props from the Musical! I forgot to take them off! Oops! That would look strange! HAI! That’s it for today! MATA AIMASHOU! See you!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: Hey, MINA-SAN! It’s time for “KOUKAN TALK”! Today, I’ll teach you this question to ask when you see a Pokémon that you are interested in! “Where did you catch that Pokémon?” “Sono Pokémon doko de tsukamaeta no?” So-no po-kay-mo-n do-ko de tsu-ka-mah-e-ta no? Then you can go catch one for yourself! OK, that’s it for today! MINNA, bye-bye!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Azusa: ...Ne, Toru? Ninniku no nioi suru? Kinou sa, oishii pasuta tabetanda kedo sa, ninniku ga sugoku kiiteta no yo ne. Iki wo tometeiru no atashi no sei ja nai yo ne? ...Toru? Nande, kyou wa sonna ni shizuka na no? Sonnani niou? Are... Ee? Nani? What?! No way! We’re rolling?! H-hello, MINNA! P-please watch “KOUKAN TALK” again, OK? SAYONARA!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: Hey, everyone! How ya doin’? Ha ha! Whether you’re feeling good or bad, it’s time for “KOUKAN TALK”! This week’s phrase is: “Check out this Pokémon!” This is like telling someone: Hey, have a look at my Pokémon! It’s so cool! Woot woot! When you want to say that in Japanese, say this! “Kono Pokémon mite!” Ko-no po-kay-mo-n mee-te! With this, you can show off your Pokémon to each other, right? OK, thanks for watching this week! MATA KONDO!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: Hey hey, is everyone explosively GENKI today?! “KOUKAN TALK” comin’ at’cha! Today’s single phrase for communication is... “Let me see your Pokédex!” Trainers are always interested in another Trainer’s Pokédex! This is what you say in that situation! “Pokémon Zukan misete!” Po-kay-mo-n zu-ka-n mee-say-te! Now you can have a person who speaks Japanese show you their Pokédex! You have that? URAYAMASHII ZE! OK, have a great day! MATA NE! MINNA!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: YA! MINNA! Are you enjoying life? It’s time for this week’s “KOUKAN TALK”! This week’s phrase is for asking your excellent Pokémon rival something, yeah! “How many Badges have you got?” “Ikutsu bajji motteru?” Ii-ku-tsu ba ji mo te-ru? YEAH! With this, you can see how far your rival has progressed! Through Pokémon, everyone can be friends and rivals! On that note, I’m going to challenge the Gyms and collect more Badges! MATA NE!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: OSSU, MINNA! Today’s “KOUKAN TALK” is a liiittle different than usual! Why? Because today I’m having a fantastic day! So what I’m going to teach you in this fantastic mood is this, KORE! “Are you having a good time?” So you’re thinking, I want to talk to that person! But what should I say? OK, my hypothetical, shy young man or woman! I have the perfect phrase for you! “Tanoshinderu?” Ta-no-shi-n-de-ru? The perfect conversation starter! Just run with it from here! So that’s it for today! See you! MATA NE, MINNA!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: OSSU! Recently, I met an UTSUKUSHII woman at a party! The second I saw her, I thought I’d seen her before somewhere. But I couldn’t remember her name! So, in this situation, I went up to her, and I said this: “Dokoka de atta koto arukke?” Do-ko-ka de a ta ko-to a-ru keh? It means, “Have we met somewhere?” And what do you think she said to me? “What? I work with you every day. You’re not serious, right?” IYA! It was an all-prettied-up Azusa! SHIMATAAA! So, that’s it for today’s “KOUKAN TALK”! ...I sure hope Azusa will start talking to me again soon!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: KONNICHIWA, MINNA! We’re getting back to the basics on today’s “KOUKAN TALK”! Today, we will introduce a very basic phrase! “Let’s trade!” I almost don’t need to explain this phrase! Let’s translate it! “Koukan shiyou yo!” Ko-o-ka-n shee-yo-o yo! What is important is to have a glint in your eye, like you’re really excited! If you communicate your excitement, I’m sure you can make a good trade! So that’s it for today! See you, everyone! JA NE!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: YA, MINNA! In today’s “KOUKAN TALK,” I’m going to introduce something that’s often said to me. “You’re kidding!” There is often a lot of shocking news in my circle of friends. When I said I saw a bright-red [VAR PKNAME(0003)], this is what they said to me! “Jodan deshou!” Jo-da-n de-sho-o! You’re kidding! I’m serious! I saw a very angry [VAR PKNAME(0003)], and its face was bright red! ...Man, I was scared! So that’s all for today! MATA KONDO, everyone!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: MINNA, KONNICHIWA! In today’s “KOUKAN TALK,” we’re going to teach you an aggressive way to proclaim your future victory! “I’m going to win!” “Katsu zo!” Ka-tsu zo! What is important is to emphasize the “zo!” Be aggressive and show where you stand! For example, saying it through clenched teeth would be really cool. You might not even have to battle! Just declare victory like that, and your opponent might get scared and run away! So that’s it for today! Let’s meet again! JA NE!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: KONNICHI-HELLO! It’s “KOUKAN TALK,” which gives you great tips for talking in Japanese! Today’s phrase is this! “What was that about?!” This is something you spout out without thinking when something unexpected happens! This is how you say it in Japanese! “Nandattendayo!” Na-n-da te-n-da-yo! The point is your expression. If you say this while making an expression that says, “What?” II YO! Well, that’s it for today! Please look forward to next week’s installment! MATA RAISHU!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Toru: Hello, everyone! In today’s “KOUKAN TALK,” we will teach you the question to end all questions! “What’s your hobby?” Use it with people you’ve just met! Use it with people you’ve known forever! In Japanese, you say this: “Shumi nani?” Shu-mee nah-nee? That should get the conversation going! Well, that’s it for today! Please watch again! MATA KONDO!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! It’s everyone’s favorite event, the 100-meter dash! Oh... The Red Team’s Pokémon has stepped onto the field! The Bash Buffalo Pokémon, Bouffalant, is scattering everything in its path! From the White Team, its opponent is the fearsome Psychic type, Kadabra! The athletes are at the starting line! Ready, set, go! Wow! Bouffalant charges off the line with a powerful dash! Kadabra is... Wha—? It hasn’t budged an inch from the starting line! Bouffalant is almost to the goal line! What’s this? Kadabra has vanished! It used Teleport! Kadabra crossed the goal in the blink of an eye! What a dramatic come-from-behind win! And that concludes today’s Unova Sports Spectacular coverage from Floccesy Ranch! Oh! Bouffalant is angry with the result and is charging right this way! AAAH!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! It’s a unique Fighting-type match— judo versus karate! Throh, from the Red Team, will battle using judo techniques! Sawk, from the White Team, will battle using karate techniques! These two rivals have been engaged in fierce competition for a long time! The time to settle things once and for all has come! Sawk immediately starts the match with a swift Low Sweep and does some damage! Throh responds with a Vital Throw! This match is getting heated already! Neither athlete fears damage as they aggressively use attack moves! Wowza! Sawk’s Double Kick was a critical hit! But, wasting no time, Throh responds with its specialty, Seismic Toss! Both athletes are down! Neither one is getting up! It’s...a tie! What an amazing clash of spirits! And this concludes our coverage from the PWT stadium!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! This time, it’s the swimming competition Undella Bay Lap Race! For the Red Team, it’s the savage fish Pokémon, Basculin! For the White Team, it’s the ancient Prototurtle Pokémon, Tirtouga! OK! Let’s get started! Wow! Right behind Basculin is the gracefully swimming Tirtouga! Both Pokémon have reached the halfway mark at the same time. What’s this? Tirtouga has sped up and taken the lead? What’s this? Basculin is going to Bite with its razor-sharp fangs. But Tirtouga instantly uses Withdraw! Basculin bounces off of Tirtouga’s ultra-hard shell! And it’s over! Tirtouga crosses the finish line! Amazing! Could this be the power of prehistoric Pokémon? If you’re interested in prehistoric Pokémon, make sure to visit the Nacrene Museum!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! Our next event is the shot put! For the Red Team, it’s the muscular Gurdurr! For the White Team, it’s Scraggy, who looks like it’s up to something! Gurdurr is up first. An excellent windup and release! And... Wow! The shot just keeps going and going! It’s... Amazing! It’s a new record! How will Scraggy surpass this amazing record? It spins around and launches the shot! Well, that doesn’t look like a great trajectory... But wait! It just keeps going. It’s almost like the shot has wings! Wait a minute... Doesn’t it look like there is a heart- shaped mark in the center of that shot? It couldn’t be?! It is! It’s a Woobat that was painted black! Scraggy, that’s against the rules! You’re disqualified! And this concludes our broadcast from Nimbasa City’s Big Stadium.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! This event is a new twist on a traditional game: Roggenrola bowling! The rules are simple. A Roggenrola is rolled at 10 pins, and the player who knocks down the most wins! However, depending on the Roggenrola, there is the chance of an explosion! The participants in this thrilling sport are the pro Roggenrola bowlers Watchog and Throh! OK... I’m getting far, far away before they start. Uwaaaugh! Throh suddenly threw that Roggenrola with all its might and caused an explosion! Oh! Eeek! Watchog’s Roggenrola also exploded! What a day for explosions! I’m getting out of here! This concludes our coverage from Lentimas Town’s airstrip!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! Next up, a match of pushing and shoving. That’s right. It’s sumo! On the left, the fiery pig Pokémon Pignite-yama! On the right, the tunneling mole Pokémon Drilbur-maru! Ready, go! Pignite-yama goes after Drilbur-maru with Take Down! Drilbur-maru doesn’t stand a chance of withstanding a Take Down! But it has... Wow! It disappeared into the ground! Could it be using Dig? Yes! There it is! And Pignite-yama flies out of the ring from the force of the hit! I, ah, I guess you could call this a win by a Dig-Ringout? This concludes our coverage from the PWT stadium!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! It’s the event everyone’s been waiting for: the Pokémon Table Tennis Championship! The athletes are approaching the table! Using psychic powers to control the ball at will, it’s Gothitelle! Using its four hands skillfully to return the ball, it’s Cofagrigus! This match is barely within the rules, and it begins now! ... Four days have passed since the start of the match. Neither player has dropped the ball once. They’re both too good! I’ve been doing a play-by-play for four days without sleep. I’m so, so tired... But wait! Oh! Cofagrigus! It’s as if it felt what I’m feeling, and it fell asleep! Th-the winner...is Gothitelle!! And this concludes our coverage from Big Stadium! Good night!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! We’re covering the Beach Volleyball tournament in Undella Town! We’re joining a heated match between Team Palpitoad and Team Frillish! Team Frillish is backing Team Palpitoad into a corner with attacks that are barely in bounds! What’s this? The members of Team Palpitoad have started using their long tongues to receive and attack! Do the rules allow this? No, no, that’s just plain icky, so Team Palpitoad is violating the rules! ...Wh-what? For some reason, the members of Team Palpitoad are surrounding me. You guys aren’t mad...are you? Ughhh! Eeewww! Stop licking me!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! One of the weight lifters competing today is that mass of muscle you know and love, Gurdurr! The other challenger is the Automaton Pokémon, Golett! ...Amazing! Both Gurdurr and Golett are lifting heavier and heavier barbells! That’s why they’re known for power! But compared to Golett, who is lifting with a good rhythm, is Gurdurr starting to look tired? Is the match going to end here? Wow! A large group of Timburr have gathered, and they’re cheering for Gurdurr! It’s lifting the barbells like it’s responding to their encouragement! Even Golett can’t lift this much weight. The victorious Gurdurr is... Oh dear. I think it fainted from excitement! Wow! That’s amazing! Here in Pinwheel Forest you can barely hear anything over the sound of those Timburr cheering for Gurdurr!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to our coverage of the Unova Sports Spectacular! It’s a fencing duel between master and apprentice—the boss Bisharp and its pupil Pawniard! Everyone faces challenges they must overcome! Then let the match begin! Amazing! Bisharp’s swordsmanship is hard to follow with the naked eye! Pawniard somehow managed to dodge, but there’s nowhere left to go! Wow! That attack! Pawniard used Swords Dance!! Even Bisharp cannot hide its surprise! But now it’s recovered and sent Pawniard’s sword flying! Could this be the match? No...Bisharp has suddenly thrown down its sword. And...it’s walking away... Wh-what’s going on? Does this mean Bisharp recognizes Pawniard’s true strength and has given up its position as boss? The winner is Pawniard! It’s crying tears of joy! And this concludes our coverage from the bridge on Route 11! From today on, you’re the boss of this area, Pawniard!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Pikachu! What is it called in Japanese? No hint is necessary this time, because it’s international! OK, panelists, your answers, please? Quil: Oh! It’s Electchu! Ill: I know! It’s Pikanezumi! Zill: Ah! It’s Pikapika! Host: Oh, too bad! The correct answer is Pikachu! Just like in English! As a matter of fact, wherever you go in the world, Pikachu is Pikachu! OK then, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Hoothoot! What is it called in Japanese? Here’s a big hint! In Japanese, the sound it makes is “hoo”! OK, you three, start from there! Quill: Oh! It’s Hoo! Ill: I know! It’s Hoohoo! Zill: Oh yeah! It’s Hooareyou! Host: Oh, Ill was so close! The correct answer is Hoho! Ho-o ho-o! I’ll bet you learned a lot! Well then, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Lickitung! What is it called in Japanese? The hint is, its long tongue is called a “bero”! OK, go to work, my energetic three-person team! Quill: Oh, it’s Lickitung! Ill: I know! It’s Berong! Zill: Oh yeah, it’s Berlong! Host: Ooh! Too bad! The correct answer is Beroringa! Be-ro-ri-n-ga! Berori is the sound of licking in Japanese! It’s an easy-to-understand name that emphasizes the lo-o-ong tongue it’s known for! OK, see you later! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Eevee! What is it called in Japanese? OK, you over there! Quill: Oh! It’s Eevee! Ill: I know! It’s Eve! Zill: Oh yeah! It’s Eievui! Host: Oh! I can’t believe it! That’s correct! The answer is Eievui! Ee-vee! Congratulations! The person with the correct answer wins an Eevee doll! ...Well then, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Turtwig! What is it called in Japanese? OK, you three sleepy-looking kids over there! Quill: Is it Turtwig? Ill: Is it Torunae? Zill: Is it Tornado? Host: Oh, sorry. The correct answer is Naetle! “Nae” means seedling in Japanese, and Turtwig has a seedling growing out of its head! Did you learn something? Well then, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Squirtle! What is Squirtle in Japanese? OK, you over there! Quill: Oh! It’s Squirtle! Ill: I know! It’s Turzen! Zill: Oh yeah! It’s Zenzen! Host: So sorry! The answer is Zenigame! Zeh-nee-ga-me! “Zeni” is an old-fashioned word for money. Squirtle’s shells look like old coins, so that’s how they got their name! You can’t use them as coins, though. OK, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Geodude! OK, what is it called in Japanese? What do you think, you kids who look like you enjoy learning? Quill: Oh! It’s Geodude! Ill: I know! It’s Geometery! Zill: Oh yeah! It’s Geometeric! Host: The correct answer’s Ishitsubute! I-shee-tsu-bu-te! “Ishi” means rock, and “tsubute” is like a throwing stone. Don’t try to throw a Geodude, though, because you will probably get hurt! OK, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Wailord! OK, what is it called in Japanese? OK, you three kids there with the confident expressions! Quill: Oh! It’s Wailord! Ill: I know! It’s Ohwhale! Zill: Oh yeah! It’s Ohwell! Host: Oh! That’s incorrect! The correct answer is Whaloh! It’s pronounced: ho-e-ru-o-o! “Hoeru” means “wail,” and the “oh” at the end means “king.” Maybe it’s sad and lonely at the top! Has a very noble sound to it, doesn’t it? OK, see you next week!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Machop! What is it called in Japanese? The hint is, “riki” means strength in Japanese. OK, you three over there! Your answers please! Quill: Oh! It’s Machop! Ill: I know! It’s Mabrarian! Zill: Oh yeah! It’s Chopchop! Host: Sorry, that’s incorrect! The correct answer is Wanriky! Wan-ri-kee! “Wan” means “arm,” and “riki” means “strength.” It’s very easy to understand! Well then, everyone, farewell! Mah-mah-machooo!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Host: Welcome to “PokéQuiz,” where we quiz kids who love Pokémon, but don’t like language lessons, on the Japanese names of Pokémon! Today’s Pokémon is Beautifly! What is it called in Japanese? OK, you three over there! Quill: Oh! It’s Beautifly! Ill: I know! It’s Flybeauti! Zill: Oh yeah! It’s Flyfly! Host: Nope, the correct answer is Agehunt! A-ge-ha-n-to! The “hunt” part makes it sound ferocious for such a pretty Pokémon. OK, see you next week! Farewell!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On “The Pokémon Whisperer,” Pokémon with many different problems are taken to the Pokémon Breeder Paul, and he works to build a good relationship. Today’s Pokémon is a human-hating Patrat that won’t open up to its Trainer. Paul chose to stay by its side for 24 hours as the way to get along with it better... Paul: Ouch! The little guy bit me while I was sleeping! OK, then! Bite as much as you want! Every time you bite, I’ll give you a hug! Narrator: This is how Paul’s time with Patrat began! The Biting Patrat continues next week... Will Paul’s method’s work? Find out next time!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On this episode of “The Pokémon Whisperer,” we will finish the story of Paul and the biting Patrat! Paul is covered in injuries as he lives with the biting Patrat. Paul: No matter how much you hurt me, I won’t let anyone hurt you! Even if 100 Gurdurr show up out of nowhere! Narrator: That’s right... Patrat doesn’t hate humans. It just doesn’t understand how they show trust and affection! Paul: Yup! As you can see, this Patrat is totally friendly and playful now! You just have to communicate that you’re a trustworthy Trainer! Narrator: Well done, Paul! And now for a test. We’ve prepared 100 Gurdurr to see if you really could protect Patrat from them! Paul: What? Hey, wait a minute! Aww! Patrat is staring right at me with a pleading look in its eyes... OK. OK! You got it, buddy! I’ll do my best to protect you! Bring ’em on! Hi-yaaah!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On “The Pokémon Whisperer,” Pokémon with many different problems are brought to Pokémon Breeder Paul, who works to build a good relationship. Today’s problem Pokémon is a young Timburr! It’s causing trouble for its Trainer by rebelling at every opportunity... When Paul goes to meet Timburr, he finds it in a ruined room. Paul: Did you trash everything? Heh heh... I get it! I was a bad guy once, too! Some folks just go through that phase! Narrator: As Paul approaches to talk, Timburr smacks him in the head with its wooden beam! It’s a sudden breakdown in negotiations! How will Paul respond? Tune in next week for the conclusion of Taming Timburr!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On this episode of “The Pokémon Whisperer,” we will finish the story of Taming Timburr! Last time, Paul was approaching Timburr to talk when it walloped him with its wooden beam. This is his response... Paul: Hey, that really hurt! Narrator: Between sobs, he takes a swing at Timburr, and they start to battle! Their fight continues into the next morning. Paul: Whew! Got that out of our systems! Hey, how about going to the ocean? Narrator: Timburr calmly accepts the invitation. Paul: C’mon! Face the ocean and shout! The answer you’re looking for is there! Narrator: The two of them shout at the sea to their hearts’ content. By fighting with Paul and yelling at the sea, Timburr was able to get rid of its pent-up frustrations. Now it understands how to deal with its anger and doesn’t go wild anymore. Paul: Trainers! Enjoy the excitement of youth with your Pokémon! See you!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On “The Pokémon Whisperer,” Pokémon with many different problems are brought to Pokémon Breeder Paul, who works to build a good relationship. Today’s problem Pokémon is a depressed Stunfisk. Paul is investigating the cause of its feeling down... Paul: Oh, I see... A lost love... Stunfisk: Unnn... Paul: Aww. Was your relationship really that wonderful? ...Chin up! There are other possibilities out there! I’ve got it! Let’s go to the swamp to find you a new love! Narrator: So Paul drags the reluctant Stunfisk into the swamp! What startling thing does Stunfisk witness there? Stunfisk in Love continues next week! See you then!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On this episode of “The Pokémon Whisperer,” we will finish the story of Stunfisk in Love! Paul takes the depressed, lovelorn Stunfisk to the swamp! And here’s what they find... Stunfisk: Unnnnnn! Paul: What? That Stunfisk over there is the one who left you? Stunfisk: Unnn... Paul: Oh my. And it’s hanging out with a new Stunfisk now... Narrator: Paul is at a loss for words. But then, the lovelorn Stunfisk takes him by surprise! Paul: Wait! You’re going over there to talk? What will you say?! Stunfisk: Un! Un! Narrator: Stunfisk professes its affection again...and is rejected once more! Stunfisk: Uuuuunnn! Narrator: But in the process, Stunfisk made a decision and acted on it without fear of being hurt. Paul: Wow. That was really brave... and Stunfisk looked so cool! This time, I feel like I’m the one who learned a lot!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On “The Pokémon Whisperer,” Pokémon with many different problems are brought to Pokémon Breeder Paul, who works to build a good relationship. Today’s problem Pokémon is a runaway Audino! Since it can tell how people feel, it can also detect bad things, and it no longer trusts people. Wanting to teach it that people aren’t all that bad, Paul sets off in search of Audino! Paul: Audino! Where are you? Narrator: Paul searches deserts, cities, even the depths of the ocean, but is unable to find it... Paul: Oh! What’s that? Narrator: Finally, Paul finds Audino in the depths of the forest! But in his excitement, Paul makes a terrible mistake... We’ll continue the story of What Audino Wants next time!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On this episode of “The Pokémon Whisperer,” the story of What Audino Wants continues! Paul finally finds the runaway Audino and tries to talk to it... Paul: I know you can sense negative things about people, and that’s what scared you away! But there are so many good things about people, too! Please give us another chance! Narrator: Startled by Paul’s shouting, Audino runs away again! That’s right! Because Audino have such good hearing, they dislike loud noises... and Paul has a hard time talking quietly! Paul: Guess that was a bad idea, huh... Narrator: Paul’s usual way of doing things won’t work this time! How will he communicate his feelings to Audino? Watch next week for the conclusion to What Audino Wants, and find out how Paul solves this dilemma!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On this episode of “The Pokémon Whisperer,” it’s the conclusion of What Audino Wants! A worried Paul searches once again for a runaway Audino, after scaring it away by shouting. Paul: This is so hard! How can I communicate to Audino without shouting? I want to tell it so many things! Narrator: After a long journey, he finds Audino in a cave deep in the mountains. With a great effort, he manages not to shout about his feelings. Instead, he runs up to Audino and gives it a big hug! Paul: Audino... Narrator: Audino can sense people’s feelings. When it senses Paul’s intense, sincere caring for Pokémon, its distrust of humans melts away... Paul: That’s right! If you sincerely care about Pokémon, they will understand even if you don’t use words! It’s your feelings that are important!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On today’s special episode of “The Pokémon Whisperer,” the dedicated Pokémon Breeder Paul talks about special techniques for getting along with Pokémon! This is a must-watch episode for all Trainers! Paul: Let’s begin right away! When you meet a Pokémon, these things are very important! Tip 1: Talk loudly! Tip 2: Act sincerely! Tip 3: Capture its interest! Tip 4: Open up to it! With these techniques, any Pokémon will hop into the Poké Ball you throw with just one try! Remember these tips with “TACO.” I’m more of a pasta guy, though... OK! See you next week!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Narrator: On today’s special episode of “The Pokémon Whisperer,” the dedicated Pokémon Breeder Paul talks about how to raise Pokémon. These tips will help get any Pokémon on the road to success. Paul: Take good notes! First, gently let the Pokémon out of the Poké Ball! Then loudly tell it how much you enjoy its company! Shouting is best! That’s it! Just repeat this 30 times a day! They’ll grow with the power of love! ...Probably! OK. See you next week!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV I was just your average girl until I was struck by a Thunder Shock. It was love at first sight, baby! And my target, a Gym Leader! I didn’t have any Pokémon then, but not a problem for a resourceful gal! The answer was simple—and we all know simple is best! I just had to become a Trainer. That’s all it took for me! “The Diary of a Poké Romantic” will soon make its debut! The pilot episode: “Love at First Sight: The Rules of the Move Attract!” By the way, how did everyone get their first Pokémon anyway?\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV After some fits and starts, a childhood friend gave me my first Pokémon! ...It was a Kricketot. Except...I don’t like the legs of bugs. I bet he gave me this because I picked on him when he was little... But though the road has been long and hard, I’m finally at the starting line! Next week: “The Diary of a Poké Romantic,” episode two! “The Maiden in Love and the Kricketot: The Magic of Romance Never Ends!” Oh, this Kricketot is a female. Maybe we can be friends.\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV I checked out my Kricketot and learned about its moves. ...It only knows Growl and Bide. That’s worse than just challenging! I was about to say that, when my childhood friend stopped me. “Let it hold an Oran Berry so that it can survive while using Bide.” Hey, that’s smart! That’s from a former Bug Catcher! While we’re at it, may I have an Oran Berry, too? Next week: “The Diary of a Poké Romantic,” episode three! “Love Conquers All: Covering Weakness with Ideas!” We’re a Trainer and Pokémon now! We’ll get stronger together!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV I had my first ever Pokémon battle, and it ended badly... My childhood friend, a former Bug Catcher, had this to say... “Pokémon get tougher by battling. The key to victory is type matchups.” Type matchups? Types affect battles? The only type matchup I care about is with that Gym Leader! Next week: “The Diary of a Poké Romantic,” episode four! “Type Matchups Settle Battles! Moves That Exploit Weak Points!” Fire, Flying, and Rock... Kricketot has some disadvantages!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV We’d win a battle, and lose one. Lose one, then win one. Though it was at times discouraging, I had to keep battling to toughen us up. With me and Kricketot, it was always three steps forward, two steps back. But we were getting stronger. Then, one day, Kricketot started to shine! Next week: “The Diary of a Poké Romantic,” episode five! “Kricketot Becomes Kricketune! Watch Me! I’ll Change, Too!” And to cancel Evolution, press the B Button... Tell me that first!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV After Kricketot evolved, it became stronger as Kricketune. We also got other Pokémon, so we could go farther and farther from home. But where is my beloved Gym Leader? Where is that city he said he’s from? I do have the Town Map, but maps baffle me. It doesn’t matter, though. If we keep moving, we’ll get somewhere. Next week: “The Diary of a Poké Romantic,” episode six! “How Is This Possible? Pokémon Gyms Can’t Be Found Everywhere!” The more lost you are, the less useful a map becomes! You know it’s true!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV Our journey was long, and it was hard. But no one wants to hear that! So, I finally found my Gym Leader. But he has an incurable disease! He begged me, out of the blue, with his last wish. He asked for my Pokémon! But my Kricketune’s my partner! Next week: “The Diary of a Poké Romantic,” episode seven! “My Trail of Footprints Shortened the Distance Between Us!” Every time I see Kricketune’s face, I am reminded of our time together...\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV My beloved Gym Leader, whom I fought so hard to meet, was a fraud! How dare he con this pure maiden! How dare he toy with my emotions! But whose fault was it? Was it mine for being taken in? All I know is that my tears overflow, and despair is my world... Next week: “The Diary of a Poké Romantic,” episode eight! “Kricketune and I! Our Bond Is True!” That Gym Leader’s eating a Giga Impact for playing me for a fool!\n...</NPC>
+<NPC id="0" name="TV" identifier="TV" language="9">Best of Sinnoh TV Having defeated the fake Gym Leader, Kricketune and I stood in a daze. We were spent. Drained by a romance that ended in a nightmare. It was then that my childhood friend, the former Bug Catcher, arrived. He did more than that. He confessed his love to me! “I wanted to become an Elite Four member, so I quit as a Gym Leader. But then that faker appeared. You took care of him, though!” Wait, ex-Bug Catcher! What? What are you saying?! Next week: “The Diary of a Poké Romantic,” final episode! “Do it, Kricketune! Silver Wind over Sinnoh Skies!” You were laughing at me for falling for that fraud, weren’t you?\n...</NPC>
 </Scenes>
 <Abilities>
 <!--
@@ -851,19 +1125,19 @@ of the Flying type’s weaknesses.
 <Ribbon id="51" language="9" identifier="RECORD" name="" region="" type="">A Ribbon awarded for setting an incredible record.</Ribbon>
 <Ribbon id="52" language="9" identifier="EVENT" name="" region="" type="">Pokémon Event Participation Ribbon.</Ribbon>
 <Ribbon id="53" language="9" identifier="LEGEND" name="" region="" type="">A Ribbon awarded for setting a legendary record.</Ribbon>
-<Ribbon id="54" language="9" identifier="GORGEOUS" name="" region="" type="">An extraordinarily gorgeous and extravagant Ribbon.</Ribbon>
-<Ribbon id="55" language="9" identifier="ROYAL" name="" region="" type="">An incredibly regal Ribbon with an air of nobility.</Ribbon>
+<Ribbon id="54" language="9" identifier="GORGEOUS" name="Gorgeous Ribbon" region="" type="">An extraordinarily gorgeous and extravagant Ribbon.</Ribbon>
+<Ribbon id="55" language="9" identifier="ROYAL" name="Royal Ribbon" region="" type="">An incredibly regal Ribbon with an air of nobility.</Ribbon>
 <Ribbon id="56" language="9" identifier="GORGEOUSROYAL" name="Gorgeous Royal Ribbon" region="" type="">A gorgeous and regal Ribbon that is the peak of fabulous.</Ribbon>
 <Ribbon id="57" language="9" identifier="ALERT" name="" region="" type="">A Ribbon for recalling an invigorating event that created life energy.</Ribbon>
 <Ribbon id="58" language="9" identifier="SHOCK" name="" region="" type="">A Ribbon for recalling a thrilling event that made life more exciting.</Ribbon>
-<Ribbon id="59" language="9" identifier="DOWNCAST" name="" region="" type="">A Ribbon for recalling feelings of sadness that added spice to life.</Ribbon>
-<Ribbon id="60" language="9" identifier="CARELESS" name="" region="" type="">A Ribbon for recalling a careless error that helped steer life decisions.</Ribbon>
-<Ribbon id="61" language="9" identifier="RELAX" name="" region="" type="">A Ribbon for recalling a refreshing event that added sparkle to life.</Ribbon>
-<Ribbon id="62" language="9" identifier="SNOOZE" name="" region="" type="">A Ribbon for recalling a deep slumber that made life soothing.</Ribbon>
-<Ribbon id="63" language="9" identifier="SMILE" name="" region="" type="">A Ribbon for recalling that smiles enrich the quality of life.</Ribbon>
+<Ribbon id="59" language="9" identifier="DOWNCAST" name="Downcast Ribbon" region="" type="">A Ribbon for recalling feelings of sadness that added spice to life.</Ribbon>
+<Ribbon id="60" language="9" identifier="CARELESS" name="Careless Ribbon" region="" type="">A Ribbon for recalling a careless error that helped steer life decisions.</Ribbon>
+<Ribbon id="61" language="9" identifier="RELAX" name="Relax Ribbon" region="" type="">A Ribbon for recalling a refreshing event that added sparkle to life.</Ribbon>
+<Ribbon id="62" language="9" identifier="SNOOZE" name="Snooze Ribbon" region="" type="">A Ribbon for recalling a deep slumber that made life soothing.</Ribbon>
+<Ribbon id="63" language="9" identifier="SMILE" name="Smile Ribbon" region="" type="">A Ribbon for recalling that smiles enrich the quality of life.</Ribbon>
 <Ribbon id="64" language="9" identifier="FOOTPRINT" name="" region="" type="">A Ribbon awarded to a Pokémon deemed to have a top-quality footprint.</Ribbon>
 <Ribbon id="65" language="9" identifier="ARTIST" name="" region="" type="">Ribbon awarded for being chosen as a super sketch model in Hoenn.</Ribbon>
-<Ribbon id="66" language="9" identifier="EFFORT" name="" region="" type="">Ribbon awarded for being an exceptionally hard worker.</Ribbon>
+<Ribbon id="66" language="9" identifier="EFFORT" name="Effort Ribbon" region="" type="">Ribbon awarded for being an exceptionally hard worker.</Ribbon>
 <Ribbon id="67" language="9" identifier="BIRTHDAY" name="" region="" type="">A Ribbon to celebrate a birthday.</Ribbon>
 <Ribbon id="68" language="9" identifier="SPECIAL" name="" region="" type="">A special Ribbon for a special day.</Ribbon>
 <Ribbon id="69" language="9" identifier="CLASSIC" name="" region="" type="">A Ribbon that proclaims love for Pokémon.</Ribbon>
@@ -878,6 +1152,10 @@ of the Flying type’s weaknesses.
 <Ribbon id="78" language="9" identifier="WORLD" name="World Ribbon" region="" type="">Pokémon League Champion Ribbon.</Ribbon>
 <Ribbon id="79" language="9" identifier="NATIONALCHAMPION" name="National Champion Ribbon" region="" type="">Pokémon World Championships National Champion Ribbon.</Ribbon>
 <Ribbon id="80" language="9" identifier="WORLDCHAMPION" name="World Champion Ribbon" region="" type="">Pokémon World Championships World Champion Ribbon.</Ribbon>
+<Ribbon id="81" language="9" identifier="BESTFRIENDS" name="Best Friends Ribbon" region="" type="">A Ribbon that can be given to a Pokémon with which you share a close and meaningful bond.</Ribbon>
+<Ribbon id="82" language="9" identifier="TRAINING" name="Training Ribbon" region="" type="">A Ribbon that can be given to a Pokémon that has overcome rigorous trials and training.</Ribbon>
+<Ribbon id="83" language="9" identifier="SKILLFUL" name="Skillful Battler Ribbon" region="" type="">A Ribbon that can be given to a Pokémon that has achieved victory in difficult battles.</Ribbon>
+<Ribbon id="84" language="9" identifier="EXPERT" name="Expert Battler Ribbon" region="" type="">A Ribbon that can be given to a brave Pokémon that has honed its battle skills to an art.</Ribbon>
 </Ribbons>
 <Items>
 <!-- 
@@ -24447,40 +24725,6 @@ attacks that ignore the effects of moves like Protect
 and Detect. This attack lowers the user’s Defense.
 </Move>
 </Moves>
-<Natures>
-<!-- 
-select id, identifier, [name], local_language_id 
-from natures a
-left join nature_names b on a.id=b.nature_id
-where local_language_id=9
--->
-<!-- "^"(\d*)"\t"([\w\S.\- ]*)"\t"([\w '’,-]*)"\t"(\d*)"" | <Nature id="$1" language="$4" identifier="$2">$3</Nature> -->
-<Nature id="1" language="9" identifier="hardy">Hardy</Nature>
-<Nature id="2" language="9" identifier="bold">Bold</Nature>
-<Nature id="3" language="9" identifier="modest">Modest</Nature>
-<Nature id="4" language="9" identifier="calm">Calm</Nature>
-<Nature id="5" language="9" identifier="timid">Timid</Nature>
-<Nature id="6" language="9" identifier="lonely">Lonely</Nature>
-<Nature id="7" language="9" identifier="docile">Docile</Nature>
-<Nature id="8" language="9" identifier="mild">Mild</Nature>
-<Nature id="9" language="9" identifier="gentle">Gentle</Nature>
-<Nature id="10" language="9" identifier="hasty">Hasty</Nature>
-<Nature id="11" language="9" identifier="adamant">Adamant</Nature>
-<Nature id="12" language="9" identifier="impish">Impish</Nature>
-<Nature id="13" language="9" identifier="bashful">Bashful</Nature>
-<Nature id="14" language="9" identifier="careful">Careful</Nature>
-<Nature id="15" language="9" identifier="rash">Rash</Nature>
-<Nature id="16" language="9" identifier="jolly">Jolly</Nature>
-<Nature id="17" language="9" identifier="naughty">Naughty</Nature>
-<Nature id="18" language="9" identifier="lax">Lax</Nature>
-<Nature id="19" language="9" identifier="quirky">Quirky</Nature>
-<Nature id="20" language="9" identifier="naive">Naive</Nature>
-<Nature id="21" language="9" identifier="brave">Brave</Nature>
-<Nature id="22" language="9" identifier="relaxed">Relaxed</Nature>
-<Nature id="23" language="9" identifier="quiet">Quiet</Nature>
-<Nature id="24" language="9" identifier="sassy">Sassy</Nature>
-<Nature id="25" language="9" identifier="serious">Serious</Nature>
-</Natures>
 <Species>
 <!-- "^"(\d*)"\t"(\d*)"\t"([\w\S.\- ]*)"\t"([\w ’,-]*)"\t"(\d*)"\t"(\d*)"\t"(\d*)"\t"([\w\s\d.’,\-—“”!/():♀♂]*|[\r])"" | <Pokemon id="$1" language="$2" identifier="\U$3\E" name="$3" genus="$4">$8</Pokemon> -->
 <!-- <Pokemon id="([\d]*)" \w*="(\d*)" name="([\w\s'-]*)" genus="([\w\s'-]*)"([\d\w\s.’,\-—“”!/():♀♂\[\]{}"\\'=>]*[\n| ][\w’.!]*)</Pokemon> -->
@@ -28089,5 +28333,1035 @@ arms on its back. It has enough
 power to blow away a mountain.
 </Pokemon>
 </Species>
+<BeginSpeech>
+<RBY id="0" name="BUG CATCHER"  identifier="BUG CATCHER" language="9" region="RBY" field0="Route 2 &amp; Viridian Forest" field1="Forest">Hey! You have POKEMON! Come on! Let's battle'em [sic]!</RBY>
+<RBY id="0" name="BUG CATCHER"  identifier="BUG CATCHER" language="9" region="RBY" field0="Route 2 &amp; Viridian Forest" field1="Forest">Yo! You can't jam out if you're a POKEMON trainer!</RBY>
+<RBY id="0" name="BUG CATCHER"  identifier="BUG CATCHER" language="9" region="RBY" field0="Route 2 &amp; Viridian Forest" field1="Forest">Hey, wait up! What's the hurry?</RBY>
+<RBY id="0" name="JR.TRAINER  (Male)"  identifier="JR.TRAINER  (Male)" language="9" region="RBY" field0="Pewter City" field1="Pokemon Gym">Stop right there, kid! You're still light years from facing
+BROCK!</RBY>
+<RBY id="0" name="Brock"  identifier="Brock" language="9" region="RBY" field0="Pewter City" field1="Pokemon Gym">I'm BROCK! I'm PEWTER's GYM LEADER! I believe in rock hard
+defense and determination! That's why my POKEMON are all the
+rock-type! Do you still want to challenge me? Fine then!
+Show me your best!</RBY>
+<RBY id="0" name="LASS"  identifier="LASS" language="9" region="RBY" field0="Route 3" field1="Route 3">You looked at me, didn't you?</RBY>
+<RBY id="0" name="BUG CATCHER"  identifier="BUG CATCHER" language="9" region="RBY" field0="Route 3" field1="Route 3">Hey! I met you in VIRIDIAN FOREST!</RBY>
+<RBY id="0" name="YOUNGSTER"  identifier="YOUNGSTER" language="9" region="RBY" field0="Route 3" field1="Route 3">Hi! I like shorts! They're comfy and easy to wear!</RBY>
+<RBY id="0" name="BUG CATCHER"  identifier="BUG CATCHER" language="9" region="RBY" field0="Route 3" field1="Route 3">Are you a trainer? Let's fight!</RBY>
+<RBY id="0" name="YOUNGSTER"  identifier="YOUNGSTER" language="9" region="RBY" field0="Route 3" field1="Route 3">Hey! You're not wearing shorts!</RBY>
+<RBY id="0" name="LASS"  identifier="LASS" language="9" region="RBY" field0="Route 3" field1="Route 3">That look you gave me, it's so intriguing!</RBY>
+<RBY id="0" name="BUG CATCHER"  identifier="BUG CATCHER" language="9" region="RBY" field0="Route 3" field1="Route 3">You can fight my new POKEMON!</RBY>
+<RBY id="0" name="LASS"  identifier="LASS" language="9" region="RBY" field0="Route 3" field1="Route 3">Eek! Did you touch me?</RBY>
+</BeginSpeech>
+<SystemMessages>
+<!--Pokemon Summary-->
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName">Which move should {0} learn?</Idea>
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">[VAR PKNICK(0000)] learned [VAR MOVE(0001)]!</Idea>
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">[VAR PKNICK(0000)] wants to learn the move [VAR MOVE(0001)]. However, [VAR PKNICK(0000)] already knows four moves. Should a move be deleted and replaced with [VAR MOVE(0001)]?</Idea>
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">1, [WAIT 20]2, and[WAIT 20]... [WAIT 20]... [WAIT 20]... Ta-da![VAR BE05(0003)][VAR BE05(0005)][VAR BE04] [VAR PKNICK(0000)] forgot how to use [VAR MOVE(0001)]. And...</Idea>
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Give up on learning the move [VAR MOVE(0001)]?</Idea>
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">[VAR PKNICK(0000)] did not learn [VAR MOVE(0001)].</Idea>
+<Idea id="0" version="RBY" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">HM moves can’t be forgotten now.</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName">What? [VAR PKNICK(0000)] is evolving!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Huh? [VAR PKNICK(0000)] stopped evolving!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Congratulations! Your [VAR PKNICK(0000)] evolved into [VAR PKNAME(0001)]!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">KEEP OLD MOVES!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Give up on [VAR MOVE(0000)]!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Don’t give up on [VAR MOVE(0000)]!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Give a nickname to the [VAR PKNAME(0000)] you caught?</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">[VAR PKNICK(0000)] has been transferred to [VAR BOX(0001)]!</Idea>
+<!--Pokemon Battle-->
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">A wild [VAR PKNAME(0000)] appeared!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Whoa! A wild [VAR PKNAME(0000)] leaped out!</Idea>
+<Idea id="0" version="ORAS" name="HealBlock"  identifier="HealBlock" language="9" field0="pokemonName" field1="abilityName">Oh! A wild [VAR PKNAME(0000)] appeared!
+A wild [VAR PKNAME(0000)] appeared!
+Whoa! The [VAR PKNAME(0000)] you stepped on attacked!
+[VAR PKNAME(0000)] appeared!
+Whoa! A horde of [VAR PKNAME(0000)] appeared!
+You are challenged by [VAR 010E(0000)] [VAR TRNAME(0001)]!
+[VAR TRNAME(0000)] is issuing a challenge!
+You are challenged by [VAR 010E(0000)] [VAR TRNAME(0001)] and [VAR 010E(0002)] [VAR TRNAME(0003)]!
+[VAR TRNAME(0000)] and [VAR TRNAME(0001)] issued a challenge!
+Go! [VAR PKNICK(0000)]!
+Go! [VAR PKNICK(0000)] and [VAR PKNICK(0001)]!
+Go! [VAR PKNICK(0000)], [VAR PKNICK(0001)], and [VAR PKNICK(0002)]!
+[VAR 010E(0000)] [VAR TRNAME(0001)] sent out [VAR PKNICK(0002)]!
+[VAR 010E(0000)] [VAR TRNAME(0001)] sent out [VAR PKNICK(0002)] and [VAR PKNICK(0003)]!
+[VAR 010E(0000)] [VAR TRNAME(0001)] sent out [VAR PKNICK(0002)], [VAR PKNICK(0003)], and [VAR PKNICK(0004)]!
+[VAR TRNAME(0000)] sent out [VAR PKNICK(0001)]!
+[VAR TRNAME(0000)] sent out [VAR PKNICK(0001)] and [VAR PKNICK(0002)]!
+[VAR TRNAME(0000)] sent out [VAR PKNICK(0001)], [VAR PKNICK(0002)], and [VAR PKNICK(0003)]!
+[VAR 010E(0000)] [VAR TRNAME(0001)] is about to send in [VAR PKNICK(0002)]. Will you switch your Pokémon?
+You’re in charge, [VAR PKNICK(0000)]!
+Go for it, [VAR PKNICK(0000)]!
+Just a little more! Hang in there, [VAR PKNICK(0000)]!
+Your opponent’s weak! Get ’em, [VAR PKNICK(0000)]!
+[VAR PKNICK(0000)], switch out! Come back!
+[VAR PKNICK(0000)], come back!
+[VAR PKNICK(0000)], that’s enough! Come back!
+OK, [VAR PKNICK(0000)]! Come back!
+Good job, [VAR PKNICK(0000)]! Come back!
+[VAR 010E(0000)] [VAR TRNAME(0001)] withdrew [VAR PKNICK(0002)]!
+[VAR TRNAME(0000)] withdrew [VAR PKNICK(0001)]!
+Hit [VAR NUM1(0000)] time[VAR NUMBRNCH(0000,0100)]s!
+[VAR TRNAME(0000)] used [VAR iCOLOR2(0001)][VAR ITEM2(0001)].
+[VAR TRNAME(0000)] used [VAR iCOLOR2(0001)][VAR ITEM2(0001)].
+[VAR 010E(0000)][VAR TRNAME(0001)] used [VAR iCOLOR2(0002)][VAR ITEM2(0002)]!
+[VAR TRNAME(0000)] launched [VAR iCOLOR2(0002)][VAR ITEM2(0002)] toward [VAR PKNICK(0001)]!
+You cannot use your Wonder Launcher now!
+[VAR TRNAME(0000)]’s Pokémon rotated to the left!
+[VAR TRNAME(0000)]’s Pokémon rotated to the left!
+[VAR TRNAME(0000)]’s Pokémon rotated to the right!
+[VAR TRNAME(0000)]’s Pokémon rotated to the right!
+[VAR 010C(0000)] gained [VAR NUM7(0001,002C)] Exp. Point[VAR NUMBRNCH(0001,0100)]s!
+[VAR 010C(0000)] gained a boosted [VAR NUM7(0001,002C)] Exp. Points!
+The rest of your team gained Exp. Points thanks to the Exp. Share!
+You defeated [VAR 010E(0000)] [VAR TRNAME(0001)]!
+You beat [VAR 010E(0000)] [VAR TRNAME(0001)] and [VAR 010E(0002)] [VAR TRNAME(0003)]!
+You lost against [VAR 010E(0000)] [VAR TRNAME(0001)]!
+Your battle ended in a draw against [VAR 010E(0000)] [VAR TRNAME(0001)]!
+You defeated [VAR TRNAME(0000)]!
+You defeated [VAR TRNAME(0000)] and [VAR TRNAME(0001)]!
+You lost against [VAR TRNAME(0000)]!
+You lost to [VAR TRNAME(0000)] and [VAR TRNAME(0001)]!
+You battled to a draw against [VAR TRNAME(0000)]!
+You battled to a draw against [VAR TRNAME(0000)] and [VAR TRNAME(0001)]!
+[VAR TRNAME(0000)] has no more Pokémon that can fight!
+[VAR TRNAME(0000)] panicked and dropped $[VAR NUM5(0001,002C)]...
+[VAR TRNAME(0000)] gave $[VAR NUM5(0001,002C)] to the winner...
+[VAR TRNAME(0000)] blacked out!
+[VAR TRNAME(0000)] received $[VAR NUM6(0001,002C)] for winning!
+[VAR TRNAME(0000)] picked up $[VAR NUM5(0001,002C)]!
+[VAR 010C(0000)] grew to Lv. [VAR NUM3(0001)]!
+Oh no! The Pokémon broke free!
+Aww! It appeared to be caught!
+Aargh! Almost had it!
+Gah! It was so close, too!
+Gotcha! [VAR PKNAME(0000)] was caught!
+[VAR PKNAME(0000)]’s data was added to the Pokédex.
+The Trainer blocked your Poké Ball! Don’t be a thief!
+But it had no effect!
+What will [VAR 010C(0000)] do?
+What will [VAR TRNAME(0000)] do?
+[VAR 010C(0000)] is awaiting [VAR TRNAME(0001)]’s directions...
+But it failed!
+You got away safely!
+You couldn’t get away!
+You can’t escape!
+The wild [VAR PKNICK(0000)] fled!
+No! There’s no running from a Trainer battle!
+Would you like to forfeit the match and quit now?
+It’s super effective!
+It’s not very effective...
+It hurt itself in its confusion!
+[VAR BD00(0007,0000,0000)]A critical hit![VAR BD01]
+But there was no PP left for the move!
+[VAR TRNAME(0000)] came to the rescue and restored [VAR PKNICK(0001)]’s health!
+The sunlight turned harsh!
+It started to rain!
+A sandstorm kicked up!
+It started to hail!
+Fog crept up as thick as soup!
+The sunlight faded.
+The rain stopped.
+The sandstorm subsided.
+The hail stopped.
+The fog lifted.
+The effects of the weather disappeared.
+The sandstorm is raging.
+The hail is crashing down.
+It’s a one-hit KO!
+The [VAR ITEM2(0000)] weakened [VAR MOVE(0001)]’s power!
+The [VAR ITEM2(0000)] only allows the use of [VAR MOVE(0001)]!
+The effects of the [VAR ITEM2(0000)] prevent status moves from being used!
+[VAR 010C(0000)] can only use [VAR MOVE(0001)]!
+All stat changes were eliminated!
+But nothing happened!
+[VAR PKNICK(0000)]’s [VAR ABILITY(0001)]!
+Magnitude 4!
+Magnitude 5!
+Magnitude 6!
+Magnitude 7!
+Magnitude 8!
+Magnitude 9!
+Magnitude 10!
+A bell chimed!
+A soothing aroma wafted through the area!
+The battlers shared their pain!
+Fire’s power was weakened!
+The effects of Water Sport have faded.
+Electricity’s power was weakened!
+The effects of Mud Sport have faded.
+The twisted dimensions returned to normal!
+Gravity intensified!
+Gravity returned to normal!
+All Pokémon that hear the song will faint in three turns!
+Waggling a finger let it use [VAR MOVE(0000)]!
+Nature Power turned into [VAR MOVE(0000)]!
+Coins were scattered everywhere!
+But it does not have enough HP left to make a substitute!
+Reflect raised your team’s Defense!
+Reflect raised the opposing team’s Defense!
+Your team’s Reflect wore off!
+The opposing team’s Reflect wore off!
+Light Screen raised your team’s Special Defense!
+Light Screen raised the opposing team’s Special Defense!
+Your team’s Light Screen wore off!
+The opposing team’s Light Screen wore off!
+Your team cloaked itself in a mystical veil!
+The opposing team cloaked itself in a mystical veil!
+Your team is no longer protected by Safeguard!
+The opposing team is no longer protected by Safeguard!
+Your team became shrouded in mist!
+The opposing team became shrouded in mist!
+Your team is no longer protected by mist!
+The opposing team is no longer protected by mist!
+The Tailwind blew from behind your team!
+The Tailwind blew from behind the opposing team!
+Your team’s Tailwind petered out!
+The opposing team’s Tailwind petered out!
+Lucky Chant shielded your team from critical hits!
+Lucky Chant shielded the opposing team from critical hits!
+Your team’s Lucky Chant wore off!
+The opposing team’s Lucky Chant wore off!
+Spikes were scattered all around your team’s feet!
+Spikes were scattered all around the opposing team’s feet!
+The spikes disappeared from around your team’s feet!
+The spikes disappeared from around the opposing team’s feet!
+Poison spikes were scattered all around your team’s feet!
+Poison spikes were scattered all around the opposing team’s feet!
+The poison spikes disappeared from around your team’s feet!
+The poison spikes disappeared from around the opposing team’s feet!
+Pointed stones float in the air around your team!
+Pointed stones float in the air around the opposing team!
+The pointed stones disappeared from around your team!
+The pointed stones disappeared from around the opposing team!
+Wide Guard protected your team!
+Wide Guard protected the opposing team!
+Quick Guard protected your team!
+Quick Guard protected the opposing team!
+A rainbow appeared in the sky on your team’s side!
+A rainbow appeared in the sky on the opposing team’s side!
+The rainbow on your team’s side disappeared!
+The rainbow on the opposing team’s side disappeared!
+A sea of fire enveloped your team!
+A sea of fire enveloped the opposing team!
+The sea of fire around your team disappeared!
+The sea of fire around the opposing team disappeared!
+A swamp enveloped your team!
+A swamp enveloped the opposing team!
+The swamp around your team disappeared!
+The swamp around the opposing team disappeared!
+Your team is too nervous to eat Berries!
+The opposing team is too nervous to eat Berries!
+It created a bizarre area in which Defense and Sp. Def stats are swapped!
+Wonder Room wore off, and Defense and Sp. Def stats returned to normal!
+It created a bizarre area in which Pokémon’s held items lose their effects!
+Magic Room wore off, and held items’ effects returned to normal!
+The [VAR ITEM2(0000)] strengthened [VAR MOVE(0001)]’s power!
+Time has run out! The battle is over!
+The battle is too long. Playback canceled.
+Zen Mode triggered!
+Zen Mode ended!
+The two moves have become one! It’s a combined move!
+[VAR 010C(0000)] won’t obey!
+[VAR 010C(0000)] is loafing around!
+[VAR 010C(0000)] turned away!
+[VAR 010C(0000)] pretended not to notice!
+[VAR 010C(0000)] ignored orders!
+[VAR 010C(0000)] began to nap!
+[VAR 010C(0000)] ignored orders and kept sleeping!
+Automatic center!
+But the item doesn’t do anything there!
+Sky Drop won’t let [VAR 010C(0000)] go!
+The match was forfeited.
+Grass grew to cover the battlefield!
+The grass disappeared from the battlefield.
+Mist swirls around the battlefield!
+The mist disappeared from the battlefield.
+An electric current runs across the battlefield!
+The electricity disappeared from the battlefield.
+Crafty Shield protected your team!
+Crafty Shield protected the opposing team!
+[VAR MOVE(0000)] was blocked by the kicked-up mat!
+A sticky web spreads out beneath your team’s feet!
+A sticky web has been laid out beneath the opposing team’s feet!
+The sticky web has disappeared from beneath your feet!
+The sticky web has disappeared from beneath the opposing team’s feet!
+Your Pokémon can’t use this move because it hasn’t eaten any Berries!
+[VAR TRNAME(0000)] found [VAR iCOLOR2(0001)][VAR ITEM2(0001)] in the aftermath!
+[VAR 010C(0000)] toughed it out to show its best side to [VAR TRNAME(0001)]!
+[VAR 010C(0000)] shook itself awake so that [VAR TRNAME(0001)] wouldn’t worry!
+[VAR 010C(0000)] managed to expel the poison so that [VAR TRNAME(0001)] wouldn’t worry!
+[VAR 010C(0000)] blew on its burn and made it better so that [VAR TRNAME(0001)] wouldn’t worry!
+[VAR 010C(0000)] gathered all its energy to break through its paralysis so that [VAR TRNAME(0001)] wouldn’t worry!
+[VAR 010C(0000)] melted the ice with its fiery determination so that [VAR TRNAME(0001)] wouldn’t worry!
+[VAR 010C(0000)] read [VAR TRNAME(0001)]’s mind and avoided the move!
+[VAR 010C(0000)] is so in sync with [VAR TRNAME(0001)]’s wishes that [VAR BD00(0007,0000,0000)]it landed a critical hit[VAR BD01]!
+[VAR 010C(0000)] turned back toward [VAR TRNAME(0001)] and nodded in understanding!
+[VAR 010C(0000)] is looking at [VAR TRNAME(0001)] with trusting eyes!
+[VAR 010C(0000)] trusts [VAR TRNAME(0001)] to come up with the best strategy!
+[VAR 010C(0000)] and [VAR TRNAME(0001)] are breathing in perfect sync with one another!
+[VAR 010C(0000)] seems curious about [VAR TRNAME(0001)]’s Bag...
+[VAR 010C(0000)] is bursting with enthusiasm for the battle!
+[VAR 010C(0000)] really wants some time to play with [VAR TRNAME(0001)]...
+[VAR 010C(0000)] seems to be interested in the other Pokémon’s scent...
+[VAR 010C(0000)] is reassured by [VAR TRNAME(0001)]’s familiar scent...
+[VAR 010C(0000)] seems curious about what is going on around it.
+[VAR 010C(0000)] is remembering the first time it met [VAR TRNAME(0001)]...
+[VAR 010C(0000)] seems a bit excited.
+[VAR 010C(0000)] seems a little bit out of it...
+[VAR 010C(0000)] seems a little uneasy...
+[VAR 010C(0000)] looks a bit excited.
+[VAR 010C(0000)] can’t wait to begin.
+Go on, [VAR 010C(0000)]! I know you can do it!
+Come on back, [VAR 010C(0000)]! You did great out there!
+That’s it! I knew you could do it!
+[VAR 010C(0000)] is in a bit of a pinch. It looks like it might cry...
+[VAR 010C(0000)] is thrilled to bits!
+Zzz... Zzz...
+[VAR OPOWER(0001)] was offered by [VAR 018D(0000)]!
+You defeated [VAR NUM1(0000)] Pokémon at the same time!
+Changed to Blade Forme!
+Changed to Shield Forme!
+[VAR PKNICK(0000)] was frisked, revealing its [VAR ITEM2(0001)]!
+Everyone is caught up in the happy atmosphere!
+That move won’t work well during a Sky Battle!
+A deluge of ions showers the battlefield!
+No one will be able to run away during the next turn!
+When the flame touched the powder on the Pokémon, it exploded!
+[VAR NUM1(0000)]’s Metronome [VAR NUM3(0001)]: [VAR MOVE(0002)]
+Whoa! A wild [VAR PKNAME(0000)] leaped out of the tall grass!
+Whoa! A wild [VAR PKNAME(0000)] leaped out of the ground!
+Whoa! A wild [VAR PKNAME(0000)] dived out of the sky!
+Whoa! A wild [VAR PKNAME(0000)] swooped down from above!
+Whoa! A wild [VAR PKNAME(0000)] leaped out of the trash can!
+[VAR 018D(0000)]’s [VAR OPOWER(0001)] was activated!
+Congratulations, [VAR TRNAME(0000)]!
+Birch: Y-you’re not just going to leave me here, are you?!
+A heavy rain began to fall!
+The heavy rain has lifted!
+The sunlight turned extremely harsh!
+The harsh sunlight faded.
+A mysterious air current is protecting Flying-type Pokémon!
+The mysterious air current has dissipated!
+The Fire-type attack fizzled out in the heavy rain!
+The Water-type attack evaporated in the harsh sunlight!
+There is no relief from this heavy rain!
+The extremely harsh sunlight was not lessened at all!
+The mysterious air current weakened the attack!
+The mysterious air current blows on regardless!
+But [VAR PKNICK(0000)] can’t use it the way it is now!
+But [VAR PKNICK(0000)] can’t use the move!
+The [VAR 010E(0000)] Grunts sent out a horde of Poochyena!
+The [VAR 010E(0000)] Grunts sent out a horde of Mightyena!
+You are challenged by [VAR 010E(0000)] [VAR TRNAME(0001)]!
+You defeated [VAR 010E(0000)] [VAR TRNAME(0001)]!</Idea>
+<!--Pokemon Battler's Name-->
+<Battler id="0" name="TrainerPokemon" identifier="TrainerPokemon" language="9">[VAR PKNAME(0000)]</Battler>
+<Battler id="0" name="AllyPokemon" identifier="AllyPokemon" language="9">[VAR PKNAME(0000)]</Battler>
+<Battler id="0" name="AllyPokemon" identifier="AllyPokemon" language="9">[VAR PKNAME(0000)]</Battler>
+<Battler id="0" name="WildPokemon" identifier="WildPokemon" language="9">The wild [VAR PKNAME(0000)]</Battler>
+<Battler id="0" name="WildPokemon" identifier="WildPokemonL" language="9">the wild [VAR PKNAME(0000)]</Battler>
+<Battler id="0" name="OpposingPokemon" identifier="OpposingPokemon" language="9">The opposing [VAR PKNAME(0000)]</Battler>
+<Battler id="0" name="OpposingPokemon" identifier="OpposingPokemonL" language="9">the opposing [VAR PKNAME(0000)]</Battler>
+<AttackMessage id="0" name="UsedMove" identifier="UsedMove" language="9">[VAR PKBTLR(0000)] used [VAR PKMOVE(0000)]!</AttackMessage>
+<!--Pokemon Battle System Messages-->
+<BattleMessage id="0" name="HealBlock"  identifier="HealBlock" language="9">[VAR PKBTLR(0000)] fainted!
+[VAR PKBTLR(0000)] recovered from fainting!
+It’s super effective on [VAR PKBTLR(0000)]!
+It’s super effective on [VAR PKBTLR(0000)] and [VAR PKBTLR(0001)]!
+It’s super effective on the wild [VAR PKBTLR(0000)] and [VAR PKBTLR(0001)]!
+It’s super effective on the opposing [VAR PKBTLR(0000)] and [VAR PKBTLR(0001)]!
+It’s super effective on [VAR PKBTLR(0000)], [VAR PKBTLR(0001)], and [VAR PKBTLR(0002)]!
+It’s super effective on the wild [VAR PKBTLR(0000)], [VAR PKBTLR(0001)], and [VAR PKBTLR(0002)]!
+It’s super effective on the opposing [VAR PKBTLR(0000)], [VAR PKBTLR(0001)], and [VAR PKBTLR(0002)]!
+It’s not very effective on [VAR PKBTLR(0000)].
+It’s not very effective on [VAR PKBTLR(0000)] or [VAR PKBTLR(0001)].
+It’s not very effective on the wild [VAR PKBTLR(0000)] or [VAR PKBTLR(0001)].
+It’s not very effective on the opposing [VAR PKBTLR(0000)] or [VAR PKBTLR(0001)].
+It’s not very effective on [VAR PKBTLR(0000)], [VAR PKBTLR(0001)], or [VAR PKBTLR(0002)]!
+It’s not very effective on the wild [VAR PKBTLR(0000)], [VAR PKBTLR(0001)], or [VAR PKBTLR(0002)]!
+It’s not very effective on the opposing [VAR PKBTLR(0000)], [VAR PKBTLR(0001)], or [VAR PKBTLR(0002)]!
+But it failed to affect [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)]’s Attack rose!
+[VAR PKBTLR(0000)]’s Defense rose!
+[VAR PKBTLR(0000)]’s Special Attack rose!
+[VAR PKBTLR(0000)]’s Special Defense rose!
+[VAR PKBTLR(0000)]’s Speed rose!
+[VAR PKBTLR(0000)]’s accuracy rose!
+[VAR PKBTLR(0000)]’s evasiveness rose!
+[VAR PKBTLR(0000)]’s Attack rose sharply!
+[VAR PKBTLR(0000)]’s Defense rose sharply!
+[VAR PKBTLR(0000)]’s Special Attack rose sharply!
+[VAR PKBTLR(0000)]’s Special Defense rose sharply!
+[VAR PKBTLR(0000)]’s Speed rose sharply!
+[VAR PKBTLR(0000)]’s accuracy rose sharply!
+[VAR PKBTLR(0000)]’s evasiveness rose sharply!
+[VAR PKBTLR(0000)]’s Attack rose drastically!
+[VAR PKBTLR(0000)]’s Defense rose drastically!
+[VAR PKBTLR(0000)]’s Special Attack rose drastically!
+[VAR PKBTLR(0000)]’s Special Defense rose drastically!
+[VAR PKBTLR(0000)]’s Speed rose drastically!
+[VAR PKBTLR(0000)]’s accuracy rose drastically!
+[VAR PKBTLR(0000)]’s evasiveness rose drastically!
+[VAR PKBTLR(0000)]’s Attack fell!
+[VAR PKBTLR(0000)]’s Defense fell!
+[VAR PKBTLR(0000)]’s Special Attack fell!
+[VAR PKBTLR(0000)]’s Special Defense fell!
+[VAR PKBTLR(0000)]’s Speed fell!
+[VAR PKBTLR(0000)]’s accuracy fell!
+[VAR PKBTLR(0000)]’s evasiveness fell!
+[VAR PKBTLR(0000)]’s Attack harshly fell!
+[VAR PKBTLR(0000)]’s Defense harshly fell!
+[VAR PKBTLR(0000)]’s Special Attack harshly fell!
+[VAR PKBTLR(0000)]’s Special Defense harshly fell!
+[VAR PKBTLR(0000)]’s Speed harshly fell!
+[VAR PKBTLR(0000)]’s accuracy harshly fell!
+[VAR PKBTLR(0000)]’s evasiveness harshly fell!
+[VAR PKBTLR(0000)]’s Attack severely fell!
+[VAR PKBTLR(0000)]’s Defense severely fell!
+[VAR PKBTLR(0000)]’s Special Attack severely fell!
+[VAR PKBTLR(0000)]’s Special Defense severely fell!
+[VAR PKBTLR(0000)]’s Speed severely fell!
+[VAR PKBTLR(0000)]’s accuracy severely fell!
+[VAR PKBTLR(0000)]’s evasiveness severely fell!
+[VAR PKBTLR(0000)]’s Attack won’t go any higher!
+[VAR PKBTLR(0000)]’s Defense won’t go any higher!
+[VAR PKBTLR(0000)]’s Special Attack won’t go any higher!
+[VAR PKBTLR(0000)]’s Special Defense won’t go any higher!
+[VAR PKBTLR(0000)]’s Speed won’t go any higher!
+[VAR PKBTLR(0000)]’s accuracy won’t go any higher!
+[VAR PKBTLR(0000)]’s evasiveness won’t go any higher!
+[VAR PKBTLR(0000)]’s Attack won’t go any lower!
+[VAR PKBTLR(0000)]’s Defense won’t go any lower!
+[VAR PKBTLR(0000)]’s Special Attack won’t go any lower!
+[VAR PKBTLR(0000)]’s Special Defense won’t go any lower!
+[VAR PKBTLR(0000)]’s Speed won’t go any lower!
+[VAR PKBTLR(0000)]’s accuracy won’t go any lower!
+[VAR PKBTLR(0000)]’s evasiveness won’t go any lower!
+[VAR PKBTLR(0000)]’s stat changes were removed!
+[VAR PKBTLR(0000)]’s stats were not lowered!
+[VAR PKBTLR(0000)]’s Attack was not lowered!
+[VAR PKBTLR(0000)]’s Defense was not lowered!
+[VAR PKBTLR(0000)]’s accuracy was not lowered!
+It doesn’t affect [VAR PKBTLR(0000)]...
+[VAR PKBTLR(0000)] avoided the attack!
+[VAR PKBTLR(0000)] is unaffected!
+The [VAR ITEM2(0001)] weakened the damage to [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] transformed!
+[VAR PKBTLR(0000)] dropped its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)]’s status was restored!
+[VAR PKBTLR(0000)] moved to the center!
+[VAR PKBTLR(0000)] was poisoned!
+[VAR PKBTLR(0000)] was badly poisoned!
+[VAR PKBTLR(0000)] was badly poisoned by the [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] was hurt by poison!
+[VAR PKBTLR(0000)] was cured of its poisoning.
+[VAR PKBTLR(0000)] is already poisoned.
+[VAR PKBTLR(0000)] cannot be poisoned!
+[VAR PKBTLR(0000)] was burned!
+[VAR PKBTLR(0000)] was burned by the [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] was hurt by its burn!
+[VAR PKBTLR(0000)]’s burn was healed.
+[VAR PKBTLR(0000)] already has a burn.
+[VAR PKBTLR(0000)] cannot be burned!
+[VAR PKBTLR(0000)] is paralyzed! It may be unable to move!
+[VAR PKBTLR(0000)] is paralyzed! It can’t move!
+[VAR PKBTLR(0000)] was cured of paralysis.
+[VAR PKBTLR(0000)] is already paralyzed!
+[VAR PKBTLR(0000)] cannot be paralyzed!
+[VAR PKBTLR(0000)] was frozen solid!
+[VAR PKBTLR(0000)] is frozen solid!
+[VAR PKBTLR(0000)] thawed out!
+[VAR PKBTLR(0000)] is already frozen solid!
+[VAR PKBTLR(0000)] cannot be frozen solid!
+[VAR PKBTLR(0000)]’s [VAR MOVE(0001)] melted the ice!
+[VAR PKBTLR(0000)] fell asleep!
+[VAR PKBTLR(0000)] is fast asleep.
+[VAR PKBTLR(0000)] woke up!
+[VAR PKBTLR(0000)] is already asleep!
+[VAR PKBTLR(0000)] stays awake!
+[VAR PKBTLR(0000)] began having a nightmare!
+[VAR PKBTLR(0000)] is locked in a nightmare!
+[VAR PKBTLR(0000)] fell in love!
+[VAR PKBTLR(0000)] fell in love from the [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] is in love with [VAR PKBTLR(0001)]!
+[VAR PKBTLR(0000)] is immobilized by love!
+[VAR PKBTLR(0000)] got over its infatuation.
+[VAR PKBTLR(0000)]’s status returned to normal!
+[VAR PKBTLR(0000)] became confused!
+[VAR PKBTLR(0000)] is confused!
+[VAR PKBTLR(0000)] snapped out of its confusion.
+[VAR PKBTLR(0000)] is already confused!
+[VAR PKBTLR(0000)] doesn’t become confused!
+[VAR PKBTLR(0000)] became confused due to fatigue!
+[VAR PKBTLR(0000)] flinched and couldn’t move!
+[VAR PKBTLR(0000)] lost its focus and couldn’t move!
+[VAR PKBTLR(0000)] was identified!
+[VAR PKBTLR(0000)] is hurt by [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] was freed from [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] is damaged by the recoil!
+It traced [VAR PKBTLR(0000)]’s [VAR ABILITY(0001)]!
+[VAR BD00(0007,0000,0000)]A critical hit[VAR BD01] on [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)]’s HP was restored.
+[VAR PKBTLR(0000)] restored [VAR MOVE(0001)]’s PP!
+[VAR PKBTLR(0000)] restored all its moves’ PP!
+[VAR PKBTLR(0000)] is buffeted by the sandstorm!
+[VAR PKBTLR(0000)] is buffeted by the hail!
+[VAR PKBTLR(0000)] is hurt!
+[VAR PKBTLR(0000)] acquired [VAR ABILITY(0001)]!
+[VAR PKBTLR(0000)] floats in the air with its Air Balloon!
+[VAR PKBTLR(0000)]’s Air Balloon popped!
+[VAR PKBTLR(0000)] is switched out with the Eject Button!
+[VAR PKBTLR(0000)] held up its Red Card against [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] held up its Red Card against [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] held up its Red Card against the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] held up its Red Card against [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] held up its Red Card against the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)] was hurt by the Rocky Helmet!
+The power of [VAR PKBTLR(0000)]’s Fire-type moves rose!
+[VAR PKBTLR(0000)] was hurt!
+It was alerted to [VAR PKBTLR(0000)]’s [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] shuddered!
+[VAR PKBTLR(0000)] frisked [VAR PKBTLR(0001)] and found its [VAR ITEM2(0002)]!
+[VAR PKBTLR(0000)] breaks the mold!
+[VAR PKBTLR(0000)] is loafing around!
+[VAR PKBTLR(0000)] took the attack!
+[VAR PKBTLR(0000)] stays awake!
+[VAR PKBTLR(0000)] anchors itself!
+[VAR PKBTLR(0000)] sucked up the liquid ooze!
+It stole [VAR PKBTLR(0000)]’s [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)]’s Ability became Mummy!
+It bounced back [VAR PKBTLR(0000)]’s [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] avoids attacks by its ally Pokémon!
+It poisoned [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] harvested one [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)]’s illusion wore off!
+[VAR PKBTLR(0000)] maxed its Attack!
+[VAR PKBTLR(0000)] is tormented!
+[VAR PKBTLR(0000)] is exerting its pressure!
+[VAR PKBTLR(0000)] found [VAR iCOLOR2(0001)][VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)]’s item cannot be stolen!
+[VAR PKBTLR(0000)] can’t get it going!
+[VAR PKBTLR(0000)] finally got its act together!
+[VAR PKBTLR(0000)] is radiating a bursting aura!
+[VAR PKBTLR(0000)] is radiating a blazing aura!
+[VAR PKBTLR(0000)] swapped Abilities with its target!
+[VAR PKBTLR(0000)] braced itself!
+[VAR PKBTLR(0000)] endured the hit!
+[VAR PKBTLR(0000)] protected itself!
+It broke through [VAR PKBTLR(0000)]’s protection!
+[VAR PKBTLR(0000)] protected itself!
+[VAR PKBTLR(0000)] fell for the feint!
+[VAR PKBTLR(0000)] flew up high!
+[VAR PKBTLR(0000)]’s rage is building!
+[VAR PKBTLR(0000)] hid underwater!
+[VAR PKBTLR(0000)] burrowed its way under the ground!
+[VAR PKBTLR(0000)] vanished instantly!
+[VAR PKBTLR(0000)] sprang up!
+[VAR PKBTLR(0000)] whipped up a whirlwind!
+[VAR PKBTLR(0000)] became cloaked in a harsh light!
+[VAR PKBTLR(0000)] absorbed light!
+[VAR PKBTLR(0000)] tucked in its head!
+[VAR PKBTLR(0000)] received an encore!
+[VAR PKBTLR(0000)]’s encore ended!
+[VAR PKBTLR(0000)]’s Ability was suppressed!
+[VAR PKBTLR(0000)] fell for the taunt!
+[VAR PKBTLR(0000)] can’t use [VAR MOVE(0001)] after the taunt!
+[VAR PKBTLR(0000)]’s taunt wore off!
+[VAR PKBTLR(0000)] was subjected to torment!
+[VAR PKBTLR(0000)] can’t use the same move twice in a row due to the torment!
+[VAR PKBTLR(0000)]’s torment wore off!
+[VAR PKBTLR(0000)] sealed any moves its target shares with it!
+[VAR PKBTLR(0000)] can’t use its sealed [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)]’s [VAR MOVE(0001)] was disabled!
+[VAR PKBTLR(0000)]’s [VAR MOVE(0001)] is disabled!
+[VAR PKBTLR(0000)]’s move is no longer disabled!
+[VAR PKBTLR(0000)] surrounded itself with a veil of water!
+Aqua Ring restored [VAR PKBTLR(0000)]’s HP!
+[VAR PKBTLR(0000)] was seeded!
+[VAR PKBTLR(0000)]’s health is sapped by Leech Seed!
+[VAR PKBTLR(0000)] cut its own HP and maximized its Attack!
+[VAR PKBTLR(0000)] is tightening its focus!
+[VAR PKBTLR(0000)] copied [VAR PKBTLR(0001)]’s [VAR ABILITY(0002)] Ability!
+<!--The wild [VAR PKBTLR(0000)] copied [VAR PKBTLR(0001)]’s [VAR ABILITY(0002)] Ability!
+The wild [VAR PKBTLR(0000)] copied the wild [VAR PKBTLR(0001)]’s [VAR ABILITY(0002)] Ability!
+The opposing [VAR PKBTLR(0000)] copied [VAR PKBTLR(0001)]’s [VAR ABILITY(0002)] Ability!
+The opposing [VAR PKBTLR(0000)] copied the opposing [VAR PKBTLR(0001)]’s [VAR ABILITY(0002)] Ability!-->
+[VAR PKBTLR(0000)] is hoping to take its attacker down with it!
+[VAR PKBTLR(0000)] took its attacker down with it!
+[VAR PKBTLR(0000)] wants its target to bear a grudge!
+[VAR PKBTLR(0000)]’s [VAR MOVE(0001)] lost all of its PP due to the grudge!
+[VAR PKBTLR(0000)] slept and became healthy!
+It reduced the PP of [VAR PKBTLR(0000)]’s [VAR MOVE(0001)] by [VAR NUM1(0002)]!
+[VAR PKBTLR(0000)] transformed into [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] transformed into [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] transformed into the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] transformed into [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] transformed into the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)] took aim at [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] took aim at [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] took aim at the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] took aim at [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] took aim at the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)] levitated with electromagnetism!
+[VAR PKBTLR(0000)]’s electromagnetism wore off!
+[VAR PKBTLR(0000)] began charging power!
+[VAR PKBTLR(0000)] grew drowsy!
+[VAR PKBTLR(0000)] became the center of attention!
+[VAR PKBTLR(0000)] switched stat changes with its target!
+[VAR PKBTLR(0000)] switched all changes to its Attack and Sp. Atk with its target!
+[VAR PKBTLR(0000)] switched all changes to its Defense and Sp. Def with its target!
+[VAR PKBTLR(0000)] switched items with its target!
+[VAR PKBTLR(0000)] obtained [VAR iCOLOR2(0001)][VAR ITEM2(0001)].
+[VAR PKBTLR(0000)] learned [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] sketched [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] became cloaked in mystical moonlight!
+The healing wish came true for [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)]’s wish came true!
+[VAR PKBTLR(0000)] caused an uproar!
+The uproar woke [VAR PKBTLR(0000)]!
+But the uproar kept [VAR PKBTLR(0000)] awake!
+But [VAR PKBTLR(0000)] can’t sleep in an uproar!
+[VAR PKBTLR(0000)] is making an uproar!
+[VAR PKBTLR(0000)] calmed down.
+[VAR PKBTLR(0000)] stockpiled [VAR NUM1(0001)]!
+[VAR PKBTLR(0000)]’s stockpiled effect wore off!
+[VAR PKBTLR(0000)] can’t use items anymore!
+[VAR PKBTLR(0000)] can use items again!
+[VAR PKBTLR(0000)] found [VAR iCOLOR2(0001)][VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] planted its roots!
+[VAR PKBTLR(0000)] absorbed nutrients with its roots!
+[VAR PKBTLR(0000)] anchored itself with its roots!
+[VAR PKBTLR(0000)] is storing energy!
+[VAR PKBTLR(0000)] unleashed its energy!
+[VAR PKBTLR(0000)] waits for a target to make a move!
+[VAR PKBTLR(0000)] snatched [VAR PKBTLR(0001)]’s move!
+<!--The wild [VAR PKBTLR(0000)] snatched [VAR PKBTLR(0001)]’s move!
+The wild [VAR PKBTLR(0000)] snatched the wild [VAR PKBTLR(0001)]’s move!
+The opposing [VAR PKBTLR(0000)] snatched [VAR PKBTLR(0001)]’s move!
+The opposing [VAR PKBTLR(0000)] snatched the opposing [VAR PKBTLR(0001)]’s move!-->
+[VAR PKBTLR(0000)] shrouded itself with Magic Coat!
+[VAR PKBTLR(0000)] bounced the [VAR MOVE(0001)] back!
+[VAR PKBTLR(0000)] fled from battle!
+[VAR PKBTLR(0000)] went back to [VAR TRNAME(0001)]!
+[VAR PKBTLR(0000)] switched its Attack and Defense!
+[VAR PKBTLR(0000)] stole and ate its target’s [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] flung its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] blew away [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] put in a substitute!
+[VAR PKBTLR(0000)] already has a substitute!
+The substitute took damage for [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)]’s substitute faded!
+Wide Guard protected [VAR PKBTLR(0000)]!
+Quick Guard protected [VAR PKBTLR(0000)]!
+Crafty Shield protected [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] was squeezed by [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] was squeezed by [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] was squeezed by the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] was squeezed by [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] was squeezed by the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)] was wrapped by [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] was wrapped by [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] was wrapped by the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] was wrapped by [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] was wrapped by the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0001)] clamped down on [VAR PKBTLR(0000)]!
+<!--The wild [VAR PKBTLR(0001)] clamped down on [VAR PKBTLR(0000)]!
+The opposing [VAR PKBTLR(0001)] clamped down on [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0001)] clamped down on the wild [VAR PKBTLR(0000)]!
+The wild [VAR PKBTLR(0001)] clamped down on the wild [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0001)] clamped down on the opposing [VAR PKBTLR(0000)]!
+The opposing [VAR PKBTLR(0001)] clamped down on the opposing [VAR PKBTLR(0000)]!-->
+[VAR PKBTLR(0000)] became trapped in the vortex!
+[VAR PKBTLR(0000)] became trapped in the fiery vortex!
+[VAR PKBTLR(0000)] became trapped by swirling magma!
+[VAR PKBTLR(0000)] became trapped by Sand Tomb!
+[VAR PKBTLR(0000)] has no moves left!
+[VAR PKBTLR(0000)] is protected by Safeguard!
+[VAR PKBTLR(0000)] is protected by the mist!
+[VAR PKBTLR(0000)] was dragged out!
+[VAR PKBTLR(0000)] must recharge!
+[VAR PKBTLR(0000)] is hurt by the spikes!
+Pointed stones dug into [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] twisted the dimensions!
+[VAR PKBTLR(0000)]’s perish count fell to [VAR NUM1(0001)]!
+[VAR PKBTLR(0000)] became cloaked in a freezing light!
+[VAR PKBTLR(0000)] became cloaked in freezing air!
+[VAR PKBTLR(0000)] prevents escape with [VAR ABILITY(0001)]!
+[VAR PKBTLR(0000)] can no longer escape!
+[VAR PKBTLR(0000)] can’t escape!
+[VAR PKBTLR(0000)]’s [VAR ABILITY(0001)] prevents switching!
+[VAR PKBTLR(0000)] was prevented from healing!
+[VAR PKBTLR(0000)]’s Heal Block wore off!
+[VAR PKBTLR(0000)] was prevented from healing due to Heal Block!
+[VAR PKBTLR(0000)] can’t use [VAR MOVE(0001)] because of Heal Block!
+[VAR PKBTLR(0000)]’s HP is full!
+[VAR PKBTLR(0000)] transformed into the [VAR TYPE(0001)] type!
+[VAR TYPE(0001)] type was added to [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] had its energy drained!
+[VAR PKBTLR(0000)] kept going and crashed!
+[VAR PKBTLR(0000)] cannot use [VAR MOVE(0001)]!
+[VAR PKBTLR(0000)] restored its health using its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] restored PP to its [VAR MOVE(0002)] move using [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] restored a little HP using its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] cured its poison!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] cured its paralysis!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] woke it up!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] defrosted it!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] healed its burn!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] snapped it out of its confusion!
+[VAR PKBTLR(0000)] cured its infatuation status using its [VAR ITEM2(0001)]!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s Attack!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s Defense!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s Special Attack!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s Special Defense!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s Speed!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s accuracy!
+The [VAR ITEM2(0001)] raised [VAR PKBTLR(0000)]’s evasiveness!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s Attack!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s Defense!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s Special Attack!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s Special Defense!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s Speed!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s accuracy!
+The [VAR ITEM2(0001)] sharply raised [VAR PKBTLR(0000)]’s evasiveness!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s Attack!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s Defense!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s Special Attack!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s Special Defense!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s Speed!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s accuracy!
+The [VAR ITEM2(0001)] drastically raised [VAR PKBTLR(0000)]’s evasiveness!
+[VAR PKBTLR(0000)] used the [VAR ITEM2(0001)] to get pumped!
+[VAR PKBTLR(0000)] fled using its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] hung on using its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] returned its status to normal using its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] lost some of its HP!
+...But [VAR PKBTLR(0000)] isn’t here!
+...But [VAR PKBTLR(0000)] was not holding a usable item!
+[VAR PKBTLR(0000)] became fully charged due to its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] let it move first!
+[VAR PKBTLR(0000)] boosted the accuracy of its next move using its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] is hurt by [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+<!--The wild [VAR PKBTLR(0000)] is hurt by [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The wild [VAR PKBTLR(0000)] is hurt by the wild [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The opposing [VAR PKBTLR(0000)] is hurt by [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The opposing [VAR PKBTLR(0000)] is hurt by the opposing [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!-->
+[VAR PKBTLR(0000)] is hurt by its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] is getting pumped!
+[VAR PKBTLR(0000)] is ready to help [VAR PKBTLR(0001)]!
+[VAR PKBTLR(0000)] copied [VAR PKBTLR(0001)]’s stat changes!
+[VAR PKBTLR(0000)] knocked off [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+<!--The wild [VAR PKBTLR(0000)] knocked off [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The wild [VAR PKBTLR(0000)] knocked off the wild [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The opposing [VAR PKBTLR(0000)] knocked off [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The opposing [VAR PKBTLR(0000)] knocked off the opposing [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!-->
+[VAR PKBTLR(0000)] stole [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+<!--The wild [VAR PKBTLR(0000)] stole [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The wild [VAR PKBTLR(0000)] stole the wild [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The opposing [VAR PKBTLR(0000)] stole [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!
+The opposing [VAR PKBTLR(0000)] stole the opposing [VAR PKBTLR(0001)]’s [VAR ITEM2(0002)]!-->
+[VAR PKBTLR(0000)] cut its own HP and put a curse on [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] cut its own HP and put a curse on [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] cut its own HP and put a curse on the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] cut its own HP and put a curse on [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] cut its own HP and put a curse on the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)] is afflicted by the curse!
+[VAR PKBTLR(0000)] foresaw an attack!
+[VAR PKBTLR(0000)] chose Doom Desire as its destiny!
+[VAR PKBTLR(0000)] took the [VAR MOVE(0001)] attack!
+[VAR PKBTLR(0000)] couldn’t stay airborne because of gravity!
+[VAR PKBTLR(0000)] can’t use [VAR MOVE(0001)] because of gravity!
+[VAR PKBTLR(0000)]’s type became the same as [VAR PKBTLR(0001)]’s type!
+<!--The wild [VAR PKBTLR(0000)]’s type became the same as [VAR PKBTLR(0001)]’s type!
+The wild [VAR PKBTLR(0000)]’s type became the same as the wild [VAR PKBTLR(0001)]’s type!
+The opposing [VAR PKBTLR(0000)]’s type became the same as [VAR PKBTLR(0001)]’s type!
+The opposing [VAR PKBTLR(0000)]’s type became the same as the opposing [VAR PKBTLR(0001)]’s type!-->
+[VAR PKBTLR(0000)] shared its power with the target!
+[VAR PKBTLR(0000)] shared its guard with the target!
+[VAR PKBTLR(0000)] became nimble!
+The bursting flame hit [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0001)] was burned up!
+[VAR PKBTLR(0000)] received [VAR ITEM2(0002)] from [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] received [VAR ITEM2(0002)] from [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] received [VAR ITEM2(0002)] from the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] received [VAR ITEM2(0002)] from [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] received [VAR ITEM2(0002)] from the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)] took [VAR PKBTLR(0001)] into the sky!
+<!--The wild [VAR PKBTLR(0000)] took [VAR PKBTLR(0001)] into the sky!
+The wild [VAR PKBTLR(0000)] took the wild [VAR PKBTLR(0001)] into the sky!
+The opposing [VAR PKBTLR(0000)] took [VAR PKBTLR(0001)] into the sky!
+The opposing [VAR PKBTLR(0000)] took the opposing [VAR PKBTLR(0001)] into the sky!-->
+[VAR PKBTLR(0000)] was freed from the Sky Drop!
+[VAR PKBTLR(0000)] fell straight down!
+[VAR PKBTLR(0000)]’s move was postponed!
+[VAR PKBTLR(0000)] took the kind offer!
+[VAR PKBTLR(0000)] and [VAR PKBTLR(0001)] switched places!
+[VAR PKBTLR(0000)] was hurled into the air!
+[VAR PKBTLR(0000)] was freed from the telekinesis!
+[VAR PKBTLR(0000)] is waiting for [VAR PKBTLR(0001)]’s move...
+<!--The wild [VAR PKBTLR(0000)] is waiting for [VAR PKBTLR(0001)]’s move...
+The wild [VAR PKBTLR(0000)] is waiting for the wild [VAR PKBTLR(0001)]’s move...
+The opposing [VAR PKBTLR(0000)] is waiting for [VAR PKBTLR(0001)]’s move...
+The opposing [VAR PKBTLR(0000)] is waiting for the opposing [VAR PKBTLR(0001)]’s move...-->
+It is completely synchronized with [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] is hurt by the sea of fire!
+[VAR PKBTLR(0000)]’s [VAR ITEM2(0002)] is reacting to [VAR TRNAME(0001)]’s [VAR ITEM2(0003)]!
+[VAR PKBTLR(0000)] has Mega Evolved into Mega [VAR PKNAME(0001)]!
+[VAR PKBTLR(0000)]’s stat changes were all reversed!
+[VAR PKBTLR(0000)] surrounded itself with a veil of petals!
+[VAR PKBTLR(0000)] is protected by Aroma Veil!
+[VAR PKBTLR(0000)] surrounded itself with a veil of sweetness!
+[VAR PKBTLR(0000)] intends to flip up a mat and block incoming attacks!
+[VAR PKBTLR(0000)] hasn’t eaten any held Berries, so it can’t possibly belch!
+[VAR PKBTLR(0000)]’s moves have been electrified!
+[VAR PKBTLR(0000)] is not affected by [VAR MOVE(0002)] thanks to its [VAR ITEM2(0001)]!
+[VAR PKBTLR(0000)] is radiating a dark aura!
+[VAR PKBTLR(0000)] is radiating a fairy aura!
+[VAR PKBTLR(0000)] surrounds itself with electrified terrain!
+[VAR PKBTLR(0000)] is covered in powder!
+[VAR PKBTLR(0000)] is absorbing power!
+[VAR PKBTLR(0000)] was hurt!
+[VAR PKBTLR(0000)] shared its [VAR ITEM2(0001)] with [VAR PKBTLR(0002)]!
+[VAR PKBTLR(0000)] was caught in a sticky web!
+[VAR PKBTLR(0000)] surrounds itself with a protective mist!
+[VAR PKBTLR(0000)] is too heavy to be lifted!
+[VAR PKBTLR(0000)] reversed all other Pokémon’s auras!
+[VAR PKBTLR(0000)] has been afflicted with an infestation by [VAR PKBTLR(0001)]!
+<!--The wild [VAR PKBTLR(0000)] has been afflicted with an infestation by [VAR PKBTLR(0001)]!
+The wild [VAR PKBTLR(0000)] has been afflicted with an infestation by the wild [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] has been afflicted with an infestation by [VAR PKBTLR(0001)]!
+The opposing [VAR PKBTLR(0000)] has been afflicted with an infestation by the opposing [VAR PKBTLR(0001)]!-->
+[VAR PKBTLR(0000)]’s Primal Reversion! It reverted to its primal form!
+[VAR PKBTLR(0000)]’s Primal Reversion! It reverted to its primal form!
+[VAR TRNAME(0001)]’s fervent wish has reached [VAR PKBTLR(0000)]!
+[VAR PKBTLR(0000)] has Mega Evolved into Mega [VAR PKNAME(0001)]!</BattleMessage>
+<!--Pokemon Contest Move Effects-->
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">USE
+DISCARD
+REGISTER
+GIVE
+WALK
+CANCEL
+DESELECT
+[VAR ITEM2(0000)] selected.
+This is a Key Item. You can’t throw it away.
+Throw away how many [VAR ITEMPLUR1][VAR ITEM2(0000)]?
+Threw away [VAR NUM3(0001)] [VAR ITEM2(0000)].
+Is it OK to throw away [VAR NUM3(0001)] [VAR ITEM2(0000)]?
+Your father’s words echo in your mind... “[VAR TRNAME(0000)]! This isn’t the time for that!”
+[VAR TRNAME(0000)] used the [VAR ITEM2(0001)].
+Since a repellent’s effects still linger, you can’t use this now.
+[VAR TRNAME(0000)] used the [VAR ITEM2(0001)]! The likelihood of encountering Pokémon increased!
+[VAR TRNAME(0000)] used the [VAR ITEM2(0001)]! The likelihood of encountering Pokémon decreased!
+TM[VAR NUM3(0000)] [VAR MOVE(0001)]
+HM[VAR NUM2(0000)] [VAR MOVE(0001)]
+Nothing
+Sorted items by type!
+Sorted items by name!
+Sorted items from most to fewest held!
+Sorted items from fewest to most held!
+How do you want to sort your items?
+By Type
+By Name
+From Most
+From Fewest
+By Number
+Sorted items by number!
+[~ 87]
+Give to which Pokémon?
+[VAR PKNICK(0001)] is already holding [VAR iCOLOR2(0000)][VAR ITEM2(0000)]. Would you like to switch the two items?
+The Pokémon is now holding the [VAR ITEM2(0000)].
+Took the Pokémon’s [VAR ITEM2(0000)] and gave it the [VAR ITEM2(0001)].
+Use on which Pokémon?
+Teach which Pokémon?
+The [VAR ITEM2(0000)] can’t be held.
+[~ 95]
+Booted up a TM.[VAR BE05(0002)][VAR BE05(0000)]
+Booted up an HM.[VAR BE05(0002)][VAR BE05(0000)]
+It contained [VAR MOVE(0000)]. Teach [VAR MOVE(0000)] to [VAR PKNICK(0001)]?
+[VAR PKNICK(0000)] wants to learn the move [VAR MOVE(0001)]. However, [VAR PKNICK(0000)] already knows four moves. Should a move be deleted and replaced with [VAR MOVE(0001)]?
+Which move should be forgotten?
+1, [WAIT 20]2, and[WAIT 20]... [WAIT 20]... [WAIT 20]... Ta-da![VAR BE05(0003)][VAR BE05(0000)] [VAR PKNICK(0000)] forgot how to use [VAR MOVE(0001)]. And... [VAR PKNICK(0000)] learned [VAR MOVE(0002)]![VAR BE05(0004)][VAR BE05(0001)]
+Give up on learning the move [VAR MOVE(0001)]?
+[VAR PKNICK(0000)] did not learn [VAR MOVE(0001)].
+[VAR PKNICK(0000)] and [VAR MOVE(0001)] are not compatible. [VAR MOVE(0001)] can’t be learned.
+[VAR PKNICK(0000)] already knows [VAR MOVE(0001)].
+[VAR PKNICK(0000)] learned [VAR MOVE(0001)]![VAR BE05(0004)][VAR BE05(0001)]
+[VAR MOVE(0000)]
+It won’t have any effect.
+[VAR PKNICK(0000)]’s HP was restored by [VAR NUM3(0001)] point[VAR NUMBRNCH(0001,0100)]s.
+[VAR PKNICK(0000)] was cured of poisoning.
+[VAR PKNICK(0000)] was cured of paralysis.
+[VAR PKNICK(0000)]’s burn was healed.
+[VAR PKNICK(0000)] was thawed out.
+PP was restored.
+[VAR PKNICK(0000)] recovered from fainting!
+[VAR PKNICK(0000)] became healthy.
+[VAR MOVE(0000)]’s PP increased.
+[VAR PKNICK(0000)]’s base [VAR EVSTAT(0001)] rose!
+There’s no Pokémon.
+[VAR PKNICK(0000)] woke up!
++ [VAR NUM3(0000)]
+[VAR PKNICK(0000)] was elevated to Lv. [VAR NUM3(0001)]![VAR BE05(0005)][VAR BE05(0001)]
+[VAR PKNICK(0000)] became more friendly. However, its base [VAR EVSTAT(0001)] fell!
+[VAR PKNICK(0000)] adores you! Its base [VAR EVSTAT(0001)] fell!
+[VAR PKNICK(0000)] became more friendly. Its base [VAR EVSTAT(0001)] can’t go lower.
+Restore which move?
+Boost the PP of which move?
+ABLE!
+[VAR COLOR(0001)]UNABLE![VAR COLOR(0000)]
+[VAR COLOR(0002)]LEARNED[VAR COLOR(0000)]
+ABLE!
+[VAR COLOR(0001)]UNABLE![VAR COLOR(0000)]
+LAST USED ITEMS
+HELD ITEM
+Do what with the [VAR ITEM2(0000)] on [VAR PKNICK(0001)]?
+You can register up to four items to use with the Ready button.
+Would you like to change [VAR PKNICK(0000)]’s Ability to [VAR ABILITY(0001)]?
+[VAR PKNICK(0000)]’s Ability changed to [VAR ABILITY(0001)]![VAR BE05(0005)][VAR BE05(0001)]
+It cannot be fused with that Pokémon.
+It cannot be fused with that fainted Pokémon.
+It cannot be fused with an Egg.
+You have no room to separate the Pokémon.
+Fuse with which Pokémon?
+This can’t be used on the fainted Pokémon.
+[VAR PKNAME(0000)] changed Forme!
+[VAR NUM3(0000)]
+$[VAR NUM7(0000,002C)]
+The Exp. Share was turned on.
+The Exp. Share was turned off.
+You don’t have any contact lenses.
+You have [VAR 019D(0000)] lenses.
+You have [VAR 019D(0000)] and [VAR 019D(0001)] lenses.
+You have [VAR 019D(0000)], [VAR 019D(0001)], and [VAR 019D(0002)] lenses!
+You have [VAR 019D(0000)], [VAR 019D(0001)], [VAR 019D(0002)], and [VAR 019D(0003)] lenses!
+You have [VAR NUM2(0000)] ticket[VAR NUMBRNCH(0000,0100)]s.
+[~ 168]
+MONEY
+How many [VAR ITEMPLUR1][VAR ITEM2(0000)] will you sell?
+I can pay $[VAR NUM7(0000,002C)]. Would that be OK?
+Turned over the [VAR ITEM2(0000)] and received $[VAR NUM7(0001,002C)].
+Turned over the [VAR ITEM2(0000)] and received $[VAR NUM7(0001,002C)].
+[VAR ITEM2(0000)]? Oh no, I can’t buy th[VAR NUMBRNCH(0000,0302)]atose.
+On
+Off
+Put away
+The Bag is full.
+[VAR TRNAME(0000)] used a [VAR ITEM2(0001)]! Now you’re more likely to encounter high-level Pokémon!
+[VAR TRNAME(0000)] used a [VAR ITEM2(0001)]! Now you’re more likely to encounter low-level Pokémon!</ContestEffect>
+<!--Pokemon Contest Move Effects-->
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Quite an appealing move.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">A very appealing move, but after using this move, the user is more easily startled.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">A move of huge appeal, but using it prevents the user from taking further contest moves.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">An appealing move that can be used repeatedly without boring the audience.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Prevents the user from being startled one time this turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Prevents the user from being startled until the turn ends.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Startles the last Pokémon to act before the user.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Startles all of the Pokémon to act before the user.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Badly startles the last Pokémon to act before the user.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Badly startles all of the Pokémon to act before the user.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Makes audience expect little of other contestants.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Badly startles Pokémon that the audience has high expectations of.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Startles all other Pokémon. User cannot act in the next turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Badly startles Pokémon that used a move of the same type.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Makes the remaining Pokémon nervous.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Brings down the energy of any Pokémon that have already used a move this turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Works great if the user goes first this turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Works great if the user goes last this turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Shows off the Pokémon’s appeal about as well as all the moves before it this turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Shows off the Pokémon’s appeal about as well as the move used just before it.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Works better the later it is used in a turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Effectiveness varies depending on when it is used.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Works well if it is the same type as the move used by the last Pokémon.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Affected by how well the previous Pokémon’s move went.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Gets the Pokémon pumped up. Helps prevent nervousness, too.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Works well if the user is pumped up.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Causes the user to move earlier on the next turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Causes the user to move later on the next turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Scrambles the order in which Pokémon will move on the next turn.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Excites the audience in any kind of contest.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Badly startles all Pokémon that successfully showed their appeal.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Works better the more the crowd is excited.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Temporarily stops the crowd from growing excited.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Excites the audience a lot if used first.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Excites the audience a lot if used last.</ContestEffect>
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">Makes the audience quickly grow bored when an appeal move has little effect.</ContestEffect>
+<!--Receiving Items-->
+<ContestEffect id="0" name="HealBlock"  identifier="HealBlock" language="9">[VAR TRNAME(0000)] obtained [VAR iCOLOR2(0001)] [VAR BD00(0007,0000,0000)][VAR ITEM2(0001)][VAR BD01]!
+[VAR TRNAME(0000)] obtained the [VAR BD00(0007,0000,0000)][VAR ITEM2(0001)][VAR BD01]!
+[VAR TRNAME(0000)] obtained [VAR iCOLOR2(0001)] [VAR BD00(0007,0000,0000)][VAR ITEM2(0001)][VAR BD01]!
+[VAR TRNAME(0000)] obtained [VAR ITEM2(0001)] [VAR BD00(0007,0000,0000)][VAR MOVE(0002)][VAR BD01]!
+[VAR TRNAME(0000)] found [VAR iCOLOR2(0001)][VAR BD00(0007,0000,0000)][VAR ITEM2(0001)][VAR BD01]!
+[VAR TRNAME(0000)] found [VAR iCOLOR2(0001)][VAR BD00(0007,0000,0000)][VAR ITEM2(0001)][VAR BD01]!
+[VAR TRNAME(0000)] found [VAR ITEM2(0001)] [VAR BD00(0007,0000,0000)][VAR MOVE(0002)][VAR BD01]!
+Too bad! There is no more room for [VAR ITEMPLUR1][VAR ITEM2(0000)] in your Bag!
+Obtained [VAR iCOLOR2(0000)][VAR ITEM2(0000)]! But...too bad! Your Bag is already full!
+[VAR TRNAME(0000)] put the [VAR ITEM2(0001)] in the [VAR BD00(0007,0000,0000)][VAR 0112(0002)] Pocket[VAR BD01].</ContestEffect>
+</SystemMessages>
+<Keywords>
+<!-- 
+select id, identifier, [name], local_language_id 
+from natures a
+left join nature_names b on a.id=b.nature_id
+where local_language_id=9
+-->
+<!-- "^"(\d*)"\t"([\w\S.\- ]*)"\t"([\w '’,-]*)"\t"(\d*)"" | <Nature id="$1" language="$4" identifier="$2">$3</Nature> -->
+<Nature id="1" language="9" identifier="hardy">Hardy</Nature>
+<Nature id="2" language="9" identifier="bold">Bold</Nature>
+<Nature id="3" language="9" identifier="modest">Modest</Nature>
+<Nature id="4" language="9" identifier="calm">Calm</Nature>
+<Nature id="5" language="9" identifier="timid">Timid</Nature>
+<Nature id="6" language="9" identifier="lonely">Lonely</Nature>
+<Nature id="7" language="9" identifier="docile">Docile</Nature>
+<Nature id="8" language="9" identifier="mild">Mild</Nature>
+<Nature id="9" language="9" identifier="gentle">Gentle</Nature>
+<Nature id="10" language="9" identifier="hasty">Hasty</Nature>
+<Nature id="11" language="9" identifier="adamant">Adamant</Nature>
+<Nature id="12" language="9" identifier="impish">Impish</Nature>
+<Nature id="13" language="9" identifier="bashful">Bashful</Nature>
+<Nature id="14" language="9" identifier="careful">Careful</Nature>
+<Nature id="15" language="9" identifier="rash">Rash</Nature>
+<Nature id="16" language="9" identifier="jolly">Jolly</Nature>
+<Nature id="17" language="9" identifier="naughty">Naughty</Nature>
+<Nature id="18" language="9" identifier="lax">Lax</Nature>
+<Nature id="19" language="9" identifier="quirky">Quirky</Nature>
+<Nature id="20" language="9" identifier="naive">Naive</Nature>
+<Nature id="21" language="9" identifier="brave">Brave</Nature>
+<Nature id="22" language="9" identifier="relaxed">Relaxed</Nature>
+<Nature id="23" language="9" identifier="quiet">Quiet</Nature>
+<Nature id="24" language="9" identifier="sassy">Sassy</Nature>
+<Nature id="25" language="9" identifier="serious">Serious</Nature>
+<Color id="0" name="Red"  identifier="Red" language="9" lowercase="Red" capital="Red">Red</Color>
+<Color id="0" name="Blue"  identifier="Blue" language="9" lowercase="Blue" capital="Blue">Blue</Color>
+<Color id="0" name="Pink"  identifier="Pink" language="9" lowercase="Pink" capital="Pink">Pink</Color>
+<Color id="0" name="Green"  identifier="Green" language="9" lowercase="Green" capital="Green">Green</Color>
+<Color id="0" name="Yellow"  identifier="Yellow" language="9" lowercase="Yellow" capital="Yellow">Yellow</Color>
+<Summary id="0" name="PP"  identifier="PP" language="9" lowercase="pp" capital="PP">PP</Summary>
+<Summary id="0" name="FORGET"  identifier="FORGET" language="9" lowercase="forget" capital="Forget">FORGET</Summary>
+<Summary id="0" name="DEXNUM"  identifier="DEXNUM" language="9" lowercase="forget" capital="Forget">DEX NO.</Summary>
+<Summary id="0" name="NAME"  identifier="NAME" language="9" lowercase="NAME" capital="NAME">NAME</Summary>
+<Summary id="0" name="TYPE"  identifier="TYPE" language="9" lowercase="TYPE" capital="TYPE">TYPE</Summary>
+<Summary id="0" name="CATEGORY"  identifier="CATEGORY" language="9" lowercase="NAME" capital="NAME">CATEGORY</Summary>
+<Summary id="0" name="ACCURACY"  identifier="ACCURACY" language="9" lowercase="TYPE" capital="TYPE">ACCURACY</Summary>
+<Summary id="0" name="POWER"  identifier="POWER" language="9" lowercase="NAME" capital="NAME">POWER</Summary>
+<Summary id="0" name="HP"  identifier="HP" language="9" lowercase="TYPE" capital="TYPE">HP</Summary>
+<Summary id="0" name="ATTACK"  identifier="ATTACK" language="9" lowercase="NAME" capital="NAME">ATTACK</Summary>
+<Summary id="0" name="DEFENSE"  identifier="DEFENSE" language="9" lowercase="TYPE" capital="TYPE">DEFENSE</Summary>
+<Summary id="0" name="SPATK"  identifier="SPATK" language="9" lowercase="NAME" capital="NAME">SP. ATK</Summary>
+<Summary id="0" name="SPDEF"  identifier="SPDEF" language="9" lowercase="TYPE" capital="TYPE">SP. DEF</Summary>
+<Summary id="0" name="SPEED"  identifier="SPEED" language="9" lowercase="NAME" capital="NAME">SPEED</Summary>
+<Summary id="0" name="MALE"  identifier="MALE" language="9" lowercase="TYPE" capital="TYPE">♂</Summary>
+<Summary id="0" name="FEMALE"  identifier="FEMALE" language="9" lowercase="NAME" capital="NAME">♀</Summary>
+<Summary id="0" name="LV"  identifier="LV" language="9" lowercase="TYPE" capital="TYPE">Lv.</Summary>
+<Summary id="0" name="ATTACK"  identifier="ATTACK" language="9" lowercase="NAME" capital="NAME">ATTACK</Summary>
+<Summary id="0" name="DEFENSE"  identifier="DEFENSE" language="9" lowercase="TYPE" capital="TYPE">DEFENSE</Summary>
+<Summary id="0" name="Effect"  identifier="Effect" language="9" lowercase="TYPE" capital="TYPE">Effect</Summary>
+<Summary id="0" name="Appeal"  identifier="Appeal" language="9" lowercase="NAME" capital="NAME">Appeal</Summary>
+<Summary id="0" name="Jamming"  identifier="Jamming" language="9" lowercase="TYPE" capital="TYPE">Jamming</Summary>
+<Summary id="0" name="Contest Effects"  identifier="Contest_Effects" language="9" lowercase="NAME" capital="NAME">Contest Effects</Summary>
+<Summary id="0" name="Battle Effects"  identifier="Battle_Effects" language="9" lowercase="TYPE" capital="TYPE">Battle Effects</Summary>
+</Keywords>
 </texts>
 </localizationDictionary>

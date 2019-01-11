@@ -759,7 +759,7 @@ public static class Settings //: Settings<Translations.Languages>
     /// </summary>
     public const float framesPerSecond = 30f;
 
-	public const int pokemonGeneration = (int)Generation.All;
+	public const sbyte pokemonGeneration = (sbyte)Generation.All;
 
 	public static int pokemonGenerationCount { 
 		get { 
@@ -1044,7 +1044,7 @@ public static class Settings //: Settings<Translations.Languages>
 	#endregion
 
 	#region Custom Game Mode
-	//Nuzlocke Challenge
+	//Nuzlocke Challenge => Pokemon Centers cost money, every pokemon must be named, when defeated/fainted pokemon is gone, only allowed to capture first pokemon encountered when entering new map
 	/// <summary>
 	/// Basically, you use the Dexnav to find pokemon in the area, they appear as shadows in the grass, and you need to sneak up on them
 	/// these pokemon can have egg moves, or even their HiddenAbility
@@ -1587,6 +1587,7 @@ public class UnityUtilityIntegration
 	protected static void Dialog(string text, bool? error = null, params string[] promptOptions)
 	{
 		//ToDo: Pass values directly to DialogEventHandler
+		//ToDo: Make a struct for each non-class (enum, etc) type and add a ToString(bool) override that output unity richtext color tags
 		//Consider adding a Queue to dialog text... so messages arent replaced but appended
 		if (!error.HasValue)
 			Debug = text;
@@ -1639,5 +1640,52 @@ namespace PokemonUnity
 		SunMoon = 7,
 		//UltraSunUltraMoon
 		Custom = -1
+	}
+
+	enum Version
+	{
+		//(id, version_group_id, identifier) VALUES 
+		//(0, 0, poke-unity'),
+		PokeUnity = 0,
+		//(1, 1, red'),
+		//(2, 1, blue'),
+		RedBlue = 1,
+		//(3, 2, yellow'),
+		Yellow = 2,
+		//(4, 3, gold'),
+		//(5, 3, silver'),
+		GoldSilver = 3,
+		//(6, 4, crystal'),
+		Crystal = 4,
+		//(7, 5, ruby'),
+		//(8, 5, sapphire'),
+		RubySapphire = 5,
+		//(9, 6, emerald'),
+		Emerald = 6,
+		//(10,7, firered'),
+		//(11,7, leafgreen'),
+		LGFR = 7,
+		//(12,8, diamond'),
+		//(13,8, pearl'),
+		DiamondPearl = 8,
+		//(14,9, platinum'),
+		Platinum = 9,
+		//(15,10,heartgold'),
+		//(16,10,soulsilver'),
+		HGSS = 10,
+		//(17,11,black'),
+		//(18,11,white'),
+		BW = 11,
+		//(19,12,colosseum'),
+		//(20,13,xd'),
+		//(21,14,black-2'),
+		//(22,14,white-2'),
+		BW2 = 14,
+		//(23,15,x'),
+		//(24,15,y'),
+		XY = 15,
+		//(25,16,omega-ruby'),
+		//(26,16,alpha-sapphire')
+		ORAS = 16
 	}
 }
