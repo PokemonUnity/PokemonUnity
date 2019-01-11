@@ -601,7 +601,15 @@ public class Battle : UnityUtilityIntegration
 	{
 		return false;
 	}
+	public bool pbCheckGlobalAbility(Abilities index)
+	{
+		return false;
+	}
 	public bool pbAllFainted(Battler[] party)
+	{
+		return false;
+	}
+	public bool pbCommonAnimation(string animation, Battler atk, object uh)
 	{
 		return false;
 	}
@@ -910,7 +918,7 @@ public class Battle : UnityUtilityIntegration
 		//private int Index { get { return this.battle.battlers.Length; } }
 		public bool IsOwned { get { return battle.Player.playerPokedex2[_base.ArrayId, 1] == 1; } }
 		private Pokemon pokemon { get; set; }
-		public InBattleMove currentMove { get; private set; }
+		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }
 		public Types lastMoveUsedType { get; private set; }
 		//ToDo: Types public get;set;
@@ -1409,13 +1417,7 @@ public class Battle : UnityUtilityIntegration
 				return LanguageExtension.Translate(Text.ScriptTexts, lowercase ? "AllyPokemonL" : "AllyPokemon", Name).Value;
 			//return base.ToString();
 		}
-
-		public bool hasMovedThisRound(int turncount){
-			if (!lastRoundMoved.HasValue) return false;
-			//return lastRoundMoved.Value == battle.turncount;
-			return lastRoundMoved.Value == turncount;
-		}
-
+		
 		public bool hasMoldBreaker() {
 			//Pokemon pkmn = this;
 			if (this.hasWorkingAbility(Abilities.MOLD_BREAKER) ||
@@ -1477,6 +1479,13 @@ public class Battle : UnityUtilityIntegration
 		public bool HasMovedThisRound() {
 			if (!lastRoundMoved.HasValue) return false;
 			return lastRoundMoved.Value == battle.turncount;
+		}
+		//ToDo: Double check this
+		public bool hasMovedThisRound(int? turncount = null){
+			if (!lastRoundMoved.HasValue) return false;
+			return !turncount.HasValue 
+				? lastRoundMoved.Value == battle.turncount
+				: lastRoundMoved.Value == turncount.Value;
 		}
 
 		public bool hasWorkingItem(Items item, bool ignorefainted= false) {
@@ -1980,21 +1989,31 @@ public class Battle : UnityUtilityIntegration
 		#endregion
 
 		#region ToDo: Everything here needs to be implemented
+		public Moves lastMoveUsedSketch { get; set; }
 		/// <summary>
 		/// Does faint animation 
 		/// (doesn't have to lower hp, as hp will be done by other set of code. 
 		/// But just to be safe... do it anyways)
 		/// </summary>
 		public void pbFaint() { }
+		public void pbConsumeItem() { }
+		public void pbAbilityCureCheck() { }
 		public void pbConfuse() { }
 		public void pbSleep() { }
+		public void pbSleepSelf(int turns) { }
 		public void pbFreeze() { }
 		public void pbAttract(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbFlinch(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbPoison(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbParalyze(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbBurn(Battler pkmn, byte? uh = null, bool animate = false) { }
-		public void pbCureStatus(bool animate) { }
+		public void pbCureStatus(bool animate = false) { }
+		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
+		public void pbUseMoveSimple(Moves move) { }
+		public float Weight(Battler pkmn)
+		{
+			return 0f;
+		}
 		public bool pbTooLow(Stats stat)
 		{
 			return false;
@@ -2003,11 +2022,19 @@ public class Battle : UnityUtilityIntegration
 		{
 			return false;
 		}
+		public bool pbCanConfuseSelf(bool pkmn)
+		{
+			return false;
+		}
 		public bool pbCanConfuse(Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
 		public bool pbCanSleep(Battler pkmn, bool animate, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbCanSleep(Battler pkmn, bool animate, PokeBattle_Move atk, bool uh)
 		{
 			return false;
 		}

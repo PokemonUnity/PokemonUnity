@@ -26,12 +26,12 @@ public class Effects
 		public bool DefenseCurl        { get; set; }
 		public bool DestinyBond        { get; set; }
 		public int Disable            { get; set; }
-		public PokemonUnity.Move.Moves DisableMove        { get; set; }
+		public Moves DisableMove        { get; set; }
 		public bool Electrify          { get; set; }
 		public int Embargo            { get; set; }
 		public int Encore             { get; set; }
 		public int EncoreIndex        { get; set; }
-		public int EncoreMove         { get; set; }
+		public Moves EncoreMove         { get; set; }
 		public bool Endure             { get; set; }
 		public int FirstPledge        { get; set; }
 		public bool FlashFire          { get; set; }
@@ -78,7 +78,7 @@ public class Effects
 		/// Trapping move
 		/// </summary>
 		public int MultiTurn          { get; set; } 
-		public int MultiTurnAttack    { get; set; }
+		public Moves MultiTurnAttack    { get; set; }
 		public int MultiTurnUser      { get; set; }
 		public bool Nightmare          { get; set; }
 		public int Outrage            { get; set; }
