@@ -252,67 +252,98 @@ class BlenderJsonToUnity
 /// </summary>
 class WildPokemon
 {
-	class MapPokemon
+	public TravelGround Ground { get; private set; }
+	public TravelWater Water { get; private set; }
+	public TravelAir Air { get; private set; }
+
+	public WildPokemon(TravelGround ground = null, TravelWater water = null, TravelAir air = null)
+	{
+
+	}
+
+	#region Database
+	private static WildPokemon[] EncounterDatabase
+	{
+		get
+		{
+			return new WildPokemon[]
+			{
+				new WildPokemon(
+					new TravelGround()
+				)
+			};
+		}
+	}
+	#endregion
+
+	#region Nested Classes
+	public class MapPokemon
 	{
 		PokemonUnity.Pokemon.Pokemons Pokemon { get; set; }
 		int minLevel { get; set; }
 		int maxLevel { get; set; }
 	}
-	class TravelGround
+	//ToDo: Make Interface Class for Slots
+	//ToDo: Overworld Tile should return which Class it belongs to
+	public class TravelGround : ITravel
 	{
+		/// <summary>
+		/// After Pokemon encounter dice has been rolled, this is the output from results
+		/// </summary>
+		public MapPokemon Slot { get; private set; }
 		/// <summary>
 		/// How often or likely to engage and encounter a pokemon
 		/// </summary>
-		int Rate { get; set; }
+		public int Rate { get; private set; }
 		#region Walking
 		/// <summary>
 		/// 20%
 		/// </summary>
-		int Slot1 { get; set; }
+		public int Slot1 { get; set; }
 		/// <summary>
 		/// 20%
 		/// </summary>
-		int Slot2 { get; set; }
+		public int Slot2 { get; set; }
 		/// <summary>
 		/// 10%
 		/// </summary>
-		int Slot3 { get; set; }
+		public int Slot3 { get; set; }
 		/// <summary>
 		/// 10%
 		/// </summary>
-		int Slot4 { get; set; }
+		public int Slot4 { get; set; }
 		/// <summary>
 		/// 10%
 		/// </summary>
-		int Slot5 { get; set; }
+		public int Slot5 { get; set; }
 		/// <summary>
 		/// 10%
 		/// </summary>
-		int Slot6 { get; set; }
+		public int Slot6 { get; set; }
 		/// <summary>
 		/// 5%
 		/// </summary>
-		int Slot7 { get; set; }
+		public int Slot7 { get; set; }
 		/// <summary>
 		/// 5%
 		/// </summary>
-		int Slot8 { get; set; }
+		public int Slot8 { get; set; }
 		/// <summary>
 		/// 4%
 		/// </summary>
-		int Slot9 { get; set; }
+		public int Slot9 { get; set; }
 		/// <summary>
 		/// 4%
 		/// </summary>
-		int Slot10 { get; set; }
+		public int Slot10 { get; set; }
 		/// <summary>
 		/// 1%
 		/// </summary>
-		int Slot11 { get; set; }
+		public int Slot11 { get; set; }
 		/// <summary>
 		/// 1%
 		/// </summary>
-		int Slot12 { get; set; }
+		public int Slot12 { get; set; }
 		#endregion
 		#region Swarm
 		/// <summary>
@@ -362,62 +393,250 @@ class WildPokemon
 		/// </summary>
 		int RadarSlot4 { get; set; }
 		#endregion
+
+		public TravelGround(Method? tile = null)
+		{
+			switch ((Generation)Settings.pokemonGeneration)
+			{
+				case Generation.All:
+				case Generation.RedBlueYellow:
+				case Generation.GoldSilverCrystal:
+				case Generation.RubySapphireEmerald:
+				case Generation.DiamondPearlPlatinum:
+				case Generation.BlackWhite:
+				case Generation.XY:
+				case Generation.SunMoon:
+				case Generation.Custom:
+				default:
+					#region Switch Breakdown
+					switch (tile.Value)
+					{
+						case Method.YELLOW_FLOWERS:
+						case Method.PURPLE_FLOWERS:
+						case Method.RED_FLOWERS:
+						case Method.ROUGH_TERRAIN:
+						case Method.WALK:
+							Slot1	= 10;
+							Slot2	= 10;
+							Slot3	= 10;
+							Slot4	= 10;
+							Slot5	= 10;
+							Slot6	= 10;
+							Slot7	= 10;
+							Slot8	= 10;
+							Slot9	= 10;
+							Slot10	= 5;
+							Slot11	= 4;
+							Slot12	= 1;
+							break;
+						case Method.ROCK_SMASH:
+							Slot1 = 50;
+							Slot2 = 30;
+							Slot3 = 15;
+							Slot4 = 4;
+							Slot5 = 1;
+							//Slot6 = 10;
+							//Slot7 = 5;
+							//Slot8 = 5;
+							//Slot9 = 4;
+							//Slot10 = 4;
+							//Slot11 = 1;
+							//Slot12 = 1;
+							break;
+						case Method.DARK_GRASS:
+						case Method.GRASS_SPOTS:
+						case Method.CAVE_SPOTS:
+						case Method.BRIDGE_SPOTS:
+							Slot1	= 20;
+							Slot2	= 20;
+							Slot3	= 10;
+							Slot4	= 10;
+							Slot5	= 10;
+							Slot6	= 10;
+							Slot7	= 5;
+							Slot8	= 5;
+							Slot9	= 4;
+							Slot10	= 4;
+							Slot11	= 1;
+							Slot12	= 1;
+							break;
+						case Method.OLD_ROD:
+						case Method.GOOD_ROD:
+						case Method.SUPER_ROD:
+						case Method.SUPER_ROD_SPOTS:
+						case Method.SURF:
+						case Method.SURF_SPOTS:
+						case Method.HEADBUTT:
+						default:
+							Slot1	= 0;
+							Slot2	= 0;
+							Slot3	= 0;
+							Slot4	= 0;
+							Slot5	= 0;
+							Slot6	= 0;
+							Slot7	= 0;
+							Slot8	= 0;
+							Slot9	= 0;
+							Slot10	= 0;
+							Slot11	= 0;
+							Slot12	= 0;
+							break;
+					}
+					#endregion
+					break;
+			}
+		}
 	}
-	class TravelWater
+	public class TravelWater
 	{
 		#region Surfing
 		/// <summary>
-		/// 10
 		/// How often or likely to engage and encounter a pokemon
 		/// </summary>
+		/// 10
 		int Rate { get; set; }
 		/// <summary>
 		/// 60%
 		/// </summary>
-		MapPokemon Slot1 { get; set; }
+		byte Slot1 { get; set; }
 		/// <summary>
 		/// 30%
 		/// </summary>
-		MapPokemon Slot2 { get; set; }
+		byte Slot2 { get; set; }
 		/// <summary>
 		/// 5%
 		/// </summary>
-		MapPokemon Slot3 { get; set; }
+		byte Slot3 { get; set; }
 		/// <summary>
 		/// 4%
 		/// </summary>
-		MapPokemon Slot4 { get; set; }
+		byte Slot4 { get; set; }
 		/// <summary>
 		/// 1%
 		/// </summary>
-		MapPokemon Slot5 { get; set; }
+		byte Slot5 { get; set; }
 		#endregion
-		#region Old Rod
-		/// <summary>
-		/// 25
-		/// How often or likely to engage and encounter a pokemon
-		/// </summary>
-		int Rate2 { get; set; }
-		#endregion
-		#region Good Rod
-		/// <summary>
-		/// 50
-		/// How often or likely to engage and encounter a pokemon
-		/// </summary>
-		int Rate3 { get; set; }
-		#endregion
-		#region Super Rod
-		/// <summary>
-		/// 75
-		/// How often or likely to engage and encounter a pokemon
-		/// </summary>
-		int Rate4 { get; set; }
-		#endregion
+		//#region Old Rod
+		///// <summary>
+		///// How often or likely to engage and encounter a pokemon
+		///// </summary>
+		///// 25
+		//int Rate2 { get; set; }
+		//#endregion
+		//#region Good Rod
+		///// <summary>
+		///// How often or likely to engage and encounter a pokemon
+		///// </summary>
+		///// 50
+		//int Rate3 { get; set; }
+		//#endregion
+		//#region Super Rod
+		///// <summary>
+		///// How often or likely to engage and encounter a pokemon
+		///// </summary>
+		///// 75
+		//int Rate4 { get; set; }
+		//#endregion
+
+		public TravelWater(Method? tile = null)
+		{
+			switch ((Generation)Settings.pokemonGeneration)
+			{
+				case Generation.All:
+				case Generation.RedBlueYellow:
+				case Generation.GoldSilverCrystal:
+				case Generation.RubySapphireEmerald:
+				case Generation.DiamondPearlPlatinum:
+				case Generation.BlackWhite:
+				case Generation.XY:
+				case Generation.SunMoon:
+				case Generation.Custom:
+				default:
+					#region Switch Breakdown
+					switch (tile.Value)
+					{
+						case Method.ROCK_SMASH:
+							Slot1 = 50;
+							Slot2 = 30;
+							Slot3 = 15;
+							Slot4 = 4;
+							Slot5 = 1;
+							//Slot6 = 10;
+							//Slot7 = 5;
+							//Slot8 = 5;
+							//Slot9 = 4;
+							//Slot10 = 4;
+							//Slot11 = 1;
+							//Slot12 = 1;
+							break;
+						case Method.OLD_ROD:
+							Rate  = 25;
+							Slot1 = 60;
+							Slot2 = 30;
+							Slot3 = 5;
+							Slot4 = 4;
+							Slot5 = 1;
+							break;
+						case Method.GOOD_ROD:
+							Rate  = 50;
+							Slot1 = 60;
+							Slot2 = 30;
+							Slot3 = 5;
+							Slot4 = 4;
+							Slot5 = 1;
+							break;
+						case Method.SUPER_ROD_SPOTS:
+						case Method.SUPER_ROD:
+							Rate  = 75;
+							Slot1 = 60;
+							Slot2 = 30;
+							Slot3 = 5;
+							Slot4 = 4;
+							Slot5 = 1;
+							break;
+						case Method.SURF_SPOTS:
+						case Method.SURF:
+							Rate  = 10;
+							Slot1 = 60;
+							Slot2 = 30;
+							Slot3 = 5;
+							Slot4 = 4;
+							Slot5 = 1;
+							break;
+						case Method.YELLOW_FLOWERS:
+						case Method.PURPLE_FLOWERS:
+						case Method.RED_FLOWERS:
+						case Method.ROUGH_TERRAIN:
+						case Method.WALK:
+						case Method.DARK_GRASS:
+						case Method.GRASS_SPOTS:
+						case Method.CAVE_SPOTS:
+						case Method.BRIDGE_SPOTS:
+						case Method.HEADBUTT:
+						default:
+							Rate  = 0;
+							Slot1 = 0;
+							Slot2 = 0;
+							Slot3 = 0;
+							Slot4 = 0;
+							Slot5 = 0;
+							break;
+					}
+					#endregion
+					break;
+			}
+		}
 	}
-	class TravelAir
+	public class TravelAir
 	{
 
 	}
+	public interface ITravel
+	{
+		int Rate { get; }
+		MapPokemon Slot { get; }
+	}
+	#endregion
 }
 
 /// <summary>
@@ -856,15 +1075,15 @@ namespace PokemonUnity
 		/// </summary>
 		ROUGH_TERRAIN = 17,
 		/// <summary>
-		/// Fishing with an <see cref="PokemonUnity.Item.Items.OLD_ROD"/>
+		/// Fishing with an <see cref="eItems.Item.OLD_ROD"/>
 		/// </summary>
 		OLD_ROD = 2,
 		/// <summary>
-		/// Fishing with a <see cref="PokemonUnity.Item.Items.GOOD_ROD"/> 
+		/// Fishing with a <see cref="eItems.Item.GOOD_ROD"/> 
 		/// </summary>
 		GOOD_ROD = 3,
 		/// <summary>
-		/// Fishing with a <see cref="PokemonUnity.Item.Items.SUPER_ROD"/> 
+		/// Fishing with a <see cref="eItems.Item.SUPER_ROD"/> 
 		/// </summary>
 		SUPER_ROD = 4,
 		/// <summary>
