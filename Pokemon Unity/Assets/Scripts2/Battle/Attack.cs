@@ -643,12 +643,12 @@ public class Function
 		if (!attacker.hasMoldBreaker()){
 		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.pbThis,PBAbilities.getName(opponent.ability)))
+			//   opponent.pbThis,PBAbilities.getName(opponent.Ability)))
 			return -1;
 		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)))
+			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.Ability)))
 			return -1;
 		  }
 		}
@@ -1588,8 +1588,8 @@ public class Function
 		}
 
 		array=[]
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
+		foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){ 
 		array.push(i) if opponent.pbCanIncreaseStatStage(i, attacker,false,this)
 		}
 		if (array.Length==0){
@@ -1668,11 +1668,11 @@ public class Function
 
 		attacker.ReduceHP(Math.Floor(attacker.TotalHP/2f));
 		if (attacker.hasWorkingAbility(Abilities.CONTRARY)){
-		  attacker.stages[Stats.ATTACK]=-6;
+		  attacker.stages[(byte)Stats.ATTACK]=-6;
 		  this.battle.pbCommonAnimation("StatDown",attacker,null);
 		  //battle.pbDisplay(_INTL("{1} cut its own HP and minimized its Attack!",attacker.pbThis))
 		}else{
-		  attacker.stages[Stats.ATTACK]=6;
+		  attacker.stages[(byte)Stats.ATTACK]=6;
 		  this.battle.pbCommonAnimation("StatUp",attacker,null);
 		  //battle.pbDisplay(_INTL("{1} cut its own HP and maximized its Attack!",attacker.pbThis))
 		}
@@ -2141,7 +2141,7 @@ public class Function
 		  if (opponent.hasWorkingAbility(Abilities.CLEARBODY) ||
 			 opponent.hasWorkingAbility(Abilities.WHITESMOKE)){
 			//battle.pbDisplay(_INTL("{1}'s {2} prevents stat loss!",opponent.pbThis,
-			//   PBAbilities.getName(opponent.ability)))
+			//   PBAbilities.getName(opponent.Ability)))
 			return -1;
 		  }
 		}
@@ -2151,7 +2151,7 @@ public class Function
 		object ret=-1; bool showanim=true;
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.HYPERCUTTER) &&
 		   !opponent.pbTooLow(Stats.ATTACK)){
-			string abilityname = PBAbilities.getName(opponent.ability);
+			string abilityname = PBAbilities.getName(opponent.Ability);
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!",opponent.pbThis,abilityname))
 		} else if (opponent.pbReduceStat(Stats.ATTACK,1, attacker,false, this, showanim)) {
@@ -2160,7 +2160,7 @@ public class Function
 		}
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.BIGPECKS) &&
 		   !opponent.pbTooLow(Stats.DEFENSE)){
-			string abilityname = PBAbilities.getName(opponent.ability);
+			string abilityname = PBAbilities.getName(opponent.Ability);
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Defense loss!",opponent.pbThis,abilityname))
 		} else if (opponent.pbReduceStat(Stats.DEFENSE,1, attacker,false, this, showanim)) {
@@ -2263,7 +2263,7 @@ public class Function
 		}
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS)){
 			//battle.pbDisplay(_INTL("{1}'s {2} prevents romance!",opponent.pbThis,
-			// PBAbilities.getName(opponent.ability)))
+			// PBAbilities.getName(opponent.Ability)))
 		  return -1;
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
@@ -2402,9 +2402,9 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
-		attacker.stages[i],opponent.stages[i]=opponent.stages[i],attacker.stages[i];
+		foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){ 
+		attacker.stages[(byte)i],opponent.stages[(byte)i]=opponent.stages[(byte)i],attacker.stages[(byte)i];
 	  }
 
 		//battle.pbDisplay(_INTL("{1} switched stat changes with the target!",attacker.pbThis))
@@ -2423,9 +2423,9 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
-		attacker.stages[i]=opponent.stages[i];
+		foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){ 
+		attacker.stages[(byte)i]=opponent.stages[(byte)i];
 	  }
 
 		//battle.pbDisplay(_INTL("{1} copied {2}'s stat changes!",attacker.pbThis,opponent.pbThis(true)))
@@ -2920,8 +2920,8 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Abilities oldabil = opponent.ability;
-		opponent.ability=Abilities.SIMPLE;
+		Abilities oldabil = opponent.Ability;
+		opponent.Ability=Abilities.SIMPLE;
 		string abilityname = PBAbilities.getName(Abilities.SIMPLE);
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
@@ -2957,8 +2957,8 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Abilities oldabil = opponent.ability;
-		opponent.ability=Abilities.INSOMNIA;
+		Abilities oldabil = opponent.Ability;
+		opponent.Ability=Abilities.INSOMNIA;
 		string abilityname = PBAbilities.getName(Abilities.INSOMNIA);
 		//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 		if (opponent.effects.Illusion && oldabil == Abilities.ILLUSION){
@@ -2984,8 +2984,8 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		if (opponent.ability==0 ||
-		   attacker.ability==opponent.ability ||
+		if (opponent.Ability==0 ||
+		   attacker.Ability==opponent.Ability ||
 		   attacker.Ability == Abilities.MULTITYPE ||
 		   attacker.Ability == Abilities.STANCECHANGE ||
 		   opponent.Ability == Abilities.FLOWERGIFT ||
@@ -3002,9 +3002,9 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Abilities oldabil = attacker.ability;
-		attacker.ability=opponent.ability;
-		string abilityname = PBAbilities.getName(opponent.ability);
+		Abilities oldabil = attacker.Ability;
+		attacker.Ability=opponent.Ability;
+		string abilityname = PBAbilities.getName(opponent.Ability);
 
 		//battle.pbDisplay(_INTL("{1} copied {2}'s {3}!", attacker.pbThis, opponent.pbThis(true),abilityname))
 		if (attacker.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION){
@@ -3034,8 +3034,8 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		if (attacker.ability==0 ||
-		   attacker.ability==opponent.ability ||
+		if (attacker.Ability==0 ||
+		   attacker.Ability==opponent.Ability ||
 		   opponent.Ability == Abilities.FLOWERGIFT ||
 		   opponent.Ability == Abilities.IMPOSTER ||
 		   opponent.Ability == Abilities.MULTITYPE ||
@@ -3056,9 +3056,9 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Abilities oldabil = opponent.ability;
-		opponent.ability=attacker.ability;
-		string abilityname = PBAbilities.getName(attacker.ability);
+		Abilities oldabil = opponent.Ability;
+		opponent.Ability=attacker.Ability;
+		string abilityname = PBAbilities.getName(attacker.Ability);
 
 		//battle.pbDisplay(_INTL("{1} acquired {2}!", opponent.pbThis, abilityname))
 		if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION){
@@ -3080,8 +3080,8 @@ public class Function
 	public class PokeBattle_Move_067 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		if ((attacker.ability==0 && opponent.ability==0) ||
-		   (attacker.ability==opponent.ability && !Settings.USENEWBATTLEMECHANICS) ||
+		if ((attacker.Ability==0 && opponent.Ability==0) ||
+		   (attacker.Ability==opponent.Ability && !Settings.USENEWBATTLEMECHANICS) ||
 		   attacker.Ability == Abilities.ILLUSION ||
 		   opponent.Ability == Abilities.ILLUSION ||
 		   attacker.Ability == Abilities.MULTITYPE ||
@@ -3095,13 +3095,13 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Abilities tmp = attacker.ability;
-		attacker.ability=opponent.ability;
-		opponent.ability= tmp;
+		Abilities tmp = attacker.Ability;
+		attacker.Ability=opponent.Ability;
+		opponent.Ability= tmp;
 
 		//battle.pbDisplay(_INTL("{1} swapped its {2} Ability with its target's {3} Ability!",
-		//   attacker.pbThis, PBAbilities.getName(opponent.ability),
-		//   PBAbilities.getName(attacker.ability)))
+		//   attacker.pbThis, PBAbilities.getName(opponent.Ability),
+		//   PBAbilities.getName(attacker.Ability)))
 		attacker.pbAbilitiesOnSwitchIn(true);
 		opponent.pbAbilitiesOnSwitchIn(true);
 		return 0;
@@ -3127,7 +3127,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-		Abilities oldabil = opponent.ability;
+		Abilities oldabil = opponent.Ability;
 		opponent.effects.GastroAcid= true;
 
 		opponent.effects.Truant= false;
@@ -3151,9 +3151,9 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_069 : PokeBattle_Move
 	{
-		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true) {
 
-		List<Move.Effect> blacklist=[
+		List<Move.Effect> blacklist = new List<Move.Effect>{ 
 		   0xC9,   // Fly
 		   0xCA,   // Dig
 		   0xCB,   // Dive
@@ -3161,7 +3161,7 @@ public class Function
 		   0xCD,   // Shadow Force
 		   0xCE,   // Sky Drop
 		   0x14D   // Phantom Force
-		]
+		};
 		if (attacker.effects.Transform ||
 		   opponent.effects.Transform ||
 		   opponent.effects.Illusion.Species != Pokemons.NONE ||
@@ -3182,7 +3182,7 @@ public class Function
 		attacker.Type2=opponent.Type2;
 		attacker.effects.Type3 = Types.NONE; //-1;
 
-		attacker.ability= opponent.ability;
+		attacker.Ability= opponent.Ability;
 
 		attacker.attack= opponent.attack;
 
@@ -3193,18 +3193,18 @@ public class Function
 		attacker.spatk= opponent.spatk;
 
 		attacker.spdef= opponent.spdef;
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
-		  attacker.stages[i]= opponent.stages[i];
+		foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){ 
+		  attacker.stages[(byte)i]= opponent.stages[(byte)i];
 
 		}
 		for (int i = 0; i < 4; i++){ 
 
-		  attacker.moves[i]= PokeBattle_Move.pbFromPBMove(;
-			 this.battle, PBMove.new (opponent.moves[i].id));
+		  attacker.moves[i]= PokeBattle_Move.pbFromPBMove(
+			 this.battle, PBMove.new(opponent.moves[i].id));
 
 		  attacker.moves[i].PP=5;
-		  attacker.moves[i].totalpp=5;
+		  attacker.moves[i].TotalPP=5;
 		}
 		attacker.effects.Disable= 0;
 
@@ -3302,7 +3302,7 @@ public class Function
 	{
 		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent){
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STURDY)){
-		  //battle.pbDisplay(_INTL("{1} was protected by {2}!",opponent.pbThis,PBAbilities.getName(opponent.ability)))  
+		  //battle.pbDisplay(_INTL("{1} was protected by {2}!",opponent.pbThis,PBAbilities.getName(opponent.Ability)))  
 		  return false;
 		}
 		if (opponent.level>attacker.level){
@@ -3937,9 +3937,9 @@ public class Function
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
 		byte mult = 1;
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){
-			if (attacker.stages[i] > 0) mult += attacker.stages[i]; 
+		foreach (Stats i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){
+			if (attacker.stages[(byte)i] > 0) mult += attacker.stages[(byte)i]; 
 		}
 		return 20*mult;
 	  }
@@ -3955,9 +3955,9 @@ public class Function
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		byte mult = 3;
-			foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-					  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){
-			if (opponent.stages[i] > 0) mult += opponent.stages[i];
+			foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+					  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){
+			if (opponent.stages[(byte)i] > 0) mult += opponent.stages[(byte)i];
 			}
 			return Math.Min(20*mult,200);
 		}
@@ -5395,12 +5395,12 @@ public class Function
 		if (!attacker.hasMoldBreaker()){
 		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
+			//   opponent.pbThis,PBAbilities.getName(opponent.Ability)));
 			return -1;
 		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
+			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.Ability)));
 			return -1;
 		  }
 		}
@@ -5448,17 +5448,17 @@ public class Function
 		if (!attacker.hasMoldBreaker()){
 		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
+			//   opponent.pbThis,PBAbilities.getName(opponent.Ability)));
 			return -1;
 		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
+			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.Ability)));
 			return -1;
 		  }
 		}
 		foreach (var i in opponent.moves){ 
-		  if (i.id>0 && i.id==opponent.lastMoveUsed && (i.PP>0 || i.totalpp==0)){
+		  if (i.id>0 && i.id==opponent.lastMoveUsed && (i.PP>0 || i.TotalPP==0)){
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			opponent.effects.Disable=5;
@@ -5490,12 +5490,12 @@ public class Function
 		if (!attacker.hasMoldBreaker()){
 		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
+			//   opponent.pbThis,PBAbilities.getName(opponent.Ability)));
 			return -1;
 		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
+			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.Ability)));
 			return -1;
 		  }
 		}
@@ -5523,12 +5523,12 @@ public class Function
 		if (!attacker.hasMoldBreaker()){
 		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
+			//   opponent.pbThis,PBAbilities.getName(opponent.Ability)));
 			return -1;
 		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
+			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.Ability)));
 			return -1;
 		  }
 		}
@@ -5569,18 +5569,18 @@ public class Function
 		if (!attacker.hasMoldBreaker()){
 		  if (opponent.hasWorkingAbility(Abilities.AROMA_VEIL)){
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.pbThis,PBAbilities.getName(opponent.ability)));
+			//   opponent.pbThis,PBAbilities.getName(opponent.Ability)));
 			return -1;
 		  }else if (opponent.Partner.hasWorkingAbility(Abilities.AROMA_VEIL)){
 
 			//battle.pbDisplay(_INTL("But it failed because of {1}'s {2}!",
-			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.ability)));
+			//   opponent.Partner.pbThis,PBAbilities.getName(opponent.Partner.Ability)));
 			return -1;
 		  }
 		}
 		for (int i = 0; i < 4; i++){ 
 		  if (opponent.lastMoveUsed==opponent.moves[i].MoveId &&
-			 (opponent.moves[i].PP>0 || opponent.moves[i].totalpp==0)){
+			 (opponent.moves[i].PP>0 || opponent.moves[i].TotalPP==0)){
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			opponent.effects.Encore=4;
@@ -6786,7 +6786,7 @@ public class Function
 			bearer = this.battle.pbCheckGlobalAbility(Abilities.DAMP);
 		  if (bearer!=null){
 			//battle.pbDisplay(_INTL("{1}'s {2} prevents {3} from using {4}!",
-			//   bearer.pbThis, PBAbilities.getName(bearer.ability), attacker.pbThis(true),this.name))
+			//   bearer.pbThis, PBAbilities.getName(bearer.Ability), attacker.pbThis(true),this.name))
 			return false;
 		  }
 		}
@@ -6938,7 +6938,7 @@ public class Function
 			if (!attacker.hasMoldBreaker() && this.battle.battlers[i].hasWorkingAbility(Abilities.SOUNDPROOF)){
 
 			  //battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",this.battle.battlers[i].pbThis,
-				 PBAbilities.getName(this.battle.battlers[i].ability),this.name))
+				 PBAbilities.getName(this.battle.battlers[i].Ability),this.name))
 			}else{
 			  this.battle.battlers[i].effects.PerishSong=4;
 			  this.battle.battlers[i].effects.PerishSongUser=attacker.Index;
@@ -7069,7 +7069,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.SUCTIONCUPS)){
-		  //battle.pbDisplay(_INTL("{1} anchored itself with {2}!",opponent.pbThis,PBAbilities.getName(opponent.ability)))  
+		  //battle.pbDisplay(_INTL("{1} anchored itself with {2}!",opponent.pbThis,PBAbilities.getName(opponent.Ability)))  
 		  return -1;
 		}
 		if (opponent.effects.Ingrain){
@@ -7231,7 +7231,7 @@ public class Function
 		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-				string abilityname = PBAbilities.getName(opponent.ability);
+				string abilityname = PBAbilities.getName(opponent.Ability);
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, this.name))
 		  } else if (!this.battle.pbIsUnlosableItem(opponent, opponent.Item)) {
 				string itemname = PBItems.getName(opponent.Item);
@@ -7266,7 +7266,7 @@ public class Function
 		if (!attacker.isFainted() && !opponent.isFainted() && opponent.Item!=0 &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-			abilityname=PBAbilities.getName(opponent.ability)
+			abilityname=PBAbilities.getName(opponent.Ability)
 			//battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, this.name))
 		  else if !this.battle.pbIsUnlosableItem(opponent, opponent.Item) &&
 				!this.battle.pbIsUnlosableItem(attacker, opponent.Item) &&
@@ -7317,7 +7317,7 @@ public class Function
 		  return -1;
 		}
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STICKYHOLD)){
-		  abilityname=PBAbilities.getName(opponent.ability)
+		  abilityname=PBAbilities.getName(opponent.Ability)
 		  //battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!", opponent.pbThis, abilityname, name))
 		  return -1;
 		}
@@ -7426,7 +7426,7 @@ public class Function
 				 !this.battle.pbIsUnlosableItem(partner, partner.item) &&
 				 !this.battle.pbIsUnlosableItem(attacker, partner.item)){
 				//battle.pbDisplay(_INTL("{1}'s {2} let it share its {3} with {4}!",
-				//   partner.pbThis, PBAbilities.getName(partner.ability),
+				//   partner.pbThis, PBAbilities.getName(partner.Ability),
 				//   PBItems.getName(partner.item), attacker.pbThis(true)));
 				attacker.Item=partner.item;
 				partner.item=0
@@ -7673,13 +7673,13 @@ public class Function
 			  opponent.pbPoison(attacker, null,true);
 			}
 		 } else if (attacker.hasWorkingItem(Items.WHITEHERB)){
-			while (true) { 
-			  reducedstats=false
-			  foreach (var i in [Stats.ATTACK, Stats.DEFENSE,
+			while (true) {
+				bool reducedstats = false;
+			  foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE,
 						Stats.SPEED, Stats.SPATK, Stats.SPDEF,
-						Stats.EVASION, Stats.ACCURACY]){ 
-				if (opponent.stages[i]<0){
-				  opponent.stages[i]=0; reducedstats=true;
+						Stats.EVASION, Stats.ACCURACY }){ 
+				if (opponent.stages[(byte)i]<0){
+				  opponent.stages[(byte)i]=0; reducedstats=true;
 				}
 			  }
 				if (!reducedstats) break;
@@ -9424,7 +9424,7 @@ public class Function
 		  if(opponent.hasWorkingAbility(Abilities.CLEARBODY) ||
 			 opponent.hasWorkingAbility(Abilities.WHITESMOKE)){
 			//battle.pbDisplay(_INTL("{1}'s {2} prevents stat loss!",opponent.pbThis,
-			//   PBAbilities.getName(opponent.ability)))
+			//   PBAbilities.getName(opponent.Ability)))
 			return -1;
 		  }
 		}
@@ -9433,7 +9433,7 @@ public class Function
 
 		object ret=-1; bool showanim=true;
 		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.HYPERCUTTER)){
-			string abilityname = PBAbilities.getName(opponent.ability);
+			string abilityname = PBAbilities.getName(opponent.Ability);
 		  //battle.pbDisplay(_INTL("{1}'s {2} prevents Attack loss!", opponent.pbThis, abilityname))
 		}
 		else if (opponent.pbReduceStat(Stats.ATTACK,1, attacker,false, this, showanim)){
@@ -9526,7 +9526,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool didsomething = false;
-		foreach (var i in [attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
+		foreach (var i in new [] { attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2 }){ 
 	 if (!i || i.isFainted()) continue; //next
 	 if (!i.hasType(Types.GRASS)) continue; //next
 		  if (i.isAirborne? (attacker.hasMoldBreaker())) continue; //next
@@ -9563,7 +9563,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool didsomething = false;
-		foreach (var i in [attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2]){ 
+		foreach (var i in new [] { attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2 }){ 
 	if (!i || i.isFainted()) continue; //next
 	if (!i.hasType(Types.GRASS)) continue; //next
 		  if (!i.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)) continue; //next
@@ -9594,7 +9594,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool didsomething = false;
-		foreach (var i in [attacker.pbOpposing1, attacker.pbOpposing2]){ 
+		foreach (var i in new [] { attacker.pbOpposing1, attacker.pbOpposing2 }){ 
 	if (!i || i.isFainted()) continue; //next
 	if (!i.status==Status.POISON) continue; //next
 	if (!i.pbCanReduceStatStage(Stats.ATTACK, attacker,false,this) &&
@@ -9634,9 +9634,9 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool nonzero = false;
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED, 
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){
-		  if (opponent.stages[i]!=0){
+		foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED, 
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){
+		  if (opponent.stages[(byte)i]!=0){
 			nonzero=true; break;
 		  }
 		}
@@ -9645,9 +9645,9 @@ public class Function
 		  return -1;
 		}
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
-		foreach (var i in [Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
-				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION]){ 
-	opponent.stages[i]*=-1;
+		foreach (var i in new [] { Stats.ATTACK, Stats.DEFENSE, Stats.SPEED,
+				  Stats.SPATK, Stats.SPDEF, Stats.ACCURACY, Stats.EVASION }){ 
+	opponent.stages[(byte)i]*=-1;
 		}
 		//battle.pbDisplay(_INTL("{1}'s stats were reversed!", opponent.pbThis))
 		return 0;
