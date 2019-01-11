@@ -13,6 +13,7 @@ using PokemonUnity.Move;
 public class Function
 {
 	#region Battle Class Functions
+	/*
 	/// <summary>
 	/// Superclass that handles moves using a non-existent function code.
 	/// Damaging moves just do damage with no additional effect.
@@ -9748,7 +9749,7 @@ public class Function
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return attacker.Species == Pokemons.NONE || !attacker.belch;
 	  }
-	}
+	}*/
 	#endregion
 	//===============================================================================
 	// NOTE: If you're inventing new move effects, use function code 159 and onwards.
