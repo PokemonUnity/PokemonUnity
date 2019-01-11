@@ -254,7 +254,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Whether Happy Hour's effect applies
 	/// </summary>
-	public bool doublemoney { get; private set; }
+	public bool doublemoney { get; set; }
 	/// <summary>
 	/// Speech by opponent when player wins
 	/// </summary>
@@ -595,6 +595,15 @@ public class Battle : UnityUtilityIntegration
 			if (battlers[i].Ability != Abilities.NONE) return battlers[i].Ability;
 		}
 		return null;
+	}
+	//ToDo: Everything below
+	public bool pbCanChooseNonActive(int index)
+	{
+		return false;
+	}
+	public bool pbAllFainted(Battler[] party)
+	{
+		return false;
 	}
 	#endregion
 
