@@ -574,6 +574,16 @@ public class Battle : UnityUtilityIntegration
 	{
 		return Settings.Rand.Next(index);
 	}
+	/// <summary>
+	/// Returns the trainer party of pokemon at this index?
+	/// </summary>
+	/// <param name="index"></param>
+	/// <returns></returns>
+	/// ToDo: Not implemented
+	public Battler[] pbParty(int index)
+	{
+		return party1;
+	}
 	public bool isOpposing(int index)
 	{
 		return (index % 2) == 1;
@@ -842,6 +852,11 @@ public class Battle : UnityUtilityIntegration
 		/// Participants will earn Exp. Points if this battler is defeated
 		/// </summary>
 		public List<byte> participants { get; private set; }
+		/// <summary>
+		/// Index list of all pokemons who attacked this battler on this/previous turn
+		/// </summary>
+		/// ToDo: not implemented
+		public List<byte> lastAttacker { get; private set; }
 		#region Move to PokemonBattle Class
 		/// <summary>
 		/// Consumed held item (used in battle only)
@@ -873,10 +888,15 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		public int[] stages { get; private set; }
 		/// <summary>
+		/// Returns the position of this pkmn in battle lineup
+		/// </summary>
+		/// ToDo: Where this.pkmn.index == battle.party[this.pkmn.index]
+		public sbyte Index { get; private set; }
+		/// <summary>
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
-		public sbyte Index { get; private set; }
+		public byte pokemonIndex { get; private set; }
 		//[Obsolete]
 		//private int Index { get { return this.battle.battlers.Length; } }
 		public bool IsOwned { get { return battle.Player.playerPokedex2[_base.ArrayId, 1] == 1; } }
@@ -1965,6 +1985,11 @@ public class Battle : UnityUtilityIntegration
 		public void pbPoison(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbParalyze(Battler pkmn, byte? uh = null, bool animate = false) { }
 		public void pbBurn(Battler pkmn, byte? uh = null, bool animate = false) { }
+		public void pbCureStatus(bool animate) { }
+		public bool pbTooLow(Stats stat)
+		{
+			return false;
+		}
 		public bool pbCanAttract(Battler pkmn)
 		{
 			return false;
@@ -2001,19 +2026,27 @@ public class Battle : UnityUtilityIntegration
 		{
 			return false;
 		}
-		public object pbIncreaseStat(Stats stat, int num, Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbIncreaseStat(Stats stat, int num, Battler pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public object pbIncreaseStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		public bool pbIncreaseStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
 		{
 			return false;
 		}
-		public void pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk)
 		{
-			//return false;
+			return false;
 		}
-		public void pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		public bool pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		{
+			return false;
+		}
+		public bool pbAddTarget(byte index, Battler pkmn)
+		{
+			return false;
+		}
+		public void pbRandomTarget(byte index)
 		{
 			//return false;
 		}
