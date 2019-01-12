@@ -13,7 +13,6 @@ using PokemonUnity.Move;
 public class Function
 {
 	#region Battle Class Functions
-	/*
 	/// <summary>
 	/// Superclass that handles moves using a non-existent function code.
 	/// Damaging moves just do damage with no additional effect.
@@ -7115,73 +7114,83 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0F7 : PokeBattle_Move
 	{
-		public KeyValuePair<Items, byte> flingarray { get {  
-		return { //KeyValuePair<Items,byte>;
-		   130 => [Items.IRONBALL],
-		   100 => [Items.ARMORFOSSIL,Items.CLAWFOSSIL,Items.COVERFOSSIL,Items.DOMEFOSSIL,Items.HARDSTONE,
-				   Items.HELIXFOSSIL,Items.JAWFOSSIL,Items.OLDAMBER,Items.PLUMEFOSSIL,Items.RAREBONE,
-				   Items.ROOTFOSSIL,Items.SAILFOSSIL,Items.SKULLFOSSIL],
-			90 => [Items.DEEPSEATOOTH,Items.DRACOPLATE,Items.DREADPLATE,Items.EARTHPLATE,Items.FISTPLATE,
-				   Items.FLAMEPLATE,Items.GRIPCLAW,Items.ICICLEPLATE,Items.INSECTPLATE,Items.IRONPLATE,
-				   Items.MEADOWPLATE,Items.MINDPLATE,Items.PIXIEPLATE,Items.SKYPLATE,Items.SPLASHPLATE,
-				   Items.SPOOKYPLATE,Items.STONEPLATE,Items.THICKCLUB,Items.TOXICPLATE,Items.ZAPPLATE],
-			80 => [Items.ASSAULTVEST,Items.DAWNSTONE,Items.DUSKSTONE,Items.ELECTIRIZER,Items.MAGMARIZER,
-				   Items.ODDKEYSTONE,Items.OVALSTONE,Items.PROTECTOR,Items.QUICKCLAW,Items.RAZORCLAW,
-				   Items.SAFETYGOGGLES,Items.SHINYSTONE,Items.STICKYBARB,Items.WEAKNESSPOLICY],
-			70 => [Items.BURNDRIVE,Items.CHILLDRIVE,Items.DOUSEDRIVE,Items.DRAGONFANG,Items.POISON_BARB,
-				   Items.POWERANKLET,Items.POWERBAND,Items.POWERBELT,Items.POWERBRACER,Items.POWERLENS,
-				   Items.POWERWEIGHT,Items.SHOCKDRIVE],
-			60 => [Items.ADAMANTORB,Items.DAMP_ROCK,Items.GRISEOUSORB,Items.HEAT_ROCK,Items.LUSTROUSORB,
-				   Items.MACHOBRACE,Items.ROCKYHELMET,Items.STICK],
-			50 => [Items.DUBIOUSDISC,Items.SHARPBEAK],
-			40 => [Items.EVIOLITE,Items.ICYROCK,Items.LUCKYPUNCH],
-			30 => [Items.ABILITYCAPSULE,Items.ABILITYURGE,Items.ABSORBBULB,Items.AMAZEMULCH,Items.AMULETCOIN,
-				   Items.ANTIDOTE,Items.AWAKENING,Items.BALMMUSHROOM,Items.BERRYJUICE,Items.BIGMUSHROOM,
-				   Items.BIGNUGGET,Items.BIGPEARL,Items.BINDINGBAND,Items.BLACKBELT,Items.BLACKFLUTE,
-				   Items.BLACKGLASSES,Items.BLACKSLUDGE,Items.BLUEFLUTE,Items.BLUESHARD,Items.BOOSTMULCH,
-				   Items.BURNHEAL,Items.CALCIUM,Items.CARBOS,Items.CASTELIACONE,Items.CELLBATTERY,
-				   Items.CHARCOAL,Items.CLEANSETAG,Items.COMETSHARD,Items.DAMPMULCH,Items.DEEPSEASCALE,
-				   Items.DIREHIT,Items.DIREHIT2,Items.DIREHIT3,Items.DRAGONSCALE,Items.EJECTBUTTON,
-				   Items.ELIXIR,Items.ENERGYPOWDER,Items.ENERGYROOT,Items.ESCAPEROPE,Items.ETHER,
-				   Items.EVERSTONE,Items.EXPSHARE,Items.FIRESTONE,Items.FLAME_ORB,Items.FLOATSTONE,
-				   Items.FLUFFYTAIL,Items.FRESHWATER,Items.FULLHEAL,Items.FULLRESTORE,Items.GOOEYMULCH,
-				   Items.GREENSHARD,Items.GROWTHMULCH,Items.GUARDSPEC,Items.HEALPOWDER,Items.HEARTSCALE,
-				   Items.HONEY,Items.HPUP,Items.HYPERPOTION,Items.ICEHEAL,Items.IRON,
-				   Items.ITEMDROP,Items.ITEMURGE,Items.KINGS_ROCK,Items.LAVACOOKIE,Items.LEAFSTONE,
-				   Items.LEMONADE,Items.LIFEORB,Items.LIGHT_BALL,Items.LIGHTCLAY,Items.LUCKYEGG,
-				   Items.LUMINOUSMOSS,Items.LUMIOSEGALETTE,Items.MAGNET,Items.MAXELIXIR,Items.MAXETHER,
-				   Items.MAXPOTION,Items.MAXREPEL,Items.MAXREVIVE,Items.METALCOAT,Items.METRONOME,
-				   Items.MIRACLESEED,Items.MOOMOOMILK,Items.MOONSTONE,Items.MYSTICWATER,Items.NEVERMELTICE,
-				   Items.NUGGET,Items.OLDGATEAU,Items.PARALYZEHEAL,Items.PARLYZHEAL,Items.PASSORB,
-				   Items.PEARL,Items.PEARLSTRING,Items.POKEDOLL,Items.POKETOY,Items.POTION,
-				   Items.PPMAX,Items.PPUP,Items.PRISMSCALE,Items.PROTEIN,Items.RAGECANDYBAR,
-				   Items.RARECANDY,Items.RAZOR_FANG,Items.REDFLUTE,Items.REDSHARD,Items.RELICBAND,
-				   Items.RELICCOPPER,Items.RELICCROWN,Items.RELICGOLD,Items.RELICSILVER,Items.RELICSTATUE,
-				   Items.RELICVASE,Items.REPEL,Items.RESETURGE,Items.REVIVALHERB,Items.REVIVE,
-				   Items.RICHMULCH,Items.SACHET,Items.SACREDASH,Items.SCOPELENS,Items.SHALOURSABLE,
-				   Items.SHELLBELL,Items.SHOALSALT,Items.SHOALSHELL,Items.SMOKEBALL,Items.SNOWBALL,
-				   Items.SODAPOP,Items.SOULDEW,Items.SPELLTAG,Items.STABLEMULCH,Items.STARDUST,
-				   Items.STARPIECE,Items.SUNSTONE,Items.SUPERPOTION,Items.SUPERREPEL,Items.SURPRISEMULCH,
-				   Items.SWEETHEART,Items.THUNDERSTONE,Items.TINYMUSHROOM,Items.TOXIC_ORB,Items.TWISTEDSPOON,
-				   Items.UPGRADE,Items.WATERSTONE,Items.WHIPPEDDREAM,Items.WHITEFLUTE,Items.XACCURACY,
-				   Items.XACCURACY2,Items.XACCURACY3,Items.XACCURACY6,Items.XATTACK,Items.XATTACK2,
-				   Items.XATTACK3,Items.XATTACK6,Items.XDEFEND,Items.XDEFEND2,Items.XDEFEND3,
-				   Items.XDEFEND6,Items.XDEFENSE,Items.XDEFENSE2,Items.XDEFENSE3,Items.XDEFENSE6,
-				   Items.XSPDEF,Items.XSPDEF2,Items.XSPDEF3,Items.XSPDEF6,Items.XSPATK,
-				   Items.XSPATK2,Items.XSPATK3,Items.XSPATK6,Items.XSPECIAL,Items.XSPECIAL2,
-				   Items.XSPECIAL3,Items.XSPECIAL6,Items.XSPEED,Items.XSPEED2,Items.XSPEED3,
-				   Items.XSPEED6,Items.YELLOWFLUTE,Items.YELLOWSHARD,Items.ZINC],
-			20 => [Items.CLEVERWING,Items.GENIUSWING,Items.HEALTHWING,Items.MUSCLEWING,Items.PRETTYWING,
-				   Items.RESISTWING,Items.SWIFTWING],
-			10 => [Items.AIRBALLOON,Items.BIGROOT,Items.BLUESCARF,Items.BRIGHTPOWDER,Items.CHOICEBAND,
-				   Items.CHOICESCARF,Items.CHOICESPECS,Items.DESTINYKNOT,Items.EXPERTBELT,Items.FOCUSBAND,
-				   Items.FOCUSSASH,Items.FULLINCENSE,Items.GREENSCARF,Items.LAGGINGTAIL,Items.LAXINCENSE,
-				   Items.LEFTOVERS,Items.LUCKINCENSE,Items.MENTAL_HERB,Items.METALPOWDER,Items.MUSCLEBAND,
-				   Items.ODDINCENSE,Items.PINKSCARF,Items.POWERHERB,Items.PUREINCENSE,Items.QUICKPOWDER,
-				   Items.REAPERCLOTH,Items.REDCARD,Items.REDSCARF,Items.RINGTARGET,Items.ROCKINCENSE,
-				   Items.ROSEINCENSE,Items.SEAINCENSE,Items.SHEDSHELL,Items.SILKSCARF,Items.SILVERPOWDER,
-				   Items.SMOOTH_ROCK,Items.SOFTSAND,Items.SOOTHEBELL,Items.WAVEINCENSE,Items.WHITE_HERB,
-				   Items.WIDELENS,Items.WISEGLASSES,Items.YELLOWSCARF,Items.ZOOMLENS]
+		public Dictionary<Items, byte> flingarray { get {  
+		return new Dictionary<Items,byte> { 
+		   //130 => [	
+					{ Items.IRON_BALL, 130 },
+		   //100 => [	
+					{ Items.ARMOR_FOSSIL, 100 },	{ Items.CLAW_FOSSIL, 100 },	{ Items.COVER_FOSSIL, 100 },	{ Items.DOME_FOSSIL, 100 },	{ Items.HARD_STONE, 100 },	
+					{ Items.HELIX_FOSSIL, 100 },	{ Items.JAW_FOSSIL, 100 },	{ Items.OLD_AMBER, 100 },	{ Items.PLUME_FOSSIL, 100 },	{ Items.RARE_BONE, 100 },	
+					{ Items.ROOT_FOSSIL, 100 },	{ Items.SAIL_FOSSIL, 100 },	{ Items.SKULL_FOSSIL, 100 },	
+			//90 => [	
+					{ Items.DEEP_SEA_TOOTH, 90 },	{ Items.DRACO_PLATE, 90 },	{ Items.DREAD_PLATE, 90 },	{ Items.EARTH_PLATE, 90 },	{ Items.FIST_PLATE, 90 },	
+					{ Items.FLAME_PLATE, 90 },	{ Items.GRIP_CLAW, 90 },		{ Items.ICICLE_PLATE, 90 },	{ Items.INSECT_PLATE, 90 },	{ Items.IRON_PLATE, 90 },	
+					{ Items.MEADOW_PLATE, 90 },	{ Items.MIND_PLATE, 90 },	{ Items.PIXIE_PLATE, 90 },	{ Items.SKY_PLATE, 90 },		{ Items.SPLASH_PLATE, 90 },	
+					{ Items.SPOOKY_PLATE, 90 },	{ Items.STONE_PLATE, 90 },	{ Items.THICK_CLUB, 90 },	{ Items.TOXIC_PLATE, 90 },	{ Items.ZAP_PLATE, 90 },	
+			//80 => [	
+					{ Items.ASSAULT_VEST, 80 },	{ Items.DAWN_STONE, 80 },	{ Items.DUSK_STONE, 80 },	{ Items.ELECTIRIZER, 80 },	{ Items.MAGMARIZER, 80 },	
+					{ Items.ODD_KEYSTONE, 80 },	{ Items.OVAL_STONE, 80 },	{ Items.PROTECTOR, 80 },	{ Items.QUICK_CLAW, 80 },	{ Items.RAZOR_CLAW, 80 },	
+					{ Items.SAFETY_GOGGLES, 80 },	{ Items.SHINY_STONE, 80 },	{ Items.STICKY_BARB, 80 },	{ Items.WEAKNESS_POLICY, 80 },	
+			//70 => [	
+					{ Items.BURN_DRIVE, 70 },		{ Items.CHILL_DRIVE, 70 },	{ Items.DOUSE_DRIVE, 70 },	{ Items.DRAGON_FANG, 70 },	{ Items.POISON_BARB, 70 },	
+					{ Items.POWER_ANKLET, 70 },	{ Items.POWER_BAND, 70 },	{ Items.POWER_BELT, 70 },	{ Items.POWER_BRACER, 70 },	{ Items.POWER_LENS, 70 },	
+					{ Items.POWER_WEIGHT, 70 },	{ Items.SHOCK_DRIVE, 70 },	
+			//60 => [	
+					{ Items.ADAMANT_ORB, 60 },	{ Items.DAMP_ROCK, 60 },	{ Items.GRISEOUS_ORB, 60 },	{ Items.HEAT_ROCK, 60 },	{ Items.LUSTROUS_ORB, 60 },	
+					{ Items.MACHO_BRACE, 60 },	{ Items.ROCKY_HELMET, 60 },	{ Items.STICK, 60 },	
+			//50 => [	
+					{ Items.DUBIOUS_DISC, 50 },	{ Items.SHARP_BEAK, 50 },	
+			//40 => [	
+					{ Items.EVIOLITE, 40 },	{ Items.ICY_ROCK, 40 },	{ Items.LUCKY_PUNCH, 40 },	
+			//30 => [	
+					{ Items.ABILITY_CAPSULE, 30 },	{ Items.ABILITY_URGE, 30 },	{ Items.ABSORB_BULB, 30 },	{ Items.AMAZE_MULCH, 30 },	{ Items.AMULET_COIN, 30 },	
+					{ Items.ANTIDOTE, 30 },	{ Items.AWAKENING, 30 },	{ Items.BALM_MUSHROOM, 30 },	{ Items.BERRY_JUICE, 30 },	{ Items.BIG_MUSHROOM, 30 },	
+					{ Items.BIG_NUGGET, 30 },	{ Items.BIG_PEARL, 30 },	{ Items.BINDING_BAND, 30 },	{ Items.BLACK_BELT, 30 },	{ Items.BLACK_FLUTE, 30 },	
+					{ Items.BLACK_GLASSES, 30 },	{ Items.BLACK_SLUDGE, 30 },	{ Items.BLUE_FLUTE, 30 },	{ Items.BLUE_SHARD, 30 },	{ Items.BOOST_MULCH, 30 },	
+					{ Items.BURN_HEAL, 30 },	{ Items.CALCIUM, 30 },	{ Items.CARBOS, 30 },	{ Items.CASTELIACONE, 30 },	{ Items.CELL_BATTERY, 30 },	
+					{ Items.CHARCOAL, 30 },	{ Items.CLEANSE_TAG, 30 },	{ Items.COMET_SHARD, 30 },	{ Items.DAMP_MULCH, 30 },	{ Items.DEEP_SEA_SCALE, 30 },	
+					{ Items.DIRE_HIT, 30 },	{ Items.DIRE_HIT_2, 30 },	{ Items.DIRE_HIT_3, 30 },	{ Items.DRAGON_SCALE, 30 },	{ Items.EJECT_BUTTON, 30 },	
+					{ Items.ELIXIR, 30 },	{ Items.ENERGY_POWDER, 30 },	{ Items.ENERGY_ROOT, 30 },	{ Items.ESCAPE_ROPE, 30 },	{ Items.ETHER, 30 },	
+					{ Items.EVERSTONE, 30 },	{ Items.EXP_SHARE, 30 },	{ Items.FIRE_STONE, 30 },	{ Items.FLAME_ORB, 30 },	{ Items.FLOAT_STONE, 30 },	
+					{ Items.FLUFFY_TAIL, 30 },	{ Items.FRESH_WATER, 30 },	{ Items.FULL_HEAL, 30 },	{ Items.FULL_RESTORE, 30 },	{ Items.GOOEY_MULCH, 30 },	
+					{ Items.GREEN_SHARD, 30 },	{ Items.GROWTH_MULCH, 30 },	{ Items.GUARD_SPEC, 30 },	{ Items.HEAL_POWDER, 30 },	{ Items.HEART_SCALE, 30 },	
+					{ Items.HONEY, 30 },	{ Items.HP_UP, 30 },	{ Items.HYPER_POTION, 30 },	{ Items.ICE_HEAL, 30 },	{ Items.IRON, 30 },	
+					{ Items.ITEM_DROP, 30 },	{ Items.ITEM_URGE, 30 },	{ Items.KINGS_ROCK, 30 },	{ Items.LAVA_COOKIE, 30 },	{ Items.LEAF_STONE, 30 },	
+					{ Items.LEMONADE, 30 },	{ Items.LIFE_ORB, 30 },	{ Items.LIGHT_BALL, 30 },	{ Items.LIGHT_CLAY, 30 },	{ Items.LUCKY_EGG, 30 },	
+					{ Items.LUMINOUS_MOSS, 30 },	{ Items.LUMIOSE_GALETTE, 30 },	{ Items.MAGNET, 30 },	{ Items.MAX_ELIXIR, 30 },	{ Items.MAX_ETHER, 30 },	
+					{ Items.MAX_POTION, 30 },	{ Items.MAX_REPEL, 30 },	{ Items.MAX_REVIVE, 30 },	{ Items.METAL_COAT, 30 },	{ Items.METRONOME, 30 },	
+					{ Items.MIRACLE_SEED, 30 },	{ Items.MOOMOO_MILK, 30 },	{ Items.MOON_STONE, 30 },	{ Items.MYSTIC_WATER, 30 },	{ Items.NEVER_MELT_ICE, 30 },	
+					{ Items.NUGGET, 30 },	{ Items.OLD_GATEAU, 30 },	{ Items.PARALYZE_HEAL, 30 },	{ Items.PARALYZE_HEAL, 30 },	{ Items.PASS_ORB, 30 },	
+					{ Items.PEARL, 30 },	{ Items.PEARL_STRING, 30 },	{ Items.POKE_DOLL, 30 },	{ Items.POKE_TOY, 30 },	{ Items.POTION, 30 },	
+					{ Items.PP_MAX, 30 },	{ Items.PP_UP, 30 },	{ Items.PRISM_SCALE, 30 },	{ Items.PROTEIN, 30 },	{ Items.RAGE_CANDY_BAR, 30 },	
+					{ Items.RARE_CANDY, 30 },	{ Items.RAZOR_FANG, 30 },	{ Items.RED_FLUTE, 30 },	{ Items.RED_SHARD, 30 },	{ Items.RELIC_BAND, 30 },	
+					{ Items.RELIC_COPPER, 30 },	{ Items.RELIC_CROWN, 30 },	{ Items.RELIC_GOLD, 30 },	{ Items.RELIC_SILVER, 30 },	{ Items.RELIC_STATUE, 30 },	
+					{ Items.RELIC_VASE, 30 },	{ Items.REPEL, 30 },	{ Items.RESET_URGE, 30 },	{ Items.REVIVAL_HERB, 30 },	{ Items.REVIVE, 30 },	
+					{ Items.RICH_MULCH, 30 },	{ Items.SACHET, 30 },	{ Items.SACRED_ASH, 30 },	{ Items.SCOPE_LENS, 30 },	{ Items.SHALOUR_SABLE, 30 },	
+					{ Items.SHELL_BELL, 30 },	{ Items.SHOAL_SALT, 30 },	{ Items.SHOAL_SHELL, 30 },	{ Items.SMOKE_BALL, 30 },	{ Items.SNOWBALL, 30 },	
+					{ Items.SODA_POP, 30 },	{ Items.SOUL_DEW, 30 },	{ Items.SPELL_TAG, 30 },	{ Items.STABLE_MULCH, 30 },	{ Items.STARDUST, 30 },	
+					{ Items.STAR_PIECE, 30 },	{ Items.SUN_STONE, 30 },	{ Items.SUPER_POTION, 30 },	{ Items.SUPER_REPEL, 30 },	{ Items.SURPRISE_MULCH, 30 },	
+					{ Items.SWEET_HEART, 30 },	{ Items.THUNDER_STONE, 30 },	{ Items.TINY_MUSHROOM, 30 },	{ Items.TOXIC_ORB, 30 },	{ Items.TWISTED_SPOON, 30 },	
+					{ Items.UP_GRADE, 30 },	{ Items.WATER_STONE, 30 },	{ Items.WHIPPED_DREAM, 30 },	{ Items.WHITE_FLUTE, 30 },	{ Items.X_ACCURACY, 30 },	
+					{ Items.X_ACCURACY_2, 30 },	{ Items.X_ACCURACY_3, 30 },	{ Items.X_ACCURACY_6, 30 },	{ Items.X_ATTACK, 30 },	{ Items.X_ATTACK_2, 30 },
+					{ Items.X_ATTACK_3, 30 },	{ Items.X_ATTACK_6, 30 },	{ Items.X_DEFENSE, 30 },	{ Items.X_DEFENSE_2, 30 },	{ Items.X_DEFENSE_3, 30 },
+					{ Items.X_DEFENSE_6, 30 },	{ Items.X_SP_DEF, 30 },	{ Items.X_SP_DEF_2, 30 },	{ Items.X_SP_DEF_3, 30 },	{ Items.X_SP_DEF_6, 30 },	
+					{ Items.X_SP_ATK, 30 },		{ Items.X_SP_ATK_2, 30 },	{ Items.X_SP_ATK_3, 30 },	{ Items.X_SP_ATK_6, 30 },	{ Items.X_SPEED, 30 },					
+					{ Items.X_SPEED_2, 30 },	{ Items.X_SPEED_3, 30 },	{ Items.X_SPEED_6, 30 },	{ Items.YELLOW_FLUTE, 30 },	{ Items.YELLOW_SHARD, 30 },	{ Items.ZINC, 30 },	
+					//{ Items.X_SPECIAL, 30 },	{ Items.X_SPECIAL2, 30 },	{ Items.X_SPECIAL_3, 30 },	{ Items.X_SPECIAL_6, 30 },	
+			//20 => [	
+					{ Items.CLEVER_WING, 20 },	{ Items.GENIUS_WING, 20 },	{ Items.HEALTH_WING, 20 },	{ Items.MUSCLE_WING, 20 },	{ Items.PRETTY_WING, 20 },	
+					{ Items.RESIST_WING, 20 },	{ Items.SWIFT_WING, 20 },	
+			//10 => [	
+					{ Items.AIR_BALLOON, 10 },	{ Items.BIG_ROOT, 10 },	{ Items.BLUE_SCARF, 10 },	{ Items.BRIGHT_POWDER, 10 },	{ Items.CHOICE_BAND, 10 },	
+					{ Items.CHOICE_SCARF, 10 },	{ Items.CHOICE_SPECS, 10 },	{ Items.DESTINY_KNOT, 10 },	{ Items.EXPERT_BELT, 10 },	{ Items.FOCUS_BAND, 10 },	
+					{ Items.FOCUS_SASH, 10 },	{ Items.FULL_INCENSE, 10 },	{ Items.GREEN_SCARF, 10 },	{ Items.LAGGING_TAIL, 10 },	{ Items.LAX_INCENSE, 10 },	
+					{ Items.LEFTOVERS, 10 },	{ Items.LUCK_INCENSE, 10 },	{ Items.MENTAL_HERB, 10 },	{ Items.METAL_POWDER, 10 },	{ Items.MUSCLE_BAND, 10 },	
+					{ Items.ODD_INCENSE, 10 },	{ Items.PINK_SCARF, 10 },	{ Items.POWER_HERB, 10 },	{ Items.PURE_INCENSE, 10 },	{ Items.QUICK_POWDER, 10 },	
+					{ Items.REAPER_CLOTH, 10 },	{ Items.RED_CARD, 10 },	{ Items.RED_SCARF, 10 },	{ Items.RING_TARGET, 10 },	{ Items.ROCK_INCENSE, 10 },	
+					{ Items.ROSE_INCENSE, 10 },	{ Items.SEA_INCENSE, 10 },	{ Items.SHED_SHELL, 10 },	{ Items.SILK_SCARF, 10 },	{ Items.SILVER_POWDER, 10 },	
+					{ Items.SMOOTH_ROCK, 10 },	{ Items.SOFT_SAND, 10 },	{ Items.SOOTHE_BELL, 10 },	{ Items.WAVE_INCENSE, 10 },	{ Items.WHITE_HERB, 10 },	
+					{ Items.WIDE_LENS, 10 },	{ Items.WISE_GLASSES, 10 },	{ Items.YELLOW_SCARF, 10 },	{ Items.ZOOM_LENS, 10 }	
 			};
 		}
 	}
@@ -7193,13 +7202,12 @@ public class Function
 					   this.battle.field.MagicRoom>0 ||
 					   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
 					   attacker.effects.Embargo>0) return true;
-		foreach (var i in flingarray.Key){ 
-		  if (flingarray[i]){
-			foreach (var j in flingarray[i]){ 
-			  if (attacker.Item == j) return false;
-			 }
-
-		  }
+		foreach (Items i in flingarray.Keys){ 
+		  //if (flingarray[i]){
+			//foreach (var j in flingarray[i]){ 
+			  if (attacker.Item == i) return false;
+			 //}
+		  //}
 		}
 		if (pbIsBerry? (attacker.Item) &&
 						!attacker.pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
@@ -7210,13 +7218,12 @@ public class Function
 	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 		if (pbIsBerry? (attacker.Item)) return 10;
 		if (pbIsMegaStone? (attacker.Item)) return 80;
-		foreach (var i in flingarray.Key){ 
-		  if (flingarray[i]){
-			foreach (var j in flingarray[i]){ 
-			  if (attacker.Item == j) return i;
-			 }
-
-		  }
+		foreach (Items i in flingarray.Keys){ 
+		  //if (flingarray[i]){
+			//foreach (var j in flingarray[i]){ 
+			  if (attacker.Item == i) return i;
+			 //}
+		  //}
 		}
 		return 1;
 	  }
@@ -8590,7 +8597,7 @@ public class Function
 		  if (opponent.effects.Telekinesis>0){   
 			opponent.effects.Telekinesis=0; showmsg=true;
 		  }
-		  //battle.pbDisplay(_INTL("{1} fell straight down!", opponent.pbThis)) if showmsg
+		  //if (showmsg)battle.pbDisplay(_INTL("{1} fell straight down!", opponent.pbThis));
 		 }
 		return ret;
 	  }
@@ -9749,7 +9756,7 @@ public class Function
 		public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		return attacker.Species == Pokemons.NONE || !attacker.belch;
 	  }
-	}*/
+	}
 	#endregion
 	//===============================================================================
 	// NOTE: If you're inventing new move effects, use function code 159 and onwards.
