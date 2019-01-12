@@ -3973,24 +3973,27 @@ public class Function
 
 	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
-		KeyValuePair<Items,byte> damagearray= new KeyValuePair<Items, byte>{
-		   60 => [:CHERIBERRY,:CHESTOBERRY,:PECHABERRY,:RAWSTBERRY,:ASPEARBERRY,
-				  :LEPPABERRY,:ORANBERRY,:PERSIMBERRY,:LUMBERRY,:SITRUSBERRY,
-				  :FIGYBERRY,:WIKIBERRY,:MAGOBERRY,:AGUAVBERRY,:IAPAPABERRY,
-				  :RAZZBERRY,:OCCABERRY,:PASSHOBERRY,:WACANBERRY,:RINDOBERRY,
-				  :YACHEBERRY,:CHOPLEBERRY,:KEBIABERRY,:SHUCABERRY,:COBABERRY,
-				  :PAYAPABERRY,:TANGABERRY,:CHARTIBERRY,:KASIBBERRY,:HABANBERRY,
-				  :COLBURBERRY,:BABIRIBERRY,:CHILANBERRY,:ROSELIBERRY],
-		   70 => [:BLUKBERRY,:NANABBERRY,:WEPEARBERRY,:PINAPBERRY,:POMEGBERRY,
-				  :KELPSYBERRY,:QUALOTBERRY,:HONDEWBERRY,:GREPABERRY,:TAMATOBERRY,
-				  :CORNNBERRY,:MAGOSTBERRY,:RABUTABERRY,:NOMELBERRY,:SPELONBERRY,
-				  :PAMTREBERRY],
-		   80 => [:WATMELBERRY,:DURINBERRY,:BELUEBERRY,:LIECHIBERRY,:GANLONBERRY,
-				  :SALACBERRY,:PETAYABERRY,:APICOTBERRY,:LANSATBERRY,:STARFBERRY,
-				  :ENIGMABERRY,:MICLEBERRY,:CUSTAPBERRY,:JABOCABERRY,:ROWAPBERRY,
-				  :KEEBERRY,:MARANGABERRY]
+		Dictionary<Items,byte> damagearray= new Dictionary<Items, byte>{
+		   //60 => [	
+					{ Items.CHERI_BERRY, 60 },	{ Items.CHESTO_BERRY, 60 },	{ Items.PECHA_BERRY, 60 },	{ Items.RAWST_BERRY, 60 },	{ Items.ASPEAR_BERRY, 60 },	
+					{ Items.LEPPA_BERRY, 60 },	{ Items.ORAN_BERRY, 60 },	{ Items.PERSIM_BERRY, 60 },	{ Items.LUM_BERRY, 60 },	{ Items.SITRUS_BERRY, 60 },	
+					{ Items.FIGY_BERRY, 60 },	{ Items.WIKI_BERRY, 60 },	{ Items.MAGO_BERRY, 60 },	{ Items.AGUAV_BERRY, 60 },	{ Items.IAPAPA_BERRY, 60 },	
+					{ Items.RAZZ_BERRY, 60 },	{ Items.OCCA_BERRY, 60 },	{ Items.PASSHO_BERRY, 60 },	{ Items.WACAN_BERRY, 60 },	{ Items.RINDO_BERRY, 60 },	
+					{ Items.YACHE_BERRY, 60 },	{ Items.CHOPLE_BERRY, 60 },	{ Items.KEBIA_BERRY, 60 },	{ Items.SHUCA_BERRY, 60 },	{ Items.COBA_BERRY, 60 },	
+					{ Items.PAYAPA_BERRY, 60 },	{ Items.TANGA_BERRY, 60 },	{ Items.CHARTI_BERRY, 60 },	{ Items.KASIB_BERRY, 60 },	{ Items.HABAN_BERRY, 60 },	
+					{ Items.COLBUR_BERRY, 60 },	{ Items.BABIRI_BERRY, 60 },	{ Items.CHILAN_BERRY, 60 },	{ Items.ROSELI_BERRY, 60 },	
+		   //70 => [	
+					{ Items.BLUK_BERRY, 70 },	{ Items.NANAB_BERRY, 70 },	{ Items.WEPEAR_BERRY, 70 },	{ Items.PINAP_BERRY, 70 },	{ Items.POMEG_BERRY, 70 },	
+					{ Items.KELPSY_BERRY, 70 },	{ Items.QUALOT_BERRY, 70 },	{ Items.HONDEW_BERRY, 70 },	{ Items.GREPA_BERRY, 70 },	{ Items.TAMATO_BERRY, 70 },	
+					{ Items.CORNN_BERRY, 70 },	{ Items.MAGOST_BERRY, 70 },	{ Items.RABUTA_BERRY, 70 },	{ Items.NOMEL_BERRY, 70 },	{ Items.SPELON_BERRY, 70 },	
+					{ Items.PAMTRE_BERRY, 70 },	
+		   //80 => [	
+					{ Items.WATMEL_BERRY, 80 },	{ Items.DURIN_BERRY, 80 },	{ Items.BELUE_BERRY, 80 },	{ Items.LIECHI_BERRY, 80 },	{ Items.GANLON_BERRY, 80 },	
+					{ Items.SALAC_BERRY, 80 },	{ Items.PETAYA_BERRY, 80 },	{ Items.APICOT_BERRY, 80 },	{ Items.LANSAT_BERRY, 80 },	{ Items.STARF_BERRY, 80 },	
+					{ Items.ENIGMA_BERRY, 80 },	{ Items.MICLE_BERRY, 80 },	{ Items.CUSTAP_BERRY, 80 },	{ Items.JABOCA_BERRY, 80 },	{ Items.ROWAP_BERRY, 80 },	
+					{ Items.KEE_BERRY, 80 },	{ Items.MARANGA_BERRY, 80 }
 		};
-		foreach (Items i in damagearray.Key){ 
+		foreach (Items i in damagearray.Keys){ 
 		//  byte data = damagearray[i];
 		//  if (data){
 		//	foreach (var j in data){ 
@@ -4011,37 +4014,53 @@ public class Function
 	  public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
 
 	type = Types.NORMAL;
-	KeyValuePair<Items, Types> typearray = new KeyValuePair<Items, Types> {
-		   :NORMAL   => [:CHILANBERRY],
-		   :FIRE     => [:CHERIBERRY,:BLUKBERRY,:WATMELBERRY,:OCCABERRY],
-		   :WATER    => [:CHESTOBERRY,:NANABBERRY,:DURINBERRY,:PASSHOBERRY],
-		   :ELECTRIC => [:PECHABERRY,:WEPEARBERRY,:BELUEBERRY,:WACANBERRY],
-		   :GRASS    => [:RAWSTBERRY,:PINAPBERRY,:RINDOBERRY,:LIECHIBERRY],
-		   :ICE      => [:ASPEARBERRY,:POMEGBERRY,:YACHEBERRY,:GANLONBERRY],
-		   :FIGHTING => [:LEPPABERRY,:KELPSYBERRY,:CHOPLEBERRY,:SALACBERRY],
-		   :POISON   => [:ORANBERRY,:QUALOTBERRY,:KEBIABERRY,:PETAYABERRY],
-		   :GROUND   => [:PERSIMBERRY,:HONDEWBERRY,:SHUCABERRY,:APICOTBERRY],
-		   :FLYING   => [:LUMBERRY,:GREPABERRY,:COBABERRY,:LANSATBERRY],
-		   :PSYCHIC  => [:SITRUSBERRY,:TAMATOBERRY,:PAYAPABERRY,:STARFBERRY],
-		   :BUG      => [:FIGYBERRY,:CORNNBERRY,:TANGABERRY,:ENIGMABERRY],
-		   :ROCK     => [:WIKIBERRY,:MAGOSTBERRY,:CHARTIBERRY,:MICLEBERRY],
-		   :GHOST    => [:MAGOBERRY,:RABUTABERRY,:KASIBBERRY,:CUSTAPBERRY],
-		   :DRAGON   => [:AGUAVBERRY,:NOMELBERRY,:HABANBERRY,:JABOCABERRY],
-		   :DARK     => [:IAPAPABERRY,:SPELONBERRY,:COLBURBERRY,:ROWAPBERRY,:MARANGABERRY],
-		   :STEEL    => [:RAZZBERRY,:PAMTREBERRY,:BABIRIBERRY],
-		   :FAIRY    => [:ROSELIBERRY,:KEEBERRY]
-		}
-		foreach (var i in typearray.keys){ 
-		  data = typearray[i]
-		  if (data){
-			foreach (var i in data){ 
-			  if (isConst? (this.berry, PBItems, j)){
-				 type = getConst(PBTypes, i) || type
-
+	Dictionary<Items, Types> typearray = new Dictionary<Items, Types> {
+		   //:NORMAL =>	
+						{ Items.CHILAN_BERRY, Types.NORMAL },	
+		   //:FIRE	 =>	
+						{ Items.CHERI_BERRY, Types.FIRE },	{ Items.BLUK_BERRY, Types.FIRE },	{ Items.WATMEL_BERRY, Types.FIRE },	{ Items.OCCA_BERRY, Types.FIRE },	
+		   //:WATER	 =>	
+						{ Items.CHESTO_BERRY, Types.WATER },	{ Items.NANAB_BERRY, Types.WATER },	{ Items.DURIN_BERRY, Types.WATER },	{ Items.PASSHO_BERRY, Types.WATER },	
+		   //:ELECTRIC =>	
+						{ Items.PECHA_BERRY, Types.ELECTRIC },	{ Items.WEPEAR_BERRY, Types.ELECTRIC },	{ Items.BELUE_BERRY, Types.ELECTRIC },	{ Items.WACAN_BERRY, Types.ELECTRIC },	
+		   //:GRASS	 =>	
+						{ Items.RAWST_BERRY, Types.GRASS },	{ Items.PINAP_BERRY, Types.GRASS },	{ Items.RINDO_BERRY, Types.GRASS },	{ Items.LIECHI_BERRY, Types.GRASS },	
+		   //:ICE	 =>	
+						{ Items.ASPEAR_BERRY, Types.ICE },	{ Items.POMEG_BERRY, Types.ICE },	{ Items.YACHE_BERRY, Types.ICE },	{ Items.GANLON_BERRY, Types.ICE },	
+		   //:FIGHTING =>	
+						{ Items.LEPPA_BERRY, Types.FIGHTING },	{ Items.KELPSY_BERRY, Types.FIGHTING },	{ Items.CHOPLE_BERRY, Types.FIGHTING },	{ Items.SALAC_BERRY, Types.FIGHTING },	
+		   //:POISON =>	
+						{ Items.ORAN_BERRY, Types.POISON },	{ Items.QUALOT_BERRY, Types.POISON },	{ Items.KEBIA_BERRY, Types.POISON },	{ Items.PETAYA_BERRY, Types.POISON },	
+		   //:GROUND =>	
+						{ Items.PERSIM_BERRY, Types.GROUND },	{ Items.HONDEW_BERRY, Types.GROUND },	{ Items.SHUCA_BERRY, Types.GROUND },	{ Items.APICOT_BERRY, Types.GROUND },	
+		   //:FLYING =>	
+						{ Items.LUM_BERRY, Types.FLYING },	{ Items.GREPA_BERRY, Types.FLYING },	{ Items.COBA_BERRY, Types.FLYING },	{ Items.LANSAT_BERRY, Types.FLYING },	
+		   //:PSYCHIC=>	
+						{ Items.SITRUS_BERRY, Types.PSYCHIC },	{ Items.TAMATO_BERRY, Types.PSYCHIC },	{ Items.PAYAPA_BERRY, Types.PSYCHIC },	{ Items.STARF_BERRY, Types.PSYCHIC },	
+		   //:BUG	 =>	
+						{ Items.FIGY_BERRY, Types.BUG },	{ Items.CORNN_BERRY, Types.BUG },	{ Items.TANGA_BERRY, Types.BUG },	{ Items.ENIGMA_BERRY, Types.BUG },	
+		   //:ROCK	 =>	
+						{ Items.WIKI_BERRY, Types.ROCK },	{ Items.MAGOST_BERRY, Types.ROCK },	{ Items.CHARTI_BERRY, Types.ROCK },	{ Items.MICLE_BERRY, Types.ROCK },	
+		   //:GHOST	 =>	
+						{ Items.MAGO_BERRY, Types.GHOST },	{ Items.RABUTA_BERRY, Types.GHOST },	{ Items.KASIB_BERRY, Types.GHOST },	{ Items.CUSTAP_BERRY, Types.GHOST },	
+		   //:DRAGON =>	
+						{ Items.AGUAV_BERRY, Types.DRAGON },	{ Items.NOMEL_BERRY, Types.DRAGON },	{ Items.HABAN_BERRY, Types.DRAGON },	{ Items.JABOCA_BERRY, Types.DRAGON },	
+		   //:DARK	 =>	
+						{ Items.IAPAPA_BERRY, Types.DARK },	{ Items.SPELON_BERRY, Types.DARK },	{ Items.COLBUR_BERRY, Types.DARK },	{ Items.ROWAP_BERRY, Types.DARK },	{ Items.MARANGA_BERRY, Types.DARK },	
+		   //:STEEL	 =>	
+						{ Items.RAZZ_BERRY, Types.STEEL },	{ Items.PAMTRE_BERRY, Types.STEEL },	{ Items.BABIRI_BERRY, Types.STEEL },	
+		   //:FAIRY	 =>	
+						{ Items.ROSELI_BERRY, Types.FAIRY },	{ Items.KEE_BERRY, Types.FAIRY }
+		};
+		foreach (Items i in typearray.Keys){ 
+		//  data = typearray[i];;
+		//  if (data){
+		//	foreach (var j in data){ 
+			  if (this.berry == j)){
+				 type = i; //|| type;
 			  }
-			}
-
-		  }
+		//	}
+		//  }
 		}
 		return type;
 	  }
@@ -6671,8 +6690,8 @@ public class Function
 	/// <summary>
 	/// If target would be KO'd by this attack, it survives with 1HP instead. (False Swipe)
 	/// <summary>
-	public class PokeBattle_Move_0E9 : PokeBattle_Move
-	/// Handled in superclass public object ReduceHPDamage, do not edit!
+	public class PokeBattle_Move_0E9 : PokeBattle_Move { 
+		// Handled in superclass public object ReduceHPDamage, do not edit!
 	}
 
 	/// <summary>
@@ -7023,7 +7042,7 @@ public class Function
 	public class PokeBattle_Move_0F4 : PokeBattle_Move
 	{
 		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
-		if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry? (opponent.Item) &&
+		if (!attacker.isFainted() && !opponent.isFainted() && pbIsBerry(opponent.Item) &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute){
 		  if (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.STICKY_HOLD)){
 				Items item = opponent.Item;
@@ -7068,7 +7087,7 @@ public class Function
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted() && opponent.damagestate.CalcDamage>0 &&
 		   !opponent.damagestate.Substitute &&
-		   (pbIsBerry?(opponent.Item) || (Settings.USENEWBATTLEMECHANICS && pbIsGem? (opponent.Item)))){
+		   (pbIsBerry?(opponent.Item) || (Settings.USENEWBATTLEMECHANICS && pbIsGem(opponent.Item)))){
 		  itemname=PBItems.getName(opponent.Item)
 		  opponent.pbConsumeItem(false,false);
 
@@ -7198,7 +7217,7 @@ public class Function
 	public object pbMoveFailed(Battle.Battler attacker, Battle.Battler opponent){
 		if (attacker.Item==0 ||
 					   this.battle.pbIsUnlosableItem(attacker, attacker.Item) ||
-					   pbIsPokeBall? (attacker.Item) ||
+					   pbIsPokeBall(attacker.Item) ||
 					   this.battle.field.MagicRoom>0 ||
 					   attacker.hasWorkingAbility(Abilities.KLUTZ) ||
 					   attacker.effects.Embargo>0) return true;
@@ -7209,15 +7228,15 @@ public class Function
 			 //}
 		  //}
 		}
-		if (pbIsBerry? (attacker.Item) &&
+		if (pbIsBerry(attacker.Item) &&
 						!attacker.pbOpposing1.hasWorkingAbility(Abilities.UNNERVE) &&
 						!attacker.pbOpposing2.hasWorkingAbility(Abilities.UNNERVE)) return false;
 		return true;
 	  }
 
 	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		if (pbIsBerry? (attacker.Item)) return 10;
-		if (pbIsMegaStone? (attacker.Item)) return 80;
+		if (pbIsBerry(attacker.Item)) return 10;
+		if (pbIsMegaStone(attacker.Item)) return 80;
 		foreach (Items i in flingarray.Keys){ 
 		  //if (flingarray[i]){
 			//foreach (var j in flingarray[i]){ 
