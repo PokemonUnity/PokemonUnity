@@ -33,7 +33,7 @@ public class Effects
 		public int EncoreIndex        { get; set; }
 		public Moves EncoreMove         { get; set; }
 		public bool Endure             { get; set; }
-		public int FirstPledge        { get; set; }
+		public global::Move.Effect FirstPledge	{ get; set; }
 		public bool FlashFire          { get; set; }
 		public bool Flinch             { get; set; }
 		public int FocusEnergy        { get; set; }
@@ -53,7 +53,7 @@ public class Effects
 		/// <summary>
 		/// Takes image of last person on team
 		/// </summary>
-		public Battle.Battler Illusion           { get; set; }
+		public Battle.Battler Illusion	{ get; set; }
 		public bool Imprison           { get; set; }
 		public bool Ingrain            { get; set; }
 		public bool KingsShield        { get; set; }

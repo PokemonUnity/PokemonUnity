@@ -1504,7 +1504,7 @@ public class Function
 		  attacker.pbReduceStat(Stats.SPDEF,1,attacker,false,this,showanim);
 		  showanim=false;
 		}
-		showanim = true
+			showanim = true;
 		if (attacker.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.ATTACK,2,attacker,false,this,showanim);
 		  showanim=false;
@@ -2292,8 +2292,8 @@ public class Function
 			int[] astage = attacker.stages;
 			int[] ostage = opponent.stages;
 		//create temp variables then override source
-		astage[Stats.ATTACK],ostage[Stats.ATTACK]=ostage[Stats.ATTACK],astage[Stats.ATTACK]
-		astage[Stats.SPATK], ostage[Stats.SPATK] = ostage[Stats.SPATK], astage[Stats.SPATK]
+		astage[(byte)Stats.ATTACK],ostage[(byte)Stats.ATTACK]=ostage[(byte)Stats.ATTACK],astage[(byte)Stats.ATTACK]
+		astage[(byte)Stats.SPATK], ostage[(byte)Stats.SPATK] = ostage[(byte)Stats.SPATK], astage[(byte)Stats.SPATK]
 
 		//battle.pbDisplay(_INTL("{1} switched all changes to its Attack and Sp. Atk with the target!",attacker.pbThis))
 		return 0;
@@ -2312,8 +2312,8 @@ public class Function
 			int[] astage = attacker.stages;
 			int[] ostage = opponent.stages;
 
-		astage[Stats.DEFENSE],ostage[Stats.DEFENSE]=ostage[Stats.DEFENSE],astage[Stats.DEFENSE]
-		astage[Stats.SPDEF], ostage[Stats.SPDEF] = ostage[Stats.SPDEF], astage[Stats.SPDEF]
+		astage[(byte)Stats.DEFENSE],ostage[(byte)Stats.DEFENSE]=ostage[(byte)Stats.DEFENSE],astage[(byte)Stats.DEFENSE]
+		astage[(byte)Stats.SPDEF], ostage[(byte)Stats.SPDEF] = ostage[(byte)Stats.SPDEF], astage[(byte)Stats.SPDEF]
 
 		//battle.pbDisplay(_INTL("{1} switched all changes to its Defense and Sp. Def with the target!",attacker.pbThis))
 		return 0;
@@ -2667,7 +2667,7 @@ public class Function
 		}
 		for (int i = 0; i < BTypes.maxValue; i++){ 
 		  //if (PBTypes.isPseudoType(i)) continue; //next
-		   if (attacker.pbHasType(i)) continue; //next
+		   if (attacker.pbHasType((Types)i)) continue; //next
 			if (PBTypes.getEffectiveness(atype, i) < 2) types.Add((Types)i); 
 		}
 		if (types.Count==0){
@@ -3573,8 +3573,8 @@ public class Function
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 
-		object ret=basedmg;
-		(attacker.OwnSide.Round.times){ // do; do => while or...
+		int ret=basedmg;
+		for (int i = 0; i <=  attacker.OwnSide.Round; i++){ 
 
 		  ret*=2;
 
@@ -3787,7 +3787,7 @@ public class Function
 	public class PokeBattle_Move_090 : PokeBattle_Move
 	{
 		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent){
-		int[] hp = pbHiddenPower(attacker.iv);
+		int[] hp = pbHiddenPower(attacker.IV);
 
 		type = (Types)hp[0];
 			return type;
@@ -3795,12 +3795,12 @@ public class Function
 
 	  public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
 			if (Settings.USENEWBATTLEMECHANICS) return 60;
-		int[] hp = pbHiddenPower(attacker.iv);
+		int[] hp = pbHiddenPower(attacker.IV);
 			return hp[1];
 		  }
 		}
 
-	public int[] pbHiddenPower(byte iv){
+	public int[] pbHiddenPower(byte[] iv){
 	byte powermin = 30;
 	byte powermax = 70;
 	  int type=0; int baseY = 0;
@@ -3809,20 +3809,20 @@ public class Function
 		if (//!PBTypes.isPseudoType(i) &&
 			(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i); 
 	  }
-	type |= (iv[Stats.HP] & 1);
-	type |= (iv[Stats.ATTACK] & 1) << 1;
-	type |= (iv[Stats.DEFENSE] & 1) << 2;
-	type |= (iv[Stats.SPEED] & 1) << 3;
-	type |= (iv[Stats.SPATK] & 1) << 4;
-	type |= (iv[Stats.SPDEF] & 1) << 5;
+	type |= (iv[(byte)Stats.HP] & 1);
+	type |= (iv[(byte)Stats.ATTACK] & 1) << 1;
+	type |= (iv[(byte)Stats.DEFENSE] & 1) << 2;
+	type |= (iv[(byte)Stats.SPEED] & 1) << 3;
+	type |= (iv[(byte)Stats.SPATK] & 1) << 4;
+	type |= (iv[(byte)Stats.SPDEF] & 1) << 5;
 	type = (int)Math.Floor(type * (types.Count - 1f) / 63f);
 	Types hptype = types[type];
-	baseY |= (iv[Stats.HP] & 2) >> 1;
-	baseY |= (iv[Stats.ATTACK] & 2);
-	baseY |= (iv[Stats.DEFENSE] & 2) << 1;
-	baseY |= (iv[Stats.SPEED] & 2) << 2;
-	baseY |= (iv[Stats.SPATK] & 2) << 3;
-	baseY |= (iv[Stats.SPDEF] & 2) << 4;
+	baseY |= (iv[(byte)Stats.HP] & 2) >> 1;
+	baseY |= (iv[(byte)Stats.ATTACK] & 2);
+	baseY |= (iv[(byte)Stats.DEFENSE] & 2) << 1;
+	baseY |= (iv[(byte)Stats.SPEED] & 2) << 2;
+	baseY |= (iv[(byte)Stats.SPATK] & 2) << 3;
+	baseY |= (iv[(byte)Stats.SPDEF] & 2) << 4;
 	  baseY = (int)Math.Floor(baseY * (powermax - powermin) / 63f) + powermin;
 	  return new int[] { (int)hptype, baseY }; //return type, and power
 		}
@@ -3932,7 +3932,7 @@ public class Function
 		   9,9,
 		   10
 		};
-		byte magni=magnitudes[this.battle.pbRandom(magnitudes.Length)]
+		byte magni=magnitudes[this.battle.pbRandom(magnitudes.Length)];
 		this.calcbasedmg = basedmg[magni - 4];
 
 		//battle.pbDisplay(_INTL("Magnitude {1}!",magni))
@@ -4056,8 +4056,8 @@ public class Function
 		//  data = typearray[i];;
 		//  if (data){
 		//	foreach (var j in data){ 
-			  if (this.berry == j)){
-				 type = i; //|| type;
+			  if (this.berry == i){
+				 type = typearray[i];//i;
 			  }
 		//	}
 		//  }
@@ -4126,7 +4126,7 @@ public class Function
 	public class PokeBattle_Move_09A : PokeBattle_Move
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		float weight = opponent.weight(attacker)
+			float weight = opponent.Weight(attacker);
 
 		object ret=20;
 		if (weight>=100	)ret=40 ;
@@ -4144,7 +4144,7 @@ public class Function
 	public class PokeBattle_Move_09B : PokeBattle_Move
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent){
-		int n = (int)Math.Floor(attacker.weight / opponent.weight(attacker))
+			int n = (int)Math.Floor((float)attacker.weight / (float)opponent.Weight(attacker));
 
 		object ret=40;
 		if (n>=2) ret=60 ;
@@ -4334,8 +4334,8 @@ public class Function
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		attacker.OwnSide.Reflect=5;
-		if (attacker.hasWorkingItem(Items.LIGHTCLAY)) attacker.OwnSide.Reflect=8;
-		if (!this.battle.isOpposing(attacker.Index){
+		if (attacker.hasWorkingItem(Items.LIGHT_CLAY)) attacker.OwnSide.Reflect=8;
+		if (!this.battle.isOpposing(attacker.Index)){
 		   //battle.pbDisplay(_INTL("Reflect raised your team's Defense!"))
 		}  else{
 		  //battle.pbDisplay(_INTL("Reflect raised the opposing team's Defense!"))
@@ -4357,7 +4357,7 @@ public class Function
 		pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 		attacker.OwnSide.LightScreen=5;
-		if (attacker.hasWorkingItem(Items.LIGHTCLAY)) attacker.OwnSide.Reflect=8;
+		if (attacker.hasWorkingItem(Items.LIGHT_CLAY)) attacker.OwnSide.Reflect=8;
 		if (!this.battle.isOpposing(attacker.Index)){
 		   //battle.pbDisplay(_INTL("Light Screen raised your team's Special Defense!"))
 		}else{
@@ -4570,15 +4570,15 @@ public class Function
 	public class PokeBattle_Move_0AA : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		ratesharers=[
+		List<int> ratesharers = new List<int> { 
 		   0xAA,   // Detect, Protect
 		   0xAB,   // Quick Guard
 		   0xAC,   // Wide Guard
 		   0xE8,   // Endure
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
-		]
-		if (!ratesharers.Contains(new Move ((Moves)attacker.lastMoveUsed).Function)){
+		 };
+		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
 		bool unmoved = false;
@@ -4616,15 +4616,15 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		ratesharers =[
+		List<int> ratesharers = new List<int> { 
 		   0xAA,   // Detect, Protect
 		   0xAB,   // Quick Guard
 		   0xAC,   // Wide Guard
 		   0xE8,   // Endure
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
-		]
-		if (!ratesharers.Contains(new Move ((Moves)attacker.lastMoveUsed).Function)){
+		 };
+		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
 		bool unmoved = false;
@@ -4666,18 +4666,18 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		ratesharers =[
+		List<int> ratesharers = new List<int> { 
 		   0xAA,   // Detect, Protect
 		   0xAB,   // Quick Guard
 		   0xAC,   // Wide Guard
 		   0xE8,   // Endure
 		   0x14B,  // King's Shield
 		   0x14C   // Spiky Shield
-		]
+		 };
 		if (!ratesharers.Contains((int)new Move ((Moves)attacker.lastMoveUsed).Function)){
 		  attacker.effects.ProtectRate=1;
 		}
-		unmoved = false;
+		bool unmoved = false;
 		foreach (Battle.Battler poke in this.battle.battlers) {
 		  if (poke.Index==attacker.Index) continue; //next
 		  if ((int)this.battle.choices[poke.Index].Action==1 && // Chose a move
@@ -4687,7 +4687,7 @@ public class Function
 		}
 		if (!unmoved ||
 		   (!Settings.USENEWBATTLEMECHANICS &&
-		   this.battle.pbRandom(65536)>=Math.Floor(65536/attacker.effects.ProtectRate))){
+		   this.battle.pbRandom(65536)>=(int)Math.Floor(65536f/attacker.effects.ProtectRate))){
 		  attacker.effects.ProtectRate=1;
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
@@ -4766,7 +4766,7 @@ public class Function
 		   (Move.Effect)0x158    // Belch
 		 };
 		if (Settings.USENEWBATTLEMECHANICS){
-		  blacklist.AddRange(= new List<Move.Effect> { 
+		  blacklist.AddRange(new List<Move.Effect> { 
 			 (Move.Effect)0xEB,		// Roar, Whirlwind
 									// Two-turn attacks
 			 (Move.Effect)0xC3,		// Razor Wind
@@ -4812,10 +4812,10 @@ public class Function
 		   (Move.Effect)0x115,   // Focus Punch
 		   (Move.Effect)0x158    // Belch
 		 };
-	oppmove=this.battle.choices[opponent.Index].Move
+			Battle.InBattleMove oppmove = this.battle.choices[opponent.Index].Move;
 		if ((int)this.battle.choices[opponent.Index].Action!=1 || // Didn't choose a move
-		   opponent.hasMovedThisRound() ||
-		   !oppmove || oppmove.id<=0 ||
+		   opponent.hasMovedThisRound() || 
+		   oppmove.MoveId == Moves.NONE || oppmove.MoveId<=0 ||
 		   oppmove.pbIsStatus() ||
 		   blacklist.Contains(oppmove.Function)){
 		   //battle.pbDisplay(_INTL("But it failed!"))
@@ -4823,7 +4823,7 @@ public class Function
 		}
 		attacker.effects.MeFirst= true;
 
-		attacker.pbUseMoveSimple(oppmove.id);
+		attacker.pbUseMoveSimple(oppmove.MoveId);
 		attacker.effects.MeFirst= false;
 		return 0;
 	  }
@@ -4864,36 +4864,36 @@ public class Function
 	public class PokeBattle_Move_0B3 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		Moves move = Moves.TRIATTACK;
+		Moves move = Moves.TRI_ATTACK;
 		switch (this.battle.environment) {
 		case PokemonUnity.Environment.Grass: case PokemonUnity.Environment.TallGrass: case PokemonUnity.Environment.Forest:
-		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.ENERGYBALL : Moves.SEEDBOMB; break;
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.ENERGY_BALL : Moves.SEED_BOMB; break;
 
-		case PokemonUnity.Environment.MovingWater: move = Moves.HYDROPUMP;  break;
-			case PokemonUnity.Environment.StillWater:  move = Moves.MUDBOMB; break;
-			case PokemonUnity.Environment.Underwater:  move = Moves.HYDROPUMP; break;
+		case PokemonUnity.Environment.MovingWater: move = Moves.HYDRO_PUMP;  break;
+			case PokemonUnity.Environment.StillWater:  move = Moves.MUD_BOMB; break;
+			case PokemonUnity.Environment.Underwater:  move = Moves.HYDRO_PUMP; break;
 			case PokemonUnity.Environment.Cave:
-		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.POWERGEM : Moves.ROCKSLIDE; break;
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.POWER_GEM : Moves.ROCK_SLIDE; break;
 
 		case PokemonUnity.Environment.Rock:
 
-		  move= (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.ROCKSLIDE; break;
+		  move= (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.ROCK_SLIDE; break;
 
 		case PokemonUnity.Environment.Sand:
-		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTHPOWER : Moves.EARTHQUAKE; break;
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.EARTHQUAKE; break;
 		// Ice tiles in Gen 6 should be Ice Beam
 		case PokemonUnity.Environment.Snow:
-		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.FROSTBREATH : Moves.ICEBEAM; break;
+		  move = (Settings.USENEWBATTLEMECHANICS) ? Moves.FROST_BREATH : Moves.ICE_BEAM; break;
 
-		case PokemonUnity.Environment.Volcano: move = Moves.LAVAPLUME;  break;
-			case PokemonUnity.Environment.Graveyard:   move = Moves.SHADOWBALL; break;
-			case PokemonUnity.Environment.Sky:         move = Moves.AIRSLASH;  break;
-			case PokemonUnity.Environment.Space:       move = Moves.DRACOMETEOR; break;
+		case PokemonUnity.Environment.Volcano: move = Moves.LAVA_PLUME;  break;
+			case PokemonUnity.Environment.Graveyard:   move = Moves.SHADOW_BALL; break;
+			case PokemonUnity.Environment.Sky:         move = Moves.AIR_SLASH;  break;
+			case PokemonUnity.Environment.Space:       move = Moves.DRACO_METEOR; break;
 		}
 		if (this.battle.field.ElectricTerrain>0){
 			move = Moves.THUNDERBOLT;
 		} else if (this.battle.field.GrassyTerrain>0) {
-			move = Moves.ENERGYBALL;
+			move = Moves.ENERGY_BALL;
 		} else if (this.battle.field.MistyTerrain>0) {
 			move = Moves.MOONBLAST;
 		}
@@ -4905,7 +4905,7 @@ public class Function
 
 		string movename = PBMoves.getName(move);
 		//battle.pbDisplay(_INTL("{1} turned into {2}!", thismovename, movename))
-		int target = (Settings.USENEWBATTLEMECHANICS && opponent) ? opponent.Index : -1;
+		int target = (Settings.USENEWBATTLEMECHANICS && opponent.Species != Pokemons.NONE) ? opponent.Index : -1;
 		attacker.pbUseMoveSimple(move,-1, target);
 		return 0;
 	  }
@@ -4963,7 +4963,7 @@ public class Function
 		  if (attacker.moves[i].MoveId==0) continue; //next
 			if (blacklist.Contains(attacker.moves[i].Function)) found = true; 
 		  if (found) continue; //next
-		  if (this.battle.pbCanChooseMove(attacker.Index, i,false,true))choices.Add(i); 
+		  if (this.battle.pbCanChooseMove(attacker.Index, i,false,true)) choices.Add(i); 
 		}
 		if (choices.Count==0){
 		  //battle.pbDisplay(_INTL("But it failed!"))
@@ -4971,8 +4971,8 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		choice=choices[this.battle.pbRandom(choices.Length)]
-		attacker.pbUseMoveSimple(attacker.moves[choice].id,-1, attacker.pbOppositeOpposing.Index);
+			int choice = choices[this.battle.pbRandom(choices.Count)];
+		attacker.pbUseMoveSimple(attacker.moves[choice].MoveId,-1, attacker.pbOppositeOpposing.Index);
 		return 0;
 	  }
 	}
@@ -5042,12 +5042,12 @@ public class Function
 
 		Battle.Battler[] party = this.battle.pbParty(attacker.Index); // NOTE: pbParty is common to both allies in multi battles
 		for (int i = 0; i < party.Length; i++){ 
-		  if (i!=attacker.pokemonIndex && party[i] && !(Settings.USENEWBATTLEMECHANICS && party[i].isEgg)){
+		  if (i!=attacker.pokemonIndex && party[i].Species!=Pokemons.NONE && !(Settings.USENEWBATTLEMECHANICS && party[i].isEgg)){
 			foreach (var j in party[i].moves){ 
 			  if (j.Type == Types.SHADOW) continue; //next
 			  if (j.MoveId==0) continue; //next
-			  bool found=false;
-			  if (!blacklist.Contains((int)new Move ((Moves)j.id).Function)) moves.Add(j.id);
+			  //bool found=false;
+			  if (!blacklist.Contains(new Move ((Moves)j.MoveId).Function)) moves.Add(j.MoveId);
 			}
 		  }
 
@@ -5058,7 +5058,7 @@ public class Function
 		}
 		pbShowAnimation(this.id, attacker, null, hitnum, alltargets, showanimation);
 
-		Moves move=moves[this.battle.pbRandom(moves.Count)]
+			Moves move = moves[this.battle.pbRandom(moves.Count)];
 		attacker.pbUseMoveSimple(move);
 		return 0;
 	  }
@@ -5509,7 +5509,7 @@ public class Function
 
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (this.immediate || attacker.effects.TwoTurnAttack>0){
-		  pbShowAnimation(this.id, attacker, opponent,1, alltargets, showanimation) // Charging anim;
+				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim;
 		  //battle.pbDisplay(_INTL("{1} whipped up a whirlwind!",attacker.pbThis))
 		}
 		if (this.immediate){
@@ -5912,7 +5912,7 @@ public class Function
 		if (opponent.effects.TwoTurnAttack>0								  )  ret = true; 
 		if (opponent.effects.SkyDrop && attacker.effects.TwoTurnAttack>0	  )  ret = true; 
 		if (!opponent.IsOpposing(attacker.Index)						  )  ret = true; 
-		if (Settings.USENEWBATTLEMECHANICS && opponent.weight(attacker)>=2000)ret = true; 
+		if (Settings.USENEWBATTLEMECHANICS && opponent.Weight(attacker)>=2000)ret = true; 
 		return ret;
 	  }
 
@@ -6379,7 +6379,7 @@ public class Function
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0){
-		  int hpgain= (int)Math.Round(opponent.damagestate.HPLost/2f)
+				int hpgain = (int)Math.Round(opponent.damagestate.HPLost / 2f);
 		  if (opponent.hasWorkingAbility(Abilities.LIQUID_OOZE)){
 			attacker.ReduceHP(hpgain,true);
 			//battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!",attacker.pbThis))
@@ -6487,7 +6487,7 @@ public class Function
 	public class PokeBattle_Move_0E1 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent);
+		Types typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent);
 		if (typemod==0){
 		  //battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 		  return -1;
@@ -6496,7 +6496,7 @@ public class Function
 		return ret;
 	  }
 
-	  public object pbShowAnimation(Movesid, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public override object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted()){
@@ -6584,12 +6584,12 @@ public class Function
 	public class PokeBattle_Move_0E5 : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		failed=true
+			bool failed = true;
 		for (int i = 0; i < 4; i++){ 
 		  if (this.battle.battlers[i].effects.PerishSong==0 &&
 			 (attacker.hasMoldBreaker() ||
 			 !this.battle.battlers[i].hasWorkingAbility(Abilities.SOUNDPROOF))){
-			failed=false; break
+			failed=false; break;
 		  }
 		}
 		if (failed){
@@ -6604,7 +6604,7 @@ public class Function
 			if (!attacker.hasMoldBreaker() && this.battle.battlers[i].hasWorkingAbility(Abilities.SOUNDPROOF)){
 
 			  //battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",this.battle.battlers[i].pbThis,
-				 PBAbilities.getName(this.battle.battlers[i].Ability),this.name))
+			  //	 PBAbilities.getName(this.battle.battlers[i].Ability),this.name))
 			}else{
 			  this.battle.battlers[i].effects.PerishSong=4;
 			  this.battle.battlers[i].effects.PerishSongUser=attacker.Index;
@@ -6722,7 +6722,7 @@ public class Function
 	public class PokeBattle_Move_0EB : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.SUCTIONCUPS)){
+		if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.SUCTION_CUPS)){
 		  //battle.pbDisplay(_INTL("{1} anchored itself with {2}!",opponent.pbThis,PBAbilities.getName(opponent.Ability)))  
 		  return -1;
 		}
@@ -6771,16 +6771,16 @@ public class Function
 		public void pbEffectAfterHit(Battle.Battler attacker, Battle.Battler opponent, Effects.Move turneffects){
 		if (!attacker.isFainted() && !opponent.isFainted() &&
 		   opponent.damagestate.CalcDamage>0 && !opponent.damagestate.Substitute && 
-		   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTIONCUPS)) &&
+		   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTION_CUPS)) &&
 		   !opponent.effects.Ingrain){
-		  if (!this.battle.opponent){
+		  if (this.battle.opponent.ID == TrainerTypes.WildPokemon){//Wild Pokemon Battle
 			if (opponent.level<=attacker.level){
-					this.battle.decision = 3; // Set decision to escaped;
+					this.battle.decision = (Battle.BattleResults)3; // Set decision to escaped;
 			}
 		  }else{
 
-			party= this.battle.pbParty(opponent.Index)
-			for (int i = 0; i < arty.Length; i++){ -1
+					Battle.Battler[] party = this.battle.pbParty(opponent.Index);
+			for (int i = 0; i < party.Length -1; i++){ //ToDo: Double check this
 			  if (this.battle.pbCanSwitch(opponent.Index, i,false)){
 
 				opponent.effects.Roar=true;
@@ -6945,7 +6945,7 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		if ((opponent.effects.Substitute>0 && !ignoresSubstitute(attacker)) ||
 		   (attacker.Item==0 && opponent.Item==0) ||
-		   (!this.battle.opponent && this.battle.isOpposing(attacker.Index)){ 
+		   (this.battle.opponent.ID == TrainerTypes.WildPokemon && this.battle.isOpposing(attacker.Index))){ 
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
@@ -6972,13 +6972,13 @@ public class Function
 		Items tmpitem = attacker.Item;
 		attacker.Item=opponent.Item;
 		opponent.Item= tmpitem;
-		if (!this.battle.opponent && // In a wild battle
-		   attacker.pokemon.itemInitial==oldattitem &&
+		if (this.battle.opponent.ID == TrainerTypes.WildPokemon && // In a wild battle
+		   attacker.itemInitial==oldattitem &&
 
-		   opponent.pokemon.itemInitial==oldoppitem){
-		  attacker.pokemon.itemInitial= oldoppitem;
+		   opponent.itemInitial==oldoppitem){
+		  attacker.itemInitial= oldoppitem;
 
-		  opponent.pokemon.itemInitial= oldattitem;
+		  opponent.itemInitial= oldattitem;
 
 		}
 		//battle.pbDisplay(_INTL("{1} switched items with its opponent!", attacker.pbThis))
@@ -7087,9 +7087,9 @@ public class Function
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted() && opponent.damagestate.CalcDamage>0 &&
 		   !opponent.damagestate.Substitute &&
-		   (pbIsBerry?(opponent.Item) || (Settings.USENEWBATTLEMECHANICS && pbIsGem(opponent.Item)))){
-		  itemname=PBItems.getName(opponent.Item)
-		  opponent.pbConsumeItem(false,false);
+		   (pbIsBerry(opponent.Item) || (Settings.USENEWBATTLEMECHANICS && pbIsGem(opponent.Item)))){
+				string itemname = PBItems.getName(opponent.Item);
+				opponent.pbConsumeItem(false,false);
 
 		  //battle.pbDisplay(_INTL("{1}'s {2} was incinerated!",opponent.pbThis,itemname))
 		}
@@ -7785,9 +7785,9 @@ public class Function
 		  }
 		}
 		if ((int)partnermove==0x107 ||   // Fire Pledge
-		   (int)partnermove==0x108      // Water Pledge
+		   (int)partnermove==0x108){      // Water Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
-		  attacker.Partner.effects.FirstPledge==this.function){
+		  attacker.Partner.effects.FirstPledge=this.function;
 		  attacker.Partner.effects.MoveNext= true;
 		  return 0;
 
@@ -7890,9 +7890,9 @@ public class Function
 		  }
 		}
 		if ((int)partnermove==0x106 ||   // Grass Pledge
-		   (int)partnermove==0x108      // Water Pledge
+		   (int)partnermove==0x108){      // Water Pledge
 		  //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
-		  attacker.Partner.effects.FirstPledge==this.function){
+		  attacker.Partner.effects.FirstPledge=this.function;
 		  attacker.Partner.effects.MoveNext= true;
 		  return 0;
 
@@ -8315,7 +8315,7 @@ public class Function
 
 		attacker.effects.Stockpile+=1;
 		//battle.pbDisplay(_INTL("{1} stockpiled {2}!",attacker.pbThis,
-			attacker.effects.Stockpile));
+		//	attacker.effects.Stockpile));
 		bool showanim = true;
 		if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker,false,this)){
 		  attacker.pbIncreaseStat(Stats.DEFENSE,1,attacker,false,this,showanim);
@@ -8590,18 +8590,18 @@ public class Function
 		if((int)new Move ((Moves)opponent.effects.TwoTurnAttack).Function==0xC9 || // Fly
 		   (int)new Move ((Moves)opponent.effects.TwoTurnAttack).Function==0xCC || // Bounce
 		   (int)new Move ((Moves)opponent.effects.TwoTurnAttack).Function==0xCE || // Sky Drop
-		   opponent.effects.SkyDrop);
+		   opponent.effects.SkyDrop) { 
 		  return basedmg*2;
 		}
 		return basedmg;
 	  }
-
+		//ToDo: Double check this one
 	  public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (opponent.damagestate.CalcDamage>0 && 
 			!opponent.damagestate.Substitute &&
-			!opponent.effects.Roost)
+			!opponent.effects.Roost) { 
 		  opponent.effects.SmackDown= true;
 
 		  bool showmsg= (opponent.hasType(Types.FLYING) ||
@@ -9046,8 +9046,8 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
 		bool didsomething = false;
-		foreach (var i in new [] { attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2 }){ 
-	 if (!i || i.isFainted()) continue; //next
+		foreach (Battle.Battler i in new [] { attacker, attacker.Partner, attacker.pbOpposing1, attacker.pbOpposing2 }){ 
+	 if (i.Species == Pokemons.NONE || i.isFainted()) continue; //next
 	 if (!i.hasType(Types.GRASS)) continue; //next
 		  if (i.isAirborne(attacker.hasMoldBreaker())) continue; //next
 		    if (!i.pbCanIncreaseStatStage(Stats.ATTACK, attacker,false,this) &&
@@ -9786,6 +9786,9 @@ public class Function
 public abstract class PokeBattle_Move : IPokeBattle_Move
 {
 	public bool immediate { get; set; }
+	public byte calcbasedmg { get; set; }
+	public Move.Effect function { get; set; }
+	public Items berry { get; set; }
 	public Moves id { get; set; }
 	public Types type { get; set; }
 	public Battle battle { get; set; }
@@ -9800,6 +9803,22 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 		return true;
 	}
 	public bool pbIsDamaging()
+	{
+		return true;
+	}
+	public bool pbIsPokeBall(Items item)
+	{
+		return true;
+	}
+	public bool pbIsBerry(Items item)
+	{
+		return true;
+	}
+	public bool pbIsGem(Items item)
+	{
+		return true;
+	}
+	public bool pbIsMegaStone(Items item)
 	{
 		return true;
 	}

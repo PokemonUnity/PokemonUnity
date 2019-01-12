@@ -674,7 +674,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
 	/// ToDo: Ability 1 or 2, never both...
 	/// ToDo: Error on non-compatible ability?
-	public Abilities Ability { get; private set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
+	public Abilities Ability { get; set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
 
 	/// <summary>
 	/// Returns whether this Pokemon has a partiular ability

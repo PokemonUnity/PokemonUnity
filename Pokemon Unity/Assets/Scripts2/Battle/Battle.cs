@@ -21,7 +21,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Decision: 0=undecided; 1=win; 2=loss; 3=escaped; 4=caught
 	/// </summary>
-	public BattleResults decision { get; private set; }
+	public BattleResults decision { get; set; }
 	/// <summary>
 	/// Internal battle flag
 	/// </summary>
@@ -617,6 +617,10 @@ public class Battle : UnityUtilityIntegration
 	{
 		return false;
 	}
+	public bool pbCanSwitch(int index, int pkmn, bool item)
+	{
+		return false;
+	}
 	public bool pbCommonAnimation(string animation, Battler atk, object uh)
 	{
 		return false;
@@ -855,6 +859,11 @@ public class Battle : UnityUtilityIntegration
 			return false;
 		}*/
 		return true;
+	}
+	//ToDo: Renaame to match above, delete after replacing all calls pointing to this method
+	public bool pbCanChooseMove(int pkmn, int index, bool uhh, bool uh)
+	{
+		return false;
 	}
 
 	//void MoveEffects(int who, int move)
@@ -1513,7 +1522,7 @@ public class Battle : UnityUtilityIntegration
 			return new global::Item(this.Item).ItemPocket == ItemPockets.BERRY;//pbIsBerry?(@item)
 		}
 
-		bool isAirborne(bool ignoreability=false){
+		public bool isAirborne(bool ignoreability=false){
 			if (this.hasWorkingItem(Items.IRON_BALL)) return false;
 			if (effects.Ingrain) return false;
 			if (effects.SmackDown) return false;
@@ -1526,7 +1535,7 @@ public class Battle : UnityUtilityIntegration
 			return false;
 		}
 
-		int Speed()
+		public int Speed()
 		{
 			int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
 			int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
@@ -1999,6 +2008,9 @@ public class Battle : UnityUtilityIntegration
 		#endregion
 
 		#region ToDo: Everything here needs to be implemented
+		new public Items Item { get; set; } //ToDo: Fix this
+		new public Types Type1 { get; set; }
+		new public Types Type2 { get; set; }
 		public Moves lastMoveUsedSketch { get; set; }
 		/// <summary>
 		/// Does faint animation 
@@ -2007,6 +2019,7 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		public void pbFaint() { }
 		public void pbConsumeItem() { }
+		public void pbConsumeItem(bool one, bool two) { }
 		public void pbBerryCureCheck() { }
 		public void pbAbilityCureCheck() { }
 		public void pbActivateBerryEffect(Items item, bool something) { }
@@ -2023,11 +2036,17 @@ public class Battle : UnityUtilityIntegration
 		public void pbCureAttract(bool animate = false) { }
 		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
 		public void pbUseMoveSimple(Moves move) { }
+		public Battler pbOppositeOpposing { get; set; }
+		public float weight { get; set; }
 		public float Weight(Battler pkmn)
 		{
 			return 0f;
 		}
 		public bool pbHasType(Types type)
+		{
+			return false;
+		}
+		public bool pbIsStatus()
 		{
 			return false;
 		}
@@ -2094,6 +2113,10 @@ public class Battle : UnityUtilityIntegration
 		public bool pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
 		{
 			return false;
+		}
+		public void pbUseMoveSimple(Moves pkmn, int uhh, int index)
+		{
+			//return false;
 		}
 		public bool pbAddTarget(byte index, Battler pkmn)
 		{
