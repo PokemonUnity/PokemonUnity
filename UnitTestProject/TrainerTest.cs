@@ -10,7 +10,7 @@ namespace Tests
     [TestClass]
     public class TrainerTest
     {
-        #region
+        #region Nicknames
         [TestMethod]
 		public void Trainer_SetPokemon_Nickname()
 		{
@@ -19,28 +19,32 @@ namespace Tests
 			//trainer.Party[0].Name
 			Assert.AreEqual("testname", trainer.Party[0].Name);
 		}
+        #endregion
 
-		//public void Trainer_() { 
-		//	/*SaveDataOld.currentSave.playerName = name;
-		//	SaveDataOld.currentSave.playerID = 29482; //not implemented
-		//	SaveDataOld.currentSave.isMale = isMale;
-		//	SaveDataOld.currentSave.playerMoney = 2481; 
-		//	SaveDataOld.currentSave.playerLanguage = Language.English;
-		//
-		//	SaveDataOld.currentSave.playerOutfit = "hgss";
-		//
-		//	SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
-		//	SaveDataOld.currentSave.playerMisc = null;
-		//	SaveDataOld.currentSave.playerHat = "Ethan's Hat";
-		//	//customizables not implemented
-		//
-		//	if(isMale == true){
-		//		SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
-		//	} else {
-		//		SaveDataOld.currentSave.setCVariable("male",0);
-		//	}*/
-		//}
+        #region TrainerProperties
+        //public void Trainer_() { 
+        //	/*SaveDataOld.currentSave.playerName = name;
+        //	SaveDataOld.currentSave.playerID = 29482; //not implemented
+        //	SaveDataOld.currentSave.isMale = isMale;
+        //	SaveDataOld.currentSave.playerMoney = 2481; 
+        //	SaveDataOld.currentSave.playerLanguage = Language.English;
+        //
+        //	SaveDataOld.currentSave.playerOutfit = "hgss";
+        //
+        //	SaveDataOld.currentSave.playerShirt = "Ethan's Shirt";
+        //	SaveDataOld.currentSave.playerMisc = null;
+        //	SaveDataOld.currentSave.playerHat = "Ethan's Hat";
+        //	//customizables not implemented
+        //
+        //	if(isMale == true){
+        //		SaveDataOld.currentSave.setCVariable("male",1); //custom events can check if the player is male or female, 1 meaning male, 0 meaning female
+        //	} else {
+        //		SaveDataOld.currentSave.setCVariable("male",0);
+        //	}*/
+        //}
+        #endregion
 
+        #region TrainerPokemon
         [TestMethod]
         public void Trainer_Party_AddPokemon() {
 			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
@@ -92,6 +96,13 @@ namespace Tests
 			Assert.Inconclusive();
 		}
 
+        //[TestMethod]
+        //public void Trainer_Trade_Pokemons()
+        //{
+        //	//Swap pokemons between owners, and confirm original pokemon owners are different
+        //	Assert.Inconclusive();
+        //}
+
         [TestMethod]
         public void Trainer_Party_SwapPokemon() {
 			/*SaveDataOld.currentSave.PC.swapPokemon(0, 5, 1, 5);
@@ -122,7 +133,16 @@ namespace Tests
 			SaveDataOld.currentSave.PC.packParty();*/
 			Assert.Inconclusive();
 		}
-	
+        #endregion
+
+        #region TrainerItemsBags&&PC
+
+        [TestMethod]
+        public void Trainer_RideBike_Fail_If_Item_NotInInventory()
+        {
+            Assert.Inconclusive();
+        }
+
         [TestMethod]
         public void Trainer_Bag_AddItems() {
 			/*SaveDataOld.currentSave.Bag.addItem("Poké Ball", 9);
@@ -162,7 +182,9 @@ namespace Tests
 			PC.boxTexture[2] = 12;*/
 			Assert.Inconclusive();
 		}
+        #endregion
 
+        #region TrainerSave
         [TestMethod]
         public void Trainer_Save() {
 			////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,24 +253,13 @@ namespace Tests
 			Assert.Inconclusive();
 		}
         #endregion
-
-        //[TestMethod]
-		//public void Trainer_Trade_Pokemons()
-		//{
-		//	//Swap pokemons between owners, and confirm original pokemon owners are different
-		//	Assert.Inconclusive();
-		//}
-
-        [TestMethod]
-		public void Trainer_RideBike_Fail_If_Item_NotInInventory()
-		{
-			Assert.Inconclusive();
-		}
+        
     }
+    
+    [TestClass]
     /// <summary>
     /// Database sample on how to write code for different componenets of your database.
     /// </summary>
-    [TestClass]
     public class FrameworkTest
     {
 		#region PokemonData
@@ -335,7 +346,10 @@ namespace Tests
 		}
 		#endregion
 
-        #region
+        #region Misc
+
+
+
         #endregion
     }
 }
