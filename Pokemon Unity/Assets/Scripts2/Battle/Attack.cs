@@ -3037,7 +3037,7 @@ public class Function
 				//battle.pbDisplay(_INTL("But it failed!"))
 				return -1;
 			}
-			for (int i = 0; i < PBTypes.maxValue; i++)
+			for (int i = 0; i < Enum.GetValues(typeof(Types)).Length; i++)
 			{
 				//if (PBTypes.isPseudoType(i)) continue; //next
 				if (attacker.pbHasType((Types)i)) continue; //next
@@ -4329,7 +4329,7 @@ public class Function
 		byte powermax = 70;
 		int type = 0; int baseY = 0;
 		List<Types> types = new List<Types>();
-		for (int i = 0; i < PBTypes.maxValue; i++)
+		for (int i = 0; i < Enum.GetValues(typeof(Types)).Length; i++)
 		{
 			if (//!PBTypes.isPseudoType(i) &&
 				(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i);
@@ -5799,7 +5799,7 @@ public class Function
 		};
 			for (int i = 0; i < 1000; i++)
 			{//loop do break unless i<1000
-				Moves move = (Moves)(this.battle.pbRandom(Move.MaxValue) + 1);
+				Moves move = (Moves)(this.battle.pbRandom(Enum.GetValues(typeof(Moves)).Length) + 1);
 				if (new Move((Moves)move).Type == Types.SHADOW) continue; //next
 				bool found = false;
 				if (blacklist.Contains(new Move((Moves)move).Function))
