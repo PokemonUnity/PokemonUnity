@@ -2,6 +2,14 @@
 using PokemonUnity;
 using PokemonUnity.Item;
 
+public class PBItems
+{
+	public static string getName(PokemonUnity.Item.Items item)
+	{
+		return string.Empty;
+	}
+	//public static int MaxValue { get { return MoveData.Count; } }
+}
 
 public class Item
 {

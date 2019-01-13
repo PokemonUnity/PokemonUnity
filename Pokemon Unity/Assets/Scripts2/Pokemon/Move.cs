@@ -6,6 +6,15 @@ using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Move;
 
+public class PBMoves
+{
+	public static string getName(PokemonUnity.Move.Moves move)
+	{
+		return string.Empty;
+	}
+	//public static int MaxValue { get { return MoveData.Count; } }
+}
+
 public partial class Move //: MoveData
 {
 	#region Properties
