@@ -10,7 +10,7 @@ namespace Tests
     [TestClass]
     public class MapTest
     {
-        #region
+        #region Events
         [TestMethod]
 		public void Map_TestMap_Event_Trigger()
 		{

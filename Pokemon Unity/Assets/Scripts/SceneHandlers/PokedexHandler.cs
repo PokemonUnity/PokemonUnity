@@ -296,44 +296,44 @@ public class PokedexHandler : MonoBehaviour {
 		}
 	}
 
-	private Texture typeToImage(PokemonUnity.Types type){
-		if (type == PokemonUnity.Types.NORMAL) {
+	private Texture typeToImage(PokemonUnity.Pokemon.Types type){
+		if (type == PokemonUnity.Pokemon.Types.NORMAL) {
 			return types [0];
-		} else if (type == PokemonUnity.Types.FIGHTING) {
+		} else if (type == PokemonUnity.Pokemon.Types.FIGHTING) {
 			return types [1];
-		} else if (type == PokemonUnity.Types.FLYING) {
+		} else if (type == PokemonUnity.Pokemon.Types.FLYING) {
 			return types [2];
-		} else if (type == PokemonUnity.Types.POISON) {
+		} else if (type == PokemonUnity.Pokemon.Types.POISON) {
 			return types [3];
-		} else if (type == PokemonUnity.Types.GROUND) {
+		} else if (type == PokemonUnity.Pokemon.Types.GROUND) {
 			return types [4];
-		} else if (type == PokemonUnity.Types.ROCK) {
+		} else if (type == PokemonUnity.Pokemon.Types.ROCK) {
 			return types [5];
-		} else if (type == PokemonUnity.Types.BUG) {
+		} else if (type == PokemonUnity.Pokemon.Types.BUG) {
 			return types [6];
-		} else if (type == PokemonUnity.Types.GHOST) {
+		} else if (type == PokemonUnity.Pokemon.Types.GHOST) {
 			return types [7];
-		} else if (type == PokemonUnity.Types.STEEL) {
+		} else if (type == PokemonUnity.Pokemon.Types.STEEL) {
 			return types [8];
-		} else if (type == PokemonUnity.Types.NONE) {
+		} else if (type == PokemonUnity.Pokemon.Types.NONE) {
 			return types [9];
-		} else if (type == PokemonUnity.Types.FIRE) {
+		} else if (type == PokemonUnity.Pokemon.Types.FIRE) {
 			return types [10];
-		} else if (type == PokemonUnity.Types.WATER) {
+		} else if (type == PokemonUnity.Pokemon.Types.WATER) {
 			return types [11];
-		} else if (type == PokemonUnity.Types.GRASS) {
+		} else if (type == PokemonUnity.Pokemon.Types.GRASS) {
 			return types [12];
-		} else if (type == PokemonUnity.Types.ELECTRIC) {
+		} else if (type == PokemonUnity.Pokemon.Types.ELECTRIC) {
 			return types [13];
-		} else if (type == PokemonUnity.Types.PSYCHIC) {
+		} else if (type == PokemonUnity.Pokemon.Types.PSYCHIC) {
 			return types [14];
-		} else if (type == PokemonUnity.Types.ICE) {
+		} else if (type == PokemonUnity.Pokemon.Types.ICE) {
 			return types [15];
-		} else if (type == PokemonUnity.Types.DRAGON) {
+		} else if (type == PokemonUnity.Pokemon.Types.DRAGON) {
 			return types [16];
-		} else if (type == PokemonUnity.Types.DARK) {
+		} else if (type == PokemonUnity.Pokemon.Types.DARK) {
 			return types [17];
-		} else if (type == PokemonUnity.Types.FAIRY) {
+		} else if (type == PokemonUnity.Pokemon.Types.FAIRY) {
 			return types [18];
 		} else {
 			return types [9];

@@ -33,7 +33,7 @@ public class Effects
 		public int EncoreIndex        { get; set; }
 		public Moves EncoreMove         { get; set; }
 		public bool Endure             { get; set; }
-		public int FirstPledge        { get; set; }
+		public global::Move.Effect FirstPledge	{ get; set; }
 		public bool FlashFire          { get; set; }
 		public bool Flinch             { get; set; }
 		public int FocusEnergy        { get; set; }
@@ -53,7 +53,7 @@ public class Effects
 		/// <summary>
 		/// Takes image of last person on team
 		/// </summary>
-		public Battle.Battler Illusion           { get; set; }
+		public Battle.Battler Illusion	{ get; set; }
 		public bool Imprison           { get; set; }
 		public bool Ingrain            { get; set; }
 		public bool KingsShield        { get; set; }
@@ -122,7 +122,7 @@ public class Effects
 		public bool Transform          { get; set; }
 		public bool Truant             { get; set; }
 		public int TwoTurnAttack      { get; set; }
-		public Types Type3              { get; set; }
+		public PokemonUnity.Pokemon.Types Type3	{ get; set; }
 		public bool Unburden           { get; set; }
 		public int Uproar             { get; set; }
 		public bool Uturn              { get; set; }
@@ -296,7 +296,7 @@ public class Effects
 			this.Transform        = false;
 			this.Truant           = false;
 			this.TwoTurnAttack    = 0;
-			this.Type3            = PokemonUnity.Types.NONE;//-1; ToDo: What's difference between "None" and "null"?
+			this.Type3            = PokemonUnity.Pokemon.Types.NONE;//-1; ToDo: What's difference between "None" and "null"?
 			this.Unburden         = false;
 			this.Uproar           = 0;
 			this.Uturn            = false;
