@@ -10,7 +10,7 @@
   </p>
 </p>
 
-"Pokémon Unity was in development for about a year before I could not continue working on the project. Rather than let it
+"Pokémon Unity was in development for about a year before I could not continue working on the project. Rather than let it 
 die, I released the source as is." - Lucas.
 
 I have changed a lot of code that was either unused (most unused assets were removed) or were obsolete. There can be a lot of conflicts if you're looking forward to using this branch as a framework rather than the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject). Please be aware that some features in this branch are incomplete (the features in the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject) is being tracked and monitored by the build status).

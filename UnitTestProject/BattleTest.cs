@@ -10,7 +10,7 @@ namespace Tests
     [TestClass]
     public class BattleTest
     {
-        #region
+        #region EncounterChances
         [TestMethod]
 		public void Battle_WildPokemon_Encounter_Chance()
 		{
