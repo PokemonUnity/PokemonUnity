@@ -12,11 +12,14 @@ public class EventListener : MonoBehaviour
 
     private void Awake()
     {
-        GlobalSaveManager.Load(0);
-
         if (null == Player)
         {
             Player = GameObject.FindGameObjectWithTag("Player");
+            playerMovement = Player.GetComponent<PlayerMovement>();
+        }
+        else
+        {
+            Player.tag = "Player";
             playerMovement = Player.GetComponent<PlayerMovement>();
         }
         GlobalSaveManager.RegisterPlayer(Player);
@@ -36,7 +39,7 @@ public class EventListener : MonoBehaviour
                             saveObject.SetActive(false);
                             break;
                         case SaveEventType.INTERACTION:
-                            saveObject.SetActive(false);
+                            //Perform action for Interaction
                             break;
                         default:
                             break;
@@ -60,13 +63,12 @@ public class EventListener : MonoBehaviour
             if (null != interactionEvent)
             {
                 RegisteredEvent = true;
-                GlobalSaveManager.RegisterEvent(new CustomSaveEvent(DateTime.Now, SaveEventType.INTERACTION, eventObject, SceneManager.GetActiveScene().buildIndex));
+                GlobalSaveManager.RegisterEvent(new CustomSaveEvent(SaveEventType.INTERACTION, eventObject, SceneManager.GetActiveScene().buildIndex));
             }
             else if (null != itemEvent)
             {
                 RegisteredEvent = true;
-                GlobalSaveManager.RegisterEvent(new CustomSaveEvent(DateTime.Now, SaveEventType.ITEM, eventObject, SceneManager.GetActiveScene().buildIndex));
-                GlobalSaveManager.Save();
+                GlobalSaveManager.RegisterEvent(new CustomSaveEvent(SaveEventType.ITEM, eventObject, SceneManager.GetActiveScene().buildIndex));
             }
         }
         else if(playerMovement.busyWith == null)

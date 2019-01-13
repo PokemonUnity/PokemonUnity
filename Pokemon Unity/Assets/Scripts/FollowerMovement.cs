@@ -80,8 +80,6 @@ public class FollowerMovement : MonoBehaviour
             followerLight.intensity = 0;
         }
 
-        transform.position = Player.transform.position;
-        direction = Player.direction;
         if (direction == 0)
         {
             transform.Translate(Vector3.back);
@@ -98,7 +96,7 @@ public class FollowerMovement : MonoBehaviour
         {
             transform.Translate(Vector3.right);
         }
-
+        transform.position = startPosition;
         changeFollower(followerIndex);
         StartCoroutine("animateSprite");
     }
