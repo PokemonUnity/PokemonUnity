@@ -124,7 +124,7 @@ namespace PokemonUnity.Battle
 			public bool Transform          { get; set; }
 			public bool Truant             { get; set; }
 			public int TwoTurnAttack      { get; set; }
-			public PokemonUnity.Pokemon.Types Type3	{ get; set; }
+			public PokemonUnity.Types Type3	{ get; set; }
 			public bool Unburden           { get; set; }
 			public int Uproar             { get; set; }
 			public bool Uturn              { get; set; }

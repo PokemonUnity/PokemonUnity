@@ -8,7 +8,7 @@ using PokemonUnity.Move;
 
 public class PBMoves
 {
-	public static string getName(PokemonUnity.Move.Moves move)
+	public static string getName(PokemonUnity.Moves move)
 	{
 		return string.Empty;
 	}
