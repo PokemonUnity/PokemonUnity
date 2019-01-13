@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Item;
 using PokemonUnity.Move;
+using System.Collections;
 
 /// <summary>
 /// During battle, the moves used are modified by these classes before calculations are applied
@@ -72,7 +73,7 @@ public class Function
 		public bool IsPhysical(){ return true; }
 		public bool IsSpecial(){ return false; }
 
-		public override object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent){
+		public override int pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent){
     		return base.pbCalcDamage(attacker, opponent,
 	   			thismove.NOCRITICAL|thismove.SELFCONFUSE|thismove.NOTYPE|thismove.NOWEIGHTING);
   		}
@@ -125,7 +126,7 @@ public class Function
 			}
 		}
 
-		public override object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
+		public override int pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return base.pbCalcDamage(attacker, opponent, thismove.IGNOREPKMNTYPES);
 		}
@@ -2636,6 +2637,7 @@ public class Function
 		string typename = PBTypes.getName(newtype);
 
 		//battle.pbDisplay(_INTL("{1} transformed into the {2} type!", attacker.pbThis, typename))
+		return null; //ToDo: Wasnt sure what to return, so put null
 	  }
 	}
 
@@ -3137,7 +3139,7 @@ public class Function
 	public class PokeBattle_Move_06C : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
-		return pbEffectFixedDamage(Math.Max(Math.Floor(opponent.HP / 2f),1), attacker, opponent, hitnum, alltargets, showanimation);
+		return pbEffectFixedDamage((int)Math.Max(Math.Floor(opponent.HP / 2f),1), attacker, opponent, hitnum, alltargets, showanimation);
 	  }
 	}
 
@@ -3279,7 +3281,7 @@ public class Function
 		  //battle.pbDisplay(_INTL("But it failed!"))
 		  return -1;
 		}
-		object ret = pbEffectFixedDamage(Math.Max(Math.Floor(attacker.lastHPLost * 1.5f), 1), attacker, opponent, hitnum, alltargets, showanimation);
+		object ret = pbEffectFixedDamage((int)Math.Max(Math.Floor(attacker.lastHPLost * 1.5f), 1), attacker, opponent, hitnum, alltargets, showanimation);
 		return ret;
 	  }
 	}
@@ -3402,7 +3404,7 @@ public class Function
 		return ret;
 	  }
 
-	  public override object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (opponent.damagestate.Critical || this.doubled){
 		  return base.pbShowAnimation(id, attacker, opponent,1, alltargets, showanimation); // Charged anim;
 		}
@@ -3864,7 +3866,7 @@ public class Function
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
-		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		int ret=(int)base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 
 		if (ret>0)attacker.effects.Rage=true ;
 		return ret;
@@ -4279,7 +4281,7 @@ public class Function
 		return (Types.NORMAL);
 	  }
 
-	  public override object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 		if (id == Moves.TECHNO_BLAST){
 			byte anim = 0;
 		  if (pbType(this.type, attacker, opponent) == Types.ELECTRIC)	anim = 1; 
@@ -4715,7 +4717,7 @@ public class Function
 	public class PokeBattle_Move_0AD : PokeBattle_Move
 	{
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum=0, byte? alltargets=null, bool showanimation=true){
-		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		int ret=(int)base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (ret>0){
 		  opponent.effects.ProtectNegation=true;
 		  opponent.OwnSide.CraftyShield=false;
@@ -5888,7 +5890,7 @@ public class Function
 		  attacker.pbConsumeItem();
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
-		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		int ret=(int)base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (ret>0){
 		  opponent.effects.ProtectNegation=true;
 		  opponent.OwnSide.CraftyShield=false;
@@ -5931,18 +5933,18 @@ public class Function
 		  opponent.effects.SkyDrop=true;
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
-		object ret=super;
+		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		//battle.pbDisplay(_INTL("{1} was freed from the Sky Drop!", opponent.pbThis))
 		opponent.effects.SkyDrop=false;
 		return ret;
 	  }
 
-	  public object pbTypeModifier(Types type, Battle.Battler attacker, Battle.Battler opponent){
+	  public override Types pbTypeModifier(Types type, Battle.Battler attacker, Battle.Battler opponent){
 		if (opponent.hasType(Types.FLYING)) return 0;
 		if (!attacker.hasMoldBreaker() &&
 		   opponent.hasWorkingAbility(Abilities.LEVITATE) && 
 		   !opponent.effects.SmackDown) return 0;
-		return super;
+		return base.pbTypeModifier(type, attacker, opponent);
 	  }
 	}
 
@@ -6132,7 +6134,7 @@ public class Function
 		}
 	  }
 
-	  public object pbAddTarget(byte targets, Battle.Battler attacker){
+	  public void pbAddTarget(byte targets, Battle.Battler attacker){
 		if (attacker.effects.BideTarget>=0){
 		  if (!attacker.pbAddTarget(targets, this.battle.battlers[attacker.effects.BideTarget])){
 			attacker.pbRandomTarget(targets);
@@ -6473,7 +6475,7 @@ public class Function
 		return true;
 	  }
 
-	  public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted()){
@@ -6481,6 +6483,7 @@ public class Function
 
 		  if (attacker.isFainted())attacker.pbFaint();
 		}
+		return null;//ToDo: Added this here, double check to see if there better options 
 	  }
 	}
 
@@ -6500,7 +6503,7 @@ public class Function
 		return ret;
 	  }
 
-	  public override object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
+	  public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true){
 
 		base.pbShowAnimation(id, attacker, opponent, hitnum, alltargets, showanimation);
 		if (!attacker.isFainted()){
@@ -6508,6 +6511,7 @@ public class Function
 
 		   if (attacker.isFainted())attacker.pbFaint();
 		}
+		return null;//ToDo: Added this here, double check to see if there better options 
 	  }
 	}
 
@@ -8733,6 +8737,7 @@ public class Function
 
 		opponent.Update(true);
 		//battle.pbDisplay(_INTL("{1} and {2} switched places!",opponent.pbThis,attacker.pbThis(true)))
+		return null;//ToDo: Not sure what to return here, so i added null
 	  }
 	}
 
@@ -9505,7 +9510,7 @@ public class Function
 		  attacker.pbConsumeItem();
 		}
 		if (attacker.effects.TwoTurnAttack>0) return 0;
-		object ret=base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
+		int ret=(int)base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		if (ret>0){
 		  opponent.effects.ProtectNegation=true;
 		  opponent.OwnSide.CraftyShield=false;
@@ -9840,11 +9845,19 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 	{
 		return true;
 	}
+	public virtual object pbDisplayUseMessage(Battle.Battler attacker)
+	{
+		return true;
+	}
 	public Types pbType(Types type, Battle.Battler atk, Battle.Battler opp)
 	{
 		return Types.NONE;
 	}
-	public Types pbTypeModifier(Types type, Battle.Battler atk, Battle.Battler opp)
+	public virtual object pbModifyType(Types type, Battle.Battler atk, Battle.Battler opp)
+	{
+		return Types.NONE;
+	}
+	public virtual Types pbTypeModifier(Types type, Battle.Battler atk, Battle.Battler opp)
 	{
 		return Types.NONE;
 	}
@@ -9852,23 +9865,35 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 	{
 		return true;
 	}
+	/// <summary>
+	/// </summary>
+	/// ToDo: I think this only returns null (void) or `-1`; so all codes check for `x < zero`
 	public virtual object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 	{
 		return null;
+	}
+	public virtual int pbEffectFixedDamage(int dmg, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+	{
+		//return pbEffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation);
+		return 0;
 	}
 	public virtual object pbEffectMessages(Battle.Battler attacker, Battle.Battler opponent, bool ignoretype = false)
 	{
 		return null;
 	}
-	public virtual object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
+	public virtual object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 	{
 		return null;
 	}
-	public virtual object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent, bool somethinghere) //ToDo: Fix this
+	public virtual int pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
 	{
-		return null;
+		return 0;
 	}
-	public virtual object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true)
+	public virtual int pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent, bool somethinghere) //ToDo: Fix this
+	{
+		return 0;
+	}
+	public virtual IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum= 0, byte? alltargets= null, bool showanimation= true)
 	{
 		return null;
 	}

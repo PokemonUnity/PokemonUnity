@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts2\Battle\Attack.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\BattlePokemonHandler.cs" />
+    <Compile Include="Assets\Scripts2\Pokemon\Type.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
     <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
