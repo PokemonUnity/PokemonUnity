@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-public class EventListener : MonoBehaviour
+public class EventListener : UnityEngine.MonoBehaviour
 {
-    public GameObject Player;
+    public UnityEngine.GameObject Player;
     private PlayerMovement playerMovement;
     private bool RegisteredEvent = false;
 
@@ -14,7 +13,7 @@ public class EventListener : MonoBehaviour
     {
         if (null == Player)
         {
-            Player = GameObject.FindGameObjectWithTag("Player");
+            Player = UnityEngine.GameObject.FindGameObjectWithTag("Player");
             playerMovement = Player.GetComponent<PlayerMovement>();
         }
         else
@@ -28,8 +27,8 @@ public class EventListener : MonoBehaviour
 
         foreach(CustomSaveEvent Event in Events)
         {
-            var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == Event.ObjectName);
-            foreach (GameObject saveObject in objects)
+            var objects = UnityEngine.Resources.FindObjectsOfTypeAll<UnityEngine.GameObject>().Where(obj => obj.name == Event.ObjectName);
+            foreach (UnityEngine.GameObject saveObject in objects)
             {
                 if (saveObject.name == Event.ObjectName && saveObject.transform.position == Event.ObjectPosition)
                 {
@@ -54,7 +53,7 @@ public class EventListener : MonoBehaviour
         if (playerMovement.busyWith != null && RegisteredEvent == false)
         {
             //Getting the Object the Player's busy with
-            GameObject eventObject = playerMovement.busyWith;
+            UnityEngine.GameObject eventObject = playerMovement.busyWith;
 
             //Getting the events from the object
             CustomEvent interactionEvent = eventObject.GetComponent<CustomEvent>();
