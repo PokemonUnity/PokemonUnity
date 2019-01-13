@@ -3604,7 +3604,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_070 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STURDY))
 			{
@@ -3897,7 +3897,7 @@ public class Function
 			return ret;
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.damagestate.Critical || this.doubled)
 			{
@@ -4162,7 +4162,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 
 			type = Types.NORMAL;
@@ -4307,7 +4307,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_090 : PokeBattle_Move
 	{
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			int[] hp = pbHiddenPower(attacker.IV);
 
@@ -4552,7 +4552,7 @@ public class Function
 			return 1;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 
 			type = Types.NORMAL;
@@ -4815,7 +4815,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09F : PokeBattle_Move
 	{
-		public Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.id == Moves.JUDGMENT)
 			{
@@ -5071,7 +5071,7 @@ public class Function
 			}
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
 			id = Moves.BODY_SLAM;
@@ -5113,7 +5113,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A5 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -6970,7 +6970,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D4 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(Battle.Battler attacker)
+		public override object pbDisplayUseMessage(Battle.Battler attacker)
 		{
 			if (attacker.effects.Bide == 0)
 			{
@@ -8853,7 +8853,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.overridetype)
 			{
@@ -8942,7 +8942,7 @@ public class Function
 			return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.overridetype)
 			{
@@ -8984,7 +8984,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.overridetype)
 			{
@@ -9073,7 +9073,7 @@ public class Function
 			return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.overridetype)
 			{
@@ -9115,7 +9115,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.overridetype)
 			{
@@ -9204,7 +9204,7 @@ public class Function
 			return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.overridetype)
 			{
@@ -9241,7 +9241,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10A : PokeBattle_Move
 	{
-		public object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
+		public override int pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return base.pbCalcDamage(attacker, opponent, thismove.NOREFLECT);
 		}
@@ -9277,7 +9277,7 @@ public class Function
 			return ret;
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.Reflect > 0 ||
 			   attacker.OpposingSide.LightScreen > 0)
@@ -9546,7 +9546,7 @@ public class Function
 			return 0;
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.futuresight)
 			{
@@ -9713,7 +9713,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_115 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(Battle.Battler attacker)
+		public override object pbDisplayUseMessage(Battle.Battler attacker)
 		{
 			if (attacker.lastHPLost > 0)
 			{
@@ -10250,7 +10250,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_139 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10333,7 +10333,7 @@ public class Function
 			return false;
 		}
 
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10353,7 +10353,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13C : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10694,7 +10694,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_147 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -11307,7 +11307,7 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 	{
 		return Types.NONE;
 	}
-	public virtual object pbModifyType(Types type, Battle.Battler atk, Battle.Battler opp)
+	public virtual Types pbModifyType(Types type, Battle.Battler atk, Battle.Battler opp)
 	{
 		return Types.NONE;
 	}
