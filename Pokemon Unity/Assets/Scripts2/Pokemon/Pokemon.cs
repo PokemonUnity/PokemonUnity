@@ -73,13 +73,13 @@ public partial class Pokemon //: ePokemons //PokemonData
     /// <summary>
     /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
     /// </summary>
-    public int[] IV { get; private set; }
+    public byte[] IV { get; private set; }
 	/// <summary>
 	/// Effort Values
 	/// </summary>
 	/// <see cref="EVSTATLIMIT"/>
 	/// new int[6] = { 0, 0, 0, 0, 0, 0 }; //same thing
-	public int[] EV { get; private set; }
+	public byte[] EV { get; private set; }
 	/// <summary>
 	/// Species (National Pokedex number)
 	/// </summary>
@@ -196,8 +196,8 @@ public partial class Pokemon //: ePokemons //PokemonData
 		//shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
 		//Gender = isMale();
 		//IV = new int[] { 10, 10, 10, 10, 10, 10 };
-		IV = new int[] { Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32), Settings.Rand.Next(32) };
-		EV = new int[6];
+		IV = new byte[] { (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32) };
+		EV = new byte[6];
 		Exp = new Experience(GrowthRate);
 		moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
 		pokerus = new int[2];
@@ -244,7 +244,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 		int TPFORM = 0,
 		bool TPSHINY = false,
 		Natures TPNATURE = Natures.UNSET,
-		int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
+		byte[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
 		int TPHAPPINESS = 70,
 		string TPNAME = null,
 		bool TPSHADOW = false,
@@ -674,7 +674,7 @@ public partial class Pokemon //: ePokemons //PokemonData
 	/// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
 	/// ToDo: Ability 1 or 2, never both...
 	/// ToDo: Error on non-compatible ability?
-	public Abilities Ability { get; private set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
+	public Abilities Ability { get; set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
 
 	/// <summary>
 	/// Returns whether this Pokemon has a partiular ability
@@ -3193,30 +3193,6 @@ namespace PokemonUnity
 		NATIONALCHAMPION = 79,
 		WORLDCHAMPION = 80
 	}
-	public enum Types
-	{
-		NONE = 0,
-		NORMAL = 1,
-		FIGHTING = 2,
-		FLYING = 3,
-		POISON = 4,
-		GROUND = 5,
-		ROCK = 6,
-		BUG = 7,
-		GHOST = 8,
-		STEEL = 9,
-		FIRE = 10,
-		WATER = 11,
-		GRASS = 12,
-		ELECTRIC = 13,
-		PSYCHIC = 14,
-		ICE = 15,
-		DRAGON = 16,
-		DARK = 17,
-		FAIRY = 18,
-		UNKNOWN = 10001,
-		SHADOW = 10002
-	};
 	public enum Color
 	{
 		RED = 8,

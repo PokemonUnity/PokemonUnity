@@ -1,13 +1,22 @@
 ﻿using System.Collections;
 
 
-public class Ability
+public class PBAbilities
 {
-    
+	public static string getName(PokemonUnity.Pokemon.Abilities ability)
+	{
+		return string.Empty;
+	}
+	public static int maxValue { get; set; } //{ get { return MoveData.Count; } }
 }
 
 namespace PokemonUnity.Pokemon
 {
+	public class Ability
+	{
+    
+	}
+
     /// <summary>
 	/// Ability ids are connected to XML file.
 	/// </summary>

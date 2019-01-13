@@ -16,12 +16,12 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Scene object for this battle
 	/// </summary>
-	//public void Scene (int scene) { this.scene = scene; }
-	public int scene { get; private set; }
+	public void SetScene(int scene) { }//this.scene = scene; }
+	public Scene scene { get; private set; }
 	/// <summary>
 	/// Decision: 0=undecided; 1=win; 2=loss; 3=escaped; 4=caught
 	/// </summary>
-	public BattleResults decision { get; private set; }
+	public BattleResults decision { get; set; }
 	/// <summary>
 	/// Internal battle flag
 	/// </summary>
@@ -250,7 +250,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Money gained in battle by using Pay Day
 	/// </summary>
-	public int extramoney { get; private set; }
+	public int extramoney { get; set; }
 	/// <summary>
 	/// Whether Happy Hour's effect applies
 	/// </summary>
@@ -605,9 +605,10 @@ public class Battle : UnityUtilityIntegration
 	{
 		return false;
 	}
-	public bool pbCheckGlobalAbility(Abilities index)
+	public Battler pbCheckGlobalAbility(Abilities index)
 	{
-		return false;
+		//return none, not null
+		return null;
 	}
 	public bool pbAllFainted(Battler[] party)
 	{
@@ -616,6 +617,18 @@ public class Battle : UnityUtilityIntegration
 	public bool pbIsUnlosableItem(Battler party, Items item)
 	{
 		return false;
+	}
+	public bool pbCanSwitch(int index, int pkmn, bool item)
+	{
+		return false;
+	}
+	public bool pbCanSwitch(int index, int pkmn, bool item, bool uhh)
+	{
+		return false;
+	}
+	private bool OwnedByPlayer(int index)
+	{
+		return false; //throw new NotImplementedException();
 	}
 	public bool pbCommonAnimation(string animation, Battler atk, object uh)
 	{
@@ -855,6 +868,15 @@ public class Battle : UnityUtilityIntegration
 			return false;
 		}*/
 		return true;
+	}
+	//ToDo: Renaame to match above, delete after replacing all calls pointing to this method
+	public bool pbCanChooseMove(int pkmn, int index, bool uhh, bool uh)
+	{
+		return false;
+	}
+	public bool pbCanRun(int index)
+	{
+		return false;
 	}
 
 	//void MoveEffects(int who, int move)
@@ -1513,7 +1535,7 @@ public class Battle : UnityUtilityIntegration
 			return new global::Item(this.Item).ItemPocket == ItemPockets.BERRY;//pbIsBerry?(@item)
 		}
 
-		bool isAirborne(bool ignoreability=false){
+		public bool isAirborne(bool ignoreability=false){
 			if (this.hasWorkingItem(Items.IRON_BALL)) return false;
 			if (effects.Ingrain) return false;
 			if (effects.SmackDown) return false;
@@ -1526,7 +1548,7 @@ public class Battle : UnityUtilityIntegration
 			return false;
 		}
 
-		int Speed()
+		public int Speed()
 		{
 			int[] stagemul = new int[] { 10, 10, 10, 10, 10, 10, 10, 15, 20, 25, 30, 35, 40 };
 			int[] stagediv = new int[] { 40, 35, 30, 25, 20, 15, 10, 10, 10, 10, 10, 10, 10 };
@@ -1999,6 +2021,19 @@ public class Battle : UnityUtilityIntegration
 		#endregion
 
 		#region ToDo: Everything here needs to be implemented
+		new public Items Item { get; set; } //ToDo: Fix this
+		new public Types Type1 { get; set; }
+		new public Types Type2 { get; set; }
+		public byte[] baseStats { get; set; }
+		public int gender { get; set; }
+		public int level { get; set; }
+		public int attack { get; set; }
+		public int defense { get; set; }
+		public int spatk { get; set; }
+		public int spdef { get; set; }
+		public int speed { get; set; }
+		public int pbSpeed { get; set; }
+		public int happiness { get; set; }
 		public Moves lastMoveUsedSketch { get; set; }
 		/// <summary>
 		/// Does faint animation 
@@ -2007,6 +2042,7 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		public void pbFaint() { }
 		public void pbConsumeItem() { }
+		public void pbConsumeItem(bool one, bool two) { }
 		public void pbBerryCureCheck() { }
 		public void pbAbilityCureCheck() { }
 		public void pbActivateBerryEffect(Items item, bool something) { }
@@ -2023,11 +2059,17 @@ public class Battle : UnityUtilityIntegration
 		public void pbCureAttract(bool animate = false) { }
 		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
 		public void pbUseMoveSimple(Moves move) { }
+		public Battler pbOppositeOpposing { get; set; }
+		public float weight { get; set; }
 		public float Weight(Battler pkmn)
 		{
 			return 0f;
 		}
 		public bool pbHasType(Types type)
+		{
+			return false;
+		}
+		public bool pbIsStatus()
 		{
 			return false;
 		}
@@ -2095,6 +2137,10 @@ public class Battle : UnityUtilityIntegration
 		{
 			return false;
 		}
+		public void pbUseMoveSimple(Moves pkmn, int uhh, int index)
+		{
+			//return false;
+		}
 		public bool pbAddTarget(byte index, Battler pkmn)
 		{
 			return false;
@@ -2154,9 +2200,11 @@ public class Battle : UnityUtilityIntegration
 		}
 	}
 
-	private bool OwnedByPlayer(int index)
+	//ToDo: Fix this
+	public class Scene
 	{
-		throw new NotImplementedException();
+		public void pbHPChanged(Battler pkmn, int _new) { }
+		public void pbChangePokemon(Battler pkmn, Pokemons _new) { }
 	}
 
 	/// <summary>
@@ -2200,6 +2248,7 @@ public class Battle : UnityUtilityIntegration
 		public bool IsPhysical					{ get { return Category == Category.PHYSICAL; } }
 		public bool IsSpecial					{ get { return Category == Category.SPECIAL; } }
 		public bool UnuseableInGravity			{ get; set; }
+		public bool pbIsStatus(){ return false; }
 		public string EffectString				{ get; set; }
 		public string Nothing = "But nothing happened!";
 		#endregion
