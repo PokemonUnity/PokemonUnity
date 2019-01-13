@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Pokémon Unity Logo" src="https://i.imgur.com/E3necpp.png" />
+  <img alt="Pokémon Unity Logo" src="https://styles.redditmedia.com/t5_39moy/styles/bannerPositionedImage_6is405sk53j01.png" />
   <h1 align="center">Pokémon Unity by IIcolour Spectrum</h1>
   <p align="center">
     <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"/></a>
