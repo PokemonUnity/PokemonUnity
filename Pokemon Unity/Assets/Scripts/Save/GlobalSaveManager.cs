@@ -12,6 +12,9 @@ using UnityEngine.SceneManagement;
 public static class GlobalSaveManager
 {
     private const string BuildVersion = "0.0.1";
+    //If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
+    //If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
+    private const bool UseAppdate = false;
     private static string saveLocation = Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
 
     private static UnityEngine.GameObject Player;
@@ -51,6 +54,11 @@ public static class GlobalSaveManager
     /// </summary>
     public static void Save()
     {
+        if (!UseAppdate)
+        {
+            saveLocation = UnityEngine.Application.dataPath + "/Saves/";
+        }
+
         Pokemon[][] Party = SaveData.currentSave.PC.boxes;
         Bag PlayerBag = SaveData.currentSave.Bag;
 
@@ -93,6 +101,15 @@ public static class GlobalSaveManager
     /// <param name="saveIndex">The index of the save (starting from 0, FE: "Save0.pku")</param>
     public static void Load(int saveIndex)
     {
+        if (!UseAppdate)
+        {
+            saveLocation = UnityEngine.Application.dataPath + "/Saves/";
+            if(!Directory.Exists(saveLocation.Substring(0, saveLocation.Length - 1)))
+            {
+                Directory.CreateDirectory(saveLocation.Substring(0, saveLocation.Length - 1));
+            }
+        }
+
         BinaryFormatter bf = new BinaryFormatter();
         try
         {

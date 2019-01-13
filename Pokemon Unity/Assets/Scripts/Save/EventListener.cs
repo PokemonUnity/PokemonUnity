@@ -11,6 +11,7 @@ public class EventListener : UnityEngine.MonoBehaviour
 
     private void Awake()
     {
+        GlobalSaveManager.Load(0);
         if (null == Player)
         {
             Player = UnityEngine.GameObject.FindGameObjectWithTag("Player");
@@ -68,6 +69,7 @@ public class EventListener : UnityEngine.MonoBehaviour
             {
                 RegisteredEvent = true;
                 GlobalSaveManager.RegisterEvent(new CustomSaveEvent(SaveEventType.ITEM, eventObject, SceneManager.GetActiveScene().buildIndex));
+                GlobalSaveManager.Save();
             }
         }
         else if(playerMovement.busyWith == null)
