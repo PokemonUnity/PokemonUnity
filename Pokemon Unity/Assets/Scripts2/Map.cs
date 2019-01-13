@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using PokemonUnity;
+using PokemonUnity.Pokemon;
 
 /// ToDo: Store maps as GameObjects in code
 /// Find a way to associate code-variables to Maps
@@ -279,7 +280,7 @@ class WildPokemon
 	#region Nested Classes
 	public class MapPokemon
 	{
-		PokemonUnity.Pokemon.Pokemons Pokemon { get; set; }
+		PokemonUnity.Pokemons Pokemon { get; set; }
 		int minLevel { get; set; }
 		int maxLevel { get; set; }
 	}
@@ -721,12 +722,12 @@ class PokemonEncounter
 
 	public Pokemon EncounterRNG()
 	{
-		return new Pokemon(PokemonUnity.Pokemon.Pokemons.NONE);
+		return new Pokemon(PokemonUnity.Pokemons.NONE);
 	}
 
 	public class EncounterSlot
 	{
-		PokemonUnity.Pokemon.Pokemons Pokemon { get; set; }
+		PokemonUnity.Pokemons Pokemon { get; set; }
 		int MinLevel { get; set; }
 		int MaxLevel { get; set; }
 	}
