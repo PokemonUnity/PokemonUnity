@@ -604,19 +604,19 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		for (int i = 0; i < playerParty.childCount; i++)
 		{
 			var pkmn = GameVariables.battle.party1[i];
-			if (pkmn.Species != PokemonUnity.Pokemon.Pokemons.NONE)
+			if (pkmn.Species != PokemonUnity.Pokemons.NONE)
 			{
 				var status = pkmn.Status;
 				switch (status)
 				{
-					case PokemonUnity.Move.Status.SLEEP:
-					case PokemonUnity.Move.Status.POISON:
-					case PokemonUnity.Move.Status.PARALYSIS:
-					case PokemonUnity.Move.Status.BURN:
-					case PokemonUnity.Move.Status.FROZEN:
+					case PokemonUnity.Status.SLEEP:
+					case PokemonUnity.Status.POISON:
+					case PokemonUnity.Status.PARALYSIS:
+					case PokemonUnity.Status.BURN:
+					case PokemonUnity.Status.FROZEN:
 						playerParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.pressedSprite;
 						break;
-					case PokemonUnity.Move.Status.NONE:
+					case PokemonUnity.Status.NONE:
 					default:
 						playerParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.highlightedSprite;
 						break;
@@ -631,19 +631,19 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		for (int i = 0; i < opponentParty.childCount; i++)
 		{
 			var pkmn = GameVariables.battle.party1[i];
-			if (pkmn.Species != PokemonUnity.Pokemon.Pokemons.NONE)
+			if (pkmn.Species != PokemonUnity.Pokemons.NONE)
 			{
 				var status = pkmn.Status;
 				switch (status)
 				{
-					case PokemonUnity.Move.Status.SLEEP:
-					case PokemonUnity.Move.Status.POISON:
-					case PokemonUnity.Move.Status.PARALYSIS:
-					case PokemonUnity.Move.Status.BURN:
-					case PokemonUnity.Move.Status.FROZEN:
+					case PokemonUnity.Status.SLEEP:
+					case PokemonUnity.Status.POISON:
+					case PokemonUnity.Status.PARALYSIS:
+					case PokemonUnity.Status.BURN:
+					case PokemonUnity.Status.FROZEN:
 						opponentParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.pressedSprite;
 						break;
-					case PokemonUnity.Move.Status.NONE:
+					case PokemonUnity.Status.NONE:
 					default:
 						opponentParty.GetChild(i).GetComponent<Image>().sprite = PartySlotUI.spriteState.highlightedSprite;
 						break;

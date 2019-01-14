@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Attack;
 
 public class SummaryHandler : MonoBehaviour
 {
