@@ -205,7 +205,7 @@ public class Function
 				{
 					attacker.Form = (attacker.Form + 1) % 2;
 					attacker.Update(true);
-					//this.battle.scene.pbChangePokemon(attacker, attacker.Species); //ToDo: Feed animation thru Battleor make a Scene class
+					this.battle.scene.pbChangePokemon(attacker, attacker.Species); //ToDo: Feed animation thru Battleor make a Scene class
 					//battle.pbDisplay(_INTL("{1} transformed!", attacker.pbThis))
 					//PBDebug.log("[Form changed] #{attacker.pbThis} changed to form #{attacker.Form}")
 				}
@@ -2974,7 +2974,7 @@ public class Function
 			foreach (var i in attacker.moves)
 			{
 				if (i.MoveId == this.id) continue; //next
-												   //if (PBTypes.isPseudoType(i.Type)) continue; //next
+				//if (PBTypes.isPseudoType(i.Type)) continue; //next
 				if (attacker.pbHasType(i.Type)) continue; //next
 				if (!types.Contains(i.Type))
 				{
@@ -3017,7 +3017,7 @@ public class Function
 				return -1;
 			}
 			if (opponent.lastMoveUsed <= 0 //||
-										   //PBTypes.isPseudoType(new Move ((Moves)opponent.lastMoveUsed).Type)
+				//PBTypes.isPseudoType(new Move ((Moves)opponent.lastMoveUsed).Type)
 			   )
 			{
 				//battle.pbDisplay(_INTL("But it failed!"))
@@ -3037,7 +3037,7 @@ public class Function
 				//battle.pbDisplay(_INTL("But it failed!"))
 				return -1;
 			}
-			for (int i = 0; i < PBTypes.maxValue; i++)
+			for (int i = 0; i < Enum.GetValues(typeof(Types)).Length; i++)
 			{
 				//if (PBTypes.isPseudoType(i)) continue; //next
 				if (attacker.pbHasType((Types)i)) continue; //next
@@ -3604,7 +3604,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_070 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (!attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.STURDY))
 			{
@@ -3757,8 +3757,8 @@ public class Function
 	{
 		public object pbModifyDamage(int damagemult, Battle.Battler attacker, Battle.Battler opponent)
 		{
-			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCB)
-			{ // Dive
+			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCB)	// Dive
+			{ 
 				return (int)Math.Round(damagemult * 2.0f);
 			}
 			return damagemult;
@@ -3776,8 +3776,8 @@ public class Function
 		{
 
 			object ret = damagemult;
-			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCA)
-			{ // Dig
+			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCA)	// Dig
+			{ 
 				ret = (int)Math.Round(damagemult * 2.0f);
 			}
 			if (this.battle.field.GrassyTerrain > 0)
@@ -3897,7 +3897,7 @@ public class Function
 			return ret;
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.damagestate.Critical || this.doubled)
 			{
@@ -4083,8 +4083,8 @@ public class Function
 				attacker.OwnSide.Round += 1;
 				if (attacker.Partner.Species != Pokemons.NONE && !attacker.Partner.hasMovedThisRound())
 				{
-					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)
-					{ // Will use a move
+					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Will use a move
+					{ 
 						Battle.InBattleMove partnermove = this.battle.choices[attacker.Partner.Index].Move;
 						if (partnermove.Function == this.function)
 						{
@@ -4109,8 +4109,8 @@ public class Function
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
-			   opponent.hasMovedThisRound())
-			{ // Used a move already;
+			   opponent.hasMovedThisRound())	// Used a move already
+			{ 
 				return basedmg * 2;
 			}
 			return basedmg;
@@ -4162,7 +4162,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 
 			type = Types.NORMAL;
@@ -4307,7 +4307,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_090 : PokeBattle_Move
 	{
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			int[] hp = pbHiddenPower(attacker.IV);
 
@@ -4329,7 +4329,7 @@ public class Function
 		byte powermax = 70;
 		int type = 0; int baseY = 0;
 		List<Types> types = new List<Types>();
-		for (int i = 0; i < PBTypes.maxValue; i++)
+		for (int i = 0; i < Enum.GetValues(typeof(Types)).Length; i++)
 		{
 			if (//!PBTypes.isPseudoType(i) &&
 				(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i);
@@ -4476,8 +4476,8 @@ public class Function
 		{
 
 			int ret = this.calcbasedmg;
-			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCA)
-			{ // Dig
+			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCA)	// Dig
+			{ 
 				ret *= 2;
 			}
 			if (this.battle.field.GrassyTerrain > 0)
@@ -4534,25 +4534,23 @@ public class Function
 		};
 			foreach (Items i in damagearray.Keys)
 			{
-				//  byte data = damagearray[i];
-				//  if (data){
+				//byte data = damagearray[i];
+				//if (data){
 				//	foreach (var j in data){ 
-				if (this.berry == i)
-				{
-					int ret = damagearray[i];
+						if (this.berry == i)
+						{
+							int ret = damagearray[i];
 
-					if (Settings.USENEWBATTLEMECHANICS) ret += 20;
-					return ret;
-				}
-
+							if (Settings.USENEWBATTLEMECHANICS) ret += 20;
+							return ret;
+						}
 				//	}
-				//  }
-
+				//}
 			}
 			return 1;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 
 			type = Types.NORMAL;
@@ -4596,15 +4594,15 @@ public class Function
 		};
 			foreach (Items i in typearray.Keys)
 			{
-				//  data = typearray[i];;
-				//  if (data){
+				//data = typearray[i];;
+				//if (data){
 				//	foreach (var j in data){ 
-				if (this.berry == i)
-				{
-					type = typearray[i];//i;
-				}
+						if (this.berry == i)
+						{
+							type = typearray[i];//i;
+						}
 				//	}
-				//  }
+				//}
 			}
 			return type;
 		}
@@ -4815,7 +4813,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_09F : PokeBattle_Move
 	{
-		public Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.id == Moves.JUDGMENT)
 			{
@@ -5071,7 +5069,7 @@ public class Function
 			}
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 
 			id = Moves.BODY_SLAM;
@@ -5113,7 +5111,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0A5 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -5382,8 +5380,8 @@ public class Function
 		{
 			if (opponent.lastMoveUsed <= 0 || //(
 			   !new Move((Moves)opponent.lastMoveUsed).Flag.Mirror //& 0x10)==0
-			   )
-			{ // flag e: Copyable by Mirror Move
+			   ) // flag e: Copyable by Mirror Move
+			{ 
 			  //battle.pbDisplay(_INTL("The mirror move failed!"))
 				return -1;
 			}
@@ -5662,59 +5660,59 @@ public class Function
 		public override object pbEffect(Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			List<Move.Effect> blacklist = new List<Move.Effect> {
-		   (Move.Effect)0x02,    // Struggle
-		   (Move.Effect)0x14,    // Chatter
-		   (Move.Effect)0x5C,    // Mimic
-		   (Move.Effect)0x5D,    // Sketch
-		   (Move.Effect)0x69,    // Transform
-		   (Move.Effect)0x71,    // Counter
-		   (Move.Effect)0x72,    // Mirror Coat
-		   (Move.Effect)0x73,    // Metal Burst
-		   (Move.Effect)0x9C,    // Helping Hand
-		   (Move.Effect)0xAA,    // Detect, Protect
-		   (Move.Effect)0xAD,    // Feint
-		   (Move.Effect)0xAE,    // Mirror Move
-		   (Move.Effect)0xAF,    // Copycat
-		   (Move.Effect)0xB0,    // Me First
-		   (Move.Effect)0xB2,    // Snatch
-		   (Move.Effect)0xB3,    // Nature Power
-		   (Move.Effect)0xB4,    // Sleep Talk
-		   (Move.Effect)0xB5,    // Assist
-		   (Move.Effect)0xB6,    // Metronome
-		   (Move.Effect)0xCD,    // Shadow Force
-		   (Move.Effect)0xE7,    // Destiny Bond
-		   (Move.Effect)0xE8,    // Endure
-		   (Move.Effect)0xEB,    // Roar, Whirlwind
-		   (Move.Effect)0xEC,    // Circle Throw, Dragon Tail
-		   (Move.Effect)0xF1,    // Covet, Thief
-		   (Move.Effect)0xF2,    // Switcheroo, Trick
-		   (Move.Effect)0xF3,    // Bestow
-		   (Move.Effect)0x115,   // Focus Punch
-		   (Move.Effect)0x117,   // Follow Me, Rage Powder
-		   (Move.Effect)0x149,   // Mat Block
-		   (Move.Effect)0x14B,   // King's Shield
-		   (Move.Effect)0x14C,   // Spiky Shield
-		   (Move.Effect)0x14D,   // Phantom Force
-		   (Move.Effect)0x158    // Belch
+		   (Move.Effect)0x02,		// Struggle
+		   (Move.Effect)0x14,		// Chatter
+		   (Move.Effect)0x5C,		// Mimic
+		   (Move.Effect)0x5D,		// Sketch
+		   (Move.Effect)0x69,		// Transform
+		   (Move.Effect)0x71,		// Counter
+		   (Move.Effect)0x72,		// Mirror Coat
+		   (Move.Effect)0x73,		// Metal Burst
+		   (Move.Effect)0x9C,		// Helping Hand
+		   (Move.Effect)0xAA,		// Detect, Protect
+		   (Move.Effect)0xAD,		// Feint
+		   (Move.Effect)0xAE,		// Mirror Move
+		   (Move.Effect)0xAF,		// Copycat
+		   (Move.Effect)0xB0,		// Me First
+		   (Move.Effect)0xB2,		// Snatch
+		   (Move.Effect)0xB3,		// Nature Power
+		   (Move.Effect)0xB4,		// Sleep Talk
+		   (Move.Effect)0xB5,		// Assist
+		   (Move.Effect)0xB6,		// Metronome
+		   (Move.Effect)0xCD,		// Shadow Force
+		   (Move.Effect)0xE7,		// Destiny Bond
+		   (Move.Effect)0xE8,		// Endure
+		   (Move.Effect)0xEB,		// Roar, Whirlwind
+		   (Move.Effect)0xEC,		// Circle Throw, Dragon Tail
+		   (Move.Effect)0xF1,		// Covet, Thief
+		   (Move.Effect)0xF2,		// Switcheroo, Trick
+		   (Move.Effect)0xF3,		// Bestow
+		   (Move.Effect)0x115,		// Focus Punch
+		   (Move.Effect)0x117,		// Follow Me, Rage Powder
+		   (Move.Effect)0x149,		// Mat Block
+		   (Move.Effect)0x14B,		// King's Shield
+		   (Move.Effect)0x14C,		// Spiky Shield
+		   (Move.Effect)0x14D,		// Phantom Force
+		   (Move.Effect)0x158		// Belch
 		};
 			if (Settings.USENEWBATTLEMECHANICS)
 			{
 				blacklist.AddRange(new List<Move.Effect>{
-			 // Two-turn attacks
-			 (Move.Effect)0xC3,    // Razor Wind
-			 (Move.Effect)0xC4,    // SolarBeam
-			 (Move.Effect)0xC5,    // Freeze Shock
-			 (Move.Effect)0xC6,    // Ice Burn
-			 (Move.Effect)0xC7,    // Sky Attack
-			 (Move.Effect)0xC8,    // Skull Bash
-			 (Move.Effect)0xC9,    // Fly
-			 (Move.Effect)0xCA,    // Dig
-			 (Move.Effect)0xCB,    // Dive
-			 (Move.Effect)0xCC,    // Bounce
-			 (Move.Effect)0xCD,    // Shadow Force
-			 (Move.Effect)0xCE,    // Sky Drop
-			 (Move.Effect)0x14D,   // Phantom Force
-			 (Move.Effect)0x14E    // Geomancy
+									// Two-turn attacks
+			 (Move.Effect)0xC3,		// Razor Wind
+			 (Move.Effect)0xC4,		// SolarBeam
+			 (Move.Effect)0xC5,		// Freeze Shock
+			 (Move.Effect)0xC6,		// Ice Burn
+			 (Move.Effect)0xC7,		// Sky Attack
+			 (Move.Effect)0xC8,		// Skull Bash
+			 (Move.Effect)0xC9,		// Fly
+			 (Move.Effect)0xCA,		// Dig
+			 (Move.Effect)0xCB,		// Dive
+			 (Move.Effect)0xCC,		// Bounce
+			 (Move.Effect)0xCD,		// Shadow Force
+			 (Move.Effect)0xCE,		// Sky Drop
+			 (Move.Effect)0x14D,	// Phantom Force
+			 (Move.Effect)0x14E		// Geomancy
 		  });
 			}
 			List<Moves> moves = new List<Moves>();
@@ -5728,7 +5726,7 @@ public class Function
 					{
 						if (j.Type == Types.SHADOW) continue; //next
 						if (j.MoveId == 0) continue; //next
-													 //bool found=false;
+						//bool found=false;
 						if (!blacklist.Contains(new Move((Moves)j.MoveId).Function)) moves.Add(j.MoveId);
 					}
 				}
@@ -5797,9 +5795,9 @@ public class Function
 		   Moves.V_CREATE,
 		   Moves.GEOMANCY
 		};
-			for (int i = 0; i < 1000; i++)
-			{//loop do break unless i<1000
-				Moves move = (Moves)(this.battle.pbRandom(Move.MaxValue) + 1);
+			for (int i = 0; i < 1000; i++) //loop do break unless i<1000
+			{
+				Moves move = (Moves)(this.battle.pbRandom(Enum.GetValues(typeof(Moves)).Length) + 1);
 				if (new Move((Moves)move).Type == Types.SHADOW) continue; //next
 				bool found = false;
 				if (blacklist.Contains(new Move((Moves)move).Function))
@@ -6264,7 +6262,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim;
-																							//battle.pbDisplay(_INTL("{1} whipped up a whirlwind!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} whipped up a whirlwind!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6319,7 +6317,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} took in sunlight!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} took in sunlight!",attacker.pbThis))
 			}
 			if (this.immediate && !this.sunny)
 			{
@@ -6355,7 +6353,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} became cloaked in a freezing light!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} became cloaked in a freezing light!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6400,7 +6398,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} became cloaked in freezing air!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} became cloaked in freezing air!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6445,7 +6443,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} became cloaked in a harsh light!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} became cloaked in a harsh light!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6487,7 +6485,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} tucked in its head!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} tucked in its head!",attacker.pbThis))
 				if (attacker.pbCanIncreaseStatStage(Stats.DEFENSE, attacker, false, this))
 				{
 					attacker.pbIncreaseStat(Stats.DEFENSE, 1, attacker, false, this);
@@ -6532,7 +6530,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} flew up high!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} flew up high!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6568,7 +6566,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} burrowed its way under the ground!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} burrowed its way under the ground!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6604,7 +6602,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} hid underwater!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} hid underwater!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6646,7 +6644,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} sprang up!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} sprang up!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6693,7 +6691,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} vanished instantly!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} vanished instantly!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -6748,7 +6746,7 @@ public class Function
 			if (attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim;
-																							//battle.pbDisplay(_INTL("{1} took {2} into the sky!",attacker.pbThis,opponent.pbThis(true)))
+				//battle.pbDisplay(_INTL("{1} took {2} into the sky!",attacker.pbThis,opponent.pbThis(true)))
 				opponent.effects.SkyDrop = true;
 			}
 			if (attacker.effects.TwoTurnAttack > 0) return 0;
@@ -6862,8 +6860,8 @@ public class Function
 
 		public object pbModifyDamage(int damagemult, Battle.Battler attacker, Battle.Battler opponent)
 		{
-			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCB)
-			{ // Dive
+			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCB)	// Dive
+			{ 
 				return (int)Math.Round(damagemult * 2.0f);
 			}
 			return damagemult;
@@ -6970,7 +6968,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_0D4 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(Battle.Battler attacker)
+		public override object pbDisplayUseMessage(Battle.Battler attacker)
 		{
 			if (attacker.effects.Bide == 0)
 			{
@@ -7752,8 +7750,8 @@ public class Function
 			   (attacker.hasMoldBreaker() || !opponent.hasWorkingAbility(Abilities.SUCTION_CUPS)) &&
 			   !opponent.effects.Ingrain)
 			{
-				if (this.battle.opponent.ID == TrainerTypes.WildPokemon)
-				{//Wild Pokemon Battle
+				if (this.battle.opponent.ID == TrainerTypes.WildPokemon)//Wild Pokemon Battle
+				{
 					if (opponent.level <= attacker.level)
 					{
 						this.battle.decision = (Battle.BattleResults)3; // Set decision to escaped;
@@ -7763,8 +7761,8 @@ public class Function
 				{
 
 					Battle.Battler[] party = this.battle.pbParty(opponent.Index);
-					for (int i = 0; i < party.Length - 1; i++)
-					{ //ToDo: Double check this
+					for (int i = 0; i < party.Length - 1; i++)	//ToDo: Double check this
+					{ 
 						if (this.battle.pbCanSwitch(opponent.Index, i, false))
 						{
 
@@ -8002,8 +8000,8 @@ public class Function
 			}
 			else
 			{
-				//battle.pbDisplay(_INTL("{1} obtained {2}.",attacker.pbThis,oldoppitemname)) if oldoppitem>0
-				//battle.pbDisplay(_INTL("{1} obtained {2}.",opponent.pbThis,oldattitemname)) if oldattitem>0
+				//battle.pbDisplay(_INTL("{1} obtained {2}.",attacker.pbThis,oldoppitemname)) if (oldoppitem>0)
+				//battle.pbDisplay(_INTL("{1} obtained {2}.",opponent.pbThis,oldattitemname)) if (oldattitem>0)
 			}
 			attacker.effects.ChoiceBand = Moves.NONE;//-1;
 
@@ -8143,8 +8141,8 @@ public class Function
 			string itemname = PBItems.getName(item);
 
 			attacker.Item = item;
-			if (this.battle.opponent.ID == TrainerTypes.WildPokemon)
-			{ // In a wild battle
+			if (this.battle.opponent.ID == TrainerTypes.WildPokemon)	// In a wild battle
+			{ 
 				if (attacker.itemInitial == 0) attacker.itemInitial = item;
 
 			}
@@ -8169,33 +8167,33 @@ public class Function
 			get
 			{
 				return new Dictionary<Items, byte> { 
-		   //130 => [	
+		   //130 => 
 					{ Items.IRON_BALL, 130 },
-		   //100 => [	
+		   //100 => 
 					{ Items.ARMOR_FOSSIL, 100 },    { Items.CLAW_FOSSIL, 100 }, { Items.COVER_FOSSIL, 100 },    { Items.DOME_FOSSIL, 100 }, { Items.HARD_STONE, 100 },
 					{ Items.HELIX_FOSSIL, 100 },    { Items.JAW_FOSSIL, 100 },  { Items.OLD_AMBER, 100 },   { Items.PLUME_FOSSIL, 100 },    { Items.RARE_BONE, 100 },
 					{ Items.ROOT_FOSSIL, 100 }, { Items.SAIL_FOSSIL, 100 }, { Items.SKULL_FOSSIL, 100 },	
-			//90 => [	
+			//90 => 
 					{ Items.DEEP_SEA_TOOTH, 90 },   { Items.DRACO_PLATE, 90 },  { Items.DREAD_PLATE, 90 },  { Items.EARTH_PLATE, 90 },  { Items.FIST_PLATE, 90 },
 					{ Items.FLAME_PLATE, 90 },  { Items.GRIP_CLAW, 90 },        { Items.ICICLE_PLATE, 90 }, { Items.INSECT_PLATE, 90 }, { Items.IRON_PLATE, 90 },
 					{ Items.MEADOW_PLATE, 90 }, { Items.MIND_PLATE, 90 },   { Items.PIXIE_PLATE, 90 },  { Items.SKY_PLATE, 90 },        { Items.SPLASH_PLATE, 90 },
 					{ Items.SPOOKY_PLATE, 90 }, { Items.STONE_PLATE, 90 },  { Items.THICK_CLUB, 90 },   { Items.TOXIC_PLATE, 90 },  { Items.ZAP_PLATE, 90 },	
-			//80 => [	
+			//80 => 
 					{ Items.ASSAULT_VEST, 80 }, { Items.DAWN_STONE, 80 },   { Items.DUSK_STONE, 80 },   { Items.ELECTIRIZER, 80 },  { Items.MAGMARIZER, 80 },
 					{ Items.ODD_KEYSTONE, 80 }, { Items.OVAL_STONE, 80 },   { Items.PROTECTOR, 80 },    { Items.QUICK_CLAW, 80 },   { Items.RAZOR_CLAW, 80 },
 					{ Items.SAFETY_GOGGLES, 80 },   { Items.SHINY_STONE, 80 },  { Items.STICKY_BARB, 80 },  { Items.WEAKNESS_POLICY, 80 },	
-			//70 => [	
+			//70 => 
 					{ Items.BURN_DRIVE, 70 },       { Items.CHILL_DRIVE, 70 },  { Items.DOUSE_DRIVE, 70 },  { Items.DRAGON_FANG, 70 },  { Items.POISON_BARB, 70 },
 					{ Items.POWER_ANKLET, 70 }, { Items.POWER_BAND, 70 },   { Items.POWER_BELT, 70 },   { Items.POWER_BRACER, 70 }, { Items.POWER_LENS, 70 },
 					{ Items.POWER_WEIGHT, 70 }, { Items.SHOCK_DRIVE, 70 },	
-			//60 => [	
+			//60 => 
 					{ Items.ADAMANT_ORB, 60 },  { Items.DAMP_ROCK, 60 },    { Items.GRISEOUS_ORB, 60 }, { Items.HEAT_ROCK, 60 },    { Items.LUSTROUS_ORB, 60 },
 					{ Items.MACHO_BRACE, 60 },  { Items.ROCKY_HELMET, 60 }, { Items.STICK, 60 },	
-			//50 => [	
+			//50 => 
 					{ Items.DUBIOUS_DISC, 50 }, { Items.SHARP_BEAK, 50 },	
-			//40 => [	
+			//40 => 
 					{ Items.EVIOLITE, 40 }, { Items.ICY_ROCK, 40 }, { Items.LUCKY_PUNCH, 40 },	
-			//30 => [	
+			//30 => 
 					{ Items.ABILITY_CAPSULE, 30 },  { Items.ABILITY_URGE, 30 }, { Items.ABSORB_BULB, 30 },  { Items.AMAZE_MULCH, 30 },  { Items.AMULET_COIN, 30 },
 					{ Items.ANTIDOTE, 30 }, { Items.AWAKENING, 30 },    { Items.BALM_MUSHROOM, 30 },    { Items.BERRY_JUICE, 30 },  { Items.BIG_MUSHROOM, 30 },
 					{ Items.BIG_NUGGET, 30 },   { Items.BIG_PEARL, 30 },    { Items.BINDING_BAND, 30 }, { Items.BLACK_BELT, 30 },   { Items.BLACK_FLUTE, 30 },
@@ -8230,11 +8228,11 @@ public class Function
 					{ Items.X_DEFENSE_6, 30 },  { Items.X_SP_DEF, 30 }, { Items.X_SP_DEF_2, 30 },   { Items.X_SP_DEF_3, 30 },   { Items.X_SP_DEF_6, 30 },
 					{ Items.X_SP_ATK, 30 },     { Items.X_SP_ATK_2, 30 },   { Items.X_SP_ATK_3, 30 },   { Items.X_SP_ATK_6, 30 },   { Items.X_SPEED, 30 },
 					{ Items.X_SPEED_2, 30 },    { Items.X_SPEED_3, 30 },    { Items.X_SPEED_6, 30 },    { Items.YELLOW_FLUTE, 30 }, { Items.YELLOW_SHARD, 30 }, { Items.ZINC, 30 },	
-					//{ Items.X_SPECIAL, 30 },	{ Items.X_SPECIAL2, 30 },	{ Items.X_SPECIAL_3, 30 },	{ Items.X_SPECIAL_6, 30 },	
-			//20 => [	
+					//{ Items.X_SPECIAL, 30 },	{ Items.X_SPECIAL2, 30 },	{ Items.X_SPECIAL_3, 30 },	{ Items.X_SPECIAL_6, 30 },	//ToDo: Is X-Special a thing?
+			//20 => 
 					{ Items.CLEVER_WING, 20 },  { Items.GENIUS_WING, 20 },  { Items.HEALTH_WING, 20 },  { Items.MUSCLE_WING, 20 },  { Items.PRETTY_WING, 20 },
 					{ Items.RESIST_WING, 20 },  { Items.SWIFT_WING, 20 },	
-			//10 => [	
+			//10 => 
 					{ Items.AIR_BALLOON, 10 },  { Items.BIG_ROOT, 10 }, { Items.BLUE_SCARF, 10 },   { Items.BRIGHT_POWDER, 10 },    { Items.CHOICE_BAND, 10 },
 					{ Items.CHOICE_SCARF, 10 }, { Items.CHOICE_SPECS, 10 }, { Items.DESTINY_KNOT, 10 }, { Items.EXPERT_BELT, 10 },  { Items.FOCUS_BAND, 10 },
 					{ Items.FOCUS_SASH, 10 },   { Items.FULL_INCENSE, 10 }, { Items.GREEN_SCARF, 10 },  { Items.LAGGING_TAIL, 10 }, { Items.LAX_INCENSE, 10 },
@@ -8259,9 +8257,9 @@ public class Function
 			foreach (Items i in flingarray.Keys)
 			{
 				//if (flingarray[i]){
-				//foreach (var j in flingarray[i]){ 
-				if (attacker.Item == i) return false;
-				//}
+				//	foreach (var j in flingarray[i]){ 
+						if (attacker.Item == i) return false;
+				//	}
 				//}
 			}
 			if (pbIsBerry(attacker.Item) &&
@@ -8277,9 +8275,9 @@ public class Function
 			foreach (Items i in flingarray.Keys)
 			{
 				//if (flingarray[i]){
-				//foreach (var j in flingarray[i]){ 
-				if (attacker.Item == i) return i;
-				//}
+				//	foreach (var j in flingarray[i]){ 
+						if (attacker.Item == i) return i;
+				//	}
 				//}
 			}
 			return 1;
@@ -8832,12 +8830,12 @@ public class Function
 		{
 			this.doubledamage = false; this.overridetype = false;
 			if ((int)attacker.effects.FirstPledge == 0x107 ||   // Fire Pledge
-			   (int)attacker.effects.FirstPledge == 0x108)
-			{     // Water Pledge
-				  //battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
+			   (int)attacker.effects.FirstPledge == 0x108)		// Water Pledge
+			{     
+				//battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
 				this.doubledamage = true;
-				if ((int)attacker.effects.FirstPledge == 0x107)
-				{   // Fire Pledge
+				if ((int)attacker.effects.FirstPledge == 0x107)	// Fire Pledge
+				{   
 					this.overridetype = true;
 				}
 			}
@@ -8853,7 +8851,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.overridetype)
 			{
@@ -8871,8 +8869,8 @@ public class Function
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			}
 			// Combined move's effect
-			if ((int)attacker.effects.FirstPledge == 0x107)
-			{   // Fire Pledge
+			if ((int)attacker.effects.FirstPledge == 0x107)	// Fire Pledge
+			{   
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
@@ -8893,8 +8891,8 @@ public class Function
 				attacker.effects.FirstPledge = 0;
 				return ret;
 			}
-			else if ((int)attacker.effects.FirstPledge == 0x108)
-			{   // Water Pledge
+			else if ((int)attacker.effects.FirstPledge == 0x108)// Water Pledge
+			{   
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
@@ -8917,8 +8915,8 @@ public class Function
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
 			Move.Effect partnermove = Move.Effect.UnimplementedMove; //-1;
-			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)
-			{ // Chose a move
+			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
+			{ 
 				if (!attacker.Partner.hasMovedThisRound())
 				{
 					Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
@@ -8929,10 +8927,10 @@ public class Function
 
 				}
 			}
-			if ((int)partnermove == 0x107 ||   // Fire Pledge
-			   (int)partnermove == 0x108)
-			{      // Water Pledge
-				   //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
+			if ((int)partnermove == 0x107 ||	// Fire Pledge
+			   (int)partnermove == 0x108)		// Water Pledge
+			{     
+				//battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 				attacker.Partner.effects.FirstPledge = this.function;
 				attacker.Partner.effects.MoveNext = true;
 				return 0;
@@ -8942,7 +8940,7 @@ public class Function
 			return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.overridetype)
 			{
@@ -8963,12 +8961,12 @@ public class Function
 		{
 			this.doubledamage = false; this.overridetype = false;
 			if ((int)attacker.effects.FirstPledge == 0x106 ||   // Grass Pledge
-			   (int)attacker.effects.FirstPledge == 0x108)
-			{       // Water Pledge
-					//battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
+			   (int)attacker.effects.FirstPledge == 0x108)		// Water Pledge
+			{       
+				//battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
 				this.doubledamage = true;
-				if ((int)attacker.effects.FirstPledge == 0x108)
-				{   // Water Pledge
+				if ((int)attacker.effects.FirstPledge == 0x108)	// Water Pledge
+				{   
 					this.overridetype = true;
 				}
 			}
@@ -8984,7 +8982,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.overridetype)
 			{
@@ -9002,8 +9000,8 @@ public class Function
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			}
 			// Combined move's effect
-			if ((int)attacker.effects.FirstPledge == 0x106)
-			{   // Grass Pledge
+			if ((int)attacker.effects.FirstPledge == 0x106)	// Grass Pledge
+			{   
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
@@ -9024,8 +9022,8 @@ public class Function
 				attacker.effects.FirstPledge = 0;
 				return ret;
 			}
-			else if ((int)attacker.effects.FirstPledge == 0x108)
-			{   // Water Pledge
+			else if ((int)attacker.effects.FirstPledge == 0x108)	// Water Pledge
+			{   
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
@@ -9048,22 +9046,22 @@ public class Function
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
 			Move.Effect partnermove = Move.Effect.UnimplementedMove; //-1;
-			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)
-			{ // Chose a move
+			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
+			{ 
 				if (!attacker.Partner.hasMovedThisRound())
 				{
 					Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
-					if (move > 0)
-					{//move && 
+					if (move > 0)	//move && 
+					{
 						partnermove = this.battle.choices[attacker.Partner.Index].Move.Function;
 					}
 
 				}
 			}
-			if ((int)partnermove == 0x106 ||   // Grass Pledge
-			   (int)partnermove == 0x108)
-			{      // Water Pledge
-				   //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
+			if ((int)partnermove == 0x106 ||	// Grass Pledge
+			   (int)partnermove == 0x108)		// Water Pledge
+			{      
+				//battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 				attacker.Partner.effects.FirstPledge = this.function;
 				attacker.Partner.effects.MoveNext = true;
 				return 0;
@@ -9073,7 +9071,7 @@ public class Function
 			return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.overridetype)
 			{
@@ -9094,12 +9092,12 @@ public class Function
 		{
 			this.doubledamage = false; this.overridetype = false;
 			if ((int)attacker.effects.FirstPledge == 0x106 ||   // Grass Pledge
-			   (int)attacker.effects.FirstPledge == 0x107)
-			{      // Fire Pledge
-				   //battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
+			   (int)attacker.effects.FirstPledge == 0x107)		// Fire Pledge
+			{      
+				//battle.pbDisplay(_INTL("The two moves have become one! It's a combined move!"))
 				this.doubledamage = true;
-				if ((int)attacker.effects.FirstPledge == 0x106)
-				{   // Grass Pledge
+				if ((int)attacker.effects.FirstPledge == 0x106)	// Grass Pledge
+				{   
 					this.overridetype = true;
 				}
 			}
@@ -9115,7 +9113,7 @@ public class Function
 			return basedmg;
 		}
 
-		public object pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
+		public override Types pbModifyType(Types type, Battle.Battler attacker, Battle.Battler opponent)
 		{
 			if (this.overridetype)
 			{
@@ -9133,8 +9131,8 @@ public class Function
 				return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			}
 			// Combined move's effect
-			if ((int)attacker.effects.FirstPledge == 0x106)
-			{   // Grass Pledge
+			if ((int)attacker.effects.FirstPledge == 0x106)	// Grass Pledge
+			{   
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
@@ -9155,8 +9153,8 @@ public class Function
 				attacker.effects.FirstPledge = 0;
 				return ret;
 			}
-			else if ((int)attacker.effects.FirstPledge == 0x107)
-			{   // Fire Pledge
+			else if ((int)attacker.effects.FirstPledge == 0x107)	// Fire Pledge
+			{   
 				object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 				if (opponent.damagestate.CalcDamage > 0)
 				{
@@ -9179,22 +9177,22 @@ public class Function
 			// Set up partner for a combined move
 			attacker.effects.FirstPledge = 0;
 			Move.Effect partnermove = Move.Effect.UnimplementedMove; //-1;
-			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)
-			{ // Chose a move
+			if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Chose a move
+			{ 
 				if (!attacker.Partner.hasMovedThisRound())
 				{
 					Moves move = this.battle.choices[attacker.Partner.Index].Move.MoveId;
-					if (move > 0)
-					{//move && 
+					if (move > 0)	//move && 
+					{
 						partnermove = this.battle.choices[attacker.Partner.Index].Move.Function;
 					}
 
 				}
 			}
-			if ((int)partnermove == 0x106 ||   // Grass Pledge
-			   (int)partnermove == 0x107)
-			{      // Fire Pledge
-				   //battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
+			if ((int)partnermove == 0x106 ||	// Grass Pledge
+			   (int)partnermove == 0x107)		// Fire Pledge
+			{      
+				//battle.pbDisplay(_INTL("{1} is waiting for {2}'s move...",attacker.pbThis,attacker.Partner.pbThis(true)))
 				attacker.Partner.effects.FirstPledge = this.function;
 				attacker.Partner.effects.MoveNext = true;
 				return 0;
@@ -9204,7 +9202,7 @@ public class Function
 			return base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.overridetype)
 			{
@@ -9241,7 +9239,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_10A : PokeBattle_Move
 	{
-		public object pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
+		public override int pbCalcDamage(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return base.pbCalcDamage(attacker, opponent, thismove.NOREFLECT);
 		}
@@ -9277,7 +9275,7 @@ public class Function
 			return ret;
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (attacker.OpposingSide.Reflect > 0 ||
 			   attacker.OpposingSide.LightScreen > 0)
@@ -9546,7 +9544,7 @@ public class Function
 			return 0;
 		}
 
-		public object pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+		public override IEnumerator pbShowAnimation(Moves id, Battle.Battler attacker, Battle.Battler opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (this.battle.futuresight)
 			{
@@ -9713,7 +9711,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_115 : PokeBattle_Move
 	{
-		public object pbDisplayUseMessage(Battle.Battler attacker)
+		public override object pbDisplayUseMessage(Battle.Battler attacker)
 		{
 			if (attacker.lastHPLost > 0)
 			{
@@ -9785,10 +9783,10 @@ public class Function
 			{
 				Battle.Battler poke = this.battle.battlers[i];
 				if (poke.Species == Pokemons.NONE) continue; //next
-				if ((int)new Move((Moves)poke.effects.TwoTurnAttack).Function == 0xC9 || // Fly
-				   (int)new Move((Moves)poke.effects.TwoTurnAttack).Function == 0xCC || // Bounce
-				   (int)new Move((Moves)poke.effects.TwoTurnAttack).Function == 0xCE)
-				{    // Sky Drop
+				if ((int)new Move((Moves)poke.effects.TwoTurnAttack).Function == 0xC9 ||// Fly
+				   (int)new Move((Moves)poke.effects.TwoTurnAttack).Function == 0xCC ||	// Bounce
+				   (int)new Move((Moves)poke.effects.TwoTurnAttack).Function == 0xCE)	// Sky Drop
+				{    
 					poke.effects.TwoTurnAttack = 0;
 				}
 				if (poke.effects.SkyDrop)
@@ -9885,7 +9883,7 @@ public class Function
 	{
 		public object pbBaseDamage(int basedmg, Battle.Battler attacker, Battle.Battler opponent)
 		{
-			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xC9 || // Fly
+			if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xC9 ||// Fly
 			   (int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCC || // Bounce
 			   (int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCE || // Sky Drop
 			   opponent.effects.SkyDrop)
@@ -9907,9 +9905,9 @@ public class Function
 
 				bool showmsg = (opponent.hasType(Types.FLYING) ||
 						 opponent.hasWorkingAbility(Abilities.LEVITATE));
-				if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xC9 || // Fly
-				   (int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCC)
-				{    // Bounce
+				if ((int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xC9 ||// Fly
+				   (int)new Move((Moves)opponent.effects.TwoTurnAttack).Function == 0xCC)	// Bounce
+				{    
 					opponent.effects.TwoTurnAttack = 0; showmsg = true;
 				}
 				if (opponent.effects.MagnetRise > 0)
@@ -10037,7 +10035,8 @@ public class Function
 			//ToDo: Must assign each variable one by one.
 			foreach (BattlerEffects i in effectstoswap)
 			{
-				//  a.effects[i], b.effects[i]= b.effects[i], a.effects[i];
+				//ToDo: create temp variables then override source
+				//a.effects[i], b.effects[i]= b.effects[i], a.effects[i];
 			}
 
 			attacker.Update(true);
@@ -10250,7 +10249,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_139 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10333,7 +10332,7 @@ public class Function
 			return false;
 		}
 
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10353,7 +10352,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_13C : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10642,9 +10641,9 @@ public class Function
 				return -1;
 			}
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
-																		//!this.battle.choices[opponent.Index].Move ||
-			   this.battle.choices[opponent.Index].Move.MoveId <= 0 ||
-			   opponent.hasMovedThisRound())
+				//!this.battle.choices[opponent.Index].Move ||
+				this.battle.choices[opponent.Index].Move.MoveId <= 0 ||
+				opponent.hasMovedThisRound())
 			{
 				//battle.pbDisplay(_INTL("But it failed!"))
 				return -1;
@@ -10694,7 +10693,7 @@ public class Function
 	/// <summary>
 	public class PokeBattle_Move_147 : PokeBattle_Move
 	{
-		public object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
+		public override object pbAccuracyCheck(Battle.Battler attacker, Battle.Battler opponent)
 		{
 			return true;
 		}
@@ -10913,7 +10912,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} vanished instantly!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} vanished instantly!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -10962,7 +10961,7 @@ public class Function
 			if (this.immediate || attacker.effects.TwoTurnAttack > 0)
 			{
 				pbShowAnimation(this.id, attacker, opponent, 1, alltargets, showanimation); // Charging anim
-																							//battle.pbDisplay(_INTL("{1} is absorbing power!",attacker.pbThis))
+				//battle.pbDisplay(_INTL("{1} is absorbing power!",attacker.pbThis))
 			}
 			if (this.immediate)
 			{
@@ -11307,7 +11306,7 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 	{
 		return Types.NONE;
 	}
-	public virtual object pbModifyType(Types type, Battle.Battler atk, Battle.Battler opp)
+	public virtual Types pbModifyType(Types type, Battle.Battler atk, Battle.Battler opp)
 	{
 		return Types.NONE;
 	}
