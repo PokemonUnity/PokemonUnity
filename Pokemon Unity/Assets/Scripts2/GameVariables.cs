@@ -312,7 +312,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 	}
 	#endregion
 
-	#region Trainer PC and Bag Inventory
+	#region Trainer PC
 	public class TrainerPC
 	{
 		//public static PC
