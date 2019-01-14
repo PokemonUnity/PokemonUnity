@@ -5,4 +5,4 @@ You can view documentation at the [PkUnity GitBook](https://pokemonunity.gitbook
 # Thanks for using my tool!
 Tiled2PkUnity was developed by TeamPopplio.
 
-**For support with the app, please contact Popplio#7754 on Discord rather than the original PkUnity developers/maintainers. This application is seperate from the framework itself.**
+**For support with the app, please contact [TeamPopplio](https://github.com/TeamPopplio) rather than the original PkUnity developers/maintainers. This application is seperate from the framework itself.**
