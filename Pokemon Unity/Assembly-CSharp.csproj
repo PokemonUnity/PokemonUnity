@@ -53,7 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts2\Battle\Attack.cs" />
+    <Compile Include="Assets\Scripts2\Enums\Battles.cs" />
+    <Compile Include="Assets\Scripts2\Enums\Pokemons.cs" />
+    <Compile Include="Assets\Scripts2\Enums\Items.cs" />
+    <Compile Include="Assets\Scripts2\Enums\Moves.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\BattlePokemonHandler.cs" />
+    <Compile Include="Assets\Scripts2\Enums\Enums.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Type.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
@@ -119,10 +124,10 @@
     <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
     <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
     <Compile Include="Assets\Scripts\WindowLight.cs" />
-    <Compile Include="Assets\Scripts2\AnimationEffect.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\AnimationEffect.cs" />
     <Compile Include="Assets\Scripts2\Battle\Battle.cs" />
     <Compile Include="Assets\Scripts2\Battle\Effects.cs" />
-    <Compile Include="Assets\Scripts2\Billboard.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\Billboard.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\AudioHandler.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\BattleAnimationHandler.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\CanvasUIManager.cs" />
@@ -139,7 +144,7 @@
     <Compile Include="Assets\Scripts2\Pokemon\Nature.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Pokemon.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\PokemonDatabase.cs" />
-    <Compile Include="Assets\Scripts2\ReSkinAnimation.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\ReSkinAnimation.cs" />
     <Compile Include="Assets\Scripts2\Trainer.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
