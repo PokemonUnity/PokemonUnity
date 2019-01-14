@@ -8,17 +8,8 @@ using PokemonUnity;
 /// <summary>
 /// Namespace to nest all Pokemon Move Enums
 /// </summary>
-namespace PokemonUnity.Move
+namespace PokemonUnity.Attack
 {
-	public enum Status
-	{
-		NONE,
-		SLEEP,
-		POISON,
-		PARALYSIS,
-		BURN,
-		FROZEN
-	}
 	/// <summary>
 	/// Is one of the following:
 	/// Physical, Special, or Status

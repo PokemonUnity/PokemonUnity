@@ -8,7 +8,8 @@ using PokemonUnity.Item;
 //using PokemonUnity.Move;
 using System.Collections;
 
-
+namespace PokemonUnity.Battle
+{
 /// <summary>
 /// Uses current battle and manipulates the data then return the current battle with updated values.
 /// </summary>
@@ -21,11 +22,119 @@ using System.Collections;
 //	//return await _subscriptionPaymentRepository.GetAll().LastOrDefaultAsync(predicate);
 //}
 
-/// <summary>
-/// During battle, the moves used are modified by these classes before calculations are applied
-/// </summary>
-public class Function
+//ToDo: Inhereit from Move
+public abstract class PokeBattle_Move : IPokeBattle_Move
 {
+	public bool overridetype { get; set; }
+	public bool sunny { get; set; }
+	public bool checks { get; set; }
+	public bool doubled { get; set; }
+	public bool forcedamage { get; set; }
+	public bool immediate { get; set; }
+	public bool doubledamage { get; set; }
+	public int basedamage { get; set; }
+	public int calcbasedmg { get; set; }
+	public byte PP { get; set; }
+	public byte accuracy { get; set; }
+	public List<byte> participants { get; set; }
+	public PokemonUnity.Attack.Move.Effect function { get; set; }
+	public Items berry { get; set; }
+	public Moves id { get; set; }
+	public Types type { get; set; }
+	public Battle battle { get; set; }
+	public virtual int AddlEffect { get { return thismove.AddlEffect; } }
+	public Move thismove { get; set; }
+	public bool isSoundBased()
+	{
+		return true;
+	}
+	public bool IsDamaging()
+	{
+		return true;
+	}
+	public bool pbIsDamaging()
+	{
+		return true;
+	}
+	public bool pbIsPokeBall(Items item)
+	{
+		return true;
+	}
+	public bool pbIsBerry(Items item)
+	{
+		return true;
+	}
+	public bool pbIsGem(Items item)
+	{
+		return true;
+	}
+	public bool pbIsMegaStone(Items item)
+	{
+		return true;
+	}
+	public bool ignoresSubstitute(Pokemon atk)
+	{
+		return true;
+	}
+	public virtual object pbDisplayUseMessage(Pokemon attacker)
+	{
+		return true;
+	}
+	public Types pbType(Types type, Pokemon atk, Pokemon opp)
+	{
+		return Types.NONE;
+	}
+	public virtual Types pbModifyType(Types type, Pokemon atk, Pokemon opp)
+	{
+		return Types.NONE;
+	}
+	public virtual Types pbTypeModifier(Types type, Pokemon atk, Pokemon opp)
+	{
+		return Types.NONE;
+	}
+	public bool pbTypeImmunityByAbility(Types type, Pokemon atk, Pokemon opp)
+	{
+		return true;
+	}
+	/// <summary>
+	/// </summary>
+	/// ToDo: I think this only returns null (void) or `-1`; so all codes check for `x < zero`
+	public virtual object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+	{
+		return null;
+	}
+	public virtual int pbEffectFixedDamage(int dmg, Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+	{
+		//return pbEffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation);
+		return 0;
+	}
+	public virtual object pbEffectMessages(Pokemon attacker, Pokemon opponent, bool ignoretype = false)
+	{
+		return null;
+	}
+	public virtual object pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
+	{
+		return null;
+	}
+	public virtual int pbCalcDamage(Pokemon attacker, Pokemon opponent)
+	{
+		return 0;
+	}
+	public virtual int pbCalcDamage(Pokemon attacker, Pokemon opponent, bool somethinghere) //ToDo: Fix this
+	{
+		return 0;
+	}
+	public virtual IEnumerator pbShowAnimation(Moves id, Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
+	{
+		return null;
+	}
+}
+
+// <summary>
+// During battle, the moves used are modified by these classes before calculations are applied
+// </summary>
+//public class Function
+//{
 	#region Battle Class Functions
 	/// <summary>
 	/// Superclass that handles moves using a non-existent function code.
@@ -2894,7 +3003,7 @@ public class Function
 				if (attacker.moves[i].MoveId == this.id)
 				{
 					Move newmove = new Move(opponent.lastMoveUsed);
-					attacker.moves[i] = new Battle.Move(//this.battle, 
+					attacker.moves[i] = new Move(//this.battle, 
 						newmove);
 
 					string movename = PBMoves.getName(opponent.lastMoveUsed);
@@ -2949,13 +3058,13 @@ public class Function
 				if (attacker.moves[i].MoveId == this.id)
 				{
 					Moves newmove = opponent.lastMoveUsedSketch;
-					attacker.moves[i] = new Battle.Move(//this.battle, 
+					attacker.moves[i] = new Move(//this.battle, 
 						newmove);
 
 					Pokemon[] party = this.battle.pbParty(attacker.Index);
 
 
-					party[attacker.pokemonIndex].moves[i] = new Battle.Move(newmove);
+					party[attacker.pokemonIndex].moves[i] = new Move(newmove);
 
 
 					string movename = PBMoves.getName(opponent.lastMoveUsedSketch);
@@ -3524,7 +3633,7 @@ public class Function
 			for (int i = 0; i < 4; i++)
 			{
 
-				attacker.moves[i] = new Battle.Move(//this.battle,
+				attacker.moves[i] = new Move(//this.battle,
 				   opponent.moves[i].MoveId);
 
 				attacker.moves[i].PP = 5;
@@ -4098,7 +4207,7 @@ public class Function
 				{
 					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Will use a move
 					{ 
-						Battle.Move partnermove = this.battle.choices[attacker.Partner.Index].Move;
+						Move partnermove = this.battle.choices[attacker.Partner.Index].Move;
 						if (partnermove.Function == this.function)
 						{
 							attacker.Partner.effects.MoveNext = true;
@@ -4334,35 +4443,35 @@ public class Function
 			int[] hp = pbHiddenPower(attacker.IV);
 			return hp[1];
 		}
-	}
 
-	public static int[] pbHiddenPower(byte[] iv)
-	{
-		byte powermin = 30;
-		byte powermax = 70;
-		int type = 0; int baseY = 0;
-		List<Types> types = new List<Types>();
-		for (int i = 0; i < Enum.GetValues(typeof(Types)).Length; i++)
+		public static int[] pbHiddenPower(byte[] iv)
 		{
-			if (//!PBTypes.isPseudoType(i) &&
-				(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i);
+			byte powermin = 30;
+			byte powermax = 70;
+			int type = 0; int baseY = 0;
+			List<Types> types = new List<Types>();
+			for (int i = 0; i < Enum.GetValues(typeof(Types)).Length; i++)
+			{
+				if (//!PBTypes.isPseudoType(i) &&
+					(Types)i == Types.NORMAL && (Types)i == Types.SHADOW) types.Add((Types)i);
+			}
+			type |= (iv[(byte)Stats.HP] & 1);
+			type |= (iv[(byte)Stats.ATTACK] & 1) << 1;
+			type |= (iv[(byte)Stats.DEFENSE] & 1) << 2;
+			type |= (iv[(byte)Stats.SPEED] & 1) << 3;
+			type |= (iv[(byte)Stats.SPATK] & 1) << 4;
+			type |= (iv[(byte)Stats.SPDEF] & 1) << 5;
+			type = (int)Math.Floor(type * (types.Count - 1f) / 63f);
+			Types hptype = types[type];
+			baseY |= (iv[(byte)Stats.HP] & 2) >> 1;
+			baseY |= (iv[(byte)Stats.ATTACK] & 2);
+			baseY |= (iv[(byte)Stats.DEFENSE] & 2) << 1;
+			baseY |= (iv[(byte)Stats.SPEED] & 2) << 2;
+			baseY |= (iv[(byte)Stats.SPATK] & 2) << 3;
+			baseY |= (iv[(byte)Stats.SPDEF] & 2) << 4;
+			baseY = (int)Math.Floor(baseY * (powermax - powermin) / 63f) + powermin;
+			return new int[] { (int)hptype, baseY }; //return type, and power
 		}
-		type |= (iv[(byte)Stats.HP] & 1);
-		type |= (iv[(byte)Stats.ATTACK] & 1) << 1;
-		type |= (iv[(byte)Stats.DEFENSE] & 1) << 2;
-		type |= (iv[(byte)Stats.SPEED] & 1) << 3;
-		type |= (iv[(byte)Stats.SPATK] & 1) << 4;
-		type |= (iv[(byte)Stats.SPDEF] & 1) << 5;
-		type = (int)Math.Floor(type * (types.Count - 1f) / 63f);
-		Types hptype = types[type];
-		baseY |= (iv[(byte)Stats.HP] & 2) >> 1;
-		baseY |= (iv[(byte)Stats.ATTACK] & 2);
-		baseY |= (iv[(byte)Stats.DEFENSE] & 2) << 1;
-		baseY |= (iv[(byte)Stats.SPEED] & 2) << 2;
-		baseY |= (iv[(byte)Stats.SPATK] & 2) << 3;
-		baseY |= (iv[(byte)Stats.SPDEF] & 2) << 4;
-		baseY = (int)Math.Floor(baseY * (powermax - powermin) / 63f) + powermin;
-		return new int[] { (int)hptype, baseY }; //return type, and power
 	}
 
 	/// <summary>
@@ -5482,7 +5591,7 @@ public class Function
 		   (Move.Effect)0x115,   // Focus Punch
 		   (Move.Effect)0x158    // Belch
 		 };
-			Battle.Move oppmove = this.battle.choices[opponent.Index].Move;
+			Move oppmove = this.battle.choices[opponent.Index].Move;
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
 			   opponent.hasMovedThisRound() ||
 			   oppmove.MoveId == Moves.NONE || oppmove.MoveId <= 0 ||
@@ -7686,7 +7795,7 @@ public class Function
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			//battle.pbDisplay(_INTL("{1} fled from battle!",attacker.pbThis))
-			this.battle.decision = (Battle.BattleResults)3;
+			this.battle.decision = (BattleResults)3;
 			return 0;
 		}
 	}
@@ -7720,7 +7829,7 @@ public class Function
 				}
 				pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-				this.battle.decision = (Battle.BattleResults)3; // Set decision to escaped;
+				this.battle.decision = (BattleResults)3; // Set decision to escaped;
 				return 0;
 			}
 			else
@@ -7767,7 +7876,7 @@ public class Function
 				{
 					if (opponent.level <= attacker.level)
 					{
-						this.battle.decision = (Battle.BattleResults)3; // Set decision to escaped;
+						this.battle.decision = (BattleResults)3; // Set decision to escaped;
 					}
 				}
 				else
@@ -9744,7 +9853,7 @@ public class Function
 		public object pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if ((int)this.battle.choices[opponent.Index].Action != 1) return true; // Didn't choose a move
-			Battle.Move oppmove = this.battle.choices[opponent.Index].Move;
+			Move oppmove = this.battle.choices[opponent.Index].Move;
 			if (oppmove.MoveId <= 0 || oppmove.pbIsStatus()) return true;
 			if (opponent.hasMovedThisRound() && (int)oppmove.Function != 0xB0) return true; // Me First
 			return false;
@@ -10193,7 +10302,7 @@ public class Function
 	/// <summary>
 	/// Increases the user's Defense by 1 stage for each target hit. (Diamond Storm)
 	/// <summary>
-	public class PokeBattle_Move_136 : Function.PokeBattle_Move_01D
+	public class PokeBattle_Move_136 : PokeBattle_Move_01D
 	{
 		// No difference to function code 01D. It may need to be separate in future.
 	}
@@ -11255,117 +11364,10 @@ public class Function
 	//===============================================================================
 	// NOTE: If you're inventing new move effects, use function code 159 and onwards.
 	//===============================================================================
-}
-
-//ToDo: Inhereit from Move
-public abstract class PokeBattle_Move : IPokeBattle_Move
-{
-	public bool overridetype { get; set; }
-	public bool sunny { get; set; }
-	public bool checks { get; set; }
-	public bool doubled { get; set; }
-	public bool forcedamage { get; set; }
-	public bool immediate { get; set; }
-	public bool doubledamage { get; set; }
-	public int basedamage { get; set; }
-	public int calcbasedmg { get; set; }
-	public byte PP { get; set; }
-	public byte accuracy { get; set; }
-	public List<byte> participants { get; set; }
-	public PokemonUnity.Move.Move.Effect function { get; set; }
-	public Items berry { get; set; }
-	public Moves id { get; set; }
-	public Types type { get; set; }
-	public Battle battle { get; set; }
-	public virtual int AddlEffect { get { return thismove.AddlEffect; } }
-	public Move thismove { get; set; }
-	public bool isSoundBased()
-	{
-		return true;
-	}
-	public bool IsDamaging()
-	{
-		return true;
-	}
-	public bool pbIsDamaging()
-	{
-		return true;
-	}
-	public bool pbIsPokeBall(Items item)
-	{
-		return true;
-	}
-	public bool pbIsBerry(Items item)
-	{
-		return true;
-	}
-	public bool pbIsGem(Items item)
-	{
-		return true;
-	}
-	public bool pbIsMegaStone(Items item)
-	{
-		return true;
-	}
-	public bool ignoresSubstitute(Pokemon atk)
-	{
-		return true;
-	}
-	public virtual object pbDisplayUseMessage(Pokemon attacker)
-	{
-		return true;
-	}
-	public Types pbType(Types type, Pokemon atk, Pokemon opp)
-	{
-		return Types.NONE;
-	}
-	public virtual Types pbModifyType(Types type, Pokemon atk, Pokemon opp)
-	{
-		return Types.NONE;
-	}
-	public virtual Types pbTypeModifier(Types type, Pokemon atk, Pokemon opp)
-	{
-		return Types.NONE;
-	}
-	public bool pbTypeImmunityByAbility(Types type, Pokemon atk, Pokemon opp)
-	{
-		return true;
-	}
-	/// <summary>
-	/// </summary>
-	/// ToDo: I think this only returns null (void) or `-1`; so all codes check for `x < zero`
-	public virtual object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
-	{
-		return null;
-	}
-	public virtual int pbEffectFixedDamage(int dmg, Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
-	{
-		//return pbEffectFixedDamage(20, attacker, opponent, hitnum, alltargets, showanimation);
-		return 0;
-	}
-	public virtual object pbEffectMessages(Pokemon attacker, Pokemon opponent, bool ignoretype = false)
-	{
-		return null;
-	}
-	public virtual object pbAccuracyCheck(Pokemon attacker, Pokemon opponent)
-	{
-		return null;
-	}
-	public virtual int pbCalcDamage(Pokemon attacker, Pokemon opponent)
-	{
-		return 0;
-	}
-	public virtual int pbCalcDamage(Pokemon attacker, Pokemon opponent, bool somethinghere) //ToDo: Fix this
-	{
-		return 0;
-	}
-	public virtual IEnumerator pbShowAnimation(Moves id, Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
-	{
-		return null;
-	}
-}
+//}
 
 public interface IPokeBattle_Move
 {
 
+}
 }

@@ -675,6 +675,15 @@ namespace PokemonUnity
 	}
 	#endregion
 	#region Move
+	public enum Status
+	{
+		NONE,
+		SLEEP,
+		POISON,
+		PARALYSIS,
+		BURN,
+		FROZEN
+	}
 	/// <summary>
 	/// Move ids are connected to XML file.
 	/// </summary>
