@@ -29,7 +29,7 @@ There are also demos for Windows, Linux, and Mac zipped in [Releases](https://gi
 ## Credits
 ### _Names below are from Origin-Fork_
 
-* PKUE Project Lead: [Kisu-Amare](https://www.furaffinity.net/user/teampopplio/)
+* PKUnity Project Lead: [TeamPopplio](https://github.com/TeamPopplio/)
 * PKUnity Base author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
 * PKUnity Maintainer: [superusercode](https://www.reddit.com/user/Lucas_One/)
 * PKUnity Logo artist: [Kaihatsu](https://twitter.com/KaihatsuYT)
