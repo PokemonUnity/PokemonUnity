@@ -363,7 +363,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 			int result = 0;
 			for (int i = 0; i < Pokemons.Length; i++)
 			{
-				if (Pokemons[i] != null || Pokemons[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
+				if (Pokemons[i] != null || Pokemons[i].Species != PokemonUnity.Pokemons.NONE)
 				{
 					result += 1;
 				}
@@ -376,7 +376,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 			//int result = 0;
 			for (int i = 0; i < Pokemons.Length; i++)
 			{
-				if (Pokemons[i] == null || Pokemons[i].Species == PokemonUnity.Pokemon.Pokemons.NONE)
+				if (Pokemons[i] == null || Pokemons[i].Species == PokemonUnity.Pokemons.NONE)
 				{
 					return i;
 				}
@@ -455,7 +455,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 		{
 			get
 			{
-				return global::Item.GetItem(GameVariables.Bag_Items.FirstOrDefault(i => i == item));
+				return PokemonUnity.Item.Item.GetItem(GameVariables.Bag_Items.FirstOrDefault(i => i == item));
 			}
 		}
 
@@ -478,7 +478,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 			foreach (Items Item in GameVariables.Bag_Items)
 			{
 				//Item item = global::Item.GetItem(Item.Key);
-				Item item = global::Item.GetItem(Item);
+				Item item = PokemonUnity.Item.Item.GetItem(Item);
 				switch (item.ItemPocket)
 				{
 					case ItemPockets.MISC:
@@ -1584,7 +1584,7 @@ public class UnityUtilityIntegration
 	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
 	/// <param name="text"></param>
 	/// <param name="error">Maybe something about interupting coroutine</param>
-	protected static void Dialog(string text, bool? error = null, params string[] promptOptions)
+	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
 	{
 		//ToDo: Pass values directly to DialogEventHandler
 		//ToDo: Make a struct for each non-class (enum, etc) type and add a ToString(bool) override that output unity richtext color tags

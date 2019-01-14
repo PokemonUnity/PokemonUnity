@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
-using PokemonUnity.Move;
+using PokemonUnity.Attack;
 
 public class PBMoves
 {
@@ -15,7 +15,7 @@ public class PBMoves
 	//public static int MaxValue { get { return MoveData.Count; } }
 }
 
-namespace PokemonUnity.Move
+namespace PokemonUnity.Attack
 {
 public partial class Move 
 {

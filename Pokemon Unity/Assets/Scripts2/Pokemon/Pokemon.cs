@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
-using PokemonUnity.Move;
+using PokemonUnity.Attack;
 using PokemonUnity.Item;
 
 namespace PokemonUnity.Pokemon
@@ -153,7 +153,7 @@ public partial class Pokemon
 	/// Moves (PBMove)
 	/// </summary>
 	/// ToDo Move class, not enum
-	public Move.Move[] moves { get; private set; } 
+	public Move[] moves { get; private set; } 
 	/// <summary>
 	/// The moves known when this Pokemon was obtained
 	/// </summary>
@@ -1538,7 +1538,7 @@ public partial class Pokemon
     {
         get
 		{
-            if (this.mail == null || !global::Item.Mail.IsMail(this.Item)) return null; //If empty return null
+            if (this.mail == null || !PokemonUnity.Item.Item.Mail.IsMail(this.Item)) return null; //If empty return null
             //if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
             //{
             //    //mail = null;

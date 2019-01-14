@@ -1,5 +1,5 @@
 ﻿using PokemonUnity;
-using PokemonUnity.Move;
+using PokemonUnity.Attack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace PokemonUnity.Battle
 			public int EncoreIndex        { get; set; }
 			public Moves EncoreMove         { get; set; }
 			public bool Endure             { get; set; }
-			public PokemonUnity.Move.Move.Effect FirstPledge	{ get; set; }
+			public PokemonUnity.Attack.Move.Effect FirstPledge	{ get; set; }
 			public bool FlashFire          { get; set; }
 			public bool Flinch             { get; set; }
 			public int FocusEnergy        { get; set; }
@@ -298,7 +298,7 @@ namespace PokemonUnity.Battle
 				this.Transform        = false;
 				this.Truant           = false;
 				this.TwoTurnAttack    = 0;
-				this.Type3            = PokemonUnity.Pokemon.Types.NONE;//-1; ToDo: What's difference between "None" and "null"?
+				this.Type3            = PokemonUnity.Types.NONE;//-1; ToDo: What's difference between "None" and "null"?
 				this.Unburden         = false;
 				this.Uproar           = 0;
 				this.Uturn            = false;
