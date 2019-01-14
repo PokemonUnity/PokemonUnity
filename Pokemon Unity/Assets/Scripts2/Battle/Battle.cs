@@ -1,7 +1,7 @@
 ﻿using PokemonUnity;
-using PokemonUnity.Pokemon;
+//using PokemonUnity.Pokemon;
 using PokemonUnity.Item;
-using PokemonUnity.Move;
+//using PokemonUnity.Attack;
 using PokemonUnity.Battle;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ public class Battle : UnityUtilityIntegration
 	/// Internal battle flag
 	/// </summary>
 	public Battle InternalBattle (bool internalBattle) { internalbattle = internalBattle; return this; }
-	private bool internalbattle { get; set; }
+	public bool internalbattle { get; set; }
 	/// <summary>
 	/// Double battle flag
 	/// </summary>
@@ -281,7 +281,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Counter to track number of turns for battle
 	/// </summary>
-	public byte turncount { get; private set; }
+	public byte turncount { get; set; }
 	public int[] priority { get; private set; }
 	public List<byte> snaggedpokemon { get; private set; }
 	/// <summary>
@@ -617,7 +617,7 @@ public class Battle : UnityUtilityIntegration
 	{
 		return false;
 	}
-	private bool OwnedByPlayer(int index)
+	public bool OwnedByPlayer(int index)
 	{
 		return false; //throw new NotImplementedException();
 	}
@@ -1117,8 +1117,8 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public byte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return battle.Player.playerPokedex2[_base.ArrayId, 1] == 1; } }
-		private Pokemon pokemon { get; set; }
+		public bool IsOwned { get { return GameVariables.playerTrainer.playerPokedex2[_base.ArrayId, 1] == 1; } }
+		private PokemonUnity.Pokemon.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }
 		public Types lastMoveUsedType { get; private set; }
@@ -1206,7 +1206,7 @@ public class Battle : UnityUtilityIntegration
 			captured		= false;
 			stages			= new int[7];
 			effects			= new Effects.Battler(false);
-			damagestate		= new DamageState();
+			damagestate		= new Battle.DamageState();
 			InitBlank();
 			InitEffects(false);
 			InitPermanentEffects();
@@ -1563,7 +1563,7 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		public Pokemon Reset()
 		{
-			this.pokemon		= new PokemonUnity.Pokemon.Pokemon();
+			pokemon		= new Pokemon();
 			Index		= -1;
 			InitEffects(false);
 			//reset status
@@ -1571,7 +1571,7 @@ public class Battle : UnityUtilityIntegration
 			StatusCount	= 0;
 			//IsFainted	= true;
 			//reset choice
-			battle.choices[Index] = new Choice(ChoiceAction.NoAction);
+			battle.choices[Index] = new Battle.Choice(ChoiceAction.NoAction);
 			return this;
 		}
 		/// <summary>
@@ -1703,7 +1703,7 @@ public class Battle : UnityUtilityIntegration
 			if (effects.Embargo > 0) return false;
 			if (battle.field.MagicRoom > 0) return false;
 			if (this.hasWorkingAbility(Abilities.KLUTZ, ignorefainted)) return false;
-			return new global::Item(this.Item).ItemPocket == ItemPockets.BERRY;//pbIsBerry?(@item)
+			return new PokemonUnity.Item.Item(this.Item).ItemPocket == ItemPockets.BERRY;//pbIsBerry?(@item)
 		}
 
 		public bool isAirborne(bool ignoreability=false){
@@ -1775,7 +1775,7 @@ public class Battle : UnityUtilityIntegration
 				speedmult = (int)Math.Round(speedmult / 4f);
 			if (battle.internalbattle && 
 				//battle.OwnedByPlayer(Index) &&
-				battle.Player.BadgesCount >= Settings.BADGESBOOSTSPEED)
+				GameVariables.playerTrainer.BadgesCount >= Settings.BADGESBOOSTSPEED)
 				speedmult = (int)Math.Round(speedmult * 1.1f);
 			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
 			return Math.Max(speed, 1);
@@ -1852,7 +1852,7 @@ public class Battle : UnityUtilityIntegration
 			//	pokemon.MakeUnprimal;
 			//Fainted = true;
 			//reset choice
-			battle.choices[Index] = new Choice(ChoiceAction.NoAction);
+			battle.choices[Index] = new Battle.Choice(ChoiceAction.NoAction);
 			OwnSide.LastRoundFainted = battle.turncount;
 			if (showMessage)
 				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
@@ -2340,7 +2340,7 @@ public class Battle : UnityUtilityIntegration
 			return battlers;
 		}*/
 
-		public static Pokemon[] GetBattlers(Pokemon[] input)
+		public static Pokemon[] GetBattlers(PokemonUnity.Pokemon.Pokemon[] input)
 		{
 			Pokemon[] battlers = new Pokemon[input.Length];
 			for (int i = 0; i < input.Length; i++)
@@ -2375,7 +2375,7 @@ public class Battle : UnityUtilityIntegration
 	/// A Move placeholder class to be used while in-battle, 
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
-	public class Move : PokemonUnity.Move.Move
+	public class Move : PokemonUnity.Attack.Move
 	{
 		#region Variables
 		public bool NOTYPE						{ get; set; } //= 0x01
@@ -2385,9 +2385,9 @@ public class Battle : UnityUtilityIntegration
 		public bool NOREFLECT					{ get; set; } //= 0x10
 		public bool SELFCONFUSE					{ get; set; } //= 0x20
 
-		public Category Category				{ get; set; }
+		public Attack.Category Category			{ get; set; }
 		new public Moves MoveId					{ get; set; }
-		new public Target Targets				{ get; set; }
+		new public Attack.Target Targets		{ get; set; }
 		new public Types Type					{ get; set; }
 		new public Flags Flag					{ get; set; }
 		new public byte PP						{ get; set; }
@@ -2409,8 +2409,8 @@ public class Battle : UnityUtilityIntegration
 		public int BaseDamage					{ get; set; }
 		public int CritRatio					{ get; set; }
 		public int Priority						{ get; set; }
-		public bool IsPhysical					{ get { return Category == Category.PHYSICAL; } }
-		public bool IsSpecial					{ get { return Category == Category.SPECIAL; } }
+		public bool IsPhysical					{ get { return Category == Attack.Category.PHYSICAL; } }
+		public bool IsSpecial					{ get { return Category == Attack.Category.SPECIAL; } }
 		public bool UnuseableInGravity			{ get; set; }
 		public bool pbIsStatus(){ return false; }
 		public string EffectString				{ get; set; }
@@ -2488,13 +2488,13 @@ public class Battle : UnityUtilityIntegration
 					PP = 0; //-1;
 					//TotalPP	= ;
 					AddlEffect = 0;
-					Targets = Target.NoTarget;
+					Targets = Attack.Target.NoTarget;
 					Priority = 0;
 					Flag = new Flags();
 					//thismove		= move
 					//name			= ""
 					MoveId = Moves.NONE;
-					Category = Category.PHYSICAL;
+					Category = Attack.Category.PHYSICAL;
 					break;
 				case Effect.Struggle:
 				case Effect.x000:
@@ -2848,7 +2848,7 @@ public class Battle : UnityUtilityIntegration
 	#region Move Interfaces
 	public interface IMoveEffect
 	{
-		int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Target alltargets, bool showanimation);
+		int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Attack.Target alltargets, bool showanimation);
 	}
 	public interface IMoveAdditionalEffect
 	{

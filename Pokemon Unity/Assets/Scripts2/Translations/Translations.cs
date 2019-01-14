@@ -516,10 +516,10 @@ public static class gameTextExtension //: LanguageExtension
         //return message;
     }
     /// <summary>
-    /// This might be pretty taxing on system, would not recommend using until a replacement can be made
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
+    /// This might be pretty taxing on system, would not recommend using until a replacement can be made
     public static string highlightCodexAllTerms(this string text)
     {
         /*if (fieldValues == null)
@@ -539,8 +539,9 @@ public static class gameTextExtension //: LanguageExtension
             switch (codex)
             {
                 case "Pokemons":
-                    foreach(var pokemon in System.Enum.GetNames(typeof(Pokemons)))
+                    foreach(var pokemon in System.Enum.GetNames(typeof(PokemonUnity.Pokemons)))
                     {
+						//ToDo: Use Settings => ToColorHEX methods...
                         RichTextAssignColor(ref text, pokemon, "blue");
                     }
                     break;

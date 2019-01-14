@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
-using PokemonUnity.Move;
+using PokemonUnity.Attack;
 
-namespace PokemonUnity.Move
+namespace PokemonUnity.Attack
 {
 	public partial class Move
 	{

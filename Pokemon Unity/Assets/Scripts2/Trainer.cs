@@ -292,6 +292,17 @@ public class Trainer
 	}
 
 	#region Party
+	//This isnt needed, there's one already in battle class
+	//public PokemonUnity.Battle.Pokemon[] GetBattleParty()
+	//public PokemonUnity.Battle.Pokemon[] BattleParty
+	//{
+	//	get
+	//	{
+	//		return new PokemonUnity.Battle.Pokemon[] {
+	//			//new PokemonUnity.Battle.Pokemon(Party[0])
+	//		};
+	//	}
+	//}
 	#endregion
 
 	/// <summary>
@@ -317,7 +328,7 @@ public static class PokemonPartyExtension
 		int i2 = 0; //counter for packed array
 		for (int i = 0; i < 6; i++)
 		{
-			if (Party[i] != null || Party[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
+			if (Party[i] != null || Party[i].Species != Pokemons.NONE)
 			{
 				//if next object in box has a value
 				packedArray[i2] = Party[i]; //add to packed array
@@ -337,7 +348,7 @@ public static class PokemonPartyExtension
 		int result = 0;
 		for (int i = 0; i < partyOrPC.Length; i++)
 		{
-			if (partyOrPC[i] != null || partyOrPC[i].Species != PokemonUnity.Pokemon.Pokemons.NONE)
+			if (partyOrPC[i] != null || partyOrPC[i].Species != Pokemons.NONE)
 			{
 				result += 1;
 			}
