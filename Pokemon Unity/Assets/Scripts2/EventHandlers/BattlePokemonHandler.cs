@@ -50,20 +50,20 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 				gender.text = string.Empty;
 		}
 	}
-	public PokemonUnity.Move.Status Status
+	public PokemonUnity.Status Status
 	{
 		set
 		{
 			switch (value)
 			{
-				case PokemonUnity.Move.Status.SLEEP:
-				case PokemonUnity.Move.Status.POISON:
-				case PokemonUnity.Move.Status.PARALYSIS:
-				case PokemonUnity.Move.Status.BURN:
-				case PokemonUnity.Move.Status.FROZEN:
+				case PokemonUnity.Status.SLEEP:
+				case PokemonUnity.Status.POISON:
+				case PokemonUnity.Status.PARALYSIS:
+				case PokemonUnity.Status.BURN:
+				case PokemonUnity.Status.FROZEN:
 					StatusIcon.sprite = Resources.Load<Sprite>(string.Format("PCSprites/status{0}" + value.ToString()));
 					break;
-				case PokemonUnity.Move.Status.NONE:
+				case PokemonUnity.Status.NONE:
 				default:
 					StatusIcon.sprite = Resources.Load<Sprite>("null");
 					break;

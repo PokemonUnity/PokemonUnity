@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
-using PokemonUnity.Move;
+using PokemonUnity.Attack;
 using PokemonUnity.Item;
 
 namespace Tests

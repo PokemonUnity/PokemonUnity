@@ -539,7 +539,7 @@ public static class gameTextExtension //: LanguageExtension
             switch (codex)
             {
                 case "Pokemons":
-                    foreach(var pokemon in System.Enum.GetNames(typeof(Pokemons)))
+                    foreach(var pokemon in System.Enum.GetNames(typeof(PokemonUnity.Pokemons)))
                     {
                         RichTextAssignColor(ref text, pokemon, "blue");
                     }

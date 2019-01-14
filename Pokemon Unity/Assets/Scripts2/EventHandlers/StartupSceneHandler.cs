@@ -1,5 +1,7 @@
 ﻿using PokemonUnity.Item;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Battle;
+using PokemonUnity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,7 +143,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Start a single wild battle
 	/// </summary>
-	public bool WildBattle(Pokemon pkmn, bool cantescape = true, bool canlose = false)
+	public bool WildBattle(PokemonUnity.Pokemon.Pokemon pkmn, bool cantescape = true, bool canlose = false)
 	{
 		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.debugMode))
 		{
@@ -152,7 +154,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 			GameVariables.nextBattleBack = null;
 			return true;
 		}
-		Pokemon[] generateWildPkmn = new Pokemon[1];
+		PokemonUnity.Pokemon.Pokemon[] generateWildPkmn = new PokemonUnity.Pokemon.Pokemon[1];
 		generateWildPkmn[0] = pkmn; //new Pokemon();
 		//int decision = 0;
 		Battle battle =
@@ -166,18 +168,18 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 			//.StartBattle(canlose); //Switch to battle scene and trigger coroutine 
 			//.AfterBattle(ref decision,canlose);
 		//GameVariables.battle.StartBattle(canlose);  
-		IEnumerator<Battle.BattleResults> e = BattleAnimationHandler.BattleCoroutineResults;
+		IEnumerator<BattleResults> e = BattleAnimationHandler.BattleCoroutineResults;
 		//while battle scene is active
 		//delay results of battle
 		//on battle end return the results of the battle 
 		//ToDo: and save data to profile?... maybe that would be done from battle class
-		return e.Current != Battle.BattleResults.LOST;
+		return e.Current != BattleResults.LOST;
 	}
 
 	/// <summary>
 	/// Start a double wild battle
 	/// </summary>
-	public bool DoubleWildBattle(Pokemon pkmn1, Pokemon pkmn2, bool cantescape = true, bool canlose = false)
+	public bool DoubleWildBattle(PokemonUnity.Pokemon.Pokemon pkmn1, PokemonUnity.Pokemon.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
 	{
 		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.debugMode))
 		{
@@ -188,7 +190,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 			GameVariables.nextBattleBack = null;
 			return true;
 		}
-		Pokemon[] generateWildPkmn = new Pokemon[] { pkmn1, pkmn2 };//new Pokemon(), new Pokemon()
+		PokemonUnity.Pokemon.Pokemon[] generateWildPkmn = new PokemonUnity.Pokemon.Pokemon[] { pkmn1, pkmn2 };//new Pokemon(), new Pokemon()
 		//int decision = 0;
 		Battle battle =
 		//GameVariables.battle =
@@ -201,18 +203,18 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 			//.StartBattle(canlose); //Switch to battle scene and trigger coroutine 
 			//.AfterBattle(ref decision,canlose);
 		//GameVariables.battle.StartBattle(canlose);  
-		IEnumerator<Battle.BattleResults> e = BattleAnimationHandler.BattleCoroutineResults;
+		IEnumerator<BattleResults> e = BattleAnimationHandler.BattleCoroutineResults;
 		//while battle scene is active
 		//delay results of battle
 		//on battle end return the results of the battle 
 		//ToDo: and save data to profile?... maybe that would be done from battle class
 		//return battle.decision;
-		return (e.Current != Battle.BattleResults.LOST && e.Current != Battle.BattleResults.DRAW);
+		return (e.Current != BattleResults.LOST && e.Current != BattleResults.DRAW);
 	}
 
-	public void AfterBattle()//Battle.BattleResults decision, bool canlose
+	public void AfterBattle()//BattleResults decision, bool canlose
 	{
-		Battle.BattleResults decision = GameVariables.battle.decision;
+		BattleResults decision = GameVariables.battle.decision;
 		bool canlose = GameVariables.battle.canLose;
 		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
 		{
@@ -229,7 +231,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		//		//GameVariables.Partner.Trainer.Party[i].MakeUnPrimal();
 		//	}
 		//}
-		if (decision == Battle.BattleResults.LOST || decision == Battle.BattleResults.DRAW)
+		if (decision == BattleResults.LOST || decision == BattleResults.DRAW)
 		{
 			if (canlose)
 			{
@@ -244,11 +246,11 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 
 	public System.Collections.IEnumerator OnEndBattle()
 	{
-		Battle.BattleResults decision = GameVariables.battle.decision;
+		BattleResults decision = GameVariables.battle.decision;
 		bool canlose = GameVariables.battle.canLose;
-		//if (Settings.USENEWBATTLEMECHANICS || (decision == Battle.BattleResults.LOST || decision == Battle.BattleResults.DRAW))
+		//if (Settings.USENEWBATTLEMECHANICS || (decision == BattleResults.LOST || decision == BattleResults.DRAW))
 		//	if()
-		if(decision == Battle.BattleResults.WON)
+		if(decision == BattleResults.WON)
 		{
 			for (int pkmn = 0; pkmn < GameVariables.playerTrainer.Trainer.Party.Length; pkmn++)
 			{
@@ -262,7 +264,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 				}
 			}
 		}
-		if ((decision == Battle.BattleResults.LOST || decision == Battle.BattleResults.DRAW) && !canlose)
+		if ((decision == BattleResults.LOST || decision == BattleResults.DRAW) && !canlose)
 		{
 			//Audio.BGM.UnPause
 			//Audio.BGS.UnPause
@@ -272,11 +274,11 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		return null;
 	}
 
-	public void EvolutionCheck(Pokemon[] currentlevels)
+	public void EvolutionCheck(PokemonUnity.Pokemon.Pokemon[] currentlevels)
 	{
 		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
 		{
-			Pokemon pokemon = GameVariables.playerTrainer.Trainer.Party[i];
+			PokemonUnity.Pokemon.Pokemon pokemon = GameVariables.playerTrainer.Trainer.Party[i];
 			if (pokemon.HP == 0 && !Settings.USENEWBATTLEMECHANICS) continue;
 			if(pokemon.Species != Pokemons.NONE &&
 				(currentlevels[i].Species == Pokemons.NONE
@@ -298,7 +300,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
 	/// </summary>
-	public void Pickup(Pokemon pokemon)
+	public void Pickup(PokemonUnity.Pokemon.Pokemon pokemon)
 	{
 		if (pokemon.Ability == Abilities.PICKUP || pokemon.isEgg) return;
 		if (pokemon.Item != Items.NONE) return;

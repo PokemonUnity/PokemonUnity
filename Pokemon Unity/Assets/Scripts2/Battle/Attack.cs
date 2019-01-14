@@ -2894,7 +2894,7 @@ public class Function
 				if (attacker.moves[i].MoveId == this.id)
 				{
 					Move newmove = new Move(opponent.lastMoveUsed);
-					attacker.moves[i] = new Battle.Move(//this.battle, 
+					attacker.moves[i] = new Move(//this.battle, 
 						newmove);
 
 					string movename = PBMoves.getName(opponent.lastMoveUsed);
@@ -2949,13 +2949,13 @@ public class Function
 				if (attacker.moves[i].MoveId == this.id)
 				{
 					Moves newmove = opponent.lastMoveUsedSketch;
-					attacker.moves[i] = new Battle.Move(//this.battle, 
+					attacker.moves[i] = new Move(//this.battle, 
 						newmove);
 
 					Pokemon[] party = this.battle.pbParty(attacker.Index);
 
 
-					party[attacker.pokemonIndex].moves[i] = new Battle.Move(newmove);
+					party[attacker.pokemonIndex].moves[i] = new Move(newmove);
 
 
 					string movename = PBMoves.getName(opponent.lastMoveUsedSketch);
@@ -3524,7 +3524,7 @@ public class Function
 			for (int i = 0; i < 4; i++)
 			{
 
-				attacker.moves[i] = new Battle.Move(//this.battle,
+				attacker.moves[i] = new Move(//this.battle,
 				   opponent.moves[i].MoveId);
 
 				attacker.moves[i].PP = 5;
@@ -4098,7 +4098,7 @@ public class Function
 				{
 					if ((int)this.battle.choices[attacker.Partner.Index].Action == 1)	// Will use a move
 					{ 
-						Battle.Move partnermove = this.battle.choices[attacker.Partner.Index].Move;
+						Move partnermove = this.battle.choices[attacker.Partner.Index].Move;
 						if (partnermove.Function == this.function)
 						{
 							attacker.Partner.effects.MoveNext = true;
@@ -5482,7 +5482,7 @@ public class Function
 		   (Move.Effect)0x115,   // Focus Punch
 		   (Move.Effect)0x158    // Belch
 		 };
-			Battle.Move oppmove = this.battle.choices[opponent.Index].Move;
+			Move oppmove = this.battle.choices[opponent.Index].Move;
 			if ((int)this.battle.choices[opponent.Index].Action != 1 || // Didn't choose a move
 			   opponent.hasMovedThisRound() ||
 			   oppmove.MoveId == Moves.NONE || oppmove.MoveId <= 0 ||
@@ -7686,7 +7686,7 @@ public class Function
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
 			//battle.pbDisplay(_INTL("{1} fled from battle!",attacker.pbThis))
-			this.battle.decision = (Battle.BattleResults)3;
+			this.battle.decision = (BattleResults)3;
 			return 0;
 		}
 	}
@@ -7720,7 +7720,7 @@ public class Function
 				}
 				pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-				this.battle.decision = (Battle.BattleResults)3; // Set decision to escaped;
+				this.battle.decision = (BattleResults)3; // Set decision to escaped;
 				return 0;
 			}
 			else
@@ -7767,7 +7767,7 @@ public class Function
 				{
 					if (opponent.level <= attacker.level)
 					{
-						this.battle.decision = (Battle.BattleResults)3; // Set decision to escaped;
+						this.battle.decision = (BattleResults)3; // Set decision to escaped;
 					}
 				}
 				else
@@ -9744,7 +9744,7 @@ public class Function
 		public object pbMoveFailed(Pokemon attacker, Pokemon opponent)
 		{
 			if ((int)this.battle.choices[opponent.Index].Action != 1) return true; // Didn't choose a move
-			Battle.Move oppmove = this.battle.choices[opponent.Index].Move;
+			Move oppmove = this.battle.choices[opponent.Index].Move;
 			if (oppmove.MoveId <= 0 || oppmove.pbIsStatus()) return true;
 			if (opponent.hasMovedThisRound() && (int)oppmove.Function != 0xB0) return true; // Me First
 			return false;
@@ -11272,7 +11272,7 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 	public byte PP { get; set; }
 	public byte accuracy { get; set; }
 	public List<byte> participants { get; set; }
-	public PokemonUnity.Move.Move.Effect function { get; set; }
+	public PokemonUnity.Attack.Move.Effect function { get; set; }
 	public Items berry { get; set; }
 	public Moves id { get; set; }
 	public Types type { get; set; }
