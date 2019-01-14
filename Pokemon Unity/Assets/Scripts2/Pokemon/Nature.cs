@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using PokemonUnity.Pokemon;
 
+namespace PokemonUnity.Pokemon
+{
 public class Nature
 {
 
@@ -63,36 +65,4 @@ public class Nature
         return natures[new System.Random(Settings.Seed()).Next(0, natures.Length)].Natures;
     }
 }
-
-namespace PokemonUnity.Pokemon
-{
-    public enum Natures
-    {
-		UNSET,
-        HARDY,
-        LONELY,
-        BRAVE,
-        ADAMANT,
-        NAUGHTY,
-        BOLD,
-        DOCILE,
-        RELAXED,
-        IMPISH,
-        LAX,
-        TIMID,
-        HASTY,
-        SERIOUS,
-        JOLLY,
-        NAIVE,
-        MODEST,
-        MILD,
-        QUIET,
-        BASHFUL,
-        RASH,
-        CALM,
-        GENTLE,
-        SASSY,
-        CAREFUL,
-        QUIRKY
-    }
 }

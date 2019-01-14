@@ -2,11 +2,14 @@
 using PokemonUnity.Pokemon;
 using PokemonUnity.Item;
 using PokemonUnity.Move;
+using PokemonUnity.Battle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+namespace PokemonUnity.Battle
+{
 /// <summary>
 /// </summary>
 /// ToDo: Create a battle namespace?
@@ -137,16 +140,16 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Player's Pokémon party
 	/// </summary>
-	public Battler[] party1 { get; private set; }
+	public Pokemon[] party1 { get; private set; }
 	/// <summary>
 	/// Foe's Pokémon party
 	/// </summary>
-	public Battler[] party2 { get; private set; }
+	public Pokemon[] party2 { get; private set; }
 	/// <summary>
 	/// Pokémon party for All Trainers in Battle.
 	/// Array[4,6] = 0: Player, 1: Foe, 2: Ally, 3: Foe's Ally 
 	/// </summary>
-	public Battler[,] party { get; private set; }
+	public Pokemon[,] party { get; private set; }
 	/// <summary>
 	/// Order of Pokémon in the player's party
 	/// </summary>
@@ -166,7 +169,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// Currently active Pokémon
 	/// </summary>
-	public Battler[] battlers { get; private set; }
+	public Pokemon[] battlers { get; private set; }
 	/// <summary>
 	/// Items held by opponents
 	/// </summary>
@@ -222,7 +225,7 @@ public class Battle : UnityUtilityIntegration
 	/// <summary>
 	/// The Struggle move
 	/// </summary>
-	public InBattleMove struggle { get; private set; }
+	public Move struggle { get; private set; }
 	/// <summary>
 	/// Choices made by each Pokémon this round
 	/// </summary>
@@ -310,7 +313,7 @@ public class Battle : UnityUtilityIntegration
 		}
 	}
 	//private string display { get; set; }
-	/* ToDo: Move to Battler? => Display on PokemonUI 
+	/* ToDo: Move to Pokemon? => Display on PokemonUI 
 	/// <summary>
 	/// </summary>
 	/// ToDo: Might need to be a method
@@ -338,19 +341,7 @@ public class Battle : UnityUtilityIntegration
 		}
 	}*/
 	#endregion
-
-	/// <summary>
-	/// Uses current battle and manipulates the data then return the current battle with updated values.
-	/// </summary>
-	/// Pokemon variable should use the pokemon trainerid as hashvalue, or an int of where pokemon is on battle lineup
-	//public Func<Battle, Pokemon, Move, Battle> Func { get; set; }
-	//public Action<Battle, Pokemon, Move> Action { get; set; }
-	//public //async Task<Battle> 
-	//	void GenerateBattleTurn(System.Linq.Expressions.Expression<Func<Battle, Pokemon, Move, Battle>> predicate)
-	//{
-	//	//return await _subscriptionPaymentRepository.GetAll().LastOrDefaultAsync(predicate);
-	//}
-
+		
 	#region Constructor
 	/// <summary>
 	/// 
@@ -359,8 +350,8 @@ public class Battle : UnityUtilityIntegration
 	/// Cant have a battle without first establishing who you're battling
 	public Battle(Trainer player, Trainer opponent)
 	{
-		Pokemon[] p1 = player.Party;
-		Pokemon[] p2 = opponent.Party;
+		PokemonUnity.Pokemon.Pokemon[] p1 = player.Party;
+		PokemonUnity.Pokemon.Pokemon[] p2 = opponent.Party;
 		if (p1.Length == 0) {
 			//raise ArgumentError.new(_INTL("Party 1 has no Pokémon."))
 			GameVariables.DebugLog("Party 1 has no Pokémon.", true);
@@ -397,8 +388,8 @@ public class Battle : UnityUtilityIntegration
 
 		this.player = player;
 		this.opponent = opponent;
-		party1 = Battler.GetBattlers(p1);
-		party2 = Battler.GetBattlers(p2);
+		party1 = Pokemon.GetBattlers(p1);
+		party2 = Pokemon.GetBattlers(p2);
 
 		party1order = new List<int>();
 
@@ -420,7 +411,7 @@ public class Battle : UnityUtilityIntegration
 
 		fullparty2 = false;
 
-		battlers = new Battler[4];
+		battlers = new Pokemon[4];
 
 		items = new List<Items>(); //null;
 
@@ -490,7 +481,7 @@ public class Battle : UnityUtilityIntegration
 		runCommand = 0;
 
 		if (Moves.STRUGGLE.GetType() == typeof(Moves))
-			struggle = new InBattleMove(Moves.STRUGGLE);//PokeBattle_Move.pbFromPBMove(Moves.STRUGGLE);
+			struggle = new Move(Moves.STRUGGLE);//PokeBattle_Move.pbFromPBMove(Moves.STRUGGLE);
 		else
 			struggle = null;//PokeBattle_Struggle.new(self, nil)
 
@@ -498,7 +489,7 @@ public class Battle : UnityUtilityIntegration
 
 		for (byte i = 0; i < 4; i++)
 		{
-			battlers[i] = new Battler().Initialize(new Pokemon(), (sbyte)i);
+			this.battlers[i] = new Pokemon().Initialize(new PokemonUnity.Pokemon.Pokemon(), (sbyte)i);
 		}
 
 		foreach (var i in party1)
@@ -553,7 +544,7 @@ public class Battle : UnityUtilityIntegration
 	//	//return this;
 	//	GameVariables.battle = this;
 	//}
-	public IEnumerator<Battle.BattleResults> StartBattle(bool canlose)
+	public IEnumerator<BattleResults> StartBattle(bool canlose)
 	{
 		//return this;
 		GameVariables.battle = this;
@@ -580,7 +571,7 @@ public class Battle : UnityUtilityIntegration
 	/// <param name="index"></param>
 	/// <returns></returns>
 	/// ToDo: Not implemented
-	public Battler[] pbParty(int index)
+	public Pokemon[] pbParty(int index)
 	{
 		return party1;
 	}
@@ -605,16 +596,16 @@ public class Battle : UnityUtilityIntegration
 	{
 		return false;
 	}
-	public Battler pbCheckGlobalAbility(Abilities index)
+	public Pokemon pbCheckGlobalAbility(Abilities index)
 	{
 		//return none, not null
 		return null;
 	}
-	public bool pbAllFainted(Battler[] party)
+	public bool pbAllFainted(Pokemon[] party)
 	{
 		return false;
 	}
-	public bool pbIsUnlosableItem(Battler party, Items item)
+	public bool pbIsUnlosableItem(Pokemon party, Items item)
 	{
 		return false;
 	}
@@ -630,14 +621,14 @@ public class Battle : UnityUtilityIntegration
 	{
 		return false; //throw new NotImplementedException();
 	}
-	public bool pbCommonAnimation(string animation, Battler atk, object uh)
+	public bool pbCommonAnimation(string animation, Pokemon atk, object uh)
 	{
 		return false;
 	}
 	#endregion
 
 	#region Catching and storing Pokémon.
-	public void StorePokemon(Battler pokemon)
+	public void StorePokemon(Pokemon pokemon)
 	{
 		//if(!pokemon.isShadow)
 		//	//"Would you like to give a nickname to {1}?"
@@ -671,7 +662,7 @@ public class Battle : UnityUtilityIntegration
 	public void ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 	{
 		string itemname = LanguageExtension.Translate(Text.Items, ball.ToString()).Value;
-		Battler battler = null;
+		Pokemon battler = null;
 		if (isOpposing(idxPokemon))
 			battler = battlers[idxPokemon];
 		else
@@ -725,7 +716,7 @@ public class Battle : UnityUtilityIntegration
 	#endregion
 
 	#region Get party info, manipulate parties.
-	int PokemonCount(Pokemon[] party)
+	int PokemonCount(PokemonUnity.Pokemon.Pokemon[] party)
 	{
 		int count = 0;
 		for (int i = 0; i < party.Length; i++)
@@ -735,11 +726,11 @@ public class Battle : UnityUtilityIntegration
 		}
 		return count;
 	}
-	bool AllFainted(Pokemon[] party)
+	bool AllFainted(PokemonUnity.Pokemon.Pokemon[] party)
 	{
 		return PokemonCount(party) == 0;
 	}
-	int MaxLevel(Pokemon[] party)
+	int MaxLevel(PokemonUnity.Pokemon.Pokemon[] party)
 	{
 		int lv = 0;
 		for (int i = 0; i < party.Length; i++)
@@ -759,7 +750,7 @@ public class Battle : UnityUtilityIntegration
 	bool CanShowCommands(int idxPokemon)
 	{
 		//List<BattlerEffects> thispkmn = new List<PokemonUnity.Effects.BattlerEffects>(); //battlers[idxPokemon].
-		Pokemon thispkmn = battlers[idxPokemon];
+		PokemonUnity.Pokemon.Pokemon thispkmn = this.battlers[idxPokemon];
 		if (thispkmn.isFainted()) return false;
 		//if (thispkmn.Effects.Contains(BattlerEffects.TwoTurnAttack)) return false; 
 		//if (thispkmn.Effects.Contains(BattlerEffects.HyperBeam)) return false; 
@@ -771,7 +762,7 @@ public class Battle : UnityUtilityIntegration
 	}
 	bool CanShowFightMenu(int idxPokemon)
 	{
-		Pokemon thispkmn = battlers[idxPokemon];
+		PokemonUnity.Pokemon.Pokemon thispkmn = this.battlers[idxPokemon];
 		if (!CanShowCommands(idxPokemon)) return false;
 
 		// No moves that can be chosen
@@ -885,13 +876,193 @@ public class Battle : UnityUtilityIntegration
 	//}
 
 	#region Nested Classes
+	//ToDo: Fix this
+	public class Scene
+	{
+		public void pbHPChanged(Pokemon pkmn, int _new) { }
+		public void pbChangePokemon(Pokemon pkmn, Pokemons _new) { }
+	}
+
+	public class DamageState
+	{
+		/// <summary>
+		/// HP lost by opponent, inc. HP lost by a substitute
+		/// </summary>
+		public int HPLost { get; set; }
+		/// <summary>
+		/// Critical hit flag
+		/// </summary>
+		public bool Critical { get; set; }
+		/// <summary>
+		/// Calculated damage
+		/// </summary>
+		public int CalcDamage { get; set; }
+		/// <summary>
+		/// Type effectiveness
+		/// </summary>
+		public int TypeMod { get; set; }
+		/// <summary>
+		/// A substitute took the damage
+		/// </summary>
+		public bool Substitute { get; set; }
+		/// <summary>
+		/// Focus Band used
+		/// </summary>
+		public bool FocusBand { get; set; }
+		/// <summary>
+		/// Focus Sash used
+		/// </summary>
+		public bool FocusSash { get; set; }
+		/// <summary>
+		/// Sturdy ability used
+		/// </summary>
+		public bool Sturdy { get; set; }
+		/// <summary>
+		/// Damage was endured
+		/// </summary>
+		public bool Endured { get; set; }
+		/// <summary>
+		/// A type-resisting berry was used
+		/// </summary>
+		public bool BerryWeakened { get; set; }
+
+		public void Reset()
+		{
+			HPLost        = 0;
+			Critical      = false;
+			CalcDamage    = 0;
+			TypeMod       = 0;
+			Substitute    = false;
+			FocusBand     = false;
+			FocusSash     = false;
+			Sturdy        = false;
+			Endured       = false;
+			BerryWeakened = false;
+		}
+	}
+
+	/// <summary>
+	/// Success state (used for Battle Arena)
+	/// </summary>
+	public class SuccessState
+	{
+		/// <summary>
+		/// Type effectiveness
+		/// </summary>
+		public int TypeMod { get; set; }
+		/// <summary>
+		/// null - not used, 0 - failed, 1 - succeeded
+		/// </summary>
+		/// instead of an int or enum
+		/// 0 - not used, 1 - failed, 2 - succeeded
+		public bool? UseState { get; set; }
+		public bool Protected { get; set; }
+		public int Skill { get; private set; }
+
+		public SuccessState()
+		{
+			Clear();
+		}
+
+		public void Clear()
+		{
+			TypeMod		= 4;
+			UseState	= null;
+			Protected	= false;
+			Skill		= 0;
+		}
+
+		public void UpdateSkill()
+		{
+			if (!UseState.Value && !Protected)
+				Skill -= 2;
+			else if (UseState.Value)
+			{
+				if (TypeMod > 4)
+					Skill += 2; // "Super effective"
+				else if (TypeMod >= 1 && TypeMod < 4)
+					Skill -= 1; // "Not very effective"
+				else if (TypeMod == 0)
+					Skill -= 2; // Ineffective
+				else
+					Skill += 1;
+			}
+			TypeMod = 4;
+			UseState = false;
+			Protected = false;
+		}
+	}
+
+	/// <summary>
+	/// Options made on a given turn, per pokemon.
+	/// </summary>
+	/// ToDo: Make a logger of this as a List<> to document a match history.
+	/// ToDo: If making logger, consider documenting math/results as well...
+	public class Choice
+	{
+		public ChoiceAction Action { get; private set; }
+		/// <summary>
+		/// Index of Action being used
+		/// </summary>
+		public int Index { get; private set; }
+		public Move Move { get; private set; }
+		public int Target { get; private set; }
+
+		/// <summary>
+		/// If action you're choosing to take is to Attack with a Move
+		/// </summary>
+		/// <param name="action"></param>
+		/// <param name="move"></param>
+		/// <param name="target"></param>
+		public Choice (ChoiceAction action, int moveIndex, Move move, int target = -1)
+		{
+			Action = action;
+			Index = moveIndex;
+			Move = move;
+			Target = target;
+		}
+
+		/// <summary>
+		/// If action you're choosing to take is to Switch Pkmns
+		/// </summary>
+		/// <param name="action"></param>
+		/// <param name="pkmnIndex"></param>
+		public Choice (ChoiceAction action, int pkmnIndex)
+		{
+			Action = action;
+			Index = pkmnIndex;
+		}
+
+		/// <summary>
+		/// If action you're choosing to take is to Use an Item on a Pkmn
+		/// </summary>
+		/// <param name="action"></param>
+		/// <param name="itemIndex"></param>
+		/// <param name="pkmnTarget"></param>
+		public Choice (ChoiceAction action, int itemIndex, int pkmnTarget)
+		{
+			Action = action;
+			Index = itemIndex;
+			Target = pkmnTarget;
+		}
+
+		/// <summary>
+		/// If action you're choosing to take is to Flee, Call Pokemon, or Nothing
+		/// </summary>
+		public Choice (ChoiceAction action = 0)
+		{
+			Action = action;
+		}
+	}
+	#endregion
+}
 	/// <summary>
 	/// A Pokemon placeholder class to be used while in-battle, 
 	/// to prevent changes from being permanent to original pokemon profile
 	/// </summary>
 	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
 	/// ToDo: If battle namespace, rename back to pokemon? is "battler" (battle only) too confusing?
-	public class Battler : Pokemon
+	public class Pokemon : PokemonUnity.Pokemon.Pokemon
 	{
 		#region Variables
 		public int turncount { get; private set; }
@@ -928,24 +1099,24 @@ public class Battle : UnityUtilityIntegration
 		public Battle battle { get { return GameVariables.battle; } }
 		public bool captured { get; private set; }
 		//public bool Fainted { get { return isFainted(); } }
-		public DamageState damagestate { get; set; }
+		public Battle.DamageState damagestate { get; set; }
 		/// <summary>
 		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
 		/// 0: Attack, 1: Defense, 2: Speed, 3: SpAtk, 4: SpDef, 5: Evasion, 6: Accuracy
 		/// </summary>
-		public int[] stages { get; private set; }
+		public int[] stages { get; private set; }//ToDo: sbyte?
 		/// <summary>
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == battle.party[this.pkmn.index]
 		public sbyte Index { get; private set; }
+		//[Obsolete]
+		//private int Index { get { return this.battle.battlers.Length; } }
 		/// <summary>
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public byte pokemonIndex { get; private set; }
-		//[Obsolete]
-		//private int Index { get { return this.battle.battlers.Length; } }
 		public bool IsOwned { get { return battle.Player.playerPokedex2[_base.ArrayId, 1] == 1; } }
 		private Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
@@ -994,9 +1165,9 @@ public class Battle : UnityUtilityIntegration
 					base.StatusCount = 0;
 			}
 		}
-		new public Battle.InBattleMove[] moves { get; set; }
+		new public Move[] moves { get; set; }
 
-		public int GetWeight(Battler attacker = null)
+		public int GetWeight(Pokemon attacker = null)
 		{
 			float w = _base.Weight;
 			if (attacker != null || !attacker.hasMoldBreaker())
@@ -1020,12 +1191,12 @@ public class Battle : UnityUtilityIntegration
 		#endregion
 
 		#region Constructors
-		/*public Battler(Battler replacingPkmn, bool batonpass)
+		/*public Pokemon(Pokemon replacingPkmn, bool batonpass)
 		{
 			return replacingPkmn;
 		}*/
 		//[Obsolete("Don't think this is needed or should be used")]
-		public Battler() : base() //Battle btl, int idx
+		public Pokemon() : base() //Battle btl, int idx
 		{
 			//battle		= btl;
 			//Index			= idx;
@@ -1047,7 +1218,7 @@ public class Battle : UnityUtilityIntegration
 		/// <param name="index"></param>
 		/// <param name="batonpass"></param>
 		/// <returns></returns>
-		public Battler Initialize(Pokemon pkmn, sbyte index, bool batonpass = false) //: base(pkmn)
+		public Pokemon Initialize(PokemonUnity.Pokemon.Pokemon pkmn, sbyte index, bool batonpass = false) //: base(pkmn)
 		{
 			//Cure status of previous Pokemon with Natural Cure
 			if (this.hasWorkingAbility(Abilities.NATURAL_CURE))
@@ -1056,8 +1227,8 @@ public class Battle : UnityUtilityIntegration
 				this.RecoverHP((int)Math.Floor((decimal)this.TotalHP / 3));
 			InitPokemon(pkmn, index);
 			InitEffects(batonpass);
-			/*effects = new Effects.Battler(batonpass);
-			effects = new Effects.Battler(batonpass);
+			/*effects = new Effects.Pokemon(batonpass);
+			effects = new Effects.Pokemon(batonpass);
 			if (!batonpass)
 			{
 				//These effects are retained if Baton Pass is used
@@ -1319,7 +1490,7 @@ public class Battle : UnityUtilityIntegration
 			effects.WishAmount         = 0	  ;
 			effects.WishMaker          = -1	  ;
 		}
-		private void InitPokemon(Pokemon pkmn, sbyte pkmnIndex)
+		private void InitPokemon(PokemonUnity.Pokemon.Pokemon pkmn, sbyte pkmnIndex)
 		{
 			if (pkmn.isEgg)
 			{
@@ -1350,27 +1521,27 @@ public class Battle : UnityUtilityIntegration
 				pokemon			= pkmn;
 				Index			= pkmnIndex;
 				participants	= new List<byte>();
-				moves			= new InBattleMove[] {
-					(InBattleMove)base.moves[0],
-					(InBattleMove)base.moves[1],
-					(InBattleMove)base.moves[2],
-					(InBattleMove)base.moves[3]
+				moves			= new Move[] {
+					(Move)base.moves[0],
+					(Move)base.moves[1],
+					(Move)base.moves[2],
+					(Move)base.moves[3]
 				};
 			}
 #if (DEBUG == false || UNITY_EDITOR == true)
 			UpdateUI();
 #endif
 		}
-		public Battler Update(bool fullchange = false)
+		public Pokemon Update(bool fullchange = false)
 		{
 			if(Species != Pokemons.NONE)
 			{
-				//calcStats(); //Not needed since fetching stats from base ( Battler => Pokemon )
+				//calcStats(); //Not needed since fetching stats from base ( Pokemon => Pokemon )
 				//ToDo: Uncomment and fetch data from baseClass
 				//Level		= pokemon.Level;
 				//HP		= pokemon.HP;
 				//TotalHP	= pokemon.TotalHP;
-				//Battler	= Pokemon, so not all stats need to be handpicked
+				//Pokemon	= Pokemon, so not all stats need to be handpicked
 				if (!effects.Transform) //Changed forms but did not transform?
 				{
 					//ATK		= pokemon.ATK;
@@ -1390,9 +1561,9 @@ public class Battle : UnityUtilityIntegration
 		/// <summary>
 		/// Used only to erase the battler of a Shadow Pokémon that has been snagged.
 		/// </summary>
-		public Battler Reset()
+		public Pokemon Reset()
 		{
-			pokemon		= new Pokemon();
+			this.pokemon		= new PokemonUnity.Pokemon.Pokemon();
 			Index		= -1;
 			InitEffects(false);
 			//reset status
@@ -1712,11 +1883,11 @@ public class Battle : UnityUtilityIntegration
 		/// <summary>
 		/// Returns the battler's partner
 		/// </summary>
-		public Battler Partner { get { return battle.battlers[(Index & 1) | ((Index & 2) ^ 2)]; } }
+		public Pokemon Partner { get { return battle.battlers[(Index & 1) | ((Index & 2) ^ 2)]; } }
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon
 		/// </summary>
-		public Battler OppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
+		public Pokemon OppositeOpposing { get { return battle.battlers[(Index ^ 1)]; } }
 		/// <summary>
 		/// Returns the battler's first opposing Pokémon Index
 		/// </summary>
@@ -1997,7 +2168,7 @@ public class Battle : UnityUtilityIntegration
 				List<int> choices = new List<int>();
 				for (int i = 0; i < battle.battlers.Length; i++)
 				{
-					Battler foe = battle.battlers[i];
+					Pokemon foe = battle.battlers[i];
 					if (IsOpposing(i) && !foe.isFainted())
 					{
 						Abilities abil = foe.Ability;
@@ -2050,18 +2221,18 @@ public class Battle : UnityUtilityIntegration
 		public void pbSleep() { }
 		public void pbSleepSelf(int turns) { }
 		public void pbFreeze() { }
-		public void pbAttract(Battler pkmn, byte? uh = null, bool animate = false) { }
-		public void pbFlinch(Battler pkmn, byte? uh = null, bool animate = false) { }
-		public void pbPoison(Battler pkmn, byte? uh = null, bool animate = false) { }
-		public void pbParalyze(Battler pkmn, byte? uh = null, bool animate = false) { }
-		public void pbBurn(Battler pkmn, byte? uh = null, bool animate = false) { }
+		public void pbAttract(Pokemon pkmn, byte? uh = null, bool animate = false) { }
+		public void pbFlinch(Pokemon pkmn, byte? uh = null, bool animate = false) { }
+		public void pbPoison(Pokemon pkmn, byte? uh = null, bool animate = false) { }
+		public void pbParalyze(Pokemon pkmn, byte? uh = null, bool animate = false) { }
+		public void pbBurn(Pokemon pkmn, byte? uh = null, bool animate = false) { }
 		public void pbCureStatus(bool animate = false) { }
 		public void pbCureAttract(bool animate = false) { }
 		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
 		public void pbUseMoveSimple(Moves move) { }
-		public Battler pbOppositeOpposing { get; set; }
+		public Pokemon pbOppositeOpposing { get; set; }
 		public float weight { get; set; }
-		public float Weight(Battler pkmn)
+		public float Weight(Pokemon pkmn)
 		{
 			return 0f;
 		}
@@ -2077,7 +2248,7 @@ public class Battle : UnityUtilityIntegration
 		{
 			return false;
 		}
-		public bool pbCanAttract(Battler pkmn)
+		public bool pbCanAttract(Pokemon pkmn)
 		{
 			return false;
 		}
@@ -2085,55 +2256,55 @@ public class Battle : UnityUtilityIntegration
 		{
 			return false;
 		}
-		public bool pbCanConfuse(Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanConfuse(Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanSleep(Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanSleep(Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanSleep(Battler pkmn, bool animate, PokeBattle_Move atk, bool uh)
+		public bool pbCanSleep(Pokemon pkmn, bool animate, PokeBattle_Move atk, bool uh)
 		{
 			return false;
 		}
-		public bool pbCanFreeze(Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanFreeze(Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanPoison(Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanPoison(Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanParalyze(Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanParalyze(Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanBurn(Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanBurn(Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanIncreaseStatStage(Stats stat, Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanIncreaseStatStage(Stats stat, Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbCanReduceStatStage(Stats stat, Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbCanReduceStatStage(Stats stat, Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbIncreaseStat(Stats stat, int num, Battler pkmn, bool animate, PokeBattle_Move atk)
+		public bool pbIncreaseStat(Stats stat, int num, Pokemon pkmn, bool animate, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbIncreaseStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		public bool pbIncreaseStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk, bool animate)
 		{
 			return false;
 		}
-		public bool pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk)
+		public bool pbReduceStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk)
 		{
 			return false;
 		}
-		public bool pbReduceStat(Stats stat, int num, Battler pkmn, bool uh, PokeBattle_Move atk, bool animate)
+		public bool pbReduceStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk, bool animate)
 		{
 			return false;
 		}
@@ -2141,7 +2312,7 @@ public class Battle : UnityUtilityIntegration
 		{
 			//return false;
 		}
-		public bool pbAddTarget(byte index, Battler pkmn)
+		public bool pbAddTarget(byte index, Pokemon pkmn)
 		{
 			return false;
 		}
@@ -2153,28 +2324,28 @@ public class Battle : UnityUtilityIntegration
 		{
 			//return false;
 		}
-		public Battler pbOpposing1 { get; set; }
-		public Battler pbOpposing2 { get; set; }
+		public Pokemon pbOpposing1 { get; set; }
+		public Pokemon pbOpposing2 { get; set; }
 		#endregion
 
-		/*public static implicit operator Battler[](Pokemon[] input)
+		/*public static implicit operator Pokemon[](Pokemon[] input)
 		{
-			Battler[] battlers = new Battler[input.Length];
+			Pokemon[] battlers = new Pokemon[input.Length];
 			return battlers;
 		}
 
-		public static implicit operator Battler(Pokemon input)
+		public static implicit operator Pokemon(Pokemon input)
 		{
-			Battler[] battlers = new Battler[input.Length];
+			Pokemon[] battlers = new Pokemon[input.Length];
 			return battlers;
 		}*/
 
-		public static Battler[] GetBattlers(Pokemon[] input)
+		public static Pokemon[] GetBattlers(Pokemon[] input)
 		{
-			Battler[] battlers = new Battler[input.Length];
+			Pokemon[] battlers = new Pokemon[input.Length];
 			for (int i = 0; i < input.Length; i++)
 			{
-				battlers[i] = (Battler)input[i];
+				battlers[i] = (Pokemon)input[i];
 			}
 			return battlers;
 		}
@@ -2184,7 +2355,7 @@ public class Battle : UnityUtilityIntegration
 			else nonplayerHUD = gameObject;
 		}
 		/// <summary>
-		/// Refreshes the HUD of this Battler
+		/// Refreshes the HUD of this Pokemon
 		/// </summary>
 		private void UpdateUI()
 		{
@@ -2199,19 +2370,12 @@ public class Battle : UnityUtilityIntegration
 			playerHUD.Item = nonplayerHUD.Item = Item != Items.NONE;
 		}
 	}
-
-	//ToDo: Fix this
-	public class Scene
-	{
-		public void pbHPChanged(Battler pkmn, int _new) { }
-		public void pbChangePokemon(Battler pkmn, Pokemons _new) { }
-	}
-
+	
 	/// <summary>
 	/// A Move placeholder class to be used while in-battle, 
 	/// to prevent temp changes from being permanent to original pokemon profile
 	/// </summary>
-	public class InBattleMove : Move
+	public class Move : PokemonUnity.Move.Move
 	{
 		#region Variables
 		public bool NOTYPE						{ get; set; } //= 0x01
@@ -2274,7 +2438,7 @@ public class Battle : UnityUtilityIntegration
 			SELFCONFUSE		= 0x20
 		}
 
-		public InBattleMove(Moves move) : base(move)
+		public Move(Moves move) : base(move)
 		{
 			//battle	= battle
 			BaseDamage	= _base.BaseDamage;
@@ -2291,18 +2455,18 @@ public class Battle : UnityUtilityIntegration
 			MoveId		= base.MoveId;
 		}
 
-		public InBattleMove(Move move) : this(move.MoveId)
+		public Move(Move move) : this(move.MoveId)
 		{
 			PP		= move.PP;
 			TotalPP = move.TotalPP;
 			CalcMoveFunc();
 		}
 
-		/*public InBattleMove(Battle battle, Move move) : base(move.MoveId)
+		/*public Move(Battle battle, Move move) : base(move.MoveId)
 		{
 		}
 
-		public static implicit operator Move(Battle.InBattleMove input)
+		public static implicit operator Move(Battle.Move input)
 		{
 
 		}
@@ -2311,7 +2475,7 @@ public class Battle : UnityUtilityIntegration
 		{
 
 		}*/
-		public void CalcMoveFunc()//(ref Battle.InBattleMove move)
+		public void CalcMoveFunc()//(ref Battle.Move move)
 		{
 			//Effect function;
 			switch ((Effect)Function)
@@ -2681,288 +2845,18 @@ public class Battle : UnityUtilityIntegration
 		}
 	}
 
-	public class DamageState
+	#region Move Interfaces
+	public interface IMoveEffect
 	{
-		/// <summary>
-		/// HP lost by opponent, inc. HP lost by a substitute
-		/// </summary>
-		public int HPLost { get; set; }
-		/// <summary>
-		/// Critical hit flag
-		/// </summary>
-		public bool Critical { get; set; }
-		/// <summary>
-		/// Calculated damage
-		/// </summary>
-		public int CalcDamage { get; set; }
-		/// <summary>
-		/// Type effectiveness
-		/// </summary>
-		public int TypeMod { get; set; }
-		/// <summary>
-		/// A substitute took the damage
-		/// </summary>
-		public bool Substitute { get; set; }
-		/// <summary>
-		/// Focus Band used
-		/// </summary>
-		public bool FocusBand { get; set; }
-		/// <summary>
-		/// Focus Sash used
-		/// </summary>
-		public bool FocusSash { get; set; }
-		/// <summary>
-		/// Sturdy ability used
-		/// </summary>
-		public bool Sturdy { get; set; }
-		/// <summary>
-		/// Damage was endured
-		/// </summary>
-		public bool Endured { get; set; }
-		/// <summary>
-		/// A type-resisting berry was used
-		/// </summary>
-		public bool BerryWeakened { get; set; }
-
-		public void Reset()
-		{
-			HPLost        = 0;
-			Critical      = false;
-			CalcDamage    = 0;
-			TypeMod       = 0;
-			Substitute    = false;
-			FocusBand     = false;
-			FocusSash     = false;
-			Sturdy        = false;
-			Endured       = false;
-			BerryWeakened = false;
-		}
+		int Effect(Pokemon attacker, Pokemon opponent, int hitnum, Target alltargets, bool showanimation);
 	}
-
-	/// <summary>
-	/// Success state (used for Battle Arena)
-	/// </summary>
-	public class SuccessState
+	public interface IMoveAdditionalEffect
 	{
-		/// <summary>
-		/// Type effectiveness
-		/// </summary>
-		public int TypeMod { get; set; }
-		/// <summary>
-		/// null - not used, 0 - failed, 1 - succeeded
-		/// </summary>
-		/// instead of an int or enum
-		/// 0 - not used, 1 - failed, 2 - succeeded
-		public bool? UseState { get; set; }
-		public bool Protected { get; set; }
-		public int Skill { get; private set; }
-
-		public SuccessState()
-		{
-			Clear();
-		}
-
-		public void Clear()
-		{
-			TypeMod		= 4;
-			UseState	= null;
-			Protected	= false;
-			Skill		= 0;
-		}
-
-		public void UpdateSkill()
-		{
-			if (!UseState.Value && !Protected)
-				Skill -= 2;
-			else if (UseState.Value)
-			{
-				if (TypeMod > 4)
-					Skill += 2; // "Super effective"
-				else if (TypeMod >= 1 && TypeMod < 4)
-					Skill -= 1; // "Not very effective"
-				else if (TypeMod == 0)
-					Skill -= 2; // Ineffective
-				else
-					Skill += 1;
-			}
-			TypeMod = 4;
-			UseState = false;
-			Protected = false;
-		}
+		void AdditionalEffect(Pokemon attacker, Pokemon opponent);
 	}
-
-	/// <summary>
-	/// Options made on a given turn, per pokemon.
-	/// </summary>
-	/// ToDo: Make a logger of this as a List<> to document a match history.
-	/// ToDo: If making logger, consider documenting math/results as well...
-	public class Choice
+	public interface IMoveModifyAccuracy
 	{
-		public ChoiceAction Action { get; private set; }
-		/// <summary>
-		/// Index of Action being used
-		/// </summary>
-		public int Index { get; private set; }
-		public InBattleMove Move { get; private set; }
-		public int Target { get; private set; }
-
-		/// <summary>
-		/// If action you're choosing to take is to Attack with a Move
-		/// </summary>
-		/// <param name="action"></param>
-		/// <param name="move"></param>
-		/// <param name="target"></param>
-		public Choice (ChoiceAction action, int moveIndex, InBattleMove move, int target = -1)
-		{
-			Action = action;
-			Index = moveIndex;
-			Move = move;
-			Target = target;
-		}
-
-		/// <summary>
-		/// If action you're choosing to take is to Switch Pkmns
-		/// </summary>
-		/// <param name="action"></param>
-		/// <param name="pkmnIndex"></param>
-		public Choice (ChoiceAction action, int pkmnIndex)
-		{
-			Action = action;
-			Index = pkmnIndex;
-		}
-
-		/// <summary>
-		/// If action you're choosing to take is to Use an Item on a Pkmn
-		/// </summary>
-		/// <param name="action"></param>
-		/// <param name="itemIndex"></param>
-		/// <param name="pkmnTarget"></param>
-		public Choice (ChoiceAction action, int itemIndex, int pkmnTarget)
-		{
-			Action = action;
-			Index = itemIndex;
-			Target = pkmnTarget;
-		}
-
-		/// <summary>
-		/// If action you're choosing to take is to Flee, Call Pokemon, or Nothing
-		/// </summary>
-		public Choice (ChoiceAction action = 0)
-		{
-			Action = action;
-		}
-	}
-
-	public enum ChoiceAction
-	{
-		/// <summary>
-		/// IsFainted
-		/// </summary>
-		NoAction = 0,
-		UseMove = 1,
-		SwitchPokemon = 2,
-		UseItem = 3,
-		CallPokemon = 4,
-		Run = 5
-	}
-
-	public enum BattleResults
-	{
-		InProgress = -1,
-		/// <summary>
-		/// 0 - Undecided or aborted
-		/// </summary>
-		ABORTED = 0,
-		/// <summary>
-		/// 1 - Player won
-		/// </summary>
-		WON = 1,
-		/// <summary>
-		/// 2 - Player lost
-		/// </summary>
-		LOST = 2,
-		/// <summary>
-		/// 3 - Player or wild Pokémon ran from battle, or player forfeited the match
-		/// </summary>
-		FORFEIT = 3,
-		/// <summary>
-		/// 4 - Wild Pokémon was caught
-		/// </summary>
-		CAPTURED = 4,
-		/// <summary>
-		/// 5 - Draw
-		/// </summary>
-		DRAW = 5
+		void ModifyAccuracy(int moveAccuracy, Pokemon attacker, Pokemon opponent);
 	}
 	#endregion
-}
-namespace PokemonUnity
-{
-	public enum Stats
-	{
-		ATTACK,
-		DEFENSE,
-		SPEED,
-		SPATK,
-		SPDEF,
-		ACCURACY,
-		EVASION,
-		/// <summary>
-		/// Use minus 2 when reflecting in IV, 
-		/// as accuracy and evasion are battle only
-		/// </summary>
-		/// Should HP be here?
-		HP
-	}
-	public enum Weather
-	{
-		NONE,
-		RAINDANCE,
-		HEAVYRAIN,
-		SUNNYDAY,
-		HARSHSUN,
-		SANDSTORM,
-		STRONGWINDS,
-		HAIL
-	}
-	/// <summary>
-	/// Terrain Tags or Tiles a player can be stepping on;
-	/// used to contruct map floor plane
-	/// </summary>
-	public enum Terrain
-	{
-		Grass,
-		Sand,
-		Rock,
-		DeepWater,
-		StillWater,
-		Water,
-		TallGrass,
-		SootGrass,
-		Puddle
-	}
-	public enum Environment
-	{
-		None,
-		/// <summary>
-		/// Normal Grass, and Sooty Tall Grass, are both grass but different colors
-		/// </summary>
-		Grass,
-		Cave,
-		Sand,
-		Rock,
-		MovingWater,
-		StillWater,
-		Underwater,
-		/// <summary>
-		/// Tall Grass
-		/// </summary>
-		TallGrass,
-		Forest,
-		Snow,
-		Volcano,
-		Graveyard,
-		Sky,
-		Space
-	}
 }

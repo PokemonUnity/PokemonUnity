@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using PokemonUnity.Pokemon;
 
 public class TestPokedexHandler : MonoBehaviour
 {
