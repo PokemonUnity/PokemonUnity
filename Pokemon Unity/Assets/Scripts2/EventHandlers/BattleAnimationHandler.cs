@@ -5,14 +5,15 @@ using System.Text;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using PokemonUnity.Battle;
 
 //[ExecuteInEditMode]
 public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 {
 	//private static GameVariables PersistantPlayerData { get { return StartupSceneHandler.PersistantPlayerData; } }
-	public static IEnumerator<Battle.BattleResults> BattleCoroutineResults { get; private set; }
-	public IEnumerator<Battle.BattleResults> BattleCoroutine { get; private set; }
-	public Battle.BattleResults victor { get { return GameVariables.battle.decision; } }
+	public static IEnumerator<BattleResults> BattleCoroutineResults { get; private set; }
+	public IEnumerator<BattleResults> BattleCoroutine { get; private set; }
+	public BattleResults victor { get { return GameVariables.battle.decision; } }
     //public float time;
     //AnimationClip anim;
 

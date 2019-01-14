@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity.Pokemon;
 
 public class MapSettings : MonoBehaviour
 {

@@ -716,7 +716,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 	/// ToDo: On Set, trigger UnityEngine EventHandler,
 	/// Switch scenes, load rules, and animate pokemons
 	//public static Battle Battle { get; set; }
-	public static Battle battle
+	public static PokemonUnity.Battle.Battle battle
 	{
 		get
 		{
@@ -729,7 +729,7 @@ public class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviou
 #endif
 		}
 	}
-	private static Battle _battle { get; set; }
+	private static PokemonUnity.Battle.Battle _battle { get; set; }
 	#endregion
 
 	#region Audio 
@@ -1624,68 +1624,72 @@ public class UnityUtilityIntegration
 
 namespace PokemonUnity
 {
-	enum Generation
+	/*// <summary>
+	/// Extension methods for <see cref="MenuItemDefinition"/>.
+	/// </summary>
+	public static class MenuItemDefinitionExtensions
 	{
-		All = 0,
-		RedBlueYellow = 1,
-		GoldSilverCrystal = 2,
-		RubySapphireEmerald = 3,
-		//FireRedLeafGreen, 
-		DiamondPearlPlatinum = 4,
-		//HeartgoldSoulsilver, 
-		BlackWhite = 5,
-		//BlackWhite2, 
-		XY = 6,
-		//OmegaRubyAlphaSapphire,
-		SunMoon = 7,
-		//UltraSunUltraMoon
-		Custom = -1
-	}
+		/// <summary>
+		/// Moves a menu item to top in the list.
+		/// </summary>
+		/// <param name="menuItems">List of menu items</param>
+		/// <param name="menuItemName">Name of the menu item to move</param>
+		public static void MoveMenuItemToTop(this IList<MenuItemDefinition> menuItems, string menuItemName)
+		{
+			var menuItem = GetMenuItem(menuItems, menuItemName);
+			menuItems.Remove(menuItem);
+			menuItems.Insert(0, menuItem);
+		}
 
-	enum Version
-	{
-		//(id, version_group_id, identifier) VALUES 
-		//(0, 0, poke-unity'),
-		PokeUnity = 0,
-		//(1, 1, red'),
-		//(2, 1, blue'),
-		RedBlue = 1,
-		//(3, 2, yellow'),
-		Yellow = 2,
-		//(4, 3, gold'),
-		//(5, 3, silver'),
-		GoldSilver = 3,
-		//(6, 4, crystal'),
-		Crystal = 4,
-		//(7, 5, ruby'),
-		//(8, 5, sapphire'),
-		RubySapphire = 5,
-		//(9, 6, emerald'),
-		Emerald = 6,
-		//(10,7, firered'),
-		//(11,7, leafgreen'),
-		LGFR = 7,
-		//(12,8, diamond'),
-		//(13,8, pearl'),
-		DiamondPearl = 8,
-		//(14,9, platinum'),
-		Platinum = 9,
-		//(15,10,heartgold'),
-		//(16,10,soulsilver'),
-		HGSS = 10,
-		//(17,11,black'),
-		//(18,11,white'),
-		BW = 11,
-		//(19,12,colosseum'),
-		//(20,13,xd'),
-		//(21,14,black-2'),
-		//(22,14,white-2'),
-		BW2 = 14,
-		//(23,15,x'),
-		//(24,15,y'),
-		XY = 15,
-		//(25,16,omega-ruby'),
-		//(26,16,alpha-sapphire')
-		ORAS = 16
-	}
+		/// <summary>
+		/// Moves a menu item to bottom in the list.
+		/// </summary>
+		/// <param name="menuItems">List of menu items</param>
+		/// <param name="menuItemName">Name of the menu item to move</param>
+		public static void MoveMenuItemToBottom(this IList<MenuItemDefinition> menuItems, string menuItemName)
+		{
+			var menuItem = GetMenuItem(menuItems, menuItemName);
+			menuItems.Remove(menuItem);
+			menuItems.Insert(menuItems.Count, menuItem);
+		}
+
+		/// <summary>
+		/// Moves a menu item in the list after another menu item in the list.
+		/// </summary>
+		/// <param name="menuItems">List of menu items</param>
+		/// <param name="menuItemName">Name of the menu item to move</param>
+		/// <param name="targetMenuItemName">Target menu item (to move before it)</param>
+		public static void MoveMenuItemBefore(this IList<MenuItemDefinition> menuItems, string menuItemName, string targetMenuItemName)
+		{
+			var menuItem = GetMenuItem(menuItems, menuItemName);
+			var targetMenuItem = GetMenuItem(menuItems, targetMenuItemName);
+			menuItems.Remove(menuItem);
+			menuItems.Insert(menuItems.IndexOf(targetMenuItem), menuItem);
+		}
+
+		/// <summary>
+		/// Moves a menu item in the list before another menu item in the list.
+		/// </summary>
+		/// <param name="menuItems">List of menu items</param>
+		/// <param name="menuItemName">Name of the menu item to move</param>
+		/// <param name="targetMenuItemName">Target menu item (to move after it)</param>
+		public static void MoveMenuItemAfter(this IList<MenuItemDefinition> menuItems, string menuItemName, string targetMenuItemName)
+		{
+			var menuItem = GetMenuItem(menuItems, menuItemName);
+			var targetMenuItem = GetMenuItem(menuItems, targetMenuItemName);
+			menuItems.Remove(menuItem);
+			menuItems.Insert(menuItems.IndexOf(targetMenuItem) + 1, menuItem);
+		}
+
+		private static MenuItemDefinition GetMenuItem(IEnumerable<MenuItemDefinition> menuItems, string menuItemName)
+		{
+			var menuItem = menuItems.FirstOrDefault(i => i.Name == menuItemName);
+			if (menuItem == null)
+			{
+				throw new Exception("Can not find menu item: " + menuItemName);
+			}
+
+			return menuItem;
+		}
+	}*/
 }
