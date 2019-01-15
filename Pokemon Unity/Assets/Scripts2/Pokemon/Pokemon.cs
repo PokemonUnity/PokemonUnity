@@ -9,9 +9,6 @@ using PokemonUnity.Item;
 
 namespace PokemonUnity.Pokemon
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public partial class Pokemon
     {
         #region Variables

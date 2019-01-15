@@ -63,7 +63,7 @@ namespace PokemonUnity.Saving.Location
         /// <param name="rValue"></param>
         /// <returns></returns>
         public static implicit operator SerializableVector3(UnityEngine.Vector3 rValue)
-        {
+        { 
             return new SerializableVector3(rValue.x, rValue.y, rValue.z);
         }
     }

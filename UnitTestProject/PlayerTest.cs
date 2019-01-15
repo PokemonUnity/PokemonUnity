@@ -200,6 +200,7 @@ namespace Tests
         public void Compare_Save_Files()
         {
             SaveData newSave;
+
             #region Fill newSave
             string saveName = "First Save";
             int activeScene = 2;
@@ -247,13 +248,10 @@ namespace Tests
                 eventList
             );
             #endregion
+
             SaveManager.Overwrite(newSave, 0);
 
             SaveData loadedData = SaveManager.GetSave(0);
-
-            //Only difference between newSave and loadedData
-            //Is the CreatedDate, so we set them to the same thing
-            newSave.TimeCreated = loadedData.TimeCreated;
 
             #region Assert On Save Values
             if (newSave.BuildVersion != loadedData.BuildVersion)
