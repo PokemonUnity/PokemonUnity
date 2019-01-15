@@ -200,9 +200,7 @@ namespace Tests
         public void Compare_Save_Files()
         {
             SaveData newSave;
-            #region Save File Setup
-
-            #region Fill The Save File
+            #region Fill newSave
             string saveName = "First Save";
             int activeScene = 2;
 
@@ -249,65 +247,97 @@ namespace Tests
                 eventList
             );
             #endregion
-
-            #endregion
             SaveManager.Overwrite(newSave, 0);
 
             SaveData loadedData = SaveManager.GetSave(0);
-
-            #region Fill The New Save File
-            saveName = "First Save";
-            activeScene = 2;
-
-            playerName = "Red";
-            trainerID = 55323;
-            secretID = 64123;
-            isMale = false;
-
-            pokedex = new bool?[] { null, false, true, false, null };
-            playerTime = new TimeSpan(4, 20, 53);
-
-            playerPosition = new SerializableVector3(0, 1, 0);
-            playerDirection = 2;
-            followerPosition = new SerializableVector3(1, 0, 0);
-            followerDirection = 1;
-
-            playerParty = new Pokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
-            };
-            playerPC = new Pokemon[,]
-            {
-                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
-                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
-            };
-            //Don't know how to initialize the Items List<> yet, leaving this for later
-            playerBag = new List<Items>();
-
-            eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
-
-            newSave = new SaveData
-            (
-                saveName, activeScene,
-                playerName, trainerID, secretID, isMale,
-                pokedex, playerTime,
-                playerPosition, playerDirection,
-                followerPosition, followerDirection,
-                playerParty, playerPC, playerBag,
-                eventList
-            );
-            #endregion
 
             //Only difference between newSave and loadedData
             //Is the CreatedDate, so we set them to the same thing
             newSave.TimeCreated = loadedData.TimeCreated;
 
-            Assert.IsInstanceOfType(loadedData, typeof(SaveData));
+            #region Assert On Save Values
+            if (newSave.BuildVersion != loadedData.BuildVersion)
+                Assert.Fail("Build versions are not the same");
+
+            if (newSave.SaveName != loadedData.SaveName)
+                Assert.Fail("SaveNames are not the same");
+
+            if (newSave.TimeCreated != loadedData.TimeCreated)
+                Assert.Fail("TimeCreated are not the same");
+
+            if (newSave.PlayerName != loadedData.PlayerName)
+                Assert.Fail("PlayerNames are not the same");
+
+            if (newSave.TrainerID != loadedData.TrainerID)
+                Assert.Fail("TrainerID's are not the same");
+
+            if (newSave.SecretID != loadedData.SecretID)
+                Assert.Fail("SecretID are not the same");
+
+            if (newSave.IsMale != loadedData.IsMale)
+                Assert.Fail("Genders are not the same");
+
+            if (newSave.Pokedex.Length != loadedData.Pokedex.Length)
+                Assert.Fail("Pokedex Length are not the same");
+            for (int i = 0; i < newSave.Pokedex.Length; i++)
+            {
+                if (newSave.Pokedex[i] != loadedData.Pokedex[i])
+                    Assert.Fail("Pokedex entries are not the same on index: " + i);
+            }
+
+            if (newSave.PlayerTime != loadedData.PlayerTime)
+                Assert.Fail("PlayerTimes are not the same");
+
+            if (
+                (newSave.PlayerPosition.x != loadedData.PlayerPosition.x) &&
+                (newSave.PlayerPosition.y != loadedData.PlayerPosition.y) &&
+                (newSave.PlayerPosition.z != loadedData.PlayerPosition.z)
+                )
+                Assert.Fail("PlayerPositions are not the same");
+            if (newSave.PlayerDirection != loadedData.PlayerDirection)
+                Assert.Fail("PlayerDirections are not the same");
+
+            if (
+                (newSave.FollowerPosition.x != loadedData.FollowerPosition.x) &&
+                (newSave.FollowerPosition.y != loadedData.FollowerPosition.y) &&
+                (newSave.FollowerPosition.z != loadedData.FollowerPosition.z)
+                )
+                Assert.Fail("FollowerPositions are not the same");
+            if (newSave.FollowerDirection != loadedData.FollowerDirection)
+                Assert.Fail("FollowerDirections are not the same");
+
+            if (newSave.ActiveScene != loadedData.ActiveScene)
+                Assert.Fail("ActiveScenes are no the same");
+
+            if (newSave.PlayerParty.Length != loadedData.PlayerParty.Length)
+                Assert.Fail("PlayerPartys are not the same, newSave contains: " + newSave.PlayerParty.Length + ", whilst loadedData contains: " + loadedData.PlayerParty.Length);
+            for (int i = 0; i < newSave.PlayerParty.Length; i++)
+            {
+                if (newSave.PlayerParty[i].Species != loadedData.PlayerParty[i].Species)
+                    Assert.Fail("PlayerParty's are not the same on index: " + i);
+            }
+
+            if (newSave.PC.GetUpperBound(0) != loadedData.PC.GetUpperBound(0))
+                Assert.Fail("PC's are not the same on bound: 0");
+            if (newSave.PC.GetUpperBound(1) != loadedData.PC.GetUpperBound(1))
+                Assert.Fail("PC's are not the same on bound: 1");
+            for (int i = 0; i < newSave.PC.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j < newSave.PC.GetUpperBound(1); j++)
+                {
+                    if (newSave.PC[i, j].Species != loadedData.PC[i, j].Species)
+                        Assert.Fail("PC's are not the same on indexes: " + i + ", " + j);
+                }
+            }
+
+            if (newSave.PlayerBag.Count != loadedData.PlayerBag.Count)
+                Assert.Fail("PlayerBag's sizes are not the same");
+            for (int i = 0; i < newSave.PlayerBag.Count; i++)
+            {
+                if (newSave.PlayerBag[i] != loadedData.PlayerBag[i])
+                    Assert.Fail("PlayerBag's are not the same on index: " + i);
+            }
+            #endregion
         }
 
         #region Player Properties
