@@ -3,6 +3,7 @@ using PokemonUnity.Pokemon;
 
 namespace PokemonUnity.Pokemon
 {
+[System.Serializable]
 public class Nature
 {
 

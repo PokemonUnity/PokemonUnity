@@ -2361,7 +2361,7 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 			if (!opponent.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			byte increment = (Settings.USENEWBATTLEMECHANICS) ? 2 : 1;
+			byte increment = (Settings.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
 			bool ret = opponent.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
 			return ret ? 0 : -1;
 		}
@@ -2371,7 +2371,7 @@ public abstract class PokeBattle_Move : IPokeBattle_Move
 			if (opponent.damagestate.Substitute) return;
 			if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
 			{
-				byte increment = (Settings.USENEWBATTLEMECHANICS) ? 2 : 1;
+				byte increment = (Settings.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
 				opponent.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
 			}
 		}
