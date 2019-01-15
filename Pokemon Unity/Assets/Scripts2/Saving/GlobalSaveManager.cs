@@ -18,7 +18,8 @@ namespace PokemonUnity.Saving
         //If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
         //If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
         private const bool UseAppdate = false;
-        private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
+        //private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
+        private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
 
         private static UnityEngine.GameObject Player;
         private static List<SaveEvent> EventSaves = new List<SaveEvent>();
