@@ -219,9 +219,9 @@ public partial class Pokemon
 	{
 		_base = PokemonData.GetPokemon(pokemon);
 		Exp = new Experience(GrowthRate);
-		Ability = abilityFlag;
+        eggSteps = _base.HatchTime;
+        Ability = abilityFlag;
 		Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
-		eggSteps = _base.HatchTime;
 		GenerateMoveset();
 
 		//calcStats();
@@ -656,6 +656,37 @@ public partial class Pokemon
 	{
 		get
 		{
+
+                if (isEgg && hasHiddenAbility())
+                {
+                    if (_base.Ability[1] != Abilities.NONE)
+                    {
+                        return _base.Ability[Settings.Rand.Next(0, 3)];
+                    }
+                    else
+                    {
+                        if (Settings.Rand.Next(0, 2) == 1)
+                        {
+                            return _base.Ability[2];
+                        }
+                        else
+                        {
+                            return _base.Ability[0];
+                        }
+                    }
+                }
+                else
+                {
+                    if (_base.Ability[1] == Abilities.NONE)
+                    {
+                        return _base.Ability[0];
+                    }
+                    else
+                    {
+                        return _base.Ability[Settings.Rand.Next(0, 2)];
+                    }
+                }
+
 			return
 				//If is egg AND has hidden, include hidden in roll
 				isEgg && hasHiddenAbility() ? 
