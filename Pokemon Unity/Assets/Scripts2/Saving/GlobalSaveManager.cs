@@ -209,6 +209,23 @@ namespace PokemonUnity.Saving
             }
         }
 
+        public static SaveData GetSave(int saveID)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (FileStream fileStream = new FileStream(saveLocation + "Save" + saveID + ".pku", FileMode.Open, FileAccess.Read))
+            {
+                try
+                {
+                    SaveData newSave = (SaveData)bf.Deserialize(fileStream);
+                    return newSave;
+                }
+                catch (FileNotFoundException)
+                {
+                    return null;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the amount of save files that's specified in Amount.
         /// </summary>
