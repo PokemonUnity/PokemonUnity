@@ -64,7 +64,7 @@
     <Compile Include="Assets\Scripts2\Pokemon\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts2\Saving\SaveEvent.cs" />
     <Compile Include="Assets\Scripts2\Saving\EventListener.cs" />
-    <Compile Include="Assets\Scripts2\Saving\GlobalSaveManager.cs" />
+    <Compile Include="Assets\Scripts2\Saving\SaveManager.cs" />
     <Compile Include="Assets\Scripts2\Saving\SaveData.cs" />
     <Compile Include="Assets\Scripts2\Saving\Location\SerializeVector3.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />

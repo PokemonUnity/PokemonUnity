@@ -13,7 +13,7 @@ namespace PokemonUnity.Saving
 
         private void Awake()
         {
-            GlobalSaveManager.Load(0);
+            SaveManager.Load(0);
             if (null == Player)
             {
                 Player = UnityEngine.GameObject.FindGameObjectWithTag("Player");
@@ -24,9 +24,9 @@ namespace PokemonUnity.Saving
                 Player.tag = "Player";
                 playerMovement = Player.GetComponent<PlayerMovement>();
             }
-            GlobalSaveManager.RegisterPlayer(Player);
+            SaveManager.RegisterPlayer(Player);
 
-            List<SaveEvent> Events = GlobalSaveManager.GetRelaventSaveData(SceneManager.GetActiveScene().buildIndex);
+            List<SaveEvent> Events = SaveManager.GetRelaventSaveData(SceneManager.GetActiveScene().buildIndex);
 
             foreach (SaveEvent Event in Events)
             {
@@ -70,7 +70,7 @@ namespace PokemonUnity.Saving
                 else*/ if (null != itemEvent)
                 {
                     RegisteredEvent = true;
-                    GlobalSaveManager.RegisterEvent(new SaveEvent(SaveEventType.ITEM, eventObject, SceneManager.GetActiveScene().buildIndex));
+                    SaveManager.RegisterEvent(new SaveEvent(SaveEventType.ITEM, eventObject, SceneManager.GetActiveScene().buildIndex));
                 }
             }
             else if (playerMovement.busyWith == null)

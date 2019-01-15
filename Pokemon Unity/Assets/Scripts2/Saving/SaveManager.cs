@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
-using UnityEngine.SceneManagement;
 
 namespace PokemonUnity.Saving
 {
@@ -11,7 +10,7 @@ namespace PokemonUnity.Saving
     using PokemonUnity.Item;
     using PokemonUnity.Saving.Location;
 
-    public static class GlobalSaveManager
+    public static class SaveManager
     {
         private const string BuildVersion = "0.0.1";
 
@@ -51,7 +50,7 @@ namespace PokemonUnity.Saving
             return EventSaves.Where(x => x.SceneIndex == sceneIndex).ToList();
         }
 
-        private static SaveData CreateSaveFile(string saveName)
+        private static SaveData CreateSaveFile(string saveName, int activeScene)
         {
             Pokemon[] Party = GameVariables.playerTrainer.Trainer.Party;
             Pokemon[,] PC = GameVariables.PC_Poke;
@@ -60,7 +59,7 @@ namespace PokemonUnity.Saving
             return new SaveData
                 (
                 saveName,
-                SceneManager.GetActiveScene().buildIndex,
+                activeScene,
                 GameVariables.playerTrainer.Trainer.Name,
                 GameVariables.playerTrainer.TrainerID, GameVariables.playerTrainer.SecretID,
                 GameVariables.playerTrainer.isMale, //GameVariables.playerTrainer.GymBadges,
@@ -76,14 +75,14 @@ namespace PokemonUnity.Saving
         /// <summary>
         /// Saves the game using the standard data.
         /// </summary>
-        public static void Save(string saveName)
+        public static void Save(string saveName, int activeScene)
         {
             if (!UseAppdate)
             {
                 saveLocation = UnityEngine.Application.dataPath + "/Saves/";
             }
 
-            SaveData DataToSave = CreateSaveFile(saveName);
+            SaveData DataToSave = CreateSaveFile(saveName, activeScene);
             SerializeAndCreateSaveFile(DataToSave);
         }
 
