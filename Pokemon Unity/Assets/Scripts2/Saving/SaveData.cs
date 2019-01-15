@@ -10,7 +10,7 @@ namespace PokemonUnity.Saving
     [System.Serializable]
     public class SaveData
     {
-        public string BuildVersion = GlobalSaveManager.GetBuildVersion();
+        public string BuildVersion = SaveManager.GetBuildVersion();
         public string SaveName = string.Empty;
 
         public DateTime TimeCreated;
