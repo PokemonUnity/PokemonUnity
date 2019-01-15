@@ -17,6 +17,7 @@ public class PBMoves
 
 namespace PokemonUnity.Attack
 {
+[System.Serializable]
 public partial class Move 
 {
 	#region Properties
@@ -1923,6 +1924,7 @@ public partial class Move
 	#endregion
 
 	#region Nested Classes
+    [System.Serializable]
 	public partial class MoveData
 	{
 		#region Variables
@@ -1974,6 +1976,8 @@ public partial class Move
 			throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
 		}
 	}
+
+    [System.Serializable]
     public class Flags
     {
         /// <summary>
