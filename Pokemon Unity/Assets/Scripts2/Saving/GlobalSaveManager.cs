@@ -14,6 +14,7 @@ namespace PokemonUnity.Saving
     public static class GlobalSaveManager
     {
         private const string BuildVersion = "0.0.1";
+
         //If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
         //If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
         private const bool UseAppdate = false;
@@ -79,7 +80,7 @@ namespace PokemonUnity.Saving
         /// Saves the game using a given SaveData class.
         /// </summary>
         /// <param name="saveData">The SaveData containing the data that needs to be saved.</param>
-        public static void SaveCustomData(SaveData saveData)
+        public static void Save(SaveData saveData)
         {
             SerializeAndCreateSaveFile(saveData);
         }

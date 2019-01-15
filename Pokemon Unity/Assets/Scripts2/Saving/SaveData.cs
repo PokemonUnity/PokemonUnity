@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PokemonUnity.Saving
 {
@@ -16,6 +14,18 @@ namespace PokemonUnity.Saving
         public string SaveName = string.Empty;
 
         public DateTime TimeCreated;
+
+        public string PlayerName;
+
+        //PlayerID doesn't need to be public: TrainerID + SecretID * 65536 = PlayerID
+        private int playerID;
+        public int TrainerID;
+        public int SecretID;
+        public bool IsMale;
+        //public List<GymBadges> GymBadges;
+
+        public bool?[] Pokedex;
+        public System.TimeSpan PlayerTime;
 
         //Player
         public SerializableVector3 PlayerPosition;
@@ -58,25 +68,37 @@ namespace PokemonUnity.Saving
         public SaveData(
             string saveName,
             int activeScene,
+            string playerName, int trainerID, int secretID, bool isMale,
+            //List<GymBadges> gymBadges,
+            bool?[] pokedex,
+            System.TimeSpan playerTIme,
             SerializableVector3 playerPosition, int playerDirection,
             SerializableVector3 followerPosition, int followerDirection,
             Pokemon[] playerParty, Pokemon[,] playerPC, List<Items> playerBag,
             List<SaveEvent> eventList
             )
         {
+            //Important
             SaveName = saveName;
             ActiveScene = activeScene;
 
+            //Player Information
+            PlayerName = playerName;
+            playerID = (trainerID + secretID) * 65536;
+
+            //Player Vector3
             PlayerPosition = playerPosition;
             PlayerDirection = playerDirection;
-
+            //Follower Vector3
             FollowerPosition = followerPosition;
             FollowerDirection = followerDirection;
 
+            //Player Items and Pokemons
             PlayerParty = playerParty;
             PC = playerPC;
             PlayerBag = playerBag;
 
+            //List of Registered Events
             EventList = eventList;
         }
     }

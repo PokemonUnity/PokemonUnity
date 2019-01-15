@@ -12,9 +12,6 @@ namespace Tests
     [TestClass] //ToDo: Move Test into a PlayerTest.cs
     public class PlayerTest
 	{
-        SaveData Save0;
-        SaveData Save1;
-        SaveData Save2;
 
 		[TestMethod] //Game isnt automatically saved, just because player is created. Let them save game from in-game menu
 		public void Player_NewPlayer_IsNot_EqualTo_SaveFile()
