@@ -12,7 +12,6 @@ namespace PokemonUnity.Pokemon
     /// <summary>
     /// 
     /// </summary>
-    [System.Serializable]
     public partial class Pokemon
     {
         #region Variables
@@ -1914,7 +1913,6 @@ namespace PokemonUnity.Pokemon
         #endregion
 
         #region Nested Classes
-        [Serializable]
         public partial class PokemonData
         {
             #region Variables
@@ -2487,7 +2485,6 @@ namespace PokemonUnity.Pokemon
             /// <summary>
             /// The moves that all Pokémon of the species learn as they level up. 
             /// </summary>
-            [System.Serializable]
             public class PokemonMoveset
             {
                 public LearnMethod TeachMethod;
@@ -2528,7 +2525,6 @@ namespace PokemonUnity.Pokemon
             /// <summary>
             /// All the moves this pokemon species can learn, and the methods by which they learn them
             /// </summary>
-            [System.Serializable]
             public class PokemonMoveTree
             {
                 #region Properties
@@ -2656,7 +2652,6 @@ namespace PokemonUnity.Pokemon
             /// For each possible evolution of this species, 
             /// there are three parts
             /// </summary>
-            [System.Serializable]
             public class PokemonEvolution : IPokemonEvolution //<T> where T : new()
             {
                 /// <summary>
@@ -2686,7 +2681,6 @@ namespace PokemonUnity.Pokemon
                     return false;
                 }
             }
-            [System.Serializable]
             public class PokemonEvolution<T> : PokemonEvolution
             {
                 /*// <summary>
@@ -2850,7 +2844,6 @@ namespace PokemonUnity.Pokemon
         /// </summary>
         /// Experience can be it's own class away from Pokemon. But there's no need for it to be global.
         /// ToDo: Consider making Experience class a Pokemon extension class...
-        [Serializable]
         public class Experience
         {
             #region Variables

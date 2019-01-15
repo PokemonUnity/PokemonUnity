@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace PokemonUnity.Saving.SerializableClasses
+{
+    using PokemonUnity.Pokemon;
+    using PokemonUnity.Attack;
+    using PokemonUnity.Item;
+
+    [System.Serializable]
+    public class SeriPokemon
+    {
+        #region Variables
+        public string NickName { get; private set; }
+        public int Form { get; private set; }
+        public int Species { get; private set; }
+
+        public int Ability { get; private set; }
+        public int Nature { get; private set; }
+
+        public int Type1 { get; private set; }
+        public int Type2 { get; private set; }
+
+        public virtual bool? IsShiny { get; private set; }
+        public virtual bool? Gender { get; private set; }
+
+        public bool? PokerusStage { get; private set; }
+        public int[] Pokerus { get; private set; }
+        public int PokerusStrain { get; private set; }
+
+        public bool IsHyperMode { get; private set; }
+        public bool IsShadow { get; private set; }
+        public int? ShadowLevel { get; private set; }
+
+        public int CurrentHP { get; private set; }
+        public int Item { get; private set; }
+
+        public byte[] IV { get; private set; }
+        public byte[] EV { get; private set; }
+
+        public int ObtainedLevel { get; private set; }
+        public int CurrentLevel { get; private set; }
+        public int CurrentExp { get; private set; }
+
+        public int LevelingRate { get; private set; }
+        public int BaseExp { get; private set; }
+
+        public int Happines { get; private set; }
+
+        public int Status { get; private set; }
+        public int StatusCount { get; private set; }
+        
+        public bool IsEgg { get; private set; }
+        public int EggSteps { get; private set; }
+
+        public int BallUsed { get; private set; }
+        public string Mail { get; private set; }
+
+        public static List<SeriMove> Moves { get; private set; }
+        public static List<SeriEvolution> Evolutions { get; private set; }
+
+        public int[] Ribbons { get; private set; }
+        public bool[] Markings { get; private set; }
+
+        /// <summary>
+        /// Trading/Obtaining
+        /// </summary>
+        public int PersonalId { get; private set; }
+        public string PublicId { get; private set; }
+
+        public int ObtainedMethod { get; private set; }
+        public DateTimeOffset TimeReceived { get; private set; }
+        public DateTimeOffset TimeEggHatched { get; private set; }
+        #endregion
+
+        #region Methods
+        public List<SeriMove> GetMoves()
+        {
+            return Moves;
+        }
+        #endregion
+
+        public static implicit operator Pokemon(SeriPokemon pokemon)
+        {
+            Pokemon normalPokemon = new Pokemon();
+
+            return normalPokemon;
+        }
+
+        public static implicit operator SeriPokemon(Pokemon pokemon)
+        {
+            SeriPokemon seriPokemon = new SeriPokemon();
+
+            seriPokemon.Species = (int)pokemon.Species;
+            seriPokemon.Form = pokemon.Form;
+            seriPokemon.NickName = pokemon.Name;
+
+            seriPokemon.Ability = (int)pokemon.Ability;
+            seriPokemon.Nature = (int)pokemon.Nature;
+
+            seriPokemon.Type1 = (int)pokemon.Type1;
+            seriPokemon.Type2 = (int)pokemon.Type2;
+
+            seriPokemon.IsShiny = pokemon.IsShiny;
+            seriPokemon.Gender = pokemon.Gender;
+
+            seriPokemon.PokerusStage = pokemon.PokerusStage;
+            seriPokemon.Pokerus = pokemon.Pokerus;
+            seriPokemon.PokerusStrain = pokemon.PokerusStrain;
+
+            seriPokemon.IsHyperMode = pokemon.isHyperMode;
+            seriPokemon.IsShadow = pokemon.isShadow;
+            seriPokemon.ShadowLevel = pokemon.ShadowLevel;
+
+            seriPokemon.CurrentHP = pokemon.HP;
+            seriPokemon.Item = (int)pokemon.Item;
+
+            seriPokemon.IV = pokemon.IV;
+            seriPokemon.EV = pokemon.EV;
+
+            seriPokemon.ObtainedLevel = pokemon.ObtainLevel;
+            seriPokemon.CurrentLevel = pokemon.Level;
+            seriPokemon.CurrentExp = pokemon.Exp.Current;
+
+            seriPokemon.LevelingRate = (int)pokemon.GrowthRate;
+            seriPokemon.BaseExp = pokemon.baseExp;
+
+            seriPokemon.Happines = pokemon.Happiness;
+
+            seriPokemon.Status = (int)pokemon.Status;
+            seriPokemon.StatusCount = pokemon.StatusCount;
+
+            seriPokemon.IsEgg = pokemon.isEgg;
+            if(seriPokemon.IsEgg)
+                seriPokemon.EggSteps = pokemon.EggSteps;
+
+            seriPokemon.BallUsed = (int)pokemon.ballUsed;
+            seriPokemon.Mail = pokemon.Mail;
+
+            foreach(Move move in pokemon.moves)
+            {
+                //Moves.Add(new SeriMove());
+            }
+
+            foreach(IPokemonEvolution evolution in pokemon.Evolutions)
+            {
+                Evolutions.Add(new SeriEvolution((int)evolution.Species, (int)evolution.EvolveMethod));
+            }
+
+            seriPokemon.Ribbons = new int[pokemon.Ribbons.Count];
+            for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
+            {
+                seriPokemon.Ribbons[i] = (int)pokemon.Ribbons[i];
+            }
+            seriPokemon.Markings = pokemon.Markings;
+
+            seriPokemon.PersonalId = pokemon.PersonalId;
+            seriPokemon.PublicId = pokemon.PublicId;
+
+            seriPokemon.ObtainedMethod = (int)pokemon.ObtainedMode;
+            seriPokemon.TimeReceived = pokemon.TimeReceived;
+            seriPokemon.TimeEggHatched = pokemon.TimeEggHatched;
+
+            return seriPokemon;
+        }
+
+        [System.Serializable]
+        public class SeriEvolution
+        {
+            public int EvolutionSpecies { get; private set; }
+            public int EvolutionMethod { get; private set; }
+
+            public SeriEvolution(int species, int method)
+            {
+                EvolutionSpecies = species;
+                EvolutionMethod = method;
+            }
+        }
+    }
+
+}
