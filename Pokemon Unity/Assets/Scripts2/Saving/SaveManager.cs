@@ -174,13 +174,15 @@ namespace PokemonUnity.Saving
 
                 if (null != DataToLoad)
                 {
+                    //!Pass the data through to GameVariables!
 
+                    /*
                     //EventSaves contains all the Events that the Player has encountered
                     EventSaves = DataToLoad.EventList;
 
-                    if (SceneManager.GetActiveScene().buildIndex != DataToLoad.ActiveScene)
+                    if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex != DataToLoad.ActiveScene)
                     {
-                        SceneManager.LoadScene(DataToLoad.ActiveScene);
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(DataToLoad.ActiveScene);
                     }
                     else
                     {
@@ -206,9 +208,8 @@ namespace PokemonUnity.Saving
                         Follower.GetComponent<FollowerMovement>().direction = DataToLoad.FollowerDirection;
 
                         EventSaves = EventSaves.OrderBy(x => x.EventTime).ToList();
-                    }
+                    }*/
                 }
-
                 file.Dispose();
             }
             catch (FileNotFoundException)
