@@ -23,6 +23,13 @@ namespace Tests
         [TestMethod]
         public void Create_New_Save_File()
         {
+            //For this I literally had to go in every class
+            //And marked it as [System.Serializable]
+            //I wasted more than 45 minutes trying to figure out why this test always failed
+            //But now the problem is solved
+
+
+            //Hopefully
             SaveData newSave;
 
             #region Fill The Save File
