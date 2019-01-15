@@ -50,21 +50,14 @@ namespace PokemonUnity.Saving
             return EventSaves.Where(x => x.SceneIndex == sceneIndex).ToList();
         }
 
-        /// <summary>
-        /// Saves the game using the standard data.
-        /// </summary>
-        public static void Save(string saveName)
+        private static SaveData CreateSaveFile(string saveName)
         {
-            if (!UseAppdate)
-            {
-                saveLocation = UnityEngine.Application.dataPath + "/Saves/";
-            }
-
             Pokemon[] Party = GameVariables.playerTrainer.Trainer.Party;
             Pokemon[,] PC = GameVariables.PC_Poke;
             List<Items> PlayerBag = GameVariables.Bag_Items;
 
-            SaveData DataToSave = new SaveData(
+            return new SaveData
+                (
                 saveName,
                 SceneManager.GetActiveScene().buildIndex,
                 GameVariables.playerTrainer.Trainer.Name,
@@ -77,7 +70,19 @@ namespace PokemonUnity.Saving
                 Party, PC, PlayerBag,
                 EventSaves
                 );
+        }
 
+        /// <summary>
+        /// Saves the game using the standard data.
+        /// </summary>
+        public static void Save(string saveName)
+        {
+            if (!UseAppdate)
+            {
+                saveLocation = UnityEngine.Application.dataPath + "/Saves/";
+            }
+
+            SaveData DataToSave = CreateSaveFile(saveName);
             SerializeAndCreateSaveFile(DataToSave);
         }
 
@@ -88,6 +93,30 @@ namespace PokemonUnity.Saving
         public static void Save(SaveData saveData)
         {
             SerializeAndCreateSaveFile(saveData);
+        }
+
+        public static void Overwrite(SaveData saveData, int saveID)
+        {
+            SerializeAndCreateSaveFile(saveData, saveID);
+        }
+
+        private static void SerializeAndCreateSaveFile(SaveData saveData, int saveID)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            try
+            {
+                File.Delete(saveLocation + "Save" + saveID + ".pku");
+                FileStream file = File.Open(saveLocation + @"Save" + saveID + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
+                bf.Serialize(file, saveData);
+                file.Close();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Directory.CreateDirectory(saveLocation.Substring(0, saveLocation.Length - 1));
+                FileStream file = File.Open(saveLocation + @"Save" + (Directory.GetFiles(saveLocation, "*pku", SearchOption.TopDirectoryOnly).Length).ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
+                bf.Serialize(file, saveData);
+                file.Close();
+            }
         }
 
         private static void SerializeAndCreateSaveFile(SaveData saveData)
@@ -103,19 +132,14 @@ namespace PokemonUnity.Saving
                 FileStream file = File.Open(saveLocation + @"Save" + saveAmount.ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
                 bf.Serialize(file, saveData);
                 file.Close();
-                UnityEngine.Debug.Log("Save file created.");
             }
             catch (Exception)
             {
-                UnityEngine.Debug.Log("Pokemon Unity save directory does not exist, creating new one...");
                 Directory.CreateDirectory(saveLocation.Substring(0, saveLocation.Length - 1));
-                UnityEngine.Debug.Log("Trying to save again...");
 
                 FileStream file = File.Open(saveLocation + @"Save" + (Directory.GetFiles(saveLocation, "*pku", SearchOption.TopDirectoryOnly).Length).ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
                 bf.Serialize(file, saveData);
                 file.Close();
-
-                UnityEngine.Debug.Log("Save file created.");
             }
         }
 
@@ -190,7 +214,7 @@ namespace PokemonUnity.Saving
         /// </summary>
         /// <param name="Amount">The amount of save files that needs to be loaded (0 for all the save files).</param>
         /// <returns>A List containing the relevant amount of save files.</returns>
-        static List<SaveData> GetSaves(int Amount)
+        public static List<SaveData> GetSaves(int Amount)
         {
             List<SaveData> saveFiles = new List<SaveData>();
             foreach (string file in Directory.GetFiles(saveLocation))

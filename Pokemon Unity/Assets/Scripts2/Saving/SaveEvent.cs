@@ -22,6 +22,16 @@ namespace PokemonUnity.Saving
             ObjectPosition = eventObject.transform.position;
         }
 
+        public SaveEvent(SaveEventType eventType, string objectName, SerializableVector3 objectPosition, int sceneIndex)
+        {
+            EventTime = DateTime.Now;
+            EventType = eventType;
+            SceneIndex = sceneIndex;
+
+            ObjectName = objectName;
+            ObjectPosition = objectPosition;
+        }
+
         public override string ToString()
         {
             return ("EventType : " + EventType.ToString() + ", Time : " + EventTime + ", Map: " + SceneIndex);

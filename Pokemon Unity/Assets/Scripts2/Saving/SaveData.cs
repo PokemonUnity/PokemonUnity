@@ -22,7 +22,7 @@ namespace PokemonUnity.Saving
         public int TrainerID;
         public int SecretID;
         public bool IsMale;
-        //public List<GymBadges> GymBadges;
+        //public Dictionary<GymBadges, System.DateTime?> GymBadges;
 
         public bool?[] Pokedex;
         public System.TimeSpan PlayerTime;

@@ -62,7 +62,7 @@
     <Compile Include="Assets\Scripts2\Enums\Enums.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Type.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\MoveDatabase.cs" />
-    <Compile Include="Assets\Scripts2\Saving\CustomSaveEvent.cs" />
+    <Compile Include="Assets\Scripts2\Saving\SaveEvent.cs" />
     <Compile Include="Assets\Scripts2\Saving\EventListener.cs" />
     <Compile Include="Assets\Scripts2\Saving\GlobalSaveManager.cs" />
     <Compile Include="Assets\Scripts2\Saving\SaveData.cs" />
