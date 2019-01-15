@@ -19,7 +19,7 @@ namespace PokemonUnity.Saving
         //If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
         private const bool UseAppdate = false;
         //private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
-        private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
+        public static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
 
         private static UnityEngine.GameObject Player;
         private static List<SaveEvent> EventSaves = new List<SaveEvent>();
@@ -106,7 +106,15 @@ namespace PokemonUnity.Saving
             BinaryFormatter bf = new BinaryFormatter();
             try
             {
-                File.Delete(saveLocation + "Save" + saveID + ".pku");
+                try
+                {
+                    File.Delete(saveLocation + "Save" + saveID + ".pku");
+                }
+                catch (FileNotFoundException)
+                {
+
+                }
+
                 FileStream file = File.Open(saveLocation + @"Save" + saveID + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
                 bf.Serialize(file, saveData);
                 file.Close();

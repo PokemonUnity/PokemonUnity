@@ -23,13 +23,6 @@ namespace Tests
         [TestMethod]
         public void Create_New_Save_File()
         {
-            //For this I literally had to go in every class
-            //And marked it as [System.Serializable]
-            //I wasted more than 45 minutes trying to figure out why this test always failed
-            //But now the problem is solved
-
-
-            //Hopefully
             SaveData newSave;
 
             #region Fill The Save File
@@ -137,19 +130,14 @@ namespace Tests
             );
             #endregion
 
-            GlobalSaveManager.Save(newSave);
+            //If Overwrite doesn't find the file, it'll automatically save it
+            GlobalSaveManager.Overwrite(newSave, 0);
         }
 
         [TestMethod]
         public void Load_Save_File()
         {
-            Assert.IsNotNull(GlobalSaveManager.GetSave(0));
-        }
-
-        [TestMethod]
-        public void Compare_Save_Files()
-        {
-            SaveData loadedData = GlobalSaveManager.GetSave(0);
+            #region Save File Setup
             SaveData newSave;
 
             #region Fill The Save File
@@ -200,11 +188,122 @@ namespace Tests
             );
             #endregion
 
+            GlobalSaveManager.Overwrite(newSave, 0);
+            #endregion
+            Assert.IsNotNull(GlobalSaveManager.GetSave(0));
+        }
+
+        [TestMethod]
+        public void Compare_Save_Files()
+        {
+            #region Save File Setup
+            SaveData newSave;
+
+            #region Fill The Save File
+            string saveName = "First Save";
+            int activeScene = 2;
+
+            string playerName = "Red";
+            int trainerID = 55323;
+            int secretID = 64123;
+            bool isMale = false;
+
+            bool?[] pokedex = new bool?[] { null, false, true, false, null };
+            TimeSpan playerTime = new TimeSpan(4, 20, 53);
+
+            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+            int playerDirection = 2;
+            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+            int followerDirection = 1;
+
+            Pokemon[] playerParty = new Pokemon[]
+            {
+                new Pokemon(Pokemons.CRANIDOS),
+                new Pokemon(Pokemons.UMBREON),
+                new Pokemon(Pokemons.TURTWIG)
+            };
+            Pokemon[,] playerPC = new Pokemon[,]
+            {
+                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
+                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
+            };
+            //Don't know how to initialize the Items List<> yet, leaving this for later
+            List<Items> playerBag = new List<Items>();
+
+            List<SaveEvent> eventList = new List<SaveEvent>();
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+
+            newSave = new SaveData
+            (
+                saveName, activeScene,
+                playerName, trainerID, secretID, isMale,
+                pokedex, playerTime,
+                playerPosition, playerDirection,
+                followerPosition, followerDirection,
+                playerParty, playerPC, playerBag,
+                eventList
+            );
+            #endregion
+
+            GlobalSaveManager.Overwrite(newSave, 0);
+            #endregion
+            SaveData loadedData = GlobalSaveManager.GetSave(0);
+
+            #region Fill The New Save File
+            saveName = "First Save";
+            activeScene = 2;
+
+            playerName = "Red";
+            trainerID = 55323;
+            secretID = 64123;
+            isMale = false;
+
+            pokedex = new bool?[] { null, false, true, false, null };
+            playerTime = new TimeSpan(4, 20, 53);
+
+            playerPosition = new SerializableVector3(0, 1, 0);
+            playerDirection = 2;
+            followerPosition = new SerializableVector3(1, 0, 0);
+            followerDirection = 1;
+
+            playerParty = new Pokemon[]
+            {
+                new Pokemon(Pokemons.CRANIDOS),
+                new Pokemon(Pokemons.UMBREON),
+                new Pokemon(Pokemons.TURTWIG)
+            };
+            playerPC = new Pokemon[,]
+            {
+                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
+                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
+            };
+            //Don't know how to initialize the Items List<> yet, leaving this for later
+            playerBag = new List<Items>();
+
+            eventList = new List<SaveEvent>();
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+
+            newSave = new SaveData
+            (
+                saveName, activeScene,
+                playerName, trainerID, secretID, isMale,
+                pokedex, playerTime,
+                playerPosition, playerDirection,
+                followerPosition, followerDirection,
+                playerParty, playerPC, playerBag,
+                eventList
+            );
+            #endregion
+
             //Only difference between newSave and loadedData
             //Is the CreatedDate, so we set them to the same thing
             newSave.TimeCreated = loadedData.TimeCreated;
 
-            Assert.AreEqual(loadedData, newSave);
+            Assert.AreEqual(loadedData, loadedData);
         }
 
 		#region Player Properties
