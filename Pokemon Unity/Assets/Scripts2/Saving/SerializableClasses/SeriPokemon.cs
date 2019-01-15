@@ -44,9 +44,6 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int CurrentLevel { get; private set; }
         public int CurrentExp { get; private set; }
 
-        public int LevelingRate { get; private set; }
-        public int BaseExp { get; private set; }
-
         public int Happines { get; private set; }
 
         public int Status { get; private set; }
@@ -59,7 +56,6 @@ namespace PokemonUnity.Saving.SerializableClasses
         public string Mail { get; private set; }
 
         public static List<SeriMove> Moves { get; private set; }
-        public static List<SeriEvolution> Evolutions { get; private set; }
 
         public int[] Ribbons { get; private set; }
         public bool[] Markings { get; private set; }
@@ -85,7 +81,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public static implicit operator Pokemon(SeriPokemon pokemon)
         {
             Pokemon normalPokemon = new Pokemon();
-
+            //Create a new Pokemon Constructor fitted for Seripokemon
             return normalPokemon;
         }
 
@@ -124,9 +120,6 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.CurrentLevel = pokemon.Level;
             seriPokemon.CurrentExp = pokemon.Exp.Current;
 
-            seriPokemon.LevelingRate = (int)pokemon.GrowthRate;
-            seriPokemon.BaseExp = pokemon.baseExp;
-
             seriPokemon.Happines = pokemon.Happiness;
 
             seriPokemon.Status = (int)pokemon.Status;
@@ -142,11 +135,6 @@ namespace PokemonUnity.Saving.SerializableClasses
             foreach(Move move in pokemon.moves)
             {
                 //Moves.Add(new SeriMove());
-            }
-
-            foreach(IPokemonEvolution evolution in pokemon.Evolutions)
-            {
-                Evolutions.Add(new SeriEvolution((int)evolution.Species, (int)evolution.EvolveMethod));
             }
 
             seriPokemon.Ribbons = new int[pokemon.Ribbons.Count];
