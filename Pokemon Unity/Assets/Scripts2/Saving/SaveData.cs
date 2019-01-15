@@ -71,7 +71,7 @@ namespace PokemonUnity.Saving
             string playerName, int trainerID, int secretID, bool isMale,
             //List<GymBadges> gymBadges,
             bool?[] pokedex,
-            System.TimeSpan playerTIme,
+            System.TimeSpan playerTime,
             SerializableVector3 playerPosition, int playerDirection,
             SerializableVector3 followerPosition, int followerDirection,
             Pokemon[] playerParty, Pokemon[,] playerPC, List<Items> playerBag,
@@ -85,6 +85,12 @@ namespace PokemonUnity.Saving
             //Player Information
             PlayerName = playerName;
             playerID = (trainerID + secretID) * 65536;
+            TrainerID = trainerID;
+            SecretID = secretID;
+            IsMale = isMale;
+
+            Pokedex = pokedex;
+            PlayerTime = playerTime;
 
             //Player Vector3
             PlayerPosition = playerPosition;

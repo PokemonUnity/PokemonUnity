@@ -63,10 +63,15 @@ namespace PokemonUnity.Saving
             Pokemon[] Party = GameVariables.playerTrainer.Trainer.Party;
             Pokemon[,] PC = GameVariables.PC_Poke;
             List<Items> PlayerBag = GameVariables.Bag_Items;
-            
+
             SaveData DataToSave = new SaveData(
                 saveName,
                 SceneManager.GetActiveScene().buildIndex,
+                GameVariables.playerTrainer.Trainer.Name,
+                GameVariables.playerTrainer.TrainerID, GameVariables.playerTrainer.SecretID,
+                GameVariables.playerTrainer.isMale, //GameVariables.playerTrainer.GymBadges,
+                GameVariables.playerTrainer.playerPokedex,
+                GameVariables.playerTrainer.playerTime,
                 Player.transform.position, Player.GetComponent<Player>().playerDirection,
                 Player.transform.Find("Follower").transform.position, Player.GetComponent<FollowerMovement>().direction,
                 Party, PC, PlayerBag,
