@@ -191,18 +191,28 @@ namespace Tests
         [TestMethod]
 		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
 		{
-			Pokemons pkmn = Pokemons.BULBASAUR;
-			Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
+            Pokemons pkmn = Pokemons.BULBASAUR;
+            Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
+            if (Hidden == Abilities.NONE)
+            {
+                Assert.Fail("This pokemon does not have a hidden ability");
+            }
 			int i = 0;
-			while (true)
+
+            Pokemon pokemon;
+
+            while (true)
 			{
-				Pokemon pokemon = new Pokemon(pkmn);
+                pokemon = new Pokemon(pkmn);
+                if (!pokemon.isEgg) Assert.Fail("Pokemon is not an egg. Can't roll for hidden abilities.");
 				//pokemon.HatchEgg();
 				bool HA = pokemon.Ability == Hidden;
-				if(HA) Assert.IsTrue(HA); i++;
-				if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (HA) break; i++;
+                
+				if (i > 30) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
-		}
+            Assert.AreEqual(Hidden, pokemon.Ability);
+        }
 
 		//Test max value for pokemon stats
         [TestMethod]

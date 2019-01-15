@@ -8,7 +8,7 @@ using PokemonUnity.Item;
 namespace Tests
 {
 
-    [TestClass] //ToDo: Move Test into a PlayerTest.cs
+    [TestClass]
     public class PlayerTest
     {
         [TestMethod] //Game isnt automatically saved, just because player is created. Let them save game from in-game menu
