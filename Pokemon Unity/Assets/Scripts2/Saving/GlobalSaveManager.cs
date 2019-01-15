@@ -9,6 +9,7 @@ namespace PokemonUnity.Saving
 {
     using PokemonUnity.Pokemon;
     using PokemonUnity.Item;
+    using PokemonUnity.Saving.Location;
 
     public static class GlobalSaveManager
     {
@@ -20,8 +21,6 @@ namespace PokemonUnity.Saving
 
         private static UnityEngine.GameObject Player;
         private static List<SaveEvent> EventSaves = new List<SaveEvent>();
-
-        private static EventListener EventListener = new EventListener();
 
         public static void RegisterPlayer(UnityEngine.GameObject player)
         {
@@ -51,7 +50,7 @@ namespace PokemonUnity.Saving
         }
 
         /// <summary>
-        /// Saves the game into the computer's %AppData% folder.
+        /// Saves the game using the standard data.
         /// </summary>
         public static void Save(string saveName)
         {
@@ -73,6 +72,20 @@ namespace PokemonUnity.Saving
                 EventSaves
                 );
 
+            SerializeAndCreateSaveFile(DataToSave);
+        }
+
+        /// <summary>
+        /// Saves the game using a given SaveData class.
+        /// </summary>
+        /// <param name="saveData">The SaveData containing the data that needs to be saved.</param>
+        public static void SaveCustomData(SaveData saveData)
+        {
+            SerializeAndCreateSaveFile(saveData);
+        }
+
+        private static void SerializeAndCreateSaveFile(SaveData saveData)
+        {
             BinaryFormatter bf = new BinaryFormatter();
             try
             {
@@ -82,7 +95,7 @@ namespace PokemonUnity.Saving
                     saveAmount = 0;
 
                 FileStream file = File.Open(saveLocation + @"Save" + saveAmount.ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
-                bf.Serialize(file, DataToSave);
+                bf.Serialize(file, saveData);
                 file.Close();
                 UnityEngine.Debug.Log("Save file created.");
             }
@@ -93,7 +106,7 @@ namespace PokemonUnity.Saving
                 UnityEngine.Debug.Log("Trying to save again...");
 
                 FileStream file = File.Open(saveLocation + @"Save" + (Directory.GetFiles(saveLocation, "*pku", SearchOption.TopDirectoryOnly).Length).ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
-                bf.Serialize(file, DataToSave);
+                bf.Serialize(file, saveData);
                 file.Close();
 
                 UnityEngine.Debug.Log("Save file created.");

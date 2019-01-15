@@ -10,7 +10,7 @@ namespace PokemonUnity.Saving
     using PokemonUnity.Saving.Location;
 
     [System.Serializable]
-    class SaveData
+    public class SaveData
     {
         public string BuildVersion = GlobalSaveManager.GetBuildVersion();
         public string SaveName = string.Empty;
