@@ -13,7 +13,6 @@ public class PBItems
 
 namespace PokemonUnity.Item
 {
-[System.Serializable]
 public class Item
 {
 	#region Variables
@@ -1049,7 +1048,6 @@ new Item(Items.TM100,				ItemCategory.ALL_MACHINES,     0, null, null, null    )
 		}
 	}
 
-    [System.Serializable]
 	public class Mail
 	{
 		public int Background { get; private set; }
