@@ -193,14 +193,19 @@ namespace Tests
 		{
 			Pokemons pkmn = Pokemons.BULBASAUR;
 			Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
+            if (Hidden == Abilities.NONE)
+            {
+                Assert.Fail("This pokemon does not have a hidden ability");
+            }
 			int i = 0;
+            Pokemon pokemon;
 			while (true)
 			{
-				Pokemon pokemon = new Pokemon(pkmn);
+				pokemon = new Pokemon(pkmn);
 				//pokemon.HatchEgg();
 				bool HA = pokemon.Ability == Hidden;
-				if(HA) Assert.IsTrue(HA); i++;
-				if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
+				if(HA) break; i++;
+				if (i > 30) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
 		}
 
