@@ -2306,7 +2306,14 @@ namespace PokemonUnity.Pokemon
                         this.name = fieldValue.Value ?? translation.Identifier;
                     }
                 }
-                this.forms = formvalues.ToArray();
+                if (formvalues.Count != 0)
+                {
+                    this.forms = formvalues.ToArray();
+                }
+                else
+                {
+                    this.forms = new string[1] { null };
+                }
             }
 
             public PokemonData(Pokemons Id = Pokemons.NONE, int[] regionalDex = null, //string name, 
