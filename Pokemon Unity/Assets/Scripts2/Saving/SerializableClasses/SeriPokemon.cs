@@ -18,10 +18,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int Species { get; private set; }
 
         public int Ability { get; private set; }
-        public int Nature { get; private set; }
-
-        public int Type1 { get; private set; }
-        public int Type2 { get; private set; }
+        public SeriNature Nature { get; private set; }
 
         public virtual bool? IsShiny { get; private set; }
         public virtual bool? Gender { get; private set; }
@@ -48,14 +45,13 @@ namespace PokemonUnity.Saving.SerializableClasses
 
         public int Status { get; private set; }
         public int StatusCount { get; private set; }
-        
-        public bool IsEgg { get; private set; }
+
         public int EggSteps { get; private set; }
 
         public int BallUsed { get; private set; }
         public string Mail { get; private set; }
 
-        public static List<SeriMove> Moves { get; private set; }
+        public SeriMove[] Moves { get; private set; }
 
         public int[] Ribbons { get; private set; }
         public bool[] Markings { get; private set; }
@@ -72,7 +68,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         #endregion
 
         #region Methods
-        public List<SeriMove> GetMoves()
+        public SeriMove[] GetMoves()
         {
             return Moves;
         }
@@ -94,10 +90,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.NickName = pokemon.Name;
 
             seriPokemon.Ability = (int)pokemon.Ability;
-            seriPokemon.Nature = (int)pokemon.Nature;
-
-            seriPokemon.Type1 = (int)pokemon.Type1;
-            seriPokemon.Type2 = (int)pokemon.Type2;
+            seriPokemon.Nature = pokemon.getNature();
 
             seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
@@ -125,16 +118,14 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.Status = (int)pokemon.Status;
             seriPokemon.StatusCount = pokemon.StatusCount;
 
-            seriPokemon.IsEgg = pokemon.isEgg;
-            if(seriPokemon.IsEgg)
-                seriPokemon.EggSteps = pokemon.EggSteps;
+            seriPokemon.EggSteps = pokemon.EggSteps;
 
             seriPokemon.BallUsed = (int)pokemon.ballUsed;
             seriPokemon.Mail = pokemon.Mail;
 
-            foreach(Move move in pokemon.moves)
+            for (int i = 0; i < 4; i++)
             {
-                //Moves.Add(new SeriMove());
+                seriPokemon.Moves[i] = pokemon.moves[i];
             }
 
             seriPokemon.Ribbons = new int[pokemon.Ribbons.Count];

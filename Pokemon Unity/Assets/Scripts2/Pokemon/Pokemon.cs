@@ -265,6 +265,70 @@ namespace PokemonUnity.Pokemon
 
             //calcStats();
         }
+
+        public Pokemon(string nickName, int form,
+            Pokemons species, Abilities ability,
+            Nature nature, Types type1, Types type2,
+            bool isShiny, bool? gender, bool? pokeRusStage,
+            int[] pokerus, int pokerusStrain,
+            bool isHyperMode, bool isShadow, int? shadowLevel,
+            int currentHp, Items item,
+            byte[] iv, byte[] ev, 
+            int obtainedLevel, int currentLevel, int currentExp,
+            int happiness, Status status, int statusCount,
+            bool isEgg, int eggSteps, Items ballUsed,
+            PokemonUnity.Item.Item.Mail mail, Move[] moves,
+            Ribbon[] ribbons, bool[] markings,
+            int personalId, string publicId,
+            ObtainedMethod obtainedMethod,
+            DateTimeOffset timeReceived, DateTimeOffset timeEggHatched) : this()
+        {
+            name = nickName;
+            Form = form;
+            _base = new PokemonData(species);
+
+            Ability = ability;
+            natureFlag = nature;
+
+            IsShiny = isShiny;
+            Gender = gender;
+
+            this.pokerus = pokerus;
+
+            this.isHyperMode = isHyperMode;
+            ShadowLevel = shadowLevel;
+
+            HP = currentHp;
+            Item = item;
+
+            IV = iv;
+            EV = ev;
+
+            ObtainLevel = obtainedLevel;
+            Level = currentLevel;
+            Exp.AddExperience(currentExp);
+
+            Happiness = happiness;
+
+            Status = status;
+            StatusCount = statusCount;
+
+            EggSteps = eggSteps;
+
+            this.ballUsed = ballUsed;
+            this.mail = mail;
+
+            this.moves = moves;
+
+            this.ribbons = ribbons.ToList();
+            Markings = markings;
+
+            PersonalId = personalId;
+
+            ObtainedMode = obtainedMethod;
+            TimeReceived = timeReceived;
+            TimeEggHatched = timeEggHatched;
+        }
         #endregion
 
         #region Ownership, obtained information
@@ -744,6 +808,15 @@ namespace PokemonUnity.Pokemon
             {
                 return this.Nature == nature;
             }
+        }
+
+        /// <summary>
+        /// Returns the Nature for the SeriPokemon class to serialize Nature
+        /// </summary>
+        /// <returns></returns>
+        public Nature getNature()
+        {
+            return natureFlag;
         }
         #endregion
 
