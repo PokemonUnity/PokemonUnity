@@ -117,9 +117,12 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.NickName = pokemon.Name;
 
             seriPokemon.Ability = (int)pokemon.Ability;
-            seriPokemon.Nature = pokemon.getNature();
+            //Due to parts of Pokemon that's being reworked
+            //These parts shouldn't be saved yet.
 
-            seriPokemon.IsShiny = pokemon.IsShiny;
+            //seriPokemon.Nature = pokemon.getNature();
+
+            //seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
 
             seriPokemon.PokerusStage = pokemon.PokerusStage;
@@ -150,24 +153,34 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.BallUsed = (int)pokemon.ballUsed;
             //seriPokemon.Mail = pokemon.GetMail();
 
+            seriPokemon.Moves = new SeriMove[4];
             for (int i = 0; i < 4; i++)
             {
                 seriPokemon.Moves[i] = pokemon.moves[i];
             }
 
-            seriPokemon.Ribbons = new int[pokemon.Ribbons.Count];
-            for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
+            //Ribbons is also null, we add a null check
+            if (pokemon.Ribbons != null)
             {
-                seriPokemon.Ribbons[i] = (int)pokemon.Ribbons[i];
+                seriPokemon.Ribbons = new int[pokemon.Ribbons.Count];
+                for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
+                {
+                    seriPokemon.Ribbons[i] = (int)pokemon.Ribbons[i];
+                }
             }
             seriPokemon.Markings = pokemon.Markings;
 
             seriPokemon.PersonalId = pokemon.PersonalId;
-            seriPokemon.PublicId = pokemon.PublicId;
+            //PublicId in pokemon is null, so Pokemon returns null
+            //seriPokemon.PublicId = pokemon.PublicId;
 
             seriPokemon.ObtainedMethod = (int)pokemon.ObtainedMode;
             seriPokemon.TimeReceived = pokemon.TimeReceived;
-            seriPokemon.TimeEggHatched = pokemon.TimeEggHatched;
+            try
+            {
+                seriPokemon.TimeEggHatched = pokemon.TimeEggHatched;
+            }
+            catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
 
             return seriPokemon;
         }

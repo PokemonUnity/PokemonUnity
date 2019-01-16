@@ -1,6 +1,7 @@
 ﻿namespace PokemonUnity.Saving.SerializableClasses
 {
     using PokemonUnity.Attack;
+    [System.Serializable]
     public class SeriMove
     {
         public int Move { get; private set; }
