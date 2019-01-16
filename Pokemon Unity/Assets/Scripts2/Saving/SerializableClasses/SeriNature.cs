@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Pokemon;
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
+    /// <summary>
+    /// Serializable version of Pokemon Unity's Nature class
+    /// </summary>
+    [System.Serializable]
     public class SeriNature
     {
         public int Nature { get; private set; }

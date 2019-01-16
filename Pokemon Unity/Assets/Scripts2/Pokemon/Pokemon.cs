@@ -268,18 +268,18 @@ namespace PokemonUnity.Pokemon
 
         public Pokemon(string nickName, int form,
             Pokemons species, Abilities ability,
-            Nature nature, Types type1, Types type2,
-            bool isShiny, bool? gender, bool? pokeRusStage,
+            Nature nature,
+            bool isShiny, bool? gender,
             int[] pokerus, int pokerusStrain,
-            bool isHyperMode, bool isShadow, int? shadowLevel,
+            int? shadowLevel,
             int currentHp, Items item,
             byte[] iv, byte[] ev, 
             int obtainedLevel, int currentLevel, int currentExp,
             int happiness, Status status, int statusCount,
-            bool isEgg, int eggSteps, Items ballUsed,
-            PokemonUnity.Item.Item.Mail mail, Move[] moves,
+            int eggSteps, Items ballUsed,
+            Item.Item.Mail mail, Move[] moves,
             Ribbon[] ribbons, bool[] markings,
-            int personalId, string publicId,
+            int personalId,
             ObtainedMethod obtainedMethod,
             DateTimeOffset timeReceived, DateTimeOffset timeEggHatched) : this()
         {
@@ -295,7 +295,7 @@ namespace PokemonUnity.Pokemon
 
             this.pokerus = pokerus;
 
-            this.isHyperMode = isHyperMode;
+            isHyperMode = isHyperMode;
             ShadowLevel = shadowLevel;
 
             HP = currentHp;
@@ -1663,6 +1663,11 @@ namespace PokemonUnity.Pokemon
                 return mail.Message;
             }
             //set { mail = value; }
+        }
+
+        public Item.Item.Mail GetMail()
+        {
+            return mail;
         }
         /// <summary>
         /// The pokemons fused into this one.

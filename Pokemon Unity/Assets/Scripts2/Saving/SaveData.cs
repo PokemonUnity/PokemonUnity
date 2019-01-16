@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using PokemonUnity.Item;
+using PokemonUnity.Saving.Location;
+using PokemonUnity.Saving.SerializableClasses;
 
 namespace PokemonUnity.Saving
 {
-    using PokemonUnity.Pokemon;
-    using PokemonUnity.Item;
-    using PokemonUnity.Saving.Location;
 
     [System.Serializable]
     public class SaveData
@@ -48,8 +48,9 @@ namespace PokemonUnity.Saving
         private int pCenterFdirection;
         #endregion
 
-        public Pokemon[] PlayerParty;
-        public Pokemon[,] PC;
+        //These can now use the new Seri- classes
+        public SeriPokemon[] PlayerParty;
+        public SeriPC PC;
         public List<Items> PlayerBag;
 
         public List<SaveEvent> EventList;
@@ -74,7 +75,7 @@ namespace PokemonUnity.Saving
             System.TimeSpan playerTime,
             SerializableVector3 playerPosition, int playerDirection,
             SerializableVector3 followerPosition, int followerDirection,
-            Pokemon[] playerParty, Pokemon[,] playerPC, List<Items> playerBag,
+            Pokemon.Pokemon[] playerParty, Pokemon.Pokemon[,] playerPC, List<Items> playerBag,
             List<SaveEvent> eventList
             )
         {
@@ -100,8 +101,11 @@ namespace PokemonUnity.Saving
             FollowerDirection = followerDirection;
 
             //Player Items and Pokemons
-            PlayerParty = playerParty;
-            PC = playerPC;
+            PlayerParty = new SeriPokemon[playerParty.Length];
+            for (int i = 0; i < PlayerParty.Length; i++)
+            {
+                PlayerParty[i] = playerParty[i];
+            }
             PlayerBag = playerBag;
 
             //List of Registered Events

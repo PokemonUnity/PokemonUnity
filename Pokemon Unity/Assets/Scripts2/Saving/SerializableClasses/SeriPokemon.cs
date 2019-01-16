@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
     using PokemonUnity.Pokemon;
     using PokemonUnity.Attack;
     using PokemonUnity.Item;
+    using PokemonUnity;
 
+    /// <summary>
+    /// Serializable version of Pokemon Unity's Pokemon class
+    /// </summary>
     [System.Serializable]
     public class SeriPokemon
     {
@@ -20,7 +21,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int Ability { get; private set; }
         public SeriNature Nature { get; private set; }
 
-        public virtual bool? IsShiny { get; private set; }
+        public virtual bool IsShiny { get; private set; }
         public virtual bool? Gender { get; private set; }
 
         public bool? PokerusStage { get; private set; }
@@ -49,7 +50,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int EggSteps { get; private set; }
 
         public int BallUsed { get; private set; }
-        public string Mail { get; private set; }
+        public int Mail { get; private set; }
 
         public SeriMove[] Moves { get; private set; }
 
@@ -76,8 +77,33 @@ namespace PokemonUnity.Saving.SerializableClasses
 
         public static implicit operator Pokemon(SeriPokemon pokemon)
         {
-            Pokemon normalPokemon = new Pokemon();
-            //Create a new Pokemon Constructor fitted for Seripokemon
+            Ribbon[] ribbons = new Ribbon[pokemon.Ribbons.Length];
+            for (int i = 0; i < ribbons.Length; i++)
+            {
+                ribbons[i] = (Ribbon)pokemon.Ribbons[i];
+            }
+
+            Move[] moves = new Attack.Move[pokemon.Moves.Length];
+            for (int i = 0; i < moves.Length; i++)
+            {
+                moves[i] = pokemon.Moves[i];
+            }
+            
+            Pokemon normalPokemon = 
+                new Pokemon
+                (
+                    pokemon.NickName, pokemon.Form,
+                    (Pokemons)pokemon.Species, (Abilities)pokemon.Ability,
+                    pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
+                    pokemon.Pokerus, pokemon.PokerusStrain, pokemon.ShadowLevel,
+                    pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
+                    pokemon.ObtainedLevel, pokemon.CurrentLevel, pokemon.CurrentExp,
+                    pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
+                    pokemon.EggSteps, (Items)pokemon.BallUsed, /*Fix Mail*/ new Item.Mail(Items.AIR_MAIL), 
+                    moves, ribbons, pokemon.Markings, pokemon.PersonalId,
+                    (Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
+                    pokemon.TimeReceived, pokemon.TimeEggHatched
+                );
             return normalPokemon;
         }
 
@@ -87,6 +113,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
             seriPokemon.Species = (int)pokemon.Species;
             seriPokemon.Form = pokemon.Form;
+            //Creates an error System OutOfBounds inside Pokemon
             seriPokemon.NickName = pokemon.Name;
 
             seriPokemon.Ability = (int)pokemon.Ability;
@@ -121,7 +148,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.EggSteps = pokemon.EggSteps;
 
             seriPokemon.BallUsed = (int)pokemon.ballUsed;
-            seriPokemon.Mail = pokemon.Mail;
+            //seriPokemon.Mail = pokemon.GetMail();
 
             for (int i = 0; i < 4; i++)
             {
@@ -144,19 +171,5 @@ namespace PokemonUnity.Saving.SerializableClasses
 
             return seriPokemon;
         }
-
-        [System.Serializable]
-        public class SeriEvolution
-        {
-            public int EvolutionSpecies { get; private set; }
-            public int EvolutionMethod { get; private set; }
-
-            public SeriEvolution(int species, int method)
-            {
-                EvolutionSpecies = species;
-                EvolutionMethod = method;
-            }
-        }
     }
-
 }
