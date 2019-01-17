@@ -194,7 +194,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             private int MailId { get; set; }
             public string Message { get; private set; }
             //Background will stay 0 (new int) until Mail's background feature is implemented
-            public int Background { get; private set; }
+            //public int Background { get; private set; }
 
             public static implicit operator Item.Mail(SeriMail mail)
             {
