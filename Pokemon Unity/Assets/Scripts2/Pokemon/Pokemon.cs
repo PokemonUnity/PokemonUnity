@@ -684,20 +684,7 @@ namespace PokemonUnity.Pokemon
                 {
                     return _base.Ability[Settings.Rand.Next(0, 2)];
                 }
-
-
-
-                //return
-                //    //If is egg AND has hidden, include hidden in roll
-                //    isEgg && hasHiddenAbility() ?
-                //        //if has three slots
-                //        (_base.Ability[1] != Abilities.NONE ?
-                //            // roll between all 3
-                //            _base.Ability[Settings.Rand.Next(0, 3)]
-                //        : //else skip over slot 2
-                //            _base.Ability[Settings.Rand.Next(0, 2) == 1 ? 2 : 0])
-                //    : //else just roll between slot 1 and 2
-                //        (_base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[Settings.Rand.Next(0, 2)]);
+                
             }
         }
         /// <summary>
