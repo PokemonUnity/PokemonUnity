@@ -9,10 +9,6 @@ using PokemonUnity.Item;
 
 namespace PokemonUnity.Pokemon
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    [System.Serializable]
     public partial class Pokemon
     {
         #region Variables
@@ -268,6 +264,83 @@ namespace PokemonUnity.Pokemon
             //EV = new int[6];
 
             //calcStats();
+        }
+
+        public Pokemon(string nickName, int form,
+            Pokemons species, Abilities ability,
+            Nature nature,
+            bool isShiny, bool? gender,
+            int[] pokerus, int pokerusStrain,
+            int? shadowLevel,
+            int currentHp, Items item,
+            byte[] iv, byte[] ev, 
+            int obtainedLevel, int currentLevel, int currentExp,
+            int happiness, Status status, int statusCount,
+            int eggSteps, Items ballUsed,
+            string mail, Move[] moves,
+            Ribbon[] ribbons, bool[] markings,
+            int personalId,
+            ObtainedMethod obtainedMethod,
+            DateTimeOffset timeReceived, DateTimeOffset timeEggHatched) : this(species)
+        {
+            //Check to see if nickName is filled
+            if (nickName != null || nickName != string.Empty)
+            {
+                name = nickName;
+            }
+            else
+            {
+                name = null;
+            }
+
+            Form = form;
+            //_base = Pokemon.PokemonData.GetPokemon(species);
+
+            Ability = ability;
+            natureFlag = nature;
+
+            IsShiny = isShiny;
+            Gender = gender;
+
+            this.pokerus = pokerus;
+
+            isHyperMode = isHyperMode;
+            ShadowLevel = shadowLevel;
+
+            HP = currentHp;
+            Item = item;
+
+            IV = iv;
+            EV = ev;
+
+            ObtainLevel = obtainedLevel;
+            Level = currentLevel;
+            Exp.AddExperience(currentExp);
+
+            Happiness = happiness;
+
+            Status = status;
+            StatusCount = statusCount;
+
+            EggSteps = eggSteps;
+
+            this.ballUsed = ballUsed;
+            if (PokemonUnity.Item.Item.Mail.IsMail(item))
+            {
+                this.mail = new Item.Item.Mail((Items)item);
+                this.mail.Message = mail;
+            }
+
+            this.moves = moves;
+
+            this.ribbons = ribbons.ToList();
+            Markings = markings;
+
+            PersonalId = personalId;
+
+            ObtainedMode = obtainedMethod;
+            TimeReceived = timeReceived;
+            TimeEggHatched = timeEggHatched;
         }
         #endregion
 
@@ -754,6 +827,15 @@ namespace PokemonUnity.Pokemon
             {
                 return this.Nature == nature;
             }
+        }
+
+        /// <summary>
+        /// Returns the Nature for the SeriPokemon class to serialize Nature
+        /// </summary>
+        /// <returns></returns>
+        public Nature getNature()
+        {
+            return natureFlag;
         }
         #endregion
 
@@ -1601,6 +1683,7 @@ namespace PokemonUnity.Pokemon
             }
             //set { mail = value; }
         }
+
         /// <summary>
         /// The pokemons fused into this one.
         /// </summary>
@@ -1920,7 +2003,6 @@ namespace PokemonUnity.Pokemon
         #endregion
 
         #region Nested Classes
-        [Serializable]
         public partial class PokemonData
         {
             #region Variables
@@ -2239,7 +2321,14 @@ namespace PokemonUnity.Pokemon
                         this.name = fieldValue.Value ?? translation.Identifier;
                     }
                 }
-                this.forms = formvalues.ToArray();
+                if (formvalues.Count != 0)
+                {
+                    this.forms = formvalues.ToArray();
+                }
+                else
+                {
+                    this.forms = new string[1] { null };
+                }
             }
 
             public PokemonData(Pokemons Id = Pokemons.NONE, int[] regionalDex = null, //string name, 
@@ -2493,7 +2582,6 @@ namespace PokemonUnity.Pokemon
             /// <summary>
             /// The moves that all Pokémon of the species learn as they level up. 
             /// </summary>
-            [System.Serializable]
             public class PokemonMoveset
             {
                 public LearnMethod TeachMethod;
@@ -2534,7 +2622,6 @@ namespace PokemonUnity.Pokemon
             /// <summary>
             /// All the moves this pokemon species can learn, and the methods by which they learn them
             /// </summary>
-            [System.Serializable]
             public class PokemonMoveTree
             {
                 #region Properties
@@ -2662,7 +2749,6 @@ namespace PokemonUnity.Pokemon
             /// For each possible evolution of this species, 
             /// there are three parts
             /// </summary>
-            [System.Serializable]
             public class PokemonEvolution : IPokemonEvolution //<T> where T : new()
             {
                 /// <summary>
@@ -2692,7 +2778,6 @@ namespace PokemonUnity.Pokemon
                     return false;
                 }
             }
-            [System.Serializable]
             public class PokemonEvolution<T> : PokemonEvolution
             {
                 /*// <summary>
@@ -2856,7 +2941,6 @@ namespace PokemonUnity.Pokemon
         /// </summary>
         /// Experience can be it's own class away from Pokemon. But there's no need for it to be global.
         /// ToDo: Consider making Experience class a Pokemon extension class...
-        [Serializable]
         public class Experience
         {
             #region Variables

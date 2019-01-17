@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
 
 namespace PokemonUnity.Saving.Location
 {
@@ -54,9 +52,9 @@ namespace PokemonUnity.Saving.Location
         /// </summary>
         /// <param name="rValue"></param>
         /// <returns></returns>
-        public static implicit operator Vector3(SerializableVector3 rValue)
+        public static implicit operator UnityEngine.Vector3(SerializableVector3 rValue)
         {
-            return new Vector3(rValue.x, rValue.y, rValue.z);
+            return new UnityEngine.Vector3(rValue.x, rValue.y, rValue.z);
         }
 
         /// <summary>
@@ -64,8 +62,8 @@ namespace PokemonUnity.Saving.Location
         /// </summary>
         /// <param name="rValue"></param>
         /// <returns></returns>
-        public static implicit operator SerializableVector3(Vector3 rValue)
-        {
+        public static implicit operator SerializableVector3(UnityEngine.Vector3 rValue)
+        { 
             return new SerializableVector3(rValue.x, rValue.y, rValue.z);
         }
     }
