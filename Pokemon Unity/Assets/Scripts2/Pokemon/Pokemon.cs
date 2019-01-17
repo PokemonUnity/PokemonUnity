@@ -230,9 +230,9 @@ namespace PokemonUnity.Pokemon
         {
             _base = PokemonData.GetPokemon(pokemon);
             Exp = new Experience(GrowthRate);
+            eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
-            eggSteps = _base.HatchTime;
             GenerateMoveset();
 
             //calcStats();
@@ -668,17 +668,23 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return
-                    //If is egg AND has hidden, include hidden in roll
-                    isEgg && hasHiddenAbility() ?
-                        //if has three slots
-                        (_base.Ability[1] != Abilities.NONE ?
-                            // roll between all 3
-                            _base.Ability[Settings.Rand.Next(0, 3)]
-                        : //else skip over slot 2
-                            _base.Ability[Settings.Rand.Next(0, 2) == 1 ? 2 : 0])
-                    : //else just roll between slot 1 and 2
-                        (_base.Ability[1] == Abilities.NONE ? _base.Ability[0] : _base.Ability[Settings.Rand.Next(0, 2)]);
+
+                if (isEgg && hasHiddenAbility())
+                {
+                    if (_base.Ability[1] != Abilities.NONE)
+                    {
+                        return _base.Ability[Settings.Rand.Next(0, 3)];                            
+                    }
+                    else
+                    {
+                        return _base.Ability[Settings.Rand.Next(0, 2) == 1 ? 2 : 0];
+                    }
+                }
+                else
+                {
+                    return _base.Ability[Settings.Rand.Next(0, 2)];
+                }
+                
             }
         }
         /// <summary>

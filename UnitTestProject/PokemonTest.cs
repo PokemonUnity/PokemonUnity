@@ -193,15 +193,21 @@ namespace Tests
 		{
 			Pokemons pkmn = Pokemons.BULBASAUR;
 			Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
+            if (Hidden == Abilities.NONE)
+            {
+                Assert.Fail("This pokemon does not have a hidden ability");
+            }
 			int i = 0;
+            Pokemon pokemon;
 			while (true)
 			{
-				Pokemon pokemon = new Pokemon(pkmn);
+				pokemon = new Pokemon(pkmn);
 				//pokemon.HatchEgg();
 				bool HA = pokemon.Ability == Hidden;
-				if(HA) Assert.IsTrue(HA); i++;
-				if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
+				if(HA) break; i++;
+				if (i > 30) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
+            Assert.AreEqual(Hidden, pokemon.Ability);
 		}
 
 		//Test max value for pokemon stats
@@ -218,7 +224,11 @@ namespace Tests
 			//All EV points when added together cannot be greater than a sum of MaxEVLimit
 			Pokemon pokemon = new Pokemon();
 			int ev = pokemon.EV[0] + pokemon.EV[1] + pokemon.EV[2] + pokemon.EV[3] + pokemon.EV[4] + pokemon.EV[5];
-			Assert.AreEqual(Pokemon.EVLIMIT, ev);
+            if (Pokemon.EVLIMIT < ev)
+            {
+                Assert.Fail("EV Limit is less than the total EV level");
+            }
+            Assert.IsTrue(Pokemon.EVLIMIT >= ev);
 		}
         #endregion
 
