@@ -1042,14 +1042,8 @@ new Item(Items.TM100,               ItemCategory.ALL_MACHINES,     0, null, null
         {
             get
             {
-                if (ItemPocket.Value != ItemPockets.MAIL) return false; //If empty return null
+                if (ItemPocket.HasValue && ItemPocket.Value != ItemPockets.MAIL) return false;
                 else return true;
-                //if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
-                //{
-                //	//mail = null;
-                //	return null;
-                //}
-                //return mail.Message;
             }
         }
 

@@ -48,11 +48,17 @@ namespace Tests
                 new Pokemon(Pokemons.UMBREON),
                 new Pokemon(Pokemons.TURTWIG)
             };
-            Pokemon[,] playerPC = new Pokemon[,]
+            Pokemon[,] playerPC = new Pokemon[4,4];
+            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
             {
-                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
-                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
-            };
+                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+                {
+                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
+                }
+            }
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -105,11 +111,17 @@ namespace Tests
                 new Pokemon(Pokemons.UMBREON),
                 new Pokemon(Pokemons.TURTWIG)
             };
-            Pokemon[,] playerPC = new Pokemon[,]
+            Pokemon[,] playerPC = new Pokemon[4, 4];
+            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
             {
-                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
-                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
-            };
+                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+                {
+                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
+                }
+            }
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -163,11 +175,17 @@ namespace Tests
                 new Pokemon(Pokemons.UMBREON),
                 new Pokemon(Pokemons.TURTWIG)
             };
-            Pokemon[,] playerPC = new Pokemon[,]
+            Pokemon[,] playerPC = new Pokemon[4, 4];
+            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
             {
-                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
-                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
-            };
+                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+                {
+                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
+                }
+            }
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -221,11 +239,17 @@ namespace Tests
                 new Pokemon(Pokemons.UMBREON),
                 new Pokemon(Pokemons.TURTWIG)
             };
-            Pokemon[,] playerPC = new Pokemon[,]
+            Pokemon[,] playerPC = new Pokemon[4, 4];
+            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
             {
-                { new Pokemon(Pokemons.EMPOLEON), new Pokemon(Pokemons.MUNCHLAX) },
-                { new Pokemon(Pokemons.MURKROW), new Pokemon(Pokemons.PILOSWINE) }
-            };
+                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+                {
+                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
+                }
+            }
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 

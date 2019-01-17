@@ -189,6 +189,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             return seriPokemon;
         }
 
+        [System.Serializable]
         public class SeriMail
         {
             private int MailId { get; set; }

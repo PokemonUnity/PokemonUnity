@@ -294,7 +294,7 @@ namespace PokemonUnity.Pokemon
             }
 
             Form = form;
-            _base = Pokemon.PokemonData.GetPokemon(species);
+            //_base = Pokemon.PokemonData.GetPokemon(species);
 
             Ability = ability;
             natureFlag = nature;
