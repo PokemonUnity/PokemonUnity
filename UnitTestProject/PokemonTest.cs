@@ -207,6 +207,7 @@ namespace Tests
 				if(HA) break; i++;
 				if (i > 30) Assert.Fail("Infinite Loop; Results Undetermined");
 			}
+            Assert.AreEqual(Hidden, pokemon.Ability);
 		}
 
 		//Test max value for pokemon stats
