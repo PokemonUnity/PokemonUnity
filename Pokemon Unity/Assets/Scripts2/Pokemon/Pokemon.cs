@@ -277,13 +277,22 @@ namespace PokemonUnity.Pokemon
             int obtainedLevel, int currentLevel, int currentExp,
             int happiness, Status status, int statusCount,
             int eggSteps, Items ballUsed,
-            Item.Item.Mail mail, Move[] moves,
+            string mail, Move[] moves,
             Ribbon[] ribbons, bool[] markings,
             int personalId,
             ObtainedMethod obtainedMethod,
-            DateTimeOffset timeReceived, DateTimeOffset timeEggHatched) : this()
+            DateTimeOffset timeReceived, DateTimeOffset timeEggHatched) : this(species)
         {
-            name = nickName;
+            //Check to see if nickName is filled
+            if (nickName != null || nickName != string.Empty)
+            {
+                name = nickName;
+            }
+            else
+            {
+                name = null;
+            }
+
             Form = form;
             _base = new PokemonData(species);
 
@@ -316,7 +325,11 @@ namespace PokemonUnity.Pokemon
             EggSteps = eggSteps;
 
             this.ballUsed = ballUsed;
-            this.mail = mail;
+            if (PokemonUnity.Item.Item.Mail.IsMail(item))
+            {
+                this.mail = new Item.Item.Mail((Items)item);
+                this.mail.Message = mail;
+            }
 
             this.moves = moves;
 
@@ -1665,10 +1678,6 @@ namespace PokemonUnity.Pokemon
             //set { mail = value; }
         }
 
-        public Item.Item.Mail GetMail()
-        {
-            return mail;
-        }
         /// <summary>
         /// The pokemons fused into this one.
         /// </summary>

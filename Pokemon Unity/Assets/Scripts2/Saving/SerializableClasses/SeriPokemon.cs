@@ -50,7 +50,8 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int EggSteps { get; private set; }
 
         public int BallUsed { get; private set; }
-        public int Mail { get; private set; }
+        //Creating a seperate Seri class for Mail
+        public SeriMail Mail { get; private set; }
 
         public SeriMove[] Moves { get; private set; }
 
@@ -99,7 +100,7 @@ namespace PokemonUnity.Saving.SerializableClasses
                     pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
                     pokemon.ObtainedLevel, pokemon.CurrentLevel, pokemon.CurrentExp,
                     pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
-                    pokemon.EggSteps, (Items)pokemon.BallUsed, /*Fix Mail*/ new Item.Mail(Items.AIR_MAIL), 
+                    pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message, 
                     moves, ribbons, pokemon.Markings, pokemon.PersonalId,
                     (Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
                     pokemon.TimeReceived, pokemon.TimeEggHatched
@@ -151,7 +152,10 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.EggSteps = pokemon.EggSteps;
 
             seriPokemon.BallUsed = (int)pokemon.ballUsed;
-            //seriPokemon.Mail = pokemon.GetMail();
+            if (PokemonUnity.Item.Item.Mail.IsMail(pokemon.Item))
+            {
+                seriPokemon.Mail = new SeriMail(pokemon.Item, pokemon.Mail);
+            }
 
             seriPokemon.Moves = new SeriMove[4];
             for (int i = 0; i < 4; i++)
@@ -183,6 +187,27 @@ namespace PokemonUnity.Saving.SerializableClasses
             catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
 
             return seriPokemon;
+        }
+
+        public class SeriMail
+        {
+            private int MailId { get; set; }
+            public string Message { get; private set; }
+            //Background will stay 0 (new int) until Mail's background feature is implemented
+            public int Background { get; private set; }
+
+            public static implicit operator Item.Mail(SeriMail mail)
+            {
+                Item.Mail newMail = new Item.Mail((Items)mail.MailId);
+                newMail.Message = mail.Message;
+                return newMail;
+            }
+
+            public SeriMail(Items mailItem, string messsage)
+            {
+                MailId = (int)mailItem;
+                Message = messsage;
+            }
         }
     }
 }
