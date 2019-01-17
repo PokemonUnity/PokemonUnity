@@ -183,18 +183,40 @@ namespace Tests
         //}
 
         [TestMethod]
-        public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
-        {
-            Pokemon pokemon = new Pokemon(Pokemons.CHARMANDER);
-            if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
-            int i = 0;
-            while (pokemon.EggSteps != 0)//(pokemon.isEgg)
+		public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.NONE); //Step counter for test pokemon is 1000
+			if (!pokemon.isEgg) Assert.Fail("new Pokemon isnt an Egg");
+			int i = 0;
+			while (pokemon.EggSteps != 0)//(pokemon.isEgg)
+			{
+				pokemon.AddSteps(); //goes down by 1
+				if (i > 1001) Assert.Fail("Infinite Loop; Results Undetermined");
+			}
+			Assert.AreEqual(false,pokemon.isEgg);
+		}
+		
+        [TestMethod]
+		public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
+		{
+			Pokemons pkmn = Pokemons.BULBASAUR;
+			Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
+            if (Hidden == Abilities.NONE)
             {
-                pokemon.AddSteps(); //goes down by 1
-                if (i > 1001) Assert.Fail("Infinite Loop; Results Undetermined");
+                Assert.Fail("This pokemon does not have a hidden ability");
             }
-            Assert.AreEqual(false, pokemon.isEgg);
-        }
+			int i = 0;
+            Pokemon pokemon;
+			while (true)
+			{
+				pokemon = new Pokemon(pkmn);
+				//pokemon.HatchEgg();
+				bool HA = pokemon.Ability == Hidden;
+				if(HA) break; i++;
+				if (i > 30) Assert.Fail("Infinite Loop; Results Undetermined");
+			}
+            Assert.AreEqual(Hidden, pokemon.Ability);
+		}
 
         [TestMethod]
         public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
