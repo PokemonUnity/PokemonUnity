@@ -226,7 +226,7 @@ namespace Tests
 			int ev = pokemon.EV[0] + pokemon.EV[1] + pokemon.EV[2] + pokemon.EV[3] + pokemon.EV[4] + pokemon.EV[5];
             if (Pokemon.EVLIMIT < ev)
             {
-                Assert.Fail("EV Limit is less than the total EV leve");
+                Assert.Fail("EV Limit is less than the total EV level");
             }
             Assert.IsTrue(Pokemon.EVLIMIT >= ev);
 		}
