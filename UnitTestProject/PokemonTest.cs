@@ -224,7 +224,11 @@ namespace Tests
 			//All EV points when added together cannot be greater than a sum of MaxEVLimit
 			Pokemon pokemon = new Pokemon();
 			int ev = pokemon.EV[0] + pokemon.EV[1] + pokemon.EV[2] + pokemon.EV[3] + pokemon.EV[4] + pokemon.EV[5];
-			Assert.AreEqual(Pokemon.EVLIMIT, ev);
+            if (Pokemon.EVLIMIT < ev)
+            {
+                Assert.Fail("EV Limit is less than the total EV leve");
+            }
+            Assert.IsTrue(Pokemon.EVLIMIT >= ev);
 		}
         #endregion
 
