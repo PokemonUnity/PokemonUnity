@@ -15,6 +15,19 @@ namespace PokemonUnity.Saving
 
         public DateTime TimeCreated;
 
+        #region User Settings
+        public int Language;
+
+        public byte WindowBorder;
+        public byte DialogBorder;
+        public byte TextSpeed;
+
+        public float mVol;
+        public float sVol;
+        #endregion
+
+
+        #region Player
         public string PlayerName;
 
         //PlayerID doesn't need to be public: TrainerID + SecretID * 65536 = PlayerID
@@ -23,6 +36,7 @@ namespace PokemonUnity.Saving
         public int SecretID;
         public bool IsMale;
         //public Dictionary<GymBadges, System.DateTime?> GymBadges;
+        #endregion
 
         public bool?[] Pokedex;
         public System.TimeSpan PlayerTime;
