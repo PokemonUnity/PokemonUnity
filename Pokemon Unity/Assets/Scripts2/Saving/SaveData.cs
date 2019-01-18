@@ -13,7 +13,7 @@ namespace PokemonUnity.Saving
         public string BuildVersion = SaveManager.GetBuildVersion();
         public string SaveName = string.Empty;
 
-        public DateTime TimeCreated;
+        public DateTime TimeCreated = System.DateTime.Now;
 
         #region User Settings
         public int Language;
@@ -21,6 +21,9 @@ namespace PokemonUnity.Saving
         public byte WindowBorder;
         public byte DialogBorder;
         public byte TextSpeed;
+
+        //public bool FullScreen;
+        //public bool BattleScene;
 
         public float mVol;
         public float sVol;
@@ -80,16 +83,36 @@ namespace PokemonUnity.Saving
             pCenterFdirection = fDirection;
         }
 
-        public SaveData(
+        public SaveData
+            (
             string saveName,
-            int activeScene,
-            string playerName, int trainerID, int secretID, bool isMale,
-            //List<GymBadges> gymBadges,
+
+            int language,
+            byte windowBorder,
+            byte dialogBorder,
+            byte textSpeed,
+            float mvol,
+            float svol,
+
+            string playerName,
+            int trainerID,
+            int secretID,
+            bool isMale,
+
             bool?[] pokedex,
-            System.TimeSpan playerTime,
-            SerializableVector3 playerPosition, int playerDirection,
-            SerializableVector3 followerPosition, int followerDirection,
-            Pokemon.Pokemon[] playerParty, Pokemon.Pokemon[,] playerPC, List<Items> playerBag,
+            TimeSpan playerTime,
+
+            SerializableVector3 playerPosition,
+            int playerDirection,
+            SerializableVector3 followerPosition,
+            int followerDirection,
+
+            int activeScene,
+
+            SeriPokemon[] playerParty,
+            SeriPC pc,
+            List<Items> playerBag,
+
             List<SaveEvent> eventList
             )
         {
