@@ -20,6 +20,93 @@ namespace Tests
             Assert.Fail("No Player Test");
         }
 
+        public void Overwrite_New_Save_File_With_Standard_Unit_Test_Values()
+        {
+            SaveData newSave;
+            #region Fill The Save File
+            string saveName = "First Save";
+            int activeScene = 2;
+
+            Settings.Languages language = Settings.Languages.English;
+            byte windowBorder = 2;
+            byte dialogBorder = 9;
+            byte textSpeed = 1;
+            float mvol = 0.4f;
+            float svol = 0.9f;
+
+            string playerName = "Red";
+            int trainerID = 55323;
+            int secretID = 64123;
+            bool isMale = false;
+
+            bool?[] pokedex = new bool?[] { null, false, true, false, null };
+            TimeSpan playerTime = new TimeSpan(4, 20, 53);
+            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+            int playerDirection = 2;
+            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+            int followerDirection = 1;
+
+            Pokemon[] playerParty = new Pokemon[]
+            {
+                new Pokemon(Pokemons.CRANIDOS),
+                new Pokemon(Pokemons.UMBREON),
+                new Pokemon(Pokemons.TURTWIG)
+            };
+            Pokemon[,] playerPC = new Pokemon[4, 4];
+            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
+            {
+                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+                {
+                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
+                }
+            }
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+
+            //Don't know how to initialize the Items List<> yet, leaving this for later
+            List<Items> playerBag = new List<Items>();
+
+            List<SaveEvent> eventList = new List<SaveEvent>();
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+
+            newSave = new SaveData
+            (
+                saveName,
+
+                language,
+                windowBorder,
+                dialogBorder,
+                textSpeed,
+                mvol,
+                svol,
+
+                playerName,
+                trainerID,
+                secretID,
+                isMale,
+
+                pokedex,
+                playerTime,
+                playerPosition,
+                playerDirection,
+                followerPosition,
+                followerDirection,
+
+                activeScene,
+
+                playerParty,
+                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+                playerBag,
+
+                eventList
+            );
+            #endregion
+            SaveManager.Overwrite(newSave, 0);
+        }
+
         [TestMethod]
         public void Create_New_Save_File()
         {
@@ -29,14 +116,21 @@ namespace Tests
             string saveName = "First Save";
             int activeScene = 2;
 
+            Settings.Languages language = Settings.Languages.English;
+            byte windowBorder = 2;
+            byte dialogBorder = 9;
+            byte textSpeed = 1;
+            float mvol = 0.4f;
+            float svol = 0.9f;
+
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
 
+
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-
             SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
             int playerDirection = 2;
             SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
@@ -59,6 +153,7 @@ namespace Tests
             playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -69,12 +164,33 @@ namespace Tests
 
             newSave = new SaveData
             (
-                saveName, activeScene,
-                playerName, trainerID, secretID, isMale,
-                pokedex, playerTime,
-                playerPosition, playerDirection,
-                followerPosition, followerDirection,
-                playerParty, playerPC, playerBag,
+                saveName,
+
+                language,
+                windowBorder,
+                dialogBorder,
+                textSpeed,
+                mvol,
+                svol,
+
+                playerName,
+                trainerID,
+                secretID,
+                isMale,
+
+                pokedex,
+                playerTime,
+                playerPosition,
+                playerDirection,
+                followerPosition,
+                followerDirection,
+
+                activeScene,
+
+                playerParty,
+                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+                playerBag,
+
                 eventList
             );
             #endregion
@@ -92,14 +208,21 @@ namespace Tests
             string saveName = "First Save";
             int activeScene = 2;
 
+            Settings.Languages language = Settings.Languages.English;
+            byte windowBorder = 2;
+            byte dialogBorder = 9;
+            byte textSpeed = 1;
+            float mvol = 0.4f;
+            float svol = 0.9f;
+
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
 
+
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-
             SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
             int playerDirection = 2;
             SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
@@ -122,6 +245,7 @@ namespace Tests
             playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -132,12 +256,33 @@ namespace Tests
 
             newSave = new SaveData
             (
-                saveName, activeScene,
-                playerName, trainerID, secretID, isMale,
-                pokedex, playerTime,
-                playerPosition, playerDirection,
-                followerPosition, followerDirection,
-                playerParty, playerPC, playerBag,
+                saveName,
+
+                language,
+                windowBorder,
+                dialogBorder,
+                textSpeed,
+                mvol,
+                svol,
+
+                playerName,
+                trainerID,
+                secretID,
+                isMale,
+
+                pokedex,
+                playerTime,
+                playerPosition,
+                playerDirection,
+                followerPosition,
+                followerDirection,
+
+                activeScene,
+
+                playerParty,
+                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+                playerBag,
+
                 eventList
             );
             #endregion
@@ -156,14 +301,21 @@ namespace Tests
             string saveName = "First Save";
             int activeScene = 2;
 
+            Settings.Languages language = Settings.Languages.English;
+            byte windowBorder = 2;
+            byte dialogBorder = 9;
+            byte textSpeed = 1;
+            float mvol = 0.4f;
+            float svol = 0.9f;
+
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
 
+
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-
             SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
             int playerDirection = 2;
             SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
@@ -186,6 +338,7 @@ namespace Tests
             playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -196,12 +349,33 @@ namespace Tests
 
             newSave = new SaveData
             (
-                saveName, activeScene,
-                playerName, trainerID, secretID, isMale,
-                pokedex, playerTime,
-                playerPosition, playerDirection,
-                followerPosition, followerDirection,
-                playerParty, playerPC, playerBag,
+                saveName,
+
+                language,
+                windowBorder,
+                dialogBorder,
+                textSpeed,
+                mvol,
+                svol,
+
+                playerName,
+                trainerID,
+                secretID,
+                isMale,
+
+                pokedex,
+                playerTime,
+                playerPosition,
+                playerDirection,
+                followerPosition,
+                followerDirection,
+
+                activeScene,
+
+                playerParty,
+                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+                playerBag,
+
                 eventList
             );
             #endregion
@@ -216,18 +390,25 @@ namespace Tests
         {
             SaveData newSave;
 
-            #region Fill newSave
+            #region Fill The Save File
             string saveName = "First Save";
             int activeScene = 2;
+
+            Settings.Languages language = Settings.Languages.English;
+            byte windowBorder = 2;
+            byte dialogBorder = 9;
+            byte textSpeed = 1;
+            float mvol = 0.4f;
+            float svol = 0.9f;
 
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
 
+
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-
             SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
             int playerDirection = 2;
             SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
@@ -250,6 +431,7 @@ namespace Tests
             playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+
             //Don't know how to initialize the Items List<> yet, leaving this for later
             List<Items> playerBag = new List<Items>();
 
@@ -260,12 +442,33 @@ namespace Tests
 
             newSave = new SaveData
             (
-                saveName, activeScene,
-                playerName, trainerID, secretID, isMale,
-                pokedex, playerTime,
-                playerPosition, playerDirection,
-                followerPosition, followerDirection,
-                playerParty, playerPC, playerBag,
+                saveName,
+
+                language,
+                windowBorder,
+                dialogBorder,
+                textSpeed,
+                mvol,
+                svol,
+
+                playerName,
+                trainerID,
+                secretID,
+                isMale,
+
+                pokedex,
+                playerTime,
+                playerPosition,
+                playerDirection,
+                followerPosition,
+                followerDirection,
+
+                activeScene,
+
+                playerParty,
+                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+                playerBag,
+
                 eventList
             );
             #endregion
@@ -411,8 +614,11 @@ namespace Tests
         [TestMethod]
         public void Player_Load_Name()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+
+            Assert.AreEqual("Red", newSave.PlayerName);
         }
         [TestMethod]
         public void Player_Load_Badges()
@@ -435,38 +641,65 @@ namespace Tests
         [TestMethod]
         public void Player_Load_HoursPlayed()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            TimeSpan expectedTimeSpan = new TimeSpan(4, 20, 53);
+
+            Assert.AreEqual(expectedTimeSpan, newSave.PlayerTime);
         }
         [TestMethod]
         public void Player_Load_Settings_Language()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            Settings.Languages expectedLanguage = Settings.Languages.English;
+
+            //We need to cast newSave.Language to the correct variable, since we save it in an (int)
+            Assert.AreEqual(expectedLanguage, (Settings.Languages)newSave.Language);
         }
         [TestMethod]
         public void Player_Load_Settings_Text_WindowBorder()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            byte expectedWindowBorder = 2;
+
+            Assert.AreEqual(expectedWindowBorder, newSave.WindowBorder);
         }
         [TestMethod]
         public void Player_Load_Settings_Text_DialogBorder()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            byte expectedDialogBorder = 9;
+
+            Assert.AreEqual(expectedDialogBorder, newSave.DialogBorder);
         }
         [TestMethod]
         public void Player_Load_Settings_VolumeValues()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            float expectedMvol = 0.4f;
+            float expectedSvol = 0.9f;
+
+            Assert.AreEqual(expectedMvol, newSave.mVol);
+            Assert.AreEqual(expectedSvol, newSave.sVol);
         }
         [TestMethod]
         public void Player_Load_Settings_TextSpeed()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            byte expectedTextSpeed = 1;
+
+            Assert.AreEqual(expectedTextSpeed, newSave.TextSpeed);
         }
         [TestMethod] //ToDo: Should be map data, and stuff... Map0 == new game (professsor intro speech)
         public void Player_Load_SpawnLocation()

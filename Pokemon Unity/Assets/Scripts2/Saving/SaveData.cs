@@ -12,7 +12,7 @@ namespace PokemonUnity.Saving
     {
         #region ImportantInfo
         public string BuildVersion = SaveManager.GetBuildVersion();
-        public string SaveName = string.Empty;
+        public string SaveName;
         public int ActiveScene;
 
         public DateTime TimeCreated = System.DateTime.Now;
@@ -112,7 +112,7 @@ namespace PokemonUnity.Saving
 
             int activeScene,
 
-            SeriPokemon[] playerParty,
+            Pokemon.Pokemon[] playerParty,
             SeriPC pc,
             List<Items> playerBag,
 
@@ -143,7 +143,11 @@ namespace PokemonUnity.Saving
 
             ActiveScene = activeScene;
 
-            PlayerParty = playerParty;
+            PlayerParty = new SeriPokemon[playerParty.Length];
+            for (int i = 0; i < playerParty.Length; i++)
+            {
+                PlayerParty[i] = playerParty[i];
+            }
             PC = pc;
             PlayerBag = playerBag;
 
