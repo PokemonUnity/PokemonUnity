@@ -629,14 +629,44 @@ namespace Tests
         [TestMethod]
         public void Player_Load_Party()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            Pokemon[] expectedPlayerParty = new Pokemon[]
+            {
+                new Pokemon(Pokemons.CRANIDOS),
+                new Pokemon(Pokemons.UMBREON),
+                new Pokemon(Pokemons.TURTWIG)
+            };
+            Pokemon[] actualPlayerParty = new Pokemon[newSave.PlayerParty.Length];
+            for (int i = 0; i < actualPlayerParty.Length; i++)
+            {
+                actualPlayerParty[i] = newSave.PlayerParty[i];
+            }
+
+            if (expectedPlayerParty.Length != actualPlayerParty.Length)
+                Assert.Fail("Party Lengths do not match up.");
+            for (int i = 0; i < expectedPlayerParty.Length; i++)
+            {
+                if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
+                    Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
+            }
         }
         [TestMethod]
         public void Player_Load_Pokedex()
         {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+            SaveData newSave = SaveManager.GetSave(0);
+            bool?[] expectedPokedex = new bool?[] { null, false, true, false, null };
+
+            if (expectedPokedex.Length != newSave.Pokedex.Length)
+                Assert.Fail("Expected- and actual Pokedex's length didn't match up.");
+            for (int i = 0; i < expectedPokedex.Length; i++)
+            {
+                if (expectedPokedex[i] != newSave.Pokedex[i])
+                    Assert.Fail("Expected- and actual Pokedex's index didn't match up on index: " + i);
+            }
         }
         [TestMethod]
         public void Player_Load_HoursPlayed()

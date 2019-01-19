@@ -122,7 +122,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             //These parts shouldn't be saved yet.
 
             //seriPokemon.Nature = pokemon.getNature();
-
+            seriPokemon.Nature = new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
             //seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
 
@@ -171,6 +171,10 @@ namespace PokemonUnity.Saving.SerializableClasses
                 {
                     seriPokemon.Ribbons[i] = (int)pokemon.Ribbons[i];
                 }
+            }
+            else
+            {
+                seriPokemon.Ribbons = new int[0];
             }
             seriPokemon.Markings = pokemon.Markings;
 
