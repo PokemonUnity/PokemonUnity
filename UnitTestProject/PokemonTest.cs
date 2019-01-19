@@ -218,7 +218,7 @@ namespace Tests
             Assert.AreEqual(Hidden, pokemon.Ability);
 		}
 
-        /*[TestMethod]
+        [TestMethod]
         public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
         {
             Pokemons pkmn = Pokemons.BULBASAUR;
@@ -232,7 +232,7 @@ namespace Tests
                 if (HA) Assert.IsTrue(HA); i++;
                 if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
             }
-        }*/
+        }
 
         //Test max value for pokemon stats
         [TestMethod]
