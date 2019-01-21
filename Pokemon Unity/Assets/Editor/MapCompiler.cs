@@ -9,14 +9,22 @@ public class MapCompiler : EditorWindow
     [MenuItem("PK Unity/Compile Selected Map")]
     static void Compile()
     {
-        Debug.Log("Test");
+        Debug.Log("Compiling map...");
         Mesh map = new Mesh();
+        if(!Selection.activeGameObject.transform.GetComponent<MeshFilter>())
+        {
+            Selection.activeGameObject.AddComponent<MeshFilter>();
+        }
+        if(!Selection.activeGameObject.transform.GetComponent<MeshCollider>())
+        {
+            Selection.activeGameObject.AddComponent<MeshCollider>();
+        }
+        Selection.activeGameObject.transform.GetComponent<MeshFilter>().mesh = null;
         MeshFilter[] meshFilters = Selection.activeGameObject.transform.GetComponentsInChildren<MeshFilter>();
         Debug.Log(meshFilters.Length);
         CombineInstance[] combine = new CombineInstance[meshFilters.Length];
         int i = 0;
         while (i < meshFilters.Length) {
-			MeshRenderer renderer = meshFilters[i].gameObject.GetComponent<MeshRenderer>();
             combine[i].mesh = meshFilters[i].sharedMesh;
             combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
             i++;
