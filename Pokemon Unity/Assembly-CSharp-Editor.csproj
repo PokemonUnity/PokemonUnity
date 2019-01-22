@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\CustomEventEditor.cs" />
+     <Compile Include="Assets\Editor\MapCompiler.cs" />
      <Compile Include="Assets\Editor\UnitySpriteEditor.cs" />
      <Compile Include="Assets\Resources\Editor\EventHandlerTest.cs" />
      <Compile Include="Assets\Resources\Editor\NewEditModeTest.cs" />
