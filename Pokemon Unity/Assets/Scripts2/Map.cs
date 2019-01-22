@@ -6,6 +6,8 @@ using UnityEngine;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 
+namespace PokemonUnity.Samples
+{
 /// ToDo: Store maps as GameObjects in code
 /// Find a way to associate code-variables to Maps
 /// Generate code to load maps based on above
@@ -180,72 +182,6 @@ class Map : MonoBehaviour
 	}
 	#endregion
 }
-
-/// <summary>
-/// Map GameObject will be an Array of tiles
-/// mapEnum = MapId = BlenderJsonToUnity[]
-/// </summary>
-class BlenderJsonToUnity
-{
-	/// <summary>
-	/// Vector3 || (float x, float y, float z)
-	/// </summary>
-	/// we dont need ray casting anymore, since all the x,y,z's are recorded
-    float tileLocation; 
-	/// <summary>
-	/// Quaternion || (float x, float y, float z)
-	/// </summary>
-    float tileRotation;
-	/// <summary>
-	/// Mesh object
-	/// </summary>
-    string tileShape; 
-	/// <summary>
-	/// Texture enum or filename
-	/// </summary>
-    string tileTexture; 
-	/// <summary>
-    /// Tile Tags:
-    /// 0 - Default Environment
-    /// 1 - Impassable
-    /// 2 - Surf Water
-    /// 3 - Environment 2
-    /// 4? - Dive Water
-	/// </summary>
-	/// ToDo: enum here... Mesh object will determine collision mapping
-    int tileCollision; 
-
-    /*
-     * Read all of the json files in the blender/json/ folder
-     * Each file should represent 1 map file, filled with many tilesArray
-     * convert json file into an array of tiles, to be used with Map.BuildMap()
-     * 
-     * Consider writing unity script to convert json map tiles to a saved prefab asset
-     * to view texture configuration for better hard-code adjustments
-     * https://forum.unity.com/threads/saving-a-custom-map-object-hierarchy-and-keeping-prefabs-looking-for-ideas.156963/
-     * 
-     * What if textures were stored as a single map sprite
-     * broken down into a grid and used to load the textures 
-     * on the tiles x,y by sprite's x,y? Only issue is Z value
-     * build from buttom up x,y,(z|0 to z|n+), if empty: skip, 
-     * use sprite x,y texture for each z?
-     * https://gamedev.stackexchange.com/questions/87696/how-do-i-draw-a-tilemap-within-unity3d
-     * https://answers.unity.com/questions/974007/what-is-the-best-way-to-create-3d-tile-based-level.html
-    private static Dictionary<int, PokemonData> LoadPokedex()
-    {
-        var data = new Dictionary<int, PokemonData>(); //Why not convert dictionary to Array? It's faster, more streamlined, and simpler to work with
-
-        string[] fileEntries = Directory.GetFiles(Application.streamingAssetsPath + "/Pokemons", "*.json");  // Filter on only json files, otherwise you can also get other files (.meta)
-        foreach (string fileName in fileEntries)
-        {
-            string dataAsJson = File.ReadAllText(fileName, Encoding.UTF8);
-            PokemonData pokemonData = new PokemonData();
-            JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
-            data.Add(pokemonData.ID, pokemonData);
-        }
-
-        return data; //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
-    }*/
 }
 
 /// <summary>
@@ -1013,262 +949,203 @@ public class WildPokemonInitialiser
 
 namespace PokemonUnity
 {
-	/*enum EncounterActions
+	public struct Tile
 	{
-		Land,
 		/// <summary>
-		/// If null or empty, defaults to Land
+		/// Y measurement of this Tile's Node in Scene; 
+		/// starts at Bottom and stretches Up
 		/// </summary>
-		LandMorning,
-		LandDay,
-		LandNight,
-		//ToDo: Missing Grass, and Tall grass...
-		Cave,
-		BugContest,
-		Water,
-		RockSmash,
-		OldRod,
-		GoodRod,
-		SuperRod,
-		HeadbuttLow,
-		HeadbuttHigh
-	}*/
+		public int Length 
+		{
+			get
+			{
+				switch (Shape)
+				{
+					case Shape.WalkPath:
+						return 2;
+					default:
+						return 1;
+				}
+			}
+		}
+		/// <summary>
+		/// X measurement of this Tile's Node in Scene;
+		/// Starts at Left and stretches Right
+		/// </summary>
+		public int Width
+		{
+			get
+			{
+				switch (Shape)
+				{
+					case Shape.WalkPath:
+						return 2;
+					default:
+						return 1;
+				}
+			}
+		}
+		/// <summary>
+		/// X position of this Tile's Node in Scene
+		/// </summary>
+		public int X { get; set; }
+		/// <summary>
+		/// Y position of this Tile's Node in Scene
+		/// </summary>
+		public int Y { get; set; }
+		/// <summary>
+		/// Z position of this Tile's Node in Scene
+		/// </summary>
+		public int Z { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// ToDo: Enum?
+		public int Map { get; set; } 
+		public Terrain Terrain { get; set; }
+		public Environment Environment { get; set; }
+		//public Season Texture { get; set; }
+		public Shape Shape { get; set; }
+		/// <summary>
+		/// Direction this Tile Node is facing
+		/// </summary>
+		public Terrain Direction { get; set; }
 
-	/// <summary>
-	/// Encounter method
-	/// </summary>
-	public enum Method
-	{
-		/// <summary>
-		/// Walking in tall grass or a cave
-		/// </summary>
-		WALK = 1,
-		/// <summary>
-		/// Walking in rustling grass
-		/// </summary>
-		GRASS_SPOTS = 9,
-		/// <summary>
-		/// Walking in dust clouds
-		/// </summary>
-		CAVE_SPOTS = 10,
-		/// <summary>
-		/// Walking in bridge shadows
-		/// </summary>
-		BRIDGE_SPOTS = 11,
-		/// <summary>
-		/// Walking in dark grass
-		/// </summary>
-		DARK_GRASS = 8,
-		/// <summary>
-		/// Walking in yellow flowers
-		/// </summary>
-		YELLOW_FLOWERS = 14,
-		/// <summary>
-		/// Walking in purple flowers
-		/// </summary>
-		PURPLE_FLOWERS = 15,
-		/// <summary>
-		/// Walking in red flowers
-		/// </summary>
-		RED_FLOWERS = 16,
-		/// <summary>
-		/// Walking on rough terrain
-		/// </summary>
-		ROUGH_TERRAIN = 17,
-		/// <summary>
-		/// Fishing with an <see cref="eItems.Item.OLD_ROD"/>
-		/// </summary>
-		OLD_ROD = 2,
-		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.GOOD_ROD"/> 
-		/// </summary>
-		GOOD_ROD = 3,
-		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.SUPER_ROD"/> 
-		/// </summary>
-		SUPER_ROD = 4,
-		/// <summary>
-		/// Fishing in dark spots
-		/// </summary>
-		SUPER_ROD_SPOTS = 12,
-		/// <summary>
-		/// Surfing
-		/// </summary>
-		SURF = 5,
-		/// <summary>
-		/// Surfing in dark spots
-		/// </summary>
-		SURF_SPOTS = 13,
-		/// <summary>
-		/// Smashing rocks
-		/// </summary>
-		ROCK_SMASH = 6,
-		/// <summary>
-		/// Headbutting trees
-		/// </summary>
-		HEADBUTT = 7
+		#region Explicit Operators
+		public static bool operator == (Tile tile1, Tile tile2)
+		{
+			return tile1.X == tile2.X && tile1.Y == tile2.Y && tile1.Z == tile2.Z && tile1.Map == tile2.Map;
+		}
+		public static bool operator != (Tile tile1, Tile tile2)
+		{
+			return tile1.X != tile2.X && tile1.Y != tile2.Y && tile1.Z != tile2.Z && tile1.Map != tile2.Map;
+		}
+		//public bool Equals(Tile obj)
+		//{
+		//	return this == obj;
+		//}
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Tile)) return false;
+			return this == (Tile)obj;
+		}
+		public override int GetHashCode()
+		{
+			//ToDo: Test HashCode? Also, MapId should also be included...
+			//Math was copied from Unity's Vector3
+			return X.GetHashCode() ^ Y.GetHashCode() << 2 ^ Z.GetHashCode() >> 2;
+		}
+		#endregion
 	}
 
 	/// <summary>
-	/// 
+	/// Map GameObject will be an Array of tiles
+	/// mapEnum = MapId = BlenderJsonToUnity[]
 	/// </summary>
-	public enum Condition
+	class BlenderJsonToUnity
 	{
-		SWARM = 1,
-		TIME = 2,
-		RADAR = 3,
-		SLOT = 4,
-		RADIO = 5,
-		SEASON = 6
+		/// <summary>
+		/// Vector3 || (float x, float y, float z)
+		/// </summary>
+		/// we dont need ray casting anymore, since all the x,y,z's are recorded
+		float tileLocation; 
+		/// <summary>
+		/// Quaternion || (float x, float y, float z)
+		/// </summary>
+		float tileRotation;
+		/// <summary>
+		/// Mesh object
+		/// </summary>
+		string tileShape; 
+		/// <summary>
+		/// Texture enum or filename
+		/// </summary>
+		string tileTexture; 
+		/// <summary>
+		/// Tile Tags:
+		/// 0 - Default Environment
+		/// 1 - Impassable
+		/// 2 - Surf Water
+		/// 3 - Environment 2
+		/// 4? - Dive Water
+		/// </summary>
+		/// ToDo: enum here... Mesh object will determine collision mapping
+		int tileCollision; 
+
+		/*
+		 * Read all of the json files in the blender/json/ folder
+		 * Each file should represent 1 map file, filled with many tilesArray
+		 * convert json file into an array of tiles, to be used with Map.BuildMap()
+		 * 
+		 * Consider writing unity script to convert json map tiles to a saved prefab asset
+		 * to view texture configuration for better hard-code adjustments
+		 * https://forum.unity.com/threads/saving-a-custom-map-object-hierarchy-and-keeping-prefabs-looking-for-ideas.156963/
+		 * 
+		 * What if textures were stored as a single map sprite
+		 * broken down into a grid and used to load the textures 
+		 * on the tiles x,y by sprite's x,y? Only issue is Z value
+		 * build from buttom up x,y,(z|0 to z|n+), if empty: skip, 
+		 * use sprite x,y texture for each z?
+		 * https://gamedev.stackexchange.com/questions/87696/how-do-i-draw-a-tilemap-within-unity3d
+		 * https://answers.unity.com/questions/974007/what-is-the-best-way-to-create-3d-tile-based-level.html
+		 */
+		public static Tile[] ImportBlender(string filename)
+		{
+			List<Tile> data = new List<Tile>(); //Why not convert dictionary to Array? It's faster, more streamlined, and simpler to work with
+
+			// Filter on only json files, otherwise you can also get other files (.meta)
+			string[] fileEntries = System.IO.Directory.GetFiles(UnityEngine.Application.streamingAssetsPath + "/Pokemons", "*.json");  
+			foreach (string fileName in fileEntries)
+			{
+				if (filename== fileName)
+				{
+					string dataAsJson = System.IO.File.ReadAllText(fileName, Encoding.UTF8);
+					Tile pokemonData = new Tile();
+					UnityEngine.JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
+					//data.Add(pokemonData.ID, pokemonData);
+				}
+			}
+
+			return data.ToArray(); //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
+		}
+
+		private static Dictionary<int, Tile> LoadMaps()
+		{
+			var data = new Dictionary<int, Tile>(); //Why not convert dictionary to Array? It's faster, more streamlined, and simpler to work with
+
+			// Filter on only json files, otherwise you can also get other files (.meta)
+			string[] fileEntries = System.IO.Directory.GetFiles(UnityEngine.Application.streamingAssetsPath + "/Pokemons", "*.json");  
+			foreach (string fileName in fileEntries)
+			{
+				string dataAsJson = System.IO.File.ReadAllText(fileName, Encoding.UTF8);
+				Tile pokemonData = new Tile();
+				UnityEngine.JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
+				//data.Add(pokemonData.ID, pokemonData);
+			}
+
+			return data; //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
+		}
 	}
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <remarks>
-	/// default: swarm-no, time-day, radar-off, slot-none, radio-off
-	/// </remarks>
-	/// ToDo: Change from Enum to class with Bool values
-	public enum ConditionValue
+	public enum Shape
 	{
 		/// <summary>
-		/// During a swarm
-		/// <para>
-		/// <seealso cref="Condition.SWARM"/>
-		/// </para>
+		/// Stairs use flats too
 		/// </summary>
-		SWARM_YES = 1,
-		/// <summary>
-		/// Not during a swarm
-		/// <para>
-		/// <seealso cref="Condition.SWARM"/>
-		/// </para>
-		/// </summary>
-		SWARM_NO = 2,
+		Flat,
+		CliffSide,
+		CliffCorner,
+		LedgeJump,
+		LedgeWater,
+		WalkPath
+	}
 
-		/// <summary>
-		/// In the morning
-		/// <para>
-		/// <seealso cref="Condition.TIME"/>
-		/// </para>
-		/// </summary>
-		TIME_MORNING = 3,
-		/// <summary>
-		/// During the day
-		/// <para>
-		/// <seealso cref="Condition.TIME"/>
-		/// </para>
-		/// </summary>
-		TIME_DAY = 4,
-		/// <summary>
-		/// At night
-		/// <para>
-		/// <seealso cref="Condition.TIME"/>
-		/// </para>
-		/// </summary>
-		TIME_NIGHT = 5,
-
-		/// <summary>
-		/// Using PokeRadar
-		/// <para>
-		/// <seealso cref="Condition.RADAR"/>
-		/// </para>
-		/// </summary>
-		RADAR_ON = 6,
-		/// <summary>
-		/// Not using PokeRadar
-		/// <para>
-		/// <seealso cref="Condition.RADAR"/>
-		/// </para>
-		/// </summary>
-		RADAR_OFF = 7,
-
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_NONE = 8,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_RUBY = 9,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_SAPPHIRE = 10,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_EMERALD = 11,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_FIRERED = 12,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_LEAFGREEN = 13,
-
-		/// <summary>
-		/// Radio off
-		/// <para>
-		/// <seealso cref="Condition.RADIO"/>
-		/// </para>
-		/// </summary>
-		RADIO_OFF = 14,
-		/// <summary>
-		/// Hoenn radio
-		/// <para>
-		/// <seealso cref="Condition.RADIO"/>
-		/// </para>
-		/// </summary>
-		RADIO_HOENN = 15,
-		/// <summary>
-		/// Sinnoh radio
-		/// <para>
-		/// <seealso cref="Condition.RADIO"/>
-		/// </para>
-		/// </summary>
-		RADIO_SINNOH = 16,
-
-		/// <summary>
-		/// During Spring
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_SPRING = 17,
-		/// <summary>
-		/// During Summer
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_SUMMER = 18,
-		/// <summary>
-		/// During Autumn
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_AUTUMN = 19,
-		/// <summary>
-		/// During Winter
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_WINTER = 20
+	public enum Season
+	{
+		Summer,
+		Winter,
+		Fall,
+		Spring,
+		Volcanic
 	}
 }
