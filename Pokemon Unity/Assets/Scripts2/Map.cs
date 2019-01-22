@@ -43,10 +43,10 @@ class Map : MonoBehaviour
     #endregion
 
     #region Idea2: Overworld tiles as individual GameObject
-    /// a 2D grid of cubes
-    /// every position in the grid must have a cube
-    /// the height is different for each position in the grid
-    /// The way would be to loop through every x position, and within that every z position.
+    // a 2D grid of cubes
+    // every position in the grid must have a cube
+    // the height is different for each position in the grid
+    // The way would be to loop through every x position, and within that every z position.
 
     GameObject mapTile; 
  
@@ -155,6 +155,7 @@ class Map : MonoBehaviour
 		/// <summary>
 		/// Texture around Name when entering Map
 		/// </summary>
+		/// ToDo: Volcanic, Snow, Spring, etc...
 		int NameStyle;
 		int MapType;
 		//int Texture1;
@@ -184,6 +185,7 @@ class Map : MonoBehaviour
 }
 }
 
+#region Encounter Scripts
 /// <summary>
 /// Idea 1 for Pokemon Encounters
 /// </summary>
@@ -946,6 +948,7 @@ public class WildPokemonInitialiser
 		return packedList;
 	}
 }
+#endregion
 
 namespace PokemonUnity
 {
@@ -1007,17 +1010,48 @@ namespace PokemonUnity
 		//public Season Texture { get; set; }
 		public Shape Shape { get; set; }
 		/// <summary>
-		/// Direction this Tile Node is facing
+		/// Direction this Tile Node is facing;
+		/// Rotation to use on this Tile's Node
 		/// </summary>
-		public Terrain Direction { get; set; }
+		public Direction Direction { get; set; }
+
+		//public Tile(int x, int y, int z) { }
 
 		#region Explicit Operators
+		/// <summary>
+		/// Two Tile objects are equal if they each occupy by the same physical location.
+		/// </summary>
+		/// <param name="tile1">Tile Location 1</param>
+		/// <param name="tile2">Tile Attempting to Occupy 2</param>
+		/// <returns>Returns whether or not the two Tile entities are overlapping the same physical location</returns>
 		public static bool operator == (Tile tile1, Tile tile2)
 		{
+			for (int x = 0; x < tile1.Width; x++)
+			{
+				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+					//return true;
+					for (int y = 0; y < tile1.Length; y++)
+					{
+						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+							return true;
+					}
+			}
 			return tile1.X == tile2.X && tile1.Y == tile2.Y && tile1.Z == tile2.Z && tile1.Map == tile2.Map;
 		}
 		public static bool operator != (Tile tile1, Tile tile2)
 		{
+			if (tile1.Z != tile2.Z || tile1.Map != tile2.Map)
+				return true;
+			for (int x = 0; x < tile1.Width; x++)
+			{
+				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+					//return true;
+					for (int y = 0; y < tile1.Length; y++)
+					{
+						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+							return false;
+					}
+			}
 			return tile1.X != tile2.X && tile1.Y != tile2.Y && tile1.Z != tile2.Z && tile1.Map != tile2.Map;
 		}
 		//public bool Equals(Tile obj)
@@ -1042,17 +1076,19 @@ namespace PokemonUnity
 	/// Map GameObject will be an Array of tiles
 	/// mapEnum = MapId = BlenderJsonToUnity[]
 	/// </summary>
-	class BlenderJsonToUnity
+	public class BlenderJsonToUnity
 	{
+		#region Variables
 		/// <summary>
 		/// Vector3 || (float x, float y, float z)
 		/// </summary>
 		/// we dont need ray casting anymore, since all the x,y,z's are recorded
-		float tileLocation; 
+		double tileLocation; 
 		/// <summary>
 		/// Quaternion || (float x, float y, float z)
+		/// ACtually, dont need any of the other rotations except for Z. 
 		/// </summary>
-		float tileRotation;
+		double tileRotation;
 		/// <summary>
 		/// Mesh object
 		/// </summary>
@@ -1071,6 +1107,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// ToDo: enum here... Mesh object will determine collision mapping
 		int tileCollision; 
+		#endregion
 
 		/*
 		 * Read all of the json files in the blender/json/ folder
@@ -1100,13 +1137,35 @@ namespace PokemonUnity
 				if (filename== fileName)
 				{
 					string dataAsJson = System.IO.File.ReadAllText(fileName, Encoding.UTF8);
-					Tile pokemonData = new Tile();
+					#region Direction & Rotation
+					//Either the tile's rotation is based on the actual Z rotation of object, 
+					//OR based on name of tile (i.e. CornerBottomLeft, CliffSideRight)
+					Direction direction = 0;
+					if (Math.Floor(double.Parse(dataAsJson)) == 0d)//.RotationZ
+						direction = 0;
+					else if (Math.Floor(double.Parse(dataAsJson)) == 0d)//.RotationZ
+						direction = 0;
+					#endregion Direction & Rotation
+					#region Tile Shape/Piece
+					Shape shape = 0;
+					switch (dataAsJson)
+					{
+						default:
+							shape = Shape.NULL;
+							break;
+					}
+					#endregion Tile Shape/Piece
+					Tile pokemonData = new Tile()
+					{
+						X = 0, Y = 0, Z = 0
+						,Direction = (Direction)direction
+					};
 					UnityEngine.JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
-					//data.Add(pokemonData.ID, pokemonData);
+					data.Add(pokemonData);
 				}
 			}
 
-			return data.ToArray(); //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
+			return data.ToArray();
 		}
 
 		private static Dictionary<int, Tile> LoadMaps()
@@ -1127,6 +1186,17 @@ namespace PokemonUnity
 		}
 	}
 
+	public enum Direction
+	{
+		/// <summary>
+		/// Facing Foward, towards camera
+		/// </summary>
+		Down = 0,
+		Up,
+		Left,
+		Right
+	}
+
 	public enum Shape
 	{
 		/// <summary>
@@ -1137,7 +1207,8 @@ namespace PokemonUnity
 		CliffCorner,
 		LedgeJump,
 		LedgeWater,
-		WalkPath
+		WalkPath,
+		NULL
 	}
 
 	public enum Season
