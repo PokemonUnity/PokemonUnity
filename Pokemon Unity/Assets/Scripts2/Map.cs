@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
+using System.IO;
+//using Newtonsoft.Json;
+//using Newtonsoft.Json.Serialization;
 using UnityEngine;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
@@ -1076,7 +1080,7 @@ namespace PokemonUnity
 	/// Map GameObject will be an Array of tiles
 	/// mapEnum = MapId = BlenderJsonToUnity[]
 	/// </summary>
-	public class BlenderJsonToUnity
+	public class JsonToUnity
 	{
 		#region Variables
 		/// <summary>
@@ -1186,6 +1190,159 @@ namespace PokemonUnity
 		}
 	}
 
+	/// ToDo: Store maps as GameObjects in code
+	/// Find a way to associate code-variables to Maps
+	/// Generate code to load maps based on above
+	/// Consider each overworld Route (1,21,26, PalletTown...)
+	/// a separate GameObject versus a single map
+	/// Decide whether to load all GameObjects together or
+	/// relative to/based on a player's given position
+	class Map : MonoBehaviour
+	{
+		#region Idea1: Overworld section as 1 GameObject
+		/// <summary>
+		/// Set this variable in the inspector
+		/// </summary>
+		public GameObject mapPrefab;
+		/// <summary>
+		/// The Map-prefab's global position
+		/// </summary>
+		private Vector3[] objectPositions;
+
+		private void Awake()
+		{
+			foreach (Vector3 objectPos in objectPositions)
+			{
+				GameObject mapObject = Instantiate(mapPrefab) as GameObject;
+				mapObject.transform.position = objectPos;
+			}
+		}
+
+		static Map()
+		{
+			//objectPositions = new Array[] {} //ToDo: List of map names and vectors
+		}
+		#endregion
+
+		#region Idea2: Overworld tiles as individual GameObject
+		// a 2D grid of cubes
+		// every position in the grid must have a cube
+		// the height is different for each position in the grid
+		// The way would be to loop through every x position, and within that every z position.
+
+		GameObject mapTile; 
+ 
+		/// <summary>
+		/// Build map from Array of GameObjects[]
+		/// </summary>
+		/// ToDo: How to save map as Array of Objects?
+		/// ToDo: Blender-to-Unity => Read object name in if-check
+		/// A tile Array for Location, Rotation, and Name
+		void BuildMap() 
+		{
+			int minX = -20;
+			int maxX = 20;
+			int minY = 0;
+			int maxY = 4;
+			int minZ = -20;
+			int maxZ = 20;
+			// loop for every z position in the grid
+			for (int z = minZ; z < maxZ; z++ )
+			{
+				// now loop for every x position in the grid
+				for (int x = minX; x < maxX; x++ )
+				{
+					//loop for every y position in the grid
+					for (int y = minY; y < maxY; y++ )
+					{
+
+						// put it all to together to assign a position
+						Vector3 pos = new Vector3(x, y, z);
+
+						// instantiate the cube into a variable, so you can do other things with it
+						GameObject clone = (GameObject)Instantiate(mapTile, pos, new Quaternion());
+
+						//ToDO: Add 'if(tile)' => collision-map
+
+						// change the name of the object, include the x and z position in the name
+						clone.name = "Tile_" + x.ToString() + "_" + z.ToString();
+
+						// in future, 
+						// this would be stored in a 3D array for future reference
+						// so you could modify the position, material, anything!
+						// cubeArray[x,y,z] = clone;
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region Idea4: 3d map chunk from 2d array
+		/// <summary>
+		/// Overworld excel grid of map headers 
+		/// </summary>
+		public class MapMatrix
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
+			/// if MAP then it allows you to load mapHeaders
+			/// else it's a small chunk or dungeon
+			int MapId;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// enum label of matrix
+			/// matrix id 0 is the overworld map
+			int MatrxId;
+			public int Height { get; private set; }
+			public int Width { get; private set; }
+			public MapChunk mapHeader { get; private set; }
+		}
+		/// <summary>
+		/// Header data contains map x,y size
+		/// </summary>
+		public class MapChunk
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// Internal Name
+			int MapId;
+			string Name;
+			/// <summary>
+			/// Texture around Name when entering Map
+			/// </summary>
+			/// ToDo: Volcanic, Snow, Spring, etc...
+			int NameStyle;
+			int MapType;
+			//int Texture1;
+			//int Texture2;
+			int Scripts;
+			int MapScripts;
+			int MusicDay;
+			int MusicNight;
+			int Texts;
+			/// <summary>
+			/// Table or Encounter chart for pokemons expected to find on map
+			/// </summary>
+			int WildPokemon;
+			int Events;
+			int Flags;
+			int Weather;
+			int Camera;
+			/// <summary>
+			/// </summary>
+			/// For height loop or For width loop
+			/// [Z,i] = gameobject int value
+			/// each value in for loop should be rounded to nearest whole number
+			/// need to map collision to X,Y value as well...
+			Tile[,] MapArray;
+		}
+		#endregion
+	}
+	#region Enums
 	public enum Direction
 	{
 		/// <summary>
@@ -1219,4 +1376,5 @@ namespace PokemonUnity
 		Spring,
 		Volcanic
 	}
+	#endregion
 }
