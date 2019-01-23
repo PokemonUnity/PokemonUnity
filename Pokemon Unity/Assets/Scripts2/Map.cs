@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Globalization;
 using System.IO;
 //using Newtonsoft.Json;
 //using Newtonsoft.Json.Serialization;
@@ -1000,10 +999,10 @@ namespace PokemonUnity
 		/// Y position of this Tile's Node in Scene
 		/// </summary>
 		public int Y { get; set; }
-		/// <summary>
-		/// Z position of this Tile's Node in Scene
-		/// </summary>
-		public int Z { get; set; }
+		// <summary>
+		// Z position of this Tile's Node in Scene
+		// </summary>
+		//public int Z { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -1032,31 +1031,31 @@ namespace PokemonUnity
 		{
 			for (int x = 0; x < tile1.Width; x++)
 			{
-				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
 					//return true;
 					for (int y = 0; y < tile1.Length; y++)
 					{
-						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
 							return true;
 					}
 			}
-			return tile1.X == tile2.X && tile1.Y == tile2.Y && tile1.Z == tile2.Z && tile1.Map == tile2.Map;
+			return tile1.X == tile2.X && tile1.Y == tile2.Y /*&& tile1.Z == tile2.Z*/ && tile1.Map == tile2.Map;
 		}
 		public static bool operator != (Tile tile1, Tile tile2)
 		{
-			if (tile1.Z != tile2.Z || tile1.Map != tile2.Map)
+			if (/*tile1.Z != tile2.Z ||*/ tile1.Map != tile2.Map)
 				return true;
 			for (int x = 0; x < tile1.Width; x++)
 			{
-				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
 					//return true;
 					for (int y = 0; y < tile1.Length; y++)
 					{
-						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&*/ tile1.Z == tile2.Z && tile1.Map == tile2.Map))
+						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
 							return false;
 					}
 			}
-			return tile1.X != tile2.X && tile1.Y != tile2.Y && tile1.Z != tile2.Z && tile1.Map != tile2.Map;
+			return tile1.X != tile2.X && tile1.Y != tile2.Y /*&& tile1.Z != tile2.Z*/ && tile1.Map != tile2.Map;
 		}
 		//public bool Equals(Tile obj)
 		//{
@@ -1071,7 +1070,15 @@ namespace PokemonUnity
 		{
 			//ToDo: Test HashCode? Also, MapId should also be included...
 			//Math was copied from Unity's Vector3
-			return X.GetHashCode() ^ Y.GetHashCode() << 2 ^ Z.GetHashCode() >> 2;
+			//return X.GetHashCode() ^ Y.GetHashCode() << 2 ^ Z.GetHashCode() >> 2;
+			//return X.GetHashCode() ^ Y.GetHashCode() << 2 ^ Map.GetHashCode() >> 2;
+			unchecked
+			{
+				int hash = 17;
+				hash = hash * 23 + X.GetHashCode();
+				hash = hash * 23 + Y.GetHashCode();
+				return hash;
+			}
 		}
 		#endregion
 	}
@@ -1161,7 +1168,7 @@ namespace PokemonUnity
 					#endregion Tile Shape/Piece
 					Tile pokemonData = new Tile()
 					{
-						X = 0, Y = 0, Z = 0
+						X = 0, Y = 0//, Z = 0
 						,Direction = (Direction)direction
 					};
 					UnityEngine.JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
