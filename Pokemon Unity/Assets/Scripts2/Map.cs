@@ -5,12 +5,12 @@ using System.Text;
 using System.IO;
 //using Newtonsoft.Json;
 //using Newtonsoft.Json.Serialization;
-using UnityEngine;
+//using UnityEngine;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 
 namespace PokemonUnity.Samples
-{
+{using UnityEngine;
 /// ToDo: Store maps as GameObjects in code
 /// Find a way to associate code-variables to Maps
 /// Generate code to load maps based on above
@@ -1172,6 +1172,8 @@ namespace PokemonUnity
 							break;
 					}
 					#endregion Tile Shape/Piece
+					#region Direction
+					#endregion
 					Tile pokemonData = new Tile()
 					{
 						X = 0, Y = 0//, Z = 0
@@ -1201,6 +1203,105 @@ namespace PokemonUnity
 
 			return data; //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
 		}
+
+		/*// <summary>
+		///     Builds an <see cref="JsonLocalizationDictionary" /> from given file.
+		/// </summary>
+		/// <param name="filePath">Path of the file</param>
+		public static Dictionary<int, Tile> BuildFromFile(string filePath)
+		{
+			try
+			{
+				return BuildFromJsonString(File.ReadAllText(filePath));
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Invalid localization file format! " + filePath, ex);
+			}
+		}
+
+		/// <summary>
+		///     Builds an <see cref="JsonLocalizationDictionary" /> from given json string.
+		/// </summary>
+		/// <param name="jsonString">Json string</param>
+		public static Dictionary<int, Tile> BuildFromJsonString(string jsonString)
+		{
+			JsonLocalizationFile jsonFile;
+			try
+			{
+				jsonFile = JsonConvert.DeserializeObject<JsonLocalizationFile>(
+					jsonString,
+					new JsonSerializerSettings
+					{
+						ContractResolver = new CamelCasePropertyNamesContractResolver()
+					});
+			}
+			catch (JsonException ex)
+			{
+				throw new Exception("Can not parse json string. " + ex.Message);
+			}
+
+			var cultureCode = jsonFile.MapHeader;
+			if (string.IsNullOrEmpty(cultureCode))
+			{
+				throw new Exception("Culture is empty in language json file.");
+			}
+
+			var dictionary = new Dictionary<int, Tile>();// CultureInfo.GetCultureInfo(cultureCode));
+			var dublicateNames = new List<string>();
+			foreach (var item in jsonFile.Texts)
+			{
+				if (string.IsNullOrEmpty(item.Key))
+				{
+					throw new Exception("The key is empty in given json string.");
+				}
+
+				if (dictionary.Contains(item.Key))
+				{
+					dublicateNames.Add(item.Key);
+				}
+
+				dictionary[item.Key] = item.Value.NormalizeLineEndings();
+			}
+
+			if (dublicateNames.Count > 0)
+			{
+				throw new Exception(
+					"A dictionary can not contain same key twice. There are some duplicated names: " +
+					dublicateNames.JoinAsString(", "));
+			}
+
+			return dictionary;
+		}
+		
+		/// <summary>
+		/// Use it to serialize json file
+		/// </summary>
+		public class JsonLocalizationFile
+		{
+			/// <summary>
+			/// Constructor
+			/// </summary>
+			public JsonLocalizationFile()
+			{
+				Texts = new Dictionary<string, string>();
+			}
+
+			/// <summary>
+			/// get or set the culture name; eg : en , en-us, zh-CN
+			/// </summary>
+			public string MapHeader { get; set; }
+
+			/// <summary>
+			///  Key value pairs
+			/// </summary>
+			public Dictionary<string, string> Texts { get; private set; }
+		}*/
+	}
+
+	public class SceneTiles : UnityEngine.MonoBehaviour
+	{
+		public Tile[] Tiles { get; private set; }
 	}
 
 	/// ToDo: Store maps as GameObjects in code
@@ -1210,15 +1311,15 @@ namespace PokemonUnity
 	/// a separate GameObject versus a single map
 	/// Decide whether to load all GameObjects together or
 	/// relative to/based on a player's given position
-	public class Map : MonoBehaviour
+	public class Map : UnityEngine.MonoBehaviour
 	{
-		#region Idea1: Overworld section as 1 GameObject
 		/// <summary>
 		/// Set this variable in the inspector
 		/// </summary>
-		public GameObject mapPrefab;
+		public UnityEngine.GameObject mapPrefab;
 		public string MapName;
 
+		#region Unity UI Resources
 		private void Awake()
 		{
 			//foreach (Vector3 objectPos in objectPositions)
@@ -1241,13 +1342,7 @@ namespace PokemonUnity
 		}
 		#endregion
 
-		#region Idea2: Overworld tiles as individual GameObject
-		// a 2D grid of cubes
-		// every position in the grid must have a cube
-		// the height is different for each position in the grid
-		// The way would be to loop through every x position, and within that every z position.
-
-		GameObject mapTile;
+		UnityEngine.GameObject mapTile;
 		//ToDo: Fetch from GameVariables
 		MapMatrix map; //{ get { return GameVariables.Map; } }
  
@@ -1257,7 +1352,7 @@ namespace PokemonUnity
 		/// ToDo: How to save map as Array of Objects?
 		/// ToDo: Blender-to-Unity => Read object name in if-check
 		/// A tile Array for Location, Rotation, and Name
-		void BuildMap(GameObject layer, Terrain terrain) 
+		void BuildMap(UnityEngine.GameObject layer, Terrain terrain) 
 		{
 			int minX = -20;
 			int maxX = map.Width;
@@ -1268,8 +1363,8 @@ namespace PokemonUnity
 
 			List<Tile> tArray = new List<Tile>();
 			UnityEngine.Mesh quad = new UnityEngine.Mesh();
-			MeshFilter mf = mapTile.AddComponent<MeshFilter>();
-			MeshRenderer mr = mapTile.AddComponent<MeshRenderer>();
+			UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
 
 			// loop for every z position in the grid
 			for (int z = minZ; z < maxZ; z++ )
@@ -1327,8 +1422,8 @@ namespace PokemonUnity
 			List<UnityEngine.Mesh> floor = new List<UnityEngine.Mesh>();
 			UnityEngine.Mesh floorQuad = new UnityEngine.Mesh();
 
-			MeshFilter mf = mapTile.AddComponent<MeshFilter>();
-			MeshRenderer mr = mapTile.AddComponent<MeshRenderer>();
+			UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
 
 			// loop for every z position in the grid
 			for (int z = minZ; z < maxZ; z++ )
@@ -1357,10 +1452,10 @@ namespace PokemonUnity
 							case Terrain.Puddle:
 							default:
 								// put it all to together to assign a position
-								Vector3 pos = new Vector3(x, y, z);
+								UnityEngine.Vector3 pos = new UnityEngine.Vector3(x, y, z);
 
 								// instantiate the cube into a variable, so you can do other things with it
-								GameObject clone = (GameObject)Instantiate(mapTile, pos, new Quaternion());
+								UnityEngine.GameObject clone = (UnityEngine.GameObject)Instantiate(mapTile, pos, new UnityEngine.Quaternion());
 
 								//ToDO: Add 'if(tile)' => collision-map
 
@@ -1383,7 +1478,7 @@ namespace PokemonUnity
 		}
 
 		#region Methods
-		public UnityEngine.Mesh TileToQuad(ref Mesh mesh, Tile[] tiles, int Z = 0)
+		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile[] tiles, int Z = 0)
 		{
 			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
 			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
@@ -1399,10 +1494,10 @@ namespace PokemonUnity
 					case Shape.Flat:
 						vertices.AddRange(new UnityEngine.Vector3[] 
 						{
-							new Vector3 (tile.X,tile.Y,Z),
-							new Vector3 (tile.Width, tile.Y, Z),
-							new Vector3 (tile.X,tile.Length,Z),
-							new Vector3 (tile.Width, tile.Length, Z)
+							new UnityEngine.Vector3 (tile.X,tile.Y,Z),
+							new UnityEngine.Vector3 (tile.Width, tile.Y, Z),
+							new UnityEngine.Vector3 (tile.X,tile.Length,Z),
+							new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
 						});
 						tri.AddRange(new int[] 
 						{
@@ -1415,10 +1510,10 @@ namespace PokemonUnity
 						});
 						normals.AddRange(new UnityEngine.Vector3[] 
 						{
-							-Vector3.forward,
-							-Vector3.forward,
-							-Vector3.forward,
-							-Vector3.forward
+							-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.forward
 						});
 						//uv.AddRange(new UnityEngine.Vector2[]
 						//{
@@ -1435,7 +1530,7 @@ namespace PokemonUnity
 						yLo = Math.Min(0, tile.Y);
 						xHi = Math.Max(1, tile.X + tile.Width);
 						yHi = Math.Max(1, tile.Y + tile.Length);
-						uv = new Vector2[vertices.Count];
+						uv = new UnityEngine.Vector2[vertices.Count];
 						for (int i = 0; i < vertices.Count; i++)
 						{
 							//Each UV should be a fraction of the total dimension 
@@ -1464,7 +1559,7 @@ namespace PokemonUnity
 			//mesh.uv = uv.ToArray();
 			return mesh;
 		}
-		public UnityEngine.Mesh TileToQuad(ref Mesh mesh, Tile tile, int Z = 0)
+		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile tile, int Z = 0)
 		{
 			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
 			UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[0];
@@ -1475,18 +1570,18 @@ namespace PokemonUnity
 				case Shape.Flat:
 					vertices = new UnityEngine.Vector3[] 
 					{
-						new Vector3 (tile.X,tile.Y,Z),
-						new Vector3 (tile.Width, tile.Y, Z),
-						new Vector3 (tile.X,tile.Length,Z),
-						new Vector3 (tile.Width, tile.Length, Z)
+						new UnityEngine.Vector3 (tile.X,tile.Y,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Y, Z),
+						new UnityEngine.Vector3 (tile.X,tile.Length,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
 					};
 					tri = new int[6];
 					normals = new UnityEngine.Vector3[] 
 					{
-						-Vector3.forward,
-						-Vector3.forward,
-						-Vector3.forward,
-						-Vector3.forward
+						-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.forward
 					};
 					break;
 				case Shape.CliffSide:
@@ -1509,10 +1604,10 @@ namespace PokemonUnity
 			mesh.normals = normals;
 			mesh.uv = new UnityEngine.Vector2[]
 			{
-				new Vector2 (0, 0),
-				new Vector2 (1, 0),
-				new Vector2 (0, 1),
-				new Vector2 (1, 1)
+				new UnityEngine.Vector2 (0, 0),
+				new UnityEngine.Vector2 (1, 0),
+				new UnityEngine.Vector2 (0, 1),
+				new UnityEngine.Vector2 (1, 1)
 			};
 			return mesh;
 		}
@@ -1527,18 +1622,18 @@ namespace PokemonUnity
 				case Shape.Flat:
 					vertices = new UnityEngine.Vector3[] 
 					{
-						new Vector3 (tile.X,tile.Y,Z),
-						new Vector3 (tile.Width, tile.Y, Z),
-						new Vector3 (tile.X,tile.Length,Z),
-						new Vector3 (tile.Width, tile.Length, Z)
+						new UnityEngine.Vector3 (tile.X,tile.Y,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Y, Z),
+						new UnityEngine.Vector3 (tile.X,tile.Length,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
 					};
 					tri = new int[6];
 					normals = new UnityEngine.Vector3[] 
 					{
-						-Vector3.forward,
-						-Vector3.forward,
-						-Vector3.forward,
-						-Vector3.forward
+						-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.forward
 					};
 					break;
 				case Shape.CliffSide:
@@ -1561,82 +1656,81 @@ namespace PokemonUnity
 			mesh.normals = normals;
 			mesh.uv = new UnityEngine.Vector2[]
 			{
-				new Vector2 (0, 0),
-				new Vector2 (1, 0),
-				new Vector2 (0, 1),
-				new Vector2 (1, 1)
+				new UnityEngine.Vector2 (0, 0),
+				new UnityEngine.Vector2 (1, 0),
+				new UnityEngine.Vector2 (0, 1),
+				new UnityEngine.Vector2 (1, 1)
 			};
 			return mesh;
 		}
 		#endregion
-		#endregion
-
-		#region Idea4: 3d map chunk from 2d array
-		/// <summary>
-		/// Overworld excel grid of map headers 
-		/// </summary>
-		public class MapMatrix
-		{
-			/// <summary>
-			/// 
-			/// </summary>
-			/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
-			/// if MAP then it allows you to load mapHeaders
-			/// else it's a small chunk or dungeon
-			Worlds WorldId;
-			/// <summary>
-			/// 
-			/// </summary>
-			/// enum label of matrix
-			/// matrix id 0 is the overworld map
-			Regions MatrxId;
-			public int Length { get; private set; }
-			public int Width { get; private set; }
-			public MapHeader mapHeader { get; private set; }
-		}
-		/// <summary>
-		/// Header data contains map x,y size
-		/// </summary>
-		public class MapHeader
-		{
-			/// <summary>
-			/// 
-			/// </summary>
-			/// Internal Name
-			public Maps MapId;
-			public string Name;
-			/// <summary>
-			/// Texture around Name when entering Map
-			/// </summary>
-			/// ToDo: Volcanic, Snow, Spring, etc...
-			public int NameStyle;
-			public int MapType;
-			public int MapHeight;
-			//int Texture1;
-			//int Texture2;
-			public int Scripts;
-			public int MapScripts;
-			public int MusicDay;
-			public int MusicNight;
-			public int Texts;
-			/// <summary>
-			/// Table or Encounter chart for pokemons expected to find on map
-			/// </summary>
-			public int WildPokemon;
-			public int Events;
-			public int Flags;
-			public Weather Weather;
-			public int Camera;
-			/// <summary>
-			/// </summary>
-			/// For height loop or For width loop
-			/// [Z,i] = gameobject int value
-			/// each value in for loop should be rounded to nearest whole number
-			/// need to map collision to X,Y value as well...
-			public Tile[][,] MapArray;
-		}
-		#endregion
 	}
+
+	#region Idea4: 3d map chunk from 2d array
+	/// <summary>
+	/// Overworld excel grid of map headers 
+	/// </summary>
+	public class MapMatrix
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
+		/// if MAP then it allows you to load mapHeaders
+		/// else it's a small chunk or dungeon
+		Worlds WorldId;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// enum label of matrix
+		/// matrix id 0 is the overworld map
+		Regions MatrxId;
+		public int Length { get; private set; }
+		public int Width { get; private set; }
+		public MapHeader mapHeader { get; private set; }
+	}
+	/// <summary>
+	/// Header data contains map x,y size
+	/// </summary>
+	public class MapHeader
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// Internal Name
+		public Maps MapId;
+		public string Name;
+		/// <summary>
+		/// Texture around Name when entering Map
+		/// </summary>
+		/// ToDo: Volcanic, Snow, Spring, etc...
+		public int NameStyle;
+		public int MapType;
+		public int MapHeight;
+		//int Texture1;
+		//int Texture2;
+		public int Scripts;
+		public int MapScripts;
+		public int MusicDay;
+		public int MusicNight;
+		public int Texts;
+		/// <summary>
+		/// Table or Encounter chart for pokemons expected to find on map
+		/// </summary>
+		public int WildPokemon;
+		public int Events;
+		public int Flags;
+		public Weather Weather;
+		public int Camera;
+		/// <summary>
+		/// </summary>
+		/// For height loop or For width loop
+		/// [Z,i] = gameobject int value
+		/// each value in for loop should be rounded to nearest whole number
+		/// need to map collision to X,Y value as well...
+		public Tile[][,] MapArray;
+	}
+	#endregion
 	#region Enums
 	public enum Worlds
 	{
