@@ -1061,6 +1061,12 @@ namespace PokemonUnity
 		//{
 		//	return this == obj;
 		//}
+		public bool Equals(int x, int y)
+		{
+			//return this.X == x && this.Y == y;
+			Tile obj = new Tile() { X = x, Y = y };
+			return base.Equals(obj);
+		}
 		public override bool Equals(object obj)
 		{
 			if (!(obj is Tile)) return false;
@@ -1204,30 +1210,34 @@ namespace PokemonUnity
 	/// a separate GameObject versus a single map
 	/// Decide whether to load all GameObjects together or
 	/// relative to/based on a player's given position
-	class Map : MonoBehaviour
+	public class Map : MonoBehaviour
 	{
 		#region Idea1: Overworld section as 1 GameObject
 		/// <summary>
 		/// Set this variable in the inspector
 		/// </summary>
 		public GameObject mapPrefab;
-		/// <summary>
-		/// The Map-prefab's global position
-		/// </summary>
-		private Vector3[] objectPositions;
+		public string MapName;
 
 		private void Awake()
 		{
-			foreach (Vector3 objectPos in objectPositions)
-			{
-				GameObject mapObject = Instantiate(mapPrefab) as GameObject;
-				mapObject.transform.position = objectPos;
-			}
+			//foreach (Vector3 objectPos in objectPositions)
+			//{
+			//	GameObject mapObject = Instantiate(mapPrefab) as GameObject;
+			//	mapObject.transform.position = objectPos;
+			//}
 		}
 
-		static Map()
+		void OnEnable()
 		{
-			//objectPositions = new Array[] {} //ToDo: List of map names and vectors
+			//if mapName not null, scan directory for file/filename that matches "MapName"
+			//if file exist, load map and content on screen
+				//create a layer for each terrain asset
+				//for each terrain, generate mesh map (from file)
+				//for each asset, instantiate obj prefab (based on file)
+				//Create Components with values (if terrain add SceneTile, if tallGrass add PokemonEncounter) 
+				//Add Component to Tiles/Squares
+			//else do nothing
 		}
 		#endregion
 
@@ -1237,7 +1247,9 @@ namespace PokemonUnity
 		// the height is different for each position in the grid
 		// The way would be to loop through every x position, and within that every z position.
 
-		GameObject mapTile; 
+		GameObject mapTile;
+		//ToDo: Fetch from GameVariables
+		MapMatrix map; //{ get { return GameVariables.Map; } }
  
 		/// <summary>
 		/// Build map from Array of GameObjects[]
@@ -1245,14 +1257,20 @@ namespace PokemonUnity
 		/// ToDo: How to save map as Array of Objects?
 		/// ToDo: Blender-to-Unity => Read object name in if-check
 		/// A tile Array for Location, Rotation, and Name
-		void BuildMap() 
+		void BuildMap(GameObject layer, Terrain terrain) 
 		{
 			int minX = -20;
-			int maxX = 20;
+			int maxX = map.Width;
 			int minY = 0;
-			int maxY = 4;
+			int maxY = map.Length;
 			int minZ = -20;
-			int maxZ = 20;
+			int maxZ = map.mapHeader.MapHeight;
+
+			List<Tile> tArray = new List<Tile>();
+			UnityEngine.Mesh quad = new UnityEngine.Mesh();
+			MeshFilter mf = mapTile.AddComponent<MeshFilter>();
+			MeshRenderer mr = mapTile.AddComponent<MeshRenderer>();
+
 			// loop for every z position in the grid
 			for (int z = minZ; z < maxZ; z++ )
 			{
@@ -1262,26 +1280,295 @@ namespace PokemonUnity
 					//loop for every y position in the grid
 					for (int y = minY; y < maxY; y++ )
 					{
+						Tile t = map.mapHeader.MapArray[z][x, y];
 
-						// put it all to together to assign a position
-						Vector3 pos = new Vector3(x, y, z);
+						if(!tArray.Exists(i => i.Equals(t))) tArray.Add(t);
 
-						// instantiate the cube into a variable, so you can do other things with it
-						GameObject clone = (GameObject)Instantiate(mapTile, pos, new Quaternion());
+						switch (t.Terrain)
+						{
+							case Terrain.Grass:
+								//floor.Add(TileToQuad(t));
+								TileToQuad(ref quad, t);
+								break;
+							case Terrain.Sand:
+							case Terrain.Rock:
+							case Terrain.DeepWater:
+							case Terrain.StillWater:
+							case Terrain.Water:
+							case Terrain.TallGrass:
+							case Terrain.SootGrass:
+							case Terrain.Puddle:
+							default:
+								break;
+						}
+					}
+				}
+				TileToQuad(ref quad, tArray.ToArray(), z);
+			}
 
-						//ToDO: Add 'if(tile)' => collision-map
+			mf.mesh = quad;
+			quad.RecalculateBounds();
+		}
+ 
+		/// <summary>
+		/// Add assets to map from Array of GameObjects[]
+		/// </summary>
+		/// ToDo: Save assets on map as Array of Objects?
+		/// A tile Array for Location, Rotation, and Name
+		void SpawnAssets() 
+		{
+			int minX = -20;
+			int maxX = map.Width;
+			int minY = 0;
+			int maxY = map.Length;
+			int minZ = -20;
+			int maxZ = map.mapHeader.MapHeight;
 
-						// change the name of the object, include the x and z position in the name
-						clone.name = "Tile_" + x.ToString() + "_" + z.ToString();
+			List<UnityEngine.Mesh> floor = new List<UnityEngine.Mesh>();
+			UnityEngine.Mesh floorQuad = new UnityEngine.Mesh();
 
-						// in future, 
-						// this would be stored in a 3D array for future reference
-						// so you could modify the position, material, anything!
-						// cubeArray[x,y,z] = clone;
+			MeshFilter mf = mapTile.AddComponent<MeshFilter>();
+			MeshRenderer mr = mapTile.AddComponent<MeshRenderer>();
+
+			// loop for every z position in the grid
+			for (int z = minZ; z < maxZ; z++ )
+			{
+				// now loop for every x position in the grid
+				for (int x = minX; x < maxX; x++ )
+				{
+					//loop for every y position in the grid
+					for (int y = minY; y < maxY; y++ )
+					{
+						Tile t = map.mapHeader.MapArray[z][x, y];
+
+						switch (t.Terrain)
+						{
+							case Terrain.Grass:
+								//floor.Add(TileToQuad(t));
+								TileToQuad(ref floorQuad, t);
+								break;
+							case Terrain.Sand:
+							case Terrain.Rock:
+							case Terrain.DeepWater:
+							case Terrain.StillWater:
+							case Terrain.Water:
+							case Terrain.TallGrass:
+							case Terrain.SootGrass:
+							case Terrain.Puddle:
+							default:
+								// put it all to together to assign a position
+								Vector3 pos = new Vector3(x, y, z);
+
+								// instantiate the cube into a variable, so you can do other things with it
+								GameObject clone = (GameObject)Instantiate(mapTile, pos, new Quaternion());
+
+								//ToDO: Add 'if(tile)' => collision-map
+
+								// change the name of the object, include the x and z position in the name
+								clone.name = "Tile_" + x.ToString() + "_" + z.ToString();
+
+								// in future, 
+								// this would be stored in a 3D array for future reference
+								// so you could modify the position, material, anything!
+								// cubeArray[x,y,z] = clone;
+								break;
+						}
+
 					}
 				}
 			}
+
+			mf.mesh = floorQuad;
+			floorQuad.RecalculateBounds();
 		}
+
+		#region Methods
+		public UnityEngine.Mesh TileToQuad(ref Mesh mesh, Tile[] tiles, int Z = 0)
+		{
+			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
+			List<int> tri = new List<int>();
+			List<UnityEngine.Vector3> normals = new List<UnityEngine.Vector3>();
+			UnityEngine.Vector2[] uv = new UnityEngine.Vector2[0];
+			int xLo, xHi, yLo, yHi;
+			
+			foreach (Tile tile in tiles)
+			{
+				switch (tile.Shape)
+				{
+					case Shape.Flat:
+						vertices.AddRange(new UnityEngine.Vector3[] 
+						{
+							new Vector3 (tile.X,tile.Y,Z),
+							new Vector3 (tile.Width, tile.Y, Z),
+							new Vector3 (tile.X,tile.Length,Z),
+							new Vector3 (tile.Width, tile.Length, Z)
+						});
+						tri.AddRange(new int[] 
+						{
+							//Lower Left Triangle
+							//0, 2, 1,
+							tri.Count, tri.Count + 2, tri.Count + 1,
+							//Upper Right Triangle
+							//2, 3, 1
+							tri.Count + 2, tri.Count + 3, tri.Count + 1
+						});
+						normals.AddRange(new UnityEngine.Vector3[] 
+						{
+							-Vector3.forward,
+							-Vector3.forward,
+							-Vector3.forward,
+							-Vector3.forward
+						});
+						//uv.AddRange(new UnityEngine.Vector2[]
+						//{
+						//	new Vector2 ((float)(tile.X) + 0f,		(float)(tile.Y) + 0f),//(0f, 0f)
+						//	new Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Y) + 0f),//(1f, 0f)
+						//	new Vector2 ((float)(tile.X) + 0f,		(float)(tile.Length) + 1f),//(0f, 1f)
+						//	new Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Length) + 1f) //(1f, 1f)
+						//	//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 0f),//(0f, 0f)
+						//	//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 0f),//(1f, 0f)
+						//	//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 1f),//(0f, 1f)
+						//	//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 1f) //(1f, 1f)
+						//});
+						xLo = Math.Min(0, tile.X);
+						yLo = Math.Min(0, tile.Y);
+						xHi = Math.Max(1, tile.X + tile.Width);
+						yHi = Math.Max(1, tile.Y + tile.Length);
+						uv = new Vector2[vertices.Count];
+						for (int i = 0; i < vertices.Count; i++)
+						{
+							//Each UV should be a fraction of the total dimension 
+							uv[i] = new UnityEngine.Vector2((float)i / (xHi - xLo), (float)i / (yHi - yLo));
+						}
+						break;
+					case Shape.CliffSide:
+						break;
+					case Shape.CliffCorner:
+						break;
+					case Shape.LedgeJump:
+						break;
+					case Shape.LedgeWater:
+						break;
+					case Shape.WalkPath:
+						break;
+					case Shape.NULL:
+						break;
+					default:
+						break;
+				}
+			}
+			mesh.vertices = vertices.ToArray();
+			mesh.triangles = tri.ToArray();
+			mesh.normals = normals.ToArray();
+			//mesh.uv = uv.ToArray();
+			return mesh;
+		}
+		public UnityEngine.Mesh TileToQuad(ref Mesh mesh, Tile tile, int Z = 0)
+		{
+			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[0];
+			int[] tri = new int[0];
+			UnityEngine.Vector3[] normals = new UnityEngine.Vector3[0];
+			switch (tile.Shape)
+			{
+				case Shape.Flat:
+					vertices = new UnityEngine.Vector3[] 
+					{
+						new Vector3 (tile.X,tile.Y,Z),
+						new Vector3 (tile.Width, tile.Y, Z),
+						new Vector3 (tile.X,tile.Length,Z),
+						new Vector3 (tile.Width, tile.Length, Z)
+					};
+					tri = new int[6];
+					normals = new UnityEngine.Vector3[] 
+					{
+						-Vector3.forward,
+						-Vector3.forward,
+						-Vector3.forward,
+						-Vector3.forward
+					};
+					break;
+				case Shape.CliffSide:
+					break;
+				case Shape.CliffCorner:
+					break;
+				case Shape.LedgeJump:
+					break;
+				case Shape.LedgeWater:
+					break;
+				case Shape.WalkPath:
+					break;
+				case Shape.NULL:
+					break;
+				default:
+					break;
+			}
+			mesh.vertices = vertices;
+			mesh.triangles = tri;
+			mesh.normals = normals;
+			mesh.uv = new UnityEngine.Vector2[]
+			{
+				new Vector2 (0, 0),
+				new Vector2 (1, 0),
+				new Vector2 (0, 1),
+				new Vector2 (1, 1)
+			};
+			return mesh;
+		}
+		public UnityEngine.Mesh TileToQuad(Tile tile, int Z = 0)
+		{
+			UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[0];
+			int[] tri = new int[0];
+			UnityEngine.Vector3[] normals = new UnityEngine.Vector3[0];
+			switch (tile.Shape)
+			{
+				case Shape.Flat:
+					vertices = new UnityEngine.Vector3[] 
+					{
+						new Vector3 (tile.X,tile.Y,Z),
+						new Vector3 (tile.Width, tile.Y, Z),
+						new Vector3 (tile.X,tile.Length,Z),
+						new Vector3 (tile.Width, tile.Length, Z)
+					};
+					tri = new int[6];
+					normals = new UnityEngine.Vector3[] 
+					{
+						-Vector3.forward,
+						-Vector3.forward,
+						-Vector3.forward,
+						-Vector3.forward
+					};
+					break;
+				case Shape.CliffSide:
+					break;
+				case Shape.CliffCorner:
+					break;
+				case Shape.LedgeJump:
+					break;
+				case Shape.LedgeWater:
+					break;
+				case Shape.WalkPath:
+					break;
+				case Shape.NULL:
+					break;
+				default:
+					break;
+			}
+			mesh.vertices = vertices;
+			mesh.triangles = tri;
+			mesh.normals = normals;
+			mesh.uv = new UnityEngine.Vector2[]
+			{
+				new Vector2 (0, 0),
+				new Vector2 (1, 0),
+				new Vector2 (0, 1),
+				new Vector2 (1, 1)
+			};
+			return mesh;
+		}
+		#endregion
 		#endregion
 
 		#region Idea4: 3d map chunk from 2d array
@@ -1296,60 +1583,80 @@ namespace PokemonUnity
 			/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
 			/// if MAP then it allows you to load mapHeaders
 			/// else it's a small chunk or dungeon
-			int MapId;
+			Worlds WorldId;
 			/// <summary>
 			/// 
 			/// </summary>
 			/// enum label of matrix
 			/// matrix id 0 is the overworld map
-			int MatrxId;
-			public int Height { get; private set; }
+			Regions MatrxId;
+			public int Length { get; private set; }
 			public int Width { get; private set; }
-			public MapChunk mapHeader { get; private set; }
+			public MapHeader mapHeader { get; private set; }
 		}
 		/// <summary>
 		/// Header data contains map x,y size
 		/// </summary>
-		public class MapChunk
+		public class MapHeader
 		{
 			/// <summary>
 			/// 
 			/// </summary>
 			/// Internal Name
-			int MapId;
-			string Name;
+			public Maps MapId;
+			public string Name;
 			/// <summary>
 			/// Texture around Name when entering Map
 			/// </summary>
 			/// ToDo: Volcanic, Snow, Spring, etc...
-			int NameStyle;
-			int MapType;
+			public int NameStyle;
+			public int MapType;
+			public int MapHeight;
 			//int Texture1;
 			//int Texture2;
-			int Scripts;
-			int MapScripts;
-			int MusicDay;
-			int MusicNight;
-			int Texts;
+			public int Scripts;
+			public int MapScripts;
+			public int MusicDay;
+			public int MusicNight;
+			public int Texts;
 			/// <summary>
 			/// Table or Encounter chart for pokemons expected to find on map
 			/// </summary>
-			int WildPokemon;
-			int Events;
-			int Flags;
-			int Weather;
-			int Camera;
+			public int WildPokemon;
+			public int Events;
+			public int Flags;
+			public Weather Weather;
+			public int Camera;
 			/// <summary>
 			/// </summary>
 			/// For height loop or For width loop
 			/// [Z,i] = gameobject int value
 			/// each value in for loop should be rounded to nearest whole number
 			/// need to map collision to X,Y value as well...
-			Tile[,] MapArray;
+			public Tile[][,] MapArray;
 		}
 		#endregion
 	}
 	#region Enums
+	public enum Worlds
+	{
+		GLOBAL = 0,
+		Emerald 
+	}
+	/// <summary>
+	/// Each "world" has their own smaller regions
+	/// </summary>
+	public enum Regions
+	{
+		Overworld = 0
+	}
+	/// <summary>
+	/// Each "region" has their own individual maps
+	/// </summary>
+	public enum Maps
+	{
+		Safari = 0
+	}
 	public enum Direction
 	{
 		/// <summary>
