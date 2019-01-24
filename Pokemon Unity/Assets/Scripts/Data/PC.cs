@@ -4,7 +4,6 @@
 using System.Collections;
 using PokemonUnity.Pokemon;
 
-[System.Serializable]
 public class PC
 {
     //index 0: Party,    index >= 1: PC box
