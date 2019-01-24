@@ -218,22 +218,6 @@ namespace Tests
             Assert.AreEqual(Hidden, pokemon.Ability);
 		}
 
-        [TestMethod]
-        public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
-        {
-            Pokemons pkmn = Pokemons.BULBASAUR;
-            Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
-            int i = 0;
-            while (true)
-            {
-                Pokemon pokemon = new Pokemon(pkmn);
-                //pokemon.HatchEgg();
-                bool HA = pokemon.Ability == Hidden;
-                if (HA) Assert.IsTrue(HA); i++;
-                if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
-            }
-        }
-
         //Test max value for pokemon stats
         [TestMethod]
         public void Pokemon_EV_GreaterThan_MaxEV_Equals_MaxEV()

@@ -10,11 +10,29 @@ namespace PokemonUnity.Saving
     [System.Serializable]
     public class SaveData
     {
+        #region ImportantInfo
         public string BuildVersion = SaveManager.GetBuildVersion();
-        public string SaveName = string.Empty;
+        public string SaveName;
+        public int ActiveScene;
 
-        public DateTime TimeCreated;
+        public DateTime TimeCreated = System.DateTime.Now;
+        #endregion
 
+        #region User Settings
+        public int Language;
+
+        public byte WindowBorder;
+        public byte DialogBorder;
+        public byte TextSpeed;
+
+        //public bool FullScreen;
+        //public bool BattleScene;
+
+        public float mVol;
+        public float sVol;
+        #endregion
+
+        #region Player
         public string PlayerName;
 
         //PlayerID doesn't need to be public: TrainerID + SecretID * 65536 = PlayerID
@@ -23,7 +41,9 @@ namespace PokemonUnity.Saving
         public int SecretID;
         public bool IsMale;
         //public Dictionary<GymBadges, System.DateTime?> GymBadges;
+        #endregion
 
+        #region PlayerInfo
         public bool?[] Pokedex;
         public System.TimeSpan PlayerTime;
 
@@ -33,8 +53,7 @@ namespace PokemonUnity.Saving
         //Follower
         public SerializableVector3 FollowerPosition;
         public int FollowerDirection;
-
-        public int ActiveScene;
+        #endregion
 
         #region Pokemon Center
         /// <summary>
@@ -48,12 +67,13 @@ namespace PokemonUnity.Saving
         private int pCenterFdirection;
         #endregion
 
-        //These can now use the new Seri- classes
+        #region SeriClasses
         public SeriPokemon[] PlayerParty;
         public SeriPC PC;
         public List<Items> PlayerBag;
 
         public List<SaveEvent> EventList;
+        #endregion
 
         public void AddPokemonCenter(int scene, SerializableVector3 position, int direction, SerializableVector3 fPosition, int fDirection)
         {
@@ -66,26 +86,49 @@ namespace PokemonUnity.Saving
             pCenterFdirection = fDirection;
         }
 
-        public SaveData(
+        public SaveData
+            (
             string saveName,
-            int activeScene,
-            string playerName, int trainerID, int secretID, bool isMale,
-            //List<GymBadges> gymBadges,
+
+            Settings.Languages language,
+            byte windowBorder,
+            byte dialogBorder,
+            byte textSpeed,
+            float mvol,
+            float svol,
+
+            string playerName,
+            int trainerID,
+            int secretID,
+            bool isMale,
+
             bool?[] pokedex,
-            System.TimeSpan playerTime,
-            SerializableVector3 playerPosition, int playerDirection,
-            SerializableVector3 followerPosition, int followerDirection,
-            Pokemon.Pokemon[] playerParty, Pokemon.Pokemon[,] playerPC, List<Items> playerBag,
+            TimeSpan playerTime,
+
+            SerializableVector3 playerPosition,
+            int playerDirection,
+            SerializableVector3 followerPosition,
+            int followerDirection,
+
+            int activeScene,
+
+            Pokemon.Pokemon[] playerParty,
+            SeriPC pc,
+            List<Items> playerBag,
+
             List<SaveEvent> eventList
             )
         {
-            //Important
             SaveName = saveName;
-            ActiveScene = activeScene;
 
-            //Player Information
+            Language = (int)language;
+            WindowBorder = windowBorder;
+            DialogBorder = dialogBorder;
+            TextSpeed = textSpeed;
+            mVol = mvol;
+            sVol = svol;
+
             PlayerName = playerName;
-            playerID = (trainerID + secretID) * 65536;
             TrainerID = trainerID;
             SecretID = secretID;
             IsMale = isMale;
@@ -93,22 +136,21 @@ namespace PokemonUnity.Saving
             Pokedex = pokedex;
             PlayerTime = playerTime;
 
-            //Player Vector3
             PlayerPosition = playerPosition;
             PlayerDirection = playerDirection;
-            //Follower Vector3
             FollowerPosition = followerPosition;
             FollowerDirection = followerDirection;
 
-            //Player Items and Pokemons
+            ActiveScene = activeScene;
+
             PlayerParty = new SeriPokemon[playerParty.Length];
-            for (int i = 0; i < PlayerParty.Length; i++)
+            for (int i = 0; i < playerParty.Length; i++)
             {
                 PlayerParty[i] = playerParty[i];
             }
+            PC = pc;
             PlayerBag = playerBag;
 
-            //List of Registered Events
             EventList = eventList;
         }
     }

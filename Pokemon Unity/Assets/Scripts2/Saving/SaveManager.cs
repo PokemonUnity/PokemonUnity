@@ -50,7 +50,7 @@ namespace PokemonUnity.Saving
             return EventSaves.Where(x => x.SceneIndex == sceneIndex).ToList();
         }
 
-        private static SaveData CreateSaveFile(string saveName, int activeScene)
+        /*private static SaveData CreateSaveFile(string saveName, int activeScene)
         {
             Pokemon[] Party = GameVariables.playerTrainer.Trainer.Party;
             Pokemon[,] PC = GameVariables.PC_Poke;
@@ -70,7 +70,7 @@ namespace PokemonUnity.Saving
                 Party, PC, PlayerBag,
                 EventSaves
                 );
-        }
+        }*/
 
         /// <summary>
         /// Saves the game using the standard data.
@@ -82,8 +82,8 @@ namespace PokemonUnity.Saving
                 saveLocation = UnityEngine.Application.dataPath + "/Saves/";
             }
 
-            SaveData DataToSave = CreateSaveFile(saveName, activeScene);
-            SerializeAndCreateSaveFile(DataToSave);
+            //SaveData DataToSave = CreateSaveFile(saveName, activeScene);
+            //SerializeAndCreateSaveFile(DataToSave);
         }
 
         /// <summary>

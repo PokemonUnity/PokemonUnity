@@ -89,8 +89,8 @@ namespace PokemonUnity.Saving.SerializableClasses
             {
                 moves[i] = pokemon.Moves[i];
             }
-            
-            Pokemon normalPokemon = 
+
+            Pokemon normalPokemon =
                 new Pokemon
                 (
                     pokemon.NickName, pokemon.Form,
@@ -100,7 +100,7 @@ namespace PokemonUnity.Saving.SerializableClasses
                     pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
                     pokemon.ObtainedLevel, pokemon.CurrentLevel, pokemon.CurrentExp,
                     pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
-                    pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message, 
+                    pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
                     moves, ribbons, pokemon.Markings, pokemon.PersonalId,
                     (Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
                     pokemon.TimeReceived, pokemon.TimeEggHatched
@@ -122,7 +122,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             //These parts shouldn't be saved yet.
 
             //seriPokemon.Nature = pokemon.getNature();
-
+            seriPokemon.Nature = new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
             //seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
 
@@ -171,6 +171,10 @@ namespace PokemonUnity.Saving.SerializableClasses
                 {
                     seriPokemon.Ribbons[i] = (int)pokemon.Ribbons[i];
                 }
+            }
+            else
+            {
+                seriPokemon.Ribbons = new int[0];
             }
             seriPokemon.Markings = pokemon.Markings;
 

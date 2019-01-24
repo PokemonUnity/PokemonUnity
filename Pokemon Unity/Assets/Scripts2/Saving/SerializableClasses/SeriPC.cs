@@ -14,9 +14,16 @@ namespace PokemonUnity.Saving.SerializableClasses
         public static int[] BoxTextures { get; private set; }
         public static int[] Items { get; private set; }
 
-        public SeriPC(SeriPokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Item.Item> boxItems)
+        public SeriPC(Pokemon.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Item.Item> boxItems)
         {
-            Pokemons = pokemons;
+            Pokemons = new SeriPokemon[pokemons.GetUpperBound(0), pokemons.GetUpperBound(1)];
+            for (int i = 0; i < Pokemons.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j < Pokemons.GetUpperBound(1); j++)
+                {
+                    Pokemons[i, j] = pokemons[i, j];
+                }
+            }
             BoxNames = boxNames;
             BoxTextures = boxTextures;
 
