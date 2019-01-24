@@ -6,7 +6,7 @@ public class MapBuilderWindow : EditorWindow
 	private bool m_bAlignRotations = true;
 
 	// Add a menu item
-	[MenuItem("Window/Drop Object(s)")]
+	[MenuItem("PK Unity/Drop Object(s)")]
 	static void Awake()
 	{
 		// Get or create an editor window
@@ -107,7 +107,7 @@ public class DropObjectsEditor : EditorWindow
 	bool AlignNormals;
 	Vector3 UpVector = new Vector3(0, 90, 0);
 
-	[MenuItem("Window/Drop Object-Test")]											// add menu item
+	[MenuItem("PK Unity/Drop Object-Test")]											// add menu item
 	static void Awake()
 	{
 		EditorWindow.GetWindow<DropObjectsEditor>().Show();                         // Get existing open window or if none, make a new one
