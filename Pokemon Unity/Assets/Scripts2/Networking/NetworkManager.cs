@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PokemonUnity.Saving;
-using PokemonUnity.Saving.SerializableClasses;
-using PokemonUnity.Networking.Trading;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PokemonUnity.Networking
 {
@@ -18,6 +10,7 @@ namespace PokemonUnity.Networking
         private const int port = 1000;
 
         private static TcpClient tcpClient;
+        public static bool IsRunning = false;
 
         public static void Start()
         {
@@ -35,6 +28,7 @@ namespace PokemonUnity.Networking
                 if (tempSocket.Connected)
                 {
                     tcpClient = tempSocket;
+                    IsRunning = true;
                     break;
                 }
                 else
@@ -44,40 +38,18 @@ namespace PokemonUnity.Networking
             }
         }
 
-        public static void InitiateTrade(int PlayerID)
+        public static void Disconnect()
         {
-            if (!tcpClient.Connected)
+            if (tcpClient.Connected)
             {
-                Start();
-            }
-
-            //Preparing/Sending message
-            using (NetworkStream Stream = tcpClient.GetStream())
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                TradePacket tradePacket = new TradePacket(TradeCommand.INITIATE, PlayerID);
-
-                formatter.Serialize(Stream, tradePacket);
-                Stream.Flush();
+                tcpClient.Close();
+                tcpClient = null;
             }
         }
 
-        public static void SetPokemon(SeriPokemon Pokemon)
+        public static TcpClient GetConnection()
         {
-            if (!tcpClient.Connected)
-            {
-                Start();
-            }
-
-            //Preparing/Sending message
-            using (NetworkStream Stream = tcpClient.GetStream())
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                TradePacket tradePacket = new TradePacket(TradeCommand.SET_POKEMON, Pokemon);
-
-                formatter.Serialize(Stream, tradePacket);
-                Stream.Flush();
-            }
+            return tcpClient;
         }
     }
 }

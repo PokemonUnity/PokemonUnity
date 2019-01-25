@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PokemonUnity.Networking.Trading
+namespace PokemonUnity.Networking
 {
     [System.Serializable]
     public class TradePacket
