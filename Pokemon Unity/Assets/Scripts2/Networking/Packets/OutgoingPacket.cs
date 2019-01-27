@@ -28,10 +28,10 @@ namespace PokemonUnity.Networking.Packets
         /// Creates a new Outgoing Trade Packet with the SET_POKEMON Trade Command
         /// </summary>
         /// <param name="pokemonToTrade">The SeriPokemon that needs to be set (visible to the other player)</param>
-        public OutgoingPacket(SeriPokemon pokemonToTrade)
+        public OutgoingPacket(TradeCommand command, SeriPokemon pokemonToTrade)
         {
             Type = OutgoingPacketType.TRADE;
-            PacketContainer = new OTradePacket(TradeCommand.SET_POKEMON, pokemonToTrade);
+            PacketContainer = new OTradePacket(command, pokemonToTrade);
         }
         #endregion
 

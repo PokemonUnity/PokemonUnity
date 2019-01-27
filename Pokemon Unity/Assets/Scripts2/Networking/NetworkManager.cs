@@ -7,7 +7,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using PokemonUnity.Saving;
 using PokemonUnity.Networking.Packets;
 using PokemonUnity.Networking.Packets.Incoming;
-using PokemonUnity.Networking.Packets.Outgoing;
 
 namespace PokemonUnity.Networking
 {
@@ -143,6 +142,7 @@ namespace PokemonUnity.Networking
 
         private static void Authenticate()
         {
+            //SaveData authData = SaveManager.GetActiveSave();
             SaveData authData = SaveManager.GetSave(0);
             OutgoingPacket authPacket = new OutgoingPacket(authData); 
 
@@ -150,7 +150,21 @@ namespace PokemonUnity.Networking
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(memoryStream, authPacket);
-                client.Send(memoryStream.ToArray(), memoryStream.ToArray().Length);
+
+                byte[] serializedData = memoryStream.ToArray();
+                client.Send(serializedData, serializedData.Length);
+            }
+        }
+
+        public static void Send(OutgoingPacket outgoingPacket)
+        {
+            using(MemoryStream memoryStream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(memoryStream, outgoingPacket);
+
+                byte[] serializedData = memoryStream.ToArray();
+                client.Send(serializedData, serializedData.Length);
             }
         }
 
