@@ -144,14 +144,8 @@ namespace PokemonUnity.Networking
         private static void Authenticate()
         {
             SaveData authData = SaveManager.GetSave(0);
-            OutgoingPacket authPacket = new OutgoingPacket()
-            {
-                Type = OutgoingPacketType.AUTH,
-                PacketContainer = new OAuthenticatePacket()
-                {
-                    saveData = authData
-                }
-            };
+            OutgoingPacket authPacket = new OutgoingPacket(authData); 
+
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 BinaryFormatter formatter = new BinaryFormatter();
