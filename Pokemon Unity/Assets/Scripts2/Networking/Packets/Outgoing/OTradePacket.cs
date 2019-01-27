@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PokemonUnity.Networking
+﻿namespace PokemonUnity.Networking.Packets.Outgoing
 {
     [System.Serializable]
-    public class TradePacket
+    public class OTradePacket : IOutPacket
     {
         public TradeCommand Command { get; private set; }
         public object Message { get; private set; }
 
-        public TradePacket(TradeCommand Command, object Message)
+        public OTradePacket(TradeCommand Command, object Message)
         {
             this.Command = Command;
             this.Message = Message;

@@ -1,15 +1,27 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
+using System.IO;
+using System.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
+using PokemonUnity.Saving;
+using PokemonUnity.Networking.Packets;
+using PokemonUnity.Networking.Packets.Incoming;
+using PokemonUnity.Networking.Packets.Outgoing;
 
 namespace PokemonUnity.Networking
 {
     public static class NetworkManager
     {
-        private const string encryptionKey = "pku123";
-        private const string ipAdress = "192.168.0.0";
-        private const int port = 1000;
+        private static string authToken;
+        private static bool isAuth;
 
-        private static TcpClient tcpClient;
+        private const string encryptionKey = "pku123";
+        private const string ipAdress = "192.168.0.46";
+        private const int port = 4568;
+
+        private static UdpClient client;
+        private static IPEndPoint ipEndPoint;
         public static bool IsRunning = false;
 
         public static void Start()
@@ -22,12 +34,13 @@ namespace PokemonUnity.Networking
             foreach (IPAddress adress in hostEntry.AddressList)
             {
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ipAdress), port);
-                TcpClient tempSocket = new TcpClient(endPoint.AddressFamily);
+                UdpClient tempSocket = new UdpClient(endPoint.AddressFamily);
 
                 tempSocket.Connect(endPoint);
-                if (tempSocket.Connected)
+                if (tempSocket.Client.Connected)
                 {
-                    tcpClient = tempSocket;
+                    client = tempSocket;
+                    ipEndPoint = endPoint;
                     IsRunning = true;
                     break;
                 }
@@ -36,20 +49,134 @@ namespace PokemonUnity.Networking
                     continue;
                 }
             }
+
+            Authenticate();
+
+            Thread listeningThread = new Thread(BackgroundListener)
+            {
+                IsBackground = true
+            };
+            listeningThread.Start();
+        }
+
+        /// <summary>
+        /// Listens to the incoming packets. Should be ran on a new thread.
+        /// </summary>
+        private static void BackgroundListener()
+        {
+            bool isListening = false;
+            if (client.Client.Connected)
+            {
+                isListening = true;
+            }
+
+            try
+            {
+                while (isListening)
+                {
+                    byte[] collectedBytes = client.Receive(ref ipEndPoint);
+                    IncomingPacket collectedPacket;
+
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        memoryStream.Write(collectedBytes, 0, collectedBytes.Length);
+                        memoryStream.Position = 0;
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        collectedPacket = (IncomingPacket)formatter.Deserialize(memoryStream);
+                    }
+
+                    if (!isAuth)
+                    {
+                        if (collectedPacket.Type == IncomingPacketType.AUTH)
+                        {
+                            IAuthenticatePacket token = (IAuthenticatePacket)collectedPacket.PacketContainer;
+                            switch (token.Authenticated)
+                            {
+                                case IAuthenticatePacket.AuthOptions.SUCCES:
+                                    isAuth = true;
+                                    authToken = token.AuthenticationKey;
+                                    //Succes, send connected to user
+                                    break;
+                                case IAuthenticatePacket.AuthOptions.FAILED:
+                                    isAuth = false;
+                                    authToken = string.Empty;
+                                    //Failed Authentication
+                                    break;
+                                case IAuthenticatePacket.AuthOptions.ERROR:
+                                    isAuth = false;
+                                    authToken = string.Empty;
+                                    //Error Handling
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            //Server is sending useless data
+                            //Should be discarded
+                            //Possible cheater or server is not doing it's job correctly
+                        }
+                    }
+                    else
+                    {
+                        if(collectedPacket.Type == IncomingPacketType.TRADE)
+                        {
+                            //Pass data through to TradeManager
+                        }
+                        else if(collectedPacket.Type == IncomingPacketType.BATTLE)
+                        {
+                            //Pass data through to OnlineBattleManager
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //Add error handling
+            }
+            finally
+            {
+                Disconnect();
+            }
+        }
+
+        private static void Authenticate()
+        {
+            SaveData authData = SaveManager.GetSave(0);
+            OutgoingPacket authPacket = new OutgoingPacket()
+            {
+                Type = OutgoingPacketType.AUTH,
+                PacketContainer = new OAuthenticatePacket()
+                {
+                    saveData = authData
+                }
+            };
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(memoryStream, authPacket);
+                client.Send(memoryStream.ToArray(), memoryStream.ToArray().Length);
+            }
         }
 
         public static void Disconnect()
         {
-            if (tcpClient.Connected)
+            if (client.Client.Connected)
             {
-                tcpClient.Close();
-                tcpClient = null;
+                client.Close();
+                client = null;
             }
         }
 
-        public static TcpClient GetConnection()
+        public static UdpClient GetConnection()
         {
-            return tcpClient;
+            return client;
+        }
+
+        public static bool IsAuthenticated()
+        {
+            return isAuth;
         }
     }
 }
