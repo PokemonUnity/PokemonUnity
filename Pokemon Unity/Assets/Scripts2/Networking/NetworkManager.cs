@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using PokemonUnity.Saving;
 using PokemonUnity.Networking.Packets;
 using PokemonUnity.Networking.Packets.Incoming;
+using System.Collections.Generic;
 
 namespace PokemonUnity.Networking
 {
@@ -16,7 +17,20 @@ namespace PokemonUnity.Networking
     public static class NetworkManager
     {
         private static string authToken;
-        private static bool isAuth;
+        private static bool isAuth
+        {
+            get
+            {
+                return isAuth;
+            }
+            set
+            {
+                if (isAuth)
+                {
+                    EmptyOutgoingStack();
+                }
+            }
+        }
 
         private const string encryptionKey = "pku123";
         private const string ipAdress = "192.168.0.46";
@@ -25,6 +39,8 @@ namespace PokemonUnity.Networking
         private static UdpClient client;
         private static IPEndPoint ipEndPoint;
         public static bool IsRunning = false;
+
+        private static Queue<OutgoingPacket> packetStack;
 
         /// <summary>
         /// Starts the server and sends a ping to the server to authenticate this user.
@@ -57,6 +73,8 @@ namespace PokemonUnity.Networking
 
             Authenticate();
 
+            ///Here we create a new Thread
+            ///That way it can stay on the background on a new Thread
             Thread listeningThread = new Thread(BackgroundListener)
             {
                 IsBackground = true
@@ -138,11 +156,9 @@ namespace PokemonUnity.Networking
             }
             catch (Exception)
             {
-                //Add error handling
-            }
-            finally
-            {
                 Disconnect();
+                IsRunning = false;
+                isAuth = false;
             }
         }
 
@@ -168,13 +184,36 @@ namespace PokemonUnity.Networking
         /// <param name="outgoingPacket">The OutgoingPacket that contains the data that needs to be send</param>
         public static void Send(OutgoingPacket outgoingPacket)
         {
-            using(MemoryStream memoryStream = new MemoryStream())
+            if (isAuth)
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(memoryStream, outgoingPacket);
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(memoryStream, outgoingPacket);
 
-                byte[] serializedData = memoryStream.ToArray();
-                client.Send(serializedData, serializedData.Length);
+                    byte[] serializedData = memoryStream.ToArray();
+                    client.Send(serializedData, serializedData.Length);
+                }
+            }
+            else
+            {
+                packetStack.Enqueue(outgoingPacket);
+            }
+        }
+
+        private static void EmptyOutgoingStack()
+        {
+            while(packetStack.Count != 0)
+            {
+                OutgoingPacket outgoingPacket = packetStack.Dequeue();
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(memoryStream, outgoingPacket);
+
+                    byte[] serializedData = memoryStream.ToArray();
+                    client.Send(serializedData, serializedData.Length);
+                }
             }
         }
 
@@ -185,6 +224,7 @@ namespace PokemonUnity.Networking
         {
             if (client.Client.Connected)
             {
+                client.Client.Disconnect(true);
                 client.Close();
                 client = null;
             }
