@@ -10,6 +10,9 @@ using PokemonUnity.Networking.Packets.Incoming;
 
 namespace PokemonUnity.Networking
 {
+    /// <summary>
+    /// Manages the Network part of Pokemon Unity. Regulates incoming and outgoing packets.
+    /// </summary>
     public static class NetworkManager
     {
         private static string authToken;
@@ -23,6 +26,9 @@ namespace PokemonUnity.Networking
         private static IPEndPoint ipEndPoint;
         public static bool IsRunning = false;
 
+        /// <summary>
+        /// Starts the server and sends a ping to the server to authenticate this user.
+        /// </summary>
         public static void Start()
         {
             IPHostEntry hostEntry = Dns.GetHostEntry(ipAdress);
@@ -156,6 +162,10 @@ namespace PokemonUnity.Networking
             }
         }
 
+        /// <summary>
+        /// Sends an OutgoingPacket to the designated Server
+        /// </summary>
+        /// <param name="outgoingPacket">The OutgoingPacket that contains the data that needs to be send</param>
         public static void Send(OutgoingPacket outgoingPacket)
         {
             using(MemoryStream memoryStream = new MemoryStream())
@@ -168,6 +178,9 @@ namespace PokemonUnity.Networking
             }
         }
 
+        /// <summary>
+        /// Disconnects the UDP Client from the Server Socket (if the connection was made)
+        /// </summary>
         public static void Disconnect()
         {
             if (client.Client.Connected)
@@ -177,11 +190,10 @@ namespace PokemonUnity.Networking
             }
         }
 
-        public static UdpClient GetConnection()
-        {
-            return client;
-        }
-
+        /// <summary>
+        /// Returns a bool that indicates if the Client is Authenticated to send data to the server.
+        /// </summary>
+        /// <returns>true if the user is authenticated, false if it's pending or rejected</returns>
         public static bool IsAuthenticated()
         {
             return isAuth;
