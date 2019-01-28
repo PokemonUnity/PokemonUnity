@@ -17,20 +17,7 @@ namespace PokemonUnity.Networking
     public static class NetworkManager
     {
         private static string authToken;
-        private static bool isAuth
-        {
-            get
-            {
-                return isAuth;
-            }
-            set
-            {
-                if (isAuth)
-                {
-                    EmptyOutgoingStack();
-                }
-            }
-        }
+        private static bool isAuth;
 
         private const string encryptionKey = "pku123";
         private const string ipAdress = "192.168.0.46";
@@ -118,7 +105,7 @@ namespace PokemonUnity.Networking
                                 case IAuthenticatePacket.AuthOptions.SUCCES:
                                     isAuth = true;
                                     authToken = token.AuthenticationKey;
-                                    //Succes, send connected to user
+                                    EmptyOutgoingStack();
                                     break;
                                 case IAuthenticatePacket.AuthOptions.FAILED:
                                     isAuth = false;
