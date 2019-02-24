@@ -28,19 +28,6 @@ public class Player
 	public SeriV3 respawnScenePosition;
 	//public int respawnSceneDirection;
 
-	#region Important player data
-	/// <summary>
-	/// IDfinal = IDtrainer + IDsecret × 65536
-	/// </summary>
-	/// <remarks>
-	/// Should be private, use "get()" and perform math
-	/// only the last six digits are used so the Trainer Card will display an ID No.
-	/// </remarks>
-	public int PlayerID { get { return TrainerID + SecretID * 65536; } }
-	public int TrainerID { get; private set; }
-	public int SecretID { get; private set; }
-	#endregion
-
 	#region Player Records
 	public string PlayerName { get; private set; }
 	/// <summary>
@@ -329,7 +316,7 @@ public partial class GameVariables
 		public SortedList<Item, byte> Mail { get; private set; }
 		public SortedList<Item, byte> Battle { get; private set; }
 		public SortedList<Item, byte> Key { get; private set; }
-		private int[] quantity;
+		private int[] quantity { get; set; }
 
 		/// <summary>
 		/// 
@@ -437,6 +424,7 @@ public partial class GameVariables
 		public TrainerBag()
 		{
 			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+			GetBag();
 		}
 
 		/*public int getIndexOf(Item name)

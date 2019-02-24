@@ -58,6 +58,41 @@ public class Trainer
 	/// </summary>
 	public bool? Gender { get; private set; }
 
+	#region Important Trainer Data
+	/// <summary>
+	/// IDfinal = (IDtrainer + IDsecret × 65536).Last6
+	/// </summary>
+	/// <remarks>
+	/// only the last six digits are used so the Trainer Card will display an ID No.
+	/// </remarks>
+	public string PlayerID { get { return GetHashCode().ToString().Substring(GetHashCode().ToString().Length-6,GetHashCode().ToString().Length); } }
+	private int TrainerID { get; set; }
+	private int SecretID { get; set; }
+
+	#region Explicit Operators
+	public static bool operator == (Trainer t1, Trainer t2)
+	{
+		return ((t1.Gender == t2.Gender) && (t1.TrainerID == t2.TrainerID) && (t1.SecretID == t2.SecretID)) & (t1.Name == t2.Name);
+	}
+	public static bool operator != (Trainer t1, Trainer t2)
+	{
+		return ((t1.Gender != t2.Gender) || (t1.TrainerID != t2.TrainerID) || (t1.SecretID != t2.SecretID)) | (t1.Name == t2.Name);
+	}
+	public bool Equals(Player obj)
+	{
+		return Equals(obj.Trainer);
+	}
+	public override bool Equals(object obj)
+	{
+		return base.Equals(obj);
+	}
+	public override int GetHashCode()
+	{
+		return TrainerID + SecretID * 65536;
+	}
+	#endregion
+	#endregion
+
 	#region Wild Pokemon
 	/// <summary>
 	/// True is Double Battle, False is Single Battle, and Null is Wild Pokemon Encounter
