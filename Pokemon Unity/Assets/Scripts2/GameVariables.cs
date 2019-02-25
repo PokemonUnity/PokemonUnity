@@ -185,6 +185,10 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 			case "0.0.1":
 			default:
 				GameVariables.playerTrainer.LoadTrainer(data); //data.GymsChallenged
+				GameVariables.PC_Poke = data.PC.GetPokemonsFromSeri();
+				GameVariables.PC_boxNames = data.PC.BoxNames;
+				GameVariables.PC_boxTexture = data.PC.BoxTextures;
+				GameVariables.PC_Items = new List<Item>(data.PC.GetItemsFromSeri());
 				break;
 		}
 	}
