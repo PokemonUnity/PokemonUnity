@@ -163,12 +163,24 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#region Save/Load Data
 	private static byte slotIndex { get; set; }
 	//private int fileIndex { get; set; }
+	/// <summary>
+	/// Bool used to tell Start-Up screen whether or not to display "Continue" option
+	/// </summary>
     public static bool SaveFileFound { get; set; }
-    public System.DateTimeOffset fileCreationDate { get; set; }
-	public System.DateTimeOffset? lastSave { get; set; }
-	public System.DateTimeOffset startTime { get; set; }
-	//var t = new System.Resources.ResourceManager().
+    //public System.DateTimeOffset fileCreationDate { get; set; }
+	//public System.DateTimeOffset? lastSave { get; set; }
+	//public System.DateTimeOffset startTime { get; set; }
 
+	/// <summary
+	/// Preload before any of the other scenes are loaded...
+	/// </summary>
+	///ToDo: Temp Save Profiles to be used and displayed on Start-Up screen
+	public static void Load()
+	{
+		//Load player settings (language, full screen, vol...)
+		//Load continue/new game/"choose load slots" options...
+		//Load temp profile data (Party, pokedex seen/caught, hours played...)
+	}
 	/// <summary>
 	/// Loads saved game data from memory slot
 	/// </summary>
@@ -183,12 +195,14 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 		switch (data.BuildVersion)
 		{
 			case "0.0.1":
+			//Next one gets added to list, and default is copied above, and modified below...
 			default:
-				GameVariables.playerTrainer.LoadTrainer(data); //data.GymsChallenged
+				GameVariables.playerTrainer.LoadTrainer(data); 
 				GameVariables.PC_Poke = data.PC.GetPokemonsFromSeri();
 				GameVariables.PC_boxNames = data.PC.BoxNames;
 				GameVariables.PC_boxTexture = data.PC.BoxTextures;
 				GameVariables.PC_Items = new List<Item>(data.PC.GetItemsFromSeri());
+				GameVariables.Bag_Items = data.PlayerBag;
 				break;
 		}
 	}
