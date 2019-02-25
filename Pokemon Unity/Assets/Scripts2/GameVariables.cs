@@ -161,7 +161,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#endregion
 
 	#region Save/Load Data
-	private byte slotIndex { get; set; }
+	private static byte slotIndex { get; set; }
 	//private int fileIndex { get; set; }
     public static bool SaveFileFound { get; set; }
     public System.DateTimeOffset fileCreationDate { get; set; }
@@ -175,15 +175,27 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	/// <param name="i">Array int from binary stream</param>
 	public static void Load(byte i)
     {
-        GameVariables.SaveLoad.Load();
-    }
+		slotIndex = i > 0 && i < 3 ? i : slotIndex;
+        //GameVariables.SaveLoad.Load();
+		PokemonUnity.Saving.SaveData data = PokemonUnity.Saving.SaveManager.GetSave(i);
+		GameVariables.playerTrainer = new Player();
+
+		switch (data.BuildVersion)
+		{
+			case "0.0.1":
+			default:
+				GameVariables.playerTrainer.LoadTrainer(data); //data.GymsChallenged
+				break;
+		}
+	}
     public static void Save()
     {
-        //using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
-        //GameVariables.SaveLoad.Save();
+		//using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
+		//GameVariables.SaveLoad.Save();
+		PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
     }
 
-    private class SaveLoad {
+    /*private class SaveLoad {
         #region Variables
         //int DatabaseEntryStringWidth = 100;
         System.IO.FileStream fs;
@@ -325,7 +337,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 		//	bf.Serialize(file, SaveLoad.savedGames);
 		//	file.Close();
 		//}
-	}
+	}*/
 	#endregion
 
 	#region Active Battle and Misc Battle related Data

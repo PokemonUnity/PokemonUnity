@@ -1117,7 +1117,7 @@ public class Battle : UnityUtilityIntegration
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public byte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return GameVariables.playerTrainer.playerPokedex2[_base.ArrayId, 1] == 1; } }
+		public bool IsOwned { get { return GameVariables.playerTrainer.PlayerPokedex[_base.ArrayId, 1] == 1; } }
 		private PokemonUnity.Pokemon.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }
