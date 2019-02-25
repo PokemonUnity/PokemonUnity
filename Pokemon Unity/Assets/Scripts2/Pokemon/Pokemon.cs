@@ -392,7 +392,7 @@ namespace PokemonUnity.Pokemon
         /// </summary>
         /// <param name="trainer"></param>
         /// <returns></returns>
-        public bool isForeign(Player trainer)
+        public bool isOutsider(Player trainer)
         {
             return trainer.Trainer != this.OT; 
         }
