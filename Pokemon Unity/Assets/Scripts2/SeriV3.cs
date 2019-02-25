@@ -8,8 +8,8 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-//namespace PokemonUnity.Saving.Location
-//{
+namespace PokemonUnity
+{
 	/// <summary>
 	/// Since unity doesn't flag the Vector3 as serializable, we
 	/// need to create our own version. This one will automatically convert
@@ -118,4 +118,4 @@ using UnityEditor;
 			return new Vector3(v.x, v.y, z);
 		}
 	}
-//}
+}

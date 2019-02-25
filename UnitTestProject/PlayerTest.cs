@@ -41,9 +41,9 @@ namespace Tests
 
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
-            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
             Pokemon[] playerParty = new Pokemon[]
@@ -68,9 +68,9 @@ namespace Tests
             List<Items> playerBag = new List<Items>();
 
             List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
             newSave = new SaveData
             (
@@ -131,9 +131,9 @@ namespace Tests
 
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
-            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
             Pokemon[] playerParty = new Pokemon[]
@@ -158,9 +158,9 @@ namespace Tests
             List<Items> playerBag = new List<Items>();
 
             List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
             newSave = new SaveData
             (
@@ -223,9 +223,9 @@ namespace Tests
 
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
-            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
             Pokemon[] playerParty = new Pokemon[]
@@ -250,9 +250,9 @@ namespace Tests
             List<Items> playerBag = new List<Items>();
 
             List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
             newSave = new SaveData
             (
@@ -316,9 +316,9 @@ namespace Tests
 
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
-            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
             Pokemon[] playerParty = new Pokemon[]
@@ -343,9 +343,9 @@ namespace Tests
             List<Items> playerBag = new List<Items>();
 
             List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
             newSave = new SaveData
             (
@@ -409,9 +409,9 @@ namespace Tests
 
             bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
-            SerializableVector3 playerPosition = new SerializableVector3(0, 1, 0);
+			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
-            SerializableVector3 followerPosition = new SerializableVector3(1, 0, 0);
+			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
             Pokemon[] playerParty = new Pokemon[]
@@ -436,9 +436,9 @@ namespace Tests
             List<Items> playerBag = new List<Items>();
 
             List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SerializableVector3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SerializableVector3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SerializableVector3(2, 7, 3), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
+            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
             newSave = new SaveData
             (
@@ -686,8 +686,9 @@ namespace Tests
             SaveData newSave = SaveManager.GetSave(0);
             Settings.Languages expectedLanguage = Settings.Languages.English;
 
-            //We need to cast newSave.Language to the correct variable, since we save it in an (int)
-            Assert.AreEqual(expectedLanguage, (Settings.Languages)newSave.Language);
+			//We need to cast newSave.Language to the correct variable, since we save it in an (int)
+			//Assert.AreEqual(expectedLanguage, (Settings.Languages)newSave.Language);
+			Assert.Fail("Player Settings are saved separate from Player Game State");
         }
         [TestMethod]
         public void Player_Load_Settings_Text_WindowBorder()
@@ -697,8 +698,9 @@ namespace Tests
             SaveData newSave = SaveManager.GetSave(0);
             byte expectedWindowBorder = 2;
 
-            Assert.AreEqual(expectedWindowBorder, newSave.WindowBorder);
-        }
+            //Assert.AreEqual(expectedWindowBorder, newSave.WindowBorder);
+			Assert.Fail("Player Settings are saved separate from Player Game State");
+		}
         [TestMethod]
         public void Player_Load_Settings_Text_DialogBorder()
         {
@@ -707,8 +709,9 @@ namespace Tests
             SaveData newSave = SaveManager.GetSave(0);
             byte expectedDialogBorder = 9;
 
-            Assert.AreEqual(expectedDialogBorder, newSave.DialogBorder);
-        }
+            //Assert.AreEqual(expectedDialogBorder, newSave.DialogBorder);
+			Assert.Fail("Player Settings are saved separate from Player Game State");
+		}
         [TestMethod]
         public void Player_Load_Settings_VolumeValues()
         {
@@ -718,9 +721,12 @@ namespace Tests
             float expectedMvol = 0.4f;
             float expectedSvol = 0.9f;
 
-            Assert.AreEqual(expectedMvol, newSave.mVol);
-            Assert.AreEqual(expectedSvol, newSave.sVol);
-        }
+			//Pretty sure it's only one Assert per test for MS Unit Test. 
+			//It wont spit out multiple results, just the one that hits first.
+            //Assert.AreEqual(expectedMvol, newSave.mVol);
+            //Assert.AreEqual(expectedSvol, newSave.sVol);
+			Assert.Fail("Player Settings are saved separate from Player Game State");
+		}
         [TestMethod]
         public void Player_Load_Settings_TextSpeed()
         {
@@ -729,8 +735,9 @@ namespace Tests
             SaveData newSave = SaveManager.GetSave(0);
             byte expectedTextSpeed = 1;
 
-            Assert.AreEqual(expectedTextSpeed, newSave.TextSpeed);
-        }
+            //Assert.AreEqual(expectedTextSpeed, newSave.TextSpeed);
+			Assert.Fail("Player Settings are saved separate from Player Game State");
+		}
         [TestMethod] //ToDo: Should be map data, and stuff... Map0 == new game (professsor intro speech)
         public void Player_Load_SpawnLocation()
         {

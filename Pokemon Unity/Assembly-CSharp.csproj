@@ -88,7 +88,7 @@
     <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
     <Compile Include="Assets\Scripts\ImportedScripts\AspectUtilityEnhanced.cs" />
     <Compile Include="Assets\Scripts\ImportedScripts\RotatableGUIItem.cs" />
-    <Compile Include="Assets\Scripts\ImportedScripts\SeriV3.cs" />
+    <Compile Include="Assets\Scripts2\SeriV3.cs" />
     <Compile Include="Assets\Scripts\Interacts\BumpLedge.cs" />
     <Compile Include="Assets\Scripts\Interacts\BumpPokemonCenterRespawn.cs" />
     <Compile Include="Assets\Scripts\Interacts\BumpRespawnSet.cs" />
