@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PokemonUnity;
 
 [System.Serializable, System.Obsolete]
 public class SaveDataOld

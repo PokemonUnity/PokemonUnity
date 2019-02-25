@@ -1047,10 +1047,19 @@ new Item(Items.TM100,               ItemCategory.ALL_MACHINES,     0, null, null
             }
         }
 
+		/// <summary>
+		/// Data structure representing mail that the Pokémon can hold
+		/// </summary>
         public class Mail
         {
             public int Background { get; private set; }
             public string Message { get; set; }
+			/// <summary>
+			/// Used when displaying in UI, one character at a time.
+			/// </summary>
+            public char[] Display { get { return Message.ToCharArray(); } }
+            public string Sender { get { return sender.Name; } }
+            private Trainer sender { get; set; }
             public bool IsLetter { get; private set; }
 
             public static bool IsMail(Items item) { return new Item(item).IsMail; }
@@ -1103,6 +1112,17 @@ new Item(Items.TM100,               ItemCategory.ALL_MACHINES,     0, null, null
                         break;
                 }
             }
+
+			/// <summary>
+			/// </summary>
+			/// <param name="item">Item represented by this mail</param>
+			/// <param name="message">Message text</param>
+			/// <param name="sender">Name of the message's sender</param>
+			public Mail(Items item, string message, Trainer sender) : this(item)
+			{
+				if (!string.IsNullOrEmpty(message)) Message = message.Length > 255 ? message.Substring(0,(byte)255) : message;
+				this.sender = sender;
+			}
         }
         #endregion
     }
