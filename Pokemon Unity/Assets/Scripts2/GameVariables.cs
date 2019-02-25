@@ -61,14 +61,32 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	/// Frame Style for all player and non-playable characters Speech bubbles
 	/// </summary>
 	public static byte DialogSkin { get; private set; }
+	public static byte mvol { get; private set; }
 	/// <summary>
 	/// Music Volume
 	/// </summary>
-	public static float mVol = (7f / 20f) * (7f / 20f);
+	public static float mVol {
+		set
+		{
+			if (value > 20f) mvol = (byte)20;
+			if (value < 0f) mvol = (byte)0;
+			if (value < 20f && value > 0f) mvol = (byte)value;
+		}
+		get { return (mvol / 20f) * (mvol / 20f); }
+	}
+	public static byte svol { get; private set; }
     /// <summary>
     /// SFX (Sound Effects) Volume 
     /// </summary>
-    public static float sVol = (14f / 20f) * (14f / 20f);
+    public static float sVol {
+		set
+		{
+			if (value > 20f) svol = (byte)20;
+			if (value < 0f)  svol = (byte)0;
+			if (value < 20f && value > 0f) svol = (byte)value;
+		}
+		get { return (svol / 20f) * (svol / 20f); }
+	}
     public static bool battleScene = true;
     public static bool fullscreen;
     public static byte textSpeed = 2;
@@ -144,9 +162,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 
 	#region Save/Load Data
 	private byte slotIndex { get; set; }
-    private int fileIndex { get; set; }
-	private const int buildID = 2;
-    //private double buildNum = 0.17;
+	//private int fileIndex { get; set; }
     public static bool SaveFileFound { get; set; }
     public System.DateTimeOffset fileCreationDate { get; set; }
 	public System.DateTimeOffset? lastSave { get; set; }

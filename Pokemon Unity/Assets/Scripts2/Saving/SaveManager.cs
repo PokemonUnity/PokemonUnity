@@ -17,8 +17,17 @@ namespace PokemonUnity.Saving
 		//If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
 		//If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
 		private const bool UseAppdate = false;
+#if DEBUG
+		private const string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
+		//private const string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; //TestProject\bin\Debug
+		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+#else
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
-		public static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
+		//public static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";		
+		private const string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
+		//string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
+#endif
 
 		//private static UnityEngine.GameObject Player;
 		private static List<SaveEvent> EventSaves = new List<SaveEvent>();
@@ -74,19 +83,19 @@ namespace PokemonUnity.Saving
 				);
 		}*/
 
-		/// <summary>
-		/// Saves the game using the standard data.
-		/// </summary>
-		public static void Save(string saveName, int activeScene)
-		{
-			if (!UseAppdate)
-			{
-				saveLocation = UnityEngine.Application.dataPath + "/Saves/";
-			}
-
-			//SaveData DataToSave = CreateSaveFile(saveName, activeScene);
-			//SerializeAndCreateSaveFile(DataToSave);
-		}
+		///// <summary>
+		///// Saves the game using the standard data.
+		///// </summary>
+		//public static void Save(string saveName, int activeScene)
+		//{
+		//	if (!UseAppdate)
+		//	{
+		//		saveLocation = UnityEngine.Application.dataPath + "/Saves/";
+		//	}
+		//
+		//	//SaveData DataToSave = CreateSaveFile(saveName, activeScene);
+		//	//SerializeAndCreateSaveFile(DataToSave);
+		//}
 
 		/// <summary>
 		/// Saves the game using a given SaveData class.
@@ -120,9 +129,10 @@ namespace PokemonUnity.Saving
 			catch (DirectoryNotFoundException)
 			{
 				Directory.CreateDirectory(saveLocation.Substring(0, saveLocation.Length - 1));
-				FileStream file = File.Open(saveLocation + "Save" + (Directory.GetFiles(saveLocation, "*pku", SearchOption.TopDirectoryOnly).Length).ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write);
-				bf.Serialize(file, saveData);
-				file.Close();
+				using (FileStream file = File.Open(saveLocation + "Save" + (Directory.GetFiles(saveLocation, "*.pku", SearchOption.TopDirectoryOnly).Length).ToString() + ".pku", FileMode.OpenOrCreate, FileAccess.Write))
+				{
+					bf.Serialize(file, saveData);
+				}
 			}
 		}
 
@@ -158,7 +168,7 @@ namespace PokemonUnity.Saving
 		{
 			if (!UseAppdate)
 			{
-				saveLocation = UnityEngine.Application.dataPath + "/Saves/";
+				//saveLocation = UnityEngine.Application.dataPath + "/Saves/";
 				if (!Directory.Exists(saveLocation.Substring(0, saveLocation.Length - 1)))
 				{
 					Directory.CreateDirectory(saveLocation.Substring(0, saveLocation.Length - 1));

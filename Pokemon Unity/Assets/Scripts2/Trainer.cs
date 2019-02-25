@@ -66,8 +66,8 @@ public class Trainer
 	/// only the last six digits are used so the Trainer Card will display an ID No.
 	/// </remarks>
 	public string PlayerID { get { return GetHashCode().ToString().Substring(GetHashCode().ToString().Length-6,GetHashCode().ToString().Length); } }
-	private int TrainerID { get; set; }
-	private int SecretID { get; set; }
+	public int TrainerID { get; private set; }
+	public int SecretID { get; private set; }
 
 	#region Explicit Operators
 	public static bool operator == (Trainer t1, Trainer t2)
@@ -142,6 +142,8 @@ public class Trainer
 
 	public Trainer(TrainerTypes trainer)
     {
+		TrainerID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
+		SecretID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
 		IsDouble = false;
 		Party = new Pokemon[6];
 		GetTrainer(trainer);
@@ -163,6 +165,8 @@ public class Trainer
 	public Trainer(Player trainer) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
     {
 		//if trainer is another player
+		TrainerID = trainer.Trainer.TrainerID;
+		SecretID = trainer.Trainer.SecretID;
 		//Change name being loaded
 		Name = trainer.PlayerName;
 		//Load player's gender as well

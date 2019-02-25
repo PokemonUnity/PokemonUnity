@@ -13,25 +13,25 @@ namespace PokemonUnity.Saving.Location
         /// <summary>
         /// x component
         /// </summary>
-        public float x;
+        public float x { get; set; }
 
         /// <summary>
         /// y component
         /// </summary>
-        public float y;
+        public float y { get; set; }
 
-        /// <summary>
-        /// z component
-        /// </summary>
-        public float z;
+		/// <summary>
+		/// z component
+		/// </summary>
+		public float z { get; set; }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="rX"></param>
-        /// <param name="rY"></param>
-        /// <param name="rZ"></param>
-        public SerializableVector3(float rX, float rY, float rZ)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="rX"></param>
+		/// <param name="rY"></param>
+		/// <param name="rZ"></param>
+		public SerializableVector3(float rX, float rY, float rZ)
         {
             x = rX;
             y = rY;

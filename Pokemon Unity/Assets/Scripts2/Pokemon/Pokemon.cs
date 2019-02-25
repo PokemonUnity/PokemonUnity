@@ -200,10 +200,10 @@ namespace PokemonUnity.Pokemon
             PersonalId |= Settings.Rand.Next(256) << 24;
             Ability = Abilities.NONE;
             natureFlag = new Nature();//(Natures)(Settings.Rand.Next(0, 24));
-                                      //ToDo: Maybe add TrainerId = <int> here, before isShiny()?
-                                      //shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
-                                      //Gender = isMale();
-                                      //IV = new int[] { 10, 10, 10, 10, 10, 10 };
+			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
+			//shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
+			//Gender = isMale();
+			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
             IV = new byte[] { (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32) };
             EV = new byte[6];
             Exp = new Experience(GrowthRate);
@@ -380,7 +380,7 @@ namespace PokemonUnity.Pokemon
         /// <remarks>
         /// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
         /// </remarks>
-        private Player OT { get; set; }
+        private Trainer OT { get; set; }
         /// <summary>
         /// Personal/Pokemon ID
         /// </summary>
@@ -394,7 +394,7 @@ namespace PokemonUnity.Pokemon
         /// <returns></returns>
         public bool isForeign(Player trainer)
         {
-            return trainer != this.OT; //ToDo: Match HashId 
+            return trainer.Trainer != this.OT; 
         }
 
         /// <summary>
@@ -851,7 +851,7 @@ namespace PokemonUnity.Pokemon
         private bool isShiny()
         {
             if (shinyFlag.HasValue) return shinyFlag.Value;
-            int a = this.PersonalId ^ this.OT.PlayerID;//this.TrainerId; //Wild Pokemon TrainerId?
+            int a = this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
             int b = a & 0xFFFF;
             int c = (a >> 16) & 0xFFFF;
             int d = b ^ c;
