@@ -49,7 +49,7 @@ namespace PokemonUnity.Saving
 
 		//Player
 		public SeriV3 PlayerPosition { get; private set; }
-		public int PlayerDirection { get; private set; }
+		public float PlayerDirection { get; private set; }
 		//Follower
 		/// <summary>
 		/// </summary>
@@ -100,6 +100,7 @@ namespace PokemonUnity.Saving
 		public SaveData ( )
         {
 			//SaveName = saveName;
+			BuildVersion = SaveManager.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
 			//Language			= (int)GameVariables.UserLanguage;//(int)language;
@@ -117,7 +118,7 @@ namespace PokemonUnity.Saving
 			TrainerID			= GameVariables.playerTrainer.Trainer.TrainerID;
 			SecretID			= GameVariables.playerTrainer.Trainer.SecretID;
 			IsMale				= GameVariables.playerTrainer.isMale;
-			Pokedex2			= GameVariables.playerTrainer.playerPokedex2;
+			Pokedex2			= GameVariables.playerTrainer.PlayerPokedex;
 			PlayerTime			= GameVariables.playerTrainer.playerTime;
 			PlayerPosition		= GameVariables.playerTrainer.playerPosition;
 			PlayerDirection		= GameVariables.playerTrainer.playerDirection;

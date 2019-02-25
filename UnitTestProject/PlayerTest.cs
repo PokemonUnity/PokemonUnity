@@ -193,9 +193,15 @@ namespace Tests
 
                 eventList
             );
-            #endregion
+			#endregion
 
-            Assert.IsNotNull(newSave);
+			//This is a bad test... the variable was just created.
+			//Make a file, save it on hard drive, test to see if the value can be stored to a variable
+			//Unless i am mistaken on what the test is supposed to be looking for
+			//i assume that it is bad because it was matching against inline code
+			//rather than actually testing for functionality of code inside assembly...
+			//Assert.IsNotNull(newSave);
+			Assert.Fail("Could not find save file");
         }
 
         //Check to see if no Exceptions are thrown
@@ -288,8 +294,11 @@ namespace Tests
             #endregion
 
             //If Overwrite doesn't find the file, it'll automatically save it
-            SaveManager.Overwrite(newSave, 0);
-        }
+            //SaveManager.Overwrite(newSave, 0);
+			//There was no assert made for this test...
+			//Try to test if file exist, or if data can be read/saved without any errors...
+			Assert.Fail("Could not find save file");
+		}
 
         [TestMethod]
         public void Load_Save_File()
@@ -431,9 +440,19 @@ namespace Tests
             playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
-
-            //Don't know how to initialize the Items List<> yet, leaving this for later
-            List<Items> playerBag = new List<Items>();
+			
+            List<Items> playerBag = new List<Items>()
+			//Created random inventory list for player bag
+			{
+				Items.ADAMANT_ORB,
+				Items.ACRO_BIKE,
+				Items.POKE_BALL,
+				Items.POKE_BALL,
+				Items.POKE_BALL,
+				Items.POKE_BALL,
+				Items.POKE_BALL,
+				Items.GREAT_BALL
+			};
 
             List<SaveEvent> eventList = new List<SaveEvent>();
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
@@ -473,9 +492,9 @@ namespace Tests
             );
             #endregion
 
-            SaveManager.Overwrite(newSave, 0);
+            SaveManager.Overwrite(newSave, 1);
 
-            SaveData loadedData = SaveManager.GetSave(0);
+            SaveData loadedData = SaveManager.GetSave(1);
 
             #region Assert On Save Values
             if (newSave.BuildVersion != loadedData.BuildVersion)
@@ -632,18 +651,23 @@ namespace Tests
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
             SaveData newSave = SaveManager.GetSave(0);
+			//Party of pokemons should still equal 6, even if other three are empty...
             Pokemon[] expectedPlayerParty = new Pokemon[]
             {
                 new Pokemon(Pokemons.CRANIDOS),
                 new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
+                new Pokemon(Pokemons.TURTWIG),
+				//add null values until 6 pokemons is met, otherwise the test may cause false results
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE)
             };
             Pokemon[] actualPlayerParty = new Pokemon[newSave.PlayerParty.Length];
             for (int i = 0; i < actualPlayerParty.Length; i++)
             {
                 actualPlayerParty[i] = newSave.PlayerParty[i];
             }
-
+			//Dont assert on party length, repeating last message but... all parties should be same length...
             if (expectedPlayerParty.Length != actualPlayerParty.Length)
                 Assert.Fail("Party Lengths do not match up.");
             for (int i = 0; i < expectedPlayerParty.Length; i++)
@@ -658,6 +682,9 @@ namespace Tests
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
             SaveData newSave = SaveManager.GetSave(0);
+			//this is testing for inferior pokedex... but was still functional code.
+			//i removedd pokedex script because i found the expanded version to be more attractive...
+			//may need to redo test again to match active code...
             bool?[] expectedPokedex = new bool?[] { null, false, true, false, null };
 
             if (expectedPokedex.Length != newSave.Pokedex.Length)
