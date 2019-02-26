@@ -18,14 +18,14 @@ namespace PokemonUnity.Saving
 		//If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
 		private const bool UseAppdate = false;
 #if DEBUG
-		private const string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
+		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private const string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; //TestProject\bin\Debug
 		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
 		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
 		//public static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";		
-		private const string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
+		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
 		//string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
 
