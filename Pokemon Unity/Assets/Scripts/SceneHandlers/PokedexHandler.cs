@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using UnityEditor;
+//using UnityEditor;
 
 public class PokedexHandler : MonoBehaviour {
 
