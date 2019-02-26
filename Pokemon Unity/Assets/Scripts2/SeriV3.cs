@@ -5,7 +5,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 #if (DEBUG == false || UNITY_EDITOR == true)
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 #endif
 
 namespace PokemonUnity

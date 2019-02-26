@@ -111,7 +111,6 @@
     <Compile Include="Assets\Scripts\NPCHandler.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
-    <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
