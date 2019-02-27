@@ -7,6 +7,7 @@ using PokemonUnity.Item;
 using PokemonUnity.Saving;
 using PokemonUnity.Saving.Location;
 using System.Collections.Generic;
+using PokemonUnity.Saving.SerializableClasses;
 
 namespace Tests
 {
@@ -25,7 +26,7 @@ namespace Tests
             SaveData newSave;
             #region Fill The Save File
             //string saveName = "First Save";
-            //int activeScene = 2;
+            int activeScene = 2;
 
             //Settings.Languages language = Settings.Languages.English;
             //byte windowBorder = 2;
@@ -39,14 +40,14 @@ namespace Tests
             int secretID = 64123;
             bool isMale = false;
 
-            bool?[] pokedex = new bool?[] { null, false, true, false, null };
+            //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
 			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
-            Pokemon[] playerParty = new Pokemon[]
+            SeriPokemon[] playerParty = new SeriPokemon[]
             {
                 new Pokemon(Pokemons.CRANIDOS),
                 new Pokemon(Pokemons.UMBREON),
@@ -87,8 +88,8 @@ namespace Tests
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
-			newSave = new SaveData()
-			{
+			newSave = new SaveData
+			(
 				//saveName,
 		
 				//language,
@@ -98,26 +99,26 @@ namespace Tests
 				//mvol,
 				//svol,
 		
-				//playerName,
-				//trainerID,
-				//secretID,
-				//isMale,
+				name: playerName,
+				trainer: trainerID,
+				secret: secretID,
+				gender: isMale,
 		
-				//pokedex,
-				//playerTime,
-				//playerPosition,
-				//playerDirection,
+				//pokedex: pokedex,
+				time: playerTime,
+				position: playerPosition,
+				direction: playerDirection,
 				//followerPosition,
 				//followerDirection,
 		
-				//activeScene,
+				scene: activeScene,
 		
-				//playerParty,
-				//new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
-				//playerBag,
+				party: playerParty,
+				pc: new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+				bag: playerBag,
 		
-				//eventList
-			};
+				eventList: eventList
+			);
 			#endregion
 			//SaveManager.Overwrite(newSave, 0);
 			return newSave;
