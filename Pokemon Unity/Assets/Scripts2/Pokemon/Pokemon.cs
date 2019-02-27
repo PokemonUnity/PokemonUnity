@@ -2407,7 +2407,7 @@ namespace PokemonUnity.Pokemon
             #endregion
 
             #region Methods
-            public static this[Pokemons species] { get { return GetPokemon((Pokemons)species); } }
+            public PokemonData this[Pokemons species] { get { return GetPokemon((Pokemons)species); } }
 
 			/// <summary>
             /// 
