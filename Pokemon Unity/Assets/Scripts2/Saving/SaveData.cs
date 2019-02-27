@@ -103,7 +103,7 @@ namespace PokemonUnity.Saving
 			SeriPokemon[] party = null, SeriPC pc = null, List<SaveEvent> eventList = null)
         {
 			//SaveName = saveName;
-			BuildVersion = SaveManager.GetBuildVersion();
+			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
 			//Language			= (int)GameVariables.UserLanguage;//(int)language;
@@ -140,72 +140,72 @@ namespace PokemonUnity.Saving
 			EventList			= eventList; //GameVariables.EventList;
         }
 
-		public SaveData
-            (
-				string saveName,
-
-				Settings.Languages language,
-				byte windowBorder,
-				byte dialogBorder,
-				byte textSpeed,
-				float mvol,
-				float svol,
-
-				string playerName,
-				int trainerID,
-				int secretID,
-				bool isMale,
-
-				bool?[] pokedex,
-				TimeSpan playerTime,
-
-				SeriV3 playerPosition,
-				int playerDirection,
-				SeriV3 followerPosition,
-				int followerDirection,
-
-				int activeScene,
-
-				Pokemon.Pokemon[] playerParty,
-				SeriPC pc,
-				List<Items> playerBag,
-
-				List<SaveEvent> eventList
-            )
-        {
-            SaveName = saveName;
-
-            //Language = (int)language;
-            //WindowBorder = windowBorder;
-            //DialogBorder = dialogBorder;
-            //TextSpeed = textSpeed;
-            //mVol = mvol;
-            //sVol = svol;
-
-            PlayerName = playerName;
-            TrainerID = trainerID;
-            SecretID = secretID;
-            IsMale = isMale;
-
-            Pokedex = pokedex;
-            PlayerTime = playerTime;
-
-            PlayerPosition = playerPosition;
-            PlayerDirection = playerDirection;
-            FollowerPosition = followerPosition;
-            FollowerDirection = followerDirection;
-
-            ActiveScene = activeScene;
-
-            PlayerParty = new SeriPokemon[playerParty.Length];
-            for (int i = 0; i < playerParty.Length; i++)
-            {
-                PlayerParty[i] = playerParty[i];
-            }
-            PC = pc;
-            PlayerBag = playerBag;
-
-            EventList = eventList;
-        }
+		//public SaveData
+        //    (
+		//		string saveName,
+		//
+		//		Settings.Languages language,
+		//		byte windowBorder,
+		//		byte dialogBorder,
+		//		byte textSpeed,
+		//		float mvol,
+		//		float svol,
+		//
+		//		string playerName,
+		//		int trainerID,
+		//		int secretID,
+		//		bool isMale,
+		//
+		//		bool?[] pokedex,
+		//		TimeSpan playerTime,
+		//
+		//		SeriV3 playerPosition,
+		//		int playerDirection,
+		//		SeriV3 followerPosition,
+		//		int followerDirection,
+		//
+		//		int activeScene,
+		//
+		//		Pokemon.Pokemon[] playerParty,
+		//		SeriPC pc,
+		//		List<Items> playerBag,
+		//
+		//		List<SaveEvent> eventList
+        //    )
+        //{
+        //    SaveName = saveName;
+		//
+        //    //Language = (int)language;
+        //    //WindowBorder = windowBorder;
+        //    //DialogBorder = dialogBorder;
+        //    //TextSpeed = textSpeed;
+        //    //mVol = mvol;
+        //    //sVol = svol;
+		//
+        //    PlayerName = playerName;
+        //    TrainerID = trainerID;
+        //    SecretID = secretID;
+        //    IsMale = isMale;
+		//
+        //    Pokedex = pokedex;
+        //    PlayerTime = playerTime;
+		//
+        //    PlayerPosition = playerPosition;
+        //    PlayerDirection = playerDirection;
+        //    FollowerPosition = followerPosition;
+        //    FollowerDirection = followerDirection;
+		//
+        //    ActiveScene = activeScene;
+		//
+        //    PlayerParty = new SeriPokemon[playerParty.Length];
+        //    for (int i = 0; i < playerParty.Length; i++)
+        //    {
+        //        PlayerParty[i] = playerParty[i];
+        //    }
+        //    PC = pc;
+        //    PlayerBag = playerBag;
+		//
+        //    EventList = eventList;
+        //}
     }
 }

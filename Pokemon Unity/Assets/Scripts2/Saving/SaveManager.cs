@@ -12,7 +12,7 @@ namespace PokemonUnity.Saving
 
 	public static class SaveManager
 	{
-		private const string BuildVersion = "0.0.1";
+		public const string BuildVersion = "0.0.1";
 
 		/// <summary>
 		/// If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
@@ -309,9 +309,9 @@ namespace PokemonUnity.Saving
 			}
 		}
 
-		public static string GetBuildVersion()
-		{
-			return BuildVersion;
-		}
+		//public static string GetBuildVersion()
+		//{
+		//	return BuildVersion;
+		//}
 	}
 }
