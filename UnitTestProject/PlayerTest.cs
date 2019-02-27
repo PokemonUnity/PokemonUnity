@@ -705,7 +705,11 @@ namespace Tests
 
             Assert.AreEqual(expectedTimeSpan, newSave.PlayerTime);
         }
-        [TestMethod]
+		#region Game Settings (different from Player Settings)
+		//ToDo: One of these should be good enough... 
+		// i dont think we need each variable to pass
+		// to validate that the mechanic is functional
+		[TestMethod]
         public void Player_Load_Settings_Language()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
@@ -717,7 +721,7 @@ namespace Tests
 			//Assert.AreEqual(expectedLanguage, (Settings.Languages)newSave.Language);
 			Assert.Fail("Player Settings are saved separate from Player Game State");
         }
-        [TestMethod]
+        /*[TestMethod]
         public void Player_Load_Settings_Text_WindowBorder()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
@@ -764,7 +768,8 @@ namespace Tests
 
             //Assert.AreEqual(expectedTextSpeed, newSave.TextSpeed);
 			Assert.Fail("Player Settings are saved separate from Player Game State");
-		}
+		}*/
+		#endregion
         [TestMethod] //ToDo: Should be map data, and stuff... Map0 == new game (professsor intro speech)
         public void Player_Load_SpawnLocation()
         {
