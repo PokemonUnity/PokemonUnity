@@ -268,7 +268,7 @@ namespace PokemonUnity.Pokemon
 
         public Pokemon(string nickName, int form,
             Pokemons species, Abilities ability,
-            Nature nature,
+            Natures nature,
             bool isShiny, bool? gender,
             int[] pokerus, int pokerusStrain,
             int? shadowLevel,
@@ -297,7 +297,7 @@ namespace PokemonUnity.Pokemon
             //_base = Pokemon.PokemonData.GetPokemon(species);
 
             Ability = ability;
-            natureFlag = nature;
+            natureFlag = new Nature(nature);
 
             IsShiny = isShiny;
             Gender = gender;
@@ -829,14 +829,15 @@ namespace PokemonUnity.Pokemon
             }
         }
 
-        /// <summary>
-        /// Returns the Nature for the SeriPokemon class to serialize Nature
-        /// </summary>
-        /// <returns></returns>
-        public Nature getNature()
-        {
-            return natureFlag;
-        }
+        ///// <summary>
+        ///// Returns the Nature for the SeriPokemon class to serialize Nature
+        ///// </summary>
+        ///// <returns></returns>
+		///// Could've just made the natureFlag public if you needed access to it...
+        //public Nature getNature()
+        //{
+        //    return natureFlag;
+        //}
         #endregion
 
         #region Shininess

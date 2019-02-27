@@ -20,6 +20,11 @@ namespace PokemonUnity.Pokemon
             this.Natures = getRandomNature();
         }
 
+        public Nature(Natures nature)
+        {
+            this.Natures = natures[(int)nature].Natures;
+        }
+
         public Nature(Natures name, float ATK_mod, float DEF_mod, float SPA_mod, float SPD_mod, float SPE_mod)
         {
             this.Natures = name;
