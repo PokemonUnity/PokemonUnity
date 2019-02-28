@@ -12,21 +12,30 @@ namespace PokemonUnity.Saving
 
 	public static class SaveManager
 	{
-		private const string BuildVersion = "0.0.1";
+		public const string BuildVersion = "0.0.1";
 
-		//If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
-		//If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
+		/// <summary>
+		/// If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
+		/// <para></para> 
+		/// If UseAppdata = false, Pokemon Unity will save the save files into Assets/Saves
+		/// </summary>
+		/// <remarks>
+		/// Instead of cluttering workspace by saving non-CompileTime content in directory,
+		/// it should be left in bin, until the project is ready to be shipped out (i.e. production/release ready)
+		/// At least then, it remains disposable; and doesnt get in the way of coding/git...
+		/// Also, this bool is unnecessary, when the #pragma below does the job a lot better
+		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
 		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
-		//private const string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; //TestProject\bin\Debug
-		//string file = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
-		//string file =  @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
+		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
+		//private static string saveLocation = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//private static string saveLocation = @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
-		//public static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";		
+		//private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";		
 		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
-		//string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
+		//private static string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
 
 		//private static UnityEngine.GameObject Player;
@@ -300,9 +309,9 @@ namespace PokemonUnity.Saving
 			}
 		}
 
-		public static string GetBuildVersion()
-		{
-			return BuildVersion;
-		}
+		//public static string GetBuildVersion()
+		//{
+		//	return BuildVersion;
+		//}
 	}
 }

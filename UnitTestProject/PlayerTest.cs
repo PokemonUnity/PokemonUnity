@@ -7,6 +7,7 @@ using PokemonUnity.Item;
 using PokemonUnity.Saving;
 using PokemonUnity.Saving.Location;
 using System.Collections.Generic;
+using PokemonUnity.Saving.SerializableClasses;
 
 namespace Tests
 {
@@ -20,423 +21,51 @@ namespace Tests
             Assert.Fail("No Player Test");
         }
 
-        public void Overwrite_New_Save_File_With_Standard_Unit_Test_Values()
+        public static SaveData New_Save_File_With_Standard_Unit_Test_Values()
         {
             SaveData newSave;
             #region Fill The Save File
-            string saveName = "First Save";
+            //string saveName = "First Save";
             int activeScene = 2;
 
-            Settings.Languages language = Settings.Languages.English;
-            byte windowBorder = 2;
-            byte dialogBorder = 9;
-            byte textSpeed = 1;
-            float mvol = 0.4f;
-            float svol = 0.9f;
+            //Settings.Languages language = Settings.Languages.English;
+            //byte windowBorder = 2;
+            //byte dialogBorder = 9;
+            //byte textSpeed = 1;
+            //float mvol = 0.4f;
+            //float svol = 0.9f;
 
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
 
-            bool?[] pokedex = new bool?[] { null, false, true, false, null };
+            //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
 			SeriV3 playerPosition = new SeriV3(0, 1, 0);
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
-            Pokemon[] playerParty = new Pokemon[]
+            SeriPokemon[] playerParty = new SeriPokemon[]
             {
                 new Pokemon(Pokemons.CRANIDOS),
                 new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
+                new Pokemon(Pokemons.TURTWIG),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE)
             };
-            Pokemon[,] playerPC = new Pokemon[4, 4];
-            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
-            {
-                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
-                {
-                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
-                }
-            }
-            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
-            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
-            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
-
-            //Don't know how to initialize the Items List<> yet, leaving this for later
-            List<Items> playerBag = new List<Items>();
-
-            List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
-
-            newSave = new SaveData
-            (
-                saveName,
-
-                language,
-                windowBorder,
-                dialogBorder,
-                textSpeed,
-                mvol,
-                svol,
-
-                playerName,
-                trainerID,
-                secretID,
-                isMale,
-
-                pokedex,
-                playerTime,
-                playerPosition,
-                playerDirection,
-                followerPosition,
-                followerDirection,
-
-                activeScene,
-
-                playerParty,
-                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
-                playerBag,
-
-                eventList
-            );
-            #endregion
-            SaveManager.Overwrite(newSave, 0);
-        }
-
-        [TestMethod]
-        public void Create_New_Save_File()
-        {
-            SaveData newSave;
-
-            #region Fill The Save File
-            string saveName = "First Save";
-            int activeScene = 2;
-
-            Settings.Languages language = Settings.Languages.English;
-            byte windowBorder = 2;
-            byte dialogBorder = 9;
-            byte textSpeed = 1;
-            float mvol = 0.4f;
-            float svol = 0.9f;
-
-            string playerName = "Red";
-            int trainerID = 55323;
-            int secretID = 64123;
-            bool isMale = false;
-
-
-            bool?[] pokedex = new bool?[] { null, false, true, false, null };
-            TimeSpan playerTime = new TimeSpan(4, 20, 53);
-			SeriV3 playerPosition = new SeriV3(0, 1, 0);
-            int playerDirection = 2;
-			SeriV3 followerPosition = new SeriV3(1, 0, 0);
-            int followerDirection = 1;
-
-            Pokemon[] playerParty = new Pokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
-            };
-            Pokemon[,] playerPC = new Pokemon[4,4];
-            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
-            {
-                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
-                {
-                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
-                }
-            }
-            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
-            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
-            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
-
-            //Don't know how to initialize the Items List<> yet, leaving this for later
-            List<Items> playerBag = new List<Items>();
-
-            List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
-
-            newSave = new SaveData
-            (
-                saveName,
-
-                language,
-                windowBorder,
-                dialogBorder,
-                textSpeed,
-                mvol,
-                svol,
-
-                playerName,
-                trainerID,
-                secretID,
-                isMale,
-
-                pokedex,
-                playerTime,
-                playerPosition,
-                playerDirection,
-                followerPosition,
-                followerDirection,
-
-                activeScene,
-
-                playerParty,
-                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
-                playerBag,
-
-                eventList
-            );
-			#endregion
-
-			//This is a bad test... the variable was just created.
-			//Make a file, save it on hard drive, test to see if the value can be stored to a variable
-			//Unless i am mistaken on what the test is supposed to be looking for
-			//i assume that it is bad because it was matching against inline code
-			//rather than actually testing for functionality of code inside assembly...
-			//Assert.IsNotNull(newSave);
-			Assert.Fail("Could not find save file");
-        }
-
-        //Check to see if no Exceptions are thrown
-        [TestMethod]
-        public void Save_Into_File()
-        {
-            SaveData newSave;
-
-            #region Fill The Save File
-            string saveName = "First Save";
-            int activeScene = 2;
-
-            Settings.Languages language = Settings.Languages.English;
-            byte windowBorder = 2;
-            byte dialogBorder = 9;
-            byte textSpeed = 1;
-            float mvol = 0.4f;
-            float svol = 0.9f;
-
-            string playerName = "Red";
-            int trainerID = 55323;
-            int secretID = 64123;
-            bool isMale = false;
-
-
-            bool?[] pokedex = new bool?[] { null, false, true, false, null };
-            TimeSpan playerTime = new TimeSpan(4, 20, 53);
-			SeriV3 playerPosition = new SeriV3(0, 1, 0);
-            int playerDirection = 2;
-			SeriV3 followerPosition = new SeriV3(1, 0, 0);
-            int followerDirection = 1;
-
-            Pokemon[] playerParty = new Pokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
-            };
-            Pokemon[,] playerPC = new Pokemon[4, 4];
-            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
-            {
-                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
-                {
-                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
-                }
-            }
-            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
-            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
-            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
-
-            //Don't know how to initialize the Items List<> yet, leaving this for later
-            List<Items> playerBag = new List<Items>();
-
-            List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
-
-            newSave = new SaveData
-            (
-                saveName,
-
-                language,
-                windowBorder,
-                dialogBorder,
-                textSpeed,
-                mvol,
-                svol,
-
-                playerName,
-                trainerID,
-                secretID,
-                isMale,
-
-                pokedex,
-                playerTime,
-                playerPosition,
-                playerDirection,
-                followerPosition,
-                followerDirection,
-
-                activeScene,
-
-                playerParty,
-                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
-                playerBag,
-
-                eventList
-            );
-            #endregion
-
-            //If Overwrite doesn't find the file, it'll automatically save it
-            //SaveManager.Overwrite(newSave, 0);
-			//There was no assert made for this test...
-			//Try to test if file exist, or if data can be read/saved without any errors...
-			Assert.Fail("Could not find save file");
-		}
-
-        [TestMethod]
-        public void Load_Save_File()
-        {
-            #region Save File Setup
-            SaveData newSave;
-
-            #region Fill The Save File
-            string saveName = "First Save";
-            int activeScene = 2;
-
-            Settings.Languages language = Settings.Languages.English;
-            byte windowBorder = 2;
-            byte dialogBorder = 9;
-            byte textSpeed = 1;
-            float mvol = 0.4f;
-            float svol = 0.9f;
-
-            string playerName = "Red";
-            int trainerID = 55323;
-            int secretID = 64123;
-            bool isMale = false;
-
-
-            bool?[] pokedex = new bool?[] { null, false, true, false, null };
-            TimeSpan playerTime = new TimeSpan(4, 20, 53);
-			SeriV3 playerPosition = new SeriV3(0, 1, 0);
-            int playerDirection = 2;
-			SeriV3 followerPosition = new SeriV3(1, 0, 0);
-            int followerDirection = 1;
-
-            Pokemon[] playerParty = new Pokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
-            };
-            Pokemon[,] playerPC = new Pokemon[4, 4];
-            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
-            {
-                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
-                {
-                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
-                }
-            }
-            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
-            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
-            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
-
-            //Don't know how to initialize the Items List<> yet, leaving this for later
-            List<Items> playerBag = new List<Items>();
-
-            List<SaveEvent> eventList = new List<SaveEvent>();
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
-            eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
-
-            newSave = new SaveData
-            (
-                saveName,
-
-                language,
-                windowBorder,
-                dialogBorder,
-                textSpeed,
-                mvol,
-                svol,
-
-                playerName,
-                trainerID,
-                secretID,
-                isMale,
-
-                pokedex,
-                playerTime,
-                playerPosition,
-                playerDirection,
-                followerPosition,
-                followerDirection,
-
-                activeScene,
-
-                playerParty,
-                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
-                playerBag,
-
-                eventList
-            );
-            #endregion
-
-            SaveManager.Overwrite(newSave, 0);
-            #endregion
-            Assert.IsNotNull(SaveManager.GetSave(0));
-        }
-
-        [TestMethod]
-        public void Compare_Save_Files()
-        {
-            SaveData newSave;
-
-            #region Fill The Save File
-            string saveName = "First Save";
-            int activeScene = 2;
-
-            Settings.Languages language = Settings.Languages.English;
-            byte windowBorder = 2;
-            byte dialogBorder = 9;
-            byte textSpeed = 1;
-            float mvol = 0.4f;
-            float svol = 0.9f;
-
-            string playerName = "Red";
-            int trainerID = 55323;
-            int secretID = 64123;
-            bool isMale = false;
-
-
-            bool?[] pokedex = new bool?[] { null, false, true, false, null };
-            TimeSpan playerTime = new TimeSpan(4, 20, 53);
-			SeriV3 playerPosition = new SeriV3(0, 1, 0);
-            int playerDirection = 2;
-			SeriV3 followerPosition = new SeriV3(1, 0, 0);
-            int followerDirection = 1;
-
-            Pokemon[] playerParty = new Pokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG)
-            };
-            Pokemon[,] playerPC = new Pokemon[4, 4];
-            for (int i = 0; i < playerPC.GetUpperBound(1); i++)
-            {
-                for (int j = 0; j < playerPC.GetUpperBound(0); j++)
-                {
-                    playerPC[i, j] = new Pokemon(Pokemons.NONE);
-                }
-            }
+            Pokemon[,] playerPC = new Pokemon[Settings.STORAGEBOXES, 30];
+            //for (int i = 0; i < playerPC.GetUpperBound(1); i++)
+            //{
+            //	for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+            //	{
+			//		//This should be done by aleady
+			//		//i believe the default value on new Pokemon[,] will return none
+            //		playerPC[i, j] = new Pokemon(Pokemons.NONE);
+            //	}
+            //}
             playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
@@ -454,45 +83,96 @@ namespace Tests
 				Items.GREAT_BALL
 			};
 
-            List<SaveEvent> eventList = new List<SaveEvent>();
+			List<SaveEvent> eventList = new List<SaveEvent>();
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - MasterBall", new SeriV3(4, 1, 9), 9));
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - RareCandy", new SeriV3(2, 7, 3), 2));
 
-            newSave = new SaveData
-            (
-                saveName,
+			newSave = new SaveData
+			(
+				//saveName,
+		
+				//language,
+				//windowBorder,
+				//dialogBorder,
+				//textSpeed,
+				//mvol,
+				//svol,
+		
+				name: playerName,
+				trainer: trainerID,
+				secret: secretID,
+				gender: isMale,
+		
+				//pokedex: pokedex,
+				time: playerTime,
+				position: playerPosition,
+				direction: playerDirection,
+				//followerPosition,
+				//followerDirection,
+		
+				scene: activeScene,
+		
+				party: playerParty,
+				pc: new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+				bag: playerBag,
+		
+				eventList: eventList
+			);
+			#endregion
+			//SaveManager.Overwrite(newSave, 0);
+			return newSave;
+        }
 
-                language,
-                windowBorder,
-                dialogBorder,
-                textSpeed,
-                mvol,
-                svol,
+        public void Overwrite_New_Save_File_With_Standard_Unit_Test_Values()
+        {
+			SaveManager.Overwrite(New_Save_File_With_Standard_Unit_Test_Values(), 0);
+        }
 
-                playerName,
-                trainerID,
-                secretID,
-                isMale,
+        [TestMethod]
+        public void Create_New_Save_File()
+		{
+			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
-                pokedex,
-                playerTime,
-                playerPosition,
-                playerDirection,
-                followerPosition,
-                followerDirection,
+			//This is a bad test... the variable was just created.
+			//Make a file, save it on hard drive, test to see if the value can be stored to a variable
+			//Unless i am mistaken on what the test is supposed to be looking for
+			//i assume that it is bad because it was matching against inline code
+			//rather than actually testing for functionality of code inside assembly...
+			//Assert.IsNotNull(newSave);
+			Assert.Fail("Could not find save file");
+        }
 
-                activeScene,
+        //Check to see if no Exceptions are thrown
+        [TestMethod]
+        public void Save_Into_File()
+		{
+			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
-                playerParty,
-                new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
-                playerBag,
+			//If Overwrite doesn't find the file, it'll automatically save it
+			//SaveManager.Overwrite(newSave, 0);
+			//There was no assert made for this test...
+			//Try to test if file exist, or if data can be read/saved without any errors...
+			Assert.Fail("Could not find save file");
+		}
 
-                eventList
-            );
+        [TestMethod]
+        public void Load_Save_File()
+        {
+			#region Save File Setup
+			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
+
+			SaveManager.Overwrite(newSave, 2);
             #endregion
+            Assert.IsNotNull(SaveManager.GetSave(2));
+        }
 
-            SaveManager.Overwrite(newSave, 1);
+        [TestMethod]
+        public void Compare_Save_Files()
+        {
+			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
+
+			SaveManager.Overwrite(newSave, 1);
 
             SaveData loadedData = SaveManager.GetSave(1);
 
@@ -646,35 +326,74 @@ namespace Tests
             Assert.Fail("No Player Test");
         }
         [TestMethod]
+        public void SaveData_Load_Party()
+        {
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+			byte saveSlot = 0;
+            SaveData newSave = SaveManager.GetSave(saveSlot);
+			////Party of pokemons should still equal 6, even if other three are empty...
+			//Pokemon[] expectedPlayerParty = new Pokemon[]
+			//{
+			//    new Pokemon(Pokemons.CRANIDOS),
+			//    new Pokemon(Pokemons.UMBREON),
+			//    new Pokemon(Pokemons.TURTWIG),
+			//	//add null values until 6 pokemons is met, otherwise the test may cause false results
+			//	new Pokemon(Pokemons.NONE),
+			//	new Pokemon(Pokemons.NONE),
+			//	new Pokemon(Pokemons.NONE)
+			//};
+			//Pokemon[] actualPlayerParty = new Pokemon[newSave.PlayerParty.Length];
+			//for (int i = 0; i < actualPlayerParty.Length; i++)
+			//{
+			//    actualPlayerParty[i] = newSave.PlayerParty[i];
+			//}
+			////Dont assert on party length, repeating last message but... all parties should be same length...
+			//if (expectedPlayerParty.Length != actualPlayerParty.Length)
+			//    Assert.Fail("Party Lengths do not match up.");
+			//for (int i = 0; i < expectedPlayerParty.Length; i++)
+			//{
+			//    if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
+			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
+			//}
+			Assert.AreSame(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
+				new Pokemons[] { (Pokemons)newSave.PlayerParty[0].Species, (Pokemons)newSave.PlayerParty[1].Species, (Pokemons)newSave.PlayerParty[2].Species,
+					(Pokemons)newSave.PlayerParty[3].Species, (Pokemons)newSave.PlayerParty[4].Species, (Pokemons)newSave.PlayerParty[5].Species });
+        }
+        [TestMethod]
         public void Player_Load_Party()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-            SaveData newSave = SaveManager.GetSave(0);
-			//Party of pokemons should still equal 6, even if other three are empty...
-            Pokemon[] expectedPlayerParty = new Pokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG),
-				//add null values until 6 pokemons is met, otherwise the test may cause false results
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE)
-            };
-            Pokemon[] actualPlayerParty = new Pokemon[newSave.PlayerParty.Length];
-            for (int i = 0; i < actualPlayerParty.Length; i++)
-            {
-                actualPlayerParty[i] = newSave.PlayerParty[i];
-            }
-			//Dont assert on party length, repeating last message but... all parties should be same length...
-            if (expectedPlayerParty.Length != actualPlayerParty.Length)
-                Assert.Fail("Party Lengths do not match up.");
-            for (int i = 0; i < expectedPlayerParty.Length; i++)
-            {
-                if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
-                    Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
-            }
+			byte saveSlot = 0;
+			GameVariables.Load(saveSlot);
+			////Party of pokemons should still equal 6, even if other three are empty...
+			//Pokemon[] expectedPlayerParty = new Pokemon[]
+			//{
+			//    new Pokemon(Pokemons.CRANIDOS),
+			//    new Pokemon(Pokemons.UMBREON),
+			//    new Pokemon(Pokemons.TURTWIG),
+			//	//add null values until 6 pokemons is met, otherwise the test may cause false results
+			//	new Pokemon(Pokemons.NONE),
+			//	new Pokemon(Pokemons.NONE),
+			//	new Pokemon(Pokemons.NONE)
+			//};
+			//Pokemon[] actualPlayerParty = new Pokemon[newSave.PlayerParty.Length];
+			//for (int i = 0; i < actualPlayerParty.Length; i++)
+			//{
+			//    actualPlayerParty[i] = newSave.PlayerParty[i];
+			//}
+			////Dont assert on party length, repeating last message but... all parties should be same length...
+			//if (expectedPlayerParty.Length != actualPlayerParty.Length)
+			//    Assert.Fail("Party Lengths do not match up.");
+			//for (int i = 0; i < expectedPlayerParty.Length; i++)
+			//{
+			//    if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
+			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
+			//}
+			Assert.AreSame(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
+				new Pokemons[] { GameVariables.playerTrainer.Trainer.Party[0].Species, GameVariables.playerTrainer.Trainer.Party[1].Species, GameVariables.playerTrainer.Trainer.Party[2].Species,
+					GameVariables.playerTrainer.Trainer.Party[3].Species, GameVariables.playerTrainer.Trainer.Party[4].Species, GameVariables.playerTrainer.Trainer.Party[5].Species });
         }
         [TestMethod]
         public void Player_Load_Pokedex()
@@ -705,7 +424,11 @@ namespace Tests
 
             Assert.AreEqual(expectedTimeSpan, newSave.PlayerTime);
         }
-        [TestMethod]
+		#region Game Settings (different from Player Settings)
+		//ToDo: One of these should be good enough... 
+		// i dont think we need each variable to pass
+		// to validate that the mechanic is functional
+		[TestMethod]
         public void Player_Load_Settings_Language()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
@@ -717,7 +440,7 @@ namespace Tests
 			//Assert.AreEqual(expectedLanguage, (Settings.Languages)newSave.Language);
 			Assert.Fail("Player Settings are saved separate from Player Game State");
         }
-        [TestMethod]
+        /*[TestMethod]
         public void Player_Load_Settings_Text_WindowBorder()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
@@ -764,7 +487,8 @@ namespace Tests
 
             //Assert.AreEqual(expectedTextSpeed, newSave.TextSpeed);
 			Assert.Fail("Player Settings are saved separate from Player Game State");
-		}
+		}*/
+		#endregion
         [TestMethod] //ToDo: Should be map data, and stuff... Map0 == new game (professsor intro speech)
         public void Player_Load_SpawnLocation()
         {

@@ -19,7 +19,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int Species { get; private set; }
 
         public int Ability { get; private set; }
-        public SeriNature Nature { get; private set; }
+        public int Nature { get; private set; }
 
         public virtual bool IsShiny { get; private set; }
         public virtual bool? Gender { get; private set; }
@@ -66,7 +66,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
         public int ObtainedMethod { get; private set; }
         public DateTimeOffset TimeReceived { get; private set; }
-        public DateTimeOffset TimeEggHatched { get; private set; }
+        public DateTimeOffset? TimeEggHatched { get; private set; }
         #endregion
 
         #region Methods
@@ -95,7 +95,7 @@ namespace PokemonUnity.Saving.SerializableClasses
                 (
                     pokemon.NickName, pokemon.Form,
                     (Pokemons)pokemon.Species, (Abilities)pokemon.Ability,
-                    pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
+                    (Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
                     pokemon.Pokerus, pokemon.PokerusStrain, pokemon.ShadowLevel,
                     pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
                     pokemon.ObtainedLevel, pokemon.CurrentLevel, pokemon.CurrentExp,
@@ -118,11 +118,11 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.NickName = pokemon.Name;
 
             seriPokemon.Ability = (int)pokemon.Ability;
-            //Due to parts of Pokemon that's being reworked
-            //These parts shouldn't be saved yet.
+			//Due to parts of Pokemon that's being reworked
+			//These parts shouldn't be saved yet.
 
-            //seriPokemon.Nature = pokemon.getNature();
-            seriPokemon.Nature = new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
+			//seriPokemon.Nature = pokemon.getNature();
+			seriPokemon.Nature = (int)pokemon.Nature;//new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
             //seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
 
@@ -184,11 +184,11 @@ namespace PokemonUnity.Saving.SerializableClasses
 
             seriPokemon.ObtainedMethod = (int)pokemon.ObtainedMode;
             seriPokemon.TimeReceived = pokemon.TimeReceived;
-            try
-            {
+            //try
+            //{
                 seriPokemon.TimeEggHatched = pokemon.TimeEggHatched;
-            }
-            catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
+            //}
+            //catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
 
             return seriPokemon;
         }

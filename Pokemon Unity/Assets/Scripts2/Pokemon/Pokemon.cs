@@ -268,7 +268,7 @@ namespace PokemonUnity.Pokemon
 
         public Pokemon(string nickName, int form,
             Pokemons species, Abilities ability,
-            Nature nature,
+            Natures nature,
             bool isShiny, bool? gender,
             int[] pokerus, int pokerusStrain,
             int? shadowLevel,
@@ -281,7 +281,7 @@ namespace PokemonUnity.Pokemon
             Ribbon[] ribbons, bool[] markings,
             int personalId,
             ObtainedMethod obtainedMethod,
-            DateTimeOffset timeReceived, DateTimeOffset timeEggHatched) : this(species)
+            DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species)
         {
             //Check to see if nickName is filled
             if (nickName != null || nickName != string.Empty)
@@ -297,7 +297,7 @@ namespace PokemonUnity.Pokemon
             //_base = Pokemon.PokemonData.GetPokemon(species);
 
             Ability = ability;
-            natureFlag = nature;
+            natureFlag = new Nature(nature);
 
             IsShiny = isShiny;
             Gender = gender;
@@ -373,7 +373,7 @@ namespace PokemonUnity.Pokemon
         private string obtainString { get; set; }
         //private int obtainLevel; // = 0;
         private System.DateTimeOffset obtainWhen { get; set; }
-        private System.DateTimeOffset hatchedWhen { get; set; }
+        private System.DateTimeOffset? hatchedWhen { get; set; }
         /// <summary>
         /// Original Trainer's Name
         /// </summary>
@@ -483,20 +483,22 @@ namespace PokemonUnity.Pokemon
             hatchedWhen = UTCdate;
         }*/
         /// <summary>
-        /// Sets or Returns the time when this Pokemon hatched
+        /// Sets or Returns the time when this Pokemon hatched.
+		/// If trainer did not hatch this pokemon, age will remain unknown.
         /// </summary>
-        public DateTimeOffset TimeEggHatched
+        public DateTimeOffset? TimeEggHatched
         {
             get
             {
-                if (this.ObtainedMode == ObtainedMethod.EGG)
-                {
-                    if (hatchedWhen == null) this.hatchedWhen = DateTimeOffset.UtcNow;
-                    return this.hatchedWhen;
-                }
-                else
-                    //return DateTimeOffset.UtcNow; //ToDo: Something else? Maybe error?
-                    throw new Exception("Trainer did not acquire Pokemon as an egg.");
+				if (this.ObtainedMode == ObtainedMethod.EGG)
+				{
+					//if (hatchedWhen == null) this.hatchedWhen = DateTimeOffset.UtcNow;
+					return this.hatchedWhen;
+				}
+				else
+					//return DateTimeOffset.UtcNow; //ToDo: Something else? Maybe error?
+					//throw new Exception("Trainer did not acquire Pokemon as an egg."); //No Exceptions...
+					return null;
             }
             set { this.hatchedWhen = value; }
         }
@@ -829,14 +831,15 @@ namespace PokemonUnity.Pokemon
             }
         }
 
-        /// <summary>
-        /// Returns the Nature for the SeriPokemon class to serialize Nature
-        /// </summary>
-        /// <returns></returns>
-        public Nature getNature()
-        {
-            return natureFlag;
-        }
+        ///// <summary>
+        ///// Returns the Nature for the SeriPokemon class to serialize Nature
+        ///// </summary>
+        ///// <returns></returns>
+		///// Could've just made the natureFlag public if you needed access to it...
+        //public Nature getNature()
+        //{
+        //    return natureFlag;
+        //}
         #endregion
 
         #region Shininess
@@ -2407,7 +2410,7 @@ namespace PokemonUnity.Pokemon
             #endregion
 
             #region Methods
-            /// <summary>
+			/// <summary>
             /// 
             /// </summary>
             /// <param name="ID"></param>
