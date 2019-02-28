@@ -11,6 +11,7 @@ namespace PokemonUnity.Saving
 
 	public static class SaveManager
 	{
+		#region Variables
 		public const string BuildVersion = "0.1.0";
 
 		/// <summary>
@@ -27,7 +28,8 @@ namespace PokemonUnity.Saving
 		private const bool UseAppdate = false;
 #if DEBUG
 		private static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
-		private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		//private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug
 		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
 		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
@@ -40,6 +42,7 @@ namespace PokemonUnity.Saving
 		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
 		//private static string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
+		#endregion
 		
 		#region 0.0.1 Original Save Mechanic
 		//private static UnityEngine.GameObject Player;
@@ -324,19 +327,23 @@ namespace PokemonUnity.Saving
 		{
 			BinaryFormatter bf = new BinaryFormatter();
 			//if (System.IO.File.Exists(playerSave))
-			//{
+			//{//SaveData[] sd = GetSaves();
+#if DEBUG
+				//using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				//{
+				//	using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8))
+				//	{
+				//		sw.Write(ob ((object)saveData).ToString());
+				//		//sw.Flush(); sw.Close(); sw.Dispose();
+				//	}
+				//}
+				File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(saveData, true));
+#else
 				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
-					//SaveData[] sd = GetSaves();
-#if DEBUG
-					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8))
-					{
-						sw.Write(((object)saveData).ToString());
-					}
-#else
 					bf.Serialize(fs, saveData);
-#endif
 				}
+#endif
 			//}
 		}
 
@@ -390,19 +397,20 @@ namespace PokemonUnity.Saving
 				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
 #if DEBUG
-					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
-					{
-						sw.Write(new
+					//using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
+					//{
+					//	sw.Write(
+						File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(new
 						{
-							//Language			= (int)GameVariables.UserLanguage,//(int)language;
+							Language			= (int)GameVariables.UserLanguage,//(int)language;
 							//WindowBorder		= GameVariables.WindowSkin,
 							//DialogBorder		= GameVariables.DialogSkin,
-							//TextSpeed			= GameVariables.textSpeed,
+							TextSpeed			= GameVariables.textSpeed,
 							//mVol				= GameVariables.mvol,
 							//sVol				= GameVariables.svol,
-							//Fullscreen			= GameVariables.fullscreen,
-						});
-					}
+							Fullscreen			= GameVariables.fullscreen,
+						}, true));
+					//}
 #else
 					bf.Serialize(fs, new
 					{
