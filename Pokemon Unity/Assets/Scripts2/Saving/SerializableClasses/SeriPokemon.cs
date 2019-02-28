@@ -24,12 +24,12 @@ namespace PokemonUnity.Saving.SerializableClasses
         public virtual bool IsShiny { get; private set; }
         public virtual bool? Gender { get; private set; }
 
-        public bool? PokerusStage { get; private set; }
+        //public bool? PokerusStage { get; private set; }
         public int[] Pokerus { get; private set; }
-        public int PokerusStrain { get; private set; }
+        //public int PokerusStrain { get; private set; }
 
         public bool IsHyperMode { get; private set; }
-        public bool IsShadow { get; private set; }
+        //public bool IsShadow { get; private set; }
         public int? ShadowLevel { get; private set; }
 
         public int CurrentHP { get; private set; }
@@ -39,7 +39,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public byte[] EV { get; private set; }
 
         public int ObtainedLevel { get; private set; }
-        public int CurrentLevel { get; private set; }
+        //public int CurrentLevel { get; private set; }
         public int CurrentExp { get; private set; }
 
         public int Happines { get; private set; }
@@ -62,7 +62,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         /// Trading/Obtaining
         /// </summary>
         public int PersonalId { get; private set; }
-        public string PublicId { get; private set; }
+        //public string PublicId { get; private set; }
 
         public int ObtainedMethod { get; private set; }
         public DateTimeOffset TimeReceived { get; private set; }
@@ -96,9 +96,9 @@ namespace PokemonUnity.Saving.SerializableClasses
                     pokemon.NickName, pokemon.Form,
                     (Pokemons)pokemon.Species, (Abilities)pokemon.Ability,
                     (Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
-                    pokemon.Pokerus, pokemon.PokerusStrain, pokemon.ShadowLevel,
+                    pokemon.Pokerus, pokemon.IsHyperMode, pokemon.ShadowLevel,
                     pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
-                    pokemon.ObtainedLevel, pokemon.CurrentLevel, pokemon.CurrentExp,
+                    pokemon.ObtainedLevel, /*pokemon.CurrentLevel,*/ pokemon.CurrentExp,
                     pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
                     pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
                     moves, ribbons, pokemon.Markings, pokemon.PersonalId,
@@ -126,12 +126,12 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
 
-            seriPokemon.PokerusStage = pokemon.PokerusStage;
+            //seriPokemon.PokerusStage = pokemon.PokerusStage;
             seriPokemon.Pokerus = pokemon.Pokerus;
-            seriPokemon.PokerusStrain = pokemon.PokerusStrain;
+            //seriPokemon.PokerusStrain = pokemon.PokerusStrain;
 
             seriPokemon.IsHyperMode = pokemon.isHyperMode;
-            seriPokemon.IsShadow = pokemon.isShadow;
+            //seriPokemon.IsShadow = pokemon.isShadow;
             seriPokemon.ShadowLevel = pokemon.ShadowLevel;
 
             seriPokemon.CurrentHP = pokemon.HP;
@@ -141,7 +141,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             seriPokemon.EV = pokemon.EV;
 
             seriPokemon.ObtainedLevel = pokemon.ObtainLevel;
-            seriPokemon.CurrentLevel = pokemon.Level;
+            //seriPokemon.CurrentLevel = pokemon.Level;
             seriPokemon.CurrentExp = pokemon.Exp.Current;
 
             seriPokemon.Happines = pokemon.Happiness;

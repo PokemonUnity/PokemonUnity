@@ -270,11 +270,11 @@ namespace PokemonUnity.Pokemon
             Pokemons species, Abilities ability,
             Natures nature,
             bool isShiny, bool? gender,
-            int[] pokerus, int pokerusStrain,
+            int[] pokerus, bool ishyper,
             int? shadowLevel,
             int currentHp, Items item,
             byte[] iv, byte[] ev, 
-            int obtainedLevel, int currentLevel, int currentExp,
+            int obtainedLevel, /*int currentLevel,*/ int currentExp,
             int happiness, Status status, int statusCount,
             int eggSteps, Items ballUsed,
             string mail, Move[] moves,
@@ -304,7 +304,7 @@ namespace PokemonUnity.Pokemon
 
             this.pokerus = pokerus;
 
-            isHyperMode = isHyperMode;
+            isHyperMode = ishyper;
             ShadowLevel = shadowLevel;
 
             HP = currentHp;
@@ -314,7 +314,7 @@ namespace PokemonUnity.Pokemon
             EV = ev;
 
             ObtainLevel = obtainedLevel;
-            Level = currentLevel;
+            //Level = currentLevel;
             Exp.AddExperience(currentExp);
 
             Happiness = happiness;
@@ -388,7 +388,7 @@ namespace PokemonUnity.Pokemon
         public int PersonalId { get; private set; }
 
         /// <summary>
-        /// Returns whether or not the specified Trainer is the NOT this Pokemon's original trainer
+        /// Returns whether or not the specified Trainer is NOT this Pokemon's original trainer
         /// </summary>
         /// <param name="trainer"></param>
         /// <returns></returns>
