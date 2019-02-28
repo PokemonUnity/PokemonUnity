@@ -299,7 +299,7 @@ namespace PokemonUnity.Pokemon
             Ability = ability;
             natureFlag = new Nature(nature);
 
-            IsShiny = isShiny;
+            shinyFlag = isShiny;
             Gender = gender;
 
             this.pokerus = pokerus;
@@ -858,7 +858,8 @@ namespace PokemonUnity.Pokemon
             int b = a & 0xFFFF;
             int c = (a >> 16) & 0xFFFF;
             int d = b ^ c;
-            return d < _base.ShinyChance;
+            shinyFlag = d < _base.ShinyChance;
+			return shinyFlag.Value;
         }
 
         /// <summary>
@@ -868,8 +869,8 @@ namespace PokemonUnity.Pokemon
         {
             //If not manually set, use math to figure out.
             //ToDo: Store results to save on redoing future execution? 
-            get { return shinyFlag ?? isShiny()/*false*/; }
-            set { shinyFlag = value; }
+            get { return shinyFlag ?? isShiny(); }
+            //set { shinyFlag = value; }
         }
         /// <summary>
         /// Forces the shininess
