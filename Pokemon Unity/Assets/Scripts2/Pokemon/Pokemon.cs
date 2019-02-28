@@ -339,8 +339,8 @@ namespace PokemonUnity.Pokemon
             PersonalId = personalId;
 
             ObtainedMode = obtainedMethod;
-            TimeReceived = timeReceived;
-            TimeEggHatched = timeEggHatched;
+            obtainWhen = timeReceived;
+            hatchedWhen = timeEggHatched;
         }
         #endregion
 
@@ -456,7 +456,7 @@ namespace PokemonUnity.Pokemon
                 if (obtainWhen == null) this.obtainWhen = DateTimeOffset.UtcNow;
                 return this.obtainWhen;
             }
-            set { this.obtainWhen = value; }
+            //set { this.obtainWhen = value; }
         }
 
         /*// <summary>
@@ -500,7 +500,7 @@ namespace PokemonUnity.Pokemon
 					//throw new Exception("Trainer did not acquire Pokemon as an egg."); //No Exceptions...
 					return null;
             }
-            set { this.hatchedWhen = value; }
+            //set { this.hatchedWhen = value; }
         }
         #endregion
 
