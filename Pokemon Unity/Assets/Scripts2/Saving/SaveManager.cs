@@ -325,7 +325,14 @@ namespace PokemonUnity.Saving
 				using(FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
 					SaveData[] sd = GetSaves();
+#if DEBUG
+					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII))
+					{
+						sw.Write(saveData);
+					}
+#else
 					bf.Serialize(fs, saveData);
+#endif
 				}
 			}
 		}
@@ -337,8 +344,15 @@ namespace PokemonUnity.Saving
 			{
 				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
+#if DEBUG
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.ASCII))
+					{
+						return (SaveData[])(object)sr.ReadToEnd();
+					};
+#else
 					return (SaveData[])bf.Deserialize(fs);
-				}
+#endif
+					}
 			}
 			else return null;
 		}
@@ -350,7 +364,15 @@ namespace PokemonUnity.Saving
 			{
 				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
-					dynamic data = bf.Deserialize(fs);
+					dynamic data;
+#if DEBUG
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.ASCII))
+					{
+						data = (dynamic)sr.ReadToEnd();
+					};
+#else
+					data = bf.Deserialize(fs);
+#endif
 					GameVariables.UserLanguage	= (Settings.Languages)data.Language;
 					//GameVariables.WindowSkin	= data.WindowBorder;
 					//GameVariables.DialogSkin	= data.DialogBorder;
@@ -364,6 +386,21 @@ namespace PokemonUnity.Saving
 			{
 				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
+#if DEBUG
+					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
+					{
+						sw.Write(new
+						{
+							Language			= (int)GameVariables.UserLanguage,//(int)language;
+							WindowBorder		= GameVariables.WindowSkin,
+							DialogBorder		= GameVariables.DialogSkin,
+							TextSpeed			= GameVariables.textSpeed,
+							mVol				= GameVariables.mvol,
+							sVol				= GameVariables.svol,
+							Fullscreen			= GameVariables.fullscreen,
+						});
+					}
+#else
 					bf.Serialize(fs, new
 					{
 						Language			= (int)GameVariables.UserLanguage,//(int)language;
@@ -374,9 +411,10 @@ namespace PokemonUnity.Saving
 						sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
 					});
+#endif
 				}
 			}
 		}
-		#endregion
+#endregion
 	}
 }
