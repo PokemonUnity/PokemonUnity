@@ -324,8 +324,8 @@ namespace PokemonUnity.Saving
 		public static void CreateSaveFileAndSerialize(SaveData[] saveData)
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			if (System.IO.File.Exists(playerSave))
-			{
+			//if (System.IO.File.Exists(playerSave))
+			//{
 				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
 					SaveData[] sd = GetSaves();
@@ -338,7 +338,7 @@ namespace PokemonUnity.Saving
 					bf.Serialize(fs, saveData);
 #endif
 				}
-			}
+			//}
 		}
 
 		public static SaveData[] GetSaves()
