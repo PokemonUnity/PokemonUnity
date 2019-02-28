@@ -352,18 +352,21 @@ namespace PokemonUnity.Saving
 			BinaryFormatter bf = new BinaryFormatter();
 			if (System.IO.File.Exists(playerSave))
 			{
+#if DEBUG
+				//using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				//{
+				//	using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
+				//	{
+				//		return (SaveData[])(object)sr.ReadToEnd();
+				//	};
+				//}
+				return UnityEngine.JsonUtility.FromJson<SaveData[]>(playerSave);
+#else
 				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
-#if DEBUG
-					//using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
-					//{
-					//	return (SaveData[])(object)sr.ReadToEnd();
-					//};
-					return UnityEngine.JsonUtility.FromJson<SaveData[]>(playerSave);
-#else
 					return (SaveData[])bf.Deserialize(fs);
-#endif
 				}
+#endif
 			}
 			else return null;
 		}
