@@ -12,7 +12,7 @@ namespace PokemonUnity.Saving
 
 	public static class SaveManager
 	{
-		public const string BuildVersion = "0.0.1";
+		public const string BuildVersion = "0.1.0";
 
 		/// <summary>
 		/// If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
@@ -27,9 +27,9 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
-		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
+		private static string saveLocation = @"\SaveFile.pku"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
-		//private static string saveLocation = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
 		//private static string saveLocation = @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
@@ -37,7 +37,8 @@ namespace PokemonUnity.Saving
 		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
 		//private static string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
-
+		
+		#region 0.0.1 Original Save Mechanic
 		//private static UnityEngine.GameObject Player;
 		private static List<SaveEvent> EventSaves = new List<SaveEvent>();
 
@@ -313,5 +314,34 @@ namespace PokemonUnity.Saving
 		//{
 		//	return BuildVersion;
 		//}
+		#endregion
+
+		#region Save 0.1.0 Rewrite
+		public static void CreateSaveFileAndSerialize(SaveData[] saveData)
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			if (System.IO.File.Exists(saveLocation))
+			{
+				using(FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				{
+					SaveData[] sd = GetSaves();
+					bf.Serialize(fs, saveData);
+				}
+			}
+		}
+
+		public static SaveData[] GetSaves()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			if (System.IO.File.Exists(saveLocation))
+			{
+				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					return (SaveData[])bf.Deserialize(fs);
+				}
+			}
+			else return null;
+		}
+		#endregion
 	}
 }
