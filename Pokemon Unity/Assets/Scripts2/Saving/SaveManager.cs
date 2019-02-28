@@ -342,6 +342,41 @@ namespace PokemonUnity.Saving
 			}
 			else return null;
 		}
+
+		public static void LoadGameState()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			if (System.IO.File.Exists(saveLocation))
+			{
+				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					dynamic data = bf.Deserialize(fs);
+					GameVariables.UserLanguage	= (Settings.Languages)data.Language;
+					//GameVariables.WindowSkin	= data.WindowBorder;
+					//GameVariables.DialogSkin	= data.DialogBorder;
+					GameVariables.textSpeed		= data.TextSpeed;
+					//GameVariables.mvol			= data.mVol;
+					//GameVariables.svol			= data.sVol;
+					GameVariables.fullscreen	= data.Fullscreen;
+				}
+			}
+			else
+			{
+				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				{
+					bf.Serialize(fs, new
+					{
+						Language			= (int)GameVariables.UserLanguage,//(int)language;
+						WindowBorder		= GameVariables.WindowSkin,
+						DialogBorder		= GameVariables.DialogSkin,
+						TextSpeed			= GameVariables.textSpeed,
+						mVol				= GameVariables.mvol,
+						sVol				= GameVariables.svol,
+						Fullscreen			= GameVariables.fullscreen,
+					});
+				}
+			}
+		}
 		#endregion
 	}
 }

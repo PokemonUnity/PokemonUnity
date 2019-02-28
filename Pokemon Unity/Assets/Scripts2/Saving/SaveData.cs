@@ -106,13 +106,6 @@ namespace PokemonUnity.Saving
 			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
-			//Language			= (int)GameVariables.UserLanguage;//(int)language;
-			//WindowBorder		= GameVariables.WindowSkin;
-			//DialogBorder		= GameVariables.DialogSkin;
-			//TextSpeed			= GameVariables.textSpeed;
-			//mVol				= GameVariables.mvol;
-			//sVol				= GameVariables.svol;
-			//Fullscreen			= GameVariables.fullscreen;
 			PlayerName			= name			?? GameVariables.playerTrainer.PlayerName;
 			PlayerMoney			= money			?? GameVariables.playerTrainer.PlayerMoney;
 			PlayerCoins			= coin			?? GameVariables.playerTrainer.PlayerCoins;
