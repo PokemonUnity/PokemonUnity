@@ -123,7 +123,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 			//seriPokemon.Nature = pokemon.getNature();
 			seriPokemon.Nature = (int)pokemon.Nature;//new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
-            //seriPokemon.IsShiny = pokemon.IsShiny;
+            seriPokemon.IsShiny = pokemon.IsShiny;
             seriPokemon.Gender = pokemon.Gender;
 
             seriPokemon.PokerusStage = pokemon.PokerusStage;
@@ -178,7 +178,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             }
             seriPokemon.Markings = pokemon.Markings;
 
-            seriPokemon.PersonalId = pokemon.PersonalId;
+            //seriPokemon.PersonalId = pokemon.PersonalId;
             //PublicId in pokemon is null, so Pokemon returns null
             //seriPokemon.PublicId = pokemon.PublicId;
 

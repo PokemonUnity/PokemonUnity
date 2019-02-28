@@ -68,7 +68,6 @@
     <Compile Include="Assets\Scripts2\Saving\SaveData.cs" />
     <Compile Include="Assets\Scripts2\Saving\Location\SeriVector3.cs" />
     <Compile Include="Assets\Scripts2\Saving\SerializableClasses\SeriMove.cs" />
-    <Compile Include="Assets\Scripts2\Saving\SerializableClasses\SeriNature.cs" />
     <Compile Include="Assets\Scripts2\Saving\SerializableClasses\SeriPC.cs" />
     <Compile Include="Assets\Scripts2\Saving\SerializableClasses\SeriPokemon.cs" />
     <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
