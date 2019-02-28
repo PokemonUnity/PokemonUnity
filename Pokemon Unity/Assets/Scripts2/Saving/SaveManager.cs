@@ -26,9 +26,9 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
-		private static string gameConfig = @"\ConfigFile.pku"; //TestProject\bin\Debug
-		private static string playerSave = @"\SaveFile.pku"; //TestProject\bin\Debug
-		private static string saveLocation = "\\Save\\"; //TestProject\bin\Debug
+		private static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
+		private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
 		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
 		//private static string saveLocation = @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
@@ -327,11 +327,11 @@ namespace PokemonUnity.Saving
 			//{
 				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
-					SaveData[] sd = GetSaves();
+					//SaveData[] sd = GetSaves();
 #if DEBUG
-					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII))
+					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8))
 					{
-						sw.Write(saveData);
+						sw.Write(((object)saveData).ToString());
 					}
 #else
 					bf.Serialize(fs, saveData);
@@ -348,7 +348,7 @@ namespace PokemonUnity.Saving
 				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
 #if DEBUG
-					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.ASCII))
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
 					{
 						return (SaveData[])(object)sr.ReadToEnd();
 					};
@@ -367,22 +367,22 @@ namespace PokemonUnity.Saving
 			{
 				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
-					dynamic data;
+					object data;
 #if DEBUG
-					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.ASCII))
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
 					{
-						data = (dynamic)sr.ReadToEnd();
+						data = (object)sr.ReadToEnd();
 					};
 #else
 					data = bf.Deserialize(fs);
 #endif
-					GameVariables.UserLanguage	= (Settings.Languages)data.Language;
+					//GameVariables.UserLanguage	= (Settings.Languages)data.Language;
 					//GameVariables.WindowSkin	= data.WindowBorder;
 					//GameVariables.DialogSkin	= data.DialogBorder;
-					GameVariables.textSpeed		= data.TextSpeed;
+					//GameVariables.textSpeed		= data.TextSpeed;
 					//GameVariables.mvol			= data.mVol;
 					//GameVariables.svol			= data.sVol;
-					GameVariables.fullscreen	= data.Fullscreen;
+					//GameVariables.fullscreen	= data.Fullscreen;
 				}
 			}
 			else
@@ -394,13 +394,13 @@ namespace PokemonUnity.Saving
 					{
 						sw.Write(new
 						{
-							Language			= (int)GameVariables.UserLanguage,//(int)language;
+							//Language			= (int)GameVariables.UserLanguage,//(int)language;
 							//WindowBorder		= GameVariables.WindowSkin,
 							//DialogBorder		= GameVariables.DialogSkin,
-							TextSpeed			= GameVariables.textSpeed,
+							//TextSpeed			= GameVariables.textSpeed,
 							//mVol				= GameVariables.mvol,
 							//sVol				= GameVariables.svol,
-							Fullscreen			= GameVariables.fullscreen,
+							//Fullscreen			= GameVariables.fullscreen,
 						});
 					}
 #else

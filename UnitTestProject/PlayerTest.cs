@@ -113,7 +113,7 @@ namespace Tests
 				scene: activeScene,
 		
 				party: playerParty,
-				pc: new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
 				bag: playerBag,
 		
 				eventList: eventList

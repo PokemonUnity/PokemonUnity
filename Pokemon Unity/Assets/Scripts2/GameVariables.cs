@@ -215,7 +215,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 		//PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
 		SaveData[] save = SaveManager.GetSaves();
 		if (save == null)
-			save = new SaveData[3];
+			save = new SaveData[] { null, null, null };
 		save[slotIndex] = new SaveData();
 		SaveManager.CreateSaveFileAndSerialize(save);
     }
@@ -227,7 +227,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     {
 		SaveData[] save = SaveManager.GetSaves();
 		if (save == null)
-			save = new SaveData[3];
+			save = new SaveData[] { null, null, null };
 		save[slot] = test;
 		SaveManager.CreateSaveFileAndSerialize(save);
     }
