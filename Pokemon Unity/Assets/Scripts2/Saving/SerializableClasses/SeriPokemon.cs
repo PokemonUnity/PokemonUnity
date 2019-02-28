@@ -66,7 +66,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
         public int ObtainedMethod { get; private set; }
         public DateTimeOffset TimeReceived { get; private set; }
-        public DateTimeOffset TimeEggHatched { get; private set; }
+        public DateTimeOffset? TimeEggHatched { get; private set; }
         #endregion
 
         #region Methods
@@ -184,11 +184,11 @@ namespace PokemonUnity.Saving.SerializableClasses
 
             seriPokemon.ObtainedMethod = (int)pokemon.ObtainedMode;
             seriPokemon.TimeReceived = pokemon.TimeReceived;
-            try
-            {
+            //try
+            //{
                 seriPokemon.TimeEggHatched = pokemon.TimeEggHatched;
-            }
-            catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
+            //}
+            //catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
 
             return seriPokemon;
         }
