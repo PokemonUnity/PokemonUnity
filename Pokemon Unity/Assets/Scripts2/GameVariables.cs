@@ -14,6 +14,7 @@ using System.Globalization;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Item;
+using PokemonUnity.Saving;
 
 /// <summary>
 /// Variables that are stored when game is saved, and other temp values used for gameplay.
@@ -210,7 +211,21 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     {
 		//using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
 		//GameVariables.SaveLoad.Save();
-		PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
+
+		//PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
+		SaveData[] save = SaveManager.GetSaves();
+		save[slotIndex] = new SaveData();
+		SaveManager.CreateSaveFileAndSerialize(save);
+    }
+	/// <summary>
+	/// For Debug Use Purposes;
+	/// Used Unit Tester...
+	/// </summary>
+    public static void Save(SaveData test, int slot)
+    {
+		SaveData[] save = SaveManager.GetSaves();
+		save[slot] = test;
+		SaveManager.CreateSaveFileAndSerialize(save);
     }
 
     /*private class SaveLoad {

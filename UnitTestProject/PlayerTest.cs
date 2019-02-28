@@ -363,9 +363,11 @@ namespace Tests
         [TestMethod]
         public void Player_Load_Party()
         {
-            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+            //Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
+			GameVariables.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
+
 			GameVariables.Load(saveSlot);
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]
