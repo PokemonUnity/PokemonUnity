@@ -178,7 +178,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             }
             seriPokemon.Markings = pokemon.Markings;
 
-            //seriPokemon.PersonalId = pokemon.PersonalId;
+            seriPokemon.PersonalId = pokemon.PersonalId;
             //PublicId in pokemon is null, so Pokemon returns null
             //seriPokemon.PublicId = pokemon.PublicId;
 
