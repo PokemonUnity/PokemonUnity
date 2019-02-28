@@ -28,8 +28,8 @@ namespace PokemonUnity.Saving
 		private const bool UseAppdate = false;
 #if DEBUG
 		private static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
-		//private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
-		private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug
+		private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		//private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug
 		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
 		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
@@ -355,14 +355,15 @@ namespace PokemonUnity.Saving
 				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
 #if DEBUG
-					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
-					{
-						return (SaveData[])(object)sr.ReadToEnd();
-					};
+					//using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
+					//{
+					//	return (SaveData[])(object)sr.ReadToEnd();
+					//};
+					return UnityEngine.JsonUtility.FromJson<SaveData[]>(playerSave);
 #else
 					return (SaveData[])bf.Deserialize(fs);
 #endif
-					}
+				}
 			}
 			else return null;
 		}
