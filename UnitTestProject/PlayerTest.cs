@@ -326,11 +326,12 @@ namespace Tests
             Assert.Fail("No Player Test");
         }
         [TestMethod]
-        public void Player_Load_Party()
+        public void SaveData_Load_Party()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-            SaveData newSave = SaveManager.GetSave(0);
+			byte saveSlot = 0;
+            SaveData newSave = SaveManager.GetSave(saveSlot);
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]
 			//{
@@ -358,6 +359,41 @@ namespace Tests
 			Assert.AreSame(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
 				new Pokemons[] { (Pokemons)newSave.PlayerParty[0].Species, (Pokemons)newSave.PlayerParty[1].Species, (Pokemons)newSave.PlayerParty[2].Species,
 					(Pokemons)newSave.PlayerParty[3].Species, (Pokemons)newSave.PlayerParty[4].Species, (Pokemons)newSave.PlayerParty[5].Species });
+        }
+        [TestMethod]
+        public void Player_Load_Party()
+        {
+            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+
+			byte saveSlot = 0;
+			GameVariables.Load(saveSlot);
+			////Party of pokemons should still equal 6, even if other three are empty...
+			//Pokemon[] expectedPlayerParty = new Pokemon[]
+			//{
+			//    new Pokemon(Pokemons.CRANIDOS),
+			//    new Pokemon(Pokemons.UMBREON),
+			//    new Pokemon(Pokemons.TURTWIG),
+			//	//add null values until 6 pokemons is met, otherwise the test may cause false results
+			//	new Pokemon(Pokemons.NONE),
+			//	new Pokemon(Pokemons.NONE),
+			//	new Pokemon(Pokemons.NONE)
+			//};
+			//Pokemon[] actualPlayerParty = new Pokemon[newSave.PlayerParty.Length];
+			//for (int i = 0; i < actualPlayerParty.Length; i++)
+			//{
+			//    actualPlayerParty[i] = newSave.PlayerParty[i];
+			//}
+			////Dont assert on party length, repeating last message but... all parties should be same length...
+			//if (expectedPlayerParty.Length != actualPlayerParty.Length)
+			//    Assert.Fail("Party Lengths do not match up.");
+			//for (int i = 0; i < expectedPlayerParty.Length; i++)
+			//{
+			//    if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
+			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
+			//}
+			Assert.AreSame(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
+				new Pokemons[] { GameVariables.playerTrainer.Trainer.Party[0].Species, GameVariables.playerTrainer.Trainer.Party[1].Species, GameVariables.playerTrainer.Trainer.Party[2].Species,
+					GameVariables.playerTrainer.Trainer.Party[3].Species, GameVariables.playerTrainer.Trainer.Party[4].Species, GameVariables.playerTrainer.Trainer.Party[5].Species });
         }
         [TestMethod]
         public void Player_Load_Pokedex()
