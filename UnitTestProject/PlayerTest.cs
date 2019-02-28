@@ -5,7 +5,6 @@ using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
 using PokemonUnity.Saving;
-using PokemonUnity.Saving.Location;
 using System.Collections.Generic;
 using PokemonUnity.Saving.SerializableClasses;
 

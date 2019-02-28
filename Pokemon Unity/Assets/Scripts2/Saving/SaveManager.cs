@@ -8,7 +8,6 @@ namespace PokemonUnity.Saving
 {
 	using PokemonUnity.Pokemon;
 	using PokemonUnity.Item;
-	using PokemonUnity.Saving.Location;
 
 	public static class SaveManager
 	{
