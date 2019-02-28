@@ -378,22 +378,30 @@ namespace PokemonUnity.Saving
 			{
 				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
-					object data;
+					var data = new {
+						Language			= (int)GameVariables.UserLanguage,//(int)language;
+						//WindowBorder		= GameVariables.WindowSkin,
+						//DialogBorder		= GameVariables.DialogSkin,
+						TextSpeed			= GameVariables.textSpeed,
+						//mVol				= GameVariables.mvol,
+						//sVol				= GameVariables.svol,
+						Fullscreen			= GameVariables.fullscreen,
+					};
 #if DEBUG
 					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
 					{
-						data = (object)sr.ReadToEnd();
+						data = sr.ReadToEnd().CastTo(data);
 					};
 #else
-					data = bf.Deserialize(fs);
+					data = bf.Deserialize(fs).CastTo(data);
 #endif
-					//GameVariables.UserLanguage	= (Settings.Languages)data.Language;
+					GameVariables.UserLanguage	= (Settings.Languages)data.Language;
 					//GameVariables.WindowSkin	= data.WindowBorder;
 					//GameVariables.DialogSkin	= data.DialogBorder;
-					//GameVariables.textSpeed		= data.TextSpeed;
+					GameVariables.textSpeed		= data.TextSpeed;
 					//GameVariables.mvol			= data.mVol;
 					//GameVariables.svol			= data.sVol;
-					//GameVariables.fullscreen	= data.Fullscreen;
+					GameVariables.fullscreen	= data.Fullscreen;
 				}
 			}
 			else
@@ -430,6 +438,11 @@ namespace PokemonUnity.Saving
 				}
 			}
 		}
-#endregion
+
+		private static T CastTo<T>(this Object value, T target)
+		{
+			return (T)value;
+		}
+		#endregion
 	}
 }
