@@ -844,32 +844,25 @@ namespace PokemonUnity.Pokemon
 
         #region Shininess
         /// <summary>
-        /// Uses math to determine if Pokemon is shiny.
         /// Returns whether this Pokemon is shiny (differently colored)
         /// </summary>
-        /// <returns></returns>
-        /// Use this when rolling for shiny...
-        /// Honestly, without this math, i probably would've done something a lot more primative.
-        /// Look forward to primative math on wild pokemon encounter chances...
-        private bool isShiny()
-        {
-            if (shinyFlag.HasValue) return shinyFlag.Value;
-            int a = this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
-            int b = a & 0xFFFF;
-            int c = (a >> 16) & 0xFFFF;
-            int d = b ^ c;
-            shinyFlag = d < _base.ShinyChance;
-			return shinyFlag.Value;
-        }
-
-        /// <summary>
-        /// Makes this Pokemon shiny or not shiny
-        /// </summary>
         public virtual bool IsShiny
-        {
-            //If not manually set, use math to figure out.
-            //ToDo: Store results to save on redoing future execution? 
-            get { return shinyFlag ?? isShiny(); }
+        { 
+			//Uses math to determine if Pokemon is shiny.
+            get
+			{
+				//return shinyFlag ?? isShiny();
+				if (shinyFlag.HasValue) return shinyFlag.Value;
+				// Use this when rolling for shiny...
+				// Honestly, without this math, i probably would've done something a lot more primative.
+				// Look forward to primative math on wild pokemon encounter chances...
+				int a = this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
+				int b = a & 0xFFFF;
+				int c = (a >> 16) & 0xFFFF;
+				int d = b ^ c;
+				shinyFlag = d < _base.ShinyChance;
+				return shinyFlag.Value;
+			}
             //set { shinyFlag = value; }
         }
         /// <summary>
