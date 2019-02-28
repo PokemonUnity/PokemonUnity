@@ -27,13 +27,17 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
-		private static string saveLocation = @"\SaveFile.pku"; //TestProject\bin\Debug
+		private static string gameConfig = @"\ConfigFile.pku"; //TestProject\bin\Debug
+		private static string playerSave = @"\SaveFile.pku"; //TestProject\bin\Debug
+		private static string saveLocation = "\\Save\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
 		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
 		//private static string saveLocation = @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
+		private static string gameConfig = UnityEngine.Application.persistentDataPath + "/ConfigFile.pku";
+		private static string playerSave = UnityEngine.Application.persistentDataPath + "/SaveFile.pku";
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
-		//private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";		
+		//private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
 		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
 		//private static string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
@@ -316,13 +320,13 @@ namespace PokemonUnity.Saving
 		//}
 		#endregion
 
-		#region Save 0.1.0 Rewrite
+		#region 0.1.0 Save Mechanic Rewrite
 		public static void CreateSaveFileAndSerialize(SaveData[] saveData)
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			if (System.IO.File.Exists(saveLocation))
+			if (System.IO.File.Exists(playerSave))
 			{
-				using(FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
 					SaveData[] sd = GetSaves();
 #if DEBUG
@@ -340,9 +344,9 @@ namespace PokemonUnity.Saving
 		public static SaveData[] GetSaves()
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			if (System.IO.File.Exists(saveLocation))
+			if (System.IO.File.Exists(playerSave))
 			{
-				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
 #if DEBUG
 					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.ASCII))
@@ -360,9 +364,9 @@ namespace PokemonUnity.Saving
 		public static void LoadGameState()
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			if (System.IO.File.Exists(saveLocation))
+			if (System.IO.File.Exists(gameConfig))
 			{
-				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
 					dynamic data;
 #if DEBUG
@@ -384,7 +388,7 @@ namespace PokemonUnity.Saving
 			}
 			else
 			{
-				using (FileStream fs = System.IO.File.Open(saveLocation, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
 #if DEBUG
 					using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
@@ -392,11 +396,11 @@ namespace PokemonUnity.Saving
 						sw.Write(new
 						{
 							Language			= (int)GameVariables.UserLanguage,//(int)language;
-							WindowBorder		= GameVariables.WindowSkin,
-							DialogBorder		= GameVariables.DialogSkin,
+							//WindowBorder		= GameVariables.WindowSkin,
+							//DialogBorder		= GameVariables.DialogSkin,
 							TextSpeed			= GameVariables.textSpeed,
-							mVol				= GameVariables.mvol,
-							sVol				= GameVariables.svol,
+							//mVol				= GameVariables.mvol,
+							//sVol				= GameVariables.svol,
 							Fullscreen			= GameVariables.fullscreen,
 						});
 					}
@@ -404,11 +408,11 @@ namespace PokemonUnity.Saving
 					bf.Serialize(fs, new
 					{
 						Language			= (int)GameVariables.UserLanguage,//(int)language;
-						WindowBorder		= GameVariables.WindowSkin,
-						DialogBorder		= GameVariables.DialogSkin,
+						//WindowBorder		= GameVariables.WindowSkin,
+						//DialogBorder		= GameVariables.DialogSkin,
 						TextSpeed			= GameVariables.textSpeed,
-						mVol				= GameVariables.mvol,
-						sVol				= GameVariables.svol,
+						//mVol				= GameVariables.mvol,
+						//sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
 					});
 #endif
