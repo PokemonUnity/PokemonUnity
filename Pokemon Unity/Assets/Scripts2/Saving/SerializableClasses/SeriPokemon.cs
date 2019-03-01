@@ -63,6 +63,10 @@ namespace PokemonUnity.Saving.SerializableClasses
         /// </summary>
         public int PersonalId { get; private set; }
         //public string PublicId { get; private set; }
+		public string TrainerName { get; private set; }
+		public bool TrainerIsMale { get; private set; }
+		public int TrainerTrainerId { get; private set; }
+		public int TrainerSecretId { get; private set; }
 
         public int ObtainedMethod { get; private set; }
         public DateTimeOffset TimeReceived { get; private set; }
@@ -93,8 +97,9 @@ namespace PokemonUnity.Saving.SerializableClasses
             Pokemon normalPokemon =
                 new Pokemon
                 (
-                    pokemon.NickName, pokemon.Form,
-                    (Pokemons)pokemon.Species, (Abilities)pokemon.Ability,
+                    (Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName, 
+					pokemon.TrainerIsMale), pokemon.TrainerTrainerId, pokemon.TrainerSecretId),
+                    pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
                     (Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
                     pokemon.Pokerus, pokemon.IsHyperMode, pokemon.ShadowLevel,
                     pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
@@ -113,8 +118,13 @@ namespace PokemonUnity.Saving.SerializableClasses
             SeriPokemon seriPokemon = new SeriPokemon();
 
             seriPokemon.PersonalId = pokemon.PersonalId;
-            //PublicId in pokemon is null, so Pokemon returns null
-            //seriPokemon.PublicId = pokemon.PublicId;
+			//PublicId in pokemon is null, so Pokemon returns null
+			//seriPokemon.PublicId = pokemon.PublicId;
+
+			seriPokemon.TrainerName = pokemon.OT.Name;
+			seriPokemon.TrainerIsMale = pokemon.OT.Gender.Value;
+			seriPokemon.TrainerTrainerId = pokemon.OT.TrainerID;
+			seriPokemon.TrainerSecretId = pokemon.OT.SecretID;
 
             seriPokemon.Species = (int)pokemon.Species;
             seriPokemon.Form = pokemon.Form;

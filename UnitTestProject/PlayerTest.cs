@@ -38,6 +38,7 @@ namespace Tests
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
+			Trainer red = new Trainer(new Player(playerName, isMale), trainerID, secretID);
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);

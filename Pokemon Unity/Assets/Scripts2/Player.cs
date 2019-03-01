@@ -20,7 +20,7 @@ public class Player
 	/// </summary>
 	private int? secretId { get; set; } 
 	//public Pokemon[] Party { get; private set; }
-	public Trainer Trainer { get { return new Trainer(this, tID: trainerId, sID: secretId); } }
+	public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale,*/ tID: trainerId, sID: secretId); } }
 	/// <summary>
 	/// When displaying items in bag, do a foreach loop and filter by item category
 	/// </summary>

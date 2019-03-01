@@ -162,15 +162,15 @@ public class Trainer
 		//ScriptBattleEnd = 
 	}
 
-	public Trainer(Player trainer, int? tID = null, int? sID = null) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
+	public Trainer(Player trainer, /*string name, bool gender,*/ int? tID = null, int? sID = null) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
     {
 		//if trainer is another player
 		if (tID.HasValue) TrainerID = tID.Value; //trainer.Trainer.TrainerID;
 		if (sID.HasValue) SecretID = sID.Value; //trainer.Trainer.SecretID;
 		//Change name being loaded
-		Name = trainer.PlayerName;
+		Name = trainer.PlayerName; //name;
 		//Load player's gender as well
-		Gender = trainer.isMale;
+		Gender = trainer.isMale; //gender;
     }
 
 	void GetTrainer(TrainerTypes type)

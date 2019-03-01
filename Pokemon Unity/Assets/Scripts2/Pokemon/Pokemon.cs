@@ -240,6 +240,8 @@ namespace PokemonUnity.Pokemon
 
         //public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
+        public Pokemon(Pokemons pkmn, Trainer original) : this(pkmn) { OT = original; }
+
         public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
             byte TPLEVEL = 10,
             Items TPITEM = Items.NONE,
@@ -266,9 +268,43 @@ namespace PokemonUnity.Pokemon
             //calcStats();
         }
 
-        public Pokemon(string nickName, int form,
-            Pokemons species, Abilities ability,
-            Natures nature,
+		/// <summary>
+		/// This is used SPECIFICALLY for regenerating a pokemon from a serialized variable
+		/// </summary>
+		/// <param name="species"></param>
+		/// <param name="original"></param>
+		/// <param name="nickName"></param>
+		/// <param name="form"></param>
+		/// <param name="ability"></param>
+		/// <param name="nature"></param>
+		/// <param name="isShiny"></param>
+		/// <param name="gender"></param>
+		/// <param name="pokerus"></param>
+		/// <param name="ishyper"></param>
+		/// <param name="shadowLevel"></param>
+		/// <param name="currentHp"></param>
+		/// <param name="item"></param>
+		/// <param name="iv"></param>
+		/// <param name="ev"></param>
+		/// <param name="obtainedLevel"></param>
+		/// <param name="currentExp"></param>
+		/// <param name="happiness"></param>
+		/// <param name="status"></param>
+		/// <param name="statusCount"></param>
+		/// <param name="eggSteps"></param>
+		/// <param name="ballUsed"></param>
+		/// <param name="mail"></param>
+		/// <param name="moves"></param>
+		/// <param name="ribbons"></param>
+		/// <param name="markings"></param>
+		/// <param name="personalId"></param>
+		/// <param name="obtainedMethod"></param>
+		/// <param name="timeReceived"></param>
+		/// <param name="timeEggHatched"></param>
+        public Pokemon(Pokemons species, 
+			Trainer original,
+			string nickName, int form,
+            Abilities ability, Natures nature,
             bool isShiny, bool? gender,
             int[] pokerus, bool ishyper,
             int? shadowLevel,
@@ -281,7 +317,7 @@ namespace PokemonUnity.Pokemon
             Ribbon[] ribbons, bool[] markings,
             int personalId,
             ObtainedMethod obtainedMethod,
-            DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species)
+            DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species, original)
         {
             //Check to see if nickName is filled
             if (nickName != null || nickName != string.Empty)
@@ -380,7 +416,7 @@ namespace PokemonUnity.Pokemon
         /// <remarks>
         /// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
         /// </remarks>
-        private Trainer OT { get; set; }
+        public Trainer OT { get; private set; }
         /// <summary>
         /// Personal/Pokemon ID
         /// </summary>
