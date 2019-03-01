@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
+using PokemonUnity.Saving.SerializableClasses;
 
 [Serializable]
 public class Player
@@ -134,7 +135,15 @@ public class Player
 		//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
 		PlayerPokedex = new byte[Pokemon.PokemonData.Database.Length, 3];
 		playerTime = new TimeSpan();
-		Party = new Pokemon[6];
+		Party = new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE)
+		};
 
 		//List<GymBadges> gymBadges = new List<GymBadges>();
 		GymsBeatTime = new Dictionary<GymBadges, DateTime?>();
@@ -196,10 +205,11 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 		playerTime = trainerSaveData.PlayerTime;
 		isMale = trainerSaveData.IsMale;
 		GymsBeatTime = trainerSaveData.GymsChallenged;
-		for (int i = 0; i < /*GameVariables.playerTrainer.Trainer.*/Party.Length; i++)
-		{
-			Party[i] = trainerSaveData.PlayerParty[i];
-		}
+		//for (int i = 0; i < /*GameVariables.playerTrainer.Trainer.*/Party.Length; i++)
+		//{
+		//	Party[i] = trainerSaveData.PlayerParty[i];
+		//}
+		Party = trainerSaveData.PlayerParty.Deserialize();
 	}
 
 	/// <summary>
@@ -210,11 +220,11 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 	public int? addPokemon(Pokemon pokemon)
 	{
 		//attempt to add to party first. pack the party array if space available.
-		if (Trainer.Party.HasSpace(Trainer.Party.Length))
+		if (Party.HasSpace(Party.Length))
 		{
-			Trainer.Party.PackParty();
-			Trainer.Party[Trainer.Party.Length - 1] = pokemon;
-			Trainer.Party.PackParty();
+			Party.PackParty();
+			Party[Trainer.Party.Length - 1] = pokemon;
+			Party.PackParty();
 			return -1; //true
 		}
 		else

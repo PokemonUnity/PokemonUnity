@@ -145,7 +145,15 @@ public class Trainer
 		TrainerID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
 		SecretID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
 		IsDouble = false;
-		Party = new Pokemon[6];
+		Party = new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE)
+		};
 		GetTrainer(trainer);
 	}
 
