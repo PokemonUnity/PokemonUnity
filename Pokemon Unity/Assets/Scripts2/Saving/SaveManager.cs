@@ -379,12 +379,12 @@ namespace PokemonUnity.Saving
 				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
 					var data = new {
-						Language			= (int)GameVariables.UserLanguage,//(int)language;
-						//WindowBorder		= GameVariables.WindowSkin,
-						//DialogBorder		= GameVariables.DialogSkin,
+						Language			= GameVariables.UserLanguage,//(int)language;
+						WindowBorder		= GameVariables.WindowSkin,
+						DialogBorder		= GameVariables.DialogSkin,
 						TextSpeed			= GameVariables.textSpeed,
-						//mVol				= GameVariables.mvol,
-						//sVol				= GameVariables.svol,
+						mVol				= GameVariables.mvol,
+						sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
 					};
 #if DEBUG
@@ -414,24 +414,24 @@ namespace PokemonUnity.Saving
 					//	sw.Write(
 						File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(new
 						{
-							Language			= (int)GameVariables.UserLanguage,//(int)language;
-							//WindowBorder		= GameVariables.WindowSkin,
-							//DialogBorder		= GameVariables.DialogSkin,
+							Language			= GameVariables.UserLanguage,//(int)language;
+							WindowBorder		= GameVariables.WindowSkin,
+							DialogBorder		= GameVariables.DialogSkin,
 							TextSpeed			= GameVariables.textSpeed,
-							//mVol				= GameVariables.mvol,
-							//sVol				= GameVariables.svol,
+							mVol				= GameVariables.mvol,
+							sVol				= GameVariables.svol,
 							Fullscreen			= GameVariables.fullscreen,
 						}, true));
 					//}
 #else
 					bf.Serialize(fs, new
 					{
-						Language			= (int)GameVariables.UserLanguage,//(int)language;
-						//WindowBorder		= GameVariables.WindowSkin,
-						//DialogBorder		= GameVariables.DialogSkin,
+						Language			= GameVariables.UserLanguage,//(int)language;
+						WindowBorder		= GameVariables.WindowSkin,
+						DialogBorder		= GameVariables.DialogSkin,
 						TextSpeed			= GameVariables.textSpeed,
-						//mVol				= GameVariables.mvol,
-						//sVol				= GameVariables.svol,
+						mVol				= GameVariables.mvol,
+						sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
 					});
 #endif
