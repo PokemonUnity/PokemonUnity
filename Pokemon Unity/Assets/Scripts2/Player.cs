@@ -130,6 +130,7 @@ public class Player
 		//Party = new Pokemon[6];
 
 		//List<GymBadges> gymBadges = new List<GymBadges>();
+		GymsBeatTime = new Dictionary<GymBadges, DateTime?>();
 		foreach (GymBadges i in (GymBadges[])Enum.GetValues(typeof(GymBadges)))
 		{
 			//gymBadges.Add(i);
