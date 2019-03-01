@@ -19,8 +19,15 @@ public class Player
 	/// Please use the values stored in <see cref="Trainer.SecretID"/>
 	/// </summary>
 	private int? secretId { get; set; } 
-	//public Pokemon[] Party { get; private set; }
-	public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale,*/ tID: trainerId, sID: secretId); } }
+	/// <summary>
+	/// Player's Pokemon Party is stored in Player class, 
+	/// and then reflected in Trainer, to match what occurs
+	/// </summary>
+	/// Didn't think about it it till now but the player should
+	/// hold the `Trainer` data, and instantiate a new Trainer
+	/// whenever it's needed...
+	public Pokemon[] Party { get; private set; }
+	public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale,*/ party: Party, tID: trainerId, sID: secretId); } }
 	/// <summary>
 	/// When displaying items in bag, do a foreach loop and filter by item category
 	/// </summary>
@@ -126,8 +133,8 @@ public class Player
 	{
 		//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
 		PlayerPokedex = new byte[Pokemon.PokemonData.Database.Length, 3];
-		playerTime = new TimeSpan(); 
-		//Party = new Pokemon[6];
+		playerTime = new TimeSpan();
+		Party = new Pokemon[6];
 
 		//List<GymBadges> gymBadges = new List<GymBadges>();
 		GymsBeatTime = new Dictionary<GymBadges, DateTime?>();
@@ -142,10 +149,11 @@ public class Player
 		//GymsBeatTime = new System.DateTime?[gymBadges.Count];
 	}
 
-	public Player(string name, bool gender) : this()
+	public Player(string name, bool gender, Pokemon[] party = null) : this()
 	{
 		PlayerName = name;
 		isMale = gender;
+		Party = party ?? Party;
 	}
 
 	static Player()
@@ -188,6 +196,10 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 		playerTime = trainerSaveData.PlayerTime;
 		isMale = trainerSaveData.IsMale;
 		GymsBeatTime = trainerSaveData.GymsChallenged;
+		for (int i = 0; i < /*GameVariables.playerTrainer.Trainer.*/Party.Length; i++)
+		{
+			Party[i] = trainerSaveData.PlayerParty[i];
+		}
 	}
 
 	/// <summary>
