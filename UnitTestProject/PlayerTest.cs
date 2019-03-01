@@ -38,7 +38,7 @@ namespace Tests
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
-			Trainer red = new Trainer(new Player(playerName, isMale/*, playerParty*/), trainerID, secretID);
+			Trainer red = new Trainer(new Player(playerName, isMale/*, playerParty*/), tID: trainerID, sID: secretID);
 
 			Pokemon[] playerParty = new Pokemon[]
 			{
@@ -49,7 +49,7 @@ namespace Tests
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
-			red = new Trainer(new Player(playerName, isMale, playerParty), trainerID, secretID);
+			red = new Trainer(new Player(playerName, isMale, playerParty), tID: trainerID, sID: secretID);
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);

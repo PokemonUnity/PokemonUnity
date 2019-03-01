@@ -98,7 +98,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				new Pokemon
 				(
 					(Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName,
-					pokemon.TrainerIsMale), pokemon.TrainerTrainerId, pokemon.TrainerSecretId),
+					pokemon.TrainerIsMale), tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
 					pokemon.Pokerus, pokemon.IsHyperMode, pokemon.ShadowLevel,
