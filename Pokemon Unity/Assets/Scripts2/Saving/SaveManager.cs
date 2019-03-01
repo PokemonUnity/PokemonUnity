@@ -405,26 +405,19 @@ namespace PokemonUnity.Saving
 				}
 			}
 			else
+				SaveGameState();
+		}
+
+		public static void SaveGameState()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 			{
-				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
-				{
 #if DEBUG
-					//using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
-					//{
-					//	sw.Write(
-						File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(new
-						{
-							Language			= GameVariables.UserLanguage,//(int)language;
-							WindowBorder		= GameVariables.WindowSkin,
-							DialogBorder		= GameVariables.DialogSkin,
-							TextSpeed			= GameVariables.textSpeed,
-							mVol				= GameVariables.mvol,
-							sVol				= GameVariables.svol,
-							Fullscreen			= GameVariables.fullscreen,
-						}, true));
-					//}
-#else
-					bf.Serialize(fs, new
+				//using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
+				//{
+				//	sw.Write(
+					File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(new
 					{
 						Language			= GameVariables.UserLanguage,//(int)language;
 						WindowBorder		= GameVariables.WindowSkin,
@@ -433,9 +426,20 @@ namespace PokemonUnity.Saving
 						mVol				= GameVariables.mvol,
 						sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
-					});
+					}, true));
+				//}
+#else
+				bf.Serialize(fs, new
+				{
+					Language			= GameVariables.UserLanguage,//(int)language;
+					WindowBorder		= GameVariables.WindowSkin,
+					DialogBorder		= GameVariables.DialogSkin,
+					TextSpeed			= GameVariables.textSpeed,
+					mVol				= GameVariables.mvol,
+					sVol				= GameVariables.svol,
+					Fullscreen			= GameVariables.fullscreen,
+				});
 #endif
-				}
 			}
 		}
 
