@@ -114,15 +114,7 @@ namespace Tests
 		
 				scene: activeScene,
 		
-				party: new SeriPokemon[] //playerParty,
-				{
-					(SeriPokemon)new Pokemon(Pokemons.CRANIDOS, red),
-					(SeriPokemon)new Pokemon(Pokemons.UMBREON, red),
-					(SeriPokemon)new Pokemon(Pokemons.TURTWIG, red),
-					(SeriPokemon)new Pokemon(Pokemons.NONE),
-					(SeriPokemon)new Pokemon(Pokemons.NONE),
-					(SeriPokemon)new Pokemon(Pokemons.NONE)
-				},
+				party: red.Party.Serialize(), 
 				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
 				bag: playerBag,
 		

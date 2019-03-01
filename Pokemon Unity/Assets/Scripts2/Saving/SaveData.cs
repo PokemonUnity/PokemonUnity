@@ -96,6 +96,18 @@ namespace PokemonUnity.Saving
 		//    pCenterFdirection = fDirection;
 		//}
 
+		public SaveData (Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
+			TimeSpan? time = null, SeriV3 position = null, float? direction = null, int? scene = null, 
+			int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
+			SeriPC pc = null, List<SaveEvent> eventList = null) 
+				: this(name: player.PlayerName, money: money, coin: coin, trainer: player.Trainer.TrainerID,
+					  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
+					  time: time, position: position, direction: direction, scene: scene, pokecenter: pokecenter,
+					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize(), pc: pc, eventList: eventList)
+		{
+			// Just made this one for fun... might be useful in future, than doing things the long way, like below
+		}
+
 		public SaveData (string name = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
 			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, SeriV3 position = null, float? direction = null, 
 			int? scene = null, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
