@@ -47,15 +47,15 @@ namespace Tests
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
 
-            SeriPokemon[] playerParty = new SeriPokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE)
-            };
+            //SeriPokemon[] playerParty = new SeriPokemon[]
+            //{
+            //    (SeriPokemon)new Pokemon(Pokemons.CRANIDOS),
+            //    (SeriPokemon)new Pokemon(Pokemons.UMBREON),
+            //    (SeriPokemon)new Pokemon(Pokemons.TURTWIG),
+			//	(SeriPokemon)new Pokemon(Pokemons.NONE),
+			//	(SeriPokemon)new Pokemon(Pokemons.NONE),
+			//	(SeriPokemon)new Pokemon(Pokemons.NONE)
+            //};
             Pokemon[,] playerPC = new Pokemon[Settings.STORAGEBOXES, 30];
             //for (int i = 0; i < playerPC.GetUpperBound(1); i++)
             //{
@@ -113,7 +113,15 @@ namespace Tests
 		
 				scene: activeScene,
 		
-				party: playerParty,
+				party: new SeriPokemon[] //playerParty,
+				{
+					(SeriPokemon)new Pokemon(Pokemons.CRANIDOS, red),
+					(SeriPokemon)new Pokemon(Pokemons.UMBREON, red),
+					(SeriPokemon)new Pokemon(Pokemons.TURTWIG, red),
+					(SeriPokemon)new Pokemon(Pokemons.NONE),
+					(SeriPokemon)new Pokemon(Pokemons.NONE),
+					(SeriPokemon)new Pokemon(Pokemons.NONE)
+				},
 				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
 				bag: playerBag,
 		
