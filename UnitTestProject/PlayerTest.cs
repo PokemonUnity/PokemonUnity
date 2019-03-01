@@ -34,21 +34,22 @@ namespace Tests
             //float mvol = 0.4f;
             //float svol = 0.9f;
 
-			Pokemon[] playerParty = new Pokemon[]
-			{
-				new Pokemon(Pokemons.CRANIDOS),
-				new Pokemon(Pokemons.UMBREON),
-				new Pokemon(Pokemons.TURTWIG),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE)
-			};
-
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
-			Trainer red = new Trainer(new Player(playerName, isMale, playerParty), trainerID, secretID);
+			Trainer red = new Trainer(new Player(playerName, isMale/*, playerParty*/), trainerID, secretID);
+
+			Pokemon[] playerParty = new Pokemon[]
+			{
+				new Pokemon(Pokemons.CRANIDOS, red),
+				new Pokemon(Pokemons.UMBREON, red),
+				new Pokemon(Pokemons.TURTWIG, red),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE)
+			};
+			red = new Trainer(new Player(playerName, isMale, playerParty), trainerID, secretID);
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);

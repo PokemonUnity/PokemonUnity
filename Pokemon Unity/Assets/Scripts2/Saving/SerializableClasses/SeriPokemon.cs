@@ -97,7 +97,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             Pokemon normalPokemon =
                 new Pokemon
                 (
-                    (Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName, 
+					(Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName,
 					pokemon.TrainerIsMale), pokemon.TrainerTrainerId, pokemon.TrainerSecretId),
                     pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
                     (Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
@@ -225,4 +225,32 @@ namespace PokemonUnity.Saving.SerializableClasses
             }
         }
     }
+
+	public static class SeriArray
+	{
+		public static Pokemon[] Deserialize (this SeriPokemon[] pkmn)
+		{
+			return new Pokemon[]
+			{
+				pkmn[0],
+				pkmn[1],
+				pkmn[2],
+				pkmn[3],
+				pkmn[4],
+				pkmn[5]
+			};
+		}
+		public static SeriPokemon[] Serialize (this Pokemon[] pkmn)
+		{
+			return new SeriPokemon[]
+			{
+				pkmn[0],
+				pkmn[1],
+				pkmn[2],
+				pkmn[3],
+				pkmn[4],
+				pkmn[5]
+			};
+		}
+	}
 }
