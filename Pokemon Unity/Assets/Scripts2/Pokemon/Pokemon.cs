@@ -201,7 +201,7 @@ namespace PokemonUnity.Pokemon
             Ability = Abilities.NONE;
             natureFlag = new Nature();//(Natures)(Settings.Rand.Next(0, 24));
 			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
-			//shinyFlag = isShiny(); ToDo: Fix WildPokemon.TrainerId
+			//shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
             IV = new byte[] { (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32) };
@@ -406,6 +406,8 @@ namespace PokemonUnity.Pokemon
         /// <summary>
         /// Replaces the obtain map's name if not null
         /// </summary>
+		/// ToDo: if (isOutside) return generic "got from player"
+		/// else, all data stored in class remains unchanged to OT?
         private string obtainString { get; set; }
         //private int obtainLevel; // = 0;
         private System.DateTimeOffset obtainWhen { get; set; }
@@ -887,15 +889,23 @@ namespace PokemonUnity.Pokemon
 			//Uses math to determine if Pokemon is shiny.
             get
 			{
+				//Don't bother to generate math for a null value; skip the process...
+				if (Species == Pokemons.NONE) return false;
 				//return shinyFlag ?? isShiny();
-				if (shinyFlag.HasValue) return shinyFlag.Value;
+				if (shinyFlag != null && shinyFlag.HasValue) return shinyFlag.Value;
 				// Use this when rolling for shiny...
 				// Honestly, without this math, i probably would've done something a lot more primative.
 				// Look forward to primative math on wild pokemon encounter chances...
-				int a = this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
-				int b = a & 0xFFFF;
-				int c = (a >> 16) & 0xFFFF;
-				int d = b ^ c;
+				//ToDo: Need default value for if/when Trainer is NULL...
+				//int a = OT == null? this.PersonalId : this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
+				//int b = a & 0xFFFF;
+				//int c = (a >> 16) & 0xFFFF;
+				//int d = b ^ c;
+				//New Math Equation from Bulbapedia, gen 2 to 6...
+				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				//int d = (GameVariables.playerTrainer.Trainer.TrainerID ^ GameVariables.playerTrainer.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
+				int d = ((OT != null? OT.TrainerID : GameVariables.playerTrainer.Trainer.TrainerID) ^ (OT != null? OT.SecretID : GameVariables.playerTrainer.Trainer.SecretID)) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
 			}
