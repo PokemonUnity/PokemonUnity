@@ -134,12 +134,14 @@ namespace PokemonUnity.Saving
 			//FollowerDirection	= GameVariables.playerTrainer.followerDirection;
 			ActiveScene			= scene			?? GameVariables.playerTrainer.mapName;//.activeScene;
 			pCenterScene		= pokecenter	?? GameVariables.playerTrainer.respawnScene;//pkmnCenter;
-			PlayerParty			= party ?? new SeriPokemon[GameVariables.playerTrainer.Trainer.Party.Length];
-			if(party != null)
-			for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
-			{
-				PlayerParty[i]	= GameVariables.playerTrainer.Trainer.Party[i];
-			}
+			PlayerParty			= party			?? GameVariables.playerTrainer.Trainer.Party.Serialize();
+			//	new SeriPokemon[GameVariables.playerTrainer.Trainer.Party.Length];
+			//if(party != null)
+			//	for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+			//	{
+			//		PlayerParty[i]	= GameVariables.playerTrainer.Trainer.Party[i];
+			//	}
+				
 			PC = pc ?? new SeriPC(GameVariables.PC_Poke, GameVariables.PC_boxNames, GameVariables.PC_boxTexture, GameVariables.PC_Items);
 			EventList			= eventList; //GameVariables.EventList;
         }
