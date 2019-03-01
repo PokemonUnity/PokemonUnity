@@ -27,7 +27,7 @@ public class Player
 	/// hold the `Trainer` data, and instantiate a new Trainer
 	/// whenever it's needed...
 	public Pokemon[] Party { get; private set; }
-	public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale,*/ party: Party, tID: trainerId, sID: secretId); } }
+	public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale, party: Party,*/ tID: trainerId, sID: secretId); } }
 	/// <summary>
 	/// When displaying items in bag, do a foreach loop and filter by item category
 	/// </summary>
