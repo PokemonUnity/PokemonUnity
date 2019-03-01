@@ -34,11 +34,21 @@ namespace Tests
             //float mvol = 0.4f;
             //float svol = 0.9f;
 
+			Pokemon[] playerParty = new Pokemon[]
+			{
+				new Pokemon(Pokemons.CRANIDOS),
+				new Pokemon(Pokemons.UMBREON),
+				new Pokemon(Pokemons.TURTWIG),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE)
+			};
+
             string playerName = "Red";
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
-			Trainer red = new Trainer(new Player(playerName, isMale), trainerID, secretID);
+			Trainer red = new Trainer(new Player(playerName, isMale, playerParty), trainerID, secretID);
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
@@ -46,16 +56,6 @@ namespace Tests
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
-
-            //SeriPokemon[] playerParty = new SeriPokemon[]
-            //{
-            //    (SeriPokemon)new Pokemon(Pokemons.CRANIDOS),
-            //    (SeriPokemon)new Pokemon(Pokemons.UMBREON),
-            //    (SeriPokemon)new Pokemon(Pokemons.TURTWIG),
-			//	(SeriPokemon)new Pokemon(Pokemons.NONE),
-			//	(SeriPokemon)new Pokemon(Pokemons.NONE),
-			//	(SeriPokemon)new Pokemon(Pokemons.NONE)
-            //};
             Pokemon[,] playerPC = new Pokemon[Settings.STORAGEBOXES, 30];
             //for (int i = 0; i < playerPC.GetUpperBound(1); i++)
             //{

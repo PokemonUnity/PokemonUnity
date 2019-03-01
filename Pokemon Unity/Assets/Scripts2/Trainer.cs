@@ -162,7 +162,7 @@ public class Trainer
 		//ScriptBattleEnd = 
 	}
 
-	public Trainer(Player trainer, /*string name, bool gender,*/ Pokemon[] party, int? tID = null, int? sID = null) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
+	public Trainer(Player trainer, /*string name, bool gender, Pokemon[] party = null,*/ int? tID = null, int? sID = null) : this(TrainerTypes.PLAYER, /*party??new Pokemon[6]*/trainer.Trainer.Party)
     {
 		//if trainer is another player
 		if (tID.HasValue) TrainerID = tID.Value; //trainer.Trainer.TrainerID;
