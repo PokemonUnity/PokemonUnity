@@ -112,6 +112,10 @@ namespace PokemonUnity.Saving.SerializableClasses
         {
             SeriPokemon seriPokemon = new SeriPokemon();
 
+            seriPokemon.PersonalId = pokemon.PersonalId;
+            //PublicId in pokemon is null, so Pokemon returns null
+            //seriPokemon.PublicId = pokemon.PublicId;
+
             seriPokemon.Species = (int)pokemon.Species;
             seriPokemon.Form = pokemon.Form;
             //Creates an error System OutOfBounds inside Pokemon
@@ -177,10 +181,6 @@ namespace PokemonUnity.Saving.SerializableClasses
                 seriPokemon.Ribbons = new int[0];
             }
             seriPokemon.Markings = pokemon.Markings;
-
-            seriPokemon.PersonalId = pokemon.PersonalId;
-            //PublicId in pokemon is null, so Pokemon returns null
-            //seriPokemon.PublicId = pokemon.PublicId;
 
             seriPokemon.ObtainedMethod = (int)pokemon.ObtainedMode;
             seriPokemon.TimeReceived = pokemon.TimeReceived;

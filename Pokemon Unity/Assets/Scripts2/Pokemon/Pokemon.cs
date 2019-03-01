@@ -299,6 +299,8 @@ namespace PokemonUnity.Pokemon
             Ability = ability;
             natureFlag = new Nature(nature);
 
+            PersonalId = personalId;
+
             shinyFlag = isShiny;
             Gender = gender;
 
@@ -335,8 +337,6 @@ namespace PokemonUnity.Pokemon
 
             this.ribbons = ribbons.ToList();
             Markings = markings;
-
-            PersonalId = personalId;
 
             ObtainedMode = obtainedMethod;
             obtainWhen = timeReceived;
