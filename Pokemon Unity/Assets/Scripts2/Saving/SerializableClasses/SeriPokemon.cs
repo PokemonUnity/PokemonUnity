@@ -121,8 +121,8 @@ namespace PokemonUnity.Saving.SerializableClasses
 			//PublicId in pokemon is null, so Pokemon returns null
 			//seriPokemon.PublicId = pokemon.PublicId;
 
-			seriPokemon.TrainerName = pokemon.OT.Name;
-			seriPokemon.TrainerIsMale = pokemon.OT.Gender.Value;
+			seriPokemon.TrainerName = pokemon.OT == null? null : pokemon.OT.Name;
+			seriPokemon.TrainerIsMale = pokemon.OT == null? false : pokemon.OT.Gender.Value;
 			seriPokemon.TrainerTrainerId = pokemon.OT.TrainerID;
 			seriPokemon.TrainerSecretId = pokemon.OT.SecretID;
 
