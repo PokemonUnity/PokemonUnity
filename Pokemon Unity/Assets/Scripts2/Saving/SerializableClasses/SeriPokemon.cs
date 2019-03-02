@@ -82,6 +82,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 		public static implicit operator Pokemon(SeriPokemon pokemon)
 		{
+			if ((Pokemons)pokemon.Species == Pokemons.NONE || pokemon == null) return new Pokemon(Pokemons.NONE);
 			Ribbon[] ribbons = new Ribbon[pokemon.Ribbons.Length];
 			for (int i = 0; i < ribbons.Length; i++)
 			{
@@ -117,88 +118,91 @@ namespace PokemonUnity.Saving.SerializableClasses
 		{
 			SeriPokemon seriPokemon = new SeriPokemon();
 
-			seriPokemon.PersonalId		= pokemon.PersonalId;
-			//PublicId in pokemon is null, so Pokemon returns null
-			//seriPokemon.PublicId		= pokemon.PublicId;
-
-			seriPokemon.TrainerName			=  pokemon.OT == null? null : pokemon.OT.Name;
-			seriPokemon.TrainerIsMale		= pokemon.OT == null? false : pokemon.OT.Gender.Value;
-			seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
-			seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
-
-			seriPokemon.Species				= (int)pokemon.Species;
-			seriPokemon.Form				= pokemon.Form;
-			//Creates an error System OutOfBounds inside Pokemon
-			seriPokemon.NickName			= pokemon.Name;
-
-			seriPokemon.Ability				= (int)pokemon.Ability;
-			//Due to parts of Pokemon that's being reworked
-			//These parts shouldn't be saved yet.
-
-			//seriPokemon.Nature = pokemon.getNature();
-			seriPokemon.Nature				= (int)pokemon.Nature;//new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
-			seriPokemon.IsShiny				= pokemon.IsShiny;
-			seriPokemon.Gender				= pokemon.Gender;
-
-			//seriPokemon.PokerusStage		= pokemon.PokerusStage;
-			seriPokemon.Pokerus				= pokemon.Pokerus;
-			//seriPokemon.PokerusStrain		= pokemon.PokerusStrain;
-
-			seriPokemon.IsHyperMode			= pokemon.isHyperMode;
-			//seriPokemon.IsShadow			= pokemon.isShadow;
-			seriPokemon.ShadowLevel			= pokemon.ShadowLevel;
-
-			seriPokemon.CurrentHP			= pokemon.HP;
-			seriPokemon.Item				= (int)pokemon.Item;
-
-			seriPokemon.IV					= pokemon.IV;
-			seriPokemon.EV					= pokemon.EV;
-
-			seriPokemon.ObtainedLevel		= pokemon.ObtainLevel;
-			//seriPokemon.CurrentLevel		= pokemon.Level;
-			seriPokemon.CurrentExp			= pokemon.Exp.Current;
-
-			seriPokemon.Happines			= pokemon.Happiness;
-
-			seriPokemon.Status				= (int)pokemon.Status;
-			seriPokemon.StatusCount			= pokemon.StatusCount;
-
-			seriPokemon.EggSteps			= pokemon.EggSteps;
-
-			seriPokemon.BallUsed			= (int)pokemon.ballUsed;
-			if (PokemonUnity.Item.Item.Mail.IsMail(pokemon.Item))
+			if(pokemon.Species != Pokemons.NONE || pokemon != null)
 			{
-				seriPokemon.Mail			= new SeriMail(pokemon.Item, pokemon.Mail);
-			}
+				seriPokemon.PersonalId			= pokemon.PersonalId;
+				//PublicId in pokemon is null, so Pokemon returns null
+				//seriPokemon.PublicId			= pokemon.PublicId;
 
-			seriPokemon.Moves = new SeriMove[4];
-			for (int i = 0; i < 4; i++)
-			{
-				seriPokemon.Moves[i]		= pokemon.moves[i];
-			}
+				seriPokemon.TrainerName			= pokemon.OT == null? null : pokemon.OT.Name;
+				seriPokemon.TrainerIsMale		= pokemon.OT == null? false : pokemon.OT.Gender.Value;
+				seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
+				seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
 
-			//Ribbons is also null, we add a null check
-			if (pokemon.Ribbons != null)
-			{
-				seriPokemon.Ribbons			= new int[pokemon.Ribbons.Count];
-				for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
+				seriPokemon.Species				= (int)pokemon.Species;
+				seriPokemon.Form				= pokemon.Form;
+				//Creates an error System OutOfBounds inside Pokemon
+				seriPokemon.NickName			= pokemon.Name;
+
+				seriPokemon.Ability				= (int)pokemon.Ability;
+				//Due to parts of Pokemon that's being reworked
+				//These parts shouldn't be saved yet.
+
+				//seriPokemon.Nature = pokemon.getNature();
+				seriPokemon.Nature				= (int)pokemon.Nature;//new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
+				seriPokemon.IsShiny				= pokemon.IsShiny;
+				seriPokemon.Gender				= pokemon.Gender;
+
+				//seriPokemon.PokerusStage		= pokemon.PokerusStage;
+				seriPokemon.Pokerus				= pokemon.Pokerus;
+				//seriPokemon.PokerusStrain		= pokemon.PokerusStrain;
+
+				seriPokemon.IsHyperMode			= pokemon.isHyperMode;
+				//seriPokemon.IsShadow			= pokemon.isShadow;
+				seriPokemon.ShadowLevel			= pokemon.ShadowLevel;
+
+				seriPokemon.CurrentHP			= pokemon.HP;
+				seriPokemon.Item				= (int)pokemon.Item;
+
+				seriPokemon.IV					= pokemon.IV;
+				seriPokemon.EV					= pokemon.EV;
+
+				seriPokemon.ObtainedLevel		= pokemon.ObtainLevel;
+				//seriPokemon.CurrentLevel		= pokemon.Level;
+				seriPokemon.CurrentExp			= pokemon.Exp.Current;
+
+				seriPokemon.Happines			= pokemon.Happiness;
+
+				seriPokemon.Status				= (int)pokemon.Status;
+				seriPokemon.StatusCount			= pokemon.StatusCount;
+
+				seriPokemon.EggSteps			= pokemon.EggSteps;
+
+				seriPokemon.BallUsed			= (int)pokemon.ballUsed;
+				if (PokemonUnity.Item.Item.Mail.IsMail(pokemon.Item))
 				{
-					seriPokemon.Ribbons[i]	= (int)pokemon.Ribbons[i];
+					seriPokemon.Mail			= new SeriMail(pokemon.Item, pokemon.Mail);
 				}
-			}
-			else
-			{
-				seriPokemon.Ribbons			= new int[0];
-			}
-			seriPokemon.Markings			= pokemon.Markings;
 
-			seriPokemon.ObtainedMethod		= (int)pokemon.ObtainedMode;
-			seriPokemon.TimeReceived		= pokemon.TimeReceived;
-			//try
-			//{
-				seriPokemon.TimeEggHatched	= pokemon.TimeEggHatched;
-			//}
-			//catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
+				seriPokemon.Moves = new SeriMove[4];
+				for (int i = 0; i < 4; i++)
+				{
+					seriPokemon.Moves[i]		= pokemon.moves[i];
+				}
+
+				//Ribbons is also null, we add a null check
+				if (pokemon.Ribbons != null)
+				{
+					seriPokemon.Ribbons			= new int[pokemon.Ribbons.Count];
+					for (int i = 0; i < seriPokemon.Ribbons.Length; i++)
+					{
+						seriPokemon.Ribbons[i]	= (int)pokemon.Ribbons[i];
+					}
+				}
+				else
+				{
+					seriPokemon.Ribbons			= new int[0];
+				}
+				seriPokemon.Markings			= pokemon.Markings;
+
+				seriPokemon.ObtainedMethod		= (int)pokemon.ObtainedMode;
+				seriPokemon.TimeReceived		= pokemon.TimeReceived;
+				//try
+				//{
+					seriPokemon.TimeEggHatched	= pokemon.TimeEggHatched;
+				//}
+				//catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
+			}
 
 			return seriPokemon;
 		}
