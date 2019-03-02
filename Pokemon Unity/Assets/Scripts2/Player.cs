@@ -166,6 +166,13 @@ public class Player
 		Party = party ?? Party;
 	}
 
+	public Player(Trainer trainer, Pokemon[] party = null) 
+		: this (name: trainer.Name, gender: trainer.Gender.Value, party: party ?? trainer.Party)
+	{
+		trainerId = trainer.TrainerID;
+		secretId = trainer.SecretID;
+	}
+
 	static Player()
 	{
 /*TPSPECIES	,

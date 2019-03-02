@@ -49,7 +49,7 @@ namespace Tests
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
-			red = new Trainer(new Player(playerName, isMale, playerParty), tID: trainerID, sID: secretID);
+			red = new Player(red, playerParty).Trainer;
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
