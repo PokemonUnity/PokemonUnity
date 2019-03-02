@@ -173,7 +173,7 @@ public class Trainer
 	public Trainer(Player trainer, /*string name, bool gender,*/ Pokemon[] party = null, int? tID = null, int? sID = null) 
 		: this(TrainerTypes.PLAYER, /*trainer.Trainer.Party*/party ?? new Pokemon[]
 		{
-			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE),new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE),
 			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE)
 		})
     {
