@@ -15,12 +15,12 @@ namespace PokemonUnity.Saving.SerializableClasses
 
         public SeriPC(Pokemon.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Item.Item> boxItems)
         {
-            Pokemons = new SeriPokemon[pokemons.GetUpperBound(0), pokemons.GetUpperBound(1)];
-            for (int i = 0; i < Pokemons.GetUpperBound(0); i++)
+            Pokemons = new SeriPokemon[pokemons.GetLength(0), pokemons.GetLength(1)];
+            for (int i = 0; i < Pokemons.GetLength(0); i++)
             {
-                for (int j = 0; j < Pokemons.GetUpperBound(1); j++)
+                for (int j = 0; j < Pokemons.GetLength(1); j++)
                 {
-                    Pokemons[i, j] = pokemons[i, j];
+                    Pokemons[i, j] = (SeriPokemon)pokemons[i, j];
                 }
             }
             BoxNames = boxNames;
@@ -35,12 +35,16 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 		public Pokemon.Pokemon[,] GetPokemonsFromSeri()
 		{
-			Pokemon.Pokemon[,] pkmn = new Pokemon.Pokemon[Pokemons.GetUpperBound(0), Pokemons.GetUpperBound(1)];
-            for (int i = 0; i < Pokemons.GetUpperBound(0); i++)
+			Pokemon.Pokemon[,] pkmn = new Pokemon.Pokemon[Pokemons.GetLength(0), Pokemons.GetLength(1)];
+            for (int i = 0; i < Pokemons.GetLength(0); i++)
             {
-                for (int j = 0; j < Pokemons.GetUpperBound(1); j++)
+                for (int j = 0; j < Pokemons.GetLength(1); j++)
                 {
-                    pkmn[i, j] = (Pokemon.Pokemon)Pokemons[i, j];
+					//Easier if it only grabs actual pokemons (with values), than trying to copy everything...
+                    if(Pokemons[i,j] == null || (PokemonUnity.Pokemons)Pokemons[i, j].Species != PokemonUnity.Pokemons.NONE)
+						pkmn[i, j] = (Pokemon.Pokemon)Pokemons[i, j];
+					else
+						pkmn[i, j] = new Pokemon.Pokemon(PokemonUnity.Pokemons.NONE);
                 }
             }
 			return pkmn;

@@ -49,6 +49,12 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
 		for (int i = 0; i < Settings.STORAGEBOXES; i++)
 		{
+			//Initialize the PC storage so pokemons arent null (in value)
+			for (int j = 0; j < PC_Poke.GetLength(1); j++)
+			{
+				//All default values must be `NONE`
+				PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
+			}
 			//ToDo: Using string from translator here
 			PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
 			//ToDo: Make sure there's enough texture in library for array size
