@@ -124,13 +124,14 @@ namespace PokemonUnity.Saving.SerializableClasses
 				//PublicId in pokemon is null, so Pokemon returns null
 				//seriPokemon.PublicId			= pokemon.PublicId;
 
-				if (pokemon.OT != null)
-				{
-					seriPokemon.TrainerName			= pokemon.OT.Name;
-					seriPokemon.TrainerIsMale		= pokemon.OT.Gender.Value;
-					seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
-					seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
-				}
+				//ToDo: Uncomment and fix
+				//if (pokemon.OT != null)
+				//{
+				//	seriPokemon.TrainerName			= pokemon.OT.Name;
+				//	seriPokemon.TrainerIsMale		= pokemon.OT.Gender.Value;
+				//	seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
+				//	seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
+				//}
 
 				seriPokemon.Species				= (int)pokemon.Species;
 				seriPokemon.Form				= pokemon.Form;
@@ -143,7 +144,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 				//seriPokemon.Nature = pokemon.getNature();
 				seriPokemon.Nature				= (int)pokemon.Nature;//new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
-				seriPokemon.IsShiny				= pokemon.IsShiny;
+				//seriPokemon.IsShiny				= pokemon.IsShiny; //ToDo: Uncomment and fix
 				seriPokemon.Gender				= pokemon.Gender;
 
 				//seriPokemon.PokerusStage		= pokemon.PokerusStage;
