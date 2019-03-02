@@ -142,6 +142,7 @@ namespace PokemonUnity.Saving
 			//		PlayerParty[i]	= GameVariables.playerTrainer.Trainer.Party[i];
 			//	}
 				
+			//ToDo: Store user's Active PC
 			PC = pc ?? new SeriPC(GameVariables.PC_Poke, GameVariables.PC_boxNames, GameVariables.PC_boxTexture, GameVariables.PC_Items);
 			EventList			= eventList; //GameVariables.EventList;
         }

@@ -30,7 +30,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
 	public static Player playerTrainer { get; set; }
-	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
+	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#region Private Records of Player Storage Data
 	public static Pokemon[,] PC_Poke { get; set; }
 	public static string[] PC_boxNames { get; set; }
@@ -47,6 +47,13 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
+		for (int i = 0; i < Settings.STORAGEBOXES; i++)
+		{
+			//ToDo: Using string from translator here
+			PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
+			//ToDo: Make sure there's enough texture in library for array size
+			PC_boxTexture[i] = i; 
+		}
 
 		PC_Items = new List<Item>();
 		Bag_Items = new List<Items>();

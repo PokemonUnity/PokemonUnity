@@ -33,7 +33,7 @@ public class Player
 	/// When displaying items in bag, do a foreach loop and filter by item category
 	/// </summary>
 	public GameVariables.TrainerBag Bag { get { return new GameVariables.TrainerBag(this); } }
-	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this); } }
+	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
 
 	public int mapName { get; set; }
 	//public int levelName;
@@ -59,6 +59,7 @@ public class Player
 	private int playerMoney { get; set; }
 	private int playerCoins { get; set; }
 	public bool isMale { get; private set; }
+	public int ActivePcBox { get; private set; }
 
 	/// <summary>
 	/// Usage:<para>
@@ -229,12 +230,12 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 		}
 		else
 			//attempt to add to the earliest available PC box. 
-			for (int i = 1; i < GameVariables.PC_Poke.GetUpperBound(0); i++)
+			for (int i = 0, b = ActivePcBox; i < GameVariables.PC_Poke.GetUpperBound(0); i++, b++)
 			{
-				bool added = this.PC.addPokemon(pokemon);
+				bool added = this.PC[b % Settings.STORAGEBOXES].addPokemon(pokemon);
 				if (added)
 				{
-					return i; //true
+					return b; //true
 				}
 			}
 		return null;
@@ -249,10 +250,21 @@ public partial class GameVariables
 	{
 		//public static PC
 		private Player trainer { get; set; }
-		private int? activeBox { get; set; }
-		public string Name { get; set; }
-		public int Texture { get; set; }
-		public Pokemon[] Pokemons { get; set; }
+		private int activeBox { get; set; }
+		public string Name { get { return GameVariables.PC_boxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
+		public int Texture { get { return GameVariables.PC_boxTexture[activeBox]; } }
+		public Pokemon[] Pokemons
+		{
+			get
+			{
+				Pokemon[] p = new Pokemon[30];
+				for (int t = 0; t < 30; t++)
+				{
+					p[t] = GameVariables.PC_Poke[activeBox, t];
+				}
+				return p;
+			}
+		}
 		/// <summary>
 		/// </summary>
 		/// ToDo: Add filter to add/remove items...
@@ -262,15 +274,16 @@ public partial class GameVariables
 		{
 			get
 			{
+				i = i % Settings.STORAGEBOXES;
 				this.activeBox = i;
-				Pokemon[] p = new Pokemon[30];
-				for (int t = 0; t < 30; t++)
-				{
-					p[t] = GameVariables.PC_Poke[i, t];
-				}
-				this.Pokemons = p;
-				this.Texture = GameVariables.PC_boxTexture[i];
-				this.Name = GameVariables.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
+				//Pokemon[] p = new Pokemon[30];
+				//for (int t = 0; t < 30; t++)
+				//{
+				//	p[t] = GameVariables.PC_Poke[i, t];
+				//}
+				//this.Pokemons = p;
+				//this.Texture = GameVariables.PC_boxTexture[i];
+				//this.Name = GameVariables.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
 				return this;
 			}
 		}
@@ -279,9 +292,11 @@ public partial class GameVariables
 		{
 		}
 
-		public TrainerPC(Player t) : this()
+		public TrainerPC(Player t, int? box = null) : this()
 		{
 			trainer = t;
+			if (box.HasValue)
+				activeBox = box.Value % Settings.STORAGEBOXES;
 		}
 
 		public bool hasSpace()
@@ -329,7 +344,6 @@ public partial class GameVariables
 			return result;
 		}*/
 
-
 		/// <summary>
 		/// Add a new pokemon directly to active box. 
 		/// If pokemon could not be added return false.
@@ -342,7 +356,7 @@ public partial class GameVariables
 			if (hasSpace())
 			{
 				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				GameVariables.PC_Poke[activeBox.Value, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+				GameVariables.PC_Poke[activeBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
 				return true;
 			}
 			//if could not add a pokemon, return false. Party and PC are both full.
