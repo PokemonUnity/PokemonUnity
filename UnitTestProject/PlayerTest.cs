@@ -57,10 +57,10 @@ namespace Tests
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
-            Pokemon[,] playerPC = new Pokemon[Settings.STORAGEBOXES, 30];
-            //for (int i = 0; i < playerPC.GetUpperBound(1); i++)
+			Pokemon[,] playerPC = GameVariables.PC_Poke; //new Pokemon[Settings.STORAGEBOXES, 30];
+            //for (int i = 0; i < playerPC.GetLength(1); i++)
             //{
-            //	for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+            //	for (int j = 0; j < playerPC.GetLength(0); j++)
             //	{
 			//		//This should be done by aleady
 			//		//i believe the default value on new Pokemon[,] will return none

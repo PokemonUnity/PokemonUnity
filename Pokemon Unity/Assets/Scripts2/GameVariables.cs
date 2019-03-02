@@ -42,7 +42,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	//public static SaveDataOld currentSave;
 
 	#region Constructor
-	public GameVariables()
+	static GameVariables()
 	{
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
