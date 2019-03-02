@@ -905,7 +905,7 @@ namespace PokemonUnity.Pokemon
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//int d = (GameVariables.playerTrainer.Trainer.TrainerID ^ GameVariables.playerTrainer.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((OT != null? OT.TrainerID : GameVariables.playerTrainer.Trainer.TrainerID) ^ (OT != null? OT.SecretID : GameVariables.playerTrainer.Trainer.SecretID)) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				int d = ((!OT.Equals((object)null)? OT.TrainerID : GameVariables.playerTrainer.Trainer.TrainerID) ^ (!OT.Equals((object)null) ? OT.SecretID : GameVariables.playerTrainer.Trainer.SecretID)) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
 			}

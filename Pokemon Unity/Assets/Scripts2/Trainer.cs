@@ -80,7 +80,7 @@ public class Trainer
 	}
 	public bool Equals(Player obj)
 	{
-		return Equals(obj.Trainer);
+		return this == obj.Trainer; //Equals(obj.Trainer);
 	}
 	public override bool Equals(object obj)
 	{
