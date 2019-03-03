@@ -100,6 +100,15 @@ namespace PokemonUnity.Pokemon
 	}
 	#endregion
 	#region Pokemon
+	public enum Stats
+	{
+		ATTACK,
+		DEFENSE,
+		SPEED,
+		SPATK,
+		SPDEF,
+		HP
+	}
 	public enum LearnMethod
 	{
 		levelup = 1,

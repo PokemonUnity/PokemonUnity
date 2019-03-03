@@ -540,22 +540,6 @@ namespace PokemonUnity
         ENERGYROOT,
         REVIVALHERB
 	}
-	public enum Stats
-	{
-		ATTACK,
-		DEFENSE,
-		SPEED,
-		SPATK,
-		SPDEF,
-		ACCURACY,
-		EVASION,
-		/// <summary>
-		/// Use minus 2 when reflecting in IV, 
-		/// as accuracy and evasion are battle only
-		/// </summary>
-		/// Should HP be here?
-		HP
-	}
 	public enum Weather
 	{
 		NONE,
