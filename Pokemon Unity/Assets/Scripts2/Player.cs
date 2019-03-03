@@ -368,8 +368,8 @@ public partial class GameVariables
 	{
 		private Player trainer { get; set; }
 		/*// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
-		/// <see cref="Items"/> stores quantity value
-		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
+		/// <see cref="Items"/> stores quantity value*/
+		//public List<Item> Items { get { return trainer.Bag_Items; } }
 		//public SortedList<Item, byte> Misc { get; private set; }
 		//public SortedList<Item, byte> Medicine { get; private set; }
 		//public SortedList<Item, byte> Pokeball { get; private set; }
