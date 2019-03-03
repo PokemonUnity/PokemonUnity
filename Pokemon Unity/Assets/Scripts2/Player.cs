@@ -364,6 +364,8 @@ public partial class GameVariables
 	/// </summary>
 	/// I'd feel more comfortable if instead of {get;set;}
 	/// it was a {get;} only, that returned an iqueryable
+	/// ToDo: remove static <see cref="GameVariables.Bag_Items"/>
+	/// so trainerbag can load multiple players (for netplay)
 	public class TrainerBag
 	{
 		private Player trainer { get; set; }
@@ -477,7 +479,7 @@ public partial class GameVariables
 		{
 			get
 			{
-				return PokemonUnity.Item.Item.GetItem(GameVariables.Bag_Items.FirstOrDefault(i => i == item));
+				return PokemonUnity.Item.Item.GetItem(GameVariables.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item));
 			}
 		}
 
@@ -491,6 +493,7 @@ public partial class GameVariables
 
 		public TrainerBag(Player t) //: this()
 		{
+			quantity = new int[Bag_Items.Count];
 			trainer = t;
 		}
 
