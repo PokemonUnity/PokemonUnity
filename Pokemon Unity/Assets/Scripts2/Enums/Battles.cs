@@ -6,6 +6,23 @@ using PokemonUnity;
 
 namespace PokemonUnity.Battle
 {
+	public enum Stats
+	{
+		ATTACK,
+		DEFENSE,
+		SPEED,
+		SPATK,
+		SPDEF,
+		HP,
+		/// <summary>
+		/// battle only stat
+		/// </summary>
+		ACCURACY,
+		/// <summary>
+		/// battle only stat
+		/// </summary>
+		EVASION
+	}
 	#region Battle
 	public enum ChoiceAction
 	{

@@ -21,7 +21,7 @@ namespace PokemonUnity.Pokemon
             {
                 if (_base.BaseStatsHP == 1) return 1;
                 return //totalHP;
-                    ((2 * _base.BaseStatsHP + IV[0] + (EV[0] / 4)) * Level) / 100 + Level + 10;
+                    ((2 * _base.BaseStatsHP + IV[(int)Stats.HP] + (EV[(int)Stats.HP] / 4)) * Level) / 100 + Level + 10;
             }
         }
         /// <summary>
@@ -35,7 +35,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[1] + (EV[1] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
+                return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[(int)Stats.ATTACK] + (EV[(int)Stats.ATTACK] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
             }
         }
         /// <summary>
@@ -45,7 +45,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[2] + (EV[2] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
+                return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[(int)Stats.DEFENSE] + (EV[(int)Stats.DEFENSE] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
             }
         }
         /// <summary>
@@ -55,7 +55,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[4] + (EV[4] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[(int)Stats.SPATK] + (EV[(int)Stats.SPATK] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
             }
         }
         /// <summary>
@@ -65,7 +65,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[5] + (EV[5] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[(int)Stats.SPDEF] + (EV[(int)Stats.SPDEF] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
             }
         }
         /// <summary>
@@ -75,7 +75,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[3] + (EV[3] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[(int)Stats.SPEED] + (EV[(int)Stats.SPEED] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
             }
         }
         /// <summary>
@@ -191,6 +191,9 @@ namespace PokemonUnity.Pokemon
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Uses PokemonData to initialize a Pokemon from base stats
+        /// </summary>
         public Pokemon()
         {
             _base = PokemonData.GetPokemon(Pokemons.NONE);
@@ -234,13 +237,41 @@ namespace PokemonUnity.Pokemon
             //calcStats();
         }
 
+		/// <summary>
+		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Pokemon is created at the lowest possible level, 
+		/// with all stats randomly generated/assigned (new roll)
+		/// </summary>
+		/// <param name="pkmn">Pokemon being generated</param>
+		/// <param name="isEgg">Whether or not this level 
+		/// <see cref="Settings.EGGINITIALLEVEL"/> pokemon is hatched.</param>
         public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 
-        public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; } //Exp.AddExperience(Experience.GetStartExperience(GrowthRate, level));
+		/// <summary>
+		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Pokemon is created at the level assigned in parameter, 
+		/// with all stats randomly generated/assigned (new roll)
+		/// </summary>
+		/// <param name="pkmn">Pokemon being generated</param>
+		/// <param name="level">Level this pokemon start ats</param>
+		/// <param name="isEgg">Whether or not this pokemon is hatched; 
+		/// if pokemon <see cref="isEgg"/> is false, it loses benefits 
+		/// of learning egg moves</param>
+		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); }
 
-        //public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
+		//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
-        public Pokemon(Pokemons pkmn, Trainer original) : this(pkmn) { OT = original; }
+		/// <summary>
+		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Pokemon is created at the level assigned in parameter, 
+		/// with all stats randomly generated/assigned (new roll).
+		/// </summary>
+		/// <param name="pkmn">Pokemon being generated</param>
+		/// <param name="original">Assigns original <see cref="Trainer"/> 
+		/// of this pokemon. 
+		/// Affects ability to command pokemon, if player is not OT</param>
+		/// <param name="level">Level this pokemon start ats</param>
+		public Pokemon(Pokemons pkmn, Trainer original, byte level = Settings.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
         public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
             byte TPLEVEL = 10,
@@ -258,8 +289,8 @@ namespace PokemonUnity.Pokemon
             int TPHAPPINESS = 70,
             string TPNAME = null,
             bool TPSHADOW = false,
-            //bool EGG = false,
-            Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL)
+            bool EGG = false,
+            Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL, isEgg: EGG)
         {
             //Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
             IV = TPIV ?? IV;
