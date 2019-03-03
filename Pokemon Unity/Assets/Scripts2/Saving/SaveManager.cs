@@ -8,6 +8,7 @@ namespace PokemonUnity.Saving
 {
 	using PokemonUnity.Pokemon;
 	using PokemonUnity.Item;
+	using Newtonsoft.Json;
 
 	public static class SaveManager
 	{
@@ -337,7 +338,7 @@ namespace PokemonUnity.Saving
 				//		//sw.Flush(); sw.Close(); sw.Dispose();
 				//	}
 				//}
-				File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(saveData, true));
+				File.WriteAllText(playerSave, JsonConvert.SerializeObject(saveData));
 #else
 				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
@@ -360,7 +361,7 @@ namespace PokemonUnity.Saving
 				//		return (SaveData[])(object)sr.ReadToEnd();
 				//	};
 				//}
-				return UnityEngine.JsonUtility.FromJson<SaveData[]>(playerSave);
+				return JsonConvert.DeserializeObject<SaveData[]>(playerSave);
 #else
 				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
@@ -378,6 +379,7 @@ namespace PokemonUnity.Saving
 			{
 				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
+					//ToDo: Create Custom class from anon
 					var data = new {
 						Language			= GameVariables.UserLanguage,//(int)language;
 						WindowBorder		= GameVariables.WindowSkin,
@@ -391,6 +393,7 @@ namespace PokemonUnity.Saving
 					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
 					{
 						data = sr.ReadToEnd().CastTo(data);
+						//data = JsonConvert.DeserializeObject<data>(sr.ReadToEnd());
 					};
 #else
 					data = bf.Deserialize(fs).CastTo(data);
@@ -417,7 +420,7 @@ namespace PokemonUnity.Saving
 				//using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
 				//{
 				//	sw.Write(
-					File.WriteAllText(playerSave, UnityEngine.JsonUtility.ToJson(new
+					File.WriteAllText(playerSave, JsonConvert.SerializeObject(new
 					{
 						Language			= GameVariables.UserLanguage,//(int)language;
 						WindowBorder		= GameVariables.WindowSkin,
@@ -426,7 +429,7 @@ namespace PokemonUnity.Saving
 						mVol				= GameVariables.mvol,
 						sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
-					}, true));
+					}));
 				//}
 #else
 				bf.Serialize(fs, new
