@@ -464,6 +464,7 @@ public partial class GameVariables
 			}
 		}
 		private int[] quantity { get; set; }
+		private ItemPockets pocket_ { get; set; }
 
 		/// <summary>
 		/// 
@@ -487,92 +488,92 @@ public partial class GameVariables
 			}
 		}
 
-		public void GetBag()
-		{
-			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
-			List<Items> misc, medicine, pokeball, machine, berry, mail, battle, key;// = new List<Item>();
-			misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
-			//orderString = new string[ItemDatabaseOld.getItemsLength()];
-			quantity = new int[Bag_Items.Count];
-			//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
-			foreach (Items Item in GameVariables.Bag_Items)
-			{
-				//Item item = global::Item.GetItem(Item.Key);
-				Item item = PokemonUnity.Item.Item.GetItem(Item);
-				switch (item.ItemPocket)
-				{
-					case ItemPockets.MISC:
-						if (!misc.Contains(Item))
-						{
-							Misc.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							misc.Add(Item);
-						}
-						break;
-					case ItemPockets.MEDICINE:
-						if (!machine.Contains(Item))
-						{
-							Medicine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							machine.Add(Item);
-						}
-						break;
-					case ItemPockets.POKEBALL:
-						if (!pokeball.Contains(Item))
-						{
-							Pokeball.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							pokeball.Add(Item);
-						}
-						break;
-					case ItemPockets.MACHINE:
-						if (!machine.Contains(Item))
-						{
-							Machine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							machine.Add(Item);
-						}
-						break;
-					case ItemPockets.BERRY:
-						if (!berry.Contains(Item))
-						{
-							Berry.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							berry.Add(Item);
-						}
-						break;
-					case ItemPockets.MAIL:
-						if (!mail.Contains(Item))
-						{
-							Mail.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							mail.Add(Item);
-						}
-						break;
-					case ItemPockets.BATTLE:
-						if (!battle.Contains(Item))
-						{
-							Battle.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							battle.Add(Item);
-						}
-						break;
-					case ItemPockets.KEY:
-						if (!key.Contains(Item))
-						{
-							Key.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							key.Add(Item);
-						}
-						break;
-					default:
-						break;
-				}
-			}
-		}
-
 		public TrainerBag(Player t) : this()
 		{
 			trainer = t;
 		}
 
-		public TrainerBag()
-		{
-			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
-			GetBag();
-		}
+		//public TrainerBag()
+		//{
+		//	Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+		//	GetBag();
+		//}
+		//
+		//public void GetBag()
+		//{
+		//	Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+		//	List<Items> misc, medicine, pokeball, machine, berry, mail, battle, key;// = new List<Item>();
+		//	misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
+		//	//orderString = new string[ItemDatabaseOld.getItemsLength()];
+		//	quantity = new int[Bag_Items.Count];
+		//	//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
+		//	foreach (Items Item in GameVariables.Bag_Items)
+		//	{
+		//		//Item item = global::Item.GetItem(Item.Key);
+		//		Item item = PokemonUnity.Item.Item.GetItem(Item);
+		//		switch (item.ItemPocket)
+		//		{
+		//			case ItemPockets.MISC:
+		//				if (!misc.Contains(Item))
+		//				{
+		//					Misc.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					misc.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.MEDICINE:
+		//				if (!machine.Contains(Item))
+		//				{
+		//					Medicine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					machine.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.POKEBALL:
+		//				if (!pokeball.Contains(Item))
+		//				{
+		//					Pokeball.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					pokeball.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.MACHINE:
+		//				if (!machine.Contains(Item))
+		//				{
+		//					Machine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					machine.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.BERRY:
+		//				if (!berry.Contains(Item))
+		//				{
+		//					Berry.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					berry.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.MAIL:
+		//				if (!mail.Contains(Item))
+		//				{
+		//					Mail.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					mail.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.BATTLE:
+		//				if (!battle.Contains(Item))
+		//				{
+		//					Battle.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					battle.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.KEY:
+		//				if (!key.Contains(Item))
+		//				{
+		//					Key.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					key.Add(Item);
+		//				}
+		//				break;
+		//			default:
+		//				break;
+		//		}
+		//	}
+		//}
 
 		/*public int getIndexOf(Item name)
 		{
@@ -726,6 +727,30 @@ public partial class GameVariables
 			}
 			return true;
 		}*/
+
+		public KeyValuePair<Item, byte>[] Sort(Order by)
+		{
+			IQueryable<KeyValuePair<Item, byte>> items = this[pocket_].AsQueryable();
+			switch (by)
+			{
+				case Order.Alphabet:
+					break;
+				case Order.Quantity:
+					break;
+				case Order.Type:
+					break;
+				default:
+					break;
+			}
+			return items.ToArray();
+		}
+
+		public enum Order
+		{
+			Alphabet,
+			Quantity, 
+			Type
+		}
 	}
 }
 #endregion
