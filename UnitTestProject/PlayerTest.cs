@@ -49,7 +49,8 @@ namespace Tests
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
-			red = new Player(red, playerParty).Trainer;
+			GameVariables.playerTrainer = new Player(red, playerParty);
+			red = GameVariables.playerTrainer.Trainer;
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
@@ -67,9 +68,9 @@ namespace Tests
             //		playerPC[i, j] = new Pokemon(Pokemons.NONE);
             //	}
             //}
-            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
-            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
-            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS, red);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON, red);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP, red);
 			
             List<Items> playerBag = new List<Items>()
 			//Created random inventory list for player bag
