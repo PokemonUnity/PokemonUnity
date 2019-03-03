@@ -378,6 +378,91 @@ public partial class GameVariables
 		public SortedList<Item, byte> Mail { get; private set; }
 		public SortedList<Item, byte> Battle { get; private set; }
 		public SortedList<Item, byte> Key { get; private set; }
+		public SortedList<Item, byte> this[ItemPockets pocket]  {
+			get
+			{
+				//All items found in the bag
+				List<Items> bag = new List<Items>();
+				//List of items that belong in this pocket, with quantity found
+				SortedList<Item, byte> items = new SortedList<Item, byte>();
+				//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
+				foreach (Items Item in GameVariables.Bag_Items)
+				{
+					//Item item = global::Item.GetItem(Item.Key);
+					Item item = PokemonUnity.Item.Item.GetItem(Item);
+					switch (item.ItemPocket)
+					{
+						case ItemPockets.MISC:
+							if(pocket == ItemPockets.MISC)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.MEDICINE:
+							if (pocket == ItemPockets.MEDICINE)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.POKEBALL:
+							if (pocket == ItemPockets.POKEBALL)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.MACHINE:
+							if (pocket == ItemPockets.MACHINE)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.BERRY:
+							if (pocket == ItemPockets.BERRY)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.MAIL:
+							if (pocket == ItemPockets.MAIL)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.BATTLE:
+							if (pocket == ItemPockets.BATTLE)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.KEY:
+							if (pocket == ItemPockets.KEY)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						default:
+							break;
+					}
+				};
+				return items;
+			}
+		}
 		private int[] quantity { get; set; }
 
 		/// <summary>
