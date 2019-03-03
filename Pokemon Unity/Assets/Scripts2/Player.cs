@@ -364,21 +364,110 @@ public partial class GameVariables
 	/// </summary>
 	/// I'd feel more comfortable if instead of {get;set;}
 	/// it was a {get;} only, that returned an iqueryable
+	/// ToDo: remove static <see cref="GameVariables.Bag_Items"/>
+	/// so trainerbag can load multiple players (for netplay)
 	public class TrainerBag
 	{
 		private Player trainer { get; set; }
 		/*// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
-		/// <see cref="Items"/> stores quantity value
-		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
-		public SortedList<Item, byte> Misc { get; private set; }
-		public SortedList<Item, byte> Medicine { get; private set; }
-		public SortedList<Item, byte> Pokeball { get; private set; }
-		public SortedList<Item, byte> Machine { get; private set; }
-		public SortedList<Item, byte> Berry { get; private set; }
-		public SortedList<Item, byte> Mail { get; private set; }
-		public SortedList<Item, byte> Battle { get; private set; }
-		public SortedList<Item, byte> Key { get; private set; }
+		/// <see cref="Items"/> stores quantity value*/
+		//public List<Item> Items { get { return trainer.Bag_Items; } }
+		//public SortedList<Item, byte> Misc { get; private set; }
+		//public SortedList<Item, byte> Medicine { get; private set; }
+		//public SortedList<Item, byte> Pokeball { get; private set; }
+		//public SortedList<Item, byte> Machine { get; private set; }
+		//public SortedList<Item, byte> Berry { get; private set; }
+		//public SortedList<Item, byte> Mail { get; private set; }
+		//public SortedList<Item, byte> Battle { get; private set; }
+		//public SortedList<Item, byte> Key { get; private set; }
+		public SortedList<Item, byte> this[ItemPockets pocket]  {
+			get
+			{
+				//All items found in the bag
+				List<Items> bag = new List<Items>();
+				//List of items that belong in this pocket, with quantity found
+				SortedList<Item, byte> items = new SortedList<Item, byte>();
+				//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
+				foreach (Items Item in GameVariables.Bag_Items)
+				{
+					//Item item = global::Item.GetItem(Item.Key);
+					Item item = PokemonUnity.Item.Item.GetItem(Item);
+					switch (item.ItemPocket)
+					{
+						case ItemPockets.MISC:
+							if(pocket == ItemPockets.MISC)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.MEDICINE:
+							if (pocket == ItemPockets.MEDICINE)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.POKEBALL:
+							if (pocket == ItemPockets.POKEBALL)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.MACHINE:
+							if (pocket == ItemPockets.MACHINE)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.BERRY:
+							if (pocket == ItemPockets.BERRY)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.MAIL:
+							if (pocket == ItemPockets.MAIL)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.BATTLE:
+							if (pocket == ItemPockets.BATTLE)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						case ItemPockets.KEY:
+							if (pocket == ItemPockets.KEY)
+								if (!bag.Contains(Item))
+								{
+									items.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+									bag.Add(Item);
+								}
+							break;
+						default:
+							break;
+					}
+				};
+				return items;
+			}
+		}
 		private int[] quantity { get; set; }
+		private ItemPockets pocket { get; set; }
+		private bool reverseOrder { get; set; }
 
 		/// <summary>
 		/// 
@@ -390,7 +479,7 @@ public partial class GameVariables
 		{
 			get
 			{
-				return PokemonUnity.Item.Item.GetItem(GameVariables.Bag_Items.FirstOrDefault(i => i == item));
+				return PokemonUnity.Item.Item.GetItem(GameVariables.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item));
 			}
 		}
 
@@ -402,92 +491,93 @@ public partial class GameVariables
 			}
 		}
 
-		public void GetBag()
+		public TrainerBag(Player t) //: this()
 		{
-			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
-			List<Items> misc, medicine, pokeball, machine, berry, mail, battle, key;// = new List<Item>();
-			misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
-			//orderString = new string[ItemDatabaseOld.getItemsLength()];
 			quantity = new int[Bag_Items.Count];
-			//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
-			foreach (Items Item in GameVariables.Bag_Items)
-			{
-				//Item item = global::Item.GetItem(Item.Key);
-				Item item = PokemonUnity.Item.Item.GetItem(Item);
-				switch (item.ItemPocket)
-				{
-					case ItemPockets.MISC:
-						if (!misc.Contains(Item))
-						{
-							Misc.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							misc.Add(Item);
-						}
-						break;
-					case ItemPockets.MEDICINE:
-						if (!machine.Contains(Item))
-						{
-							Medicine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							machine.Add(Item);
-						}
-						break;
-					case ItemPockets.POKEBALL:
-						if (!pokeball.Contains(Item))
-						{
-							Pokeball.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							pokeball.Add(Item);
-						}
-						break;
-					case ItemPockets.MACHINE:
-						if (!machine.Contains(Item))
-						{
-							Machine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							machine.Add(Item);
-						}
-						break;
-					case ItemPockets.BERRY:
-						if (!berry.Contains(Item))
-						{
-							Berry.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							berry.Add(Item);
-						}
-						break;
-					case ItemPockets.MAIL:
-						if (!mail.Contains(Item))
-						{
-							Mail.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							mail.Add(Item);
-						}
-						break;
-					case ItemPockets.BATTLE:
-						if (!battle.Contains(Item))
-						{
-							Battle.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							battle.Add(Item);
-						}
-						break;
-					case ItemPockets.KEY:
-						if (!key.Contains(Item))
-						{
-							Key.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
-							key.Add(Item);
-						}
-						break;
-					default:
-						break;
-				}
-			}
-		}
-
-		public TrainerBag(Player t) : this()
-		{
 			trainer = t;
 		}
 
-		public TrainerBag()
-		{
-			Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
-			GetBag();
-		}
+		//public TrainerBag()
+		//{
+		//	Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+		//	GetBag();
+		//}
+		//
+		//public void GetBag()
+		//{
+		//	Misc = Medicine = Pokeball = Machine = Berry = Mail = Battle = Key = new SortedList<Item, byte>();
+		//	List<Items> misc, medicine, pokeball, machine, berry, mail, battle, key;// = new List<Item>();
+		//	misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
+		//	//orderString = new string[ItemDatabaseOld.getItemsLength()];
+		//	quantity = new int[Bag_Items.Count];
+		//	//foreach (KeyValuePair<Items, byte> Item in GameVariables.Bag_Items)
+		//	foreach (Items Item in GameVariables.Bag_Items)
+		//	{
+		//		//Item item = global::Item.GetItem(Item.Key);
+		//		Item item = PokemonUnity.Item.Item.GetItem(Item);
+		//		switch (item.ItemPocket)
+		//		{
+		//			case ItemPockets.MISC:
+		//				if (!misc.Contains(Item))
+		//				{
+		//					Misc.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					misc.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.MEDICINE:
+		//				if (!machine.Contains(Item))
+		//				{
+		//					Medicine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					machine.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.POKEBALL:
+		//				if (!pokeball.Contains(Item))
+		//				{
+		//					Pokeball.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					pokeball.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.MACHINE:
+		//				if (!machine.Contains(Item))
+		//				{
+		//					Machine.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					machine.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.BERRY:
+		//				if (!berry.Contains(Item))
+		//				{
+		//					Berry.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					berry.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.MAIL:
+		//				if (!mail.Contains(Item))
+		//				{
+		//					Mail.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					mail.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.BATTLE:
+		//				if (!battle.Contains(Item))
+		//				{
+		//					Battle.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					battle.Add(Item);
+		//				}
+		//				break;
+		//			case ItemPockets.KEY:
+		//				if (!key.Contains(Item))
+		//				{
+		//					Key.Add(item, (byte)GameVariables.Bag_Items.Count(i => i == Item));
+		//					key.Add(Item);
+		//				}
+		//				break;
+		//			default:
+		//				break;
+		//		}
+		//	}
+		//}
 
 		/*public int getIndexOf(Item name)
 		{
@@ -641,6 +731,37 @@ public partial class GameVariables
 			}
 			return true;
 		}*/
+
+		public KeyValuePair<Item, byte>[] Sort(Order by)
+		{
+			IQueryable<KeyValuePair<Item, byte>> items = this[pocket].AsQueryable();
+			switch (by)
+			{
+				case Order.Alphabet:
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Key.Name).ToArray() : items.OrderByDescending(x => x.Key.Name).ToArray();
+				case Order.Quantity:
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Value).ToArray() : items.OrderByDescending(x => x.Value).ToArray();
+				case Order.Price:
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Key.Price).ToArray() : items.OrderByDescending(x => x.Key.Price).ToArray();
+				case Order.Category:
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Key.ItemCategory).ToArray() : items.OrderByDescending(x => x.Key.ItemCategory).ToArray();
+				default:
+					break;
+			}
+			return items.ToArray();
+		}
+
+		public enum Order
+		{
+			Alphabet,
+			Quantity, 
+			Category,
+			Price
+		}
 	}
 }
 #endregion
