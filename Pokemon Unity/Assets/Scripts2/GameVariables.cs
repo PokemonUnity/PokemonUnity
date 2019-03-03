@@ -14,6 +14,7 @@ using System.Globalization;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Item;
+using PokemonUnity.Saving;
 
 /// <summary>
 /// Variables that are stored when game is saved, and other temp values used for gameplay.
@@ -29,7 +30,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
 	public static Player playerTrainer { get; set; }
-	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
+	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#region Private Records of Player Storage Data
 	public static Pokemon[,] PC_Poke { get; set; }
 	public static string[] PC_boxNames { get; set; }
@@ -41,11 +42,24 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	//public static SaveDataOld currentSave;
 
 	#region Constructor
-	public GameVariables()
+	static GameVariables()
 	{
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
+		for (int i = 0; i < Settings.STORAGEBOXES; i++)
+		{
+			//Initialize the PC storage so pokemons arent null (in value)
+			for (int j = 0; j < PC_Poke.GetLength(1); j++)
+			{
+				//All default values must be `NONE`
+				PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
+			}
+			//ToDo: Using string from translator here
+			PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
+			//ToDo: Make sure there's enough texture in library for array size
+			PC_boxTexture[i] = i; 
+		}
 
 		PC_Items = new List<Item>();
 		Bag_Items = new List<Items>();
@@ -210,7 +224,25 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     {
 		//using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
 		//GameVariables.SaveLoad.Save();
-		PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
+
+		//PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
+		SaveData[] save = SaveManager.GetSaves();
+		if (save == null)
+			save = new SaveData[] { null, null, null };
+		save[slotIndex] = new SaveData();
+		SaveManager.CreateSaveFileAndSerialize(save);
+    }
+	/// <summary>
+	/// For Debug Use Purposes;
+	/// Used Unit Tester...
+	/// </summary>
+    public static void Save(SaveData test, int slot)
+    {
+		SaveData[] save = SaveManager.GetSaves();
+		if (save == null)
+			save = new SaveData[] { null, null, null };
+		save[slot] = test;
+		SaveManager.CreateSaveFileAndSerialize(save);
     }
 
     /*private class SaveLoad {
@@ -1158,9 +1190,9 @@ public static class TransformExtension
 /// for ease of use utility and integration.
 /// </summary>
 public class UnityUtilityIntegration
-#if (DEBUG == false || UNITY_EDITOR == true)
+#if !DEBUG //|| UNITY_EDITOR 
 	//Not sure if this is something i want inheriting monobehavior...
-	//: UnityEngine.MonoBehaviour
+	: UnityEngine.MonoBehaviour
 #endif
 {
 	#region Debug Functions and Features

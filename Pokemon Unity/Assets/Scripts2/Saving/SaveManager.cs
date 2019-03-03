@@ -8,11 +8,12 @@ namespace PokemonUnity.Saving
 {
 	using PokemonUnity.Pokemon;
 	using PokemonUnity.Item;
-	using PokemonUnity.Saving.Location;
+	using Newtonsoft.Json;
 
 	public static class SaveManager
 	{
-		public const string BuildVersion = "0.0.1";
+		#region Variables
+		public const string BuildVersion = "0.1.0";
 
 		/// <summary>
 		/// If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
@@ -27,17 +28,24 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
+		private static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
+		private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		//private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug
 		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
-		//private static string saveLocation = System.Environment.CurrentDirectory + @"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //TestProject\bin\Debug
+		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
 		//private static string saveLocation = @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
+		private static string gameConfig = UnityEngine.Application.persistentDataPath + "/ConfigFile.pku";
+		private static string playerSave = UnityEngine.Application.persistentDataPath + "/SaveFile.pku";
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
-		//private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";		
+		//private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
 		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
 		//private static string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
-
+		#endregion
+		
+		#region 0.0.1 Original Save Mechanic
 		//private static UnityEngine.GameObject Player;
 		private static List<SaveEvent> EventSaves = new List<SaveEvent>();
 
@@ -313,5 +321,136 @@ namespace PokemonUnity.Saving
 		//{
 		//	return BuildVersion;
 		//}
+		#endregion
+
+		#region 0.1.0 Save Mechanic Rewrite
+		public static void CreateSaveFileAndSerialize(SaveData[] saveData)
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			//if (System.IO.File.Exists(playerSave))
+			//{//SaveData[] sd = GetSaves();
+#if DEBUG
+				//using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				//{
+				//	using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8))
+				//	{
+				//		sw.Write(ob ((object)saveData).ToString());
+				//		//sw.Flush(); sw.Close(); sw.Dispose();
+				//	}
+				//}
+				File.WriteAllText(playerSave, JsonConvert.SerializeObject(saveData));
+#else
+				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				{
+					bf.Serialize(fs, saveData);
+				}
+#endif
+			//}
+		}
+
+		public static SaveData[] GetSaves()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			if (System.IO.File.Exists(playerSave))
+			{
+#if DEBUG
+				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
+					{
+						//return (SaveData[])(object)sr.ReadToEnd();
+						return JsonConvert.DeserializeObject<SaveData[]>(sr.ReadToEnd());
+					};
+				}
+				//return JsonConvert.DeserializeObject<SaveData[]>(playerSave);
+#else
+				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					return (SaveData[])bf.Deserialize(fs);
+				}
+#endif
+			}
+			else return null;
+		}
+
+		public static void LoadGameState()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			if (System.IO.File.Exists(gameConfig))
+			{
+				using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					//ToDo: Create Custom class from anon
+					var data = new {
+						Language			= GameVariables.UserLanguage,//(int)language;
+						WindowBorder		= GameVariables.WindowSkin,
+						DialogBorder		= GameVariables.DialogSkin,
+						TextSpeed			= GameVariables.textSpeed,
+						mVol				= GameVariables.mvol,
+						sVol				= GameVariables.svol,
+						Fullscreen			= GameVariables.fullscreen,
+					};
+#if DEBUG
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
+					{
+						data = sr.ReadToEnd().CastTo(data);
+						//data = JsonConvert.DeserializeObject<data>(sr.ReadToEnd());
+					};
+#else
+					data = bf.Deserialize(fs).CastTo(data);
+#endif
+					GameVariables.UserLanguage	= (Settings.Languages)data.Language;
+					//GameVariables.WindowSkin	= data.WindowBorder;
+					//GameVariables.DialogSkin	= data.DialogBorder;
+					GameVariables.textSpeed		= data.TextSpeed;
+					//GameVariables.mvol			= data.mVol;
+					//GameVariables.svol			= data.sVol;
+					GameVariables.fullscreen	= data.Fullscreen;
+				}
+			}
+			else
+				SaveGameState();
+		}
+
+		public static void SaveGameState()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			using (FileStream fs = System.IO.File.Open(gameConfig, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+			{
+#if DEBUG
+				//using (StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.ASCII)) 
+				//{
+				//	sw.Write(
+					File.WriteAllText(playerSave, JsonConvert.SerializeObject(new
+					{
+						Language			= GameVariables.UserLanguage,//(int)language;
+						WindowBorder		= GameVariables.WindowSkin,
+						DialogBorder		= GameVariables.DialogSkin,
+						TextSpeed			= GameVariables.textSpeed,
+						mVol				= GameVariables.mvol,
+						sVol				= GameVariables.svol,
+						Fullscreen			= GameVariables.fullscreen,
+					}));
+				//}
+#else
+				bf.Serialize(fs, new
+				{
+					Language			= GameVariables.UserLanguage,//(int)language;
+					WindowBorder		= GameVariables.WindowSkin,
+					DialogBorder		= GameVariables.DialogSkin,
+					TextSpeed			= GameVariables.textSpeed,
+					mVol				= GameVariables.mvol,
+					sVol				= GameVariables.svol,
+					Fullscreen			= GameVariables.fullscreen,
+				});
+#endif
+			}
+		}
+
+		private static T CastTo<T>(this Object value, T target)
+		{
+			return (T)value;
+		}
+		#endregion
 	}
 }

@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
+using PokemonUnity.Saving.SerializableClasses;
 
 [Serializable]
 public class Player
@@ -19,13 +20,20 @@ public class Player
 	/// Please use the values stored in <see cref="Trainer.SecretID"/>
 	/// </summary>
 	private int? secretId { get; set; } 
-	//public Pokemon[] Party { get; private set; }
-	public Trainer Trainer { get { return new Trainer(this, tID: trainerId, sID: secretId); } }
+	/// <summary>
+	/// Player's Pokemon Party is stored in Player class, 
+	/// and then reflected in Trainer, to match what occurs
+	/// </summary>
+	/// Didn't think about it it till now but the player should
+	/// hold the `Trainer` data, and instantiate a new Trainer
+	/// whenever it's needed...
+	public Pokemon[] Party { get; private set; }
+	public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale,*/ party: Party, tID: trainerId, sID: secretId); } }
 	/// <summary>
 	/// When displaying items in bag, do a foreach loop and filter by item category
 	/// </summary>
 	public GameVariables.TrainerBag Bag { get { return new GameVariables.TrainerBag(this); } }
-	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this); } }
+	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
 
 	public int mapName { get; set; }
 	//public int levelName;
@@ -51,6 +59,7 @@ public class Player
 	private int playerMoney { get; set; }
 	private int playerCoins { get; set; }
 	public bool isMale { get; private set; }
+	public int ActivePcBox { get; private set; }
 
 	/// <summary>
 	/// Usage:<para>
@@ -73,8 +82,8 @@ public class Player
 	//public bool?[] playerPokedex { get; set; }
 	//public int pokedexCaught { get { return (from caught in playerPokedex where caught == true select caught).Count(); } }
 	//public int pokedexSeen  { get { return (from seen in playerPokedex where seen != null select seen).Count(); } }
-	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) select PlayerPokedex[index, 1] == 1).Count(); } }
-	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) select PlayerPokedex[index, 0] == 1).Count(); } }
+	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 1] == 1 select PlayerPokedex[index, 1]).Count(); } }
+	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 0] == 1 select PlayerPokedex[index, 0]).Count(); } }
 
     public System.TimeSpan playerTime { get; private set; }
     //public int playerHours;
@@ -126,10 +135,19 @@ public class Player
 	{
 		//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
 		PlayerPokedex = new byte[Pokemon.PokemonData.Database.Length, 3];
-		playerTime = new TimeSpan(); 
-		//Party = new Pokemon[6];
+		playerTime = new TimeSpan();
+		Party = new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE)
+		};
 
 		//List<GymBadges> gymBadges = new List<GymBadges>();
+		GymsBeatTime = new Dictionary<GymBadges, DateTime?>();
 		foreach (GymBadges i in (GymBadges[])Enum.GetValues(typeof(GymBadges)))
 		{
 			//gymBadges.Add(i);
@@ -141,32 +159,18 @@ public class Player
 		//GymsBeatTime = new System.DateTime?[gymBadges.Count];
 	}
 
-	public Player(string name, bool gender) : this()
+	public Player(string name, bool gender, Pokemon[] party = null) : this()
 	{
 		PlayerName = name;
 		isMale = gender;
+		Party = party ?? Party;
 	}
 
-	static Player()
+	public Player(Trainer trainer, Pokemon[] party = null) 
+		: this (name: trainer.Name, gender: trainer.Gender.Value, party: party ?? trainer.Party)
 	{
-/*TPSPECIES	,
-TPLEVEL		,
-TPITEM		,
-TPMOVE1		,
-TPMOVE2		,
-TPMOVE3		,
-TPMOVE4		,
-TPABILITY	,
-TPGENDER	,
-TPFORM		,
-TPSHINY		,
-TPNATURE	,
-TPIV		,
-TPHAPPINESS ,
-TPNAME		,
-TPSHADOW	,
-TPBALL		,
-TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false, 0]*/
+		trainerId = trainer.TrainerID;
+		secretId = trainer.SecretID;
 	}
 	#endregion
 
@@ -187,6 +191,11 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 		playerTime = trainerSaveData.PlayerTime;
 		isMale = trainerSaveData.IsMale;
 		GymsBeatTime = trainerSaveData.GymsChallenged;
+		//for (int i = 0; i < /*GameVariables.playerTrainer.Trainer.*/Party.Length; i++)
+		//{
+		//	Party[i] = trainerSaveData.PlayerParty[i];
+		//}
+		Party = trainerSaveData.PlayerParty.Deserialize();
 	}
 
 	/// <summary>
@@ -197,21 +206,21 @@ TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false,
 	public int? addPokemon(Pokemon pokemon)
 	{
 		//attempt to add to party first. pack the party array if space available.
-		if (Trainer.Party.HasSpace(Trainer.Party.Length))
+		if (Party.HasSpace(Party.Length))
 		{
-			Trainer.Party.PackParty();
-			Trainer.Party[Trainer.Party.Length - 1] = pokemon;
-			Trainer.Party.PackParty();
+			Party.PackParty();
+			Party[Trainer.Party.Length - 1] = pokemon;
+			Party.PackParty();
 			return -1; //true
 		}
 		else
 			//attempt to add to the earliest available PC box. 
-			for (int i = 1; i < GameVariables.PC_Poke.GetUpperBound(0); i++)
+			for (int i = 0, b = ActivePcBox; i < GameVariables.PC_Poke.GetUpperBound(0); i++, b++)
 			{
-				bool added = this.PC.addPokemon(pokemon);
+				bool added = this.PC[b % Settings.STORAGEBOXES].addPokemon(pokemon);
 				if (added)
 				{
-					return i; //true
+					return b; //true
 				}
 			}
 		return null;
@@ -226,10 +235,21 @@ public partial class GameVariables
 	{
 		//public static PC
 		private Player trainer { get; set; }
-		private int? activeBox { get; set; }
-		public string Name { get; set; }
-		public int Texture { get; set; }
-		public Pokemon[] Pokemons { get; set; }
+		private int activeBox { get; set; }
+		public string Name { get { return GameVariables.PC_boxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
+		public int Texture { get { return GameVariables.PC_boxTexture[activeBox]; } }
+		public Pokemon[] Pokemons
+		{
+			get
+			{
+				Pokemon[] p = new Pokemon[30];
+				for (int t = 0; t < 30; t++)
+				{
+					p[t] = GameVariables.PC_Poke[activeBox, t];
+				}
+				return p;
+			}
+		}
 		/// <summary>
 		/// </summary>
 		/// ToDo: Add filter to add/remove items...
@@ -239,15 +259,16 @@ public partial class GameVariables
 		{
 			get
 			{
+				i = i % Settings.STORAGEBOXES;
 				this.activeBox = i;
-				Pokemon[] p = new Pokemon[30];
-				for (int t = 0; t < 30; t++)
-				{
-					p[t] = GameVariables.PC_Poke[i, t];
-				}
-				this.Pokemons = p;
-				this.Texture = GameVariables.PC_boxTexture[i];
-				this.Name = GameVariables.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
+				//Pokemon[] p = new Pokemon[30];
+				//for (int t = 0; t < 30; t++)
+				//{
+				//	p[t] = GameVariables.PC_Poke[i, t];
+				//}
+				//this.Pokemons = p;
+				//this.Texture = GameVariables.PC_boxTexture[i];
+				//this.Name = GameVariables.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
 				return this;
 			}
 		}
@@ -256,9 +277,11 @@ public partial class GameVariables
 		{
 		}
 
-		public TrainerPC(Player t) : this()
+		public TrainerPC(Player t, int? box = null) : this()
 		{
 			trainer = t;
+			if (box.HasValue)
+				activeBox = box.Value % Settings.STORAGEBOXES;
 		}
 
 		public bool hasSpace()
@@ -306,7 +329,6 @@ public partial class GameVariables
 			return result;
 		}*/
 
-
 		/// <summary>
 		/// Add a new pokemon directly to active box. 
 		/// If pokemon could not be added return false.
@@ -319,7 +341,7 @@ public partial class GameVariables
 			if (hasSpace())
 			{
 				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				GameVariables.PC_Poke[activeBox.Value, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+				GameVariables.PC_Poke[activeBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
 				return true;
 			}
 			//if could not add a pokemon, return false. Party and PC are both full.

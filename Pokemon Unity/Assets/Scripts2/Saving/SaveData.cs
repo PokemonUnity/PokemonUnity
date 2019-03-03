@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using PokemonUnity.Item;
-using PokemonUnity.Saving.Location;
 using PokemonUnity.Saving.SerializableClasses;
 
 namespace PokemonUnity.Saving
@@ -97,6 +96,18 @@ namespace PokemonUnity.Saving
 		//    pCenterFdirection = fDirection;
 		//}
 
+		public SaveData (Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
+			TimeSpan? time = null, SeriV3 position = null, float? direction = null, int? scene = null, 
+			int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
+			SeriPC pc = null, List<SaveEvent> eventList = null) 
+				: this(name: player.PlayerName, money: money, coin: coin, trainer: player.Trainer.TrainerID,
+					  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
+					  time: time, position: position, direction: direction, scene: scene, pokecenter: pokecenter,
+					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize(), pc: pc, eventList: eventList)
+		{
+			// Just made this one for fun... might be useful in future, than doing things the long way, like below
+		}
+
 		public SaveData (string name = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
 			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, SeriV3 position = null, float? direction = null, 
 			int? scene = null, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
@@ -106,13 +117,6 @@ namespace PokemonUnity.Saving
 			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
-			//Language			= (int)GameVariables.UserLanguage;//(int)language;
-			//WindowBorder		= GameVariables.WindowSkin;
-			//DialogBorder		= GameVariables.DialogSkin;
-			//TextSpeed			= GameVariables.textSpeed;
-			//mVol				= GameVariables.mvol;
-			//sVol				= GameVariables.svol;
-			//Fullscreen			= GameVariables.fullscreen;
 			PlayerName			= name			?? GameVariables.playerTrainer.PlayerName;
 			PlayerMoney			= money			?? GameVariables.playerTrainer.PlayerMoney;
 			PlayerCoins			= coin			?? GameVariables.playerTrainer.PlayerCoins;
@@ -130,12 +134,15 @@ namespace PokemonUnity.Saving
 			//FollowerDirection	= GameVariables.playerTrainer.followerDirection;
 			ActiveScene			= scene			?? GameVariables.playerTrainer.mapName;//.activeScene;
 			pCenterScene		= pokecenter	?? GameVariables.playerTrainer.respawnScene;//pkmnCenter;
-			PlayerParty			= party ?? new SeriPokemon[GameVariables.playerTrainer.Trainer.Party.Length];
-			if(party != null)
-			for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
-			{
-				PlayerParty[i]	= GameVariables.playerTrainer.Trainer.Party[i];
-			}
+			PlayerParty			= party			?? GameVariables.playerTrainer.Trainer.Party.Serialize();
+			//	new SeriPokemon[GameVariables.playerTrainer.Trainer.Party.Length];
+			//if(party != null)
+			//	for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+			//	{
+			//		PlayerParty[i]	= GameVariables.playerTrainer.Trainer.Party[i];
+			//	}
+				
+			//ToDo: Store user's Active PC
 			PC = pc ?? new SeriPC(GameVariables.PC_Poke, GameVariables.PC_boxNames, GameVariables.PC_boxTexture, GameVariables.PC_Items);
 			EventList			= eventList; //GameVariables.EventList;
         }

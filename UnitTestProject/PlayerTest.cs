@@ -5,7 +5,6 @@ using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
 using PokemonUnity.Saving;
-using PokemonUnity.Saving.Location;
 using System.Collections.Generic;
 using PokemonUnity.Saving.SerializableClasses;
 
@@ -39,6 +38,19 @@ namespace Tests
             int trainerID = 55323;
             int secretID = 64123;
             bool isMale = false;
+			Trainer red = new Trainer(new Player(playerName, isMale/*, playerParty*/), tID: trainerID, sID: secretID);
+
+			Pokemon[] playerParty = new Pokemon[]
+			{
+				new Pokemon(Pokemons.CRANIDOS, red),
+				new Pokemon(Pokemons.UMBREON, red),
+				new Pokemon(Pokemons.TURTWIG, red),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE)
+			};
+			GameVariables.playerTrainer = new Player(red, playerParty);
+			red = GameVariables.playerTrainer.Trainer;
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
@@ -46,31 +58,21 @@ namespace Tests
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
-
-            SeriPokemon[] playerParty = new SeriPokemon[]
-            {
-                new Pokemon(Pokemons.CRANIDOS),
-                new Pokemon(Pokemons.UMBREON),
-                new Pokemon(Pokemons.TURTWIG),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE),
-				new Pokemon(Pokemons.NONE)
-            };
-            Pokemon[,] playerPC = new Pokemon[Settings.STORAGEBOXES, 30];
-            //for (int i = 0; i < playerPC.GetUpperBound(1); i++)
+			Pokemon[,] playerPC = GameVariables.PC_Poke; //new Pokemon[Settings.STORAGEBOXES, 30];
+            //for (int i = 0; i < playerPC.GetLength(1); i++)
             //{
-            //	for (int j = 0; j < playerPC.GetUpperBound(0); j++)
+            //	for (int j = 0; j < playerPC.GetLength(0); j++)
             //	{
 			//		//This should be done by aleady
 			//		//i believe the default value on new Pokemon[,] will return none
             //		playerPC[i, j] = new Pokemon(Pokemons.NONE);
             //	}
             //}
-            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS);
-            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON);
-            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP);
+            playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS, red);
+            playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON, red);
+            playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP, red);
 			
-            List<Items> playerBag = new List<Items>()
+            GameVariables.Bag_Items = new List<Items>()
 			//Created random inventory list for player bag
 			{
 				Items.ADAMANT_ORB,
@@ -82,6 +84,7 @@ namespace Tests
 				Items.POKE_BALL,
 				Items.GREAT_BALL
 			};
+			List<Items> playerBag = GameVariables.Bag_Items;
 
 			List<SaveEvent> eventList = new List<SaveEvent>();
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
@@ -113,8 +116,8 @@ namespace Tests
 		
 				scene: activeScene,
 		
-				party: playerParty,
-				pc: new PokemonUnity.Saving.SerializableClasses.SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+				party: red.Party.Serialize(), 
+				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
 				bag: playerBag,
 		
 				eventList: eventList
@@ -363,9 +366,11 @@ namespace Tests
         [TestMethod]
         public void Player_Load_Party()
         {
-            Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+            //Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
+			GameVariables.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
+
 			GameVariables.Load(saveSlot);
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]

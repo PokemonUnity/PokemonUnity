@@ -80,7 +80,7 @@ public class Trainer
 	}
 	public bool Equals(Player obj)
 	{
-		return Equals(obj.Trainer);
+		return this == obj.Trainer; //Equals(obj.Trainer);
 	}
 	public override bool Equals(object obj)
 	{
@@ -145,7 +145,15 @@ public class Trainer
 		TrainerID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
 		SecretID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
 		IsDouble = false;
-		Party = new Pokemon[6];
+		Party = new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE)
+		};
 		GetTrainer(trainer);
 	}
 
@@ -162,15 +170,20 @@ public class Trainer
 		//ScriptBattleEnd = 
 	}
 
-	public Trainer(Player trainer, int? tID = null, int? sID = null) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
+	public Trainer(Player trainer, /*string name, bool gender,*/ Pokemon[] party = null, int? tID = null, int? sID = null) 
+		: this(TrainerTypes.PLAYER, /*trainer.Trainer.Party*/party ?? new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE)
+		})
     {
 		//if trainer is another player
 		if (tID.HasValue) TrainerID = tID.Value; //trainer.Trainer.TrainerID;
 		if (sID.HasValue) SecretID = sID.Value; //trainer.Trainer.SecretID;
 		//Change name being loaded
-		Name = trainer.PlayerName;
+		Name = trainer.PlayerName; //name;
 		//Load player's gender as well
-		Gender = trainer.isMale;
+		Gender = trainer.isMale; //gender;
     }
 
 	void GetTrainer(TrainerTypes type)
