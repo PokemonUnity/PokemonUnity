@@ -338,7 +338,7 @@ namespace PokemonUnity.Saving
 				//		//sw.Flush(); sw.Close(); sw.Dispose();
 				//	}
 				//}
-				File.WriteAllText(playerSave, JsonConvert.SerializeObject(saveData));
+				File.WriteAllText(playerSave, JsonConvert.SerializeObject(saveData, Formatting.Indented/*, new JsonSerializerSettings() { Formatting = Formatting.Indented }*/));
 #else
 				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
 				{
@@ -430,7 +430,7 @@ namespace PokemonUnity.Saving
 						mVol				= GameVariables.mvol,
 						sVol				= GameVariables.svol,
 						Fullscreen			= GameVariables.fullscreen,
-					}));
+					}, Formatting.Indented));
 				//}
 #else
 				bf.Serialize(fs, new
