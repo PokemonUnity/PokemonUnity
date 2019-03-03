@@ -107,10 +107,11 @@ namespace PokemonUnity.Item
             this.ItemCategory = item.ItemCategory;
             this.ItemFlag = item.ItemFlag;
             this.ItemFlingEffect = item.ItemFlingEffect;
-            //this.Name				= ToDo: load from translation
-            //this.Plural			= ToDo: load from translation
-            //this.Description		= ToDo: load from translation
-            if (IsMail) this.mail = new Mail(itemId);
+			//this.Name				= ToDo: load from translation
+			//this.Plural			= ToDo: load from translation
+			//this.Description		= ToDo: load from translation
+			Mail m = new Mail(itemId);
+			if (m.IsLetter) this.mail = m;
         }
 
         public static Item GetItem(Items item)
@@ -1015,11 +1016,16 @@ new Item(Items.TM100,               ItemCategory.ALL_MACHINES,     0, null, null
         /// Mail?...
         /// </summary>
         private Mail mail { get; set; }
+		/// <summary>
+		/// Returns message stored on this letter, if item <see cref="IsMail"/>;
+        /// If anything other than null, there is a message. 
+		/// Try <seealso cref="System.String.IsNullOrEmpty(string)"/>
+		/// </summary>
         public string MailText
         {
             get
             {
-                //if (!IsMail) return null; //If empty return null
+                if (!IsMail) return null; //If empty return null
                 //if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
                 //{
                 //	//mail = null;
@@ -1035,15 +1041,17 @@ new Item(Items.TM100,               ItemCategory.ALL_MACHINES,     0, null, null
             }
         }
         /// <summary>
-        /// Perform a null check; if anything other than null, there is a message
-        /// </summary>
+        /// Performs a check to see if this Item belongs in the 
+		/// Mail Pocket, <seealso cref="ItemPockets.MAIL"/>;
+		/// and if the item is also a letter, <seealso cref="Mail.IsLetter"/>
+        /// </summary
         /// ToDo: Item category
         public bool IsMail
         {
             get
             {
-                if (ItemPocket.HasValue && ItemPocket.Value != ItemPockets.MAIL) return false;
-                else return true;
+                if ((ItemPocket.HasValue && ItemPocket.Value == ItemPockets.MAIL) && mail.IsLetter) return true;
+                else return false;
             }
         }
 
