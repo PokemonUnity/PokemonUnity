@@ -356,14 +356,18 @@ public partial class GameVariables
 		}
 	}
 
+	/// <summary>
+	/// Collection of KeyValuePairs grouped by Pockets.
+	/// Used in combination with quantity[], 
+	/// one holds the itemId (Key) and the other 
+	/// has amount (value).
+	/// </summary>
+	/// I'd feel more comfortable if instead of {get;set;}
+	/// it was a {get;} only, that returned an iqueryable
 	public class TrainerBag
 	{
 		private Player trainer { get; set; }
-		/*// <summary>
-		/// in combination with quantity[], 
-		/// one holds the itemId and the other has amount
-		/// </summary>
-		/// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
+		/*// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
 		/// <see cref="Items"/> stores quantity value
 		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
 		public SortedList<Item, byte> Misc { get; private set; }
