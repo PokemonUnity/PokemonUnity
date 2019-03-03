@@ -370,14 +370,14 @@ public partial class GameVariables
 		/*// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
 		/// <see cref="Items"/> stores quantity value
 		//public List<Item> Items { get { return trainer.Bag_Items; } }*/
-		public SortedList<Item, byte> Misc { get; private set; }
-		public SortedList<Item, byte> Medicine { get; private set; }
-		public SortedList<Item, byte> Pokeball { get; private set; }
-		public SortedList<Item, byte> Machine { get; private set; }
-		public SortedList<Item, byte> Berry { get; private set; }
-		public SortedList<Item, byte> Mail { get; private set; }
-		public SortedList<Item, byte> Battle { get; private set; }
-		public SortedList<Item, byte> Key { get; private set; }
+		//public SortedList<Item, byte> Misc { get; private set; }
+		//public SortedList<Item, byte> Medicine { get; private set; }
+		//public SortedList<Item, byte> Pokeball { get; private set; }
+		//public SortedList<Item, byte> Machine { get; private set; }
+		//public SortedList<Item, byte> Berry { get; private set; }
+		//public SortedList<Item, byte> Mail { get; private set; }
+		//public SortedList<Item, byte> Battle { get; private set; }
+		//public SortedList<Item, byte> Key { get; private set; }
 		public SortedList<Item, byte> this[ItemPockets pocket]  {
 			get
 			{
