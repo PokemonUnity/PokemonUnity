@@ -354,14 +354,15 @@ namespace PokemonUnity.Saving
 			if (System.IO.File.Exists(playerSave))
 			{
 #if DEBUG
-				//using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-				//{
-				//	using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
-				//	{
-				//		return (SaveData[])(object)sr.ReadToEnd();
-				//	};
-				//}
-				return JsonConvert.DeserializeObject<SaveData[]>(playerSave);
+				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
+					{
+						//return (SaveData[])(object)sr.ReadToEnd();
+						return JsonConvert.DeserializeObject<SaveData[]>(sr.ReadToEnd());
+					};
+				}
+				//return JsonConvert.DeserializeObject<SaveData[]>(playerSave);
 #else
 				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
 				{
