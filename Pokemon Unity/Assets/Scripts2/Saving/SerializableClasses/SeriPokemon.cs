@@ -97,6 +97,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 		public static implicit operator Pokemon(SeriPokemon pokemon)
 		{
+			//if (pokemon == null) return null;
 			if ((Pokemons)pokemon.Species == Pokemons.NONE || pokemon == null) return new Pokemon(Pokemons.NONE);
 			Ribbon[] ribbons = new Ribbon[pokemon.Ribbons.Length];
 			for (int i = 0; i < ribbons.Length; i++)
@@ -131,6 +132,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 		public static implicit operator SeriPokemon(Pokemon pokemon)
 		{
+			if (pokemon == null) return null;
 			SeriPokemon seriPokemon = new SeriPokemon();
 
 			if(pokemon != null && pokemon.Species != Pokemons.NONE)
