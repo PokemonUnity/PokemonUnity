@@ -72,7 +72,7 @@ namespace Tests
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON, red);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP, red);
 			
-            List<Items> playerBag = new List<Items>()
+            GameVariables.Bag_Items = new List<Items>()
 			//Created random inventory list for player bag
 			{
 				Items.ADAMANT_ORB,
@@ -84,6 +84,7 @@ namespace Tests
 				Items.POKE_BALL,
 				Items.GREAT_BALL
 			};
+			List<Items> playerBag = GameVariables.Bag_Items;
 
 			List<SaveEvent> eventList = new List<SaveEvent>();
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
