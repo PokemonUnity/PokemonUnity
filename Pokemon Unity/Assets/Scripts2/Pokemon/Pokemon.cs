@@ -234,13 +234,41 @@ namespace PokemonUnity.Pokemon
             //calcStats();
         }
 
+		/// <summary>
+		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Pokemon is created at the lowest possible level, 
+		/// with all stats randomly generated/assigned (new roll)
+		/// </summary>
+		/// <param name="pkmn">Pokemon being generated</param>
+		/// <param name="isEgg">Whether or not this level 
+		/// <see cref="Settings.EGGINITIALLEVEL"/> pokemon is hatched.</param>
         public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 
-        public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; } //Exp.AddExperience(Experience.GetStartExperience(GrowthRate, level));
+		/// <summary>
+		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Pokemon is created at the level assigned in parameter, 
+		/// with all stats randomly generated/assigned (new roll)
+		/// </summary>
+		/// <param name="pkmn">Pokemon being generated</param>
+		/// <param name="level">Level this pokemon start ats</param>
+		/// <param name="isEgg">Whether or not this pokemon is hatched; 
+		/// if pokemon <see cref="isEgg"/> is false, it loses benefits 
+		/// of learning egg moves</param>
+		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); }
 
-        //public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
+		//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
-        public Pokemon(Pokemons pkmn, Trainer original) : this(pkmn) { OT = original; }
+		/// <summary>
+		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Pokemon is created at the level assigned in parameter, 
+		/// with all stats randomly generated/assigned (new roll).
+		/// </summary>
+		/// <param name="pkmn">Pokemon being generated</param>
+		/// <param name="original">Assigns original <see cref="Trainer"/> 
+		/// of this pokemon. 
+		/// Affects ability to command pokemon, if player is not OT</param>
+		/// <param name="level">Level this pokemon start ats</param>
+		public Pokemon(Pokemons pkmn, Trainer original, byte level = Settings.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
         public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
             byte TPLEVEL = 10,
