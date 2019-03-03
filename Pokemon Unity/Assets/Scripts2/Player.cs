@@ -82,8 +82,8 @@ public class Player
 	//public bool?[] playerPokedex { get; set; }
 	//public int pokedexCaught { get { return (from caught in playerPokedex where caught == true select caught).Count(); } }
 	//public int pokedexSeen  { get { return (from seen in playerPokedex where seen != null select seen).Count(); } }
-	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) select PlayerPokedex[index, 1] == 1).Count(); } }
-	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) select PlayerPokedex[index, 0] == 1).Count(); } }
+	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 1] == 1 select PlayerPokedex[index, 1]).Count(); } }
+	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 0] == 1 select PlayerPokedex[index, 0]).Count(); } }
 
     public System.TimeSpan playerTime { get; private set; }
     //public int playerHours;
