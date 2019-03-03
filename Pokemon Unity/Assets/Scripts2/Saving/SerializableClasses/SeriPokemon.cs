@@ -13,6 +13,28 @@ namespace PokemonUnity.Saving.SerializableClasses
 	[System.Serializable]
 	public class SeriPokemon
 	{
+		#region Sample of Serialized Pokemon Profile
+		//This is an *IDEA* of what it should look like in save file...
+		/*TPSPECIES	,
+		TPLEVEL		,
+		TPITEM		,
+		TPMOVE1		,
+		TPMOVE2		,
+		TPMOVE3		,
+		TPMOVE4		,
+		TPABILITY	,
+		TPGENDER	,
+		TPFORM		, //ToDo
+		TPSHINY		,
+		TPNATURE	,
+		TPIV		,
+		TPHAPPINESS ,
+		TPNAME		,
+		TPSHADOW	,
+		TPBALL		,
+		TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false, 0]*/
+		#endregion
+
 		#region Variables
 		public string NickName { get; private set; }
 		public int Form { get; private set; }
@@ -73,13 +95,6 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public DateTimeOffset? TimeEggHatched { get; private set; }
 		#endregion
 
-		#region Methods
-		public SeriMove[] GetMoves()
-		{
-			return Moves;
-		}
-		#endregion
-
 		public static implicit operator Pokemon(SeriPokemon pokemon)
 		{
 			if ((Pokemons)pokemon.Species == Pokemons.NONE || pokemon == null) return new Pokemon(Pokemons.NONE);
@@ -118,7 +133,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		{
 			SeriPokemon seriPokemon = new SeriPokemon();
 
-			if(pokemon.Species != Pokemons.NONE || pokemon != null)
+			if(pokemon != null && pokemon.Species != Pokemons.NONE)
 			{
 				seriPokemon.PersonalId			= pokemon.PersonalId;
 				//PublicId in pokemon is null, so Pokemon returns null
@@ -173,7 +188,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				seriPokemon.EggSteps			= pokemon.EggSteps;
 
 				seriPokemon.BallUsed			= (int)pokemon.ballUsed;
-				if (PokemonUnity.Item.Item.Mail.IsMail(pokemon.Item))
+				if (pokemon.Item != Items.NONE && PokemonUnity.Item.Item.Mail.IsMail(pokemon.Item))
 				{
 					seriPokemon.Mail			= new SeriMail(pokemon.Item, pokemon.Mail);
 				}
@@ -193,10 +208,10 @@ namespace PokemonUnity.Saving.SerializableClasses
 						seriPokemon.Ribbons[i]	= (int)pokemon.Ribbons[i];
 					}
 				}
-				else
-				{
-					seriPokemon.Ribbons			= new int[0];
-				}
+				//else //Dont need else, should copy whatever value is given, even if null...
+				//{
+				//	seriPokemon.Ribbons			= new int[0];
+				//}
 				seriPokemon.Markings			= pokemon.Markings;
 
 				seriPokemon.ObtainedMethod		= (int)pokemon.ObtainedMode;
