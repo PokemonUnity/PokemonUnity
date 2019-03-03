@@ -464,7 +464,8 @@ public partial class GameVariables
 			}
 		}
 		private int[] quantity { get; set; }
-		private ItemPockets pocket_ { get; set; }
+		private ItemPockets pocket { get; set; }
+		private bool reverseOrder { get; set; }
 
 		/// <summary>
 		/// 
@@ -488,7 +489,7 @@ public partial class GameVariables
 			}
 		}
 
-		public TrainerBag(Player t) : this()
+		public TrainerBag(Player t) //: this()
 		{
 			trainer = t;
 		}
@@ -730,15 +731,21 @@ public partial class GameVariables
 
 		public KeyValuePair<Item, byte>[] Sort(Order by)
 		{
-			IQueryable<KeyValuePair<Item, byte>> items = this[pocket_].AsQueryable();
+			IQueryable<KeyValuePair<Item, byte>> items = this[pocket].AsQueryable();
 			switch (by)
 			{
 				case Order.Alphabet:
-					break;
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Key.Name).ToArray() : items.OrderByDescending(x => x.Key.Name).ToArray();
 				case Order.Quantity:
-					break;
-				case Order.Type:
-					break;
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Value).ToArray() : items.OrderByDescending(x => x.Value).ToArray();
+				case Order.Price:
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Key.Price).ToArray() : items.OrderByDescending(x => x.Key.Price).ToArray();
+				case Order.Category:
+					reverseOrder = !reverseOrder;
+					return this.reverseOrder? items.OrderBy(x => x.Key.ItemCategory).ToArray() : items.OrderByDescending(x => x.Key.ItemCategory).ToArray();
 				default:
 					break;
 			}
@@ -749,7 +756,8 @@ public partial class GameVariables
 		{
 			Alphabet,
 			Quantity, 
-			Type
+			Category,
+			Price
 		}
 	}
 }
