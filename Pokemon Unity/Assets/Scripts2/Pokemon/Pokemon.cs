@@ -191,6 +191,9 @@ namespace PokemonUnity.Pokemon
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Uses PokemonData to initialize a Pokemon from base stats
+        /// </summary>
         public Pokemon()
         {
             _base = PokemonData.GetPokemon(Pokemons.NONE);
@@ -286,8 +289,8 @@ namespace PokemonUnity.Pokemon
             int TPHAPPINESS = 70,
             string TPNAME = null,
             bool TPSHADOW = false,
-            //bool EGG = false,
-            Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL)
+            bool EGG = false,
+            Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL, isEgg: EGG)
         {
             //Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
             IV = TPIV ?? IV;
