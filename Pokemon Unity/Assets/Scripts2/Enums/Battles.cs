@@ -13,11 +13,6 @@ namespace PokemonUnity.Battle
 		SPEED,
 		SPATK,
 		SPDEF,
-		/// <summary>
-		/// Use minus 2 when reflecting in IV, 
-		/// as accuracy and evasion are battle only
-		/// </summary>
-		/// Should HP be here?
 		HP,
 		/// <summary>
 		/// battle only stat

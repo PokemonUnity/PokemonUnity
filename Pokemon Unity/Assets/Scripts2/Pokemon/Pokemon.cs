@@ -21,7 +21,7 @@ namespace PokemonUnity.Pokemon
             {
                 if (_base.BaseStatsHP == 1) return 1;
                 return //totalHP;
-                    ((2 * _base.BaseStatsHP + IV[0] + (EV[0] / 4)) * Level) / 100 + Level + 10;
+                    ((2 * _base.BaseStatsHP + IV[(int)Stats.HP] + (EV[(int)Stats.HP] / 4)) * Level) / 100 + Level + 10;
             }
         }
         /// <summary>
@@ -35,7 +35,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[1] + (EV[1] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
+                return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[(int)Stats.ATTACK] + (EV[(int)Stats.ATTACK] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
             }
         }
         /// <summary>
@@ -45,7 +45,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[2] + (EV[2] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
+                return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[(int)Stats.DEFENSE] + (EV[(int)Stats.DEFENSE] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
             }
         }
         /// <summary>
@@ -55,7 +55,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[4] + (EV[4] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[(int)Stats.SPATK] + (EV[(int)Stats.SPATK] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
             }
         }
         /// <summary>
@@ -65,7 +65,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[5] + (EV[5] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[(int)Stats.SPDEF] + (EV[(int)Stats.SPDEF] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
             }
         }
         /// <summary>
@@ -75,7 +75,7 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[3] + (EV[3] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[(int)Stats.SPEED] + (EV[(int)Stats.SPEED] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
             }
         }
         /// <summary>
