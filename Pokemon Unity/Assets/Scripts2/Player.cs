@@ -172,28 +172,6 @@ public class Player
 		trainerId = trainer.TrainerID;
 		secretId = trainer.SecretID;
 	}
-
-	static Player()
-	{
-/*TPSPECIES	,
-TPLEVEL		,
-TPITEM		,
-TPMOVE1		,
-TPMOVE2		,
-TPMOVE3		,
-TPMOVE4		,
-TPABILITY	,
-TPGENDER	,
-TPFORM		,
-TPSHINY		,
-TPNATURE	,
-TPIV		,
-TPHAPPINESS ,
-TPNAME		,
-TPSHADOW	,
-TPBALL		,
-TPDEFAULTS = [0, 10, 0, 0, 0, 0, 0, nil, nil, 0, false, nil, 10, 70, nil, false, 0]*/
-	}
 	#endregion
 
 	#region Methods
