@@ -1136,9 +1136,10 @@ namespace PokemonUnity.Pokemon
             //if (!level.HasValue)
             //	level = -1;
             ClearFirstMoves();
-            int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 0 and 3
+            int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
             if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+			int[] rejected = new int[movelist.Count];
             switch (level)
             {
                 #region sample from alpha version
@@ -1194,11 +1195,16 @@ namespace PokemonUnity.Pokemon
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
                     for (int n = 0; n < movelist.Count; n++)
                     {
-                        if (Convert.ToBoolean(Settings.Rand.Next(2)))
+						//For a truly random approach, instead of just adding moves in the order they're listed
+						int x = Settings.Rand.Next(movelist.Count+1);
+						while(rejected.Contains(x))
+							x = Settings.Rand.Next(movelist.Count+1);
+						rejected[n] = x;
+						if (Convert.ToBoolean(Settings.Rand.Next(2)))
                         {
-                            if (this.countMoves() < numMove + 1)
+                            if (this.countMoves() < numMove)
                             {
-                                LearnMove(movelist[n]);
+                                LearnMove((Moves)x);
                             }
                             else
                                 break;
@@ -1215,11 +1221,16 @@ namespace PokemonUnity.Pokemon
                     {
                         if (Convert.ToBoolean(Settings.Rand.Next(2)))
                         {
-                            if (this.countMoves() < numMove + 1) //j
+							//For a truly random approach, instead of just adding moves in the order they're listed
+							int x = Settings.Rand.Next(movelist.Count+1);
+							while(rejected.Contains(x))
+								x = Settings.Rand.Next(movelist.Count+1);
+							rejected[n] = x;
+                            if (this.countMoves() < numMove) //j
                             {
                                 //this.moves[j] = new Move(movelist[n]);
                                 //j += 1;
-                                LearnMove(movelist[n]);
+                                LearnMove((Moves)x);
                                 //j += this.countMoves() < numMove ? 0 : 1;
                             }
                             else
