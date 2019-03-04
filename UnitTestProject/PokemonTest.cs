@@ -307,7 +307,7 @@ namespace Tests
             Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.GenerateMoveset();
-            Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			CollectionAssert.AreNotEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
         public void Pokemon_Moves_Should_Not_Contain_Duplicates()
@@ -354,7 +354,7 @@ namespace Tests
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.LearnMove(Moves.RAZOR_LEAF, true);
-            Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			CollectionAssert.AreNotEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
         /// <summary>
@@ -371,7 +371,7 @@ namespace Tests
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.LearnMove(Moves.OVERHEAT);
-            Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+            CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         //[TestMethod]
         //public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()
@@ -394,7 +394,7 @@ namespace Tests
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.LearnMove(Moves.OVERHEAT);
-            Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
         /// <summary>
