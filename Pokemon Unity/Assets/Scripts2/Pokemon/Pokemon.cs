@@ -1194,6 +1194,7 @@ namespace PokemonUnity.Pokemon
                 case null:
                     //case -1:
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+					rejected = new int?[movelist.Count];
                     for (int n = 0; n < movelist.Count; n++)
                     {
                         if (this.countMoves() < numMove)
@@ -1215,6 +1216,7 @@ namespace PokemonUnity.Pokemon
                 default:
                     //if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
+					rejected = new int?[movelist.Count];
                     //int listend = movelist.Count - 4;
                     //listend = listend < 0 ? 0 : listend + 4;
                     //int j = 0; 
