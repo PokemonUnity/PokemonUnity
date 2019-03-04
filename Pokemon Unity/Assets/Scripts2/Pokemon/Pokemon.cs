@@ -1222,18 +1222,18 @@ namespace PokemonUnity.Pokemon
                     {
                         if (this.countMoves() < numMove) //j
                         {
+							//For a truly random approach, instead of just adding moves in the order they're listed
+							int x = Settings.Rand.Next(movelist.Count);
+							while(rejected.Contains(x))
+								x = Settings.Rand.Next(movelist.Count);
+							rejected[n] = x;
 							if (Convert.ToBoolean(Settings.Rand.Next(2)))
 							{
-								//For a truly random approach, instead of just adding moves in the order they're listed
-								int x = Settings.Rand.Next(movelist.Count);
-								while(rejected.Contains(x))
-									x = Settings.Rand.Next(movelist.Count);
-								rejected[n] = x;
-                                //this.moves[j] = new Move(movelist[n]);
-                                //j += 1;
-                                LearnMove((Moves)movelist[x]);
-                                //j += this.countMoves() < numMove ? 0 : 1;
-                            }
+								//this.moves[j] = new Move(movelist[n]);
+								//j += 1;
+								LearnMove((Moves)movelist[x]);
+								//j += this.countMoves() < numMove ? 0 : 1;
+							}
                         }
                         else
                             break;
