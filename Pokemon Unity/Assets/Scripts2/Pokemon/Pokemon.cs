@@ -1136,6 +1136,7 @@ namespace PokemonUnity.Pokemon
             //if (!level.HasValue)
             //	level = -1;
             ClearFirstMoves();
+			resetMoves();
             int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
             if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
@@ -1195,20 +1196,20 @@ namespace PokemonUnity.Pokemon
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
                     for (int n = 0; n < movelist.Count; n++)
                     {
-						//For a truly random approach, instead of just adding moves in the order they're listed
-						int x = Settings.Rand.Next(movelist.Count+1);
-						while(rejected.Contains(x))
-							x = Settings.Rand.Next(movelist.Count+1);
-						rejected[n] = x;
-						if (Convert.ToBoolean(Settings.Rand.Next(2)))
+                        if (this.countMoves() < numMove)
                         {
-                            if (this.countMoves() < numMove)
-                            {
-                                LearnMove((Moves)x);
-                            }
-                            else
-                                break;
+							//For a truly random approach, instead of just adding moves in the order they're listed
+							int x = Settings.Rand.Next(movelist.Count+1);
+							while(rejected.Contains(x))
+								x = Settings.Rand.Next(movelist.Count+1);
+							rejected[n] = x;
+							if (Convert.ToBoolean(Settings.Rand.Next(2)))
+							{
+								LearnMove((Moves)movelist[x]);
+							}
                         }
+                        else
+                            break;
                     }
                     break;
                 default:
@@ -1219,23 +1220,23 @@ namespace PokemonUnity.Pokemon
                     //int j = 0; 
                     for (int n = 0; n < movelist.Count; n++)
                     {
-                        if (Convert.ToBoolean(Settings.Rand.Next(2)))
+                        if (this.countMoves() < numMove) //j
                         {
-							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Settings.Rand.Next(movelist.Count+1);
-							while(rejected.Contains(x))
-								x = Settings.Rand.Next(movelist.Count+1);
-							rejected[n] = x;
-                            if (this.countMoves() < numMove) //j
-                            {
+							if (Convert.ToBoolean(Settings.Rand.Next(2)))
+							{
+								//For a truly random approach, instead of just adding moves in the order they're listed
+								int x = Settings.Rand.Next(movelist.Count+1);
+								while(rejected.Contains(x))
+									x = Settings.Rand.Next(movelist.Count+1);
+								rejected[n] = x;
                                 //this.moves[j] = new Move(movelist[n]);
                                 //j += 1;
-                                LearnMove((Moves)x);
+                                LearnMove((Moves)movelist[x]);
                                 //j += this.countMoves() < numMove ? 0 : 1;
                             }
-                            else
-                                break;
                         }
+                        else
+                            break;
                     }
                     break;
             }
