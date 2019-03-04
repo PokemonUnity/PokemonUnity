@@ -367,7 +367,7 @@ namespace Tests
             while (pokemon.countMoves() == 4)
             {
                 pokemon.GenerateMoveset(); i++;
-                if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (i > 25) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.LearnMove(Moves.OVERHEAT);
@@ -390,10 +390,10 @@ namespace Tests
             while (pokemon.countMoves() != 4)
             {
                 pokemon.GenerateMoveset(); i++;
-                if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (i > 1000) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-            pokemon.LearnMove(Moves.OVERHEAT);
+            pokemon.LearnMove(Moves.TACKLE);
 			CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
@@ -407,11 +407,11 @@ namespace Tests
             while (pokemon.countMoves() == 4)
             {
                 pokemon.GenerateMoveset(); i++;
-                if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
             }
-            pokemon.LearnMove(Moves.OVERHEAT);
+            pokemon.LearnMove(Moves.TACKLE);
             int before = pokemon.countMoves();
-            pokemon.DeleteMove(Moves.OVERHEAT);
+            pokemon.DeleteMove(Moves.TACKLE);
             Assert.IsTrue(pokemon.countMoves() == before - 1);
         }
         //[TestMethod]
@@ -434,14 +434,14 @@ namespace Tests
             //Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
             Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR, level: 25).getMoveList(LearnMethod.levelup).Length > 0);
         }
-        [TestMethod]
-        public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_TeachMethod()
-        {
-            //list of moves a pokemon can learn for a given technique
-            //attempt to teach move
-            //confirm moves are unchanged 
-            Assert.Inconclusive();
-        }
+        //[TestMethod]
+        //public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_TeachMethod()
+        //{
+        //    //list of moves a pokemon can learn for a given technique
+        //    //attempt to teach move
+        //    //confirm moves are unchanged 
+        //    Assert.Inconclusive();
+        //}
         #endregion
 
         #region Evolving/evolution
