@@ -1140,7 +1140,7 @@ namespace PokemonUnity.Pokemon
             int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
             if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
-			int[] rejected = new int[movelist.Count];
+			int?[] rejected = new int?[movelist.Count];
             switch (level)
             {
                 #region sample from alpha version
@@ -1199,9 +1199,9 @@ namespace PokemonUnity.Pokemon
                         if (this.countMoves() < numMove)
                         {
 							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Settings.Rand.Next(movelist.Count+1);
+							int x = Settings.Rand.Next(movelist.Count);
 							while(rejected.Contains(x))
-								x = Settings.Rand.Next(movelist.Count+1);
+								x = Settings.Rand.Next(movelist.Count);
 							rejected[n] = x;
 							if (Convert.ToBoolean(Settings.Rand.Next(2)))
 							{
@@ -1225,9 +1225,9 @@ namespace PokemonUnity.Pokemon
 							if (Convert.ToBoolean(Settings.Rand.Next(2)))
 							{
 								//For a truly random approach, instead of just adding moves in the order they're listed
-								int x = Settings.Rand.Next(movelist.Count+1);
+								int x = Settings.Rand.Next(movelist.Count);
 								while(rejected.Contains(x))
-									x = Settings.Rand.Next(movelist.Count+1);
+									x = Settings.Rand.Next(movelist.Count);
 								rejected[n] = x;
                                 //this.moves[j] = new Move(movelist[n]);
                                 //j += 1;
