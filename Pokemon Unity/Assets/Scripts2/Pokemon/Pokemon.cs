@@ -238,7 +238,7 @@ namespace PokemonUnity.Pokemon
         }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the lowest possible level, 
 		/// with all stats randomly generated/assigned (new roll)
 		/// </summary>
@@ -248,7 +248,7 @@ namespace PokemonUnity.Pokemon
         public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the level assigned in parameter, 
 		/// with all stats randomly generated/assigned (new roll)
 		/// </summary>
@@ -262,7 +262,7 @@ namespace PokemonUnity.Pokemon
 		//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the level assigned in parameter, 
 		/// with all stats randomly generated/assigned (new roll).
 		/// </summary>
