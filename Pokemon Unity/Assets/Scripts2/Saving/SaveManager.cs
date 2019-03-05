@@ -28,8 +28,8 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
-		private static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
-		private static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		public static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
+		public static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
 		//private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug
 		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 

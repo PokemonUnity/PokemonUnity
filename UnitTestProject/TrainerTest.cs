@@ -45,7 +45,16 @@ namespace Tests
         #region TrainerPokemon
         [TestMethod]
         public void Trainer_Party_AddPokemon() {
-			Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			string playerName = "Red";
+			int trainerID = 55323;
+			int secretID = 64123;
+			bool isMale = false;
+			Player player = new Player(playerName, isMale/*, playerParty*/);
+			Trainer trainer = new Trainer(player, tID: trainerID, sID: secretID);
+			player = new Player(trainer);
+			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			player.addPokemon(new PokemonUnity.Pokemon.Pokemon(Pokemons.CHARMANDER, trainer));
+
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,
 				Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32), Random.Range(0, 32),
@@ -67,7 +76,7 @@ namespace Tests
 				"", name,
 				31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
-			Assert.AreNotSame(new Pokemons[] { Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, new Pokemons[] { trainer.Party[0].Species, trainer.Party[1].Species, trainer.Party[2].Species, trainer.Party[3].Species, trainer.Party[4].Species, trainer.Party[5].Species } );
+			CollectionAssert.AreNotEqual(new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, new Pokemons[] { trainer.Party[0].Species, trainer.Party[1].Species, trainer.Party[2].Species, trainer.Party[3].Species, trainer.Party[4].Species, trainer.Party[5].Species } );
 		}
 
         [TestMethod]
@@ -134,10 +143,14 @@ namespace Tests
         #endregion
 
         #region TrainerItemsBags&&PC
-
         [TestMethod]
         public void Trainer_RideBike_Fail_If_Item_NotInInventory()
         {
+			//if(
+			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.BICYCLE] != null ||
+			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.ACRO_BIKE] != null ||
+			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.MACH_BIKE] != null
+			//)
             Assert.Inconclusive();
         }
 
@@ -173,83 +186,83 @@ namespace Tests
 			Assert.Inconclusive();
 		}
         
-        [TestMethod]
-        public void Trainer_PC_RenameBox() {
-			//debug code to test custom box names/textures
-			/*PC.boxName[1] = "Grassy Box";
-			PC.boxTexture[2] = 12;*/
-			Assert.Inconclusive();
-		}
+        //[TestMethod]
+        //public void Trainer_PC_RenameBox() {
+		//	//debug code to test custom box names/textures
+		//	/*PC.boxName[1] = "Grassy Box";
+		//	PC.boxTexture[2] = 12;*/
+		//	Assert.Inconclusive();
+		//}
         #endregion
 
         #region TrainerSave
-        [TestMethod]
-        public void Trainer_Save() {
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-			/* None of this is needed...
-			//set file creation date
-			string day = "";
-			string month = "";
-			if(System.DateTime.Now.Day == 1){day = "1st, ";}
-			else if(System.DateTime.Now.Day == 2){day = "2nd, ";}
-			else if(System.DateTime.Now.Day == 3){day = "3rd, ";}
-			else if(System.DateTime.Now.Day == 21){day = "21st, ";}
-			else if(System.DateTime.Now.Day == 22){day = "22nd, ";}
-			else if(System.DateTime.Now.Day == 23){day = "23rd, ";}
-			else if(System.DateTime.Now.Day == 31){day = "31st, ";}
-			else{day = System.DateTime.Now.Day.ToString("D") + "th, ";}
-
-			if(System.DateTime.Now.Month == 1){month = "Jan. ";}
-			else if(System.DateTime.Now.Month == 2){month = "Feb. ";}
-			else if(System.DateTime.Now.Month == 3){month = "Mar. ";}
-			else if(System.DateTime.Now.Month == 4){month = "Apr. ";}
-			else if(System.DateTime.Now.Month == 5){month = "May ";}
-			else if(System.DateTime.Now.Month == 6){month = "June ";}
-			else if(System.DateTime.Now.Month == 7){month = "July ";}
-			else if(System.DateTime.Now.Month == 8){month = "Aug. ";}
-			else if(System.DateTime.Now.Month == 9){month = "Sep. ";}
-			else if(System.DateTime.Now.Month == 10){month = "Oct. ";}
-			else if(System.DateTime.Now.Month == 11){month = "Nov. ";}
-			else if(System.DateTime.Now.Month == 12){month = "Dec. ";} //probably the worst way to do this but I have no idea why ToString("MMM") doesn't work
-
-			string date = month + day + System.DateTime.Now.Year;
-
-			//SaveData.currentSave.fileCreationDate = "Aug. 2nd, 2017";
-			SaveData.currentSave.fileCreationDate = date;*/
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-			/*
-			//debug code to test trainer card/save
-			SaveDataOld.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
-			SaveDataOld.currentSave.playerMoney = 2481;
-			SaveDataOld.currentSave.playerScore = SaveDataOld.currentSave.pokedexCaught + "/" + SaveDataOld.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
-			//SaveData.currentSave.pokeDex = 0;
-        
-			SaveDataOld.currentSave.playerHours = 0;
-			SaveDataOld.currentSave.playerMinutes = 7;
-			SaveDataOld.currentSave.playerSeconds = 12;
-			SaveDataOld.currentSave.playerTime = new System.TimeSpan(0,7,12);
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			//debug code to test badge box
-			SaveDataOld.currentSave.gymsEncountered = new bool[]
-			{
-				true, true, false, true, true, true,
-				false, false, false, false, false, false
-			};
-			SaveDataOld.currentSave.gymsBeaten = new bool[]
-			{
-				true, true, false, false, false, true,
-				false, false, false, false, false, false
-			};*/
-			//SaveDataOld.currentSave.gymsBeatTime = new System.DateTime?[]
-			//{
-			//	new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
-			//	null, null, null, null, null, null
-			//};
-			Assert.Inconclusive();
-		}
+        //[TestMethod] //Not needed anymore, being saved from Player
+        //public void Trainer_Save() {
+		//	////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	/* None of this is needed...
+		//	//set file creation date
+		//	string day = "";
+		//	string month = "";
+		//	if(System.DateTime.Now.Day == 1){day = "1st, ";}
+		//	else if(System.DateTime.Now.Day == 2){day = "2nd, ";}
+		//	else if(System.DateTime.Now.Day == 3){day = "3rd, ";}
+		//	else if(System.DateTime.Now.Day == 21){day = "21st, ";}
+		//	else if(System.DateTime.Now.Day == 22){day = "22nd, ";}
+		//	else if(System.DateTime.Now.Day == 23){day = "23rd, ";}
+		//	else if(System.DateTime.Now.Day == 31){day = "31st, ";}
+		//	else{day = System.DateTime.Now.Day.ToString("D") + "th, ";}
+		//
+		//	if(System.DateTime.Now.Month == 1){month = "Jan. ";}
+		//	else if(System.DateTime.Now.Month == 2){month = "Feb. ";}
+		//	else if(System.DateTime.Now.Month == 3){month = "Mar. ";}
+		//	else if(System.DateTime.Now.Month == 4){month = "Apr. ";}
+		//	else if(System.DateTime.Now.Month == 5){month = "May ";}
+		//	else if(System.DateTime.Now.Month == 6){month = "June ";}
+		//	else if(System.DateTime.Now.Month == 7){month = "July ";}
+		//	else if(System.DateTime.Now.Month == 8){month = "Aug. ";}
+		//	else if(System.DateTime.Now.Month == 9){month = "Sep. ";}
+		//	else if(System.DateTime.Now.Month == 10){month = "Oct. ";}
+		//	else if(System.DateTime.Now.Month == 11){month = "Nov. ";}
+		//	else if(System.DateTime.Now.Month == 12){month = "Dec. ";} //probably the worst way to do this but I have no idea why ToString("MMM") doesn't work
+		//
+		//	string date = month + day + System.DateTime.Now.Year;
+		//
+		//	//SaveData.currentSave.fileCreationDate = "Aug. 2nd, 2017";
+		//	SaveData.currentSave.fileCreationDate = date;*/
+		//
+		//	////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	/*
+		//	//debug code to test trainer card/save
+		//	SaveDataOld.currentSave.fileCreationDate = new System.DateTime(System.DateTime.Now.Year, 2, 14); //"Feb. 14th, 2015";
+		//	SaveDataOld.currentSave.playerMoney = 2481;
+		//	SaveDataOld.currentSave.playerScore = SaveDataOld.currentSave.pokedexCaught + "/" + SaveDataOld.currentSave.pokedexSeen;// PokemonDatabase.LoadPokedex().Length;//481;
+		//	//SaveData.currentSave.pokeDex = 0;
+        //
+		//	SaveDataOld.currentSave.playerHours = 0;
+		//	SaveDataOld.currentSave.playerMinutes = 7;
+		//	SaveDataOld.currentSave.playerSeconds = 12;
+		//	SaveDataOld.currentSave.playerTime = new System.TimeSpan(0,7,12);
+		//
+		//	////////////////////////////////////////////////////////////////////////////////////////////////////
+		//
+		//	//debug code to test badge box
+		//	SaveDataOld.currentSave.gymsEncountered = new bool[]
+		//	{
+		//		true, true, false, true, true, true,
+		//		false, false, false, false, false, false
+		//	};
+		//	SaveDataOld.currentSave.gymsBeaten = new bool[]
+		//	{
+		//		true, true, false, false, false, true,
+		//		false, false, false, false, false, false
+		//	};*/
+		//	//SaveDataOld.currentSave.gymsBeatTime = new System.DateTime?[]
+		//	//{
+		//	//	new System.DateTime(System.DateTime.Now.Year, 4, 27) /*"Apr. 27th, 2015"*/, new System.DateTime(System.DateTime.Now.Year, 4, 30) /*"Apr. 30th, 2015"*/, null, null, null, new System.DateTime(System.DateTime.Now.Year, 5,1) /*"May. 1st, 2015"*/,
+		//	//	null, null, null, null, null, null
+		//	//};
+		//	Assert.Inconclusive();
+		//}
         #endregion        
     }
     

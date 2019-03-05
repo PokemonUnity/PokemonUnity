@@ -238,7 +238,7 @@ namespace PokemonUnity.Pokemon
         }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the lowest possible level, 
 		/// with all stats randomly generated/assigned (new roll)
 		/// </summary>
@@ -248,7 +248,7 @@ namespace PokemonUnity.Pokemon
         public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the level assigned in parameter, 
 		/// with all stats randomly generated/assigned (new roll)
 		/// </summary>
@@ -262,7 +262,7 @@ namespace PokemonUnity.Pokemon
 		//public Pokemon(Pokemons pkmn, byte loLevel, byte hiLevel, bool isEgg = false) : this(pkmn, isEgg) {  }
 
 		/// <summary>
-		/// Instializes a new Pokemon, with values at defaukt. 
+		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the level assigned in parameter, 
 		/// with all stats randomly generated/assigned (new roll).
 		/// </summary>
@@ -1136,9 +1136,11 @@ namespace PokemonUnity.Pokemon
             //if (!level.HasValue)
             //	level = -1;
             ClearFirstMoves();
-            int numMove = Settings.Rand.Next(4); //number of moves pokemon will have, between 0 and 3
+			resetMoves();
+            int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
             if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+			int?[] rejected = new int?[movelist.Count];
             switch (level)
             {
                 #region sample from alpha version
@@ -1192,39 +1194,51 @@ namespace PokemonUnity.Pokemon
                 case null:
                     //case -1:
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
+					rejected = new int?[movelist.Count];
                     for (int n = 0; n < movelist.Count; n++)
                     {
-                        if (Convert.ToBoolean(Settings.Rand.Next(2)))
+                        if (this.countMoves() < numMove)
                         {
-                            if (this.countMoves() < numMove + 1)
-                            {
-                                LearnMove(movelist[n]);
-                            }
-                            else
-                                break;
+							//For a truly random approach, instead of just adding moves in the order they're listed
+							int x = Settings.Rand.Next(movelist.Count);
+							while(rejected.Contains(x))
+								x = Settings.Rand.Next(movelist.Count);
+							rejected[n] = x;
+							if (Convert.ToBoolean(Settings.Rand.Next(2)))
+							{
+								LearnMove((Moves)movelist[x]);
+							}
                         }
+                        else
+                            break;
                     }
                     break;
                 default:
                     //if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
+					rejected = new int?[movelist.Count];
                     //int listend = movelist.Count - 4;
                     //listend = listend < 0 ? 0 : listend + 4;
                     //int j = 0; 
                     for (int n = 0; n < movelist.Count; n++)
                     {
-                        if (Convert.ToBoolean(Settings.Rand.Next(2)))
+                        if (this.countMoves() < numMove) //j
                         {
-                            if (this.countMoves() < numMove + 1) //j
-                            {
-                                //this.moves[j] = new Move(movelist[n]);
-                                //j += 1;
-                                LearnMove(movelist[n]);
-                                //j += this.countMoves() < numMove ? 0 : 1;
-                            }
-                            else
-                                break;
+							//For a truly random approach, instead of just adding moves in the order they're listed
+							int x = Settings.Rand.Next(movelist.Count);
+							while(rejected.Contains(x))
+								x = Settings.Rand.Next(movelist.Count);
+							rejected[n] = x;
+							if (Convert.ToBoolean(Settings.Rand.Next(2)))
+							{
+								//this.moves[j] = new Move(movelist[n]);
+								//j += 1;
+								LearnMove((Moves)movelist[x]);
+								//j += this.countMoves() < numMove ? 0 : 1;
+							}
                         }
+                        else
+                            break;
                     }
                     break;
             }

@@ -13,12 +13,14 @@ namespace Tests
     [TestClass] //ToDo: Move Test into a PlayerTest.cs
     public class PlayerTest
     {
-        [TestMethod] //Game isnt automatically saved, just because player is created. Let them save game from in-game menu
-        public void Player_NewPlayer_IsNot_EqualTo_SaveFile()
-        {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
-        }
+        //[TestMethod] 
+		//Game isnt automatically saved, just because player is created. Let them save game from in-game menu
+		//Not needed anymore because of how save mechanic is set-up, `new player()` doesnt touch it...
+        //public void Player_NewPlayer_IsNot_EqualTo_SaveFile()
+        //{
+        //    //Player trainer = new Player();
+        //    Assert.Fail("No Player Test");
+        //}
 
         public static SaveData New_Save_File_With_Standard_Unit_Test_Values()
         {
@@ -135,7 +137,8 @@ namespace Tests
         [TestMethod]
         public void Create_New_Save_File()
 		{
-			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
+			//SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
+			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			//This is a bad test... the variable was just created.
 			//Make a file, save it on hard drive, test to see if the value can be stored to a variable
@@ -143,20 +146,21 @@ namespace Tests
 			//i assume that it is bad because it was matching against inline code
 			//rather than actually testing for functionality of code inside assembly...
 			//Assert.IsNotNull(newSave);
-			Assert.Fail("Could not find save file");
+			Assert.IsTrue(System.IO.File.Exists(SaveManager.playerSave), "Could not find save file");
         }
 
         //Check to see if no Exceptions are thrown
         [TestMethod]
         public void Save_Into_File()
 		{
-			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
+			//SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
+			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			//If Overwrite doesn't find the file, it'll automatically save it
 			//SaveManager.Overwrite(newSave, 0);
 			//There was no assert made for this test...
 			//Try to test if file exist, or if data can be read/saved without any errors...
-			Assert.Fail("Could not find save file");
+			Assert.IsFalse(string.IsNullOrEmpty(System.IO.File.ReadAllText(SaveManager.playerSave)),"Save file returned null or empty string.");
 		}
 
         [TestMethod]
@@ -167,7 +171,7 @@ namespace Tests
 
 			SaveManager.Overwrite(newSave, 2);
             #endregion
-            Assert.IsNotNull(SaveManager.GetSave(2));
+            Assert.IsNotNull(SaveManager.GetSaves()[2]);
         }
 
         [TestMethod]
@@ -318,23 +322,23 @@ namespace Tests
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-            SaveData newSave = SaveManager.GetSave(0);
+            SaveData newSave = SaveManager.GetSaves()[0];
 
             Assert.AreEqual("Red", newSave.PlayerName);
         }
-        [TestMethod]
-        public void Player_Load_Badges()
-        {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
-        }
+        //[TestMethod]
+        //public void Player_Load_Badges()
+        //{
+        //    //Player trainer = new Player();
+        //    Assert.Fail("No Player Test");
+        //}
         [TestMethod]
         public void SaveData_Load_Party()
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
-            SaveData newSave = SaveManager.GetSave(saveSlot);
+            SaveData newSave = SaveManager.GetSaves()[saveSlot];
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]
 			//{
@@ -359,7 +363,7 @@ namespace Tests
 			//    if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
 			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
 			//}
-			Assert.AreSame(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
+			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
 				new Pokemons[] { (Pokemons)newSave.PlayerParty[0].Species, (Pokemons)newSave.PlayerParty[1].Species, (Pokemons)newSave.PlayerParty[2].Species,
 					(Pokemons)newSave.PlayerParty[3].Species, (Pokemons)newSave.PlayerParty[4].Species, (Pokemons)newSave.PlayerParty[5].Species });
         }
@@ -396,7 +400,7 @@ namespace Tests
 			//    if (expectedPlayerParty[i].Name != actualPlayerParty[i].Name)
 			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
 			//}
-			Assert.AreSame(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
+			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
 				new Pokemons[] { GameVariables.playerTrainer.Trainer.Party[0].Species, GameVariables.playerTrainer.Trainer.Party[1].Species, GameVariables.playerTrainer.Trainer.Party[2].Species,
 					GameVariables.playerTrainer.Trainer.Party[3].Species, GameVariables.playerTrainer.Trainer.Party[4].Species, GameVariables.playerTrainer.Trainer.Party[5].Species });
         }
@@ -407,7 +411,7 @@ namespace Tests
 
             SaveData newSave = SaveManager.GetSave(0);
 			//this is testing for inferior pokedex... but was still functional code.
-			//i removedd pokedex script because i found the expanded version to be more attractive...
+			//i removed pokedex script because i found the expanded version to be more attractive...
 			//may need to redo test again to match active code...
             bool?[] expectedPokedex = new bool?[] { null, false, true, false, null };
 
@@ -424,7 +428,7 @@ namespace Tests
         {
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-            SaveData newSave = SaveManager.GetSave(0);
+            SaveData newSave = SaveManager.GetSaves()[0];
             TimeSpan expectedTimeSpan = new TimeSpan(4, 20, 53);
 
             Assert.AreEqual(expectedTimeSpan, newSave.PlayerTime);
@@ -494,12 +498,12 @@ namespace Tests
 			Assert.Fail("Player Settings are saved separate from Player Game State");
 		}*/
 		#endregion
-        [TestMethod] //ToDo: Should be map data, and stuff... Map0 == new game (professsor intro speech)
-        public void Player_Load_SpawnLocation()
-        {
-            //Player trainer = new Player();
-            Assert.Fail("No Player Test");
-        }
+		//[TestMethod] //ToDo: Should be map data, and stuff... Map0 == new game (professsor intro speech)
+		//public void Player_Load_SpawnLocation()
+		//{
+		//    //Player trainer = new Player();
+		//    Assert.Fail("No Player Test");
+		//}
         #endregion
     }
 
