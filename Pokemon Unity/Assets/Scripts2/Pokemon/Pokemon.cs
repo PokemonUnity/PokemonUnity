@@ -300,7 +300,8 @@ namespace PokemonUnity.Pokemon
         }
 
 		/// <summary>
-		/// This is used SPECIFICALLY for regenerating a pokemon from a serialized variable
+		/// This is used SPECIFICALLY for regenerating a pokemon from a 
+		/// <see cref="PokemonUnity.Saving.SerializableClasses.SeriPokemon"/>
 		/// </summary>
 		/// <param name="species"></param>
 		/// <param name="original"></param>
@@ -332,6 +333,7 @@ namespace PokemonUnity.Pokemon
 		/// <param name="obtainedMethod"></param>
 		/// <param name="timeReceived"></param>
 		/// <param name="timeEggHatched"></param>
+		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
         public Pokemon(Pokemons species, 
 			Trainer original,
 			string nickName, int form,
@@ -351,7 +353,7 @@ namespace PokemonUnity.Pokemon
             DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species, original)
         {
             //Check to see if nickName is filled
-            if (nickName != null || nickName != string.Empty)
+            if (!string.IsNullOrEmpty(nickName))
             {
                 name = nickName;
             }
@@ -409,13 +411,42 @@ namespace PokemonUnity.Pokemon
             obtainWhen = timeReceived;
             hatchedWhen = timeEggHatched;
         }
-        #endregion
 
-        #region Ownership, obtained information
-        /// <summary>
-        /// Manner Obtained:
-        /// </summary>
-        public ObtainedMethod ObtainedMode { get; private set; }
+		/// <summary>
+		/// Use this constructor when capturing wild pokemons from a battle
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="pokeball"></param>
+		/// <param name="obtain"></param>
+		/// <param name="nickname"></param>
+		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null) 
+			: this (
+			species: pkmn.Species,
+			original: GameVariables.playerTrainer.Trainer,
+			nickName: nickname, form: pkmn.Form,
+			ability: pkmn.Ability, nature: pkmn.Nature,
+			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+			pokerus: pkmn.pokerus, ishyper: pkmn.isHyperMode,
+			shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP, 
+			item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV, 
+			obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
+			happiness: pkmn.Happiness, status: pkmn.Status, 
+			statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps, 
+			ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
+			ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
+			personalId: pkmn.PersonalId, obtainedMethod: obtain,
+			timeReceived: DateTimeOffset.Now, timeEggHatched: null)
+		{
+			//ToDo: What to do about timeEggHatched and OT
+			//Should make a new class for trading pokemons?
+		}
+		#endregion
+
+		#region Ownership, obtained information
+		/// <summary>
+		/// Manner Obtained:
+		/// </summary>
+		public ObtainedMethod ObtainedMode { get; private set; }
         public enum ObtainedMethod
         {
             MET = 0,
