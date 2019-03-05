@@ -426,7 +426,7 @@ namespace PokemonUnity.Pokemon
 			nickName: nickname, form: pkmn.Form,
 			ability: pkmn.Ability, nature: pkmn.Nature,
 			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
-			pokerus: pkmn.pokerus, ishyper: pkmn.isHyperMode,
+			pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
 			shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP, 
 			item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV, 
 			obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
