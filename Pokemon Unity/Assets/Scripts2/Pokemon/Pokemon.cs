@@ -1512,6 +1512,12 @@ namespace PokemonUnity.Pokemon
         #endregion
 
         #region Items
+		public Items SwapItem(Items item)
+		{
+			Items old = Item;
+			Item = item;
+			return old;
+		}
         #endregion
 
         #region Shadow
