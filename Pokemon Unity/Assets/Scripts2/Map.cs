@@ -1009,6 +1009,28 @@ namespace PokemonUnity
 		/// </summary>
 		/// ToDo: Enum?
 		public int Map { get; private set; } 
+		public bool Encounter {
+			get
+			{
+				switch (Terrain)
+				{
+					case Terrain.Grass:
+					case Terrain.Sand:
+					case Terrain.Rock:
+					case Terrain.DeepWater:
+					case Terrain.StillWater:
+					case Terrain.Water:
+					case Terrain.TallGrass:
+					case Terrain.SootGrass:
+						return true;
+					case Terrain.Puddle:
+					default:
+						return false;
+				}
+			}
+		}
+		#endregion
+		#region Enums
 		public Terrain Terrain { get; set; }
 		public Environment Environment { get; set; }
 		//public Season Texture { get; set; }
