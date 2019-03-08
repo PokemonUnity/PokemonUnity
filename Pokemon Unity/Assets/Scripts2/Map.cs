@@ -1176,9 +1176,11 @@ namespace PokemonUnity
 			int maxZ = map.mapHeader.MapHeight;
 
 			List<Tile> tArray = new List<Tile>();
-			UnityEngine.Mesh quad = new UnityEngine.Mesh();
 			UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
-			UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
+			UnityEngine.Mesh quad = mf.mesh; //new UnityEngine.Mesh();
+			//UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
+
+			//Foreach Tile in Map that matches Terrain...
 
 			// loop for every z position in the grid
 			for (int z = minZ; z < maxZ; z++ )
@@ -1193,20 +1195,34 @@ namespace PokemonUnity
 
 						if(!tArray.Exists(i => i.Equals(t))) tArray.Add(t);
 
-						switch (t.Terrain)
+						//switch (t.Terrain)
+						//{
+						//	case Terrain.Grass:
+						//		//floor.Add(TileToQuad(t));
+						//		TileToQuad(ref quad, t);
+						//		break;
+						//	case Terrain.Sand:
+						//	case Terrain.Rock:
+						//	case Terrain.DeepWater:
+						//	case Terrain.StillWater:
+						//	case Terrain.Water:
+						//	case Terrain.TallGrass:
+						//	case Terrain.SootGrass:
+						//	case Terrain.Puddle:
+						//	default:
+						//		break;
+						//}
+						switch (t.Shape)
 						{
-							case Terrain.Grass:
+							case Shape.Flat:
 								//floor.Add(TileToQuad(t));
 								TileToQuad(ref quad, t);
 								break;
-							case Terrain.Sand:
-							case Terrain.Rock:
-							case Terrain.DeepWater:
-							case Terrain.StillWater:
-							case Terrain.Water:
-							case Terrain.TallGrass:
-							case Terrain.SootGrass:
-							case Terrain.Puddle:
+							case Shape.CliffSide:
+							case Shape.CliffCorner:
+							case Shape.LedgeJump:
+							case Shape.LedgeWater:
+							case Shape.WalkPath:
 							default:
 								break;
 						}
