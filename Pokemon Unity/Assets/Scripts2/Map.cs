@@ -1396,6 +1396,7 @@ namespace PokemonUnity
 			UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[0];
 			int[] tri = new int[0];
 			UnityEngine.Vector3[] normals = new UnityEngine.Vector3[0];
+			UnityEngine.Vector2[] uvs = new UnityEngine.Vector2[0];
 			switch (tile.Shape)
 			{
 				case Shape.Flat:
@@ -1413,6 +1414,13 @@ namespace PokemonUnity
 						-UnityEngine.Vector3.forward,
 						-UnityEngine.Vector3.forward,
 						-UnityEngine.Vector3.forward
+					};
+					uvs = new UnityEngine.Vector2[]
+					{
+						new UnityEngine.Vector2 (0, 0),
+						new UnityEngine.Vector2 (1, 0),
+						new UnityEngine.Vector2 (0, 1),
+						new UnityEngine.Vector2 (1, 1)
 					};
 					break;
 				case Shape.CliffSide:
@@ -1433,13 +1441,7 @@ namespace PokemonUnity
 			mesh.vertices = vertices;
 			mesh.triangles = tri;
 			mesh.normals = normals;
-			mesh.uv = new UnityEngine.Vector2[]
-			{
-				new UnityEngine.Vector2 (0, 0),
-				new UnityEngine.Vector2 (1, 0),
-				new UnityEngine.Vector2 (0, 1),
-				new UnityEngine.Vector2 (1, 1)
-			};
+			mesh.uv = uvs;
 			return mesh;
 		}
 		public UnityEngine.Mesh TileToQuad(Tile tile, int Z = 0)
