@@ -1009,6 +1009,16 @@ namespace PokemonUnity
 		/// </summary>
 		/// ToDo: Enum?
 		public int Map { get; private set; } 
+		public bool Passable {
+			get
+			{
+				switch (Shape)
+				{
+					default:
+						return true;
+				}
+			}
+		}
 		public bool Encounter {
 			get
 			{
@@ -1024,6 +1034,16 @@ namespace PokemonUnity
 					case Terrain.SootGrass:
 						return true;
 					case Terrain.Puddle:
+					default:
+						return false;
+				}
+			}
+		}
+		public bool NeedsSurf {
+			get
+			{
+				switch (Terrain)
+				{
 					default:
 						return false;
 				}
