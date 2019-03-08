@@ -957,6 +957,7 @@ namespace PokemonUnity
 {
 	public struct Tile
 	{
+		#region Variables
 		/// <summary>
 		/// Y measurement of this Tile's Node in Scene; 
 		/// starts at Bottom and stretches Up
@@ -994,11 +995,11 @@ namespace PokemonUnity
 		/// <summary>
 		/// X position of this Tile's Node in Scene
 		/// </summary>
-		public int X { get; set; }
+		public int X { get; private set; }
 		/// <summary>
 		/// Y position of this Tile's Node in Scene
 		/// </summary>
-		public int Y { get; set; }
+		public int Y { get; private set; }
 		// <summary>
 		// Z position of this Tile's Node in Scene
 		// </summary>
@@ -1007,7 +1008,7 @@ namespace PokemonUnity
 		/// 
 		/// </summary>
 		/// ToDo: Enum?
-		public int Map { get; set; } 
+		public int Map { get; private set; } 
 		public Terrain Terrain { get; set; }
 		public Environment Environment { get; set; }
 		//public Season Texture { get; set; }
@@ -1017,6 +1018,7 @@ namespace PokemonUnity
 		/// Rotation to use on this Tile's Node
 		/// </summary>
 		public Direction Direction { get; set; }
+		#endregion
 
 		//public Tile(int x, int y, int z) { }
 
@@ -1193,6 +1195,7 @@ namespace PokemonUnity
 
 			mf.mesh = quad;
 			quad.RecalculateBounds();
+			//quad.Optimize();
 		}
  
 		/// <summary>
