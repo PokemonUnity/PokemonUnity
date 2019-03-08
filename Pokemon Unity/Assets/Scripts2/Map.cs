@@ -1315,8 +1315,8 @@ namespace PokemonUnity
 			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
 			List<int> tri = new List<int>();
 			List<UnityEngine.Vector3> normals = new List<UnityEngine.Vector3>();
-			UnityEngine.Vector2[] uv = new UnityEngine.Vector2[0];
-			int xLo, xHi, yLo, yHi;
+			List<UnityEngine.Vector2> uv = new List<UnityEngine.Vector2>();
+			//int xLo, xHi, yLo, yHi;
 			
 			foreach (Tile tile in tiles)
 			{
@@ -1330,43 +1330,51 @@ namespace PokemonUnity
 							new UnityEngine.Vector3 (tile.X,tile.Length,Z),
 							new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
 						});
+						//tri.AddRange(new int[] 
+						//{
+						//	//Lower Left Triangle
+						//	//0, 2, 1,
+						//	tri.Count, tri.Count + 2, tri.Count + 1,
+						//	//Upper Right Triangle
+						//	//2, 3, 1
+						//	tri.Count + 2, tri.Count + 3, tri.Count + 1
+						//});
 						tri.AddRange(new int[] 
 						{
-							//Lower Left Triangle
-							//0, 2, 1,
-							tri.Count, tri.Count + 2, tri.Count + 1,
-							//Upper Right Triangle
+							//2, 1, 0,
+							tri.Count + 2, tri.Count + 1, tri.Count,
 							//2, 3, 1
 							tri.Count + 2, tri.Count + 3, tri.Count + 1
 						});
 						normals.AddRange(new UnityEngine.Vector3[] 
 						{
-							-UnityEngine.Vector3.forward,
-							-UnityEngine.Vector3.forward,
-							-UnityEngine.Vector3.forward,
-							-UnityEngine.Vector3.forward
+							//Floor Tiles Should point UP
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
 						});
-						//uv.AddRange(new UnityEngine.Vector2[]
-						//{
-						//	new Vector2 ((float)(tile.X) + 0f,		(float)(tile.Y) + 0f),//(0f, 0f)
-						//	new Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Y) + 0f),//(1f, 0f)
-						//	new Vector2 ((float)(tile.X) + 0f,		(float)(tile.Length) + 1f),//(0f, 1f)
-						//	new Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Length) + 1f) //(1f, 1f)
-						//	//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 0f),//(0f, 0f)
-						//	//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 0f),//(1f, 0f)
-						//	//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 1f),//(0f, 1f)
-						//	//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 1f) //(1f, 1f)
-						//});
-						xLo = Math.Min(0, tile.X);
-						yLo = Math.Min(0, tile.Y);
-						xHi = Math.Max(1, tile.X + tile.Width);
-						yHi = Math.Max(1, tile.Y + tile.Length);
-						uv = new UnityEngine.Vector2[vertices.Count];
-						for (int i = 0; i < vertices.Count; i++)
+						uv.AddRange(new UnityEngine.Vector2[]
 						{
-							//Each UV should be a fraction of the total dimension 
-							uv[i] = new UnityEngine.Vector2((float)i / (xHi - xLo), (float)i / (yHi - yLo));
-						}
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Y) + 0f),//(0f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Y) + 0f),//(1f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Length) + 1f),//(0f, 1f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Length) + 1f) //(1f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 0f),//(0f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 0f),//(1f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 1f),//(0f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 1f) //(1f, 1f)
+						});
+						//xLo = Math.Min(0, tile.X);
+						//yLo = Math.Min(0, tile.Y);
+						//xHi = Math.Max(1, tile.X + tile.Width);
+						//yHi = Math.Max(1, tile.Y + tile.Length);
+						//uv = new UnityEngine.Vector2[vertices.Count];
+						//for (int i = 0; i < vertices.Count; i++)
+						//{
+						//	//Each UV should be a fraction of the total dimension 
+						//	uv[i] = new UnityEngine.Vector2((float)i / (xHi - xLo), (float)i / (yHi - yLo));
+						//}
 						break;
 					case Shape.CliffSide:
 						break;
@@ -1410,10 +1418,11 @@ namespace PokemonUnity
 					tri = new int[6];
 					normals = new UnityEngine.Vector3[] 
 					{
-						-UnityEngine.Vector3.forward,
-						-UnityEngine.Vector3.forward,
-						-UnityEngine.Vector3.forward,
-						-UnityEngine.Vector3.forward
+						//Floor Tiles Should point UP
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
 					};
 					uvs = new UnityEngine.Vector2[]
 					{
@@ -1460,13 +1469,20 @@ namespace PokemonUnity
 						new UnityEngine.Vector3 (tile.X,tile.Length,Z),
 						new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
 					};
-					tri = new int[6];
+					tri = new int[] //new int[6]; 
+					{
+						2, 1, 0,
+						//tri.Count + 2, tri.Count + 1, tri.Count,
+						2, 3, 1
+						//tri.Count + 2, tri.Count + 3, tri.Count + 1
+					};
 					normals = new UnityEngine.Vector3[] 
 					{
-						-UnityEngine.Vector3.forward,
-						-UnityEngine.Vector3.forward,
-						-UnityEngine.Vector3.forward,
-						-UnityEngine.Vector3.forward
+						//Floor Tiles Should point UP
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
 					};
 					break;
 				case Shape.CliffSide:
