@@ -94,13 +94,13 @@ namespace PokemonUnity
 					#endregion Tile Shape/Piece
 					#region Direction
 					#endregion
-					Tile pokemonData = new Tile()
-					{
-						X = 0,
-						Y = 0//, Z = 0
-						,
-						Direction = (Direction)direction
-					};
+					Tile pokemonData = new Tile();
+					//{
+					//	X = 0,
+					//	Y = 0, 
+					//	//Z = 0,
+					//	Direction = (Direction)direction
+					//};
 					UnityEngine.JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
 					data.Add(pokemonData);
 				}
@@ -183,12 +183,12 @@ namespace PokemonUnity
 					throw new Exception("The key is empty in given json string.");
 				}
 
-				if (dictionary.Contains(item.Key))
+				if (dictionary.ContainsKey(int.Parse(item.Key)))
 				{
 					dublicateNames.Add(item.Key);
 				}
 
-				dictionary[item.Key] = item.Value.NormalizeLineEndings();
+				//dictionary[int.Parse(item.Key)] = item.Value.NormalizeLineEndings();
 			}
 
 			if (dublicateNames.Count > 0)

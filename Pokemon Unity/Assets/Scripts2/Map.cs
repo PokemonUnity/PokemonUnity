@@ -1610,6 +1610,7 @@ namespace PokemonUnity
 		public Tile[][,] MapArray;
 	}
 	#endregion
+
 	#region Enums
 	public enum Worlds
 	{
