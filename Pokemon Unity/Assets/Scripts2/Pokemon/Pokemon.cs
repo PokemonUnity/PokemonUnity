@@ -130,8 +130,10 @@ namespace PokemonUnity.Pokemon
         /// <summary>
         /// Steps to hatch egg, 0 if Pokemon is not an egg.
         /// Pokemon moves auto reset when egg counter reaches 0.
+		/// Double as Friendship Meter after pokemon is hatched.
         /// </summary>
         /// ToDo: Sequence of events to occur when egg is hatching (roll dice for ability, moves, and animate hatching)
+		/// ToDo: New variable for Friendship, Math.Abs(EggSteps)?
         public int EggSteps
         {
             get
@@ -447,18 +449,22 @@ namespace PokemonUnity.Pokemon
 		/// Manner Obtained:
 		/// </summary>
 		public ObtainedMethod ObtainedMode { get; private set; }
+		//ToDo: Change to EncounterType
         public enum ObtainedMethod
         {
             MET = 0,
             EGG = 1,
+			//If EncounterType == Gift, then it's Traded
             TRADED = 2,
             /// <summary>
             /// NPC-Event?
             /// </summary>
             FATEFUL_ENCOUNTER = 4
         }
+		//ToDo: Nintendo has variable for location where egg hatched
         /// <summary>
-        /// Map where obtained
+        /// Map where obtained (as egg, or in wild).
+		/// Return no results if Traded/Gift...
         /// </summary>
         /// <remarks>
         /// Doubles as "HatchedMap"
@@ -470,8 +476,11 @@ namespace PokemonUnity.Pokemon
         /// </summary>
 		/// ToDo: if (isOutside) return generic "got from player"
 		/// else, all data stored in class remains unchanged to OT?
+		/// Try: if (encounter == gift) return "got from player" (npcs too)
         private string obtainString { get; set; }
         //private int obtainLevel; // = 0;
+		//Should obtainWhen be used for hatchedWhen? Eggs dont mean anything...
+		//ToDo: Nintendo has date variable for when egg was received
         private System.DateTimeOffset obtainWhen { get; set; }
         private System.DateTimeOffset? hatchedWhen { get; set; }
         /// <summary>
@@ -1454,7 +1463,8 @@ namespace PokemonUnity.Pokemon
         /// <summary>
         /// Contest stats; Max value is 255
         /// </summary>
-        private int cool, beauty, cute, smart, tough, sheen;
+		/// ToDo: Should make into an Array, and use Enum to get value?
+        public int Cool, Beauty, Cute, Smart, Tough, Sheen;
         /// <summary>
         /// Returns whether this Pokémon has the specified ribbon.
         /// </summary>
