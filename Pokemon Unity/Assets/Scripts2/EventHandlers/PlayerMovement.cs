@@ -34,15 +34,21 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 		private Coroutine _warmUpCoroutine;
 		private Coroutine _warmUpTimeoutCoroutine;
 
-		private Tile currentTile
+		public Tile currentTile { get; private set; }
+		private Tile nextTile
 		{
 			get
 			{
-				//ToDo: Pull value from GameVariables class
+				//ToDo: Unity UI should push value to GameVariable
 				MapMatrix map = new MapMatrix();
-				return map.mapHeader.MapArray[(int)GameVariables.playerTrainer.playerPosition.z]
+				Tile x = map.mapHeader.MapArray[(int)GameVariables.playerTrainer.playerPosition.z]
 					[ (int)GameVariables.playerTrainer.playerPosition.x
 					, (int)GameVariables.playerTrainer.playerPosition.y];
+				//if (currentTile != x)
+				//{
+				//	currentTile = x;
+					return x;
+				//}
 			}
 		} 
 
