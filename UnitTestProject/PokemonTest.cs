@@ -218,22 +218,6 @@ namespace Tests
             Assert.AreEqual(Hidden, pokemon.Ability);
 		}
 
-        [TestMethod]
-        public void Pokemon_ChanceFor_HiddenAbility_If_Egg()
-        {
-            Pokemons pkmn = Pokemons.BULBASAUR;
-            Abilities Hidden = Pokemon.PokemonData.GetPokemon(pkmn).Ability[2];
-            int i = 0;
-            while (true)
-            {
-                Pokemon pokemon = new Pokemon(pkmn);
-                //pokemon.HatchEgg();
-                bool HA = pokemon.Ability == Hidden;
-                if (HA) Assert.IsTrue(HA); i++;
-                if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
-            }
-        }
-
         //Test max value for pokemon stats
         [TestMethod]
         public void Pokemon_EV_GreaterThan_MaxEV_Equals_MaxEV()
@@ -323,7 +307,7 @@ namespace Tests
             Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.GenerateMoveset();
-            Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			CollectionAssert.AreNotEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
         public void Pokemon_Moves_Should_Not_Contain_Duplicates()
@@ -370,7 +354,7 @@ namespace Tests
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.LearnMove(Moves.RAZOR_LEAF, true);
-            Assert.AreNotSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+			CollectionAssert.AreNotEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
         /// <summary>
@@ -383,11 +367,11 @@ namespace Tests
             while (pokemon.countMoves() == 4)
             {
                 pokemon.GenerateMoveset(); i++;
-                if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (i > 25) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
             pokemon.LearnMove(Moves.OVERHEAT);
-            Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+            CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         //[TestMethod]
         //public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_Pokemon()
@@ -406,11 +390,11 @@ namespace Tests
             while (pokemon.countMoves() != 4)
             {
                 pokemon.GenerateMoveset(); i++;
-                if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (i > 1000) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-            pokemon.LearnMove(Moves.OVERHEAT);
-            Assert.AreSame(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
+            pokemon.LearnMove(Moves.TACKLE);
+			CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
         /// <summary>
@@ -423,11 +407,11 @@ namespace Tests
             while (pokemon.countMoves() == 4)
             {
                 pokemon.GenerateMoveset(); i++;
-                if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
+                if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
             }
-            pokemon.LearnMove(Moves.OVERHEAT);
+            pokemon.LearnMove(Moves.TACKLE);
             int before = pokemon.countMoves();
-            pokemon.DeleteMove(Moves.OVERHEAT);
+            pokemon.DeleteMove(Moves.TACKLE);
             Assert.IsTrue(pokemon.countMoves() == before - 1);
         }
         //[TestMethod]
@@ -450,14 +434,14 @@ namespace Tests
             //Assert.AreSame(new Moves[] { }, new Pokemon().getMoveList());
             Assert.IsTrue(new Pokemon(Pokemons.BULBASAUR, level: 25).getMoveList(LearnMethod.levelup).Length > 0);
         }
-        [TestMethod]
-        public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_TeachMethod()
-        {
-            //list of moves a pokemon can learn for a given technique
-            //attempt to teach move
-            //confirm moves are unchanged 
-            Assert.Inconclusive();
-        }
+        //[TestMethod]
+        //public void Pokemon_PokemonTest_CantLearn_Move_NotCompatible_With_TeachMethod()
+        //{
+        //    //list of moves a pokemon can learn for a given technique
+        //    //attempt to teach move
+        //    //confirm moves are unchanged 
+        //    Assert.Inconclusive();
+        //}
         #endregion
 
         #region Evolving/evolution

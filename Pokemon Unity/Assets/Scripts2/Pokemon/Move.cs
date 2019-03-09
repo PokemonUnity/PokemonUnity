@@ -1977,12 +1977,14 @@ namespace PokemonUnity.Attack
             }
 
             internal MoveData getMove(Moves ID)
-            {
-                foreach (MoveData move in Database)
-                {
+			{
+				foreach (MoveData move in Database)
+				{
                     if (move.ID == ID) return move;
                 }
-                throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
+				//if ((int)ID > 559) //Database only goes up to a certain gen, right now
+					return Database[0]; //return the database value for "none"
+                //throw new System.Exception("Move ID doesnt exist in the database. Please check MoveData constructor.");
             }
         }
 

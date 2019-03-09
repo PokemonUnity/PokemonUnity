@@ -58,6 +58,41 @@ public class Trainer
 	/// </summary>
 	public bool? Gender { get; private set; }
 
+	#region Important Trainer Data
+	/// <summary>
+	/// IDfinal = (IDtrainer + IDsecret × 65536).Last6
+	/// </summary>
+	/// <remarks>
+	/// only the last six digits are used so the Trainer Card will display an ID No.
+	/// </remarks>
+	public string PlayerID { get { return GetHashCode().ToString().Substring(GetHashCode().ToString().Length-6,GetHashCode().ToString().Length); } }
+	public int TrainerID { get; private set; }
+	public int SecretID { get; private set; }
+
+	#region Explicit Operators
+	public static bool operator == (Trainer t1, Trainer t2)
+	{
+		return ((t1.Gender == t2.Gender) && (t1.TrainerID == t2.TrainerID) && (t1.SecretID == t2.SecretID)) & (t1.Name == t2.Name);
+	}
+	public static bool operator != (Trainer t1, Trainer t2)
+	{
+		return ((t1.Gender != t2.Gender) || (t1.TrainerID != t2.TrainerID) || (t1.SecretID != t2.SecretID)) | (t1.Name == t2.Name);
+	}
+	public bool Equals(Player obj)
+	{
+		return this == obj.Trainer; //Equals(obj.Trainer);
+	}
+	public override bool Equals(object obj)
+	{
+		return base.Equals(obj);
+	}
+	public override int GetHashCode()
+	{
+		return TrainerID + SecretID * 65536;
+	}
+	#endregion
+	#endregion
+
 	#region Wild Pokemon
 	/// <summary>
 	/// True is Double Battle, False is Single Battle, and Null is Wild Pokemon Encounter
@@ -107,8 +142,18 @@ public class Trainer
 
 	public Trainer(TrainerTypes trainer)
     {
+		TrainerID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
+		SecretID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
 		IsDouble = false;
-		Party = new Pokemon[6];
+		Party = new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE)
+		};
 		GetTrainer(trainer);
 	}
 
@@ -125,13 +170,20 @@ public class Trainer
 		//ScriptBattleEnd = 
 	}
 
-	public Trainer(Player trainer) : this(TrainerTypes.PLAYER, trainer.Trainer.Party)
+	public Trainer(Player trainer, /*string name, bool gender,*/ Pokemon[] party = null, int? tID = null, int? sID = null) 
+		: this(TrainerTypes.PLAYER, /*trainer.Trainer.Party*/party ?? new Pokemon[]
+		{
+			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE)
+		})
     {
 		//if trainer is another player
+		if (tID.HasValue) TrainerID = tID.Value; //trainer.Trainer.TrainerID;
+		if (sID.HasValue) SecretID = sID.Value; //trainer.Trainer.SecretID;
 		//Change name being loaded
-		Name = trainer.PlayerName;
+		Name = trainer.PlayerName; //name;
 		//Load player's gender as well
-		Gender = trainer.isMale;
+		Gender = trainer.isMale; //gender;
     }
 
 	void GetTrainer(TrainerTypes type)

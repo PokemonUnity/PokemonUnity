@@ -24,7 +24,7 @@ namespace PokemonUnity.Saving
                 Player.tag = "Player";
                 playerMovement = Player.GetComponent<PlayerMovement>();
             }
-            SaveManager.RegisterPlayer(Player);
+            //SaveManager.RegisterPlayer(Player);
 
             List<SaveEvent> Events = SaveManager.GetRelaventSaveData(SceneManager.GetActiveScene().buildIndex);
 
