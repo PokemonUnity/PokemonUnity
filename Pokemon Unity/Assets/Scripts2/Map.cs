@@ -1415,7 +1415,7 @@ namespace PokemonUnity
 			mesh.vertices = vertices.ToArray();
 			mesh.triangles = tri.ToArray();
 			mesh.normals = normals.ToArray();
-			//mesh.uv = uv.ToArray();
+			mesh.uv = uv.ToArray();
 			return mesh;
 		}
 		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile tile, int Z = 0)
@@ -1542,18 +1542,18 @@ namespace PokemonUnity
 	public class MapMatrix
 	{
 		/// <summary>
-		/// 
+		/// The first matrix (Matrix 0), resembles the present routes of Pokémon Version.
 		/// </summary>
 		/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
 		/// if MAP then it allows you to load mapHeaders
 		/// else it's a small chunk or dungeon
-		Worlds WorldId;
+		public Worlds WorldId { get; private set; }
 		/// <summary>
 		/// 
 		/// </summary>
 		/// enum label of matrix
 		/// matrix id 0 is the overworld map
-		Regions MatrxId;
+		public Regions MatrixId { get; private set; }
 		public int Length { get; private set; }
 		public int Width { get; private set; }
 		public MapHeader mapHeader { get; private set; }
@@ -1575,6 +1575,13 @@ namespace PokemonUnity
 		/// ToDo: Volcanic, Snow, Spring, etc...
 		public int NameStyle;
 		public int MapType;
+		/// <summary>
+		/// Lists the maps of the "edges", 
+		/// ie those maps which have a block of trees, 
+		/// a block of the sea, a block of rock, etc. 
+		/// ... to continue the maps. 
+		/// Each block has its own height.
+		/// </summary>
 		public int MapHeight;
 		//int Texture1;
 		//int Texture2;
@@ -1584,7 +1591,10 @@ namespace PokemonUnity
 		public int MusicNight;
 		public int Texts;
 		/// <summary>
-		/// Table or Encounter chart for pokemons expected to find on map
+		/// Table or Encounter chart for pokemons expected to find on map.
+		/// <para></para>
+		/// Points to another array id, 
+		/// where the Pokemon Encounters are expressed in detail
 		/// </summary>
 		public int WildPokemon;
 		public int Events;
