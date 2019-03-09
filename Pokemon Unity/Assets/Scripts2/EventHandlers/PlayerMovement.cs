@@ -34,6 +34,17 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 		private Coroutine _warmUpCoroutine;
 		private Coroutine _warmUpTimeoutCoroutine;
 
+		private Tile currentTile
+		{
+			get
+			{
+				//ToDo: Pull value from GameVariables class
+				MapMatrix map = new MapMatrix();
+				return map.mapHeader.MapArray[(int)GameVariables.playerTrainer.playerPosition.z]
+					[ (int)GameVariables.playerTrainer.playerPosition.x
+					, (int)GameVariables.playerTrainer.playerPosition.y];
+			}
+		} 
 
 		#region Animation Properties
 		private bool IsWalking
