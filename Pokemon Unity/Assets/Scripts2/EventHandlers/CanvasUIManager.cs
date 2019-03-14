@@ -15,16 +15,17 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     private static bool InstantLine;
     private static float secPerChar
     {
-        get { return secPerChar; }
-        set
+        get 
         {
             int txtSpd = GameVariables.textSpeed + 1;
-            value = 1 / (16 + (txtSpd * txtSpd * 9));
+            return 1 / (16 + (txtSpd * txtSpd * 9));
         }
     }
 
-    void Awake()
+	#region Unity Stuff
+	void Awake()
     {
+		GameVariables.SetCanvasManager(this);
         DialogUIText = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
         DialogUITextDump = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
         DialogUIScrollText = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
@@ -41,7 +42,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     void Update()
     {
         //Test dialog skin
-        if (UnityEngine.Input.anyKeyDown) RefreshWindowSkin();
+        //if (UnityEngine.Input.anyKeyDown) RefreshWindowSkin();
     }
 
     public void ShowMenu(CanvasUI screen)
@@ -51,6 +52,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         CurrentCanvas = screen;
         CurrentCanvas.IsActive = true;
     }
+	#endregion
 
     #region Enumerator
     public enum UICanvas
@@ -73,12 +75,14 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         /// </summary>
         SettingsMenu
     }
+	#endregion
 
-    /// <summary>
-    /// Reassigns all the <seealso cref="UnityEngine.Sprite"/> images 
-    /// for every <seealso cref="UnityEngine.GameObject"/> with the tag "DialogWindow"
-    /// </summary>
-    public static void RefreshWindowSkin()
+	#region Methods
+	/// <summary>
+	/// Reassigns all the <seealso cref="UnityEngine.Sprite"/> images 
+	/// for every <seealso cref="UnityEngine.GameObject"/> with the tag "DialogWindow"
+	/// </summary>
+	public static void RefreshWindowSkin()
     {
         if (GameVariables.WindowSkinSprite != null)
         {
@@ -107,7 +111,6 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         }
         else return;
     }
-    #endregion
 
     void ChangeScene(UICanvas scene)
     {
@@ -501,7 +504,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     {
         DialogUIText.text = DialogUITextDump.text = DialogUIScrollText.text = DialogText = null; 
     }
-
+	#endregion
 
     public class CanvasUI : UnityEngine.MonoBehaviour
     {
@@ -541,9 +544,9 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 
         public void Update()
         {
-            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(""))
-                _canvasGroup.blocksRaycasts = _canvasGroup.interactable = false;
-            else _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
+            //if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(""))
+            //    _canvasGroup.blocksRaycasts = _canvasGroup.interactable = false;
+            //else _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
         }
     }
 }

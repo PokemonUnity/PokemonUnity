@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventSystems.ISubmitHandler, UnityEngine.EventSystems.IScrollHandler
 {
 	#region Variables
-	public static GameVariables PersistantPlayerData { get; private set; }
+	//public static GameVariables PersistantPlayerData { get; private set; }
 	public UnityEngine.UI.Image DialogSkin, WindowSkin;
     private static UnityEngine.GameObject MainMenu;// = UnityEngine.GameObject.Find("MainMenu");
     /// <summary>
@@ -29,8 +29,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	#region Unity MonoBehavior
     void Awake()
     {
-		PersistantPlayerData = new GameVariables();
+		//PersistantPlayerData = new GameVariables();
 		//ToDo: On Start-up, Load & Process GameVariables, to begin and instantiate game
+		GameVariables.SetStartScene(this);
         MainMenu = UnityEngine.GameObject.Find("MainMenu");
         FileDataPanel = MainMenu.transform.GetChild(0).gameObject;
         MenuOptions = MainMenu.transform.GetChild(1).gameObject;
@@ -101,8 +102,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
         //If Continue Option is select
         if (MenuOptions.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
-            //Get Toggle Value from Toggle group for which toggleOption is selected
-            //use gamesave toggle to load game from that slot
+			//Get Toggle Value from Toggle group for which toggleOption is selected
+			//use gamesave toggle to load game from that slot
+			GameVariables.Load();
         }
     }
 
@@ -115,7 +117,6 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
     public void OnScroll(PointerEventData eventData)
     {
         //throw new NotImplementedException();
-
     }
 
     public void OnSubmit(BaseEventData eventData)

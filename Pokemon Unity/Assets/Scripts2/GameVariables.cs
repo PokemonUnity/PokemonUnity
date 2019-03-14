@@ -190,13 +190,27 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#endregion
 	#endregion
 
+	#region Unity Scene Manager
+	public static CanvasUIHandler CanvasManager { get; private set; }
+	public static DialogHandler DialogScene { get; private set; }
+	public static StartupSceneHandler StartScene { get; private set; }
+	public static BattlePokemonHandler BattleScene { get; private set; }
+	//public static ItemHandler ItemScene { get; private set; }
+	//public static SummaryHandler SummaryScene { get; private set; }
+	//public static SettingsHandler SettingsScene { get; private set; }
+	#region Scene Manager Methods
+	public static void SetCanvasManager(CanvasUIHandler canvas) { CanvasManager = canvas; }
+	public static void SetStartScene(StartupSceneHandler start) { StartScene = start; }
+	#endregion
+	#endregion
+
 	#region Save/Load Data
 	private static byte slotIndex { get; set; }
 	//private int fileIndex { get; set; }
 	/// <summary>
 	/// Bool used to tell Start-Up screen whether or not to display "Continue" option
 	/// </summary>
-    public static bool SaveFileFound { get; set; }
+    public static bool SaveFileFound { get; private set; }
     //public System.DateTimeOffset fileCreationDate { get; set; }
 	//public System.DateTimeOffset? lastSave { get; set; }
 	//public System.DateTimeOffset startTime { get; set; }
