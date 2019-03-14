@@ -1152,6 +1152,10 @@ namespace PokemonUnity
 		/// </summary>
 		public UnityEngine.GameObject mapPrefab;
 		public string MapName;
+		//public List<UnityEngine.Vector3> vertices { get; private set; }
+		//public List<int> tris { get; private set; }
+		//public List<UnityEngine.Vector3> normals { get; private set; }
+		//public List<UnityEngine.Vector2> uvs { get; private set; }
 
 		#region Unity UI Resources
 		private void Awake()
@@ -1329,9 +1333,72 @@ namespace PokemonUnity
 		}
 
 		#region Methods
+		void Combine(UnityEngine.GameObject go)
+		{
+			#region Mesh UVs Part 1
+			#endregion
+			//Grab all the mesh filters (from parent + children) on Map layer
+			UnityEngine.MeshFilter[] meshFilters = GetComponentsInChild<UnityEngine.MeshFilter>();
+			//An array to hold all of the pending mesh data
+			UnityEngine.CombineInstance[] combine = new UnityEngine.CombineInstance[meshFilters.Length];
+			//Remove collider (will add again at end)
+			Destroy(this.gameObject.GetComponent<UnityEngine.MeshCollider>());
+
+			#region Mesh UVs Part 1
+			//Get current UVs before combining the multiple mesh data
+			UnityEngine.Vector2[] oldUVs = transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv;
+			#endregion
+
+			#region Mesh Vertices
+			int i = 0;
+			while(i < meshFilters.Length)
+			{
+				combine[i].mesh = meshFilters[i].sharedMesh;
+				combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+				//Disables objects added, so that they can be merged/removed
+				meshFilters[i].gameObject.SetActive(false);
+				i++
+			}
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh = new UnityEngine.Mesh();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.CombineMeshes(combine, true);
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.RecalculateBounds();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.RecalculateNormals();
+			//transform.GetComponent<UnityEngine.MeshFilter>().mesh.Optimize();
+			//UnityEditor.MeshUtility.Optimize(transform.GetComponent<UnityEngine.MeshFilter>().mesh);
+			#endregion
+
+			#region Mesh UVs Part 2
+			//Reset UV array to hold both the old and new UVs
+			UnityEngine.Vector2[] newUVs = new UnityEngine.Vector2[oldUVs]; //Old.count + New.count = length
+			//Add the new UVs to the old UVs (the newer textures are added towards the end...)
+			for (i = 0; i < oldUVs.Length; i++)
+				newUVs[i] = oldUVs[i];
+
+			//Add new UVs to array
+			//SetUVs suv = go.GetComponent<UnityEngine.set>
+			//go.GetComponent<UnityEngine.MeshFilter>().mesh.GetUVs()
+
+			//Override with the new combined UVs 
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv = newUVs;
+			#endregion
+
+			this.gameObject.AddComponent<UnityEngine.MeshCollider>();
+			transform.gameObject.SetActive(true);
+
+			//remove object since it's been added already
+			Destroy(go);
+		}
+		public void AddGameObjectToMapMesh(UnityEngine.GameObject go)
+		{
+			//Makes GameObject a child of Map 
+			go.transform.parent = this.transform;
+			//Merges the two objects into one unit
+			Combine(go);
+		}
 		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile[] tiles, int Z = 0)
 		{
 			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			//All vertices are on mid point, because when player position is rounded to 0, it would be in middle of quad
 			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
 			List<int> tri = new List<int>();
 			List<UnityEngine.Vector3> normals = new List<UnityEngine.Vector3>();
@@ -1345,10 +1412,10 @@ namespace PokemonUnity
 					case Shape.Flat:
 						vertices.AddRange(new UnityEngine.Vector3[] 
 						{
-							new UnityEngine.Vector3 (tile.X,tile.Y,Z),
-							new UnityEngine.Vector3 (tile.Width, tile.Y, Z),
-							new UnityEngine.Vector3 (tile.X,tile.Length,Z),
-							new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Length	- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Length - .5f,	Z)
 						});
 						//tri.AddRange(new int[] 
 						//{
