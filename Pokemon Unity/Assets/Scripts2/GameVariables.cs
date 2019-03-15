@@ -22,12 +22,12 @@ using PokemonUnity.Saving;
 /// During boot-up, game will check directory for save files and load data.
 /// GameVariables class will overwrite all the other class default values when player triggers a load state.
 /// </summary>
-/// This class should be static...
+/// ToDo: Split this class into multiple partial classes
 public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
 	//public static Translator.Languages UserLanguage = Translator.Languages.English;
 	public static Settings.Languages UserLanguage = Settings.Languages.English;
-    //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
+	//public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 
 	public static Player playerTrainer { get; set; }
 	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
@@ -39,7 +39,77 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	public static List<Items> Bag_Items { get; set; }
 	#endregion
 
-	//public static SaveDataOld currentSave;
+	#region Unity Monobehaviour Stuff
+#if !DEBUG //|| UNITY_EDITOR 
+	public static GameVariables game;
+	public void Awake()
+	{
+		//Log bool results in debugger...
+		//GameDebug.Assert(game == null);
+		DontDestroyOnLoad(game);
+		game = this;
+
+		var commandLineArgs = new List<string>(System.Environment.GetCommandLineArgs());
+
+		// If -logfile was passed, we try to put our own logs next to the engine's logfile
+		var engineLogFileLocation = ".";
+		var logfileArgIdx = commandLineArgs.IndexOf("-logfile");
+		if (logfileArgIdx >= 0 && commandLineArgs.Count >= logfileArgIdx)
+		{
+			engineLogFileLocation = System.IO.Path.GetDirectoryName(commandLineArgs[logfileArgIdx + 1]);
+		}
+
+		//Headless means if it's offline...
+		var logName = true ? "game_" + DateTime.UtcNow.ToString("yyyyMMdd_HHmmss_fff") : "game";
+		GameDebug.Init(engineLogFileLocation, logName);
+
+#if UNITY_EDITOR
+        GameDebug.Log("Build type: editor");
+#elif DEVELOPMENT_BUILD
+        GameDebug.Log("Build type: development");
+#else
+        GameDebug.Log("Build type: release");
+#endif
+		//ToDo: Load asssembly build version into logger
+        GameDebug.Log("BuildID: " + buildId);
+
+        levelManager = new LevelManager();
+        levelManager.Init();
+        GameDebug.Log("LevelManager initialized");
+
+        inputSystem = new InputSystem();
+        GameDebug.Log("InputSystem initialized");
+	}
+	
+    void OnDestroy()
+    {
+        GameDebug.Shutdown();
+        Console.Shutdown();
+        //if (m_DebugOverlay != null)
+        //    m_DebugOverlay.Shutdown();
+    }
+
+    void OnApplicationQuit()
+    {
+#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
+        GameDebug.Log("Farewell, cruel world...");
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
+        ShutdownGameLoops();
+    }
+
+	public void LoadLevel(string levelname)
+	{
+		if (!Game.game.levelManager.CanLoadLevel(levelname))
+		{
+			GameDebug.Log("ERROR : Cannot load level : " + levelname);
+			return;
+		}
+
+		Game.game.levelManager.LoadLevel(levelname);
+	}
+#endif
+	#endregion
 
 	#region Constructor
 	static GameVariables()
@@ -415,6 +485,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#endregion
 
 	#region Audio 
+	public UnityEngine.Audio.AudioMixer audioMixer;
 	public static int? nextBattleBGM { get; set; }
 	public static int? nextBattleME { get; set; }
 	public static int? nextBattleBack { get; set; }
@@ -1232,6 +1303,204 @@ public class UnityUtilityIntegration
 #if !DEBUG
 			UnityEngine.Debug.LogError(value);
 #endif
+		}
+	}
+	#region New Logger for Debugging
+	/// <summary>
+	/// Logging of messages
+	/// <para>
+	/// There are three different types of messages:
+	/// </para><para>
+	/// Debug.Log/Warn/Error coming from unity (or code, e.g. packages, not using GameDebug) =>
+	///    These get caught here and sent onto the console and into our log file
+	///    </para><para>
+	/// GameDebug.Log/Warn/Error coming from game =>
+	///    These gets sent onto the console and into our log file.
+	///    *IF* we are in editor, they are also sent to Debug.* so they show up in editor Console window
+	///    </para><para>
+	/// Console.Write =>
+	///    Only used for things that should not be logged. Typically reponses to user commands. Only shown on Console.
+	/// </para>
+	/// </summary>
+	public static class GameDebug
+	{
+		private static string Debug {
+			set
+			{
+	#if !DEBUG
+				UnityEngine.Debug.Log(value);
+	#endif
+			}
+		}
+		private static string DebugWarning {
+			set
+			{
+	#if !DEBUG
+				UnityEngine.Debug.LogWarning(value);
+	#endif
+			}
+		}
+		private static string DebugError {
+			set
+			{
+	#if !DEBUG
+				UnityEngine.Debug.LogError(value);
+	#endif
+			}
+		}
+		static System.IO.StreamWriter logFile = null;
+		/// <summary>
+		/// Determines whether or not to store Debug Log to a file, or display only
+		/// </summary>
+		static bool forwardToDebug { get; set; }
+		public static void Init(string logfilePath, string logBaseName)
+		{
+	#if !DEBUG
+			forwardToDebug = UnityEngine.Application.isEditor;
+			UnityEngine.Application.logMessageReceived += LogCallback;
+	#endif
+
+			// Try creating logName; attempt a number of suffixxes
+			string name = "";
+			for (var i = 0; i < 10; i++)
+			{
+				name = logBaseName + (i == 0 ? "" : "_" + i) + ".log";
+				try
+				{
+					logFile = System.IO.File.CreateText(logfilePath + "/" + name);
+					logFile.AutoFlush = true;
+					break;
+				}
+				catch
+				{
+					name = "<none>";
+				}
+			}
+			GameDebug.Log("GameDebug initialized. Logging to " + logfilePath + "/" + name);
+		}
+
+		public static void Shutdown()
+		{
+	#if !DEBUG
+			UnityEngine.Application.logMessageReceived -= LogCallback;
+	#endif
+			if (logFile != null)
+				logFile.Close();
+			logFile = null;
+		}
+
+		static void LogCallback(string message, string stack, UnityEngine.LogType logtype)
+		{
+			switch (logtype)
+			{
+				default:
+				case UnityEngine.LogType.Log:
+					GameDebug._Log(message);
+					break;
+				case UnityEngine.LogType.Warning:
+					GameDebug._LogWarning(message);
+					break;
+				case UnityEngine.LogType.Error:
+					GameDebug._LogError(message);
+					break;
+			}
+		}
+
+		public static void Log(string message)
+		{
+			if (forwardToDebug)
+				//Debug.Log(message);
+				Debug = message;
+			else
+				_Log(message);
+		}
+
+		static void _Log(string message)
+		{
+			Console.Write(Time.frameCount + ": " + message);
+			if (logFile != null)
+				logFile.WriteLine(Time.frameCount + ": " + message + "\n");
+		}
+
+		public static void LogError(string message)
+		{
+			if (forwardToDebug)
+				//Debug.LogError(message);
+				DebugError = message;
+			else
+				_LogError(message);
+		}
+
+		static void _LogError(string message)
+		{
+			Console.Write(Time.frameCount + ": [ERR] " + message);
+			if (logFile != null)
+				logFile.WriteLine("[ERR] " + message + "\n");
+		}
+
+		public static void LogWarning(string message)
+		{
+			if (forwardToDebug)
+				//Debug.LogWarning(message);
+				DebugWarning = message;
+			else
+				_LogWarning(message);
+		}
+
+		static void _LogWarning(string message)
+		{
+			Console.Write(Time.frameCount + ": [WARN] " + message);
+			if (logFile != null)
+				logFile.WriteLine("[WARN] " + message + "\n");
+		}
+	}
+	#endregion
+	#endregion
+
+	#region MyRegion
+	public static class Input
+	{
+		[Flags]
+		public enum Blocker
+		{
+			None = 0,
+			Console = 1,
+			Chat = 2,
+			Debug = 4,
+		}
+		static Blocker blocks;
+
+		public static void SetBlock(Blocker b, bool value)
+		{
+			if (value)
+				blocks |= b;
+			else
+				blocks &= ~b;
+		}
+
+		internal static float GetAxisRaw(string axis)
+		{
+			return blocks != Blocker.None ? 0.0f : UnityEngine.Input.GetAxisRaw(axis);
+		}
+
+		internal static bool GetKey(KeyCode key)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetKey(key);
+		}
+
+		internal static bool GetKeyDown(KeyCode key)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetKeyDown(key);
+		}
+
+		internal static bool GetMouseButton(int button)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetMouseButton(button);
+		}
+
+		internal static bool GetKeyUp(KeyCode key)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetKeyUp(key);
 		}
 	}
 	#endregion
