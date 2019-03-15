@@ -1145,7 +1145,7 @@ namespace PokemonUnity
 	/// a separate GameObject versus a single map
 	/// Decide whether to load all GameObjects together or
 	/// relative to/based on a player's given position
-	[UnityEngine.RequireComponent(typeof(UnityEngine.MeshFilter)]
+	[UnityEngine.RequireComponent(typeof(UnityEngine.MeshFilter),typeof(UnityEngine.MeshRenderer))]
 	public class Map : UnityEngine.MonoBehaviour
 	{
 		/// <summary>
@@ -1153,14 +1153,25 @@ namespace PokemonUnity
 		/// </summary>
 		//public UnityEngine.GameObject mapPrefab;
 		public string MapName;
-		//public List<UnityEngine.Vector3> vertices { get; private set; }
-		//public List<int> tris { get; private set; }
-		//public List<UnityEngine.Vector3> normals { get; private set; }
-		//public List<UnityEngine.Vector2> uvs { get; private set; }
+		private UnityEngine.Mesh mesh { get; set; }
+		public List<UnityEngine.Vector3> vertices { get; private set; }
+		public List<int> tris { get; private set; }
+		public List<UnityEngine.Vector3> normals { get; private set; }
+		public List<UnityEngine.Vector2> uvs { get; private set; }
 
 		#region Unity UI Resources
 		private void Awake()
 		{
+			//If mesh is not null, use value already stored
+			if (!mesh)
+			{
+				mesh = new UnityEngine.Mesh();
+				UnityEngine.MeshFilter f = (UnityEngine.MeshFilter)GetComponent<UnityEngine.MeshFilter>();
+				f.mesh = mesh;
+				mesh.name = string.Format("{0}Mesh", gameObject.name);
+			}
+			else 
+				mesh = GetComponent<UnityEngine.MeshFilter>().mesh;
 			//foreach (Vector3 objectPos in objectPositions)
 			//{
 			//	GameObject mapObject = Instantiate(mapPrefab) as GameObject;
@@ -1168,8 +1179,15 @@ namespace PokemonUnity
 			//}
 		}
 
+		void Start()
+		{
+			//CreateMesh();
+			BuildMap();
+		}
+
 		void OnEnable()
 		{
+			UpdateMesh();
 			//if mapName not null, scan directory for file/filename that matches "MapName"
 			//if file exist, load map and content on screen
 				//create a layer for each terrain asset
@@ -1191,17 +1209,18 @@ namespace PokemonUnity
 		/// ToDo: How to save map as Array of Objects?
 		/// ToDo: Blender-to-Unity => Read object name in if-check
 		/// A tile Array for Location, Rotation, and Name
-		void BuildMap(UnityEngine.GameObject layer, Terrain terrain) 
+		void BuildMap(/*UnityEngine.GameObject layer, Terrain terrain*/) 
 		{
-			int minX = -20;
+			//int minX = -20;
 			int maxX = map.Width;
-			int minY = 0;
+			//int minY = 0;
 			int maxY = map.Length;
-			int minZ = -20;
+			//int minZ = -20;
 			int maxZ = map.mapHeader.MapHeight;
 
 			List<Tile> tArray = new List<Tile>();
-			UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			//UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			UnityEngine.MeshFilter mf = transform.GetComponent<UnityEngine.MeshFilter>();
 			UnityEngine.Mesh quad = mf.mesh; //new UnityEngine.Mesh();
 			//UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
 
@@ -1241,7 +1260,8 @@ namespace PokemonUnity
 						{
 							case Shape.Flat:
 								//floor.Add(TileToQuad(t));
-								TileToQuad(ref quad, t);
+								//TileToQuad(ref quad, t);
+								//TileToQuad(t);
 								break;
 							case Shape.CliffSide:
 							case Shape.CliffCorner:
@@ -1253,17 +1273,20 @@ namespace PokemonUnity
 						}
 					}
 				}
-				TileToQuad(ref quad, tArray.ToArray(), z);
+				//TileToQuad(ref quad, tArray.ToArray(), z);
+				TileToQuad(tArray.ToArray(), z);
 			}
 
 			mf.mesh = quad;
-			quad.RecalculateBounds();
+			//quad.RecalculateBounds();
+			mf.mesh.RecalculateBounds();
 			//quad.Optimize();
 		}
  
 		/// <summary>
 		/// Add assets to map from Array of GameObjects[]
 		/// </summary>
+		/// ToDo: Redo method to instantiate non-floor tiles
 		/// ToDo: Save assets on map as Array of Objects?
 		/// A tile Array for Location, Rotation, and Name
 		void SpawnAssets() 
@@ -1296,7 +1319,8 @@ namespace PokemonUnity
 						{
 							case Terrain.Grass:
 								//floor.Add(TileToQuad(t));
-								TileToQuad(ref floorQuad, t);
+								//TileToQuad(ref floorQuad, t);
+								//TileToQuad(t);
 								break;
 							case Terrain.Sand:
 							case Terrain.Rock:
@@ -1334,6 +1358,26 @@ namespace PokemonUnity
 		}
 
 		#region Methods
+		void UpdateMesh()
+		{
+			//int index = 0;
+			//for (int z = 0; z < length; z++)
+			//{
+			//	for (int x = 0; x < length; x++)
+			//	{
+			//		vertices[index] = Tile[x, z]; //mapGrid
+			//		index++;
+			//	}
+			//}
+
+			//mesh.Clear();
+			mesh.vertices = vertices;
+			mesh.triangles = tris;
+			mesh.uv = uvs;
+
+			mesh.RecalculateBounds();
+			mesh.RecalculateNormals();
+		}
 		/// <summary>
 		/// Reads the MeshFilter component of Mesh 
 		/// to combine into single game object.
@@ -1408,7 +1452,8 @@ namespace PokemonUnity
 		}
 		public void TileToQuad(Tile[] tiles, int Z = 0)
 		{
-			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			//UnityEngine.MeshFilter mf = new UnityEngine.MeshFilter();
+			//UnityEngine.Mesh m = new UnityEngine.Mesh();
 			//All vertices are on mid point, because when player position is rounded to 0, it would be in middle of quad
 			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
 			List<int> tri = new List<int>();
@@ -1496,6 +1541,7 @@ namespace PokemonUnity
 			transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv = uv.ToArray();
 			//return mesh;
 		}
+		#region Old Idea...
 		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile[] tiles, int Z = 0)
 		{
 			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
@@ -1700,6 +1746,7 @@ namespace PokemonUnity
 			};
 			return mesh;
 		}
+		#endregion
 		#endregion
 	}
 
