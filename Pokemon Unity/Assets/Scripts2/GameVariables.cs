@@ -47,7 +47,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	{
 		//Log bool results in debugger...
 		//GameDebug.Assert(game == null);
-		DontDestroyOnLoad(game);
+		DontDestroyOnLoad(this.gameObject);
 		game = this;
 
 		var commandLineArgs = new List<string>(System.Environment.GetCommandLineArgs());
