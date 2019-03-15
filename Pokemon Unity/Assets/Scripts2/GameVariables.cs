@@ -25,13 +25,27 @@ using PokemonUnity.Saving;
 /// This class should be static...
 public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
-	//public static Translator.Languages UserLanguage = Translator.Languages.English;
-	public static Settings.Languages UserLanguage = Settings.Languages.English;
-    //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
-
+	#region Player and Overworld Data
+	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 	public static Player playerTrainer { get; set; }
 	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
+	#endregion
+
 	#region Private Records of Player Storage Data
+	//ToDo: Berry Field Data (0x18 per tree, 36 trees)
+	//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
+	//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
+	//ToDo: Missing Variable for DayCare, maybe `Pokemon[,]` for multipe locations?
+	//Daycare Data
+	//(Slot 1) Occupied Flag 
+	//(Slot 1) Steps Taken Since Depositing 
+	//(Slot 1) Box EK6 1 
+	//(Slot 2) Occupied Flag 
+	//(Slot 2) Steps Taken Since Depositing2 
+	//(Slot 2) Box EK6 2 
+	//Flag (egg available) 
+	//RNG Seed
+	//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
 	public static Pokemon[,] PC_Poke { get; set; }
 	public static string[] PC_boxNames { get; set; }
 	public static int[] PC_boxTexture { get; set; }
@@ -39,11 +53,10 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	public static List<Items> Bag_Items { get; set; }
 	#endregion
 
-	//public static SaveDataOld currentSave;
-
 	#region Constructor
 	static GameVariables()
 	{
+		UserLanguage  = Settings.Languages.English;
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
@@ -67,6 +80,9 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#endregion
 
 	#region Unity Canvas UI
+	//public static Translator.Languages UserLanguage = Translator.Languages.English;
+	public static Settings.Languages UserLanguage { get; private set; }// = Settings.Languages.English;
+    //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 	/// <summary>
 	/// Frame Style for all System Prompts and Text Displays
 	/// </summary>
@@ -174,13 +190,27 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#endregion
 	#endregion
 
+	#region Unity Scene Manager
+	public static CanvasUIHandler CanvasManager { get; private set; }
+	public static DialogHandler DialogScene { get; private set; }
+	public static StartupSceneHandler StartScene { get; private set; }
+	public static BattlePokemonHandler BattleScene { get; private set; }
+	//public static ItemHandler ItemScene { get; private set; }
+	//public static SummaryHandler SummaryScene { get; private set; }
+	//public static SettingsHandler SettingsScene { get; private set; }
+	#region Scene Manager Methods
+	public static void SetCanvasManager(CanvasUIHandler canvas) { CanvasManager = canvas; }
+	public static void SetStartScene(StartupSceneHandler start) { StartScene = start; }
+	#endregion
+	#endregion
+
 	#region Save/Load Data
 	private static byte slotIndex { get; set; }
 	//private int fileIndex { get; set; }
 	/// <summary>
 	/// Bool used to tell Start-Up screen whether or not to display "Continue" option
 	/// </summary>
-    public static bool SaveFileFound { get; set; }
+    public static bool SaveFileFound { get; private set; }
     //public System.DateTimeOffset fileCreationDate { get; set; }
 	//public System.DateTimeOffset? lastSave { get; set; }
 	//public System.DateTimeOffset startTime { get; set; }

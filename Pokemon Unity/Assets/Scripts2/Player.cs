@@ -34,7 +34,9 @@ public class Player
 	/// </summary>
 	public GameVariables.TrainerBag Bag { get { return new GameVariables.TrainerBag(this); } }
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
+	//ToDo: Missing (Trainer)Player.Rival variable
 
+	#region UI/Game Engine
 	public int mapName { get; set; }
 	//public int levelName;
 	public SeriV3 playerPosition { get; set; }
@@ -47,6 +49,7 @@ public class Player
 	public int respawnScene { get; set; }
 	//public SeriV3 respawnScenePosition;
 	//public int respawnSceneDirection;
+	#endregion
 
 	#region Player Records
 	public string PlayerName { get; private set; }
@@ -58,6 +61,7 @@ public class Player
 	public int PlayerCoins { get { return playerCoins; } set { playerCoins = value > Settings.MAXCOINS ? Settings.MAXCOINS : value; } }
 	private int playerMoney { get; set; }
 	private int playerCoins { get; set; }
+	private int playerSavings { get; set; }
 	public bool isMale { get; private set; }
 	public int ActivePcBox { get; private set; }
 
@@ -84,7 +88,7 @@ public class Player
 	//public int pokedexSeen  { get { return (from seen in playerPokedex where seen != null select seen).Count(); } }
 	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 1] == 1 select PlayerPokedex[index, 1]).Count(); } }
 	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 0] == 1 select PlayerPokedex[index, 0]).Count(); } }
-
+	//ToDo: Adventure Start Date
     public System.TimeSpan playerTime { get; private set; }
     //public int playerHours;
     //public int playerMinutes;
@@ -116,6 +120,7 @@ public class Player
 	#endregion
 
 	#region Player Customization
+	//ToDo: Is there a reason to store user's Favorite Pkmn?
 	///// <summary>
 	///// Active player design
 	///// </summary>
