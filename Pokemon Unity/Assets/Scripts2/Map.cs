@@ -1145,12 +1145,13 @@ namespace PokemonUnity
 	/// a separate GameObject versus a single map
 	/// Decide whether to load all GameObjects together or
 	/// relative to/based on a player's given position
+	[UnityEngine.RequireComponent(typeof(UnityEngine.MeshFilter)]
 	public class Map : UnityEngine.MonoBehaviour
 	{
 		/// <summary>
 		/// Set this variable in the inspector
 		/// </summary>
-		public UnityEngine.GameObject mapPrefab;
+		//public UnityEngine.GameObject mapPrefab;
 		public string MapName;
 		//public List<UnityEngine.Vector3> vertices { get; private set; }
 		//public List<int> tris { get; private set; }
@@ -1180,7 +1181,7 @@ namespace PokemonUnity
 		}
 		#endregion
 
-		UnityEngine.GameObject mapTile;
+		//UnityEngine.GameObject mapTile;
 		//ToDo: Fetch from GameVariables
 		MapMatrix map; //{ get { return GameVariables.Map; } }
  
@@ -1333,6 +1334,11 @@ namespace PokemonUnity
 		}
 
 		#region Methods
+		/// <summary>
+		/// Reads the MeshFilter component of Mesh 
+		/// to combine into single game object.
+		/// </summary>
+		/// <param name="go"></param>
 		void Combine(UnityEngine.GameObject go)
 		{
 			#region Mesh UVs Part 1
@@ -1388,12 +1394,107 @@ namespace PokemonUnity
 			//remove object since it's been added already
 			Destroy(go);
 		}
+		/// <summary>
+		/// Use this for Mesh objects that share the same texture/material atlas.
+		/// When meshes are merged into one, they use the same materials as parent.
+		/// </summary>
+		/// <param name="go"></param>
 		public void AddGameObjectToMapMesh(UnityEngine.GameObject go)
 		{
 			//Makes GameObject a child of Map 
 			go.transform.parent = this.transform;
 			//Merges the two objects into one unit
 			Combine(go);
+		}
+		public void TileToQuad(Tile[] tiles, int Z = 0)
+		{
+			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			//All vertices are on mid point, because when player position is rounded to 0, it would be in middle of quad
+			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
+			List<int> tri = new List<int>();
+			List<UnityEngine.Vector3> normals = new List<UnityEngine.Vector3>();
+			List<UnityEngine.Vector2> uv = new List<UnityEngine.Vector2>();
+			//int xLo, xHi, yLo, yHi;
+			
+			foreach (Tile tile in tiles)
+			{
+				switch (tile.Shape)
+				{
+					case Shape.Flat:
+						vertices.AddRange(new UnityEngine.Vector3[] 
+						{
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Length	- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Length - .5f,	Z)
+						});
+						//tri.AddRange(new int[] 
+						//{
+						//	//Lower Left Triangle
+						//	//0, 2, 1,
+						//	tri.Count, tri.Count + 2, tri.Count + 1,
+						//	//Upper Right Triangle
+						//	//2, 3, 1
+						//	tri.Count + 2, tri.Count + 3, tri.Count + 1
+						//});
+						tri.AddRange(new int[] 
+						{
+							//2, 1, 0,
+							tri.Count + 2, tri.Count + 1, tri.Count,
+							//2, 3, 1
+							tri.Count + 2, tri.Count + 3, tri.Count + 1
+						});
+						normals.AddRange(new UnityEngine.Vector3[] 
+						{
+							//Floor Tiles Should point UP
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
+						});
+						uv.AddRange(new UnityEngine.Vector2[]
+						{
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Y) + 0f),//(0f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Y) + 0f),//(1f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Length) + 1f),//(0f, 1f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Length) + 1f) //(1f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 0f),//(0f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 0f),//(1f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 1f),//(0f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 1f) //(1f, 1f)
+						});
+						//xLo = Math.Min(0, tile.X);
+						//yLo = Math.Min(0, tile.Y);
+						//xHi = Math.Max(1, tile.X + tile.Width);
+						//yHi = Math.Max(1, tile.Y + tile.Length);
+						//uv = new UnityEngine.Vector2[vertices.Count];
+						//for (int i = 0; i < vertices.Count; i++)
+						//{
+						//	//Each UV should be a fraction of the total dimension 
+						//	uv[i] = new UnityEngine.Vector2((float)i / (xHi - xLo), (float)i / (yHi - yLo));
+						//}
+						break;
+					case Shape.CliffSide:
+						break;
+					case Shape.CliffCorner:
+						break;
+					case Shape.LedgeJump:
+						break;
+					case Shape.LedgeWater:
+						break;
+					case Shape.WalkPath:
+						break;
+					case Shape.NULL:
+						break;
+					default:
+						break;
+				}
+			}
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.vertices = vertices.ToArray();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.triangles = tri.ToArray();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.normals = normals.ToArray();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv = uv.ToArray();
+			//return mesh;
 		}
 		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile[] tiles, int Z = 0)
 		{
