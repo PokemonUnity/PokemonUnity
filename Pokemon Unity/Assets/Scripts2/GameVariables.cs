@@ -42,6 +42,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#region Unity Monobehaviour Stuff
 #if !DEBUG //|| UNITY_EDITOR 
 	public static GameVariables game;
+    //public LevelManager levelManager;
 	public void Awake()
 	{
 		//Log bool results in debugger...
@@ -73,9 +74,9 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 		//ToDo: Load asssembly build version into logger
         GameDebug.Log("BuildID: " + buildId);
 
-        levelManager = new LevelManager();
-        levelManager.Init();
-        GameDebug.Log("LevelManager initialized");
+        //levelManager = new LevelManager();
+        //levelManager.Init();
+        //GameDebug.Log("LevelManager initialized");
 
         inputSystem = new InputSystem();
         GameDebug.Log("InputSystem initialized");
