@@ -951,6 +951,33 @@ public class WildPokemonInitialiser
 		return packedList;
 	}
 }
+/* Another Idea...
+	#1
+		The encounter code. Dictate how the Pokemon is encountered. There are currently 2 options:
+
+		0 - Grass/floor
+		1 - Headbutt trees
+	
+	#2
+		This is the Pokemon code. Finds the Pokemon whose national dex number is given.
+
+	#3
+		The chance of encounter. This number decides how easy it will be to find this Pokemon. The higher the number the more likely it will be.
+
+	#4
+		Time code. This decides when this Pokemon will be available. There are 5 options:
+
+		-1 - All times.
+		0 - Night.
+		1 - Morning.
+		2 - Day.
+		3 - Evening.
+	#5
+		The Minimum level.
+
+	#6
+		The maximum level. If the Pokemon should only appear at one level this number should be the same as ##5.
+ */
 #endregion
 
 namespace PokemonUnity
@@ -1000,59 +1027,65 @@ namespace PokemonUnity
 		/// Y position of this Tile's Node in Scene
 		/// </summary>
 		public int Y { get; private set; }
-		// <summary>
-		// Z position of this Tile's Node in Scene
-		// </summary>
-		//public int Z { get; set; }
+		/// <summary>
+		/// Z position of this Tile's Node in Scene
+		/// </summary>
+		public float Z { get; private set; }
 		/// <summary>
 		/// 
 		/// </summary>
 		/// ToDo: Enum?
 		public int Map { get; private set; } 
-		public bool Passable {
-			get
-			{
-				switch (Shape)
-				{
-					default:
-						return true;
-				}
-			}
-		}
-		public bool Encounter {
-			get
-			{
-				switch (Terrain)
-				{
-					case Terrain.Grass:
-					case Terrain.Sand:
-					case Terrain.Rock:
-					case Terrain.DeepWater:
-					case Terrain.StillWater:
-					case Terrain.Water:
-					case Terrain.TallGrass:
-					case Terrain.SootGrass:
-						return true;
-					case Terrain.Puddle:
-					default:
-						return false;
-				}
-			}
-		}
-		public bool NeedsSurf {
-			get
-			{
-				switch (Terrain)
-				{
-					default:
-						return false;
-				}
-			}
-		}
+		//public bool Passable {
+		//	get
+		//	{
+		//		switch (Shape)
+		//		{
+		//			default:
+		//				return true;
+		//		}
+		//	}
+		//}
+		//public bool Encounter {
+		//	get
+		//	{
+		//		switch (Terrain)
+		//		{
+		//			case Terrain.Grass:
+		//			case Terrain.Sand:
+		//			case Terrain.Rock:
+		//			case Terrain.DeepWater:
+		//			case Terrain.StillWater:
+		//			case Terrain.Water:
+		//			case Terrain.TallGrass:
+		//			case Terrain.SootGrass:
+		//				return true;
+		//			case Terrain.Puddle:
+		//			default:
+		//				return false;
+		//		}
+		//	}
+		//}
+		//public bool NeedsSurf {
+		//	get
+		//	{
+		//		switch (Terrain)
+		//		{
+		//			default:
+		//				return false;
+		//		}
+		//	}
+		//}
+		public bool hasSnow { get; set; }
+		public bool hasSand { get; set; }
+		public bool isIce { get; set; }
 		#endregion
 		#region Enums
 		public Terrain Terrain { get; set; }
-		public Environment Environment { get; set; }
+		//public Environment Environment { get; set; }
+		///// <summary>
+		///// What Season Texture to apply
+		///// </summary>
 		//public Season Texture { get; set; }
 		public Shape Shape { get; set; }
 		/// <summary>
@@ -1227,15 +1260,16 @@ namespace PokemonUnity
 			//Foreach Tile in Map that matches Terrain...
 
 			// loop for every z position in the grid
-			for (int z = minZ; z < maxZ; z++ )
-			{
+			//for (int z = 0; z < maxZ; z++ )
+			//{
 				// now loop for every x position in the grid
-				for (int x = minX; x < maxX; x++ )
+				for (int x = 0; x < maxX; x++ )
 				{
 					//loop for every y position in the grid
-					for (int y = minY; y < maxY; y++ )
+					for (int y = 0; y < maxY; y++ )
 					{
-						Tile t = map.mapHeader.MapArray[z][x, y];
+						//Tile t = map.mapHeader.MapArray[z][x, y];
+						Tile t = map.mapHeader.Tiles[x, y];
 
 						if(!tArray.Exists(i => i.Equals(t))) tArray.Add(t);
 
@@ -1264,18 +1298,18 @@ namespace PokemonUnity
 								//TileToQuad(t);
 								break;
 							case Shape.CliffSide:
-							case Shape.CliffCorner:
+							//case Shape.CliffCorner:
 							case Shape.LedgeJump:
 							case Shape.LedgeWater:
-							case Shape.WalkPath:
+							//case Shape.WalkPath:
 							default:
 								break;
 						}
 					}
 				}
-				//TileToQuad(ref quad, tArray.ToArray(), z);
-				TileToQuad(tArray.ToArray(), z);
-			}
+			//	//TileToQuad(ref quad, tArray.ToArray(), z);
+			//	TileToQuad(tArray.ToArray(), z);
+			//}
 
 			mf.mesh = quad;
 			//quad.RecalculateBounds();
@@ -1291,70 +1325,70 @@ namespace PokemonUnity
 		/// A tile Array for Location, Rotation, and Name
 		void SpawnAssets() 
 		{
-			int minX = -20;
-			int maxX = map.Width;
-			int minY = 0;
-			int maxY = map.Length;
-			int minZ = -20;
-			int maxZ = map.mapHeader.MapHeight;
-
-			List<UnityEngine.Mesh> floor = new List<UnityEngine.Mesh>();
-			UnityEngine.Mesh floorQuad = new UnityEngine.Mesh();
-
-			UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
-			UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
-
-			// loop for every z position in the grid
-			for (int z = minZ; z < maxZ; z++ )
-			{
-				// now loop for every x position in the grid
-				for (int x = minX; x < maxX; x++ )
-				{
-					//loop for every y position in the grid
-					for (int y = minY; y < maxY; y++ )
-					{
-						Tile t = map.mapHeader.MapArray[z][x, y];
-
-						switch (t.Terrain)
-						{
-							case Terrain.Grass:
-								//floor.Add(TileToQuad(t));
-								//TileToQuad(ref floorQuad, t);
-								//TileToQuad(t);
-								break;
-							case Terrain.Sand:
-							case Terrain.Rock:
-							case Terrain.DeepWater:
-							case Terrain.StillWater:
-							case Terrain.Water:
-							case Terrain.TallGrass:
-							case Terrain.SootGrass:
-							case Terrain.Puddle:
-							default:
-								// put it all to together to assign a position
-								UnityEngine.Vector3 pos = new UnityEngine.Vector3(x, y, z);
-
-								// instantiate the cube into a variable, so you can do other things with it
-								UnityEngine.GameObject clone = (UnityEngine.GameObject)Instantiate(mapTile, pos, new UnityEngine.Quaternion());
-
-								//ToDO: Add 'if(tile)' => collision-map
-
-								// change the name of the object, include the x and z position in the name
-								clone.name = "Tile_" + x.ToString() + "_" + z.ToString();
-
-								// in future, 
-								// this would be stored in a 3D array for future reference
-								// so you could modify the position, material, anything!
-								// cubeArray[x,y,z] = clone;
-								break;
-						}
-
-					}
-				}
-			}
-
-			mf.mesh = floorQuad;
-			floorQuad.RecalculateBounds();
+			//int minX = -20;
+			//int maxX = map.Width;
+			//int minY = 0;
+			//int maxY = map.Length;
+			//int minZ = -20;
+			//int maxZ = map.mapHeader.MapHeight;
+			//
+			//List<UnityEngine.Mesh> floor = new List<UnityEngine.Mesh>();
+			//UnityEngine.Mesh floorQuad = new UnityEngine.Mesh();
+			//
+			//UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			//UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
+			//
+			//// loop for every z position in the grid
+			//for (int z = minZ; z < maxZ; z++ )
+			//{
+			//	// now loop for every x position in the grid
+			//	for (int x = minX; x < maxX; x++ )
+			//	{
+			//		//loop for every y position in the grid
+			//		for (int y = minY; y < maxY; y++ )
+			//		{
+			//			Tile t = map.mapHeader.MapArray[z][x, y];
+			//
+			//			switch (t.Terrain)
+			//			{
+			//				case Terrain.Grass:
+			//					//floor.Add(TileToQuad(t));
+			//					//TileToQuad(ref floorQuad, t);
+			//					//TileToQuad(t);
+			//					break;
+			//				case Terrain.Sand:
+			//				case Terrain.Rock:
+			//				case Terrain.DeepWater:
+			//				case Terrain.StillWater:
+			//				case Terrain.Water:
+			//				case Terrain.TallGrass:
+			//				case Terrain.SootGrass:
+			//				case Terrain.Puddle:
+			//				default:
+			//					// put it all to together to assign a position
+			//					UnityEngine.Vector3 pos = new UnityEngine.Vector3(x, y, z);
+			//
+			//					// instantiate the cube into a variable, so you can do other things with it
+			//					UnityEngine.GameObject clone = (UnityEngine.GameObject)Instantiate(mapTile, pos, new UnityEngine.Quaternion());
+			//
+			//					//ToDO: Add 'if(tile)' => collision-map
+			//
+			//					// change the name of the object, include the x and z position in the name
+			//					clone.name = "Tile_" + x.ToString() + "_" + z.ToString();
+			//
+			//					// in future, 
+			//					// this would be stored in a 3D array for future reference
+			//					// so you could modify the position, material, anything!
+			//					// cubeArray[x,y,z] = clone;
+			//					break;
+			//			}
+			//
+			//		}
+			//	}
+			//}
+			//
+			//mf.mesh = floorQuad;
+			//floorQuad.RecalculateBounds();
 		}
 
 		#region Methods
@@ -1371,9 +1405,9 @@ namespace PokemonUnity
 			//}
 
 			//mesh.Clear();
-			mesh.vertices = vertices;
-			mesh.triangles = tris;
-			mesh.uv = uvs;
+			mesh.vertices = vertices.ToArray();
+			mesh.triangles = tris.ToArray();
+			mesh.uv = uvs.ToArray();
 
 			mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
@@ -1388,7 +1422,7 @@ namespace PokemonUnity
 			#region Mesh UVs Part 1
 			#endregion
 			//Grab all the mesh filters (from parent + children) on Map layer
-			UnityEngine.MeshFilter[] meshFilters = GetComponentsInChild<UnityEngine.MeshFilter>();
+			UnityEngine.MeshFilter[] meshFilters = GetComponentsInChildren<UnityEngine.MeshFilter>();
 			//An array to hold all of the pending mesh data
 			UnityEngine.CombineInstance[] combine = new UnityEngine.CombineInstance[meshFilters.Length];
 			//Remove collider (will add again at end)
@@ -1407,7 +1441,7 @@ namespace PokemonUnity
 				combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
 				//Disables objects added, so that they can be merged/removed
 				meshFilters[i].gameObject.SetActive(false);
-				i++
+				i++;
 			}
 			transform.GetComponent<UnityEngine.MeshFilter>().mesh = new UnityEngine.Mesh();
 			transform.GetComponent<UnityEngine.MeshFilter>().mesh.CombineMeshes(combine, true);
@@ -1419,7 +1453,7 @@ namespace PokemonUnity
 
 			#region Mesh UVs Part 2
 			//Reset UV array to hold both the old and new UVs
-			UnityEngine.Vector2[] newUVs = new UnityEngine.Vector2[oldUVs]; //Old.count + New.count = length
+			UnityEngine.Vector2[] newUVs = new UnityEngine.Vector2[oldUVs.Length]; //Old.count + New.count = length
 			//Add the new UVs to the old UVs (the newer textures are added towards the end...)
 			for (i = 0; i < oldUVs.Length; i++)
 				newUVs[i] = oldUVs[i];
@@ -1521,8 +1555,8 @@ namespace PokemonUnity
 						break;
 					case Shape.CliffSide:
 						break;
-					case Shape.CliffCorner:
-						break;
+					//case Shape.CliffCorner:
+					//	break;
 					case Shape.LedgeJump:
 						break;
 					case Shape.LedgeWater:
@@ -1612,8 +1646,8 @@ namespace PokemonUnity
 						break;
 					case Shape.CliffSide:
 						break;
-					case Shape.CliffCorner:
-						break;
+					//case Shape.CliffCorner:
+					//	break;
 					case Shape.LedgeJump:
 						break;
 					case Shape.LedgeWater:
@@ -1668,8 +1702,8 @@ namespace PokemonUnity
 					break;
 				case Shape.CliffSide:
 					break;
-				case Shape.CliffCorner:
-					break;
+				//case Shape.CliffCorner:
+				//	break;
 				case Shape.LedgeJump:
 					break;
 				case Shape.LedgeWater:
@@ -1721,8 +1755,8 @@ namespace PokemonUnity
 					break;
 				case Shape.CliffSide:
 					break;
-				case Shape.CliffCorner:
-					break;
+				//case Shape.CliffCorner:
+				//	break;
 				case Shape.LedgeJump:
 					break;
 				case Shape.LedgeWater:
@@ -1778,6 +1812,7 @@ namespace PokemonUnity
 	/// </summary>
 	public class MapHeader
 	{
+		#region Level
 		/// <summary>
 		/// 
 		/// </summary>
@@ -1788,7 +1823,7 @@ namespace PokemonUnity
 		/// Texture around Name when entering Map
 		/// </summary>
 		/// ToDo: Volcanic, Snow, Spring, etc...
-		public int NameStyle;
+		public int NameStyle { get; private set; }
 		public int MapType;
 		/// <summary>
 		/// Lists the maps of the "edges", 
@@ -1798,12 +1833,79 @@ namespace PokemonUnity
 		/// Each block has its own height.
 		/// </summary>
 		public int MapHeight;
+		///// <summary>
+		///// An Array of Ints that specify elevation for specific tile node (individual quads).
+		///// Z elevation to <see cref="Tiles"/>' [X,Y]
+		///// </summary>
+		//public sbyte[] HeightMap;
+		public int MusicDay { get; private set; }
+		public int MusicNight { get; private set; }
+		/// <summary>
+		/// If true, Wild Pokemon can be found every step you take and not just in grass.
+		/// </summary>
+		public bool WildPokemon2 { get; private set; }
+		/// <summary>
+		/// Allows the following pokemon to show.
+		/// </summary>
+		public bool OverworldPokemon { get; private set; }
+		#endregion
+		#region Actions
+		/// <summary>
+		/// Allows Teleporting
+		/// </summary>
+		public bool CanTeleport { get; private set; }
+		/// <summary>
+		/// Allows Digging
+		/// </summary>
+		public bool CanDig { get; private set; }
+		/// <summary>
+		/// Allows Flying
+		/// </summary>
+		public bool CanFly { get; private set; }
+		/// <summary>
+		/// Allows Riding
+		/// </summary>
+		/// RideType
+		/// null=> 0 - If both CanDig and CanFly = false then Cannot ride.
+		/// 1	=> 1 - Can Ride.
+		/// 0	=> 2 - Cannot Ride.
+		public bool? CanRide { get; private set; }
+		/// <summary>
+		/// Determines the Environment(the background).
+		/// </summary>
+		/// 0 - Day/Night cycle
+		/// 1 - Day
+		/// 2 - Cave
+		/// 3 - Night
+		/// 4 - UnderWater
+		/// Anything not listed defaults to 0.
+		public Environment Environment { get; set; }
+		//ToDo: 0:Random, 1:Normal, Bubbles?
+		public Weather Weather;
+		/// <summary>
+		/// A variety(0-3) of different lighting effects.
+		/// </summary>
+		public byte Lightning;
+		/// <summary>
+		/// Makes the cave dark to use flash for.
+		/// </summary>
+		public bool IsDark { get; private set; }
+		/// <summary>
+		/// Makes all wild battles into "Safari" Battles
+		/// </summary>
+		public bool IsSafariZone { get; private set; }
+		/// <summary>
+		/// Used during bug catching contest.
+		/// </summary>
+		public string BugCatchingContest { get; private set; }
+		#endregion
 		//int Texture1;
 		//int Texture2;
 		public int Scripts;
+		/// <summary>
+		/// </summary>
+		/// A script to run upon entering the map(after landing if flying).
 		public int MapScripts;
-		public int MusicDay;
-		public int MusicNight;
 		public int Texts;
 		/// <summary>
 		/// Table or Encounter chart for pokemons expected to find on map.
@@ -1814,7 +1916,6 @@ namespace PokemonUnity
 		public int WildPokemon;
 		public int Events;
 		public int Flags;
-		public Weather Weather;
 		public int Camera;
 		/// <summary>
 		/// </summary>
@@ -1823,6 +1924,7 @@ namespace PokemonUnity
 		/// each value in for loop should be rounded to nearest whole number
 		/// need to map collision to X,Y value as well...
 		public Tile[][,] MapArray;
+		public Tile[,] Tiles { get; private set; }
 	}
 	#endregion
 
@@ -1860,14 +1962,69 @@ namespace PokemonUnity
 	public enum Shape
 	{
 		/// <summary>
-		/// Stairs use flats too
+		/// Flat surface. 
 		/// </summary>
+		/// Stairs use flats too
 		Flat,
+		/// <summary>
+		/// Box(five sides)
+		/// </summary>
+		Entrance,
+		/// <summary>
+		/// 45 degree slant.
+		/// </summary>
+		Slant,
+		/// <summary>
+		/// Flat vertical surface
+		/// </summary>
 		CliffSide,
-		CliffCorner,
+		/// <summary>
+		/// "In" corner.
+		/// </summary>
+		CliffCornerIn,
+		/// <summary>
+		/// "Out" corner.
+		/// </summary>
+		CliffCornerOut,
+		/// <summary>
+		/// Ledge.
+		/// </summary>
 		LedgeJump,
+		/// <summary>
+		/// Ledge Corner.
+		/// </summary>
+		LedgeJumpCorner,
+		/// <summary>
+		/// Water's edge.
+		/// </summary>
 		LedgeWater,
+		/// <summary>
+		/// Water's edge "in" corner.
+		/// </summary>
+		LedgeWaterIn,
+		/// <summary>
+		/// Water's edge "out" corner.
+		/// </summary>
+		LedgeWaterOut,
+		/// <summary>
+		/// Only here because 3ds using a 2x2 dirt path
+		/// </summary>
 		WalkPath,
+		/// <summary>
+		/// Thin block. 4 Pixels wide.
+		/// </summary>
+		Fence,
+		/// <summary>
+		/// Double floor (a floor with a floor above it)
+		/// </summary>
+		Bridge,
+		/// <summary>
+		/// Two Flat pieces intersecting in their centers at 90 degree angles.
+		/// </summary>
+		Crossway,
+		/// <summary>
+		/// Box (Six Sides).
+		/// </summary>
 		NULL
 	}
 
@@ -1878,6 +2035,129 @@ namespace PokemonUnity
 		Fall,
 		Spring,
 		Volcanic
+	}
+
+	public enum Entity
+	{
+		//ToDo: Dive
+		/// <summary>
+		/// Renders sides from all directions.
+		/// </summary>
+		AllSidesObject,// or Cube 
+		/// <summary>
+		/// Creates an Apricorn Plant.
+		/// <para></para>
+		/// An integer defining which Apricorn is used.
+		/// </summary>
+		/// 0 - White
+		/// 1 - Black
+		/// 2 - Pink
+		/// 3 - Blue
+		/// 4 - Red
+		/// 5 - Green
+		/// 6 - Yellow
+		ApricornPlant,
+		/// <summary>
+		/// Allows the player to use cut on the Entity.
+		/// </summary>
+		CutTree,
+		/// <summary>
+		/// Creates long grass where the player may run into wild pokemon.
+		/// <para></para>
+		/// An integer defining properties of grass.
+		/// </summary>
+		Grass,
+		/// <summary>
+		/// Allows the player to use headbutt on the Entity.
+		/// </summary>
+		HeadbuttTree,
+		/// <summary>
+		/// Creates an item, if the "Action" tag = 1 then it is a "hidden" item.
+		/// <para></para>
+		/// int,int - the first value is the ID for the item on that map(each item should have a unique ID) The second is the item's ID.
+		/// </summary>
+		ItemObject,
+		/// <summary>
+		/// Creates a spot to grow a berry in.
+		/// </summary>
+		LoamySoil,
+		/// <summary>
+		/// Creates a block to trigger a script when it is either walked on or clicked on.
+		/// <para></para>
+		/// Depending on the "Action" tag the way the "AdditionalValue" tag is interpreted is changed
+		/// </summary>
+		/// 0 - Activates the given script when walked on. Automatically invisible.
+		/// 1 - Activates the given script when clicked on.
+		/// 2 - Displays the given text when clicked on.
+		/// 3 - Interprets the given text as a script.
+		/// 4 - Activates the given script when walked on.
+		ScriptBlock,
+		/// <summary>
+		/// Creates an entity that either displays text or activates a script when the player "talks" to it.
+		/// <para></para>
+		/// Based on the "Action" tag the "AdditionalValue" tag is interpreted differently:
+		/// </summary>
+		/// 0 - Displays the given text as text.
+		/// 1 - Activates the given script.
+		/// 2 - Converts the given text to a script.
+		SignBlock,
+		/// <summary>
+		/// Creates a stairway.
+		/// </summary>
+		SlideBlock,
+		/// <summary>
+		/// Allows the player to use rock smash on the Entity.
+		/// </summary>
+		SmashRock,
+		/// <summary>
+		/// Creates a ledge the player can lead down.
+		/// </summary>
+		Step,
+		/// <summary>
+		///  Allows the player to use strength on the Entity.
+		/// </summary>
+		StrengthRock,
+		/// <summary>
+		/// Creates a Trigger that activates when a "StrengthRock" is pushed onto it.
+		/// <para></para>
+		/// bool,bool, str - the bools are for if the rock is removed immediately, and if the rock is nolonger loaded with the map, the string is the script activated when the trigger is activated.
+		/// </summary>
+		StrengthTrigger,
+		/// <summary>
+		/// A sign that spins at the center.
+		/// <para></para>
+		/// An int defining what texture is used for the sign.
+		/// </summary>
+		/// 0 - PokeCenter
+		/// 1 - Mart
+		/// 2 - Gym Sign
+		TurningSign,
+		/// <summary>
+		/// An entity that always shows the same face to the player(spins on the center.
+		/// </summary>
+		WallBill,
+		/// <summary>
+		/// Basic Entity.
+		/// </summary>
+		WallBlock,
+		/// <summary>
+		/// Creates a warp.
+		/// <para></para>
+		/// mapfilepath, X, Y, Z, R, E - The mapfile, position, number of 1/4 turns to warp, and directions from which it can be accessed separated by "|".
+		/// </summary>
+		WarpBlock,
+		/// <summary>
+		/// Creates a surf spot, ignores texture(s) given.
+		/// </summary>
+		Water,
+		/// <summary>
+		/// Creates a Waterfall, ignores texture(s) given.
+		/// </summary>
+		Waterfall,
+		/// <summary>
+		/// Creates a Whirlpool, ignores texture(s) given.
+		/// </summary>
+		Whirlpool
 	}
 	#endregion
 }
