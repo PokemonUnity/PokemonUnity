@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.VisualBasic;
+
+public class StrengthTrigger : Entity
+{
+    private bool RemoveRock = false;
+    private bool RemoveForever = false;
+    private string ActivateScript = "";
+
+    private bool Activated = false;
+    public static bool RemovedRegistered = false;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        string[] v = this.AdditionalValue.Split(System.Convert.ToChar(","));
+
+        for (var i = 0; i <= v.Length; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    {
+                        RemoveRock = System.Convert.ToBoolean(v[i]);
+                        break;
+                    }
+
+                case 1:
+                    {
+                        RemoveForever = System.Convert.ToBoolean(v[i]);
+                        break;
+                    }
+
+                case 2:
+                    {
+                        ActivateScript = v[i];
+                        break;
+                    }
+            }
+        }
+
+        string[] registers = Core.Player.RegisterData.Split(System.Convert.ToChar(","));
+        foreach (string r in registers)
+        {
+            if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Screen.Level.LevelFile + "_") == true)
+            {
+                string RemoveID = r.Remove(0, ("ACTIVATOR_REMOVE_STRENGTHT_ROCK_" + Screen.Level.LevelFile + "_").Length - 1);
+                foreach (Entity sRock in Screen.Level.Entities)
+                {
+                    if (sRock.EntityID == "StrengthRock")
+                    {
+                        if (sRock.ID == System.Convert.ToInt32(RemoveID))
+                            sRock.CanBeRemoved = true;
+                    }
+                }
+            }
+        }
+
+        this.NeedsUpdate = true;
+    }
+
+    public override void Update()
+    {
+        if (Activated == false)
+        {
+            foreach (Entity sRock in Screen.Level.Entities)
+            {
+                if (sRock.EntityID == "StrengthRock")
+                {
+                    if (sRock.Position.X == this.Position.X & sRock.Position.Z == this.Position.Z)
+                    {
+                        if (RemoveRock == true)
+                            (StrengthRock)sRock.CanBeRemoved = true;
+                        if (RemoveForever == true)
+                            ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Screen.Level.LevelFile + "_" + sRock.ID.ToString());
+                        if (ActivateScript != "")
+                        {
+                            if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+                                (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(this.ActivateScript, 0, false);
+                        }
+
+                        Activated = true;
+                    }
+                }
+            }
+        }
+
+        base.Update();
+    }
+
+    public override void Render()
+    {
+        this.Draw(this.Model, Textures, true);
+    }
+}
