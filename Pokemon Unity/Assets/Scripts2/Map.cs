@@ -2037,7 +2037,7 @@ namespace PokemonUnity
 		Volcanic
 	}
 
-	public enum Entity
+	public enum Entities
 	{
 		//ToDo: Dive
 		/// <summary>

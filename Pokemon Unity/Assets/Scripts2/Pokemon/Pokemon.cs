@@ -130,8 +130,10 @@ namespace PokemonUnity.Pokemon
         /// <summary>
         /// Steps to hatch egg, 0 if Pokemon is not an egg.
         /// Pokemon moves auto reset when egg counter reaches 0.
+		/// Double as Friendship Meter after pokemon is hatched.
         /// </summary>
         /// ToDo: Sequence of events to occur when egg is hatching (roll dice for ability, moves, and animate hatching)
+		/// ToDo: New variable for Friendship, Math.Abs(EggSteps)?
         public int EggSteps
         {
             get
@@ -300,7 +302,8 @@ namespace PokemonUnity.Pokemon
         }
 
 		/// <summary>
-		/// This is used SPECIFICALLY for regenerating a pokemon from a serialized variable
+		/// This is used SPECIFICALLY for regenerating a pokemon from a 
+		/// <see cref="PokemonUnity.Saving.SerializableClasses.SeriPokemon"/>
 		/// </summary>
 		/// <param name="species"></param>
 		/// <param name="original"></param>
@@ -332,6 +335,7 @@ namespace PokemonUnity.Pokemon
 		/// <param name="obtainedMethod"></param>
 		/// <param name="timeReceived"></param>
 		/// <param name="timeEggHatched"></param>
+		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
         public Pokemon(Pokemons species, 
 			Trainer original,
 			string nickName, int form,
@@ -351,7 +355,7 @@ namespace PokemonUnity.Pokemon
             DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species, original)
         {
             //Check to see if nickName is filled
-            if (nickName != null || nickName != string.Empty)
+            if (!string.IsNullOrEmpty(nickName))
             {
                 name = nickName;
             }
@@ -409,25 +413,58 @@ namespace PokemonUnity.Pokemon
             obtainWhen = timeReceived;
             hatchedWhen = timeEggHatched;
         }
-        #endregion
 
-        #region Ownership, obtained information
-        /// <summary>
-        /// Manner Obtained:
-        /// </summary>
-        public ObtainedMethod ObtainedMode { get; private set; }
+		/// <summary>
+		/// Use this constructor when capturing wild pokemons from a battle
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="pokeball"></param>
+		/// <param name="obtain"></param>
+		/// <param name="nickname"></param>
+		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null) 
+			: this (
+			species: pkmn.Species,
+			original: GameVariables.playerTrainer.Trainer,
+			nickName: nickname, form: pkmn.Form,
+			ability: pkmn.Ability, nature: pkmn.Nature,
+			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+			pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
+			shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP, 
+			item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV, 
+			obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
+			happiness: pkmn.Happiness, status: pkmn.Status, 
+			statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps, 
+			ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
+			ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
+			personalId: pkmn.PersonalId, obtainedMethod: obtain,
+			timeReceived: DateTimeOffset.Now, timeEggHatched: null)
+		{
+			//ToDo: What to do about timeEggHatched and OT
+			//Should make a new class for trading pokemons?
+		}
+		#endregion
+
+		#region Ownership, obtained information
+		/// <summary>
+		/// Manner Obtained:
+		/// </summary>
+		public ObtainedMethod ObtainedMode { get; private set; }
+		//ToDo: Change to EncounterType
         public enum ObtainedMethod
         {
             MET = 0,
             EGG = 1,
+			//If EncounterType == Gift, then it's Traded
             TRADED = 2,
             /// <summary>
             /// NPC-Event?
             /// </summary>
             FATEFUL_ENCOUNTER = 4
         }
+		//ToDo: Nintendo has variable for location where egg hatched
         /// <summary>
-        /// Map where obtained
+        /// Map where obtained (as egg, or in wild).
+		/// Return no results if Traded/Gift...
         /// </summary>
         /// <remarks>
         /// Doubles as "HatchedMap"
@@ -439,8 +476,11 @@ namespace PokemonUnity.Pokemon
         /// </summary>
 		/// ToDo: if (isOutside) return generic "got from player"
 		/// else, all data stored in class remains unchanged to OT?
+		/// Try: if (encounter == gift) return "got from player" (npcs too)
         private string obtainString { get; set; }
         //private int obtainLevel; // = 0;
+		//Should obtainWhen be used for hatchedWhen? Eggs dont mean anything...
+		//ToDo: Nintendo has date variable for when egg was received
         private System.DateTimeOffset obtainWhen { get; set; }
         private System.DateTimeOffset? hatchedWhen { get; set; }
         /// <summary>
@@ -1423,7 +1463,8 @@ namespace PokemonUnity.Pokemon
         /// <summary>
         /// Contest stats; Max value is 255
         /// </summary>
-        private int cool, beauty, cute, smart, tough, sheen;
+		/// ToDo: Should make into an Array, and use Enum to get value?
+        public int Cool, Beauty, Cute, Smart, Tough, Sheen;
         /// <summary>
         /// Returns whether this Pokémon has the specified ribbon.
         /// </summary>
@@ -1481,15 +1522,155 @@ namespace PokemonUnity.Pokemon
         #endregion
 
         #region Items
-        #endregion
+		public Items SwapItem(Items item)
+		{
+			Items old = Item;
+			Item = item;
+			return old;
+		}
 
-        #region Shadow
-        /// <summary>
-        /// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead.
-        /// </summary>
-        /// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
-        /// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
-        public bool isHyperMode { get; private set; }
+		#region Mail
+		/*public void pbMoveToMailbox(pokemon)
+		{
+			//PokemonGlobal.mailbox = [] if !$PokemonGlobal.mailbox;
+			PokemonGlobal.mailbox = !PokemonGlobal.mailbox ?? [];
+			//return false if $PokemonGlobal.mailbox.length>=10
+			return PokemonGlobal.mailbox.length >= 10 ?? false
+				//return false if !pokemon.mail
+			return !pokemon.mail ?? false
+				PokemonGlobal.mailbox.push(pokemon.mail);
+			pokemon.mail = null;
+			return true
+		}
+
+		public void pbStoreMail(pkmn, item, message, poke1= nil, poke2= nil, poke3= nil)
+		{
+			//raise _INTL("Pokémon already has mail") if pkmn.mail
+			raise pkmn.mail ?? _INTL("Pokémon already has mail");
+			pkmn.mail = PokemonMail.new(item, message, Trainer.name, poke1, poke2, poke3)
+		}
+
+		public void pbTakeMail(pkmn)
+		{
+			if (!pkmn.hasItem)
+			{
+				//pbDisplay(_INTL("{1} isn't holding anything.",pkmn.name))
+			}
+			else if (!PokemonBag.pbCanStore(pkmn.item))
+			{
+				//pbDisplay(_INTL("The Bag is full.  The Pokémon's item could not be removed."))
+			}
+			elsif pkmn.mail
+			{
+			}
+
+			if pbConfirm(_INTL("Send the removed mail to your PC?"))
+			{
+				if !pbMoveToMailbox(pkmn)
+					pbDisplay(_INTL("Your PC's Mailbox is full."))
+
+				else
+					pbDisplay(_INTL("The mail was sent to your PC."))
+
+				pkmn.setItem(0)
+			}
+			elsif pbConfirm(_INTL("If the mail is removed, the message will be lost.  OK?"))
+			{
+				pbDisplay(_INTL("Mail was taken from the Pokémon."))
+				$PokemonBag.pbStoreItem(pkmn.item)
+				pkmn.setItem(0)
+				pkmn.mail=nil
+			}
+			else
+			{
+				$PokemonBag.pbStoreItem(pkmn.item)
+				itemname=PBItems.getName(pkmn.item)
+
+				pbDisplay(_INTL("Received the {1} from {2}.", itemname, pkmn.name))
+				pkmn.setItem(0)
+			}
+		}
+
+		public bool pbGiveMail(item, pkmn, pkmnid= 0)
+		{
+			thisitemname=PBItems.getName(item)
+			if pkmn.isEgg?
+			{
+				pbDisplay(_INTL("Eggs can't hold items."))
+				return false
+			}
+			if pkmn.mail
+			{
+				pbDisplay(_INTL("Mail must be removed before holding an item."))
+				return false
+			}
+			if pkmn.item!=0
+			{
+				itemname=PBItems.getName(pkmn.item)
+
+				pbDisplay(_INTL("{1} is already holding one {2}.\1", pkmn.name, itemname))
+				if pbConfirm(_INTL("Would you like to switch the two items?"))
+				{
+					$PokemonBag.pbDeleteItem(item)
+					if !$PokemonBag.pbStoreItem(pkmn.item)
+					{
+						if !$PokemonBag.pbStoreItem(item) // Compensate
+						{
+							raise _INTL("Can't re-store deleted item in bag")
+						}
+
+						pbDisplay(_INTL("The Bag is full.  The Pokémon's item could not be removed."))
+					}
+					else
+					{
+						if pbIsMail?(item)
+						{
+							if pbMailScreen(item, pkmn, pkmnid)
+							{
+								pkmn.setItem(item)
+
+								pbDisplay(_INTL("The {1} was taken and replaced with the {2}.", itemname, thisitemname))
+								return true
+							}
+							else
+							{
+								if !$PokemonBag.pbStoreItem(item) // Compensate
+									raise _INTL("Can't re-store deleted item in bag")
+								}
+							}
+						}
+						else
+						{
+							pkmn.setItem(item)
+
+							pbDisplay(_INTL("The {1} was taken and replaced with the {2}.", itemname, thisitemname))
+							return true
+						}
+					}
+				}
+			else
+			{
+				if !pbIsMail?(item) || pbMailScreen(item, pkmn, pkmnid) // Open the mail screen if necessary
+				{
+					$PokemonBag.pbDeleteItem(item)
+					pkmn.setItem(item)
+
+					pbDisplay(_INTL("{1} was given the {2} to hold.", pkmn.name, thisitemname))
+					return true
+				}
+			}
+			return false
+		}*/
+		#endregion Mail
+		#endregion
+
+		#region Shadow
+		/// <summary>
+		/// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead.
+		/// </summary>
+		/// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
+		/// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
+		public bool isHyperMode { get; private set; }
         /// <summary>
         /// Shadow Pokémon don't have a set Nature or a set gender, but once encountered, the personality value, 
         /// Nature and IVs are saved to the memory for the Shadow Monitor to be able to keep track of their exact status and location. 
