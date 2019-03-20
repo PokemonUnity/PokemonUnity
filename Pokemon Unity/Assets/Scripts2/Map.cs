@@ -8,6 +8,7 @@ using System.IO;
 //using UnityEngine;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Overworld;
 
 namespace PokemonUnity.Samples
 {using UnityEngine;
@@ -1879,7 +1880,7 @@ namespace PokemonUnity
 		/// 3 - Night
 		/// 4 - UnderWater
 		/// Anything not listed defaults to 0.
-		public Environment Environment { get; set; }
+		public Overworld.Environment Environment { get; set; }
 		//ToDo: 0:Random, 1:Normal, Bubbles?
 		public Weather Weather;
 		/// <summary>

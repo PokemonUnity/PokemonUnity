@@ -193,7 +193,7 @@ public class Battle : UnityUtilityIntegration
 	/// ToDo: Should be enum value
 	/// ToDo: Might be a static get value from global/map variables.
 	//public void Environment (PokemonUnity.Environment environment) { this.environment = environment; }
-	public PokemonUnity.Environment environment { get; set; }
+	public Environment environment { get; set; }
 	public Weather weather { get; set; }
 	/// <summary>
 	/// Current weather, custom methods should use <see cref="SetWeather"/>  instead
@@ -419,7 +419,7 @@ public class Battle : UnityUtilityIntegration
 		//                   PokeBattle_ActiveSide.new]		// Foe's side
 		sides = new Effects.Side[4];						//ToDo: Not sure if it's 2 sides, or 4 sides (foreach pokemon)
 		field = new Effects.Field();                        // Whole field (gravity/rooms)
-		environment = PokemonUnity.Environment.None;		// e.g. Tall grass, cave, still water
+		environment = Environment.None;		// e.g. Tall grass, cave, still water
 		weather = 0;
 
 		weatherduration = 0;
@@ -1729,15 +1729,15 @@ public class Battle : UnityUtilityIntegration
 			int speedmult = 0x1000;
 			switch (battle.weather)
 			{
-				case PokemonUnity.Weather.RAINDANCE:
-				case PokemonUnity.Weather.HEAVYRAIN:
+				case Weather.RAINDANCE:
+				case Weather.HEAVYRAIN:
 					speedmult = hasWorkingAbility(Abilities.SWIFT_SWIM) ? speedmult * 2 : speedmult;
 					break;
-				case PokemonUnity.Weather.SUNNYDAY:
-				case PokemonUnity.Weather.HARSHSUN:
+				case Weather.SUNNYDAY:
+				case Weather.HARSHSUN:
 					speedmult = hasWorkingAbility(Abilities.CHLOROPHYLL) ? speedmult * 2 : speedmult;
 					break;
-				case PokemonUnity.Weather.SANDSTORM:
+				case Weather.SANDSTORM:
 					speedmult = hasWorkingAbility(Abilities.SAND_RUSH) ? speedmult * 2 : speedmult;
 					break;
 				default:
