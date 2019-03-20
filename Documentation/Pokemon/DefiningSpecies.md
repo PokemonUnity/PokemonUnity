@@ -12,8 +12,8 @@ The Pokemon Database File `Scripts2/Pokemon/PokemonDatabase.cs` lists all the de
 
 Aside from the ID line, every line in a section follows the format:
 
-```
-X=Y
+```csharp
+X: Y // X=Y
 ```
 
 where X is a property and Y is the value or values associated with it. For example:
