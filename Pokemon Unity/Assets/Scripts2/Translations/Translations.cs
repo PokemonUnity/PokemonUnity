@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PokemonUnity.Pokemon;
+using PokemonUnity;
 
 #region Deprecated/Obsolete
 [System.Serializable]

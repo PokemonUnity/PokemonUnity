@@ -55,6 +55,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\Extensions\TransformExtension.cs" />
+    <Compile Include="Assets\Scripts2\Settings.cs" />
+    <Compile Include="Assets\Scripts2\Pokedex.cs" />
     <Compile Include="Assets\Scripts2\Battle\Attack.cs" />
     <Compile Include="Assets\Scripts2\Enums\Battles.cs" />
     <Compile Include="Assets\Scripts2\Enums\Pokemons.cs" />
@@ -63,6 +66,8 @@
     <Compile Include="Assets\Scripts2\Enums\SaveEvent.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\BattlePokemonHandler.cs" />
     <Compile Include="Assets\Scripts2\Enums\Enums.cs" />
+    <Compile Include="Assets\Scripts2\Pokemon\Roaming.cs" />
+    <Compile Include="Assets\Scripts2\Pokemon\PokeRadar.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\Type.cs" />
     <Compile Include="Assets\Scripts2\Pokemon\MoveDatabase.cs" />
     <Compile Include="Assets\Scripts2\Saving\SaveEvent.cs" />
@@ -230,6 +235,7 @@
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
