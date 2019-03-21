@@ -56,7 +56,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#region Constructor
 	static GameVariables()
 	{
-		UserLanguage  = Settings.Languages.English;
+		UserLanguage  = Languages.English;
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
 		PC_boxTexture = new int[Settings.STORAGEBOXES];
@@ -81,7 +81,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 
 	#region Unity Canvas UI
 	//public static Translator.Languages UserLanguage = Translator.Languages.English;
-	public static Settings.Languages UserLanguage { get; private set; }// = Settings.Languages.English;
+	public static Languages UserLanguage { get; private set; }// = Languages.English;
     //public GlobalVariables.Language playerLanguage = GlobalVariables.Language.English;
 	/// <summary>
 	/// Frame Style for all System Prompts and Text Displays
@@ -764,23 +764,6 @@ public static class Settings //: Settings<Translations.Languages>
 	/// Apparently you can use the Sneaking feature to helps with this. 
 	/// ToDo: OnlyAllowEggMovesWhenUsingDexNav or DexNavAllowsEggMoves
 	public static bool CatchPokemonsWithEggMoves { get; private set; }
-    #endregion
-
-    #region Enumerators
-    /// <summary>
-    /// Still need to sort out Language Enums
-    /// </summary>
-    public enum Languages //: Languages<Translations.Languages>//Translator.Languages//
-    {
-        /// <summary>
-        /// US English
-        /// </summary>
-        English = 9
-    }
-    /*public class Languagess : ILanguage<Translations.Languages>
-    {
-        public enum Translations.Languages { get; set; } 
-    }*/
     #endregion
 
 	#region Screen Options

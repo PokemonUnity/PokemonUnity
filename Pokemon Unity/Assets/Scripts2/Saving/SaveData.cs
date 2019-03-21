@@ -151,7 +151,7 @@ namespace PokemonUnity.Saving
         //    (
 		//		string saveName,
 		//
-		//		Settings.Languages language,
+		//		Languages language,
 		//		byte windowBorder,
 		//		byte dialogBorder,
 		//		byte textSpeed,

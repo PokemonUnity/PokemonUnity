@@ -242,14 +242,14 @@ public static class LanguageExtension //: GameText
         }
 
         int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-        if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
+        if (!_pokeTranslations.ContainsKey(arrayId) && language == Languages.English)
         {
             //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
             throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
             //return new PokedexTranslation();
         }
         //ToDo: Show english text for missing data on foreign languages 
-        else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
+        else if (!_pokeTranslations.ContainsKey(arrayId) && language != Languages.English)
         {
             return _pokeEnglishTranslations[arrayId];
         }*/
@@ -321,7 +321,7 @@ public static class LanguageExtension //: GameText
 		return Failure;
     }
 
-    public static string Translate(this Settings.Languages language, string textId, params string[] fieldValues)
+    public static string Translate(this Languages language, string textId, params string[] fieldValues)
     {
         //Uses the langauge class that has the stored user's (current) language value
         //to perform translantion, by matching value from a dictionary stored in the memory 
@@ -332,14 +332,14 @@ public static class LanguageExtension //: GameText
         }
 
         int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-        if (!_pokeTranslations.ContainsKey(arrayId) && language == Settings.Languages.English)
+        if (!_pokeTranslations.ContainsKey(arrayId) && language == Languages.English)
         {
             //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
             throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
             //return new PokedexTranslation();
         }
         //ToDo: Show english text for missing data on foreign languages 
-        else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
+        else if (!_pokeTranslations.ContainsKey(arrayId) && language != Languages.English)
         {
             return _pokeEnglishTranslations[arrayId];
         }*/
@@ -374,7 +374,7 @@ public static class LanguageExtension //: GameText
         //if(_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Count < _dictionary.Dictionaries[Translator.Languages.English.ToString()].GetAllStrings().Count) _dictionary.Dictionaries[Settings.UserLanguage.ToString()]
 
         //int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-        /*if (!_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(text))//&& language == Settings.Languages.English
+        /*if (!_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(text))//&& language == Languages.English
         {
             //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
             //throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
@@ -382,7 +382,7 @@ public static class LanguageExtension //: GameText
             //return new PokedexTranslation();
         }
         //ToDo: Show english text for missing data on foreign languages 
-        /*else if (!_pokeTranslations.ContainsKey(arrayId) && language != Settings.Languages.English)
+        /*else if (!_pokeTranslations.ContainsKey(arrayId) && language != Languages.English)
         {
             return _pokeEnglishTranslations[arrayId];
         }*/
