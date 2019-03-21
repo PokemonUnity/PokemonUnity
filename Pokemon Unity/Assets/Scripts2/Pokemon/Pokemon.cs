@@ -1179,7 +1179,7 @@ namespace PokemonUnity.Pokemon
 			resetMoves();
             int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
-            if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+            if (isEgg || GameVariables.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			int?[] rejected = new int?[movelist.Count];
             switch (level)
             {

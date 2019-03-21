@@ -399,7 +399,7 @@ namespace PokemonUnity.Saving
 #else
 					data = bf.Deserialize(fs).CastTo(data);
 #endif
-					GameVariables.UserLanguage	= (Settings.Languages)data.Language;
+					//GameVariables.UserLanguage	= (Languages)data.Language;
 					//GameVariables.WindowSkin	= data.WindowBorder;
 					//GameVariables.DialogSkin	= data.DialogBorder;
 					GameVariables.textSpeed		= data.TextSpeed;

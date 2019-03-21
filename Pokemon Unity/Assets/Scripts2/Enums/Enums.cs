@@ -603,6 +603,20 @@ namespace PokemonUnity
 		Space
 	}
 	#region Game Variables
+	/// <summary>
+	/// Still need to sort out Language Enums
+	/// </summary>
+	public enum Languages //: Languages<Translations.Languages>//Translator.Languages//
+	{
+		/// <summary>
+		/// US English
+		/// </summary>
+		English = 9
+	}
+	/*public class Languagess : ILanguage<Translations.Languages>
+    {
+        public enum Translations.Languages { get; set; } 
+    }*/
 
 	enum Generation
 	{
