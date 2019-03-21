@@ -1148,6 +1148,26 @@ public static class Settings //: Settings<Translations.Languages>
 		[28, 20, :BUTTERFREE, 15, 18],
 		[28, 20, :BEEDRILL,   15, 18]
 		]*/
+		/// <summary>
+		/// A set of arrays each containing details of a wild encounter that can only
+		/// occur via using the Poké Radar.
+		/// </summary>
+		/// <param name="map">Map ID on which this encounter can occur.</param>
+		/// <param name="pkmn">Species.</param>
+		/// <param name="chance">Probability that this encounter will occur (as a percentage).</param>
+		/// <param name="min">Minimum possible level.</param>
+		/// <param name="max">Maximum possible level (optional).</param>
+		public PokeRadars(int map, Pokemons pkmn, int chance, byte min, byte max)
+		{
+			MapId = map;
+			Species = pkmn;
+			EncounterChance = chance;
+			LevelMinMax = new int[] { min, max };
+		}
+		public PokeRadars(int map, Pokemons pkmn, int chance, byte min) : this(map, pkmn, chance, min, min)
+		{
+
+		}
 	}
 	#endregion
 
