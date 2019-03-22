@@ -1,19 +1,11 @@
-﻿/// <summary>
-/// This class handles all actions regarding Badge loading and displaying.
-/// </summary>
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Player
+{
+/// <summary>
+/// This class handles all actions regarding Badge loading and displaying.
+/// </summary
 public class Badge
 {
     public enum HMMoves
@@ -35,8 +27,12 @@ public class Badge
     /// <summary>
     /// This describes one Badge loaded by a GameMode with ID, Name, Texture and Arguments.
     /// </summary>
-    private class BadgeDeclaration
+	[System.Serializable] private class BadgeDeclaration
     {
+		/// <summary>
+		/// Id of Trainer Badge
+		/// </summary>
+		/// ToDo: Use enum here
         public int ID = 0;
         public string Name = "";
         public int LevelCap = -1;
@@ -66,7 +62,6 @@ public class Badge
                                 this.LevelCap = System.Convert.ToInt32(argData);
                                 break;
                             }
-
                         case "hm":
                             {
                                 string[] hms = argData.Split(System.Convert.ToChar(","));
@@ -80,55 +75,46 @@ public class Badge
                                                 this.HMs.Add(HMMoves.Surf);
                                                 break;
                                             }
-
                                         case "cut":
                                             {
                                                 this.HMs.Add(HMMoves.Cut);
                                                 break;
                                             }
-
                                         case "strength":
                                             {
                                                 this.HMs.Add(HMMoves.Strength);
                                                 break;
                                             }
-
                                         case "flash":
                                             {
                                                 this.HMs.Add(HMMoves.Flash);
                                                 break;
                                             }
-
                                         case "fly":
                                             {
                                                 this.HMs.Add(HMMoves.Fly);
                                                 break;
                                             }
-
                                         case "whirlpool":
                                             {
                                                 this.HMs.Add(HMMoves.Whirlpool);
                                                 break;
                                             }
-
                                         case "waterfall":
                                             {
                                                 this.HMs.Add(HMMoves.Waterfall);
                                                 break;
                                             }
-
                                         case "ride":
                                             {
                                                 this.HMs.Add(HMMoves.Ride);
                                                 break;
                                             }
-
                                         case "dive":
                                             {
                                                 this.HMs.Add(HMMoves.Dive);
                                                 break;
                                             }
-
                                         case "rockclimb":
                                             {
                                                 this.HMs.Add(HMMoves.RockClimb);
@@ -136,10 +122,8 @@ public class Badge
                                             }
                                     }
                                 }
-
                                 break;
                             }
-
                         case "texture":
                             {
                                 string[] texData = argData.Split(System.Convert.ToChar(","));
@@ -147,7 +131,6 @@ public class Badge
                                 this.TextureRectangle = new Rectangle(System.Convert.ToInt32(texData[1]), System.Convert.ToInt32(texData[2]), System.Convert.ToInt32(texData[3]), System.Convert.ToInt32(texData[4]));
                                 break;
                             }
-
                         case "region":
                             {
                                 this.Region = argData;
@@ -167,7 +150,7 @@ public class Badge
         Badges.Clear();
 
         string file = GameModeManager.GetContentFilePath(@"Data\badges.dat");
-        System.Security.FileValidation.CheckFileValid(file, false, "Badge.vb");
+        //System.Security.FileValidation.CheckFileValid(file, false, "Badge.vb");
         string[] data = System.IO.File.ReadAllLines(file);
         foreach (string line in data)
         {
@@ -244,7 +227,7 @@ public class Badge
         List<string> regions = new List<string>();
         foreach (BadgeDeclaration b in Badges)
         {
-            if (!regions.Any(string m => m.ToLowerInvariant() == b.Region.ToLowerInvariant()))
+            if (!regions.Any(m => m.ToLowerInvariant() == b.Region.ToLowerInvariant()))
                 regions.Add(b.Region);
         }
         if (regions.Count - 1 >= index)
@@ -276,7 +259,7 @@ public class Badge
         List<string> regions = new List<string>();
         foreach (BadgeDeclaration b in Badges)
         {
-            if (!regions.Any(string m => m.ToLowerInvariant() == b.Region.ToLowerInvariant()))
+            if (!regions.Any(m => m.ToLowerInvariant() == b.Region.ToLowerInvariant()))
                 regions.Add(b.Region);
         }
         return regions.Count;
@@ -309,4 +292,5 @@ public class Badge
     {
         return Core.Player.Badges.Contains(BadgeID);
     }
+}
 }

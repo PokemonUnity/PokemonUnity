@@ -1,27 +1,16 @@
-﻿/// <summary>
+﻿using System.Linq;
+using PokemonUnity.Pokemon;
+using UnityEngine;
+
+namespace PokemonUnity.Overworld
+{
+/// <summary>
 /// A class to handle wild Pokémon encounters.
 /// </summary>
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
 public class PokemonEncounter
 {
-
-
     // Stores a reference to the level instance:
     private Level _levelReference;
-
-
 
     /// <summary>
     /// Creates a new instance of the PokemonEncounter class.
@@ -31,8 +20,6 @@ public class PokemonEncounter
     {
         this._levelReference = levelReference;
     }
-
-
 
     /// <summary>
     /// Checks if the player should encounter a wild Pokémon.
@@ -57,7 +44,7 @@ public class PokemonEncounter
 
                     if (Core.Player.Pokemons.Count > 0)
                     {
-                        Pokemon p = Core.Player.Pokemons(0);
+                        PokemonUnity.Pokemon.Pokemon p = Core.Player.Pokemons(0);
 
                         // Arena Trap/Illuminate/No Guard/Swarm Ability:
                         if (p.Ability.Name.ToLower() == "arena trap" | p.Ability.Name.ToLower() == "illuminate" | p.Ability.Name.ToLower() == "no guard" | p.Ability.Name.ToLower() == "swarm")
@@ -133,17 +120,17 @@ public class PokemonEncounter
                 Screen.Camera.StopMovement();
 
                 // Generate new wild Pokémon:
-                Pokemon Pokemon = Spawner.GetPokemon(Screen.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
+                Pokemon.Pokemon Pokemon = Spawner.GetPokemon(Screen.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
 
-                if (!Pokemon == null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
+                if (Pokemon != null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
                 {
                     Screen.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 
                     // If the player has a Repel going and the first Pokémon in the party's level is greater than the wild Pokémon's level, don't start the battle:
                     if (Core.Player.RepelSteps > 0)
                     {
-                        Pokemon p = Core.Player.GetWalkPokemon();
-                        if (!p == null)
+                        Pokemon.Pokemon p = Core.Player.GetWalkPokemon();
+                        if (p != null)
                         {
                             if (p.Level >= Pokemon.Level)
                                 return;
@@ -153,7 +140,7 @@ public class PokemonEncounter
                     // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
                     if (Core.Player.Pokemons(0).Level >= Pokemon.Level)
                     {
-                        if (!Core.Player.Pokemons(0).Item == null)
+                        if (Core.Player.Pokemons(0).Item != null)
                         {
                             if (Core.Player.Pokemons(0).Item.ID == 94)
                             {
@@ -166,7 +153,7 @@ public class PokemonEncounter
                     // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
                     if (Core.Player.Pokemons(0).Level >= Pokemon.Level)
                     {
-                        if (!Core.Player.Pokemons(0).Item == null)
+                        if (Core.Player.Pokemons(0).Item != null)
                         {
                             if (Core.Player.Pokemons(0).Item.ID == 291)
                             {
@@ -190,4 +177,5 @@ public class PokemonEncounter
             }
         }
     }
+}
 }

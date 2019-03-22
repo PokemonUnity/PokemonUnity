@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+﻿using System.Linq;
 
-public class NetworkPokemon : Entity
+namespace PokemonUnity.Overworld.Entity.Misc
+{
+	public class NetworkPokemon : Entity
 {
 	public int PlayerID = 0;
 	public string LevelFile = "";
@@ -27,11 +18,11 @@ public class NetworkPokemon : Entity
 	private float AnimationDelay = AnimationDelayLenght;
 
 	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.X, pos.Y, pos.Z, "NetworkPokemon",
-
+		new Texture2D()
 	{
 		TextureManager.DefaultTexture
 
-	},
+	}, new int[]
     {
         0,
         0
@@ -100,11 +91,9 @@ public class NetworkPokemon : Entity
 							{
 								var state = GraphicsDevice.DepthStencilState;
 								GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-								Draw(this.Model,
-
+								Draw(this.Model, new Texture2D()
 									{
-									this.Textures(0)
-
+										this.Textures(0)
 									}, false);
 								GraphicsDevice.DepthStencilState = state;
 							}
@@ -183,12 +172,7 @@ public class NetworkPokemon : Entity
 	{
 		this.Shaders.Clear();
 		foreach (Shader Shader in Screen.Level.Shaders)
-			Shader.ApplyShader(
-
-				{
-			this
-
-				});
+			Shader.ApplyShader(this);
 	}
 
 	public void ApplyPlayerData(Servers.Player p)
@@ -223,4 +207,5 @@ public class NetworkPokemon : Entity
 		{
 		}
 	}
+}
 }

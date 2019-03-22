@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class ScriptBlock : Entity
 {
     public static bool TriggeredScriptBlock = false;
@@ -123,13 +116,11 @@ public class ScriptBlock : Entity
                     activationID = 0;
                     break;
                 }
-
             case 2:
                 {
                     activationID = 1;
                     break;
                 }
-
             case 3:
                 {
                     activationID = 2;
@@ -164,4 +155,5 @@ public class ScriptBlock : Entity
             return this._scriptID;
         }
     }
+}
 }

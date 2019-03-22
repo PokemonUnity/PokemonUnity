@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
+﻿namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class SlideBlock : Entity
 {
     private ScriptBlock TempScriptEntity = null/* TODO Change to default(_) if this is not a reference type */;
@@ -36,13 +25,13 @@ public class SlideBlock : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true,
+                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(SlideBlock),
                     typeof(ScriptBlock),
                     typeof(WarpBlock)
                 });
-                if (!e == null)
+                if (e != null)
                 {
                     if (e.EntityID == "SlideBlock")
                     {
@@ -69,7 +58,7 @@ public class SlideBlock : Entity
 
             string s = "version=2" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",1," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",0," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine;
 
-            if (!this.TempScriptEntity == null)
+            if (this.TempScriptEntity != null)
             {
                 s += GetScriptStartLine(this.TempScriptEntity) + Environment.NewLine;
                 this.TempScriptEntity = null;
@@ -92,7 +81,7 @@ public class SlideBlock : Entity
 
     private string GetScriptStartLine(ScriptBlock ScriptEntity)
     {
-        if (!ScriptEntity == null)
+        if (ScriptEntity != null)
         {
             if (ScriptEntity.CorrectRotation() == true)
             {
@@ -102,12 +91,10 @@ public class SlideBlock : Entity
                         {
                             return "@script.start(" + ScriptEntity.ScriptID + ")";
                         }
-
                     case 1:
                         {
                             return "@script.text(" + ScriptEntity.ScriptID + ")";
                         }
-
                     case 2:
                         {
                             return "@script.run(" + ScriptEntity.ScriptID + ")";
@@ -137,13 +124,13 @@ public class SlideBlock : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true,
+                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(SlideBlock),
                     typeof(ScriptBlock),
                     typeof(WarpBlock)
                 });
-                if (!e == null)
+                if (e != null)
                 {
                     if (e.EntityID == "SlideBlock")
                     {
@@ -170,7 +157,7 @@ public class SlideBlock : Entity
 
             string s = "version=2" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",-1," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine;
 
-            if (!this.TempScriptEntity == null)
+            if (this.TempScriptEntity != null)
             {
                 s += GetScriptStartLine(this.TempScriptEntity) + Environment.NewLine;
                 this.TempScriptEntity = null;
@@ -186,4 +173,5 @@ public class SlideBlock : Entity
     {
         this.Draw(this.Model, Textures, false);
     }
+}
 }

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+using UnityEngine;
 
+namespace PokemonUnity.Overworld
+{
 public class SkyDome
 {
     private Model SkydomeModel;
@@ -98,7 +90,7 @@ public class SkyDome
             {
                 RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 8.0F, 1.0F);
 
-                if (!TextureDown == null)
+                if (TextureDown != null)
                     RenderHalf(FOV, Yaw, 0.0F, false, TextureDown, 8.0F, 1.0F);
             }
         }
@@ -108,7 +100,7 @@ public class SkyDome
     {
         float Roll = 0.0F;
         if (up == false)
-            Roll = Math.PI;
+            Roll = (float)Math.PI;
 
         var previousBlendState = Core.GraphicsDevice.BlendState;
         Core.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
@@ -128,57 +120,50 @@ public class SkyDome
 
                 switch (Screen.Level.World.CurrentMapWeather)
                 {
-                    case object _ when World.Weathers.Clear:
-                    case object _ when World.Weathers.Sunny:
+                    case World.Weathers.Clear:
+                    case World.Weathers.Sunny:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(1);
+                            BasicEffect.DiffuseColor = new Vector3(1f, 1f, 1f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Rain:
+                    case World.Weathers.Rain:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.4, 0.4, 0.7);
+                            BasicEffect.DiffuseColor = new Vector3(0.4f, 0.4f, 0.7f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Snow:
+                    case World.Weathers.Snow:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.8);
+                            BasicEffect.DiffuseColor = new Vector3(0.8f, .8f, .8f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Underwater:
+                    case World.Weathers.Underwater:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.1, 0.3, 0.9);
+                            BasicEffect.DiffuseColor = new Vector3(0.1f, 0.3f, 0.9f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Fog:
+                    case World.Weathers.Fog:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.7, 0.7, 0.8);
+                            BasicEffect.DiffuseColor = new Vector3(0.7f, 0.7f, 0.8f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Sandstorm:
+                    case World.Weathers.Sandstorm:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.8, 0.5, 0.2);
+                            BasicEffect.DiffuseColor = new Vector3(0.8f, 0.5f, 0.2f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Ash:
+                    case World.Weathers.Ash:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.5, 0.5, 0.5);
+                            BasicEffect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
                             break;
                         }
-
-                    case object _ when World.Weathers.Blizzard:
+                    case World.Weathers.Blizzard:
                         {
-                            BasicEffect.DiffuseColor = new Vector3(0.6, 0.6, 0.6);
+                            BasicEffect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
                             break;
                         }
                 }
 
-                if (BasicEffect.DiffuseColor != new Vector3(1))
+                if (BasicEffect.DiffuseColor != new Vector3(1f, 1f, 1f))
                     BasicEffect.DiffuseColor = GetWeatherColorMultiplier(BasicEffect.DiffuseColor);
             }
 
@@ -225,20 +210,18 @@ public class SkyDome
     {
         switch (Screen.Level.World.CurrentMapWeather)
         {
-            case object _ when World.Weathers.Rain:
-            case object _ when World.Weathers.Blizzard:
-            case object _ when World.Weathers.Thunderstorm:
+            case World.Weathers.Rain:
+            case World.Weathers.Blizzard:
+            case World.Weathers.Thunderstorm:
                 {
                     return 0.6F;
                 }
-
-            case object _ when World.Weathers.Snow:
-            case object _ when World.Weathers.Ash:
+            case World.Weathers.Snow:
+            case World.Weathers.Ash:
                 {
                     return 0.4F;
                 }
-
-            case object _ when World.Weathers.Clear:
+            case World.Weathers.Clear:
                 {
                     return 0.1F;
                 }
@@ -273,17 +256,17 @@ public class SkyDome
         {
             // Between 6:00:00 PM and 7:00:00 PM, the Sun will fade away with 60 stages:
             float i = progress - 1080;
-            float percent = i / (double)60 * 100;
+            float percent = i / (float)60 * 100f;
 
-            return 1.0F - percent / (double)100.0F;
+            return 1.0F - percent / (float)100.0F;
         }
         else if (progress >= 300 & progress < 360)
         {
             // Between 5:00:00 AM and 6:00:00 Am, the Sun will fade in with 60 stages:
             float i = progress - 300;
-            float percent = i / (double)60 * 100;
+            float percent = i / (float)60 * 100;
 
-            return percent / (double)100.0F;
+            return percent / (float)100.0F;
         }
         else if (progress >= 1140 | progress < 300)
             // Between 7:00:00 PM and 5:00:00 AM, the Sun will be invisible:
@@ -297,10 +280,10 @@ public class SkyDome
     {
         switch (Screen.Level.World.CurrentMapWeather)
         {
-            case object _ when World.Weathers.Rain:
-            case object _ when World.Weathers.Blizzard:
-            case object _ when World.Weathers.Thunderstorm:
-            case object _ when World.Weathers.Snow:
+            case World.Weathers.Rain:
+            case World.Weathers.Blizzard:
+            case World.Weathers.Thunderstorm:
+            case World.Weathers.Snow:
                 {
                     return TextureManager.GetTexture(@"SkyDomeResource\CloudsWeather");
                 }
@@ -333,4 +316,5 @@ public class SkyDome
             return World.MinutesOfDay;
         }
     }
+}
 }

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
-public class NetworkPlayer : Entity
+namespace PokemonUnity.Overworld.Entity.Misc
+{
+	public class NetworkPlayer : Entity
 {
 	private static readonly string[] FallbackSkins = new[] { "0", "1", "2", "5", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "32", "49", "61", "63", "oldhatman", "PinkShirtGirl", "bugcatcher" };
 	private static Dictionary<int, string> FallBack = new Dictionary<int, string>();
@@ -170,7 +163,6 @@ public class NetworkPlayer : Entity
 							spriteIndex = 3;
 							break;
 						}
-
 					case 3:
 						{
 							spriteIndex = 1;
@@ -206,17 +198,14 @@ public class NetworkPlayer : Entity
 					{
 						return 0;
 					}
-
 				case 2:
 					{
 						return 1;
 					}
-
 				case 3:
 					{
 						return 0;
 					}
-
 				case 4:
 					{
 						return 1;
@@ -229,17 +218,14 @@ public class NetworkPlayer : Entity
 				{
 					return 0;
 				}
-
 			case 2:
 				{
 					return 1;
 				}
-
 			case 3:
 				{
 					return 0;
 				}
-
 			case 4:
 				{
 					return 2;
@@ -345,13 +331,11 @@ public class NetworkPlayer : Entity
 					b = new MessageBulb(new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z), MessageBulb.NotifcationTypes.Battle);
 					break;
 				}
-
 			case "2":
 				{
 					b = new MessageBulb(new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z), MessageBulb.NotifcationTypes.Waiting);
 					break;
 				}
-
 			case "3":
 				{
 					b = new MessageBulb(new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z), MessageBulb.NotifcationTypes.AFK);
@@ -473,4 +457,5 @@ public class NetworkPlayer : Entity
 		}
 		return null/* TODO Change to default(_) if this is not a reference type */;
 	}
+}
 }

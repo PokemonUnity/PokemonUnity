@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+﻿using System.Linq;
 
+namespace PokemonUnity.Overworld.Entity.Misc
+{
 public class Particle : Entity
 {
 	public enum Behaviors
@@ -58,12 +49,10 @@ public class Particle : Entity
 							this.CanBeRemoved = true;
 						break;
 					}
-
 				case Behaviors.Floating:
 					{
 						break;
 					}
-
 				case Behaviors.Rising:
 					{
 						this.Position.Y -= this.MoveSpeed;
@@ -71,7 +60,6 @@ public class Particle : Entity
 							this.CanBeRemoved = true;
 						break;
 					}
-
 				case Behaviors.LeftToRight:
 					{
 						this.Position.X += this.MoveSpeed;
@@ -81,7 +69,6 @@ public class Particle : Entity
 							this.CanBeRemoved = true;
 						break;
 					}
-
 				case Behaviors.RightToLeft:
 					{
 						this.Position.X += this.MoveSpeed;
@@ -108,19 +95,16 @@ public class Particle : Entity
 		switch (this.Behavior)
 		{
 			case Behaviors.Falling:
-			case Behaviors.Floating // y
-		   :
+			//case Behaviors.Floating: // y
 				{
 					this.Destination -= diff.Y;
 					break;
 				}
-
 			case Behaviors.Floating:
 				{
 					this.Destination += diff.Y;
 					break;
 				}
-
 			default:
 				{
 					this.Destination -= diff.X;
@@ -149,4 +133,5 @@ public class Particle : Entity
 	{
 		base.Draw(this.Model, this.Textures, false);
 	}
+}
 }

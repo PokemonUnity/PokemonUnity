@@ -1,16 +1,10 @@
-﻿using System;
+﻿using PokemonUnity.Item;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-//using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class ApricornPlant : Entity
 {
 	public enum ApricornColors
@@ -156,12 +150,7 @@ public class ApricornPlant : Entity
 			text = "There is a " + Item.Name + "~on this tree.*Do you want to pick it?%Yes|No%";
 		}
 
-		Screen.TextBox.Show(text,
-			new ApricornPlant()
-		{
-			this
-
-		});
+		Screen.TextBox.Show(text, this);
 		SoundManager.PlaySound("select");
 	}
 
@@ -175,12 +164,7 @@ public class ApricornPlant : Entity
 			PlayerStatistics.Track("[85]Apricorns picked", 1);
 			SoundManager.PlaySound("item_found", true);
 			Screen.TextBox.TextColor = TextBox.PlayerColor;
-			Screen.TextBox.Show(Core.Player.Name + " picked the~" + Item.Name + ".*" + Core.Player.Inventory.GetMessageReceive(Item, 1),
-				new ApricornPlant()
-			{
-				this
-
-			});
+			Screen.TextBox.Show(Core.Player.Name + " picked the~" + Item.Name + ".*" + Core.Player.Inventory.GetMessageReceive(Item, 1), this);
 			AddApriconSave();
 			hasApricorn = false;
 			ChangeTexture();
@@ -200,7 +184,7 @@ public class ApricornPlant : Entity
 		Core.Player.ApricornData += s;
 	}
 
-	private Item GetItem()
+	private Items GetItem()
 	{
 		int ItemID = 0;
 
@@ -251,4 +235,5 @@ public class ApricornPlant : Entity
 
 		return Item.GetItemByID(ItemID);
 	}
+}
 }

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+﻿using PokemonUnity.Pokemon;
+using System;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class RockClimbEntity : Entity
 {
     private ScriptBlock TempScriptEntity = null/* TODO Change to default(_) if this is not a reference type */;
@@ -22,15 +15,9 @@ public class RockClimbEntity : Entity
         {
             TempClicked = true;
             if (GetRockClimbPokemon() == null)
-                Screen.TextBox.Show("A Pokémon could~climb this rock...",
-                {
-                    this
-                }, true, true);
+                Screen.TextBox.Show("A Pokémon could~climb this rock...", this, true, true);
             else
-                Screen.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%",
-                {
-                    this
-                }, true, true);
+                Screen.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%", this, true, true);
         }
     }
 
@@ -40,22 +27,13 @@ public class RockClimbEntity : Entity
         {
             TempClicked = false;
             if (GetRockClimbPokemon() == null)
-                Screen.TextBox.Show("A Pokémon could~climb this rock...",
-                {
-                    this
-                }, true, true);
+                Screen.TextBox.Show("A Pokémon could~climb this rock...", this, true, true);
             else
-                Screen.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%",
-                {
-                    this
-                }, true, true);
+                Screen.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%", this, true, true);
             SoundManager.PlaySound("select");
         }
         else
-            Screen.TextBox.Show("A path is engraved~into this rock...",
-            {
-                this
-            }, true, true);
+            Screen.TextBox.Show("A path is engraved~into this rock...", this, true, true);
     }
 
     public override void ResultFunction(int Result)
@@ -73,7 +51,7 @@ public class RockClimbEntity : Entity
     {
         foreach (Pokemon teamPokemon in Core.Player.Pokemons)
         {
-            if (teamPokemon.IsEgg() == false)
+            if (teamPokemon.isEgg == false)
             {
                 foreach (BattleSystem.Attack a in teamPokemon.Attacks)
                 {
@@ -118,13 +96,13 @@ public class RockClimbEntity : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true,
+                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(RockClimbEntity),
                     typeof(ScriptBlock),
                     typeof(WarpBlock)
                 });
-                if (!e == null)
+                if (e != null)
                 {
                     if (e.EntityID.ToLower() == "rockclimbentity")
                     {
@@ -158,7 +136,7 @@ public class RockClimbEntity : Entity
 
             string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",1," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",0," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
 
-            if (!this.TempScriptEntity == null)
+            if (this.TempScriptEntity != null)
             {
                 s += GetScriptStartLine(this.TempScriptEntity) + Environment.NewLine;
                 this.TempScriptEntity = null;
@@ -193,13 +171,13 @@ public class RockClimbEntity : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true,
+                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(RockClimbEntity),
                     typeof(ScriptBlock),
                     typeof(WarpBlock)
                 });
-                if (!e == null)
+                if (e != null)
                 {
                     if (e.EntityID == "RockClimbEntity")
                     {
@@ -233,7 +211,7 @@ public class RockClimbEntity : Entity
 
             string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",-1," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
 
-            if (!this.TempScriptEntity == null)
+            if (this.TempScriptEntity != null)
             {
                 s += GetScriptStartLine(this.TempScriptEntity) + Environment.NewLine;
                 this.TempScriptEntity = null;
@@ -260,12 +238,10 @@ public class RockClimbEntity : Entity
                         {
                             return "@script.start(" + ScriptEntity.ScriptID + ")";
                         }
-
                     case 1:
                         {
                             return "@script.text(" + ScriptEntity.ScriptID + ")";
                         }
-
                     case 2:
                         {
                             return "@script.run(" + ScriptEntity.ScriptID + ")";
@@ -281,4 +257,5 @@ public class RockClimbEntity : Entity
     {
         this.Draw(this.Model, Textures, false);
     }
+}
 }

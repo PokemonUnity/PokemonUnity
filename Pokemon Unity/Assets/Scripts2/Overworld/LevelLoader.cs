@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+using PokemonUnity.Overworld.Entity;
+using PokemonUnity.Overworld.Entity.Misc;
+using PokemonUnity.Overworld.Entity.Environment;
+using UnityEngine;
 
+namespace PokemonUnity.Overworld
+{
 public class LevelLoader
 {
     const bool MULTITHREAD = false;
@@ -92,6 +90,7 @@ public class LevelLoader
 
         if (loadOffsetMap == false)
         {
+			//ToDo: Change Screen to Scene
             Screen.Level.LevelFile = levelPath;
 
             Core.Player.LastSavePlace = Screen.Level.LevelFile;
@@ -118,6 +117,7 @@ public class LevelLoader
         }
 
         levelPath = GameModeManager.GetMapPath(levelPath);
+		//ToDo: Logger => Debug.Log
         Logger.Debug("Loading map: " + levelPath.Remove(0, GameController.GamePath.Length));
         System.Security.FileValidation.CheckFileValid(levelPath, false, "LevelLoader.vb");
 
@@ -141,14 +141,14 @@ public class LevelLoader
         {
             if (line.Contains("{") == true)
             {
-                line = line.Remove(0, line.IndexOf("{"));
+                string l = line.Remove(0, line.IndexOf("{"));
 
-                if (line.StartsWith("{\"Comment\"{COM") == true)
+                if (l.StartsWith("{\"Comment\"{COM") == true)
                 {
-                    line = line.Remove(0, line.IndexOf("[") + 1);
-                    line = line.Remove(line.IndexOf("]"));
+                    l = l.Remove(0, l.IndexOf("[") + 1);
+                    l = l.Remove(l.IndexOf("]"));
 
-                    Logger.Log(Logger.LogTypes.Debug, line);
+                    Logger.Log(Logger.LogTypes.Debug, l);
                 }
             }
         }
@@ -169,14 +169,8 @@ public class LevelLoader
                     TagTypes TagType = TagTypes.None;
                     line = line.Remove(0, line.IndexOf("{") + 2);
 
-                    switch (true)
-                    {
-                        case object _ when line.ToLower().StartsWith("structure\""):
-                            {
-                                TagType = TagTypes.Structure;
-                                break;
-                            }
-                    }
+                    if(line.ToLower().StartsWith("structure\""))
+						TagType = TagTypes.Structure;
 
                     if (TagType == TagTypes.Structure)
                     {
@@ -208,71 +202,33 @@ public class LevelLoader
                 try
                 {
                     TagTypes TagType = TagTypes.None;
-                    line = line.Remove(0, line.IndexOf("{") + 2);
+                    string l = line.Remove(0, line.IndexOf("{") + 2);
 
-                    switch (true)
-                    {
-                        case object _ when line.ToLower().StartsWith("entity\""):
-                            {
-                                TagType = TagTypes.Entity;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("floor\""):
-                            {
-                                TagType = TagTypes.Floor;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("entityfield\""):
-                            {
-                                TagType = TagTypes.EntityField;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("level\""):
-                            {
-                                TagType = TagTypes.Level;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("actions\""):
-                            {
-                                TagType = TagTypes.LevelActions;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("npc\""):
-                            {
-                                TagType = TagTypes.NPC;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("shader\""):
-                            {
-                                TagType = TagTypes.Shader;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("offsetmap\""):
-                            {
-                                TagType = TagTypes.OffsetMap;
-                                break;
-                            }
-
-                        case object _ when line.ToLower().StartsWith("backdrop\""):
-                            {
-                                TagType = TagTypes.Backdrop;
-                                break;
-                            }
-                    }
+					if (l.ToLower().StartsWith("entity\""))
+						TagType = TagTypes.Entity;
+					if (l.ToLower().StartsWith("floor\""))
+						TagType = TagTypes.Floor;
+					if (l.ToLower().StartsWith("entityfield\""))
+						TagType = TagTypes.EntityField;
+					if (l.ToLower().StartsWith("level\""))
+						TagType = TagTypes.Level;
+					if (l.ToLower().StartsWith("actions\""))
+						TagType = TagTypes.LevelActions;
+					if (l.ToLower().StartsWith("npc\""))
+						TagType = TagTypes.NPC;
+					if (l.ToLower().StartsWith("shader\""))
+						TagType = TagTypes.Shader;
+					if (l.ToLower().StartsWith("offsetmap\""))
+						TagType = TagTypes.OffsetMap;
+					if (l.ToLower().StartsWith("backdrop\""))
+						TagType = TagTypes.Backdrop;
 
                     if (TagType != TagTypes.None)
                     {
-                        line = line.Remove(0, line.IndexOf("[") + 1);
-                        line = line.Remove(line.Length - 3, 3);
+                        l = l.Remove(0, l.IndexOf("[") + 1);
+                        l = l.Remove(l.Length - 3, 3);
 
-                        Tags = GetTags(line);
+                        Tags = GetTags(l);
 
                         switch (TagType)
                         {
@@ -281,53 +237,45 @@ public class LevelLoader
                                     EntityField(Tags);
                                     break;
                                 }
-
                             case TagTypes.Entity:
                                 {
                                     AddEntity(Tags, new Size(1, 1), 1, true, new Vector3(1, 1, 1));
                                     break;
                                 }
-
                             case TagTypes.Floor:
                                 {
                                     AddFloor(Tags);
                                     break;
                                 }
-
                             case TagTypes.Level:
                                 {
                                     if (loadOffsetMap == false)
                                         SetupLevel(Tags);
                                     break;
                                 }
-
                             case TagTypes.LevelActions:
                                 {
                                     if (loadOffsetMap == false)
                                         SetupActions(Tags);
                                     break;
                                 }
-
                             case TagTypes.NPC:
                                 {
                                     AddNPC(Tags);
                                     break;
                                 }
-
                             case TagTypes.Shader:
                                 {
                                     if (loadOffsetMap == false)
                                         AddShader(Tags);
                                     break;
                                 }
-
                             case TagTypes.OffsetMap:
                                 {
                                     if (loadOffsetMap == false | offsetMapLevel <= Core.GameOptions.MaxOffsetLevel)
                                         AddOffsetMap(Tags);
                                     break;
                                 }
-
                             case TagTypes.Backdrop:
                                 {
                                     if (loadOffsetMap == false)
@@ -404,39 +352,35 @@ public class LevelLoader
         {
             if (subTag.Length > 0)
             {
-                subTag = subTag.Remove(0, 1);
+                string s = subTag.Remove(0, 1);
 
-                string subTagType = subTag.Remove(subTag.IndexOf("["));
-                string subTagValue = subTag.Remove(0, subTag.IndexOf("[") + 1);
+                string subTagType = s.Remove(s.IndexOf("["));
+                string subTagValue = s.Remove(0, s.IndexOf("[") + 1);
                 subTagValue = subTagValue.Remove(subTagValue.Length - 1, 1);
 
                 switch (subTagType.ToLower())
                 {
                     case "int":
                         {
-                            Dictionary.Add(TagName, (int)subTagValue);
+                            Dictionary.Add(TagName, int.Parse(subTagValue));
                             break;
                         }
-
                     case "str":
                         {
                             Dictionary.Add(TagName, (string)subTagValue);
                             break;
                         }
-
                     case "sng":
                         {
                             subTagValue = subTagValue.Replace(".", GameController.DecSeparator);
-                            Dictionary.Add(TagName, (float)subTagValue);
+                            Dictionary.Add(TagName, float.Parse(subTagValue));
                             break;
                         }
-
                     case "bool":
                         {
-                            Dictionary.Add(TagName, (bool)subTagValue);
+                            Dictionary.Add(TagName, bool.Parse(subTagValue));
                             break;
                         }
-
                     case "intarr":
                         {
                             string[] values = subTagValue.Split(System.Convert.ToChar(","));
@@ -446,7 +390,6 @@ public class LevelLoader
                             Dictionary.Add(TagName, arr);
                             break;
                         }
-
                     case "intarr2d":
                         {
                             string[] rows = subTagValue.Split(System.Convert.ToChar("]"));
@@ -455,9 +398,9 @@ public class LevelLoader
                             {
                                 if (row.Length > 0)
                                 {
-                                    row = row.Remove(0, 1);
+                                    string r = row.Remove(0, 1);
                                     List<int> list = new List<int>();
-                                    foreach (var value in row.Split(System.Convert.ToChar(",")))
+                                    foreach (var value in r.Split(System.Convert.ToChar(",")))
                                         list.Add(System.Convert.ToInt32(value));
                                     arr.Add(list);
                                 }
@@ -465,14 +408,12 @@ public class LevelLoader
                             Dictionary.Add(TagName, arr);
                             break;
                         }
-
                     case "rec":
                         {
                             string[] content = subTagValue.Split(System.Convert.ToChar(","));
                             Dictionary.Add(TagName, new Rectangle(System.Convert.ToInt32(content[0]), System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3])));
                             break;
                         }
-
                     case "recarr":
                         {
                             string[] values = subTagValue.Split(System.Convert.ToChar("]"));
@@ -481,24 +422,23 @@ public class LevelLoader
                             {
                                 if (value.Length > 0)
                                 {
-                                    value = value.Remove(0, 1);
+                                    string v = value.Remove(0, 1);
 
-                                    string[] content = value.Split(System.Convert.ToChar(","));
+                                    string[] content = v.Split(System.Convert.ToChar(","));
                                     arr.Add(new Rectangle(System.Convert.ToInt32(content[0]), System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3])));
                                 }
                             }
                             Dictionary.Add(TagName, arr);
                             break;
                         }
-
                     case "sngarr":
                         {
                             string[] values = subTagValue.Split(System.Convert.ToChar(","));
                             List<float> arr = new List<float>();
                             foreach (string value in values)
                             {
-                                value = value.Replace(".", GameController.DecSeparator);
-                                arr.Add(System.Convert.ToSingle(value));
+                                string v = value.Replace(".", GameController.DecSeparator);
+                                arr.Add(System.Convert.ToSingle(v));
                             }
                             Dictionary.Add(TagName, arr);
                             break;
@@ -515,8 +455,8 @@ public class LevelLoader
 
         for (var i = 0; i <= Tags.Count - 1; i++)
         {
-            if (Tags.Keys(i).ToLower() == TagName.ToLower())
-                return Tags.Values(i);
+            if (Tags.ElementAt(i).Key.ToLower() == TagName.ToLower())
+                return Tags.ElementAt(i).Value;
         }
 
         return null;
@@ -529,7 +469,7 @@ public class LevelLoader
 
         for (var i = 0; i <= Tags.Count - 1; i++)
         {
-            if (Tags.Keys(i).ToLower() == TagName.ToLower())
+            if (Tags.ElementAt(i).Key.ToLower() == TagName.ToLower())
                 return true;
         }
 
@@ -564,7 +504,7 @@ public class LevelLoader
                 List<List<Entity>> mapList = new List<List<Entity>>();
 
                 List<object> @params = new List<object>();
-                @params.AddRange(
+                @params.AddRange(new
                 {
                     MapName,
                     true,
@@ -581,9 +521,9 @@ public class LevelLoader
                 List<Entity> entList = new List<Entity>();
                 List<Entity> floorList = new List<Entity>();
 
-                for (var i = offsetEntityCount; i <= Screen.Level.OffsetmapEntities.Count - 1; i++)
+                for (int i = offsetEntityCount; i <= Screen.Level.OffsetmapEntities.Count - 1; i++)
                     entList.Add(Screen.Level.OffsetmapEntities(i));
-                for (i = offsetFloorCount; i <= Screen.Level.OffsetmapFloors.Count - 1; i++)
+                for (int i = offsetFloorCount; i <= Screen.Level.OffsetmapFloors.Count - 1; i++)
                     floorList.Add(Screen.Level.OffsetmapFloors(i));
                 mapList.AddRange(
                 {
@@ -659,13 +599,13 @@ public class LevelLoader
         if (tempStructureList.ContainsKey(structureKey) == false)
         {
             string filepath = GameModeManager.GetMapPath(MapName);
-            System.Security.FileValidation.CheckFileValid(filepath, false, "LevelLoader.vb/StructureSpawner");
+            //System.Security.FileValidation.CheckFileValid(filepath, false, "LevelLoader.vb/StructureSpawner");
 
             if (System.IO.File.Exists(filepath) == false)
             {
                 Logger.Log(Logger.LogTypes.ErrorMessage, "LevelLoader.vb: Error loading structure from \"" + filepath + "\". File not found.");
 
-                return new[] { };
+                return new string[] { };
             }
 
             string[] MapContent = System.IO.File.ReadAllLines(filepath);
@@ -676,48 +616,26 @@ public class LevelLoader
                 if (line.EndsWith("}") == true)
                 {
                     bool addLine = false;
-                    switch (true)
-                    {
-                        case object _ when line.Trim(' ', StringHelper.Tab).StartsWith("{\"Entity\"{ENT["):
-                            {
-                                addLine = true;
-                                break;
-                            }
-
-                        case object _ when line.Trim(' ', StringHelper.Tab).StartsWith("{\"Floor\"{ENT["):
-                            {
-                                addLine = true;
-                                break;
-                            }
-
-                        case object _ when line.Trim(' ', StringHelper.Tab).StartsWith("{\"EntityField\"{ENT["):
-                            {
-                                addLine = true;
-                                break;
-                            }
-
-                        case object _ when line.Trim(' ', StringHelper.Tab).StartsWith("{\"NPC\"{NPC["):
-                            {
-                                if (addNPC == true)
-                                    addLine = true;
-                                break;
-                            }
-
-                        case object _ when line.Trim(' ', StringHelper.Tab).StartsWith("{\"Shader\"{SHA["):
-                            {
-                                addLine = true;
-                                break;
-                            }
-                    }
+					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"Entity\"{ENT["))
+						addLine = true;
+					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"Floor\"{ENT["))
+						addLine = true;
+					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"EntityField\"{ENT["))
+						addLine = true;
+					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"NPC\"{NPC["))
+						if (addNPC == true)
+							addLine = true;
+					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"Shader\"{SHA["))
+						addLine = true;
 
                     if (addLine == true)
                     {
-                        line = ReplaceStructurePosition(line, MapOffset);
+                        string l = ReplaceStructurePosition(line, MapOffset);
 
                         if (MapRotation > -1)
-                            line = ReplaceStructureRotation(line, MapRotation);
+                            l = ReplaceStructureRotation(l, MapRotation);
 
-                        structureList.Add(line);
+                        structureList.Add(l);
                     }
                 }
             }
@@ -838,14 +756,12 @@ public class LevelLoader
         if (TagExists(Tags, "AnimateIdle") == true)
             AnimateIdle = System.Convert.ToBoolean(GetTag(Tags, "AnimateIdle"));
 
-        NPC NPC = (NPC)Entity.GetNewEntity("NPC", Position,
-        {
-            null/* TODO Change to default(_) if this is not a reference type */
-        },
+        NPC NPC = (NPC)Entity.GetNewEntity("NPC", Position, null, // TODO Change to default(_) if this is not a reference type 
+        new int[]
         {
             0,
             0
-        }, true, new Vector3(0), Scale, BaseModel.BillModel, ActionValue, AdditionalValue, true, Shader, -1, MapOrigin, "", Offset,
+        }, true, new Vector3(0), Scale, BaseModel.BillModel, ActionValue, AdditionalValue, true, Shader, -1, MapOrigin, "", Offset, new
         {
             TextureID,
             Rotation,
@@ -928,18 +844,18 @@ public class LevelLoader
 
                     if (loadOffsetMap == true)
                     {
-                        Ent = Screen.Level.OffsetmapFloors.Find(Entity e =>
+                        Ent = Screen.Level.OffsetmapFloors.Find(e =>
                         {
-                            return e.Position == new Vector3(Position.X + iX, Position.Y, Position.Z + iZ);
+                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.Y, Position.Z + iZ);
                         });
                     }
                     else
-                        Ent = Screen.Level.Floors.Find(Entity e =>
+                        Ent = Screen.Level.Floors.Find(e =>
                         {
-                            return e.Position == new Vector3(Position.X + iX, Position.Y, Position.Z + iZ);
+                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.Y, Position.Z + iZ);
                         });
 
-                    if (!Ent == null)
+                    if (Ent != null)
                     {
                         Ent.Textures = new[] { Texture };
                         Ent.Visible = Visible;
@@ -954,10 +870,7 @@ public class LevelLoader
 
                     if (exists == false)
                     {
-                        Floor f = new Floor(Position.X + x, Position.Y, Position.Z + z,
-                        {
-                            TextureManager.GetTexture(TexturePath, TextureRectangle)
-                        }, new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
+                        Floor f = new Floor(Position.X + x, Position.Y, Position.Z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
                         f.MapOrigin = MapOrigin;
                         f.SeasonColorTexture = SeasonTexture;
                         f.LoadSeasonTextures();
@@ -1044,7 +957,7 @@ public class LevelLoader
             Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
         }
 
-        Vector3 RotationXYZ = null/* TODO Change to default(_) if this is not a reference type */;
+		//Vector3 RotationXYZ = null; // TODO Change to default(_) if this is not a reference type 
         if (TagExists(Tags, "RotationXYZ") == true)
         {
             List<float> rotationList = (List<float>)GetTag(Tags, "RotationXYZ");
@@ -1102,12 +1015,10 @@ public class LevelLoader
                     }
                     if (DoAdd == true)
                     {
-                        Entity newEnt = Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.Y + Y, Position.Z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset,
-                        {
-                        }, Opacity, AnimationData, CameraDistanceDelta);
+                        Entity newEnt = Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.Y + Y, Position.Z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
                         newEnt.IsOffsetMapContent = loadOffsetMap;
 
-                        if (!newEnt == null)
+                        if (newEnt != null)
                         {
                             if (loadOffsetMap == false)
                                 Screen.Level.Entities.Add(newEnt);
@@ -1300,7 +1211,7 @@ public class LevelLoader
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
         Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.Y, PosList[2] + Offset.Z);
 
-        Vector3 Rotation = Vector3.Zero;
+        Vector3 Rotation = Vector3.zero;
         if (TagExists(Tags, "Rotation") == true)
         {
             List<float> rotationList = (List<float>)GetTag(Tags, "Rotation");
@@ -1347,10 +1258,10 @@ public class LevelLoader
         {
             if (Berry.Contains("{") == true)
             {
-                Berry = Berry.Remove(0, Berry.IndexOf("{"));
-                Berry = Berry.Remove(0, 1);
+                string b = Berry.Remove(0, Berry.IndexOf("{"));
+                b = b.Remove(0, 1);
 
-                List<string> BData = Berry.Split(System.Convert.ToChar("|")).ToList();
+                List<string> BData = b.Split(System.Convert.ToChar("|")).ToList();
                 string[] PData = BData[1].Split(System.Convert.ToChar(","));
 
                 if (BData.Count == 6)
@@ -1358,19 +1269,18 @@ public class LevelLoader
 
                 if (BData[0].ToLower() == Screen.Level.LevelFile.ToLower())
                 {
-                    Entity newEnt = Entity.GetNewEntity("BerryPlant", new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])),
-                    {
-                        null/* TODO Change to default(_) if this is not a reference type */
-                    },
+                    Entity newEnt = Entity.GetNewEntity("BerryPlant", new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
+                    new int[]
                     {
                         0,
                         0
                     }, true, new Vector3(0), new Vector3(1), BaseModel.BillModel, 0, "", true, new Vector3(1.0F), -1, MapOrigin, "", Offset);
-                    (BerryPlant)newEnt.Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
+                    ((BerryPlant)newEnt).Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
 
                     Screen.Level.Entities.Add(newEnt);
                 }
             }
         }
     }
+}
 }

@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
-public class MessageBulb : Entity
+﻿namespace PokemonUnity.Overworld.Entity.Misc
+{
+	public class MessageBulb : Entity
 {
 	public enum NotifcationTypes
 	{
@@ -37,8 +26,7 @@ public class MessageBulb : Entity
 	private bool setTexture = false;
 	private float delay = 0.0F;
 
-	public MessageBulb(Vector3 Position, NotifcationTypes NotificationType) : base(Position.X, Position.Y, Position.Z, "MessageBulb",
-			//{},
+	public MessageBulb(Vector3 Position, NotifcationTypes NotificationType) : base(Position.X, Position.Y, Position.Z, "MessageBulb", null,
 		new int[] {
 			0,
 			0
@@ -195,4 +183,5 @@ public class MessageBulb : Entity
 	{
 		this.Draw(this.Model, this.Textures, true);
 	}
+}
 }

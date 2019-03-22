@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+using PokemonUnity.Pokemon;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class Waterfall : Entity
 {
     private static Dictionary<string, Texture2D> WaterfallTexturesTemp = new Dictionary<string, Texture2D>();
@@ -134,13 +128,11 @@ public class Waterfall : Entity
                         this.Textures(0) = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_0"];
                         break;
                     }
-
                 case 1:
                     {
                         this.Textures(0) = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_1"];
                         break;
                     }
-
                 case 2:
                     {
                         this.Textures(0) = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_2"];
@@ -150,7 +142,7 @@ public class Waterfall : Entity
             switch (this.Rotation.Y)
             {
                 case 0:
-                case object _ when MathHelper.TwoPi:
+                case (object)MathHelper.TwoPi:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -159,13 +151,11 @@ public class Waterfall : Entity
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_0"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_1"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_2"];
@@ -175,8 +165,7 @@ public class Waterfall : Entity
 
                         break;
                     }
-
-                case object _ when MathHelper.Pi * 0.5F:
+                case (object)MathHelper.Pi * 0.5F:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -185,13 +174,11 @@ public class Waterfall : Entity
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_3"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_4"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_5"];
@@ -201,8 +188,7 @@ public class Waterfall : Entity
 
                         break;
                     }
-
-                case object _ when MathHelper.Pi:
+                case (object)MathHelper.Pi:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -227,8 +213,7 @@ public class Waterfall : Entity
 
                         break;
                     }
-
-                case object _ when MathHelper.Pi * 1.5:
+                case (object)MathHelper.Pi * 1.5:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -266,7 +251,7 @@ public class Waterfall : Entity
     {
         foreach (Pokemon p in Core.Player.Pokemons)
         {
-            if (p.IsEgg() == false)
+            if (p.isEgg == false)
             {
                 foreach (BattleSystem.Attack a in p.Attacks)
                 {
@@ -285,11 +270,11 @@ public class Waterfall : Entity
 
         bool isOnTop = true;
         Vector3 OnTopcheckPosition = new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z);
-        Entity Oe = GetEntity(Screen.Level.Entities, OnTopcheckPosition, true,
+        Entity Oe = GetEntity(Screen.Level.Entities, OnTopcheckPosition, true, new System.Type[]
         {
             typeof(Waterfall)
         });
-        if (!Oe == null)
+        if (Oe != null)
         {
             if (Oe.EntityID == "Waterfall")
                 isOnTop = false;
@@ -307,11 +292,11 @@ public class Waterfall : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true,
+                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(Waterfall)
                 });
-                if (!e == null)
+                if (e != null)
                 {
                     if (e.EntityID == "Waterfall")
                     {
@@ -337,13 +322,13 @@ public class Waterfall : Entity
             return this.Collision;
 
         Pokemon p = ReturnWaterFallPokemonName();
-        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & !p == null | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
         {
             string s = "";
 
             string pName = "";
             int pNumber = 1;
-            if (!p == null)
+            if (p != null)
             {
                 pName = p.GetDisplayName();
                 pNumber = p.Number;
@@ -357,11 +342,11 @@ public class Waterfall : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true,
+                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(Waterfall)
                 });
-                if (!e == null)
+                if (e != null)
                 {
                     if (e.EntityID == "Waterfall")
                     {
@@ -390,4 +375,5 @@ public class Waterfall : Entity
         else
             return true;
     }
+}
 }

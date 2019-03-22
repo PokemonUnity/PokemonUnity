@@ -1,23 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+using PokemonUnity.Pokemon;
 
+namespace PokemonUnity.Overworld.Entity.Misc
+{
 public class OverworldPokemon : Entity
 {
-	public OverworldPokemon(float X, float Y, float Z) : base(X, Y, Z, "OverworldPokemon",
-		new Texture2D()
-		{
-			P3D.TextureManager.DefaultTexture
-		},
+	public OverworldPokemon(float X, float Y, float Z) : base(X, Y, Z, "OverworldPokemon", P3D.TextureManager.DefaultTexture,
 		new int[]{
 			0,
 			0
@@ -32,7 +22,6 @@ public class OverworldPokemon : Entity
             this.warped = false;
         }
         else
-
 			this.Position = Core.Player.LastPokemonPosition;
 
         this.Position = new Vector3(System.Convert.ToInt32(this.Position.X), this.GetYPosition(), System.Convert.ToInt32(this.Position.Z));
@@ -115,11 +104,11 @@ public class OverworldPokemon : Entity
 
 	public override void Update()
 	{
-		if (!Core.Player.GetWalkPokemon() == null)
+		if (Core.Player.GetWalkPokemon() != null)
 		{
 			bool differentAdditionalData = false;
 			bool differentShinyState = false;
-			if (!this.PokemonReference == null)
+			if (this.PokemonReference != null)
 			{
 				differentAdditionalData = (this.PokemonReference.AdditionalData != Core.Player.GetWalkPokemon().AdditionalData);
 				differentShinyState = (this.PokemonReference.IsShiny != Core.Player.GetWalkPokemon().IsShiny);
@@ -168,11 +157,7 @@ public class OverworldPokemon : Entity
 		{
 			var state = GraphicsDevice.DepthStencilState;
 			GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-			Draw(this.Model,
-				new Texture2D()
-				{
-					this.Textures(0)
-				}, false);
+			Draw(this.Model, this.Textures(0), false);
 			GraphicsDevice.DepthStencilState = state;
 		}
 	}
@@ -188,7 +173,7 @@ public class OverworldPokemon : Entity
 			{
 				if (IsCorrectScreen() == true)
 				{
-					if (!Core.Player.GetWalkPokemon() == null)
+					if (Core.Player.GetWalkPokemon() != null)
 					{
 						if (Screen.Level.Surfing == false & Screen.Level.Riding == false)
 						{
@@ -245,19 +230,16 @@ public class OverworldPokemon : Entity
 					moveVector = new Vector3(0, 0, -1) * MoveSpeed;
 					break;
 				}
-
 			case 1:
 				{
 					moveVector = new Vector3(-1, 0, 0) * MoveSpeed;
 					break;
 				}
-
 			case 2:
 				{
 					moveVector = new Vector3(0, 0, 1) * MoveSpeed;
 					break;
 				}
-
 			case 3:
 				{
 					moveVector = new Vector3(1, 0, 0) * MoveSpeed;
@@ -280,7 +262,7 @@ public class OverworldPokemon : Entity
 		else
 		{
 			Screen c = Core.CurrentScreen;
-			while (!c.PreScreen == null)
+			while (c.PreScreen != null)
 				c = c.PreScreen;
 			if (screens.Contains(c.Identification) == true)
 				return false;
@@ -314,19 +296,16 @@ public class OverworldPokemon : Entity
 						this.Position = new Vector3(Screen.Camera.Position.X, this.GetYPosition(), Screen.Camera.Position.Z + 1);
 						break;
 					}
-
 				case 1:
 					{
 						this.Position = new Vector3(Screen.Camera.Position.X + 1, this.GetYPosition(), Screen.Camera.Position.Z);
 						break;
 					}
-
 				case 2:
 					{
 						this.Position = new Vector3(Screen.Camera.Position.X, this.GetYPosition(), Screen.Camera.Position.Z - 1);
 						break;
 					}
-
 				case 3:
 					{
 						this.Position = new Vector3(Screen.Camera.Position.X - 1, this.GetYPosition(), Screen.Camera.Position.Z);
@@ -341,7 +320,7 @@ public class OverworldPokemon : Entity
 	{
 		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
 		{
-			if (this.Visible == true & !Core.Player.GetWalkPokemon() == null & Screen.Level.Surfing == false & Screen.Level.Riding == false & Screen.Level.ShowOverworldPokemon == true)
+			if (this.Visible == true & Core.Player.GetWalkPokemon() != null & Screen.Level.Surfing == false & Screen.Level.Riding == false & Screen.Level.ShowOverworldPokemon == true)
 			{
 				Pokemon p = Core.Player.GetWalkPokemon();
 				string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
@@ -359,11 +338,7 @@ public class OverworldPokemon : Entity
 	{
 		this.Shaders.Clear();
 		foreach (Shader Shader in Screen.Level.Shaders)
-			Shader.ApplyShader(
-				new OverworldPokemon()
-				{
-					this
-				});
+			Shader.ApplyShader(this);
 	}
 
 	private void PokemonReference_TexturesCleared(object sender, EventArgs e)
@@ -382,4 +357,5 @@ public class OverworldPokemon : Entity
 		this.lastRectangle = new Rectangle(0, 0, 0, 0);
 		this.ChangeTexture();
 	}
+}
 }

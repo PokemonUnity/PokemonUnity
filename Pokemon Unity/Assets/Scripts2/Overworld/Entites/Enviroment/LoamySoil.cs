@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+﻿using PokemonUnity.Item;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class LoamySoil : Entity
 {
     public override void Initialize()
@@ -34,10 +25,7 @@ public class LoamySoil : Entity
         }
         if (hasBerry == false)
         {
-            Screen.TextBox.Show("Do you want to plant a~berry here?%Yes|No%",
-            {
-                this
-            });
+            Screen.TextBox.Show("Do you want to plant a~berry here?%Yes|No%", this);
             SoundManager.PlaySound("select");
         }
     }
@@ -46,7 +34,7 @@ public class LoamySoil : Entity
     {
         if (Result == 0)
         {
-            NewInventoryScreen selScreen = new NewInventoryScreen(Core.CurrentScreen,
+            NewInventoryScreen selScreen = new NewInventoryScreen(Core.CurrentScreen, new int[]
             {
                 2
             }, 2, null/* TODO Change to default(_) if this is not a reference type */);
@@ -65,16 +53,14 @@ public class LoamySoil : Entity
 
     public void PlantBerry(int ChosenBerry)
     {
-        Item testItem = Item.GetItemByID(ChosenBerry);
+        Item testItem = Item.GetItem(ChosenBerry);
         if (testItem.isBerry == true)
         {
-            Items.Berry Berry = (Items.Berry)Item.GetItemByID(ChosenBerry);
+            Item.Berry Berry = (Item.Berry)Item.GetItem(ChosenBerry);
 
             BerryPlant.AddBerryPlant(Screen.Level.LevelFile, this.Position, Berry.BerryIndex);
             Screen.TextBox.reDelay = 0.0F;
-            Screen.TextBox.Show("You planted a~" + Berry.Name + " Berry here.",
-            {
-            });
+            Screen.TextBox.Show("You planted a~" + Berry.Name + " Berry here.", null);
         }
     }
 
@@ -82,4 +68,5 @@ public class LoamySoil : Entity
     {
         this.Draw(this.Model, Textures, false);
     }
+}
 }

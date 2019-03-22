@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Misc
+{
 public class NPC : Entity
 {
 	const float STANDARD_SPEED = 0.04F;
@@ -74,37 +67,31 @@ public class NPC : Entity
 					this.Movement = Movements.Pokeball;
 					break;
 				}
-
 			case "still":
 				{
 					this.Movement = Movements.Still;
 					break;
 				}
-
 			case "looking":
 				{
 					this.Movement = Movements.Looking;
 					break;
 				}
-
 			case "faceplayer":
 				{
 					this.Movement = Movements.FacePlayer;
 					break;
 				}
-
 			case "walk":
 				{
 					this.Movement = Movements.Walk;
 					break;
 				}
-
 			case "straight":
 				{
 					this.Movement = Movements.Straight;
 					break;
 				}
-
 			case "turning":
 				{
 					this.Movement = Movements.Turning;
@@ -174,7 +161,6 @@ public class NPC : Entity
 		this.ChangeTexture();
 	}
 
-
 	private void ApplyNPCData()
 	{
 		if (Core.Player.NPCData != "")
@@ -201,7 +187,6 @@ public class NPC : Entity
 								this.Position = new Vector3(System.Convert.ToSingle(PositionData[0].Replace(".", GameController.DecSeparator)) + Offset.X, System.Convert.ToSingle(PositionData[1].Replace(".", GameController.DecSeparator)) + Offset.Y, System.Convert.ToSingle(PositionData[2].Replace(".", GameController.DecSeparator)) + Offset.Z);
 								break;
 							}
-
 						case "remove":
 							{
 								this.CanBeRemoved = true;
@@ -252,7 +237,6 @@ public class NPC : Entity
 		RemoveNPCData(Data[0], System.Convert.ToInt32(Data[1]), Data[2], Data[3]);
 	}
 
-
 	private int GetAnimationX()
 	{
 		if (this.HasPokemonTexture == true)
@@ -263,17 +247,14 @@ public class NPC : Entity
 					{
 						return 0;
 					}
-
 				case 2:
 					{
 						return 1;
 					}
-
 				case 3:
 					{
 						return 0;
 					}
-
 				case 4:
 					{
 						return 1;
@@ -286,17 +267,14 @@ public class NPC : Entity
 				{
 					return 0;
 				}
-
 			case 2:
 				{
 					return 1;
 				}
-
 			case 3:
 				{
 					return 0;
 				}
-
 			case 4:
 				{
 					return 2;
@@ -367,19 +345,16 @@ public class NPC : Entity
 						oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
 						break;
 					}
-
 				case 1:
 					{
 						oScreen.ActionScript.StartScript(this.AdditionalValue, 0);
 						break;
 					}
-
 				case 3:
 					{
 						oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", Environment.NewLine), 2);
 						break;
 					}
-
 				default:
 					{
 						oScreen.ActionScript.StartScript(this.AdditionalValue, 0);
@@ -476,19 +451,16 @@ public class NPC : Entity
 											needFacing = 2;
 											break;
 										}
-
 									case 1:
 										{
 											needFacing = 3;
 											break;
 										}
-
 									case 2:
 										{
 											needFacing = 0;
 											break;
 										}
-
 									case 3:
 										{
 											needFacing = 1;
@@ -513,19 +485,16 @@ public class NPC : Entity
 											offset.Y = -0.01F;
 											break;
 										}
-
 									case 1:
 										{
 											offset.X = -0.01F;
 											break;
 										}
-
 									case 2:
 										{
 											offset.Y = 0.01F;
 											break;
 										}
-
 									case 3:
 										{
 											offset.X = 0.01F;
@@ -601,7 +570,6 @@ public class NPC : Entity
 		GraphicsDevice.DepthStencilState = state;
 	}
 
-
 	private void NPCMovement()
 	{
 		if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
@@ -616,7 +584,6 @@ public class NPC : Entity
 				{
 					break;
 				}
-
 			case Movements.Turning:
 				{
 					if (this.TurningDelay > 0.0F)
@@ -636,7 +603,6 @@ public class NPC : Entity
 
 					break;
 				}
-
 			case Movements.Looking:
 				{
 					if (this.Moved == 0.0F)
@@ -654,7 +620,6 @@ public class NPC : Entity
 
 					break;
 				}
-
 			case Movements.FacePlayer:
 				{
 					if (this.Moved == 0.0F)
@@ -679,7 +644,6 @@ public class NPC : Entity
 
 					break;
 				}
-
 			case Movements.Walk:
 				{
 					if (this.Moved == 0.0F)
@@ -713,7 +677,6 @@ public class NPC : Entity
 
 					break;
 				}
-
 			case Movements.Straight:
 				{
 					if (this.Moved == 0.0F)
@@ -859,19 +822,16 @@ public class NPC : Entity
 					moveVector = new Vector3(0, 0, -1) * Speed;
 					break;
 				}
-
 			case 1:
 				{
 					moveVector = new Vector3(-1, 0, 0) * Speed;
 					break;
 				}
-
 			case 2:
 				{
 					moveVector = new Vector3(0, 0, 1) * Speed;
 					break;
 				}
-
 			case 3:
 				{
 					moveVector = new Vector3(1, 0, 0) * Speed;
@@ -917,11 +877,7 @@ public class NPC : Entity
 	{
 		this.Shaders.Clear();
 		foreach (Shader Shader in Screen.Level.Shaders)
-			Shader.ApplyShader(
-				new NPC()
-			{
-				this
-			});
+			Shader.ApplyShader(this);
 	}
 
 	internal bool InCameraFocus()
@@ -943,4 +899,5 @@ public class NPC : Entity
 	{
 		return Screen.Camera.BoundingFrustum.Contains(this.Position) != ContainmentType.Disjoint;
 	}
+}
 }

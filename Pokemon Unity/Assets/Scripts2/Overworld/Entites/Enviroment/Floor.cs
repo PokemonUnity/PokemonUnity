@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class Floor : Entity
 {
     private bool changedWeatherTexture = false;
@@ -131,7 +123,7 @@ public class Floor : Entity
 
             if (hasEntityOnAllSides == false)
             {
-                this.Textures =
+                this.Textures = new Texture2D[]
                 {
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 2)),
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16))
@@ -200,7 +192,7 @@ public class Floor : Entity
 
             if (hasEntityOnAllSides == false)
             {
-                this.Textures =
+                this.Textures = new Texture2D[]
                 {
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 2)),
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16))
@@ -237,11 +229,8 @@ public class Floor : Entity
         bool foundSteps = true;
         while (foundSteps == true)
         {
-            Entity e = base.GetEntity(Screen.Level.Floors, checkPosition, true,
-            {
-                typeof(Floor)
-            });
-            if (!e == null)
+            Entity e = base.GetEntity(Screen.Level.Floors, checkPosition, true, typeof(Floor));
+            if (e != null)
             {
                 if (e.EntityID == "Floor")
                 {
@@ -294,4 +283,5 @@ public class Floor : Entity
     {
         FloorDictionary.Clear();
     }
+}
 }

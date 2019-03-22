@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+﻿using PokemonUnity.Pokemon;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class StrengthRock : Entity
 {
     public override void Initialize()
@@ -25,10 +16,7 @@ public class StrengthRock : Entity
         if (Screen.Level.UsedStrength == true)
         {
             string text = "Pokémon with Strength are~able to move this.";
-            Screen.TextBox.Show(text,
-            {
-                this
-            });
+            Screen.TextBox.Show(text, this);
             SoundManager.PlaySound("select");
         }
         else
@@ -37,7 +25,7 @@ public class StrengthRock : Entity
 
             foreach (Pokemon p in Core.Player.Pokemons)
             {
-                if (p.IsEgg() == false)
+                if (p.isEgg == false)
                 {
                     foreach (BattleSystem.Attack a in p.Attacks)
                     {
@@ -58,10 +46,7 @@ public class StrengthRock : Entity
             if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) == true | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
                 text += "~Do you want to~use Strength?%Yes|No%";
 
-            Screen.TextBox.Show(text,
-            {
-                this
-            });
+            Screen.TextBox.Show(text, this);
             SoundManager.PlaySound("select");
         }
     }
@@ -74,7 +59,7 @@ public class StrengthRock : Entity
 
             foreach (Pokemon p in Core.Player.Pokemons)
             {
-                if (p.IsEgg() == false)
+                if (p.isEgg == false)
                 {
                     foreach (BattleSystem.Attack a in p.Attacks)
                     {
@@ -86,14 +71,14 @@ public class StrengthRock : Entity
                     }
                 }
 
-                if (!useP == null)
+                if (useP != null)
                     break;
             }
 
             string pName = "MissignNo.";
             int pNumber = 23;
 
-            if (!useP == null)
+            if (useP != null)
             {
                 pName = useP.GetDisplayName();
                 pNumber = useP.Number;
@@ -102,9 +87,7 @@ public class StrengthRock : Entity
             Screen.Level.UsedStrength = true;
 
             SoundManager.PlayPokemonCry(pNumber);
-            Screen.TextBox.Show(pName + " used~Strength!",
-            {
-            }, true, false);
+            Screen.TextBox.Show(pName + " used~Strength!", null, true, false);
             PlayerStatistics.Track("Strength used", 1);
         }
     }
@@ -166,4 +149,5 @@ public class StrengthRock : Entity
     {
         this.Draw(this.Model, Textures, false);
     }
+}
 }

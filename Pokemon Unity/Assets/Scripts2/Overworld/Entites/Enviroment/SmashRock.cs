@@ -1,16 +1,9 @@
-﻿using System;
+﻿using PokemonUnity.Pokemon;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class SmashRock : Entity
 {
     public override void ClickFunction()
@@ -21,7 +14,7 @@ public class SmashRock : Entity
 
             foreach (Pokemon p in Core.Player.Pokemons)
             {
-                if (p.IsEgg() == false)
+                if (p.isEgg == false)
                 {
                     foreach (BattleSystem.Attack a in p.Attacks)
                     {
@@ -42,10 +35,7 @@ public class SmashRock : Entity
             if (pName != "" | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
                 text += "~Do you want to~use Rock Smash?%Yes|No%";
 
-            Screen.TextBox.Show(text,
-            {
-                this
-            });
+            Screen.TextBox.Show(text, this);
             SoundManager.PlaySound("select");
         }
     }
@@ -58,7 +48,7 @@ public class SmashRock : Entity
 
             foreach (Pokemon p in Core.Player.Pokemons)
             {
-                if (p.IsEgg() == false)
+                if (p.isEgg == false)
                 {
                     foreach (BattleSystem.Attack a in p.Attacks)
                     {
@@ -176,4 +166,5 @@ public class SmashRock : Entity
     {
         this.Draw(this.Model, this.Textures, false);
     }
+}
 }

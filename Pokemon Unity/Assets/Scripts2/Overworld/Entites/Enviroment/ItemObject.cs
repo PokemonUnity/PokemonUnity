@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class ItemObject : Entity
 {
     private static Dictionary<string, Texture2D> AnimationTexturesTemp = new Dictionary<string, Texture2D>();
@@ -175,10 +167,7 @@ public class ItemObject : Entity
             RemoveItem(this);
             SoundManager.PlaySound("item_found", true);
             Screen.TextBox.TextColor = TextBox.PlayerColor;
-            Screen.TextBox.Show(Core.Player.Name + " found~" + this.Item.Name + "!*" + Core.Player.Inventory.GetMessageReceive(Item, 1),
-            {
-                this
-            });
+            Screen.TextBox.Show(Core.Player.Name + " found~" + this.Item.Name + "!*" + Core.Player.Inventory.GetMessageReceive(Item, 1), this);
             Core.Player.Inventory.AddItem(this.Item.ID, 1);
             PlayerStatistics.Track("Items found", 1);
 
@@ -234,4 +223,5 @@ public class ItemObject : Entity
         else
             return false;
     }
+}
 }

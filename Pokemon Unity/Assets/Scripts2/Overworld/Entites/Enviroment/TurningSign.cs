@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
+﻿namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class TurningSign : Entity
 {
     private float TurningSpeed = 0.01F;
@@ -27,13 +16,11 @@ public class TurningSign : Entity
                     this.Rotation.X = randomValue;
                     break;
                 }
-
             case 2:
                 {
                     this.Rotation.Z = randomValue;
                     break;
                 }
-
             default:
                 {
                     this.Rotation.Y = randomValue;
@@ -55,13 +42,11 @@ public class TurningSign : Entity
                     this.Rotation.X += TurningSpeed;
                     break;
                 }
-
             case 2:
                 {
                     this.Rotation.Z += TurningSpeed;
                     break;
                 }
-
             default:
                 {
                     this.Rotation.Y += TurningSpeed;
@@ -76,4 +61,5 @@ public class TurningSign : Entity
     {
         this.Draw(this.Model, Textures, true);
     }
+}
 }

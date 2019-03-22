@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Misc
+{
 public class OwnPlayer : Entity
 {
-	public static readonly string[] AllowedSkins = new[] { "Ethan", "Lyra", "Nate", "Rosa", "Hilbert", "Hilda", "GoldRetro" };
+	public static readonly string[] AllowedSkins = new string[] { "Ethan", "Lyra", "Nate", "Rosa", "Hilbert", "Hilda", "GoldRetro" };
 
 	public Texture2D Texture;
 	public string SkinName = "Hilbert";
@@ -202,17 +195,14 @@ public class OwnPlayer : Entity
 					{
 						return 0;
 					}
-
 				case 2:
 					{
 						return 1;
 					}
-
 				case 3:
 					{
 						return 0;
 					}
-
 				case 4:
 					{
 						return 2;
@@ -249,11 +239,7 @@ public class OwnPlayer : Entity
 	{
 		this.Shaders.Clear();
 		foreach (Shader Shader in Screen.Level.Shaders)
-			Shader.ApplyShader(
-				new OwnPlayer()
-				{
-					this
-				});
+			Shader.ApplyShader(this);
 	}
 
 	private float GetAnimationDelay()
@@ -262,4 +248,5 @@ public class OwnPlayer : Entity
 			return OwnPlayer.AnimationDelayLenght / (double)1.4F;
 		return OwnPlayer.AnimationDelayLenght;
 	}
+}
 }

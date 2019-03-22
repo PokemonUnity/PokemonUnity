@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
+﻿namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class ModelEntity : Entity
 {
-
     // A private copy of a model, because who needs Inherhitance or OO in general.
     // Just... Microsoft... Why make the Model class NotInheritable
     private Model _model;
@@ -88,4 +76,5 @@ public class ModelEntity : Entity
                 BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, Color.Red);
         }
     }
+}
 }

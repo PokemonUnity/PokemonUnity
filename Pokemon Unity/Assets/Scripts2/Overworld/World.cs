@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-using P3D.BattleSystem;
+using UnityEngine;
 
+namespace PokemonUnity.Overworld
+{
 public class World
 {
     private static Weathers _regionWeather = Weathers.Clear;
@@ -83,17 +77,14 @@ public class World
                     {
                         return Seasons.Winter;
                     }
-
                 case 2:
                     {
                         return Seasons.Spring;
                     }
-
                 case 3:
                     {
                         return Seasons.Summer;
                     }
-
                 case 0:
                     {
                         return Seasons.Fall;
@@ -112,7 +103,8 @@ public class World
 
             DayTime time = DayTime.Day;
 
-            int Hour = My.Computer.Clock.LocalTime.Hour;
+			//ToDo: DateTime UTC to Local
+            int Hour = DateTime.UtcNow.Hour;
             if (NeedServerObject() == true)
             {
                 string[] data = ServerTimeData.Split(System.Convert.ToChar(","));
@@ -133,7 +125,6 @@ public class World
                             time = DayTime.Evening;
                         break;
                     }
-
                 case Seasons.Spring:
                     {
                         if (Hour > 19 | Hour < 5)
@@ -146,7 +137,6 @@ public class World
                             time = DayTime.Evening;
                         break;
                     }
-
                 case Seasons.Summer:
                     {
                         if (Hour > 20 | Hour < 4)
@@ -159,7 +149,6 @@ public class World
                             time = DayTime.Evening;
                         break;
                     }
-
                 case Seasons.Fall:
                     {
                         if (Hour > 19 | Hour < 6)
@@ -223,7 +212,6 @@ public class World
                                 Screen.Camera.FarPlane = 20;
                                 break;
                             }
-
                         case 1:
                             {
                                 Screen.Effect.FogStart = -2;
@@ -232,7 +220,6 @@ public class World
                                 Screen.Camera.FarPlane = 40;
                                 break;
                             }
-
                         case 2:
                             {
                                 Screen.Effect.FogStart = -2;
@@ -241,7 +228,6 @@ public class World
                                 Screen.Camera.FarPlane = 60;
                                 break;
                             }
-
                         case 3:
                             {
                                 Screen.Effect.FogStart = -5;
@@ -250,7 +236,6 @@ public class World
                                 Screen.Camera.FarPlane = 80;
                                 break;
                             }
-
                         case 4:
                             {
                                 Screen.Effect.FogStart = -20;
@@ -276,7 +261,6 @@ public class World
                                 Screen.Camera.FarPlane = 20;
                                 break;
                             }
-
                         case 1:
                             {
                                 Screen.Effect.FogStart = 36;
@@ -285,7 +269,6 @@ public class World
                                 Screen.Camera.FarPlane = 40;
                                 break;
                             }
-
                         case 2:
                             {
                                 Screen.Effect.FogStart = 56;
@@ -294,7 +277,6 @@ public class World
                                 Screen.Camera.FarPlane = 60;
                                 break;
                             }
-
                         case 3:
                             {
                                 Screen.Effect.FogStart = 76;
@@ -303,7 +285,6 @@ public class World
                                 Screen.Camera.FarPlane = 80;
                                 break;
                             }
-
                         case 4:
                             {
                                 Screen.Effect.FogStart = 96;
@@ -333,7 +314,6 @@ public class World
                                             Screen.Camera.FarPlane = 20;
                                             break;
                                         }
-
                                     case 1:
                                         {
                                             Screen.Effect.FogStart = -2;
@@ -342,7 +322,6 @@ public class World
                                             Screen.Camera.FarPlane = 40;
                                             break;
                                         }
-
                                     case 2:
                                         {
                                             Screen.Effect.FogStart = -2;
@@ -351,7 +330,6 @@ public class World
                                             Screen.Camera.FarPlane = 60;
                                             break;
                                         }
-
                                     case 3:
                                         {
                                             Screen.Effect.FogStart = -5;
@@ -360,7 +338,6 @@ public class World
                                             Screen.Camera.FarPlane = 80;
                                             break;
                                         }
-
                                     case 4:
                                         {
                                             Screen.Effect.FogStart = -20;
@@ -386,7 +363,6 @@ public class World
                                             Screen.Camera.FarPlane = 20;
                                             break;
                                         }
-
                                     case 1:
                                         {
                                             Screen.Effect.FogStart = 36;
@@ -395,7 +371,6 @@ public class World
                                             Screen.Camera.FarPlane = 40;
                                             break;
                                         }
-
                                     case 2:
                                         {
                                             Screen.Effect.FogStart = 56;
@@ -404,7 +379,6 @@ public class World
                                             Screen.Camera.FarPlane = 60;
                                             break;
                                         }
-
                                     case 3:
                                         {
                                             Screen.Effect.FogStart = 76;
@@ -413,7 +387,6 @@ public class World
                                             Screen.Camera.FarPlane = 80;
                                             break;
                                         }
-
                                     case 4:
                                         {
                                             Screen.Effect.FogStart = 96;
@@ -439,7 +412,6 @@ public class World
                                             Screen.Camera.FarPlane = 20;
                                             break;
                                         }
-
                                     case 1:
                                         {
                                             Screen.Effect.FogStart = 36;
@@ -448,7 +420,6 @@ public class World
                                             Screen.Camera.FarPlane = 40;
                                             break;
                                         }
-
                                     case 2:
                                         {
                                             Screen.Effect.FogStart = 56;
@@ -457,7 +428,6 @@ public class World
                                             Screen.Camera.FarPlane = 60;
                                             break;
                                         }
-
                                     case 3:
                                         {
                                             Screen.Effect.FogStart = 76;
@@ -466,7 +436,6 @@ public class World
                                             Screen.Camera.FarPlane = 80;
                                             break;
                                         }
-
                                     case 4:
                                         {
                                             Screen.Effect.FogStart = 96;
@@ -492,7 +461,6 @@ public class World
                                             Screen.Camera.FarPlane = 20;
                                             break;
                                         }
-
                                     case 1:
                                         {
                                             Screen.Effect.FogStart = 0;
@@ -501,7 +469,6 @@ public class World
                                             Screen.Camera.FarPlane = 40;
                                             break;
                                         }
-
                                     case 2:
                                         {
                                             Screen.Effect.FogStart = 0;
@@ -510,7 +477,6 @@ public class World
                                             Screen.Camera.FarPlane = 60;
                                             break;
                                         }
-
                                     case 3:
                                         {
                                             Screen.Effect.FogStart = 0;
@@ -519,7 +485,6 @@ public class World
                                             Screen.Camera.FarPlane = 80;
                                             break;
                                         }
-
                                     case 4:
                                         {
                                             Screen.Effect.FogStart = 0;
@@ -549,7 +514,6 @@ public class World
                                 Screen.Camera.FarPlane = 20;
                                 break;
                             }
-
                         case 1:
                             {
                                 Screen.Effect.FogStart = 0;
@@ -558,7 +522,6 @@ public class World
                                 Screen.Camera.FarPlane = 40;
                                 break;
                             }
-
                         case 2:
                             {
                                 Screen.Effect.FogStart = 0;
@@ -567,7 +530,6 @@ public class World
                                 Screen.Camera.FarPlane = 60;
                                 break;
                             }
-
                         case 3:
                             {
                                 Screen.Effect.FogStart = 0;
@@ -576,7 +538,6 @@ public class World
                                 Screen.Camera.FarPlane = 80;
                                 break;
                             }
-
                         case 4:
                             {
                                 Screen.Effect.FogStart = 0;
@@ -621,9 +582,7 @@ public class World
                         return Weathers.Clear;
                     else
                         return Weathers.Snow;
-                    break;
                 }
-
             case Seasons.Spring:
                 {
                     if (r < 5)
@@ -632,18 +591,14 @@ public class World
                         return Weathers.Rain;
                     else
                         return Weathers.Clear;
-                    break;
                 }
-
             case Seasons.Summer:
                 {
                     if (r < 10)
                         return Weathers.Rain;
                     else
                         return Weathers.Clear;
-                    break;
                 }
-
             case Seasons.Fall:
                 {
                     if (r < 5)
@@ -652,7 +607,6 @@ public class World
                         return Weathers.Rain;
                     else
                         return Weathers.Clear;
-                    break;
                 }
         }
 
@@ -676,68 +630,47 @@ public class World
 
         switch (WeatherType)
         {
-            case 0 // Region Weather
-           :
+            case 0: // Region Weather
                 {
                     return World.GetCurrentRegionWeather();
                 }
-
-            case 1 // Clear
-           :
+            case 1: // Clear
                 {
                     return Weathers.Clear;
                 }
-
-            case 2 // Rain
-           :
+            case 2: // Rain
                 {
                     return Weathers.Rain;
                 }
-
-            case 3 // Snow
-           :
+            case 3: // Snow
                 {
                     return Weathers.Snow;
                 }
-
-            case 4 // Underwater
-           :
+            case 4: // Underwater
                 {
                     return Weathers.Underwater;
                 }
-
-            case 5 // Sunny
-           :
+            case 5: // Sunny
                 {
                     return Weathers.Sunny;
                 }
-
-            case 6 // Fog
-           :
+            case 6: // Fog
                 {
                     return Weathers.Fog;
                 }
-
-            case 7 // Sandstorm
-           :
+            case 7: // Sandstorm
                 {
                     return Weathers.Sandstorm;
                 }
-
-            case 8 // Ash
-           :
+            case 8: // Ash
                 {
                     return Weathers.Ash;
                 }
-
-            case 9 // Blizzard
-           :
+            case 9: // Blizzard
                 {
                     return Weathers.Blizzard;
                 }
-
-            case 10 // Thunderstorm
-           :
+            case 10: // Thunderstorm
                 {
                     return Weathers.Thunderstorm;
                 }
@@ -756,52 +689,42 @@ public class World
                 {
                     return 1;
                 }
-
             case Weathers.Rain:
                 {
                     return 2;
                 }
-
             case Weathers.Snow:
                 {
                     return 3;
                 }
-
             case Weathers.Underwater:
                 {
                     return 4;
                 }
-
             case Weathers.Sunny:
                 {
                     return 5;
                 }
-
             case Weathers.Fog:
                 {
                     return 6;
                 }
-
             case Weathers.Sandstorm:
                 {
                     return 7;
                 }
-
             case Weathers.Ash:
                 {
                     return 8;
                 }
-
             case Weathers.Blizzard:
                 {
                     return 9;
                 }
-
             case Weathers.Thunderstorm:
                 {
                     return 10;
                 }
-
             default:
                 {
                     return 0;
@@ -821,24 +744,19 @@ public class World
 
         switch (EnvironmentType)
         {
-            case 0 // Overworld
-           :
+            case 0: // Overworld
                 {
                     this.EnvironmentType = EnvironmentTypes.Outside;
                     this.UseLightning = true;
                     break;
                 }
-
-            case 1 // Permanent Day
-     :
+            case 1: // Permanent Day
                 {
                     this.EnvironmentType = EnvironmentTypes.Inside;
                     this.UseLightning = false;
                     break;
                 }
-
-            case 2 // Cave
-     :
+            case 2: // Cave
                 {
                     this.EnvironmentType = EnvironmentTypes.Cave;
                     if (WeatherType == 0)
@@ -846,9 +764,7 @@ public class World
                     this.UseLightning = false;
                     break;
                 }
-
-            case 3 // Permanent Night
-     :
+            case 3: // Permanent Night
                 {
                     this.EnvironmentType = EnvironmentTypes.Dark;
                     if (WeatherType == 0)
@@ -856,9 +772,7 @@ public class World
                     this.UseLightning = false;
                     break;
                 }
-
-            case 4 // Underwater
-     :
+            case 4: // Underwater
                 {
                     this.EnvironmentType = EnvironmentTypes.Underwater;
                     if (WeatherType == 0)
@@ -866,9 +780,7 @@ public class World
                     this.UseLightning = true;
                     break;
                 }
-
-            case 5 // Forest
-     :
+            case 5: // Forest
                 {
                     this.EnvironmentType = EnvironmentTypes.Forest;
                     this.UseLightning = true;
@@ -887,56 +799,48 @@ public class World
         {
             case Weathers.Clear:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(1);
+                    Screen.Effect.DiffuseColor = new Vector3(1f, 1f, 1f);
                     break;
                 }
-
             case Weathers.Rain:
             case Weathers.Thunderstorm:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.4, 0.4, 0.7);
+                    Screen.Effect.DiffuseColor = new Vector3(0.4f, 0.4f, 0.7f);
                     break;
                 }
-
             case Weathers.Snow:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.8);
+                    Screen.Effect.DiffuseColor = new Vector3(0.8f, .8f, .8f);
                     break;
                 }
-
             case Weathers.Underwater:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.1, 0.3, 0.9);
+                    Screen.Effect.DiffuseColor = new Vector3(0.1f, 0.3f, 0.9f);
                     break;
                 }
-
             case Weathers.Sunny:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(1.6, 1.3, 1.3);
+                    Screen.Effect.DiffuseColor = new Vector3(1.6f, 1.3f, 1.3f);
                     break;
                 }
-
             case Weathers.Fog:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.5, 0.5, 0.6);
+                    Screen.Effect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.6f);
                     break;
                 }
-
             case Weathers.Sandstorm:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.8, 0.5, 0.2);
+                    Screen.Effect.DiffuseColor = new Vector3(0.8f, 0.5f, 0.2f);
                     break;
                 }
-
             case Weathers.Ash:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.5, 0.5, 0.5);
+                    Screen.Effect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
                     break;
                 }
-
             case Weathers.Blizzard:
                 {
-                    Screen.Effect.DiffuseColor = new Vector3(0.6, 0.6, 0.6);
+                    Screen.Effect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
                     break;
                 }
         }
@@ -946,7 +850,7 @@ public class World
 
     private Color GetWeatherBackgroundColor(Color defaultColor)
     {
-        Vector3 v = Vector3.One;
+        Vector3 v = Vector3.one;
 
         switch (CurrentMapWeather)
         {
@@ -1345,7 +1249,7 @@ public class World
                                 float rY = System.Convert.ToSingle(Core.Random.Next(0, 40) / (double)10) - 2.0F;
                                 float rX = System.Convert.ToSingle(Core.Random.NextDouble()) - 0.5F;
                                 float rZ = System.Convert.ToSingle(Core.Random.NextDouble()) - 0.5F;
-                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.Y + 1.8F + rY, z + rZ), new[] { T }, new[] { 0, 0 }, Core.Random.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1));
+                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.Y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Core.Random.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1f, 1f, 1f));
                                 p.MoveSpeed = speed;
                                 if (MapWeather == Weathers.Rain)
                                     p.Opacity = 0.7F;
@@ -1400,21 +1304,18 @@ public class World
                         y = 0;
                         break;
                     }
-
                 case Seasons.Spring:
                     {
                         x = 2;
                         y = 0;
                         break;
                     }
-
                 case Seasons.Summer:
                     {
                         x = 0;
                         y = 2;
                         break;
                     }
-
                 case Seasons.Fall:
                     {
                         x = 2;
@@ -1462,7 +1363,7 @@ public class World
                 return hours * 3600 + minutes * 60 + seconds;
             }
             else
-                return My.Computer.Clock.LocalTime.Hour * 3600 + My.Computer.Clock.LocalTime.Minute * 60 + My.Computer.Clock.LocalTime.Second;
+                return DateTime.UtcNow.Hour * 3600 + DateTime.UtcNow.Minute * 60 + DateTime.UtcNow.Second;
         }
     }
 
@@ -1524,4 +1425,5 @@ public class World
             _regionWeatherSet = value;
         }
     }
+}
 }

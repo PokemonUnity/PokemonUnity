@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 using System.Threading;
+using PokemonUnity.Overworld;
+using PokemonUnity.Overworld.Entity;
+using PokemonUnity.Overworld.Entity.Misc;
+using PokemonUnity.Overworld.Entity.Environment;
+
+namespace PokemonUnity.Overworld
+{
 /// <summary>
-
 /// A class that manages the collection of entities to represent a map.
-
+/// Contains MetaData and Map Header.
 /// </summary>
 public class Level
 {
-    private RouteSign _routeSign = null/* TODO Change to default(_) if this is not a reference type */;
-    private World _world = null/* TODO Change to default(_) if this is not a reference type */;
-    private PokemonEncounter _pokemonEncounter = null/* TODO Change to default(_) if this is not a reference type */;
+    private RouteSign _routeSign = null;// TODO Change to default(_) if this is not a reference type 
+	private World _world = null;// TODO Change to default(_) if this is not a reference type
+	private PokemonEncounter _pokemonEncounter = null;// TODO Change to default(_) if this is not a reference type 
 
     /// <summary>
     /// Stores warp data for warping to a new map.
@@ -82,7 +79,7 @@ public class Level
 
     // Radio:
     private bool _isRadioOn = false;
-    private GameJolt.PokegearScreen.RadioStation _selectedRadioStation = null/* TODO Change to default(_) if this is not a reference type */;
+	private GameJolt.PokegearScreen.RadioStation _selectedRadioStation = null;// TODO Change to default(_) if this is not a reference type 
     private List<decimal> _radioChannels = new List<decimal>();
 
     private System.Timers.Timer _offsetTimer = new System.Timers.Timer();
@@ -804,7 +801,7 @@ public class Level
     /// </summary>
     public void StartOffsetMapUpdate()
     {
-        if (!this._offsetTimer == null)
+        if (this._offsetTimer != null)
             this._offsetTimer.Stop();
 
         this._offsetTimer = new System.Timers.Timer();
@@ -838,7 +835,7 @@ public class Level
 
         // Create a parameter array to pass over to the LevelLoader:
         List<object> @params = new List<object>();
-        @params.AddRange(
+        @params.AddRange(new
         {
             Levelpath,
             false,
@@ -860,10 +857,7 @@ public class Level
             Logger.Debug("Don't attempt to load a levelfile.");
 
         // Create own player entity and OverworldPokémon entity and add them to the entity enumeration:
-        OwnPlayer = new OwnPlayer(0, 0, 0,
-        {
-            TextureManager.DefaultTexture
-        }, Core.Player.Skin, 0, 0, "", "Gold", 0);
+        OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Core.Player.Skin, 0, 0, "", "Gold", 0);
         OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.X, Screen.Camera.Position.Y, Screen.Camera.Position.Z + 1);
         OverworldPokemon.ChangeRotation();
         Entities.AddRange(
@@ -922,7 +916,7 @@ public class Level
         }
 
         // Render all other entities:
-        for (i = 0; i <= AllEntities.Count - 1; i++)
+        for (int i = 0; i <= AllEntities.Count - 1; i++)
         {
             if (i <= AllEntities.Count - 1)
             {
@@ -1055,7 +1049,7 @@ public class Level
                 }
 
                 // Call UpdateEntity on all offset map floors:
-                for (i = this.OffsetmapFloors.Count - 1; i >= 0; i += -1)
+                for (int i = this.OffsetmapFloors.Count - 1; i >= 0; i += -1)
                 {
                     if (i <= this.OffsetmapFloors.Count - 1)
                         this.OffsetmapFloors[i].UpdateEntity();
@@ -1073,11 +1067,11 @@ public class Level
     private void RenderOffsetMap()
     {
         // Render floors:
-        for (var i = 0; i <= this.OffsetmapFloors.Count - 1; i++)
+        for (int i = 0; i <= this.OffsetmapFloors.Count - 1; i++)
         {
             if (i <= this.OffsetmapFloors.Count - 1)
             {
-                if (!this.OffsetmapFloors[i] == null)
+                if (this.OffsetmapFloors[i] != null)
                 {
                     this.OffsetmapFloors[i].Render();
                     DebugDisplay.MaxVertices += this.OffsetmapFloors[i].VertexCount;
@@ -1086,7 +1080,7 @@ public class Level
         }
 
         // Render entities:
-        for (i = 0; i <= this.OffsetmapEntities.Count - 1; i++)
+        for (int i = 0; i <= this.OffsetmapEntities.Count - 1; i++)
         {
             if (i <= this.OffsetmapEntities.Count - 1)
             {
@@ -1132,7 +1126,7 @@ public class Level
 
             // Load the new level:
             List<object> @params = new List<object>();
-            @params.AddRange(
+            @params.AddRange(new 
             {
                 WarpData.WarpDestination,
                 false,
@@ -1152,10 +1146,7 @@ public class Level
             this.Surfing = Core.Player.startSurfing; // Set the Surfing property after map switch.
 
             // Create player and Pokémon entities:
-            OwnPlayer = new OwnPlayer(0, 0, 0,
-            {
-                TextureManager.DefaultTexture
-            }, Core.Player.Skin, 0, 0, "", "Gold", 0);
+            OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Core.Player.Skin, 0, 0, "", "Gold", 0);
             OwnPlayer.SetTexture(Core.Player.Skin, usingGameJoltTexture);
 
             OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.X, Screen.Camera.Position.Y, Screen.Camera.Position.Z + 1);
@@ -1322,7 +1313,6 @@ public class Level
                     {
                         return true;
                     }
-
                 case 2:
                     {
                         return false;
@@ -1347,4 +1337,5 @@ public class Level
         }
         return true;
     }
+}
 }

@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class Water : Entity
 {
     private static Dictionary<string, Texture2D> WaterTexturesTemp = new Dictionary<string, Texture2D>();
@@ -174,7 +166,6 @@ public class Water : Entity
                                         message = "Do you want to Surf?%Yes|No%";
                                         break;
                                     }
-
                                 case "1":
                                 case "sea":
                                 case "water":
@@ -182,7 +173,6 @@ public class Water : Entity
                                         message = "The water looks still~and deep.~Do you want to Surf?%Yes|No%";
                                         break;
                                     }
-
                                 case "2":
                                 case "lake":
                                 case "pond":
@@ -192,10 +182,7 @@ public class Water : Entity
                                     }
                             }
 
-                            Screen.TextBox.Show(message,
-                            {
-                                this
-                            }, true, true);
+                            Screen.TextBox.Show(message, this, true, true);
                             SoundManager.PlaySound("select");
                         }
                     }
@@ -238,7 +225,7 @@ public class Water : Entity
             switch (this.Rotation.Y)
             {
                 case 0:
-                case object _ when MathHelper.TwoPi:
+                case (object)MathHelper.TwoPi:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -263,8 +250,7 @@ public class Water : Entity
 
                         break;
                     }
-
-                case object _ when MathHelper.Pi * 0.5F:
+                case (object)MathHelper.Pi * 0.5F:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -289,8 +275,7 @@ public class Water : Entity
 
                         break;
                     }
-
-                case object _ when MathHelper.Pi:
+                case (object)MathHelper.Pi:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -315,8 +300,7 @@ public class Water : Entity
 
                         break;
                     }
-
-                case object _ when MathHelper.Pi * 1.5:
+                case (object)MathHelper.Pi * 1.5:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -349,10 +333,7 @@ public class Water : Entity
     {
         if (Result == 0)
         {
-            Screen.TextBox.Show(Core.Player.Pokemons(Core.Player.SurfPokemon).GetDisplayName() + " used~Surf!",
-            {
-                this
-            });
+            Screen.TextBox.Show(Core.Player.Pokemons(Core.Player.SurfPokemon).GetDisplayName() + " used~Surf!", this);
             Screen.Level.Surfing = true;
             Screen.Camera.Move(1);
             PlayerStatistics.Track("Surf used", 1);
@@ -384,4 +365,5 @@ public class Water : Entity
 
         this.Draw(this.Model, Textures, setRasterizerState);
     }
+}
 }

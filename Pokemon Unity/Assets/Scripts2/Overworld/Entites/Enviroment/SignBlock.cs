@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-
+﻿namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class SignBlock : Entity
 {
-
     // Action value:  0=normal text in additional value
     // 1=script path in additional value
     // 2=direct script input in additional value
@@ -44,7 +32,6 @@ public class SignBlock : Entity
                         canRead = true;
                     break;
                 }
-
             case 0:
             case 2:
                 {
@@ -68,19 +55,16 @@ public class SignBlock : Entity
                             oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
                             break;
                         }
-
                     case 1:
                         {
                             oScreen.ActionScript.StartScript(this.AdditionalValue, 0);
                             break;
                         }
-
                     case 2:
                         {
                             oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", Environment.NewLine), 2);
                             break;
                         }
-
                     default:
                         {
                             oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
@@ -95,4 +79,5 @@ public class SignBlock : Entity
     {
         this.Draw(this.Model, Textures, true);
     }
+}
 }

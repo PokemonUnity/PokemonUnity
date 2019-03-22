@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-//using System.Threading.Tasks;
 using PokemonUnity;
-//using Microsoft.VisualBasic;
+using PokemonUnity.Overworld.Entity.Environment;
 
+namespace PokemonUnity.Overworld.Entity
+{
 public class Entity : BaseEntity
 {
 	public static bool MakeShake = false;
@@ -19,7 +13,7 @@ public class Entity : BaseEntity
 
 	public int ID = -1;
 
-	public string EntityID = "";
+	public Entities EntityID;// = null;
 	public string MapOrigin = "";
 	public bool IsOffsetMapContent = false;
 	public UnityEngine.Vector3 Offset = new UnityEngine.Vector3(0);
@@ -91,7 +85,7 @@ public class Entity : BaseEntity
 	{
 	}
 
-	public Entity(float X, float Y, float Z, string EntityID, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, UnityEngine.Vector3 Scale, BaseModel Model, int ActionValue, string AdditionalValue, UnityEngine.Vector3 Shader) : base(EntityTypes.Entity)
+	public Entity(float X, float Y, float Z, Entities EntityID, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, UnityEngine.Vector3 Scale, BaseModel Model, int ActionValue, string AdditionalValue, UnityEngine.Vector3 Shader) : base(EntityTypes.Entity)
 	{
 		this.Position = new UnityEngine.Vector3(X, Y, Z);
 		this.EntityID = EntityID;
@@ -186,7 +180,6 @@ public class Entity : BaseEntity
 					(AnimatedBlock)newEnt.Initialize(AnimationData);
 					break;
 				}
-
 			case "wallblock":
 				{
 					newEnt = new WallBlock();
@@ -194,7 +187,6 @@ public class Entity : BaseEntity
 					(WallBlock)newEnt.Initialize();
 					break;
 				}
-
 			case "cube":
 			case "allsidesobject":
 				{
@@ -203,7 +195,6 @@ public class Entity : BaseEntity
 					(AllSidesObject)newEnt.Initialize();
 					break;
 				}
-
 			case "slideblock":
 				{
 					newEnt = new SlideBlock();
@@ -211,7 +202,6 @@ public class Entity : BaseEntity
 					(SlideBlock)newEnt.Initialize();
 					break;
 				}
-
 			case "wallbill":
 				{
 					newEnt = new WallBill();
@@ -219,7 +209,6 @@ public class Entity : BaseEntity
 					(WallBill)newEnt.Initialize();
 					break;
 				}
-
 			case "signblock":
 				{
 					newEnt = new SignBlock();
@@ -227,7 +216,6 @@ public class Entity : BaseEntity
 					(SignBlock)newEnt.Initialize();
 					break;
 				}
-
 			case "warpblock":
 				{
 					newEnt = new WarpBlock();
@@ -235,7 +223,6 @@ public class Entity : BaseEntity
 					(WarpBlock)newEnt.Initialize();
 					break;
 				}
-
 			case "floor":
 				{
 					newEnt = new Floor();
@@ -243,7 +230,6 @@ public class Entity : BaseEntity
 					(Floor)newEnt.Initialize(true, false, true);
 					break;
 				}
-
 			case "step":
 				{
 					newEnt = new StepBlock();
@@ -251,7 +237,6 @@ public class Entity : BaseEntity
 					(StepBlock)newEnt.Initialize();
 					break;
 				}
-
 			case "cuttree":
 				{
 					newEnt = new CutDownTree();
@@ -259,7 +244,6 @@ public class Entity : BaseEntity
 					(CutDownTree)newEnt.Initialize();
 					break;
 				}
-
 			case "water":
 				{
 					newEnt = new Water();
@@ -267,7 +251,6 @@ public class Entity : BaseEntity
 					(Water)newEnt.Initialize();
 					break;
 				}
-
 			case "grass":
 				{
 					newEnt = new Grass();
@@ -275,7 +258,6 @@ public class Entity : BaseEntity
 					(Grass)newEnt.Initialize();
 					break;
 				}
-
 			case "berryplant":
 				{
 					newEnt = new BerryPlant();
@@ -283,7 +265,6 @@ public class Entity : BaseEntity
 					(BerryPlant)newEnt.Initialize();
 					break;
 				}
-
 			case "loamysoil":
 				{
 					newEnt = new LoamySoil();
@@ -291,7 +272,6 @@ public class Entity : BaseEntity
 					(LoamySoil)newEnt.Initialize();
 					break;
 				}
-
 			case "itemobject":
 				{
 					newEnt = new ItemObject();
@@ -299,7 +279,6 @@ public class Entity : BaseEntity
 					(ItemObject)newEnt.Initialize();
 					break;
 				}
-
 			case "scriptblock":
 				{
 					newEnt = new ScriptBlock();
@@ -307,7 +286,6 @@ public class Entity : BaseEntity
 					(ScriptBlock)newEnt.Initialize();
 					break;
 				}
-
 			case "turningsign":
 				{
 					newEnt = new TurningSign();
@@ -315,7 +293,6 @@ public class Entity : BaseEntity
 					(TurningSign)newEnt.Initialize();
 					break;
 				}
-
 			case "apricornplant":
 				{
 					newEnt = new ApricornPlant();
@@ -323,7 +300,6 @@ public class Entity : BaseEntity
 					(ApricornPlant)newEnt.Initialize();
 					break;
 				}
-
 			case "headbutttree":
 				{
 					newEnt = new HeadbuttTree();
@@ -331,7 +307,6 @@ public class Entity : BaseEntity
 					(HeadbuttTree)newEnt.Initialize();
 					break;
 				}
-
 			case "smashrock":
 				{
 					newEnt = new SmashRock();
@@ -339,7 +314,6 @@ public class Entity : BaseEntity
 					(SmashRock)newEnt.Initialize();
 					break;
 				}
-
 			case "strengthrock":
 				{
 					newEnt = new StrengthRock();
@@ -347,7 +321,6 @@ public class Entity : BaseEntity
 					(StrengthRock)newEnt.Initialize();
 					break;
 				}
-
 			case "npc":
 				{
 					newEnt = new NPC();
@@ -355,7 +328,6 @@ public class Entity : BaseEntity
 					(NPC)newEnt.Initialize(System.Convert.ToString(Params[0]), System.Convert.ToInt32(Params[1]), System.Convert.ToString(Params[2]), System.Convert.ToInt32(Params[3]), System.Convert.ToBoolean(Params[4]), System.Convert.ToString(Params[5]), (List<Rectangle>)Params[6]);
 					break;
 				}
-
 			case "waterfall":
 				{
 					newEnt = new Waterfall();
@@ -363,7 +335,6 @@ public class Entity : BaseEntity
 					(Waterfall)newEnt.Initialize();
 					break;
 				}
-
 			case "whirlpool":
 				{
 					newEnt = new Whirlpool();
@@ -371,7 +342,6 @@ public class Entity : BaseEntity
 					(Whirlpool)newEnt.Initialize();
 					break;
 				}
-
 			case "strengthtrigger":
 				{
 					newEnt = new StrengthTrigger();
@@ -379,7 +349,6 @@ public class Entity : BaseEntity
 					(StrengthTrigger)newEnt.Initialize();
 					break;
 				}
-
 			case "modelentity":
 				{
 					newEnt = new ModelEntity();
@@ -387,7 +356,6 @@ public class Entity : BaseEntity
 					(ModelEntity)newEnt.Initialize();
 					break;
 				}
-
 			case "rotationtile":
 				{
 					newEnt = new RotationTile();
@@ -395,7 +363,6 @@ public class Entity : BaseEntity
 					(RotationTile)newEnt.Initialize();
 					break;
 				}
-
 			case "divetile":
 				{
 					newEnt = new DiveTile();
@@ -403,7 +370,6 @@ public class Entity : BaseEntity
 					(DiveTile)newEnt.Initialize();
 					break;
 				}
-
 			case "rockclimbentity":
 				{
 					newEnt = new RockClimbEntity();
@@ -857,4 +823,5 @@ public class Entity : BaseEntity
 		}
 		return null;
 	}
+}
 }

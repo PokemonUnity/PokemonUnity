@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+﻿using System.Collections.Generic;
+using PokemonUnity.Pokemon;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class Whirlpool : Entity
 {
     public static bool LoadedWaterTemp = false;
@@ -73,19 +65,16 @@ public class Whirlpool : Entity
                         this.Textures(0) = Whirlpool.WaterTexturesTemp[0];
                         break;
                     }
-
                 case 1:
                     {
                         this.Textures(0) = Whirlpool.WaterTexturesTemp[1];
                         break;
                     }
-
                 case 2:
                     {
                         this.Textures(0) = Whirlpool.WaterTexturesTemp[2];
                         break;
                     }
-
                 case 3:
                     {
                         this.Textures(0) = Whirlpool.WaterTexturesTemp[3];
@@ -104,7 +93,7 @@ public class Whirlpool : Entity
     {
         foreach (Pokemon p in Core.Player.Pokemons)
         {
-            if (p.IsEgg() == false)
+            if (p.isEgg == false)
             {
                 foreach (BattleSystem.Attack a in p.Attacks)
                 {
@@ -171,4 +160,5 @@ public class Whirlpool : Entity
 
         return true;
     }
+}
 }

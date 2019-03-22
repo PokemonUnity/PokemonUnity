@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-//using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class AnimatedBlock : Entity
 {
 	private static Dictionary<string, Texture2D> BlockTexturesTemp = new Dictionary<string, Texture2D>();
@@ -177,12 +170,7 @@ public class AnimatedBlock : Entity
 						if (canSurf == true)
 						{
 							string message = "Do you want to Surf?%Yes|No%";
-							Screen.TextBox.Show(message,
-								new AnimatedBlock()
-							{
-								this
-
-							}, true, true);
+							Screen.TextBox.Show(message, this, true, true);
 							SoundManager.PlaySound("select");
 						}
 					}
@@ -233,12 +221,7 @@ public class AnimatedBlock : Entity
 	{
 		if (Result == 0)
 		{
-			Screen.TextBox.Show(Core.Player.Pokemons(Core.Player.SurfPokemon).GetDisplayName() + " used~Surf!",
-				new AnimatedBlock()
-			{
-				this
-
-			});
+			Screen.TextBox.Show(Core.Player.Pokemons(Core.Player.SurfPokemon).GetDisplayName() + " used~Surf!", this);
 			Screen.Level.Surfing = true;
 			Screen.Camera.Move(1);
 			PlayerStatistics.Track("Surf used", 1);
@@ -270,4 +253,5 @@ public class AnimatedBlock : Entity
 
 		this.Draw(this.Model, Textures, setRasterizerState);
 	}
+}
 }

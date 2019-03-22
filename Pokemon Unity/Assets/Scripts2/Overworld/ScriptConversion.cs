@@ -1,10 +1,12 @@
-﻿/// <summary>
-/// Used to convert strings into various types.
-/// </summary>
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
+namespace PokemonUnity
+{
+/// <summary>
+/// Used to convert strings into various types.
+/// </summary>
 public class ScriptConversion
 {
     enum Associativity
@@ -20,7 +22,7 @@ public class ScriptConversion
     {
         string input = expression.ToString();
         bool retError = false;
-        double retDbl = 0M;
+        double retDbl = 0d;
 
         retDbl = InternalToDouble(input, ref retError);
 
@@ -33,7 +35,7 @@ public class ScriptConversion
             return EvaluatePostfix(postFix);
         }
         else
-            return 0M;
+            return 0d;
     }
 
     /// <summary>
@@ -56,7 +58,7 @@ public class ScriptConversion
     /// Evaluates a math expression in the postfix notation. Example: "2 3 +".
     /// </summary>
     /// <param name="input">The postfix string.</param>
-    private static double EvaluatePostfix(string input, ref bool hasError = false)
+    private static double EvaluatePostfix(string input, ref bool hasError)
     {
         List<double> stack = new List<double>();
         List<char> tokens = input.ToCharArray().ToList();
@@ -101,19 +103,16 @@ public class ScriptConversion
                                 result = v1 + v2;
                                 break;
                             }
-
                         case "-":
                             {
                                 result = v1 - v2;
                                 break;
                             }
-
                         case "*":
                             {
                                 result = v1 * v2;
                                 break;
                             }
-
                         case "/":
                             {
                                 if (v2 == 0)
@@ -126,13 +125,11 @@ public class ScriptConversion
                                     result = v1 / v2;
                                 break;
                             }
-
                         case "^":
                             {
                                 result = Math.Pow(v1, v2);
                                 break;
                             }
-
                         case "%":
                             {
                                 result = v1 % v2;
@@ -165,7 +162,7 @@ public class ScriptConversion
     /// Converts an infix notation to postfix notation.
     /// </summary>
     /// <param name="input">The infix notation. Example: "2+3".</param>
-    private static string ToPostfix(string input, ref bool hasError = false)
+    private static string ToPostfix(string input, ref bool hasError)
     {
         if (input.Trim().StartsWith("-"))
             input = "0" + input;
@@ -289,14 +286,12 @@ public class ScriptConversion
                 {
                     return 2;
                 }
-
             case '*':
             case '/':
             case '%':
                 {
                     return 3;
                 }
-
             case '^':
                 {
                     return 4;
@@ -318,7 +313,6 @@ public class ScriptConversion
                 {
                     return Associativity.Right;
                 }
-
             default:
                 {
                     return Associativity.Left;
@@ -329,9 +323,9 @@ public class ScriptConversion
     /// <summary>
     /// Tries to convert a single number into a <see cref="Double"/>.
     /// </summary>
-    private static double InternalToDouble(string expression, ref bool hasError = false)
+    private static double InternalToDouble(string expression, ref bool hasError)
     {
-        expression = expression.Replace(".", My.Application.Culture.NumberFormat.NumberDecimalSeparator);
+        expression = expression.Replace(".", System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
         if (StringHelper.IsNumeric(expression))
             return System.Convert.ToDouble(expression);
@@ -377,7 +371,6 @@ public class ScriptConversion
                 {
                     return true;
                 }
-
             default:
                 {
                     return false;
@@ -395,4 +388,5 @@ public class ScriptConversion
         string[] validBools = new[] { "0", "1", "true", "false" };
         return validBools.Contains(s.ToLower());
     }
+}
 }

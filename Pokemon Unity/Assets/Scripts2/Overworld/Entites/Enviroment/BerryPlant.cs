@@ -1,23 +1,16 @@
-﻿using System;
+﻿using PokemonUnity.Item;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
+namespace PokemonUnity.Overworld.Entity.Environment
+{
 public class BerryPlant : Entity
 {
     private int Phase = 0;
     private int Grow = 0;
     private int BerryIndex = 0;
     private int BerryGrowTime = 0;
-    private Items.Berry Berry;
+    private Item.Item.Berry Berry;
     private int Berries = 0;
     private string PlantDate = "";
     private bool FullGrown = false;
@@ -28,7 +21,7 @@ public class BerryPlant : Entity
 
     public new void Initialize(int BerryIndex, int BerriesYield, string Watered, string Time, bool FullGrown)
     {
-        this.Berry = (Items.Berry)Item.GetItemByID(BerryIndex + 2000);
+        this.Berry = (Item.Item.Berry)Item.Item.GetItem(BerryIndex + 2000);
         this.Berries = BerriesYield;
         this.PlantDate = Time;
         this.BerryIndex = BerryIndex;
@@ -39,7 +32,7 @@ public class BerryPlant : Entity
         this.LastUpdateDate = DateTime.Now;
 
         if (Watered.CountSplits(",") != 4)
-            this.Watered.AddRange(
+            this.Watered.AddRange(new bool[]
             {
                 false,
                 false,
@@ -221,10 +214,7 @@ public class BerryPlant : Entity
                 }
         }
 
-        Screen.TextBox.Show(text,
-        {
-            this
-        });
+        Screen.TextBox.Show(text, this);
         SoundManager.PlaySound("select");
     }
 
@@ -248,10 +238,7 @@ public class BerryPlant : Entity
 
                         SoundManager.PlaySound("item_found", true);
                         Screen.TextBox.TextColor = TextBox.PlayerColor;
-                        Screen.TextBox.Show(Text,
-                        {
-                            this
-                        });
+                        Screen.TextBox.Show(Text, this);
                         RemoveBerry();
                         Screen.Level.Entities.Remove(this);
                         break;
@@ -261,10 +248,7 @@ public class BerryPlant : Entity
                     {
                         WaterBerry();
                         string Text = Core.Player.Name + " watered~the " + Berry.Name + ".";
-                        Screen.TextBox.Show(Text,
-                        {
-                            this
-                        });
+                        Screen.TextBox.Show(Text, this);
                         break;
                     }
             }
@@ -302,7 +286,7 @@ public class BerryPlant : Entity
         DateTime cD = DateTime.Now;
         string DateData = cD.Year + "," + cD.Month + "," + cD.Day + "," + cD.TimeOfDay.Hours + "," + cD.TimeOfDay.Minutes + "," + cD.TimeOfDay.Seconds;
 
-        Items.Berry Berry = (Items.Berry)Item.GetItemByID(BerryIndex + 2000);
+        Item.Item.Berry Berry = (Item.Item.Berry)Item.Item.GetItem(BerryIndex + 2000);
 
         int BerryAmount = GetBerryAmount(Berry, 0);
 
@@ -319,10 +303,10 @@ public class BerryPlant : Entity
 
         Core.Player.BerryData = OldData;
 
-        Entity newEnt = Entity.GetNewEntity("BerryPlant", Position,
+        Entity newEnt = Entity.GetNewEntity("BerryPlant", Position, new string[]
         {
             null/* TODO Change to default(_) if this is not a reference type */
-        },
+        }, new int[]
         {
             0,
             0
@@ -333,7 +317,7 @@ public class BerryPlant : Entity
         Core.Player.Inventory.RemoveItem(BerryIndex + 2000, 1);
     }
 
-    private static int GetBerryAmount(Items.Berry Berry, int Watered)
+    private static int GetBerryAmount(Item.Item.Berry Berry, int Watered)
     {
         if (Watered > 0)
         {
@@ -349,25 +333,25 @@ public class BerryPlant : Entity
             int seasonGrow = 0;
             switch (P3D.World.CurrentSeason)
             {
-                case object _ when P3D.World.Seasons.Winter:
+                case (object) P3D.World.Seasons.Winter:
                     {
                         seasonGrow = Berry.WinterGrow;
                         break;
                     }
 
-                case object _ when P3D.World.Seasons.Spring:
+                case (object) P3D.World.Seasons.Spring:
                     {
                         seasonGrow = Berry.SpringGrow;
                         break;
                     }
 
-                case object _ when P3D.World.Seasons.Summer:
+                case (object) P3D.World.Seasons.Summer:
                     {
                         seasonGrow = Berry.SummerGrow;
                         break;
                     }
 
-                case object _ when P3D.World.Seasons.Fall:
+                case (object) P3D.World.Seasons.Fall:
                     {
                         seasonGrow = Berry.FallGrow;
                         break;
@@ -419,7 +403,7 @@ public class BerryPlant : Entity
 
             string DateData = PlantDate;
 
-            Items.Berry Berry = (Items.Berry)Item.GetItemByID(BerryIndex + 2000);
+            Item.Item.Berry Berry = (Item.Item.Berry)Item.Item.GetItem(BerryIndex + 2000);
 
             string WateredData = "";
             int wateredCount = 0;
@@ -448,4 +432,5 @@ public class BerryPlant : Entity
             Core.Player.BerryData = OldData;
         }
     }
+}
 }

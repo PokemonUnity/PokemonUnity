@@ -1,4 +1,6 @@
-﻿public abstract class BaseEntity
+﻿namespace PokemonUnity.Overworld.Entity
+{
+public abstract class BaseEntity
 {
     public enum EntityTypes
     {
@@ -16,4 +18,6 @@
     {
         this._entityType = EntityType;
     }
+
+}
 }
