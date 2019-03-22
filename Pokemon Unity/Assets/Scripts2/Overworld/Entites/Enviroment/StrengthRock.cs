@@ -23,7 +23,7 @@ public class StrengthRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
@@ -57,7 +57,7 @@ public class StrengthRock : Entity
         {
             Pokemon useP = null/* TODO Change to default(_) if this is not a reference type */;
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {

@@ -249,7 +249,7 @@ public class Waterfall : Entity
 
     private Pokemon ReturnWaterFallPokemonName()
     {
-        foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+        foreach (Pokemon p in GameVariables.playerTrainer.Party)
         {
             if (p.isEgg == false)
             {

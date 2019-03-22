@@ -20,7 +20,7 @@ public class CutDownTree : Entity
 	{
 		string pName = "";
 
-		foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+		foreach (Pokemon p in GameVariables.playerTrainer.Party)
 		{
 			if (p.isEgg == false)
 			{
@@ -53,7 +53,7 @@ public class CutDownTree : Entity
 		{
 			string pName = "";
 
-			foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+			foreach (Pokemon p in GameVariables.playerTrainer.Party)
 			{
 				if (p.isEgg == false)
 				{

@@ -93,7 +93,7 @@ public class DiveTile : Entity
 
     private string GetDivePokemon()
     {
-        foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+        foreach (Pokemon p in GameVariables.playerTrainer.Party)
         {
             foreach (BattleSystem.Attack a in p.Attacks)
             {

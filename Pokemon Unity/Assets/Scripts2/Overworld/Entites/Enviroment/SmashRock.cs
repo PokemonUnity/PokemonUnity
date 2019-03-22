@@ -12,7 +12,7 @@ public class SmashRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
@@ -46,7 +46,7 @@ public class SmashRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {

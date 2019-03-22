@@ -221,7 +221,7 @@ public class AnimatedBlock : Entity
 	{
 		if (Result == 0)
 		{
-			Screen.TextBox.Show(GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon).GetDisplayName() + " used~Surf!", this);
+			Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).GetDisplayName() + " used~Surf!", this);
 			Screen.Level.Surfing = true;
 			Screen.Camera.Move(1);
 			PlayerStatistics.Track("Surf used", 1);
@@ -230,10 +230,10 @@ public class AnimatedBlock : Entity
 				var withBlock = Screen.Level.OwnPlayer;
 				GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
-				int pokemonNumber = GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon).Number;
-				string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon));
-				if (GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon).IsShiny == true)
-					SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon));
+				int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Number;
+				string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
+				if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny == true)
+					SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
 
 				withBlock.SetTexture(SkinName, false);
 

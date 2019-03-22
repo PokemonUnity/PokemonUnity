@@ -42,9 +42,9 @@ public class PokemonEncounter
                     int startRandomValue = 12;
                     int minRandomValue = 5;
 
-                    if (GameVariables.playerTrainer.Pokemons.Count > 0)
+                    if (GameVariables.playerTrainer.Party.Count > 0)
                     {
-                        PokemonUnity.Pokemon.Pokemon p = GameVariables.playerTrainer.Pokemons(0);
+                        PokemonUnity.Pokemon.Pokemon p = GameVariables.playerTrainer.Party(0);
 
                         // Arena Trap/Illuminate/No Guard/Swarm Ability:
                         if (p.Ability.Name.ToLower() == "arena trap" | p.Ability.Name.ToLower() == "illuminate" | p.Ability.Name.ToLower() == "no guard" | p.Ability.Name.ToLower() == "swarm")
@@ -138,11 +138,11 @@ public class PokemonEncounter
                     }
 
                     // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
-                    if (GameVariables.playerTrainer.Pokemons(0).Level >= Pokemon.Level)
+                    if (GameVariables.playerTrainer.Party(0).Level >= Pokemon.Level)
                     {
-                        if (GameVariables.playerTrainer.Pokemons(0).Item != null)
+                        if (GameVariables.playerTrainer.Party(0).Item != null)
                         {
-                            if (GameVariables.playerTrainer.Pokemons(0).Item.ID == 94)
+                            if (GameVariables.playerTrainer.Party(0).Item.ID == 94)
                             {
                                 if (Core.Random.Next(0, 3) == 0)
                                     return;
@@ -151,11 +151,11 @@ public class PokemonEncounter
                     }
 
                     // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
-                    if (GameVariables.playerTrainer.Pokemons(0).Level >= Pokemon.Level)
+                    if (GameVariables.playerTrainer.Party(0).Level >= Pokemon.Level)
                     {
-                        if (GameVariables.playerTrainer.Pokemons(0).Item != null)
+                        if (GameVariables.playerTrainer.Party(0).Item != null)
                         {
-                            if (GameVariables.playerTrainer.Pokemons(0).Item.ID == 291)
+                            if (GameVariables.playerTrainer.Party(0).Item.ID == 291)
                             {
                                 if (Core.Random.Next(0, 3) == 0)
                                     return;

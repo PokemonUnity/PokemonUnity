@@ -91,7 +91,7 @@ public class Whirlpool : Entity
 
     private string ReturnWhirlPoolPokemonName()
     {
-        foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
+        foreach (Pokemon p in GameVariables.playerTrainer.Party)
         {
             if (p.isEgg == false)
             {

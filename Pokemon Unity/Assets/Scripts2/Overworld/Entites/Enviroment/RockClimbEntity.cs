@@ -49,7 +49,7 @@ public class RockClimbEntity : Entity
 
     private Pokemon GetRockClimbPokemon()
     {
-        foreach (Pokemon teamPokemon in GameVariables.playerTrainer.Pokemons)
+        foreach (Pokemon teamPokemon in GameVariables.playerTrainer.Party)
         {
             if (teamPokemon.isEgg == false)
             {
@@ -64,8 +64,8 @@ public class RockClimbEntity : Entity
         // No rock climb in team:
         if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
-            if (GameVariables.playerTrainer.Pokemons.Count > 0)
-                return GameVariables.playerTrainer.Pokemons(0);
+            if (GameVariables.playerTrainer.Party.Count > 0)
+                return GameVariables.playerTrainer.Party(0);
             else
             {
                 Pokemon p = Pokemon.GetPokemonByID(10);
