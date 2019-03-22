@@ -80,7 +80,7 @@ public class AnimatedBlock : Entity
 				for (var i = 0; i <= this.rows[n] - 1; i++)
 				{
 					for (var j = 0; j <= this.columns[n] - 1; j++)
-						BlockTexturesTemp.Add(AnimationNames[n] + "_" + (j + columns[n] * i).ToString(), TextureManager.GetTexture(AdditionalValue, new Rectangle(r.X + r.Width * j, r.Y + r.Height * i, r.Width, r.Height)));
+						BlockTexturesTemp.Add(AnimationNames[n] + "_" + (j + columns[n] * i).ToString(), TextureManager.GetTexture(AdditionalValue, new Rectangle(r.x + r.Width * j, r.y + r.Height * i, r.Width, r.Height)));
 				}
 			}
 		}

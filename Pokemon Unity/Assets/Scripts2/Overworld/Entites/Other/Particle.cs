@@ -23,13 +23,13 @@ public class Particle : Entity
 	private Vector3 LastPosition;
 	private float time = 0;
 
-	public Particle(Vector3 Position, Texture2D[] Textures, int[] TextureIndex, int Rotation, Vector3 Scale, BaseModel Model, Vector3 Shader) : base(Position.X, Position.Y, Position.Z, "Particle", Textures, TextureIndex, false, Rotation, Scale, Model, 0, "", Shader)
+	public Particle(Vector3 Position, Texture2D[] Textures, int[] TextureIndex, int Rotation, Vector3 Scale, BaseModel Model, Vector3 Shader) : base(Position.x, Position.y, Position.z, "Particle", Textures, TextureIndex, false, Rotation, Scale, Model, 0, "", Shader)
 	{
 		this.NeedsUpdate = true;
 		this.CreateWorldEveryFrame = true;
 
 		if (Destination == 999.0F)
-			this.Destination = this.Position.Y - 2.8F;
+			this.Destination = this.Position.y - 2.8F;
 
 		this.DropUpdateUnlessDrawn = false;
 		this.NormalOpacity = 0F;
@@ -44,8 +44,8 @@ public class Particle : Entity
 			{
 				case Behaviors.Falling:
 					{
-						this.Position.Y -= this.MoveSpeed;
-						if (this.Position.Y <= this.Destination)
+						this.Position.y -= this.MoveSpeed;
+						if (this.Position.y <= this.Destination)
 							this.CanBeRemoved = true;
 						break;
 					}
@@ -55,26 +55,26 @@ public class Particle : Entity
 					}
 				case Behaviors.Rising:
 					{
-						this.Position.Y -= this.MoveSpeed;
-						if (this.Position.Y >= this.Destination)
+						this.Position.y -= this.MoveSpeed;
+						if (this.Position.y >= this.Destination)
 							this.CanBeRemoved = true;
 						break;
 					}
 				case Behaviors.LeftToRight:
 					{
-						this.Position.X += this.MoveSpeed;
-						this.Position.Y -= this.MoveSpeed / (double)4;
+						this.Position.x += this.MoveSpeed;
+						this.Position.y -= this.MoveSpeed / (double)4;
 
-						if (this.Position.X >= this.Destination)
+						if (this.Position.x >= this.Destination)
 							this.CanBeRemoved = true;
 						break;
 					}
 				case Behaviors.RightToLeft:
 					{
-						this.Position.X += this.MoveSpeed;
-						this.Position.Y += this.MoveSpeed / (double)4;
+						this.Position.x += this.MoveSpeed;
+						this.Position.y += this.MoveSpeed / (double)4;
 
-						if (this.Position.X >= this.Destination)
+						if (this.Position.x >= this.Destination)
 							this.CanBeRemoved = true;
 						break;
 					}
@@ -97,17 +97,17 @@ public class Particle : Entity
 			case Behaviors.Falling:
 			//case Behaviors.Floating: // y
 				{
-					this.Destination -= diff.Y;
+					this.Destination -= diff.y;
 					break;
 				}
 			case Behaviors.Floating:
 				{
-					this.Destination += diff.Y;
+					this.Destination += diff.y;
 					break;
 				}
 			default:
 				{
-					this.Destination -= diff.X;
+					this.Destination -= diff.x;
 					break;
 				}
 		}
@@ -120,11 +120,11 @@ public class Particle : Entity
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.Y != Screen.Camera.Yaw)
-			this.Rotation.Y = Screen.Camera.Yaw;
+		if (this.Rotation.y != Screen.Camera.Yaw)
+			this.Rotation.y = Screen.Camera.Yaw;
 
 		float c_pitch = Screen.Camera.Pitch;
-		this.Rotation.X = c_pitch / (double)2.0F;
+		this.Rotation.x = c_pitch / (double)2.0F;
 
 		base.UpdateEntity();
 	}

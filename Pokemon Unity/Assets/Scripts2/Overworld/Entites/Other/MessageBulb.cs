@@ -26,7 +26,7 @@
 	private bool setTexture = false;
 	private float delay = 0.0F;
 
-	public MessageBulb(Vector3 Position, NotifcationTypes NotificationType) : base(Position.X, Position.Y, Position.Z, "MessageBulb", null,
+	public MessageBulb(Vector3 Position, NotifcationTypes NotificationType) : base(Position.x, Position.y, Position.z, "MessageBulb", null,
 		new int[] {
 			0,
 			0
@@ -170,9 +170,9 @@
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.Y != Screen.Camera.Yaw)
+		if (this.Rotation.y != Screen.Camera.Yaw)
 		{
-			this.Rotation.Y = Screen.Camera.Yaw;
+			this.Rotation.y = Screen.Camera.Yaw;
 			CreatedWorld = false;
 		}
 

@@ -79,7 +79,7 @@ public class RockClimbEntity : Entity
 
     private void WalkUp()
     {
-        int facing = System.Convert.ToInt32(this.Rotation.Y / (double)MathHelper.PiOver2);
+        int facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
         facing -= 2;
         if (facing < 0)
             facing += 4;
@@ -91,7 +91,7 @@ public class RockClimbEntity : Entity
             int Steps = 0;
 
             Vector3 checkPosition = Screen.Camera.GetForwardMovedPosition();
-            checkPosition.Y = checkPosition.Y.ToInteger();
+            checkPosition.y = checkPosition.y.ToInteger();
 
             bool foundSteps = true;
             while (foundSteps == true)
@@ -107,9 +107,9 @@ public class RockClimbEntity : Entity
                     if (e.EntityID.ToLower() == "rockclimbentity")
                     {
                         Steps += 1;
-                        checkPosition.X += Screen.Camera.GetMoveDirection().X;
-                        checkPosition.Z += Screen.Camera.GetMoveDirection().Z;
-                        checkPosition.Y += 1;
+                        checkPosition.x += Screen.Camera.GetMoveDirection().x;
+                        checkPosition.z += Screen.Camera.GetMoveDirection().z;
+                        checkPosition.y += 1;
                     }
                     else
                     {
@@ -134,7 +134,7 @@ public class RockClimbEntity : Entity
             Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             Screen.Level.OwnPlayer.ChangeTexture();
 
-            string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",1," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",0," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
+            string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {
@@ -150,14 +150,14 @@ public class RockClimbEntity : Entity
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
         }
 
-        facing = System.Convert.ToInt32(this.Rotation.Y / (double)MathHelper.PiOver2);
+        facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
         if (facing < 0)
             facing += 4;
     }
 
     private void WalkDown()
     {
-        int facing = System.Convert.ToInt32(this.Rotation.Y / (double)MathHelper.PiOver2);
+        int facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
 
         Screen.Camera.PlannedMovement = Vector3.Zero;
 
@@ -166,7 +166,7 @@ public class RockClimbEntity : Entity
             int Steps = 0;
 
             Vector3 checkPosition = Screen.Camera.GetForwardMovedPosition();
-            checkPosition.Y = checkPosition.Y.ToInteger() - 1;
+            checkPosition.y = checkPosition.y.ToInteger() - 1;
 
             bool foundSteps = true;
             while (foundSteps == true)
@@ -182,9 +182,9 @@ public class RockClimbEntity : Entity
                     if (e.EntityID == "RockClimbEntity")
                     {
                         Steps += 1;
-                        checkPosition.X += Screen.Camera.GetMoveDirection().X;
-                        checkPosition.Z += Screen.Camera.GetMoveDirection().Z;
-                        checkPosition.Y -= 1;
+                        checkPosition.x += Screen.Camera.GetMoveDirection().x;
+                        checkPosition.z += Screen.Camera.GetMoveDirection().z;
+                        checkPosition.y -= 1;
                     }
                     else
                     {
@@ -209,7 +209,7 @@ public class RockClimbEntity : Entity
             Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             Screen.Level.OwnPlayer.ChangeTexture();
 
-            string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().X + ",-1," + Screen.Camera.GetMoveDirection().Z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
+            string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {

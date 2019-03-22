@@ -99,11 +99,11 @@ public class OwnPlayer : Entity
 				if (Screen.Camera.Name == "Overworld")
 				{
 					OverworldCamera c = (OverworldCamera)Screen.Camera;
-					this.Position = new Vector3(c.Position.X, c.Position.Y - 0.1F, c.Position.Z);
+					this.Position = new Vector3(c.Position.x, c.Position.y - 0.1F, c.Position.z);
 				}
 			}
-			if (this.Rotation.Y != Screen.Camera.Yaw)
-				this.Rotation.Y = Screen.Camera.Yaw;
+			if (this.Rotation.y != Screen.Camera.Yaw)
+				this.Rotation.y = Screen.Camera.Yaw;
 		}
 
 		Move();

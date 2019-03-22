@@ -1009,7 +1009,7 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\rain");
 
                             WeatherOffset.X += 8;
-                            WeatherOffset.Y += 16;
+                            WeatherOffset.y += 16;
                             break;
                         }
 
@@ -1018,7 +1018,7 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\rain");
 
                             WeatherOffset.X += 12;
-                            WeatherOffset.Y += 20;
+                            WeatherOffset.y += 20;
 
                             opacity = 50;
                             break;
@@ -1029,7 +1029,7 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
 
                             WeatherOffset.X += 1;
-                            WeatherOffset.Y += 1;
+                            WeatherOffset.y += 1;
                             break;
                         }
 
@@ -1038,7 +1038,7 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
 
                             WeatherOffset.X += 8;
-                            WeatherOffset.Y += 2;
+                            WeatherOffset.y += 2;
 
                             opacity = 80;
                             break;
@@ -1049,7 +1049,7 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\sand");
 
                             WeatherOffset.X += 4;
-                            WeatherOffset.Y += 1;
+                            WeatherOffset.y += 1;
 
                             opacity = 80;
                             size = 48;
@@ -1066,7 +1066,7 @@ public class World
                             for (var i = 0; i <= ObjectsList.Count - 1; i++)
                             {
                                 Rectangle r = ObjectsList[i];
-                                ObjectsList[i] = new Rectangle(r.X, r.Y - 2, r.Width, r.Height);
+                                ObjectsList[i] = new Rectangle(r.X, r.y - 2, r.Width, r.Height);
 
                                 Core.SpriteBatch.Draw(T, ObjectsList[i], new Color(255, 255, 255, 150));
                             }
@@ -1078,7 +1078,7 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\ash2");
 
-                            WeatherOffset.Y += 1;
+                            WeatherOffset.y += 1;
                             opacity = 65;
                             size = 48;
                             break;
@@ -1087,8 +1087,8 @@ public class World
 
                 if (WeatherOffset.X >= size)
                     WeatherOffset.X = 0;
-                if (WeatherOffset.Y >= size)
-                    WeatherOffset.Y = 0;
+                if (WeatherOffset.y >= size)
+                    WeatherOffset.y = 0;
 
                 switch (MapWeather)
                 {
@@ -1102,9 +1102,9 @@ public class World
                             for (var x = -size; x <= Core.windowSize.Width; x += size)
                             {
                                 for (var y = -size; y <= Core.windowSize.Height; y += size)
-                                    Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.X), System.Convert.ToInt32(y + WeatherOffset.Y), size, size), new Color(255, 255, 255, opacity));
+                                    Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.X), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new Color(255, 255, 255, opacity));
                             }
-
+.x
                             break;
                         }
                 }
@@ -1113,7 +1113,7 @@ public class World
     }
 
     public static void GenerateParticles(int chance, Weathers MapWeather)
-    {
+    {.x
         if (MapWeather == Weathers.Thunderstorm)
         {
             if (Core.Random.Next(0, 250) == 0)
@@ -1124,7 +1124,7 @@ public class World
             }
         }
 
-        if (LevelLoader.IsBusy == false)
+        if (LevelLoader.IsBusy == false).x
         {
             Screen.Identifications[] validScreen = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen };
             if (validScreen.Contains(Core.CurrentScreen.Identification) == true)
@@ -1133,7 +1133,7 @@ public class World
                 {
                     if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == false)
                         return;
-                }
+                }.x
 
                 Texture2D T = null/* TODO Change to default(_) if this is not a reference type */;
 
@@ -1144,7 +1144,7 @@ public class World
                 switch (MapWeather)
                 {
                     case Weathers.Rain:
-                        {
+                        {.x
                             speed = 0.1F;
                             T = TextureManager.GetTexture(@"Textures\Weather\rain3");
                             if (chance > -1)
@@ -1162,7 +1162,7 @@ public class World
                                     {
                                         T = TextureManager.GetTexture(@"Textures\Weather\rain2");
                                         scale = new Vector3(0.1F, 0.1F, 0.1F);
-                                        break;
+                                        break;.x
                                     }
 
                                 default:
@@ -1181,8 +1181,8 @@ public class World
                         {
                             speed = 0.02F;
                             T = TextureManager.GetTexture(@"Textures\Weather\snow2");
-                            if (chance > -1)
-                                chance = 5;
+                            if (c.xnce > -1)
+                                c.xnce = 5;
                             scale = new Vector3(0.03F, 0.03F, 0.1F);
                             break;
                         }
@@ -1198,7 +1198,7 @@ public class World
                             break;
                         }
 
-                    case Weathers.Sandstorm:
+                    case Weathers.Sandstorm:.x
                         {
                             speed = 0.1F;
                             T = TextureManager.GetTexture(@"Textures\Weather\sand");
@@ -1242,14 +1242,14 @@ public class World
                 {
                     for (var x = cameraPosition.X - range; x <= cameraPosition.X + range; x++)
                     {
-                        for (var z = cameraPosition.Z - range; z <= cameraPosition.Z + range; z++)
+                        for (var z = cameraPosition.z - range; z <= cameraPosition.z + range; z++)
                         {
                             if (z != 0 | x != 0)
                             {
                                 float rY = System.Convert.ToSingle(Core.Random.Next(0, 40) / (double)10) - 2.0F;
                                 float rX = System.Convert.ToSingle(Core.Random.NextDouble()) - 0.5F;
                                 float rZ = System.Convert.ToSingle(Core.Random.NextDouble()) - 0.5F;
-                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.Y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Core.Random.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1f, 1f, 1f));
+                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Core.Random.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1f, 1f, 1f));
                                 p.MoveSpeed = speed;
                                 if (MapWeather == Weathers.Rain)
                                     p.Opacity = 0.7F;
@@ -1257,7 +1257,7 @@ public class World
                                     p.Opacity = 1.0F;
                                 if (MapWeather == Weathers.Underwater)
                                 {
-                                    p.Position.Y = 0.0F;
+                                    p.Position.y = 0.0F;
                                     p.Destination = 10;
                                     p.Behavior = Particle.Behaviors.Rising;
                                 }
@@ -1336,7 +1336,7 @@ public class World
             Color[] Data = new Color[4];
             seasonTexture.GetData(0, new Rectangle(x, y, 2, 2), Data, 0, 4);
 
-            SeasonTextureBuffer.Add(T, T.ReplaceColors(inputColors, Data));
+            SeasonTextureBuffer.Add(T, T.Replac.xolors(inputColors, Data));.x
             return SeasonTextureBuffer[T];
         }
         return null/* TODO Change to default(_) if this is not a reference type */;
@@ -1360,8 +1360,8 @@ public class World
 
                 seconds += System.Convert.ToInt32(Math.Abs((DateTime.Now - LastServerDataReceived).Seconds));
 
-                return hours * 3600 + minutes * 60 + seconds;
-            }
+                return hours * 3600 + minutes * 60 + seconds;.x
+            }.x
             else
                 return DateTime.UtcNow.Hour * 3600 + DateTime.UtcNow.Minute * 60 + DateTime.UtcNow.Second;
         }

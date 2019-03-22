@@ -37,18 +37,18 @@ public class Water : Entity
                 this.waterTextureName = AdditionalValue;
                 if (Water.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0") == false)
                 {
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.X, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 2, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 3, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 4, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 5, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 6, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 7, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 8, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 9, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 10, r.Y, r.Width, r.Height)));
-                    Water.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 11, r.Y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 2, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 3, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 4, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 5, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 6, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 7, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 8, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 9, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 10, r.y, r.Width, r.Height)));
+                    Water.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 11, r.y, r.Width, r.Height)));
                 }
             }
             else if (Water.WaterTexturesTemp.ContainsKey("_0") == false)
@@ -222,7 +222,7 @@ public class Water : Entity
                 CreateWaterTextureTemp();
             }
 
-            switch (this.Rotation.Y)
+            switch (this.Rotation.y)
             {
                 case 0:
                 case (object)MathHelper.TwoPi:

@@ -491,7 +491,7 @@ public class Entity : BaseEntity
 				float? result = Ray.Intersects(this.boundingBox);
 				if (result.HasValue == true)
 				{
-					if (result.Value < 0.3F + ((OverworldCamera)Screen.Camera.ThirdPersonOffset.Z - 1.5F))
+					if (result.Value < 0.3F + ((OverworldCamera)Screen.Camera.ThirdPersonOffset.z - 1.5F))
 					{
 						this.Opacity = this._normalOpactity - 0.5F;
 						if (this.Opacity < 0.3F)
@@ -583,7 +583,7 @@ public class Entity : BaseEntity
 
 		if (CreatedWorld == false | CreateWorldEveryFrame == true)
 		{
-			World = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z) * Matrix.CreateTranslation(Position);
+			World = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(Rotation.y, Rotation.x, Rotation.z) * Matrix.CreateTranslation(Position);
 			CreatedWorld = true;
 		}
 
@@ -600,21 +600,21 @@ public class Entity : BaseEntity
 
 				});
 
-				ViewBox.Min.X -= diff[0];
-				ViewBox.Min.Y -= diff[1];
-				ViewBox.Min.Z -= diff[2];
+				ViewBox.Min.x -= diff[0];
+				ViewBox.Min.y -= diff[1];
+				ViewBox.Min.z -= diff[2];
 
-				ViewBox.Max.X -= diff[0];
-				ViewBox.Max.Y -= diff[1];
-				ViewBox.Max.Z -= diff[2];
+				ViewBox.Max.x -= diff[0];
+				ViewBox.Max.y -= diff[1];
+				ViewBox.Max.z -= diff[2];
 
-				boundingBox.Min.X -= diff[0];
-				boundingBox.Min.Y -= diff[1];
-				boundingBox.Min.Z -= diff[2];
+				boundingBox.Min.x -= diff[0];
+				boundingBox.Min.y -= diff[1];
+				boundingBox.Min.z -= diff[2];
 
-				boundingBox.Max.X -= diff[0];
-				boundingBox.Max.Y -= diff[1];
-				boundingBox.Max.Z -= diff[2];
+				boundingBox.Max.x -= diff[0];
+				boundingBox.Max.y -= diff[1];
+				boundingBox.Max.z -= diff[2];
 
 				this.BoundingPositionCreated = this.Position;
 			}

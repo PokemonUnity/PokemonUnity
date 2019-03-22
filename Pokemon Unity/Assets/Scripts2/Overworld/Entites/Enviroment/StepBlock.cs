@@ -4,14 +4,14 @@ public class StepBlock : Entity
 {
     public override bool WalkAgainstFunction()
     {
-        int facing = System.Convert.ToInt32(this.Rotation.Y / (double)MathHelper.PiOver2);
+        int facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
         facing -= 2;
         if (facing < 0)
             facing += 4;
 
         if (Screen.Camera.GetPlayerFacingDirection() == facing)
         {
-            // Dim newPos As New Vector3(Screen.Camera.Position.X + Screen.Camera.moveDirectionX * 2, Screen.Camera.Position.Y, Screen.Camera.Position.Z + Screen.Camera.moveDirectionZ * 2)
+            // Dim newPos As New Vector3(Screen.Camera.Position.x + Screen.Camera.moveDirectionX * 2, Screen.Camera.Position.y, Screen.Camera.Position.z + Screen.Camera.moveDirectionZ * 2)
             // If CType(Screen.Camera, OverworldCamera).CheckCollision(newPos) = True Then
 
             // End If

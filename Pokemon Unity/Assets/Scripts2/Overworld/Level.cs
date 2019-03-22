@@ -858,7 +858,7 @@ public class Level
 
         // Create own player entity and OverworldPokémon entity and add them to the entity enumeration:
         OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Core.Player.Skin, 0, 0, "", "Gold", 0);
-        OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.X, Screen.Camera.Position.Y, Screen.Camera.Position.Z + 1);
+        OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
         OverworldPokemon.ChangeRotation();
         Entities.AddRange(
         {
@@ -1149,7 +1149,7 @@ public class Level
             OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Core.Player.Skin, 0, 0, "", "Gold", 0);
             OwnPlayer.SetTexture(Core.Player.Skin, usingGameJoltTexture);
 
-            OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.X, Screen.Camera.Position.Y, Screen.Camera.Position.Z + 1);
+            OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
             OverworldPokemon.Visible = false;
             OverworldPokemon.warped = true;
             Entities.AddRange(
@@ -1332,7 +1332,7 @@ public class Level
     {
         foreach (Entity e in this.Entities)
         {
-            if (e.Position.X == Screen.Camera.Position.X & e.Position.Z == Screen.Camera.Position.Z & System.Convert.ToInt32(e.Position.Y) == System.Convert.ToInt32(Screen.Camera.Position.Y))
+            if (e.Position.x == Screen.Camera.Position.x & e.Position.z == Screen.Camera.Position.z & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y))
                 return e.LetPlayerMove();
         }
         return true;

@@ -40,25 +40,25 @@ public class Floor : Entity
         {
             case 0:
                 {
-                    this.Rotation.Y = 0;
+                    this.Rotation.y = 0;
                     break;
                 }
 
             case 1:
                 {
-                    this.Rotation.Y = MathHelper.PiOver2;
+                    this.Rotation.y = MathHelper.PiOver2;
                     break;
                 }
 
             case 2:
                 {
-                    this.Rotation.Y = MathHelper.Pi;
+                    this.Rotation.y = MathHelper.Pi;
                     break;
                 }
 
             case 3:
                 {
-                    this.Rotation.Y = MathHelper.Pi * 1.5F;
+                    this.Rotation.y = MathHelper.Pi * 1.5F;
                     break;
                 }
         }
@@ -83,7 +83,7 @@ public class Floor : Entity
 
     private void ChangeSnow()
     {
-        this.Rotation = new Vector3(this.Rotation.X, 0.0F, this.Rotation.Z);
+        this.Rotation = new Vector3(this.Rotation.x, 0.0F, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
             this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
         else
@@ -94,17 +94,17 @@ public class Floor : Entity
 
             if (this.IsOffsetMapContent == true)
             {
-                ent[0] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z + 1));
-                ent[1] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X + 1, this.Position.Y, this.Position.Z));
-                ent[2] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X - 1, this.Position.Y, this.Position.Z));
-                ent[3] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z - 1));
+                ent[0] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
             else
             {
-                ent[0] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z + 1));
-                ent[1] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X + 1, this.Position.Y, this.Position.Z));
-                ent[2] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X - 1, this.Position.Y, this.Position.Z));
-                ent[3] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z - 1));
+                ent[0] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
 
             for (var i = 0; i <= 3; i++)
@@ -131,12 +131,12 @@ public class Floor : Entity
                 this.Model = BaseModel.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
                 this.Scale = new Vector3(1, 0.1F, 1);
-                this.Position.Y -= 0.45F;
+                this.Position.y -= 0.45F;
             }
             else
             {
                 this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
-                this.Position.Y += 0.1F;
+                this.Position.y += 0.1F;
             }
         }
 
@@ -152,7 +152,7 @@ public class Floor : Entity
 
     private void ChangeSand()
     {
-        this.Rotation = new Vector3(this.Rotation.X, 0.0F, this.Rotation.Z);
+        this.Rotation = new Vector3(this.Rotation.x, 0.0F, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
             this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
         else
@@ -163,17 +163,17 @@ public class Floor : Entity
 
             if (this.IsOffsetMapContent == true)
             {
-                ent[0] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z + 1));
-                ent[1] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X + 1, this.Position.Y, this.Position.Z));
-                ent[2] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X - 1, this.Position.Y, this.Position.Z));
-                ent[3] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z - 1));
+                ent[0] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
             else
             {
-                ent[0] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z + 1));
-                ent[1] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X + 1, this.Position.Y, this.Position.Z));
-                ent[2] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X - 1, this.Position.Y, this.Position.Z));
-                ent[3] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.X, this.Position.Y, this.Position.Z - 1));
+                ent[0] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
 
             for (var i = 0; i <= 3; i++)
@@ -200,12 +200,12 @@ public class Floor : Entity
                 this.Model = BaseModel.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
                 this.Scale = new Vector3(1, 0.1F, 1);
-                this.Position.Y -= 0.45F;
+                this.Position.y -= 0.45F;
             }
             else
             {
                 this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
-                this.Position.Y += 0.1F;
+                this.Position.y += 0.1F;
             }
         }
 
@@ -224,7 +224,7 @@ public class Floor : Entity
         int Steps = 0;
 
         Vector3 checkPosition = Screen.Camera.GetForwardMovedPosition();
-        checkPosition.Y = checkPosition.Y.ToInteger();
+        checkPosition.y = checkPosition.y.ToInteger();
 
         bool foundSteps = true;
         while (foundSteps == true)
@@ -239,8 +239,8 @@ public class Floor : Entity
                         if ((OverworldCamera)Screen.Camera.CheckCollision(checkPosition) == false)
                         {
                             Steps += 1;
-                            checkPosition.X += Screen.Camera.GetMoveDirection().X;
-                            checkPosition.Z += Screen.Camera.GetMoveDirection().Z;
+                            checkPosition.x += Screen.Camera.GetMoveDirection().x;
+                            checkPosition.z += Screen.Camera.GetMoveDirection().z;
 
                             Screen.Level.OverworldPokemon.Visible = false;
                             Screen.Level.OverworldPokemon.warped = true;

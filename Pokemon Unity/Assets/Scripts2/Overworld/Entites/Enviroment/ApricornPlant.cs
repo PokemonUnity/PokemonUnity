@@ -77,7 +77,7 @@ public class ApricornPlant : Entity
 					if (ApricornData[0] == Screen.Level.LevelFile)
 					{
 						string[] PositionData = ApricornData[1].Split(System.Convert.ToChar(","));
-						if (Position.X == System.Convert.ToInt32(PositionData[0]) & Position.Y == System.Convert.ToInt32(PositionData[1]) & Position.Z == System.Convert.ToInt32(PositionData[2]))
+						if (Position.x == System.Convert.ToInt32(PositionData[0]) & Position.y == System.Convert.ToInt32(PositionData[1]) & Position.z == System.Convert.ToInt32(PositionData[2]))
 						{
 							string[] d = ApricornData[2].Split(System.Convert.ToChar(","));
 
@@ -128,8 +128,8 @@ public class ApricornPlant : Entity
 
 	public override void UpdateEntity()
 	{
-		if (Rotation.Y != Screen.Camera.Yaw)
-			Rotation.Y = Screen.Camera.Yaw;
+		if (Rotation.y != Screen.Camera.Yaw)
+			Rotation.y = Screen.Camera.Yaw;
 
 		base.UpdateEntity();
 	}
@@ -176,7 +176,7 @@ public class ApricornPlant : Entity
 		string s = "{";
 
 		DateTime d = DateTime.Now;
-		s += Screen.Level.LevelFile + "|" + System.Convert.ToInt32(Position.X) + "," + System.Convert.ToInt32(Position.Y) + "," + System.Convert.ToInt32(Position.Z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
+		s += Screen.Level.LevelFile + "|" + System.Convert.ToInt32(Position.x) + "," + System.Convert.ToInt32(Position.y) + "," + System.Convert.ToInt32(Position.z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
 
 		if (Core.Player.ApricornData != "")
 			Core.Player.ApricornData += Environment.NewLine;

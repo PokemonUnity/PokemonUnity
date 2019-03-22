@@ -109,7 +109,7 @@ public class SkyDome
         {
             foreach (BasicEffect BasicEffect in ModelMesh.Effects)
             {
-                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(Screen.Camera.Position.X, -5, Screen.Camera.Position.Z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
+                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(Screen.Camera.Position.X, -5, Screen.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
 
                 BasicEffect.View = Screen.Camera.View;
                 BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, 10000);
@@ -117,7 +117,7 @@ public class SkyDome
                 BasicEffect.TextureEnabled = true;
                 BasicEffect.Texture = texture;
                 BasicEffect.Alpha = alpha;
-
+.x
                 switch (Screen.Level.World.CurrentMapWeather)
                 {
                     case World.Weathers.Clear:
@@ -302,7 +302,7 @@ public class SkyDome
         else
             p = System.Convert.ToSingle((progress - 720) / (double)720);
 
-        return new Vector3(v.X + ((1 - v.X) * p), v.Y + ((1 - v.Y) * p), v.Z + ((1 - v.Z) * p));
+        return new Vector3(v.X + ((1 - v.X) * p), v.y + ((1 - v.y) * p), v.z + ((1 - v.z) * p));
     }
 
     private int GetTimeValue()
@@ -317,4 +317,4 @@ public class SkyDome
         }
     }
 }
-}
+}.x.x

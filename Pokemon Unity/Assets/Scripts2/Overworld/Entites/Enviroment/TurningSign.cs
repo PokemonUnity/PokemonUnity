@@ -13,17 +13,17 @@ public class TurningSign : Entity
         {
             case 1:
                 {
-                    this.Rotation.X = randomValue;
+                    this.Rotation.x = randomValue;
                     break;
                 }
             case 2:
                 {
-                    this.Rotation.Z = randomValue;
+                    this.Rotation.z = randomValue;
                     break;
                 }
             default:
                 {
-                    this.Rotation.Y = randomValue;
+                    this.Rotation.y = randomValue;
                     break;
                 }
         }
@@ -39,17 +39,17 @@ public class TurningSign : Entity
         {
             case 1:
                 {
-                    this.Rotation.X += TurningSpeed;
+                    this.Rotation.x += TurningSpeed;
                     break;
                 }
             case 2:
                 {
-                    this.Rotation.Z += TurningSpeed;
+                    this.Rotation.z += TurningSpeed;
                     break;
                 }
             default:
                 {
-                    this.Rotation.Y += TurningSpeed;
+                    this.Rotation.y += TurningSpeed;
                     break;
                 }
         }

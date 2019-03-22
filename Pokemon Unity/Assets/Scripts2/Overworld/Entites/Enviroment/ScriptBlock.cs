@@ -70,7 +70,7 @@ public class ScriptBlock : Entity
 
     public override void Update()
     {
-        if (this.ActivateScript == true & Screen.Camera.Position.X == this.Position.X & Screen.Camera.Position.Z == this.Position.Z & System.Convert.ToInt32(Screen.Camera.Position.Y) == System.Convert.ToInt32(this.Position.Y))
+        if (this.ActivateScript == true & Screen.Camera.Position.x == this.Position.x & Screen.Camera.Position.z == this.Position.z & System.Convert.ToInt32(Screen.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
         {
             Screen.Camera.StopMovement();
             ActivateScript = false;

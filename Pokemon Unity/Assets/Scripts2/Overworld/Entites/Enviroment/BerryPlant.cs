@@ -107,8 +107,8 @@ public class BerryPlant : Entity
 
     public override void UpdateEntity()
     {
-        if (this.Rotation.Y != Screen.Camera.Yaw)
-            this.Rotation.Y = Screen.Camera.Yaw;
+        if (this.Rotation.y != Screen.Camera.Yaw)
+            this.Rotation.y = Screen.Camera.Yaw;
 
         base.UpdateEntity();
     }
@@ -269,7 +269,7 @@ public class BerryPlant : Entity
         {
             if (Berry != "")
             {
-                if (Berry.ToLower().StartsWith("{" + Screen.Level.LevelFile.ToLower() + "|" + (this.Position.X + "," + this.Position.Y + "," + this.Position.Z).ToLower() + "|") == false)
+                if (Berry.ToLower().StartsWith("{" + Screen.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|") == false)
                 {
                     if (OutData != "")
                         OutData += Environment.NewLine;
@@ -294,7 +294,7 @@ public class BerryPlant : Entity
 
         string FullGrownData = "0";
 
-        string Data = "{" + LevelFile + "|" + Position.X + "," + Position.Y + "," + Position.Z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "|" + FullGrownData + "}";
+        string Data = "{" + LevelFile + "|" + Position.x + "," + Position.y + "," + Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "|" + FullGrownData + "}";
 
         string OldData = Core.Player.BerryData;
         if (OldData != "")
@@ -422,7 +422,7 @@ public class BerryPlant : Entity
 
             int BerryAmount = GetBerryAmount(Berry, wateredCount);
 
-            string Data = "{" + Screen.Level.LevelFile + "|" + this.Position.X + "," + this.Position.Y + "," + this.Position.Z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
+            string Data = "{" + Screen.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
 
             string OldData = Core.Player.BerryData;
             if (OldData != "")

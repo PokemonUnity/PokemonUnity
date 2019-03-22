@@ -256,17 +256,17 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.Y != Screen.Camera.Yaw)
-			this.Rotation.Y = Screen.Camera.Yaw;
+		if (this.Rotation.y != Screen.Camera.Yaw)
+			this.Rotation.y = Screen.Camera.Yaw;
 		if (!this.TextureID == null && this.TextureID.ToLower() == "nilllzz" & this.GameJoltID == "17441")
 		{
-			this.Rotation.Z = MathHelper.Pi;
+			this.Rotation.z = MathHelper.Pi;
 			RotatedSprite = true;
 		}
 		else
 		{
 			RotatedSprite = false;
-			this.Rotation.Z = 0;
+			this.Rotation.z = 0;
 		}
 
 		ChangeTexture();
@@ -328,17 +328,17 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			case "1":
 				{
-					b = new MessageBulb(new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z), MessageBulb.NotifcationTypes.Battle);
+					b = new MessageBulb(new Vector3(this.Position.x, this.Position.y + 1, this.Position.z), MessageBulb.NotifcationTypes.Battle);
 					break;
 				}
 			case "2":
 				{
-					b = new MessageBulb(new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z), MessageBulb.NotifcationTypes.Waiting);
+					b = new MessageBulb(new Vector3(this.Position.x, this.Position.y + 1, this.Position.z), MessageBulb.NotifcationTypes.Waiting);
 					break;
 				}
 			case "3":
 				{
-					b = new MessageBulb(new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z), MessageBulb.NotifcationTypes.AFK);
+					b = new MessageBulb(new Vector3(this.Position.x, this.Position.y + 1, this.Position.z), MessageBulb.NotifcationTypes.AFK);
 					break;
 				}
 		}
@@ -398,9 +398,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile) == true)
 			{
 				Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
-				this.Position.X += Offset.X;
-				this.Position.Y += Offset.Y;
-				this.Position.Z += Offset.Z;
+				this.Position.x += Offset.x;
+				this.Position.y += Offset.y;
+				this.Position.z += Offset.z;
 				this.Visible = true;
 			}
 		}
@@ -439,13 +439,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			else
 			{
 				Vector2 size = font.MeasureString(text);
-				RenderTarget2D renderTarget = new RenderTarget2D(Core.GraphicsDevice, System.Convert.ToInt32(size.X), System.Convert.ToInt32(size.Y * 3));
+				RenderTarget2D renderTarget = new RenderTarget2D(Core.GraphicsDevice, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y * 3));
 				Core.GraphicsDevice.SetRenderTarget(renderTarget);
 
 				Core.GraphicsDevice.Clear(Color.Transparent);
 
 				Core.SpriteBatch.Begin();
-				Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.X), System.Convert.ToInt32(size.Y)), new Color(0, 0, 0, 150));
+				Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new Color(0, 0, 0, 150));
 				Core.SpriteBatch.DrawString(font, text, Vector2.Zero, Color.White);
 				Core.SpriteBatch.End();
 

@@ -94,7 +94,7 @@ public class ItemObject : Entity
             for (var i = 0; i <= this.rows - 1; i++)
             {
                 for (var j = 0; j <= this.columns - 1; j++)
-                    AnimationTexturesTemp.Add(AnimationName + "_" + (j + columns * i).ToString(), TextureManager.GetTexture(AnimationPath, new Rectangle(r.X + r.Width * j, r.Y + r.Height * i, r.Width, r.Height)));
+                    AnimationTexturesTemp.Add(AnimationName + "_" + (j + columns * i).ToString(), TextureManager.GetTexture(AnimationPath, new Rectangle(r.x + r.Width * j, r.y + r.Height * i, r.Width, r.Height)));
             }
         }
     }
@@ -127,9 +127,9 @@ public class ItemObject : Entity
 
     public override void UpdateEntity()
     {
-        if (this.Rotation.Y != Screen.Camera.Yaw)
+        if (this.Rotation.y != Screen.Camera.Yaw)
         {
-            this.Rotation.Y = Screen.Camera.Yaw;
+            this.Rotation.y = Screen.Camera.Yaw;
             this.CreatedWorld = false;
         }
 

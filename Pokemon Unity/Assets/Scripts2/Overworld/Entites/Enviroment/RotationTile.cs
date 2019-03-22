@@ -42,7 +42,7 @@ public class RotationTile : Entity
             {
                 if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
                 {
-                    if (this.Position.X == Screen.Camera.Position.X & System.Convert.ToInt32(this.Position.Y) == System.Convert.ToInt32(Screen.Camera.Position.Y) & this.Position.Z == Screen.Camera.Position.Z)
+                    if (this.Position.x == Screen.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & this.Position.z == Screen.Camera.Position.z)
                     {
                         int steps = GetSteps();
 
@@ -63,36 +63,36 @@ public class RotationTile : Entity
         {
             case 0:
                 {
-                    direction.Y = -1;
+                    direction.y = -1;
                     break;
                 }
 
             case 1:
                 {
-                    direction.X = -1;
+                    direction.x = -1;
                     break;
                 }
 
             case 2:
                 {
-                    direction.Y = 1;
+                    direction.y = 1;
                     break;
                 }
 
             case 3:
                 {
-                    direction.X = 1;
+                    direction.x = 1;
                     break;
                 }
         }
 
-        int stepY = System.Convert.ToInt32(direction.Y);
+        int stepY = System.Convert.ToInt32(direction.y);
         if (stepY == 0)
             stepY = 1;
 
-        for (var x = 0; x <= direction.X * 100; x += direction.X)
+        for (var x = 0; x <= direction.x * 100; x += direction.x)
         {
-            for (var y = 0; y <= direction.Y * 100; y += stepY)
+            for (var y = 0; y <= direction.y * 100; y += stepY)
             {
                 Vector3 p = new Vector3(x, 0, y) + this.Position;
                 foreach (Entity e in Screen.Level.Entities)
@@ -101,7 +101,7 @@ public class RotationTile : Entity
                     {
                         if (e.EntityID.ToLower() == "rotationtile")
                         {
-                            if (System.Convert.ToInt32(e.Position.X) == System.Convert.ToInt32(p.X) & System.Convert.ToInt32(e.Position.Y) == System.Convert.ToInt32(p.Y) & System.Convert.ToInt32(e.Position.Z) == System.Convert.ToInt32(p.Z))
+                            if (System.Convert.ToInt32(e.Position.x) == System.Convert.ToInt32(p.x) & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(p.y) & System.Convert.ToInt32(e.Position.z) == System.Convert.ToInt32(p.z))
                                 goto theend;
                         }
                     }

@@ -14,7 +14,7 @@ public class SignBlock : Entity
         this.Scale = new Vector3(0.7);
 
         if (ActionValue < 3)
-            this.Position.Y -= 0.15F;
+            this.Position.y -= 0.15F;
 
         this.CreatedWorld = false;
     }
@@ -28,14 +28,14 @@ public class SignBlock : Entity
             case 1:
             case 3:
                 {
-                    if (this.Rotation.Y == MathHelper.Pi * 1.5F | this.Rotation.Y == MathHelper.Pi * 0.5F)
+                    if (this.Rotation.y == MathHelper.Pi * 1.5F | this.Rotation.y == MathHelper.Pi * 0.5F)
                         canRead = true;
                     break;
                 }
             case 0:
             case 2:
                 {
-                    if (this.Rotation.Y == MathHelper.Pi | this.Rotation.Y == MathHelper.TwoPi | this.Rotation.Y == 0)
+                    if (this.Rotation.y == MathHelper.Pi | this.Rotation.y == MathHelper.TwoPi | this.Rotation.y == 0)
                         canRead = true;
                     break;
                 }

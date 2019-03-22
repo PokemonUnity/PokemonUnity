@@ -97,9 +97,9 @@ public class StrengthRock : Entity
         if (Screen.Level.UsedStrength == true & this.Moved == 0.0F)
         {
             Vector3 newPosition = Screen.Camera.GetForwardMovedPosition();
-            newPosition.Y = newPosition.Y.ToInteger();
-            newPosition.X += Screen.Camera.GetMoveDirection().X;
-            newPosition.Z += Screen.Camera.GetMoveDirection().Z;
+            newPosition.y = newPosition.y.ToInteger();
+            newPosition.x += Screen.Camera.GetMoveDirection().x;
+            newPosition.z += Screen.Camera.GetMoveDirection().z;
 
             if (CheckCollision(newPosition) == true)
             {
@@ -114,11 +114,11 @@ public class StrengthRock : Entity
 
     private bool CheckCollision(Vector3 newPosition)
     {
-        newPosition = new Vector3(System.Convert.ToInt32(newPosition.X), System.Convert.ToInt32(newPosition.Y), System.Convert.ToInt32(newPosition.Z));
+        newPosition = new Vector3(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.y), System.Convert.ToInt32(newPosition.z));
 
         bool HasFloor = false;
 
-        Vector3 Position2D = new Vector3(newPosition.X, newPosition.Y - 0.1F, newPosition.Z);
+        Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1F, newPosition.z);
         foreach (Entity Floor in Screen.Level.Floors)
         {
             if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)

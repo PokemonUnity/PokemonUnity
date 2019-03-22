@@ -152,7 +152,7 @@ public class NPC : Entity
 		this.FrameSize = new Vector2(System.Convert.ToInt32(this.Texture.Width / (double)3), System.Convert.ToInt32(this.Texture.Height / (double)4));
 
 		if (HasPokemonTexture == true)
-			this.FrameSize = new Vector2(this.FrameSize.X, this.FrameSize.Y);
+			this.FrameSize = new Vector2(this.FrameSize.x, this.FrameSize.y);
 		if (this.Movement == Movements.Pokeball)
 			this.FrameSize = new Vector2(32, 32);
 
@@ -184,7 +184,7 @@ public class NPC : Entity
 						case "position":
 							{
 								string[] PositionData = addition.Split(System.Convert.ToChar(","));
-								this.Position = new Vector3(System.Convert.ToSingle(PositionData[0].Replace(".", GameController.DecSeparator)) + Offset.X, System.Convert.ToSingle(PositionData[1].Replace(".", GameController.DecSeparator)) + Offset.Y, System.Convert.ToSingle(PositionData[2].Replace(".", GameController.DecSeparator)) + Offset.Z);
+								this.Position = new Vector3(System.Convert.ToSingle(PositionData[0].Replace(".", GameController.DecSeparator)) + Offset.x, System.Convert.ToSingle(PositionData[1].Replace(".", GameController.DecSeparator)) + Offset.y, System.Convert.ToSingle(PositionData[2].Replace(".", GameController.DecSeparator)) + Offset.z);
 								break;
 							}
 						case "remove":
@@ -296,7 +296,7 @@ public class NPC : Entity
 
 			int x = 0;
 			if (this.Moved > 0.0F | AnimateIdle == true)
-				x = System.Convert.ToInt32(FrameSize.X) * GetAnimationX();
+				x = System.Convert.ToInt32(FrameSize.x) * GetAnimationX();
 
 			if (this.Movement == Movements.Pokeball)
 			{
@@ -304,10 +304,10 @@ public class NPC : Entity
 				x = 0;
 			}
 
-			int y = System.Convert.ToInt32(FrameSize.Y) * spriteIndex;
+			int y = System.Convert.ToInt32(FrameSize.y) * spriteIndex;
 
-			int xFrameSize = System.Convert.ToInt32(this.FrameSize.X);
-			int yFrameSize = System.Convert.ToInt32(this.FrameSize.Y);
+			int xFrameSize = System.Convert.ToInt32(this.FrameSize.x);
+			int yFrameSize = System.Convert.ToInt32(this.FrameSize.y);
 
 			if (x < 0)
 				x = 0;
@@ -368,18 +368,18 @@ public class NPC : Entity
 	{
 		if (this.TrainerSight > -1 & Screen.Level.PokemonEncounterData.EncounteredPokemon == false & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 		{
-			if (System.Convert.ToInt32(this.Position.Y) == System.Convert.ToInt32(Screen.Camera.Position.Y) & Screen.Camera.IsMoving() == false)
+			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & Screen.Camera.IsMoving() == false)
 			{
 				if (Moved == 0.0F & this.CanBeRemoved == false)
 				{
-					if (Screen.Camera.Position.X == System.Convert.ToInt32(this.Position.X) | System.Convert.ToInt32(this.Position.Z) == Screen.Camera.Position.Z)
+					if (Screen.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == Screen.Camera.Position.z)
 					{
 						int distance = 0;
 						bool correctFacing = false;
 
-						if (Screen.Camera.Position.X == System.Convert.ToInt32(this.Position.X))
+						if (Screen.Camera.Position.x == System.Convert.ToInt32(this.Position.x))
 						{
-							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.Z) - Screen.Camera.Position.Z);
+							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.z) - Screen.Camera.Position.z);
 
 							if (distance > 0)
 							{
@@ -389,9 +389,9 @@ public class NPC : Entity
 							else if (this.faceRotation == 2)
 								correctFacing = true;
 						}
-						else if (Screen.Camera.Position.Z == System.Convert.ToInt32(this.Position.Z))
+						else if (Screen.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
 						{
-							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.X) - Screen.Camera.Position.X);
+							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.x) - Screen.Camera.Position.x);
 
 							if (distance > 0)
 							{
@@ -482,22 +482,22 @@ public class NPC : Entity
 								{
 									case 0:
 										{
-											offset.Y = -0.01F;
+											offset.y = -0.01F;
 											break;
 										}
 									case 1:
 										{
-											offset.X = -0.01F;
+											offset.x = -0.01F;
 											break;
 										}
 									case 2:
 										{
-											offset.Y = 0.01F;
+											offset.y = 0.01F;
 											break;
 										}
 									case 3:
 										{
-											offset.X = 0.01F;
+											offset.x = 0.01F;
 											break;
 										}
 								}
@@ -509,11 +509,11 @@ public class NPC : Entity
 									if ((OverworldCamera)Screen.Camera.ThirdPerson == true & IsOnScreen() == false)
 									{
 										s += "@camera.setfocus(npc," + this.NPCID + ")" + Environment.NewLine;
-										var cPosition = withBlock.ThirdPersonOffset.X.ToString() + "," + withBlock.ThirdPersonOffset.Y.ToString() + "," + withBlock.ThirdPersonOffset.Z.ToString();
-										s += "@entity.showmessagebulb(1|" + this.Position.X + offset.X + "|" + this.Position.Y + 0.7F + "|" + this.Position.Z + offset.Y + ")" + Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + Environment.NewLine + "@camera.resetfocus" + Environment.NewLine + "@camera.setposition(" + cPosition + ")" + Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + Environment.NewLine + ":end";
+										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + Environment.NewLine + "@camera.resetfocus" + Environment.NewLine + "@camera.setposition(" + cPosition + ")" + Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + Environment.NewLine + ":end";
 									}
 									else
-										s += "@entity.showmessagebulb(1|" + this.Position.X + offset.X + "|" + this.Position.Y + 0.7F + "|" + this.Position.Z + offset.Y + ")" + Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + Environment.NewLine + ":end";
 								}
 
 
@@ -556,8 +556,8 @@ public class NPC : Entity
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.Y != Screen.Camera.Yaw)
-			this.Rotation.Y = Screen.Camera.Yaw;
+		if (this.Rotation.y != Screen.Camera.Yaw)
+			this.Rotation.y = Screen.Camera.Yaw;
 
 		base.UpdateEntity();
 	}
@@ -626,15 +626,15 @@ public class NPC : Entity
 					{
 						int oldRotation = this.faceRotation;
 
-						if (Screen.Camera.Position.X == this.Position.X | Screen.Camera.Position.Z == this.Position.Z)
+						if (Screen.Camera.Position.x == this.Position.x | Screen.Camera.Position.z == this.Position.z)
 						{
-							if (this.Position.X < Screen.Camera.Position.X)
+							if (this.Position.x < Screen.Camera.Position.x)
 								this.faceRotation = 3;
-							else if (this.Position.X > Screen.Camera.Position.X)
+							else if (this.Position.x > Screen.Camera.Position.x)
 								this.faceRotation = 1;
-							if (this.Position.Z < Screen.Camera.Position.Z)
+							if (this.Position.z < Screen.Camera.Position.z)
 								this.faceRotation = 2;
-							else if (this.Position.Z > Screen.Camera.Position.Z)
+							else if (this.Position.z > Screen.Camera.Position.z)
 								this.faceRotation = 0;
 						}
 
@@ -663,7 +663,7 @@ public class NPC : Entity
 							{
 								foreach (Rectangle r in this.MoveRectangles)
 								{
-									if (r.Contains(new Point(System.Convert.ToInt32(newPosition.X), System.Convert.ToInt32(newPosition.Z))) == true)
+									if (r.Contains(new Point(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.z))) == true)
 									{
 										contains = true;
 										break;
@@ -694,7 +694,7 @@ public class NPC : Entity
 						{
 							foreach (Rectangle r in this.MoveRectangles)
 							{
-								if (r.Contains(new Point(System.Convert.ToInt32(newPosition.X), System.Convert.ToInt32(newPosition.Z))) == true)
+								if (r.Contains(new Point(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.z))) == true)
 								{
 									contains = true;
 									break;
@@ -712,15 +712,15 @@ public class NPC : Entity
 
 	private bool CheckCollision(Vector3 newPosition)
 	{
-		newPosition = new Vector3(System.Convert.ToInt32(newPosition.X), System.Convert.ToInt32(newPosition.Y), System.Convert.ToInt32(newPosition.Z));
+		newPosition = new Vector3(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.y), System.Convert.ToInt32(newPosition.z));
 
 		bool interactPlayer = true;
 
 		if (Screen.Camera.IsMoving() == false)
 		{
-			if (System.Convert.ToInt32(Screen.Camera.Position.X) != newPosition.X | System.Convert.ToInt32(Screen.Camera.Position.Z) != newPosition.Z)
+			if (System.Convert.ToInt32(Screen.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(Screen.Camera.Position.z) != newPosition.z)
 			{
-				if (System.Convert.ToInt32(Screen.Level.OverworldPokemon.Position.X) != newPosition.X | System.Convert.ToInt32(Screen.Level.OverworldPokemon.Position.Z) != newPosition.Z)
+				if (System.Convert.ToInt32(Screen.Level.OverworldPokemon.Position.x) != newPosition.x | System.Convert.ToInt32(Screen.Level.OverworldPokemon.Position.z) != newPosition.z)
 					interactPlayer = false;
 			}
 		}
@@ -730,7 +730,7 @@ public class NPC : Entity
 
 		bool HasFloor = false;
 
-		Vector3 Position2D = new Vector3(newPosition.X, newPosition.Y - 0.1F, newPosition.Z);
+		Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1F, newPosition.z);
 		foreach (Entity Floor in Screen.Level.Floors)
 		{
 			if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)
@@ -793,7 +793,7 @@ public class NPC : Entity
 				MoveY = 0.0F;
 				AnimationX = 1;
 				AnimationDelay = AnimationDelayLenght;
-				this.Position = new Vector3(System.Convert.ToInt32(this.Position.X), System.Convert.ToInt32(this.Position.Y), System.Convert.ToInt32(this.Position.Z));
+				this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToInt32(this.Position.y), System.Convert.ToInt32(this.Position.z));
 				ChangeTexture();
 				ApplyShaders();
 				Speed = NPC.STANDARD_SPEED;
@@ -844,9 +844,9 @@ public class NPC : Entity
 			if (multi < 0.0F)
 				multi *= -1;
 			if (MoveY > 0)
-				moveVector.Y = multi * 1;
+				moveVector.y = multi * 1;
 			else
-				moveVector.Y = multi * -1;
+				moveVector.y = multi * -1;
 		}
 		return moveVector;
 	}

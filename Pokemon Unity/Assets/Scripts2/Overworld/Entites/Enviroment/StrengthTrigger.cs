@@ -65,7 +65,7 @@ public class StrengthTrigger : Entity
             {
                 if (sRock.EntityID == "StrengthRock")
                 {
-                    if (sRock.Position.X == this.Position.X & sRock.Position.Z == this.Position.Z)
+                    if (sRock.Position.x == this.Position.x & sRock.Position.z == this.Position.z)
                     {
                         if (RemoveRock == true)
                             (StrengthRock)sRock.CanBeRemoved = true;

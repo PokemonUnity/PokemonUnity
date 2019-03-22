@@ -92,9 +92,9 @@ public class LevelLoader
         {
 			//ToDo: Change Screen to Scene
             Screen.Level.LevelFile = levelPath;
-
+.x
             Core.Player.LastSavePlace = Screen.Level.LevelFile;
-            Core.Player.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.Y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.Z;
+            Core.Player.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
             Screen.Level.Entities.Clear();
             Screen.Level.Floors.Clear();
@@ -592,9 +592,9 @@ public class LevelLoader
 
         bool addNPC = false;
         if (TagExists(Tags, "AddNPC") == true)
-            addNPC = System.Convert.ToBoolean(GetTag(Tags, "AddNPC"));
+            addNPC = System.Convert.ToB.xlean(GetTag(Tags, "AddNPC"));
 
-        string structureKey = MapOffset.X.ToString() + "|" + MapOffset.Y.ToString() + "|" + MapOffset.Z.ToString() + "|" + MapName;
+        string structureKey = MapOffset.X.ToString() + "|" + MapOffset.y.ToString() + "|" + MapOffset.z.ToString() + "|" + MapName;
 
         if (tempStructureList.ContainsKey(structureKey) == false)
         {
@@ -687,14 +687,14 @@ public class LevelLoader
 
             string positionData = positionString.Remove(0, positionString.IndexOf("[") + 1);
             positionData = positionData.Remove(positionData.IndexOf("]"));
-
+.x
             string[] posArr = positionData.Split(System.Convert.ToChar(","));
-            Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", GameController.DecSeparator)) + MapOffset.X, ScriptConversion.ToSingle(posArr[1].Replace(".", GameController.DecSeparator)) + MapOffset.Y, System.Convert.ToSingle(posArr[2].Replace(".", GameController.DecSeparator)) + MapOffset.Z);
-
+            Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", GameController.DecSeparator)) + MapOffset.X, ScriptConversion.ToSingle(posArr[1].Replace(".", GameController.DecSeparator)) + MapOffset.y, System.Convert.ToSingle(posArr[2].Replace(".", GameController.DecSeparator)) + MapOffset.z);
+.x
             if (line.ToLower().Contains("{\"position\"{sngarr[") == true)
-                line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.X.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.Y.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.Z.ToString().Replace(GameController.DecSeparator, ".") + "]}}");
+                line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.X.ToString().Replace(G.xeController.DecSeparator, ".") + "," + newPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.z.ToString().Replace(GameController.DecSeparator, ".") + "]}}");
             else
-                line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.X).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.Y).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.Z).ToString().Replace(GameController.DecSeparator, ".") + "]}}");
+                line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.X).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.y).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.z).ToString().Replace(GameController.DecSeparator, ".") + "]}}");
         }
 
         return line;
@@ -723,9 +723,9 @@ public class LevelLoader
     }
 
     private void AddNPC(Dictionary<string, object> Tags)
-    {
+    {.x
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.Y, PosList[2] + Offset.Z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<float> ScaleList;
         Vector3 Scale = new Vector3(1);
@@ -782,9 +782,9 @@ public class LevelLoader
     {
         List<int> sizeList = (List<int>)GetTag(Tags, "Size");
         Size Size = new Size(sizeList[0], sizeList[1]);
-
+.x
         List<int> PosList = (List<int>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.Y, PosList[2] + Offset.Z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         string TexturePath = System.Convert.ToString(GetTag(Tags, "TexturePath"));
         Rectangle TextureRectangle = (Rectangle)GetTag(Tags, "Texture");
@@ -844,15 +844,15 @@ public class LevelLoader
 
                     if (loadOffsetMap == true)
                     {
-                        Ent = Screen.Level.OffsetmapFloors.Find(e =>
+                        Ent = Screen.Level.OffsetmapFloors.Find(e =>.x
                         {
-                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.Y, Position.Z + iZ);
+                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.y, Position.z + iZ);
                         });
                     }
                     else
-                        Ent = Screen.Level.Floors.Find(e =>
+                        Ent = Screen.Level.Floors.Find(e =>.x
                         {
-                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.Y, Position.Z + iZ);
+                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.y, Position.z + iZ);
                         });
 
                     if (Ent != null)
@@ -868,9 +868,9 @@ public class LevelLoader
                         exists = true;
                     }
 
-                    if (exists == false)
+                    if (exists == false).x
                     {
-                        Floor f = new Floor(Position.X + x, Position.Y, Position.Z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
+                        Floor f = new Floor(Position.X + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
                         f.MapOrigin = MapOrigin;
                         f.SeasonColorTexture = SeasonTexture;
                         f.LoadSeasonTextures();
@@ -888,9 +888,9 @@ public class LevelLoader
                     for (var i = 0; i <= floorList.Count; i++)
                     {
                         if (i < floorList.Count)
-                        {
+                        {.x.x
                             Entity floor = floorList[i];
-                            if (floor.Position.X == Position.X + x & floor.Position.Y == Position.Y & floor.Position.Z == Position.Z + z)
+                            if (floor.Position.X == Position.X + x & floor.Position.y == Position.y & floor.Position.z == Position.z + z)
                             {
                                 floorList.RemoveAt(i);
                                 i -= 1;
@@ -908,9 +908,9 @@ public class LevelLoader
         int ID = -1;
         if (TagExists(Tags, "ID") == true)
             ID = System.Convert.ToInt32(GetTag(Tags, "ID"));
-
+.x
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.Y, PosList[2] + Offset.Z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<Rectangle> TexList = (List<Rectangle>)GetTag(Tags, "Textures");
         List<Texture2D> TextureList = new List<Texture2D>();
@@ -978,13 +978,13 @@ public class LevelLoader
 
         float CameraDistanceDelta = 0.0F;
         if (TagExists(Tags, "CameraDistanceDelta") == true)
-            CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
+            CameraDistanceDelta = System.Convert.ToSing.x(GetTag(Tags, "CameraDistanceDelta"));
 
         for (var X = 0; X <= Size.Width - 1; X += Steps.X)
         {
-            for (var Z = 0; Z <= Size.Height - 1; Z += Steps.Z)
+            for (var Z = 0; Z <= Size.Height - 1; Z += Steps.z)
             {
-                for (var Y = 0; Y <= SizeY - 1; Y += Steps.Y)
+                for (var Y = 0; Y <= SizeY - 1; Y += Steps.y)
                 {
                     bool DoAdd = false;
                     if (Fill == false)
@@ -1013,9 +1013,9 @@ public class LevelLoader
                     if (AnimationData != null && AnimationData.Count == 5)
                     {
                     }
-                    if (DoAdd == true)
+                    if (DoAdd == true).x
                     {
-                        Entity newEnt = Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.Y + Y, Position.Z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
+                        Entity newEnt = Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
                         newEnt.IsOffsetMapContent = loadOffsetMap;
 
                         if (newEnt != null)
@@ -1184,9 +1184,9 @@ public class LevelLoader
         Vector3 Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
 
         bool StopOnContact = System.Convert.ToBoolean(GetTag(Tags, "StopOnContact"));
-
+.x
         List<int> PosList = (List<int>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.Y, PosList[2] + Offset.Z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<int> ObjectSizeList = (List<int>)GetTag(Tags, "Size");
         Size ObjectSize = new Size(ObjectSizeList[0], ObjectSizeList[1]);
@@ -1207,9 +1207,9 @@ public class LevelLoader
         List<int> SizeList = (List<int>)GetTag(Tags, "Size");
         int Width = SizeList[0];
         int Height = SizeList[1];
-
+.x
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.Y, PosList[2] + Offset.Z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         Vector3 Rotation = Vector3.zero;
         if (TagExists(Tags, "Rotation") == true)

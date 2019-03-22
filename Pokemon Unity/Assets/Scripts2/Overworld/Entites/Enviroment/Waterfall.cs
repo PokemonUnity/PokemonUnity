@@ -44,9 +44,9 @@ public class Waterfall : Entity
                 this.waterFallTextureName = AdditionalValue;
                 if (Waterfall.WaterfallTexturesTemp.ContainsKey(AdditionalValue + "_0") == false)
                 {
-                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.X, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 2, r.Y, r.Width, r.Height)));
+                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.Width, r.Height)));
+                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width, r.y, r.Width, r.Height)));
+                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 2, r.y, r.Width, r.Height)));
                 }
             }
             else if (Waterfall.WaterfallTexturesTemp.ContainsKey("_0") == false)
@@ -63,18 +63,18 @@ public class Waterfall : Entity
                 this.waterTextureName = AdditionalValue;
                 if (Waterfall.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0") == false)
                 {
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.X, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 2, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 3, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 4, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 5, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 6, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 7, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 8, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 9, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 10, r.Y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.X + r.Width * 11, r.Y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 2, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 3, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 4, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 5, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 6, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 7, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 8, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 9, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 10, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 11, r.y, r.Width, r.Height)));
                 }
             }
             else if (Waterfall.WaterTexturesTemp.ContainsKey("_0") == false)
@@ -139,7 +139,7 @@ public class Waterfall : Entity
                         break;
                     }
             }
-            switch (this.Rotation.Y)
+            switch (this.Rotation.y)
             {
                 case 0:
                 case (object)MathHelper.TwoPi:
@@ -269,7 +269,7 @@ public class Waterfall : Entity
             return;
 
         bool isOnTop = true;
-        Vector3 OnTopcheckPosition = new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z);
+        Vector3 OnTopcheckPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
         Entity Oe = GetEntity(Screen.Level.Entities, OnTopcheckPosition, true, new System.Type[]
         {
             typeof(Waterfall)
@@ -288,7 +288,7 @@ public class Waterfall : Entity
             if (Screen.Level.Surfing == false)
                 Steps = 1;
 
-            Vector3 checkPosition = new Vector3(this.Position.X, this.Position.Y - 1, this.Position.Z);
+            Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y - 1, this.Position.z);
             bool foundSteps = true;
             while (foundSteps == true)
             {
@@ -301,7 +301,7 @@ public class Waterfall : Entity
                     if (e.EntityID == "Waterfall")
                     {
                         Steps += 1;
-                        checkPosition.Y -= 1;
+                        checkPosition.y -= 1;
                     }
                     else
                         foundSteps = false;
@@ -338,7 +338,7 @@ public class Waterfall : Entity
             if (Screen.Level.Surfing == false)
                 Steps = 0;
 
-            Vector3 checkPosition = new Vector3(this.Position.X, this.Position.Y + 1, this.Position.Z);
+            Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
             bool foundSteps = true;
             while (foundSteps == true)
             {
@@ -351,7 +351,7 @@ public class Waterfall : Entity
                     if (e.EntityID == "Waterfall")
                     {
                         Steps += 1;
-                        checkPosition.Y += 1;
+                        checkPosition.y += 1;
                     }
                     else
                         foundSteps = false;

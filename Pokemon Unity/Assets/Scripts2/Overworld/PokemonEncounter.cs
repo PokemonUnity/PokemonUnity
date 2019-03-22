@@ -113,7 +113,7 @@ public class PokemonEncounter
         if (this._levelReference.PokemonEncounterData.EncounteredPokemon == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
         {
             // If the player met the set position:
-            if (Screen.Camera.Position.X == this._levelReference.PokemonEncounterData.Position.X & Screen.Camera.Position.Z == this._levelReference.PokemonEncounterData.Position.Z)
+            if (Screen.Camera.Position.X == this._levelReference.PokemonEncounterData.Position.X & Screen.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
             {
                 // Make the player stop and set encounter check to false:
                 this._levelReference.PokemonEncounterData.EncounteredPokemon = false;
@@ -126,7 +126,7 @@ public class PokemonEncounter
                 {
                     Screen.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 
-                    // If the player has a Repel going and the first Pokémon in the party's level is greater than the wild Pokémon's level, don't start the battle:
+                    // If the player h.x a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
                     if (Core.Player.RepelSteps > 0)
                     {
                         Pokemon.Pokemon p = Core.Player.GetWalkPokemon();

@@ -17,7 +17,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	private float AnimationDelayLenght = 2.2F;
 	private float AnimationDelay = AnimationDelayLenght;
 
-	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.X, pos.Y, pos.Z, "NetworkPokemon",
+	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.x, pos.y, pos.z, "NetworkPokemon",
 		new Texture2D()
 	{
 		TextureManager.DefaultTexture
@@ -32,7 +32,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
         this.PokemonTexture = PokemonTexture;
 
-        this.Position = new Vector3(System.Convert.ToInt32(this.Position.X), System.Convert.ToSingle(this.Position.Y) + 0.001F, System.Convert.ToInt32(this.Position.Z));
+        this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToSingle(this.Position.y) + 0.001F, System.Convert.ToInt32(this.Position.z));
         this.NeedsUpdate = true;
         this.CreateWorldEveryFrame = true;
 
@@ -48,8 +48,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.Y != Screen.Camera.Yaw)
-			this.Rotation.Y = Screen.Camera.Yaw;
+		if (this.Rotation.y != Screen.Camera.Yaw)
+			this.Rotation.y = Screen.Camera.Yaw;
 
 		base.UpdateEntity();
 	}
@@ -196,9 +196,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile) == true)
 				{
 					Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
-					this.Position.X += Offset.X;
-					this.Position.Y += Offset.Y;
-					this.Position.Z += Offset.Z;
+					this.Position.x += Offset.x;
+					this.Position.y += Offset.y;
+					this.Position.z += Offset.z;
 					this.Visible = true;
 				}
 			}
