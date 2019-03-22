@@ -234,7 +234,7 @@ public class Floor : Entity
             {
                 if (e.EntityID == "Floor")
                 {
-                    if ((Floor)e.IsIce == true)
+                    if (((Floor)e).IsIce == true)
                     {
                         if ((OverworldCamera)Screen.Camera.CheckCollision(checkPosition) == false)
                         {

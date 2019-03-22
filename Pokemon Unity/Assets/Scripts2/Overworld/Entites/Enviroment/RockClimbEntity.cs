@@ -116,7 +116,7 @@ public class RockClimbEntity : Entity
                         if (e.EntityID == "ScriptBlock")
                             TempScriptEntity = (ScriptBlock)e;
                         else if (e.EntityID == "WarpBlock")
-                            (WarpBlock)e.WalkAgainstFunction();
+                            ((WarpBlock)e).WalkAgainstFunction();
                         foundSteps = false;
                     }
                 }
@@ -191,7 +191,7 @@ public class RockClimbEntity : Entity
                         if (e.EntityID == "ScriptBlock")
                             this.TempScriptEntity = (ScriptBlock)e;
                         else if (e.EntityID == "WarpBlock")
-                            (WarpBlock)e.WalkAgainstFunction();
+                            ((WarpBlock)e).WalkAgainstFunction();
                         foundSteps = false;
                     }
                 }
