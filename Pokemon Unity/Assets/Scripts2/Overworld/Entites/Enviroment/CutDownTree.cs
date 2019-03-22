@@ -74,7 +74,7 @@ public class CutDownTree : Entity
 			string Text = pName + " used~Cut!";
 			this.CanBeRemoved = true;
 
-			string s = "version=2" + Environment.NewLine + "@text.show(" + Text + ")" + Environment.NewLine + "@sound.play(destroy,0)" + Environment.NewLine + ":end";
+			string s = "version=2" + System.Environment.NewLine + "@text.show(" + Text + ")" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + ":end";
 
 			PlayerStatistics.Track("Cut used", 1);
 			(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);

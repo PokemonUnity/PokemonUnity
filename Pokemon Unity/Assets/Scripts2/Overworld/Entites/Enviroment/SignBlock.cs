@@ -62,7 +62,7 @@ public class SignBlock : Entity
                         }
                     case 2:
                         {
-                            oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", Environment.NewLine), 2);
+                            oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", System.Environment.NewLine), 2);
                             break;
                         }
                     default:

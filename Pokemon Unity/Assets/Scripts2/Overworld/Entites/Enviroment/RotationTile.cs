@@ -46,7 +46,7 @@ public class RotationTile : Entity
                     {
                         int steps = GetSteps();
 
-                        string s = "version=2" + Environment.NewLine + "@player.move(0)" + Environment.NewLine + "@player.turnto(" + this.RotateTo.ToString() + ")" + Environment.NewLine + "@player.move(" + steps + ")" + Environment.NewLine + ":end";
+                        string s = "version=2" + System.Environment.NewLine + "@player.move(0)" + System.Environment.NewLine + "@player.turnto(" + this.RotateTo.ToString() + ")" + System.Environment.NewLine + "@player.move(" + steps + ")" + System.Environment.NewLine + ":end";
 
                         (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
                     }

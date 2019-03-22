@@ -70,24 +70,24 @@ public class SmashRock : Entity
                 spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.RockSmash, false);
                 if (spawnedPokemon == null)
                 {
-                    string s = "version=2" + Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + ":end";
+                    string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + ":end";
                     (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
                 }
                 else
                 {
-                    string s = "version=2" + Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@level.update" + Environment.NewLine + "@text.show(A wild Pokémon~appeared!)" + Environment.NewLine + "@battle.wild(" + spawnedPokemon.Number + "," + spawnedPokemon.Level + ")" + Environment.NewLine + ":end";
+                    string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@text.show(A wild Pokémon~appeared!)" + System.Environment.NewLine + "@battle.wild(" + spawnedPokemon.Number + "," + spawnedPokemon.Level + ")" + System.Environment.NewLine + ":end";
                     (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
                 }
             }
             else if (Core.Random.Next(0, 100) < 20)
             {
                 int ItemID = GetItemID();
-                string s = "version=2" + Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@level.update" + Environment.NewLine + "@item.give(" + ItemID + ",1)" + Environment.NewLine + "@item.messagegive(" + ItemID + ",1)" + Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@item.give(" + ItemID + ",1)" + System.Environment.NewLine + "@item.messagegive(" + ItemID + ",1)" + System.Environment.NewLine + ":end";
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
             else
             {
-                string s = "version=2" + Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + ":end";
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
             PlayerStatistics.Track("Rock Smash used", 1);

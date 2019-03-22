@@ -74,12 +74,12 @@ public class HeadbuttTree : Entity
             Pokemon spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.Headbutt, false);
             if (spawnedPokemon == null)
             {
-                string s = "version=2" + Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + Environment.NewLine + "@sound.play(destroy,0)" + Environment.NewLine + "@level.wait(20)" + Environment.NewLine + "@text.show(Nothing happened...)" + Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + "@level.wait(20)" + System.Environment.NewLine + "@text.show(Nothing happened...)" + System.Environment.NewLine + ":end";
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
             else
             {
-                string s = "version=2" + Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + Environment.NewLine + "@sound.play(destroy,0)" + Environment.NewLine + "@level.wait(20)" + Environment.NewLine + "@text.show(A wild Pokémon~appeared!)" + Environment.NewLine + "@battle.wild(" + spawnedPokemon.Number + "," + spawnedPokemon.Level + ")" + Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + "@level.wait(20)" + System.Environment.NewLine + "@text.show(A wild Pokémon~appeared!)" + System.Environment.NewLine + "@battle.wild(" + spawnedPokemon.Number + "," + spawnedPokemon.Level + ")" + System.Environment.NewLine + ":end";
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
         }

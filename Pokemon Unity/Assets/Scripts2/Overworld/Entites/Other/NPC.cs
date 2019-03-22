@@ -205,7 +205,7 @@ public class NPC : Entity
 		if (GameVariables.playerTrainer.NPCData == "")
 			GameVariables.playerTrainer.NPCData = Data;
 		else
-			GameVariables.playerTrainer.NPCData += Environment.NewLine + Data;
+			GameVariables.playerTrainer.NPCData += System.Environment.NewLine + Data;
 	}
 
 	public static void RemoveNPCData(string file, int ID, string action, string addition)
@@ -222,7 +222,7 @@ public class NPC : Entity
 		for (var i = 0; i <= NData.Count() - 1; i++)
 		{
 			if (i != 0)
-				Data += Environment.NewLine;
+				Data += System.Environment.NewLine;
 
 			Data += NData[i];
 		}
@@ -352,7 +352,7 @@ public class NPC : Entity
 					}
 				case 3:
 					{
-						oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", Environment.NewLine), 2);
+						oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", System.Environment.NewLine), 2);
 						break;
 					}
 				default:
@@ -502,18 +502,18 @@ public class NPC : Entity
 										}
 								}
 
-								string s = "version=2" + Environment.NewLine + "@player.turn(" + turns + ")" + Environment.NewLine;
+								string s = "version=2" + System.Environment.NewLine + "@player.turn(" + turns + ")" + System.Environment.NewLine;
 
 								{
 									var withBlock = (OverworldCamera)Screen.Camera;
 									if ((OverworldCamera)Screen.Camera.ThirdPerson == true & IsOnScreen() == false)
 									{
-										s += "@camera.setfocus(npc," + this.NPCID + ")" + Environment.NewLine;
+										s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
-										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + Environment.NewLine + "@camera.resetfocus" + Environment.NewLine + "@camera.setposition(" + cPosition + ")" + Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + System.Environment.NewLine + "@camera.resetfocus" + System.Environment.NewLine + "@camera.setposition(" + cPosition + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
 									}
 									else
-										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
 								}
 
 

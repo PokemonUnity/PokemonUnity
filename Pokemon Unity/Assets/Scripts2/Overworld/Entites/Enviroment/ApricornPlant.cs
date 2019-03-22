@@ -109,7 +109,7 @@ public class ApricornPlant : Entity
 				foreach (string Apricorn in ApricornsData)
 				{
 					if (GameVariables.playerTrainer.ApricornData != "")
-						GameVariables.playerTrainer.ApricornData += Environment.NewLine;
+						GameVariables.playerTrainer.ApricornData += System.Environment.NewLine;
 					GameVariables.playerTrainer.ApricornData += Apricorn;
 				}
 			}
@@ -179,7 +179,7 @@ public class ApricornPlant : Entity
 		s += Screen.Level.LevelFile + "|" + System.Convert.ToInt32(Position.x) + "," + System.Convert.ToInt32(Position.y) + "," + System.Convert.ToInt32(Position.z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
 
 		if (GameVariables.playerTrainer.ApricornData != "")
-			GameVariables.playerTrainer.ApricornData += Environment.NewLine;
+			GameVariables.playerTrainer.ApricornData += System.Environment.NewLine;
 
 		GameVariables.playerTrainer.ApricornData += s;
 	}

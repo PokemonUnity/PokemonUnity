@@ -272,7 +272,7 @@ public class BerryPlant : Entity
                 if (Berry.ToLower().StartsWith("{" + Screen.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|") == false)
                 {
                     if (OutData != "")
-                        OutData += Environment.NewLine;
+                        OutData += System.Environment.NewLine;
                     OutData += Berry;
                 }
             }
@@ -298,7 +298,7 @@ public class BerryPlant : Entity
 
         string OldData = GameVariables.playerTrainer.BerryData;
         if (OldData != "")
-            OldData += Environment.NewLine;
+            OldData += System.Environment.NewLine;
         OldData += Data;
 
         GameVariables.playerTrainer.BerryData = OldData;
@@ -426,7 +426,7 @@ public class BerryPlant : Entity
 
             string OldData = GameVariables.playerTrainer.BerryData;
             if (OldData != "")
-                OldData += Environment.NewLine;
+                OldData += System.Environment.NewLine;
             OldData += Data;
 
             GameVariables.playerTrainer.BerryData = OldData;

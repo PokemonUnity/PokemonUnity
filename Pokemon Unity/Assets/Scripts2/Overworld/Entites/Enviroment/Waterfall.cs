@@ -310,7 +310,7 @@ public class Waterfall : Entity
                     foundSteps = false;
             }
 
-            s = "version=2" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(2)" + Environment.NewLine + "@player.setmovement(0,-1,0)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + ":end";
+            s = "version=2" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(2)" + System.Environment.NewLine + "@player.setmovement(0,-1,0)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + ":end";
 
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
         }
@@ -362,7 +362,7 @@ public class Waterfall : Entity
 
             Screen.Camera.PlannedMovement = new Vector3(0, 1, 0);
 
-            s = "version=2" + Environment.NewLine + "@pokemon.cry(" + pNumber + ")" + Environment.NewLine + "@sound.play(select)" + Environment.NewLine + "@text.show(" + pName + " used~Waterfall.)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(2)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + ":end";
+            s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + pNumber + ")" + System.Environment.NewLine + "@sound.play(select)" + System.Environment.NewLine + "@text.show(" + pName + " used~Waterfall.)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(2)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + ":end";
 
             PlayerStatistics.Track("Waterfall used", 1);
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);

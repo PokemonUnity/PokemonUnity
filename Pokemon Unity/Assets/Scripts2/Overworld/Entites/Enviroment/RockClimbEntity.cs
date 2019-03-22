@@ -134,11 +134,11 @@ public class RockClimbEntity : Entity
             Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             Screen.Level.OwnPlayer.ChangeTexture();
 
-            string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
+            string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {
-                s += GetScriptStartLine(this.TempScriptEntity) + Environment.NewLine;
+                s += GetScriptStartLine(this.TempScriptEntity) + System.Environment.NewLine;
                 this.TempScriptEntity = null;
             }
 
@@ -209,11 +209,11 @@ public class RockClimbEntity : Entity
             Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             Screen.Level.OwnPlayer.ChangeTexture();
 
-            string s = "version=2" + Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + Environment.NewLine + "@player.move(1)" + Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + Environment.NewLine + "@sound.play(destroy)" + Environment.NewLine + "@player.move(" + Steps + ")" + Environment.NewLine + "@pokemon.hide" + Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + Environment.NewLine;
+            string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {
-                s += GetScriptStartLine(this.TempScriptEntity) + Environment.NewLine;
+                s += GetScriptStartLine(this.TempScriptEntity) + System.Environment.NewLine;
                 this.TempScriptEntity = null;
             }
 

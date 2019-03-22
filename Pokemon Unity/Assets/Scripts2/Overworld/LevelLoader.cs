@@ -1253,7 +1253,7 @@ public class LevelLoader
 
     private void LoadBerries()
     {
-        string[] Data = GameVariables.playerTrainer.BerryData.Replace("}" + Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
+        string[] Data = GameVariables.playerTrainer.BerryData.Replace("}" + System.Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
         foreach (string Berry in Data)
         {
             if (Berry.Contains("{") == true)
