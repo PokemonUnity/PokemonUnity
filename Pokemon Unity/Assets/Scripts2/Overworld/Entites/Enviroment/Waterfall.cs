@@ -253,7 +253,7 @@ public class Waterfall : Entity
         {
             if (p.isEgg == false)
             {
-                foreach (BattleSystem.Attack a in p.moves)
+                foreach (Attack.Move a in p.moves)
                 {
                     if (a.Name.ToLower() == "waterfall")
                         return p;

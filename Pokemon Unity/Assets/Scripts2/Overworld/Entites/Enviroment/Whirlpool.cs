@@ -95,7 +95,7 @@ public class Whirlpool : Entity
         {
             if (p.isEgg == false)
             {
-                foreach (BattleSystem.Attack a in p.moves)
+                foreach (Attack.Move a in p.moves)
                 {
                     if (a.Name.ToLower() == "whirlpool")
                         return p.GetDisplayName();

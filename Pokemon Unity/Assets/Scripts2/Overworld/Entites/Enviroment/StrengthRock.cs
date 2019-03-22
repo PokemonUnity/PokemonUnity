@@ -27,7 +27,7 @@ public class StrengthRock : Entity
             {
                 if (p.isEgg == false)
                 {
-                    foreach (BattleSystem.Attack a in p.moves)
+                    foreach (Attack.Move a in p.moves)
                     {
                         if (a.Name == "Strength")
                         {
@@ -61,7 +61,7 @@ public class StrengthRock : Entity
             {
                 if (p.isEgg == false)
                 {
-                    foreach (BattleSystem.Attack a in p.moves)
+                    foreach (Attack.Move a in p.moves)
                     {
                         if (a.Name == "Strength")
                         {

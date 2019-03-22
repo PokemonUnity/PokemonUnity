@@ -95,7 +95,7 @@ public class DiveTile : Entity
     {
         foreach (Pokemon p in GameVariables.playerTrainer.Party)
         {
-            foreach (BattleSystem.Attack a in p.moves)
+            foreach (Attack.Move a in p.moves)
             {
                 if (a.Name.ToLower() == "dive")
                     return p.GetDisplayName();

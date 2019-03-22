@@ -27,7 +27,7 @@ public class HeadbuttTree : Entity
             {
                 if (p.isEgg == false)
                 {
-                    foreach (BattleSystem.Attack a in p.moves)
+                    foreach (Attack.Move a in p.moves)
                     {
                         if (a.Name == "Headbutt")
                         {
@@ -58,7 +58,7 @@ public class HeadbuttTree : Entity
 
             foreach (Pokemon p in GameVariables.playerTrainer.Party)
             {
-                foreach (BattleSystem.Attack a in p.moves)
+                foreach (Attack.Move a in p.moves)
                 {
                     if (a.Name == "Headbutt")
                     {
