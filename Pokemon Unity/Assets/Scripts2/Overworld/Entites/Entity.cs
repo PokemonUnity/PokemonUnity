@@ -177,14 +177,14 @@ public class Entity : BaseEntity
 				{
 					newEnt = new AnimatedBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(AnimatedBlock)newEnt.Initialize(AnimationData);
+					((AnimatedBlock)newEnt).Initialize(AnimationData);
 					break;
 				}
 			case "wallblock":
 				{
 					newEnt = new WallBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(WallBlock)newEnt.Initialize();
+					((WallBlock)newEnt).Initialize();
 					break;
 				}
 			case "cube":
@@ -192,189 +192,189 @@ public class Entity : BaseEntity
 				{
 					newEnt = new AllSidesObject();
 					SetProperties(ref newEnt, propertiesEnt);
-					(AllSidesObject)newEnt.Initialize();
+					((AllSidesObject)newEnt).Initialize();
 					break;
 				}
 			case "slideblock":
 				{
 					newEnt = new SlideBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(SlideBlock)newEnt.Initialize();
+					((SlideBlock)newEnt).Initialize();
 					break;
 				}
 			case "wallbill":
 				{
 					newEnt = new WallBill();
 					SetProperties(ref newEnt, propertiesEnt);
-					(WallBill)newEnt.Initialize();
+					((WallBill)newEnt).Initialize();
 					break;
 				}
 			case "signblock":
 				{
 					newEnt = new SignBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(SignBlock)newEnt.Initialize();
+					((SignBlock)newEnt).Initialize();
 					break;
 				}
 			case "warpblock":
 				{
 					newEnt = new WarpBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(WarpBlock)newEnt.Initialize();
+					((WarpBlock)newEnt).Initialize();
 					break;
 				}
 			case "floor":
 				{
 					newEnt = new Floor();
 					SetProperties(ref newEnt, propertiesEnt);
-					(Floor)newEnt.Initialize(true, false, true);
+					((Floor)newEnt).Initialize(true, false, true);
 					break;
 				}
 			case "step":
 				{
 					newEnt = new StepBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(StepBlock)newEnt.Initialize();
+					((StepBlock)newEnt).Initialize();
 					break;
 				}
 			case "cuttree":
 				{
 					newEnt = new CutDownTree();
 					SetProperties(ref newEnt, propertiesEnt);
-					(CutDownTree)newEnt.Initialize();
+					((CutDownTree)newEnt).Initialize();
 					break;
 				}
 			case "water":
 				{
 					newEnt = new Water();
 					SetProperties(ref newEnt, propertiesEnt);
-					(Water)newEnt.Initialize();
+					((Water)newEnt).Initialize();
 					break;
 				}
 			case "grass":
 				{
 					newEnt = new Grass();
 					SetProperties(ref newEnt, propertiesEnt);
-					(Grass)newEnt.Initialize();
+					((Grass)newEnt).Initialize();
 					break;
 				}
 			case "berryplant":
 				{
 					newEnt = new BerryPlant();
 					SetProperties(ref newEnt, propertiesEnt);
-					(BerryPlant)newEnt.Initialize();
+					((BerryPlant)newEnt).Initialize();
 					break;
 				}
 			case "loamysoil":
 				{
 					newEnt = new LoamySoil();
 					SetProperties(ref newEnt, propertiesEnt);
-					(LoamySoil)newEnt.Initialize();
+					((LoamySoil)newEnt).Initialize();
 					break;
 				}
 			case "itemobject":
 				{
 					newEnt = new ItemObject();
 					SetProperties(ref newEnt, propertiesEnt);
-					(ItemObject)newEnt.Initialize();
+					((ItemObject)newEnt).Initialize();
 					break;
 				}
 			case "scriptblock":
 				{
 					newEnt = new ScriptBlock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(ScriptBlock)newEnt.Initialize();
+					((ScriptBlock)newEnt).Initialize();
 					break;
 				}
 			case "turningsign":
 				{
 					newEnt = new TurningSign();
 					SetProperties(ref newEnt, propertiesEnt);
-					(TurningSign)newEnt.Initialize();
+					((TurningSign)newEnt).Initialize();
 					break;
 				}
 			case "apricornplant":
 				{
 					newEnt = new ApricornPlant();
 					SetProperties(ref newEnt, propertiesEnt);
-					(ApricornPlant)newEnt.Initialize();
+					((ApricornPlant)newEnt).Initialize();
 					break;
 				}
 			case "headbutttree":
 				{
 					newEnt = new HeadbuttTree();
 					SetProperties(ref newEnt, propertiesEnt);
-					(HeadbuttTree)newEnt.Initialize();
+					((HeadbuttTree)newEnt).Initialize();
 					break;
 				}
 			case "smashrock":
 				{
 					newEnt = new SmashRock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(SmashRock)newEnt.Initialize();
+					((SmashRock)newEnt).Initialize();
 					break;
 				}
 			case "strengthrock":
 				{
 					newEnt = new StrengthRock();
 					SetProperties(ref newEnt, propertiesEnt);
-					(StrengthRock)newEnt.Initialize();
+					((StrengthRock)newEnt).Initialize();
 					break;
 				}
 			case "npc":
 				{
 					newEnt = new NPC();
 					SetProperties(ref newEnt, propertiesEnt);
-					(NPC)newEnt.Initialize(System.Convert.ToString(Params[0]), System.Convert.ToInt32(Params[1]), System.Convert.ToString(Params[2]), System.Convert.ToInt32(Params[3]), System.Convert.ToBoolean(Params[4]), System.Convert.ToString(Params[5]), (List<Rectangle>)Params[6]);
+					((NPC)newEnt).Initialize(System.Convert.ToString(Params[0]), System.Convert.ToInt32(Params[1]), System.Convert.ToString(Params[2]), System.Convert.ToInt32(Params[3]), System.Convert.ToBoolean(Params[4]), System.Convert.ToString(Params[5]), (List<Rectangle>)Params[6]);
 					break;
 				}
 			case "waterfall":
 				{
 					newEnt = new Waterfall();
 					SetProperties(ref newEnt, propertiesEnt);
-					(Waterfall)newEnt.Initialize();
+					((Waterfall)newEnt).Initialize();
 					break;
 				}
 			case "whirlpool":
 				{
 					newEnt = new Whirlpool();
 					SetProperties(ref newEnt, propertiesEnt);
-					(Whirlpool)newEnt.Initialize();
+					((Whirlpool)newEnt).Initialize();
 					break;
 				}
 			case "strengthtrigger":
 				{
 					newEnt = new StrengthTrigger();
 					SetProperties(ref newEnt, propertiesEnt);
-					(StrengthTrigger)newEnt.Initialize();
+					((StrengthTrigger)newEnt).Initialize();
 					break;
 				}
 			case "modelentity":
 				{
 					newEnt = new ModelEntity();
 					SetProperties(ref newEnt, propertiesEnt);
-					(ModelEntity)newEnt.Initialize();
+					((ModelEntity)newEnt).Initialize();
 					break;
 				}
 			case "rotationtile":
 				{
 					newEnt = new RotationTile();
 					SetProperties(ref newEnt, propertiesEnt);
-					(RotationTile)newEnt.Initialize();
+					((RotationTile)newEnt).Initialize();
 					break;
 				}
 			case "divetile":
 				{
 					newEnt = new DiveTile();
 					SetProperties(ref newEnt, propertiesEnt);
-					(DiveTile)newEnt.Initialize();
+					((DiveTile)newEnt).Initialize();
 					break;
 				}
 			case "rockclimbentity":
 				{
 					newEnt = new RockClimbEntity();
 					SetProperties(ref newEnt, propertiesEnt);
-					(RockClimbEntity)newEnt.Initialize();
+					((RockClimbEntity)newEnt).Initialize();
 					break;
 				}
 		}

@@ -311,7 +311,7 @@ public class BerryPlant : Entity
             0,
             0
         }, true, new Vector3(0), new Vector3(1), BaseModel.BillModel, 0, "", true, new Vector3(1.0F), -1, "", "", new Vector3(0));
-        (BerryPlant)newEnt.Initialize(BerryIndex, 0, "", DateData, false);
+        ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         Screen.Level.Entities.Add(newEnt);
 
         GameVariables.playerTrainer.Inventory.RemoveItem(BerryIndex + 2000, 1);
