@@ -53,7 +53,7 @@ public class RockClimbEntity : Entity
         {
             if (teamPokemon.isEgg == false)
             {
-                foreach (BattleSystem.Attack a in teamPokemon.Attacks)
+                foreach (BattleSystem.Attack a in teamPokemon.moves)
                 {
                     if (a.Name.ToLower() == "rock climb")
                         return teamPokemon;

@@ -16,7 +16,7 @@ public class SmashRock : Entity
             {
                 if (p.isEgg == false)
                 {
-                    foreach (BattleSystem.Attack a in p.Attacks)
+                    foreach (BattleSystem.Attack a in p.moves)
                     {
                         if (a.Name.ToLower() == ("Rock Smash").ToLower())
                         {
@@ -50,7 +50,7 @@ public class SmashRock : Entity
             {
                 if (p.isEgg == false)
                 {
-                    foreach (BattleSystem.Attack a in p.Attacks)
+                    foreach (BattleSystem.Attack a in p.moves)
                     {
                         if (a.Name.ToLower() == ("Rock Smash").ToLower())
                         {
