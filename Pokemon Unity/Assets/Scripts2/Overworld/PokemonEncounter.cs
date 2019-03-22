@@ -42,9 +42,9 @@ public class PokemonEncounter
                     int startRandomValue = 12;
                     int minRandomValue = 5;
 
-                    if (Core.Player.Pokemons.Count > 0)
+                    if (GameVariables.playerTrainer.Pokemons.Count > 0)
                     {
-                        PokemonUnity.Pokemon.Pokemon p = Core.Player.Pokemons(0);
+                        PokemonUnity.Pokemon.Pokemon p = GameVariables.playerTrainer.Pokemons(0);
 
                         // Arena Trap/Illuminate/No Guard/Swarm Ability:
                         if (p.Ability.Name.ToLower() == "arena trap" | p.Ability.Name.ToLower() == "illuminate" | p.Ability.Name.ToLower() == "no guard" | p.Ability.Name.ToLower() == "swarm")
@@ -85,7 +85,7 @@ public class PokemonEncounter
                     if (Core.Random.Next(0, randomValue * 2) == 0)
                     {
                         // Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
-                        if (GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+                        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                         {
                             if (KeyBoardHandler.KeyDown(Keys.LeftControl) == true)
                                 return;
@@ -127,9 +127,9 @@ public class PokemonEncounter
                     Screen.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 
                     // If the player h.x a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
-                    if (Core.Player.RepelSteps > 0)
+                    if (GameVariables.playerTrainer.RepelSteps > 0)
                     {
-                        Pokemon.Pokemon p = Core.Player.GetWalkPokemon();
+                        Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
                         if (p != null)
                         {
                             if (p.Level >= Pokemon.Level)
@@ -138,11 +138,11 @@ public class PokemonEncounter
                     }
 
                     // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
-                    if (Core.Player.Pokemons(0).Level >= Pokemon.Level)
+                    if (GameVariables.playerTrainer.Pokemons(0).Level >= Pokemon.Level)
                     {
-                        if (Core.Player.Pokemons(0).Item != null)
+                        if (GameVariables.playerTrainer.Pokemons(0).Item != null)
                         {
-                            if (Core.Player.Pokemons(0).Item.ID == 94)
+                            if (GameVariables.playerTrainer.Pokemons(0).Item.ID == 94)
                             {
                                 if (Core.Random.Next(0, 3) == 0)
                                     return;
@@ -151,11 +151,11 @@ public class PokemonEncounter
                     }
 
                     // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
-                    if (Core.Player.Pokemons(0).Level >= Pokemon.Level)
+                    if (GameVariables.playerTrainer.Pokemons(0).Level >= Pokemon.Level)
                     {
-                        if (Core.Player.Pokemons(0).Item != null)
+                        if (GameVariables.playerTrainer.Pokemons(0).Item != null)
                         {
-                            if (Core.Player.Pokemons(0).Item.ID == 291)
+                            if (GameVariables.playerTrainer.Pokemons(0).Item.ID == 291)
                             {
                                 if (Core.Random.Next(0, 3) == 0)
                                     return;
@@ -164,7 +164,7 @@ public class PokemonEncounter
                     }
 
                     // Register the wild Pokémon as Seen in the Pokédex:
-                    Core.Player.PokedexData = Pokedex.ChangeEntry(Core.Player.PokedexData, Pokemon.Number, 1);
+                    GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Number, 1);
 
                     // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
                     int introType = Core.Random.Next(0, 10);

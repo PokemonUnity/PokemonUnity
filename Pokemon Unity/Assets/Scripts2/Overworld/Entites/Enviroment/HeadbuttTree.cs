@@ -23,7 +23,7 @@ public class HeadbuttTree : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in Core.Player.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
             {
                 if (p.isEgg == false)
                 {
@@ -41,7 +41,7 @@ public class HeadbuttTree : Entity
                 }
             }
 
-            if (pName != "" & Core.Player.Badges.Contains(10))
+            if (pName != "" & GameVariables.playerTrainer.Badges.Contains(10))
             {
                 string text = "This tree could have~a Pokémon in it.*Do you want to~use Headbutt?%Yes|No%";
                 Screen.TextBox.Show(text, this);
@@ -56,7 +56,7 @@ public class HeadbuttTree : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in Core.Player.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
             {
                 foreach (BattleSystem.Attack a in p.Attacks)
                 {

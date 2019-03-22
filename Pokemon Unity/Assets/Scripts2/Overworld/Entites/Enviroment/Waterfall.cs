@@ -249,7 +249,7 @@ public class Waterfall : Entity
 
     private Pokemon ReturnWaterFallPokemonName()
     {
-        foreach (Pokemon p in Core.Player.Pokemons)
+        foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
         {
             if (p.isEgg == false)
             {
@@ -322,7 +322,7 @@ public class Waterfall : Entity
             return this.Collision;
 
         Pokemon p = ReturnWaterFallPokemonName();
-        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             string s = "";
 

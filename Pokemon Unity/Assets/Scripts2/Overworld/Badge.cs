@@ -193,7 +193,7 @@ public class Badge
     /// </summary>
     public static int GetLevelCap()
     {
-        List<int> trainerBadges = Core.Player.Badges;
+        List<int> trainerBadges = GameVariables.playerTrainer.Badges;
         int highestCap = 10;
         foreach (BadgeDeclaration b in Badges)
         {
@@ -209,7 +209,7 @@ public class Badge
     /// <param name="HM">The Hidden Machine move the player tries to use.</param>
     public static bool CanUseHMMove(HMMoves HM)
     {
-        List<int> trainerBadges = Core.Player.Badges;
+        List<int> trainerBadges = GameVariables.playerTrainer.Badges;
         foreach (BadgeDeclaration b in Badges)
         {
             if (b.HMs.Contains(HM) == true & trainerBadges.Contains(b.ID) == true | b.ID == 0)
@@ -290,7 +290,7 @@ public class Badge
     /// <param name="BadgeID">The Badge ID to check for.</param>
     public static bool PlayerHasBadge(int BadgeID)
     {
-        return Core.Player.Badges.Contains(BadgeID);
+        return GameVariables.playerTrainer.Badges.Contains(BadgeID);
     }
 }
 }

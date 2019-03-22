@@ -55,11 +55,11 @@ public class ApricornPlant : Entity
 
 	private void CheckHasApricorn()
 	{
-		if (Core.Player.ApricornData == "")
+		if (GameVariables.playerTrainer.ApricornData == "")
 			hasApricorn = true;
 		else
 		{
-			List<string> ApricornsData = Core.Player.ApricornData.SplitAtNewline().ToList();
+			List<string> ApricornsData = GameVariables.playerTrainer.ApricornData.SplitAtNewline().ToList();
 
 			bool hasRemoved = false;
 
@@ -105,12 +105,12 @@ public class ApricornPlant : Entity
 
 			if (hasRemoved == true)
 			{
-				Core.Player.ApricornData = "";
+				GameVariables.playerTrainer.ApricornData = "";
 				foreach (string Apricorn in ApricornsData)
 				{
-					if (Core.Player.ApricornData != "")
-						Core.Player.ApricornData += Environment.NewLine;
-					Core.Player.ApricornData += Apricorn;
+					if (GameVariables.playerTrainer.ApricornData != "")
+						GameVariables.playerTrainer.ApricornData += Environment.NewLine;
+					GameVariables.playerTrainer.ApricornData += Apricorn;
 				}
 			}
 		}
@@ -160,11 +160,11 @@ public class ApricornPlant : Entity
 		{
 			Item Item = GetItem();
 
-			Core.Player.Inventory.AddItem(Item.ID, 1);
+			GameVariables.playerTrainer.Inventory.AddItem(Item.ID, 1);
 			PlayerStatistics.Track("[85]Apricorns picked", 1);
 			SoundManager.PlaySound("item_found", true);
 			Screen.TextBox.TextColor = TextBox.PlayerColor;
-			Screen.TextBox.Show(Core.Player.Name + " picked the~" + Item.Name + ".*" + Core.Player.Inventory.GetMessageReceive(Item, 1), this);
+			Screen.TextBox.Show(GameVariables.playerTrainer.Name + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
 			AddApriconSave();
 			hasApricorn = false;
 			ChangeTexture();
@@ -178,10 +178,10 @@ public class ApricornPlant : Entity
 		DateTime d = DateTime.Now;
 		s += Screen.Level.LevelFile + "|" + System.Convert.ToInt32(Position.x) + "," + System.Convert.ToInt32(Position.y) + "," + System.Convert.ToInt32(Position.z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
 
-		if (Core.Player.ApricornData != "")
-			Core.Player.ApricornData += Environment.NewLine;
+		if (GameVariables.playerTrainer.ApricornData != "")
+			GameVariables.playerTrainer.ApricornData += Environment.NewLine;
 
-		Core.Player.ApricornData += s;
+		GameVariables.playerTrainer.ApricornData += s;
 	}
 
 	private Items GetItem()

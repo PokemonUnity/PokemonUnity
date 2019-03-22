@@ -37,7 +37,7 @@ public class StrengthTrigger : Entity
             }
         }
 
-        string[] registers = Core.Player.RegisterData.Split(System.Convert.ToChar(","));
+        string[] registers = GameVariables.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
         foreach (string r in registers)
         {
             if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Screen.Level.LevelFile + "_") == true)

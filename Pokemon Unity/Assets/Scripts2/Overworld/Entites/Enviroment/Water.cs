@@ -121,7 +121,7 @@ public class Water : Entity
         {
             if (Screen.Level.Surfing == false)
             {
-                if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+                if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                 {
                     if (Screen.ChooseBox.Showing == false)
                     {
@@ -135,7 +135,7 @@ public class Water : Entity
                                 {
                                     if (Entity.EntityID == "Water")
                                     {
-                                        if (Core.Player.SurfPokemon > -1)
+                                        if (GameVariables.playerTrainer.SurfPokemon > -1)
                                             canSurf = true;
                                     }
                                     else if (Entity.Collision == true)
@@ -333,19 +333,19 @@ public class Water : Entity
     {
         if (Result == 0)
         {
-            Screen.TextBox.Show(Core.Player.Pokemons(Core.Player.SurfPokemon).GetDisplayName() + " used~Surf!", this);
+            Screen.TextBox.Show(GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon).GetDisplayName() + " used~Surf!", this);
             Screen.Level.Surfing = true;
             Screen.Camera.Move(1);
             PlayerStatistics.Track("Surf used", 1);
 
             {
                 var withBlock = Screen.Level.OwnPlayer;
-                Core.Player.TempSurfSkin = withBlock.SkinName;
+                GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
-                int pokemonNumber = Core.Player.Pokemons(Core.Player.SurfPokemon).Number;
-                string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(Core.Player.Pokemons(Core.Player.SurfPokemon));
-                if (Core.Player.Pokemons(Core.Player.SurfPokemon).IsShiny == true)
-                    SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(Core.Player.Pokemons(Core.Player.SurfPokemon));
+                int pokemonNumber = GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon).Number;
+                string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon));
+                if (GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon).IsShiny == true)
+                    SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Pokemons(GameVariables.playerTrainer.SurfPokemon));
 
                 withBlock.SetTexture(SkinName, false);
 

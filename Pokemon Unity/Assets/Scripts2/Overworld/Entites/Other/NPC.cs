@@ -144,7 +144,7 @@ public class NPC : Entity
 				PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 		}
 
-		if (UseGameJoltID == true & Core.Player.IsGameJoltSave == true & GameJolt.API.LoggedIn == true && !GameJolt.Emblem.GetOnlineSprite(GameJoltID) == null)
+		if (UseGameJoltID == true & GameVariables.playerTrainer.IsGameJoltSave == true & GameJolt.API.LoggedIn == true && !GameJolt.Emblem.GetOnlineSprite(GameJoltID) == null)
 			this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
 		else
 			this.Texture = P3D.TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
@@ -163,9 +163,9 @@ public class NPC : Entity
 
 	private void ApplyNPCData()
 	{
-		if (Core.Player.NPCData != "")
+		if (GameVariables.playerTrainer.NPCData != "")
 		{
-			string[] Data = Core.Player.NPCData.SplitAtNewline();
+			string[] Data = GameVariables.playerTrainer.NPCData.SplitAtNewline();
 
 			foreach (string line in Data)
 			{
@@ -202,17 +202,17 @@ public class NPC : Entity
 	{
 		Data = "{" + Data + "}";
 
-		if (Core.Player.NPCData == "")
-			Core.Player.NPCData = Data;
+		if (GameVariables.playerTrainer.NPCData == "")
+			GameVariables.playerTrainer.NPCData = Data;
 		else
-			Core.Player.NPCData += Environment.NewLine + Data;
+			GameVariables.playerTrainer.NPCData += Environment.NewLine + Data;
 	}
 
 	public static void RemoveNPCData(string file, int ID, string action, string addition)
 	{
 		string Data = "{" + file + "|" + ID + "|" + action + "|" + addition + "}";
 
-		string[] NData = Core.Player.NPCData.SplitAtNewline();
+		string[] NData = GameVariables.playerTrainer.NPCData.SplitAtNewline();
 		List<string> nList = NData.ToList();
 		if (nList.Contains(Data) == true)
 			nList.Remove(Data);
@@ -227,7 +227,7 @@ public class NPC : Entity
 			Data += NData[i];
 		}
 
-		Core.Player.NPCData = Data;
+		GameVariables.playerTrainer.NPCData = Data;
 	}
 
 	public static void RemoveNPCData(string FullData)

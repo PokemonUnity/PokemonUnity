@@ -158,7 +158,7 @@ public class BerryPlant : Entity
         string text = "";
 
         bool hasBottle = false;
-        if (Core.Player.Inventory.GetItemAmount(175) > 0)
+        if (GameVariables.playerTrainer.Inventory.GetItemAmount(175) > 0)
             hasBottle = true;
 
         switch (this.Phase)
@@ -226,14 +226,14 @@ public class BerryPlant : Entity
             {
                 case 0:
                     {
-                        Core.Player.Inventory.AddItem(this.Berry.ID, this.Berries);
+                        GameVariables.playerTrainer.Inventory.AddItem(this.Berry.ID, this.Berries);
                         string Text = "";
                         if (this.Berries == 1)
-                            Text = Core.Player.Name + " picked the~" + Berry.Name + " Berry.*" + Core.Player.Inventory.GetMessageReceive(Berry, this.Berries);
+                            Text = GameVariables.playerTrainer.Name + " picked the~" + Berry.Name + " Berry.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
                         else
-                            Text = Core.Player.Name + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + Core.Player.Inventory.GetMessageReceive(Berry, this.Berries);
+                            Text = GameVariables.playerTrainer.Name + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
 
-                        Core.Player.AddPoints(2, "Picked berries.");
+                        GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
                         PlayerStatistics.Track("[2006]Berries picked", this.Berries);
 
                         SoundManager.PlaySound("item_found", true);
@@ -247,7 +247,7 @@ public class BerryPlant : Entity
                 case 1:
                     {
                         WaterBerry();
-                        string Text = Core.Player.Name + " watered~the " + Berry.Name + ".";
+                        string Text = GameVariables.playerTrainer.Name + " watered~the " + Berry.Name + ".";
                         Screen.TextBox.Show(Text, this);
                         break;
                     }
@@ -262,7 +262,7 @@ public class BerryPlant : Entity
 
     private void RemoveBerry()
     {
-        string[] Data = Core.Player.BerryData.SplitAtNewline();
+        string[] Data = GameVariables.playerTrainer.BerryData.SplitAtNewline();
         string OutData = "";
 
         foreach (string Berry in Data)
@@ -278,7 +278,7 @@ public class BerryPlant : Entity
             }
         }
 
-        Core.Player.BerryData = OutData;
+        GameVariables.playerTrainer.BerryData = OutData;
     }
 
     public static void AddBerryPlant(string LevelFile, Vector3 Position, int BerryIndex)
@@ -296,12 +296,12 @@ public class BerryPlant : Entity
 
         string Data = "{" + LevelFile + "|" + Position.x + "," + Position.y + "," + Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "|" + FullGrownData + "}";
 
-        string OldData = Core.Player.BerryData;
+        string OldData = GameVariables.playerTrainer.BerryData;
         if (OldData != "")
             OldData += Environment.NewLine;
         OldData += Data;
 
-        Core.Player.BerryData = OldData;
+        GameVariables.playerTrainer.BerryData = OldData;
 
         Entity newEnt = Entity.GetNewEntity("BerryPlant", Position, new string[]
         {
@@ -314,7 +314,7 @@ public class BerryPlant : Entity
         (BerryPlant)newEnt.Initialize(BerryIndex, 0, "", DateData, false);
         Screen.Level.Entities.Add(newEnt);
 
-        Core.Player.Inventory.RemoveItem(BerryIndex + 2000, 1);
+        GameVariables.playerTrainer.Inventory.RemoveItem(BerryIndex + 2000, 1);
     }
 
     private static int GetBerryAmount(Item.Item.Berry Berry, int Watered)
@@ -424,12 +424,12 @@ public class BerryPlant : Entity
 
             string Data = "{" + Screen.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
 
-            string OldData = Core.Player.BerryData;
+            string OldData = GameVariables.playerTrainer.BerryData;
             if (OldData != "")
                 OldData += Environment.NewLine;
             OldData += Data;
 
-            Core.Player.BerryData = OldData;
+            GameVariables.playerTrainer.BerryData = OldData;
         }
     }
 }

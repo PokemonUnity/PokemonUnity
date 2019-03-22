@@ -91,7 +91,7 @@ public class Whirlpool : Entity
 
     private string ReturnWhirlPoolPokemonName()
     {
-        foreach (Pokemon p in Core.Player.Pokemons)
+        foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
         {
             if (p.isEgg == false)
             {
@@ -115,7 +115,7 @@ public class Whirlpool : Entity
             string pName = ReturnWhirlPoolPokemonName();
             string s = "";
 
-            if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) == true & pName != "" | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+            if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) == true & pName != "" | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
             {
                 s = @"version=2
 @text.show(" + pName + @" used~Whirlpool!)

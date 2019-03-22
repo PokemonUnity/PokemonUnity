@@ -23,7 +23,7 @@ public class StrengthRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in Core.Player.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
             {
                 if (p.isEgg == false)
                 {
@@ -43,7 +43,7 @@ public class StrengthRock : Entity
 
             string text = "A Pokémon may be~able to move this.";
 
-            if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) == true | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+            if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                 text += "~Do you want to~use Strength?%Yes|No%";
 
             Screen.TextBox.Show(text, this);
@@ -57,7 +57,7 @@ public class StrengthRock : Entity
         {
             Pokemon useP = null/* TODO Change to default(_) if this is not a reference type */;
 
-            foreach (Pokemon p in Core.Player.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
             {
                 if (p.isEgg == false)
                 {

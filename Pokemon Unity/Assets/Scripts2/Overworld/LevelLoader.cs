@@ -93,8 +93,8 @@ public class LevelLoader
 			//ToDo: Change Screen to Scene
             Screen.Level.LevelFile = levelPath;
 .x
-            Core.Player.LastSavePlace = Screen.Level.LevelFile;
-            Core.Player.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
+            GameVariables.playerTrainer.LastSavePlace = Screen.Level.LevelFile;
+            GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
             Screen.Level.Entities.Clear();
             Screen.Level.Floors.Clear();
@@ -1253,7 +1253,7 @@ public class LevelLoader
 
     private void LoadBerries()
     {
-        string[] Data = Core.Player.BerryData.Replace("}" + Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
+        string[] Data = GameVariables.playerTrainer.BerryData.Replace("}" + Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
         foreach (string Berry in Data)
         {
             if (Berry.Contains("{") == true)

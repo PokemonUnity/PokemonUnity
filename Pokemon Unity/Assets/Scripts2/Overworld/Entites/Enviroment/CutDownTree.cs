@@ -20,7 +20,7 @@ public class CutDownTree : Entity
 	{
 		string pName = "";
 
-		foreach (Pokemon p in Core.Player.Pokemons)
+		foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
 		{
 			if (p.isEgg == false)
 			{
@@ -40,7 +40,7 @@ public class CutDownTree : Entity
 
 		string text = "This tree looks like it~can be Cut down!";
 
-		if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) == true | Core.Player.SandBoxMode == true | GameController.IS_DEBUG_ACTIVE == true)
+		if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) == true | GameVariables.playerTrainer.SandBoxMode == true | GameController.IS_DEBUG_ACTIVE == true)
 			text += "~Do you want to~use Cut?%Yes|No%";
 
 		Screen.TextBox.Show(text, this);
@@ -53,7 +53,7 @@ public class CutDownTree : Entity
 		{
 			string pName = "";
 
-			foreach (Pokemon p in Core.Player.Pokemons)
+			foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
 			{
 				if (p.isEgg == false)
 				{

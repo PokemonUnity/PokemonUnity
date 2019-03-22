@@ -12,7 +12,7 @@ public class SmashRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in Core.Player.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
             {
                 if (p.isEgg == false)
                 {
@@ -32,7 +32,7 @@ public class SmashRock : Entity
 
             string text = "This rock looks like~it can be broken!";
 
-            if (pName != "" | GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+            if (pName != "" | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                 text += "~Do you want to~use Rock Smash?%Yes|No%";
 
             Screen.TextBox.Show(text, this);
@@ -46,7 +46,7 @@ public class SmashRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in Core.Player.Pokemons)
+            foreach (Pokemon p in GameVariables.playerTrainer.Pokemons)
             {
                 if (p.isEgg == false)
                 {

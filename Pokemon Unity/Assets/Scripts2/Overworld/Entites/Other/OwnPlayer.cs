@@ -64,13 +64,13 @@ public class OwnPlayer : Entity
 		if (StringHelper.IsNumeric(TextureID) & texturePath.StartsWith(@"Pokemon\Overworld\"))
 			PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 
-		if (Core.Player.IsGameJoltSave)
+		if (GameVariables.playerTrainer.IsGameJoltSave)
 		{
 			if (texturePath + TextureID + PokemonAddition == @"Textures\NPC\" + GameJolt.Emblem.GetPlayerSpriteFile(GameJolt.Emblem.GetPlayerLevel(Core.GameJoltSave.Points), Core.GameJoltSave.GameJoltID, Core.GameJoltSave.Gender))
 				UseGameJoltID = true;
 		}
 
-		if (UseGameJoltID & Core.Player.IsGameJoltSave & GameJolt.API.LoggedIn && !GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) == null)
+		if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && !GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) == null)
 		{
 			Logger.Debug("Change player texture to the online sprite.");
 			this.Texture = GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID);
@@ -169,7 +169,7 @@ public class OwnPlayer : Entity
 			{
 				lastRectangle = r;
 				lastTexture = SkinName;
-				Core.Player.Skin = SkinName;
+				GameVariables.playerTrainer.Skin = SkinName;
 
 				try
 				{
@@ -244,7 +244,7 @@ public class OwnPlayer : Entity
 
 	private float GetAnimationDelay()
 	{
-		if (Core.Player.IsRunning() == true)
+		if (GameVariables.playerTrainer.IsRunning() == true)
 			return OwnPlayer.AnimationDelayLenght / (double)1.4F;
 		return OwnPlayer.AnimationDelayLenght;
 	}

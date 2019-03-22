@@ -857,7 +857,7 @@ public class Level
             Logger.Debug("Don't attempt to load a levelfile.");
 
         // Create own player entity and OverworldPokémon entity and add them to the entity enumeration:
-        OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Core.Player.Skin, 0, 0, "", "Gold", 0);
+        OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
         OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
         OverworldPokemon.ChangeRotation();
         Entities.AddRange(
@@ -866,7 +866,7 @@ public class Level
             OverworldPokemon
         });
 
-        this.Surfing = Core.Player.startSurfing;
+        this.Surfing = GameVariables.playerTrainer.startSurfing;
         this.StartOffsetMapUpdate();
     }
 
@@ -940,7 +940,7 @@ public class Level
         this._pokemonEncounter.TriggerBattle();
 
         // Reload map from file (Debug or Sandbox Mode):
-        if (GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             if (KeyBoardHandler.KeyPressed(Keys.R) == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             {
@@ -1113,7 +1113,7 @@ public class Level
             this.PokemonEncounterData.EncounteredPokemon = false;
 
             // Set the Surfing flag for the next map:
-            Core.Player.startSurfing = Surfing;
+            GameVariables.playerTrainer.startSurfing = Surfing;
 
             // Change the player position:
             Screen.Camera.Position = WarpData.WarpPosition;
@@ -1122,7 +1122,7 @@ public class Level
 
             // Store skin values:
             bool usingGameJoltTexture = OwnPlayer.UsingGameJoltTexture;
-            Core.Player.Skin = OwnPlayer.SkinName;
+            GameVariables.playerTrainer.Skin = OwnPlayer.SkinName;
 
             // Load the new level:
             List<object> @params = new List<object>();
@@ -1141,13 +1141,13 @@ public class Level
             LevelLoader levelLoader = new LevelLoader();
             levelLoader.LoadLevel(@params.ToArray());
 
-            Core.Player.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
+            GameVariables.playerTrainer.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
             UsedStrength = false; // Disable Strength usuage upon map switch.
-            this.Surfing = Core.Player.startSurfing; // Set the Surfing property after map switch.
+            this.Surfing = GameVariables.playerTrainer.startSurfing; // Set the Surfing property after map switch.
 
             // Create player and Pokémon entities:
-            OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Core.Player.Skin, 0, 0, "", "Gold", 0);
-            OwnPlayer.SetTexture(Core.Player.Skin, usingGameJoltTexture);
+            OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
+            OwnPlayer.SetTexture(GameVariables.playerTrainer.Skin, usingGameJoltTexture);
 
             OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
             OverworldPokemon.Visible = false;
@@ -1162,8 +1162,8 @@ public class Level
             if (Riding == true & CanRide() == false)
             {
                 Riding = false;
-                OwnPlayer.SetTexture(Core.Player.TempRideSkin, true);
-                Core.Player.Skin = Core.Player.TempRideSkin;
+                OwnPlayer.SetTexture(GameVariables.playerTrainer.TempRideSkin, true);
+                GameVariables.playerTrainer.Skin = GameVariables.playerTrainer.TempRideSkin;
             }
 
             // If any turns after the warp are defined, apply them:
@@ -1197,8 +1197,8 @@ public class Level
                 string place = line.GetSplit(0, "|");
                 if (place == LevelFile)
                 {
-                    Core.Player.LastRestPlace = place;
-                    Core.Player.LastRestPlacePosition = line.GetSplit(1, "|");
+                    GameVariables.playerTrainer.LastRestPlace = place;
+                    GameVariables.playerTrainer.LastRestPlacePosition = line.GetSplit(1, "|");
                 }
             }
 
@@ -1303,7 +1303,7 @@ public class Level
     /// </summary>
     public bool CanRide()
     {
-        if (GameController.IS_DEBUG_ACTIVE == true | Core.Player.SandBoxMode == true)
+        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
             return true;
         if (RideType > 0)
         {

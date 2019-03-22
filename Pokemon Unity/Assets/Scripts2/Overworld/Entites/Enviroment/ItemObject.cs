@@ -34,7 +34,7 @@ public class ItemObject : Entity
         }
         else if (this.ActionValue == 2)
         {
-            if (Core.Player.Inventory.HasMegaBracelet())
+            if (GameVariables.playerTrainer.Inventory.HasMegaBracelet())
             {
                 this.Visible = Visible;
                 // sparkles
@@ -167,11 +167,11 @@ public class ItemObject : Entity
             RemoveItem(this);
             SoundManager.PlaySound("item_found", true);
             Screen.TextBox.TextColor = TextBox.PlayerColor;
-            Screen.TextBox.Show(Core.Player.Name + " found~" + this.Item.Name + "!*" + Core.Player.Inventory.GetMessageReceive(Item, 1), this);
-            Core.Player.Inventory.AddItem(this.Item.ID, 1);
+            Screen.TextBox.Show(GameVariables.playerTrainer.Name + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
+            GameVariables.playerTrainer.Inventory.AddItem(this.Item.ID, 1);
             PlayerStatistics.Track("Items found", 1);
 
-            Core.Player.AddPoints(1, "Found an item.");
+            GameVariables.playerTrainer.AddPoints(1, "Found an item.");
         }
     }
 
@@ -182,18 +182,18 @@ public class ItemObject : Entity
 
     public static bool ItemExists(ItemObject ItemObject)
     {
-        if (Core.Player.ItemData != "")
+        if (GameVariables.playerTrainer.ItemData != "")
         {
-            if (Core.Player.ItemData.Contains(",") == true)
+            if (GameVariables.playerTrainer.ItemData.Contains(",") == true)
             {
-                string[] IDs = Core.Player.ItemData.ToLower().Split(System.Convert.ToChar(","));
+                string[] IDs = GameVariables.playerTrainer.ItemData.ToLower().Split(System.Convert.ToChar(","));
 
                 if (IDs.Contains((Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == true)
                     return true;
                 else
                     return false;
             }
-            else if (Core.Player.ItemData.ToLower() == (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower())
+            else if (GameVariables.playerTrainer.ItemData.ToLower() == (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower())
                 return true;
             else
                 return false;
@@ -206,13 +206,13 @@ public class ItemObject : Entity
     {
         Screen.Level.Entities.Remove(ItemObject);
 
-        if (Core.Player.ItemData == "")
-            Core.Player.ItemData = (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
+        if (GameVariables.playerTrainer.ItemData == "")
+            GameVariables.playerTrainer.ItemData = (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
         else
         {
-            string[] IDs = Core.Player.ItemData.Split(System.Convert.ToChar(","));
+            string[] IDs = GameVariables.playerTrainer.ItemData.Split(System.Convert.ToChar(","));
             if (IDs.Contains((Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == false)
-                Core.Player.ItemData += "," + (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
+                GameVariables.playerTrainer.ItemData += "," + (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
         }
     }
 
