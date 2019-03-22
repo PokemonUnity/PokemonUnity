@@ -228,7 +228,7 @@ public class RockClimbEntity : Entity
 
     private string GetScriptStartLine(ScriptBlock ScriptEntity)
     {
-        if (!ScriptEntity == null)
+        if (ScriptEntity != null)
         {
             if (ScriptEntity.CorrectRotation() == true)
             {

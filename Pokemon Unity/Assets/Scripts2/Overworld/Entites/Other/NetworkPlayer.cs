@@ -95,7 +95,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			}
 		}
 
-		if (!OnlineSprite == null)
+		if (OnlineSprite != null)
 			this.Texture = OnlineSprite;
 		else if (TextureManager.TextureExist(texturePath) == true)
 		{
@@ -119,7 +119,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	{
 		Texture2D t = GameJolt.Emblem.GetOnlineSprite(this.GameJoltID);
 
-		if (!t == null)
+		if (t != null)
 			this.Texture = t;
 	}
 
@@ -342,7 +342,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 					break;
 				}
 		}
-		if (!b == null)
+		if (b != null)
 		{
 			b.Visible = this.Visible;
 			b.Render();

@@ -27,7 +27,7 @@ public class ModelEntity : Entity
 
     private void ApplyEffect()
     {
-        if (!_model == null)
+        if (_model != null)
         {
             foreach (ModelMesh mesh in this._model.Meshes)
             {
@@ -69,7 +69,7 @@ public class ModelEntity : Entity
     {
         if (Visible == true)
         {
-            if (!_model == null)
+            if (_model != null)
                 _model.Draw(this.World, Screen.Camera.View, Screen.Camera.Projection);
 
             if (drawViewBox == true)

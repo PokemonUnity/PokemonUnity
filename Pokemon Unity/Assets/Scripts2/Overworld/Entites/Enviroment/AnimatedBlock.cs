@@ -187,7 +187,7 @@ public class AnimatedBlock : Entity
 
 	public override void UpdateEntity()
 	{
-		if (!Animations == null)
+		if (Animations != null)
 		{
 			for (var n = 0; n <= Animations.Count - 1; n++)
 			{

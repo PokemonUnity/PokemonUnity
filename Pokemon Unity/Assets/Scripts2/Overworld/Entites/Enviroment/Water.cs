@@ -198,7 +198,7 @@ public class Water : Entity
 
     public override void UpdateEntity()
     {
-        if (!WaterAnimation == null)
+        if (WaterAnimation != null)
         {
             WaterAnimation.Update(0.01);
             if (currentRectangle != WaterAnimation.TextureRectangle)

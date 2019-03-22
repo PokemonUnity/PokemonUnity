@@ -133,7 +133,7 @@ public class ItemObject : Entity
             this.CreatedWorld = false;
         }
 
-        if (!Animation == null)
+        if (Animation != null)
         {
             Animation.Update(0.01);
             if (CurrentRectangle != Animation.TextureRectangle)
