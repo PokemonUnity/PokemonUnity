@@ -38,7 +38,7 @@ public class Grass : Entity
 
         foreach (Entity e in Screen.Level.Entities)
         {
-            if (e.EntityID == "Grass")
+            if (e.EntityID == Entities.Grass)
             {
                 if (e.Visible == true)
                 {

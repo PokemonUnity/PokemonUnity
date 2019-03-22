@@ -1242,7 +1242,7 @@ public class Level
 
         foreach (Entity Entity in this.Entities)
         {
-            if (Entity.EntityID == "NPC")
+            if (Entity.EntityID == Entities.NPC)
                 reList.Add((NPC)Entity);
         }
 
@@ -1289,7 +1289,7 @@ public class Level
     {
         foreach (Entity Entity in Entities)
         {
-            if (Entity.EntityID == "NPC")
+            if (Entity.EntityID == Entities.NPC)
             {
                 NPC NPC = (NPC)Entity;
                 if (NPC.IsTrainer == true)

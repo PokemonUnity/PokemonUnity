@@ -16,7 +16,7 @@ public class LoamySoil : Entity
         bool hasBerry = false;
         foreach (Entity Entity in Screen.Level.Entities)
         {
-            if (Entity.EntityID == "BerryPlant" & Entity.Position == this.Position)
+            if (Entity.EntityID == Entities.BerryPlant & Entity.Position == this.Position)
             {
                 hasBerry = true;
                 Entity.ClickFunction();

@@ -276,7 +276,7 @@ public class Waterfall : Entity
         });
         if (Oe != null)
         {
-            if (Oe.EntityID == "Waterfall")
+            if (Oe.EntityID == Entities.Waterfall)
                 isOnTop = false;
         }
 
@@ -298,7 +298,7 @@ public class Waterfall : Entity
                 });
                 if (e != null)
                 {
-                    if (e.EntityID == "Waterfall")
+                    if (e.EntityID == Entities.Waterfall)
                     {
                         Steps += 1;
                         checkPosition.y -= 1;
@@ -348,7 +348,7 @@ public class Waterfall : Entity
                 });
                 if (e != null)
                 {
-                    if (e.EntityID == "Waterfall")
+                    if (e.EntityID == Entities.Waterfall)
                     {
                         Steps += 1;
                         checkPosition.y += 1;

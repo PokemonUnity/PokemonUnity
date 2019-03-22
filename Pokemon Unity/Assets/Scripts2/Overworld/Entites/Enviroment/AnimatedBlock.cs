@@ -113,7 +113,7 @@ public class AnimatedBlock : Entity
 			{
 				if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
 				{
-					if (Entity.ActionValue == 0 && (Entity.EntityID == "AnimatedBlock" || Entity.EntityID == "Water"))
+					if (Entity.ActionValue == 0 && (Entity.EntityID == Entities.AnimatedBlock || Entity.EntityID == Entities.Water))
 						canSurf = true;
 					else if (Entity.Collision == true)
 					{
@@ -150,7 +150,7 @@ public class AnimatedBlock : Entity
 							{
 								if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
 								{
-									if (Entity.EntityID == "AnimatedBlock")
+									if (Entity.EntityID == Entities.AnimatedBlock)
 									{
 										if (GameVariables.playerTrainer.SurfPokemon > -1)
 											canSurf = true;

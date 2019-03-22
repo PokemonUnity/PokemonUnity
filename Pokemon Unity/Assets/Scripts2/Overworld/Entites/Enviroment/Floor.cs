@@ -232,7 +232,7 @@ public class Floor : Entity
             Entity e = base.GetEntity(Screen.Level.Floors, checkPosition, true, typeof(Floor));
             if (e != null)
             {
-                if (e.EntityID == "Floor")
+                if (e.EntityID == Entities.Floor)
                 {
                     if (((Floor)e).IsIce == true)
                     {

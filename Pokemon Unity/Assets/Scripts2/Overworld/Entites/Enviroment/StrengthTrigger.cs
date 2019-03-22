@@ -45,7 +45,7 @@ public class StrengthTrigger : Entity
                 string RemoveID = r.Remove(0, ("ACTIVATOR_REMOVE_STRENGTHT_ROCK_" + Screen.Level.LevelFile + "_").Length - 1);
                 foreach (Entity sRock in Screen.Level.Entities)
                 {
-                    if (sRock.EntityID == "StrengthRock")
+                    if (sRock.EntityID == Entities.StrengthRock)
                     {
                         if (sRock.ID == System.Convert.ToInt32(RemoveID))
                             sRock.CanBeRemoved = true;
@@ -63,7 +63,7 @@ public class StrengthTrigger : Entity
         {
             foreach (Entity sRock in Screen.Level.Entities)
             {
-                if (sRock.EntityID == "StrengthRock")
+                if (sRock.EntityID == Entities.StrengthRock)
                 {
                     if (sRock.Position.x == this.Position.x & sRock.Position.z == this.Position.z)
                     {

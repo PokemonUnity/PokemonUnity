@@ -33,7 +33,7 @@ public class SlideBlock : Entity
                 });
                 if (e != null)
                 {
-                    if (e.EntityID == "SlideBlock")
+                    if (e.EntityID == Entities.SlideBlock)
                     {
                         Steps += 1;
                         checkPosition.x += Screen.Camera.GetMoveDirection().x;
@@ -42,9 +42,9 @@ public class SlideBlock : Entity
                     }
                     else
                     {
-                        if (e.EntityID == "ScriptBlock")
+                        if (e.EntityID == Entities.ScriptBlock)
                             TempScriptEntity = (ScriptBlock)e;
-                        else if (e.EntityID == "WarpBlock")
+                        else if (e.EntityID == Entities.WarpBlock)
                             ((WarpBlock)e).WalkAgainstFunction();
                         foundSteps = false;
                     }
@@ -132,7 +132,7 @@ public class SlideBlock : Entity
                 });
                 if (e != null)
                 {
-                    if (e.EntityID == "SlideBlock")
+                    if (e.EntityID == Entities.SlideBlock)
                     {
                         Steps += 1;
                         checkPosition.x += Screen.Camera.GetMoveDirection().x;
@@ -141,9 +141,9 @@ public class SlideBlock : Entity
                     }
                     else
                     {
-                        if (e.EntityID == "ScriptBlock")
+                        if (e.EntityID == Entities.ScriptBlock)
                             this.TempScriptEntity = (ScriptBlock)e;
-                        else if (e.EntityID == "WarpBlock")
+                        else if (e.EntityID == Entities.WarpBlock)
                             ((WarpBlock)e).WalkAgainstFunction();
                         foundSteps = false;
                     }

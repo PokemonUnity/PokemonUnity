@@ -96,7 +96,7 @@ public class Water : Entity
             {
                 if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
                 {
-                    if (Entity.EntityID == "Water")
+                    if (Entity.EntityID == Entities.Water)
                         canSurf = true;
                     else if (Entity.Collision == true)
                     {
@@ -133,7 +133,7 @@ public class Water : Entity
                             {
                                 if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
                                 {
-                                    if (Entity.EntityID == "Water")
+                                    if (Entity.EntityID == Entities.Water)
                                     {
                                         if (GameVariables.playerTrainer.SurfPokemon > -1)
                                             canSurf = true;
