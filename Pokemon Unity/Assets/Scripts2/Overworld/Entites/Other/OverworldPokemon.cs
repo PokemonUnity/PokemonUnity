@@ -32,10 +32,11 @@ public class OverworldPokemon : Entity
 
 	}
 
-	public int PokemonID = 0;
-	private Pokemon _PokemonReference;
+	//public int PokemonID = 0;
+	public Pokemons PokemonID = Pokemons.NONE;
+	private Pokemon.Pokemon _PokemonReference;
 
-	public Pokemon PokemonReference
+	public Pokemon.Pokemon PokemonReference
 	{
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		get
@@ -114,10 +115,10 @@ public class OverworldPokemon : Entity
 				differentShinyState = (this.PokemonReference.IsShiny != GameVariables.playerTrainer.GetWalkPokemon().IsShiny);
 			}
 
-			if (this.PokemonID != GameVariables.playerTrainer.GetWalkPokemon().Number | differentAdditionalData == true | differentShinyState == true)
+			if (this.PokemonID != GameVariables.playerTrainer.GetWalkPokemon().Species | differentAdditionalData == true | differentShinyState == true)
 			{
 				this.Texture = null;
-				this.PokemonID = GameVariables.playerTrainer.GetWalkPokemon().Number;
+				this.PokemonID = GameVariables.playerTrainer.GetWalkPokemon().Species;
 				this.PokemonReference = GameVariables.playerTrainer.GetWalkPokemon();
 			}
 
@@ -173,7 +174,7 @@ public class OverworldPokemon : Entity
 			{
 				if (IsCorrectScreen() == true)
 				{
-					if (GameVariables.playerTrainer.GetWalkPokemon() != null)
+					if (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE)
 					{
 						if (Screen.Level.Surfing == false & Screen.Level.Riding == false)
 						{
@@ -320,9 +321,9 @@ public class OverworldPokemon : Entity
 	{
 		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
 		{
-			if (this.Visible == true & GameVariables.playerTrainer.GetWalkPokemon() != null & Screen.Level.Surfing == false & Screen.Level.Riding == false & Screen.Level.ShowOverworldPokemon == true)
+			if (this.Visible == true & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & Screen.Level.Surfing == false & Screen.Level.Riding == false & Screen.Level.ShowOverworldPokemon == true)
 			{
-				Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
+				Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
 				string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
 
 				if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)

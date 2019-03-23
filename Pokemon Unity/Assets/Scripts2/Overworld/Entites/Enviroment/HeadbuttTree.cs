@@ -23,15 +23,15 @@ public class HeadbuttTree : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Party)
+            foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
-                        if (a.Name == "Headbutt")
+                        if (a.MoveId == Moves.HEADBUTT)
                         {
-                            pName = p.GetDisplayName();
+                            pName = p.Name;
                             break;
                         }
                     }
@@ -56,13 +56,13 @@ public class HeadbuttTree : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Party)
+            foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
                 foreach (Attack.Move a in p.moves)
                 {
-                    if (a.Name == "Headbutt")
+                    if (a.MoveId == Moves.HEADBUTT)
                     {
-                        pName = p.GetDisplayName();
+                        pName = p.Name;
                         break;
                     }
                 }
@@ -71,7 +71,7 @@ public class HeadbuttTree : Entity
                     break;
             }
 
-            Pokemon spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.Headbutt, false);
+            Pokemon.Pokemon spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.Headbutt, false);
             if (spawnedPokemon == null)
             {
                 string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + "@level.wait(20)" + System.Environment.NewLine + "@text.show(Nothing happened...)" + System.Environment.NewLine + ":end";

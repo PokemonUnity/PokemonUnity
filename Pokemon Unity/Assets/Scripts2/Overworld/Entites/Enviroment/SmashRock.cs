@@ -12,15 +12,15 @@ public class SmashRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Party)
+            foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
-                        if (a.Name.ToLower() == ("Rock Smash").ToLower())
+                        if (a.MoveId == Moves.ROCK_SMASH)
                         {
-                            pName = p.GetDisplayName();
+                            pName = p.Name;
                             break;
                         }
                     }
@@ -46,15 +46,15 @@ public class SmashRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Party)
+            foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
-                        if (a.Name.ToLower() == ("Rock Smash").ToLower())
+                        if (a.MoveId == Moves.ROCK_SMASH)
                         {
-                            pName = p.GetDisplayName();
+                            pName = p.Name;
                             break;
                         }
                     }
@@ -64,7 +64,7 @@ public class SmashRock : Entity
                     break;
             }
 
-            Pokemon spawnedPokemon = null/* TODO Change to default(_) if this is not a reference type */;
+            Pokemon.Pokemon spawnedPokemon = null/* TODO Change to default(_) if this is not a reference type */;
             if (Core.Random.Next(0, 100) < 20)
             {
                 spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.RockSmash, false);

@@ -120,7 +120,7 @@ public class PokemonEncounter
                 Screen.Camera.StopMovement();
 
                 // Generate new wild Pokémon:
-                Pokemon.Pokemon Pokemon = Spawner.GetPokemon(Screen.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
+                Pokemon.Pokemon Pokemon.Pokemon = Spawner.GetPokemon(Screen.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
 
                 if (Pokemon != null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
                 {

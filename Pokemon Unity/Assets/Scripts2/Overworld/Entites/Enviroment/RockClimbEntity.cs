@@ -1,4 +1,5 @@
-﻿using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Player;
+using PokemonUnity.Pokemon;
 using System;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 {
 public class RockClimbEntity : Entity
 {
-    private ScriptBlock TempScriptEntity = null/* TODO Change to default(_) if this is not a reference type */;
+    private ScriptBlock TempScriptEntity = null;// TODO Change to default(_) if this is not a reference type 
     private bool TempClicked = false; // If true, walk up.
 
     public override void ClickFunction()
@@ -47,15 +48,15 @@ public class RockClimbEntity : Entity
         }
     }
 
-    private Pokemon GetRockClimbPokemon()
+    private Pokemon.Pokemon GetRockClimbPokemon()
     {
-        foreach (Pokemon teamPokemon in GameVariables.playerTrainer.Party)
+        foreach (Pokemon.Pokemon teamPokemon in GameVariables.playerTrainer.Party)
         {
             if (teamPokemon.isEgg == false)
             {
                 foreach (Attack.Move a in teamPokemon.moves)
                 {
-                    if (a.Name.ToLower() == "rock climb")
+                    if (a.MoveId == Moves.ROCK_CLIMB)
                         return teamPokemon;
                 }
             }
@@ -68,13 +69,13 @@ public class RockClimbEntity : Entity
                 return GameVariables.playerTrainer.Party[0];
             else
             {
-                Pokemon p = Pokemon.GetPokemonByID(10);
-                p.Generate(10, true);
+                Pokemon.Pokemon p = new Pokemon.Pokemon((Pokemons)10,false);//Pokemon.GetPokemonByID(10);
+                //p.Generate(10, true);
                 return p;
             }
         }
         else
-            return null/* TODO Change to default(_) if this is not a reference type */;
+            return null;// TODO Change to default(_) if this is not a reference type 
     }
 
     private void WalkUp()
@@ -129,12 +130,12 @@ public class RockClimbEntity : Entity
 
             string tempSkin = GameVariables.playerTrainer.Skin;
 
-            Pokemon RockClimbPokemon = GetRockClimbPokemon();
+            Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
             Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             Screen.Level.OwnPlayer.ChangeTexture();
 
-            string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
+            string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + (int)RockClimbPokemon.Species + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {
@@ -204,12 +205,12 @@ public class RockClimbEntity : Entity
 
             string tempSkin = GameVariables.playerTrainer.Skin;
 
-            Pokemon RockClimbPokemon = GetRockClimbPokemon();
+            Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
             Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             Screen.Level.OwnPlayer.ChangeTexture();
 
-            string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + RockClimbPokemon.Number + ")" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
+            string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + (int)RockClimbPokemon.Species + ")" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {

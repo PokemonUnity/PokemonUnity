@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Player;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -197,13 +198,11 @@ public class Waterfall : Entity
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_6"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_7"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_8"];
@@ -222,13 +221,11 @@ public class Waterfall : Entity
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_9"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_10"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_11"];
@@ -247,20 +244,20 @@ public class Waterfall : Entity
         this.Draw(this.Model, Textures, false);
     }
 
-    private Pokemon ReturnWaterFallPokemonName()
+    private Pokemon.Pokemon ReturnWaterFallPokemonName()
     {
-        foreach (Pokemon p in GameVariables.playerTrainer.Party)
+        foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
         {
             if (p.isEgg == false)
             {
                 foreach (Attack.Move a in p.moves)
                 {
-                    if (a.Name.ToLower() == "waterfall")
+                    if (a.MoveId == Moves.WATERFALL)
                         return p;
                 }
             }
         }
-        return null/* TODO Change to default(_) if this is not a reference type */;
+			return null;// TODO Change to default(_) if this is not a reference type 
     }
 
     public override void WalkOntoFunction()
@@ -321,7 +318,7 @@ public class Waterfall : Entity
         if (this.ActionValue == 1)
             return this.Collision;
 
-        Pokemon p = ReturnWaterFallPokemonName();
+        Pokemon.Pokemon p = ReturnWaterFallPokemonName();
         if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             string s = "";
@@ -330,8 +327,8 @@ public class Waterfall : Entity
             int pNumber = 1;
             if (p != null)
             {
-                pName = p.GetDisplayName();
-                pNumber = p.Number;
+                pName = p.Name;
+                pNumber = (int)p.Species;
             }
 
             int Steps = 1;

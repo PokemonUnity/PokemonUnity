@@ -1,4 +1,5 @@
-﻿using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Player;
+using PokemonUnity.Pokemon;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -23,15 +24,15 @@ public class StrengthRock : Entity
         {
             string pName = "";
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Party)
+            foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
-                        if (a.Name == "Strength")
+                        if (a.MoveId == Moves.STRENGTH)
                         {
-                            pName = p.GetDisplayName();
+                            pName = p.Name;
                             break;
                         }
                     }
@@ -55,15 +56,15 @@ public class StrengthRock : Entity
     {
         if (Result == 0)
         {
-            Pokemon useP = null/* TODO Change to default(_) if this is not a reference type */;
+            Pokemon.Pokemon useP = null;// TODO Change to default(_) if this is not a reference type 
 
-            foreach (Pokemon p in GameVariables.playerTrainer.Party)
+            foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
                 if (p.isEgg == false)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
-                        if (a.Name == "Strength")
+                        if (a.MoveId == Moves.STRENGTH)
                         {
                             useP = p;
                             break;
@@ -80,8 +81,8 @@ public class StrengthRock : Entity
 
             if (useP != null)
             {
-                pName = useP.GetDisplayName();
-                pNumber = useP.Number;
+                pName = useP.Name;
+                pNumber = (int)useP.Species;
             }
 
             Screen.Level.UsedStrength = true;

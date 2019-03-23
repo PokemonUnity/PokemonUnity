@@ -1,4 +1,5 @@
-﻿using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Player;
+using PokemonUnity.Pokemon;
 using System;
 
 namespace PokemonUnity.Overworld.Entity.Environment
@@ -93,12 +94,12 @@ public class DiveTile : Entity
 
     private string GetDivePokemon()
     {
-        foreach (Pokemon p in GameVariables.playerTrainer.Party)
+        foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
         {
             foreach (Attack.Move a in p.moves)
             {
-                if (a.Name.ToLower() == "dive")
-                    return p.GetDisplayName();
+                if (a.MoveId == Moves.DIVE)
+                    return p.Name;
             }
         }
         return "";

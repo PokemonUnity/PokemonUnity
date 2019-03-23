@@ -476,7 +476,7 @@ public class Entity : BaseEntity
 			return;
 		}
 
-		string[] notNames = new[] { "Floor", "OwnPlayer", "Water", "Whirlpool", "Particle", "OverworldPokemon", "ItemObject", "NetworkPokemon", "NetworkPlayer" };
+		string[] notNames = new string[] { "Floor", "OwnPlayer", "Water", "Whirlpool", "Particle", "OverworldPokemon", "ItemObject", "NetworkPokemon", "NetworkPlayer" };
 		if (Screen.Camera.Name == "Overworld" && notNames.Contains(this.EntityID) == false)
 		{
 			this.Opacity = this._normalOpactity;

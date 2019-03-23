@@ -1,4 +1,5 @@
-﻿using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Player;
+using PokemonUnity.Pokemon;
 using System;
 
 namespace PokemonUnity.Overworld.Entity.Environment
@@ -20,15 +21,15 @@ public class CutDownTree : Entity
 	{
 		string pName = "";
 
-		foreach (Pokemon p in GameVariables.playerTrainer.Party)
+		foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
 		{
 			if (p.isEgg == false)
 			{
 				foreach (Attack.Move a in p.moves)
 				{
-					if (a.Name == "Cut")
+					if (a.MoveId == Moves.CUT)
 					{
-						pName = p.GetDisplayName();
+						pName = p.Name;
 						break;
 					}
 				}
@@ -53,15 +54,15 @@ public class CutDownTree : Entity
 		{
 			string pName = "";
 
-			foreach (Pokemon p in GameVariables.playerTrainer.Party)
+			foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
 			{
 				if (p.isEgg == false)
 				{
 					foreach (Attack.Move a in p.moves)
 					{
-						if (a.Name == "Cut")
+						if (a.MoveId == Moves.CUT)
 						{
-							pName = p.GetDisplayName();
+							pName = p.Name;
 							break;
 						}
 					}

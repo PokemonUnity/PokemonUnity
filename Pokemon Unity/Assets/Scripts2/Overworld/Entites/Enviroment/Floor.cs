@@ -114,7 +114,7 @@ public class Floor : Entity
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
                 }
-                else if ((Floor)ent[i].hasSnow == false)
+                else if (((Floor)ent[i]).hasSnow == false)
                 {
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
@@ -183,7 +183,7 @@ public class Floor : Entity
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
                 }
-                else if ((Floor)ent[i].hasSnow == false)
+                else if (((Floor)ent[i]).hasSnow == false)
                 {
                     hasEntityOnAllSides = false;
                     sides[i] = 0;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PokemonUnity.Player;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PokemonUnity.Overworld.Entity.Environment
@@ -234,13 +235,11 @@ public class Water : Entity
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_0"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_1"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_2"];
@@ -259,13 +258,11 @@ public class Water : Entity
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_3"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_4"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_5"];
@@ -284,13 +281,11 @@ public class Water : Entity
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_6"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_7"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_8"];
@@ -309,13 +304,11 @@ public class Water : Entity
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_9"];
                                     break;
                                 }
-
                             case 1:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_10"];
                                     break;
                                 }
-
                             case 2:
                                 {
                                     this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_11"];
@@ -333,7 +326,7 @@ public class Water : Entity
     {
         if (Result == 0)
         {
-            Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).GetDisplayName() + " used~Surf!", this);
+            Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Name + " used~Surf!", this);
             Screen.Level.Surfing = true;
             Screen.Camera.Move(1);
             PlayerStatistics.Track("Surf used", 1);
@@ -342,7 +335,7 @@ public class Water : Entity
                 var withBlock = Screen.Level.OwnPlayer;
                 GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
-                int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Number;
+                int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Species;
                 string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
                 if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny == true)
                     SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));

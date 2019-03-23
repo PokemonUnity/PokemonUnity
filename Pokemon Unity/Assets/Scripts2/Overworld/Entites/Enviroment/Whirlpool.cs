@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Player;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -91,14 +92,14 @@ public class Whirlpool : Entity
 
     private string ReturnWhirlPoolPokemonName()
     {
-        foreach (Pokemon p in GameVariables.playerTrainer.Party)
+        foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
         {
             if (p.isEgg == false)
             {
                 foreach (Attack.Move a in p.moves)
                 {
-                    if (a.Name.ToLower() == "whirlpool")
-                        return p.GetDisplayName();
+                    if (a.MoveId == Moves.WHIRLPOOL)
+                        return p.Name;
                 }
             }
         }

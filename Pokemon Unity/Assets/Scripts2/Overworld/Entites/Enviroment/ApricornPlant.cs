@@ -145,7 +145,7 @@ public class ApricornPlant : Entity
 
 		if (hasApricorn == true)
 		{
-			Item Item = GetItem();
+			Items Item = GetItem();
 
 			text = "There is a " + Item.Name + "~on this tree.*Do you want to pick it?%Yes|No%";
 		}
@@ -158,13 +158,14 @@ public class ApricornPlant : Entity
 	{
 		if (Result == 0)
 		{
-			Item Item = GetItem();
+			Items Item = GetItem();
 
 			GameVariables.playerTrainer.Inventory.AddItem(Item.ID, 1);
+			//GameVariables.playerTrainer.Bag.AddItem(Item);
 			PlayerStatistics.Track("[85]Apricorns picked", 1);
 			SoundManager.PlaySound("item_found", true);
 			Screen.TextBox.TextColor = TextBox.PlayerColor;
-			Screen.TextBox.Show(GameVariables.playerTrainer.Name + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
+			Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
 			AddApriconSave();
 			hasApricorn = false;
 			ChangeTexture();
@@ -186,54 +187,56 @@ public class ApricornPlant : Entity
 
 	private Items GetItem()
 	{
-		int ItemID = 0;
+		//int ItemID = 0;
+		Items ItemID = 0;
 
 		switch (ApricornColor)
 		{
 			case ApricornColors.Red:
 				{
-					ItemID = 85;
+					//ItemID = 85;
+					ItemID = Items.RED_APRICORN;
 					break;
 				}
-
 			case ApricornColors.Blue:
 				{
-					ItemID = 89;
+					//ItemID = 89;
+					ItemID = Items.BLUE_APRICORN;
 					break;
 				}
-
 			case ApricornColors.Yellow:
 				{
-					ItemID = 92;
+					//ItemID = 92;
+					ItemID = Items.YELLOW_APRICORN;
 					break;
 				}
-
 			case ApricornColors.Green:
 				{
-					ItemID = 93;
+					//ItemID = 93;
+					ItemID = Items.GREEN_APRICORN;
 					break;
 				}
-
 			case ApricornColors.White:
 				{
-					ItemID = 97;
+					//ItemID = 97;
+					ItemID = Items.WHITE_APRICORN;
 					break;
 				}
-
 			case ApricornColors.Black:
 				{
-					ItemID = 99;
+					//ItemID = 99;
+					ItemID = Items.BLACK_APRICORN;
 					break;
 				}
-
 			case ApricornColors.Pink:
 				{
-					ItemID = 101;
+					//ItemID = 101;
+					ItemID = Items.PINK_APRICORN;
 					break;
 				}
 		}
 
-		return Item.GetItemByID(ItemID);
+			return (Items)ItemID; //Item.GetItem(ItemID);
 	}
 }
 }
