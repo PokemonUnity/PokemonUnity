@@ -22,7 +22,6 @@ public class RotationTile : Entity
                     this.RotationType = RotationTypes.StartSpin;
                     break;
                 }
-
             case 1:
                 {
                     this.RotationType = RotationTypes.StopSpin;
@@ -66,19 +65,16 @@ public class RotationTile : Entity
                     direction.y = -1;
                     break;
                 }
-
             case 1:
                 {
                     direction.x = -1;
                     break;
                 }
-
             case 2:
                 {
                     direction.y = 1;
                     break;
                 }
-
             case 3:
                 {
                     direction.x = 1;
@@ -99,7 +95,7 @@ public class RotationTile : Entity
                 {
                     if (e.Equals(this) == false)
                     {
-                        if (e.EntityID.ToLower() == "rotationtile")
+                        if (e.EntityID == Entities.RotationTile)
                         {
                             if (System.Convert.ToInt32(e.Position.x) == System.Convert.ToInt32(p.x) & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(p.y) & System.Convert.ToInt32(e.Position.z) == System.Convert.ToInt32(p.z))
                                 goto theend;

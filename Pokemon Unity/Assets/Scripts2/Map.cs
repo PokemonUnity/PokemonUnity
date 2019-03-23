@@ -2040,11 +2040,12 @@ namespace PokemonUnity
 
 	public enum Entities
 	{
-		//ToDo: Dive
+		Floor,//Default?...
 		/// <summary>
 		/// Renders sides from all directions.
 		/// </summary>
-		AllSidesObject,// or Cube 
+		AllSidesObject,// or 
+		Cube, 
 		/// <summary>
 		/// Creates an Apricorn Plant.
 		/// <para></para>
@@ -2058,6 +2059,7 @@ namespace PokemonUnity
 		/// 5 - Green
 		/// 6 - Yellow
 		ApricornPlant,
+		BerryPlant,
 		/// <summary>
 		/// Allows the player to use cut on the Entity.
 		/// </summary>
@@ -2158,7 +2160,16 @@ namespace PokemonUnity
 		/// <summary>
 		/// Creates a Whirlpool, ignores texture(s) given.
 		/// </summary>
-		Whirlpool
+		Whirlpool,
+		/// <summary>
+		/// Creates a dive spot, ignores texture(s) given.
+		/// </summary>
+		DiveTile,
+		RockClimbEntity,
+		NPC,
+		ModelEntity,
+		RotationTile,
+		AnimatedBlock
 	}
 	#endregion
 }

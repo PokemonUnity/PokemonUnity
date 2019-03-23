@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PokemonUnity;
+using PokemonUnity.Overworld.Entity.Misc;
 using PokemonUnity.Overworld.Entity.Environment;
 
 namespace PokemonUnity.Overworld.Entity
@@ -171,206 +172,206 @@ public class Entity : BaseEntity
 		propertiesEnt.Offset = Offset;
 		propertiesEnt.CameraDistanceDelta = CameraDistanceDelta;
 
-		switch (EntityID.ToLower())
+		switch (EntityID)
 		{
-			case "animatedblock":
+			case Entities.AnimatedBlock:// "animatedblock":
 				{
 					newEnt = new AnimatedBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((AnimatedBlock)newEnt).Initialize(AnimationData);
 					break;
 				}
-			case "wallblock":
+			case Entities.WallBlock:
 				{
 					newEnt = new WallBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((WallBlock)newEnt).Initialize();
 					break;
 				}
-			case "cube":
-			case "allsidesobject":
+			case Entities.Cube:
+			case Entities.AllSidesObject:
 				{
 					newEnt = new AllSidesObject();
 					SetProperties(ref newEnt, propertiesEnt);
 					((AllSidesObject)newEnt).Initialize();
 					break;
 				}
-			case "slideblock":
+			case Entities.SlideBlock:
 				{
 					newEnt = new SlideBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((SlideBlock)newEnt).Initialize();
 					break;
 				}
-			case "wallbill":
+			case Entities.WallBill:
 				{
 					newEnt = new WallBill();
 					SetProperties(ref newEnt, propertiesEnt);
 					((WallBill)newEnt).Initialize();
 					break;
 				}
-			case "signblock":
+			case Entities.SignBlock:
 				{
 					newEnt = new SignBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((SignBlock)newEnt).Initialize();
 					break;
 				}
-			case "warpblock":
+			case Entities.WarpBlock:
 				{
 					newEnt = new WarpBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((WarpBlock)newEnt).Initialize();
 					break;
 				}
-			case "floor":
+			case Entities.Floor:
 				{
 					newEnt = new Floor();
 					SetProperties(ref newEnt, propertiesEnt);
 					((Floor)newEnt).Initialize(true, false, true);
 					break;
 				}
-			case "step":
+			case Entities.Step:
 				{
 					newEnt = new StepBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((StepBlock)newEnt).Initialize();
 					break;
 				}
-			case "cuttree":
+			case Entities.CutTree:
 				{
 					newEnt = new CutDownTree();
 					SetProperties(ref newEnt, propertiesEnt);
 					((CutDownTree)newEnt).Initialize();
 					break;
 				}
-			case "water":
+			case Entities.Water:
 				{
 					newEnt = new Water();
 					SetProperties(ref newEnt, propertiesEnt);
 					((Water)newEnt).Initialize();
 					break;
 				}
-			case "grass":
+			case Entities.Grass:
 				{
 					newEnt = new Grass();
 					SetProperties(ref newEnt, propertiesEnt);
 					((Grass)newEnt).Initialize();
 					break;
 				}
-			case "berryplant":
+			case Entities.BerryPlant://"berryplant":
 				{
 					newEnt = new BerryPlant();
 					SetProperties(ref newEnt, propertiesEnt);
 					((BerryPlant)newEnt).Initialize();
 					break;
 				}
-			case "loamysoil":
+			case Entities.LoamySoil:
 				{
 					newEnt = new LoamySoil();
 					SetProperties(ref newEnt, propertiesEnt);
 					((LoamySoil)newEnt).Initialize();
 					break;
 				}
-			case "itemobject":
+			case Entities.ItemObject:
 				{
 					newEnt = new ItemObject();
 					SetProperties(ref newEnt, propertiesEnt);
 					((ItemObject)newEnt).Initialize();
 					break;
 				}
-			case "scriptblock":
+			case Entities.ScriptBlock:
 				{
 					newEnt = new ScriptBlock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((ScriptBlock)newEnt).Initialize();
 					break;
 				}
-			case "turningsign":
+			case Entities.TurningSign:
 				{
 					newEnt = new TurningSign();
 					SetProperties(ref newEnt, propertiesEnt);
 					((TurningSign)newEnt).Initialize();
 					break;
 				}
-			case "apricornplant":
+			case Entities.ApricornPlant:
 				{
 					newEnt = new ApricornPlant();
 					SetProperties(ref newEnt, propertiesEnt);
 					((ApricornPlant)newEnt).Initialize();
 					break;
 				}
-			case "headbutttree":
+			case Entities.HeadbuttTree:
 				{
 					newEnt = new HeadbuttTree();
 					SetProperties(ref newEnt, propertiesEnt);
 					((HeadbuttTree)newEnt).Initialize();
 					break;
 				}
-			case "smashrock":
+			case Entities.SmashRock:
 				{
 					newEnt = new SmashRock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((SmashRock)newEnt).Initialize();
 					break;
 				}
-			case "strengthrock":
+			case Entities.StrengthRock:
 				{
 					newEnt = new StrengthRock();
 					SetProperties(ref newEnt, propertiesEnt);
 					((StrengthRock)newEnt).Initialize();
 					break;
 				}
-			case "npc":
+			case Entities.NPC:
 				{
 					newEnt = new NPC();
 					SetProperties(ref newEnt, propertiesEnt);
 					((NPC)newEnt).Initialize(System.Convert.ToString(Params[0]), System.Convert.ToInt32(Params[1]), System.Convert.ToString(Params[2]), System.Convert.ToInt32(Params[3]), System.Convert.ToBoolean(Params[4]), System.Convert.ToString(Params[5]), (List<Rectangle>)Params[6]);
 					break;
 				}
-			case "waterfall":
+			case Entities.Waterfall:
 				{
 					newEnt = new Waterfall();
 					SetProperties(ref newEnt, propertiesEnt);
 					((Waterfall)newEnt).Initialize();
 					break;
 				}
-			case "whirlpool":
+			case Entities.Whirlpool:
 				{
 					newEnt = new Whirlpool();
 					SetProperties(ref newEnt, propertiesEnt);
 					((Whirlpool)newEnt).Initialize();
 					break;
 				}
-			case "strengthtrigger":
+			case Entities.StrengthTrigger:
 				{
 					newEnt = new StrengthTrigger();
 					SetProperties(ref newEnt, propertiesEnt);
 					((StrengthTrigger)newEnt).Initialize();
 					break;
 				}
-			case "modelentity":
+			case Entities.ModelEntity://"modelentity":
 				{
 					newEnt = new ModelEntity();
 					SetProperties(ref newEnt, propertiesEnt);
 					((ModelEntity)newEnt).Initialize();
 					break;
 				}
-			case "rotationtile":
+			case Entities.RotationTile://"rotationtile":
 				{
 					newEnt = new RotationTile();
 					SetProperties(ref newEnt, propertiesEnt);
 					((RotationTile)newEnt).Initialize();
 					break;
 				}
-			case "divetile":
+			case Entities.DiveTile://"divetile":
 				{
 					newEnt = new DiveTile();
 					SetProperties(ref newEnt, propertiesEnt);
 					((DiveTile)newEnt).Initialize();
 					break;
 				}
-			case "rockclimbentity":
+			case Entities.RockClimbEntity://"rockclimbentity":
 				{
 					newEnt = new RockClimbEntity();
 					SetProperties(ref newEnt, propertiesEnt);
@@ -412,17 +413,14 @@ public class Entity : BaseEntity
 				{
 					return new UnityEngine.Vector3(0, 0, 0);
 				}
-
 			case 1:
 				{
 					return new UnityEngine.Vector3(0, MathHelper.PiOver2, 0);
 				}
-
 			case 2:
 				{
 					return new UnityEngine.Vector3(0, MathHelper.Pi, 0);
 				}
-
 			case 3:
 				{
 					return new UnityEngine.Vector3(0, MathHelper.Pi * 1.5F, 0);
@@ -432,23 +430,20 @@ public class Entity : BaseEntity
 
 	public static int GetRotationFromVector(UnityEngine.Vector3 v)
 	{
-		switch (v.y)
+		switch (v.y.ToString())
 		{
-			case 0:
+			case "0":
 				{
 					return 0;
 				}
-
 			case MathHelper.PiOver2:
                 {
 					return 1;
 				}
-
 			case MathHelper.Pi:
                 {
 					return 2;
 				}
-
 			case MathHelper.Pi * 1.5F:
                 {
 					return 3;
@@ -518,7 +513,7 @@ public class Entity : BaseEntity
 		bool ActionScriptActive = false;
 
 
-		if (!Core.CurrentScreen == null)
+		if (Core.CurrentScreen != null)
 		{
 			CPosition = Screen.Camera.CPosition;
 			if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
@@ -544,19 +539,16 @@ public class Entity : BaseEntity
 						movement = new UnityEngine.Vector3(0, 0, -1);
 						break;
 					}
-
 				case 1:
 					{
 						movement = new UnityEngine.Vector3(-1, 0, 0);
 						break;
 					}
-
 				case 2:
 					{
 						movement = new UnityEngine.Vector3(0, 0, 1);
 						break;
 					}
-
 				case 3:
 					{
 						movement = new UnityEngine.Vector3(1, 0, 0);
@@ -640,7 +632,7 @@ public class Entity : BaseEntity
 			}
 		}
 
-		if (!Screen.Level.World == null)
+		if (Screen.Level.World != null)
 		{
 			switch (Screen.Level.World.EnvironmentType)
 			{
@@ -649,16 +641,14 @@ public class Entity : BaseEntity
 						this.Shader = SkyDome.GetDaytimeColor(true).ToVector3();
 						break;
 					}
-
 				case P3D.World.EnvironmentTypes.Dark:
                     {
 						this.Shader = new UnityEngine.Vector3(0.5F, 0.5F, 0.6F);
 						break;
 					}
-
 				default:
 					{
-						this.Shader = new UnityEngine.Vector3(1.0F);
+						this.Shader = new UnityEngine.Vector3(1.0F,1f,1f);
 						break;
 					}
 			}
@@ -668,7 +658,7 @@ public class Entity : BaseEntity
 			this.Shader *= s;
 	}
 
-	private UnityEngine.Vector3 tempCenterVector = UnityEngine.Vector3.Zero;
+	private UnityEngine.Vector3 tempCenterVector = UnityEngine.Vector3.zero;
 
 	/// <summary>
 	/// Returns the offset from the 0,0,0 center of the position of the entity.
@@ -764,7 +754,7 @@ public class Entity : BaseEntity
 
 	public bool IsInFieldOfView()
 	{
-		if (!Screen.Camera.BoundingFrustum.Contains(this.ViewBox) == ContainmentType.Disjoint)
+		if (Screen.Camera.BoundingFrustum.Contains(this.ViewBox) != ContainmentType.Disjoint)
 		{
 			this._visibleLastFrame = true;
 			return true;

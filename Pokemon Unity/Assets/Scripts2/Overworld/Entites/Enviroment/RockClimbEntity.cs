@@ -104,7 +104,7 @@ public class RockClimbEntity : Entity
                 });
                 if (e != null)
                 {
-                    if (e.EntityID.ToLower() == "rockclimbentity")
+                    if (e.EntityID == Entities.RockClimbEntity)
                     {
                         Steps += 1;
                         checkPosition.x += Screen.Camera.GetMoveDirection().x;
