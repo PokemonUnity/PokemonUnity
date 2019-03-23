@@ -285,7 +285,7 @@ public class NPC : Entity
 
 	private void ChangeTexture()
 	{
-		if (!this.Texture == null)
+		if (this.Texture != null)
 		{
 			Rectangle r = new Rectangle(0, 0, 0, 0);
 			int cameraRotation = this.getCameraRotation();

@@ -92,7 +92,7 @@ public class OwnPlayer : Entity
 
 	public override void UpdateEntity()
 	{
-		if (!Core.CurrentScreen == null)
+		if (Core.CurrentScreen != null)
 		{
 			if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 			{
@@ -140,7 +140,7 @@ public class OwnPlayer : Entity
 
 	public void ChangeTexture()
 	{
-		if (!this.Texture == null)
+		if (this.Texture != null)
 		{
 			Rectangle r = new Rectangle(0, 0, 0, 0);
 			int cameraRotation = 0;

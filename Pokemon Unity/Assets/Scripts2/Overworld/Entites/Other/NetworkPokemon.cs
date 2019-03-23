@@ -87,7 +87,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 					{
 						if (this.PokemonTexture != "")
 						{
-							if (!this.Textures == null)
+							if (this.Textures != null)
 							{
 								var state = GraphicsDevice.DepthStencilState;
 								GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
@@ -117,7 +117,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		else
 		{
 			Screen c = Core.CurrentScreen;
-			while (!c.PreScreen == null)
+			while (c.PreScreen != null)
 				c = c.PreScreen;
 			if (screens.Contains(c.Identification) == true)
 				return false;

@@ -669,7 +669,7 @@ public class Entity : BaseEntity
 		{
 			UnityEngine.Vector3 v = UnityEngine.Vector3.zero; // (Me.ViewBox.Min - Me.Position) + (Me.ViewBox.Max - Me.Position)
 
-			if (!this.Model == null)
+			if (this.Model != null)
 			{
 				switch (this.Model.ID)
 				{
@@ -774,7 +774,7 @@ public class Entity : BaseEntity
 		{
 			if (this._cachedVertexCount == -1)
 			{
-				if (!this.Model == null)
+				if (this.Model != null)
 				{
 					int c = System.Convert.ToInt32(this.Model.vertexBuffer.VertexCount / (double)3);
 					int min = 0;

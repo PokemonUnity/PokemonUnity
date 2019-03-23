@@ -144,7 +144,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	private void ChangeTexture()
 	{
-		if (!this.Texture == null)
+		if (this.Texture != null)
 		{
 			Rectangle r = new Rectangle(0, 0, 0, 0);
 			int cameraRotation = Screen.Camera.GetFacingDirection();
@@ -258,7 +258,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	{
 		if (this.Rotation.y != Screen.Camera.Yaw)
 			this.Rotation.y = Screen.Camera.Yaw;
-		if (!this.TextureID == null && this.TextureID.ToLower() == "nilllzz" & this.GameJoltID == "17441")
+		if (this.TextureID != null && this.TextureID.ToLower() == "nilllzz" & this.GameJoltID == "17441")
 		{
 			this.Rotation.z = MathHelper.Pi;
 			RotatedSprite = true;
@@ -421,7 +421,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public static void ScreenRegionChanged()
 	{
-		if (!Core.CurrentScreen == null && !Screen.Level == null)
+		if (Core.CurrentScreen != null && Screen.Level != null)
 		{
 			foreach (NetworkPlayer netPlayer in Screen.Level.NetworkPlayers)
 				netPlayer.LastName = "";

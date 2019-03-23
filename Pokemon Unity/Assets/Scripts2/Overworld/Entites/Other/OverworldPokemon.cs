@@ -179,7 +179,7 @@ public class OverworldPokemon : Entity
 						{
 							if (this.PokemonID > 0)
 							{
-								if (!this.Textures == null)
+								if (this.Textures != null)
 									return true;
 							}
 						}
