@@ -614,19 +614,19 @@ public class Entity : BaseEntity
 
 		if (MakeShake == true)
 		{
-			if (Core.Random.Next(0, 1) == 0)
+			if (Settings.Rand.Next(0, 1) == 0)
 			{
-				this.Rotation.x += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
-				this.Rotation.z += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
-				this.Rotation.y += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
+				this.Rotation.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+				this.Rotation.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+				this.Rotation.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
 
-				this.Position.x += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
-				this.Position.z += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
-				this.Position.y += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
+				this.Position.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+				this.Position.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+				this.Position.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
 
-				this.Scale.x += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
-				this.Scale.z += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
-				this.Scale.y += System.Convert.ToSingle((Core.Random.Next(1, 6) - 3) / (double)100);
+				this.Scale.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+				this.Scale.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+				this.Scale.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
 
 				CreatedWorld = false;
 			}

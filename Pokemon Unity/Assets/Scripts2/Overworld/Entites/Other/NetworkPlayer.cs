@@ -72,7 +72,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	private void AssignFallback(int ID)
 	{
 		if (FallBack.ContainsKey(ID) == false)
-			FallBack.Add(ID, FallbackSkins[Core.Random.Next(0, FallbackSkins.Length)]);
+			FallBack.Add(ID, FallbackSkins[Settings.Rand.Next(0, FallbackSkins.Length)]);
 	}
 
 	public void SetTexture(string TextureID)

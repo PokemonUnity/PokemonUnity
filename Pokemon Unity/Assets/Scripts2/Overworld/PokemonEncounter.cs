@@ -63,7 +63,7 @@ public class PokemonEncounter
                         // Sand Veil Ability:
                         if (withBlock.WeatherType == 7 & p.Ability.Name.ToLower() == "sand veil")
                         {
-                            if (Core.Random.Next(0, 100) < 50)
+                            if (Settings.Rand.Next(0, 100) < 50)
                                 return;
                         }
 
@@ -72,7 +72,7 @@ public class PokemonEncounter
                         {
                             if (withBlock.WeatherType == 2 | withBlock.WeatherType == 9)
                             {
-                                if (Core.Random.Next(0, 100) < 50)
+                                if (Settings.Rand.Next(0, 100) < 50)
                                     return;
                             }
                         }
@@ -82,7 +82,7 @@ public class PokemonEncounter
                     int randomValue = startRandomValue - withBlock.WalkedSteps;
                     randomValue = System.Convert.ToInt32(MathHelper.Clamp(randomValue, minRandomValue, startRandomValue));
 
-                    if (Core.Random.Next(0, randomValue * 2) == 0)
+                    if (Settings.Rand.Next(0, randomValue * 2) == 0)
                     {
                         // Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
                         if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
@@ -144,7 +144,7 @@ public class PokemonEncounter
                         {
                             if (GameVariables.playerTrainer.Party[0].Item.ID == 94)
                             {
-                                if (Core.Random.Next(0, 3) == 0)
+                                if (Settings.Rand.Next(0, 3) == 0)
                                     return;
                             }
                         }
@@ -157,7 +157,7 @@ public class PokemonEncounter
                         {
                             if (GameVariables.playerTrainer.Party[0].Item.ID == 291)
                             {
-                                if (Core.Random.Next(0, 3) == 0)
+                                if (Settings.Rand.Next(0, 3) == 0)
                                     return;
                             }
                         }
@@ -167,7 +167,7 @@ public class PokemonEncounter
                     GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Number, 1);
 
                     // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
-                    int introType = Core.Random.Next(0, 10);
+                    int introType = Settings.Rand.Next(0, 10);
                     if (BattleSystem.BattleScreen.RoamingBattle == true)
                         introType = 12;
 

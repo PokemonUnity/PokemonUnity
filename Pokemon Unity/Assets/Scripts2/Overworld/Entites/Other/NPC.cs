@@ -608,11 +608,11 @@ public class NPC : Entity
 				{
 					if (this.Moved == 0.0F)
 					{
-						if (Core.Random.Next(0, 220) == 0)
+						if (Settings.Rand.Next(0, 220) == 0)
 						{
 							int newRotation = this.faceRotation;
 							while (newRotation == this.faceRotation)
-								newRotation = Core.Random.Next(0, 4);
+								newRotation = Settings.Rand.Next(0, 4);
 							this.faceRotation = newRotation;
 							if (this.IsTrainer == true)
 								CheckInSight();
@@ -649,13 +649,13 @@ public class NPC : Entity
 				{
 					if (this.Moved == 0.0F)
 					{
-						if (Core.Random.Next(0, 120) == 0)
+						if (Settings.Rand.Next(0, 120) == 0)
 						{
-							if (Core.Random.Next(0, 3) == 0)
+							if (Settings.Rand.Next(0, 3) == 0)
 							{
 								int newRotation = this.faceRotation;
 								while (newRotation == this.faceRotation)
-									newRotation = Core.Random.Next(0, 4);
+									newRotation = Settings.Rand.Next(0, 4);
 								this.faceRotation = newRotation;
 							}
 							bool contains = false;
@@ -682,11 +682,11 @@ public class NPC : Entity
 				{
 					if (this.Moved == 0.0F)
 					{
-						if (Core.Random.Next(0, 15) == 0)
+						if (Settings.Rand.Next(0, 15) == 0)
 						{
 							int newRotation = this.faceRotation;
 							while (newRotation == this.faceRotation)
-								newRotation = Core.Random.Next(0, 4);
+								newRotation = Settings.Rand.Next(0, 4);
 							this.faceRotation = newRotation;
 						}
 						bool contains = false;

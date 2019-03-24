@@ -570,7 +570,7 @@ public class World
         if (IsMainMenu)
             return Weathers.Clear;
 
-        int r = Core.Random.Next(0, 100);
+        int r = Settings.Rand.Next(0, 100);
 
         switch (Season)
         {
@@ -1060,8 +1060,8 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\bubble");
 
-                            if (Core.Random.Next(0, 100) == 0)
-                                ObjectsList.Add(new Rectangle(Core.Random.Next(0, Core.windowSize.Width - 32), Core.windowSize.Height, 32, 32));
+                            if (Settings.Rand.Next(0, 100) == 0)
+                                ObjectsList.Add(new Rectangle(Settings.Rand.Next(0, Core.windowSize.Width - 32), Core.windowSize.Height, 32, 32));
 
                             for (var i = 0; i <= ObjectsList.Count - 1; i++)
                             {
@@ -1116,9 +1116,9 @@ public class World
     {.x
         if (MapWeather == Weathers.Thunderstorm)
         {
-            if (Core.Random.Next(0, 250) == 0)
+            if (Settings.Rand.Next(0, 250) == 0)
             {
-                float pitch = -(Core.Random.Next(8, 11) / (double)10.0F);
+                float pitch = -(Settings.Rand.Next(8, 11) / (double)10.0F);
                 Debug.Print(pitch.ToString());
                 SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, SoundManager.Volume, false);
             }
@@ -1156,7 +1156,7 @@ public class World
                     case Weathers.Thunderstorm:
                         {
                             speed = 0.15F;
-                            switch (Core.Random.Next(0, 4))
+                            switch (Settings.Rand.Next(0, 4))
                             {
                                 case 0:
                                     {
@@ -1238,7 +1238,7 @@ public class World
                 else if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
                     cameraPosition = (BattleCamera)Screen.Camera.CPosition;
 
-                if (Core.Random.Next(0, chance) == 0)
+                if (Settings.Rand.Next(0, chance) == 0)
                 {
                     for (var x = cameraPosition.X - range; x <= cameraPosition.X + range; x++)
                     {
@@ -1246,10 +1246,10 @@ public class World
                         {
                             if (z != 0 | x != 0)
                             {
-                                float rY = System.Convert.ToSingle(Core.Random.Next(0, 40) / (double)10) - 2.0F;
-                                float rX = System.Convert.ToSingle(Core.Random.NextDouble()) - 0.5F;
-                                float rZ = System.Convert.ToSingle(Core.Random.NextDouble()) - 0.5F;
-                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Core.Random.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1f, 1f, 1f));
+                                float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0F;
+                                float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5F;
+                                float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5F;
+                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1f, 1f, 1f));
                                 p.MoveSpeed = speed;
                                 if (MapWeather == Weathers.Rain)
                                     p.Opacity = 0.7F;

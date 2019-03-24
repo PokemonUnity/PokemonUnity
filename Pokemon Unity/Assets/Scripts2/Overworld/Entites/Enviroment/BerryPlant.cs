@@ -319,7 +319,7 @@ public class BerryPlant : Entity
         {
             int a = Berry.maxBerries;
             int b = Berry.minBerries;
-            int c = Core.Random.Next(b, a + 1);
+            int c = Settings.Rand.Next(b, a + 1);
             int d = Watered;
 
             int amount = System.Convert.ToInt32((((a - b) * (d - 1) + c) / (double)4) + b);

@@ -8,7 +8,7 @@ public class TurningSign : Entity
     {
         base.Initialize();
 
-        float randomValue = System.Convert.ToSingle(MathHelper.TwoPi * Core.Random.NextDouble());
+        float randomValue = System.Convert.ToSingle(MathHelper.TwoPi * Settings.Rand.NextDouble());
         switch (this.ActionValue)
         {
             case 1:
