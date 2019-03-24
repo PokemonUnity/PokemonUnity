@@ -18,7 +18,7 @@ public class LevelLoader
 
     private enum TagTypes
     {
-        Entity.Entity,
+        Entity,
         Floor,
         EntityField,
         Level,
@@ -92,7 +92,7 @@ public class LevelLoader
         {
 			//ToDo: Change Screen to Scene
             Screen.Level.LevelFile = levelPath;
-.x
+
             GameVariables.playerTrainer.LastSavePlace = Screen.Level.LevelFile;
             GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
@@ -504,13 +504,13 @@ public class LevelLoader
                 List<List<Entity.Entity>> mapList = new List<List<Entity.Entity>>();
 
                 List<object> @params = new List<object>();
-                @params.AddRange(new
+                @params.AddRange(new[]
                 {
-                    MapName,
-                    true,
-                    MapOffset + Offset,
-                    offsetMapLevel + 1,
-                    sessionMapsLoaded
+                    (object)MapName,
+                    (object)true,
+                    (object)(MapOffset + Offset),
+                    (object)(offsetMapLevel + 1),
+                    (object)sessionMapsLoaded
                 });
 
                 int offsetEntityCount = Screen.Level.OffsetmapEntities.Count;
@@ -525,7 +525,7 @@ public class LevelLoader
                     entList.Add(Screen.Level.OffsetmapEntities(i));
                 for (int i = offsetFloorCount; i <= Screen.Level.OffsetmapFloors.Count - 1; i++)
                     floorList.Add(Screen.Level.OffsetmapFloors(i));
-                mapList.AddRange(
+                mapList.AddRange(new List<List<Entity.Entity>>()
                 {
                     entList,
                     floorList
@@ -537,7 +537,7 @@ public class LevelLoader
             {
                 Logger.Debug("Loaded Offsetmap from store: " + MapName);
 
-                foreach (Entity e in OffsetMaps(listName)(0))
+                foreach (Entity.Entity e in OffsetMaps(listName)(0))
                 {
                     if (e.MapOrigin == MapName)
                     {
@@ -545,7 +545,7 @@ public class LevelLoader
                         Screen.Level.OffsetmapEntities.Add(e);
                     }
                 }
-                foreach (Entity e in OffsetMaps(listName)(1))
+                foreach (Entity.Entity e in OffsetMaps(listName)(1))
                 {
                     if (e.MapOrigin == MapName)
                     {
@@ -560,9 +560,9 @@ public class LevelLoader
                                               orderby e.CameraDistance descending
                                               select e).ToList();
 
-            foreach (Entity Entity.Entity in Screen.Level.OffsetmapEntities)
-                Entity.Entity.UpdateEntity();
-            foreach (Entity Floor in Screen.Level.OffsetmapFloors)
+            foreach (Entity.Entity Entity in Screen.Level.OffsetmapEntities)
+                Entity.UpdateEntity();
+            foreach (Entity.Entity Floor in Screen.Level.OffsetmapFloors)
                 Floor.UpdateEntity();
         }
     }
@@ -594,7 +594,7 @@ public class LevelLoader
         if (TagExists(Tags, "AddNPC") == true)
             addNPC = System.Convert.ToB.xlean(GetTag(Tags, "AddNPC"));
 
-        string structureKey = MapOffset.X.ToString() + "|" + MapOffset.y.ToString() + "|" + MapOffset.z.ToString() + "|" + MapName;
+        string structureKey = MapOffset.x.ToString() + "|" + MapOffset.y.ToString() + "|" + MapOffset.z.ToString() + "|" + MapName;
 
         if (tempStructureList.ContainsKey(structureKey) == false)
         {
@@ -687,14 +687,14 @@ public class LevelLoader
 
             string positionData = positionString.Remove(0, positionString.IndexOf("[") + 1);
             positionData = positionData.Remove(positionData.IndexOf("]"));
-.x
+
             string[] posArr = positionData.Split(System.Convert.ToChar(","));
-            Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", GameController.DecSeparator)) + MapOffset.X, ScriptConversion.ToSingle(posArr[1].Replace(".", GameController.DecSeparator)) + MapOffset.y, System.Convert.ToSingle(posArr[2].Replace(".", GameController.DecSeparator)) + MapOffset.z);
-.x
+            Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", GameController.DecSeparator)) + MapOffset.x, ScriptConversion.ToSingle(posArr[1].Replace(".", GameController.DecSeparator)) + MapOffset.y, System.Convert.ToSingle(posArr[2].Replace(".", GameController.DecSeparator)) + MapOffset.z);
+
             if (line.ToLower().Contains("{\"position\"{sngarr[") == true)
-                line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.X.ToString().Replace(G.xeController.DecSeparator, ".") + "," + newPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.z.ToString().Replace(GameController.DecSeparator, ".") + "]}}");
+                line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.x.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.z.ToString().Replace(GameController.DecSeparator, ".") + "]}}");
             else
-                line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.X).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.y).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.z).ToString().Replace(GameController.DecSeparator, ".") + "]}}");
+                line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.x).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.y).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.z).ToString().Replace(GameController.DecSeparator, ".") + "]}}");
         }
 
         return line;
@@ -723,7 +723,7 @@ public class LevelLoader
     }
 
     private void AddNPC(Dictionary<string, object> Tags)
-    {.x
+    {
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
         Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
@@ -782,7 +782,7 @@ public class LevelLoader
     {
         List<int> sizeList = (List<int>)GetTag(Tags, "Size");
         Size Size = new Size(sizeList[0], sizeList[1]);
-.x
+
         List<int> PosList = (List<int>)GetTag(Tags, "Position");
         Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
@@ -840,19 +840,19 @@ public class LevelLoader
                     int iZ = z;
                     int iX = x;
 
-                    Entity.Entity Ent = null/* TODO Change to default(_) if this is not a reference type */;
+                    Entity.Entity Ent = null;// TODO Change to default(_) if this is not a reference type 
 
                     if (loadOffsetMap == true)
                     {
-                        Ent = Screen.Level.OffsetmapFloors.Find(e =>.x
+                        Ent = Screen.Level.OffsetmapFloors.Find(e =>
                         {
-                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.y, Position.z + iZ);
+                            return ((Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
                         });
                     }
                     else
-                        Ent = Screen.Level.Floors.Find(e =>.x
+                        Ent = Screen.Level.Floors.Find(e =>
                         {
-                            return ((Entity)e).Position == new Vector3(Position.X + iX, Position.y, Position.z + iZ);
+                            return ((Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
                         });
 
                     if (Ent != null)
@@ -861,16 +861,16 @@ public class LevelLoader
                         Ent.Visible = Visible;
                         Ent.SeasonColorTexture = SeasonTexture;
                         Ent.LoadSeasonTextures();
-                        (Floor)Ent.SetRotation(rotation);
-                        (Floor)Ent.hasSnow = hasSnow;
-                        (Floor)Ent.IsIce = hasIce;
-                        (Floor)Ent.hasSand = hasSand;
+                        ((Floor)Ent).SetRotation(rotation);
+                        ((Floor)Ent).hasSnow = hasSnow;
+                        ((Floor)Ent).IsIce = hasIce;
+                        ((Floor)Ent).hasSand = hasSand;
                         exists = true;
                     }
 
-                    if (exists == false).x
+                    if (exists == false)
                     {
-                        Floor f = new Floor(Position.X + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
+                        Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
                         f.MapOrigin = MapOrigin;
                         f.SeasonColorTexture = SeasonTexture;
                         f.LoadSeasonTextures();
@@ -881,16 +881,16 @@ public class LevelLoader
             }
         }
         else
-            for (var x = 0; x <= Size.Width - 1; x++)
+            for (int x = 0; x <= Size.Width - 1; x++)
             {
-                for (var z = 0; z <= Size.Height - 1; z++)
+                for (int z = 0; z <= Size.Height - 1; z++)
                 {
-                    for (var i = 0; i <= floorList.Count; i++)
+                    for (int i = 0; i <= floorList.Count; i++)
                     {
                         if (i < floorList.Count)
-                        {.x.x
+                        {
                             Entity.Entity floor = floorList[i];
-                            if (floor.Position.X == Position.X + x & floor.Position.y == Position.y & floor.Position.z == Position.z + z)
+                            if (floor.Position.x == Position.x + x & floor.Position.y == Position.y & floor.Position.z == Position.z + z)
                             {
                                 floorList.RemoveAt(i);
                                 i -= 1;
@@ -908,9 +908,9 @@ public class LevelLoader
         int ID = -1;
         if (TagExists(Tags, "ID") == true)
             ID = System.Convert.ToInt32(GetTag(Tags, "ID"));
-.x
+
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<Rectangle> TexList = (List<Rectangle>)GetTag(Tags, "Textures");
         List<Texture2D> TextureList = new List<Texture2D>();
@@ -978,9 +978,9 @@ public class LevelLoader
 
         float CameraDistanceDelta = 0.0F;
         if (TagExists(Tags, "CameraDistanceDelta") == true)
-            CameraDistanceDelta = System.Convert.ToSing.x(GetTag(Tags, "CameraDistanceDelta"));
+            CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
 
-        for (var X = 0; X <= Size.Width - 1; X += Steps.X)
+        for (var X = 0; X <= Size.Width - 1; X += Steps.x)
         {
             for (var Z = 0; Z <= Size.Height - 1; Z += Steps.z)
             {
@@ -1013,9 +1013,9 @@ public class LevelLoader
                     if (AnimationData != null && AnimationData.Count == 5)
                     {
                     }
-                    if (DoAdd == true).x
+                    if (DoAdd == true)
                     {
-                        Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
+                        Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.x + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
                         newEnt.IsOffsetMapContent = loadOffsetMap;
 
                         if (newEnt != null)
@@ -1184,9 +1184,9 @@ public class LevelLoader
         Vector3 Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
 
         bool StopOnContact = System.Convert.ToBoolean(GetTag(Tags, "StopOnContact"));
-.x
+
         List<int> PosList = (List<int>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<int> ObjectSizeList = (List<int>)GetTag(Tags, "Size");
         Size ObjectSize = new Size(ObjectSizeList[0], ObjectSizeList[1]);
@@ -1207,9 +1207,9 @@ public class LevelLoader
         List<int> SizeList = (List<int>)GetTag(Tags, "Size");
         int Width = SizeList[0];
         int Height = SizeList[1];
-.x
+
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         Vector3 Rotation = Vector3.zero;
         if (TagExists(Tags, "Rotation") == true)
