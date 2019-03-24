@@ -12,7 +12,6 @@ namespace PokemonUnity.Battle
 {
 /// <summary>
 /// </summary>
-/// ToDo: Create a battle namespace?
 public class Battle : UnityUtilityIntegration
 {
 	#region Variables
@@ -190,7 +189,6 @@ public class Battle : UnityUtilityIntegration
 	/// Environment node is used for background animation, 
 	/// that's displayed behind the floor tile
 	/// </summary>
-	/// ToDo: Should be enum value
 	/// ToDo: Might be a static get value from global/map variables.
 	//public void Environment (PokemonUnity.Environment environment) { this.environment = environment; }
 	public Environment environment { get; set; }
@@ -750,19 +748,19 @@ public class Battle : UnityUtilityIntegration
 	bool CanShowCommands(int idxPokemon)
 	{
 		//List<BattlerEffects> thispkmn = new List<PokemonUnity.Effects.BattlerEffects>(); //battlers[idxPokemon].
-		PokemonUnity.Pokemon.Pokemon thispkmn = this.battlers[idxPokemon];
+		PokemonUnity.Battle.Pokemon thispkmn = this.battlers[idxPokemon];
 		if (thispkmn.isFainted()) return false;
-		//if (thispkmn.Effects.Contains(BattlerEffects.TwoTurnAttack)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.HyperBeam)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.Rollout)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.Outrage)) return false; 
-		//if (thispkmn.Effects.Contains(BattlerEffects.Uproar)) return false;
-		//if (thispkmn.Effects.Contains(BattlerEffects.Bide)) return false;
+		if (thispkmn.effects.TwoTurnAttack > 0) return false; 
+		if (thispkmn.effects.HyperBeam > 0) return false; 
+		if (thispkmn.effects.Rollout > 0) return false; 
+		if (thispkmn.effects.Outrage > 0) return false; 
+		if (thispkmn.effects.Uproar > 0) return false;
+		if (thispkmn.effects.Bide > 0) return false;
 		return true;
 	}
 	bool CanShowFightMenu(int idxPokemon)
 	{
-		PokemonUnity.Pokemon.Pokemon thispkmn = this.battlers[idxPokemon];
+		PokemonUnity.Battle.Pokemon thispkmn = this.battlers[idxPokemon];
 		if (!CanShowCommands(idxPokemon)) return false;
 
 		// No moves that can be chosen
@@ -778,7 +776,7 @@ public class Battle : UnityUtilityIntegration
 	}
 	bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 	{
-		/*Pokemon thispkmn = battlers[idxPokemon];
+		Pokemon thispkmn = battlers[idxPokemon];
 		Move thismove = thispkmn.moves[idxMove];
 
 		//ToDo: Array for opposing pokemons, [i] changes based on if double battle
@@ -836,7 +834,7 @@ public class Battle : UnityUtilityIntegration
 				return false;
 			}
 		}
-		if (thispkmn.effects.Taunt > 0 && thismove.basedamage == 0) {
+		if (thispkmn.effects.Taunt > 0 && thismove.BaseDamage == 0) {
 			//if (showMessages)pbDisplayPaused(_INTL("{1} can't use {2} after the taunt!", thispkmn.pbThis, thismove.name))
 			return false;
 		}
@@ -850,14 +848,14 @@ public class Battle : UnityUtilityIntegration
 			//if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} is disabled!", thispkmn.pbThis, thismove.name))
 			return false;
 		}
-		if (thismove.function==0x158 && // Belch
-		   (!thispkmn.pokemon || !thispkmn.pokemon.belch)){
+		if (thismove.Function==(Move.Effect)0x158 && // Belch
+		   (thispkmn.Species != Pokemons.NONE || !thispkmn.belch)){
 			//if (showMessages) pbDisplayPaused(_INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.pbThis))
 			return false;
 		}
 		if (thispkmn.effects.Encore>0 && idxMove!=thispkmn.effects.EncoreIndex){
 			return false;
-		}*/
+		}
 		return true;
 	}
 	//ToDo: Renaame to match above, delete after replacing all calls pointing to this method
@@ -1061,7 +1059,6 @@ public class Battle : UnityUtilityIntegration
 	/// to prevent changes from being permanent to original pokemon profile
 	/// </summary>
 	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
-	/// ToDo: If battle namespace, rename back to pokemon? is "battler" (battle only) too confusing?
 	public class Pokemon : PokemonUnity.Pokemon.Pokemon
 	{
 		#region Variables
@@ -2234,7 +2231,8 @@ public class Battle : UnityUtilityIntegration
 		public float weight { get; set; }
 		public float Weight(Pokemon pkmn)
 		{
-			return 0f;
+			return pkmn.weight;
+			//return 0f;
 		}
 		public bool pbHasType(Types type)
 		{

@@ -16,5 +16,4 @@ namespace PokemonUnity.Pokemon
 	{
     
 	}
-
 }

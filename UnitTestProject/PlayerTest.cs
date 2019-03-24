@@ -29,7 +29,7 @@ namespace Tests
             //string saveName = "First Save";
             int activeScene = 2;
 
-            //Settings.Languages language = Settings.Languages.English;
+            //Languages language = Languages.English;
             //byte windowBorder = 2;
             //byte dialogBorder = 9;
             //byte textSpeed = 1;
@@ -443,10 +443,10 @@ namespace Tests
             Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
             SaveData newSave = SaveManager.GetSave(0);
-            Settings.Languages expectedLanguage = Settings.Languages.English;
+            Languages expectedLanguage = Languages.English;
 
 			//We need to cast newSave.Language to the correct variable, since we save it in an (int)
-			//Assert.AreEqual(expectedLanguage, (Settings.Languages)newSave.Language);
+			//Assert.AreEqual(expectedLanguage, (Languages)newSave.Language);
 			Assert.Fail("Player Settings are saved separate from Player Game State");
         }
         /*[TestMethod]

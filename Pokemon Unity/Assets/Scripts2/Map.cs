@@ -185,8 +185,76 @@ class Map : MonoBehaviour
 		/// need to map collision to X,Y value as well...
 		int[,] MapArray;
 	}
-	#endregion
-}
+		#endregion
+
+		#region Global and map metadata
+		//ToDo: Each time map changes, new values are loaded/replaced below
+		public class Global
+		{
+			/// <summary>
+			/// Location you return to when you respawn
+			/// </summary>
+			public string MetadataHome;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// String below should point to Audio/Sound files
+			public string MetadataWildBattleBGM;
+			public string MetadataTrainerBattleBGM;
+			public string MetadataWildVictoryME;
+			public string MetadataTrainerVictoryME;
+			public string MetadataSurfBGM;
+			public string MetadataBicycleBGM;
+			/* TrainerClass
+			Trainer MetadataPlayerA;
+			Trainer MetadataPlayerB;
+			Trainer MetadataPlayerC;
+			Trainer MetadataPlayerD;
+			Trainer MetadataPlayerE;
+			Trainer MetadataPlayerF;
+			Trainer MetadataPlayerG;
+			Trainer MetadataPlayerH;*/
+		}
+
+		public class NonGlobalTypes : Global
+		{
+			bool MetadataOutdoor;
+			bool MetadataShowArea;
+			bool MetadataBicycle;
+			bool MetadataBicycleAlways;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// "uuu"
+			int[,] MetadataHealingSpot;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// return WeatherType
+			bool MetadataWeather;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// "uuu"
+			int[] MetadataMapPosition;
+			int MetadataDiveMap;
+			bool MetadataDarkMap;
+			bool MetadataSafariMap;
+			bool MetadataSnapEdges;
+			bool MetadataDungeon;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// String below should point to Audio/Sound files
+			public string MetadataBattleBack;
+			//public string MetadataMapWildBattleBGM;
+			//public string MetadataMapTrainerBattleBGM;
+			//public string MetadataMapWildVictoryME;
+			//public string MetadataMapTrainerVictoryME;
+			int[,] MetadataMapSize;
+		}
+		#endregion
+	}
 }
 
 #region Encounter Scripts
