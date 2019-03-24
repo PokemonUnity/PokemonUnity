@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts2\Extensions\TransformExtension.cs" />
+    <Compile Include="Assets\Scripts2\GameDebugger.cs" />
     <Compile Include="Assets\Scripts2\Settings.cs" />
     <Compile Include="Assets\Scripts2\Pokedex.cs" />
     <Compile Include="Assets\Scripts2\Battle\Attack.cs" />
