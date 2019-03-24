@@ -117,7 +117,7 @@ public class ScriptConversion
                             {
                                 if (v2 == 0)
                                 {
-                                    Logger.Log(Logger.LogTypes.Warning, "Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.");
+                                    GameVariables.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
                                     hasError = true;
                                     return 0;
                                 }
@@ -141,7 +141,7 @@ public class ScriptConversion
                 }
                 else
                 {
-                    Logger.Log(Logger.LogTypes.Warning, "Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.");
+                    GameVariables.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
                     hasError = true;
                     return 0;
                 }
@@ -152,7 +152,7 @@ public class ScriptConversion
             return stack[0];
         else
         {
-            Logger.Log(Logger.LogTypes.Warning, "Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.");
+            GameVariables.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
             hasError = true;
             return 0;
         }
@@ -230,7 +230,7 @@ public class ScriptConversion
                 }
                 else
                 {
-                    Logger.Log(Logger.LogTypes.Warning, "Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.");
+                    GameVariables.DebugLog("Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.", false);
                     hasError = true;
                     return "0";
                 }
@@ -241,7 +241,7 @@ public class ScriptConversion
         {
             if (stack[0] == '(' | stack[0] == ')')
             {
-                Logger.Log(Logger.LogTypes.Warning, "Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.");
+                GameVariables.DebugLog("Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.", false);
                 hasError = true;
                 return "0";
             }

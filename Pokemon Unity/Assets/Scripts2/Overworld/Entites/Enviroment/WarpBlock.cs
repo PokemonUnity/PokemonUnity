@@ -49,7 +49,7 @@ public class WarpBlock : Entity
                     Screen.Level.WarpData.DoWarpInNextTick = true;
                     Screen.Level.WarpData.CorrectCameraYaw = Screen.Camera.Yaw;
                     Screen.Level.WarpData.IsWarpBlock = true;
-                    Logger.Debug("Lock Camera");
+                    GameVariables.DebugLog("Lock Camera");
                     (OverworldCamera)Screen.Camera.YawLocked = true;
                 }
                 else
@@ -125,7 +125,7 @@ public class WarpBlock : Entity
 
     private static void CallError(string ex)
     {
-        Logger.Log(Logger.LogTypes.ErrorMessage, "WarpBlock.vb: Invalid warp! More information:" + ex);
+        GameVariables.DebugLog("WarpBlock.vb: Invalid warp! More information:" + ex, true);
     }
 }
 }

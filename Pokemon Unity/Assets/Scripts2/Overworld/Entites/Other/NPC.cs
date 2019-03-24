@@ -815,7 +815,7 @@ public class NPC : Entity
 
 	private Vector3 GetMove()
 	{
-		Vector3 moveVector;
+		Vector3 moveVector = new Vector3();
 		switch (this.faceRotation)
 		{
 			case 0:

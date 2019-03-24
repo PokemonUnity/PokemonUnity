@@ -117,13 +117,13 @@ public class LevelLoader
         }
 
         levelPath = GameModeManager.GetMapPath(levelPath);
-		//ToDo: Logger => Debug.Log
-        Logger.Debug("Loading map: " + levelPath.Remove(0, GameController.GamePath.Length));
-        System.Security.FileValidation.CheckFileValid(levelPath, false, "LevelLoader.vb");
+
+		GameVariables.DebugLog("Loading map: " + levelPath.Remove(0, GameController.GamePath.Length));
+        //System.Security.FileValidation.CheckFileValid(levelPath, false, "LevelLoader.vb");
 
         if (System.IO.File.Exists(levelPath) == false)
         {
-            Logger.Log(Logger.LogTypes.ErrorMessage, "LevelLoader.vb: Error accessing map file \"" + levelPath + "\". File not found.");
+            GameVariables.DebugLog("LevelLoader.vb: Error accessing map file \"" + levelPath + "\". File not found.", true);
             Busy -= 1;
 
             if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen & loadOffsetMap == false)
@@ -148,7 +148,7 @@ public class LevelLoader
                     l = l.Remove(0, l.IndexOf("[") + 1);
                     l = l.Remove(l.IndexOf("]"));
 
-                    Logger.Log(Logger.LogTypes.Debug, l);
+                    GameVariables.DebugLog(l);
                 }
             }
         }
@@ -186,7 +186,7 @@ public class LevelLoader
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log(Logger.LogTypes.Warning, "LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") from mapfile: " + levelPath + "; Error message: " + ex.Message);
+                    GameVariables.DebugLog("LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") from mapfile: " + levelPath + "; Error message: " + ex.Message, false);
                 }
             }
         }
@@ -287,7 +287,7 @@ public class LevelLoader
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log(Logger.LogTypes.Warning, "LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") (Line: " + orgLine + ") from mapfile: " + levelPath + "; Error message: " + ex.Message);
+                    GameVariables.DebugLog("LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") (Line: " + orgLine + ") from mapfile: " + levelPath + "; Error message: " + ex.Message, false);
                 }
             }
         }
@@ -304,10 +304,10 @@ public class LevelLoader
             }
         }
 
-        Logger.Debug("Map loading finished: " + levelPath.Remove(0, GameController.GamePath.Length));
-        Logger.Debug("Loaded textures: " + TextureManager.TextureList.Count.ToString());
+        GameVariables.DebugLog("Map loading finished: " + levelPath.Remove(0, GameController.GamePath.Length));
+        GameVariables.DebugLog("Loaded textures: " + TextureManager.TextureList.Count.ToString());
         timer.Stop();
-        Logger.Debug("Map loading time: " + timer.ElapsedTicks + " Ticks; " + timer.ElapsedMilliseconds + " Milliseconds.");
+        GameVariables.DebugLog("Map loading time: " + timer.ElapsedTicks + " Ticks; " + timer.ElapsedMilliseconds + " Milliseconds.");
 
         // Dim xmlLevelLoader As New XmlLevelLoader.
         // xmlLevelLoader.Load(My.Computer.FileSystem.SpecialDirectories.Desktop & "\t.xml", _5DHero.XmlLevelLoader.LevelTypes.Default, Vector3.Zero)
@@ -535,7 +535,7 @@ public class LevelLoader
             }
             else
             {
-                Logger.Debug("Loaded Offsetmap from store: " + MapName);
+                GameVariables.DebugLog("Loaded Offsetmap from store: " + MapName);
 
                 foreach (Entity.Entity e in OffsetMaps(listName)(0))
                 {
@@ -554,7 +554,7 @@ public class LevelLoader
                     }
                 }
             }
-            Logger.Debug("Offset maps in store: " + OffsetMaps.Count);
+            GameVariables.DebugLog("Offset maps in store: " + OffsetMaps.Count);
 
             Screen.Level.OffsetmapEntities = (from e in Screen.Level.OffsetmapEntities
                                               orderby e.CameraDistance descending
@@ -603,7 +603,7 @@ public class LevelLoader
 
             if (System.IO.File.Exists(filepath) == false)
             {
-                Logger.Log(Logger.LogTypes.ErrorMessage, "LevelLoader.vb: Error loading structure from \"" + filepath + "\". File not found.");
+                GameVariables.DebugLog("LevelLoader.vb: Error loading structure from \"" + filepath + "\". File not found.", true);
 
                 return new string[] { };
             }

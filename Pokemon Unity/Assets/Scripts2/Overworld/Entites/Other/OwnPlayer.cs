@@ -72,13 +72,13 @@ public class OwnPlayer : Entity
 
 		if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && !GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) == null)
 		{
-			Logger.Debug("Change player texture to the online sprite.");
+			GameVariables.DebugLog("Change player texture to the online sprite.");
 			this.Texture = GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID);
 			UsingGameJoltTexture = true;
 		}
 		else
 		{
-			Logger.Debug("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
+			GameVariables.DebugLog("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
 
 			this.Texture = P3D.TextureManager.GetTexture(texturePath + TextureID + PokemonAddition);
 			UsingGameJoltTexture = false;
@@ -178,7 +178,7 @@ public class OwnPlayer : Entity
 				}
 				catch
 				{
-					Logger.Log(Logger.LogTypes.Warning, "OwnPlayer.vb: Error assigning a new texture to the player.");
+					GameVariables.DebugLog("OwnPlayer.vb: Error assigning a new texture to the player.", false);
 				}
 			}
 		}

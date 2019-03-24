@@ -814,7 +814,7 @@ public class Level
         this._offsetTimer.Elapsed += this.UpdateOffsetMap();
         this._offsetTimer.Start();
 
-        Logger.Debug("Started Offset map update");
+        GameVariables.DebugLog("Started Offset map update");
     }
 
     public void StopOffsetMapUpdate()
@@ -823,7 +823,7 @@ public class Level
         while (this._isUpdatingOffsetMaps)
             Thread.Sleep(1);
 
-        Logger.Debug("Stopped Offset map update");
+        GameVariables.DebugLog("Stopped Offset map update");
     }
 
     /// <summary>
@@ -858,7 +858,7 @@ public class Level
             levelLoader.LoadLevel(@params.ToArray());
         }
         else
-            Logger.Debug("Don't attempt to load a levelfile.");
+            GameVariables.DebugLog("Don't attempt to load a levelfile.");
 
         // Create own player Entity and OverworldPokémon Entity and add them to the Entity enumeration:
         OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
@@ -949,7 +949,7 @@ public class Level
             if (KeyBoardHandler.KeyPressed(Keys.R) == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             {
                 Core.OffsetMaps.Clear();
-                Logger.Debug(string.Format("Reload map file: {0}", this._levelFile));
+                GameVariables.DebugLog(string.Format("Reload map file: {0}", this._levelFile));
                 this.Load(LevelFile);
             }
         }

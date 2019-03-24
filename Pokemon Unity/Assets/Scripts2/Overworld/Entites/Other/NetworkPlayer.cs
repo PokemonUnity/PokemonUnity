@@ -99,7 +99,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			this.Texture = OnlineSprite;
 		else if (TextureManager.TextureExist(texturePath) == true)
 		{
-			Logger.Debug("Change network texture to [" + texturePath + "]");
+			GameVariables.DebugLog("Change network texture to [" + texturePath + "]");
 
 			if (texturePath.StartsWith(@"Pokemon\") == true)
 				this.HasPokemonTexture = true;
@@ -110,7 +110,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		}
 		else
 		{
-			Logger.Debug("Texture fallback!");
+			GameVariables.DebugLog("Texture fallback!");
 			this.Texture = TextureManager.GetTexture(@"Textures\NPC\" + FallBack[this.NetworkID]);
 		}
 	}
@@ -406,7 +406,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		}
 		catch (Exception ex)
 		{
-			Logger.Debug("NetworkPlayer.vb: Error while assigning player data over network: " + ex.Message);
+			GameVariables.DebugLog("NetworkPlayer.vb: Error while assigning player data over network: " + ex.Message);
 		}
 	}
 
