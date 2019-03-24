@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Misc
 {
@@ -169,13 +170,13 @@ public class NPC : Entity
 
 			foreach (string line in Data)
 			{
-				line = line.Remove(0, 1);
-				line = line.Remove(line.Length - 1, 1);
+				string l = line.Remove(0, 1);
+				l = l.Remove(l.Length - 1, 1);
 
-				string file = line.GetSplit(0, "|");
-				int ID = System.Convert.ToInt32(line.GetSplit(1, "|"));
-				string action = line.GetSplit(2, "|");
-				string addition = line.GetSplit(3, "|");
+				string file = l.GetSplit(0, "|");
+				int ID = System.Convert.ToInt32(l.GetSplit(1, "|"));
+				string action = l.GetSplit(2, "|");
+				string addition = l.GetSplit(3, "|");
 
 				if (this.NPCID == ID & this.MapOrigin.ToLower() == file.ToLower())
 				{
@@ -510,10 +511,10 @@ public class NPC : Entity
 									{
 										s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
-										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + System.Environment.NewLine + "@camera.resetfocus" + System.Environment.NewLine + "@camera.setposition(" + cPosition + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + (distance - 1) + ")" + System.Environment.NewLine + "@camera.resetfocus" + System.Environment.NewLine + "@camera.setposition(" + cPosition + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
 									}
 									else
-										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + distance - 1 + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + (distance - 1) + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
 								}
 
 

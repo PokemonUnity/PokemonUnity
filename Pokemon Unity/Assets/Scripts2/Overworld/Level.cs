@@ -6,6 +6,7 @@ using PokemonUnity.Overworld;
 using PokemonUnity.Overworld.Entity;
 using PokemonUnity.Overworld.Entity.Misc;
 using PokemonUnity.Overworld.Entity.Environment;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld
 {
@@ -36,7 +37,10 @@ public class Level
     private bool _isDark = false;
     private int _walkedSteps = 0;
 
-    private int _offsetMapUpdateDelay = 50; // Ticks until the next Offset Map update occurs.
+	/// <summary>
+	/// Ticks until the next Offset Map update occurs.
+	/// </summary>
+    private int _offsetMapUpdateDelay = 50;
 
     // Map properties:
     private Terrain _terrain = new Terrain(Terrain.TerrainTypes.Plain);
@@ -66,16 +70,16 @@ public class Level
     private OwnPlayer _ownPlayer;
     private OverworldPokemon _ownOverworldPokemon;
 
-    private List<Entity> _entities = new List<Entity>();
-    private List<Entity> _floors = new List<Entity>();
+    private List<Entity.Entity> _entities = new List<Entity.Entity>();
+    private List<Entity.Entity> _floors = new List<Entity.Entity>();
     private List<Shader> _shaders = new List<Shader>();
     private BackdropRenderer _backdropRenderer;
 
     private List<NetworkPlayer> _networkPlayers = new List<NetworkPlayer>();
     private List<NetworkPokemon> _networkPokemon = new List<NetworkPokemon>();
 
-    private List<Entity> _offsetMapEntities = new List<Entity>();
-    private List<Entity> _offsetMapFloors = new List<Entity>();
+    private List<Entity.Entity> _offsetMapEntities = new List<Entity.Entity>();
+    private List<Entity.Entity> _offsetMapFloors = new List<Entity.Entity>();
 
     // Radio:
     private bool _isRadioOn = false;
@@ -187,7 +191,7 @@ public class Level
     /// <summary>
     /// The array of entities composing the map.
     /// </summary>
-    public List<Entity> Entities
+    public List<Entity.Entity> Entities
     {
         get
         {
@@ -202,7 +206,7 @@ public class Level
     /// <summary>
     /// The array of floors the player can move on.
     /// </summary>
-    public List<Entity> Floors
+    public List<Entity.Entity> Floors
     {
         get
         {
@@ -262,7 +266,7 @@ public class Level
     /// <summary>
     /// The array of entities the offset maps are composed of.
     /// </summary>
-    public List<Entity> OffsetmapEntities
+    public List<Entity.Entity> OffsetmapEntities
     {
         get
         {
@@ -277,7 +281,7 @@ public class Level
     /// <summary>
     /// The array of floors the offset maps are composed of.
     /// </summary>
-    public List<Entity> OffsetmapFloors
+    public List<Entity.Entity> OffsetmapFloors
     {
         get
         {
@@ -835,13 +839,13 @@ public class Level
 
         // Create a parameter array to pass over to the LevelLoader:
         List<object> @params = new List<object>();
-        @params.AddRange(new
+        @params.AddRange(new[]
         {
-            Levelpath,
-            false,
-            new Vector3(0, 0, 0),
-            0,
-            new List<string>()
+            (object)Levelpath,
+            (object)false,
+            (object)new Vector3(0, 0, 0),
+            (object)0,
+            (object)new List<string>()
         });
 
         // Create the world and load the level:
@@ -856,11 +860,11 @@ public class Level
         else
             Logger.Debug("Don't attempt to load a levelfile.");
 
-        // Create own player entity and OverworldPokémon entity and add them to the entity enumeration:
+        // Create own player Entity and OverworldPokémon Entity and add them to the Entity enumeration:
         OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
         OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
         OverworldPokemon.ChangeRotation();
-        Entities.AddRange(
+        Entities.AddRange(new Entity.Entity[]
         {
             OwnPlayer,
             OverworldPokemon
@@ -886,8 +890,8 @@ public class Level
         DebugDisplay.MaxVertices = 0;
         DebugDisplay.MaxDistance = 0;
 
-        List<Entity> AllEntities = new List<Entity>();
-        List<Entity> AllFloors = new List<Entity>();
+        List<Entity.Entity> AllEntities = new List<Entity.Entity>();
+        List<Entity.Entity> AllFloors = new List<Entity.Entity>();
 
         AllEntities.AddRange(Entities);
         AllFloors.AddRange(Floors);
@@ -1000,7 +1004,7 @@ public class Level
     }
 
     /// <summary>
-    /// Sorts the entity enumerations.
+    /// Sorts the Entity enumerations.
     /// </summary>
     public void SortEntities()
     {
@@ -1084,7 +1088,7 @@ public class Level
         {
             if (i <= this.OffsetmapEntities.Count - 1)
             {
-                if (!this.OffsetmapEntities[i] == null)
+                if (this.OffsetmapEntities[i] != null)
                 {
                     this.OffsetmapEntities[i].Render();
                     DebugDisplay.MaxVertices += this.OffsetmapEntities[i].VertexCount;
@@ -1126,13 +1130,13 @@ public class Level
 
             // Load the new level:
             List<object> @params = new List<object>();
-            @params.AddRange(new 
+            @params.AddRange(new[]
             {
-                WarpData.WarpDestination,
-                false,
-                new Vector3(0, 0, 0),
-                0,
-                new List<string>()
+                (object)WarpData.WarpDestination,
+                (object)false,
+                (object)new Vector3(0, 0, 0),
+                (object)0,
+                (object)new List<string>()
             });
 
             World = new World(0, 0);
@@ -1152,7 +1156,7 @@ public class Level
             OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
             OverworldPokemon.Visible = false;
             OverworldPokemon.warped = true;
-            Entities.AddRange(
+            Entities.AddRange(new Entity.Entity[]
             {
                 OwnPlayer,
                 OverworldPokemon
@@ -1240,9 +1244,9 @@ public class Level
     {
         List<NPC> reList = new List<NPC>();
 
-        foreach (Entity Entity in this.Entities)
+        foreach (Entity.Entity Entity in this.Entities)
         {
-            if (Entity.EntityID == Entities.NPC)
+            if (Entity.EntityID == PokemonUnity.Entities.NPC)
                 reList.Add((NPC)Entity);
         }
 
@@ -1262,18 +1266,18 @@ public class Level
                 return NPC;
         }
 
-        return null/* TODO Change to default(_) if this is not a reference type */;
+        return null;// TODO Change to default(_) if this is not a reference type 
     }
 
     /// <summary>
-    /// Returns an NPC based on the entity ID.
+    /// Returns an NPC based on the Entity ID.
     /// </summary>
-    public Entity GetEntity(int ID)
+    public Entity.Entity GetEntity(int ID)
     {
         if (ID == -1)
             throw new Exception("-1 is the default value for NOT having an ID, therefore is not a valid ID.");
         else
-            foreach (Entity ent in this.Entities)
+            foreach (Entity.Entity ent in this.Entities)
             {
                 if (ent.ID == ID)
                     return ent;
@@ -1287,9 +1291,9 @@ public class Level
     /// </summary>
     public void CheckTrainerSights()
     {
-        foreach (Entity Entity in Entities)
+        foreach (Entity.Entity Entity in Entities)
         {
-            if (Entity.EntityID == Entities.NPC)
+            if (Entity.EntityID == PokemonUnity.Entities.NPC)
             {
                 NPC NPC = (NPC)Entity;
                 if (NPC.IsTrainer == true)
@@ -1326,11 +1330,11 @@ public class Level
     }
 
     /// <summary>
-    /// Whether the player can move based on the entity around him.
+    /// Whether the player can move based on the Entity around him.
     /// </summary>
     public bool CanMove()
     {
-        foreach (Entity e in this.Entities)
+        foreach (Entity.Entity e in this.Entities)
         {
             if (e.Position.x == Screen.Camera.Position.x & e.Position.z == Screen.Camera.Position.z & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y))
                 return e.LetPlayerMove();

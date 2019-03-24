@@ -145,7 +145,7 @@ public class ApricornPlant : Entity
 
 		if (hasApricorn == true)
 		{
-			Items Item = GetItem();
+			Item.Item Item = new PokemonUnity.Item.Item(GetItem());
 
 			text = "There is a " + Item.Name + "~on this tree.*Do you want to pick it?%Yes|No%";
 		}
@@ -158,7 +158,7 @@ public class ApricornPlant : Entity
 	{
 		if (Result == 0)
 		{
-			Items Item = GetItem();
+			Item.Item Item = new PokemonUnity.Item.Item(GetItem());
 
 			GameVariables.playerTrainer.Inventory.AddItem(Item.ID, 1);
 			//GameVariables.playerTrainer.Bag.AddItem(Item);

@@ -705,7 +705,7 @@ public class Entity : BaseEntity
 
 				this.DrawnLastFrame = true;
 
-				if (this.EntityID != "Floor" & this.EntityID != "Water")
+				if (this.EntityID != Entities.Floor & this.EntityID != Entities.Water)
 				{
 					if (drawViewBox == true)
 						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, Color.LightCoral);

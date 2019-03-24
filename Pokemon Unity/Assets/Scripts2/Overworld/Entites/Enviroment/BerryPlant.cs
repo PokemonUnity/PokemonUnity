@@ -172,7 +172,6 @@ public class BerryPlant : Entity
                         text = "One " + this.Berry.Name + " Berry was~planted here.";
                     break;
                 }
-
             case 1:
                 {
                     this.ResultIndex = 1;
@@ -182,7 +181,6 @@ public class BerryPlant : Entity
                         text = Berry.Name + " has sprouted.";
                     break;
                 }
-
             case 2:
                 {
                     this.ResultIndex = 1;
@@ -192,7 +190,6 @@ public class BerryPlant : Entity
                         text = "This " + Berry.Name + " plant is~growing taller.";
                     break;
                 }
-
             case 3:
                 {
                     this.ResultIndex = 1;
@@ -202,7 +199,6 @@ public class BerryPlant : Entity
                         text = "These " + Berry.Name + " flowers~are blooming.";
                     break;
                 }
-
             case 4:
                 {
                     this.ResultIndex = 0;
@@ -338,19 +334,16 @@ public class BerryPlant : Entity
                         seasonGrow = Berry.WinterGrow;
                         break;
                     }
-
                 case (object) P3D.World.Seasons.Spring:
                     {
                         seasonGrow = Berry.SpringGrow;
                         break;
                     }
-
                 case (object) P3D.World.Seasons.Summer:
                     {
                         seasonGrow = Berry.SummerGrow;
                         break;
                     }
-
                 case (object) P3D.World.Seasons.Fall:
                     {
                         seasonGrow = Berry.FallGrow;
@@ -365,18 +358,15 @@ public class BerryPlant : Entity
                         amount = Berry.minBerries;
                         break;
                     }
-
                 case 1:
                     {
                         amount -= 1;
                         break;
                     }
-
                 case 2:
                     {
                         break;
                     }
-
                 case 3:
                     {
                         amount += 1;

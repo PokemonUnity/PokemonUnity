@@ -18,7 +18,7 @@ public class LevelLoader
 
     private enum TagTypes
     {
-        Entity,
+        Entity.Entity,
         Floor,
         EntityField,
         Level,
@@ -38,8 +38,8 @@ public class LevelLoader
     private List<string> sessionMapsLoaded = new List<string>(); // Prevents infinite loops when loading more than one offset map level.
 
     // Store these so other classes can get them:
-    private List<Entity> Entities = new List<Entity>();
-    private List<Entity> Floors = new List<Entity>();
+    private List<Entity.Entity> Entities = new List<Entity.Entity>();
+    private List<Entity.Entity> Floors = new List<Entity.Entity>();
 
     // A counter across all LevelLoader instances to count how many instances across the program are active:
     private static int Busy = 0;
@@ -501,7 +501,7 @@ public class LevelLoader
             string listName = Screen.Level.LevelFile + "|" + MapName + "|" + Screen.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
             if (OffsetMaps.ContainsKey(listName) == false)
             {
-                List<List<Entity>> mapList = new List<List<Entity>>();
+                List<List<Entity.Entity>> mapList = new List<List<Entity.Entity>>();
 
                 List<object> @params = new List<object>();
                 @params.AddRange(new
@@ -518,8 +518,8 @@ public class LevelLoader
 
                 LevelLoader levelLoader = new LevelLoader();
                 levelLoader.LoadLevel(@params.ToArray());
-                List<Entity> entList = new List<Entity>();
-                List<Entity> floorList = new List<Entity>();
+                List<Entity.Entity> entList = new List<Entity.Entity>();
+                List<Entity.Entity> floorList = new List<Entity.Entity>();
 
                 for (int i = offsetEntityCount; i <= Screen.Level.OffsetmapEntities.Count - 1; i++)
                     entList.Add(Screen.Level.OffsetmapEntities(i));
@@ -560,8 +560,8 @@ public class LevelLoader
                                               orderby e.CameraDistance descending
                                               select e).ToList();
 
-            foreach (Entity Entity in Screen.Level.OffsetmapEntities)
-                Entity.UpdateEntity();
+            foreach (Entity Entity.Entity in Screen.Level.OffsetmapEntities)
+                Entity.Entity.UpdateEntity();
             foreach (Entity Floor in Screen.Level.OffsetmapFloors)
                 Floor.UpdateEntity();
         }
@@ -825,7 +825,7 @@ public class LevelLoader
         if (TagExists(Tags, "SeasonTexture") == true)
             SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
 
-        List<Entity> floorList = Screen.Level.Floors;
+        List<Entity.Entity> floorList = Screen.Level.Floors;
         if (loadOffsetMap == true)
             floorList = Screen.Level.OffsetmapFloors;
 
@@ -840,7 +840,7 @@ public class LevelLoader
                     int iZ = z;
                     int iX = x;
 
-                    Entity Ent = null/* TODO Change to default(_) if this is not a reference type */;
+                    Entity.Entity Ent = null/* TODO Change to default(_) if this is not a reference type */;
 
                     if (loadOffsetMap == true)
                     {
@@ -889,7 +889,7 @@ public class LevelLoader
                     {
                         if (i < floorList.Count)
                         {.x.x
-                            Entity floor = floorList[i];
+                            Entity.Entity floor = floorList[i];
                             if (floor.Position.X == Position.X + x & floor.Position.y == Position.y & floor.Position.z == Position.z + z)
                             {
                                 floorList.RemoveAt(i);
@@ -944,7 +944,7 @@ public class LevelLoader
         if (TagExists(Tags, "AnimationData") == true)
             AnimationData = (List<List<int>>)GetTag(Tags, "AnimationData");
 
-        Vector3 Rotation = Entity.GetRotationFromInteger(System.Convert.ToInt32(GetTag(Tags, "Rotation")));
+        Vector3 Rotation = Entity.Entity.GetRotationFromInteger(System.Convert.ToInt32(GetTag(Tags, "Rotation")));
 
         bool Visible = true;
         if (TagExists(Tags, "Visible") == true)
@@ -1015,7 +1015,7 @@ public class LevelLoader
                     }
                     if (DoAdd == true).x
                     {
-                        Entity newEnt = Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
+                        Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.X + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
                         newEnt.IsOffsetMapContent = loadOffsetMap;
 
                         if (newEnt != null)
@@ -1269,7 +1269,7 @@ public class LevelLoader
 
                 if (BData[0].ToLower() == Screen.Level.LevelFile.ToLower())
                 {
-                    Entity newEnt = Entity.GetNewEntity("BerryPlant", new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
+                    Entity.Entity newEnt = Entity.Entity.GetNewEntity("BerryPlant", new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
                     new int[]
                     {
                         0,

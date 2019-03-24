@@ -2,7 +2,7 @@
 {
 public class SlideBlock : Entity
 {
-    private ScriptBlock TempScriptEntity = null/* TODO Change to default(_) if this is not a reference type */;
+    private ScriptBlock TempScriptEntity = null;// TODO Change to default(_) if this is not a reference type 
 
     public override bool WalkAgainstFunction()
     {

@@ -2,7 +2,7 @@
 
 namespace PokemonUnity.Overworld.Entity.Misc
 {
-	public class NetworkPokemon : Entity
+public class NetworkPokemon : Entity
 {
 	public int PlayerID = 0;
 	public string LevelFile = "";

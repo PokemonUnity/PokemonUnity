@@ -46,17 +46,17 @@ public class LoamySoil : Entity
         }
     }
 
-    public void PlantBerryHandler(object[] @params)
+    public void PlantBerryHandler(params object[] @params)
     {
         PlantBerry(System.Convert.ToInt32(@params[0]));
     }
 
     public void PlantBerry(int ChosenBerry)
     {
-        Item testItem = Item.GetItem(ChosenBerry);
-        if (testItem.isBerry == true)
+        Item.Item testItem = Item.Item.GetItem(ChosenBerry);
+        if (testItem.isBerry)
         {
-            Item.Berry Berry = (Item.Berry)Item.GetItem(ChosenBerry);
+            Item.Berry Berry = (Item.Berry)Item.Item.GetItem(ChosenBerry);
 
             BerryPlant.AddBerryPlant(Screen.Level.LevelFile, this.Position, Berry.BerryIndex);
             Screen.TextBox.reDelay = 0.0F;
