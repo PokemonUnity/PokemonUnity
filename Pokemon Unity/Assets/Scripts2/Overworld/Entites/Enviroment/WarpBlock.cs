@@ -44,7 +44,7 @@ public class WarpBlock : Entity
                 if (MapViewMode == false)
                 {
                     GameVariables.Level.WarpData.WarpDestination = this.AdditionalValue.GetSplit(0);
-                    GameVariables.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
+                    GameVariables.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
                     GameVariables.Level.WarpData.WarpRotations = System.Convert.ToInt32(this.AdditionalValue.GetSplit(4));
                     GameVariables.Level.WarpData.DoWarpInNextTick = true;
                     GameVariables.Level.WarpData.CorrectCameraYaw = GameVariables.Camera.Yaw;
@@ -58,7 +58,7 @@ public class WarpBlock : Entity
                     GameVariables.Level.Load(this.AdditionalValue.GetSplit(0));
                     GameVariables.Level.World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
 
-                    GameVariables.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
+                    GameVariables.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
                 }
             }
             else
@@ -86,7 +86,7 @@ public class WarpBlock : Entity
                     if (destination.EndsWith(".dat") == true)
                     {
                         string x = link.GetSplit(1);
-                        string y = link.GetSplit(2).Replace(".", GameController.DecSeparator);
+                        string y = link.GetSplit(2).Replace(".", StringHelper.DecSeparator);
                         string z = link.GetSplit(3);
                         string l = link.GetSplit(4);
 

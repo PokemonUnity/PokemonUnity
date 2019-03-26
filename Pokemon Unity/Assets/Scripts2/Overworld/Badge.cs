@@ -178,7 +178,7 @@ public class Badge
     /// Gets the badge texture.
     /// </summary>
     /// <param name="ID">The ID of the badge.</param>
-    public static Texture2D GetBadgeTexture(int ID)
+    public static UnityEngine.Texture2D GetBadgeTexture(int ID)
     {
         foreach (BadgeDeclaration b in Badges)
         {

@@ -145,7 +145,7 @@ public class NPC : Entity
 				PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 		}
 
-		if (UseGameJoltID == true & GameVariables.playerTrainer.IsGameJoltSave == true & GameJolt.API.LoggedIn == true && !GameJolt.Emblem.GetOnlineSprite(GameJoltID) == null)
+		if (UseGameJoltID == true & GameVariables.playerTrainer.IsGameJoltSave == true & GameJolt.API.LoggedIn == true && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
 			this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
 		else
 			this.Texture = P3D.TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
@@ -185,7 +185,7 @@ public class NPC : Entity
 						case "position":
 							{
 								string[] PositionData = addition.Split(System.Convert.ToChar(","));
-								this.Position = new Vector3(System.Convert.ToSingle(PositionData[0].Replace(".", GameController.DecSeparator)) + Offset.x, System.Convert.ToSingle(PositionData[1].Replace(".", GameController.DecSeparator)) + Offset.y, System.Convert.ToSingle(PositionData[2].Replace(".", GameController.DecSeparator)) + Offset.z);
+								this.Position = new Vector3(System.Convert.ToSingle(PositionData[0].Replace(".", StringHelper.DecSeparator)) + Offset.x, System.Convert.ToSingle(PositionData[1].Replace(".", StringHelper.DecSeparator)) + Offset.y, System.Convert.ToSingle(PositionData[2].Replace(".", StringHelper.DecSeparator)) + Offset.z);
 								break;
 							}
 						case "remove":

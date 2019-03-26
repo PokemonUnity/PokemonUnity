@@ -94,7 +94,7 @@ public class LevelLoader
             GameVariables.Level.LevelFile = levelPath;
 
             GameVariables.playerTrainer.LastSavePlace = GameVariables.Level.LevelFile;
-            GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
+            GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
             GameVariables.Level.Entities.Clear();
             GameVariables.Level.Floors.Clear();
@@ -372,7 +372,7 @@ public class LevelLoader
                         }
                     case "sng":
                         {
-                            subTagValue = subTagValue.Replace(".", GameController.DecSeparator);
+                            subTagValue = subTagValue.Replace(".", StringHelper.DecSeparator);
                             Dictionary.Add(TagName, float.Parse(subTagValue));
                             break;
                         }
@@ -437,7 +437,7 @@ public class LevelLoader
                             List<float> arr = new List<float>();
                             foreach (string value in values)
                             {
-                                string v = value.Replace(".", GameController.DecSeparator);
+                                string v = value.Replace(".", StringHelper.DecSeparator);
                                 arr.Add(System.Convert.ToSingle(v));
                             }
                             Dictionary.Add(TagName, arr);
@@ -689,12 +689,12 @@ public class LevelLoader
             positionData = positionData.Remove(positionData.IndexOf("]"));
 
             string[] posArr = positionData.Split(System.Convert.ToChar(","));
-            Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", GameController.DecSeparator)) + MapOffset.x, ScriptConversion.ToSingle(posArr[1].Replace(".", GameController.DecSeparator)) + MapOffset.y, System.Convert.ToSingle(posArr[2].Replace(".", GameController.DecSeparator)) + MapOffset.z);
+            Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", StringHelper.DecSeparator)) + MapOffset.x, ScriptConversion.ToSingle(posArr[1].Replace(".", StringHelper.DecSeparator)) + MapOffset.y, System.Convert.ToSingle(posArr[2].Replace(".", StringHelper.DecSeparator)) + MapOffset.z);
 
             if (line.ToLower().Contains("{\"position\"{sngarr[") == true)
-                line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.x.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + newPosition.z.ToString().Replace(GameController.DecSeparator, ".") + "]}}");
+                line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.x.ToString().Replace(StringHelper.DecSeparator, ".") + "," + newPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + newPosition.z.ToString().Replace(StringHelper.DecSeparator, ".") + "]}}");
             else
-                line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.x).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.y).ToString().Replace(GameController.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.z).ToString().Replace(GameController.DecSeparator, ".") + "]}}");
+                line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.x).ToString().Replace(StringHelper.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.y).ToString().Replace(StringHelper.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.z).ToString().Replace(StringHelper.DecSeparator, ".") + "]}}");
         }
 
         return line;
@@ -846,13 +846,13 @@ public class LevelLoader
                     {
                         Ent = GameVariables.Level.OffsetmapFloors.Find(e =>
                         {
-                            return ((Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
+                            return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
                         });
                     }
                     else
                         Ent = GameVariables.Level.Floors.Find(e =>
                         {
-                            return ((Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
+                            return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
                         });
 
                     if (Ent != null)
@@ -1155,7 +1155,7 @@ public class LevelLoader
         {
             string[] channels = System.Convert.ToString(GetTag(Tags, "RadioChannels")).Split(System.Convert.ToChar(","));
             foreach (string c in channels)
-                GameVariables.Level.AllowedRadioChannels.Add(System.Convert.ToDecimal(c.Replace(".", GameController.DecSeparator)));
+                GameVariables.Level.AllowedRadioChannels.Add(System.Convert.ToDecimal(c.Replace(".", StringHelper.DecSeparator)));
         }
         else
             GameVariables.Level.AllowedRadioChannels.Clear();
