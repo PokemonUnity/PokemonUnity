@@ -28,6 +28,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#region Player and Overworld Data
 	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 	public static Player playerTrainer { get; set; }
+	public static PokemonUnity.Overworld.Level Level { get; set; }
 	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#endregion
 

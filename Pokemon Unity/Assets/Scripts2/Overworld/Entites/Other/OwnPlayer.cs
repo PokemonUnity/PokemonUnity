@@ -114,7 +114,7 @@ public class OwnPlayer : Entity
 
 	private void Move()
 	{
-		if ((Screen.Camera.IsMoving() == true & this.DoAnimation == true) || (Screen.Level.OwnPlayer != null && Screen.Level.OwnPlayer.isDancing))
+		if ((Screen.Camera.IsMoving() == true & this.DoAnimation == true) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
 		{
 			this.AnimationDelay -= 0.13F;
 			if (AnimationDelay <= 0.0F)
@@ -238,7 +238,7 @@ public class OwnPlayer : Entity
 	public void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in Screen.Level.Shaders)
+		foreach (Shader Shader in GameVariables.Level.Shaders)
 			Shader.ApplyShader(this);
 	}
 

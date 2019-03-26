@@ -91,21 +91,21 @@ public class LevelLoader
         if (loadOffsetMap == false)
         {
 			//ToDo: Change Screen to Scene
-            Screen.Level.LevelFile = levelPath;
+            GameVariables.Level.LevelFile = levelPath;
 
-            GameVariables.playerTrainer.LastSavePlace = Screen.Level.LevelFile;
+            GameVariables.playerTrainer.LastSavePlace = GameVariables.Level.LevelFile;
             GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(GameController.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
-            Screen.Level.Entities.Clear();
-            Screen.Level.Floors.Clear();
-            Screen.Level.Shaders.Clear();
-            Screen.Level.BackdropRenderer.Clear();
+            GameVariables.Level.Entities.Clear();
+            GameVariables.Level.Floors.Clear();
+            GameVariables.Level.Shaders.Clear();
+            GameVariables.Level.BackdropRenderer.Clear();
 
-            Screen.Level.OffsetmapFloors.Clear();
-            Screen.Level.OffsetmapEntities.Clear();
+            GameVariables.Level.OffsetmapFloors.Clear();
+            GameVariables.Level.OffsetmapEntities.Clear();
 
-            Screen.Level.WildPokemonFloor = false;
-            Screen.Level.WalkedSteps = 0;
+            GameVariables.Level.WildPokemonFloor = false;
+            GameVariables.Level.WalkedSteps = 0;
 
             LoadedOffsetMapNames.Clear();
             LoadedOffsetMapOffsets.Clear();
@@ -295,12 +295,12 @@ public class LevelLoader
         if (loadOffsetMap == false)
             LoadBerries();
 
-        foreach (Shader s in Screen.Level.Shaders)
+        foreach (Shader s in GameVariables.Level.Shaders)
         {
             if (s.HasBeenApplied == false)
             {
-                s.ApplyShader(Screen.Level.Entities.ToArray());
-                s.ApplyShader(Screen.Level.Floors.ToArray());
+                s.ApplyShader(GameVariables.Level.Entities.ToArray());
+                s.ApplyShader(GameVariables.Level.Floors.ToArray());
             }
         }
 
@@ -315,7 +315,7 @@ public class LevelLoader
         Busy -= 1;
 
         if (Busy == 0)
-            Screen.Level.StartOffsetMapUpdate();
+            GameVariables.Level.StartOffsetMapUpdate();
     }
 
     private Dictionary<string, object> GetTags(string line)
@@ -498,7 +498,7 @@ public class LevelLoader
             LoadedOffsetMapNames.Add(MapName);
             LoadedOffsetMapOffsets.Add(MapOffset);
 
-            string listName = Screen.Level.LevelFile + "|" + MapName + "|" + Screen.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
+            string listName = GameVariables.Level.LevelFile + "|" + MapName + "|" + GameVariables.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
             if (OffsetMaps.ContainsKey(listName) == false)
             {
                 List<List<Entity.Entity>> mapList = new List<List<Entity.Entity>>();
@@ -513,18 +513,18 @@ public class LevelLoader
                     (object)sessionMapsLoaded
                 });
 
-                int offsetEntityCount = Screen.Level.OffsetmapEntities.Count;
-                int offsetFloorCount = Screen.Level.OffsetmapFloors.Count;
+                int offsetEntityCount = GameVariables.Level.OffsetmapEntities.Count;
+                int offsetFloorCount = GameVariables.Level.OffsetmapFloors.Count;
 
                 LevelLoader levelLoader = new LevelLoader();
                 levelLoader.LoadLevel(@params.ToArray());
                 List<Entity.Entity> entList = new List<Entity.Entity>();
                 List<Entity.Entity> floorList = new List<Entity.Entity>();
 
-                for (int i = offsetEntityCount; i <= Screen.Level.OffsetmapEntities.Count - 1; i++)
-                    entList.Add(Screen.Level.OffsetmapEntities(i));
-                for (int i = offsetFloorCount; i <= Screen.Level.OffsetmapFloors.Count - 1; i++)
-                    floorList.Add(Screen.Level.OffsetmapFloors(i));
+                for (int i = offsetEntityCount; i <= GameVariables.Level.OffsetmapEntities.Count - 1; i++)
+                    entList.Add(GameVariables.Level.OffsetmapEntities(i));
+                for (int i = offsetFloorCount; i <= GameVariables.Level.OffsetmapFloors.Count - 1; i++)
+                    floorList.Add(GameVariables.Level.OffsetmapFloors(i));
                 mapList.AddRange(new List<List<Entity.Entity>>()
                 {
                     entList,
@@ -542,7 +542,7 @@ public class LevelLoader
                     if (e.MapOrigin == MapName)
                     {
                         e.IsOffsetMapContent = true;
-                        Screen.Level.OffsetmapEntities.Add(e);
+                        GameVariables.Level.OffsetmapEntities.Add(e);
                     }
                 }
                 foreach (Entity.Entity e in OffsetMaps(listName)(1))
@@ -550,19 +550,19 @@ public class LevelLoader
                     if (e.MapOrigin == MapName)
                     {
                         e.IsOffsetMapContent = true;
-                        Screen.Level.OffsetmapFloors.Add(e);
+                        GameVariables.Level.OffsetmapFloors.Add(e);
                     }
                 }
             }
             GameVariables.DebugLog("Offset maps in store: " + OffsetMaps.Count);
 
-            Screen.Level.OffsetmapEntities = (from e in Screen.Level.OffsetmapEntities
+            GameVariables.Level.OffsetmapEntities = (from e in GameVariables.Level.OffsetmapEntities
                                               orderby e.CameraDistance descending
                                               select e).ToList();
 
-            foreach (Entity.Entity Entity in Screen.Level.OffsetmapEntities)
+            foreach (Entity.Entity Entity in GameVariables.Level.OffsetmapEntities)
                 Entity.UpdateEntity();
-            foreach (Entity.Entity Floor in Screen.Level.OffsetmapFloors)
+            foreach (Entity.Entity Floor in GameVariables.Level.OffsetmapFloors)
                 Floor.UpdateEntity();
         }
     }
@@ -773,9 +773,9 @@ public class LevelLoader
         });
 
         if (loadOffsetMap == false)
-            Screen.Level.Entities.Add(NPC);
+            GameVariables.Level.Entities.Add(NPC);
         else
-            Screen.Level.OffsetmapEntities.Add(NPC);
+            GameVariables.Level.OffsetmapEntities.Add(NPC);
     }
 
     private void AddFloor(Dictionary<string, object> Tags)
@@ -825,9 +825,9 @@ public class LevelLoader
         if (TagExists(Tags, "SeasonTexture") == true)
             SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
 
-        List<Entity.Entity> floorList = Screen.Level.Floors;
+        List<Entity.Entity> floorList = GameVariables.Level.Floors;
         if (loadOffsetMap == true)
-            floorList = Screen.Level.OffsetmapFloors;
+            floorList = GameVariables.Level.OffsetmapFloors;
 
         if (RemoveFloor == false)
         {
@@ -844,13 +844,13 @@ public class LevelLoader
 
                     if (loadOffsetMap == true)
                     {
-                        Ent = Screen.Level.OffsetmapFloors.Find(e =>
+                        Ent = GameVariables.Level.OffsetmapFloors.Find(e =>
                         {
                             return ((Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
                         });
                     }
                     else
-                        Ent = Screen.Level.Floors.Find(e =>
+                        Ent = GameVariables.Level.Floors.Find(e =>
                         {
                             return ((Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
                         });
@@ -1021,9 +1021,9 @@ public class LevelLoader
                         if (newEnt != null)
                         {
                             if (loadOffsetMap == false)
-                                Screen.Level.Entities.Add(newEnt);
+                                GameVariables.Level.Entities.Add(newEnt);
                             else
-                                Screen.Level.OffsetmapEntities.Add(newEnt);
+                                GameVariables.Level.OffsetmapEntities.Add(newEnt);
                         }
                     }
                 }
@@ -1037,26 +1037,26 @@ public class LevelLoader
         string MusicLoop = System.Convert.ToString(GetTag(Tags, "MusicLoop"));
 
         if (TagExists(Tags, "WildPokemon") == true)
-            Screen.Level.WildPokemonFloor = System.Convert.ToBoolean(GetTag(Tags, "WildPokemon"));
+            GameVariables.Level.WildPokemonFloor = System.Convert.ToBoolean(GetTag(Tags, "WildPokemon"));
         else
-            Screen.Level.WildPokemonFloor = false;
+            GameVariables.Level.WildPokemonFloor = false;
 
         if (TagExists(Tags, "OverworldPokemon") == true)
-            Screen.Level.ShowOverworldPokemon = System.Convert.ToBoolean(GetTag(Tags, "OverworldPokemon"));
+            GameVariables.Level.ShowOverworldPokemon = System.Convert.ToBoolean(GetTag(Tags, "OverworldPokemon"));
         else
-            Screen.Level.ShowOverworldPokemon = true;
+            GameVariables.Level.ShowOverworldPokemon = true;
 
         if (TagExists(Tags, "CurrentRegion") == true)
-            Screen.Level.CurrentRegion = System.Convert.ToString(GetTag(Tags, "CurrentRegion"));
+            GameVariables.Level.CurrentRegion = System.Convert.ToString(GetTag(Tags, "CurrentRegion"));
         else
-            Screen.Level.CurrentRegion = "Johto";
+            GameVariables.Level.CurrentRegion = "Johto";
 
         if (TagExists(Tags, "HiddenAbility"))
-            Screen.Level.HiddenAbilityChance = System.Convert.ToInt32(GetTag(Tags, "HiddenAbility"));
+            GameVariables.Level.HiddenAbilityChance = System.Convert.ToInt32(GetTag(Tags, "HiddenAbility"));
         else
-            Screen.Level.HiddenAbilityChance = 0;
-        Screen.Level.MapName = Name;
-        Screen.Level.MusicLoop = MusicLoop;
+            GameVariables.Level.HiddenAbilityChance = 0;
+        GameVariables.Level.MapName = Name;
+        GameVariables.Level.MusicLoop = MusicLoop;
     }
 
     public static string MapScript = "";
@@ -1064,72 +1064,72 @@ public class LevelLoader
     private void SetupActions(Dictionary<string, object> Tags)
     {
         if (TagExists(Tags, "CanTeleport") == true)
-            Screen.Level.CanTeleport = System.Convert.ToBoolean(GetTag(Tags, "CanTeleport"));
+            GameVariables.Level.CanTeleport = System.Convert.ToBoolean(GetTag(Tags, "CanTeleport"));
         else
-            Screen.Level.CanTeleport = false;
+            GameVariables.Level.CanTeleport = false;
 
         if (TagExists(Tags, "CanDig") == true)
-            Screen.Level.CanDig = System.Convert.ToBoolean(GetTag(Tags, "CanDig"));
+            GameVariables.Level.CanDig = System.Convert.ToBoolean(GetTag(Tags, "CanDig"));
         else
-            Screen.Level.CanDig = false;
+            GameVariables.Level.CanDig = false;
 
         if (TagExists(Tags, "CanFly") == true)
-            Screen.Level.CanFly = System.Convert.ToBoolean(GetTag(Tags, "CanFly"));
+            GameVariables.Level.CanFly = System.Convert.ToBoolean(GetTag(Tags, "CanFly"));
         else
-            Screen.Level.CanFly = false;
+            GameVariables.Level.CanFly = false;
 
         if (TagExists(Tags, "RideType") == true)
-            Screen.Level.RideType = System.Convert.ToInt32(GetTag(Tags, "RideType"));
+            GameVariables.Level.RideType = System.Convert.ToInt32(GetTag(Tags, "RideType"));
         else
-            Screen.Level.RideType = 0;
+            GameVariables.Level.RideType = 0;
 
         if (TagExists(Tags, "EnviromentType") == true)
-            Screen.Level.EnvironmentType = System.Convert.ToInt32(GetTag(Tags, "EnviromentType"));
+            GameVariables.Level.EnvironmentType = System.Convert.ToInt32(GetTag(Tags, "EnviromentType"));
         else
-            Screen.Level.EnvironmentType = 0;
+            GameVariables.Level.EnvironmentType = 0;
 
         if (TagExists(Tags, "Weather") == true)
-            Screen.Level.WeatherType = System.Convert.ToInt32(GetTag(Tags, "Weather"));
+            GameVariables.Level.WeatherType = System.Convert.ToInt32(GetTag(Tags, "Weather"));
         else
-            Screen.Level.WeatherType = 0;
+            GameVariables.Level.WeatherType = 0;
 
         // It's not my fault, I swear. The keyboard was slippy, I was partly sick, and there was fog on the road and I couldn't see.
         bool lightningExists = TagExists(Tags, "Lightning");
         bool lightingExists = TagExists(Tags, "Lighting");
 
         if (lightningExists == true & lightingExists == true)
-            Screen.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
+            GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
         else if (lightingExists == true)
-            Screen.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
+            GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
         else if (lightningExists == true)
-            Screen.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lightning"));
+            GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lightning"));
         else
-            Screen.Level.LightingType = 1;
+            GameVariables.Level.LightingType = 1;
 
         if (TagExists(Tags, "IsDark") == true)
-            Screen.Level.IsDark = System.Convert.ToBoolean(GetTag(Tags, "IsDark"));
+            GameVariables.Level.IsDark = System.Convert.ToBoolean(GetTag(Tags, "IsDark"));
         else
-            Screen.Level.IsDark = false;
+            GameVariables.Level.IsDark = false;
 
         if (TagExists(Tags, "Terrain") == true)
-            Screen.Level.Terrain.TerrainType = Terrain.FromString(System.Convert.ToString(GetTag(Tags, "Terrain")));
+            GameVariables.Level.Terrain.TerrainType = Terrain.FromString(System.Convert.ToString(GetTag(Tags, "Terrain")));
         else
-            Screen.Level.Terrain.TerrainType = Terrain.TerrainTypes.Plain;
+            GameVariables.Level.Terrain.TerrainType = Terrain.TerrainTypes.Plain;
 
         if (TagExists(Tags, "IsSafariZone") == true)
-            Screen.Level.IsSafariZone = System.Convert.ToBoolean(GetTag(Tags, "IsSafariZone"));
+            GameVariables.Level.IsSafariZone = System.Convert.ToBoolean(GetTag(Tags, "IsSafariZone"));
         else
-            Screen.Level.IsSafariZone = false;
+            GameVariables.Level.IsSafariZone = false;
 
         if (TagExists(Tags, "BugCatchingContest") == true)
         {
-            Screen.Level.IsBugCatchingContest = true;
-            Screen.Level.BugCatchingContestData = System.Convert.ToString(GetTag(Tags, "BugCatchingContest"));
+            GameVariables.Level.IsBugCatchingContest = true;
+            GameVariables.Level.BugCatchingContestData = System.Convert.ToString(GetTag(Tags, "BugCatchingContest"));
         }
         else
         {
-            Screen.Level.IsBugCatchingContest = false;
-            Screen.Level.BugCatchingContestData = "";
+            GameVariables.Level.IsBugCatchingContest = false;
+            GameVariables.Level.BugCatchingContestData = "";
         }
 
         if (TagExists(Tags, "MapScript") == true)
@@ -1155,22 +1155,22 @@ public class LevelLoader
         {
             string[] channels = System.Convert.ToString(GetTag(Tags, "RadioChannels")).Split(System.Convert.ToChar(","));
             foreach (string c in channels)
-                Screen.Level.AllowedRadioChannels.Add(System.Convert.ToDecimal(c.Replace(".", GameController.DecSeparator)));
+                GameVariables.Level.AllowedRadioChannels.Add(System.Convert.ToDecimal(c.Replace(".", GameController.DecSeparator)));
         }
         else
-            Screen.Level.AllowedRadioChannels.Clear();
+            GameVariables.Level.AllowedRadioChannels.Clear();
 
         if (TagExists(Tags, "BattleMap") == true)
-            Screen.Level.BattleMapData = System.Convert.ToString(GetTag(Tags, "BattleMap"));
+            GameVariables.Level.BattleMapData = System.Convert.ToString(GetTag(Tags, "BattleMap"));
         else
-            Screen.Level.BattleMapData = "";
+            GameVariables.Level.BattleMapData = "";
 
         if (TagExists(Tags, "SurfingBattleMap") == true)
-            Screen.Level.SurfingBattleMapData = System.Convert.ToString(GetTag(Tags, "SurfingBattleMap"));
+            GameVariables.Level.SurfingBattleMapData = System.Convert.ToString(GetTag(Tags, "SurfingBattleMap"));
         else
-            Screen.Level.SurfingBattleMapData = "";
+            GameVariables.Level.SurfingBattleMapData = "";
 
-        Screen.Level.World = new World(Screen.Level.EnvironmentType, Screen.Level.WeatherType);
+        GameVariables.Level.World = new World(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
     }
 
     private void AddShader(Dictionary<string, object> Tags)
@@ -1198,7 +1198,7 @@ public class LevelLoader
         if (DayTime.Contains(World.GetTime()) | DayTime.Contains(-1) | DayTime.Count == 0)
         {
             Shader NewShader = new Shader(Position, Size, Shader, StopOnContact);
-            Screen.Level.Shaders.Add(NewShader);
+            GameVariables.Level.Shaders.Add(NewShader);
         }
     }
 
@@ -1247,7 +1247,7 @@ public class LevelLoader
         }
 
         if (isTriggered == true)
-            Screen.Level.BackdropRenderer.AddBackdrop(new BackdropRenderer.Backdrop(BackdropType, Position, Rotation, Width, Height, Texture));
+            GameVariables.Level.BackdropRenderer.AddBackdrop(new BackdropRenderer.Backdrop(BackdropType, Position, Rotation, Width, Height, Texture));
     }
 
 
@@ -1267,7 +1267,7 @@ public class LevelLoader
                 if (BData.Count == 6)
                     BData.Add("0");
 
-                if (BData[0].ToLower() == Screen.Level.LevelFile.ToLower())
+                if (BData[0].ToLower() == GameVariables.Level.LevelFile.ToLower())
                 {
                     Entity.Entity newEnt = Entity.Entity.GetNewEntity("BerryPlant", new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
                     new int[]
@@ -1277,7 +1277,7 @@ public class LevelLoader
                     }, true, new Vector3(0), new Vector3(1), BaseModel.BillModel, 0, "", true, new Vector3(1.0F), -1, MapOrigin, "", Offset);
                     ((BerryPlant)newEnt).Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
 
-                    Screen.Level.Entities.Add(newEnt);
+                    GameVariables.Level.Entities.Add(newEnt);
                 }
             }
         }

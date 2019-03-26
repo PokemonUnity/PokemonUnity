@@ -41,9 +41,9 @@ public class ModelEntity : Entity
 
                             withBlock.DiffuseColor = Screen.Effect.DiffuseColor;
 
-                            if (Screen.Level.World != null)
+                            if (GameVariables.Level.World != null)
                             {
-                                if (Screen.Level.World.EnvironmentType == P3D.World.EnvironmentTypes.Outside)
+                                if (GameVariables.Level.World.EnvironmentType == P3D.World.EnvironmentTypes.Outside)
                                     withBlock.DiffuseColor *= SkyDome.GetDaytimeColor(true).ToVector3();
                             }
 

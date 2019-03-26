@@ -25,7 +25,7 @@ public class SlideBlock : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
+                Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(SlideBlock),
                     typeof(ScriptBlock),
@@ -53,8 +53,8 @@ public class SlideBlock : Entity
                     foundSteps = false;
             }
 
-            Screen.Level.OverworldPokemon.Visible = false;
-            Screen.Level.OverworldPokemon.warped = true;
+            GameVariables.Level.OverworldPokemon.Visible = false;
+            GameVariables.Level.OverworldPokemon.warped = true;
 
             string s = "version=2" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine;
 
@@ -124,7 +124,7 @@ public class SlideBlock : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
+                Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(SlideBlock),
                     typeof(ScriptBlock),
@@ -152,8 +152,8 @@ public class SlideBlock : Entity
                     foundSteps = false;
             }
 
-            Screen.Level.OverworldPokemon.Visible = false;
-            Screen.Level.OverworldPokemon.warped = true;
+            GameVariables.Level.OverworldPokemon.Visible = false;
+            GameVariables.Level.OverworldPokemon.warped = true;
 
             string s = "version=2" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine;
 

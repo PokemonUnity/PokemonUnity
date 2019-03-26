@@ -17,7 +17,7 @@ public class DiveTile : Entity
 
     public override void Update()
     {
-        if (Screen.Level.Surfing == true)
+        if (GameVariables.Level.Surfing == true)
         {
             if (System.Convert.ToInt32(this.Position.x) == System.Convert.ToInt32(Screen.Camera.Position.x) & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & System.Convert.ToInt32(this.Position.z) == System.Convert.ToInt32(Screen.Camera.Position.z))
             {

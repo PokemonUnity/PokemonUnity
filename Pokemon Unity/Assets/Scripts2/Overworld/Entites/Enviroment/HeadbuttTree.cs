@@ -19,7 +19,7 @@ public class HeadbuttTree : Entity
 
     public override void ClickFunction()
     {
-        if (Screen.Level.Surfing == false)
+        if (GameVariables.Level.Surfing == false)
         {
             string pName = "";
 
@@ -71,7 +71,7 @@ public class HeadbuttTree : Entity
                     break;
             }
 
-            Pokemon.Pokemon spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.Headbutt, false);
+            Pokemon.Pokemon spawnedPokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, Spawner.EncounterMethods.Headbutt, false);
             if (spawnedPokemon == null)
             {
                 string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + "@level.wait(20)" + System.Environment.NewLine + "@text.show(Nothing happened...)" + System.Environment.NewLine + ":end";

@@ -43,20 +43,20 @@ public class WarpBlock : Entity
             {
                 if (MapViewMode == false)
                 {
-                    Screen.Level.WarpData.WarpDestination = this.AdditionalValue.GetSplit(0);
-                    Screen.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
-                    Screen.Level.WarpData.WarpRotations = System.Convert.ToInt32(this.AdditionalValue.GetSplit(4));
-                    Screen.Level.WarpData.DoWarpInNextTick = true;
-                    Screen.Level.WarpData.CorrectCameraYaw = Screen.Camera.Yaw;
-                    Screen.Level.WarpData.IsWarpBlock = true;
+                    GameVariables.Level.WarpData.WarpDestination = this.AdditionalValue.GetSplit(0);
+                    GameVariables.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
+                    GameVariables.Level.WarpData.WarpRotations = System.Convert.ToInt32(this.AdditionalValue.GetSplit(4));
+                    GameVariables.Level.WarpData.DoWarpInNextTick = true;
+                    GameVariables.Level.WarpData.CorrectCameraYaw = Screen.Camera.Yaw;
+                    GameVariables.Level.WarpData.IsWarpBlock = true;
                     GameVariables.DebugLog("Lock Camera");
                     (OverworldCamera)Screen.Camera.YawLocked = true;
                 }
                 else
                 {
-                    Screen.Level = new Level();
-                    Screen.Level.Load(this.AdditionalValue.GetSplit(0));
-                    Screen.Level.World.Initialize(Screen.Level.EnvironmentType, Screen.Level.WeatherType);
+                    GameVariables.Level = new Level();
+                    GameVariables.Level.Load(this.AdditionalValue.GetSplit(0));
+                    GameVariables.Level.World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
 
                     Screen.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
                 }

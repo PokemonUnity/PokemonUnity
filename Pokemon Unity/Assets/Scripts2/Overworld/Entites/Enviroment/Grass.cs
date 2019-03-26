@@ -22,7 +22,7 @@ public class Grass : Entity
 
     public override bool WalkIntoFunction()
     {
-        Screen.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Land, this.AdditionalValue);
+        GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Land, this.AdditionalValue);
 
         return false;
     }
@@ -36,7 +36,7 @@ public class Grass : Entity
     {
         List<Entity> l = new List<Entity>();
 
-        foreach (Entity e in Screen.Level.Entities)
+        foreach (Entity e in GameVariables.Level.Entities)
         {
             if (e.EntityID == Entities.Grass)
             {

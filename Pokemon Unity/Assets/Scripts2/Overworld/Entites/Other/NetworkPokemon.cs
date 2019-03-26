@@ -81,7 +81,7 @@ public class NetworkPokemon : Entity
 		{
 			if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
 			{
-				if (Screen.Level.ShowOverworldPokemon == true)
+				if (GameVariables.Level.ShowOverworldPokemon == true)
 				{
 					if (IsCorrectScreen() == true)
 					{
@@ -171,7 +171,7 @@ public class NetworkPokemon : Entity
 	public void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in Screen.Level.Shaders)
+		foreach (Shader Shader in GameVariables.Level.Shaders)
 			Shader.ApplyShader(this);
 	}
 
@@ -191,7 +191,7 @@ public class NetworkPokemon : Entity
 			if (this.Visible == true)
 			{
 				this.Visible = false;
-				if (Screen.Level.LevelFile == p.LevelFile)
+				if (GameVariables.Level.LevelFile == p.LevelFile)
 					this.Visible = true;
 				else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile) == true)
 				{

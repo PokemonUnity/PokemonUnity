@@ -170,13 +170,13 @@ public class OverworldPokemon : Entity
 	{
 		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
 		{
-			if (Screen.Level.ShowOverworldPokemon == true)
+			if (GameVariables.Level.ShowOverworldPokemon == true)
 			{
 				if (IsCorrectScreen() == true)
 				{
 					if (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE)
 					{
-						if (Screen.Level.Surfing == false & Screen.Level.Riding == false)
+						if (GameVariables.Level.Surfing == false & GameVariables.Level.Riding == false)
 						{
 							if (this.PokemonID > 0)
 							{
@@ -321,7 +321,7 @@ public class OverworldPokemon : Entity
 	{
 		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
 		{
-			if (this.Visible == true & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & Screen.Level.Surfing == false & Screen.Level.Riding == false & Screen.Level.ShowOverworldPokemon == true)
+			if (this.Visible == true & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & GameVariables.Level.Surfing == false & GameVariables.Level.Riding == false & GameVariables.Level.ShowOverworldPokemon == true)
 			{
 				Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
 				string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
@@ -338,7 +338,7 @@ public class OverworldPokemon : Entity
 	public void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in Screen.Level.Shaders)
+		foreach (Shader Shader in GameVariables.Level.Shaders)
 			Shader.ApplyShader(this);
 	}
 

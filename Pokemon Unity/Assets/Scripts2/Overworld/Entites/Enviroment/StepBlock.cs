@@ -17,8 +17,8 @@ public class StepBlock : Entity
             // End If
             Screen.Camera.AddToPlannedMovement(new Vector3(0, 0.15F, 0));
             Screen.Camera.Move(1.0F);
-            Screen.Level.OverworldPokemon.Visible = false;
-            Screen.Level.OverworldPokemon.warped = true;
+            GameVariables.Level.OverworldPokemon.Visible = false;
+            GameVariables.Level.OverworldPokemon.warped = true;
 
             SoundManager.PlaySound("jump_ledge", false);
 

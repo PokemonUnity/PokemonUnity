@@ -14,7 +14,7 @@ public class StrengthRock : Entity
 
     public override void ClickFunction()
     {
-        if (Screen.Level.UsedStrength == true)
+        if (GameVariables.Level.UsedStrength == true)
         {
             string text = "Pokémon with Strength are~able to move this.";
             Screen.TextBox.Show(text, this);
@@ -85,7 +85,7 @@ public class StrengthRock : Entity
                 pNumber = (int)useP.Species;
             }
 
-            Screen.Level.UsedStrength = true;
+            GameVariables.Level.UsedStrength = true;
 
             SoundManager.PlayPokemonCry(pNumber);
             Screen.TextBox.Show(pName + " used~Strength!", null, true, false);
@@ -95,7 +95,7 @@ public class StrengthRock : Entity
 
     public override bool WalkAgainstFunction()
     {
-        if (Screen.Level.UsedStrength == true & this.Moved == 0.0F)
+        if (GameVariables.Level.UsedStrength == true & this.Moved == 0.0F)
         {
             Vector3 newPosition = Screen.Camera.GetForwardMovedPosition();
             newPosition.y = newPosition.y.ToInteger();
@@ -120,7 +120,7 @@ public class StrengthRock : Entity
         bool HasFloor = false;
 
         Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1F, newPosition.z);
-        foreach (Entity Floor in Screen.Level.Floors)
+        foreach (Entity Floor in GameVariables.Level.Floors)
         {
             if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)
                 HasFloor = true;
@@ -129,7 +129,7 @@ public class StrengthRock : Entity
         if (HasFloor == false)
             return false;
 
-        foreach (Entity Entity in Screen.Level.Entities)
+        foreach (Entity Entity in GameVariables.Level.Entities)
         {
             if (Entity.boundingBox.Contains(newPosition) == ContainmentType.Contains)
             {

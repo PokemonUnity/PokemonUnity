@@ -67,7 +67,7 @@ public class SmashRock : Entity
             Pokemon.Pokemon spawnedPokemon = null/* TODO Change to default(_) if this is not a reference type */;
             if (Settings.Rand.Next(0, 100) < 20)
             {
-                spawnedPokemon = Spawner.GetPokemon(Screen.Level.LevelFile, Spawner.EncounterMethods.RockSmash, false);
+                spawnedPokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, Spawner.EncounterMethods.RockSmash, false);
                 if (spawnedPokemon == null)
                 {
                     string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + ":end";
@@ -102,7 +102,7 @@ public class SmashRock : Entity
         List<int> Chances = new List<int>();
         foreach (ItemContainer c in ItemContainerlist)
         {
-            if (c.MapFile.ToLower() == Screen.Level.LevelFile.ToLower())
+            if (c.MapFile.ToLower() == GameVariables.Level.LevelFile.ToLower())
             {
                 MatchingContainers.Add(c);
                 Chances.Add(c.Chance);

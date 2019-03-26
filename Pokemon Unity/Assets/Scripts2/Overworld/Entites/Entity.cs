@@ -470,7 +470,7 @@ public class Entity : BaseEntity
 
 	public virtual void OpacityCheck()
 	{
-		if (this.CameraDistance > 10.0F | Screen.Level.OwnPlayer != null && CameraDistance > Screen.Level.OwnPlayer.CameraDistance)
+		if (this.CameraDistance > 10.0F | GameVariables.Level.OwnPlayer != null && CameraDistance > GameVariables.Level.OwnPlayer.CameraDistance)
 		{
 			this.Opacity = this._normalOpactity;
 			return;
@@ -632,9 +632,9 @@ public class Entity : BaseEntity
 			}
 		}
 
-		if (Screen.Level.World != null)
+		if (GameVariables.Level.World != null)
 		{
-			switch (Screen.Level.World.EnvironmentType)
+			switch (GameVariables.Level.World.EnvironmentType)
 			{
 				case P3D.World.EnvironmentTypes.Outside:
                     {

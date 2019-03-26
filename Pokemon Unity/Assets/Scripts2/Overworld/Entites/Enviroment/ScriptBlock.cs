@@ -51,8 +51,8 @@ public class ScriptBlock : Entity
                     (OverworldCamera)Screen.Camera.YawLocked = true;
             }
 
-            Screen.Level.WalkedSteps = 0;
-            Screen.Level.PokemonEncounterData.EncounteredPokemon = false;
+            GameVariables.Level.WalkedSteps = 0;
+            GameVariables.Level.PokemonEncounterData.EncounteredPokemon = false;
         }
 
         return false;

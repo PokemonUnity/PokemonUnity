@@ -105,11 +105,11 @@ public class AnimatedBlock : Entity
 
 	public override void WalkOntoFunction()
 	{
-		if (Screen.Level.Surfing == true)
+		if (GameVariables.Level.Surfing == true)
 		{
 			bool canSurf = false;
 
-			foreach (Entity Entity in Screen.Level.Entities)
+			foreach (Entity Entity in GameVariables.Level.Entities)
 			{
 				if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
 				{
@@ -127,7 +127,7 @@ public class AnimatedBlock : Entity
 			{
 				Screen.Camera.Move(1);
 
-				Screen.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Surfing, "");
+				GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Surfing, "");
 			}
 		}
 	}
@@ -136,7 +136,7 @@ public class AnimatedBlock : Entity
 	{
 		if (Screen.Camera.Turning == false)
 		{
-			if (Screen.Level.Surfing == false)
+			if (GameVariables.Level.Surfing == false)
 			{
 				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
 				{
@@ -146,7 +146,7 @@ public class AnimatedBlock : Entity
 
 						if (this.ActionValue == 0)
 						{
-							foreach (Entity Entity in Screen.Level.Entities)
+							foreach (Entity Entity in GameVariables.Level.Entities)
 							{
 								if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
 								{
@@ -164,7 +164,7 @@ public class AnimatedBlock : Entity
 							}
 						}
 
-						if (Screen.Level.Riding == true)
+						if (GameVariables.Level.Riding == true)
 							canSurf = false;
 
 						if (canSurf == true)
@@ -222,12 +222,12 @@ public class AnimatedBlock : Entity
 		if (Result == 0)
 		{
 			Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Name + " used~Surf!", this);
-			Screen.Level.Surfing = true;
+			GameVariables.Level.Surfing = true;
 			Screen.Camera.Move(1);
 			PlayerStatistics.Track("Surf used", 1);
 
 			{
-				var withBlock = Screen.Level.OwnPlayer;
+				var withBlock = GameVariables.Level.OwnPlayer;
 				GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
 				int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Number;
@@ -241,7 +241,7 @@ public class AnimatedBlock : Entity
 
 				SoundManager.PlayPokemonCry(pokemonNumber);
 
-				if (Screen.Level.IsRadioOn == false || GameJolt.PokegearScreen.StationCanPlay(Screen.Level.SelectedRadioStation) == false)
+				if (GameVariables.Level.IsRadioOn == false || GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation) == false)
 					MusicManager.Play("surf", true);
 			}
 		}

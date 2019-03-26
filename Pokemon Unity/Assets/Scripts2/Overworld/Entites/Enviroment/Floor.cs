@@ -70,9 +70,9 @@ public class Floor : Entity
         if (changedWeatherTexture == false)
         {
             changedWeatherTexture = true;
-            if ((Screen.Level.World.CurrentMapWeather == P3D.World.Weathers.Snow | Screen.Level.World.CurrentMapWeather == P3D.World.Weathers.Blizzard) == true & this.hasSnow == true)
+            if ((GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Blizzard) == true & this.hasSnow == true)
                 ChangeSnow();
-            if (Screen.Level.World.CurrentMapWeather == P3D.World.Weathers.Sandstorm & this.hasSand == true)
+            if (GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Sandstorm & this.hasSand == true)
                 ChangeSand();
         }
 
@@ -94,17 +94,17 @@ public class Floor : Entity
 
             if (this.IsOffsetMapContent == true)
             {
-                ent[0] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-                ent[1] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-                ent[2] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-                ent[3] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+                ent[0] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
             else
             {
-                ent[0] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-                ent[1] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-                ent[2] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-                ent[3] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+                ent[0] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
 
             for (var i = 0; i <= 3; i++)
@@ -163,17 +163,17 @@ public class Floor : Entity
 
             if (this.IsOffsetMapContent == true)
             {
-                ent[0] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-                ent[1] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-                ent[2] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-                ent[3] = GetEntity(Screen.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+                ent[0] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
             else
             {
-                ent[0] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-                ent[1] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-                ent[2] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-                ent[3] = GetEntity(Screen.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+                ent[0] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+                ent[1] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+                ent[2] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+                ent[3] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
             }
 
             for (var i = 0; i <= 3; i++)
@@ -229,7 +229,7 @@ public class Floor : Entity
         bool foundSteps = true;
         while (foundSteps == true)
         {
-            Entity e = base.GetEntity(Screen.Level.Floors, checkPosition, true, typeof(Floor));
+            Entity e = base.GetEntity(GameVariables.Level.Floors, checkPosition, true, typeof(Floor));
             if (e != null)
             {
                 if (e.EntityID == Entities.Floor)
@@ -242,8 +242,8 @@ public class Floor : Entity
                             checkPosition.x += Screen.Camera.GetMoveDirection().x;
                             checkPosition.z += Screen.Camera.GetMoveDirection().z;
 
-                            Screen.Level.OverworldPokemon.Visible = false;
-                            Screen.Level.OverworldPokemon.warped = true;
+                            GameVariables.Level.OverworldPokemon.Visible = false;
+                            GameVariables.Level.OverworldPokemon.warped = true;
                         }
                         else
                             foundSteps = false;

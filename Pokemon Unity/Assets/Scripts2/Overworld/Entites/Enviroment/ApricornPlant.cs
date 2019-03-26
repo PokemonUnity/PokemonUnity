@@ -74,7 +74,7 @@ public class ApricornPlant : Entity
 
 					string[] ApricornData = Apricorn.Split(System.Convert.ToChar("|"));
 
-					if (ApricornData[0] == Screen.Level.LevelFile)
+					if (ApricornData[0] == GameVariables.Level.LevelFile)
 					{
 						string[] PositionData = ApricornData[1].Split(System.Convert.ToChar(","));
 						if (Position.x == System.Convert.ToInt32(PositionData[0]) & Position.y == System.Convert.ToInt32(PositionData[1]) & Position.z == System.Convert.ToInt32(PositionData[2]))
@@ -177,7 +177,7 @@ public class ApricornPlant : Entity
 		string s = "{";
 
 		DateTime d = DateTime.Now;
-		s += Screen.Level.LevelFile + "|" + System.Convert.ToInt32(Position.x) + "," + System.Convert.ToInt32(Position.y) + "," + System.Convert.ToInt32(Position.z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
+		s += GameVariables.Level.LevelFile + "|" + System.Convert.ToInt32(Position.x) + "," + System.Convert.ToInt32(Position.y) + "," + System.Convert.ToInt32(Position.z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
 
 		if (GameVariables.playerTrainer.ApricornData != "")
 			GameVariables.playerTrainer.ApricornData += System.Environment.NewLine;

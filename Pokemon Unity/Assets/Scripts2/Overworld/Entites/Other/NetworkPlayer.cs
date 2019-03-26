@@ -393,7 +393,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			this.BusyType = p.BusyType.ToString();
 			this.Visible = false;
 
-			if (Screen.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
+			if (GameVariables.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
 				this.Visible = true;
 			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile) == true)
 			{
@@ -421,9 +421,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public static void ScreenRegionChanged()
 	{
-		if (Core.CurrentScreen != null && Screen.Level != null)
+		if (Core.CurrentScreen != null && GameVariables.Level != null)
 		{
-			foreach (NetworkPlayer netPlayer in Screen.Level.NetworkPlayers)
+			foreach (NetworkPlayer netPlayer in GameVariables.Level.NetworkPlayers)
 				netPlayer.LastName = "";
 		}
 	}

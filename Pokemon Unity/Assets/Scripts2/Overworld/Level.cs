@@ -1191,7 +1191,7 @@ public class Level
             }
 
             // Initialize the world with newly loaded environment variables:
-            World.Initialize(Screen.Level.EnvironmentType, Screen.Level.WeatherType);
+            World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
 
             // If this map is on the restplaces list, set the player's last restplace to this map:
             List<string> restplaces = System.IO.File.ReadAllLines(GameModeManager.GetMapPath("restplaces.dat")).ToList();
@@ -1323,7 +1323,7 @@ public class Level
                     }
             }
         }
-        if (Screen.Level.CanDig == false & Screen.Level.CanFly == false)
+        if (GameVariables.Level.CanDig == false & GameVariables.Level.CanFly == false)
             return false;
         else
             return true;

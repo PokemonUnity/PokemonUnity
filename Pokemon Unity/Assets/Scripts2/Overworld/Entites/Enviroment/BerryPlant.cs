@@ -236,7 +236,7 @@ public class BerryPlant : Entity
                         Screen.TextBox.TextColor = TextBox.PlayerColor;
                         Screen.TextBox.Show(Text, this);
                         RemoveBerry();
-                        Screen.Level.Entities.Remove(this);
+                        GameVariables.Level.Entities.Remove(this);
                         break;
                     }
 
@@ -265,7 +265,7 @@ public class BerryPlant : Entity
         {
             if (Berry != "")
             {
-                if (Berry.ToLower().StartsWith("{" + Screen.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|") == false)
+                if (Berry.ToLower().StartsWith("{" + GameVariables.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|") == false)
                 {
                     if (OutData != "")
                         OutData += System.Environment.NewLine;
@@ -308,7 +308,7 @@ public class BerryPlant : Entity
             0
         }, true, new Vector3(0), new Vector3(1), BaseModel.BillModel, 0, "", true, new Vector3(1.0F), -1, "", "", new Vector3(0));
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
-        Screen.Level.Entities.Add(newEnt);
+        GameVariables.Level.Entities.Add(newEnt);
 
         GameVariables.playerTrainer.Inventory.RemoveItem(BerryIndex + 2000, 1);
     }
@@ -412,7 +412,7 @@ public class BerryPlant : Entity
 
             int BerryAmount = GetBerryAmount(Berry, wateredCount);
 
-            string Data = "{" + Screen.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
+            string Data = "{" + GameVariables.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
 
             string OldData = GameVariables.playerTrainer.BerryData;
             if (OldData != "")

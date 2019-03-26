@@ -267,7 +267,7 @@ public class Waterfall : Entity
 
         bool isOnTop = true;
         Vector3 OnTopcheckPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
-        Entity Oe = GetEntity(Screen.Level.Entities, OnTopcheckPosition, true, new System.Type[]
+        Entity Oe = GetEntity(GameVariables.Level.Entities, OnTopcheckPosition, true, new System.Type[]
         {
             typeof(Waterfall)
         });
@@ -282,14 +282,14 @@ public class Waterfall : Entity
             string s = "";
 
             int Steps = 0;
-            if (Screen.Level.Surfing == false)
+            if (GameVariables.Level.Surfing == false)
                 Steps = 1;
 
             Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y - 1, this.Position.z);
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
+                Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(Waterfall)
                 });
@@ -332,14 +332,14 @@ public class Waterfall : Entity
             }
 
             int Steps = 1;
-            if (Screen.Level.Surfing == false)
+            if (GameVariables.Level.Surfing == false)
                 Steps = 0;
 
             Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
+                Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(Waterfall)
                 });

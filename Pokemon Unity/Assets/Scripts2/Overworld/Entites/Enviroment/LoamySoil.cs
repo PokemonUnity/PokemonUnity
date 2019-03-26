@@ -14,7 +14,7 @@ public class LoamySoil : Entity
     public override void ClickFunction()
     {
         bool hasBerry = false;
-        foreach (Entity Entity in Screen.Level.Entities)
+        foreach (Entity Entity in GameVariables.Level.Entities)
         {
             if (Entity.EntityID == Entities.BerryPlant & Entity.Position == this.Position)
             {
@@ -58,7 +58,7 @@ public class LoamySoil : Entity
         {
             Item.Berry Berry = (Item.Berry)Item.Item.GetItem(ChosenBerry);
 
-            BerryPlant.AddBerryPlant(Screen.Level.LevelFile, this.Position, Berry.BerryIndex);
+            BerryPlant.AddBerryPlant(GameVariables.Level.LevelFile, this.Position, Berry.BerryIndex);
             Screen.TextBox.reDelay = 0.0F;
             Screen.TextBox.Show("You planted a~" + Berry.Name + " Berry here.", null);
         }

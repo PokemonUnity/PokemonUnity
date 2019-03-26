@@ -111,7 +111,7 @@ public class Whirlpool : Entity
         if (this.ActionValue == 1)
             return this.Collision;
 
-        if (Screen.Level.Surfing == true)
+        if (GameVariables.Level.Surfing == true)
         {
             string pName = ReturnWhirlPoolPokemonName();
             string s = "";

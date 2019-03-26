@@ -1269,7 +1269,7 @@ public class World
                                 }
                                 if (MapWeather == Weathers.Blizzard)
                                     p.Opacity = 1.0F;
-                                Screen.Level.Entities.Add(p);
+                                GameVariables.Level.Entities.Add(p);
                             }
                         }
                     }

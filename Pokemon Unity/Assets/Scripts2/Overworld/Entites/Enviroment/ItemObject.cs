@@ -188,12 +188,12 @@ public class ItemObject : Entity
             {
                 string[] IDs = GameVariables.playerTrainer.ItemData.ToLower().Split(System.Convert.ToChar(","));
 
-                if (IDs.Contains((Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == true)
+                if (IDs.Contains((GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == true)
                     return true;
                 else
                     return false;
             }
-            else if (GameVariables.playerTrainer.ItemData.ToLower() == (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower())
+            else if (GameVariables.playerTrainer.ItemData.ToLower() == (GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower())
                 return true;
             else
                 return false;
@@ -204,15 +204,15 @@ public class ItemObject : Entity
 
     public static void RemoveItem(ItemObject ItemObject)
     {
-        Screen.Level.Entities.Remove(ItemObject);
+        GameVariables.Level.Entities.Remove(ItemObject);
 
         if (GameVariables.playerTrainer.ItemData == "")
-            GameVariables.playerTrainer.ItemData = (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
+            GameVariables.playerTrainer.ItemData = (GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
         else
         {
             string[] IDs = GameVariables.playerTrainer.ItemData.Split(System.Convert.ToChar(","));
-            if (IDs.Contains((Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == false)
-                GameVariables.playerTrainer.ItemData += "," + (Screen.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
+            if (IDs.Contains((GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == false)
+                GameVariables.playerTrainer.ItemData += "," + (GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
         }
     }
 

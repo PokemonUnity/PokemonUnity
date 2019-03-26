@@ -97,7 +97,7 @@ public class RockClimbEntity : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
+                Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(RockClimbEntity),
                     typeof(ScriptBlock),
@@ -125,15 +125,15 @@ public class RockClimbEntity : Entity
                     foundSteps = false;
             }
 
-            Screen.Level.OverworldPokemon.Visible = false;
-            Screen.Level.OverworldPokemon.warped = true;
+            GameVariables.Level.OverworldPokemon.Visible = false;
+            GameVariables.Level.OverworldPokemon.warped = true;
 
             string tempSkin = GameVariables.playerTrainer.Skin;
 
             Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
-            Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
-            Screen.Level.OwnPlayer.ChangeTexture();
+            GameVariables.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
+            GameVariables.Level.OwnPlayer.ChangeTexture();
 
             string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + (int)RockClimbPokemon.Species + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
 
@@ -146,7 +146,7 @@ public class RockClimbEntity : Entity
             s += ":end";
 
             // Reset the player's transparency:
-            Screen.Level.OwnPlayer.Opacity = 1.0F;
+            GameVariables.Level.OwnPlayer.Opacity = 1.0F;
 
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
         }
@@ -172,7 +172,7 @@ public class RockClimbEntity : Entity
             bool foundSteps = true;
             while (foundSteps == true)
             {
-                Entity e = GetEntity(Screen.Level.Entities, checkPosition, true, new System.Type[]
+                Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
                     typeof(RockClimbEntity),
                     typeof(ScriptBlock),
@@ -200,15 +200,15 @@ public class RockClimbEntity : Entity
                     foundSteps = false;
             }
 
-            Screen.Level.OverworldPokemon.Visible = false;
-            Screen.Level.OverworldPokemon.warped = true;
+            GameVariables.Level.OverworldPokemon.Visible = false;
+            GameVariables.Level.OverworldPokemon.warped = true;
 
             string tempSkin = GameVariables.playerTrainer.Skin;
 
             Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
-            Screen.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
-            Screen.Level.OwnPlayer.ChangeTexture();
+            GameVariables.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
+            GameVariables.Level.OwnPlayer.ChangeTexture();
 
             string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + (int)RockClimbPokemon.Species + ")" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
 
@@ -221,7 +221,7 @@ public class RockClimbEntity : Entity
             s += ":end";
 
             // Reset the player's transparency:
-            Screen.Level.OwnPlayer.Opacity = 1.0F;
+            GameVariables.Level.OwnPlayer.Opacity = 1.0F;
 
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
         }

@@ -367,7 +367,7 @@ public class NPC : Entity
 
 	public void CheckInSight()
 	{
-		if (this.TrainerSight > -1 & Screen.Level.PokemonEncounterData.EncounteredPokemon == false & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+		if (this.TrainerSight > -1 & GameVariables.Level.PokemonEncounterData.EncounteredPokemon == false & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 		{
 			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & Screen.Camera.IsMoving() == false)
 			{
@@ -518,7 +518,7 @@ public class NPC : Entity
 								}
 
 
-								Screen.Level.OwnPlayer.Opacity = 0.5F;
+								GameVariables.Level.OwnPlayer.Opacity = 0.5F;
 								(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
 								ActionScript.IsInsightScript = true;
 							}
@@ -721,7 +721,7 @@ public class NPC : Entity
 		{
 			if (System.Convert.ToInt32(Screen.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(Screen.Camera.Position.z) != newPosition.z)
 			{
-				if (System.Convert.ToInt32(Screen.Level.OverworldPokemon.Position.x) != newPosition.x | System.Convert.ToInt32(Screen.Level.OverworldPokemon.Position.z) != newPosition.z)
+				if (System.Convert.ToInt32(GameVariables.Level.OverworldPokemon.Position.x) != newPosition.x | System.Convert.ToInt32(GameVariables.Level.OverworldPokemon.Position.z) != newPosition.z)
 					interactPlayer = false;
 			}
 		}
@@ -732,7 +732,7 @@ public class NPC : Entity
 		bool HasFloor = false;
 
 		Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1F, newPosition.z);
-		foreach (Entity Floor in Screen.Level.Floors)
+		foreach (Entity Floor in GameVariables.Level.Floors)
 		{
 			if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)
 				HasFloor = true;
@@ -741,7 +741,7 @@ public class NPC : Entity
 		if (HasFloor == false)
 			return false;
 
-		foreach (Entity Entity in Screen.Level.Entities)
+		foreach (Entity Entity in GameVariables.Level.Entities)
 		{
 			if (Entity.boundingBox.Contains(newPosition) == ContainmentType.Contains)
 			{
@@ -877,7 +877,7 @@ public class NPC : Entity
 	private void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in Screen.Level.Shaders)
+		foreach (Shader Shader in GameVariables.Level.Shaders)
 			Shader.ApplyShader(this);
 	}
 

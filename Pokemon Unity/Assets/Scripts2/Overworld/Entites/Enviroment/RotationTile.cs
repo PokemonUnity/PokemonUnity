@@ -91,7 +91,7 @@ public class RotationTile : Entity
             for (var y = 0; y <= direction.y * 100; y += stepY)
             {
                 Vector3 p = new Vector3(x, 0, y) + this.Position;
-                foreach (Entity e in Screen.Level.Entities)
+                foreach (Entity e in GameVariables.Level.Entities)
                 {
                     if (e.Equals(this) == false)
                     {

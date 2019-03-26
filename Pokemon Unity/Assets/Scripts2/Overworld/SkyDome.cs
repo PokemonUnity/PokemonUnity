@@ -74,9 +74,9 @@ public class SkyDome
     {
         if (Core.GameOptions.GraphicStyle == 1)
         {
-            if (Screen.Level.World.EnvironmentType == World.EnvironmentTypes.Outside)
+            if (GameVariables.Level.World.EnvironmentType == World.EnvironmentTypes.Outside)
             {
-                if (World.GetWeatherFromWeatherType(Screen.Level.WeatherType) != World.Weathers.Fog)
+                if (World.GetWeatherFromWeatherType(GameVariables.Level.WeatherType) != World.Weathers.Fog)
                 {
                     RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch() + Math.PI), true, TextureSun, 100, this.GetSunAlpha()); // Draw the Sun.
                     RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureMoon, 100, GetStarsAlpha()); // Draw the Moon.
@@ -118,7 +118,7 @@ public class SkyDome
                 BasicEffect.Texture = texture;
                 BasicEffect.Alpha = alpha;
 
-                switch (Screen.Level.World.CurrentMapWeather)
+                switch (GameVariables.Level.World.CurrentMapWeather)
                 {
                     case World.Weathers.Clear:
                     case World.Weathers.Sunny:
@@ -208,7 +208,7 @@ public class SkyDome
 
     private float GetCloudAlpha()
     {
-        switch (Screen.Level.World.CurrentMapWeather)
+        switch (GameVariables.Level.World.CurrentMapWeather)
         {
             case World.Weathers.Rain:
             case World.Weathers.Blizzard:
@@ -278,7 +278,7 @@ public class SkyDome
 
     private Texture2D GetCloudsTexture()
     {
-        switch (Screen.Level.World.CurrentMapWeather)
+        switch (GameVariables.Level.World.CurrentMapWeather)
         {
             case World.Weathers.Rain:
             case World.Weathers.Blizzard:
