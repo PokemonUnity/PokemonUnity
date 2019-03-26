@@ -19,7 +19,7 @@ public class DiveTile : Entity
     {
         if (GameVariables.Level.Surfing == true)
         {
-            if (System.Convert.ToInt32(this.Position.x) == System.Convert.ToInt32(Screen.Camera.Position.x) & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & System.Convert.ToInt32(this.Position.z) == System.Convert.ToInt32(Screen.Camera.Position.z))
+            if (System.Convert.ToInt32(this.Position.x) == System.Convert.ToInt32(GameVariables.Camera.Position.x) & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & System.Convert.ToInt32(this.Position.z) == System.Convert.ToInt32(GameVariables.Camera.Position.z))
             {
                 if (Controls.Accept(true, true, true) == true)
                 {

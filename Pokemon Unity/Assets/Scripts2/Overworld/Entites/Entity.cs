@@ -477,16 +477,16 @@ public class Entity : BaseEntity
 		}
 
 		string[] notNames = new string[] { "Floor", "OwnPlayer", "Water", "Whirlpool", "Particle", "OverworldPokemon", "ItemObject", "NetworkPokemon", "NetworkPlayer" };
-		if (Screen.Camera.Name == "Overworld" && notNames.ToList().Contains(this.EntityID.ToString()) == false)
+		if (GameVariables.Camera.Name == "Overworld" && notNames.ToList().Contains(this.EntityID.ToString()) == false)
 		{
 			this.Opacity = this._normalOpactity;
-			if ((OverworldCamera)Screen.Camera.ThirdPerson == true)
+			if ((OverworldCamera)GameVariables.Camera.ThirdPerson == true)
 			{
-				Ray Ray = Screen.Camera.Ray;
+				Ray Ray = GameVariables.Camera.Ray;
 				float? result = Ray.Intersects(this.boundingBox);
 				if (result.HasValue == true)
 				{
-					if (result.Value < 0.3F + ((OverworldCamera)Screen.Camera.ThirdPersonOffset.z - 1.5F))
+					if (result.Value < 0.3F + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5F))
 					{
 						this.Opacity = this._normalOpactity - 0.5F;
 						if (this.Opacity < 0.3F)
@@ -509,13 +509,13 @@ public class Entity : BaseEntity
 
 	public virtual void UpdateEntity()
 	{
-		UnityEngine.Vector3 CPosition = Screen.Camera.Position;
+		UnityEngine.Vector3 CPosition = GameVariables.Camera.Position;
 		bool ActionScriptActive = false;
 
 
 		if (Core.CurrentScreen != null)
 		{
-			CPosition = Screen.Camera.CPosition;
+			CPosition = GameVariables.Camera.CPosition;
 			if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 				ActionScriptActive = !(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady;
 		}
@@ -579,7 +579,7 @@ public class Entity : BaseEntity
 			CreatedWorld = true;
 		}
 
-		if (CameraDistance < Screen.Camera.FarPlane * 2)
+		if (CameraDistance < GameVariables.Camera.FarPlane * 2)
 		{
 			if (this.Position != this.BoundingPositionCreated)
 			{
@@ -708,7 +708,7 @@ public class Entity : BaseEntity
 				if (this.EntityID != Entities.Floor & this.EntityID != Entities.Water)
 				{
 					if (drawViewBox == true)
-						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, new UnityEngine.Color(240,128,128));
+						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, new UnityEngine.Color(240,128,128));
 				}
 			}
 			else
@@ -754,7 +754,7 @@ public class Entity : BaseEntity
 
 	public bool IsInFieldOfView()
 	{
-		if (Screen.Camera.BoundingFrustum.Contains(this.ViewBox) != ContainmentType.Disjoint)
+		if (GameVariables.Camera.BoundingFrustum.Contains(this.ViewBox) != ContainmentType.Disjoint)
 		{
 			this._visibleLastFrame = true;
 			return true;

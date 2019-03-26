@@ -23,7 +23,7 @@ public class SignBlock : Entity
     {
         bool canRead = false;
 
-        switch (Screen.Camera.GetPlayerFacingDirection())
+        switch (GameVariables.Camera.GetPlayerFacingDirection())
         {
             case 1:
             case 3:

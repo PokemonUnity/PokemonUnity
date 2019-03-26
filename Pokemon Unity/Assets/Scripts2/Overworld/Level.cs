@@ -862,7 +862,7 @@ public class Level
 
         // Create own player Entity and OverworldPokémon Entity and add them to the Entity enumeration:
         OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
-        OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
+        OverworldPokemon = new OverworldPokemon(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + 1);
         OverworldPokemon.ChangeRotation();
         Entities.AddRange(new Entity.Entity[]
         {
@@ -882,8 +882,8 @@ public class Level
         this._backdropRenderer.Draw();
 
         // Set the effect's View and Projection matrices:
-        Screen.Effect.View = Screen.Camera.View;
-        Screen.Effect.Projection = Screen.Camera.Projection;
+        Screen.Effect.View = GameVariables.Camera.View;
+        Screen.Effect.Projection = GameVariables.Camera.Projection;
 
         // Reset the Debug values:
         DebugDisplay.DrawnVertices = 0;
@@ -1120,7 +1120,7 @@ public class Level
             GameVariables.playerTrainer.startSurfing = Surfing;
 
             // Change the player position:
-            Screen.Camera.Position = WarpData.WarpPosition;
+            GameVariables.Camera.Position = WarpData.WarpPosition;
 
             string tempProperties = this.CanDig.ToString() + "," + this.CanFly.ToString(); // Store properties to determine if the "enter" sound should be played.
 
@@ -1153,7 +1153,7 @@ public class Level
             OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
             OwnPlayer.SetTexture(GameVariables.playerTrainer.Skin, usingGameJoltTexture);
 
-            OverworldPokemon = new OverworldPokemon(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z + 1);
+            OverworldPokemon = new OverworldPokemon(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + 1);
             OverworldPokemon.Visible = false;
             OverworldPokemon.warped = true;
             Entities.AddRange(new Entity.Entity[]
@@ -1171,7 +1171,7 @@ public class Level
             }
 
             // If any turns after the warp are defined, apply them:
-            Screen.Camera.InstantTurn(WarpData.WarpRotations);
+            GameVariables.Camera.InstantTurn(WarpData.WarpRotations);
 
             // Make the RouteSign appear:
             this._routeSign.Setup(MapName);
@@ -1207,10 +1207,10 @@ public class Level
             }
 
             // If the warp happened through a warp block, make the player walk one step forward after switching to the new map:
-            if (Screen.Camera.IsMoving == true & WarpData.IsWarpBlock == true)
+            if (GameVariables.Camera.IsMoving == true & WarpData.IsWarpBlock == true)
             {
-                Screen.Camera.StopMovement();
-                Screen.Camera.Move(1.0F);
+                GameVariables.Camera.StopMovement();
+                GameVariables.Camera.Move(1.0F);
             }
 
             // Because of the map change, Roaming Pokémon are moving to their next location on the world map:
@@ -1221,11 +1221,11 @@ public class Level
                 SoundManager.PlaySound("enter", false);
 
             // Unlock the yaw on the camera:
-            (OverworldCamera)Screen.Camera.YawLocked = false;
+            (OverworldCamera)GameVariables.Camera.YawLocked = false;
             Entity.Misc.NetworkPlayer.ScreenRegionChanged();
 
             // If a warp occured, update the camera:
-            Screen.Camera.Update();
+            GameVariables.Camera.Update();
 
             // Disable the warp check:
             this.WarpData.DoWarpInNextTick = false;
@@ -1336,7 +1336,7 @@ public class Level
     {
         foreach (Entity.Entity e in this.Entities)
         {
-            if (e.Position.x == Screen.Camera.Position.x & e.Position.z == Screen.Camera.Position.z & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y))
+            if (e.Position.x == GameVariables.Camera.Position.x & e.Position.z == GameVariables.Camera.Position.z & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y))
                 return e.LetPlayerMove();
         }
         return true;

@@ -9,14 +9,14 @@ public class StepBlock : Entity
         if (facing < 0)
             facing += 4;
 
-        if (Screen.Camera.GetPlayerFacingDirection() == facing)
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
         {
-            // Dim newPos As New Vector3(Screen.Camera.Position.x + Screen.Camera.moveDirectionX * 2, Screen.Camera.Position.y, Screen.Camera.Position.z + Screen.Camera.moveDirectionZ * 2)
-            // If CType(Screen.Camera, OverworldCamera).CheckCollision(newPos) = True Then
+            // Dim newPos As New Vector3(GameVariables.Camera.Position.x + GameVariables.Camera.moveDirectionX * 2, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + GameVariables.Camera.moveDirectionZ * 2)
+            // If CType(GameVariables.Camera, OverworldCamera).CheckCollision(newPos) = True Then
 
             // End If
-            Screen.Camera.AddToPlannedMovement(new Vector3(0, 0.15F, 0));
-            Screen.Camera.Move(1.0F);
+            GameVariables.Camera.AddToPlannedMovement(new Vector3(0, 0.15F, 0));
+            GameVariables.Camera.Move(1.0F);
             GameVariables.Level.OverworldPokemon.Visible = false;
             GameVariables.Level.OverworldPokemon.warped = true;
 

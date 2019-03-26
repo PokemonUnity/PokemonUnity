@@ -41,7 +41,7 @@ public class RotationTile : Entity
             {
                 if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
                 {
-                    if (this.Position.x == Screen.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & this.Position.z == Screen.Camera.Position.z)
+                    if (this.Position.x == GameVariables.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & this.Position.z == GameVariables.Camera.Position.z)
                     {
                         int steps = GetSteps();
 
@@ -124,7 +124,7 @@ public class RotationTile : Entity
     public override bool WalkIntoFunction()
     {
         if (this.RotationType == RotationTypes.StartSpin)
-            (OverworldCamera)Screen.Camera.YawLocked = true;
+            (OverworldCamera)GameVariables.Camera.YawLocked = true;
         return false;
     }
 }

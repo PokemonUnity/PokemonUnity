@@ -223,7 +223,7 @@ public class Floor : Entity
     {
         int Steps = 0;
 
-        Vector3 checkPosition = Screen.Camera.GetForwardMovedPosition();
+        Vector3 checkPosition = GameVariables.Camera.GetForwardMovedPosition();
         checkPosition.y = checkPosition.y.ToInteger();
 
         bool foundSteps = true;
@@ -236,11 +236,11 @@ public class Floor : Entity
                 {
                     if (((Floor)e).IsIce == true)
                     {
-                        if ((OverworldCamera)Screen.Camera.CheckCollision(checkPosition) == false)
+                        if ((OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition) == false)
                         {
                             Steps += 1;
-                            checkPosition.x += Screen.Camera.GetMoveDirection().x;
-                            checkPosition.z += Screen.Camera.GetMoveDirection().z;
+                            checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
+                            checkPosition.z += GameVariables.Camera.GetMoveDirection().z;
 
                             GameVariables.Level.OverworldPokemon.Visible = false;
                             GameVariables.Level.OverworldPokemon.warped = true;
@@ -250,7 +250,7 @@ public class Floor : Entity
                     }
                     else
                     {
-                        if ((OverworldCamera)Screen.Camera.CheckCollision(checkPosition) == false)
+                        if ((OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition) == false)
                             Steps += 1;
                         foundSteps = false;
                     }

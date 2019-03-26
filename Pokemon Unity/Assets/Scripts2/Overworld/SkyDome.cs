@@ -109,9 +109,9 @@ public class SkyDome
         {
             foreach (BasicEffect BasicEffect in ModelMesh.Effects)
             {
-                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(Screen.Camera.Position.x, -5, Screen.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
+                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(GameVariables.Camera.Position.x, -5, GameVariables.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
 
-                BasicEffect.View = Screen.Camera.View;
+                BasicEffect.View = GameVariables.Camera.View;
                 BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, 10000);
 
                 BasicEffect.TextureEnabled = true;

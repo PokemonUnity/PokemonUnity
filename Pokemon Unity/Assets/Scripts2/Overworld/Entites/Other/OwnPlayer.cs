@@ -96,14 +96,14 @@ public class OwnPlayer : Entity
 		{
 			if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 			{
-				if (Screen.Camera.Name == "Overworld")
+				if (GameVariables.Camera.Name == "Overworld")
 				{
-					OverworldCamera c = (OverworldCamera)Screen.Camera;
+					OverworldCamera c = (OverworldCamera)GameVariables.Camera;
 					this.Position = new Vector3(c.Position.x, c.Position.y - 0.1F, c.Position.z);
 				}
 			}
-			if (this.Rotation.y != Screen.Camera.Yaw)
-				this.Rotation.y = Screen.Camera.Yaw;
+			if (this.Rotation.y != GameVariables.Camera.Yaw)
+				this.Rotation.y = GameVariables.Camera.Yaw;
 		}
 
 		Move();
@@ -114,7 +114,7 @@ public class OwnPlayer : Entity
 
 	private void Move()
 	{
-		if ((Screen.Camera.IsMoving() == true & this.DoAnimation == true) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
+		if ((GameVariables.Camera.IsMoving() == true & this.DoAnimation == true) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
 		{
 			this.AnimationDelay -= 0.13F;
 			if (AnimationDelay <= 0.0F)
@@ -148,9 +148,9 @@ public class OwnPlayer : Entity
 
 			spriteIndex = 0;
 
-			if (Screen.Camera.Name == "Overworld")
+			if (GameVariables.Camera.Name == "Overworld")
 			{
-				spriteIndex = Screen.Camera.GetPlayerFacingDirection() - Screen.Camera.GetFacingDirection();
+				spriteIndex = GameVariables.Camera.GetPlayerFacingDirection() - GameVariables.Camera.GetFacingDirection();
 				while (spriteIndex > 3)
 					spriteIndex -= 4;
 				while (spriteIndex < 0)
@@ -160,7 +160,7 @@ public class OwnPlayer : Entity
 			Size frameSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
 			int x = 0;
-			if (Screen.Camera.IsMoving() == true)
+			if (GameVariables.Camera.IsMoving() == true)
 				x = GetAnimationX() * frameSize.width;
 
 			r = new Rectangle(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
@@ -225,9 +225,9 @@ public class OwnPlayer : Entity
 
 	internal bool InCameraFocus()
 	{
-		if (Screen.Camera.Name == "Overworld")
+		if (GameVariables.Camera.Name == "Overworld")
 		{
-			var c = (OverworldCamera)Screen.Camera;
+			var c = (OverworldCamera)GameVariables.Camera;
 
 			if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.Player & c.ThirdPerson == true | c.CameraFocusType != OverworldCamera.CameraFocusTypes.Player)
 				return true;

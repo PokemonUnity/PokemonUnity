@@ -120,10 +120,10 @@ public class Particle : Entity
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.y != Screen.Camera.Yaw)
-			this.Rotation.y = Screen.Camera.Yaw;
+		if (this.Rotation.y != GameVariables.Camera.Yaw)
+			this.Rotation.y = GameVariables.Camera.Yaw;
 
-		float c_pitch = Screen.Camera.Pitch;
+		float c_pitch = GameVariables.Camera.Pitch;
 		this.Rotation.x = c_pitch / (double)2.0F;
 
 		base.UpdateEntity();

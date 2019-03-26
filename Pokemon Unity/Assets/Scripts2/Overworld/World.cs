@@ -174,7 +174,7 @@ public class World
             Screen.Effect.FogStart = -40;
             Screen.Effect.FogEnd = 12;
 
-            Screen.Camera.FarPlane = 15;
+            GameVariables.Camera.FarPlane = 15;
             goto endsub;
         }
 
@@ -183,7 +183,7 @@ public class World
             Screen.Effect.FogStart = -40;
             Screen.Effect.FogEnd = 20;
 
-            Screen.Camera.FarPlane = 24;
+            GameVariables.Camera.FarPlane = 24;
             goto endsub;
         }
 
@@ -192,7 +192,7 @@ public class World
             Screen.Effect.FogStart = -40;
             Screen.Effect.FogEnd = 20;
 
-            Screen.Camera.FarPlane = 24;
+            GameVariables.Camera.FarPlane = 24;
             goto endsub;
         }
 
@@ -209,7 +209,7 @@ public class World
                                 Screen.Effect.FogStart = -2;
                                 Screen.Effect.FogEnd = 19;
 
-                                Screen.Camera.FarPlane = 20;
+                                GameVariables.Camera.FarPlane = 20;
                                 break;
                             }
                         case 1:
@@ -217,7 +217,7 @@ public class World
                                 Screen.Effect.FogStart = -2;
                                 Screen.Effect.FogEnd = 39;
 
-                                Screen.Camera.FarPlane = 40;
+                                GameVariables.Camera.FarPlane = 40;
                                 break;
                             }
                         case 2:
@@ -225,7 +225,7 @@ public class World
                                 Screen.Effect.FogStart = -2;
                                 Screen.Effect.FogEnd = 59;
 
-                                Screen.Camera.FarPlane = 60;
+                                GameVariables.Camera.FarPlane = 60;
                                 break;
                             }
                         case 3:
@@ -233,7 +233,7 @@ public class World
                                 Screen.Effect.FogStart = -5;
                                 Screen.Effect.FogEnd = 79;
 
-                                Screen.Camera.FarPlane = 80;
+                                GameVariables.Camera.FarPlane = 80;
                                 break;
                             }
                         case 4:
@@ -241,7 +241,7 @@ public class World
                                 Screen.Effect.FogStart = -20;
                                 Screen.Effect.FogEnd = 99;
 
-                                Screen.Camera.FarPlane = 100;
+                                GameVariables.Camera.FarPlane = 100;
                                 break;
                             }
                     }
@@ -258,7 +258,7 @@ public class World
                                 Screen.Effect.FogStart = 16;
                                 Screen.Effect.FogEnd = 19;
 
-                                Screen.Camera.FarPlane = 20;
+                                GameVariables.Camera.FarPlane = 20;
                                 break;
                             }
                         case 1:
@@ -266,7 +266,7 @@ public class World
                                 Screen.Effect.FogStart = 36;
                                 Screen.Effect.FogEnd = 39;
 
-                                Screen.Camera.FarPlane = 40;
+                                GameVariables.Camera.FarPlane = 40;
                                 break;
                             }
                         case 2:
@@ -274,7 +274,7 @@ public class World
                                 Screen.Effect.FogStart = 56;
                                 Screen.Effect.FogEnd = 59;
 
-                                Screen.Camera.FarPlane = 60;
+                                GameVariables.Camera.FarPlane = 60;
                                 break;
                             }
                         case 3:
@@ -282,7 +282,7 @@ public class World
                                 Screen.Effect.FogStart = 76;
                                 Screen.Effect.FogEnd = 79;
 
-                                Screen.Camera.FarPlane = 80;
+                                GameVariables.Camera.FarPlane = 80;
                                 break;
                             }
                         case 4:
@@ -290,7 +290,7 @@ public class World
                                 Screen.Effect.FogStart = 96;
                                 Screen.Effect.FogEnd = 99;
 
-                                Screen.Camera.FarPlane = 100;
+                                GameVariables.Camera.FarPlane = 100;
                                 break;
                             }
                     }
@@ -311,7 +311,7 @@ public class World
                                             Screen.Effect.FogStart = -2;
                                             Screen.Effect.FogEnd = 19;
 
-                                            Screen.Camera.FarPlane = 20;
+                                            GameVariables.Camera.FarPlane = 20;
                                             break;
                                         }
                                     case 1:
@@ -319,7 +319,7 @@ public class World
                                             Screen.Effect.FogStart = -2;
                                             Screen.Effect.FogEnd = 39;
 
-                                            Screen.Camera.FarPlane = 40;
+                                            GameVariables.Camera.FarPlane = 40;
                                             break;
                                         }
                                     case 2:
@@ -327,7 +327,7 @@ public class World
                                             Screen.Effect.FogStart = -2;
                                             Screen.Effect.FogEnd = 59;
 
-                                            Screen.Camera.FarPlane = 60;
+                                            GameVariables.Camera.FarPlane = 60;
                                             break;
                                         }
                                     case 3:
@@ -335,7 +335,7 @@ public class World
                                             Screen.Effect.FogStart = -5;
                                             Screen.Effect.FogEnd = 79;
 
-                                            Screen.Camera.FarPlane = 80;
+                                            GameVariables.Camera.FarPlane = 80;
                                             break;
                                         }
                                     case 4:
@@ -343,7 +343,7 @@ public class World
                                             Screen.Effect.FogStart = -20;
                                             Screen.Effect.FogEnd = 99;
 
-                                            Screen.Camera.FarPlane = 100;
+                                            GameVariables.Camera.FarPlane = 100;
                                             break;
                                         }
                                 }
@@ -360,7 +360,7 @@ public class World
                                             Screen.Effect.FogStart = 16;
                                             Screen.Effect.FogEnd = 19;
 
-                                            Screen.Camera.FarPlane = 20;
+                                            GameVariables.Camera.FarPlane = 20;
                                             break;
                                         }
                                     case 1:
@@ -368,7 +368,7 @@ public class World
                                             Screen.Effect.FogStart = 36;
                                             Screen.Effect.FogEnd = 39;
 
-                                            Screen.Camera.FarPlane = 40;
+                                            GameVariables.Camera.FarPlane = 40;
                                             break;
                                         }
                                     case 2:
@@ -376,7 +376,7 @@ public class World
                                             Screen.Effect.FogStart = 56;
                                             Screen.Effect.FogEnd = 59;
 
-                                            Screen.Camera.FarPlane = 60;
+                                            GameVariables.Camera.FarPlane = 60;
                                             break;
                                         }
                                     case 3:
@@ -384,7 +384,7 @@ public class World
                                             Screen.Effect.FogStart = 76;
                                             Screen.Effect.FogEnd = 79;
 
-                                            Screen.Camera.FarPlane = 80;
+                                            GameVariables.Camera.FarPlane = 80;
                                             break;
                                         }
                                     case 4:
@@ -392,7 +392,7 @@ public class World
                                             Screen.Effect.FogStart = 96;
                                             Screen.Effect.FogEnd = 99;
 
-                                            Screen.Camera.FarPlane = 100;
+                                            GameVariables.Camera.FarPlane = 100;
                                             break;
                                         }
                                 }
@@ -409,7 +409,7 @@ public class World
                                             Screen.Effect.FogStart = 16;
                                             Screen.Effect.FogEnd = 19;
 
-                                            Screen.Camera.FarPlane = 20;
+                                            GameVariables.Camera.FarPlane = 20;
                                             break;
                                         }
                                     case 1:
@@ -417,7 +417,7 @@ public class World
                                             Screen.Effect.FogStart = 36;
                                             Screen.Effect.FogEnd = 39;
 
-                                            Screen.Camera.FarPlane = 40;
+                                            GameVariables.Camera.FarPlane = 40;
                                             break;
                                         }
                                     case 2:
@@ -425,7 +425,7 @@ public class World
                                             Screen.Effect.FogStart = 56;
                                             Screen.Effect.FogEnd = 59;
 
-                                            Screen.Camera.FarPlane = 60;
+                                            GameVariables.Camera.FarPlane = 60;
                                             break;
                                         }
                                     case 3:
@@ -433,7 +433,7 @@ public class World
                                             Screen.Effect.FogStart = 76;
                                             Screen.Effect.FogEnd = 79;
 
-                                            Screen.Camera.FarPlane = 80;
+                                            GameVariables.Camera.FarPlane = 80;
                                             break;
                                         }
                                     case 4:
@@ -441,7 +441,7 @@ public class World
                                             Screen.Effect.FogStart = 96;
                                             Screen.Effect.FogEnd = 99;
 
-                                            Screen.Camera.FarPlane = 100;
+                                            GameVariables.Camera.FarPlane = 100;
                                             break;
                                         }
                                 }
@@ -458,7 +458,7 @@ public class World
                                             Screen.Effect.FogStart = 0;
                                             Screen.Effect.FogEnd = 19;
 
-                                            Screen.Camera.FarPlane = 20;
+                                            GameVariables.Camera.FarPlane = 20;
                                             break;
                                         }
                                     case 1:
@@ -466,7 +466,7 @@ public class World
                                             Screen.Effect.FogStart = 0;
                                             Screen.Effect.FogEnd = 39;
 
-                                            Screen.Camera.FarPlane = 40;
+                                            GameVariables.Camera.FarPlane = 40;
                                             break;
                                         }
                                     case 2:
@@ -474,7 +474,7 @@ public class World
                                             Screen.Effect.FogStart = 0;
                                             Screen.Effect.FogEnd = 59;
 
-                                            Screen.Camera.FarPlane = 60;
+                                            GameVariables.Camera.FarPlane = 60;
                                             break;
                                         }
                                     case 3:
@@ -482,7 +482,7 @@ public class World
                                             Screen.Effect.FogStart = 0;
                                             Screen.Effect.FogEnd = 79;
 
-                                            Screen.Camera.FarPlane = 80;
+                                            GameVariables.Camera.FarPlane = 80;
                                             break;
                                         }
                                     case 4:
@@ -490,7 +490,7 @@ public class World
                                             Screen.Effect.FogStart = 0;
                                             Screen.Effect.FogEnd = 99;
 
-                                            Screen.Camera.FarPlane = 100;
+                                            GameVariables.Camera.FarPlane = 100;
                                             break;
                                         }
                                 }
@@ -511,7 +511,7 @@ public class World
                                 Screen.Effect.FogStart = 0;
                                 Screen.Effect.FogEnd = 19;
 
-                                Screen.Camera.FarPlane = 20;
+                                GameVariables.Camera.FarPlane = 20;
                                 break;
                             }
                         case 1:
@@ -519,7 +519,7 @@ public class World
                                 Screen.Effect.FogStart = 0;
                                 Screen.Effect.FogEnd = 39;
 
-                                Screen.Camera.FarPlane = 40;
+                                GameVariables.Camera.FarPlane = 40;
                                 break;
                             }
                         case 2:
@@ -527,7 +527,7 @@ public class World
                                 Screen.Effect.FogStart = 0;
                                 Screen.Effect.FogEnd = 59;
 
-                                Screen.Camera.FarPlane = 60;
+                                GameVariables.Camera.FarPlane = 60;
                                 break;
                             }
                         case 3:
@@ -535,7 +535,7 @@ public class World
                                 Screen.Effect.FogStart = 0;
                                 Screen.Effect.FogEnd = 79;
 
-                                Screen.Camera.FarPlane = 80;
+                                GameVariables.Camera.FarPlane = 80;
                                 break;
                             }
                         case 4:
@@ -543,7 +543,7 @@ public class World
                                 Screen.Effect.FogStart = 0;
                                 Screen.Effect.FogEnd = 99;
 
-                                Screen.Camera.FarPlane = 100;
+                                GameVariables.Camera.FarPlane = 100;
                                 break;
                             }
                     }
@@ -557,12 +557,12 @@ public class World
             Screen.Effect.FogStart = 999;
             Screen.Effect.FogEnd = 1000;
 
-            Screen.Camera.FarPlane = 1000;
+            GameVariables.Camera.FarPlane = 1000;
         }
 
     endsub:
         //;
-        Screen.Camera.CreateNewProjection(Screen.Camera.FOV);
+        GameVariables.Camera.CreateNewProjection(GameVariables.Camera.FOV);
     }
 
     private static Weathers GetRegionWeather(Seasons Season)
@@ -1232,11 +1232,11 @@ public class World
                 if (chance == -1)
                     chance = 1;
 
-                Vector3 cameraPosition = Screen.Camera.Position;
+                Vector3 cameraPosition = GameVariables.Camera.Position;
                 if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-                    cameraPosition = (OverworldCamera)Screen.Camera.CPosition;
+                    cameraPosition = (OverworldCamera)GameVariables.Camera.CPosition;
                 else if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-                    cameraPosition = (BattleCamera)Screen.Camera.CPosition;
+                    cameraPosition = (BattleCamera)GameVariables.Camera.CPosition;
 
                 if (Settings.Rand.Next(0, chance) == 0)
                 {

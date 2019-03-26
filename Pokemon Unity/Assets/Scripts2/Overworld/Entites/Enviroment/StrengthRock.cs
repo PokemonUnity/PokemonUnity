@@ -97,15 +97,15 @@ public class StrengthRock : Entity
     {
         if (GameVariables.Level.UsedStrength == true & this.Moved == 0.0F)
         {
-            Vector3 newPosition = Screen.Camera.GetForwardMovedPosition();
+            Vector3 newPosition = GameVariables.Camera.GetForwardMovedPosition();
             newPosition.y = newPosition.y.ToInteger();
-            newPosition.x += Screen.Camera.GetMoveDirection().x;
-            newPosition.z += Screen.Camera.GetMoveDirection().z;
+            newPosition.x += GameVariables.Camera.GetMoveDirection().x;
+            newPosition.z += GameVariables.Camera.GetMoveDirection().z;
 
             if (CheckCollision(newPosition) == true)
             {
                 this.Moved = 1;
-                this.FaceDirection = Screen.Camera.GetPlayerFacingDirection();
+                this.FaceDirection = GameVariables.Camera.GetPlayerFacingDirection();
                 SoundManager.PlaySound("destroy", false);
             }
         }

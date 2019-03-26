@@ -11,9 +11,9 @@ public class Grass : Entity
 
     public override void UpdateEntity()
     {
-        if (this.Rotation.y != Screen.Camera.Yaw)
+        if (this.Rotation.y != GameVariables.Camera.Yaw)
         {
-            this.Rotation.y = Screen.Camera.Yaw;
+            this.Rotation.y = GameVariables.Camera.Yaw;
             CreatedWorld = false;
         }
 
@@ -42,9 +42,9 @@ public class Grass : Entity
             {
                 if (e.Visible == true)
                 {
-                    if (System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y))
+                    if (System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y))
                     {
-                        float distance = Vector3.Distance(Screen.Camera.Position, e.Position);
+                        float distance = Vector3.Distance(GameVariables.Camera.Position, e.Position);
 
                         if (distance <= radius)
                             l.Add(e);

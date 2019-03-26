@@ -70,10 +70,10 @@ public class ModelEntity : Entity
         if (Visible == true)
         {
             if (_model != null)
-                _model.Draw(this.World, Screen.Camera.View, Screen.Camera.Projection);
+                _model.Draw(this.World, GameVariables.Camera.View, GameVariables.Camera.Projection);
 
             if (drawViewBox == true)
-                BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, UnityEngine.Color.red);
+                BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, UnityEngine.Color.red);
         }
     }
 }

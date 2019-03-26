@@ -35,7 +35,7 @@ public class WarpBlock : Entity
                 string[] rotationData = link.GetSplit(5, ",").Split(System.Convert.ToChar("|"));
                 foreach (string Element in rotationData)
                     validRotations.Add(System.Convert.ToInt32(Element));
-                if (validRotations.Contains(Screen.Camera.GetPlayerFacingDirection()) == false)
+                if (validRotations.Contains(GameVariables.Camera.GetPlayerFacingDirection()) == false)
                     return true;
             }
 
@@ -47,10 +47,10 @@ public class WarpBlock : Entity
                     GameVariables.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
                     GameVariables.Level.WarpData.WarpRotations = System.Convert.ToInt32(this.AdditionalValue.GetSplit(4));
                     GameVariables.Level.WarpData.DoWarpInNextTick = true;
-                    GameVariables.Level.WarpData.CorrectCameraYaw = Screen.Camera.Yaw;
+                    GameVariables.Level.WarpData.CorrectCameraYaw = GameVariables.Camera.Yaw;
                     GameVariables.Level.WarpData.IsWarpBlock = true;
                     GameVariables.DebugLog("Lock Camera");
-                    (OverworldCamera)Screen.Camera.YawLocked = true;
+                    (OverworldCamera)GameVariables.Camera.YawLocked = true;
                 }
                 else
                 {
@@ -58,7 +58,7 @@ public class WarpBlock : Entity
                     GameVariables.Level.Load(this.AdditionalValue.GetSplit(0));
                     GameVariables.Level.World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
 
-                    Screen.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
+                    GameVariables.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", GameController.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
                 }
             }
             else

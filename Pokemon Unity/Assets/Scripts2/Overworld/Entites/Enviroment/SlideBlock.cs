@@ -11,15 +11,15 @@ public class SlideBlock : Entity
         if (facing < 0)
             facing += 4;
 
-        Screen.Camera.PlannedMovement = Vector3.Zero;
+        GameVariables.Camera.PlannedMovement = Vector3.Zero;
 
-        if (Screen.Camera.GetPlayerFacingDirection() == facing & Screen.Camera.IsMoving() == false)
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & GameVariables.Camera.IsMoving() == false)
         {
-            (OverworldCamera)Screen.Camera.DidWalkAgainst = false;
+            (OverworldCamera)GameVariables.Camera.DidWalkAgainst = false;
 
             int Steps = 0;
 
-            Vector3 checkPosition = Screen.Camera.GetForwardMovedPosition();
+            Vector3 checkPosition = GameVariables.Camera.GetForwardMovedPosition();
             checkPosition.y = checkPosition.y.ToInteger();
 
             bool foundSteps = true;
@@ -36,8 +36,8 @@ public class SlideBlock : Entity
                     if (e.EntityID == Entities.SlideBlock)
                     {
                         Steps += 1;
-                        checkPosition.x += Screen.Camera.GetMoveDirection().x;
-                        checkPosition.z += Screen.Camera.GetMoveDirection().z;
+                        checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
+                        checkPosition.z += GameVariables.Camera.GetMoveDirection().z;
                         checkPosition.y += 1;
                     }
                     else
@@ -56,7 +56,7 @@ public class SlideBlock : Entity
             GameVariables.Level.OverworldPokemon.Visible = false;
             GameVariables.Level.OverworldPokemon.warped = true;
 
-            string s = "version=2" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",0," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine;
+            string s = "version=2" + System.Environment.NewLine + "@player.setmovement(" + GameVariables.Camera.GetMoveDirection().x + ",1," + GameVariables.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + GameVariables.Camera.GetMoveDirection().x + ",0," + GameVariables.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {
@@ -73,7 +73,7 @@ public class SlideBlock : Entity
         facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
         if (facing < 0)
             facing += 4;
-        if (Screen.Camera.GetPlayerFacingDirection() == facing)
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
             return false;
 
         return true;
@@ -110,15 +110,15 @@ public class SlideBlock : Entity
     {
         int facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
 
-        Screen.Camera.PlannedMovement = Vector3.Zero;
+        GameVariables.Camera.PlannedMovement = Vector3.Zero;
 
-        if (Screen.Camera.GetPlayerFacingDirection() == facing)
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
         {
-            (OverworldCamera)Screen.Camera.DidWalkAgainst = false;
+            (OverworldCamera)GameVariables.Camera.DidWalkAgainst = false;
 
             int Steps = 0;
 
-            Vector3 checkPosition = Screen.Camera.GetForwardMovedPosition();
+            Vector3 checkPosition = GameVariables.Camera.GetForwardMovedPosition();
             checkPosition.y = checkPosition.y.ToInteger() - 1;
 
             bool foundSteps = true;
@@ -135,8 +135,8 @@ public class SlideBlock : Entity
                     if (e.EntityID == Entities.SlideBlock)
                     {
                         Steps += 1;
-                        checkPosition.x += Screen.Camera.GetMoveDirection().x;
-                        checkPosition.z += Screen.Camera.GetMoveDirection().z;
+                        checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
+                        checkPosition.z += GameVariables.Camera.GetMoveDirection().z;
                         checkPosition.y -= 1;
                     }
                     else
@@ -155,7 +155,7 @@ public class SlideBlock : Entity
             GameVariables.Level.OverworldPokemon.Visible = false;
             GameVariables.Level.OverworldPokemon.warped = true;
 
-            string s = "version=2" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + Screen.Camera.GetMoveDirection().x + ",-1," + Screen.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine;
+            string s = "version=2" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + GameVariables.Camera.GetMoveDirection().x + ",-1," + GameVariables.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine;
 
             if (this.TempScriptEntity != null)
             {

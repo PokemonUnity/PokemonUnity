@@ -357,7 +357,7 @@ public class Waterfall : Entity
                     foundSteps = false;
             }
 
-            Screen.Camera.PlannedMovement = new Vector3(0, 1, 0);
+            GameVariables.Camera.PlannedMovement = new Vector3(0, 1, 0);
 
             s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + pNumber + ")" + System.Environment.NewLine + "@sound.play(select)" + System.Environment.NewLine + "@text.show(" + pName + " used~Waterfall.)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(2)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + ":end";
 

@@ -369,18 +369,18 @@ public class NPC : Entity
 	{
 		if (this.TrainerSight > -1 & GameVariables.Level.PokemonEncounterData.EncounteredPokemon == false & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 		{
-			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Screen.Camera.Position.y) & Screen.Camera.IsMoving() == false)
+			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & GameVariables.Camera.IsMoving() == false)
 			{
 				if (Moved == 0.0F & this.CanBeRemoved == false)
 				{
-					if (Screen.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == Screen.Camera.Position.z)
+					if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == GameVariables.Camera.Position.z)
 					{
 						int distance = 0;
 						bool correctFacing = false;
 
-						if (Screen.Camera.Position.x == System.Convert.ToInt32(this.Position.x))
+						if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x))
 						{
-							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.z) - Screen.Camera.Position.z);
+							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.z) - GameVariables.Camera.Position.z);
 
 							if (distance > 0)
 							{
@@ -390,9 +390,9 @@ public class NPC : Entity
 							else if (this.faceRotation == 2)
 								correctFacing = true;
 						}
-						else if (Screen.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
+						else if (GameVariables.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
 						{
-							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.x) - Screen.Camera.Position.x);
+							distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.x) - GameVariables.Camera.Position.x);
 
 							if (distance > 0)
 							{
@@ -468,14 +468,14 @@ public class NPC : Entity
 											break;
 										}
 								}
-								int turns = needFacing - Screen.Camera.GetPlayerFacingDirection();
+								int turns = needFacing - GameVariables.Camera.GetPlayerFacingDirection();
 								if (turns < 0)
 									turns = 4 - turns.ToPositive();
 
 								(OverworldScreen)Core.CurrentScreen.TrainerEncountered = true;
 								if (InSightMusic != "nomusic" & InSightMusic != "")
 									MusicManager.Play(InSightMusic, true, 0.0F);
-								Screen.Camera.StopMovement();
+								GameVariables.Camera.StopMovement();
 								this.Movement = Movements.Still;
 
 								Vector2 offset = new Vector2(0, 0);
@@ -506,8 +506,8 @@ public class NPC : Entity
 								string s = "version=2" + System.Environment.NewLine + "@player.turn(" + turns + ")" + System.Environment.NewLine;
 
 								{
-									var withBlock = (OverworldCamera)Screen.Camera;
-									if ((OverworldCamera)Screen.Camera.ThirdPerson == true & IsOnScreen() == false)
+									var withBlock = (OverworldCamera)GameVariables.Camera;
+									if ((OverworldCamera)GameVariables.Camera.ThirdPerson == true & IsOnScreen() == false)
 									{
 										s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
@@ -531,7 +531,7 @@ public class NPC : Entity
 
 	public override void ClickFunction()
 	{
-		int newHeading = Screen.Camera.GetPlayerFacingDirection() - 2;
+		int newHeading = GameVariables.Camera.GetPlayerFacingDirection() - 2;
 		if (newHeading < 0)
 			newHeading += 4;
 		this.faceRotation = newHeading;
@@ -557,8 +557,8 @@ public class NPC : Entity
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.y != Screen.Camera.Yaw)
-			this.Rotation.y = Screen.Camera.Yaw;
+		if (this.Rotation.y != GameVariables.Camera.Yaw)
+			this.Rotation.y = GameVariables.Camera.Yaw;
 
 		base.UpdateEntity();
 	}
@@ -627,15 +627,15 @@ public class NPC : Entity
 					{
 						int oldRotation = this.faceRotation;
 
-						if (Screen.Camera.Position.x == this.Position.x | Screen.Camera.Position.z == this.Position.z)
+						if (GameVariables.Camera.Position.x == this.Position.x | GameVariables.Camera.Position.z == this.Position.z)
 						{
-							if (this.Position.x < Screen.Camera.Position.x)
+							if (this.Position.x < GameVariables.Camera.Position.x)
 								this.faceRotation = 3;
-							else if (this.Position.x > Screen.Camera.Position.x)
+							else if (this.Position.x > GameVariables.Camera.Position.x)
 								this.faceRotation = 1;
-							if (this.Position.z < Screen.Camera.Position.z)
+							if (this.Position.z < GameVariables.Camera.Position.z)
 								this.faceRotation = 2;
-							else if (this.Position.z > Screen.Camera.Position.z)
+							else if (this.Position.z > GameVariables.Camera.Position.z)
 								this.faceRotation = 0;
 						}
 
@@ -717,9 +717,9 @@ public class NPC : Entity
 
 		bool interactPlayer = true;
 
-		if (Screen.Camera.IsMoving() == false)
+		if (GameVariables.Camera.IsMoving() == false)
 		{
-			if (System.Convert.ToInt32(Screen.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(Screen.Camera.Position.z) != newPosition.z)
+			if (System.Convert.ToInt32(GameVariables.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(GameVariables.Camera.Position.z) != newPosition.z)
 			{
 				if (System.Convert.ToInt32(GameVariables.Level.OverworldPokemon.Position.x) != newPosition.x | System.Convert.ToInt32(GameVariables.Level.OverworldPokemon.Position.z) != newPosition.z)
 					interactPlayer = false;
@@ -855,7 +855,7 @@ public class NPC : Entity
 	private int getCameraRotation()
 	{
 		int cameraRotation = 0;
-		Camera c = Screen.Camera;
+		Camera c = GameVariables.Camera;
 
 		float Yaw = c.Yaw;
 
@@ -883,9 +883,9 @@ public class NPC : Entity
 
 	internal bool InCameraFocus()
 	{
-		if (Screen.Camera.Name == "Overworld")
+		if (GameVariables.Camera.Name == "Overworld")
 		{
-			var c = (OverworldCamera)Screen.Camera;
+			var c = (OverworldCamera)GameVariables.Camera;
 
 			if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.NPC)
 			{
@@ -898,7 +898,7 @@ public class NPC : Entity
 
 	private bool IsOnScreen()
 	{
-		return Screen.Camera.BoundingFrustum.Contains(this.Position) != ContainmentType.Disjoint;
+		return GameVariables.Camera.BoundingFrustum.Contains(this.Position) != ContainmentType.Disjoint;
 	}
 }
 }

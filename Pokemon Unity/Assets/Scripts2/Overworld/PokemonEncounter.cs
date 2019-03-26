@@ -113,11 +113,11 @@ public class PokemonEncounter
         if (this._levelReference.PokemonEncounterData.EncounteredPokemon == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
         {
             // If the player met the set position:
-            if (Screen.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & Screen.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
+            if (GameVariables.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & GameVariables.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
             {
                 // Make the player stop and set encounter check to false:
                 this._levelReference.PokemonEncounterData.EncounteredPokemon = false;
-                Screen.Camera.StopMovement();
+                GameVariables.Camera.StopMovement();
 
                 // Generate new wild Pokémon:
                 Pokemon.Pokemon Pokemon.Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);

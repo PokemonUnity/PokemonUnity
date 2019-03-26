@@ -8,9 +8,9 @@ public class CutDownTree : Entity
 {
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.y != Screen.Camera.Yaw)
+		if (this.Rotation.y != GameVariables.Camera.Yaw)
 		{
-			this.Rotation.y = Screen.Camera.Yaw;
+			this.Rotation.y = GameVariables.Camera.Yaw;
 			this.CreatedWorld = false;
 		}
 

@@ -147,7 +147,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		if (this.Texture != null)
 		{
 			Rectangle r = new Rectangle(0, 0, 0, 0);
-			int cameraRotation = Screen.Camera.GetFacingDirection();
+			int cameraRotation = GameVariables.Camera.GetFacingDirection();
 			int spriteIndex = this.faceRotation - cameraRotation;
 
 			spriteIndex = this.faceRotation - cameraRotation;
@@ -256,8 +256,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.y != Screen.Camera.Yaw)
-			this.Rotation.y = Screen.Camera.Yaw;
+		if (this.Rotation.y != GameVariables.Camera.Yaw)
+			this.Rotation.y = GameVariables.Camera.Yaw;
 		if (this.TextureID != null && this.TextureID.ToLower() == "nilllzz" & this.GameJoltID == "17441")
 		{
 			this.Rotation.z = MathHelper.Pi;

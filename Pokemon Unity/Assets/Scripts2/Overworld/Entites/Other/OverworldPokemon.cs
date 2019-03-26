@@ -17,7 +17,7 @@ public class OverworldPokemon : Entity
         this.Respawn();
         if (GameVariables.playerTrainer.LastPokemonPosition == new Vector3(999, 999, 999))
         {
-            this.Position = new Vector3(Screen.Camera.Position.x, Screen.Camera.Position.y, Screen.Camera.Position.z);
+            this.Position = new Vector3(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z);
             this.Visible = false;
             this.warped = false;
         }
@@ -76,7 +76,7 @@ public class OverworldPokemon : Entity
 			this.Texture = PokemonReference.GetOverworldTexture();
 
 		Rectangle r = new Rectangle(0, 0, 0, 0);
-		int cameraRotation = Screen.Camera.GetFacingDirection();
+		int cameraRotation = GameVariables.Camera.GetFacingDirection();
 		int spriteIndex = this.faceRotation - cameraRotation;
 
 		spriteIndex = this.faceRotation - cameraRotation;
@@ -144,8 +144,8 @@ public class OverworldPokemon : Entity
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.y != Screen.Camera.Yaw)
-			this.Rotation.y = Screen.Camera.Yaw;
+		if (this.Rotation.y != GameVariables.Camera.Yaw)
+			this.Rotation.y = GameVariables.Camera.Yaw;
 		this.Scale = new Vector3(1.0F);
 		this.Position.y = this.GetYPosition();
 
@@ -194,24 +194,24 @@ public class OverworldPokemon : Entity
 	public void ChangeRotation()
 	{
 		this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToSingle(this.Position.y) + 0.001F, System.Convert.ToInt32(this.Position.z));
-		if (Screen.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | Screen.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
+		if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | GameVariables.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
 		{
-			if (this.Position.x < Screen.Camera.Position.x)
+			if (this.Position.x < GameVariables.Camera.Position.x)
 				this.faceRotation = 3;
-			else if (this.Position.x > Screen.Camera.Position.x)
+			else if (this.Position.x > GameVariables.Camera.Position.x)
 				this.faceRotation = 1;
-			if (this.Position.z < Screen.Camera.Position.z)
+			if (this.Position.z < GameVariables.Camera.Position.z)
 				this.faceRotation = 2;
-			else if (this.Position.z > Screen.Camera.Position.z)
+			else if (this.Position.z > GameVariables.Camera.Position.z)
 				this.faceRotation = 0;
 		}
 	}
 
 	private void ChangePosition()
 	{
-		if (Screen.Camera.IsMoving() == true)
+		if (GameVariables.Camera.IsMoving() == true)
 		{
-			if (System.Convert.ToInt32(this.Position.x) != System.Convert.ToInt32(Screen.Camera.Position.x) | System.Convert.ToInt32(this.Position.z) != System.Convert.ToInt32(Screen.Camera.Position.z))
+			if (System.Convert.ToInt32(this.Position.x) != System.Convert.ToInt32(GameVariables.Camera.Position.x) | System.Convert.ToInt32(this.Position.z) != System.Convert.ToInt32(GameVariables.Camera.Position.z))
 			{
 				this.Position += GetMove();
 				this.AnimationDelayLenght = 1.1F;
@@ -285,31 +285,31 @@ public class OverworldPokemon : Entity
 	public void Respawn()
 	{
 		Vector3 newPosition = new Vector3(0, -2, 0);
-		if (Screen.Camera.Name == "Overworld")
-			newPosition = (OverworldCamera)Screen.Camera.LastStepPosition;
+		if (GameVariables.Camera.Name == "Overworld")
+			newPosition = (OverworldCamera)GameVariables.Camera.LastStepPosition;
 		if (newPosition != new Vector3(0, -2, 0))
 			this.Position = newPosition;
 		else
-			switch (Screen.Camera.GetPlayerFacingDirection())
+			switch (GameVariables.Camera.GetPlayerFacingDirection())
 			{
 				case 0:
 					{
-						this.Position = new Vector3(Screen.Camera.Position.x, this.GetYPosition(), Screen.Camera.Position.z + 1);
+						this.Position = new Vector3(GameVariables.Camera.Position.x, this.GetYPosition(), GameVariables.Camera.Position.z + 1);
 						break;
 					}
 				case 1:
 					{
-						this.Position = new Vector3(Screen.Camera.Position.x + 1, this.GetYPosition(), Screen.Camera.Position.z);
+						this.Position = new Vector3(GameVariables.Camera.Position.x + 1, this.GetYPosition(), GameVariables.Camera.Position.z);
 						break;
 					}
 				case 2:
 					{
-						this.Position = new Vector3(Screen.Camera.Position.x, this.GetYPosition(), Screen.Camera.Position.z - 1);
+						this.Position = new Vector3(GameVariables.Camera.Position.x, this.GetYPosition(), GameVariables.Camera.Position.z - 1);
 						break;
 					}
 				case 3:
 					{
-						this.Position = new Vector3(Screen.Camera.Position.x - 1, this.GetYPosition(), Screen.Camera.Position.z);
+						this.Position = new Vector3(GameVariables.Camera.Position.x - 1, this.GetYPosition(), GameVariables.Camera.Position.z);
 						break;
 					}
 			}
@@ -350,7 +350,7 @@ public class OverworldPokemon : Entity
 
 	private float GetYPosition()
 	{
-		return System.Convert.ToSingle(Screen.Camera.Position.y);
+		return System.Convert.ToSingle(GameVariables.Camera.Position.y);
 	}
 
 	public void ForceTextureChange()

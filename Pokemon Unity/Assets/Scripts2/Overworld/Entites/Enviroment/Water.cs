@@ -95,7 +95,7 @@ public class Water : Entity
 
             foreach (Entity Entity in GameVariables.Level.Entities)
             {
-                if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
+                if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
                 {
                     if (Entity.EntityID == Entities.Water)
                         canSurf = true;
@@ -109,7 +109,7 @@ public class Water : Entity
 
             if (canSurf == true)
             {
-                Screen.Camera.Move(1);
+                GameVariables.Camera.Move(1);
 
                 GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Surfing, "");
             }
@@ -118,7 +118,7 @@ public class Water : Entity
 
     private void Surf()
     {
-        if (Screen.Camera.Turning == false)
+        if (GameVariables.Camera.Turning == false)
         {
             if (GameVariables.Level.Surfing == false)
             {
@@ -132,7 +132,7 @@ public class Water : Entity
                         {
                             foreach (Entity Entity in GameVariables.Level.Entities)
                             {
-                                if (Entity.boundingBox.Contains(Screen.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
+                                if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
                                 {
                                     if (Entity.EntityID == Entities.Water)
                                     {
@@ -328,7 +328,7 @@ public class Water : Entity
         {
             Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Name + " used~Surf!", this);
             GameVariables.Level.Surfing = true;
-            Screen.Camera.Move(1);
+            GameVariables.Camera.Move(1);
             PlayerStatistics.Track("Surf used", 1);
 
             {

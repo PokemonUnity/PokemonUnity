@@ -155,9 +155,9 @@ public class SmashRock : Entity
     {
         base.UpdateEntity();
 
-        if (Rotation.y != Screen.Camera.Yaw)
+        if (Rotation.y != GameVariables.Camera.Yaw)
         {
-            this.Rotation.y = Screen.Camera.Yaw;
+            this.Rotation.y = GameVariables.Camera.Yaw;
             this.CreatedWorld = false;
         }
     }

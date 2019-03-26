@@ -43,12 +43,12 @@ public class ScriptBlock : Entity
             ActivateScript = true;
             TriggeredScriptBlock = true;
             if (ActionScript.TempInputDirection == -1)
-                ActionScript.TempInputDirection = Screen.Camera.GetPlayerFacingDirection();
+                ActionScript.TempInputDirection = GameVariables.Camera.GetPlayerFacingDirection();
 
-            if (Screen.Camera.Name == "Overworld")
+            if (GameVariables.Camera.Name == "Overworld")
             {
-                if ((OverworldCamera)Screen.Camera.FreeCameraMode == false)
-                    (OverworldCamera)Screen.Camera.YawLocked = true;
+                if ((OverworldCamera)GameVariables.Camera.FreeCameraMode == false)
+                    (OverworldCamera)GameVariables.Camera.YawLocked = true;
             }
 
             GameVariables.Level.WalkedSteps = 0;
@@ -70,9 +70,9 @@ public class ScriptBlock : Entity
 
     public override void Update()
     {
-        if (this.ActivateScript == true & Screen.Camera.Position.x == this.Position.x & Screen.Camera.Position.z == this.Position.z & System.Convert.ToInt32(Screen.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
+        if (this.ActivateScript == true & GameVariables.Camera.Position.x == this.Position.x & GameVariables.Camera.Position.z == this.Position.z & System.Convert.ToInt32(GameVariables.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
         {
-            Screen.Camera.StopMovement();
+            GameVariables.Camera.StopMovement();
             ActivateScript = false;
             TriggerScript(false);
         }
@@ -135,7 +135,7 @@ public class ScriptBlock : Entity
         bool activate = false;
         if (AcceptedRotations.Count > 0)
         {
-            if (AcceptedRotations.Contains(Screen.Camera.GetPlayerFacingDirection()))
+            if (AcceptedRotations.Contains(GameVariables.Camera.GetPlayerFacingDirection()))
                 activate = true;
         }
         else

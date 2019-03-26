@@ -128,8 +128,8 @@ public class ApricornPlant : Entity
 
 	public override void UpdateEntity()
 	{
-		if (Rotation.y != Screen.Camera.Yaw)
-			Rotation.y = Screen.Camera.Yaw;
+		if (Rotation.y != GameVariables.Camera.Yaw)
+			Rotation.y = GameVariables.Camera.Yaw;
 
 		base.UpdateEntity();
 	}

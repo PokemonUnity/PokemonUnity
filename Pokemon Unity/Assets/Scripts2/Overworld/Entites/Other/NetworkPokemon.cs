@@ -48,8 +48,8 @@ public class NetworkPokemon : Entity
 
 	public override void UpdateEntity()
 	{
-		if (this.Rotation.y != Screen.Camera.Yaw)
-			this.Rotation.y = Screen.Camera.Yaw;
+		if (this.Rotation.y != GameVariables.Camera.Yaw)
+			this.Rotation.y = GameVariables.Camera.Yaw;
 
 		base.UpdateEntity();
 	}
@@ -134,7 +134,7 @@ public class NetworkPokemon : Entity
 		}
 
 		Rectangle r = new Rectangle(0, 0, 0, 0);
-		int cameraRotation = Screen.Camera.GetFacingDirection();
+		int cameraRotation = GameVariables.Camera.GetFacingDirection();
 		int spriteIndex = this.faceRotation - cameraRotation;
 
 		spriteIndex = this.faceRotation - cameraRotation;
