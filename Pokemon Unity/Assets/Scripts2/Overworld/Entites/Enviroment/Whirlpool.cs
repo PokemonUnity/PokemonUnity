@@ -63,22 +63,22 @@ public class Whirlpool : Entity
             {
                 case 0:
                     {
-                        this.Textures(0) = Whirlpool.WaterTexturesTemp[0];
+                        this.Textures[0] = Whirlpool.WaterTexturesTemp[0];
                         break;
                     }
                 case 1:
                     {
-                        this.Textures(0) = Whirlpool.WaterTexturesTemp[1];
+                        this.Textures[0] = Whirlpool.WaterTexturesTemp[1];
                         break;
                     }
                 case 2:
                     {
-                        this.Textures(0) = Whirlpool.WaterTexturesTemp[2];
+                        this.Textures[0] = Whirlpool.WaterTexturesTemp[2];
                         break;
                     }
                 case 3:
                     {
-                        this.Textures(0) = Whirlpool.WaterTexturesTemp[3];
+                        this.Textures[0] = Whirlpool.WaterTexturesTemp[3];
                         break;
                     }
             }

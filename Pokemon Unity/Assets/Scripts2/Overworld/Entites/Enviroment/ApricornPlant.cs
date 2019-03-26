@@ -50,7 +50,7 @@ public class ApricornPlant : Entity
 			r = new Rectangle(x * 16, y * 16, 16, 16);
 		}
 
-		Textures(0) = TextureManager.GetTexture("Apricorn", r);
+		Textures[0] = TextureManager.GetTexture("Apricorn", r);
 	}
 
 	private void CheckHasApricorn()

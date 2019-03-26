@@ -85,7 +85,7 @@ public class Floor : Entity
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0F, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-            this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
+            this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
         else
         {
             bool hasEntityOnAllSides = true;
@@ -135,7 +135,7 @@ public class Floor : Entity
             }
             else
             {
-                this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
+                this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
                 this.Position.y += 0.1F;
             }
         }
@@ -154,7 +154,7 @@ public class Floor : Entity
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0F, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-            this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
+            this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
         else
         {
             bool hasEntityOnAllSides = true;
@@ -204,7 +204,7 @@ public class Floor : Entity
             }
             else
             {
-                this.Textures(0) = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
+                this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
                 this.Position.y += 0.1F;
             }
         }

@@ -148,7 +148,7 @@ public class BerryPlant : Entity
             t = P3D.TextureManager.GetTexture(@"Items\ItemSheet", r, "");
         }
 
-        this.Textures(0) = t;
+        this.Textures[0] = t;
     }
 
     private int ResultIndex = 0;
@@ -225,9 +225,9 @@ public class BerryPlant : Entity
                         GameVariables.playerTrainer.Inventory.AddItem(this.Berry.ID, this.Berries);
                         string Text = "";
                         if (this.Berries == 1)
-                            Text = GameVariables.playerTrainer.Name + " picked the~" + Berry.Name + " Berry.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
+                            Text = GameVariables.playerTrainer.PlayerName + " picked the~" + Berry.Name + " Berry.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
                         else
-                            Text = GameVariables.playerTrainer.Name + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
+                            Text = GameVariables.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
 
                         GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
                         PlayerStatistics.Track("[2006]Berries picked", this.Berries);
@@ -243,7 +243,7 @@ public class BerryPlant : Entity
                 case 1:
                     {
                         WaterBerry();
-                        string Text = GameVariables.playerTrainer.Name + " watered~the " + Berry.Name + ".";
+                        string Text = GameVariables.playerTrainer.PlayerName + " watered~the " + Berry.Name + ".";
                         Screen.TextBox.Show(Text, this);
                         break;
                     }

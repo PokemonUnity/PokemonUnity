@@ -183,7 +183,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			{
 				lastRectangle = r;
 
-				Textures(0) = TextureManager.GetTexture(this.Texture, r, 1);
+				Textures[0] = TextureManager.GetTexture(this.Texture, r, 1);
 			}
 		}
 	}

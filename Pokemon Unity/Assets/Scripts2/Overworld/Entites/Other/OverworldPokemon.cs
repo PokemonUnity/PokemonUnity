@@ -99,7 +99,7 @@ public class OverworldPokemon : Entity
 			lastRectangle = r;
 
 			Texture2D t = TextureManager.GetTexture(this.Texture, r, 1);
-			Textures(0) = t;
+			Textures[0] = t;
 		}
 	}
 
@@ -158,7 +158,7 @@ public class OverworldPokemon : Entity
 		{
 			var state = GraphicsDevice.DepthStencilState;
 			GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-			Draw(this.Model, this.Textures(0), false);
+			Draw(this.Model, this.Textures[0], false);
 			GraphicsDevice.DepthStencilState = state;
 		}
 	}

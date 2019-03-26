@@ -728,7 +728,7 @@ public class LevelLoader
         Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<float> ScaleList;
-        Vector3 Scale = new Vector3(1);
+        Vector3 Scale = new Vector3(1, 1, 1);
         if (TagExists(Tags, "Scale") == true)
         {
             ScaleList = (List<float>)GetTag(Tags, "Scale");

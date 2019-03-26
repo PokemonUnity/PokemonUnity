@@ -232,17 +232,17 @@ public class Water : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_0"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_0"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_1"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_1"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_2"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_2"];
                                     break;
                                 }
                         }
@@ -255,17 +255,17 @@ public class Water : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_3"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_3"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_4"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_4"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_5"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_5"];
                                     break;
                                 }
                         }
@@ -278,17 +278,17 @@ public class Water : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_6"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_6"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_7"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_7"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_8"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_8"];
                                     break;
                                 }
                         }
@@ -301,17 +301,17 @@ public class Water : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_9"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_9"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_10"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_10"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(0) = Water.WaterTexturesTemp[waterTextureName + "_11"];
+                                    this.Textures[0] = Water.WaterTexturesTemp[waterTextureName + "_11"];
                                     break;
                                 }
                         }

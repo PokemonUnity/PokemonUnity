@@ -93,7 +93,7 @@ public class NetworkPokemon : Entity
 								GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
 								Draw(this.Model, new Texture2D()
 									{
-										this.Textures(0)
+										this.Textures[0]
 									}, false);
 								GraphicsDevice.DepthStencilState = state;
 							}
@@ -164,7 +164,7 @@ public class NetworkPokemon : Entity
 		{
 			lastRectangle = r;
 
-			Textures(0) = TextureManager.GetTexture(this.Texture, r, 1);
+			Textures[0] = TextureManager.GetTexture(this.Texture, r, 1);
 		}
 	}
 

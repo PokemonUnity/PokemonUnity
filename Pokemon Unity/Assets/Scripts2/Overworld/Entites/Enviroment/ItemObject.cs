@@ -7,9 +7,9 @@ public class ItemObject : Entity
 {
     private static Dictionary<string, Texture2D> AnimationTexturesTemp = new Dictionary<string, Texture2D>();
     private string AnimationName = "";
-    private Animation Animation = null/* TODO Change to default(_) if this is not a reference type */;
+    private Animation Animation = null;// TODO Change to default(_) if this is not a reference type
 
-    private Item Item;
+    private Item.Item Item;
     private int ItemID = 0;
     private bool checkedExistence = false;
     private string AnimationPath = "";
@@ -21,10 +21,10 @@ public class ItemObject : Entity
     {
         base.Initialize();
 
-        this.Item = Item.GetItemByID(System.Convert.ToInt32(this.AdditionalValue.GetSplit(1)));
+        this.Item = Item.GetItem(System.Convert.ToInt32(this.AdditionalValue.GetSplit(1)));
         this.ItemID = System.Convert.ToInt32(this.AdditionalValue.GetSplit(0));
 
-        this.Textures(0) = this.Item.Texture;
+        this.Textures[0] = this.Item.Texture;
         if (this.ActionValue == 0)
             this.Visible = Visible;
         else if (this.ActionValue == 1)
@@ -157,7 +157,7 @@ public class ItemObject : Entity
         }
         var i = Animation.CurrentRow;
         var j = Animation.CurrentColumn;
-        this.Textures(0) = ItemObject.AnimationTexturesTemp[AnimationName + "_" + (j + columns * i)];
+        this.Textures[0] = ItemObject.AnimationTexturesTemp[AnimationName + "_" + (j + columns * i)];
     }
 
     public override void ClickFunction()
@@ -167,8 +167,8 @@ public class ItemObject : Entity
             RemoveItem(this);
             SoundManager.PlaySound("item_found", true);
             Screen.TextBox.TextColor = TextBox.PlayerColor;
-            Screen.TextBox.Show(GameVariables.playerTrainer.Name + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
-            GameVariables.playerTrainer.Inventory.AddItem(this.Item.ID, 1);
+            Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
+            GameVariables.playerTrainer.Inventory.AddItem(this.Item.ItemId, 1);
             PlayerStatistics.Track("Items found", 1);
 
             GameVariables.playerTrainer.AddPoints(1, "Found an item.");

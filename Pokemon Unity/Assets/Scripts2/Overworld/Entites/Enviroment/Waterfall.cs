@@ -126,17 +126,17 @@ public class Waterfall : Entity
             {
                 case 0:
                     {
-                        this.Textures(0) = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_0"];
+                        this.Textures[0] = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_0"];
                         break;
                     }
                 case 1:
                     {
-                        this.Textures(0) = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_1"];
+                        this.Textures[0] = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_1"];
                         break;
                     }
                 case 2:
                     {
-                        this.Textures(0) = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_2"];
+                        this.Textures[0] = Waterfall.WaterfallTexturesTemp[waterFallTextureName + "_2"];
                         break;
                     }
             }
@@ -149,17 +149,17 @@ public class Waterfall : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_0"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_0"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_1"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_1"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_2"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_2"];
                                     break;
                                 }
                         }
@@ -172,17 +172,17 @@ public class Waterfall : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_3"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_3"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_4"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_4"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_5"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_5"];
                                     break;
                                 }
                         }
@@ -195,17 +195,17 @@ public class Waterfall : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_6"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_6"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_7"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_7"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_8"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_8"];
                                     break;
                                 }
                         }
@@ -218,17 +218,17 @@ public class Waterfall : Entity
                         {
                             case 0:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_9"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_9"];
                                     break;
                                 }
                             case 1:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_10"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_10"];
                                     break;
                                 }
                             case 2:
                                 {
-                                    this.Textures(1) = Waterfall.WaterTexturesTemp[waterTextureName + "_11"];
+                                    this.Textures[1] = Waterfall.WaterTexturesTemp[waterTextureName + "_11"];
                                     break;
                                 }
                         }

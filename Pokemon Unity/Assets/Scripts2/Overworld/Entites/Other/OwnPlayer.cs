@@ -174,7 +174,7 @@ public class OwnPlayer : Entity
 				try
 				{
 					Texture2D t = TextureManager.GetTexture(this.Texture, r, 1);
-					Textures(0) = t;
+					Textures[0] = t;
 				}
 				catch
 				{
