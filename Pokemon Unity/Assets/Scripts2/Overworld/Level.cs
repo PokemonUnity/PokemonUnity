@@ -1102,7 +1102,7 @@ public class Level
     /// </summary>
     private void DrawFlashOverlay()
     {
-        Core.SpriteBatch.Draw(TextureManager.GetTexture(@"GUI\Overworld\flash_overlay"), new Rectangle(0, 0, Core.windowSize.Width, Core.windowSize.Height), UnityEngine.Color.white);
+        Core.SpriteBatch.Draw(TextureManager.GetTexture(@"GUI\Overworld\flash_overlay"), new Rectangle(0, 0, Core.windowSize.width, Core.windowSize.height), UnityEngine.Color.white);
     }
 
     /// <summary>

@@ -191,7 +191,7 @@ public class SkyDome
         if (DaycycleTextureData == null)
         {
             Texture2D DaycycleTexture = TextureManager.GetTexture(@"SkyDomeResource\daycycle");
-            DaycycleTextureData = new UnityEngine.Color[DaycycleTexture.Width * DaycycleTexture.Height - 1 + 1];
+            DaycycleTextureData = new UnityEngine.Color[DaycycleTexture.width * DaycycleTexture.height - 1 + 1];
             DaycycleTexture.GetData(DaycycleTextureData);
             SkyDome.DaycycleTexture = DaycycleTexture;
         }
@@ -202,7 +202,7 @@ public class SkyDome
         if (pixelColor != LastSkyColor)
         {
             LastSkyColor = pixelColor;
-            LastEntityColor = DaycycleTextureData[(pixel + DaycycleTexture.Width).Clamp(0, DaycycleTexture.Width * DaycycleTexture.Height - 1)];
+            LastEntityColor = DaycycleTextureData[(pixel + DaycycleTexture.width).Clamp(0, DaycycleTexture.width * DaycycleTexture.height - 1)];
         }
     }
 

@@ -157,13 +157,13 @@ public class OwnPlayer : Entity
 					spriteIndex += 4;
 			}
 
-			Size frameSize = new Size(System.Convert.ToInt32(this.Texture.Width / (double)3), System.Convert.ToInt32(this.Texture.Height / (double)4));
+			Size frameSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
 			int x = 0;
 			if (Screen.Camera.IsMoving() == true)
-				x = GetAnimationX() * frameSize.Width;
+				x = GetAnimationX() * frameSize.width;
 
-			r = new Rectangle(x, frameSize.Width * spriteIndex, frameSize.Width, frameSize.Height);
+			r = new Rectangle(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
 
 			if (r != lastRectangle | lastTexture != SkinName)
 			{

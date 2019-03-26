@@ -83,12 +83,12 @@ public class OverworldPokemon : Entity
 		if (spriteIndex < 0)
 			spriteIndex += 4;
 
-		int width = System.Convert.ToInt32(this.Texture.Width / (double)3);
+		int width = System.Convert.ToInt32(this.Texture.width / (double)3);
 
 		int x = 0;
 		x = AnimationX * width;
 
-		int height = System.Convert.ToInt32(this.Texture.Height / (double)4);
+		int height = System.Convert.ToInt32(this.Texture.height / (double)4);
 
 		int y = height * spriteIndex;
 

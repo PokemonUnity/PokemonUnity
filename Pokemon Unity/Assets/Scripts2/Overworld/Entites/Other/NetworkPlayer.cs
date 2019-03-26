@@ -171,13 +171,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				}
 			}
 
-			Size spriteSize = new Size(System.Convert.ToInt32(this.Texture.Width / (double)3), System.Convert.ToInt32(this.Texture.Height / (double)4));
+			Size spriteSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
 			int x = 0;
 			if (this.moving == true)
-				x = GetAnimationX() * spriteSize.Width;
+				x = GetAnimationX() * spriteSize.width;
 
-			r = new Rectangle(x, spriteSize.Height * spriteIndex, spriteSize.Width, spriteSize.Height);
+			r = new Rectangle(x, spriteSize.height * spriteIndex, spriteSize.width, spriteSize.height);
 
 			if (r != lastRectangle)
 			{

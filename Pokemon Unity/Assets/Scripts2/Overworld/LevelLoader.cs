@@ -831,9 +831,9 @@ public class LevelLoader
 
         if (RemoveFloor == false)
         {
-            for (var x = 0; x <= Size.Width - 1; x++)
+            for (var x = 0; x <= Size.width - 1; x++)
             {
-                for (var z = 0; z <= Size.Height - 1; z++)
+                for (var z = 0; z <= Size.height - 1; z++)
                 {
                     bool exists = false;
 
@@ -881,9 +881,9 @@ public class LevelLoader
             }
         }
         else
-            for (int x = 0; x <= Size.Width - 1; x++)
+            for (int x = 0; x <= Size.width - 1; x++)
             {
-                for (int z = 0; z <= Size.Height - 1; z++)
+                for (int z = 0; z <= Size.height - 1; z++)
                 {
                     for (int i = 0; i <= floorList.Count; i++)
                     {
@@ -980,16 +980,16 @@ public class LevelLoader
         if (TagExists(Tags, "CameraDistanceDelta") == true)
             CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
 
-        for (var X = 0; X <= Size.Width - 1; X += Steps.x)
+        for (var X = 0; X <= Size.width - 1; X += Steps.x)
         {
-            for (var Z = 0; Z <= Size.Height - 1; Z += Steps.z)
+            for (var Z = 0; Z <= Size.height - 1; Z += Steps.z)
             {
                 for (var Y = 0; Y <= SizeY - 1; Y += Steps.y)
                 {
                     bool DoAdd = false;
                     if (Fill == false)
                     {
-                        if (X == 0 | Z == 0 | Z == Size.Height - 1 | X == Size.Width - 1)
+                        if (X == 0 | Z == 0 | Z == Size.height - 1 | X == Size.width - 1)
                             DoAdd = true;
                     }
                     else

@@ -150,7 +150,7 @@ public class NPC : Entity
 		else
 			this.Texture = P3D.TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
 
-		this.FrameSize = new Vector2(System.Convert.ToInt32(this.Texture.Width / (double)3), System.Convert.ToInt32(this.Texture.Height / (double)4));
+		this.FrameSize = new Vector2(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
 		if (HasPokemonTexture == true)
 			this.FrameSize = new Vector2(this.FrameSize.x, this.FrameSize.y);
@@ -316,11 +316,11 @@ public class NPC : Entity
 			if (y < 0)
 				y = 0;
 
-			if (x + xFrameSize > this.Texture.Width)
-				xFrameSize = this.Texture.Width - x;
+			if (x + xFrameSize > this.Texture.width)
+				xFrameSize = this.Texture.width - x;
 
-			if (y + yFrameSize > this.Texture.Height)
-				yFrameSize = this.Texture.Height - y;
+			if (y + yFrameSize > this.Texture.height)
+				yFrameSize = this.Texture.height - y;
 
 			r = new Rectangle(x, y, xFrameSize, yFrameSize);
 

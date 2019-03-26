@@ -141,7 +141,7 @@ public class NetworkPokemon : Entity
 		if (spriteIndex < 0)
 			spriteIndex += 4;
 
-		int dimension = System.Convert.ToInt32(this.Texture.Width / (double)3);
+		int dimension = System.Convert.ToInt32(this.Texture.width / (double)3);
 
 		int x = 0;
 		x = AnimationX * dimension;

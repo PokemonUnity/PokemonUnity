@@ -1061,12 +1061,12 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\bubble");
 
                             if (Settings.Rand.Next(0, 100) == 0)
-                                ObjectsList.Add(new Rectangle(Settings.Rand.Next(0, Core.windowSize.Width - 32), Core.windowSize.Height, 32, 32));
+                                ObjectsList.Add(new Rectangle(Settings.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
 
                             for (var i = 0; i <= ObjectsList.Count - 1; i++)
                             {
                                 Rectangle r = ObjectsList[i];
-                                ObjectsList[i] = new Rectangle(r.x, r.y - 2, r.Width, r.Height);
+                                ObjectsList[i] = new Rectangle(r.x, r.y - 2, r.width, r.height);
 
                                 Core.SpriteBatch.Draw(T, ObjectsList[i], new UnityEngine.Color(255, 255, 255, 150));
                             }
@@ -1099,9 +1099,9 @@ public class World
                     case Weathers.Blizzard:
                     case Weathers.Thunderstorm:
                         {
-                            for (var x = -size; x <= Core.windowSize.Width; x += size)
+                            for (var x = -size; x <= Core.windowSize.width; x += size)
                             {
-                                for (var y = -size; y <= Core.windowSize.Height; y += size)
+                                for (var y = -size; y <= Core.windowSize.height; y += size)
                                     Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.x), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new UnityEngine.Color(255, 255, 255, opacity));
                             }
 

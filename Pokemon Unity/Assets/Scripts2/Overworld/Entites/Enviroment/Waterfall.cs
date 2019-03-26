@@ -45,9 +45,9 @@ public class Waterfall : Entity
                 this.waterFallTextureName = AdditionalValue;
                 if (Waterfall.WaterfallTexturesTemp.ContainsKey(AdditionalValue + "_0") == false)
                 {
-                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.Width, r.Height)));
-                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width, r.y, r.Width, r.Height)));
-                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 2, r.y, r.Width, r.Height)));
+                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.width, r.height)));
+                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width, r.y, r.width, r.height)));
+                    Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 2, r.y, r.width, r.height)));
                 }
             }
             else if (Waterfall.WaterfallTexturesTemp.ContainsKey("_0") == false)
@@ -64,18 +64,18 @@ public class Waterfall : Entity
                 this.waterTextureName = AdditionalValue;
                 if (Waterfall.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0") == false)
                 {
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 2, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 3, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 4, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 5, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 6, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 7, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 8, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 9, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 10, r.y, r.Width, r.Height)));
-                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.Width * 11, r.y, r.Width, r.Height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 2, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 3, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 4, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 5, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 6, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 7, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 8, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 9, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 10, r.y, r.width, r.height)));
+                    Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 11, r.y, r.width, r.height)));
                 }
             }
             else if (Waterfall.WaterTexturesTemp.ContainsKey("_0") == false)
