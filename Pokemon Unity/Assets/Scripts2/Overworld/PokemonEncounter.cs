@@ -113,7 +113,7 @@ public class PokemonEncounter
         if (this._levelReference.PokemonEncounterData.EncounteredPokemon == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
         {
             // If the player met the set position:
-            if (Screen.Camera.Position.X == this._levelReference.PokemonEncounterData.Position.X & Screen.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
+            if (Screen.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & Screen.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
             {
                 // Make the player stop and set encounter check to false:
                 this._levelReference.PokemonEncounterData.EncounteredPokemon = false;

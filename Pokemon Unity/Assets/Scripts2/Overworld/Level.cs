@@ -75,7 +75,7 @@ public class Level
     private List<Shader> _shaders = new List<Shader>();
     private BackdropRenderer _backdropRenderer;
 
-    private List<NetworkPlayer> _networkPlayers = new List<NetworkPlayer>();
+    private List<Entity.Misc.NetworkPlayer> _networkPlayers = new List<Entity.Misc.NetworkPlayer>();
     private List<NetworkPokemon> _networkPokemon = new List<NetworkPokemon>();
 
     private List<Entity.Entity> _offsetMapEntities = new List<Entity.Entity>();
@@ -236,7 +236,7 @@ public class Level
     /// <summary>
     /// The array of players on the server to render.
     /// </summary>
-    public List<NetworkPlayer> NetworkPlayers
+    public List<Entity.Misc.NetworkPlayer> NetworkPlayers
     {
         get
         {
@@ -1102,7 +1102,7 @@ public class Level
     /// </summary>
     private void DrawFlashOverlay()
     {
-        Core.SpriteBatch.Draw(TextureManager.GetTexture(@"GUI\Overworld\flash_overlay"), new Rectangle(0, 0, Core.windowSize.Width, Core.windowSize.Height), Color.White);
+        Core.SpriteBatch.Draw(TextureManager.GetTexture(@"GUI\Overworld\flash_overlay"), new Rectangle(0, 0, Core.windowSize.Width, Core.windowSize.Height), UnityEngine.Color.white);
     }
 
     /// <summary>
@@ -1222,7 +1222,7 @@ public class Level
 
             // Unlock the yaw on the camera:
             (OverworldCamera)Screen.Camera.YawLocked = false;
-            NetworkPlayer.ScreenRegionChanged();
+            Entity.Misc.NetworkPlayer.ScreenRegionChanged();
 
             // If a warp occured, update the camera:
             Screen.Camera.Update();
@@ -1283,7 +1283,7 @@ public class Level
                     return ent;
             }
 
-        return null/* TODO Change to default(_) if this is not a reference type */;
+        return null;// TODO Change to default(_) if this is not a reference type 
     }
 
     /// <summary>

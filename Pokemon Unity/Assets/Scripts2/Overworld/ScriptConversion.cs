@@ -30,9 +30,9 @@ public class ScriptConversion
             return retDbl;
         else if (IsArithmeticExpression(expression) == true)
         {
-            string postFix = ToPostfix(expression.ToString());
+            string postFix = ToPostfix(expression.ToString(), ref retError);
 
-            return EvaluatePostfix(postFix);
+            return EvaluatePostfix(postFix, ref retError);
         }
         else
             return 0d;
@@ -74,13 +74,13 @@ public class ScriptConversion
                 cNumber += token.ToString();
             else if (cNumber.Length > 0)
             {
-                stack.Insert(0, InternalToDouble(cNumber));
+                stack.Insert(0, InternalToDouble(cNumber, ref hasError));
                 cNumber = "";
             }
 
             if (cNumber.Length > 0 & tokens.Count == 0)
             {
-                stack.Insert(0, InternalToDouble(cNumber));
+                stack.Insert(0, InternalToDouble(cNumber, ref hasError));
                 cNumber = "";
             }
 
@@ -327,8 +327,12 @@ public class ScriptConversion
     {
         expression = expression.Replace(".", System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
-        if (StringHelper.IsNumeric(expression))
-            return System.Convert.ToDouble(expression);
+        //if (StringHelper.IsNumeric(expression)) 
+        //    return System.Convert.ToDouble(expression);
+		double i = double.NaN;// null;
+		double.TryParse(expression, out i);
+		if (!double.IsNaN(i))
+			return i;
         else if (expression.ToLower() == "false")
             return 0;
         else if (expression.ToLower() == "true")

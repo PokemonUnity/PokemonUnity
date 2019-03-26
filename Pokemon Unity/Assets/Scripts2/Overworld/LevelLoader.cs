@@ -127,7 +127,7 @@ public class LevelLoader
             Busy -= 1;
 
             if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen & loadOffsetMap == false)
-                (OverworldScreen)CurrentScreen.Titles.Add(new OverworldScreen.Title("Couldn't find map file!", 20.0F, Color.White, 6.0F, Vector2.Zero, true));
+                ((OverworldScreen)CurrentScreen).Titles.Add(new OverworldScreen.Title("Couldn't find map file!", 20.0F, UnityEngine.Color.white, 6.0F, Vector2.zero, true));
 
             return;
         }
@@ -592,7 +592,7 @@ public class LevelLoader
 
         bool addNPC = false;
         if (TagExists(Tags, "AddNPC") == true)
-            addNPC = System.Convert.ToB.xlean(GetTag(Tags, "AddNPC"));
+            addNPC = System.Convert.ToBoolean(GetTag(Tags, "AddNPC"));
 
         string structureKey = MapOffset.x.ToString() + "|" + MapOffset.y.ToString() + "|" + MapOffset.z.ToString() + "|" + MapName;
 
@@ -725,7 +725,7 @@ public class LevelLoader
     private void AddNPC(Dictionary<string, object> Tags)
     {
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         List<float> ScaleList;
         Vector3 Scale = new Vector3(1);
@@ -784,7 +784,7 @@ public class LevelLoader
         Size Size = new Size(sizeList[0], sizeList[1]);
 
         List<int> PosList = (List<int>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.X, PosList[1] + Offset.y, PosList[2] + Offset.z);
+        Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         string TexturePath = System.Convert.ToString(GetTag(Tags, "TexturePath"));
         Rectangle TextureRectangle = (Rectangle)GetTag(Tags, "Texture");

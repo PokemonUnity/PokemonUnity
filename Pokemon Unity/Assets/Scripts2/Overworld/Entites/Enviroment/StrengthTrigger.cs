@@ -68,7 +68,7 @@ public class StrengthTrigger : Entity
                     if (sRock.Position.x == this.Position.x & sRock.Position.z == this.Position.z)
                     {
                         if (RemoveRock == true)
-                            (StrengthRock)sRock.CanBeRemoved = true;
+                            ((StrengthRock)sRock).CanBeRemoved = true;
                         if (RemoveForever == true)
                             ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Screen.Level.LevelFile + "_" + sRock.ID.ToString());
                         if (ActivateScript != "")

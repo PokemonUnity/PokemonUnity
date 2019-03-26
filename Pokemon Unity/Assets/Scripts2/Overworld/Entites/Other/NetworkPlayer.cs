@@ -81,7 +81,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		string texturePath = GetTexturePath(TextureID);
 
-		Texture2D OnlineSprite = null/* TODO Change to default(_) if this is not a reference type */;
+		Texture2D OnlineSprite = null;//* TODO Change to default(_) if this is not a reference type
 		if (this.GameJoltID != "")
 		{
 			if (GameJolt.Emblem.HasDownloadedSprite(this.GameJoltID) == true)
@@ -308,7 +308,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 						var state = GraphicsDevice.DepthStencilState;
 						GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
 						Draw(BaseModel.BillModel,
-							new string()
+							new Texture2D[]
 							{
 								this.NameTexture
 							}, false);
@@ -374,7 +374,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 			if (!p.Skin.StartsWith("[POKEMON|N]") && !p.Skin.StartsWith("[Pokémon|N]") && !p.Skin.StartsWith("[POKEMON|S]") && !p.Skin.StartsWith("[Pokémon|S]"))
 			{
-				if (!string.IsNullOrWhiteSpace(GameJoltID) && CheckForOnlineSprite == false)
+				if (!string.IsNullOrEmpty(GameJoltID) && CheckForOnlineSprite == false)
 				{
 					CheckForOnlineSprite = true;
 					this.SetTexture(p.Skin);
@@ -442,20 +442,20 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				RenderTarget2D renderTarget = new RenderTarget2D(Core.GraphicsDevice, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y * 3));
 				Core.GraphicsDevice.SetRenderTarget(renderTarget);
 
-				Core.GraphicsDevice.Clear(Color.Transparent);
+				Core.GraphicsDevice.Clear(new UnityEngine.Color(0,0,0,0));//ToDo: Transparent Color, check alpha
 
 				Core.SpriteBatch.Begin();
-				Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new Color(0, 0, 0, 150));
-				Core.SpriteBatch.DrawString(font, text, Vector2.Zero, Color.White);
+				Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new UnityEngine.Color(0, 0, 0, 150));
+				Core.SpriteBatch.DrawString(font, text, Vector2.Zero, UnityEngine.Color.white);
 				Core.SpriteBatch.End();
 
-				Core.GraphicsDevice.SetRenderTarget(null/* TODO Change to default(_) if this is not a reference type */);
+				Core.GraphicsDevice.SetRenderTarget(null);// TODO Change to default(_) if this is not a reference type 
 				SpriteTextStorage.Add(text, renderTarget);
 
 				return renderTarget;
 			}
 		}
-		return null/* TODO Change to default(_) if this is not a reference type */;
+		return null;// TODO Change to default(_) if this is not a reference type
 	}
 }
 }

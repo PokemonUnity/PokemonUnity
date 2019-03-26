@@ -60,7 +60,7 @@ public class BerryPlant : Entity
         }
         else
         {
-            var withBlock = My.Computer.Clock.LocalTime;
+            var withBlock = DateTime.UtcNow;
             int diff = (DateTime.Now - d).Seconds;
 
             Grow += diff;

@@ -109,7 +109,7 @@ public class SkyDome
         {
             foreach (BasicEffect BasicEffect in ModelMesh.Effects)
             {
-                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(Screen.Camera.Position.X, -5, Screen.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
+                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(Screen.Camera.Position.x, -5, Screen.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
 
                 BasicEffect.View = Screen.Camera.View;
                 BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, 10000);
@@ -117,7 +117,7 @@ public class SkyDome
                 BasicEffect.TextureEnabled = true;
                 BasicEffect.Texture = texture;
                 BasicEffect.Alpha = alpha;
-.x
+
                 switch (Screen.Level.World.CurrentMapWeather)
                 {
                     case World.Weathers.Clear:
@@ -173,12 +173,12 @@ public class SkyDome
         Core.GraphicsDevice.BlendState = previousBlendState;
     }
 
-    private static Color[] DaycycleTextureData = null;
+    private static UnityEngine.Color[] DaycycleTextureData = null;
     private static Texture2D DaycycleTexture = null/* TODO Change to default(_) if this is not a reference type */;
-    private static Color LastSkyColor = new Color(0, 0, 0, 0);
-    private static Color LastEntityColor = new Color(0, 0, 0, 0);
+    private static UnityEngine.Color LastSkyColor = new UnityEngine.Color(0, 0, 0, 0);
+    private static UnityEngine.Color LastEntityColor = new UnityEngine.Color(0, 0, 0, 0);
 
-    public static Color GetDaytimeColor(bool shader)
+    public static UnityEngine.Color GetDaytimeColor(bool shader)
     {
         if (shader == true)
             return LastEntityColor;
@@ -191,14 +191,14 @@ public class SkyDome
         if (DaycycleTextureData == null)
         {
             Texture2D DaycycleTexture = TextureManager.GetTexture(@"SkyDomeResource\daycycle");
-            DaycycleTextureData = new Color[DaycycleTexture.Width * DaycycleTexture.Height - 1 + 1];
+            DaycycleTextureData = new UnityEngine.Color[DaycycleTexture.Width * DaycycleTexture.Height - 1 + 1];
             DaycycleTexture.GetData(DaycycleTextureData);
             SkyDome.DaycycleTexture = DaycycleTexture;
         }
 
         int pixel = GetTimeValue();
 
-        Color pixelColor = DaycycleTextureData[pixel];
+        UnityEngine.Color pixelColor = DaycycleTextureData[pixel];
         if (pixelColor != LastSkyColor)
         {
             LastSkyColor = pixelColor;
@@ -302,7 +302,7 @@ public class SkyDome
         else
             p = System.Convert.ToSingle((progress - 720) / (double)720);
 
-        return new Vector3(v.X + ((1 - v.X) * p), v.y + ((1 - v.y) * p), v.z + ((1 - v.z) * p));
+        return new Vector3(v.x + ((1 - v.x) * p), v.y + ((1 - v.y) * p), v.z + ((1 - v.z) * p));
     }
 
     private int GetTimeValue()
@@ -317,4 +317,4 @@ public class SkyDome
         }
     }
 }
-}.x.x
+}

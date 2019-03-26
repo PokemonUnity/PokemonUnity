@@ -414,7 +414,7 @@ public class NPC : Entity
 								if (this.IsTrainer == true)
 								{
 									string trainerFilePath = GameModeManager.GetScriptPath(this.AdditionalValue + ".dat");
-									System.Security.FileValidation.CheckFileValid(trainerFilePath, false, "NPC.vb");
+									//System.Security.FileValidation.CheckFileValid(trainerFilePath, false, "NPC.vb");
 
 									string[] trainerContent = System.IO.File.ReadAllLines(trainerFilePath);
 									foreach (string line in trainerContent)

@@ -139,7 +139,7 @@ public class SmashRock : Entity
         string File = GameModeManager.GetContentFilePath(@"Data\smashrockitems.dat");
         if (System.IO.File.Exists(File) == true)
         {
-            System.Security.FileValidation.CheckFileValid(File, false, "SmashRock.vb");
+            //System.Security.FileValidation.CheckFileValid(File, false, "SmashRock.vb");
             string[] data = System.IO.File.ReadAllLines(File);
             foreach (string line in data)
             {

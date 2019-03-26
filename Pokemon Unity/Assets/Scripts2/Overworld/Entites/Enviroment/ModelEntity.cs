@@ -73,7 +73,7 @@ public class ModelEntity : Entity
                 _model.Draw(this.World, Screen.Camera.View, Screen.Camera.Projection);
 
             if (drawViewBox == true)
-                BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, Color.Red);
+                BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, UnityEngine.Color.red);
         }
     }
 }

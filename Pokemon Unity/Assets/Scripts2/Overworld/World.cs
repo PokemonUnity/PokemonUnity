@@ -58,7 +58,7 @@ public class World
     {
         get
         {
-            return System.Convert.ToInt32(((My.Computer.Clock.LocalTime.DayOfYear - (My.Computer.Clock.LocalTime.DayOfWeek - 1)) / (double)7) + 1);
+            return System.Convert.ToInt32(((DateTime.UtcNow.DayOfYear - ((double)DateTime.UtcNow.DayOfWeek - 1)) / (double)7) + 1);
         }
     }
 
@@ -561,7 +561,7 @@ public class World
         }
 
     endsub:
-        ;
+        //;
         Screen.Camera.CreateNewProjection(Screen.Camera.FOV);
     }
 
@@ -848,7 +848,7 @@ public class World
         Screen.Effect.DiffuseColor = Screen.SkyDome.GetWeatherColorMultiplier(Screen.Effect.DiffuseColor);
     }
 
-    private Color GetWeatherBackgroundColor(Color defaultColor)
+    private UnityEngine.Color GetWeatherBackgroundColor(UnityEngine.Color defaultColor)
     {
         Vector3 v = Vector3.one;
 
@@ -864,7 +864,7 @@ public class World
             case World.Weathers.Rain:
             case Weathers.Thunderstorm:
                 {
-                    v = new Vector3(0.4, 0.4, 0.7);
+                    v = new Vector3(0.4f, 0.4f, 0.7f);
                     break;
                 }
 
@@ -876,7 +876,7 @@ public class World
 
             case World.Weathers.Underwater:
                 {
-                    v = new Vector3(0.1, 0.3, 0.9);
+                    v = new Vector3(0.1f, 0.3f, 0.9f);
                     break;
                 }
 
@@ -927,7 +927,7 @@ public class World
 
             case EnvironmentTypes.Inside:
                 {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new Color(173, 216, 255));
+                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(173, 216, 255));
                     Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
                     Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds");
                     Screen.SkyDome.TextureDown = null;
@@ -936,7 +936,7 @@ public class World
 
             case EnvironmentTypes.Dark:
                 {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new Color(29, 29, 50));
+                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(29, 29, 50));
                     Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
                     Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Dark");
                     Screen.SkyDome.TextureDown = null;
@@ -945,7 +945,7 @@ public class World
 
             case EnvironmentTypes.Cave:
                 {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new Color(34, 19, 12));
+                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(34, 19, 12));
                     Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
                     Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Cave");
                     Screen.SkyDome.TextureDown = null;
@@ -954,7 +954,7 @@ public class World
 
             case EnvironmentTypes.Underwater:
                 {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new Color(19, 54, 117));
+                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(19, 54, 117));
                     Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
                     Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Underwater");
                     Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\UnderwaterGround");
@@ -963,7 +963,7 @@ public class World
 
             case EnvironmentTypes.Forest:
                 {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new Color(30, 66, 21));
+                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(30, 66, 21));
                     Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
                     Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Forest");
                     Screen.SkyDome.TextureDown = null;
@@ -997,7 +997,7 @@ public class World
             }
             else
             {
-                Texture2D T = null/* TODO Change to default(_) if this is not a reference type */;
+                Texture2D T = null;// TODO Change to default(_) if this is not a reference type
 
                 int size = 128;
                 int opacity = 30;
@@ -1008,7 +1008,7 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\rain");
 
-                            WeatherOffset.X += 8;
+                            WeatherOffset.x += 8;
                             WeatherOffset.y += 16;
                             break;
                         }
@@ -1017,7 +1017,7 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\rain");
 
-                            WeatherOffset.X += 12;
+                            WeatherOffset.x += 12;
                             WeatherOffset.y += 20;
 
                             opacity = 50;
@@ -1028,7 +1028,7 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
 
-                            WeatherOffset.X += 1;
+                            WeatherOffset.x += 1;
                             WeatherOffset.y += 1;
                             break;
                         }
@@ -1037,7 +1037,7 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
 
-                            WeatherOffset.X += 8;
+                            WeatherOffset.x += 8;
                             WeatherOffset.y += 2;
 
                             opacity = 80;
@@ -1048,7 +1048,7 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\sand");
 
-                            WeatherOffset.X += 4;
+                            WeatherOffset.x += 4;
                             WeatherOffset.y += 1;
 
                             opacity = 80;
@@ -1066,9 +1066,9 @@ public class World
                             for (var i = 0; i <= ObjectsList.Count - 1; i++)
                             {
                                 Rectangle r = ObjectsList[i];
-                                ObjectsList[i] = new Rectangle(r.X, r.y - 2, r.Width, r.Height);
+                                ObjectsList[i] = new Rectangle(r.x, r.y - 2, r.Width, r.Height);
 
-                                Core.SpriteBatch.Draw(T, ObjectsList[i], new Color(255, 255, 255, 150));
+                                Core.SpriteBatch.Draw(T, ObjectsList[i], new UnityEngine.Color(255, 255, 255, 150));
                             }
 
                             break;
@@ -1085,8 +1085,8 @@ public class World
                         }
                 }
 
-                if (WeatherOffset.X >= size)
-                    WeatherOffset.X = 0;
+                if (WeatherOffset.x >= size)
+                    WeatherOffset.x = 0;
                 if (WeatherOffset.y >= size)
                     WeatherOffset.y = 0;
 
@@ -1102,9 +1102,9 @@ public class World
                             for (var x = -size; x <= Core.windowSize.Width; x += size)
                             {
                                 for (var y = -size; y <= Core.windowSize.Height; y += size)
-                                    Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.X), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new Color(255, 255, 255, opacity));
+                                    Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.x), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new UnityEngine.Color(255, 255, 255, opacity));
                             }
-.x
+
                             break;
                         }
                 }
@@ -1113,18 +1113,18 @@ public class World
     }
 
     public static void GenerateParticles(int chance, Weathers MapWeather)
-    {.x
+    {
         if (MapWeather == Weathers.Thunderstorm)
         {
             if (Settings.Rand.Next(0, 250) == 0)
             {
-                float pitch = -(Settings.Rand.Next(8, 11) / (double)10.0F);
-                Debug.Print(pitch.ToString());
+                float pitch = -(Settings.Rand.Next(8, 11) / 10.0F);
+                GameVariables.DebugLog(pitch.ToString());
                 SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, SoundManager.Volume, false);
             }
         }
 
-        if (LevelLoader.IsBusy == false).x
+        if (LevelLoader.IsBusy == false)
         {
             Screen.Identifications[] validScreen = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen };
             if (validScreen.Contains(Core.CurrentScreen.Identification) == true)
@@ -1133,9 +1133,9 @@ public class World
                 {
                     if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == false)
                         return;
-                }.x
+                }
 
-                Texture2D T = null/* TODO Change to default(_) if this is not a reference type */;
+                Texture2D T = null;// TODO Change to default(_) if this is not a reference type
 
                 float speed;
                 Vector3 scale = new Vector3(1);
@@ -1144,7 +1144,7 @@ public class World
                 switch (MapWeather)
                 {
                     case Weathers.Rain:
-                        {.x
+                        {
                             speed = 0.1F;
                             T = TextureManager.GetTexture(@"Textures\Weather\rain3");
                             if (chance > -1)
@@ -1162,7 +1162,7 @@ public class World
                                     {
                                         T = TextureManager.GetTexture(@"Textures\Weather\rain2");
                                         scale = new Vector3(0.1F, 0.1F, 0.1F);
-                                        break;.x
+                                        break;
                                     }
 
                                 default:
@@ -1181,8 +1181,8 @@ public class World
                         {
                             speed = 0.02F;
                             T = TextureManager.GetTexture(@"Textures\Weather\snow2");
-                            if (c.xnce > -1)
-                                c.xnce = 5;
+                            if (chance > -1)
+                                chance = 5;
                             scale = new Vector3(0.03F, 0.03F, 0.1F);
                             break;
                         }
@@ -1198,7 +1198,7 @@ public class World
                             break;
                         }
 
-                    case Weathers.Sandstorm:.x
+                    case Weathers.Sandstorm:
                         {
                             speed = 0.1F;
                             T = TextureManager.GetTexture(@"Textures\Weather\sand");
@@ -1240,7 +1240,7 @@ public class World
 
                 if (Settings.Rand.Next(0, chance) == 0)
                 {
-                    for (var x = cameraPosition.X - range; x <= cameraPosition.X + range; x++)
+                    for (var x = cameraPosition.x - range; x <= cameraPosition.x + range; x++)
                     {
                         for (var z = cameraPosition.z - range; z <= cameraPosition.z + range; z++)
                         {
@@ -1264,8 +1264,8 @@ public class World
                                 if (MapWeather == Weathers.Sandstorm)
                                 {
                                     p.Behavior = Particle.Behaviors.LeftToRight;
-                                    p.Destination = cameraPosition.X + 5;
-                                    p.Position.X -= 2;
+                                    p.Destination = cameraPosition.x + 5;
+                                    p.Position.x -= 2;
                                 }
                                 if (MapWeather == Weathers.Blizzard)
                                     p.Opacity = 1.0F;
@@ -1324,22 +1324,22 @@ public class World
                     }
             }
 
-            Color[] inputColors =
+            UnityEngine.Color[] inputColors = new UnityEngine.Color[]
             {
-                new Color(0, 0, 0),
-                new Color(85, 85, 85),
-                new Color(170, 170, 170),
-                new Color(255, 255, 255)
+                new UnityEngine.Color(0, 0, 0),
+                new UnityEngine.Color(85, 85, 85),
+                new UnityEngine.Color(170, 170, 170),
+                new UnityEngine.Color(255, 255, 255)
             }.Reverse().ToArray();
-            List<Color> outputColors = new List<Color>();
+            List<UnityEngine.Color> outputColors = new List<UnityEngine.Color>();
 
-            Color[] Data = new Color[4];
+            UnityEngine.Color[] Data = new UnityEngine.Color[4];
             seasonTexture.GetData(0, new Rectangle(x, y, 2, 2), Data, 0, 4);
 
-            SeasonTextureBuffer.Add(T, T.Replac.xolors(inputColors, Data));.x
+            SeasonTextureBuffer.Add(T, T.ReplaceColors(inputColors, Data));
             return SeasonTextureBuffer[T];
         }
-        return null/* TODO Change to default(_) if this is not a reference type */;
+        return null;// TODO Change to default(_) if this is not a reference type
     }
 
     public static Seasons ServerSeason = Seasons.Spring;
@@ -1360,8 +1360,8 @@ public class World
 
                 seconds += System.Convert.ToInt32(Math.Abs((DateTime.Now - LastServerDataReceived).Seconds));
 
-                return hours * 3600 + minutes * 60 + seconds;.x
-            }.x
+                return hours * 3600 + minutes * 60 + seconds;
+            }
             else
                 return DateTime.UtcNow.Hour * 3600 + DateTime.UtcNow.Minute * 60 + DateTime.UtcNow.Second;
         }
@@ -1382,7 +1382,7 @@ public class World
                 return hours * 60 + minutes;
             }
             else
-                return My.Computer.Clock.LocalTime.Hour * 60 + My.Computer.Clock.LocalTime.Minute;
+                return DateTime.UtcNow.Hour * 60 + DateTime.UtcNow.Minute;
         }
     }
 

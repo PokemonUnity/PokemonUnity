@@ -477,7 +477,7 @@ public class Entity : BaseEntity
 		}
 
 		string[] notNames = new string[] { "Floor", "OwnPlayer", "Water", "Whirlpool", "Particle", "OverworldPokemon", "ItemObject", "NetworkPokemon", "NetworkPlayer" };
-		if (Screen.Camera.Name == "Overworld" && notNames.Contains(this.EntityID) == false)
+		if (Screen.Camera.Name == "Overworld" && notNames.ToList().Contains(this.EntityID.ToString()) == false)
 		{
 			this.Opacity = this._normalOpactity;
 			if ((OverworldCamera)Screen.Camera.ThirdPerson == true)
@@ -708,7 +708,7 @@ public class Entity : BaseEntity
 				if (this.EntityID != Entities.Floor & this.EntityID != Entities.Water)
 				{
 					if (drawViewBox == true)
-						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, Color.LightCoral);
+						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Screen.Camera.View, Screen.Camera.Projection, new UnityEngine.Color(240,128,128));
 				}
 			}
 			else

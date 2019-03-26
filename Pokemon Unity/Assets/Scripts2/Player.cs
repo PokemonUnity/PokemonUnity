@@ -7,6 +7,7 @@ using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
 using PokemonUnity.Saving.SerializableClasses;
+using PokemonUnity.Player;
 
 [Serializable]
 public class Player
@@ -19,7 +20,7 @@ public class Player
 	/// <summary>
 	/// Please use the values stored in <see cref="Trainer.SecretID"/>
 	/// </summary>
-	private int? secretId { get; set; } 
+	private int? secretId { get; set; }
 	/// <summary>
 	/// Player's Pokemon Party is stored in Player class, 
 	/// and then reflected in Trainer, to match what occurs
@@ -89,19 +90,19 @@ public class Player
 	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 1] == 1 select PlayerPokedex[index, 1]).Count(); } }
 	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 0] == 1 select PlayerPokedex[index, 0]).Count(); } }
 	//ToDo: Adventure Start Date
-    public System.TimeSpan playerTime { get; private set; }
-    //public int playerHours;
-    //public int playerMinutes;
-    //public int playerSeconds;
+	public System.TimeSpan playerTime { get; private set; }
+	//public int playerHours;
+	//public int playerMinutes;
+	//public int playerSeconds;
 
-    ///// <summary>
-    ///// Multiple Gens/Regions can be looked-up using
-    ///// </summary>
-    ///// <remarks>I thought there were only 8 badges?</remarks>
-    ///// ToDo: Array[Region/MapId,GymBadge] / or Array[i,8]
-    ///// gymsEncountered[1,5] == 2nd gen/region, 6th gym badge
+	///// <summary>
+	///// Multiple Gens/Regions can be looked-up using
+	///// </summary>
+	///// <remarks>I thought there were only 8 badges?</remarks>
+	///// ToDo: Array[Region/MapId,GymBadge] / or Array[i,8]
+	///// gymsEncountered[1,5] == 2nd gen/region, 6th gym badge
 	//[Obsolete]
-    //public bool[,] gymsEncountered { get; private set; }
+	//public bool[,] gymsEncountered { get; private set; }
 	///// <summary>
 	///// if <see cref="gymsBeatTime"/> is null, then value is false.
 	///// </summary>
@@ -117,6 +118,8 @@ public class Player
 	/// regardless of how they're set in game. One value per badge.
 	/// </summary>
 	public Dictionary<GymBadges, System.DateTime?> GymsBeatTime { get; private set; }
+	//public Badge Badges { get; set; }
+	public int[] Badges { get { return GymsBeatTime.Where(x => x.Value.HasValue).Select(x => (int)x.Key).ToArray(); } }
 	#endregion
 
 	#region Player Customization
