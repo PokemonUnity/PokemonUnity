@@ -116,7 +116,7 @@ public class Whirlpool : Entity
             string pName = ReturnWhirlPoolPokemonName();
             string s = "";
 
-            if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) == true & pName != "" | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+            if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) == true & pName != "" | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
             {
                 s = @"version=2
 @text.show(" + pName + @" used~Whirlpool!)

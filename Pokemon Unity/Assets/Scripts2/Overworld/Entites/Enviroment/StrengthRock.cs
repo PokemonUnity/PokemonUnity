@@ -44,7 +44,7 @@ public class StrengthRock : Entity
 
             string text = "A Pokémon may be~able to move this.";
 
-            if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+            if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                 text += "~Do you want to~use Strength?%Yes|No%";
 
             Screen.TextBox.Show(text, this);

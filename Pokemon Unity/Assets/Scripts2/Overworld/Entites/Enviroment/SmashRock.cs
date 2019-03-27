@@ -32,7 +32,7 @@ public class SmashRock : Entity
 
             string text = "This rock looks like~it can be broken!";
 
-            if (pName != "" | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+            if (pName != "" | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                 text += "~Do you want to~use Rock Smash?%Yes|No%";
 
             Screen.TextBox.Show(text, this);

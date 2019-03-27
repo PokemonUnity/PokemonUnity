@@ -146,7 +146,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// </summary>
 	public bool WildBattle(PokemonUnity.Pokemon.Pokemon pkmn, bool cantescape = true, bool canlose = false)
 	{
-		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.debugMode))
+		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.IS_DEBUG_ACTIVE))
 		{
 			if (GameVariables.playerTrainer.Trainer.Party.Length > 0)
 				GameVariables.DebugLog("SKIPPING BATTLE...");
@@ -182,7 +182,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// </summary>
 	public bool DoubleWildBattle(PokemonUnity.Pokemon.Pokemon pkmn1, PokemonUnity.Pokemon.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
 	{
-		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.debugMode))
+		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.IS_DEBUG_ACTIVE))
 		{
 			if (GameVariables.playerTrainer.Trainer.Party.Length > 0)
 				GameVariables.DebugLog("SKIPPING BATTLE...");

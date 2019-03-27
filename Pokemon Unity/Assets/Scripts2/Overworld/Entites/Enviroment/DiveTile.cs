@@ -41,7 +41,7 @@ public class DiveTile : Entity
             string t = "The water seems to be~really deep at this point.";
             string d = GetDivePokemon();
 
-            if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) == true | GameVariables.playerTrainer.SandBoxMode == true | GameController.IS_DEBUG_ACTIVE == true)
+            if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) == true | GameVariables.playerTrainer.SandBoxMode == true | GameVariables.IS_DEBUG_ACTIVE == true)
                 t += "*Do you want to~use Dive?%Yes|No%";
             Screen.TextBox.Show(t, (DiveTile)this);
             SoundManager.PlaySound("select");

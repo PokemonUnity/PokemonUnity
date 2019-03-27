@@ -12,7 +12,7 @@ public class RockClimbEntity : Entity
 
     public override void ClickFunction()
     {
-        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             TempClicked = true;
             if (GetRockClimbPokemon() == null)
@@ -24,7 +24,7 @@ public class RockClimbEntity : Entity
 
     public override void WalkOntoFunction()
     {
-        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             TempClicked = false;
             if (GetRockClimbPokemon() == null)
@@ -63,7 +63,7 @@ public class RockClimbEntity : Entity
         }
 
         // No rock climb in team:
-        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             if (GameVariables.playerTrainer.Party.GetCount() > 0)
                 return GameVariables.playerTrainer.Party[0];

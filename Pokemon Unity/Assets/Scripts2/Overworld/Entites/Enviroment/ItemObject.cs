@@ -34,7 +34,7 @@ public class ItemObject : Entity
         }
         else if (this.ActionValue == 2)
         {
-            if (GameVariables.playerTrainer.Inventory.HasMegaBracelet())
+            if (GameVariables.playerTrainer.Bag.HasMegaBracelet())
             {
                 this.Visible = Visible;
                 // sparkles
@@ -167,8 +167,8 @@ public class ItemObject : Entity
             RemoveItem(this);
             SoundManager.PlaySound("item_found", true);
             Screen.TextBox.TextColor = TextBox.PlayerColor;
-            Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
-            GameVariables.playerTrainer.Inventory.AddItem(this.Item.ItemId, 1);
+            Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Bag.GetMessageReceive(this.Item, 1), this);
+            GameVariables.playerTrainer.Bag.AddItem(this.Item.ItemId, 1);
             PlayerStatistics.Track("Items found", 1);
 
             GameVariables.playerTrainer.AddPoints(1, "Found an item.");

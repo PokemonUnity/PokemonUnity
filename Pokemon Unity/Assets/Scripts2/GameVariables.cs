@@ -483,7 +483,7 @@ public class UnityUtilityIntegration
 	#endregion
 
 	#region Debug Functions and Features
-	public static bool debugMode { get; set; }
+	public static bool IS_DEBUG_ACTIVE { get; set; }
 	public static void DebugLog(string text, bool? error = null)
 	{
 		if (!error.HasValue)

@@ -158,7 +158,7 @@ public class BerryPlant : Entity
         string text = "";
 
         bool hasBottle = false;
-        if (GameVariables.playerTrainer.Inventory.GetItemAmount(175) > 0)
+        if (GameVariables.playerTrainer.Bag.GetItemAmount(175) > 0)
             hasBottle = true;
 
         switch (this.Phase)
@@ -222,12 +222,12 @@ public class BerryPlant : Entity
             {
                 case 0:
                     {
-                        GameVariables.playerTrainer.Inventory.AddItem(this.Berry.ID, this.Berries);
+                        GameVariables.playerTrainer.Bag.AddItem(this.Berry.ID, this.Berries);
                         string Text = "";
                         if (this.Berries == 1)
-                            Text = GameVariables.playerTrainer.PlayerName + " picked the~" + Berry.Name + " Berry.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
+                            Text = GameVariables.playerTrainer.PlayerName + " picked the~" + Berry.Name + " Berry.*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
                         else
-                            Text = GameVariables.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Berry, this.Berries);
+                            Text = GameVariables.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
 
                         GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
                         PlayerStatistics.Track("[2006]Berries picked", this.Berries);
@@ -310,7 +310,7 @@ public class BerryPlant : Entity
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         GameVariables.Level.Entities.Add(newEnt);
 
-        GameVariables.playerTrainer.Inventory.RemoveItem(BerryIndex + 2000, 1);
+        GameVariables.playerTrainer.Bag.RemoveItem(BerryIndex + 2000, 1);
     }
 
     private static int GetBerryAmount(Item.Item.Berry Berry, int Watered)

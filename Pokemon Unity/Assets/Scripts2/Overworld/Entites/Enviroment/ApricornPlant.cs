@@ -160,12 +160,12 @@ public class ApricornPlant : Entity
 		{
 			Item.Item Item = new PokemonUnity.Item.Item(GetItem());
 
-			GameVariables.playerTrainer.Inventory.AddItem(Item.ID, 1);
+			GameVariables.playerTrainer.Bag.AddItem(Item.ID, 1);
 			//GameVariables.playerTrainer.Bag.AddItem(Item);
 			PlayerStatistics.Track("[85]Apricorns picked", 1);
 			SoundManager.PlaySound("item_found", true);
 			Screen.TextBox.TextColor = TextBox.PlayerColor;
-			Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Inventory.GetMessageReceive(Item, 1), this);
+			Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Item, 1), this);
 			AddApriconSave();
 			hasApricorn = false;
 			ChangeTexture();

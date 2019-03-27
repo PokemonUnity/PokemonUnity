@@ -319,7 +319,7 @@ public class Waterfall : Entity
             return this.Collision;
 
         Pokemon.Pokemon p = ReturnWaterFallPokemonName();
-        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             string s = "";
 

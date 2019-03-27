@@ -138,7 +138,7 @@ public class AnimatedBlock : Entity
 		{
 			if (GameVariables.Level.Surfing == false)
 			{
-				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
 				{
 					if (Screen.ChooseBox.Showing == false)
 					{
