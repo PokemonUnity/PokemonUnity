@@ -9,7 +9,9 @@ namespace PokemonUnity.Overworld
 /// </summary>
 public class PokemonEncounter
 {
-    // Stores a reference to the level instance:
+	/// <summary>
+	/// Stores a reference to the level instance:
+	/// </summary>
     private Level _levelReference;
 
     /// <summary>
@@ -47,28 +49,28 @@ public class PokemonEncounter
                         PokemonUnity.Pokemon.Pokemon p = GameVariables.playerTrainer.Party[0];
 
                         // Arena Trap/Illuminate/No Guard/Swarm Ability:
-                        if (p.Ability.Name.ToLower() == "arena trap" | p.Ability.Name.ToLower() == "illuminate" | p.Ability.Name.ToLower() == "no guard" | p.Ability.Name.ToLower() == "swarm")
+                        if (p.Ability == Abilities.ARENA_TRAP | p.Ability == Abilities.ILLUMINATE | p.Ability == Abilities.NO_GUARD | p.Ability == Abilities.SWARM)
                         {
                             startRandomValue = 6;
                             minRandomValue = 3;
                         }
 
                         // Intimidate/Keen Eye/Quick Feet/Stench/White Smoke Ability:
-                        if (p.Ability.Name.ToLower() == "intimidate" | p.Ability.Name.ToLower() == "keen eye" | p.Ability.Name.ToLower() == "quick feet" | p.Ability.Name.ToLower() == "stench" | p.Ability.Name.ToLower() == "white smoke")
+                        if (p.Ability == Abilities.INTIMIDATE | p.Ability == Abilities.KEEN_EYE | p.Ability == Abilities.QUICK_FEET | p.Ability == Abilities.STENCH | p.Ability == Abilities.WHITE_SMOKE)
                         {
                             startRandomValue = 24;
                             minRandomValue = 10;
                         }
 
                         // Sand Veil Ability:
-                        if (withBlock.WeatherType == 7 & p.Ability.Name.ToLower() == "sand veil")
+                        if (withBlock.WeatherType == 7 & p.Ability == Abilities.SAND_VEIL)
                         {
                             if (Settings.Rand.Next(0, 100) < 50)
                                 return;
                         }
 
                         // Snow Cloak Ability:
-                        if (p.Ability.Name.ToLower() == "snow cloak")
+                        if (p.Ability == Abilities.SNOW_CLOAK)
                         {
                             if (withBlock.WeatherType == 2 | withBlock.WeatherType == 9)
                             {
@@ -85,9 +87,10 @@ public class PokemonEncounter
                     if (Settings.Rand.Next(0, randomValue * 2) == 0)
                     {
                         // Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
-                        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+                        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
                         {
-                            if (KeyBoardHandler.KeyDown(Keys.LeftControl) == true)
+                            //if (KeyBoardHandler.KeyDown(Keys.LeftControl) == true)
+                            if (Input.GetKeyDown(KeyCode.LeftControl) == true)
                                 return;
                         }
 
@@ -120,13 +123,13 @@ public class PokemonEncounter
                 GameVariables.Camera.StopMovement();
 
                 // Generate new wild Pokémon:
-                Pokemon.Pokemon Pokemon.Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
+                Pokemon.Pokemon Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
 
                 if (Pokemon != null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
                 {
                     GameVariables.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 
-                    // If the player h.x a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
+                    // If the player has a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
                     if (GameVariables.playerTrainer.RepelSteps > 0)
                     {
                         Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
@@ -140,9 +143,9 @@ public class PokemonEncounter
                     // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
                     if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
                     {
-                        if (GameVariables.playerTrainer.Party[0].Item != null)
+                        if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
                         {
-                            if (GameVariables.playerTrainer.Party[0].Item.ID == 94)
+                            if (GameVariables.playerTrainer.Party[0].Item == Item.Items.CLEANSE_TAG)
                             {
                                 if (Settings.Rand.Next(0, 3) == 0)
                                     return;
@@ -153,9 +156,9 @@ public class PokemonEncounter
                     // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
                     if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
                     {
-                        if (GameVariables.playerTrainer.Party[0].Item != null)
+                        if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
                         {
-                            if (GameVariables.playerTrainer.Party[0].Item.ID == 291)
+                            if (GameVariables.playerTrainer.Party[0].Item == Item.Items.PURE_INCENSE)
                             {
                                 if (Settings.Rand.Next(0, 3) == 0)
                                     return;
@@ -164,15 +167,16 @@ public class PokemonEncounter
                     }
 
                     // Register the wild Pokémon as Seen in the Pokédex:
-                    GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Number, 1);
+                    //GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Species, 1);
+                    GameVariables.playerTrainer.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
 
                     // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
                     int introType = Settings.Rand.Next(0, 10);
-                    if (BattleSystem.BattleScreen.RoamingBattle == true)
-                        introType = 12;
-
-                    BattleSystem.BattleScreen b = new BattleSystem.BattleScreen(Pokemon, Core.CurrentScreen, this._levelReference.PokemonEncounterData.Method);
-                    Core.SetScreen(new BattleIntroScreen(Core.CurrentScreen, b, introType));
+                    //if (BattleSystem.BattleScreen.RoamingBattle == true)
+                    //    introType = 12;
+					//
+                    //BattleSystem.BattleScreen b = new BattleSystem.BattleScreen(Pokemon, Core.CurrentScreen, this._levelReference.PokemonEncounterData.Method);
+                    //Core.SetScreen(new BattleIntroScreen(Core.CurrentScreen, b, introType));
                 }
             }
         }
