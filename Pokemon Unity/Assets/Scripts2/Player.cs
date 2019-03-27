@@ -7,7 +7,7 @@ using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
 using PokemonUnity.Saving.SerializableClasses;
-using PokemonUnity.Player;
+using PokemonUnity.Character;
 
 [Serializable]
 public class Player
@@ -36,6 +36,7 @@ public class Player
 	public GameVariables.TrainerBag Bag { get { return new GameVariables.TrainerBag(this); } }
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
 	//ToDo: Missing (Trainer)Player.Rival variable
+	public string ItemData { get; set; }
 
 	#region UI/Game Engine
 	public int mapName { get; set; }
@@ -55,7 +56,6 @@ public class Player
 	#region Player Records
 	public string PlayerName { get; private set; }
 	/// <summary>
-	/// 
 	/// </summary>
 	/// ToDo: consider create AddMoney(value)... 
 	public int PlayerMoney { get { return playerMoney; } set { playerMoney = value > Settings.MAXMONEY ? Settings.MAXMONEY : value; } }
@@ -75,6 +75,7 @@ public class Player
 	/// <code>playerPokedex[1,2] == 3; means the 3rd form of pokemonId was first to be scanned into pokedex</code>
 	/// </summary>
 	/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
+	/// ToDo: Add variable for "Shiny"?...
 	public byte[,] PlayerPokedex { get; private set; }
 	///// <summary>
 	///// Usage:<para>
@@ -763,6 +764,121 @@ public partial class GameVariables
 			return items.ToArray();
 		}
 
+		/// <summary>
+		/// If the player has the Mega Bracelet in their inventory.
+		/// </summary>
+		/// <returns></returns>
+		public bool HasMegaBracelet()
+		{
+            //If Core.Player.SandBoxMode = True Or GameVariables.IS_DEBUG_ACTIVE = True Then
+            //    Return True
+            //Else
+            //    If Me.GetItemAmount(78) > 0 Then
+            //        Return True
+            //    End If
+            //End If
+
+			return false;
+		}
+
+		/// <summary>
+		/// If the player has the Mega Bracelet in their inventory.
+		/// </summary>
+		/// <returns></returns>
+		public bool HasRunningShoes()
+		{
+            //If Me.GetItemAmount(576) > 0 Then
+            //    Return True
+            //End If
+
+			return false;
+		}
+
+		/// <summary>
+		/// Adds items to the inventory.
+		/// </summary>
+		/// <param name="item">The ID of the item.</param>
+		/// <param name="quantity">Amount of items to add.</param>
+		public void AddItem(Items item, int quantity = 1)
+		{
+			//Dim newItem As Item = P3D.Item.GetItemByID(ID)
+			//
+			//For Each c As ItemContainer In Me
+			//    If c.ItemID = ID Then
+			//        c.Amount += Amount
+			//        Exit Sub
+			//    End If
+			//Next
+			//
+			//Me.Add(New ItemContainer(ID, Amount))
+			for (int i = 0; i < quantity; i++)
+			{
+				GameVariables.Bag_Items.Add(item);
+			}
+		}
+
+		/// <summary>
+		/// Removes items from the inventory.
+		/// </summary>
+		/// <param name="item">The ID of the item to remove.</param>
+		/// <param name="quantity">The amount of items to remove.</param>
+		public void RemoveItem(Items item, int quantity = 1)
+		{
+			//If Amount > 0 Then
+			//    For Each c As ItemContainer In Me
+			//        If c.ItemID = ID Then
+			//            If c.Amount - Amount <= 0 Then
+			//                Me.Remove(c)
+			//                Exit Sub
+			//            Else
+			//                c.Amount -= Amount
+			//            End If
+			//        End If
+			//    Next
+			//End If
+			if(quantity > 0)
+				for (int i = 0; i < quantity; i++)
+				{
+					if(GameVariables.Bag_Items.Contains(item))
+						GameVariables.Bag_Items.Remove(item);
+				}
+		}
+
+		/// <summary>
+		/// Returns the count of the item in the inventory.
+		/// </summary>
+		/// <param name="item">The ID of the item to be counted.</param>
+		/// <returns></returns>
+		public int GetItemAmount(Items item)
+		{
+			//For Each c As ItemContainer In Me
+			//    If c.ItemID = ID Then
+			//        Return c.Amount
+			//    End If
+			//Next
+			//
+			//Return 0
+			return GameVariables.Bag_Items.Where(x => x == item).Count();
+		}
+
+		/// <summary>
+		/// Returns a message that displays the event of putting an item into the inventory.
+		/// </summary>
+		/// <param name="item">The Item to store in the inventory.</param>
+		/// <param name="quantity">The amount.</param>
+		/// <returns></returns>
+		public string GetMessageReceive(Item item, int quantity = 1)
+		{
+			//Dim Message As String = ""
+			//If Amount = 1 Then
+			//	Message = Core.Player.Name & " stored it in the~" & Core.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//Else
+			//	Message = Core.Player.Name & " stored them~in the " & Core.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//End If
+			//Return Message
+			return "";
+		}
+
 		public enum Order
 		{
 			Alphabet,
@@ -774,6 +890,6 @@ public partial class GameVariables
 }
 #endregion
 
-namespace PokemonUnity
+namespace PokemonUnity.Character
 {	
 }
