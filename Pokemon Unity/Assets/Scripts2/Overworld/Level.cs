@@ -851,7 +851,7 @@ public class Level
         // Create the world and load the level:
         World = new World(0, 0);
 
-        if (Levelpath.StartsWith("|"!))
+        if (!Levelpath.StartsWith("|"))
         {
             this.StopOffsetMapUpdate();
             LevelLoader levelLoader = new LevelLoader();

@@ -924,7 +924,7 @@ namespace P3D
 
 								if (Value == "0")
 									Badges = new List<int>();
-								else if (Value.Contains(","!))
+								else if (!Value.Contains(","))
 									Badges = new int[]	
 									{
 										System.Convert.ToInt32(Value)
@@ -1380,7 +1380,7 @@ namespace P3D
 				newFilePrefix = filePrefix;
 				filePrefix = "autosave";
 
-				if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\autosave"!))
+				if (!System.IO.Directory.Exists(GameController.GamePath + @"\Save\autosave"))
 					System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\autosave");
 			}
 			else
@@ -2262,7 +2262,7 @@ namespace P3D
 				string[] files = new[] { "Apricorns", "Berries", "Box", "Daycare", "HallOfFame", "ItemData", "Items", "NPC", "Options", "Party", "Player", "Pokedex", "Register", "RoamingPokemon", "SecretBase" };
 				foreach (string file in files)
 				{
-					if (System.IO.File.Exists(folder + @"\" + file + ".dat"!))
+					if (!System.IO.File.Exists(folder + @"\" + file + ".dat"))
 						return false;
 				}
 				return true;

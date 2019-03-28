@@ -89,7 +89,7 @@ public class ItemObject : Entity
         // If Core.GameOptions.GraphicStyle = 1 Then
         Rectangle r = new Rectangle(X, Y, width, height);
         this.AnimationName = AnimationPath + "," + X + "," + Y + "," + height + "," + width;
-        if (AnimationTexturesTemp.ContainsKey(AnimationName + "_0"!))
+        if (!AnimationTexturesTemp.ContainsKey(AnimationName + "_0"))
         {
             for (var i = 0; i <= this.rows - 1; i++)
             {

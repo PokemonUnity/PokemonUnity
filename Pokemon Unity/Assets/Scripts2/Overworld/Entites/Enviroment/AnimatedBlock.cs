@@ -75,7 +75,7 @@ public class AnimatedBlock : Entity
 		{
 			Rectangle r = new Rectangle(X[n], Y[n], width[n], height[n]);
 			this.AnimationNames[n] = AdditionalValue + "," + X[n] + "," + Y[n] + "," + height[n] + "," + width[n];
-			if (BlockTexturesTemp.ContainsKey(AnimationNames[n] + "_0"!))
+			if (!BlockTexturesTemp.ContainsKey(AnimationNames[n] + "_0"))
 			{
 				for (var i = 0; i <= this.rows[n] - 1; i++)
 				{

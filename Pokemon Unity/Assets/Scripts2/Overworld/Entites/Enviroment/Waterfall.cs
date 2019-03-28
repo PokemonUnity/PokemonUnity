@@ -43,14 +43,14 @@ public class Waterfall : Entity
                 Rectangle r = new Rectangle(System.Convert.ToInt32(textureData[1]), System.Convert.ToInt32(textureData[2]), System.Convert.ToInt32(textureData[3]), System.Convert.ToInt32(textureData[4]));
                 string texturePath = textureData[0];
                 this.waterFallTextureName = AdditionalValue;
-                if (Waterfall.WaterfallTexturesTemp.ContainsKey(AdditionalValue + "_0"!))
+                if (!Waterfall.WaterfallTexturesTemp.ContainsKey(AdditionalValue + "_0"))
                 {
                     Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.width, r.height)));
                     Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width, r.y, r.width, r.height)));
                     Waterfall.WaterfallTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 2, r.y, r.width, r.height)));
                 }
             }
-            else if (Waterfall.WaterfallTexturesTemp.ContainsKey("_0"!))
+            else if (!Waterfall.WaterfallTexturesTemp.ContainsKey("_0"))
             {
                 Waterfall.WaterfallTexturesTemp.Add("_0", TextureManager.GetTexture("Routes", new Rectangle(0, 192, 16, 16)));
                 Waterfall.WaterfallTexturesTemp.Add("_1", TextureManager.GetTexture("Routes", new Rectangle(16, 192, 16, 16)));
@@ -62,7 +62,7 @@ public class Waterfall : Entity
                 Rectangle r = new Rectangle(System.Convert.ToInt32(textureData[6]), System.Convert.ToInt32(textureData[7]), System.Convert.ToInt32(textureData[8]), System.Convert.ToInt32(textureData[9]));
                 string texturePath = textureData[5];
                 this.waterTextureName = AdditionalValue;
-                if (Waterfall.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0"!))
+                if (!Waterfall.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0"))
                 {
                     Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.width, r.height)));
                     Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width, r.y, r.width, r.height)));
@@ -78,7 +78,7 @@ public class Waterfall : Entity
                     Waterfall.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 11, r.y, r.width, r.height)));
                 }
             }
-            else if (Waterfall.WaterTexturesTemp.ContainsKey("_0"!))
+            else if (!Waterfall.WaterTexturesTemp.ContainsKey("_0"))
             {
                 Waterfall.WaterTexturesTemp.Add("_0", TextureManager.GetTexture("Routes", new Rectangle(0, 220, 20, 20)));
                 Waterfall.WaterTexturesTemp.Add("_1", TextureManager.GetTexture("Routes", new Rectangle(20, 220, 20, 20)));

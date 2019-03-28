@@ -1,6 +1,7 @@
 ﻿using PokemonUnity.Item;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -239,7 +240,6 @@ public class BerryPlant : Entity
                         GameVariables.Level.Entities.Remove(this);
                         break;
                     }
-
                 case 1:
                     {
                         WaterBerry();
@@ -265,7 +265,7 @@ public class BerryPlant : Entity
         {
             if (Berry != "")
             {
-                if (Berry.ToLower().StartsWith("{" + GameVariables.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|"!))
+                if (!Berry.ToLower().StartsWith("{" + GameVariables.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|"))
                 {
                     if (OutData != "")
                         OutData += System.Environment.NewLine;
@@ -306,7 +306,7 @@ public class BerryPlant : Entity
         {
             0,
             0
-        }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0f), -1, "", "", new Vector3(0));
+        }, true, new Vector3(0,0,0), new Vector3(1,1,1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0f,1,1), -1, "", "", new Vector3(0,0,0));
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         GameVariables.Level.Entities.Add(newEnt);
 

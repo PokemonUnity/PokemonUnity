@@ -326,9 +326,9 @@ public class LevelLoader
         for (var i = 0; i <= tagList.Length - 1; i++)
         {
             string currentTag = tagList[i];
-            if (currentTag.EndsWith("}}"!))
+            if (!currentTag.EndsWith("}}"))
                 currentTag += "}";
-            if (currentTag.StartsWith("{"!))
+            if (!currentTag.StartsWith("{"))
                 currentTag = "{" + currentTag;
             ProcessTag(ref Tags, currentTag);
         }
@@ -587,7 +587,7 @@ public class LevelLoader
             MapRotation = System.Convert.ToInt32(GetTag(Tags, "Rotation"));
 
         string MapName = System.Convert.ToString(GetTag(Tags, "Map"));
-        if (MapName.EndsWith(".dat"!))
+        if (!MapName.EndsWith(".dat"))
             MapName = MapName + ".dat";
 
         bool addNPC = false;
@@ -997,7 +997,7 @@ public class LevelLoader
 
                     if (SeasonToggle != "")
                     {
-                        if (SeasonToggle.Contains(","!))
+                        if (!SeasonToggle.Contains(","))
                         {
                             if (SeasonToggle.ToLower() != World.CurrentSeason.ToString().ToLower())
                                 DoAdd = false;
