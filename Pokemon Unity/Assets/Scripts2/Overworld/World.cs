@@ -248,7 +248,6 @@ public class World
 
                     break;
                 }
-
             case EnvironmentTypes.Inside:
                 {
                     switch (Core.GameOptions.RenderDistance)
@@ -297,7 +296,6 @@ public class World
 
                     break;
                 }
-
             case EnvironmentTypes.Outside:
                 {
                     switch (World.GetTime)
@@ -350,7 +348,6 @@ public class World
 
                                 break;
                             }
-
                         case DayTime.Morning:
                             {
                                 switch (Core.GameOptions.RenderDistance)
@@ -399,7 +396,6 @@ public class World
 
                                 break;
                             }
-
                         case DayTime.Day:
                             {
                                 switch (Core.GameOptions.RenderDistance)
@@ -448,7 +444,6 @@ public class World
 
                                 break;
                             }
-
                         case DayTime.Evening:
                             {
                                 switch (Core.GameOptions.RenderDistance)
@@ -501,7 +496,6 @@ public class World
 
                     break;
                 }
-
             case EnvironmentTypes.Underwater:
                 {
                     switch (Core.GameOptions.RenderDistance)
@@ -868,7 +862,7 @@ public class World
                 }
             case World.Weathers.Snow:
                 {
-                    v = new Vector3(0.8f);
+                    v = new Vector3(0.8f,.8f,.8f);
                     break;
                 }
             case World.Weathers.Underwater:
@@ -898,7 +892,7 @@ public class World
                 }
         }
 
-        Vector3 colorV = defaultColor.ToVector3 * Screen.SkyDome.GetWeatherColorMultiplier(v);
+        Vector3 colorV = new Vector3();//defaultColor.ToVector3() * Screen.SkyDome.GetWeatherColorMultiplier(v);
         return colorV.ToColor();
     }
 
@@ -917,7 +911,6 @@ public class World
                     Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\Stars");
                     break;
                 }
-
             case EnvironmentTypes.Inside:
                 {
                     Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(173, 216, 255));
@@ -926,7 +919,6 @@ public class World
                     Screen.SkyDome.TextureDown = null;
                     break;
                 }
-
             case EnvironmentTypes.Dark:
                 {
                     Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(29, 29, 50));
@@ -935,7 +927,6 @@ public class World
                     Screen.SkyDome.TextureDown = null;
                     break;
                 }
-
             case EnvironmentTypes.Cave:
                 {
                     Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(34, 19, 12));
@@ -944,7 +935,6 @@ public class World
                     Screen.SkyDome.TextureDown = null;
                     break;
                 }
-
             case EnvironmentTypes.Underwater:
                 {
                     Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(19, 54, 117));
@@ -953,7 +943,6 @@ public class World
                     Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\UnderwaterGround");
                     break;
                 }
-
             case EnvironmentTypes.Forest:
                 {
                     Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(30, 66, 21));
@@ -974,22 +963,22 @@ public class World
     {
         if (!NoParticlesList.Contains(MapWeather))
         {
-            if (Core.GameOptions.GraphicStyle == 1)
-            {
-                Screen.Identifications[] identifications = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen };
-                if (identifications.Contains(Core.CurrentScreen.Identification))
-                {
-                    if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-                    {
-                        if (!Screen.TextBox.Showing)
-                            GenerateParticles(0, MapWeather);
-                    }
-                    else
-                        GenerateParticles(0, MapWeather);
-                }
-            }
-            else
-            {
+            //if (Core.GameOptions.GraphicStyle == 1)
+            //{
+            //    Screen.Identifications[] identifications = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen };
+            //    if (identifications.Contains(Core.CurrentScreen.Identification))
+            //    {
+            //        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+            //        {
+            //            if (!Screen.TextBox.Showing)
+            //                GenerateParticles(0, MapWeather);
+            //        }
+            //        else
+            //            GenerateParticles(0, MapWeather);
+            //    }
+            //}
+            //else
+            //{
                 Texture2D T = null;// TODO Change to default(_) if this is not a reference type
 
                 int size = 128;
@@ -1096,7 +1085,7 @@ public class World
                             break;
                         }
                 }
-            }
+            //}
         }
     }
 
