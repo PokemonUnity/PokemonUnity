@@ -111,12 +111,12 @@ public class Whirlpool : Entity
         if (this.ActionValue == 1)
             return this.Collision;
 
-        if (GameVariables.Level.Surfing == true)
+        if (GameVariables.Level.Surfing)
         {
             string pName = ReturnWhirlPoolPokemonName();
             string s = "";
 
-            if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) == true & pName != "" | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+            if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) & pName != "" | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
             {
                 s = @"version=2
 @text.show(" + pName + @" used~Whirlpool!)

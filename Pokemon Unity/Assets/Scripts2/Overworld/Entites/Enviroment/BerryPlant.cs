@@ -52,7 +52,7 @@ public class BerryPlant : Entity
         string[] Data = oldDate.Split(System.Convert.ToChar(","));
         DateTime d = new DateTime(System.Convert.ToInt32(Data[0]), System.Convert.ToInt32(Data[1]), System.Convert.ToInt32(Data[2]), System.Convert.ToInt32(Data[3]), System.Convert.ToInt32(Data[4]), System.Convert.ToInt32(Data[5]));
 
-        if (FullGrown == true)
+        if (FullGrown)
         {
             this.Phase = 4;
 
@@ -166,7 +166,7 @@ public class BerryPlant : Entity
             case 0:
                 {
                     this.ResultIndex = 1;
-                    if (hasBottle == true)
+                    if (hasBottle)
                         text = "One " + this.Berry.Name + " Berry was~planted here.*Do you want to~water it?%Yes|No%";
                     else
                         text = "One " + this.Berry.Name + " Berry was~planted here.";
@@ -175,7 +175,7 @@ public class BerryPlant : Entity
             case 1:
                 {
                     this.ResultIndex = 1;
-                    if (hasBottle == true)
+                    if (hasBottle)
                         text = Berry.Name + " has sprouted.*Do you want to~water it?%Yes|No%";
                     else
                         text = Berry.Name + " has sprouted.";
@@ -184,7 +184,7 @@ public class BerryPlant : Entity
             case 2:
                 {
                     this.ResultIndex = 1;
-                    if (hasBottle == true)
+                    if (hasBottle)
                         text = "This " + Berry.Name + " plant is~growing taller.*Do you want to~water it?%Yes|No%";
                     else
                         text = "This " + Berry.Name + " plant is~growing taller.";
@@ -193,7 +193,7 @@ public class BerryPlant : Entity
             case 3:
                 {
                     this.ResultIndex = 1;
-                    if (hasBottle == true)
+                    if (hasBottle)
                         text = "These " + Berry.Name + " flowers~are blooming.*Do you want to~water it?%Yes|No%";
                     else
                         text = "These " + Berry.Name + " flowers~are blooming.";
@@ -306,7 +306,7 @@ public class BerryPlant : Entity
         {
             0,
             0
-        }, true, new Vector3(0), new Vector3(1), BaseModel.BillModel, 0, "", true, new Vector3(1.0F), -1, "", "", new Vector3(0));
+        }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0F), -1, "", "", new Vector3(0));
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         GameVariables.Level.Entities.Add(newEnt);
 
@@ -401,7 +401,7 @@ public class BerryPlant : Entity
             {
                 if (WateredData != "")
                     WateredData += ",";
-                if (w == true)
+                if (w)
                 {
                     WateredData += "1";
                     wateredCount += 1;

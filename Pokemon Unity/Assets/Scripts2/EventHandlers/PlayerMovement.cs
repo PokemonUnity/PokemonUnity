@@ -679,7 +679,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 							yield return StartCoroutine(moveForward());
 						}
 					}
-					else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE == true)
+					else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE)
 					{
 						//DEBUG
 						Debug.Log(currentMap.getTileTag(transform.position));
@@ -692,7 +692,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 							followerScript.canMove = true;
 						}
 					}
-					/*else if (Input.GetKeyDown(",") && SaveData.currentSave.IS_DEBUG_ACTIVE == true+)
+					/*else if (Input.GetKeyDown(",") && SaveData.currentSave.IS_DEBUG_ACTIVE+)
 					{
 						//GlobalVariables.debug(GlobalVariables.GetDebugText());
 						//DEBUG

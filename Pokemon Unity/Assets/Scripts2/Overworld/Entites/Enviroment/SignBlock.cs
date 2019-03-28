@@ -41,10 +41,10 @@ public class SignBlock : Entity
                 }
         }
 
-        if (canRead == true)
+        if (canRead)
         {
             OverworldScreen oScreen = (OverworldScreen)Core.CurrentScreen;
-            if (oScreen.ActionScript.IsReady == true)
+            if (oScreen.ActionScript.IsReady)
             {
                 SoundManager.PlaySound("select");
                 switch (this.ActionValue)

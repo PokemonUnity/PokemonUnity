@@ -112,7 +112,7 @@ public class SoundManager
 					//sound.Play(volume, pitch, pan)
 					PlaySound(sound, volume, stopMusic);
 
-					//if (stopMusic == true)
+					//if (stopMusic)
 					//	MusicManager.PauseForSound(sound);
 				}
 				else

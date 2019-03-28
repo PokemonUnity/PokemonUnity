@@ -154,7 +154,7 @@ public class Badge
         string[] data = System.IO.File.ReadAllLines(file);
         foreach (string line in data)
         {
-            if (line.Contains("|") == true)
+            if (line.Contains("|"))
                 Badges.Add(new BadgeDeclaration(line));
         }
     }
@@ -197,7 +197,7 @@ public class Badge
         int highestCap = 10;
         foreach (BadgeDeclaration b in Badges)
         {
-            if (b.LevelCap > highestCap & trainerBadges.Contains(b.ID) == true)
+            if (b.LevelCap > highestCap & trainerBadges.Contains(b.ID))
                 highestCap = b.LevelCap;
         }
         return highestCap;
@@ -212,7 +212,7 @@ public class Badge
         int[] trainerBadges = GameVariables.playerTrainer.Badges;
         foreach (BadgeDeclaration b in Badges)
         {
-            if (b.HMs.Contains(HM) == true & trainerBadges.Contains(b.ID) == true | b.ID == 0)
+            if (b.HMs.Contains(HM) & trainerBadges.Contains(b.ID) | b.ID == 0)
                 return true;
         }
         return false;

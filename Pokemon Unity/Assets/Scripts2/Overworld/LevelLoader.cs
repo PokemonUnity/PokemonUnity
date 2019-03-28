@@ -64,7 +64,7 @@ public class LevelLoader
         Busy += 1;
         TempParams = Params;
 
-        if (MULTITHREAD == true)
+        if (MULTITHREAD)
         {
             System.Threading.Thread t = new System.Threading.Thread(InternalLoad);
             t.IsBackground = true;
@@ -139,11 +139,11 @@ public class LevelLoader
 
         foreach (string line in Data)
         {
-            if (line.Contains("{") == true)
+            if (line.Contains("{"))
             {
                 string l = line.Remove(0, line.IndexOf("{"));
 
-                if (l.StartsWith("{\"Comment\"{COM") == true)
+                if (l.StartsWith("{\"Comment\"{COM"))
                 {
                     l = l.Remove(0, l.IndexOf("[") + 1);
                     l = l.Remove(l.IndexOf("]"));
@@ -162,7 +162,7 @@ public class LevelLoader
 
             string line = Data[i];
             Tags.Clear();
-            if (line.Contains("{") == true & line.Contains("}") == true)
+            if (line.Contains("{") & line.Contains("}"))
             {
                 try
                 {
@@ -197,7 +197,7 @@ public class LevelLoader
             string orgLine = line;
             countLines += 1;
 
-            if (line.Contains("{") == true & line.Contains("}") == true)
+            if (line.Contains("{") & line.Contains("}"))
             {
                 try
                 {
@@ -450,7 +450,7 @@ public class LevelLoader
 
     private object GetTag(Dictionary<string, object> Tags, string TagName)
     {
-        if (Tags.ContainsKey(TagName) == true)
+        if (Tags.ContainsKey(TagName))
             return Tags[TagName];
 
         for (var i = 0; i <= Tags.Count - 1; i++)
@@ -464,7 +464,7 @@ public class LevelLoader
 
     private bool TagExists(Dictionary<string, object> Tags, string TagName)
     {
-        if (Tags.ContainsKey(TagName) == true)
+        if (Tags.ContainsKey(TagName))
             return true;
 
         for (var i = 0; i <= Tags.Count - 1; i++)
@@ -488,9 +488,9 @@ public class LevelLoader
 
             string MapName = System.Convert.ToString(GetTag(Tags, "Map"));
 
-            if (loadOffsetMap == true)
+            if (loadOffsetMap)
             {
-                if (sessionMapsLoaded.Contains(MapName) == true)
+                if (sessionMapsLoaded.Contains(MapName))
                     return;
             }
             sessionMapsLoaded.Add(MapName);
@@ -583,7 +583,7 @@ public class LevelLoader
             MapOffset = new Vector3(OffsetList[0], OffsetList[1], OffsetList[2]);
 
         int MapRotation = -1;
-        if (TagExists(Tags, "Rotation") == true)
+        if (TagExists(Tags, "Rotation"))
             MapRotation = System.Convert.ToInt32(GetTag(Tags, "Rotation"));
 
         string MapName = System.Convert.ToString(GetTag(Tags, "Map"));
@@ -591,7 +591,7 @@ public class LevelLoader
             MapName = MapName + ".dat";
 
         bool addNPC = false;
-        if (TagExists(Tags, "AddNPC") == true)
+        if (TagExists(Tags, "AddNPC"))
             addNPC = System.Convert.ToBoolean(GetTag(Tags, "AddNPC"));
 
         string structureKey = MapOffset.x.ToString() + "|" + MapOffset.y.ToString() + "|" + MapOffset.z.ToString() + "|" + MapName;
@@ -613,7 +613,7 @@ public class LevelLoader
 
             foreach (string line in MapContent)
             {
-                if (line.EndsWith("}") == true)
+                if (line.EndsWith("}"))
                 {
                     bool addLine = false;
 					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"Entity\"{ENT["))
@@ -623,12 +623,12 @@ public class LevelLoader
 					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"EntityField\"{ENT["))
 						addLine = true;
 					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"NPC\"{NPC["))
-						if (addNPC == true)
+						if (addNPC)
 							addLine = true;
 					if (line.Trim(' ', StringHelper.Tab).StartsWith("{\"Shader\"{SHA["))
 						addLine = true;
 
-                    if (addLine == true)
+                    if (addLine)
                     {
                         string l = ReplaceStructurePosition(line, MapOffset);
 
@@ -650,7 +650,7 @@ public class LevelLoader
     {
         string replaceString = "";
 
-        if (line.ToLower().Contains("{\"rotation\"{int[") == true)
+        if (line.ToLower().Contains("{\"rotation\"{int["))
             replaceString = "{\"rotation\"{int[";
 
         if (replaceString != "")
@@ -675,9 +675,9 @@ public class LevelLoader
     {
         string replaceString = "";
 
-        if (line.ToLower().Contains("{\"position\"{sngarr[") == true)
+        if (line.ToLower().Contains("{\"position\"{sngarr["))
             replaceString = "{\"position\"{sngarr[";
-        else if (line.ToLower().Contains("{\"position\"{intarr[") == true)
+        else if (line.ToLower().Contains("{\"position\"{intarr["))
             replaceString = "{\"position\"{intarr[";
 
         if (replaceString != "")
@@ -691,7 +691,7 @@ public class LevelLoader
             string[] posArr = positionData.Split(System.Convert.ToChar(","));
             Vector3 newPosition = new Vector3(ScriptConversion.ToSingle(posArr[0].Replace(".", StringHelper.DecSeparator)) + MapOffset.x, ScriptConversion.ToSingle(posArr[1].Replace(".", StringHelper.DecSeparator)) + MapOffset.y, System.Convert.ToSingle(posArr[2].Replace(".", StringHelper.DecSeparator)) + MapOffset.z);
 
-            if (line.ToLower().Contains("{\"position\"{sngarr[") == true)
+            if (line.ToLower().Contains("{\"position\"{sngarr["))
                 line = line.Replace(positionString, "{\"position\"{sngarr[" + newPosition.x.ToString().Replace(StringHelper.DecSeparator, ".") + "," + newPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + newPosition.z.ToString().Replace(StringHelper.DecSeparator, ".") + "]}}");
             else
                 line = line.Replace(positionString, "{\"position\"{intarr[" + System.Convert.ToInt32(newPosition.x).ToString().Replace(StringHelper.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.y).ToString().Replace(StringHelper.DecSeparator, ".") + "," + System.Convert.ToInt32(newPosition.z).ToString().Replace(StringHelper.DecSeparator, ".") + "]}}");
@@ -704,10 +704,10 @@ public class LevelLoader
     {
         List<int> SizeList = (List<int>)GetTag(Tags, "Size");
         bool Fill = true;
-        if (TagExists(Tags, "Fill") == true)
+        if (TagExists(Tags, "Fill"))
             Fill = System.Convert.ToBoolean(GetTag(Tags, "Fill"));
         Vector3 Steps = new Vector3(1, 1, 1);
-        if (TagExists(Tags, "Steps") == true)
+        if (TagExists(Tags, "Steps"))
         {
             List<float> StepList = (List<float>)GetTag(Tags, "Steps");
             if (StepList.Count == 3)
@@ -729,7 +729,7 @@ public class LevelLoader
 
         List<float> ScaleList;
         Vector3 Scale = new Vector3(1, 1, 1);
-        if (TagExists(Tags, "Scale") == true)
+        if (TagExists(Tags, "Scale"))
         {
             ScaleList = (List<float>)GetTag(Tags, "Scale");
             Scale = new Vector3(ScaleList[0], ScaleList[1], ScaleList[2]);
@@ -746,14 +746,14 @@ public class LevelLoader
         List<Rectangle> MoveRectangles = (List<Rectangle>)GetTag(Tags, "MoveRectangles");
 
         Vector3 Shader = new Vector3(1.0F);
-        if (TagExists(Tags, "Shader") == true)
+        if (TagExists(Tags, "Shader"))
         {
             List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
             Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
         }
 
         bool AnimateIdle = false;
-        if (TagExists(Tags, "AnimateIdle") == true)
+        if (TagExists(Tags, "AnimateIdle"))
             AnimateIdle = System.Convert.ToBoolean(GetTag(Tags, "AnimateIdle"));
 
         NPC NPC = (NPC)Entity.GetNewEntity("NPC", Position, null, // TODO Change to default(_) if this is not a reference type 
@@ -761,7 +761,7 @@ public class LevelLoader
         {
             0,
             0
-        }, true, new Vector3(0), Scale, BaseModel.BillModel, ActionValue, AdditionalValue, true, Shader, -1, MapOrigin, "", Offset, new
+        }, true, new Vector3(0), Scale, UnityEngine.Mesh.BillModel, ActionValue, AdditionalValue, true, Shader, -1, MapOrigin, "", Offset, new
         {
             TextureID,
             Rotation,
@@ -791,42 +791,42 @@ public class LevelLoader
         Texture2D Texture = TextureManager.GetTexture(TexturePath, TextureRectangle);
 
         bool Visible = true;
-        if (TagExists(Tags, "Visible") == true)
+        if (TagExists(Tags, "Visible"))
             Visible = System.Convert.ToBoolean(GetTag(Tags, "Visible"));
 
         Vector3 Shader = new Vector3(1.0F);
-        if (TagExists(Tags, "Shader") == true)
+        if (TagExists(Tags, "Shader"))
         {
             List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
             Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
         }
 
         bool RemoveFloor = false;
-        if (TagExists(Tags, "Remove") == true)
+        if (TagExists(Tags, "Remove"))
             RemoveFloor = System.Convert.ToBoolean(GetTag(Tags, "Remove"));
 
         bool hasSnow = true;
-        if (TagExists(Tags, "hasSnow") == true)
+        if (TagExists(Tags, "hasSnow"))
             hasSnow = System.Convert.ToBoolean(GetTag(Tags, "hasSnow"));
 
         bool hasSand = true;
-        if (TagExists(Tags, "hasSand") == true)
+        if (TagExists(Tags, "hasSand"))
             hasSand = System.Convert.ToBoolean(GetTag(Tags, "hasSand"));
 
         bool hasIce = false;
-        if (TagExists(Tags, "isIce") == true)
+        if (TagExists(Tags, "isIce"))
             hasIce = System.Convert.ToBoolean(GetTag(Tags, "isIce"));
 
         int rotation = 0;
-        if (TagExists(Tags, "Rotation") == true)
+        if (TagExists(Tags, "Rotation"))
             rotation = System.Convert.ToInt32(GetTag(Tags, "Rotation"));
 
         string SeasonTexture = "";
-        if (TagExists(Tags, "SeasonTexture") == true)
+        if (TagExists(Tags, "SeasonTexture"))
             SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
 
         List<Entity.Entity> floorList = GameVariables.Level.Floors;
-        if (loadOffsetMap == true)
+        if (loadOffsetMap)
             floorList = GameVariables.Level.OffsetmapFloors;
 
         if (RemoveFloor == false)
@@ -842,7 +842,7 @@ public class LevelLoader
 
                     Entity.Entity Ent = null;// TODO Change to default(_) if this is not a reference type 
 
-                    if (loadOffsetMap == true)
+                    if (loadOffsetMap)
                     {
                         Ent = GameVariables.Level.OffsetmapFloors.Find(e =>
                         {
@@ -870,7 +870,7 @@ public class LevelLoader
 
                     if (exists == false)
                     {
-                        Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), BaseModel.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
+                        Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), UnityEngine.Mesh.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
                         f.MapOrigin = MapOrigin;
                         f.SeasonColorTexture = SeasonTexture;
                         f.LoadSeasonTextures();
@@ -906,7 +906,7 @@ public class LevelLoader
         string EntityID = System.Convert.ToString(GetTag(Tags, "EntityID"));
 
         int ID = -1;
-        if (TagExists(Tags, "ID") == true)
+        if (TagExists(Tags, "ID"))
             ID = System.Convert.ToInt32(GetTag(Tags, "ID"));
 
         List<float> PosList = (List<float>)GetTag(Tags, "Position");
@@ -924,7 +924,7 @@ public class LevelLoader
 
         List<float> ScaleList;
         Vector3 Scale = new Vector3(1);
-        if (TagExists(Tags, "Scale") == true)
+        if (TagExists(Tags, "Scale"))
         {
             ScaleList = (List<float>)GetTag(Tags, "Scale");
             Scale = new Vector3(ScaleList[0], ScaleList[1], ScaleList[2]);
@@ -937,47 +937,47 @@ public class LevelLoader
         int ActionValue = System.Convert.ToInt32(GetTag(Tags, "Action"));
 
         string AdditionalValue = "";
-        if (TagExists(Tags, "AdditionalValue") == true)
+        if (TagExists(Tags, "AdditionalValue"))
             AdditionalValue = System.Convert.ToString(GetTag(Tags, "AdditionalValue"));
 
         List<List<int>> AnimationData = null;
-        if (TagExists(Tags, "AnimationData") == true)
+        if (TagExists(Tags, "AnimationData"))
             AnimationData = (List<List<int>>)GetTag(Tags, "AnimationData");
 
         Vector3 Rotation = Entity.Entity.GetRotationFromInteger(System.Convert.ToInt32(GetTag(Tags, "Rotation")));
 
         bool Visible = true;
-        if (TagExists(Tags, "Visible") == true)
+        if (TagExists(Tags, "Visible"))
             Visible = System.Convert.ToBoolean(GetTag(Tags, "Visible"));
 
         Vector3 Shader = new Vector3(1.0F);
-        if (TagExists(Tags, "Shader") == true)
+        if (TagExists(Tags, "Shader"))
         {
             List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
             Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
         }
 
 		//Vector3 RotationXYZ = null; // TODO Change to default(_) if this is not a reference type 
-        if (TagExists(Tags, "RotationXYZ") == true)
+        if (TagExists(Tags, "RotationXYZ"))
         {
             List<float> rotationList = (List<float>)GetTag(Tags, "RotationXYZ");
             Rotation = new Vector3(rotationList[0], rotationList[1], rotationList[2]);
         }
 
         string SeasonTexture = "";
-        if (TagExists(Tags, "SeasonTexture") == true)
+        if (TagExists(Tags, "SeasonTexture"))
             SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
 
         string SeasonToggle = "";
-        if (TagExists(Tags, "SeasonToggle") == true)
+        if (TagExists(Tags, "SeasonToggle"))
             SeasonToggle = System.Convert.ToString(GetTag(Tags, "SeasonToggle"));
 
         float Opacity = 1.0F;
-        if (TagExists(Tags, "Opacity") == true)
+        if (TagExists(Tags, "Opacity"))
             Opacity = System.Convert.ToSingle(GetTag(Tags, "Opacity"));
 
         float CameraDistanceDelta = 0.0F;
-        if (TagExists(Tags, "CameraDistanceDelta") == true)
+        if (TagExists(Tags, "CameraDistanceDelta"))
             CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
 
         for (var X = 0; X <= Size.width - 1; X += Steps.x)
@@ -1013,9 +1013,9 @@ public class LevelLoader
                     if (AnimationData != null && AnimationData.Count == 5)
                     {
                     }
-                    if (DoAdd == true)
+                    if (DoAdd)
                     {
-                        Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.x + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, BaseModel.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
+                        Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.x + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, UnityEngine.Mesh.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
                         newEnt.IsOffsetMapContent = loadOffsetMap;
 
                         if (newEnt != null)
@@ -1036,17 +1036,17 @@ public class LevelLoader
         string Name = System.Convert.ToString(GetTag(Tags, "Name"));
         string MusicLoop = System.Convert.ToString(GetTag(Tags, "MusicLoop"));
 
-        if (TagExists(Tags, "WildPokemon") == true)
+        if (TagExists(Tags, "WildPokemon"))
             GameVariables.Level.WildPokemonFloor = System.Convert.ToBoolean(GetTag(Tags, "WildPokemon"));
         else
             GameVariables.Level.WildPokemonFloor = false;
 
-        if (TagExists(Tags, "OverworldPokemon") == true)
+        if (TagExists(Tags, "OverworldPokemon"))
             GameVariables.Level.ShowOverworldPokemon = System.Convert.ToBoolean(GetTag(Tags, "OverworldPokemon"));
         else
             GameVariables.Level.ShowOverworldPokemon = true;
 
-        if (TagExists(Tags, "CurrentRegion") == true)
+        if (TagExists(Tags, "CurrentRegion"))
             GameVariables.Level.CurrentRegion = System.Convert.ToString(GetTag(Tags, "CurrentRegion"));
         else
             GameVariables.Level.CurrentRegion = "Johto";
@@ -1063,32 +1063,32 @@ public class LevelLoader
 
     private void SetupActions(Dictionary<string, object> Tags)
     {
-        if (TagExists(Tags, "CanTeleport") == true)
+        if (TagExists(Tags, "CanTeleport"))
             GameVariables.Level.CanTeleport = System.Convert.ToBoolean(GetTag(Tags, "CanTeleport"));
         else
             GameVariables.Level.CanTeleport = false;
 
-        if (TagExists(Tags, "CanDig") == true)
+        if (TagExists(Tags, "CanDig"))
             GameVariables.Level.CanDig = System.Convert.ToBoolean(GetTag(Tags, "CanDig"));
         else
             GameVariables.Level.CanDig = false;
 
-        if (TagExists(Tags, "CanFly") == true)
+        if (TagExists(Tags, "CanFly"))
             GameVariables.Level.CanFly = System.Convert.ToBoolean(GetTag(Tags, "CanFly"));
         else
             GameVariables.Level.CanFly = false;
 
-        if (TagExists(Tags, "RideType") == true)
+        if (TagExists(Tags, "RideType"))
             GameVariables.Level.RideType = System.Convert.ToInt32(GetTag(Tags, "RideType"));
         else
             GameVariables.Level.RideType = 0;
 
-        if (TagExists(Tags, "EnviromentType") == true)
+        if (TagExists(Tags, "EnviromentType"))
             GameVariables.Level.EnvironmentType = System.Convert.ToInt32(GetTag(Tags, "EnviromentType"));
         else
             GameVariables.Level.EnvironmentType = 0;
 
-        if (TagExists(Tags, "Weather") == true)
+        if (TagExists(Tags, "Weather"))
             GameVariables.Level.WeatherType = System.Convert.ToInt32(GetTag(Tags, "Weather"));
         else
             GameVariables.Level.WeatherType = 0;
@@ -1097,31 +1097,31 @@ public class LevelLoader
         bool lightningExists = TagExists(Tags, "Lightning");
         bool lightingExists = TagExists(Tags, "Lighting");
 
-        if (lightningExists == true & lightingExists == true)
+        if (lightningExists & lightingExists)
             GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
-        else if (lightingExists == true)
+        else if (lightingExists)
             GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
-        else if (lightningExists == true)
+        else if (lightningExists)
             GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lightning"));
         else
             GameVariables.Level.LightingType = 1;
 
-        if (TagExists(Tags, "IsDark") == true)
+        if (TagExists(Tags, "IsDark"))
             GameVariables.Level.IsDark = System.Convert.ToBoolean(GetTag(Tags, "IsDark"));
         else
             GameVariables.Level.IsDark = false;
 
-        if (TagExists(Tags, "Terrain") == true)
+        if (TagExists(Tags, "Terrain"))
             GameVariables.Level.Terrain.TerrainType = Terrain.FromString(System.Convert.ToString(GetTag(Tags, "Terrain")));
         else
             GameVariables.Level.Terrain.TerrainType = Terrain.TerrainTypes.Plain;
 
-        if (TagExists(Tags, "IsSafariZone") == true)
+        if (TagExists(Tags, "IsSafariZone"))
             GameVariables.Level.IsSafariZone = System.Convert.ToBoolean(GetTag(Tags, "IsSafariZone"));
         else
             GameVariables.Level.IsSafariZone = false;
 
-        if (TagExists(Tags, "BugCatchingContest") == true)
+        if (TagExists(Tags, "BugCatchingContest"))
         {
             GameVariables.Level.IsBugCatchingContest = true;
             GameVariables.Level.BugCatchingContestData = System.Convert.ToString(GetTag(Tags, "BugCatchingContest"));
@@ -1132,12 +1132,12 @@ public class LevelLoader
             GameVariables.Level.BugCatchingContestData = "";
         }
 
-        if (TagExists(Tags, "MapScript") == true)
+        if (TagExists(Tags, "MapScript"))
         {
             string scriptName = System.Convert.ToString(GetTag(Tags, "MapScript"));
             if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             {
-                if ((OverworldScreen)CurrentScreen.ActionScript.IsReady == true)
+                if ((OverworldScreen)CurrentScreen.ActionScript.IsReady)
                 {
                     (OverworldScreen)CurrentScreen.ActionScript.reDelay = 0.0F;
                     (OverworldScreen)CurrentScreen.ActionScript.StartScript(scriptName, 0);
@@ -1151,7 +1151,7 @@ public class LevelLoader
         else
             MapScript = "";
 
-        if (TagExists(Tags, "RadioChannels") == true)
+        if (TagExists(Tags, "RadioChannels"))
         {
             string[] channels = System.Convert.ToString(GetTag(Tags, "RadioChannels")).Split(System.Convert.ToChar(","));
             foreach (string c in channels)
@@ -1160,12 +1160,12 @@ public class LevelLoader
         else
             GameVariables.Level.AllowedRadioChannels.Clear();
 
-        if (TagExists(Tags, "BattleMap") == true)
+        if (TagExists(Tags, "BattleMap"))
             GameVariables.Level.BattleMapData = System.Convert.ToString(GetTag(Tags, "BattleMap"));
         else
             GameVariables.Level.BattleMapData = "";
 
-        if (TagExists(Tags, "SurfingBattleMap") == true)
+        if (TagExists(Tags, "SurfingBattleMap"))
             GameVariables.Level.SurfingBattleMapData = System.Convert.ToString(GetTag(Tags, "SurfingBattleMap"));
         else
             GameVariables.Level.SurfingBattleMapData = "";
@@ -1192,7 +1192,7 @@ public class LevelLoader
         Size ObjectSize = new Size(ObjectSizeList[0], ObjectSizeList[1]);
 
         List<int> DayTime = new List<int>();
-        if (TagExists(Tags, "DayTime") == true)
+        if (TagExists(Tags, "DayTime"))
             DayTime = (List<int>)GetTag(Tags, "DayTime");
 
         if (DayTime.Contains(World.GetTime()) | DayTime.Contains(-1) | DayTime.Count == 0)
@@ -1212,7 +1212,7 @@ public class LevelLoader
         Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         Vector3 Rotation = Vector3.zero;
-        if (TagExists(Tags, "Rotation") == true)
+        if (TagExists(Tags, "Rotation"))
         {
             List<float> rotationList = (List<float>)GetTag(Tags, "Rotation");
             Rotation = new Vector3(rotationList[0], rotationList[1], rotationList[2]);
@@ -1227,7 +1227,7 @@ public class LevelLoader
         string trigger = "";
         bool isTriggered = true;
 
-        if (TagExists(Tags, "Trigger") == true)
+        if (TagExists(Tags, "Trigger"))
             trigger = System.Convert.ToString(GetTag(Tags, "Trigger"));
         switch (trigger.ToLower())
         {
@@ -1246,7 +1246,7 @@ public class LevelLoader
                 }
         }
 
-        if (isTriggered == true)
+        if (isTriggered)
             GameVariables.Level.BackdropRenderer.AddBackdrop(new BackdropRenderer.Backdrop(BackdropType, Position, Rotation, Width, Height, Texture));
     }
 
@@ -1256,7 +1256,7 @@ public class LevelLoader
         string[] Data = GameVariables.playerTrainer.BerryData.Replace("}" + System.Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
         foreach (string Berry in Data)
         {
-            if (Berry.Contains("{") == true)
+            if (Berry.Contains("{"))
             {
                 string b = Berry.Remove(0, Berry.IndexOf("{"));
                 b = b.Remove(0, 1);
@@ -1274,7 +1274,7 @@ public class LevelLoader
                     {
                         0,
                         0
-                    }, true, new Vector3(0), new Vector3(1), BaseModel.BillModel, 0, "", true, new Vector3(1.0F), -1, MapOrigin, "", Offset);
+                    }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0F), -1, MapOrigin, "", Offset);
                     ((BerryPlant)newEnt).Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
 
                     GameVariables.Level.Entities.Add(newEnt);

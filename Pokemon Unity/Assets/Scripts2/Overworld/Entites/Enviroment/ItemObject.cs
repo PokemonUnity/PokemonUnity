@@ -105,11 +105,11 @@ public class ItemObject : Entity
         {
             checkedExistence = true;
 
-            if (ItemExists(this) == true)
+            if (ItemExists(this))
                 RemoveItem(this);
         }
 
-        if (this.IsHiddenItem() == true)
+        if (this.IsHiddenItem())
         {
             if (this.Opacity > 0.0F)
             {
@@ -184,11 +184,11 @@ public class ItemObject : Entity
     {
         if (GameVariables.playerTrainer.ItemData != "")
         {
-            if (GameVariables.playerTrainer.ItemData.Contains(",") == true)
+            if (GameVariables.playerTrainer.ItemData.Contains(","))
             {
                 string[] IDs = GameVariables.playerTrainer.ItemData.ToLower().Split(System.Convert.ToChar(","));
 
-                if (IDs.Contains((GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == true)
+                if (IDs.Contains((GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()))
                     return true;
                 else
                     return false;

@@ -331,7 +331,7 @@ public class Battle : UnityUtilityIntegration
 	public bool Owned {
 		get
 		{
-			return (int)species > 0 && player.playerPokedex[(int)species].HasValue ? player.playerPokedex[(int)species].Value == true : false;
+			return (int)species > 0 && player.playerPokedex[(int)species].HasValue ? player.playerPokedex[(int)species].Value : false;
 		}
 		set
 		{
@@ -1525,7 +1525,7 @@ public class Battle : UnityUtilityIntegration
 					(Move)base.moves[3]
 				};
 			}
-#if (DEBUG == false || UNITY_EDITOR == true)
+#if (DEBUG == false || UNITY_EDITOR)
 			UpdateUI();
 #endif
 		}

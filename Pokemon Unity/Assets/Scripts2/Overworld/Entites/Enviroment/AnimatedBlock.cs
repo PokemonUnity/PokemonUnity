@@ -105,7 +105,7 @@ public class AnimatedBlock : Entity
 
 	public override void WalkOntoFunction()
 	{
-		if (GameVariables.Level.Surfing == true)
+		if (GameVariables.Level.Surfing)
 		{
 			bool canSurf = false;
 
@@ -115,7 +115,7 @@ public class AnimatedBlock : Entity
 				{
 					if (Entity.ActionValue == 0 && (Entity.EntityID == Entities.AnimatedBlock || Entity.EntityID == Entities.Water))
 						canSurf = true;
-					else if (Entity.Collision == true)
+					else if (Entity.Collision)
 					{
 						canSurf = false;
 						break;
@@ -123,7 +123,7 @@ public class AnimatedBlock : Entity
 				}
 			}
 
-			if (canSurf == true)
+			if (canSurf)
 			{
 				GameVariables.Camera.Move(1);
 
@@ -138,7 +138,7 @@ public class AnimatedBlock : Entity
 		{
 			if (GameVariables.Level.Surfing == false)
 			{
-				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
 				{
 					if (Screen.ChooseBox.Showing == false)
 					{
@@ -155,7 +155,7 @@ public class AnimatedBlock : Entity
 										if (GameVariables.playerTrainer.SurfPokemon > -1)
 											canSurf = true;
 									}
-									else if (Entity.Collision == true)
+									else if (Entity.Collision)
 									{
 										canSurf = false;
 										break;
@@ -164,10 +164,10 @@ public class AnimatedBlock : Entity
 							}
 						}
 
-						if (GameVariables.Level.Riding == true)
+						if (GameVariables.Level.Riding)
 							canSurf = false;
 
-						if (canSurf == true)
+						if (canSurf)
 						{
 							string message = "Do you want to Surf?%Yes|No%";
 							Screen.TextBox.Show(message, this, true, true);
@@ -232,7 +232,7 @@ public class AnimatedBlock : Entity
 
 				int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Number;
 				string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
-				if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny == true)
+				if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny)
 					SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
 
 				withBlock.SetTexture(SkinName, false);

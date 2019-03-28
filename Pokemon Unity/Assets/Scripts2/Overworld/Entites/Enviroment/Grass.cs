@@ -40,7 +40,7 @@ public class Grass : Entity
         {
             if (e.EntityID == Entities.Grass)
             {
-                if (e.Visible == true)
+                if (e.Visible)
                 {
                     if (System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y))
                     {

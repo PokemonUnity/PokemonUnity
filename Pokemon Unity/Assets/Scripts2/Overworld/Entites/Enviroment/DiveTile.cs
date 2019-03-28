@@ -17,11 +17,11 @@ public class DiveTile : Entity
 
     public override void Update()
     {
-        if (GameVariables.Level.Surfing == true)
+        if (GameVariables.Level.Surfing)
         {
             if (System.Convert.ToInt32(this.Position.x) == System.Convert.ToInt32(GameVariables.Camera.Position.x) & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & System.Convert.ToInt32(this.Position.z) == System.Convert.ToInt32(GameVariables.Camera.Position.z))
             {
-                if (Controls.Accept(true, true, true) == true)
+                if (Controls.Accept(true, true, true))
                 {
                     if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
                     {
@@ -41,7 +41,7 @@ public class DiveTile : Entity
             string t = "The water seems to be~really deep at this point.";
             string d = GetDivePokemon();
 
-            if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) == true | GameVariables.playerTrainer.SandBoxMode == true | GameVariables.IS_DEBUG_ACTIVE == true)
+            if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
                 t += "*Do you want to~use Dive?%Yes|No%";
             Screen.TextBox.Show(t, (DiveTile)this);
             SoundManager.PlaySound("select");

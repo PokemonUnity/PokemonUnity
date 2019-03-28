@@ -10,7 +10,7 @@ public class ModelEntity : Entity
     {
         base.Initialize();
 
-        if (ModelManager.ModelExist(this.AdditionalValue) == true)
+        if (ModelManager.ModelExist(this.AdditionalValue))
             this._model = ModelManager.GetModel(this.AdditionalValue);
         this.NeedsUpdate = true;
 
@@ -67,12 +67,12 @@ public class ModelEntity : Entity
 
     public override void Render()
     {
-        if (Visible == true)
+        if (Visible)
         {
             if (_model != null)
                 _model.Draw(this.World, GameVariables.Camera.View, GameVariables.Camera.Projection);
 
-            if (drawViewBox == true)
+            if (drawViewBox)
                 BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, UnityEngine.Color.red);
         }
     }

@@ -17,7 +17,7 @@ public class Floor : Entity
     {
     }
 
-    public Floor(float X, float Y, float Z, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, Vector3 Scale, BaseModel Model, int ActionValue, string AdditionalValue, bool Visible, Vector3 Shader, bool hasSnow, bool IsIce, bool hasSand) : base(X, Y, Z, "Floor", Textures, TextureIndex, Collision, Rotation, Scale, Model, ActionValue, AdditionalValue, Shader)
+    public Floor(float X, float Y, float Z, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, Vector3 Shader, bool hasSnow, bool IsIce, bool hasSand) : base(X, Y, Z, "Floor", Textures, TextureIndex, Collision, Rotation, Scale, Model, ActionValue, AdditionalValue, Shader)
     {
         this.hasSnow = hasSnow;
         this.hasSand = hasSand;
@@ -70,9 +70,9 @@ public class Floor : Entity
         if (changedWeatherTexture == false)
         {
             changedWeatherTexture = true;
-            if ((GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Blizzard) == true & this.hasSnow == true)
+            if ((GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Blizzard) & this.hasSnow)
                 ChangeSnow();
-            if (GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Sandstorm & this.hasSand == true)
+            if (GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Sandstorm & this.hasSand)
                 ChangeSand();
         }
 
@@ -92,7 +92,7 @@ public class Floor : Entity
             Entity[] ent = new Entity[5];
             int[] sides = new[] { -1, -1, -1, -1 };
 
-            if (this.IsOffsetMapContent == true)
+            if (this.IsOffsetMapContent)
             {
                 ent[0] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
                 ent[1] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
@@ -128,7 +128,7 @@ public class Floor : Entity
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 2)),
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16))
                 };
-                this.Model = BaseModel.BlockModel;
+                this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
                 this.Scale = new Vector3(1, 0.1F, 1);
                 this.Position.y -= 0.45F;
@@ -161,7 +161,7 @@ public class Floor : Entity
             Entity[] ent = new Entity[5];
             int[] sides = new[] { -1, -1, -1, -1 };
 
-            if (this.IsOffsetMapContent == true)
+            if (this.IsOffsetMapContent)
             {
                 ent[0] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
                 ent[1] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
@@ -197,7 +197,7 @@ public class Floor : Entity
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 2)),
                     P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16))
                 };
-                this.Model = BaseModel.BlockModel;
+                this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
                 this.Scale = new Vector3(1, 0.1F, 1);
                 this.Position.y -= 0.45F;
@@ -227,14 +227,14 @@ public class Floor : Entity
         checkPosition.y = checkPosition.y.ToInteger();
 
         bool foundSteps = true;
-        while (foundSteps == true)
+        while (foundSteps)
         {
             Entity e = base.GetEntity(GameVariables.Level.Floors, checkPosition, true, typeof(Floor));
             if (e != null)
             {
                 if (e.EntityID == Entities.Floor)
                 {
-                    if (((Floor)e).IsIce == true)
+                    if (((Floor)e).IsIce)
                     {
                         if ((OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition) == false)
                         {

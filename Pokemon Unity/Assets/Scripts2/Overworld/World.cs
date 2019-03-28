@@ -69,7 +69,7 @@ public class World
             if (IsMainMenu)
                 return Seasons.Summer;
 
-            if (NeedServerObject() == true)
+            if (NeedServerObject())
                 return ServerSeason;
             switch (WeekOfYear % 4)
             {
@@ -105,7 +105,7 @@ public class World
 
 			//ToDo: DateTime UTC to Local
             int Hour = DateTime.UtcNow.Hour;
-            if (NeedServerObject() == true)
+            if (NeedServerObject())
             {
                 string[] data = ServerTimeData.Split(System.Convert.ToChar(","));
                 Hour = System.Convert.ToInt32(data[0]);
@@ -917,7 +917,7 @@ public class World
                 {
                     Core.BackgroundColor = GetWeatherBackgroundColor(SkyDome.GetDaytimeColor(false));
                     Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    if (IsAurora == true)
+                    if (IsAurora)
                         Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\AuroraBoralis");
                     else
                         Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds1");
@@ -984,7 +984,7 @@ public class World
             if (Core.GameOptions.GraphicStyle == 1)
             {
                 Screen.Identifications[] identifications = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen };
-                if (identifications.Contains(Core.CurrentScreen.Identification) == true)
+                if (identifications.Contains(Core.CurrentScreen.Identification))
                 {
                     if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
                     {
@@ -1127,7 +1127,7 @@ public class World
         if (LevelLoader.IsBusy == false)
         {
             Screen.Identifications[] validScreen = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen };
-            if (validScreen.Contains(Core.CurrentScreen.Identification) == true)
+            if (validScreen.Contains(Core.CurrentScreen.Identification))
             {
                 if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
                 {
@@ -1249,7 +1249,7 @@ public class World
                                 float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0F;
                                 float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5F;
                                 float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5F;
-                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, BaseModel.BillModel, new Vector3(1f, 1f, 1f));
+                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, UnityEngine.Mesh.BillModel, new Vector3(1f, 1f, 1f));
                                 p.MoveSpeed = speed;
                                 if (MapWeather == Weathers.Rain)
                                     p.Opacity = 0.7F;
@@ -1291,7 +1291,7 @@ public class World
 
         if (T != null)
         {
-            if (SeasonTextureBuffer.ContainsKey(T) == true)
+            if (SeasonTextureBuffer.ContainsKey(T))
                 return SeasonTextureBuffer[T];
 
             int x = 0;
@@ -1351,7 +1351,7 @@ public class World
     {
         get
         {
-            if (NeedServerObject() == true)
+            if (NeedServerObject())
             {
                 string[] data = ServerTimeData.Split(System.Convert.ToChar(","));
                 int hours = System.Convert.ToInt32(data[0]);
@@ -1371,7 +1371,7 @@ public class World
     {
         get
         {
-            if (NeedServerObject() == true)
+            if (NeedServerObject())
             {
                 string[] data = ServerTimeData.Split(System.Convert.ToChar(","));
                 int hours = System.Convert.ToInt32(data[0]);
@@ -1388,7 +1388,7 @@ public class World
 
     private static bool NeedServerObject()
     {
-        return JoinServerScreen.Online == true & ConnectScreen.Connected == true;
+        return JoinServerScreen.Online & ConnectScreen.Connected;
     }
 
     /// <summary>
@@ -1396,7 +1396,7 @@ public class World
     /// </summary>
     public static Weathers GetCurrentRegionWeather()
     {
-        if (NeedServerObject() == true)
+        if (NeedServerObject())
             return ServerWeather;
         else
             return _regionWeather;

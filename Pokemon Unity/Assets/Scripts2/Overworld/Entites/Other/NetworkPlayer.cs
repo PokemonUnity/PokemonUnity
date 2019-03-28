@@ -48,7 +48,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			0,
 			0
-		}, true, Rotation, Scale, BaseModel.BillModel, 0, "", new Vector3(1.0F))
+		}, true, Rotation, Scale, UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0F))
     {
         this.Name = Name;
         this.NetworkID = ID;
@@ -84,7 +84,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		Texture2D OnlineSprite = null;//* TODO Change to default(_) if this is not a reference type
 		if (this.GameJoltID != "")
 		{
-			if (GameJolt.Emblem.HasDownloadedSprite(this.GameJoltID) == true)
+			if (GameJolt.Emblem.HasDownloadedSprite(this.GameJoltID))
 				OnlineSprite = GameJolt.Emblem.GetOnlineSprite(this.GameJoltID);
 			else
 			{
@@ -97,11 +97,11 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		if (OnlineSprite != null)
 			this.Texture = OnlineSprite;
-		else if (TextureManager.TextureExist(texturePath) == true)
+		else if (TextureManager.TextureExist(texturePath))
 		{
 			GameVariables.DebugLog("Change network texture to [" + texturePath + "]");
 
-			if (texturePath.StartsWith(@"Pokemon\") == true)
+			if (texturePath.StartsWith(@"Pokemon\"))
 				this.HasPokemonTexture = true;
 			else
 				this.HasPokemonTexture = false;
@@ -127,13 +127,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	{
 		string texturePath = @"Textures\NPC\";
 		bool isPokemon = false;
-		if (TextureID.StartsWith("[POKEMON|N]") == true | TextureID.StartsWith("[Pokémon|N]") == true)
+		if (TextureID.StartsWith("[POKEMON|N]") | TextureID.StartsWith("[Pokémon|N]"))
 		{
 			TextureID = TextureID.Remove(0, 11);
 			isPokemon = true;
 			texturePath = @"Pokemon\Overworld\Normal\";
 		}
-		else if (TextureID.StartsWith("[POKEMON|S]") == true | TextureID.StartsWith("[Pokémon|S]") == true)
+		else if (TextureID.StartsWith("[POKEMON|S]") | TextureID.StartsWith("[Pokémon|S]"))
 		{
 			TextureID = TextureID.Remove(0, 11);
 			isPokemon = true;
@@ -154,7 +154,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			if (spriteIndex < 0)
 				spriteIndex += 4;
 
-			if (RotatedSprite == true)
+			if (RotatedSprite)
 			{
 				switch (spriteIndex)
 				{
@@ -174,7 +174,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			Size spriteSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
 			int x = 0;
-			if (this.moving == true)
+			if (this.moving)
 				x = GetAnimationX() * spriteSize.width;
 
 			r = new Rectangle(x, spriteSize.height * spriteIndex, spriteSize.width, spriteSize.height);
@@ -190,7 +190,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	private int GetAnimationX()
 	{
-		if (this.HasPokemonTexture == true)
+		if (this.HasPokemonTexture)
 		{
 			switch (AnimationX)
 			{
@@ -236,7 +236,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	private void Move()
 	{
-		if (this.moving == true)
+		if (this.moving)
 		{
 			this.AnimationDelay -= 0.1F;
 			if (this.AnimationDelay <= 0.0F)
@@ -296,18 +296,18 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public override void Render()
 	{
-		if (ConnectScreen.Connected == true)
+		if (ConnectScreen.Connected)
 		{
-			if (IsCorrectScreen() == true)
+			if (IsCorrectScreen())
 			{
 				this.Draw(this.Model, Textures, false);
-				if (Core.GameOptions.ShowGUI == true)
+				if (Core.GameOptions.ShowGUI)
 				{
 					if (this.NameTexture != null)
 					{
 						var state = GraphicsDevice.DepthStencilState;
 						GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-						Draw(BaseModel.BillModel,
+						Draw(UnityEngine.Mesh.BillModel,
 							new Texture2D[]
 							{
 								this.NameTexture
@@ -352,11 +352,11 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	private bool IsCorrectScreen()
 	{
 		Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
-		if (screens.Contains(Core.CurrentScreen.Identification) == true)
+		if (screens.Contains(Core.CurrentScreen.Identification))
 			return false;
 		else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
 		{
-			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) == true | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification) == true)
+			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
 				return false;
 		}
 		return true;
@@ -395,7 +395,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 			if (GameVariables.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
 				this.Visible = true;
-			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile) == true)
+			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
 			{
 				Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
 				this.Position.x += Offset.x;
@@ -434,7 +434,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	{
 		if (text.Length > 0)
 		{
-			if (SpriteTextStorage.ContainsKey(text) == true)
+			if (SpriteTextStorage.ContainsKey(text))
 				return SpriteTextStorage[text];
 			else
 			{

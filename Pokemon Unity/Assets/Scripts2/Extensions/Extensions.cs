@@ -54,7 +54,7 @@ static class Extensions
     public static int CountSplits(this string fullString, string seperator)
     {
         int i = 0;
-        if (fullString.Contains(seperator) == true)
+        if (fullString.Contains(seperator))
         {
             foreach (char c in fullString)
             {
@@ -73,7 +73,7 @@ static class Extensions
     public static int CountSeperators(this string fullstring, string seperator)
     {
         int i = 0;
-        if (fullstring.Contains(seperator) == true)
+        if (fullstring.Contains(seperator))
         {
             foreach (char c in fullstring)
             {
@@ -86,7 +86,7 @@ static class Extensions
 
     public static string ArrayToString<T>(this T[] Array, bool NewLine = false)
     {
-        if (NewLine == true)
+        if (NewLine)
         {
             string s = "";
             for (var i = 0; i <= Array.Length - 1; i++)
@@ -115,7 +115,7 @@ static class Extensions
 
     public static string ToNumberString(this bool @bool)
     {
-        if (@bool == true)
+        if (@bool)
             return "1";
         else
             return "0";
@@ -201,7 +201,7 @@ static class Extensions
 
         while (fulltext.Length > 0)
         {
-            if (fulltext.StartsWith(Environment.NewLine) == true)
+            if (fulltext.StartsWith(Environment.NewLine))
             {
                 if (currentLine != "")
                     currentLine += " ";
@@ -211,7 +211,7 @@ static class Extensions
                 currentWord = "";
                 fulltext = fulltext.Remove(0, 2);
             }
-            else if (fulltext.StartsWith(" ") == true)
+            else if (fulltext.StartsWith(" "))
             {
                 if (currentLine != "")
                     currentLine += " ";
@@ -275,7 +275,7 @@ static class Extensions
             for (var i = 0; i <= Data.Length - 1; i++)
             {
                 Color c = Data[i];
-                if (InputColors.Contains(c) == true)
+                if (InputColors.Contains(c))
                 {
                     for (var iC = 0; iC <= InputColors.Length - 1; iC++)
                     {

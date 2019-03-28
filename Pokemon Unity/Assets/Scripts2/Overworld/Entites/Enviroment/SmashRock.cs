@@ -32,7 +32,7 @@ public class SmashRock : Entity
 
             string text = "This rock looks like~it can be broken!";
 
-            if (pName != "" | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+            if (pName != "" | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                 text += "~Do you want to~use Rock Smash?%Yes|No%";
 
             Screen.TextBox.Show(text, this);
@@ -137,7 +137,7 @@ public class SmashRock : Entity
     {
         ItemContainerlist.Clear();
         string File = GameModeManager.GetContentFilePath(@"Data\smashrockitems.dat");
-        if (System.IO.File.Exists(File) == true)
+        if (System.IO.File.Exists(File))
         {
             //System.Security.FileValidation.CheckFileValid(File, false, "SmashRock.vb");
             string[] data = System.IO.File.ReadAllLines(File);

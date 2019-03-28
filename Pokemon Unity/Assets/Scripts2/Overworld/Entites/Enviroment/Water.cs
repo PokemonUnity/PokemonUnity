@@ -89,7 +89,7 @@ public class Water : Entity
 
     public override void WalkOntoFunction()
     {
-        if (GameVariables.Level.Surfing == true)
+        if (GameVariables.Level.Surfing)
         {
             bool canSurf = false;
 
@@ -99,7 +99,7 @@ public class Water : Entity
                 {
                     if (Entity.EntityID == Entities.Water)
                         canSurf = true;
-                    else if (Entity.Collision == true)
+                    else if (Entity.Collision)
                     {
                         canSurf = false;
                         break;
@@ -107,7 +107,7 @@ public class Water : Entity
                 }
             }
 
-            if (canSurf == true)
+            if (canSurf)
             {
                 GameVariables.Camera.Move(1);
 
@@ -122,7 +122,7 @@ public class Water : Entity
         {
             if (GameVariables.Level.Surfing == false)
             {
-                if (Badge.CanUseHMMove(Badge.HMMoves.Surf) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+                if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                 {
                     if (Screen.ChooseBox.Showing == false)
                     {
@@ -139,7 +139,7 @@ public class Water : Entity
                                         if (GameVariables.playerTrainer.SurfPokemon > -1)
                                             canSurf = true;
                                     }
-                                    else if (Entity.Collision == true)
+                                    else if (Entity.Collision)
                                     {
                                         canSurf = false;
                                         break;
@@ -148,10 +148,10 @@ public class Water : Entity
                             }
                         }
 
-                        if (GameVariables.Level.Riding == true)
+                        if (GameVariables.Level.Riding)
                             canSurf = false;
 
-                        if (canSurf == true)
+                        if (canSurf)
                         {
                             string message = "Do you want to Surf?%Yes|No%";
                             string waterType = "";
@@ -337,7 +337,7 @@ public class Water : Entity
 
                 int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Species;
                 string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
-                if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny == true)
+                if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny)
                     SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
 
                 withBlock.SetTexture(SkinName, false);

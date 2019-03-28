@@ -40,7 +40,7 @@ public class StrengthTrigger : Entity
         string[] registers = GameVariables.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
         foreach (string r in registers)
         {
-            if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_") == true)
+            if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_"))
             {
                 string RemoveID = r.Remove(0, ("ACTIVATOR_REMOVE_STRENGTHT_ROCK_" + GameVariables.Level.LevelFile + "_").Length - 1);
                 foreach (Entity sRock in GameVariables.Level.Entities)
@@ -67,9 +67,9 @@ public class StrengthTrigger : Entity
                 {
                     if (sRock.Position.x == this.Position.x & sRock.Position.z == this.Position.z)
                     {
-                        if (RemoveRock == true)
+                        if (RemoveRock)
                             ((StrengthRock)sRock).CanBeRemoved = true;
-                        if (RemoveForever == true)
+                        if (RemoveForever)
                             ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_" + sRock.ID.ToString());
                         if (ActivateScript != "")
                         {

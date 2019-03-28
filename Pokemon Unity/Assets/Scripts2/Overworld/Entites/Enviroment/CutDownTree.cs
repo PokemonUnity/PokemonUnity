@@ -41,7 +41,7 @@ public class CutDownTree : Entity
 
 		string text = "This tree looks like it~can be Cut down!";
 
-		if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) == true | GameVariables.playerTrainer.SandBoxMode == true | GameVariables.IS_DEBUG_ACTIVE == true)
+		if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
 			text += "~Do you want to~use Cut?%Yes|No%";
 
 		Screen.TextBox.Show(text, this);

@@ -437,7 +437,7 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-                else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE == true)
+                else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE)
                 {
                     //DEBUG
                     Debug.Log(currentMap.getTileTag(transform.position));
@@ -450,7 +450,7 @@ public class PlayerMovement : MonoBehaviour
                         followerScript.canMove = true;
                     }
                 }
-                /*else if (Input.GetKeyDown(",") && SaveData.currentSave.IS_DEBUG_ACTIVE == true+)
+                /*else if (Input.GetKeyDown(",") && SaveData.currentSave.IS_DEBUG_ACTIVE+)
                 {
                     //GlobalVariables.debug(GlobalVariables.GetDebugText());
                     //DEBUG

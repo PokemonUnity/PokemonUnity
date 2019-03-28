@@ -30,7 +30,7 @@
 		new int[] {
 			0,
 			0
-		}, false, 0, new Vector3(0.8F), BaseModel.BillModel, 0, "", new Vector3(1.0F))
+		}, false, 0, new Vector3(0.8F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0F))
     {
         this.NotificationType = NotificationType;
 

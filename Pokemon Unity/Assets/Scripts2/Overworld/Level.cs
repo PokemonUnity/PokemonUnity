@@ -929,7 +929,7 @@ public class Level
             }
         }
 
-        if (IsDark == true)
+        if (IsDark)
             DrawFlashOverlay();
     }
 
@@ -944,9 +944,9 @@ public class Level
         this._pokemonEncounter.TriggerBattle();
 
         // Reload map from file (Debug or Sandbox Mode):
-        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
         {
-            if (KeyBoardHandler.KeyPressed(Keys.R) == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+            if (KeyBoardHandler.KeyPressed(Keys.R) & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             {
                 Core.OffsetMaps.Clear();
                 GameVariables.DebugLog(string.Format("Reload map file: {0}", this._levelFile));
@@ -955,7 +955,7 @@ public class Level
         }
 
         // Update all network players and Pokémon:
-        if (JoinServerScreen.Online == true)
+        if (JoinServerScreen.Online)
             Core.ServersManager.PlayerManager.UpdatePlayers();
 
         // Call Update and UpdateEntity methods of all entities:
@@ -1110,7 +1110,7 @@ public class Level
     /// </summary>
     private void UpdatePlayerWarp()
     {
-        if (WarpData.DoWarpInNextTick == true)
+        if (WarpData.DoWarpInNextTick)
         {
             // Disable wild Pokémon:
             this._wildPokemonFloor = false;
@@ -1163,7 +1163,7 @@ public class Level
             });
 
             // Set Ride skin, if needed:
-            if (Riding == true & CanRide() == false)
+            if (Riding & CanRide() == false)
             {
                 Riding = false;
                 OwnPlayer.SetTexture(GameVariables.playerTrainer.TempRideSkin, true);
@@ -1177,14 +1177,14 @@ public class Level
             this._routeSign.Setup(MapName);
 
             // Play the correct music track:
-            if (IsRadioOn == true && GameJolt.PokegearScreen.StationCanPlay(this.SelectedRadioStation) == true)
+            if (IsRadioOn && GameJolt.PokegearScreen.StationCanPlay(this.SelectedRadioStation))
                 MusicManager.Play(SelectedRadioStation.Music, true);
             else
             {
                 IsRadioOn = false;
-                if (this.Surfing == true)
+                if (this.Surfing)
                     MusicManager.Play("surf", true);
-                else if (this.Riding == true)
+                else if (this.Riding)
                     MusicManager.Play("ride", true);
                 else
                     MusicManager.Play(MusicLoop, true);
@@ -1207,7 +1207,7 @@ public class Level
             }
 
             // If the warp happened through a warp block, make the player walk one step forward after switching to the new map:
-            if (GameVariables.Camera.IsMoving == true & WarpData.IsWarpBlock == true)
+            if (GameVariables.Camera.IsMoving & WarpData.IsWarpBlock)
             {
                 GameVariables.Camera.StopMovement();
                 GameVariables.Camera.Move(1.0F);
@@ -1231,7 +1231,7 @@ public class Level
             this.WarpData.DoWarpInNextTick = false;
             WarpData.IsWarpBlock = false;
 
-            if (Core.ServersManager.ServerConnection.Connected == true)
+            if (Core.ServersManager.ServerConnection.Connected)
                 // Update network players:
                 Core.ServersManager.PlayerManager.NeedsUpdate = true;
         }
@@ -1296,7 +1296,7 @@ public class Level
             if (Entity.EntityID == PokemonUnity.Entities.NPC)
             {
                 NPC NPC = (NPC)Entity;
-                if (NPC.IsTrainer == true)
+                if (NPC.IsTrainer)
                     NPC.CheckInSight();
             }
         }
@@ -1307,7 +1307,7 @@ public class Level
     /// </summary>
     public bool CanRide()
     {
-        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
             return true;
         if (RideType > 0)
         {

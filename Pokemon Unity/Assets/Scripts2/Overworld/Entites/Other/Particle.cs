@@ -23,7 +23,7 @@ public class Particle : Entity
 	private Vector3 LastPosition;
 	private float time = 0;
 
-	public Particle(Vector3 Position, Texture2D[] Textures, int[] TextureIndex, int Rotation, Vector3 Scale, BaseModel Model, Vector3 Shader) : base(Position.x, Position.y, Position.z, "Particle", Textures, TextureIndex, false, Rotation, Scale, Model, 0, "", Shader)
+	public Particle(Vector3 Position, Texture2D[] Textures, int[] TextureIndex, int Rotation, Vector3 Scale, UnityEngine.Mesh Model, Vector3 Shader) : base(Position.x, Position.y, Position.z, "Particle", Textures, TextureIndex, false, Rotation, Scale, Model, 0, "", Shader)
 	{
 		this.NeedsUpdate = true;
 		this.CreateWorldEveryFrame = true;
@@ -38,7 +38,7 @@ public class Particle : Entity
 	public override void Update()
 	{
 		Screen.Identifications[] identifications = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen };
-		if (identifications.Contains(Core.CurrentScreen.Identification) == true)
+		if (identifications.Contains(Core.CurrentScreen.Identification))
 		{
 			switch (this.Behavior)
 			{

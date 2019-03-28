@@ -28,7 +28,7 @@ public class OwnPlayer : Entity
 		{
 			0,
 			0
-		}, false, 0, new Vector3(1.0F), BaseModel.BillModel, 0, "", new Vector3(1.0F))
+		}, false, 0, new Vector3(1.0F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0F))
     {
 		SetTexture(TextureID, true);
 
@@ -114,14 +114,14 @@ public class OwnPlayer : Entity
 
 	private void Move()
 	{
-		if ((GameVariables.Camera.IsMoving() == true & this.DoAnimation == true) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
+		if ((GameVariables.Camera.IsMoving() & this.DoAnimation) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
 		{
 			this.AnimationDelay -= 0.13F;
 			if (AnimationDelay <= 0.0F)
 			{
 				AnimationDelay = GetAnimationDelay();
 				AnimationX += 1;
-				if (HasPokemonTexture == true)
+				if (HasPokemonTexture)
 				{
 					if (AnimationX > 2)
 						AnimationX = 1;
@@ -160,7 +160,7 @@ public class OwnPlayer : Entity
 			Size frameSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
 			int x = 0;
-			if (GameVariables.Camera.IsMoving() == true)
+			if (GameVariables.Camera.IsMoving())
 				x = GetAnimationX() * frameSize.width;
 
 			r = new Rectangle(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
@@ -186,7 +186,7 @@ public class OwnPlayer : Entity
 
 	private int GetAnimationX()
 	{
-		if (HasPokemonTexture == true)
+		if (HasPokemonTexture)
 			return AnimationX;
 		else
 			switch (AnimationX)
@@ -214,7 +214,7 @@ public class OwnPlayer : Entity
 
 	public override void Render()
 	{
-		if (InCameraFocus() == true)
+		if (InCameraFocus())
 		{
 			var state = GraphicsDevice.DepthStencilState;
 			GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
@@ -229,7 +229,7 @@ public class OwnPlayer : Entity
 		{
 			var c = (OverworldCamera)GameVariables.Camera;
 
-			if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.Player & c.ThirdPerson == true | c.CameraFocusType != OverworldCamera.CameraFocusTypes.Player)
+			if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.Player & c.ThirdPerson | c.CameraFocusType != OverworldCamera.CameraFocusTypes.Player)
 				return true;
 		}
 		return false;
@@ -244,7 +244,7 @@ public class OwnPlayer : Entity
 
 	private float GetAnimationDelay()
 	{
-		if (GameVariables.playerTrainer.IsRunning() == true)
+		if (GameVariables.playerTrainer.IsRunning())
 			return OwnPlayer.AnimationDelayLenght / (double)1.4F;
 		return OwnPlayer.AnimationDelayLenght;
 	}

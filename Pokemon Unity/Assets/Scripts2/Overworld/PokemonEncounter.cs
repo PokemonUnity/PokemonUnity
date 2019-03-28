@@ -39,7 +39,7 @@ public class PokemonEncounter
                 if (pokeFile == "")
                     pokeFile = withBlock.LevelFile.Remove(withBlock.LevelFile.Length - 4, 4) + ".poke";
 
-                if (System.IO.File.Exists(GameModeManager.GetPokeFilePath(pokeFile)) == true)
+                if (System.IO.File.Exists(GameModeManager.GetPokeFilePath(pokeFile)))
                 {
                     int startRandomValue = 12;
                     int minRandomValue = 5;
@@ -87,10 +87,10 @@ public class PokemonEncounter
                     if (Settings.Rand.Next(0, randomValue * 2) == 0)
                     {
                         // Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
-                        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+                        if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                         {
-                            //if (KeyBoardHandler.KeyDown(Keys.LeftControl) == true)
-                            if (Input.GetKeyDown(KeyCode.LeftControl) == true)
+                            //if (KeyBoardHandler.KeyDown(Keys.LeftControl))
+                            if (Input.GetKeyDown(KeyCode.LeftControl))
                                 return;
                         }
 
@@ -113,7 +113,7 @@ public class PokemonEncounter
     public void TriggerBattle()
     {
         // If the encounter check is true:
-        if (this._levelReference.PokemonEncounterData.EncounteredPokemon == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+        if (this._levelReference.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
         {
             // If the player met the set position:
             if (GameVariables.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & GameVariables.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
@@ -125,7 +125,7 @@ public class PokemonEncounter
                 // Generate new wild Pokémon:
                 Pokemon.Pokemon Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
 
-                if (Pokemon != null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
+                if (Pokemon != null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
                 {
                     GameVariables.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 
@@ -172,7 +172,7 @@ public class PokemonEncounter
 
                     // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
                     int introType = Settings.Rand.Next(0, 10);
-                    //if (BattleSystem.BattleScreen.RoamingBattle == true)
+                    //if (BattleSystem.BattleScreen.RoamingBattle)
                     //    introType = 12;
 					//
                     //BattleSystem.BattleScreen b = new BattleSystem.BattleScreen(Pokemon, Core.CurrentScreen, this._levelReference.PokemonEncounterData.Method);

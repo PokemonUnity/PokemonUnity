@@ -26,7 +26,7 @@ public class NetworkPokemon : Entity
     {
         0,
         0
-    }, false, 0, new Vector3(0.9F), BaseModel.BillModel, 0, "", new Vector3(1))
+    }, false, 0, new Vector3(0.9F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
     {
         this.Visible = visible;
 
@@ -77,13 +77,13 @@ public class NetworkPokemon : Entity
 
 	public override void Render()
 	{
-		if (ConnectScreen.Connected == true)
+		if (ConnectScreen.Connected)
 		{
-			if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
+			if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
 			{
-				if (GameVariables.Level.ShowOverworldPokemon == true)
+				if (GameVariables.Level.ShowOverworldPokemon)
 				{
-					if (IsCorrectScreen() == true)
+					if (IsCorrectScreen())
 					{
 						if (this.PokemonTexture != "")
 						{
@@ -107,11 +107,11 @@ public class NetworkPokemon : Entity
 	private bool IsCorrectScreen()
 	{
 		Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
-		if (screens.Contains(Core.CurrentScreen.Identification) == true)
+		if (screens.Contains(Core.CurrentScreen.Identification))
 			return false;
 		else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
 		{
-			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) == true | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification) == true)
+			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
 				return false;
 		}
 		else
@@ -119,7 +119,7 @@ public class NetworkPokemon : Entity
 			Screen c = Core.CurrentScreen;
 			while (c.PreScreen != null)
 				c = c.PreScreen;
-			if (screens.Contains(c.Identification) == true)
+			if (screens.Contains(c.Identification))
 				return false;
 		}
 		return true;
@@ -188,12 +188,12 @@ public class NetworkPokemon : Entity
 			this.faceRotation = p.PokemonFacing;
 			this.FaceDirection = p.PokemonFacing;
 
-			if (this.Visible == true)
+			if (this.Visible)
 			{
 				this.Visible = false;
 				if (GameVariables.Level.LevelFile == p.LevelFile)
 					this.Visible = true;
-				else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile) == true)
+				else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
 				{
 					Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
 					this.Position.x += Offset.x;

@@ -36,7 +36,7 @@ public class ApricornPlant : Entity
 	{
 		Rectangle r = new Rectangle(16, 32, 16, 16);
 
-		if (hasApricorn == true)
+		if (hasApricorn)
 		{
 			int x = GetColorCode(ApricornColor);
 			int y = 0;
@@ -103,7 +103,7 @@ public class ApricornPlant : Entity
 				}
 			}
 
-			if (hasRemoved == true)
+			if (hasRemoved)
 			{
 				GameVariables.playerTrainer.ApricornData = "";
 				foreach (string Apricorn in ApricornsData)
@@ -143,7 +143,7 @@ public class ApricornPlant : Entity
 	{
 		string text = "There are no apricorns~on this tree.*Better come back later...";
 
-		if (hasApricorn == true)
+		if (hasApricorn)
 		{
 			Item.Item Item = new PokemonUnity.Item.Item(GetItem());
 

@@ -12,7 +12,7 @@ public class RockClimbEntity : Entity
 
     public override void ClickFunction()
     {
-        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
         {
             TempClicked = true;
             if (GetRockClimbPokemon() == null)
@@ -24,7 +24,7 @@ public class RockClimbEntity : Entity
 
     public override void WalkOntoFunction()
     {
-        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
         {
             TempClicked = false;
             if (GetRockClimbPokemon() == null)
@@ -41,7 +41,7 @@ public class RockClimbEntity : Entity
     {
         if (Result == 0)
         {
-            if (this.TempClicked == true)
+            if (this.TempClicked)
                 this.WalkUp();
             else
                 this.WalkDown();
@@ -63,7 +63,7 @@ public class RockClimbEntity : Entity
         }
 
         // No rock climb in team:
-        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
         {
             if (GameVariables.playerTrainer.Party.GetCount() > 0)
                 return GameVariables.playerTrainer.Party[0];
@@ -95,7 +95,7 @@ public class RockClimbEntity : Entity
             checkPosition.y = checkPosition.y.ToInteger();
 
             bool foundSteps = true;
-            while (foundSteps == true)
+            while (foundSteps)
             {
                 Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
@@ -170,7 +170,7 @@ public class RockClimbEntity : Entity
             checkPosition.y = checkPosition.y.ToInteger() - 1;
 
             bool foundSteps = true;
-            while (foundSteps == true)
+            while (foundSteps)
             {
                 Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
@@ -231,7 +231,7 @@ public class RockClimbEntity : Entity
     {
         if (ScriptEntity != null)
         {
-            if (ScriptEntity.CorrectRotation() == true)
+            if (ScriptEntity.CorrectRotation())
             {
                 switch (ScriptEntity.GetActivationID())
                 {

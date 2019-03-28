@@ -28,7 +28,7 @@ public class ScriptConversion
 
         if (retError == false)
             return retDbl;
-        else if (IsArithmeticExpression(expression) == true)
+        else if (IsArithmeticExpression(expression))
         {
             string postFix = ToPostfix(expression.ToString(), ref retError);
 
@@ -70,7 +70,7 @@ public class ScriptConversion
             char token = tokens[0];
             tokens.RemoveAt(0);
 
-            if (IsNumber(token) == true)
+            if (IsNumber(token))
                 cNumber += token.ToString();
             else if (cNumber.Length > 0)
             {
@@ -84,7 +84,7 @@ public class ScriptConversion
                 cNumber = "";
             }
 
-            if (IsOperator(token) == true)
+            if (IsOperator(token))
             {
                 if (stack.Count >= 2)
                 {
@@ -179,7 +179,7 @@ public class ScriptConversion
             tokens.RemoveAt(0);
 
             // Token is a number:
-            if (IsNumber(token) == true)
+            if (IsNumber(token))
                 cNumber += token.ToString();
             else if (cNumber.Length > 0)
             {
@@ -194,11 +194,11 @@ public class ScriptConversion
             }
 
             // Token is an operator:
-            if (IsOperator(token) == true)
+            if (IsOperator(token))
             {
                 char o1 = token;
 
-                while (stack.Count > 0 && IsOperator(stack[0]) == true && ((GetAssociativity(o1) == Associativity.Left & GetPrecedence(o1) <= GetPrecedence(stack[0])) | (GetAssociativity(o1) == Associativity.Right & GetPrecedence(o1) < GetPrecedence(stack[0]))))
+                while (stack.Count > 0 && IsOperator(stack[0]) && ((GetAssociativity(o1) == Associativity.Left & GetPrecedence(o1) <= GetPrecedence(stack[0])) | (GetAssociativity(o1) == Associativity.Right & GetPrecedence(o1) < GetPrecedence(stack[0]))))
                 {
                     output += stack[0].ToString() + " ";
                     stack.RemoveAt(0);

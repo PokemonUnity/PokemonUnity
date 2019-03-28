@@ -17,7 +17,7 @@ public class WarpBlock : Entity
 
     public bool Warp(bool MapViewMode)
     {
-        if (IsValidLink(this.AdditionalValue) == true & ScriptBlock.TriggeredScriptBlock == false)
+        if (IsValidLink(this.AdditionalValue) & ScriptBlock.TriggeredScriptBlock == false)
         {
             string destination = this.AdditionalValue.GetSplit(0);
 
@@ -39,7 +39,7 @@ public class WarpBlock : Entity
                     return true;
             }
 
-            if (System.IO.File.Exists(GameController.GamePath + @"\" + GameModeManager.ActiveGameMode.MapPath + destination) == true | System.IO.File.Exists(GameController.GamePath + @"\Content\Data\maps\" + destination) == true)
+            if (System.IO.File.Exists(GameController.GamePath + @"\" + GameModeManager.ActiveGameMode.MapPath + destination) | System.IO.File.Exists(GameController.GamePath + @"\Content\Data\maps\" + destination))
             {
                 if (MapViewMode == false)
                 {
@@ -72,7 +72,7 @@ public class WarpBlock : Entity
     {
         if (link != "")
         {
-            if (link.Contains(",") == true)
+            if (link.Contains(","))
             {
                 int c = 0;
                 for (var e = 0; e <= link.Length - 1; e++)
@@ -83,14 +83,14 @@ public class WarpBlock : Entity
                 if (c >= 4)
                 {
                     string destination = link.GetSplit(0);
-                    if (destination.EndsWith(".dat") == true)
+                    if (destination.EndsWith(".dat"))
                     {
                         string x = link.GetSplit(1);
                         string y = link.GetSplit(2).Replace(".", StringHelper.DecSeparator);
                         string z = link.GetSplit(3);
                         string l = link.GetSplit(4);
 
-                        if (StringHelper.IsNumeric(x) == true & StringHelper.IsNumeric(y) == true & StringHelper.IsNumeric(z) == true & StringHelper.IsNumeric(l) == true)
+                        if (StringHelper.IsNumeric(x) & StringHelper.IsNumeric(y) & StringHelper.IsNumeric(z) & StringHelper.IsNumeric(l))
                             return true;
                         else
                         {

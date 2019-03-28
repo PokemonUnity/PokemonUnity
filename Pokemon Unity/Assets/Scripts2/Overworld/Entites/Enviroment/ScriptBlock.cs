@@ -70,7 +70,7 @@ public class ScriptBlock : Entity
 
     public override void Update()
     {
-        if (this.ActivateScript == true & GameVariables.Camera.Position.x == this.Position.x & GameVariables.Camera.Position.z == this.Position.z & System.Convert.ToInt32(GameVariables.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
+        if (this.ActivateScript & GameVariables.Camera.Position.x == this.Position.x & GameVariables.Camera.Position.z == this.Position.z & System.Convert.ToInt32(GameVariables.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
         {
             GameVariables.Camera.StopMovement();
             ActivateScript = false;
@@ -86,11 +86,11 @@ public class ScriptBlock : Entity
         {
             OverworldScreen oS = (OverworldScreen)Core.CurrentScreen;
 
-            if (oS.ActionScript.IsReady == true | canAttach == true)
+            if (oS.ActionScript.IsReady | canAttach)
             {
-                if (this.CorrectRotation() == true)
+                if (this.CorrectRotation())
                 {
-                    if (this.clickedToActivate == true)
+                    if (this.clickedToActivate)
                     {
                         this.clickedToActivate = false;
                         SoundManager.PlaySound("select");

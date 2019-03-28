@@ -35,7 +35,7 @@ public class SkyDome : MonoBehaviour
         //    Yaw -= MathHelper.TwoPi;
         SetLastColor();
 
-        if (FASTTIMECYCLE == true)
+        if (FASTTIMECYCLE)
         {
             Second += 60;
             if (Second == 60)
@@ -59,7 +59,7 @@ public class SkyDome : MonoBehaviour
 
     private float GetUniversePitch()
     {
-        if (FASTTIMECYCLE == true)
+        if (FASTTIMECYCLE)
         {
             int progress = Hour * 3600 + Minute * 60 + Second;
             return System.Convert.ToSingle((MathHelper.TwoPi / (double)100) * (progress / (double)86400 * 100));
@@ -181,7 +181,7 @@ public class SkyDome : MonoBehaviour
 
     public static UnityEngine.Color GetDaytimeColor(bool shader)
     {
-        if (shader == true)
+        if (shader)
             return LastEntityColor;
         else
             return LastSkyColor;
@@ -308,7 +308,7 @@ public class SkyDome : MonoBehaviour
 
     private int GetTimeValue()
     {
-        if (FASTTIMECYCLE == true)
+        if (FASTTIMECYCLE)
             return Hour * 60 + Minute;
         else
         {

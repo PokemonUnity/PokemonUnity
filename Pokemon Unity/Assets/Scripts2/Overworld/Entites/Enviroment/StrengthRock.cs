@@ -14,7 +14,7 @@ public class StrengthRock : Entity
 
     public override void ClickFunction()
     {
-        if (GameVariables.Level.UsedStrength == true)
+        if (GameVariables.Level.UsedStrength)
         {
             string text = "Pokémon with Strength are~able to move this.";
             Screen.TextBox.Show(text, this);
@@ -44,7 +44,7 @@ public class StrengthRock : Entity
 
             string text = "A Pokémon may be~able to move this.";
 
-            if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) == true | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+            if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                 text += "~Do you want to~use Strength?%Yes|No%";
 
             Screen.TextBox.Show(text, this);
@@ -95,14 +95,14 @@ public class StrengthRock : Entity
 
     public override bool WalkAgainstFunction()
     {
-        if (GameVariables.Level.UsedStrength == true & this.Moved == 0.0F)
+        if (GameVariables.Level.UsedStrength & this.Moved == 0.0F)
         {
             Vector3 newPosition = GameVariables.Camera.GetForwardMovedPosition();
             newPosition.y = newPosition.y.ToInteger();
             newPosition.x += GameVariables.Camera.GetMoveDirection().x;
             newPosition.z += GameVariables.Camera.GetMoveDirection().z;
 
-            if (CheckCollision(newPosition) == true)
+            if (CheckCollision(newPosition))
             {
                 this.Moved = 1;
                 this.FaceDirection = GameVariables.Camera.GetPlayerFacingDirection();
@@ -133,7 +133,7 @@ public class StrengthRock : Entity
         {
             if (Entity.boundingBox.Contains(newPosition) == ContainmentType.Contains)
             {
-                if (Entity.Collision == true)
+                if (Entity.Collision)
                     return false;
             }
         }

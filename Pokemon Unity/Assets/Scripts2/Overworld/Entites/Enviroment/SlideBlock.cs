@@ -23,7 +23,7 @@ public class SlideBlock : Entity
             checkPosition.y = checkPosition.y.ToInteger();
 
             bool foundSteps = true;
-            while (foundSteps == true)
+            while (foundSteps)
             {
                 Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
@@ -83,7 +83,7 @@ public class SlideBlock : Entity
     {
         if (ScriptEntity != null)
         {
-            if (ScriptEntity.CorrectRotation() == true)
+            if (ScriptEntity.CorrectRotation())
             {
                 switch (ScriptEntity.GetActivationID())
                 {
@@ -122,7 +122,7 @@ public class SlideBlock : Entity
             checkPosition.y = checkPosition.y.ToInteger() - 1;
 
             bool foundSteps = true;
-            while (foundSteps == true)
+            while (foundSteps)
             {
                 Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {

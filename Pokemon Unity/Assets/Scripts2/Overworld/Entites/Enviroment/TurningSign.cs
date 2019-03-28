@@ -28,7 +28,7 @@ public class TurningSign : Entity
                 }
         }
 
-        if (StringHelper.IsNumeric(this.AdditionalValue) == true)
+        if (StringHelper.IsNumeric(this.AdditionalValue))
             this.TurningSpeed = System.Convert.ToSingle(System.Convert.ToDouble(this.AdditionalValue) / (double)100);
         this.CreateWorldEveryFrame = true;
     }

@@ -39,7 +39,7 @@ public class RotationTile : Entity
         {
             if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             {
-                if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
+                if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
                 {
                     if (this.Position.x == GameVariables.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & this.Position.z == GameVariables.Camera.Position.z)
                     {

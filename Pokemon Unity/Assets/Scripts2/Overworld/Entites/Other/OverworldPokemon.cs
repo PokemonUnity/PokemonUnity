@@ -11,7 +11,7 @@ public class OverworldPokemon : Entity
 		new int[]{
 			0,
 			0
-		}, false, 0, new Vector3(1.0F), BaseModel.BillModel, 0, "", new Vector3(1))
+		}, false, 0, new Vector3(1.0F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
     {
         PokemonReference = null/* TODO Change to default(_) if this is not a reference type */;
         this.Respawn();
@@ -115,7 +115,7 @@ public class OverworldPokemon : Entity
 				differentShinyState = (this.PokemonReference.IsShiny != GameVariables.playerTrainer.GetWalkPokemon().IsShiny);
 			}
 
-			if (this.PokemonID != GameVariables.playerTrainer.GetWalkPokemon().Species | differentAdditionalData == true | differentShinyState == true)
+			if (this.PokemonID != GameVariables.playerTrainer.GetWalkPokemon().Species | differentAdditionalData | differentShinyState)
 			{
 				this.Texture = null;
 				this.PokemonID = GameVariables.playerTrainer.GetWalkPokemon().Species;
@@ -154,7 +154,7 @@ public class OverworldPokemon : Entity
 
 	public override void Render()
 	{
-		if (this.IsVisible() == true)
+		if (this.IsVisible())
 		{
 			var state = GraphicsDevice.DepthStencilState;
 			GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
@@ -168,11 +168,11 @@ public class OverworldPokemon : Entity
 	/// </summary>
 	public bool IsVisible()
 	{
-		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
+		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
 		{
-			if (GameVariables.Level.ShowOverworldPokemon == true)
+			if (GameVariables.Level.ShowOverworldPokemon)
 			{
-				if (IsCorrectScreen() == true)
+				if (IsCorrectScreen())
 				{
 					if (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE)
 					{
@@ -209,7 +209,7 @@ public class OverworldPokemon : Entity
 
 	private void ChangePosition()
 	{
-		if (GameVariables.Camera.IsMoving() == true)
+		if (GameVariables.Camera.IsMoving())
 		{
 			if (System.Convert.ToInt32(this.Position.x) != System.Convert.ToInt32(GameVariables.Camera.Position.x) | System.Convert.ToInt32(this.Position.z) != System.Convert.ToInt32(GameVariables.Camera.Position.z))
 			{
@@ -253,11 +253,11 @@ public class OverworldPokemon : Entity
 	private bool IsCorrectScreen()
 	{
 		Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
-		if (screens.Contains(Core.CurrentScreen.Identification) == true)
+		if (screens.Contains(Core.CurrentScreen.Identification))
 			return false;
 		else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
 		{
-			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) == true | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification) == true)
+			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
 				return false;
 		}
 		else
@@ -265,7 +265,7 @@ public class OverworldPokemon : Entity
 			Screen c = Core.CurrentScreen;
 			while (c.PreScreen != null)
 				c = c.PreScreen;
-			if (screens.Contains(c.Identification) == true)
+			if (screens.Contains(c.Identification))
 				return false;
 		}
 		return true;
@@ -273,7 +273,7 @@ public class OverworldPokemon : Entity
 
 	public void MakeVisible()
 	{
-		if (warped == true)
+		if (warped)
 			warped = false;
 		else if (this.Visible == false)
 		{
@@ -319,16 +319,16 @@ public class OverworldPokemon : Entity
 
 	public override void ClickFunction()
 	{
-		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")) == true)
+		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
 		{
-			if (this.Visible == true & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & GameVariables.Level.Surfing == false & GameVariables.Level.Riding == false & GameVariables.Level.ShowOverworldPokemon == true)
+			if (this.Visible & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & GameVariables.Level.Surfing == false & GameVariables.Level.Riding == false & GameVariables.Level.ShowOverworldPokemon)
 			{
 				Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
 				string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
 
 				if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 				{
-					if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == true)
+					if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
 						(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(scriptString, 2);
 				}
 			}

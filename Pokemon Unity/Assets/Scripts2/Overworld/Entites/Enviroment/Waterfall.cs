@@ -277,7 +277,7 @@ public class Waterfall : Entity
                 isOnTop = false;
         }
 
-        if (isOnTop == true)
+        if (isOnTop)
         {
             string s = "";
 
@@ -287,7 +287,7 @@ public class Waterfall : Entity
 
             Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y - 1, this.Position.z);
             bool foundSteps = true;
-            while (foundSteps == true)
+            while (foundSteps)
             {
                 Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
@@ -319,7 +319,7 @@ public class Waterfall : Entity
             return this.Collision;
 
         Pokemon.Pokemon p = ReturnWaterFallPokemonName();
-        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) == true & p != null | GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) & p != null | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
         {
             string s = "";
 
@@ -337,7 +337,7 @@ public class Waterfall : Entity
 
             Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
             bool foundSteps = true;
-            while (foundSteps == true)
+            while (foundSteps)
             {
                 Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
                 {
@@ -367,7 +367,7 @@ public class Waterfall : Entity
             return false;
         }
 
-        if (this.Collision == true)
+        if (this.Collision)
             return false;
         else
             return true;
