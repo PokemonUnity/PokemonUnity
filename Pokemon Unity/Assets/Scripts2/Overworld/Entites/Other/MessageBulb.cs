@@ -163,7 +163,7 @@
 			this.Textures =
 				new UnityEngine.Texture2D()
 				{
-					P3D.TextureManager.GetTexture("emoticons", r)
+					TextureManager.GetTexture("emoticons", r)
 				};
 		}
 	}

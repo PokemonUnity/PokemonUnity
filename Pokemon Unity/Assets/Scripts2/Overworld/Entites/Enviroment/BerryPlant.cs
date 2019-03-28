@@ -126,7 +126,7 @@ public class BerryPlant : Entity
                 y += 32;
             }
             Rectangle r = new Rectangle(x, y, 32, 32);
-            t = P3D.TextureManager.GetTexture(@"Textures\Berries", r, "");
+            t = TextureManager.GetTexture(@"Textures\Berries", r, "");
         }
         else
         {
@@ -145,7 +145,7 @@ public class BerryPlant : Entity
                         break;
                     }
             }
-            t = P3D.TextureManager.GetTexture(@"Items\ItemSheet", r, "");
+            t = TextureManager.GetTexture(@"Items\ItemSheet", r, "");
         }
 
         this.Textures[0] = t;

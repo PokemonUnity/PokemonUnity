@@ -148,7 +148,7 @@ public class NPC : Entity
 		if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
 			this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
 		else
-			this.Texture = P3D.TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
+			this.Texture = TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
 
 		this.FrameSize = new Vector2(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 

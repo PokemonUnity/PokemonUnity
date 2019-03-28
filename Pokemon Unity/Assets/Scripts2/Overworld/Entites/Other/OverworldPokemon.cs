@@ -7,7 +7,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 {
 public class OverworldPokemon : Entity
 {
-	public OverworldPokemon(float X, float Y, float Z) : base(X, Y, Z, "OverworldPokemon", P3D.TextureManager.DefaultTexture,
+	public OverworldPokemon(float X, float Y, float Z) : base(X, Y, Z, "OverworldPokemon", TextureManager.DefaultTexture,
 		new int[]{
 			0,
 			0

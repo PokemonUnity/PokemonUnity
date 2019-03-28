@@ -85,7 +85,7 @@ public class Floor : Entity
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-            this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
+            this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
         else
         {
             bool hasEntityOnAllSides = true;
@@ -125,8 +125,8 @@ public class Floor : Entity
             {
                 this.Textures = new Texture2D[]
                 {
-                    P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 2)),
-                    P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16))
+                    TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 2)),
+                    TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16))
                 };
                 this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
@@ -135,7 +135,7 @@ public class Floor : Entity
             }
             else
             {
-                this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
+                this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
                 this.Position.y += 0.1f;
             }
         }
@@ -154,7 +154,7 @@ public class Floor : Entity
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-            this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
+            this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
         else
         {
             bool hasEntityOnAllSides = true;
@@ -194,8 +194,8 @@ public class Floor : Entity
             {
                 this.Textures = new Texture2D[]
                 {
-                    P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 2)),
-                    P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16))
+                    TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 2)),
+                    TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16))
                 };
                 this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
@@ -204,7 +204,7 @@ public class Floor : Entity
             }
             else
             {
-                this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
+                this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
                 this.Position.y += 0.1f;
             }
         }

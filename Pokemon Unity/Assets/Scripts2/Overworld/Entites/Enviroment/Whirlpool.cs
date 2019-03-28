@@ -16,7 +16,7 @@ public class Whirlpool : Entity
     {
         base.Initialize();
 
-        WaterAnimation = new Animation(P3D.TextureManager.GetTexture(@"Textures\Routes"), 1, 4, 16, 16, 9, 12, 0);
+        WaterAnimation = new Animation(TextureManager.GetTexture(@"Textures\Routes"), 1, 4, 16, 16, 9, 12, 0);
 
         if (!Whirlpool.LoadedWaterTemp)
         {
@@ -29,10 +29,10 @@ public class Whirlpool : Entity
         {
             Whirlpool.WaterTexturesTemp.Clear();
 
-            Whirlpool.WaterTexturesTemp.Add(P3D.TextureManager.GetTexture("Routes", new Rectangle(0, 176, 16, 16)));
-            Whirlpool.WaterTexturesTemp.Add(P3D.TextureManager.GetTexture("Routes", new Rectangle(16, 176, 16, 16)));
-            Whirlpool.WaterTexturesTemp.Add(P3D.TextureManager.GetTexture("Routes", new Rectangle(32, 176, 16, 16)));
-            Whirlpool.WaterTexturesTemp.Add(P3D.TextureManager.GetTexture("Routes", new Rectangle(48, 176, 16, 16)));
+            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(0, 176, 16, 16)));
+            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(16, 176, 16, 16)));
+            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(32, 176, 16, 16)));
+            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(48, 176, 16, 16)));
             Whirlpool.LoadedWaterTemp = true;
         }
     }

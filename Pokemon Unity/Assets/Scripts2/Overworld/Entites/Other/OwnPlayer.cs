@@ -80,7 +80,7 @@ public class OwnPlayer : Entity
 		{
 			GameVariables.DebugLog("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
 
-			this.Texture = P3D.TextureManager.GetTexture(texturePath + TextureID + PokemonAddition);
+			this.Texture = TextureManager.GetTexture(texturePath + TextureID + PokemonAddition);
 			UsingGameJoltTexture = false;
 		}
 	}
