@@ -55,8 +55,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\EventHandlers\SoundManager.cs" />
+    <Compile Include="Assets\Scripts2\Extensions\Extensions.cs" />
+    <Compile Include="Assets\Scripts2\Extensions\MathHelper.cs" />
+    <Compile Include="Assets\Scripts2\Extensions\StringHelper.cs" />
     <Compile Include="Assets\Scripts2\Extensions\TransformExtension.cs" />
     <Compile Include="Assets\Scripts2\GameDebugger.cs" />
+    <Compile Include="Assets\Scripts2\Overworld\Camera.cs" />
+    <Compile Include="Assets\Scripts2\Overworld\Entites\BaseEntity.cs" />
+    <Compile Include="Assets\Scripts2\Overworld\Player.cs" />
     <Compile Include="Assets\Scripts2\Settings.cs" />
     <Compile Include="Assets\Scripts2\Pokedex.cs" />
     <Compile Include="Assets\Scripts2\Battle\Attack.cs" />
@@ -71,7 +78,6 @@
     <Compile Include="Assets\Scripts2\EventHandlers\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts2\External\FileToMaps.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Badge.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\BaseEntity.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Entites\Entity.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\AllSidesObject.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\AnimatedBlock.cs" />
