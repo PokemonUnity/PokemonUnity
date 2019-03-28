@@ -770,7 +770,7 @@ public partial class GameVariables
 		/// <returns></returns>
 		public bool HasMegaBracelet()
 		{
-            //If Core.Player.SandBoxMode = True Or GameVariables.IS_DEBUG_ACTIVE = True Then
+            //If GameVariables.playerTrainer.SandBoxMode = True Or GameVariables.IS_DEBUG_ACTIVE = True Then
             //    Return True
             //Else
             //    If Me.GetItemAmount(78) > 0 Then

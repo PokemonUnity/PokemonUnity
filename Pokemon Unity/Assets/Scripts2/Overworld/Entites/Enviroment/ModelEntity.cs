@@ -60,7 +60,7 @@ public class ModelEntity : Entity
 
     public override void Update()
     {
-        ViewBox = new BoundingBox(Vector3.Transform(new Vector3(-1, -1, -1), Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)), Vector3.Transform(new Vector3(1, 1, 1), Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)));
+        ViewBox = new UnityEngine.Bounds(Vector3.Transform(new Vector3(-1, -1, -1), Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)), Vector3.Transform(new Vector3(1, 1, 1), Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)));
 
         ApplyEffect();
     }

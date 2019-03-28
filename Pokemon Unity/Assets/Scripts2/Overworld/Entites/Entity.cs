@@ -56,9 +56,9 @@ public class Entity : BaseEntity
 	}
 
 	public UnityEngine.Vector3 boundingBoxScale = new UnityEngine.Vector3(1.25F);
-	public BoundingBox boundingBox;
+	public UnityEngine.Bounds boundingBox;
 
-	public BoundingBox ViewBox;
+	public UnityEngine.Bounds ViewBox;
 	public UnityEngine.Vector3 viewBoxScale = new UnityEngine.Vector3(1.0F);
 
 	public float CameraDistance;
@@ -71,8 +71,8 @@ public class Entity : BaseEntity
 	public bool CanBeRemoved = false;
 	public bool NeedsUpdate = false;
 
-	private static RasterizerState newRasterizerState;
-	private static RasterizerState oldRasterizerState;
+	//private static RasterizerState newRasterizerState;
+	//private static RasterizerState oldRasterizerState;
 
 	private UnityEngine.Vector3 BoundingPositionCreated = new UnityEngine.Vector3(1110);
 	private UnityEngine.Vector3 BoundingRotationCreated = new UnityEngine.Vector3(-1);
@@ -105,42 +105,44 @@ public class Entity : BaseEntity
 
 	public virtual void Initialize()
 	{
-		if (GetRotationFromVector(this.Rotation) % 2 == 1)
-			ViewBox = new BoundingBox(
-				UnityEngine.Vector3.Transform(
-					new UnityEngine.Vector3(-(this.Scale.z / (double)2), -(this.Scale.y / (double)2), -(this.Scale.x / (double)2)), 
-					Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)), 
-				UnityEngine.Vector3.Transform(
-					new UnityEngine.Vector3((this.Scale.z / (double)2), (this.Scale.y / (double)2), (this.Scale.x / (double)2)), 
-					Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)));
-		else																														  																																																					  
-			ViewBox = new BoundingBox(
-				UnityEngine.Vector3.Transform(
-					new UnityEngine.Vector3(-(this.Scale.x / (double)2), -(this.Scale.y / (double)2), -(this.Scale.z / (double)2)), 
-					Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)), 
-				UnityEngine.Vector3.Transform(
-					new UnityEngine.Vector3((this.Scale.x / (double)2), (this.Scale.y / (double)2), (this.Scale.z / (double)2)), 
-					Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position)));
-
-		boundingBox = new BoundingBox(
-			UnityEngine.Vector3.Transform(
-				new UnityEngine.Vector3(-0.5F), 
-				Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position)), 
-			UnityEngine.Vector3.Transform(
-				new UnityEngine.Vector3(0.5F), 
-				Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position)));
+		//if (GetRotationFromVector(this.Rotation) % 2 == 1)
+		//	ViewBox = new UnityEngine.Bounds(
+		//		new UnityEngine.Vector3(-(this.Scale.z / (float)2), -(this.Scale.y / (float)2), -(this.Scale.x / (float)2)), 
+		//		UnityEngine.Vector3.Dot(
+		//			UnityEngine.Vector3.Scale(viewBoxScale), 
+		//			Matrix.CreateTranslation(Position)
+		//		), 
+		//		//UnityEngine.Vector3.Transform(
+		//			new UnityEngine.Vector3((this.Scale.z / (float)2), (this.Scale.y / (float)2), (this.Scale.x / (float)2)), 
+		//			Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position));
+		//else																														  																																																					  
+		//	ViewBox = new UnityEngine.Bounds(
+		//		//UnityEngine.Vector3.Transform(
+		//			new UnityEngine.Vector3(-(this.Scale.x / (float)2), -(this.Scale.y / (float)2), -(this.Scale.z / (float)2)), 
+		//			Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position), 
+		//		//UnityEngine.Vector3.Transform(
+		//			new UnityEngine.Vector3((this.Scale.x / (float)2), (this.Scale.y / (float)2), (this.Scale.z / (float)2)), 
+		//			Matrix.CreateScale(viewBoxScale) * Matrix.CreateTranslation(Position));
+		//
+		//boundingBox = new UnityEngine.Bounds(
+		//	//UnityEngine.Vector3.Transform(
+		//		new UnityEngine.Vector3(-0.5F), 
+		//		Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position), 
+		//	//UnityEngine.Vector3.Transform(
+		//		new UnityEngine.Vector3(0.5F), 
+		//		Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position));
 
 		this.BoundingPositionCreated = this.Position;
 		this.BoundingRotationCreated = this.Rotation;
 
-		if (newRasterizerState == null)
-		{
-			newRasterizerState = new RasterizerState();
-			oldRasterizerState = new RasterizerState();
-
-			newRasterizerState.CullMode = CullMode.None;
-			oldRasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
-		}
+		//if (newRasterizerState == null)
+		//{
+		//	newRasterizerState = new RasterizerState();
+		//	oldRasterizerState = new RasterizerState();
+		//
+		//	newRasterizerState.CullMode = CullMode.None;
+		//	oldRasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
+		//}
 
 		this.LoadSeasonTextures();
 
@@ -326,7 +328,14 @@ public class Entity : BaseEntity
 				{
 					newEnt = new NPC();
 					SetProperties(ref newEnt, propertiesEnt);
-					((NPC)newEnt).Initialize(System.Convert.ToString(Params[0]), System.Convert.ToInt32(Params[1]), System.Convert.ToString(Params[2]), System.Convert.ToInt32(Params[3]), System.Convert.ToBoolean(Params[4]), System.Convert.ToString(Params[5]), (List<Rectangle>)Params[6]);
+					((NPC)newEnt).Initialize(
+						System.Convert.ToString(Params[0]), 
+						System.Convert.ToInt32(Params[1]), 
+						System.Convert.ToString(Params[2]), 
+						System.Convert.ToInt32(Params[3]), 
+						System.Convert.ToBoolean(Params[4]), 
+						System.Convert.ToString(Params[5]), 
+						(List<Rectangle>)Params[6]);
 					break;
 				}
 			case Entities.Waterfall:
@@ -480,13 +489,16 @@ public class Entity : BaseEntity
 		if (GameVariables.Camera.Name == "Overworld" && notNames.ToList().Contains(this.EntityID.ToString()) == false)
 		{
 			this.Opacity = this._normalOpactity;
-			if ((OverworldCamera)GameVariables.Camera.ThirdPerson == true)
+			if (((OverworldCamera)GameVariables.Camera).ThirdPerson)
 			{
-				Ray Ray = GameVariables.Camera.Ray;
-				float? result = Ray.Intersects(this.boundingBox);
-				if (result.HasValue == true)
+				UnityEngine.Ray Ray = GameVariables.Camera.Ray;
+				//float? result = Ray.Intersects(this.boundingBox);
+				UnityEngine.RaycastHit result;// = new UnityEngine.RaycastHit(). Ray.Intersects(this.boundingBox);
+				//if (result.HasValue)
+				if (UnityEngine.Physics.Raycast(Ray, out result))
 				{
-					if (result.Value < 0.3F + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5F))
+					//if (result.Value < 0.3F + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5F))
+					if (result.distance < 0.3F + (((OverworldCamera)GameVariables.Camera).ThirdPersonOffset.z - 1.5F))
 					{
 						this.Opacity = this._normalOpactity - 0.5F;
 						if (this.Opacity < 0.3F)

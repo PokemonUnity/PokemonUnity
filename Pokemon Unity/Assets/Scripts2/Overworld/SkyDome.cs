@@ -3,18 +3,19 @@ using UnityEngine;
 
 namespace PokemonUnity.Overworld
 {
-public class SkyDome
+public class SkyDome : MonoBehaviour
 {
-    private Model SkydomeModel;
+    private GameObject SkydomeModel;
     public Texture2D TextureUp;
     public Texture2D TextureDown;
     private Texture2D TextureSun;
     private Texture2D TextureMoon;
 
-    public float Yaw = 0;
+    //public float Yaw = 0;
 
     const bool FASTTIMECYCLE = false;
 
+	//ToDo: Replace with Awake, and use GetComponents below
     public SkyDome()
     {
         SkydomeModel = Core.Content.Load<Model>(@"SkyDomeResource\SkyDome");
@@ -29,9 +30,9 @@ public class SkyDome
 
     public void Update()
     {
-        Yaw += 0.0002F;
-        while (Yaw > MathHelper.TwoPi)
-            Yaw -= MathHelper.TwoPi;
+        //Yaw += 0.0002F;
+        //while (Yaw > MathHelper.TwoPi)
+        //    Yaw -= MathHelper.TwoPi;
         SetLastColor();
 
         if (FASTTIMECYCLE == true)
@@ -72,105 +73,105 @@ public class SkyDome
 
     public void Draw(float FOV)
     {
-        if (Core.GameOptions.GraphicStyle == 1)
-        {
-            if (GameVariables.Level.World.EnvironmentType == World.EnvironmentTypes.Outside)
-            {
-                if (World.GetWeatherFromWeatherType(GameVariables.Level.WeatherType) != World.Weathers.Fog)
-                {
-                    RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch() + Math.PI), true, TextureSun, 100, this.GetSunAlpha()); // Draw the Sun.
-                    RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureMoon, 100, GetStarsAlpha()); // Draw the Moon.
-                    RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureDown, 50, GetStarsAlpha()); // Draw the first half of the stars.
-                    RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), false, TextureDown, 50, GetStarsAlpha()); // Draw the second half of the stars.
-                    RenderHalf(FOV, MathHelper.TwoPi - Yaw, 0.0F, true, GetCloudsTexture(), 15, GetCloudAlpha()); // Draw the back layer of the clouds.
-                    RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 10, GetCloudAlpha()); // Draw the front layer of the clouds.
-                }
-            }
-            else
-            {
-                RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 8.0F, 1.0F);
-
-                if (TextureDown != null)
-                    RenderHalf(FOV, Yaw, 0.0F, false, TextureDown, 8.0F, 1.0F);
-            }
-        }
+        //if (Core.GameOptions.GraphicStyle == 1)
+        //{
+        //    if (GameVariables.Level.World.EnvironmentType == World.EnvironmentTypes.Outside)
+        //    {
+        //        if (World.GetWeatherFromWeatherType(GameVariables.Level.WeatherType) != World.Weathers.Fog)
+        //        {
+        //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch() + Math.PI), true, TextureSun, 100, this.GetSunAlpha()); // Draw the Sun.
+        //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureMoon, 100, GetStarsAlpha()); // Draw the Moon.
+        //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureDown, 50, GetStarsAlpha()); // Draw the first half of the stars.
+        //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), false, TextureDown, 50, GetStarsAlpha()); // Draw the second half of the stars.
+        //            RenderHalf(FOV, MathHelper.TwoPi - Yaw, 0.0F, true, GetCloudsTexture(), 15, GetCloudAlpha()); // Draw the back layer of the clouds.
+        //            RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 10, GetCloudAlpha()); // Draw the front layer of the clouds.
+        //        }
+        //    }
+        //    else
+        //    {
+        //        RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 8.0F, 1.0F);
+		//		
+        //        if (TextureDown != null)
+        //            RenderHalf(FOV, Yaw, 0.0F, false, TextureDown, 8.0F, 1.0F);
+        //    }
+        //}
     }
 
     private void RenderHalf(float FOV, float useYaw, float usePitch, bool up, Texture2D texture, float scale, float alpha)
     {
-        float Roll = 0.0F;
-        if (up == false)
-            Roll = (float)Math.PI;
-
-        var previousBlendState = Core.GraphicsDevice.BlendState;
-        Core.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-
-        foreach (ModelMesh ModelMesh in SkydomeModel.Meshes)
-        {
-            foreach (BasicEffect BasicEffect in ModelMesh.Effects)
-            {
-                BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(GameVariables.Camera.Position.x, -5, GameVariables.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
-
-                BasicEffect.View = GameVariables.Camera.View;
-                BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, 10000);
-
-                BasicEffect.TextureEnabled = true;
-                BasicEffect.Texture = texture;
-                BasicEffect.Alpha = alpha;
-
-                switch (GameVariables.Level.World.CurrentMapWeather)
-                {
-                    case World.Weathers.Clear:
-                    case World.Weathers.Sunny:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(1f, 1f, 1f);
-                            break;
-                        }
-                    case World.Weathers.Rain:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.4f, 0.4f, 0.7f);
-                            break;
-                        }
-                    case World.Weathers.Snow:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.8f, .8f, .8f);
-                            break;
-                        }
-                    case World.Weathers.Underwater:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.1f, 0.3f, 0.9f);
-                            break;
-                        }
-                    case World.Weathers.Fog:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.7f, 0.7f, 0.8f);
-                            break;
-                        }
-                    case World.Weathers.Sandstorm:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.8f, 0.5f, 0.2f);
-                            break;
-                        }
-                    case World.Weathers.Ash:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
-                            break;
-                        }
-                    case World.Weathers.Blizzard:
-                        {
-                            BasicEffect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
-                            break;
-                        }
-                }
-
-                if (BasicEffect.DiffuseColor != new Vector3(1f, 1f, 1f))
-                    BasicEffect.DiffuseColor = GetWeatherColorMultiplier(BasicEffect.DiffuseColor);
-            }
-
-            ModelMesh.Draw();
-        }
-
-        Core.GraphicsDevice.BlendState = previousBlendState;
+        //float Roll = 0.0F;
+        //if (up == false)
+        //    Roll = (float)Math.PI;
+		//
+        //var previousBlendState = Core.GraphicsDevice.BlendState;
+        //Core.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
+		//
+        //foreach (ModelMesh ModelMesh in SkydomeModel.Meshes)
+        //{
+        //    foreach (BasicEffect BasicEffect in ModelMesh.Effects)
+        //    {
+        //        BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(GameVariables.Camera.Position.x, -5, GameVariables.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
+		//
+        //        BasicEffect.View = GameVariables.Camera.View;
+        //        BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, 10000);
+		//
+        //        BasicEffect.TextureEnabled = true;
+        //        BasicEffect.Texture = texture;
+        //        BasicEffect.Alpha = alpha;
+		//
+        //        switch (GameVariables.Level.World.CurrentMapWeather)
+        //        {
+        //            case World.Weathers.Clear:
+        //            case World.Weathers.Sunny:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(1f, 1f, 1f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Rain:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.4f, 0.4f, 0.7f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Snow:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.8f, .8f, .8f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Underwater:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.1f, 0.3f, 0.9f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Fog:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.7f, 0.7f, 0.8f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Sandstorm:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.8f, 0.5f, 0.2f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Ash:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
+        //                    break;
+        //                }
+        //            case World.Weathers.Blizzard:
+        //                {
+        //                    BasicEffect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
+        //                    break;
+        //                }
+        //        }
+		//
+        //        if (BasicEffect.DiffuseColor != new Vector3(1f, 1f, 1f))
+        //            BasicEffect.DiffuseColor = GetWeatherColorMultiplier(BasicEffect.DiffuseColor);
+        //    }
+		//
+        //    ModelMesh.Draw();
+        //}
+		//
+        //Core.GraphicsDevice.BlendState = previousBlendState;
     }
 
     private static UnityEngine.Color[] DaycycleTextureData = null;

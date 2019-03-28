@@ -834,7 +834,7 @@ public class Level
     {
 
         // copy all changed files
-        if (GameController.IS_DEBUG_ACTIVE)
+        if (GameVariables.IS_DEBUG_ACTIVE)
             DebugFileWatcher.TriggerReload();
 
         // Create a parameter array to pass over to the LevelLoader:
@@ -944,7 +944,7 @@ public class Level
         this._pokemonEncounter.TriggerBattle();
 
         // Reload map from file (Debug or Sandbox Mode):
-        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
         {
             if (KeyBoardHandler.KeyPressed(Keys.R) == true & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             {
@@ -1307,7 +1307,7 @@ public class Level
     /// </summary>
     public bool CanRide()
     {
-        if (GameController.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
+        if (GameVariables.IS_DEBUG_ACTIVE == true | GameVariables.playerTrainer.SandBoxMode == true)
             return true;
         if (RideType > 0)
         {
