@@ -17,17 +17,17 @@ public class Entity : BaseEntity
 	public Entities EntityID;// = null;
 	public string MapOrigin = "";
 	public bool IsOffsetMapContent = false;
-	public UnityEngine.Vector3 Offset = new UnityEngine.Vector3(0);
+	public UnityEngine.Vector3 Offset = new UnityEngine.Vector3(0,0,0);
 	public UnityEngine.Vector3 Position;
-	public UnityEngine.Vector3 Rotation = new UnityEngine.Vector3(0);
-	public UnityEngine.Vector3 Scale = new UnityEngine.Vector3(1);
+	public UnityEngine.Vector3 Rotation = new UnityEngine.Vector3(0,0,0);
+	public UnityEngine.Vector3 Scale = new UnityEngine.Vector3(1,1,1);
 	public Texture2D[] Textures;
 	public int[] TextureIndex;
 	public int ActionValue;
 	public string AdditionalValue;
-	public BaseModel Model;
+	public UnityEngine.Mesh Model;
 	public bool Visible = true;
-	public UnityEngine.Vector3 Shader = new UnityEngine.Vector3(1.0F);
+	public UnityEngine.Vector3 Shader = new UnityEngine.Vector3(1.0F,1,1);
 	public List<UnityEngine.Vector3> Shaders = new List<UnityEngine.Vector3>();
 
 	public float CameraDistanceDelta = 0.0F;
@@ -55,11 +55,11 @@ public class Entity : BaseEntity
 		}
 	}
 
-	public UnityEngine.Vector3 boundingBoxScale = new UnityEngine.Vector3(1.25F);
+	public UnityEngine.Vector3 boundingBoxScale = new UnityEngine.Vector3(1.25F,1.25f,1.25f);
 	public UnityEngine.Bounds boundingBox;
 
 	public UnityEngine.Bounds ViewBox;
-	public UnityEngine.Vector3 viewBoxScale = new UnityEngine.Vector3(1.0F);
+	public UnityEngine.Vector3 viewBoxScale = new UnityEngine.Vector3(1.0F,1,1);
 
 	public float CameraDistance;
 	public Matrix World;
@@ -86,7 +86,7 @@ public class Entity : BaseEntity
 	{
 	}
 
-	public Entity(float X, float Y, float Z, Entities EntityID, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, UnityEngine.Vector3 Scale, BaseModel Model, int ActionValue, string AdditionalValue, UnityEngine.Vector3 Shader) : base(EntityTypes.Entity)
+	public Entity(float X, float Y, float Z, Entities EntityID, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, UnityEngine.Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, UnityEngine.Vector3 Shader) : base(EntityTypes.Entity)
 	{
 		this.Position = new UnityEngine.Vector3(X, Y, Z);
 		this.EntityID = EntityID;
@@ -149,7 +149,7 @@ public class Entity : BaseEntity
 		this.UpdateEntity();
 	}
 
-	public static Entity GetNewEntity(Entities EntityID, UnityEngine.Vector3 Position, Texture2D[] Textures, int[] TextureIndex, bool Collision, UnityEngine.Vector3 Rotation, UnityEngine.Vector3 Scale, BaseModel Model, int ActionValue, string AdditionalValue, bool Visible, UnityEngine.Vector3 Shader, int ID, string MapOrigin, string SeasonColorTexture, UnityEngine.Vector3 Offset, object[] Params = null, float Opacity = 1.0F, List<List<int>> AnimationData = null, float CameraDistanceDelta = 0.0F)
+	public static Entity GetNewEntity(Entities EntityID, UnityEngine.Vector3 Position, Texture2D[] Textures, int[] TextureIndex, bool Collision, UnityEngine.Vector3 Rotation, UnityEngine.Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, UnityEngine.Vector3 Shader, int ID, string MapOrigin, string SeasonColorTexture, UnityEngine.Vector3 Offset, object[] Params = null, float Opacity = 1.0F, List<List<int>> AnimationData = null, float CameraDistanceDelta = 0.0F)
 	{
 		Entity newEnt = new Entity();
 		Entity propertiesEnt = new Entity();
@@ -435,6 +435,7 @@ public class Entity : BaseEntity
 					return new UnityEngine.Vector3(0, MathHelper.Pi * 1.5F, 0);
 				}
 		}
+			return new UnityEngine.Vector3(0, 0, 0);
 	}
 
 	public static int GetRotationFromVector(UnityEngine.Vector3 v)
@@ -521,153 +522,153 @@ public class Entity : BaseEntity
 
 	public virtual void UpdateEntity()
 	{
-		UnityEngine.Vector3 CPosition = GameVariables.Camera.Position;
-		bool ActionScriptActive = false;
-
-
-		if (Core.CurrentScreen != null)
-		{
-			CPosition = GameVariables.Camera.CPosition;
-			if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-				ActionScriptActive = !(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady;
-		}
-
-
-		CameraDistance = CalculateCameraDistance(CPosition);
-
-		if (this.DropUpdateUnlessDrawn == true & this.DrawnLastFrame == false & this.Visible == true & ActionScriptActive == false)
-			return;
-
-
-		if (this.Moved > 0.0F & this.CanMove == true)
-		{
-			this.Moved -= this.Speed;
-
-			UnityEngine.Vector3 movement = UnityEngine.Vector3.zero;
-			switch (this.FaceDirection)
-			{
-				case 0:
-					{
-						movement = new UnityEngine.Vector3(0, 0, -1);
-						break;
-					}
-				case 1:
-					{
-						movement = new UnityEngine.Vector3(-1, 0, 0);
-						break;
-					}
-				case 2:
-					{
-						movement = new UnityEngine.Vector3(0, 0, 1);
-						break;
-					}
-				case 3:
-					{
-						movement = new UnityEngine.Vector3(1, 0, 0);
-						break;
-					}
-			}
-
-			movement *= Speed;
-
-			this.Position += movement;
-			this.CreatedWorld = false;
-
-			if (this.Moved <= 0.0F)
-			{
-				this.Moved = 0.0F;
-
-				this.Position.x = System.Convert.ToInt32(this.Position.x);
-				this.Position.z = System.Convert.ToInt32(this.Position.z);
-			}
-		}
-
-		if (this.IsOffsetMapContent == false)
-			OpacityCheck();
-
-		if (CreatedWorld == false | CreateWorldEveryFrame == true)
-		{
-			World = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(Rotation.y, Rotation.x, Rotation.z) * Matrix.CreateTranslation(Position);
-			CreatedWorld = true;
-		}
-
-		if (CameraDistance < GameVariables.Camera.FarPlane * 2)
-		{
-			if (this.Position != this.BoundingPositionCreated)
-			{
-				List<float> diff = new List<float>();
-				diff.AddRange(new float[]
-				{
-					this.BoundingPositionCreated.x - this.Position.x,
-                    this.BoundingPositionCreated.y - this.Position.y,
-                    this.BoundingPositionCreated.z - this.Position.z
-
-				});
-
-				ViewBox.Min.x -= diff[0];
-				ViewBox.Min.y -= diff[1];
-				ViewBox.Min.z -= diff[2];
-
-				ViewBox.Max.x -= diff[0];
-				ViewBox.Max.y -= diff[1];
-				ViewBox.Max.z -= diff[2];
-
-				boundingBox.Min.x -= diff[0];
-				boundingBox.Min.y -= diff[1];
-				boundingBox.Min.z -= diff[2];
-
-				boundingBox.Max.x -= diff[0];
-				boundingBox.Max.y -= diff[1];
-				boundingBox.Max.z -= diff[2];
-
-				this.BoundingPositionCreated = this.Position;
-			}
-		}
-
-		if (MakeShake == true)
-		{
-			if (Settings.Rand.Next(0, 1) == 0)
-			{
-				this.Rotation.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-				this.Rotation.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-				this.Rotation.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-
-				this.Position.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-				this.Position.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-				this.Position.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-
-				this.Scale.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-				this.Scale.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-				this.Scale.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-
-				CreatedWorld = false;
-			}
-		}
-
-		if (GameVariables.Level.World != null)
-		{
-			switch (GameVariables.Level.World.EnvironmentType)
-			{
-				case P3D.World.EnvironmentTypes.Outside:
-                    {
-						this.Shader = SkyDome.GetDaytimeColor(true).ToVector3();
-						break;
-					}
-				case P3D.World.EnvironmentTypes.Dark:
-                    {
-						this.Shader = new UnityEngine.Vector3(0.5F, 0.5F, 0.6F);
-						break;
-					}
-				default:
-					{
-						this.Shader = new UnityEngine.Vector3(1.0F,1f,1f);
-						break;
-					}
-			}
-		}
-
-		foreach (UnityEngine.Vector3 s in this.Shaders)
-			this.Shader *= s;
+		//UnityEngine.Vector3 CPosition = GameVariables.Camera.Position;
+		//bool ActionScriptActive = false;
+		//
+		//
+		//if (Core.CurrentScreen != null)
+		//{
+		//	CPosition = GameVariables.Camera.CPosition;
+		//	if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+		//		ActionScriptActive = !(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady;
+		//}
+		//
+		//
+		//CameraDistance = CalculateCameraDistance(CPosition);
+		//
+		//if (this.DropUpdateUnlessDrawn & this.DrawnLastFrame == false & this.Visible & ActionScriptActive == false)
+		//	return;
+		//
+		//
+		//if (this.Moved > 0.0F & this.CanMove)
+		//{
+		//	this.Moved -= this.Speed;
+		//
+		//	UnityEngine.Vector3 movement = UnityEngine.Vector3.zero;
+		//	switch (this.FaceDirection)
+		//	{
+		//		case 0:
+		//			{
+		//				movement = new UnityEngine.Vector3(0, 0, -1);
+		//				break;
+		//			}
+		//		case 1:
+		//			{
+		//				movement = new UnityEngine.Vector3(-1, 0, 0);
+		//				break;
+		//			}
+		//		case 2:
+		//			{
+		//				movement = new UnityEngine.Vector3(0, 0, 1);
+		//				break;
+		//			}
+		//		case 3:
+		//			{
+		//				movement = new UnityEngine.Vector3(1, 0, 0);
+		//				break;
+		//			}
+		//	}
+		//
+		//	movement *= Speed;
+		//
+		//	this.Position += movement;
+		//	this.CreatedWorld = false;
+		//
+		//	if (this.Moved <= 0.0F)
+		//	{
+		//		this.Moved = 0.0F;
+		//
+		//		this.Position.x = System.Convert.ToInt32(this.Position.x);
+		//		this.Position.z = System.Convert.ToInt32(this.Position.z);
+		//	}
+		//}
+		//
+		//if (this.IsOffsetMapContent == false)
+		//	OpacityCheck();
+		//
+		//if (CreatedWorld == false | CreateWorldEveryFrame)
+		//{
+		//	World = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(Rotation.y, Rotation.x, Rotation.z) * Matrix.CreateTranslation(Position);
+		//	CreatedWorld = true;
+		//}
+		//
+		//if (CameraDistance < GameVariables.Camera.FarPlane * 2)
+		//{
+		//	if (this.Position != this.BoundingPositionCreated)
+		//	{
+		//		List<float> diff = new List<float>();
+		//		diff.AddRange(new float[]
+		//		{
+		//			this.BoundingPositionCreated.x - this.Position.x,
+        //            this.BoundingPositionCreated.y - this.Position.y,
+        //            this.BoundingPositionCreated.z - this.Position.z
+		//
+		//		});
+		//
+		//		ViewBox.min.x -= diff[0];
+		//		ViewBox.min.y -= diff[1];
+		//		ViewBox.min.z -= diff[2];
+		//				
+		//		ViewBox.max.x -= diff[0];
+		//		ViewBox.max.y -= diff[1];
+		//		ViewBox.max.z -= diff[2];
+		//
+		//		boundingBox.min.x -= diff[0];
+		//		boundingBox.min.y -= diff[1];
+		//		boundingBox.min.z -= diff[2];
+		//					
+		//		boundingBox.max.x -= diff[0];
+		//		boundingBox.max.y -= diff[1];
+		//		boundingBox.max.z -= diff[2];
+		//
+		//		this.BoundingPositionCreated = this.Position;
+		//	}
+		//}
+		//
+		//if (MakeShake)
+		//{
+		//	if (Settings.Rand.Next(0, 1) == 0)
+		//	{
+		//		this.Rotation.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//		this.Rotation.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//		this.Rotation.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//
+		//		this.Position.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//		this.Position.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//		this.Position.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//
+		//		this.Scale.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//		this.Scale.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//		this.Scale.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+		//
+		//		CreatedWorld = false;
+		//	}
+		//}
+		//
+		//if (GameVariables.Level.World != null)
+		//{
+		//	switch (GameVariables.Level.World.EnvironmentType)
+		//	{
+		//		case World.EnvironmentTypes.Outside:
+        //            {
+		//				this.Shader = SkyDome.GetDaytimeColor(true).ToVector3();
+		//				break;
+		//			}
+		//		case World.EnvironmentTypes.Dark:
+        //            {
+		//				this.Shader = new UnityEngine.Vector3(0.5F, 0.5F, 0.6F);
+		//				break;
+		//			}
+		//		default:
+		//			{
+		//				this.Shader = new UnityEngine.Vector3(1.0F,1f,1f);
+		//				break;
+		//			}
+		//	}
+		//}
+		//
+		//foreach (UnityEngine.Vector3 s in this.Shaders)
+		//	this.Shader = UnityEngine.Vector3.Dot(this.Shader, s);
 	}
 
 	private UnityEngine.Vector3 tempCenterVector = UnityEngine.Vector3.zero;
@@ -677,7 +678,7 @@ public class Entity : BaseEntity
 	/// </summary>
 	private UnityEngine.Vector3 GetCenter()
 	{
-		if (CreatedWorld == false | CreateWorldEveryFrame == true)
+		if (CreatedWorld == false | CreateWorldEveryFrame)
 		{
 			UnityEngine.Vector3 v = UnityEngine.Vector3.zero; // (Me.ViewBox.Min - Me.Position) + (Me.ViewBox.Max - Me.Position)
 
@@ -701,25 +702,25 @@ public class Entity : BaseEntity
 		return this.tempCenterVector;
 	}
 
-	public virtual void Draw(BaseModel Model, Texture2D[] Textures, bool setRasterizerState)
+	public virtual void Draw(UnityEngine.Mesh Model, Texture2D[] Textures, bool setRasterizerState)
 	{
-		if (Visible == true)
+		if (Visible)
 		{
-			if (this.IsInFieldOfView() == true)
+			if (this.IsInFieldOfView())
 			{
-				if (setRasterizerState == true)
-					Core.GraphicsDevice.RasterizerState = newRasterizerState;
+				//if (setRasterizerState)
+				//	Core.GraphicsDevice.RasterizerState = newRasterizerState;
 
 				Model.Draw(this, Textures);
 
-				if (setRasterizerState == true)
-					Core.GraphicsDevice.RasterizerState = oldRasterizerState;
+				//if (setRasterizerState)
+				//	Core.GraphicsDevice.RasterizerState = oldRasterizerState;
 
 				this.DrawnLastFrame = true;
 
 				if (this.EntityID != Entities.Floor & this.EntityID != Entities.Water)
 				{
-					if (drawViewBox == true)
+					if (drawViewBox)
 						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, new UnityEngine.Color(240,128,128));
 				}
 			}
@@ -788,7 +789,7 @@ public class Entity : BaseEntity
 			{
 				if (this.Model != null)
 				{
-					int c = System.Convert.ToInt32(this.Model.vertexBuffer.VertexCount / (double)3);
+					int c = System.Convert.ToInt32(this.Model.vertexCount / (double)3);
 					int min = 0;
 
 					for (var i = 0; i <= this.TextureIndex.Length - 1; i++)
@@ -815,7 +816,7 @@ public class Entity : BaseEntity
 							  where validEntitytypes.Contains(selEnt.GetType())
 							  select selEnt))
 		{
-			if (IntComparison == true)
+			if (IntComparison)
 			{
 				if ((int)e.Position.x == (int)Position.x & (int)e.Position.y == (int)Position.y & (int)e.Position.z == (int)Position.z)
 					return e;
