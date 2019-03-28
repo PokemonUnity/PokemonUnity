@@ -1,4 +1,6 @@
-﻿namespace PokemonUnity.Overworld.Entity.Environment
+﻿using UnityEngine;
+
+namespace PokemonUnity.Overworld.Entity.Environment
 {
 public class ModelEntity : Entity
 {
@@ -43,7 +45,7 @@ public class ModelEntity : Entity
 
                             if (GameVariables.Level.World != null)
                             {
-                                if (GameVariables.Level.World.EnvironmentType == P3D.World.EnvironmentTypes.Outside)
+                                if (GameVariables.Level.World.EnvironmentType == PokemonUnity.Overworld.World.EnvironmentTypes.Outside)
                                     withBlock.DiffuseColor *= SkyDome.GetDaytimeColor(true).ToVector3();
                             }
 

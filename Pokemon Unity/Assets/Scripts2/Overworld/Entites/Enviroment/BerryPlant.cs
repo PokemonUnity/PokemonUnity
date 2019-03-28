@@ -327,24 +327,24 @@ public class BerryPlant : Entity
                 amount = Berry.minBerries;
 
             int seasonGrow = 0;
-            switch (P3D.World.CurrentSeason)
+            switch (PokemonUnity.Overworld.World.CurrentSeason)
             {
-                case (object) P3D.World.Seasons.Winter:
+                case PokemonUnity.Overworld.World.Seasons.Winter:
                     {
                         seasonGrow = Berry.WinterGrow;
                         break;
                     }
-                case (object) P3D.World.Seasons.Spring:
+                case PokemonUnity.Overworld.World.Seasons.Spring:
                     {
                         seasonGrow = Berry.SpringGrow;
                         break;
                     }
-                case (object) P3D.World.Seasons.Summer:
+                case PokemonUnity.Overworld.World.Seasons.Summer:
                     {
                         seasonGrow = Berry.SummerGrow;
                         break;
                     }
-                case (object) P3D.World.Seasons.Fall:
+                case PokemonUnity.Overworld.World.Seasons.Fall:
                     {
                         seasonGrow = Berry.FallGrow;
                         break;

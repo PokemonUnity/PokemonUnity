@@ -43,19 +43,16 @@ public class Floor : Entity
                     this.Rotation.y = 0;
                     break;
                 }
-
             case 1:
                 {
                     this.Rotation.y = MathHelper.PiOver2;
                     break;
                 }
-
             case 2:
                 {
                     this.Rotation.y = MathHelper.Pi;
                     break;
                 }
-
             case 3:
                 {
                     this.Rotation.y = MathHelper.Pi * 1.5f;
@@ -70,9 +67,9 @@ public class Floor : Entity
         if (!changedWeatherTexture)
         {
             changedWeatherTexture = true;
-            if ((GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Blizzard) & this.hasSnow)
+            if ((GameVariables.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Blizzard) & this.hasSnow)
                 ChangeSnow();
-            if (GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Sandstorm & this.hasSand)
+            if (GameVariables.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Sandstorm & this.hasSand)
                 ChangeSand();
         }
 

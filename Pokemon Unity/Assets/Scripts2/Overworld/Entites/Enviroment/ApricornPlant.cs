@@ -86,7 +86,7 @@ public class ApricornPlant : Entity
 							int diff = (DateTime.Now - PickDate).Hours;
 
 							int hasToDiff = 24;
-							if (P3D.World.CurrentSeason == P3D.World.Seasons.Winter | P3D.World.CurrentSeason == P3D.World.Seasons.Fall)
+							if (PokemonUnity.Overworld.World.CurrentSeason == PokemonUnity.Overworld.World.Seasons.Winter | PokemonUnity.Overworld.World.CurrentSeason == PokemonUnity.Overworld.World.Seasons.Fall)
 								hasToDiff = 12;
 
 							if (diff >= hasToDiff)

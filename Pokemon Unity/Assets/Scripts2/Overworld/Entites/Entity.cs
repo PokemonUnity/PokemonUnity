@@ -469,7 +469,7 @@ public class Entity : BaseEntity
 		{
 			List<Texture2D> newTextures = new List<Texture2D>();
 			foreach (Texture2D t in Textures)
-				newTextures.Add(P3D.World.GetSeasonTexture(TextureManager.GetTexture(@"Textures\Seasons\" + this.SeasonColorTexture), t));
+				newTextures.Add(PokemonUnity.Overworld.World.GetSeasonTexture(TextureManager.GetTexture(@"Textures\Seasons\" + this.SeasonColorTexture), t));
 			this.Textures = newTextures.ToArray();
 		}
 	}
