@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace PokemonUnity.Player
+namespace PokemonUnity.Character
 {
 /// <summary>
 /// This class handles all actions regarding Badge loading and displaying.

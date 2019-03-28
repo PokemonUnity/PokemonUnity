@@ -1942,6 +1942,9 @@ namespace PokemonUnity.Item
 		/// TMs
 		/// </summary>
 		MACHINE = 4,
+		/// <summary>
+		/// Plants?
+		/// </summary>
 		BERRY = 5,
 		MAIL = 6,
 		BATTLE = 7,
