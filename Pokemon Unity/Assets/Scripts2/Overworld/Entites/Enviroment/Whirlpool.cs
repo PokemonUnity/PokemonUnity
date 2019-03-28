@@ -41,7 +41,7 @@ public class Whirlpool : Entity
     {
         if (WaterAnimation != null)
         {
-            WaterAnimation.Update(0.01);
+            WaterAnimation.Update(0.01f);
             if (currentRectangle != WaterAnimation.TextureRectangle)
             {
                 ChangeTexture();

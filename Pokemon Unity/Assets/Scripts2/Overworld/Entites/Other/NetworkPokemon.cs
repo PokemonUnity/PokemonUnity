@@ -14,7 +14,7 @@ public class NetworkPokemon : Entity
 	private string loadedTexture = "";
 
 	private int AnimationX = 1;
-	private float AnimationDelayLenght = 2.2F;
+	private float AnimationDelayLenght = 2.2f;
 	private float AnimationDelay = AnimationDelayLenght;
 
 	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.x, pos.y, pos.z, "NetworkPokemon",
@@ -26,13 +26,13 @@ public class NetworkPokemon : Entity
     {
         0,
         0
-    }, false, 0, new Vector3(0.9F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
+    }, false, 0, new Vector3(0.9f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
     {
         this.Visible = visible;
 
         this.PokemonTexture = PokemonTexture;
 
-        this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToSingle(this.Position.y) + 0.001F, System.Convert.ToInt32(this.Position.z));
+        this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToSingle(this.Position.y) + 0.001f, System.Convert.ToInt32(this.Position.z));
         this.NeedsUpdate = true;
         this.CreateWorldEveryFrame = true;
 
@@ -43,7 +43,7 @@ public class NetworkPokemon : Entity
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
 	{
-		return base.CalculateCameraDistance(CPosition) - 0.2F;
+		return base.CalculateCameraDistance(CPosition) - 0.2f;
 	}
 
 	public override void UpdateEntity()
@@ -64,8 +64,8 @@ public class NetworkPokemon : Entity
 		{
 			this.ChangeTexture();
 
-			this.AnimationDelay -= 0.1F;
-			if (AnimationDelay <= 0.0F)
+			this.AnimationDelay -= 0.1f;
+			if (AnimationDelay <= 0.0f)
 			{
 				AnimationDelay = AnimationDelayLenght;
 				AnimationX += 1;

@@ -15,8 +15,8 @@ public class StepBlock : Entity
             // If CType(GameVariables.Camera, OverworldCamera).CheckCollision(newPos) = True Then
 
             // End If
-            GameVariables.Camera.AddToPlannedMovement(new Vector3(0, 0.15F, 0));
-            GameVariables.Camera.Move(1.0F);
+            GameVariables.Camera.AddToPlannedMovement(new Vector3(0, 0.15f, 0));
+            GameVariables.Camera.Move(1.0f);
             GameVariables.Level.OverworldPokemon.Visible = false;
             GameVariables.Level.OverworldPokemon.warped = true;
 

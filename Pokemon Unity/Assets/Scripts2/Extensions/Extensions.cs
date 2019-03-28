@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+using UnityEngine;
 
 static class Extensions
 {
-    public static void Move<T>(this ref List<T> l, int moveItemIndex, int destinationIndex)
+    public static void Move<T>(this List<T> l, int moveItemIndex, int destinationIndex)
     {
         T i = l[moveItemIndex];
         l.RemoveAt(moveItemIndex);
@@ -22,9 +15,9 @@ static class Extensions
 
     public static Texture2D Copy(this Texture2D t)
     {
-        Texture2D newT = new Texture2D(Core.GraphicsDevice, t.Width, t.Height);
+        Texture2D newT = new Texture2D(Core.GraphicsDevice, t.width, t.height);
 
-        Color[] cArr = new Color[newT.Width * newT.Height - 1 + 1];
+        Color[] cArr = new Color[newT.width * newT.height - 1 + 1];
         t.GetData(cArr);
 
         newT.SetData(cArr);
@@ -140,9 +133,18 @@ static class Extensions
         if (i < min)
             i = min;
         return i;
-    }
+	}
 
-    public static float Clamp(this float s, float min, float max)
+	public static int Clamp(this float f, int min, int max)
+	{
+		if (f > max)
+			return max;
+		if (f < min)
+			return min;
+		return (int)f;
+	}
+
+	public static float Clamp(this float s, float min, float max)
     {
         if (s > max)
             s = max;
@@ -169,108 +171,108 @@ static class Extensions
         return d;
     }
 
-    public static string CropStringToWidth(this string s, SpriteFont font, float scale, int width)
-    {
-        string fulltext = s;
+    //public static string CropStringToWidth(this string s, SpriteFont font, float scale, int width)
+    //{
+    //    string fulltext = s;
 
-        if ((font.MeasureString(fulltext).X * scale) <= width)
-            return fulltext;
-        else if (fulltext.Contains(" "!))
-        {
-            string newText = "";
-            while (fulltext.Length > 0)
-            {
-                if ((font.MeasureString(newText + fulltext[0].ToString()).X * scale) > width)
-                {
-                    newText += Environment.NewLine;
-                    newText += fulltext[0].ToString();
-                    fulltext.Remove(0, 1);
-                }
-                else
-                {
-                    newText += fulltext[0].ToString();
-                    fulltext.Remove(0, 1);
-                }
-            }
-            return newText;
-        }
+    //    if ((font.MeasureString(fulltext).X * scale) <= width)
+    //        return fulltext;
+    //    else if (!fulltext.Contains(" "))
+    //    {
+    //        string newText = "";
+    //        while (fulltext.Length > 0)
+    //        {
+    //            if ((font.MeasureString(newText + fulltext[0].ToString()).X * scale) > width)
+    //            {
+    //                newText += Environment.NewLine;
+    //                newText += fulltext[0].ToString();
+    //                fulltext.Remove(0, 1);
+    //            }
+    //            else
+    //            {
+    //                newText += fulltext[0].ToString();
+    //                fulltext.Remove(0, 1);
+    //            }
+    //        }
+    //        return newText;
+    //    }
 
-        string output = "";
-        string currentLine = "";
-        string currentWord = "";
+    //    string output = "";
+    //    string currentLine = "";
+    //    string currentWord = "";
 
-        while (fulltext.Length > 0)
-        {
-            if (fulltext.StartsWith(Environment.NewLine))
-            {
-                if (currentLine != "")
-                    currentLine += " ";
-                currentLine += currentWord;
-                output += currentLine + Environment.NewLine;
-                currentLine = "";
-                currentWord = "";
-                fulltext = fulltext.Remove(0, 2);
-            }
-            else if (fulltext.StartsWith(" "))
-            {
-                if (currentLine != "")
-                    currentLine += " ";
-                currentLine += currentWord;
-                currentWord = "";
-                fulltext = fulltext.Remove(0, 1);
-            }
-            else
-            {
-                currentWord += fulltext[0];
-                if ((font.MeasureString(currentLine + currentWord).X * scale) >= width)
-                {
-                    if (currentLine == "")
-                    {
-                        output += currentWord + Environment.NewLine;
-                        currentWord = "";
-                        currentLine = "";
-                    }
-                    else
-                    {
-                        output += currentLine + Environment.NewLine;
-                        currentLine = "";
-                    }
-                }
-                fulltext = fulltext.Remove(0, 1);
-            }
-        }
+    //    while (fulltext.Length > 0)
+    //    {
+    //        if (fulltext.StartsWith(Environment.NewLine))
+    //        {
+    //            if (currentLine != "")
+    //                currentLine += " ";
+    //            currentLine += currentWord;
+    //            output += currentLine + Environment.NewLine;
+    //            currentLine = "";
+    //            currentWord = "";
+    //            fulltext = fulltext.Remove(0, 2);
+    //        }
+    //        else if (fulltext.StartsWith(" "))
+    //        {
+    //            if (currentLine != "")
+    //                currentLine += " ";
+    //            currentLine += currentWord;
+    //            currentWord = "";
+    //            fulltext = fulltext.Remove(0, 1);
+    //        }
+    //        else
+    //        {
+    //            currentWord += fulltext[0];
+    //            if ((font.MeasureString(currentLine + currentWord).X * scale) >= width)
+    //            {
+    //                if (currentLine == "")
+    //                {
+    //                    output += currentWord + Environment.NewLine;
+    //                    currentWord = "";
+    //                    currentLine = "";
+    //                }
+    //                else
+    //                {
+    //                    output += currentLine + Environment.NewLine;
+    //                    currentLine = "";
+    //                }
+    //            }
+    //            fulltext = fulltext.Remove(0, 1);
+    //        }
+    //    }
 
-        if (currentWord != "")
-        {
-            if (currentLine != "")
-                currentLine += " ";
-            currentLine += currentWord;
-        }
-        if (currentLine != "")
-            output += currentLine;
+    //    if (currentWord != "")
+    //    {
+    //        if (currentLine != "")
+    //            currentLine += " ";
+    //        currentLine += currentWord;
+    //    }
+    //    if (currentLine != "")
+    //        output += currentLine;
 
-        return output;
-    }
+    //    return output;
+    //}
 
-    public static string CropStringToWidth(this string s, SpriteFont font, int width)
-    {
-        return CropStringToWidth(s, font, 1.0F, width);
-    }
+    //public static string CropStringToWidth(this string s, SpriteFont font, int width)
+    //{
+    //    return CropStringToWidth(s, font, 1.0f, width);
+    //}
 
     public static Color ToColor(this Vector3 v)
     {
-        return new Color(System.Convert.ToInt32(v.X * 255), System.Convert.ToInt32(v.Y * 255), System.Convert.ToInt32(v.Z * 255));
+        return new Color(System.Convert.ToInt32(v.x * 255), System.Convert.ToInt32(v.y * 255), System.Convert.ToInt32(v.z * 255));
     }
 
     public static Texture2D ReplaceColors(this Texture2D t, Color[] InputColors, Color[] OutputColors)
     {
-        Texture2D newTexture = new Texture2D(Core.GraphicsDevice, t.Width, t.Height);
+        Texture2D newTexture = new Texture2D(Core.GraphicsDevice, t.width, t.height);
 
         if (InputColors.Length == OutputColors.Length & InputColors.Length > 0)
         {
-            Color[] Data = new Color[t.Width * t.Height - 1 + 1];
+            Color[] Data = new Color[t.width * t.height - 1 + 1];
             List<Color> newData = new List<Color>();
-            t.GetData(0, null/* TODO Change to default(_) if this is not a reference type */, Data, 0, t.Width * t.Height);
+            t.GetData(0, null/* TODO Change to default(_) if this is not a reference type */, Data, 0, t.width * t.height);
 
             for (var i = 0; i <= Data.Length - 1; i++)
             {
@@ -308,8 +310,8 @@ static class Extensions
 
     public static string[] SplitAtNewline(this string s)
     {
-        if (s.Contains("§"!))
-            return s.Replace(StringHelper.CrLf, "§").Replace(StringHelper.LineFeed, "§").Split(System.Convert.ToChar("§"));
+        if (!s.Contains("§"))
+            return s.Replace(StringHelper.CrLf, "§").Replace(StringHelper.LineFeed, '§').Split(System.Convert.ToChar("§"));
         else
         {
             List<string> Data = new List<string>();
@@ -320,7 +322,7 @@ static class Extensions
             int i = 0;
             while (s != "" & i < s.Length)
             {
-                if (!s.Substring(i).StartsWith(StringHelper.CrLf) | !s.Substring(i).StartsWith(StringHelper.LineFeed))
+                if (!s.Substring(i).StartsWith(StringHelper.CrLf) | !s.Substring(i).StartsWith(StringHelper.LineFeed.ToString()))
                     i += 1;
                 else
                 {
@@ -369,7 +371,7 @@ static class Extensions
         foreach (int c in chances)
             totalNumber += c;
 
-        int r = Core.Random.Next(0, totalNumber + 1);
+        int r = PokemonUnity.Settings.Ramd.Next(0, totalNumber + 1);
 
         int x = 0;
         for (var i = 0; i <= chances.Count - 1; i++)
@@ -382,14 +384,14 @@ static class Extensions
         return -1;
     }
 
-    public static Vector2 ProjectPoint(this Vector3 v, Matrix View, Matrix Projection)
-    {
-        Matrix mat = Matrix.Identity * View * Projection;
-
-        Vector4 v4 = Vector4.Transform(v, mat);
-
-        return new Vector2(System.Convert.ToSingle(((v4.X / (double)v4.W + 1) * (windowSize.Width / (double)2))), System.Convert.ToSingle(((1 - v4.Y / (double)v4.W) * (windowSize.Height / (double)2))));
-    }
+    //public static Vector2 ProjectPoint(this Vector3 v, Matrix View, Matrix Projection)
+    //{
+    //    Matrix mat = Matrix.Identity * View * Projection;
+	//
+    //    Vector4 v4 = Vector4.Transform(v, mat);
+	//
+    //    return new Vector2(System.Convert.ToSingle(((v4.x / (double)v4.w + 1) * (windowSize.width / (double)2))), System.Convert.ToSingle(((1 - v4.y / (double)v4.w) * (windowSize.height / (double)2))));
+    //}
 
     public static int ToInteger(this float s)
     {
@@ -397,28 +399,28 @@ static class Extensions
     }
 
     /// <summary>
-    ///     ''' Inverts the Color.
-    ///     ''' </summary>
+    /// Inverts the Color.
+    /// </summary>
     public static Color Invert(this Color c)
     {
-        return new Color(255 - c.R, 255 - c.G, 255 - c.B, c.A);
+        return new Color(255 - c.r, 255 - c.g, 255 - c.b, c.a);
     }
 
     public static string ReplaceDecSeparator(this string s)
     {
-        return s.Replace(GameController.DecSeparator, ".");
+        return s.Replace(StringHelper.DecSeparator, ".");
     }
 
     public static string InsertDecSeparator(this string s)
     {
-        return s.Replace(".", GameController.DecSeparator);
+        return s.Replace(".", StringHelper.DecSeparator);
     }
 
-    /// <summary>
-    ///     ''' Converts a System.Drawing.Color into a Xna.Framework.Color.
-    ///     ''' </summary>
-    public static Color ToXNA(this Drawing.Color c)
-    {
-        return new Color(c.R, c.G, c.B, c.A);
-    }
+    ///// <summary>
+    ///// Converts a System.Drawing.Color into a Xna.Framework.Color.
+    ///// </summary>
+    //public static Color ToXNA(this System.Drawing.Color c)
+    //{
+    //    return new Color(c.R, c.G, c.B, c.A);
+    //}
 }

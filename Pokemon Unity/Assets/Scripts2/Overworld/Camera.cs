@@ -36,7 +36,7 @@ namespace PokemonUnity.Overworld
 
 		public bool Turning = false;
 
-		public float Speed = 0.04F;
+		public float Speed = 0.04f;
 		public float RotationSpeed = 0.003f;
 
 		public float FarPlane = 30;
@@ -66,13 +66,13 @@ namespace PokemonUnity.Overworld
 
 		public int GetFacingDirection()
 		{
-			if (Yaw <= MathHelper.Pi * 0.25F | Yaw > MathHelper.Pi * 1.75F)
+			if (Yaw <= MathHelper.Pi * 0.25f | Yaw > MathHelper.Pi * 1.75f)
 				return 0;
-			if (Yaw <= MathHelper.Pi * 0.75F & Yaw > MathHelper.Pi * 0.25F)
+			if (Yaw <= MathHelper.Pi * 0.75f & Yaw > MathHelper.Pi * 0.25f)
 				return 1;
-			if (Yaw <= MathHelper.Pi * 1.25F & Yaw > MathHelper.Pi * 0.75F)
+			if (Yaw <= MathHelper.Pi * 1.25f & Yaw > MathHelper.Pi * 0.75f)
 				return 2;
-			if (Yaw <= MathHelper.Pi * 1.75F & Yaw > MathHelper.Pi * 1.25F)
+			if (Yaw <= MathHelper.Pi * 1.75f & Yaw > MathHelper.Pi * 1.25f)
 				return 3;
 			return 0;
 		}
@@ -112,7 +112,7 @@ namespace PokemonUnity.Overworld
 
 		public void CreateNewProjection(float newFOV)
 		{
-			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(newFOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, this.FarPlane);
+			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(newFOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01f, this.FarPlane);
 			this.FOV = newFOV;
 		}
 		public virtual Vector3 CPosition

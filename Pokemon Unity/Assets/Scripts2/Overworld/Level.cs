@@ -1210,7 +1210,7 @@ public class Level
             if (GameVariables.Camera.IsMoving & WarpData.IsWarpBlock)
             {
                 GameVariables.Camera.StopMovement();
-                GameVariables.Camera.Move(1.0F);
+                GameVariables.Camera.Move(1.0f);
             }
 
             // Because of the map change, Roaming Pokémon are moving to their next location on the world map:

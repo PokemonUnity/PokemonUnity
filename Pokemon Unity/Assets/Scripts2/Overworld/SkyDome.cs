@@ -30,7 +30,7 @@ public class SkyDome : MonoBehaviour
 
     public void Update()
     {
-        //Yaw += 0.0002F;
+        //Yaw += 0.0002f;
         //while (Yaw > MathHelper.TwoPi)
         //    Yaw -= MathHelper.TwoPi;
         SetLastColor();
@@ -83,23 +83,23 @@ public class SkyDome : MonoBehaviour
         //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureMoon, 100, GetStarsAlpha()); // Draw the Moon.
         //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureDown, 50, GetStarsAlpha()); // Draw the first half of the stars.
         //            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), false, TextureDown, 50, GetStarsAlpha()); // Draw the second half of the stars.
-        //            RenderHalf(FOV, MathHelper.TwoPi - Yaw, 0.0F, true, GetCloudsTexture(), 15, GetCloudAlpha()); // Draw the back layer of the clouds.
-        //            RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 10, GetCloudAlpha()); // Draw the front layer of the clouds.
+        //            RenderHalf(FOV, MathHelper.TwoPi - Yaw, 0.0f, true, GetCloudsTexture(), 15, GetCloudAlpha()); // Draw the back layer of the clouds.
+        //            RenderHalf(FOV, Yaw, 0.0f, true, TextureUp, 10, GetCloudAlpha()); // Draw the front layer of the clouds.
         //        }
         //    }
         //    else
         //    {
-        //        RenderHalf(FOV, Yaw, 0.0F, true, TextureUp, 8.0F, 1.0F);
+        //        RenderHalf(FOV, Yaw, 0.0f, true, TextureUp, 8.0f, 1.0f);
 		//		
         //        if (TextureDown != null)
-        //            RenderHalf(FOV, Yaw, 0.0F, false, TextureDown, 8.0F, 1.0F);
+        //            RenderHalf(FOV, Yaw, 0.0f, false, TextureDown, 8.0f, 1.0f);
         //    }
         //}
     }
 
     private void RenderHalf(float FOV, float useYaw, float usePitch, bool up, Texture2D texture, float scale, float alpha)
     {
-        //float Roll = 0.0F;
+        //float Roll = 0.0f;
         //if (!up)
         //    Roll = (float)Math.PI;
 		//
@@ -113,7 +113,7 @@ public class SkyDome : MonoBehaviour
         //        BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(GameVariables.Camera.Position.x, -5, GameVariables.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
 		//
         //        BasicEffect.View = GameVariables.Camera.View;
-        //        BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01, 10000);
+        //        BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01f, 10000);
 		//
         //        BasicEffect.TextureEnabled = true;
         //        BasicEffect.Texture = texture;
@@ -215,19 +215,19 @@ public class SkyDome : MonoBehaviour
             case World.Weathers.Blizzard:
             case World.Weathers.Thunderstorm:
                 {
-                    return 0.6F;
+                    return 0.6f;
                 }
             case World.Weathers.Snow:
             case World.Weathers.Ash:
                 {
-                    return 0.4F;
+                    return 0.4f;
                 }
             case World.Weathers.Clear:
                 {
-                    return 0.1F;
+                    return 0.1f;
                 }
         }
-        return 0.0F;
+        return 0.0f;
     }
 
     private float GetStarsAlpha()
@@ -242,11 +242,11 @@ public class SkyDome : MonoBehaviour
             else if (dP > 1080)
                 dP = 720 - (1440 - dP) * 2;
 
-            float alpha = System.Convert.ToSingle(dP / (double)720) * 0.7F;
+            float alpha = System.Convert.ToSingle(dP / (double)720) * 0.7f;
             return alpha;
         }
         else
-            return 0.0F;
+            return 0.0f;
     }
 
     private float GetSunAlpha()
@@ -259,7 +259,7 @@ public class SkyDome : MonoBehaviour
             float i = progress - 1080;
             float percent = i / (float)60 * 100f;
 
-            return 1.0F - percent / (float)100.0F;
+            return 1.0f - percent / (float)100.0f;
         }
         else if (progress >= 300 & progress < 360)
         {
@@ -267,14 +267,14 @@ public class SkyDome : MonoBehaviour
             float i = progress - 300;
             float percent = i / (float)60 * 100;
 
-            return percent / (float)100.0F;
+            return percent / (float)100.0f;
         }
         else if (progress >= 1140 | progress < 300)
             // Between 7:00:00 PM and 5:00:00 AM, the Sun will be invisible:
-            return 0.0F;
+            return 0.0f;
         else
             // Between 6:00:00 AM and 6:00:00 PM, the Sun will be fully visible:
-            return 1.0F;
+            return 1.0f;
     }
 
     private Texture2D GetCloudsTexture()
@@ -296,7 +296,7 @@ public class SkyDome : MonoBehaviour
     {
         int progress = GetTimeValue();
 
-        float p = 0.0F;
+        float p = 0.0f;
 
         if (progress < 720)
             p = System.Convert.ToSingle((720 - progress) / (double)720);

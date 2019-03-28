@@ -7,7 +7,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 {
 public class NPC : Entity
 {
-	const float STANDARD_SPEED = 0.04F;
+	const float STANDARD_SPEED = 0.04f;
 
 	public enum Movements
 	{
@@ -38,14 +38,14 @@ public class NPC : Entity
 
 	private bool AnimateIdle = true;
 	private int AnimationX = 1;
-	const float AnimationDelayLenght = 1.1F;
+	const float AnimationDelayLenght = 1.1f;
 	private float AnimationDelay = AnimationDelayLenght;
 
 	public Movements Movement = Movements.Still;
 	public List<Rectangle> MoveRectangles = new List<Rectangle>();
-	public float TurningDelay = 2.0F;
+	public float TurningDelay = 2.0f;
 
-	public float MoveY = 0.0F;
+	public float MoveY = 0.0f;
 	public bool MoveAsync = false;
 
 	public new void Initialize(string TextureID, int Rotation, string Name, int ID, bool AnimateIdle, string Movement, List<Rectangle> MoveRectangles)
@@ -296,7 +296,7 @@ public class NPC : Entity
 				spriteIndex += 4;
 
 			int x = 0;
-			if (this.Moved > 0.0F | AnimateIdle)
+			if (this.Moved > 0.0f | AnimateIdle)
 				x = System.Convert.ToInt32(FrameSize.x) * GetAnimationX();
 
 			if (this.Movement == Movements.Pokeball)
@@ -371,7 +371,7 @@ public class NPC : Entity
 		{
 			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & !GameVariables.Camera.IsMoving())
 			{
-				if (Moved == 0.0F & !this.CanBeRemoved)
+				if (Moved == 0.0f & !this.CanBeRemoved)
 				{
 					if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == GameVariables.Camera.Position.z)
 					{
@@ -474,7 +474,7 @@ public class NPC : Entity
 
 								(OverworldScreen)Core.CurrentScreen.TrainerEncountered = true;
 								if (InSightMusic != "nomusic" & InSightMusic != "")
-									MusicManager.Play(InSightMusic, true, 0.0F);
+									MusicManager.Play(InSightMusic, true, 0.0f);
 								GameVariables.Camera.StopMovement();
 								this.Movement = Movements.Still;
 
@@ -483,22 +483,22 @@ public class NPC : Entity
 								{
 									case 0:
 										{
-											offset.y = -0.01F;
+											offset.y = -0.01f;
 											break;
 										}
 									case 1:
 										{
-											offset.x = -0.01F;
+											offset.x = -0.01f;
 											break;
 										}
 									case 2:
 										{
-											offset.y = 0.01F;
+											offset.y = 0.01f;
 											break;
 										}
 									case 3:
 										{
-											offset.x = 0.01F;
+											offset.x = 0.01f;
 											break;
 										}
 								}
@@ -511,14 +511,14 @@ public class NPC : Entity
 									{
 										s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
-										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + (distance - 1) + ")" + System.Environment.NewLine + "@camera.resetfocus" + System.Environment.NewLine + "@camera.setposition(" + cPosition + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7f + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + (distance - 1) + ")" + System.Environment.NewLine + "@camera.resetfocus" + System.Environment.NewLine + "@camera.setposition(" + cPosition + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
 									}
 									else
-										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7F + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + (distance - 1) + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
+										s += "@entity.showmessagebulb(1|" + this.Position.x + offset.x + "|" + this.Position.y + 0.7f + "|" + this.Position.z + offset.y + ")" + System.Environment.NewLine + "@npc.move(" + this.NPCID + "," + (distance - 1) + ")" + System.Environment.NewLine + "@script.start(" + this.AdditionalValue + ")" + System.Environment.NewLine + ":end";
 								}
 
 
-								GameVariables.Level.OwnPlayer.Opacity = 0.5F;
+								GameVariables.Level.OwnPlayer.Opacity = 0.5f;
 								(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
 								ActionScript.IsInsightScript = true;
 							}
@@ -536,7 +536,7 @@ public class NPC : Entity
 			newHeading += 4;
 		this.faceRotation = newHeading;
 
-		if (this.Moved == 0.0F)
+		if (this.Moved == 0.0f)
 			ActivateScript();
 	}
 
@@ -552,7 +552,7 @@ public class NPC : Entity
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
 	{
-		return base.CalculateCameraDistance(CPosition) - 0.2F;
+		return base.CalculateCameraDistance(CPosition) - 0.2f;
 	}
 
 	public override void UpdateEntity()
@@ -587,12 +587,12 @@ public class NPC : Entity
 				}
 			case Movements.Turning:
 				{
-					if (this.TurningDelay > 0.0F)
+					if (this.TurningDelay > 0.0f)
 					{
-						TurningDelay -= 0.1F;
-						if (TurningDelay <= 0.0F)
+						TurningDelay -= 0.1f;
+						if (TurningDelay <= 0.0f)
 						{
-							this.TurningDelay = 3.0F;
+							this.TurningDelay = 3.0f;
 
 							this.faceRotation += 1;
 							if (this.faceRotation == 4)
@@ -606,7 +606,7 @@ public class NPC : Entity
 				}
 			case Movements.Looking:
 				{
-					if (this.Moved == 0.0F)
+					if (this.Moved == 0.0f)
 					{
 						if (Settings.Rand.Next(0, 220) == 0)
 						{
@@ -623,7 +623,7 @@ public class NPC : Entity
 				}
 			case Movements.FacePlayer:
 				{
-					if (this.Moved == 0.0F)
+					if (this.Moved == 0.0f)
 					{
 						int oldRotation = this.faceRotation;
 
@@ -647,7 +647,7 @@ public class NPC : Entity
 				}
 			case Movements.Walk:
 				{
-					if (this.Moved == 0.0F)
+					if (this.Moved == 0.0f)
 					{
 						if (Settings.Rand.Next(0, 120) == 0)
 						{
@@ -672,7 +672,7 @@ public class NPC : Entity
 									}
 								}
 								if (contains)
-									Moved = 1.0F;
+									Moved = 1.0f;
 							}
 						}
 					}
@@ -681,7 +681,7 @@ public class NPC : Entity
 				}
 			case Movements.Straight:
 				{
-					if (this.Moved == 0.0F)
+					if (this.Moved == 0.0f)
 					{
 						if (Settings.Rand.Next(0, 15) == 0)
 						{
@@ -704,7 +704,7 @@ public class NPC : Entity
 								}
 							}
 							if (contains)
-								Moved = 1.0F;
+								Moved = 1.0f;
 						}
 					}
 
@@ -733,7 +733,7 @@ public class NPC : Entity
 
 		bool HasFloor = false;
 
-		Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1F, newPosition.z);
+		Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1f, newPosition.z);
 		foreach (Entity Floor in GameVariables.Level.Floors)
 		{
 			if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)
@@ -757,7 +757,7 @@ public class NPC : Entity
 
 	private void Move()
 	{
-		if (Moved > 0.0F)
+		if (Moved > 0.0f)
 		{
 			if (!isDancing)
 				this.Position += GetMove();
@@ -767,21 +767,21 @@ public class NPC : Entity
 			else
 				Moved -= this.Speed;
 
-			if (this.MoveY < 0.0F)
+			if (this.MoveY < 0.0f)
 			{
 				this.MoveY += this.Speed;
-				if (MoveY >= 0.0F)
-					this.MoveY = 0.0F;
+				if (MoveY >= 0.0f)
+					this.MoveY = 0.0f;
 			}
-			else if (this.MoveY > 0.0F)
+			else if (this.MoveY > 0.0f)
 			{
 				this.MoveY -= this.Speed;
-				if (MoveY <= 0.0F)
-					this.MoveY = 0.0F;
+				if (MoveY <= 0.0f)
+					this.MoveY = 0.0f;
 			}
 
-			this.AnimationDelay -= System.Convert.ToSingle(0.13 * (Math.Abs(this.Speed) / (double)NPC.STANDARD_SPEED));
-			if (AnimationDelay <= 0.0F)
+			this.AnimationDelay -= System.Convert.ToSingle(0.13f * (Math.Abs(this.Speed) / (double)NPC.STANDARD_SPEED));
+			if (AnimationDelay <= 0.0f)
 			{
 				AnimationDelay = AnimationDelayLenght;
 				AnimationX += 1;
@@ -789,11 +789,11 @@ public class NPC : Entity
 					AnimationX = 1;
 			}
 
-			if (Moved <= 0.0F)
+			if (Moved <= 0.0f)
 			{
 				MoveAsync = false;
-				Moved = 0.0F;
-				MoveY = 0.0F;
+				Moved = 0.0f;
+				MoveY = 0.0f;
 				AnimationX = 1;
 				AnimationDelay = AnimationDelayLenght;
 				this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToInt32(this.Position.y), System.Convert.ToInt32(this.Position.z));
@@ -804,8 +804,8 @@ public class NPC : Entity
 		}
 		else if (this.AnimateIdle)
 		{
-			this.AnimationDelay -= 0.1F;
-			if (AnimationDelay <= 0.0F)
+			this.AnimationDelay -= 0.1f;
+			if (AnimationDelay <= 0.0f)
 			{
 				AnimationDelay = AnimationDelayLenght;
 				AnimationX += 1;
@@ -841,10 +841,10 @@ public class NPC : Entity
 					break;
 				}
 		}
-		if (MoveY != 0.0F)
+		if (MoveY != 0.0f)
 		{
 			float multi = this.Speed;
-			if (multi < 0.0F)
+			if (multi < 0.0f)
 				multi *= -1;
 			if (MoveY > 0)
 				moveVector.y = multi * 1;
@@ -864,13 +864,13 @@ public class NPC : Entity
 		while (Yaw < 0)
 			Yaw += MathHelper.TwoPi;
 
-		if (Yaw <= MathHelper.Pi * 0.25F | Yaw > MathHelper.Pi * 1.75F)
+		if (Yaw <= MathHelper.Pi * 0.25f | Yaw > MathHelper.Pi * 1.75f)
 			cameraRotation = 0;
-		if (Yaw <= MathHelper.Pi * 0.75F & Yaw > MathHelper.Pi * 0.25F)
+		if (Yaw <= MathHelper.Pi * 0.75f & Yaw > MathHelper.Pi * 0.25f)
 			cameraRotation = 1;
-		if (Yaw <= MathHelper.Pi * 1.25F & Yaw > MathHelper.Pi * 0.75F)
+		if (Yaw <= MathHelper.Pi * 1.25f & Yaw > MathHelper.Pi * 0.75f)
 			cameraRotation = 2;
-		if (Yaw <= MathHelper.Pi * 1.75F & Yaw > MathHelper.Pi * 1.25F)
+		if (Yaw <= MathHelper.Pi * 1.75f & Yaw > MathHelper.Pi * 1.25f)
 			cameraRotation = 3;
 
 		return cameraRotation;

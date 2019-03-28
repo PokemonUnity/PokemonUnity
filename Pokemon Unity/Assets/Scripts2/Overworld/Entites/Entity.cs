@@ -27,21 +27,21 @@ public class Entity : BaseEntity
 	public string AdditionalValue;
 	public UnityEngine.Mesh Model;
 	public bool Visible = true;
-	public UnityEngine.Vector3 Shader = new UnityEngine.Vector3(1.0F,1,1);
+	public UnityEngine.Vector3 Shader = new UnityEngine.Vector3(1.0f,1,1);
 	public List<UnityEngine.Vector3> Shaders = new List<UnityEngine.Vector3>();
 
-	public float CameraDistanceDelta = 0.0F;
+	public float CameraDistanceDelta = 0.0f;
 
 	public string SeasonColorTexture = "";
 
 	public int FaceDirection = 0;
-	public float Moved = 0.0F;
-	public float Speed = 0.04F;
+	public float Moved = 0.0f;
+	public float Speed = 0.04f;
 	public bool CanMove = false;
 	public bool isDancing = false;
 
-	public float Opacity = 1.0F;
-	private float _normalOpactity = 1.0F;
+	public float Opacity = 1.0f;
+	private float _normalOpactity = 1.0f;
 	public float NormalOpacity
 	{
 		get
@@ -55,11 +55,11 @@ public class Entity : BaseEntity
 		}
 	}
 
-	public UnityEngine.Vector3 boundingBoxScale = new UnityEngine.Vector3(1.25F,1.25f,1.25f);
+	public UnityEngine.Vector3 boundingBoxScale = new UnityEngine.Vector3(1.25f,1.25f,1.25f);
 	public UnityEngine.Bounds boundingBox;
 
 	public UnityEngine.Bounds ViewBox;
-	public UnityEngine.Vector3 viewBoxScale = new UnityEngine.Vector3(1.0F,1,1);
+	public UnityEngine.Vector3 viewBoxScale = new UnityEngine.Vector3(1.0f,1,1);
 
 	public float CameraDistance;
 	public Matrix World;
@@ -126,10 +126,10 @@ public class Entity : BaseEntity
 		//
 		//boundingBox = new UnityEngine.Bounds(
 		//	//UnityEngine.Vector3.Transform(
-		//		new UnityEngine.Vector3(-0.5F), 
+		//		new UnityEngine.Vector3(-0.5f), 
 		//		Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position), 
 		//	//UnityEngine.Vector3.Transform(
-		//		new UnityEngine.Vector3(0.5F), 
+		//		new UnityEngine.Vector3(0.5f), 
 		//		Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position));
 
 		this.BoundingPositionCreated = this.Position;
@@ -149,7 +149,7 @@ public class Entity : BaseEntity
 		this.UpdateEntity();
 	}
 
-	public static Entity GetNewEntity(Entities EntityID, UnityEngine.Vector3 Position, Texture2D[] Textures, int[] TextureIndex, bool Collision, UnityEngine.Vector3 Rotation, UnityEngine.Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, UnityEngine.Vector3 Shader, int ID, string MapOrigin, string SeasonColorTexture, UnityEngine.Vector3 Offset, object[] Params = null, float Opacity = 1.0F, List<List<int>> AnimationData = null, float CameraDistanceDelta = 0.0F)
+	public static Entity GetNewEntity(Entities EntityID, UnityEngine.Vector3 Position, Texture2D[] Textures, int[] TextureIndex, bool Collision, UnityEngine.Vector3 Rotation, UnityEngine.Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, UnityEngine.Vector3 Shader, int ID, string MapOrigin, string SeasonColorTexture, UnityEngine.Vector3 Offset, object[] Params = null, float Opacity = 1.0f, List<List<int>> AnimationData = null, float CameraDistanceDelta = 0.0f)
 	{
 		Entity newEnt = new Entity();
 		Entity propertiesEnt = new Entity();
@@ -432,7 +432,7 @@ public class Entity : BaseEntity
 				}
 			case 3:
 				{
-					return new UnityEngine.Vector3(0, MathHelper.Pi * 1.5F, 0);
+					return new UnityEngine.Vector3(0, MathHelper.Pi * 1.5f, 0);
 				}
 		}
 			return new UnityEngine.Vector3(0, 0, 0);
@@ -454,7 +454,7 @@ public class Entity : BaseEntity
                 {
 					return 2;
 				}
-			case MathHelper.Pi * 1.5F:
+			case MathHelper.Pi * 1.5f:
                 {
 					return 3;
 				}
@@ -480,7 +480,7 @@ public class Entity : BaseEntity
 
 	public virtual void OpacityCheck()
 	{
-		if (this.CameraDistance > 10.0F | GameVariables.Level.OwnPlayer != null && CameraDistance > GameVariables.Level.OwnPlayer.CameraDistance)
+		if (this.CameraDistance > 10.0f | GameVariables.Level.OwnPlayer != null && CameraDistance > GameVariables.Level.OwnPlayer.CameraDistance)
 		{
 			this.Opacity = this._normalOpactity;
 			return;
@@ -498,12 +498,12 @@ public class Entity : BaseEntity
 				//if (result.HasValue)
 				if (UnityEngine.Physics.Raycast(Ray, out result))
 				{
-					//if (result.Value < 0.3F + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5F))
-					if (result.distance < 0.3F + (((OverworldCamera)GameVariables.Camera).ThirdPersonOffset.z - 1.5F))
+					//if (result.Value < 0.3f + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5f))
+					if (result.distance < 0.3f + (((OverworldCamera)GameVariables.Camera).ThirdPersonOffset.z - 1.5f))
 					{
-						this.Opacity = this._normalOpactity - 0.5F;
-						if (this.Opacity < 0.3F)
-							this.Opacity = 0.3F;
+						this.Opacity = this._normalOpactity - 0.5f;
+						if (this.Opacity < 0.3f)
+							this.Opacity = 0.3f;
 					}
 				}
 			}
@@ -540,7 +540,7 @@ public class Entity : BaseEntity
 		//	return;
 		//
 		//
-		//if (this.Moved > 0.0F & this.CanMove)
+		//if (this.Moved > 0.0f & this.CanMove)
 		//{
 		//	this.Moved -= this.Speed;
 		//
@@ -574,9 +574,9 @@ public class Entity : BaseEntity
 		//	this.Position += movement;
 		//	this.CreatedWorld = false;
 		//
-		//	if (this.Moved <= 0.0F)
+		//	if (this.Moved <= 0.0f)
 		//	{
-		//		this.Moved = 0.0F;
+		//		this.Moved = 0.0f;
 		//
 		//		this.Position.x = System.Convert.ToInt32(this.Position.x);
 		//		this.Position.z = System.Convert.ToInt32(this.Position.z);
@@ -656,12 +656,12 @@ public class Entity : BaseEntity
 		//			}
 		//		case World.EnvironmentTypes.Dark:
         //            {
-		//				this.Shader = new UnityEngine.Vector3(0.5F, 0.5F, 0.6F);
+		//				this.Shader = new UnityEngine.Vector3(0.5f, 0.5f, 0.6f);
 		//				break;
 		//			}
 		//		default:
 		//			{
-		//				this.Shader = new UnityEngine.Vector3(1.0F,1f,1f);
+		//				this.Shader = new UnityEngine.Vector3(1.0f,1f,1f);
 		//				break;
 		//			}
 		//	}
@@ -684,17 +684,17 @@ public class Entity : BaseEntity
 
 			if (this.Model != null)
 			{
-				switch (this.Model.ID)
-				{
-					case 0:
-					case 9:
-					case 10:
-					case 11:
-						{
-							v.y -= 0.5F;
-							break;
-						}
-				}
+				//switch (this.Model.ID)
+				//{
+				//	case 0:
+				//	case 9:
+				//	case 10:
+				//	case 11:
+				//		{
+				//			v.y -= 0.5f;
+				//			break;
+				//		}
+				//}
 			}
 			this.tempCenterVector = v;
 		}

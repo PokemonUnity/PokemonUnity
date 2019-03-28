@@ -111,12 +111,12 @@ public class ItemObject : Entity
 
         if (this.IsHiddenItem())
         {
-            if (this.Opacity > 0.0F)
+            if (this.Opacity > 0.0f)
             {
-                this.Opacity -= 0.01F;
-                if (this.Opacity <= 0.0F)
+                this.Opacity -= 0.01f;
+                if (this.Opacity <= 0.0f)
                 {
-                    this.Opacity = 1.0F;
+                    this.Opacity = 1.0f;
                     this.Visible = false;
                 }
             }
@@ -135,7 +135,7 @@ public class ItemObject : Entity
 
         if (Animation != null)
         {
-            Animation.Update(0.01);
+            Animation.Update(0.01f);
             if (CurrentRectangle != Animation.TextureRectangle)
             {
                 ChangeTexture();

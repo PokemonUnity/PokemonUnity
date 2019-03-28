@@ -4,7 +4,7 @@ public class WallBill : Entity
 {
     protected override float CalculateCameraDistance(Vector3 CPosition)
     {
-        return base.CalculateCameraDistance(CPosition) - 0.4F;
+        return base.CalculateCameraDistance(CPosition) - 0.4f;
     }
 
     public override void UpdateEntity()

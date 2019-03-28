@@ -13,11 +13,11 @@ public class Particle : Entity
 		RightToLeft
 	}
 
-	public float MoveSpeed = 0.01F;
-	public float Delay = 10.0F;
+	public float MoveSpeed = 0.01f;
+	public float Delay = 10.0f;
 	public Behaviors Behavior = Behaviors.Falling;
 
-	public float Destination = 999.0F;
+	public float Destination = 999.0f;
 
 	private Vector3 Realtive = new Vector3(0);
 	private Vector3 LastPosition;
@@ -28,8 +28,8 @@ public class Particle : Entity
 		this.NeedsUpdate = true;
 		this.CreateWorldEveryFrame = true;
 
-		if (Destination == 999.0F)
-			this.Destination = this.Position.y - 2.8F;
+		if (Destination == 999.0f)
+			this.Destination = this.Position.y - 2.8f;
 
 		this.DropUpdateUnlessDrawn = false;
 		this.NormalOpacity = 0F;
@@ -80,11 +80,11 @@ public class Particle : Entity
 					}
 			}
 
-			if (this.NormalOpacity < 1.0F)
+			if (this.NormalOpacity < 1.0f)
 			{
-				this.NormalOpacity += 0.05F;
+				this.NormalOpacity += 0.05f;
 				if (this.NormalOpacity >= 1)
-					this.NormalOpacity = 1.0F;
+					this.NormalOpacity = 1.0f;
 			}
 		}
 	}
@@ -124,7 +124,7 @@ public class Particle : Entity
 			this.Rotation.y = GameVariables.Camera.Yaw;
 
 		float c_pitch = GameVariables.Camera.Pitch;
-		this.Rotation.x = c_pitch / (double)2.0F;
+		this.Rotation.x = c_pitch / (double)2.0f;
 
 		base.UpdateEntity();
 	}

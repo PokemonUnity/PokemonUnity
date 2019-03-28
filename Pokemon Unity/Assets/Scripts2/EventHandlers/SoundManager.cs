@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SoundManager
 {
-	const float POKEMON_CRY_VOLUME_MULTIPLIER = 0.6F;
+	const float POKEMON_CRY_VOLUME_MULTIPLIER = 0.6f;
 
 	private static Dictionary<string, AudioClip> _sounds = new Dictionary<string, AudioClip>();
 
@@ -66,12 +66,12 @@ public class SoundManager
 
 	public static void PlaySound(string soundFile)
 	{
-		PlaySound(soundFile, 0.0F, 0.0F, GameVariables.sVol, false);
+		PlaySound(soundFile, 0.0f, 0.0f, GameVariables.sVol, false);
 	}
 
 	public static void PlaySound(string soundFile, bool stopMusic)
 	{
-		PlaySound(soundFile, 0.0F, 0.0F, GameVariables.sVol, stopMusic);
+		PlaySound(soundFile, 0.0f, 0.0f, GameVariables.sVol, stopMusic);
 	}
 
 	public static void PlaySound(string soundFile, float pitch, float pan, float volume, bool stopMusic)

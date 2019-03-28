@@ -59,7 +59,7 @@ public class LoamySoil : Entity
             Item.Berry Berry = (Item.Berry)Item.Item.GetItem(ChosenBerry);
 
             BerryPlant.AddBerryPlant(GameVariables.Level.LevelFile, this.Position, Berry.BerryIndex);
-            Screen.TextBox.reDelay = 0.0F;
+            Screen.TextBox.reDelay = 0.0f;
             Screen.TextBox.Show("You planted a~" + Berry.Name + " Berry here.", null);
         }
     }

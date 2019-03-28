@@ -11,7 +11,7 @@ public class OverworldPokemon : Entity
 		new int[]{
 			0,
 			0
-		}, false, 0, new Vector3(1.0F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
+		}, false, 0, new Vector3(1.0f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
     {
         PokemonReference = null/* TODO Change to default(_) if this is not a reference type */;
         this.Respawn();
@@ -63,11 +63,11 @@ public class OverworldPokemon : Entity
 	public Texture2D Texture;
 	private Rectangle lastRectangle = new Rectangle(0, 0, 0, 0);
 	public int faceRotation = 0;
-	public float MoveSpeed = 0.04F;
+	public float MoveSpeed = 0.04f;
 	public bool warped = true;
 
 	private int AnimationX = 1;
-	private float AnimationDelayLenght = 2.2F;
+	private float AnimationDelayLenght = 2.2f;
 	private float AnimationDelay = AnimationDelayLenght;
 
 	private void ChangeTexture()
@@ -124,8 +124,8 @@ public class OverworldPokemon : Entity
 
 			this.ChangeTexture();
 
-			this.AnimationDelay -= 0.1F;
-			if (AnimationDelay <= 0.0F)
+			this.AnimationDelay -= 0.1f;
+			if (AnimationDelay <= 0.0f)
 			{
 				AnimationDelay = AnimationDelayLenght;
 				AnimationX += 1;
@@ -139,14 +139,14 @@ public class OverworldPokemon : Entity
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
 	{
-		return base.CalculateCameraDistance(CPosition) - 0.2F;
+		return base.CalculateCameraDistance(CPosition) - 0.2f;
 	}
 
 	public override void UpdateEntity()
 	{
 		if (this.Rotation.y != GameVariables.Camera.Yaw)
 			this.Rotation.y = GameVariables.Camera.Yaw;
-		this.Scale = new Vector3(1.0F);
+		this.Scale = new Vector3(1.0f);
 		this.Position.y = this.GetYPosition();
 
 		base.UpdateEntity();
@@ -193,7 +193,7 @@ public class OverworldPokemon : Entity
 
 	public void ChangeRotation()
 	{
-		this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToSingle(this.Position.y) + 0.001F, System.Convert.ToInt32(this.Position.z));
+		this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), System.Convert.ToSingle(this.Position.y) + 0.001f, System.Convert.ToInt32(this.Position.z));
 		if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | GameVariables.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
 		{
 			if (this.Position.x < GameVariables.Camera.Position.x)
@@ -214,11 +214,11 @@ public class OverworldPokemon : Entity
 			if (System.Convert.ToInt32(this.Position.x) != System.Convert.ToInt32(GameVariables.Camera.Position.x) | System.Convert.ToInt32(this.Position.z) != System.Convert.ToInt32(GameVariables.Camera.Position.z))
 			{
 				this.Position += GetMove();
-				this.AnimationDelayLenght = 1.1F;
+				this.AnimationDelayLenght = 1.1f;
 			}
 		}
 		else
-			this.AnimationDelayLenght = 2.2F;
+			this.AnimationDelayLenght = 2.2f;
 	}
 
 	private Vector3 GetMove()

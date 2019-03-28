@@ -496,9 +496,9 @@ namespace P3D
 		private bool _hasPokedex = false;
 		private bool _hasPokegear = false;
 		private string _lastRestPlace = "yourroom.dat";
-		private string _lastRestPlacePosition = "1,0.1,3";
+		private string _lastRestPlacePosition = "1,0.1f,3";
 		private string _lastSavePlace = "yourroom.dat";
-		private string _lastSavePlacePosition = "1,0.1,3";
+		private string _lastSavePlacePosition = "1,0.1f,3";
 		private int _repelSteps = 0;
 		private string _saveCreated = "Pre 0.21";
 		private int _daycareSteps = 0;
@@ -528,7 +528,7 @@ namespace P3D
 		public float startRotation = 0;
 		public bool startFreeCameraMode = false;
 		public string startMap = "barktown.dat";
-		public float startFOV = 45.0F;
+		public float startFOV = 45.0f;
 		public int startRotationSpeed = 12;
 		public bool startThirdPerson = false;
 		public bool startSurfing = false;
@@ -2169,7 +2169,7 @@ namespace P3D
 
 		private void PlayWildPokemonNoise(int number)
 		{
-			SoundManager.PlayPokemonCry(number, Settings.Rand.Next(0, 6) / (double)10.0F, Settings.Rand.Next(0, 20) / (double)10.0F - 1, SoundManager.Volume * 0.35F);
+			SoundManager.PlayPokemonCry(number, Settings.Rand.Next(0, 6) / (double)10.0f, Settings.Rand.Next(0, 20) / (double)10.0f - 1, SoundManager.Volume * 0.35f);
 		}
 
 
@@ -2214,12 +2214,12 @@ namespace P3D
 		public void ResetNewLevel()
 		{
 			lastLevel = 0;
-			displayEmblemDelay = 0.0F;
+			displayEmblemDelay = 0.0f;
 			emblemPositionX = windowSize.Width;
 		}
 
 		private int lastLevel = 0;
-		private float displayEmblemDelay = 0.0F;
+		private float displayEmblemDelay = 0.0f;
 		private int emblemPositionX = windowSize.Width;
 
 		public void DrawLevelUp()
@@ -2229,14 +2229,14 @@ namespace P3D
 				//if (lastLevel != GameJolt.Emblem.GetPlayerLevel(GameJoltSave.Points) & lastLevel != 0)
 				//{
 				//	lastLevel = GameJolt.Emblem.GetPlayerLevel(GameJoltSave.Points);
-				//	displayEmblemDelay = 35.0F;
+				//	displayEmblemDelay = 35.0f;
 				//	Skin = GameJolt.Emblem.GetPlayerSpriteFile(lastLevel, GameJoltSave.GameJoltID, GameJoltSave.Gender);
 				//}
 
-				if (displayEmblemDelay > 0.0F)
+				if (displayEmblemDelay > 0.0f)
 				{
-					displayEmblemDelay -= 0.1F;
-					if (displayEmblemDelay <= 6.4F)
+					displayEmblemDelay -= 0.1f;
+					if (displayEmblemDelay <= 6.4f)
 					{
 						if (emblemPositionX < windowSize.Width)
 							emblemPositionX += 8;
@@ -2246,9 +2246,9 @@ namespace P3D
 
 					GameJolt.Emblem.Draw(GameJolt.API.username, GameJoltSave.GameJoltID, GameJoltSave.Points, GameJoltSave.Gender, GameJoltSave.Emblem, new Vector2(emblemPositionX, 0), 4, GameJoltSave.DownloadedSprite);
 
-					if (displayEmblemDelay <= 0.0F)
+					if (displayEmblemDelay <= 0.0f)
 					{
-						displayEmblemDelay = 0.0F;
+						displayEmblemDelay = 0.0f;
 						emblemPositionX = windowSize.Width;
 					}
 				}
@@ -2315,9 +2315,9 @@ namespace P3D
 				ShowBattleAnimations = 2;
 				BoxAmount = 10;
 				LastRestPlace = "yourroom.dat";
-				LastRestPlacePosition = "1,0.1,3";
+				LastRestPlacePosition = "1,0.1f,3";
 				LastSavePlace = "yourroom.dat";
-				LastSavePlacePosition = "1,0.1,3";
+				LastSavePlacePosition = "1,0.1f,3";
 				DiagonalMovement = false;
 				RepelSteps = 0;
 				DifficultyMode = 0;
@@ -2337,7 +2337,7 @@ namespace P3D
 				startRotation = 0;
 				startFreeCameraMode = false;
 				startMap = "barktown.dat";
-				startFOV = 45.0F;
+				startFOV = 45.0f;
 				startRotationSpeed = 12;
 				startThirdPerson = false;
 				startSurfing = false;

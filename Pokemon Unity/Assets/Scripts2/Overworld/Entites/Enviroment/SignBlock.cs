@@ -11,10 +11,10 @@ public class SignBlock : Entity
     {
         base.Initialize();
 
-        this.Scale = new Vector3(0.7);
+        this.Scale = new Vector3(0.7f);
 
         if (ActionValue < 3)
-            this.Position.y -= 0.15F;
+            this.Position.y -= 0.15f;
 
         this.CreatedWorld = false;
     }
@@ -28,7 +28,7 @@ public class SignBlock : Entity
             case 1:
             case 3:
                 {
-                    if (this.Rotation.y == MathHelper.Pi * 1.5F | this.Rotation.y == MathHelper.Pi * 0.5F)
+                    if (this.Rotation.y == MathHelper.Pi * 1.5f | this.Rotation.y == MathHelper.Pi * 0.5f)
                         canRead = true;
                     break;
                 }

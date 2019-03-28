@@ -100,7 +100,7 @@ public class Waterfall : Entity
     {
         if (WaterAnimation != null)
         {
-            WaterAnimation.Update(0.01);
+            WaterAnimation.Update(0.01f);
             if (currentRectangle != WaterAnimation.TextureRectangle)
             {
                 ChangeTexture();
@@ -166,7 +166,7 @@ public class Waterfall : Entity
 
                         break;
                     }
-                case (object)MathHelper.Pi * 0.5F:
+                case (object)MathHelper.Pi * 0.5f:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -212,7 +212,7 @@ public class Waterfall : Entity
 
                         break;
                     }
-                case (object)MathHelper.Pi * 1.5:
+                case (object)MathHelper.Pi * 1.5f:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {

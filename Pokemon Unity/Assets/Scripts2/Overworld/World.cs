@@ -857,50 +857,43 @@ public class World
             case World.Weathers.Clear:
             case Weathers.Sunny:
                 {
-                    v = new Vector3(1);
+                    v = new Vector3(1,1,1);
                     break;
                 }
-
             case World.Weathers.Rain:
             case Weathers.Thunderstorm:
                 {
                     v = new Vector3(0.4f, 0.4f, 0.7f);
                     break;
                 }
-
             case World.Weathers.Snow:
                 {
-                    v = new Vector3(0.8);
+                    v = new Vector3(0.8f);
                     break;
                 }
-
             case World.Weathers.Underwater:
                 {
                     v = new Vector3(0.1f, 0.3f, 0.9f);
                     break;
                 }
-
             case World.Weathers.Fog:
                 {
-                    v = new Vector3(0.7, 0.7, 0.8);
+                    v = new Vector3(0.7f, 0.7f, 0.8f);
                     break;
                 }
-
             case World.Weathers.Sandstorm:
                 {
-                    v = new Vector3(0.8, 0.5, 0.2);
+                    v = new Vector3(0.8f, 0.5f, 0.2f);
                     break;
                 }
-
             case Weathers.Ash:
                 {
-                    v = new Vector3(0.5, 0.5, 0.5);
+                    v = new Vector3(0.5f, 0.5f, 0.5f);
                     break;
                 }
-
             case Weathers.Blizzard:
                 {
-                    v = new Vector3(0.6, 0.6, 0.6);
+                    v = new Vector3(0.6f, 0.6f, 0.6f);
                     break;
                 }
         }
@@ -1012,7 +1005,6 @@ public class World
                             WeatherOffset.y += 16;
                             break;
                         }
-
                     case Weathers.Thunderstorm:
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\rain");
@@ -1023,7 +1015,6 @@ public class World
                             opacity = 50;
                             break;
                         }
-
                     case Weathers.Snow:
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
@@ -1032,7 +1023,6 @@ public class World
                             WeatherOffset.y += 1;
                             break;
                         }
-
                     case Weathers.Blizzard:
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
@@ -1043,7 +1033,6 @@ public class World
                             opacity = 80;
                             break;
                         }
-
                     case Weathers.Sandstorm:
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\sand");
@@ -1055,7 +1044,6 @@ public class World
                             size = 48;
                             break;
                         }
-
                     case Weathers.Underwater:
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\bubble");
@@ -1118,9 +1106,9 @@ public class World
         {
             if (Settings.Rand.Next(0, 250) == 0)
             {
-                float pitch = -(Settings.Rand.Next(8, 11) / 10.0F);
+                float pitch = -(Settings.Rand.Next(8, 11) / 10.0f);
                 GameVariables.DebugLog(pitch.ToString());
-                SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, SoundManager.Volume, false);
+                SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, GameVariables.sVol, false);
             }
         }
 
@@ -1138,37 +1126,36 @@ public class World
                 Texture2D T = null;// TODO Change to default(_) if this is not a reference type
 
                 float speed;
-                Vector3 scale = new Vector3(1);
+                Vector3 scale = new Vector3(1,1,1);
                 int range = 3;
 
                 switch (MapWeather)
                 {
                     case Weathers.Rain:
                         {
-                            speed = 0.1F;
+                            speed = 0.1f;
                             T = TextureManager.GetTexture(@"Textures\Weather\rain3");
                             if (chance > -1)
                                 chance = 3;
-                            scale = new Vector3(0.03F, 0.06F, 0.1F);
+                            scale = new Vector3(0.03f, 0.06f, 0.1f);
                             break;
                         }
-
                     case Weathers.Thunderstorm:
                         {
-                            speed = 0.15F;
+                            speed = 0.15f;
                             switch (Settings.Rand.Next(0, 4))
                             {
                                 case 0:
                                     {
                                         T = TextureManager.GetTexture(@"Textures\Weather\rain2");
-                                        scale = new Vector3(0.1F, 0.1F, 0.1F);
+                                        scale = new Vector3(0.1f, 0.1f, 0.1f);
                                         break;
                                     }
 
                                 default:
                                     {
                                         T = TextureManager.GetTexture(@"Textures\Weather\rain3");
-                                        scale = new Vector3(0.03F, 0.06F, 0.1F);
+                                        scale = new Vector3(0.03f, 0.06f, 0.1f);
                                         break;
                                     }
                             }
@@ -1176,55 +1163,50 @@ public class World
                                 chance = 1;
                             break;
                         }
-
                     case Weathers.Snow:
                         {
-                            speed = 0.02F;
+                            speed = 0.02f;
                             T = TextureManager.GetTexture(@"Textures\Weather\snow2");
                             if (chance > -1)
                                 chance = 5;
-                            scale = new Vector3(0.03F, 0.03F, 0.1F);
+                            scale = new Vector3(0.03f, 0.03f, 0.1f);
                             break;
                         }
-
                     case Weathers.Underwater:
                         {
-                            speed = -0.02F;
+                            speed = -0.02f;
                             T = TextureManager.GetTexture(@"Textures\Weather\bubble");
                             if (chance > -1)
                                 chance = 60;
-                            scale = new Vector3(0.5F);
+                            scale = new Vector3(0.5f);
                             range = 1;
                             break;
                         }
-
                     case Weathers.Sandstorm:
                         {
-                            speed = 0.1F;
+                            speed = 0.1f;
                             T = TextureManager.GetTexture(@"Textures\Weather\sand");
                             if (chance > -1)
                                 chance = 4;
-                            scale = new Vector3(0.03F, 0.03F, 0.1F);
+                            scale = new Vector3(0.03f, 0.03f, 0.1f);
                             break;
                         }
-
                     case Weathers.Ash:
                         {
-                            speed = 0.02F;
+                            speed = 0.02f;
                             T = TextureManager.GetTexture(@"Textures\Weather\ash");
                             if (chance > -1)
                                 chance = 20;
-                            scale = new Vector3(0.03F, 0.03F, 0.1F);
+                            scale = new Vector3(0.03f, 0.03f, 0.1f);
                             break;
                         }
-
                     case Weathers.Blizzard:
                         {
-                            speed = 0.1F;
+                            speed = 0.1f;
                             T = TextureManager.GetTexture(@"Textures\Weather\snow");
                             if (chance > -1)
                                 chance = 1;
-                            scale = new Vector3(0.12F, 0.12F, 0.1F);
+                            scale = new Vector3(0.12f, 0.12f, 0.1f);
                             break;
                         }
                 }
@@ -1246,18 +1228,18 @@ public class World
                         {
                             if (z != 0 | x != 0)
                             {
-                                float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0F;
-                                float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5F;
-                                float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5F;
-                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8F + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, UnityEngine.Mesh.BillModel, new Vector3(1f, 1f, 1f));
+                                float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0f;
+                                float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
+                                float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
+                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, UnityEngine.Mesh.BillModel, new Vector3(1f, 1f, 1f));
                                 p.MoveSpeed = speed;
                                 if (MapWeather == Weathers.Rain)
-                                    p.Opacity = 0.7F;
+                                    p.Opacity = 0.7f;
                                 if (MapWeather == Weathers.Thunderstorm)
-                                    p.Opacity = 1.0F;
+                                    p.Opacity = 1.0f;
                                 if (MapWeather == Weathers.Underwater)
                                 {
-                                    p.Position.y = 0.0F;
+                                    p.Position.y = 0.0f;
                                     p.Destination = 10;
                                     p.Behavior = Particle.Behaviors.Rising;
                                 }
@@ -1268,7 +1250,7 @@ public class World
                                     p.Position.x -= 2;
                                 }
                                 if (MapWeather == Weathers.Blizzard)
-                                    p.Opacity = 1.0F;
+                                    p.Opacity = 1.0f;
                                 GameVariables.Level.Entities.Add(p);
                             }
                         }
@@ -1388,7 +1370,7 @@ public class World
 
     private static bool NeedServerObject()
     {
-        return JoinServerScreen.Online & ConnectScreen.Connected;
+        return false;//JoinServerScreen.Online & ConnectScreen.Connected;
     }
 
     /// <summary>

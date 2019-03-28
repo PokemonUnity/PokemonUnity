@@ -694,16 +694,16 @@ public class Battle : UnityUtilityIntegration
 			//rareness = BallHandlers.ModifyCatchRate(ball, rareness, battler);
 			int x = (int)Math.Floor(((a * 3 - b * 2) * rareness.Value) / (a * 3f));
 			if (battler.Status == Status.SLEEP || battler.Status == Status.FROZEN)
-				x = (int)Math.Floor(x * 2.5);
+				x = (int)Math.Floor(x * 2.5f);
 			else if (battler.Status != Status.NONE)
-				x = (int)Math.Floor(x * 1.5);
+				x = (int)Math.Floor(x * 1.5f);
 			int c = 0;
 			if (GameVariables.playerTrainer.PokedexCaught > 600)
-				c = (int)Math.Floor(x * 2.5 / 6);
+				c = (int)Math.Floor(x * 2.5f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 450)
 				c = (int)Math.Floor(x * 2f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 300)
-				c = (int)Math.Floor(x * 1.5 / 6);
+				c = (int)Math.Floor(x * 1.5f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 150)
 				c = (int)Math.Floor(x * 1f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 30)
@@ -1741,11 +1741,11 @@ public class Battle : UnityUtilityIntegration
 					break;
 			}
 			if (hasWorkingAbility(Abilities.QUICK_FEET) && Status > 0)
-				speedmult = (int)Math.Round(speedmult * 1.5);
+				speedmult = (int)Math.Round(speedmult * 1.5f);
 			if (hasWorkingAbility(Abilities.UNBURDEN) && effects.Unburden && Item == Items.NONE)
 				speedmult = speedmult * 2;
 			if (hasWorkingAbility(Abilities.SLOW_START) && battle.turncount > 0)
-				speedmult = (int)Math.Round(speedmult * 1.5);
+				speedmult = (int)Math.Round(speedmult * 1.5f);
 			if (hasWorkingItem(Items.MACHO_BRACE) || 
 				hasWorkingItem(Items.POWER_WEIGHT) ||
 				hasWorkingItem(Items.POWER_BRACER) ||

@@ -71,21 +71,21 @@ public class DiveTile : Entity
             if (diveUp == 0)
             {
                 // Down
-                string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@player.setmovement(0,-0.5,0)" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + "@player.move(8)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@player.setmovement(0,-0.5f,0)" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + "@player.move(8)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + ":end";
 
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
             else if (diveUp == 1)
             {
                 // Up
-                string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@player.setmovement(0,0.5,0)" + System.Environment.NewLine + "@player.move(8)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@player.setmovement(0,0.5f,0)" + System.Environment.NewLine + "@player.move(8)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + ":end";
 
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
             else if (diveUp == 2)
             {
                 // Up
-                string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@player.setmovement(0,0.5,0)" + System.Environment.NewLine + "@player.move(6)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + ":end";
+                string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@player.setmovement(0,0.5f,0)" + System.Environment.NewLine + "@player.move(6)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + ":end";
 
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }

@@ -2,7 +2,7 @@
 {
 public class TurningSign : Entity
 {
-    private float TurningSpeed = 0.01F;
+    private float TurningSpeed = 0.01f;
 
     public override void Initialize()
     {

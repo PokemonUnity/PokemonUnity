@@ -182,7 +182,7 @@ public class AnimatedBlock : Entity
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
 	{
-		return base.CalculateCameraDistance(CPosition) - 0.25F;
+		return base.CalculateCameraDistance(CPosition) - 0.25f;
 	}
 
 	public override void UpdateEntity()
@@ -191,7 +191,7 @@ public class AnimatedBlock : Entity
 		{
 			for (var n = 0; n <= Animations.Count - 1; n++)
 			{
-				Animations[n].Update(0.01);
+				Animations[n].Update(0.01f);
 				if (currentRectangle[n] != Animations[n].TextureRectangle)
 				{
 					ChangeTexture(n);

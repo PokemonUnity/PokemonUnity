@@ -58,7 +58,7 @@ public class Floor : Entity
 
             case 3:
                 {
-                    this.Rotation.y = MathHelper.Pi * 1.5F;
+                    this.Rotation.y = MathHelper.Pi * 1.5f;
                     break;
                 }
         }
@@ -83,7 +83,7 @@ public class Floor : Entity
 
     private void ChangeSnow()
     {
-        this.Rotation = new Vector3(this.Rotation.x, 0.0F, this.Rotation.z);
+        this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
             this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
         else
@@ -130,13 +130,13 @@ public class Floor : Entity
                 };
                 this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
-                this.Scale = new Vector3(1, 0.1F, 1);
-                this.Position.y -= 0.45F;
+                this.Scale = new Vector3(1, 0.1f, 1);
+                this.Position.y -= 0.45f;
             }
             else
             {
                 this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
-                this.Position.y += 0.1F;
+                this.Position.y += 0.1f;
             }
         }
 
@@ -152,7 +152,7 @@ public class Floor : Entity
 
     private void ChangeSand()
     {
-        this.Rotation = new Vector3(this.Rotation.x, 0.0F, this.Rotation.z);
+        this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
         if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
             this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
         else
@@ -199,13 +199,13 @@ public class Floor : Entity
                 };
                 this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
-                this.Scale = new Vector3(1, 0.1F, 1);
-                this.Position.y -= 0.45F;
+                this.Scale = new Vector3(1, 0.1f, 1);
+                this.Position.y -= 0.45f;
             }
             else
             {
                 this.Textures[0] = P3D.TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
-                this.Position.y += 0.1F;
+                this.Position.y += 0.1f;
             }
         }
 

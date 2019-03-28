@@ -95,7 +95,7 @@ public class StrengthRock : Entity
 
     public override bool WalkAgainstFunction()
     {
-        if (GameVariables.Level.UsedStrength & this.Moved == 0.0F)
+        if (GameVariables.Level.UsedStrength & this.Moved == 0.0f)
         {
             Vector3 newPosition = GameVariables.Camera.GetForwardMovedPosition();
             newPosition.y = newPosition.y.ToInteger();
@@ -119,7 +119,7 @@ public class StrengthRock : Entity
 
         bool HasFloor = false;
 
-        Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1F, newPosition.z);
+        Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1f, newPosition.z);
         foreach (Entity Floor in GameVariables.Level.Floors)
         {
             if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)

@@ -17,17 +17,7 @@ public static class MathHelper
 			return (int)amount;
 	}
 
-	public static int Clamp(this float amount, int min, int max)
-	{
-		if (amount > max)
-			return max;
-		else if (amount < min)
-			return min;
-		else
-			return (int)amount;
-	}
-
-	public static int Clamp(this int amount, int min, int max)
+	public static int Clamp(int amount, int min, int max)
 	{
 		if (amount > max)
 			return max;

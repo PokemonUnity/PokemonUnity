@@ -306,7 +306,7 @@ public class BerryPlant : Entity
         {
             0,
             0
-        }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0F), -1, "", "", new Vector3(0));
+        }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0f), -1, "", "", new Vector3(0));
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         GameVariables.Level.Entities.Add(newEnt);
 

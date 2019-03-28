@@ -17,7 +17,7 @@ public class OwnPlayer : Entity
 	private string lastTexture = "";
 
 	private int AnimationX = 1;
-	const float AnimationDelayLenght = 1.1F;
+	const float AnimationDelayLenght = 1.1f;
 	private float AnimationDelay = AnimationDelayLenght;
 	public bool DoAnimation = true;
 
@@ -28,7 +28,7 @@ public class OwnPlayer : Entity
 		{
 			0,
 			0
-		}, false, 0, new Vector3(1.0F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0F))
+		}, false, 0, new Vector3(1.0f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f))
     {
 		SetTexture(TextureID, true);
 
@@ -87,7 +87,7 @@ public class OwnPlayer : Entity
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
 	{
-		return base.CalculateCameraDistance(CPosition) - 0.2F;
+		return base.CalculateCameraDistance(CPosition) - 0.2f;
 	}
 
 	public override void UpdateEntity()
@@ -99,7 +99,7 @@ public class OwnPlayer : Entity
 				if (GameVariables.Camera.Name == "Overworld")
 				{
 					OverworldCamera c = (OverworldCamera)GameVariables.Camera;
-					this.Position = new Vector3(c.Position.x, c.Position.y - 0.1F, c.Position.z);
+					this.Position = new Vector3(c.Position.x, c.Position.y - 0.1f, c.Position.z);
 				}
 			}
 			if (this.Rotation.y != GameVariables.Camera.Yaw)
@@ -116,8 +116,8 @@ public class OwnPlayer : Entity
 	{
 		if ((GameVariables.Camera.IsMoving() & this.DoAnimation) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
 		{
-			this.AnimationDelay -= 0.13F;
-			if (AnimationDelay <= 0.0F)
+			this.AnimationDelay -= 0.13f;
+			if (AnimationDelay <= 0.0f)
 			{
 				AnimationDelay = GetAnimationDelay();
 				AnimationX += 1;
@@ -245,7 +245,7 @@ public class OwnPlayer : Entity
 	private float GetAnimationDelay()
 	{
 		if (GameVariables.playerTrainer.IsRunning())
-			return OwnPlayer.AnimationDelayLenght / (double)1.4F;
+			return OwnPlayer.AnimationDelayLenght / (double)1.4f;
 		return OwnPlayer.AnimationDelayLenght;
 	}
 }

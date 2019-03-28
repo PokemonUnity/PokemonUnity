@@ -28,7 +28,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	public bool moving = false;
 	private Rectangle lastRectangle = new Rectangle(0, 0, 0, 0);
 	private int AnimationX = 1;
-	const float AnimationDelayLenght = 1.1F;
+	const float AnimationDelayLenght = 1.1f;
 	private float AnimationDelay = AnimationDelayLenght;
 	public bool HasPokemonTexture = false;
 
@@ -48,7 +48,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			0,
 			0
-		}, true, Rotation, Scale, UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0F))
+		}, true, Rotation, Scale, UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f))
     {
         this.Name = Name;
         this.NetworkID = ID;
@@ -238,8 +238,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	{
 		if (this.moving)
 		{
-			this.AnimationDelay -= 0.1F;
-			if (this.AnimationDelay <= 0.0F)
+			this.AnimationDelay -= 0.1f;
+			if (this.AnimationDelay <= 0.0f)
 			{
 				this.AnimationDelay = AnimationDelayLenght;
 				AnimationX += 1;
@@ -251,7 +251,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
 	{
-		return base.CalculateCameraDistance(CPosition) - 0.2F;
+		return base.CalculateCameraDistance(CPosition) - 0.2f;
 	}
 
 	public override void UpdateEntity()

@@ -194,14 +194,14 @@ public class Water : Entity
 
     protected override float CalculateCameraDistance(Vector3 CPosition)
     {
-        return base.CalculateCameraDistance(CPosition) - 0.2F;
+        return base.CalculateCameraDistance(CPosition) - 0.2f;
     }
 
     public override void UpdateEntity()
     {
         if (WaterAnimation != null)
         {
-            WaterAnimation.Update(0.01);
+            WaterAnimation.Update(0.01f);
             if (currentRectangle != WaterAnimation.TextureRectangle)
             {
                 ChangeTexture();
@@ -249,7 +249,7 @@ public class Water : Entity
 
                         break;
                     }
-                case (object)MathHelper.Pi * 0.5F:
+                case (object)MathHelper.Pi * 0.5f:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {
@@ -295,7 +295,7 @@ public class Water : Entity
 
                         break;
                     }
-                case (object)MathHelper.Pi * 1.5:
+                case (object)MathHelper.Pi * 1.5f:
                     {
                         switch (WaterAnimation.CurrentColumn)
                         {

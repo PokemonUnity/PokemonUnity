@@ -127,7 +127,7 @@ public class LevelLoader
             Busy -= 1;
 
             if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen & !loadOffsetMap)
-                ((OverworldScreen)CurrentScreen).Titles.Add(new OverworldScreen.Title("Couldn't find map file!", 20.0F, UnityEngine.Color.white, 6.0F, Vector2.zero, true));
+                ((OverworldScreen)CurrentScreen).Titles.Add(new OverworldScreen.Title("Couldn't find map file!", 20.0f, UnityEngine.Color.white, 6.0f, Vector2.zero, true));
 
             return;
         }
@@ -745,7 +745,7 @@ public class LevelLoader
         string Movement = System.Convert.ToString(GetTag(Tags, "Movement"));
         List<Rectangle> MoveRectangles = (List<Rectangle>)GetTag(Tags, "MoveRectangles");
 
-        Vector3 Shader = new Vector3(1.0F);
+        Vector3 Shader = new Vector3(1.0f);
         if (TagExists(Tags, "Shader"))
         {
             List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
@@ -794,7 +794,7 @@ public class LevelLoader
         if (TagExists(Tags, "Visible"))
             Visible = System.Convert.ToBoolean(GetTag(Tags, "Visible"));
 
-        Vector3 Shader = new Vector3(1.0F);
+        Vector3 Shader = new Vector3(1.0f);
         if (TagExists(Tags, "Shader"))
         {
             List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
@@ -870,7 +870,7 @@ public class LevelLoader
 
                     if (!exists)
                     {
-                        Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), UnityEngine.Mesh.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
+                        Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0f), UnityEngine.Mesh.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
                         f.MapOrigin = MapOrigin;
                         f.SeasonColorTexture = SeasonTexture;
                         f.LoadSeasonTextures();
@@ -950,7 +950,7 @@ public class LevelLoader
         if (TagExists(Tags, "Visible"))
             Visible = System.Convert.ToBoolean(GetTag(Tags, "Visible"));
 
-        Vector3 Shader = new Vector3(1.0F);
+        Vector3 Shader = new Vector3(1.0f);
         if (TagExists(Tags, "Shader"))
         {
             List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
@@ -972,11 +972,11 @@ public class LevelLoader
         if (TagExists(Tags, "SeasonToggle"))
             SeasonToggle = System.Convert.ToString(GetTag(Tags, "SeasonToggle"));
 
-        float Opacity = 1.0F;
+        float Opacity = 1.0f;
         if (TagExists(Tags, "Opacity"))
             Opacity = System.Convert.ToSingle(GetTag(Tags, "Opacity"));
 
-        float CameraDistanceDelta = 0.0F;
+        float CameraDistanceDelta = 0.0f;
         if (TagExists(Tags, "CameraDistanceDelta"))
             CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
 
@@ -1139,7 +1139,7 @@ public class LevelLoader
             {
                 if ((OverworldScreen)CurrentScreen.ActionScript.IsReady)
                 {
-                    (OverworldScreen)CurrentScreen.ActionScript.reDelay = 0.0F;
+                    (OverworldScreen)CurrentScreen.ActionScript.reDelay = 0.0f;
                     (OverworldScreen)CurrentScreen.ActionScript.StartScript(scriptName, 0);
                 }
                 else
@@ -1274,7 +1274,7 @@ public class LevelLoader
                     {
                         0,
                         0
-                    }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0F), -1, MapOrigin, "", Offset);
+                    }, true, new Vector3(0), new Vector3(1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0f), -1, MapOrigin, "", Offset);
                     ((BerryPlant)newEnt).Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
 
                     GameVariables.Level.Entities.Add(newEnt);

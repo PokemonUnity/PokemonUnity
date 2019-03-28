@@ -146,7 +146,7 @@ public class RockClimbEntity : Entity
             s += ":end";
 
             // Reset the player's transparency:
-            GameVariables.Level.OwnPlayer.Opacity = 1.0F;
+            GameVariables.Level.OwnPlayer.Opacity = 1.0f;
 
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
         }
@@ -221,7 +221,7 @@ public class RockClimbEntity : Entity
             s += ":end";
 
             // Reset the player's transparency:
-            GameVariables.Level.OwnPlayer.Opacity = 1.0F;
+            GameVariables.Level.OwnPlayer.Opacity = 1.0f;
 
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
         }

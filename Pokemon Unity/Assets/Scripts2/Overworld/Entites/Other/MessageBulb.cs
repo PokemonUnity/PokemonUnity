@@ -24,31 +24,31 @@
 
 	public NotifcationTypes NotificationType = NotifcationTypes.Exclamation;
 	private bool setTexture = false;
-	private float delay = 0.0F;
+	private float delay = 0.0f;
 
 	public MessageBulb(Vector3 Position, NotifcationTypes NotificationType) : base(Position.x, Position.y, Position.z, "MessageBulb", null,
 		new int[] {
 			0,
 			0
-		}, false, 0, new Vector3(0.8F), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0F))
+		}, false, 0, new Vector3(0.8f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f))
     {
         this.NotificationType = NotificationType;
 
 		LoadTexture();
         this.NeedsUpdate = true;
-        this.delay = 8.0F;
+        this.delay = 8.0f;
 
         this.DropUpdateUnlessDrawn = false;
     }
 
 	public override void Update()
 	{
-		if (this.delay > 0.0F)
+		if (this.delay > 0.0f)
 		{
-			this.delay -= 0.1F;
-			if (this.delay <= 0.0F)
+			this.delay -= 0.1f;
+			if (this.delay <= 0.0f)
 			{
-				this.delay = 0.0F;
+				this.delay = 0.0f;
 				this.CanBeRemoved = true;
 			}
 		}

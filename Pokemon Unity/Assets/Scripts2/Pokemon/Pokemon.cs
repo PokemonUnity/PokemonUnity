@@ -2528,17 +2528,17 @@ namespace PokemonUnity.Pokemon
 		/// </summary>
 		public void PlayCry()
 		{
-			float Pitch = 0.0F;
+			float Pitch = 0.0f;
 			int percent = 100;
 			if (this.HP > 0 & this.TotalHP > 0)
 				percent = System.Convert.ToInt32(Math.Ceiling(this.HP / (double)this.TotalHP) * 100);
 
 			if (percent <= 50)
-				Pitch = -0.4F;
+				Pitch = -0.4f;
 			if (percent <= 15)
-				Pitch = -0.8F;
+				Pitch = -0.8f;
 			if (percent == 0)
-				Pitch = -1.0F;
+				Pitch = -1.0f;
 
 			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
 		}
