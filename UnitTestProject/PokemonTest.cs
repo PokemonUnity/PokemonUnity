@@ -353,7 +353,8 @@ namespace Tests
                 if (i > 5) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-            pokemon.LearnMove(Moves.RAZOR_LEAF, true);
+			bool suc;
+			pokemon.LearnMove(Moves.RAZOR_LEAF, out suc, true);
 			CollectionAssert.AreNotEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
@@ -370,7 +371,8 @@ namespace Tests
                 if (i > 25) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-            pokemon.LearnMove(Moves.OVERHEAT);
+			bool suc;
+			pokemon.LearnMove(Moves.OVERHEAT, out suc);
             CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         //[TestMethod]
@@ -393,7 +395,8 @@ namespace Tests
                 if (i > 1000) Assert.Fail("Infinite Loop; Results Undetermined");
             }
             Moves[] before = new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId };
-            pokemon.LearnMove(Moves.TACKLE);
+            bool suc;
+			pokemon.LearnMove(Moves.TACKLE, out suc);
 			CollectionAssert.AreEqual(before, new Moves[] { pokemon.moves[0].MoveId, pokemon.moves[1].MoveId, pokemon.moves[2].MoveId, pokemon.moves[3].MoveId });
         }
         [TestMethod]
@@ -409,7 +412,8 @@ namespace Tests
                 pokemon.GenerateMoveset(); i++;
                 if (i > 15) Assert.Fail("Infinite Loop; Results Undetermined");
             }
-            pokemon.LearnMove(Moves.TACKLE);
+			bool suc;
+            pokemon.LearnMove(Moves.TACKLE, out suc);
             int before = pokemon.countMoves();
             pokemon.DeleteMove(Moves.TACKLE);
             Assert.IsTrue(pokemon.countMoves() == before - 1);
