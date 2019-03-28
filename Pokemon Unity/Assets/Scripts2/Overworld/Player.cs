@@ -1894,7 +1894,7 @@ namespace P3D
 
 			for (var i = 0; i <= Pokemons.Count - 1; i++)
 			{
-				if (Pokemons[i].Status != Pokemon.StatusProblems.Fainted & Pokemons[i]!.isEgg)
+				if (Pokemons[i].Status != Pokemon.StatusProblems.Fainted & !Pokemons[i].isEgg)
 					return Pokemons[i];
 			}
 			return null/* TODO Change to default(_) if this is not a reference type */;
