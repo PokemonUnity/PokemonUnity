@@ -17,7 +17,7 @@ public class WarpBlock : Entity
 
     public bool Warp(bool MapViewMode)
     {
-        if (IsValidLink(this.AdditionalValue) & ScriptBlock.TriggeredScriptBlock == false)
+        if (IsValidLink(this.AdditionalValue) & !ScriptBlock.TriggeredScriptBlock)
         {
             string destination = this.AdditionalValue.GetSplit(0);
 
@@ -35,13 +35,13 @@ public class WarpBlock : Entity
                 string[] rotationData = link.GetSplit(5, ",").Split(System.Convert.ToChar("|"));
                 foreach (string Element in rotationData)
                     validRotations.Add(System.Convert.ToInt32(Element));
-                if (validRotations.Contains(GameVariables.Camera.GetPlayerFacingDirection()) == false)
+                if (!validRotations.Contains(GameVariables.Camera.GetPlayerFacingDirection()))
                     return true;
             }
 
             if (System.IO.File.Exists(GameController.GamePath + @"\" + GameModeManager.ActiveGameMode.MapPath + destination) | System.IO.File.Exists(GameController.GamePath + @"\Content\Data\maps\" + destination))
             {
-                if (MapViewMode == false)
+                if (!MapViewMode)
                 {
                     GameVariables.Level.WarpData.WarpDestination = this.AdditionalValue.GetSplit(0);
                     GameVariables.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));

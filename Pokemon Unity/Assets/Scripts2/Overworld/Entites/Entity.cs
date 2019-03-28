@@ -487,7 +487,7 @@ public class Entity : BaseEntity
 		}
 
 		string[] notNames = new string[] { "Floor", "OwnPlayer", "Water", "Whirlpool", "Particle", "OverworldPokemon", "ItemObject", "NetworkPokemon", "NetworkPlayer" };
-		if (GameVariables.Camera.Name == "Overworld" && notNames.ToList().Contains(this.EntityID.ToString()) == false)
+		if (GameVariables.Camera.Name == "Overworld" && !notNames.ToList().Contains(this.EntityID.ToString()))
 		{
 			this.Opacity = this._normalOpactity;
 			if (((OverworldCamera)GameVariables.Camera).ThirdPerson)
@@ -536,7 +536,7 @@ public class Entity : BaseEntity
 		//
 		//CameraDistance = CalculateCameraDistance(CPosition);
 		//
-		//if (this.DropUpdateUnlessDrawn & this.DrawnLastFrame == false & this.Visible & ActionScriptActive == false)
+		//if (this.DropUpdateUnlessDrawn & !this.DrawnLastFrame & this.Visible & !ActionScriptActive)
 		//	return;
 		//
 		//
@@ -583,10 +583,10 @@ public class Entity : BaseEntity
 		//	}
 		//}
 		//
-		//if (this.IsOffsetMapContent == false)
+		//if (!this.IsOffsetMapContent)
 		//	OpacityCheck();
 		//
-		//if (CreatedWorld == false | CreateWorldEveryFrame)
+		//if (!CreatedWorld | CreateWorldEveryFrame)
 		//{
 		//	World = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(Rotation.y, Rotation.x, Rotation.z) * Matrix.CreateTranslation(Position);
 		//	CreatedWorld = true;
@@ -678,7 +678,7 @@ public class Entity : BaseEntity
 	/// </summary>
 	private UnityEngine.Vector3 GetCenter()
 	{
-		if (CreatedWorld == false | CreateWorldEveryFrame)
+		if (!CreatedWorld | CreateWorldEveryFrame)
 		{
 			UnityEngine.Vector3 v = UnityEngine.Vector3.zero; // (Me.ViewBox.Min - Me.Position) + (Me.ViewBox.Max - Me.Position)
 

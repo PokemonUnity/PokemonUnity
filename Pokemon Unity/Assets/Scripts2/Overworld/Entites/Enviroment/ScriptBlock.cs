@@ -47,7 +47,7 @@ public class ScriptBlock : Entity
 
             if (GameVariables.Camera.Name == "Overworld")
             {
-                if ((OverworldCamera)GameVariables.Camera.FreeCameraMode == false)
+                if (!(OverworldCamera)GameVariables.Camera.FreeCameraMode)
                     (OverworldCamera)GameVariables.Camera.YawLocked = true;
             }
 

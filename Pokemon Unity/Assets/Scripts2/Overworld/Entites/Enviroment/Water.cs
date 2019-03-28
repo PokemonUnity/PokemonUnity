@@ -36,7 +36,7 @@ public class Water : Entity
                 Rectangle r = new Rectangle(System.Convert.ToInt32(textureData[1]), System.Convert.ToInt32(textureData[2]), System.Convert.ToInt32(textureData[3]), System.Convert.ToInt32(textureData[4]));
                 string texturePath = textureData[0];
                 this.waterTextureName = AdditionalValue;
-                if (Water.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0") == false)
+                if (Water.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0"!))
                 {
                     Water.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.width, r.height)));
                     Water.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width, r.y, r.width, r.height)));
@@ -52,7 +52,7 @@ public class Water : Entity
                     Water.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 11, r.y, r.width, r.height)));
                 }
             }
-            else if (Water.WaterTexturesTemp.ContainsKey("_0") == false)
+            else if (Water.WaterTexturesTemp.ContainsKey("_0"!))
             {
                 Water.WaterTexturesTemp.Add("_0", TextureManager.GetTexture("Routes", new Rectangle(0, 220, 20, 20)));
                 Water.WaterTexturesTemp.Add("_1", TextureManager.GetTexture("Routes", new Rectangle(20, 220, 20, 20)));
@@ -118,13 +118,13 @@ public class Water : Entity
 
     private void Surf()
     {
-        if (GameVariables.Camera.Turning == false)
+        if (!GameVariables.Camera.Turning)
         {
-            if (GameVariables.Level.Surfing == false)
+            if (!GameVariables.Level.Surfing)
             {
                 if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                 {
-                    if (Screen.ChooseBox.Showing == false)
+                    if (!Screen.ChooseBox.Showing)
                     {
                         bool canSurf = false;
 
@@ -346,7 +346,7 @@ public class Water : Entity
 
                 SoundManager.PlayPokemonCry(pokemonNumber);
 
-                if (GameVariables.Level.IsRadioOn == false || GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation) == false)
+                if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
                     MusicManager.Play("surf", true);
             }
         }

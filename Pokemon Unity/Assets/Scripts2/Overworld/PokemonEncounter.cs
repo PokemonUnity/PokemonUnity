@@ -125,7 +125,7 @@ public class PokemonEncounter
                 // Generate new wild Pokémon:
                 Pokemon.Pokemon Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
 
-                if (Pokemon != null & (OverworldScreen)Core.CurrentScreen.TrainerEncountered == false & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
+                if (Pokemon != null & !(OverworldScreen)Core.CurrentScreen.TrainerEncountered & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
                 {
                     GameVariables.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 

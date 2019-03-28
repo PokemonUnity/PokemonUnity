@@ -367,11 +367,11 @@ public class NPC : Entity
 
 	public void CheckInSight()
 	{
-		if (this.TrainerSight > -1 & GameVariables.Level.PokemonEncounterData.EncounteredPokemon == false & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+		if (this.TrainerSight > -1 & !GameVariables.Level.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 		{
-			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & GameVariables.Camera.IsMoving() == false)
+			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & !GameVariables.Camera.IsMoving())
 			{
-				if (Moved == 0.0F & this.CanBeRemoved == false)
+				if (Moved == 0.0F & !this.CanBeRemoved)
 				{
 					if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == GameVariables.Camera.Position.z)
 					{
@@ -507,7 +507,7 @@ public class NPC : Entity
 
 								{
 									var withBlock = (OverworldCamera)GameVariables.Camera;
-									if ((OverworldCamera)GameVariables.Camera.ThirdPerson & IsOnScreen() == false)
+									if ((OverworldCamera)GameVariables.Camera.ThirdPerson & !IsOnScreen())
 									{
 										s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
@@ -575,7 +575,7 @@ public class NPC : Entity
 	{
 		if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 		{
-			if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == false)
+			if (!(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
 				return;
 		}
 		switch (this.Movement)
@@ -740,7 +740,7 @@ public class NPC : Entity
 				HasFloor = true;
 		}
 
-		if (HasFloor == false)
+		if (!HasFloor)
 			return false;
 
 		foreach (Entity Entity in GameVariables.Level.Entities)

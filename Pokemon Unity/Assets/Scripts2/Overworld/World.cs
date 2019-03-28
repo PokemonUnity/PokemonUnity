@@ -734,7 +734,7 @@ public class World
 
     public void Initialize(int EnvironmentType, int WeatherType)
     {
-        if (_regionWeatherSet == false)
+        if (!_regionWeatherSet)
         {
             World._regionWeather = World.GetRegionWeather(World.CurrentSeason);
             World._regionWeatherSet = true;
@@ -979,7 +979,7 @@ public class World
 
     public static void DrawWeather(Weathers MapWeather)
     {
-        if (NoParticlesList.Contains(MapWeather) == false)
+        if (!NoParticlesList.Contains(MapWeather))
         {
             if (Core.GameOptions.GraphicStyle == 1)
             {
@@ -988,7 +988,7 @@ public class World
                 {
                     if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
                     {
-                        if (Screen.TextBox.Showing == false)
+                        if (!Screen.TextBox.Showing)
                             GenerateParticles(0, MapWeather);
                     }
                     else
@@ -1124,14 +1124,14 @@ public class World
             }
         }
 
-        if (LevelLoader.IsBusy == false)
+        if (!LevelLoader.IsBusy)
         {
             Screen.Identifications[] validScreen = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen };
             if (validScreen.Contains(Core.CurrentScreen.Identification))
             {
                 if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
                 {
-                    if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady == false)
+                    if (!(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
                         return;
                 }
 

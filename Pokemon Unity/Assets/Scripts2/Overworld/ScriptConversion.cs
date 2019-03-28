@@ -26,7 +26,7 @@ public class ScriptConversion
 
         retDbl = InternalToDouble(input, ref retError);
 
-        if (retError == false)
+        if (!retError)
             return retDbl;
         else if (IsArithmeticExpression(expression))
         {
@@ -45,10 +45,10 @@ public class ScriptConversion
     {
         bool retError = false;
         string postfix = ToPostfix(expression.ToString(), ref retError);
-        if (retError == false)
+        if (!retError)
         {
             EvaluatePostfix(postfix, ref retError);
-            return retError == false;
+            return !retError;
         }
         else
             return false;

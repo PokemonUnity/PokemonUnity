@@ -75,7 +75,7 @@ public class AnimatedBlock : Entity
 		{
 			Rectangle r = new Rectangle(X[n], Y[n], width[n], height[n]);
 			this.AnimationNames[n] = AdditionalValue + "," + X[n] + "," + Y[n] + "," + height[n] + "," + width[n];
-			if (BlockTexturesTemp.ContainsKey(AnimationNames[n] + "_0") == false)
+			if (BlockTexturesTemp.ContainsKey(AnimationNames[n] + "_0"!))
 			{
 				for (var i = 0; i <= this.rows[n] - 1; i++)
 				{
@@ -134,13 +134,13 @@ public class AnimatedBlock : Entity
 
 	private void Surf()
 	{
-		if (GameVariables.Camera.Turning == false)
+		if (!GameVariables.Camera.Turning)
 		{
-			if (GameVariables.Level.Surfing == false)
+			if (!GameVariables.Level.Surfing)
 			{
 				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
 				{
-					if (Screen.ChooseBox.Showing == false)
+					if (!Screen.ChooseBox.Showing)
 					{
 						bool canSurf = false;
 
@@ -241,7 +241,7 @@ public class AnimatedBlock : Entity
 
 				SoundManager.PlayPokemonCry(pokemonNumber);
 
-				if (GameVariables.Level.IsRadioOn == false || GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation) == false)
+				if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
 					MusicManager.Play("surf", true);
 			}
 		}

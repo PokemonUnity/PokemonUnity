@@ -88,7 +88,7 @@ public class LevelLoader
         this.loadOffsetMap = loadOffsetMap;
         MapOrigin = levelPath;
 
-        if (loadOffsetMap == false)
+        if (!loadOffsetMap)
         {
 			//ToDo: Change Screen to Scene
             GameVariables.Level.LevelFile = levelPath;
@@ -121,12 +121,12 @@ public class LevelLoader
 		GameVariables.DebugLog("Loading map: " + levelPath.Remove(0, GameController.GamePath.Length));
         //System.Security.FileValidation.CheckFileValid(levelPath, false, "LevelLoader.vb");
 
-        if (System.IO.File.Exists(levelPath) == false)
+        if (!System.IO.File.Exists(levelPath))
         {
             GameVariables.DebugLog("LevelLoader.vb: Error accessing map file \"" + levelPath + "\". File not found.", true);
             Busy -= 1;
 
-            if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen & loadOffsetMap == false)
+            if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen & !loadOffsetMap)
                 ((OverworldScreen)CurrentScreen).Titles.Add(new OverworldScreen.Title("Couldn't find map file!", 20.0F, UnityEngine.Color.white, 6.0F, Vector2.zero, true));
 
             return;
@@ -249,13 +249,13 @@ public class LevelLoader
                                 }
                             case TagTypes.Level:
                                 {
-                                    if (loadOffsetMap == false)
+                                    if (!loadOffsetMap)
                                         SetupLevel(Tags);
                                     break;
                                 }
                             case TagTypes.LevelActions:
                                 {
-                                    if (loadOffsetMap == false)
+                                    if (!loadOffsetMap)
                                         SetupActions(Tags);
                                     break;
                                 }
@@ -266,19 +266,19 @@ public class LevelLoader
                                 }
                             case TagTypes.Shader:
                                 {
-                                    if (loadOffsetMap == false)
+                                    if (!loadOffsetMap)
                                         AddShader(Tags);
                                     break;
                                 }
                             case TagTypes.OffsetMap:
                                 {
-                                    if (loadOffsetMap == false | offsetMapLevel <= Core.GameOptions.MaxOffsetLevel)
+                                    if (!loadOffsetMap | offsetMapLevel <= Core.GameOptions.MaxOffsetLevel)
                                         AddOffsetMap(Tags);
                                     break;
                                 }
                             case TagTypes.Backdrop:
                                 {
-                                    if (loadOffsetMap == false)
+                                    if (!loadOffsetMap)
                                         AddBackdrop(Tags);
                                     break;
                                 }
@@ -292,12 +292,12 @@ public class LevelLoader
             }
         }
 
-        if (loadOffsetMap == false)
+        if (!loadOffsetMap)
             LoadBerries();
 
         foreach (Shader s in GameVariables.Level.Shaders)
         {
-            if (s.HasBeenApplied == false)
+            if (!s.HasBeenApplied)
             {
                 s.ApplyShader(GameVariables.Level.Entities.ToArray());
                 s.ApplyShader(GameVariables.Level.Floors.ToArray());
@@ -326,9 +326,9 @@ public class LevelLoader
         for (var i = 0; i <= tagList.Length - 1; i++)
         {
             string currentTag = tagList[i];
-            if (currentTag.EndsWith("}}") == false)
+            if (currentTag.EndsWith("}}"!))
                 currentTag += "}";
-            if (currentTag.StartsWith("{") == false)
+            if (currentTag.StartsWith("{"!))
                 currentTag = "{" + currentTag;
             ProcessTag(ref Tags, currentTag);
         }
@@ -499,7 +499,7 @@ public class LevelLoader
             LoadedOffsetMapOffsets.Add(MapOffset);
 
             string listName = GameVariables.Level.LevelFile + "|" + MapName + "|" + GameVariables.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
-            if (OffsetMaps.ContainsKey(listName) == false)
+            if (!OffsetMaps.ContainsKey(listName))
             {
                 List<List<Entity.Entity>> mapList = new List<List<Entity.Entity>>();
 
@@ -587,7 +587,7 @@ public class LevelLoader
             MapRotation = System.Convert.ToInt32(GetTag(Tags, "Rotation"));
 
         string MapName = System.Convert.ToString(GetTag(Tags, "Map"));
-        if (MapName.EndsWith(".dat") == false)
+        if (MapName.EndsWith(".dat"!))
             MapName = MapName + ".dat";
 
         bool addNPC = false;
@@ -596,12 +596,12 @@ public class LevelLoader
 
         string structureKey = MapOffset.x.ToString() + "|" + MapOffset.y.ToString() + "|" + MapOffset.z.ToString() + "|" + MapName;
 
-        if (tempStructureList.ContainsKey(structureKey) == false)
+        if (!tempStructureList.ContainsKey(structureKey))
         {
             string filepath = GameModeManager.GetMapPath(MapName);
             //System.Security.FileValidation.CheckFileValid(filepath, false, "LevelLoader.vb/StructureSpawner");
 
-            if (System.IO.File.Exists(filepath) == false)
+            if (!System.IO.File.Exists(filepath))
             {
                 GameVariables.DebugLog("LevelLoader.vb: Error loading structure from \"" + filepath + "\". File not found.", true);
 
@@ -772,7 +772,7 @@ public class LevelLoader
             MoveRectangles
         });
 
-        if (loadOffsetMap == false)
+        if (!loadOffsetMap)
             GameVariables.Level.Entities.Add(NPC);
         else
             GameVariables.Level.OffsetmapEntities.Add(NPC);
@@ -829,7 +829,7 @@ public class LevelLoader
         if (loadOffsetMap)
             floorList = GameVariables.Level.OffsetmapFloors;
 
-        if (RemoveFloor == false)
+        if (!RemoveFloor)
         {
             for (var x = 0; x <= Size.width - 1; x++)
             {
@@ -868,7 +868,7 @@ public class LevelLoader
                         exists = true;
                     }
 
-                    if (exists == false)
+                    if (!exists)
                     {
                         Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0F), UnityEngine.Mesh.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
                         f.MapOrigin = MapOrigin;
@@ -987,7 +987,7 @@ public class LevelLoader
                 for (var Y = 0; Y <= SizeY - 1; Y += Steps.y)
                 {
                     bool DoAdd = false;
-                    if (Fill == false)
+                    if (!Fill)
                     {
                         if (X == 0 | Z == 0 | Z == Size.height - 1 | X == Size.width - 1)
                             DoAdd = true;
@@ -997,7 +997,7 @@ public class LevelLoader
 
                     if (SeasonToggle != "")
                     {
-                        if (SeasonToggle.Contains(",") == false)
+                        if (SeasonToggle.Contains(","!))
                         {
                             if (SeasonToggle.ToLower() != World.CurrentSeason.ToString().ToLower())
                                 DoAdd = false;
@@ -1005,7 +1005,7 @@ public class LevelLoader
                         else
                         {
                             string[] seasons = SeasonToggle.ToLower().Split(System.Convert.ToChar(","));
-                            if (seasons.Contains(World.CurrentSeason.ToString().ToLower()) == false)
+                            if (!seasons.Contains(World.CurrentSeason.ToString().ToLower()))
                                 DoAdd = false;
                         }
                     }
@@ -1020,7 +1020,7 @@ public class LevelLoader
 
                         if (newEnt != null)
                         {
-                            if (loadOffsetMap == false)
+                            if (!loadOffsetMap)
                                 GameVariables.Level.Entities.Add(newEnt);
                             else
                                 GameVariables.Level.OffsetmapEntities.Add(newEnt);

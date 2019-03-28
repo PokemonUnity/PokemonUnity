@@ -53,7 +53,7 @@ namespace PokemonUnity.Saving
 
         private void Update()
         {
-            if (playerMovement.busyWith != null && RegisteredEvent == false)
+            if (playerMovement.busyWith != null && !RegisteredEvent)
             {
                 //Getting the Object the Player's busy with
                 UnityEngine.GameObject eventObject = playerMovement.busyWith;

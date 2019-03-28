@@ -56,7 +56,7 @@
 
 	private void LoadTexture()
 	{
-		if (this.setTexture == false)
+		if (!this.setTexture)
 		{
 			this.setTexture = true;
 

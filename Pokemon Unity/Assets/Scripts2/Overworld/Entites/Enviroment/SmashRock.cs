@@ -8,13 +8,13 @@ public class SmashRock : Entity
 {
     public override void ClickFunction()
     {
-        if (Screen.TextBox.Showing == false)
+        if (!Screen.TextBox.Showing)
         {
             string pName = "";
 
             foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
-                if (p.isEgg == false)
+                if (!p.isEgg)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
@@ -48,7 +48,7 @@ public class SmashRock : Entity
 
             foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
-                if (p.isEgg == false)
+                if (!p.isEgg)
                 {
                     foreach (Attack.Move a in p.moves)
                     {

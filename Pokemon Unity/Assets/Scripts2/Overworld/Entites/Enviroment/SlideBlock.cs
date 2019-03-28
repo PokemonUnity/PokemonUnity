@@ -13,7 +13,7 @@ public class SlideBlock : Entity
 
         GameVariables.Camera.PlannedMovement = Vector3.Zero;
 
-        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & GameVariables.Camera.IsMoving() == false)
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & !GameVariables.Camera.IsMoving())
         {
             (OverworldCamera)GameVariables.Camera.DidWalkAgainst = false;
 

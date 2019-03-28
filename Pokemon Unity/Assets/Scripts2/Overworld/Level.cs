@@ -851,7 +851,7 @@ public class Level
         // Create the world and load the level:
         World = new World(0, 0);
 
-        if (Levelpath.StartsWith("|") == false)
+        if (Levelpath.StartsWith("|"!))
         {
             this.StopOffsetMapUpdate();
             LevelLoader levelLoader = new LevelLoader();
@@ -968,7 +968,7 @@ public class Level
     public void UpdateEntities()
     {
         // Update and remove entities:
-        if (LevelLoader.IsBusy == false)
+        if (!LevelLoader.IsBusy)
         {
             for (var i = 0; i <= Entities.Count - 1; i++)
             {
@@ -1008,7 +1008,7 @@ public class Level
     /// </summary>
     public void SortEntities()
     {
-        if (LevelLoader.IsBusy == false)
+        if (!LevelLoader.IsBusy)
             Entities = (from f in Entities
                         orderby f.CameraDistance descending
                         select f).ToList();
@@ -1027,7 +1027,7 @@ public class Level
             if (this._offsetMapUpdateDelay <= 0)
             {
                 // Sort the list:
-                if (LevelLoader.IsBusy == false)
+                if (!LevelLoader.IsBusy)
                     OffsetmapEntities = (from e in OffsetmapEntities
                                          orderby e.CameraDistance descending
                                          select e).ToList();
@@ -1163,7 +1163,7 @@ public class Level
             });
 
             // Set Ride skin, if needed:
-            if (Riding & CanRide() == false)
+            if (Riding & !CanRide())
             {
                 Riding = false;
                 OwnPlayer.SetTexture(GameVariables.playerTrainer.TempRideSkin, true);
@@ -1323,7 +1323,7 @@ public class Level
                     }
             }
         }
-        if (GameVariables.Level.CanDig == false & GameVariables.Level.CanFly == false)
+        if (!GameVariables.Level.CanDig & !GameVariables.Level.CanFly)
             return false;
         else
             return true;

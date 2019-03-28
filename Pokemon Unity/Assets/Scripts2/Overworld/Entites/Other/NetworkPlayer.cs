@@ -71,7 +71,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	private void AssignFallback(int ID)
 	{
-		if (FallBack.ContainsKey(ID) == false)
+		if (!FallBack.ContainsKey(ID))
 			FallBack.Add(ID, FallbackSkins[Settings.Rand.Next(0, FallbackSkins.Length)]);
 	}
 
@@ -374,7 +374,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 			if (!p.Skin.StartsWith("[POKEMON|N]") && !p.Skin.StartsWith("[Pokémon|N]") && !p.Skin.StartsWith("[POKEMON|S]") && !p.Skin.StartsWith("[Pokémon|S]"))
 			{
-				if (!string.IsNullOrEmpty(GameJoltID) && CheckForOnlineSprite == false)
+				if (!string.IsNullOrEmpty(GameJoltID) && !CheckForOnlineSprite)
 				{
 					CheckForOnlineSprite = true;
 					this.SetTexture(p.Skin);

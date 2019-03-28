@@ -23,7 +23,7 @@ public class CutDownTree : Entity
 
 		foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
 		{
-			if (p.isEgg == false)
+			if (!p.isEgg)
 			{
 				foreach (Attack.Move a in p.moves)
 				{
@@ -56,7 +56,7 @@ public class CutDownTree : Entity
 
 			foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
 			{
-				if (p.isEgg == false)
+				if (!p.isEgg)
 				{
 					foreach (Attack.Move a in p.moves)
 					{

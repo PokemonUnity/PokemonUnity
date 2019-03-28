@@ -19,13 +19,13 @@ public class HeadbuttTree : Entity
 
     public override void ClickFunction()
     {
-        if (GameVariables.Level.Surfing == false)
+        if (!GameVariables.Level.Surfing)
         {
             string pName = "";
 
             foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
-                if (p.isEgg == false)
+                if (!p.isEgg)
                 {
                     foreach (Attack.Move a in p.moves)
                     {

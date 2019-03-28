@@ -89,7 +89,7 @@ public class ItemObject : Entity
         // If Core.GameOptions.GraphicStyle = 1 Then
         Rectangle r = new Rectangle(X, Y, width, height);
         this.AnimationName = AnimationPath + "," + X + "," + Y + "," + height + "," + width;
-        if (AnimationTexturesTemp.ContainsKey(AnimationName + "_0") == false)
+        if (AnimationTexturesTemp.ContainsKey(AnimationName + "_0"!))
         {
             for (var i = 0; i <= this.rows - 1; i++)
             {
@@ -101,7 +101,7 @@ public class ItemObject : Entity
 
     public override void Update()
     {
-        if (checkedExistence == false)
+        if (!checkedExistence)
         {
             checkedExistence = true;
 
@@ -211,14 +211,14 @@ public class ItemObject : Entity
         else
         {
             string[] IDs = GameVariables.playerTrainer.ItemData.Split(System.Convert.ToChar(","));
-            if (IDs.Contains((GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()) == false)
+            if (IDs.Contains((GameVariables.Level.LevelFile + "|" + !ItemObject.ItemID.ToString()).ToLower()))
                 GameVariables.playerTrainer.ItemData += "," + (GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
         }
     }
 
     public bool IsHiddenItem()
     {
-        if (this.Collision == false & this.ActionValue == 1)
+        if (!this.Collision & this.ActionValue == 1)
             return true;
         else
             return false;

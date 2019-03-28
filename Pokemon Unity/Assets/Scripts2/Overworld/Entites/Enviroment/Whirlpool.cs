@@ -18,7 +18,7 @@ public class Whirlpool : Entity
 
         WaterAnimation = new Animation(P3D.TextureManager.GetTexture(@"Textures\Routes"), 1, 4, 16, 16, 9, 12, 0);
 
-        if (Whirlpool.LoadedWaterTemp == false)
+        if (!Whirlpool.LoadedWaterTemp)
         {
         }
     }
@@ -57,7 +57,7 @@ public class Whirlpool : Entity
     {
         if (Core.GameOptions.GraphicStyle == 1)
         {
-            if (Whirlpool.LoadedWaterTemp == false)
+            if (!Whirlpool.LoadedWaterTemp)
                 Whirlpool.CreateWaterTextureTemp();
             switch (WaterAnimation.CurrentColumn)
             {
@@ -94,7 +94,7 @@ public class Whirlpool : Entity
     {
         foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
         {
-            if (p.isEgg == false)
+            if (!p.isEgg)
             {
                 foreach (Attack.Move a in p.moves)
                 {

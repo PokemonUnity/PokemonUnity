@@ -93,7 +93,7 @@ public class RotationTile : Entity
                 Vector3 p = new Vector3(x, 0, y) + this.Position;
                 foreach (Entity e in GameVariables.Level.Entities)
                 {
-                    if (e.Equals(this) == false)
+                    if (!e.Equals(this))
                     {
                         if (e.EntityID == Entities.RotationTile)
                         {

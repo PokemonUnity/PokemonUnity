@@ -26,7 +26,7 @@ public class StrengthRock : Entity
 
             foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
-                if (p.isEgg == false)
+                if (!p.isEgg)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
@@ -60,7 +60,7 @@ public class StrengthRock : Entity
 
             foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
             {
-                if (p.isEgg == false)
+                if (!p.isEgg)
                 {
                     foreach (Attack.Move a in p.moves)
                     {
@@ -126,7 +126,7 @@ public class StrengthRock : Entity
                 HasFloor = true;
         }
 
-        if (HasFloor == false)
+        if (!HasFloor)
             return false;
 
         foreach (Entity Entity in GameVariables.Level.Entities)

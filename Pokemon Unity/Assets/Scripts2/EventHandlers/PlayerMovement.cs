@@ -98,7 +98,7 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 				return;
 			}
 
-			if (_warmingUpCanActivate == false && _warmUpTimeoutCoroutine == null)
+			if (!_warmingUpCanActivate && _warmUpTimeoutCoroutine == null)
 			{
 				_warmUpTimeoutCoroutine = StartCoroutine(WarmUpTimeout());
 			}
@@ -115,7 +115,7 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 				DisableWarmUp();
 
 				IsRunning = Input.GetButton("Fire3");
-				if (IsRunning == false)
+				if (!IsRunning)
 				{
 					IsSneaking = Input.GetButton("Fire1");
 					IsWalking = !IsSneaking;
@@ -146,7 +146,7 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 
 				if (IsSneaking)
 				{
-					if (_sneakingActived == false)
+					if (!_sneakingActived)
 					{
 						StartCoroutine(SneakMovement());
 					}

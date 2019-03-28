@@ -176,7 +176,7 @@ public class OverworldPokemon : Entity
 				{
 					if (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE)
 					{
-						if (GameVariables.Level.Surfing == false & GameVariables.Level.Riding == false)
+						if (!GameVariables.Level.Surfing & !GameVariables.Level.Riding)
 						{
 							if (this.PokemonID > 0)
 							{
@@ -275,7 +275,7 @@ public class OverworldPokemon : Entity
 	{
 		if (warped)
 			warped = false;
-		else if (this.Visible == false)
+		else if (!this.Visible)
 		{
 			this.Visible = true;
 			this.Respawn();
@@ -321,7 +321,7 @@ public class OverworldPokemon : Entity
 	{
 		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
 		{
-			if (this.Visible & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & GameVariables.Level.Surfing == false & GameVariables.Level.Riding == false & GameVariables.Level.ShowOverworldPokemon)
+			if (this.Visible & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & !GameVariables.Level.Surfing & !GameVariables.Level.Riding & GameVariables.Level.ShowOverworldPokemon)
 			{
 				Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
 				string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);

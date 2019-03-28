@@ -23,7 +23,7 @@ public class LoamySoil : Entity
                 break;
             }
         }
-        if (hasBerry == false)
+        if (!hasBerry)
         {
             Screen.TextBox.Show("Do you want to plant a~berry here?%Yes|No%", this);
             SoundManager.PlaySound("select");

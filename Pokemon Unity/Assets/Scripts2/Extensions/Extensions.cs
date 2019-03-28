@@ -34,7 +34,7 @@ static class Extensions
 
     public static string GetSplit(this string fullString, int valueIndex, string seperator)
     {
-        if (fullString.Contains(seperator) == false)
+        if (!fullString.Contains(seperator))
             return fullString;
         else
         {
@@ -175,7 +175,7 @@ static class Extensions
 
         if ((font.MeasureString(fulltext).X * scale) <= width)
             return fulltext;
-        else if (fulltext.Contains(" ") == false)
+        else if (fulltext.Contains(" "!))
         {
             string newText = "";
             while (fulltext.Length > 0)
@@ -308,7 +308,7 @@ static class Extensions
 
     public static string[] SplitAtNewline(this string s)
     {
-        if (s.Contains("§") == false)
+        if (s.Contains("§"!))
             return s.Replace(StringHelper.CrLf, "§").Replace(StringHelper.LineFeed, "§").Split(System.Convert.ToChar("§"));
         else
         {
@@ -320,7 +320,7 @@ static class Extensions
             int i = 0;
             while (s != "" & i < s.Length)
             {
-                if (s.Substring(i).StartsWith(StringHelper.CrLf) == false | s.Substring(i).StartsWith(StringHelper.LineFeed) == false)
+                if (!s.Substring(i).StartsWith(StringHelper.CrLf) | !s.Substring(i).StartsWith(StringHelper.LineFeed))
                     i += 1;
                 else
                 {

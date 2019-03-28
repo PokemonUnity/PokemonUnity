@@ -67,7 +67,7 @@ public class Floor : Entity
 
     public override void Render()
     {
-        if (changedWeatherTexture == false)
+        if (!changedWeatherTexture)
         {
             changedWeatherTexture = true;
             if ((GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == P3D.World.Weathers.Blizzard) & this.hasSnow)
@@ -114,14 +114,14 @@ public class Floor : Entity
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
                 }
-                else if (((Floor)ent[i]).hasSnow == false)
+                else if (((Floor)ent[i]!).hasSnow)
                 {
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
                 }
             }
 
-            if (hasEntityOnAllSides == false)
+            if (!hasEntityOnAllSides)
             {
                 this.Textures = new Texture2D[]
                 {
@@ -144,7 +144,7 @@ public class Floor : Entity
         this.CreatedWorld = false;
         this.UpdateEntity();
 
-        if (FloorDictionary.ContainsKey(this.Position.ToString()) == false)
+        if (!FloorDictionary.ContainsKey(this.Position.ToString()))
             FloorDictionary.Add(this.Position.ToString(), this);
 
         this._changedToSnow = true;
@@ -183,14 +183,14 @@ public class Floor : Entity
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
                 }
-                else if (((Floor)ent[i]).hasSnow == false)
+                else if (((Floor)ent[i]!).hasSnow)
                 {
                     hasEntityOnAllSides = false;
                     sides[i] = 0;
                 }
             }
 
-            if (hasEntityOnAllSides == false)
+            if (!hasEntityOnAllSides)
             {
                 this.Textures = new Texture2D[]
                 {
@@ -213,7 +213,7 @@ public class Floor : Entity
         this.CreatedWorld = false;
         this.UpdateEntity();
 
-        if (FloorDictionary.ContainsKey(this.Position.ToString()) == false)
+        if (!FloorDictionary.ContainsKey(this.Position.ToString()))
             FloorDictionary.Add(this.Position.ToString(), this);
 
         this._changedToSand = true;
@@ -236,7 +236,7 @@ public class Floor : Entity
                 {
                     if (((Floor)e).IsIce)
                     {
-                        if ((OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition) == false)
+                        if (!(OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition))
                         {
                             Steps += 1;
                             checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
@@ -250,7 +250,7 @@ public class Floor : Entity
                     }
                     else
                     {
-                        if ((OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition) == false)
+                        if (!(OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition))
                             Steps += 1;
                         foundSteps = false;
                     }
@@ -268,7 +268,7 @@ public class Floor : Entity
     private new Entity GetEntity(List<Entity> List, Vector3 Position)
     {
         string positionString = Position.ToString();
-        if (FloorDictionary.ContainsKey(positionString) == false)
+        if (!FloorDictionary.ContainsKey(positionString))
             FloorDictionary.Add(positionString, (from ent in List
                                                  where ent.Position == Position
                                                  select ent)(0));

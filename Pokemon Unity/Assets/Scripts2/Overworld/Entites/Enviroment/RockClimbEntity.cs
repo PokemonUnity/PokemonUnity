@@ -52,7 +52,7 @@ public class RockClimbEntity : Entity
     {
         foreach (Pokemon.Pokemon teamPokemon in GameVariables.playerTrainer.Party)
         {
-            if (teamPokemon.isEgg == false)
+            if (!teamPokemon.isEgg)
             {
                 foreach (Attack.Move a in teamPokemon.moves)
                 {
@@ -87,7 +87,7 @@ public class RockClimbEntity : Entity
 
         GameVariables.Camera.PlannedMovement = Vector3.Zero;
 
-        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & GameVariables.Camera.IsMoving == false)
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & !GameVariables.Camera.IsMoving)
         {
             int Steps = 0;
 

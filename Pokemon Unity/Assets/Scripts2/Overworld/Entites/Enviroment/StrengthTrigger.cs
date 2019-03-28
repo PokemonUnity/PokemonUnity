@@ -59,7 +59,7 @@ public class StrengthTrigger : Entity
 
     public override void Update()
     {
-        if (Activated == false)
+        if (!Activated)
         {
             foreach (Entity sRock in GameVariables.Level.Entities)
             {

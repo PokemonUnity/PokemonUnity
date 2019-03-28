@@ -628,7 +628,7 @@ namespace P3D
 
 			LoadPlayer();
 
-			if (GameModeManager.GameModeExists(GameMode) == false)
+			if (!GameModeManager.GameModeExists(GameMode))
 			{
 				GameMode = "Kolben";
 				GameModeManager.SetGameModePointer("Kolben");
@@ -840,7 +840,7 @@ namespace P3D
 					{
 						Pokemon p = Pokemon.GetPokemonByData(Line);
 
-						if (p.isEgg == false)
+						if (!p.isEgg)
 						{
 							if (p.IsShiny)
 								//PokedexData = Pokedex.ChangeEntry(PokedexData, p.Number, 3);
@@ -924,7 +924,7 @@ namespace P3D
 
 								if (Value == "0")
 									Badges = new List<int>();
-								else if (Value.Contains(",") == false)
+								else if (Value.Contains(","!))
 									Badges = new int[]	
 									{
 										System.Convert.ToInt32(Value)
@@ -1057,7 +1057,7 @@ namespace P3D
 							}
 						case "autosave":
 							{
-								if (IsGameJoltSave == false)
+								if (!IsGameJoltSave)
 								{
 									newFilePrefix = Value;
 									AutosaveUsed = true;
@@ -1144,7 +1144,7 @@ namespace P3D
 					GameVariables.DebugLog("Player.vb: The line \"" + Line + "\" is either empty or does not conform the player.dat file rules.", false);
 			}
 
-			if (IsGameJoltSave & startSurfing == false)
+			if (IsGameJoltSave & !startSurfing)
 			{
 				//Skin = GameJolt.Emblem.GetPlayerSpriteFile(GameJolt.Emblem.GetPlayerLevel(GameJoltSave.Points), GameJoltSave.GameJoltID, GameJoltSave.Gender);
 				switch (GameJoltSave.Gender)
@@ -1380,7 +1380,7 @@ namespace P3D
 				newFilePrefix = filePrefix;
 				filePrefix = "autosave";
 
-				if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\autosave") == false)
+				if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\autosave"!))
 					System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\autosave");
 			}
 			else
@@ -1390,7 +1390,7 @@ namespace P3D
 
 			if (!IsGameJoltSave)
 			{
-				if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\" + filePrefix) == false)
+				if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\" + !filePrefix))
 					System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\" + filePrefix);
 			}
 
@@ -1473,7 +1473,7 @@ namespace P3D
 
 		//private void SavePublicVars()
 		//{
-		//	if (GameJolt.LogInScreen.UserBanned(GameJoltSave.GameJoltID) == false)
+		//	if (!GameJolt.LogInScreen.UserBanned(GameJoltSave.GameJoltID))
 		//	{
 		//		GameJolt.APICall APICallPoints = new GameJolt.APICall(SaveGameHelpers.AddGameJoltSaveCounter);
 		//		APICallPoints.SetStorageData("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|points", GameJoltSave.Points.ToString(), false);
@@ -1871,7 +1871,7 @@ namespace P3D
 				{
 					Pokemon p = Pokemons[i];
 
-					if (p.isEgg == false)
+					if (!p.isEgg)
 					{
 						foreach (PokemonUnity.Attack.Move a in p.moves)
 						{
@@ -1894,7 +1894,7 @@ namespace P3D
 
 			for (var i = 0; i <= Pokemons.Count - 1; i++)
 			{
-				if (Pokemons[i].Status != Pokemon.StatusProblems.Fainted & Pokemons[i].isEgg == false)
+				if (Pokemons[i].Status != Pokemon.StatusProblems.Fainted & Pokemons[i]!.isEgg)
 					return Pokemons[i];
 			}
 			return null/* TODO Change to default(_) if this is not a reference type */;
@@ -1946,7 +1946,7 @@ namespace P3D
 			_stepEventRepelMessage = false;
 			_stepEventStartedTrainer = false;
 
-			if (IsFlying == false)
+			if (!IsFlying)
 			{
 				// Set the last position:
 				Temp.LastPosition = Screen.Camera.Position;
@@ -1966,7 +1966,7 @@ namespace P3D
 					// Every 256 steps, add friendship to the Pokémon in the player's team.
 					foreach (Pokemon p in Pokemons)
 					{
-						if (p.Status != Pokemon.StatusProblems.Fainted & p.IsEgg() == false)
+						if (p.Status != Pokemon.StatusProblems.Fainted & !p.IsEgg())
 							p.ChangeFriendShip(Pokemon.FriendShipCauses.Walking);
 					}
 
@@ -2002,7 +2002,7 @@ namespace P3D
 				GameVariables.Level.CheckTrainerSights();
 				if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 				{
-					if ((OverworldScreen)CurrentScreen.ActionScript.IsReady == false)
+					if (!(OverworldScreen)CurrentScreen.ActionScript.IsReady)
 						_stepEventStartedTrainer = true;
 				}
 			}
@@ -2086,7 +2086,7 @@ namespace P3D
 		{
 			if (CanFireStepEvent())
 			{
-				if (GameVariables.Level.WildPokemonFloor & GameVariables.Level.Surfing == false)
+				if (GameVariables.Level.WildPokemonFloor & !GameVariables.Level.Surfing)
 					GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(Screen.Camera.Position, Spawner.EncounterMethods.Land, "");
 			}
 		}
@@ -2110,15 +2110,15 @@ namespace P3D
 
 		private bool CanFireStepEvent()
 		{
-			if (ScriptBlock.TriggeredScriptBlock == false)
+			if (!ScriptBlock.TriggeredScriptBlock)
 			{
-				if (_stepEventStartedTrainer == false)
+				if (!_stepEventStartedTrainer)
 				{
-					if (_stepEventEggHatched == false)
+					if (!_stepEventEggHatched)
 					{
-						if (_stepEventRepelMessage == false)
+						if (!_stepEventRepelMessage)
 						{
-							if (GameVariables.Level.PokemonEncounterData.EncounteredPokemon == false)
+							if (!GameVariables.Level.PokemonEncounterData.EncounteredPokemon)
 								return true;
 						}
 					}
@@ -2177,7 +2177,7 @@ namespace P3D
 		{
 			List<string> maps = VisitedMaps.Split(System.Convert.ToChar(",")).ToList();
 
-			if (maps.Contains(mapFile) == false)
+			if (!maps.Contains(mapFile))
 			{
 				maps.Add(mapFile);
 				VisitedMaps = "";
@@ -2202,7 +2202,7 @@ namespace P3D
 
 			if (IsGameJoltSave)
 			{
-				if (GameJolt.LogInScreen.UserBanned(GameJoltSave.GameJoltID) == false)
+				if (!GameJolt.LogInScreen.UserBanned(GameJoltSave.GameJoltID))
 					GameJoltSave.Points += addPoints;
 			}
 			else
@@ -2262,7 +2262,7 @@ namespace P3D
 				string[] files = new[] { "Apricorns", "Berries", "Box", "Daycare", "HallOfFame", "ItemData", "Items", "NPC", "Options", "Party", "Player", "Pokedex", "Register", "RoamingPokemon", "SecretBase" };
 				foreach (string file in files)
 				{
-					if (System.IO.File.Exists(folder + @"\" + file + ".dat") == false)
+					if (System.IO.File.Exists(folder + @"\" + file + ".dat"!))
 						return false;
 				}
 				return true;
@@ -2274,7 +2274,7 @@ namespace P3D
 		{
 			if (KeyBoardHandler.KeyDown(Keys.LeftShift) | ControllerHandler.ButtonDown(Buttons.B))
 			{
-				if (GameVariables.Level.Riding == false & GameVariables.Level.Surfing == false & Inventory.HasRunningShoes)
+				if (!GameVariables.Level.Riding & !GameVariables.Level.Surfing & Inventory.HasRunningShoes)
 					return true;
 			}
 

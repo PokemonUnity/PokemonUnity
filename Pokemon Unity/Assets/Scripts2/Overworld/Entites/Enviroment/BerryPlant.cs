@@ -265,7 +265,7 @@ public class BerryPlant : Entity
         {
             if (Berry != "")
             {
-                if (Berry.ToLower().StartsWith("{" + GameVariables.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|") == false)
+                if (Berry.ToLower().StartsWith("{" + GameVariables.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|"!))
                 {
                     if (OutData != "")
                         OutData += System.Environment.NewLine;
@@ -385,7 +385,7 @@ public class BerryPlant : Entity
     private void WaterBerry()
     {
         bool b = this.Watered[this.Phase];
-        if (b == false)
+        if (!b)
         {
             this.Watered[this.Phase] = true;
 

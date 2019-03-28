@@ -100,7 +100,7 @@ public class SkyDome : MonoBehaviour
     private void RenderHalf(float FOV, float useYaw, float usePitch, bool up, Texture2D texture, float scale, float alpha)
     {
         //float Roll = 0.0F;
-        //if (up == false)
+        //if (!up)
         //    Roll = (float)Math.PI;
 		//
         //var previousBlendState = Core.GraphicsDevice.BlendState;
