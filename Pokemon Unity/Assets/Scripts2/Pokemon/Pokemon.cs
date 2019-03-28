@@ -19,7 +19,8 @@ namespace PokemonUnity.Pokemon
         {
             get
             {
-                if (_base.BaseStatsHP == 1) return 1;
+				//Shedinja can be affected by HP-Up
+                if (_base.BaseStatsHP == 1) return 1 + (EV[(int)Stats.HP] / 4);
                 return //totalHP;
                     ((2 * _base.BaseStatsHP + IV[(int)Stats.HP] + (EV[(int)Stats.HP] / 4)) * Level) / 100 + Level + 10;
             }
@@ -212,6 +213,7 @@ namespace PokemonUnity.Pokemon
             IV = new byte[] { (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32) };
             EV = new byte[6];
             Exp = new Experience(GrowthRate);
+			TempLevel = Level;
             moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
             pokerus = new int[2];
             Markings = new bool[6]; //{ false, false, false, false, false, false };
@@ -231,9 +233,11 @@ namespace PokemonUnity.Pokemon
         {
             _base = PokemonData.GetPokemon(pokemon);
             Exp = new Experience(GrowthRate);
-            eggSteps = _base.HatchTime;
+			TempLevel = Level;
+			eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+			Item = (Items)_base.HeldItem[0,Settings.pokemonGeneration];
             GenerateMoveset();
 
             //calcStats();
@@ -355,14 +359,11 @@ namespace PokemonUnity.Pokemon
             DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species, original)
         {
             //Check to see if nickName is filled
+			//ToDo: Check if whitespace or empty, then assign it to name, even if null...
             if (!string.IsNullOrEmpty(nickName))
-            {
                 name = nickName;
-            }
             else
-            {
                 name = null;
-            }
 
             Form = form;
             //_base = Pokemon.PokemonData.GetPokemon(species);
@@ -388,9 +389,10 @@ namespace PokemonUnity.Pokemon
 
             ObtainLevel = obtainedLevel;
             //Level = currentLevel;
-            Exp.AddExperience(currentExp);
+            Exp.AddExperience(currentExp - Exp.Current);
+			TempLevel = Level;
 
-            Happiness = happiness;
+			Happiness = happiness;
 
             Status = status;
             StatusCount = statusCount;
@@ -609,12 +611,28 @@ namespace PokemonUnity.Pokemon
 					//throw new Exception("Trainer did not acquire Pokemon as an egg."); //No Exceptions...
 					return null;
             }
-            //set { this.hatchedWhen = value; }
-        }
-        #endregion
+			//set { this.hatchedWhen = value; }
+		}
 
-        #region Level
-        public int Level
+		/// <summary>
+		/// Sets the catch infos of the Pokémon. Uses the current map name and player name + OT.
+		/// </summary>
+		/// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
+		/// <param name="Method">The capture method.</param>
+		public void SetCatchInfos(Items Ball, ObtainedMethod Method)
+		{
+			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
+			//this.obtainMap = GameVariables.Level.MapName;
+			//this.CatchTrainerName = GameVariables.playerTrainer.Name;
+			this.OT = GameVariables.playerTrainer.Trainer;
+
+			this.ObtainedMode = Method;
+			this.ballUsed = Ball;
+		}
+		#endregion
+
+		#region Level
+		public int Level
         {
             get
             {
@@ -633,9 +651,54 @@ namespace PokemonUnity.Pokemon
                     GameVariables.DebugLog(string.Format("The level number {0} is invalid", value), true);
                 }
             }
-        }
+		}
+		/// <summary>
+		/// Actual pokemon level is calaculated with <see cref="this.Level"/>.
+		/// This is just a temp placeholder for Leveling-Up mechanic.
+		/// </summary>
+		public int TempLevel { get; private set; }
 
-        public bool isEgg
+		/// <summary>
+		/// Gives the Pokémon experience points and levels it up.
+		/// </summary>
+		/// <param name="Exp">The amount of EXP.</param>
+		/// <param name="LearnRandomAttack">If the Pokémon should learn an attack if it could learn one at level up.</param>
+		public void AddExperience(int exp, bool LearnRandomAttack)
+		{
+			//this.Experience += exp;
+			this.Exp.AddExperience(exp);
+			//while (this.Exp.Current >= this.Exp.NeedExperience(this.Level + 1))
+			//while (this.Exp.Current >= this.Exp.NextLevel)
+			while (Level > TempLevel)
+				this.LevelUp(LearnRandomAttack);
+			this.TempLevel = TempLevel < 1 ? 1 : (TempLevel > Settings.MAXIMUMLEVEL ? Settings.MAXIMUMLEVEL : TempLevel);
+			//this.TempLevel = Level.Clamp(1, Settings.MAXIMUMLEVEL);
+		}
+
+		/// <summary>
+		/// Rasies the Pokémon's level by one.
+		/// </summary>
+		/// <param name="LearnRandomAttack">If one attack of the Pokémon should be replaced by an attack potentially learned on the new level.</param>
+		public void LevelUp(bool LearnRandomAttack)
+		{
+			this.TempLevel += 1;
+
+			int currentMaxHP = this.TotalHP;
+
+			//this.CalculateStats();
+
+			// Heals the Pokémon by the HP difference.
+			int HPDifference = this.TotalHP - currentMaxHP;
+			if (HPDifference > 0)
+				//this.Heal(HPDifference);
+				HP += HPDifference;
+
+			if (LearnRandomAttack)
+				//this.LearnAttack(this.Level);
+				LearnMove(TempLevel);
+		}
+
+		public bool isEgg
         {
             get
             {
@@ -964,10 +1027,10 @@ namespace PokemonUnity.Pokemon
 				if (Species == Pokemons.NONE) return false;
 				//return shinyFlag ?? isShiny();
 				if (shinyFlag != null && shinyFlag.HasValue) return shinyFlag.Value;
+				if (Settings.SHINY_WILD_POKEMON_SWITCH) return true;
 				// Use this when rolling for shiny...
 				// Honestly, without this math, i probably would've done something a lot more primative.
 				// Look forward to primative math on wild pokemon encounter chances...
-				//ToDo: Need default value for if/when Trainer is NULL...
 				//int a = OT == null? this.PersonalId : this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
 				//int b = a & 0xFFFF;
 				//int c = (a >> 16) & 0xFFFF;
@@ -976,7 +1039,10 @@ namespace PokemonUnity.Pokemon
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//int d = (GameVariables.playerTrainer.Trainer.TrainerID ^ GameVariables.playerTrainer.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null)? OT.TrainerID : GameVariables.playerTrainer.Trainer.TrainerID) ^ (!OT.Equals((object)null) ? OT.SecretID : GameVariables.playerTrainer.Trainer.SecretID)) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				int d = ((!OT.Equals((object)null)? OT.TrainerID : GameVariables.playerTrainer.Trainer.TrainerID) 
+					^ (!OT.Equals((object)null) ? OT.SecretID : GameVariables.playerTrainer.Trainer.SecretID)) 
+					^ ((/*GameVariables.playerTrainer.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId* /Settings.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Settings.SHINYPOKEMONCHANCE) / 65536) 
+					^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
 			}
@@ -1237,6 +1303,7 @@ namespace PokemonUnity.Pokemon
 					rejected = new int?[movelist.Count];
                     for (int n = 0; n < movelist.Count; n++)
                     {
+						bool err = false;
                         if (this.countMoves() < numMove)
                         {
 							//For a truly random approach, instead of just adding moves in the order they're listed
@@ -1246,7 +1313,7 @@ namespace PokemonUnity.Pokemon
 							rejected[n] = x;
 							if (Convert.ToBoolean(Settings.Rand.Next(2)))
 							{
-								LearnMove((Moves)movelist[x]);
+								LearnMove((Moves)movelist[x], out err);
 							}
                         }
                         else
@@ -1262,6 +1329,7 @@ namespace PokemonUnity.Pokemon
                     //int j = 0; 
                     for (int n = 0; n < movelist.Count; n++)
                     {
+						bool err = false;
                         if (this.countMoves() < numMove) //j
                         {
 							//For a truly random approach, instead of just adding moves in the order they're listed
@@ -1273,7 +1341,7 @@ namespace PokemonUnity.Pokemon
 							{
 								//this.moves[j] = new Move(movelist[n]);
 								//j += 1;
-								LearnMove((Moves)movelist[x]);
+								LearnMove((Moves)movelist[x], out err);
 								//j += this.countMoves() < numMove ? 0 : 1;
 							}
                         }
@@ -1305,10 +1373,12 @@ namespace PokemonUnity.Pokemon
         /// <summary>
         /// Silently learns the given move. Will erase the first known move if it has to.
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="move"></param>
+        /// <param name="silently"></param>
         /// <returns></returns>
-        public void LearnMove(Moves move, bool silently = false)
+        public void LearnMove(Moves move, out bool success, bool silently = false)
         {
+			success = false;
             if ((int)move <= 0) return;
             if (!getMoveList().Contains(move))
             {
@@ -1342,15 +1412,56 @@ namespace PokemonUnity.Pokemon
                 }
             }
             if (!silently)
+			{
                 GameVariables.DebugLog("Cannot learn move, pokmeon moveset is full", false);
+			}
             else
             {
                 moves[0] = moves[1];
                 moves[1] = moves[2];
                 moves[2] = moves[3];
                 moves[3] = new Move(move);
+				success = true;
             }
         }
+
+		/// <summary>
+		/// Replaces a random move of the Pokémon by one that it learns on a given level.
+		/// </summary>
+		/// <param name="level">The level the Pokémon learns the desired move on.</param>
+		public void LearnMove(int level)
+		{
+			bool moveLearned = false;
+			List<Moves> movelist = new List<Moves>();
+			if (isEgg || GameVariables.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+			int?[] rejected = new int?[movelist.Count];
+			//if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+			movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value == level).Select(x => x.Key));
+			rejected = new int?[movelist.Count];
+			//int listend = movelist.Count - 4;
+			//listend = listend < 0 ? 0 : listend + 4;
+			//int j = 0; 
+			for (int n = 0; n < movelist.Count; n++)
+			{
+				if (!moveLearned) //j
+				{
+					//For a truly random approach, instead of just adding moves in the order they're listed
+					int x = Settings.Rand.Next(movelist.Count);
+					while (rejected.Contains(x))
+						x = Settings.Rand.Next(movelist.Count);
+					rejected[n] = x;
+					if (Convert.ToBoolean(Settings.Rand.Next(2)))
+					{
+						//this.moves[j] = new Move(movelist[n]);
+						//j += 1;
+						LearnMove((Moves)movelist[x], out moveLearned);
+						//j += this.countMoves() < numMove ? 0 : 1;
+					}
+				}
+				else
+					break;
+			}
+		}
 
         /// <summary>
         /// Deletes the given move from the Pokémon.
@@ -1942,12 +2053,12 @@ namespace PokemonUnity.Pokemon
             get
             {
                 if (this.mail == null || !PokemonUnity.Item.Item.Mail.IsMail(this.Item)) return null; //If empty return null
-                                                                                                      //if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
-                                                                                                      //{
-                                                                                                      //    //mail = null;
-                                                                                                      //	return null;
-                                                                                                      //}
-                                                                                                      //ToDo: Return the string or class?
+				//if (mail.Message.Length == 0 || this.Item == 0)//|| this.item.Category != Items.Category.Mail )
+				//{
+				//    //mail = null;
+				//	return null;
+				//}
+				//ToDo: Return the string or class?
                 return mail.Message;
             }
             //set { mail = value; }
@@ -1971,7 +2082,7 @@ namespace PokemonUnity.Pokemon
         /// Nickname; 
         /// Returns Pokemon species name if not nicknamed.
         /// </summary>
-        public virtual string Name { get { return name ?? _base.Name; } }
+        public virtual string Name { get { if (this.EggSteps > 0) return "Egg"; return name ?? _base.Name; } }
 
         /// <summary>
         ///	Used only for a few pokemon to specify what form it's in. 
@@ -2053,8 +2164,9 @@ namespace PokemonUnity.Pokemon
         {
             get { return this.hp; } //ToDo: If greater than totalHP throw error?
             set
-            {
-                this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
+			{
+				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
+				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
                 if (this.hp == 0) this.Status = Status.NONE; // statusCount = 0; //ToDo: Fainted
             }
         }
@@ -2170,10 +2282,10 @@ namespace PokemonUnity.Pokemon
             Happiness += gain;
             Happiness = Happiness > 255 ? 255 : Happiness < 0 ? 0 : Happiness; //Max 255, Min 0
         }
-        #endregion
+		#endregion
 
-        #region Stat calculations, Pokemon creation
-        /*// <summary>
+		#region Stat calculations, Pokemon creation
+		/*// <summary>
         /// Returns the EV yield of this Pokemon
         /// </summary>
         /// <returns></returns>
@@ -2184,7 +2296,146 @@ namespace PokemonUnity.Pokemon
         //_base.getBaseStats();
         public int[] evYield { get { return this.EV; } }*/
 
-        /*public bool addEVs(string stat, float amount)
+		/// <summary>
+		/// Adds Effort values (EV) to this Pokémon after defeated another Pokémon, if possible.
+		/// </summary>
+		/// <param name="DefeatedPokemon">The defeated Pokémon.</param>
+		public void GainEffort(Pokemon DefeatedPokemon)
+		{
+			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
+			if (allEV >= 510)
+				return;
+
+			int maxEVgain = 510 - allEV;
+			int totalEVgain = 0;
+
+			// EV gains
+			int gainEVHP = DefeatedPokemon._base.evYieldHP;
+			int gainEVAttack = DefeatedPokemon._base.evYieldATK;
+			int gainEVDefense = DefeatedPokemon._base.evYieldDEF;
+			int gainEVSpAttack = DefeatedPokemon._base.evYieldSPA;
+			int gainEVSpDefense = DefeatedPokemon._base.evYieldSPD;
+			int gainEVSpeed = DefeatedPokemon._base.evYieldSPE;
+
+			int EVfactor = 1;
+
+			var itemNumber = 0;
+			if (Item != Items.NONE)
+				itemNumber = (int)Item;
+
+			switch (itemNumber) //ToDo: Redo with Item.Enum, and correct id values below
+			{
+				case 581:
+					{
+						EVfactor *= 2;
+						break;
+					}
+				case 582:
+					{
+						gainEVHP += 8;
+						break;
+					}
+				case 583:
+					{
+						gainEVAttack += 8;
+						break;
+					}
+				case 584:
+					{
+						gainEVDefense += 8;
+						break;
+					}
+				case 585:
+					{
+						gainEVSpAttack += 8;
+						break;
+					}
+				case 586:
+					{
+						gainEVSpDefense += 8;
+						break;
+					}
+				case 587:
+					{
+						gainEVSpeed += 8;
+						break;
+					}
+			}
+
+			// HP gain
+			if ((gainEVHP > 0 && EV[(int)Stats.HP] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVHP *= EVfactor;
+				gainEVHP = gainEVHP < 0 ? 0 : (gainEVHP > EVSTATLIMIT - EV[(int)Stats.HP] ? EVSTATLIMIT - EV[(int)Stats.HP] : gainEVHP);
+				gainEVHP = gainEVHP < 0 ? 0 : (gainEVHP > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVHP);
+				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, EVSTATLIMIT - EV[(int)Stats.HP]);
+				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.HP] += (byte)gainEVHP;
+				totalEVgain += gainEVHP;
+			}
+
+			// Attack gain
+			if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVAttack *= EVfactor;
+				gainEVAttack = gainEVAttack < 0 ? 0 : (gainEVAttack > EVSTATLIMIT - EV[(int)Stats.ATTACK] ? EVSTATLIMIT - EV[(int)Stats.ATTACK] : gainEVAttack);
+				gainEVAttack = gainEVAttack < 0 ? 0 : (gainEVAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVAttack);
+				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, EVSTATLIMIT - EV[(int)Stats.ATTACK]);
+				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
+				totalEVgain += gainEVAttack;
+			}
+
+			// Defense gain
+			if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVDefense *= EVfactor;
+				gainEVDefense = gainEVDefense < 0 ? 0 : (gainEVDefense > EVSTATLIMIT - EV[(int)Stats.DEFENSE] ? EVSTATLIMIT - EV[(int)Stats.DEFENSE] : gainEVDefense);
+				gainEVDefense = gainEVDefense < 0 ? 0 : (gainEVDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVDefense);
+				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, EVSTATLIMIT - EV[(int)Stats.DEFENSE]);
+				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
+				totalEVgain += gainEVDefense;
+			}
+
+			// SpAttack gain
+			if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVSpAttack *= EVfactor;
+				gainEVSpAttack = gainEVSpAttack < 0 ? 0 : (gainEVSpAttack > EVSTATLIMIT - EV[(int)Stats.SPATK] ? EVSTATLIMIT - EV[(int)Stats.SPATK] : gainEVSpAttack);
+				gainEVSpAttack = gainEVSpAttack < 0 ? 0 : (gainEVSpAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpAttack);
+				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, EVSTATLIMIT - EV[(int)Stats.SPATK]);
+				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
+				totalEVgain += gainEVSpAttack;
+			}
+
+			// SpDefense gain
+			if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVSpDefense *= EVfactor;
+				gainEVSpDefense = gainEVSpDefense < 0 ? 0 : (gainEVSpDefense > EVSTATLIMIT - EV[(int)Stats.SPDEF] ? EVSTATLIMIT - EV[(int)Stats.SPDEF] : gainEVSpDefense);
+				gainEVSpDefense = gainEVSpDefense < 0 ? 0 : (gainEVSpDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpDefense);
+				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, EVSTATLIMIT - EV[(int)Stats.SPDEF]);
+				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
+				totalEVgain += gainEVSpDefense;
+			}
+
+			// Speed gain
+			if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVSpeed *= EVfactor;
+				gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
+				gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
+				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
+				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
+				totalEVgain += gainEVSpeed;
+			}
+		}
+
+		/*public bool addEVs(string stat, float amount)
         {
             int intAmount = Mathf.FloorToInt(amount);
             int evTotal = EV_HP + EV_ATK + EV_DEF + EV_SPA + EV_SPD + EV_SPE;
@@ -2269,10 +2520,32 @@ namespace PokemonUnity.Pokemon
             }
             return false; //returns false if total or relevant EV cap was reached before running.
         }*/
-        #endregion
+		#endregion
 
-        #region Nested Classes
-        public partial class PokemonData
+		#region Unity Engine Stuff...
+		/// <summary>
+		/// Plays the cry of this Pokémon.
+		/// </summary>
+		public void PlayCry()
+		{
+			float Pitch = 0.0F;
+			int percent = 100;
+			if (this.HP > 0 & this.TotalHP > 0)
+				percent = System.Convert.ToInt32(Math.Ceiling(this.HP / (double)this.TotalHP) * 100);
+
+			if (percent <= 50)
+				Pitch = -0.4F;
+			if (percent <= 15)
+				Pitch = -0.8F;
+			if (percent == 0)
+				Pitch = -1.0F;
+
+			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
+		}
+		#endregion
+
+		#region Nested Classes
+		public partial class PokemonData
         {
             #region Variables
             //private Pokemons id;
@@ -3315,23 +3588,24 @@ namespace PokemonUnity.Pokemon
                 int maxexp = GetExperience(Growth, Settings.MAXIMUMLEVEL);
                 if (Current > maxexp) Current = maxexp;
             }
-            // <summary>
-            // Adds experience points ensuring that the new total doesn't
-            // exceed the maximum Exp. Points for the given growth rate.
-            // </summary>
-            // <param name="levelingRate">Growth rate.</param>
-            // <param name="currentExperience">Current Exp Points.</param>
-            // <param name="experienceGain">Exp. Points to add</param>
-            // <returns></returns>
-            // Subtract ceiling exp for left over experience points remaining after level up?...
-            //public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
-            //{
-            //	int exp = currentExperience + experienceGain;
-            //	int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
-            //	if (exp > maxexp) exp = maxexp;
-            //	return exp;
-            //}
+			// <summary>
+			// Adds experience points ensuring that the new total doesn't
+			// exceed the maximum Exp. Points for the given growth rate.
+			// </summary>
+			// <param name="levelingRate">Growth rate.</param>
+			// <param name="currentExperience">Current Exp Points.</param>
+			// <param name="experienceGain">Exp. Points to add</param>
+			// <returns></returns>
+			// Subtract ceiling exp for left over experience points remaining after level up?...
+			//public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
+			//{
+			//	int exp = currentExperience + experienceGain;
+			//	int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+			//	if (exp > maxexp) exp = maxexp;
+			//	return exp;
+			//}
 
+			public int NeedExperience(int toLv) { return Math.Max(0, GetExperience(Growth, toLv)); }
             #region Static Methods
             private static int GetExperience(LevelingRate levelingRate, int currentLevel)
             {
