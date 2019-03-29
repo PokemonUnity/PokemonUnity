@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -21,10 +22,10 @@ public class ItemObject : Entity
     {
         base.Initialize();
 
-        this.Item = Item.GetItem(System.Convert.ToInt32(this.AdditionalValue.GetSplit(1)));
+        this.Item = new Item.Item((Item.Items)System.Convert.ToInt32(this.AdditionalValue.GetSplit(1)));
         this.ItemID = System.Convert.ToInt32(this.AdditionalValue.GetSplit(0));
 
-        this.Textures[0] = this.Item.Texture;
+        //this.Textures[0] = this.Item.Texture;
         if (this.ActionValue == 0)
             this.Visible = Visible;
         else if (this.ActionValue == 1)
@@ -66,7 +67,7 @@ public class ItemObject : Entity
                 }
                 CreateAnimationTextureTemp();
 
-                this.Animation = new Animation(TextureManager.GetTexture(@"Textures\Routes"), rows, columns, 16, 16, animationSpeed, startRow, startColumn);
+                //this.Animation = new Animation(TextureManager.GetTexture(@"Textures\Routes"), rows, columns, 16, 16, animationSpeed, startRow, startColumn);
             }
             else
             {
@@ -135,12 +136,12 @@ public class ItemObject : Entity
 
         if (Animation != null)
         {
-            Animation.Update(0.01f);
-            if (CurrentRectangle != Animation.TextureRectangle)
-            {
-                ChangeTexture();
-                CurrentRectangle = Animation.TextureRectangle;
-            }
+            //Animation.Update(0.01f);
+            //if (CurrentRectangle != Animation.TextureRectangle)
+            //{
+            //    ChangeTexture();
+            //    CurrentRectangle = Animation.TextureRectangle;
+            //}
         }
 
         base.UpdateEntity();
@@ -155,9 +156,9 @@ public class ItemObject : Entity
             ClearAnimationResources();
             CreateAnimationTextureTemp();
         }
-        var i = Animation.CurrentRow;
-        var j = Animation.CurrentColumn;
-        this.Textures[0] = ItemObject.AnimationTexturesTemp[AnimationName + "_" + (j + columns * i)];
+        //var i = Animation.CurrentRow;
+        //var j = Animation.CurrentColumn;
+        //this.Textures[0] = ItemObject.AnimationTexturesTemp[AnimationName + "_" + (j + columns * i)];
     }
 
     public override void ClickFunction()
@@ -171,7 +172,7 @@ public class ItemObject : Entity
             GameVariables.playerTrainer.Bag.AddItem(this.Item.ItemId, 1);
             //PlayerStatistics.Track("Items found", 1);
 
-            GameVariables.playerTrainer.AddPoints(1, "Found an item.");
+            //GameVariables.playerTrainer.AddPoints(1, "Found an item.");
         }
     }
 
@@ -211,7 +212,7 @@ public class ItemObject : Entity
         else
         {
             string[] IDs = GameVariables.playerTrainer.ItemData.Split(System.Convert.ToChar(","));
-            if (IDs.Contains((GameVariables.Level.LevelFile + "|" + !ItemObject.ItemID.ToString()).ToLower()))
+            if (!IDs.Contains((GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()))
                 GameVariables.playerTrainer.ItemData += "," + (GameVariables.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
         }
     }

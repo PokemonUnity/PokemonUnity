@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -50,7 +51,7 @@ public class WarpBlock : Entity
                     GameVariables.Level.WarpData.CorrectCameraYaw = GameVariables.Camera.Yaw;
                     GameVariables.Level.WarpData.IsWarpBlock = true;
                     GameVariables.DebugLog("Lock Camera");
-                    (OverworldCamera)GameVariables.Camera.YawLocked = true;
+                    ((OverworldCamera)GameVariables.Camera).YawLocked = true;
                 }
                 else
                 {

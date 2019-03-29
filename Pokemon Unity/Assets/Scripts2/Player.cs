@@ -871,9 +871,9 @@ public partial class GameVariables
 		{
 			//Dim Message As String = ""
 			//If Amount = 1 Then
-			//	Message = Core.Player.Name & " stored it in the~" & Core.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//	Message = GameVariables.playerTrainer.Name & " stored it in the~" & GameVariables.playerTrainer.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
 			//Else
-			//	Message = Core.Player.Name & " stored them~in the " & Core.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//	Message = GameVariables.playerTrainer.Name & " stored them~in the " & GameVariables.playerTrainer.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
 			//End If
 			//Return Message
 			return "";

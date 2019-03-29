@@ -1,4 +1,6 @@
-﻿namespace PokemonUnity.Overworld.Entity.Environment
+﻿using UnityEngine;
+
+namespace PokemonUnity.Overworld.Entity.Environment
 {
 public class RotationTile : Entity
 {
@@ -35,29 +37,29 @@ public class RotationTile : Entity
 
     public override void Update()
     {
-        if (this.RotationType == RotationTypes.StartSpin)
-        {
-            if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-            {
-                if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
-                {
-                    if (this.Position.x == GameVariables.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & this.Position.z == GameVariables.Camera.Position.z)
-                    {
-                        int steps = GetSteps();
-
-                        string s = "version=2" + System.Environment.NewLine + "@player.move(0)" + System.Environment.NewLine + "@player.turnto(" + this.RotateTo.ToString() + ")" + System.Environment.NewLine + "@player.move(" + steps + ")" + System.Environment.NewLine + ":end";
-
-                        (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
-                    }
-                }
-            }
-        }
+        //if (this.RotationType == RotationTypes.StartSpin)
+        //{
+        //    if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+        //    {
+        //        if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
+        //        {
+        //            if (this.Position.x == GameVariables.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & this.Position.z == GameVariables.Camera.Position.z)
+        //            {
+        //                int steps = GetSteps();
+		//	
+        //                string s = "version=2" + System.Environment.NewLine + "@player.move(0)" + System.Environment.NewLine + "@player.turnto(" + this.RotateTo.ToString() + ")" + System.Environment.NewLine + "@player.move(" + steps + ")" + System.Environment.NewLine + ":end";
+		//	
+        //                (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     private int GetSteps()
     {
         int steps = 0;
-        Vector2 direction = new Vector2(0);
+        Vector2 direction = new Vector2(0,0);
         switch (this.RotateTo)
         {
             case 0:
@@ -86,7 +88,7 @@ public class RotationTile : Entity
         if (stepY == 0)
             stepY = 1;
 
-        for (var x = 0; x <= direction.x * 100; x += direction.x)
+        for (float x = 0; x <= direction.x * 100; x += direction.x)
         {
             for (var y = 0; y <= direction.y * 100; y += stepY)
             {
@@ -124,7 +126,7 @@ public class RotationTile : Entity
     public override bool WalkIntoFunction()
     {
         if (this.RotationType == RotationTypes.StartSpin)
-            (OverworldCamera)GameVariables.Camera.YawLocked = true;
+            ((OverworldCamera)GameVariables.Camera).YawLocked = true;
         return false;
     }
 }

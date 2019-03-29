@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using PokemonUnity.Pokemon;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Misc
 {
@@ -11,7 +12,7 @@ public class OverworldPokemon : Entity
 		new int[]{
 			0,
 			0
-		}, false, 0, new Vector3(1.0f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
+		}, false, 0, new Vector3(1.0f,1,1), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1,1,1))
     {
         PokemonReference = null/* TODO Change to default(_) if this is not a reference type */;
         this.Respawn();
@@ -146,7 +147,7 @@ public class OverworldPokemon : Entity
 	{
 		if (this.Rotation.y != GameVariables.Camera.Yaw)
 			this.Rotation.y = GameVariables.Camera.Yaw;
-		this.Scale = new Vector3(1.0f);
+		this.Scale = new Vector3(1.0f, 1.0f, 1.0f);
 		this.Position.y = this.GetYPosition();
 
 		base.UpdateEntity();
@@ -156,10 +157,10 @@ public class OverworldPokemon : Entity
 	{
 		if (this.IsVisible())
 		{
-			var state = GraphicsDevice.DepthStencilState;
-			GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-			Draw(this.Model, this.Textures[0], false);
-			GraphicsDevice.DepthStencilState = state;
+			//var state = GraphicsDevice.DepthStencilState;
+			//GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+			//Draw(this.Model, this.Textures[0], false);
+			//GraphicsDevice.DepthStencilState = state;
 		}
 	}
 
@@ -223,7 +224,7 @@ public class OverworldPokemon : Entity
 
 	private Vector3 GetMove()
 	{
-		Vector3 moveVector;
+		Vector3 moveVector = new Vector3();
 		switch (this.faceRotation)
 		{
 			case 0:
@@ -252,22 +253,22 @@ public class OverworldPokemon : Entity
 
 	private bool IsCorrectScreen()
 	{
-		Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
-		if (screens.Contains(Core.CurrentScreen.Identification))
-			return false;
-		else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
-		{
-			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
-				return false;
-		}
-		else
-		{
-			Screen c = Core.CurrentScreen;
-			while (c.PreScreen != null)
-				c = c.PreScreen;
-			if (screens.Contains(c.Identification))
-				return false;
-		}
+		//Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
+		//if (screens.Contains(Core.CurrentScreen.Identification))
+		//	return false;
+		//else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
+		//{
+		//	if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
+		//		return false;
+		//}
+		//else
+		//{
+		//	Screen c = Core.CurrentScreen;
+		//	while (c.PreScreen != null)
+		//		c = c.PreScreen;
+		//	if (screens.Contains(c.Identification))
+		//		return false;
+		//}
 		return true;
 	}
 

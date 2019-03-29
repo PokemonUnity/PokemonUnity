@@ -1,4 +1,6 @@
-﻿namespace PokemonUnity.Overworld.Entity.Environment
+﻿using UnityEngine;
+
+namespace PokemonUnity.Overworld.Entity.Environment
 {
 public class WallBlock : Entity
 {

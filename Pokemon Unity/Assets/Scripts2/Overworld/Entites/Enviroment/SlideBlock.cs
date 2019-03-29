@@ -1,4 +1,6 @@
-﻿namespace PokemonUnity.Overworld.Entity.Environment
+﻿using UnityEngine;
+
+namespace PokemonUnity.Overworld.Entity.Environment
 {
 public class SlideBlock : Entity
 {
@@ -11,11 +13,11 @@ public class SlideBlock : Entity
         if (facing < 0)
             facing += 4;
 
-        GameVariables.Camera.PlannedMovement = Vector3.Zero;
+        GameVariables.Camera.PlannedMovement = Vector3.zero;
 
         if (GameVariables.Camera.GetPlayerFacingDirection() == facing & !GameVariables.Camera.IsMoving())
         {
-            (OverworldCamera)GameVariables.Camera.DidWalkAgainst = false;
+            ((OverworldCamera)GameVariables.Camera).DidWalkAgainst = false;
 
             int Steps = 0;
 
@@ -66,7 +68,7 @@ public class SlideBlock : Entity
 
             s += ":end";
 
-            (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
+            ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
             return true;
         }
 
@@ -110,11 +112,11 @@ public class SlideBlock : Entity
     {
         int facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
 
-        GameVariables.Camera.PlannedMovement = Vector3.Zero;
+        GameVariables.Camera.PlannedMovement = Vector3.zero;
 
         if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
         {
-            (OverworldCamera)GameVariables.Camera.DidWalkAgainst = false;
+            ((OverworldCamera)GameVariables.Camera).DidWalkAgainst = false;
 
             int Steps = 0;
 
@@ -165,7 +167,7 @@ public class SlideBlock : Entity
 
             s += ":end";
 
-            (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
+            ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
         }
     }
 

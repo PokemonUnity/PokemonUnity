@@ -1,4 +1,6 @@
-﻿namespace PokemonUnity.Overworld.Entity.Environment
+﻿using UnityEngine;
+
+namespace PokemonUnity.Overworld.Entity.Environment
 {
 public class SignBlock : Entity
 {
@@ -11,7 +13,7 @@ public class SignBlock : Entity
     {
         base.Initialize();
 
-        this.Scale = new Vector3(0.7f);
+        this.Scale = new Vector3(0.7f, 0.7f, 0.7f);
 
         if (ActionValue < 3)
             this.Position.y -= 0.15f;

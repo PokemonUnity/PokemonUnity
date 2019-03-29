@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Misc
 {
@@ -28,7 +29,7 @@ public class OwnPlayer : Entity
 		{
 			0,
 			0
-		}, false, 0, new Vector3(1.0f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f))
+		}, false, 0, new Vector3(1.0f,1,1), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f,1,1))
     {
 		SetTexture(TextureID, true);
 
@@ -61,28 +62,28 @@ public class OwnPlayer : Entity
 		}
 
 		string PokemonAddition = "";
-		if (StringHelper.IsNumeric(TextureID) & texturePath.StartsWith(@"Pokemon\Overworld\"))
-			PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
+		//if (StringHelper.IsNumeric(TextureID) & texturePath.StartsWith(@"Pokemon\Overworld\"))
+		//	PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 
-		if (GameVariables.playerTrainer.IsGameJoltSave)
-		{
-			if (texturePath + TextureID + PokemonAddition == @"Textures\NPC\" + GameJolt.Emblem.GetPlayerSpriteFile(GameJolt.Emblem.GetPlayerLevel(Core.GameJoltSave.Points), Core.GameJoltSave.GameJoltID, Core.GameJoltSave.Gender))
-				UseGameJoltID = true;
-		}
+		//if (GameVariables.playerTrainer.IsGameJoltSave)
+		//{
+		//	if (texturePath + TextureID + PokemonAddition == @"Textures\NPC\" + GameJolt.Emblem.GetPlayerSpriteFile(GameJolt.Emblem.GetPlayerLevel(Core.GameJoltSave.Points), Core.GameJoltSave.GameJoltID, Core.GameJoltSave.Gender))
+		//		UseGameJoltID = true;
+		//}
 
-		if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && !GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) == null)
-		{
-			GameVariables.DebugLog("Change player texture to the online sprite.");
-			this.Texture = GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID);
-			UsingGameJoltTexture = true;
-		}
-		else
-		{
-			GameVariables.DebugLog("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
-
-			this.Texture = TextureManager.GetTexture(texturePath + TextureID + PokemonAddition);
-			UsingGameJoltTexture = false;
-		}
+		//if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) != null)
+		//{
+		//	GameVariables.DebugLog("Change player texture to the online sprite.");
+		//	this.Texture = GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID);
+		//	UsingGameJoltTexture = true;
+		//}
+		//else
+		//{
+		//	GameVariables.DebugLog("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
+		//
+		//	this.Texture = TextureManager.GetTexture(texturePath + TextureID + PokemonAddition);
+		//	UsingGameJoltTexture = false;
+		//}
 	}
 
 	protected override float CalculateCameraDistance(Vector3 CPosition)
@@ -140,48 +141,48 @@ public class OwnPlayer : Entity
 
 	public void ChangeTexture()
 	{
-		if (this.Texture != null)
-		{
-			Rectangle r = new Rectangle(0, 0, 0, 0);
-			int cameraRotation = 0;
-			int spriteIndex = 0;
-
-			spriteIndex = 0;
-
-			if (GameVariables.Camera.Name == "Overworld")
-			{
-				spriteIndex = GameVariables.Camera.GetPlayerFacingDirection() - GameVariables.Camera.GetFacingDirection();
-				while (spriteIndex > 3)
-					spriteIndex -= 4;
-				while (spriteIndex < 0)
-					spriteIndex += 4;
-			}
-
-			Size frameSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
-
-			int x = 0;
-			if (GameVariables.Camera.IsMoving())
-				x = GetAnimationX() * frameSize.width;
-
-			r = new Rectangle(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
-
-			if (r != lastRectangle | lastTexture != SkinName)
-			{
-				lastRectangle = r;
-				lastTexture = SkinName;
-				GameVariables.playerTrainer.Skin = SkinName;
-
-				try
-				{
-					Texture2D t = TextureManager.GetTexture(this.Texture, r, 1);
-					Textures[0] = t;
-				}
-				catch
-				{
-					GameVariables.DebugLog("OwnPlayer.vb: Error assigning a new texture to the player.", false);
-				}
-			}
-		}
+		//if (this.Texture != null)
+		//{
+		//	Rectangle r = new Rectangle(0, 0, 0, 0);
+		//	int cameraRotation = 0;
+		//	int spriteIndex = 0;
+		//
+		//	spriteIndex = 0;
+		//
+		//	if (GameVariables.Camera.Name == "Overworld")
+		//	{
+		//		spriteIndex = GameVariables.Camera.GetPlayerFacingDirection() - GameVariables.Camera.GetFacingDirection();
+		//		while (spriteIndex > 3)
+		//			spriteIndex -= 4;
+		//		while (spriteIndex < 0)
+		//			spriteIndex += 4;
+		//	}
+		//
+		//	Size frameSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
+		//
+		//	int x = 0;
+		//	if (GameVariables.Camera.IsMoving())
+		//		x = GetAnimationX() * frameSize.width;
+		//
+		//	r = new Rectangle(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
+		//
+		//	if (r != lastRectangle | lastTexture != SkinName)
+		//	{
+		//		lastRectangle = r;
+		//		lastTexture = SkinName;
+		//		GameVariables.playerTrainer.Skin = SkinName;
+		//
+		//		try
+		//		{
+		//			Texture2D t = TextureManager.GetTexture(this.Texture, r, 1);
+		//			Textures[0] = t;
+		//		}
+		//		catch
+		//		{
+		//			GameVariables.DebugLog("OwnPlayer.vb: Error assigning a new texture to the player.", false);
+		//		}
+		//	}
+		//}
 	}
 
 	private int GetAnimationX()
@@ -216,10 +217,10 @@ public class OwnPlayer : Entity
 	{
 		if (InCameraFocus())
 		{
-			var state = GraphicsDevice.DepthStencilState;
-			GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-			Draw(this.Model, this.Textures, true);
-			GraphicsDevice.DepthStencilState = state;
+			//var state = GraphicsDevice.DepthStencilState;
+			//GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+			//Draw(this.Model, this.Textures, true);
+			//GraphicsDevice.DepthStencilState = state;
 		}
 	}
 
@@ -238,14 +239,14 @@ public class OwnPlayer : Entity
 	public void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in GameVariables.Level.Shaders)
-			Shader.ApplyShader(this);
+		//foreach (Shader Shader in GameVariables.Level.Shaders)
+		//	Shader.ApplyShader(this);
 	}
 
 	private float GetAnimationDelay()
 	{
 		if (GameVariables.playerTrainer.IsRunning())
-			return OwnPlayer.AnimationDelayLenght / (double)1.4f;
+			return OwnPlayer.AnimationDelayLenght / (float)1.4f;
 		return OwnPlayer.AnimationDelayLenght;
 	}
 }

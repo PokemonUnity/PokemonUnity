@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Misc
 {
@@ -18,7 +19,7 @@ public class NetworkPokemon : Entity
 	private float AnimationDelay = AnimationDelayLenght;
 
 	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.x, pos.y, pos.z, "NetworkPokemon",
-		new Texture2D()
+		new Texture2D[]
 	{
 		TextureManager.DefaultTexture
 
@@ -26,7 +27,7 @@ public class NetworkPokemon : Entity
     {
         0,
         0
-    }, false, 0, new Vector3(0.9f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1))
+    }, false, 0, new Vector3(0.9f,0.9f,0.9f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1,1,1))
     {
         this.Visible = visible;
 
@@ -77,53 +78,53 @@ public class NetworkPokemon : Entity
 
 	public override void Render()
 	{
-		if (ConnectScreen.Connected)
-		{
-			if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
-			{
-				if (GameVariables.Level.ShowOverworldPokemon)
-				{
-					if (IsCorrectScreen())
-					{
-						if (this.PokemonTexture != "")
-						{
-							if (this.Textures != null)
-							{
-								var state = GraphicsDevice.DepthStencilState;
-								GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-								Draw(this.Model, new Texture2D()
-									{
-										this.Textures[0]
-									}, false);
-								GraphicsDevice.DepthStencilState = state;
-							}
-						}
-					}
-				}
-			}
-		}
+		//if (ConnectScreen.Connected)
+		//{
+		//	if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
+		//	{
+		//		if (GameVariables.Level.ShowOverworldPokemon)
+		//		{
+		//			if (IsCorrectScreen())
+		//			{
+		//				if (this.PokemonTexture != "")
+		//				{
+		//					if (this.Textures != null)
+		//					{
+		//						var state = GraphicsDevice.DepthStencilState;
+		//						GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+		//						Draw(this.Model, new Texture2D[]
+		//							{
+		//								this.Textures[0]
+		//							}, false);
+		//						GraphicsDevice.DepthStencilState = state;
+		//					}
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
 	}
 
-	private bool IsCorrectScreen()
-	{
-		Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
-		if (screens.Contains(Core.CurrentScreen.Identification))
-			return false;
-		else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
-		{
-			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
-				return false;
-		}
-		else
-		{
-			Screen c = Core.CurrentScreen;
-			while (c.PreScreen != null)
-				c = c.PreScreen;
-			if (screens.Contains(c.Identification))
-				return false;
-		}
-		return true;
-	}
+	//private bool IsCorrectScreen()
+	//{
+	//	Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
+	//	if (screens.Contains(Core.CurrentScreen.Identification))
+	//		return false;
+	//	else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
+	//	{
+	//		if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
+	//			return false;
+	//	}
+	//	else
+	//	{
+	//		Screen c = Core.CurrentScreen;
+	//		while (c.PreScreen != null)
+	//			c = c.PreScreen;
+	//		if (screens.Contains(c.Identification))
+	//			return false;
+	//	}
+	//	return true;
+	//}
 
 	private void ChangeTexture()
 	{
@@ -168,44 +169,44 @@ public class NetworkPokemon : Entity
 		}
 	}
 
-	public void ApplyShaders()
-	{
-		this.Shaders.Clear();
-		foreach (Shader Shader in GameVariables.Level.Shaders)
-			Shader.ApplyShader(this);
-	}
-
-	public void ApplyPlayerData(Servers.Player p)
-	{
-		try
-		{
-			this.PlayerID = p.ServersID;
-
-			this.PokemonTexture = p.PokemonSkin;
-			this.Position = p.PokemonPosition;
-			this.LevelFile = p.LevelFile;
-			this.Visible = p.PokemonVisible;
-			this.faceRotation = p.PokemonFacing;
-			this.FaceDirection = p.PokemonFacing;
-
-			if (this.Visible)
-			{
-				this.Visible = false;
-				if (GameVariables.Level.LevelFile == p.LevelFile)
-					this.Visible = true;
-				else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
-				{
-					Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
-					this.Position.x += Offset.x;
-					this.Position.y += Offset.y;
-					this.Position.z += Offset.z;
-					this.Visible = true;
-				}
-			}
-		}
-		catch
-		{
-		}
-	}
+	//public void ApplyShaders()
+	//{
+	//	this.Shaders.Clear();
+	//	foreach (Shader Shader in GameVariables.Level.Shaders)
+	//		Shader.ApplyShader(this);
+	//}
+	//
+	//public void ApplyPlayerData(Servers.Player p)
+	//{
+	//	try
+	//	{
+	//		this.PlayerID = p.ServersID;
+	//
+	//		this.PokemonTexture = p.PokemonSkin;
+	//		this.Position = p.PokemonPosition;
+	//		this.LevelFile = p.LevelFile;
+	//		this.Visible = p.PokemonVisible;
+	//		this.faceRotation = p.PokemonFacing;
+	//		this.FaceDirection = p.PokemonFacing;
+	//
+	//		if (this.Visible)
+	//		{
+	//			this.Visible = false;
+	//			if (GameVariables.Level.LevelFile == p.LevelFile)
+	//				this.Visible = true;
+	//			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
+	//			{
+	//				Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
+	//				this.Position.x += Offset.x;
+	//				this.Position.y += Offset.y;
+	//				this.Position.z += Offset.z;
+	//				this.Visible = true;
+	//			}
+	//		}
+	//	}
+	//	catch
+	//	{
+	//	}
+	//}
 }
 }

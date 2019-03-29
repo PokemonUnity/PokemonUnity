@@ -1,6 +1,8 @@
-﻿using System;
+﻿using PokemonUnity.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -54,7 +56,7 @@ public class AnimatedBlock : Entity
 			AnimationNames.Add("");
 			currentRectangle.Add(new Rectangle(0, 0, 0, 0));
 
-			Animations.Add(new Animation(TextureManager.GetTexture(@"Textures\Routes"), rows[i], columns[i], 16, 16, animationSpeed[i], startRow[i], startColumn[i]));
+			//Animations.Add(new Animation(TextureManager.GetTexture(@"Textures\Routes"), rows[i], columns[i], 16, 16, animationSpeed[i], startRow[i], startColumn[i]));
 
 			AnimCount += 1;
 		}
@@ -111,7 +113,7 @@ public class AnimatedBlock : Entity
 
 			foreach (Entity Entity in GameVariables.Level.Entities)
 			{
-				if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
+				if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()))// == ContainmentType.Contains
 				{
 					if (Entity.ActionValue == 0 && (Entity.EntityID == Entities.AnimatedBlock || Entity.EntityID == Entities.Water))
 						canSurf = true;
@@ -148,7 +150,7 @@ public class AnimatedBlock : Entity
 						{
 							foreach (Entity Entity in GameVariables.Level.Entities)
 							{
-								if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()) == ContainmentType.Contains)
+								if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()))// == ContainmentType.Contains
 								{
 									if (Entity.EntityID == Entities.AnimatedBlock)
 									{
@@ -191,13 +193,13 @@ public class AnimatedBlock : Entity
 		{
 			for (var n = 0; n <= Animations.Count - 1; n++)
 			{
-				Animations[n].Update(0.01f);
-				if (currentRectangle[n] != Animations[n].TextureRectangle)
-				{
-					ChangeTexture(n);
-
-					currentRectangle[n] = Animations[n].TextureRectangle;
-				}
+				//Animations[n].Update(0.01f);
+				//if (currentRectangle[n] != Animations[n].TextureRectangle)
+				//{
+				//	ChangeTexture(n);
+				//
+				//	currentRectangle[n] = Animations[n].TextureRectangle;
+				//}
 			}
 		}
 		base.UpdateEntity();
@@ -212,16 +214,16 @@ public class AnimatedBlock : Entity
 			ClearAnimationResources();
 			CreateBlockTextureTemp();
 		}
-		var i = Animations[n].CurrentRow;
-		var j = Animations[n].CurrentColumn;
-		this.Textures(n) = AnimatedBlock.BlockTexturesTemp[AnimationNames[n] + "_" + (j + columns[n] * i)];
+		//var i = Animations[n].CurrentRow;
+		//var j = Animations[n].CurrentColumn;
+		//this.Textures(n) = AnimatedBlock.BlockTexturesTemp[AnimationNames[n] + "_" + (j + columns[n] * i)];
 	}
 
 	public override void ResultFunction(int Result)
 	{
 		if (Result == 0)
 		{
-			Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Name + " used~Surf!", this);
+			Screen.TextBox.Show(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Name + " used~Surf!", this);
 			GameVariables.Level.Surfing = true;
 			GameVariables.Camera.Move(1);
 			//PlayerStatistics.Track("Surf used", 1);
@@ -230,10 +232,10 @@ public class AnimatedBlock : Entity
 				var withBlock = GameVariables.Level.OwnPlayer;
 				GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
-				int pokemonNumber = GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Number;
-				string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
-				if (GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).IsShiny)
-					SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon));
+				int pokemonNumber = (int)GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Species;
+				string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
+				if (GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].IsShiny)
+					SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
 
 				withBlock.SetTexture(SkinName, false);
 
@@ -249,9 +251,9 @@ public class AnimatedBlock : Entity
 
 	public override void Render()
 	{
-		bool setRasterizerState = this.Model.ID != 0;
-
-		this.Draw(this.Model, Textures, setRasterizerState);
+		//bool setRasterizerState = this.Model.ID != 0;
+		//
+		//this.Draw(this.Model, Textures, setRasterizerState);
 	}
 }
 }

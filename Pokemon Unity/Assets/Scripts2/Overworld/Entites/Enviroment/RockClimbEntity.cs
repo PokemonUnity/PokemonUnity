@@ -1,7 +1,8 @@
-﻿using PokemonUnity.Player;
+﻿using PokemonUnity.Character;
 using PokemonUnity.Pokemon;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -85,7 +86,7 @@ public class RockClimbEntity : Entity
         if (facing < 0)
             facing += 4;
 
-        GameVariables.Camera.PlannedMovement = Vector3.Zero;
+        GameVariables.Camera.PlannedMovement = Vector3.zero;
 
         if (GameVariables.Camera.GetPlayerFacingDirection() == facing & !GameVariables.Camera.IsMoving)
         {
@@ -128,7 +129,7 @@ public class RockClimbEntity : Entity
             GameVariables.Level.OverworldPokemon.Visible = false;
             GameVariables.Level.OverworldPokemon.warped = true;
 
-            string tempSkin = GameVariables.playerTrainer.Skin;
+            string tempSkin = "";//GameVariables.playerTrainer.Skin;
 
             Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
@@ -160,7 +161,7 @@ public class RockClimbEntity : Entity
     {
         int facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
 
-        GameVariables.Camera.PlannedMovement = Vector3.Zero;
+        GameVariables.Camera.PlannedMovement = Vector3.zero;
 
         if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
         {
@@ -203,11 +204,11 @@ public class RockClimbEntity : Entity
             GameVariables.Level.OverworldPokemon.Visible = false;
             GameVariables.Level.OverworldPokemon.warped = true;
 
-            string tempSkin = GameVariables.playerTrainer.Skin;
+            string tempSkin = "";//GameVariables.playerTrainer.Skin;
 
             Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
-            GameVariables.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
+            //GameVariables.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             GameVariables.Level.OwnPlayer.ChangeTexture();
 
             string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + (int)RockClimbPokemon.Species + ")" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@player.setmovement(" + GameVariables.Camera.GetMoveDirection().x + ",-1," + GameVariables.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;

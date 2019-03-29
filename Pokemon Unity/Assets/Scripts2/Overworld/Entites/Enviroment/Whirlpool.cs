@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using PokemonUnity.Pokemon;
-using PokemonUnity.Player;
+using PokemonUnity.Character;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -16,7 +17,7 @@ public class Whirlpool : Entity
     {
         base.Initialize();
 
-        WaterAnimation = new Animation(TextureManager.GetTexture(@"Textures\Routes"), 1, 4, 16, 16, 9, 12, 0);
+        //WaterAnimation = new Animation(TextureManager.GetTexture(@"Textures\Routes"), 1, 4, 16, 16, 9, 12, 0);
 
         if (!Whirlpool.LoadedWaterTemp)
         {
@@ -25,29 +26,29 @@ public class Whirlpool : Entity
 
     public static void CreateWaterTextureTemp()
     {
-        if (Core.GameOptions.GraphicStyle == 1)
-        {
-            Whirlpool.WaterTexturesTemp.Clear();
-
-            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(0, 176, 16, 16)));
-            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(16, 176, 16, 16)));
-            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(32, 176, 16, 16)));
-            Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(48, 176, 16, 16)));
-            Whirlpool.LoadedWaterTemp = true;
-        }
+        //if (Core.GameOptions.GraphicStyle == 1)
+        //{
+        //    Whirlpool.WaterTexturesTemp.Clear();
+		//
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(0, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(16, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(32, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(48, 176, 16, 16)));
+        //    Whirlpool.LoadedWaterTemp = true;
+        //}
     }
 
     public override void UpdateEntity()
     {
         if (WaterAnimation != null)
         {
-            WaterAnimation.Update(0.01f);
-            if (currentRectangle != WaterAnimation.TextureRectangle)
-            {
-                ChangeTexture();
-
-                currentRectangle = WaterAnimation.TextureRectangle;
-            }
+            //WaterAnimation.Update(0.01f);
+            //if (currentRectangle != WaterAnimation.TextureRectangle)
+            //{
+            //    ChangeTexture();
+			//
+            //    currentRectangle = WaterAnimation.TextureRectangle;
+            //}
         }
 
         base.UpdateEntity();
@@ -55,34 +56,34 @@ public class Whirlpool : Entity
 
     private void ChangeTexture()
     {
-        if (Core.GameOptions.GraphicStyle == 1)
-        {
-            if (!Whirlpool.LoadedWaterTemp)
-                Whirlpool.CreateWaterTextureTemp();
-            switch (WaterAnimation.CurrentColumn)
-            {
-                case 0:
-                    {
-                        this.Textures[0] = Whirlpool.WaterTexturesTemp[0];
-                        break;
-                    }
-                case 1:
-                    {
-                        this.Textures[0] = Whirlpool.WaterTexturesTemp[1];
-                        break;
-                    }
-                case 2:
-                    {
-                        this.Textures[0] = Whirlpool.WaterTexturesTemp[2];
-                        break;
-                    }
-                case 3:
-                    {
-                        this.Textures[0] = Whirlpool.WaterTexturesTemp[3];
-                        break;
-                    }
-            }
-        }
+        //if (Core.GameOptions.GraphicStyle == 1)
+        //{
+        //    if (!Whirlpool.LoadedWaterTemp)
+        //        Whirlpool.CreateWaterTextureTemp();
+        //    switch (WaterAnimation.CurrentColumn)
+        //    {
+        //        case 0:
+        //            {
+        //                this.Textures[0] = Whirlpool.WaterTexturesTemp[0];
+        //                break;
+        //            }
+        //        case 1:
+        //            {
+        //                this.Textures[0] = Whirlpool.WaterTexturesTemp[1];
+        //                break;
+        //            }
+        //        case 2:
+        //            {
+        //                this.Textures[0] = Whirlpool.WaterTexturesTemp[2];
+        //                break;
+        //            }
+        //        case 3:
+        //            {
+        //                this.Textures[0] = Whirlpool.WaterTexturesTemp[3];
+        //                break;
+        //            }
+        //    }
+        //}
     }
 
     public override void Render()

@@ -15,14 +15,15 @@ static class Extensions
 
     public static Texture2D Copy(this Texture2D t)
     {
-        Texture2D newT = new Texture2D(Core.GraphicsDevice, t.width, t.height);
-
-        Color[] cArr = new Color[newT.width * newT.height - 1 + 1];
-        t.GetData(cArr);
-
-        newT.SetData(cArr);
-
-        return newT;
+		//Texture2D newT = new Texture2D(Core.GraphicsDevice, t.width, t.height);
+		//
+		//Color[] cArr = new Color[newT.width * newT.height - 1 + 1];
+		//t.GetData(cArr);
+		//
+		//newT.SetData(cArr);
+		//
+		//return newT;
+		return t;
     }
 
     public static string GetSplit(this string fullString, int valueIndex, string seperator)
@@ -266,37 +267,38 @@ static class Extensions
 
     public static Texture2D ReplaceColors(this Texture2D t, Color[] InputColors, Color[] OutputColors)
     {
-        Texture2D newTexture = new Texture2D(Core.GraphicsDevice, t.width, t.height);
-
-        if (InputColors.Length == OutputColors.Length & InputColors.Length > 0)
-        {
-            Color[] Data = new Color[t.width * t.height - 1 + 1];
-            List<Color> newData = new List<Color>();
-            t.GetData(0, null/* TODO Change to default(_) if this is not a reference type */, Data, 0, t.width * t.height);
-
-            for (var i = 0; i <= Data.Length - 1; i++)
-            {
-                Color c = Data[i];
-                if (InputColors.Contains(c))
-                {
-                    for (var iC = 0; iC <= InputColors.Length - 1; iC++)
-                    {
-                        if (InputColors[iC] == c)
-                        {
-                            c = OutputColors[iC];
-                            break;
-                        }
-                    }
-                }
-                newData.Add(c);
-            }
-
-            newTexture.SetData(newData.ToArray());
-        }
-        else
-            newTexture = t;
-
-        return newTexture;
+		//Texture2D newTexture = new Texture2D(Core.GraphicsDevice, t.width, t.height);
+		//
+		//if (InputColors.Length == OutputColors.Length & InputColors.Length > 0)
+		//{
+		//    Color[] Data = new Color[t.width * t.height - 1 + 1];
+		//    List<Color> newData = new List<Color>();
+		//    t.GetData(0, null/* TODO Change to default(_) if this is not a reference type */, Data, 0, t.width * t.height);
+		//
+		//    for (var i = 0; i <= Data.Length - 1; i++)
+		//    {
+		//        Color c = Data[i];
+		//        if (InputColors.Contains(c))
+		//        {
+		//            for (var iC = 0; iC <= InputColors.Length - 1; iC++)
+		//            {
+		//                if (InputColors[iC] == c)
+		//                {
+		//                    c = OutputColors[iC];
+		//                    break;
+		//                }
+		//            }
+		//        }
+		//        newData.Add(c);
+		//    }
+		//
+		//    newTexture.SetData(newData.ToArray());
+		//}
+		//else
+		//    newTexture = t;
+		//
+		//return newTexture;
+		return t;
     }
 
     public static double xRoot(this int root, double number)
@@ -371,7 +373,7 @@ static class Extensions
         foreach (int c in chances)
             totalNumber += c;
 
-        int r = PokemonUnity.Settings.Ramd.Next(0, totalNumber + 1);
+        int r = PokemonUnity.Settings.Rand.Next(0, totalNumber + 1);
 
         int x = 0;
         for (var i = 0; i <= chances.Count - 1; i++)

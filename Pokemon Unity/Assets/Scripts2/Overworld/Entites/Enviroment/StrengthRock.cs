@@ -1,5 +1,6 @@
-﻿using PokemonUnity.Player;
+﻿using PokemonUnity.Character;
 using PokemonUnity.Pokemon;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -89,7 +90,7 @@ public class StrengthRock : Entity
 
             SoundManager.PlayPokemonCry(pNumber);
             Screen.TextBox.Show(pName + " used~Strength!", null, true, false);
-            PlayerStatistics.Track("Strength used", 1);
+            //PlayerStatistics.Track("Strength used", 1);
         }
     }
 
@@ -122,7 +123,7 @@ public class StrengthRock : Entity
         Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1f, newPosition.z);
         foreach (Entity Floor in GameVariables.Level.Floors)
         {
-            if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)
+            if (Floor.boundingBox.Contains(Position2D))// == ContainmentType.Contains
                 HasFloor = true;
         }
 
@@ -131,7 +132,7 @@ public class StrengthRock : Entity
 
         foreach (Entity Entity in GameVariables.Level.Entities)
         {
-            if (Entity.boundingBox.Contains(newPosition) == ContainmentType.Contains)
+            if (Entity.boundingBox.Contains(newPosition))// == ContainmentType.Contains
             {
                 if (Entity.Collision)
                     return false;

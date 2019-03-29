@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Misc
 {
@@ -43,31 +44,31 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	private bool DownloadingSprite = false;
 	private bool CheckForOnlineSprite = false;
 
-	public NetworkPlayer(float X, float Y, float Z, Texture2D[] Textures, string TextureID, int Rotation, int ActionValue, string AdditionalValue, Vector3 Scale, string Name, int ID) : base(X, Y, Z, "NetworkPlayer", Textures,
-		new int[]
-		{
-			0,
-			0
-		}, true, Rotation, Scale, UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f))
-    {
-        this.Name = Name;
-        this.NetworkID = ID;
-        this.faceRotation = Rotation;
-        this.TextureID = TextureID;
-        this.Collision = false;
-        this.NeedsUpdate = true;
-
-
-		AssignFallback(ID);
-
-
-		SetTexture(TextureID);
-
-		ChangeTexture();
-        this.CreateWorldEveryFrame = true;
-
-        this.DropUpdateUnlessDrawn = false;
-    }
+	//public NetworkPlayer(float X, float Y, float Z, Texture2D[] Textures, string TextureID, int Rotation, int ActionValue, string AdditionalValue, Vector3 Scale, string Name, int ID) : base(X, Y, Z, "NetworkPlayer", Textures,
+	//	new int[]
+	//	{
+	//		0,
+	//		0
+	//	}, true, Rotation, Scale, UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f,1,1))
+    //{
+    //    this.Name = Name;
+    //    this.NetworkID = ID;
+    //    this.faceRotation = Rotation;
+    //    this.TextureID = TextureID;
+    //    this.Collision = false;
+    //    this.NeedsUpdate = true;
+	//
+	//
+	//	AssignFallback(ID);
+	//
+	//
+	//	SetTexture(TextureID);
+	//
+	//	ChangeTexture();
+    //    this.CreateWorldEveryFrame = true;
+	//
+    //    this.DropUpdateUnlessDrawn = false;
+    //}
 
 	private void AssignFallback(int ID)
 	{
@@ -84,15 +85,15 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		Texture2D OnlineSprite = null;//* TODO Change to default(_) if this is not a reference type
 		if (this.GameJoltID != "")
 		{
-			if (GameJolt.Emblem.HasDownloadedSprite(this.GameJoltID))
-				OnlineSprite = GameJolt.Emblem.GetOnlineSprite(this.GameJoltID);
-			else
-			{
-				System.Threading.Thread t = new System.Threading.Thread(DownloadOnlineSprite);
-				t.IsBackground = true;
-				t.Start();
-				DownloadingSprite = true;
-			}
+			//if (GameJolt.Emblem.HasDownloadedSprite(this.GameJoltID))
+			//	OnlineSprite = GameJolt.Emblem.GetOnlineSprite(this.GameJoltID);
+			//else
+			//{
+			//	System.Threading.Thread t = new System.Threading.Thread(DownloadOnlineSprite);
+			//	t.IsBackground = true;
+			//	t.Start();
+			//	DownloadingSprite = true;
+			//}
 		}
 
 		if (OnlineSprite != null)
@@ -115,13 +116,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		}
 	}
 
-	private void DownloadOnlineSprite()
-	{
-		Texture2D t = GameJolt.Emblem.GetOnlineSprite(this.GameJoltID);
-
-		if (t != null)
-			this.Texture = t;
-	}
+	//private void DownloadOnlineSprite()
+	//{
+	//	Texture2D t = GameJolt.Emblem.GetOnlineSprite(this.GameJoltID);
+	//
+	//	if (t != null)
+	//		this.Texture = t;
+	//}
 
 	public static string GetTexturePath(string TextureID)
 	{
@@ -171,20 +172,20 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				}
 			}
 
-			Size spriteSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
-
-			int x = 0;
-			if (this.moving)
-				x = GetAnimationX() * spriteSize.width;
-
-			r = new Rectangle(x, spriteSize.height * spriteIndex, spriteSize.width, spriteSize.height);
-
-			if (r != lastRectangle)
-			{
-				lastRectangle = r;
-
-				Textures[0] = TextureManager.GetTexture(this.Texture, r, 1);
-			}
+			//Size spriteSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
+			//
+			//int x = 0;
+			//if (this.moving)
+			//	x = GetAnimationX() * spriteSize.width;
+			//
+			//r = new Rectangle(x, spriteSize.height * spriteIndex, spriteSize.width, spriteSize.height);
+			//
+			//if (r != lastRectangle)
+			//{
+			//	lastRectangle = r;
+			//
+			//	Textures[0] = TextureManager.GetTexture(this.Texture, r, 1);
+			//}
 		}
 	}
 
@@ -279,46 +280,46 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		if (this.Name != this.LastName)
 		{
 			this.LastName = this.Name;
-			this.NameTexture = SpriteFontTextToTexture(FontManager.InGameFont, this.Name);
+			//this.NameTexture = SpriteFontTextToTexture(FontManager.InGameFont, this.Name);
 		}
 
 		Move();
 
-		if (DownloadingSprite && GameJolt.Emblem.HasDownloadedSprite(GameJoltID))
-		{
-			SetTexture(TextureID);
-			ChangeTexture();
-			DownloadingSprite = false;
-		}
+		//if (DownloadingSprite && GameJolt.Emblem.HasDownloadedSprite(GameJoltID))
+		//{
+		//	SetTexture(TextureID);
+		//	ChangeTexture();
+		//	DownloadingSprite = false;
+		//}
 
 		base.Update();
 	}
 
 	public override void Render()
 	{
-		if (ConnectScreen.Connected)
-		{
-			if (IsCorrectScreen())
-			{
-				this.Draw(this.Model, Textures, false);
-				if (Core.GameOptions.ShowGUI)
-				{
-					if (this.NameTexture != null)
-					{
-						var state = GraphicsDevice.DepthStencilState;
-						GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-						Draw(UnityEngine.Mesh.BillModel,
-							new Texture2D[]
-							{
-								this.NameTexture
-							}, false);
-						GraphicsDevice.DepthStencilState = state;
-					}
-					if (this.BusyType != "0")
-						RenderBubble();
-				}
-			}
-		}
+		//if (ConnectScreen.Connected)
+		//{
+		//	if (IsCorrectScreen())
+		//	{
+		//		this.Draw(this.Model, Textures, false);
+		//		if (Core.GameOptions.ShowGUI)
+		//		{
+		//			if (this.NameTexture != null)
+		//			{
+		//				var state = GraphicsDevice.DepthStencilState;
+		//				GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+		//				Draw(UnityEngine.Mesh.BillModel,
+		//					new Texture2D[]
+		//					{
+		//						this.NameTexture
+		//					}, false);
+		//				GraphicsDevice.DepthStencilState = state;
+		//			}
+		//			if (this.BusyType != "0")
+		//				RenderBubble();
+		//		}
+		//	}
+		//}
 	}
 
 	private void RenderBubble()
@@ -349,66 +350,66 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		}
 	}
 
-	private bool IsCorrectScreen()
-	{
-		Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
-		if (screens.Contains(Core.CurrentScreen.Identification))
-			return false;
-		else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
-		{
-			if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
-				return false;
-		}
-		return true;
-	}
+	//private bool IsCorrectScreen()
+	//{
+	//	Screen.Identifications[] screens = new[] { Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen, Screen.Identifications.BattleGrowStatsScreen, Screen.Identifications.BattleScreen, Screen.Identifications.CreditsScreen, Screen.Identifications.BattleAnimationScreen, Screen.Identifications.ViewModelScreen, Screen.Identifications.HallofFameScreen };
+	//	if (screens.Contains(Core.CurrentScreen.Identification))
+	//		return false;
+	//	else if (Core.CurrentScreen.Identification == Screen.Identifications.TransitionScreen)
+	//	{
+	//		if (screens.Contains((TransitionScreen)Core.CurrentScreen.OldScreen.Identification) | screens.Contains((TransitionScreen)Core.CurrentScreen.NewScreen.Identification))
+	//			return false;
+	//	}
+	//	return true;
+	//}
 
-	public void ApplyPlayerData(Servers.Player p)
-	{
-		try
-		{
-			this.NetworkID = p.ServersID;
-
-			this.Position = p.Position;
-
-			this.Name = p.Name;
-
-			if (!p.Skin.StartsWith("[POKEMON|N]") && !p.Skin.StartsWith("[Pokémon|N]") && !p.Skin.StartsWith("[POKEMON|S]") && !p.Skin.StartsWith("[Pokémon|S]"))
-			{
-				if (!string.IsNullOrEmpty(GameJoltID) && !CheckForOnlineSprite)
-				{
-					CheckForOnlineSprite = true;
-					this.SetTexture(p.Skin);
-				}
-			}
-
-			if (this.TextureID != p.Skin)
-				this.SetTexture(p.Skin);
-			this.ChangeTexture();
-
-			this.GameJoltID = p.GameJoltId;
-			this.faceRotation = p.Facing;
-			this.FaceDirection = p.Facing;
-			this.moving = p.Moving;
-			this.LevelFile = p.LevelFile;
-			this.BusyType = p.BusyType.ToString();
-			this.Visible = false;
-
-			if (GameVariables.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
-				this.Visible = true;
-			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
-			{
-				Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
-				this.Position.x += Offset.x;
-				this.Position.y += Offset.y;
-				this.Position.z += Offset.z;
-				this.Visible = true;
-			}
-		}
-		catch (Exception ex)
-		{
-			GameVariables.DebugLog("NetworkPlayer.vb: Error while assigning player data over network: " + ex.Message);
-		}
-	}
+	//public void ApplyPlayerData(Servers.Player p)
+	//{
+	//	try
+	//	{
+	//		this.NetworkID = p.ServersID;
+	//
+	//		this.Position = p.Position;
+	//
+	//		this.Name = p.Name;
+	//
+	//		if (!p.Skin.StartsWith("[POKEMON|N]") && !p.Skin.StartsWith("[Pokémon|N]") && !p.Skin.StartsWith("[POKEMON|S]") && !p.Skin.StartsWith("[Pokémon|S]"))
+	//		{
+	//			if (!string.IsNullOrEmpty(GameJoltID) && !CheckForOnlineSprite)
+	//			{
+	//				CheckForOnlineSprite = true;
+	//				this.SetTexture(p.Skin);
+	//			}
+	//		}
+	//
+	//		if (this.TextureID != p.Skin)
+	//			this.SetTexture(p.Skin);
+	//		this.ChangeTexture();
+	//
+	//		this.GameJoltID = p.GameJoltId;
+	//		this.faceRotation = p.Facing;
+	//		this.FaceDirection = p.Facing;
+	//		this.moving = p.Moving;
+	//		this.LevelFile = p.LevelFile;
+	//		this.BusyType = p.BusyType.ToString();
+	//		this.Visible = false;
+	//
+	//		if (GameVariables.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
+	//			this.Visible = true;
+	//		else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
+	//		{
+	//			Offset = LevelLoader.LoadedOffsetMapOffsets(LevelLoader.LoadedOffsetMapNames.IndexOf(p.LevelFile));
+	//			this.Position.x += Offset.x;
+	//			this.Position.y += Offset.y;
+	//			this.Position.z += Offset.z;
+	//			this.Visible = true;
+	//		}
+	//	}
+	//	catch (Exception ex)
+	//	{
+	//		GameVariables.DebugLog("NetworkPlayer.vb: Error while assigning player data over network: " + ex.Message);
+	//	}
+	//}
 
 	public override void ClickFunction()
 	{
@@ -430,32 +431,32 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	private static Dictionary<string, Texture2D> SpriteTextStorage = new Dictionary<string, Texture2D>();
 
-	private static Texture2D SpriteFontTextToTexture(SpriteFont font, string text)
-	{
-		if (text.Length > 0)
-		{
-			if (SpriteTextStorage.ContainsKey(text))
-				return SpriteTextStorage[text];
-			else
-			{
-				Vector2 size = font.MeasureString(text);
-				RenderTarget2D renderTarget = new RenderTarget2D(Core.GraphicsDevice, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y * 3));
-				Core.GraphicsDevice.SetRenderTarget(renderTarget);
-
-				Core.GraphicsDevice.Clear(new UnityEngine.Color(0,0,0,0));//ToDo: Transparent Color, check alpha
-
-				Core.SpriteBatch.Begin();
-				Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new UnityEngine.Color(0, 0, 0, 150));
-				Core.SpriteBatch.DrawString(font, text, Vector2.Zero, UnityEngine.Color.white);
-				Core.SpriteBatch.End();
-
-				Core.GraphicsDevice.SetRenderTarget(null);// TODO Change to default(_) if this is not a reference type 
-				SpriteTextStorage.Add(text, renderTarget);
-
-				return renderTarget;
-			}
-		}
-		return null;// TODO Change to default(_) if this is not a reference type
-	}
+	//private static Texture2D SpriteFontTextToTexture(SpriteFont font, string text)
+	//{
+	//	if (text.Length > 0)
+	//	{
+	//		if (SpriteTextStorage.ContainsKey(text))
+	//			return SpriteTextStorage[text];
+	//		else
+	//		{
+	//			Vector2 size = font.MeasureString(text);
+	//			RenderTarget2D renderTarget = new RenderTarget2D(Core.GraphicsDevice, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y * 3));
+	//			Core.GraphicsDevice.SetRenderTarget(renderTarget);
+	//
+	//			Core.GraphicsDevice.Clear(new UnityEngine.Color(0,0,0,0));//ToDo: Transparent Color, check alpha
+	//
+	//			Core.SpriteBatch.Begin();
+	//			Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new UnityEngine.Color(0, 0, 0, 150));
+	//			Core.SpriteBatch.DrawString(font, text, Vector2.Zero, UnityEngine.Color.white);
+	//			Core.SpriteBatch.End();
+	//
+	//			Core.GraphicsDevice.SetRenderTarget(null);// TODO Change to default(_) if this is not a reference type 
+	//			SpriteTextStorage.Add(text, renderTarget);
+	//
+	//			return renderTarget;
+	//		}
+	//	}
+	//	return null;// TODO Change to default(_) if this is not a reference type
+	//}
 }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using PokemonUnity;
 using PokemonUnity.Overworld.Entity.Misc;
 using PokemonUnity.Overworld.Entity.Environment;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity
 {
@@ -74,8 +75,8 @@ public class Entity : BaseEntity
 	//private static RasterizerState newRasterizerState;
 	//private static RasterizerState oldRasterizerState;
 
-	private UnityEngine.Vector3 BoundingPositionCreated = new UnityEngine.Vector3(1110);
-	private UnityEngine.Vector3 BoundingRotationCreated = new UnityEngine.Vector3(-1);
+	private UnityEngine.Vector3 BoundingPositionCreated = new UnityEngine.Vector3(1110,1110,1110);
+	private UnityEngine.Vector3 BoundingRotationCreated = new UnityEngine.Vector3(-1,-1,-1);
 
 	public int HasEqualTextures = -1;
 
@@ -129,7 +130,7 @@ public class Entity : BaseEntity
 		//		new UnityEngine.Vector3(-0.5f), 
 		//		Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position), 
 		//	//UnityEngine.Vector3.Transform(
-		//		new UnityEngine.Vector3(0.5f), 
+		//		new UnityEngine.Vector3(0.5f, 0.5f, 0.5f), 
 		//		Matrix.CreateScale(boundingBoxScale) * Matrix.CreateTranslation(Position));
 
 		this.BoundingPositionCreated = this.Position;
@@ -711,7 +712,7 @@ public class Entity : BaseEntity
 				//if (setRasterizerState)
 				//	Core.GraphicsDevice.RasterizerState = newRasterizerState;
 
-				Model.Draw(this, Textures);
+				//Model.Draw(this, Textures);
 
 				//if (setRasterizerState)
 				//	Core.GraphicsDevice.RasterizerState = oldRasterizerState;
@@ -720,8 +721,8 @@ public class Entity : BaseEntity
 
 				if (this.EntityID != Entities.Floor & this.EntityID != Entities.Water)
 				{
-					if (drawViewBox)
-						BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, new UnityEngine.Color(240,128,128));
+					//if (drawViewBox)
+					//	BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, new UnityEngine.Color(240,128,128));
 				}
 			}
 			else
@@ -767,7 +768,7 @@ public class Entity : BaseEntity
 
 	public bool IsInFieldOfView()
 	{
-		if (GameVariables.Camera.BoundingFrustum.Contains(this.ViewBox) != ContainmentType.Disjoint)
+		if (GameVariables.Camera.BoundingFrustum.Contains(this.ViewBox))// != ContainmentType.Disjoint
 		{
 			this._visibleLastFrame = true;
 			return true;

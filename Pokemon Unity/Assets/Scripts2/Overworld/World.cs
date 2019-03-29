@@ -169,392 +169,392 @@ public class World
 
     public static void SetRenderDistance(EnvironmentTypes EnvironmentType, Weathers Weather)
     {
-        if (Weather == Weathers.Fog)
-        {
-            Screen.Effect.FogStart = -40;
-            Screen.Effect.FogEnd = 12;
+        //if (Weather == Weathers.Fog)
+        //{
+        //    Screen.Effect.FogStart = -40;
+        //    Screen.Effect.FogEnd = 12;
+		//
+        //    GameVariables.Camera.FarPlane = 15;
+        //    goto endsub;
+        //}
+		//
+        //if (Weather == Weathers.Blizzard)
+        //{
+        //    Screen.Effect.FogStart = -40;
+        //    Screen.Effect.FogEnd = 20;
+		//
+        //    GameVariables.Camera.FarPlane = 24;
+        //    goto endsub;
+        //}
+		//
+        //if (Weather == Weathers.Thunderstorm)
+        //{
+        //    Screen.Effect.FogStart = -40;
+        //    Screen.Effect.FogEnd = 20;
+		//
+        //    GameVariables.Camera.FarPlane = 24;
+        //    goto endsub;
+        //}
+		//
+        //switch (EnvironmentType)
+        //{
+        //    case EnvironmentTypes.Cave:
+        //    case EnvironmentTypes.Dark:
+        //    case EnvironmentTypes.Forest:
+        //        {
+        //            switch (Core.GameOptions.RenderDistance)
+        //            {
+        //                case 0:
+        //                    {
+        //                        Screen.Effect.FogStart = -2;
+        //                        Screen.Effect.FogEnd = 19;
+		//
+        //                        GameVariables.Camera.FarPlane = 20;
+        //                        break;
+        //                    }
+        //                case 1:
+        //                    {
+        //                        Screen.Effect.FogStart = -2;
+        //                        Screen.Effect.FogEnd = 39;
+		//
+        //                        GameVariables.Camera.FarPlane = 40;
+        //                        break;
+        //                    }
+        //                case 2:
+        //                    {
+        //                        Screen.Effect.FogStart = -2;
+        //                        Screen.Effect.FogEnd = 59;
+		//
+        //                        GameVariables.Camera.FarPlane = 60;
+        //                        break;
+        //                    }
+        //                case 3:
+        //                    {
+        //                        Screen.Effect.FogStart = -5;
+        //                        Screen.Effect.FogEnd = 79;
+		//
+        //                        GameVariables.Camera.FarPlane = 80;
+        //                        break;
+        //                    }
+        //                case 4:
+        //                    {
+        //                        Screen.Effect.FogStart = -20;
+        //                        Screen.Effect.FogEnd = 99;
+		//
+        //                        GameVariables.Camera.FarPlane = 100;
+        //                        break;
+        //                    }
+        //            }
+		//
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Inside:
+        //        {
+        //            switch (Core.GameOptions.RenderDistance)
+        //            {
+        //                case 0:
+        //                    {
+        //                        Screen.Effect.FogStart = 16;
+        //                        Screen.Effect.FogEnd = 19;
+		//
+        //                        GameVariables.Camera.FarPlane = 20;
+        //                        break;
+        //                    }
+        //                case 1:
+        //                    {
+        //                        Screen.Effect.FogStart = 36;
+        //                        Screen.Effect.FogEnd = 39;
+		//
+        //                        GameVariables.Camera.FarPlane = 40;
+        //                        break;
+        //                    }
+        //                case 2:
+        //                    {
+        //                        Screen.Effect.FogStart = 56;
+        //                        Screen.Effect.FogEnd = 59;
+		//
+        //                        GameVariables.Camera.FarPlane = 60;
+        //                        break;
+        //                    }
+        //                case 3:
+        //                    {
+        //                        Screen.Effect.FogStart = 76;
+        //                        Screen.Effect.FogEnd = 79;
+		//
+        //                        GameVariables.Camera.FarPlane = 80;
+        //                        break;
+        //                    }
+        //                case 4:
+        //                    {
+        //                        Screen.Effect.FogStart = 96;
+        //                        Screen.Effect.FogEnd = 99;
+		//
+        //                        GameVariables.Camera.FarPlane = 100;
+        //                        break;
+        //                    }
+        //            }
+		//
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Outside:
+        //        {
+        //            switch (World.GetTime)
+        //            {
+        //                case DayTime.Night:
+        //                    {
+        //                        switch (Core.GameOptions.RenderDistance)
+        //                        {
+        //                            case 0:
+        //                                {
+        //                                    Screen.Effect.FogStart = -2;
+        //                                    Screen.Effect.FogEnd = 19;
+		//
+        //                                    GameVariables.Camera.FarPlane = 20;
+        //                                    break;
+        //                                }
+        //                            case 1:
+        //                                {
+        //                                    Screen.Effect.FogStart = -2;
+        //                                    Screen.Effect.FogEnd = 39;
+		//
+        //                                    GameVariables.Camera.FarPlane = 40;
+        //                                    break;
+        //                                }
+        //                            case 2:
+        //                                {
+        //                                    Screen.Effect.FogStart = -2;
+        //                                    Screen.Effect.FogEnd = 59;
+		//
+        //                                    GameVariables.Camera.FarPlane = 60;
+        //                                    break;
+        //                                }
+        //                            case 3:
+        //                                {
+        //                                    Screen.Effect.FogStart = -5;
+        //                                    Screen.Effect.FogEnd = 79;
+		//
+        //                                    GameVariables.Camera.FarPlane = 80;
+        //                                    break;
+        //                                }
+        //                            case 4:
+        //                                {
+        //                                    Screen.Effect.FogStart = -20;
+        //                                    Screen.Effect.FogEnd = 99;
+		//
+        //                                    GameVariables.Camera.FarPlane = 100;
+        //                                    break;
+        //                                }
+        //                        }
+		//
+        //                        break;
+        //                    }
+        //                case DayTime.Morning:
+        //                    {
+        //                        switch (Core.GameOptions.RenderDistance)
+        //                        {
+        //                            case 0:
+        //                                {
+        //                                    Screen.Effect.FogStart = 16;
+        //                                    Screen.Effect.FogEnd = 19;
+		//
+        //                                    GameVariables.Camera.FarPlane = 20;
+        //                                    break;
+        //                                }
+        //                            case 1:
+        //                                {
+        //                                    Screen.Effect.FogStart = 36;
+        //                                    Screen.Effect.FogEnd = 39;
+		//
+        //                                    GameVariables.Camera.FarPlane = 40;
+        //                                    break;
+        //                                }
+        //                            case 2:
+        //                                {
+        //                                    Screen.Effect.FogStart = 56;
+        //                                    Screen.Effect.FogEnd = 59;
+		//
+        //                                    GameVariables.Camera.FarPlane = 60;
+        //                                    break;
+        //                                }
+        //                            case 3:
+        //                                {
+        //                                    Screen.Effect.FogStart = 76;
+        //                                    Screen.Effect.FogEnd = 79;
+		//
+        //                                    GameVariables.Camera.FarPlane = 80;
+        //                                    break;
+        //                                }
+        //                            case 4:
+        //                                {
+        //                                    Screen.Effect.FogStart = 96;
+        //                                    Screen.Effect.FogEnd = 99;
+		//
+        //                                    GameVariables.Camera.FarPlane = 100;
+        //                                    break;
+        //                                }
+        //                        }
+		//
+        //                        break;
+        //                    }
+        //                case DayTime.Day:
+        //                    {
+        //                        switch (Core.GameOptions.RenderDistance)
+        //                        {
+        //                            case 0:
+        //                                {
+        //                                    Screen.Effect.FogStart = 16;
+        //                                    Screen.Effect.FogEnd = 19;
+		//
+        //                                    GameVariables.Camera.FarPlane = 20;
+        //                                    break;
+        //                                }
+        //                            case 1:
+        //                                {
+        //                                    Screen.Effect.FogStart = 36;
+        //                                    Screen.Effect.FogEnd = 39;
+		//
+        //                                    GameVariables.Camera.FarPlane = 40;
+        //                                    break;
+        //                                }
+        //                            case 2:
+        //                                {
+        //                                    Screen.Effect.FogStart = 56;
+        //                                    Screen.Effect.FogEnd = 59;
+		//
+        //                                    GameVariables.Camera.FarPlane = 60;
+        //                                    break;
+        //                                }
+        //                            case 3:
+        //                                {
+        //                                    Screen.Effect.FogStart = 76;
+        //                                    Screen.Effect.FogEnd = 79;
+		//
+        //                                    GameVariables.Camera.FarPlane = 80;
+        //                                    break;
+        //                                }
+        //                            case 4:
+        //                                {
+        //                                    Screen.Effect.FogStart = 96;
+        //                                    Screen.Effect.FogEnd = 99;
+		//
+        //                                    GameVariables.Camera.FarPlane = 100;
+        //                                    break;
+        //                                }
+        //                        }
+		//
+        //                        break;
+        //                    }
+        //                case DayTime.Evening:
+        //                    {
+        //                        switch (Core.GameOptions.RenderDistance)
+        //                        {
+        //                            case 0:
+        //                                {
+        //                                    Screen.Effect.FogStart = 0;
+        //                                    Screen.Effect.FogEnd = 19;
+		//
+        //                                    GameVariables.Camera.FarPlane = 20;
+        //                                    break;
+        //                                }
+        //                            case 1:
+        //                                {
+        //                                    Screen.Effect.FogStart = 0;
+        //                                    Screen.Effect.FogEnd = 39;
+		//
+        //                                    GameVariables.Camera.FarPlane = 40;
+        //                                    break;
+        //                                }
+        //                            case 2:
+        //                                {
+        //                                    Screen.Effect.FogStart = 0;
+        //                                    Screen.Effect.FogEnd = 59;
+		//
+        //                                    GameVariables.Camera.FarPlane = 60;
+        //                                    break;
+        //                                }
+        //                            case 3:
+        //                                {
+        //                                    Screen.Effect.FogStart = 0;
+        //                                    Screen.Effect.FogEnd = 79;
+		//
+        //                                    GameVariables.Camera.FarPlane = 80;
+        //                                    break;
+        //                                }
+        //                            case 4:
+        //                                {
+        //                                    Screen.Effect.FogStart = 0;
+        //                                    Screen.Effect.FogEnd = 99;
+		//
+        //                                    GameVariables.Camera.FarPlane = 100;
+        //                                    break;
+        //                                }
+        //                        }
+		//
+        //                        break;
+        //                    }
+        //            }
+		//
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Underwater:
+        //        {
+        //            switch (Core.GameOptions.RenderDistance)
+        //            {
+        //                case 0:
+        //                    {
+        //                        Screen.Effect.FogStart = 0;
+        //                        Screen.Effect.FogEnd = 19;
+		//
+        //                        GameVariables.Camera.FarPlane = 20;
+        //                        break;
+        //                    }
+        //                case 1:
+        //                    {
+        //                        Screen.Effect.FogStart = 0;
+        //                        Screen.Effect.FogEnd = 39;
+		//
+        //                        GameVariables.Camera.FarPlane = 40;
+        //                        break;
+        //                    }
+        //                case 2:
+        //                    {
+        //                        Screen.Effect.FogStart = 0;
+        //                        Screen.Effect.FogEnd = 59;
+		//
+        //                        GameVariables.Camera.FarPlane = 60;
+        //                        break;
+        //                    }
+        //                case 3:
+        //                    {
+        //                        Screen.Effect.FogStart = 0;
+        //                        Screen.Effect.FogEnd = 79;
+		//
+        //                        GameVariables.Camera.FarPlane = 80;
+        //                        break;
+        //                    }
+        //                case 4:
+        //                    {
+        //                        Screen.Effect.FogStart = 0;
+        //                        Screen.Effect.FogEnd = 99;
+		//
+        //                        GameVariables.Camera.FarPlane = 100;
+        //                        break;
+        //                    }
+        //            }
+		//
+        //            break;
+        //        }
+        //}
+		//
+        //if (Core.GameOptions.RenderDistance >= 5)
+        //{
+        //    Screen.Effect.FogStart = 999;
+        //    Screen.Effect.FogEnd = 1000;
+		//
+        //    GameVariables.Camera.FarPlane = 1000;
+        //}
 
-            GameVariables.Camera.FarPlane = 15;
-            goto endsub;
-        }
-
-        if (Weather == Weathers.Blizzard)
-        {
-            Screen.Effect.FogStart = -40;
-            Screen.Effect.FogEnd = 20;
-
-            GameVariables.Camera.FarPlane = 24;
-            goto endsub;
-        }
-
-        if (Weather == Weathers.Thunderstorm)
-        {
-            Screen.Effect.FogStart = -40;
-            Screen.Effect.FogEnd = 20;
-
-            GameVariables.Camera.FarPlane = 24;
-            goto endsub;
-        }
-
-        switch (EnvironmentType)
-        {
-            case EnvironmentTypes.Cave:
-            case EnvironmentTypes.Dark:
-            case EnvironmentTypes.Forest:
-                {
-                    switch (Core.GameOptions.RenderDistance)
-                    {
-                        case 0:
-                            {
-                                Screen.Effect.FogStart = -2;
-                                Screen.Effect.FogEnd = 19;
-
-                                GameVariables.Camera.FarPlane = 20;
-                                break;
-                            }
-                        case 1:
-                            {
-                                Screen.Effect.FogStart = -2;
-                                Screen.Effect.FogEnd = 39;
-
-                                GameVariables.Camera.FarPlane = 40;
-                                break;
-                            }
-                        case 2:
-                            {
-                                Screen.Effect.FogStart = -2;
-                                Screen.Effect.FogEnd = 59;
-
-                                GameVariables.Camera.FarPlane = 60;
-                                break;
-                            }
-                        case 3:
-                            {
-                                Screen.Effect.FogStart = -5;
-                                Screen.Effect.FogEnd = 79;
-
-                                GameVariables.Camera.FarPlane = 80;
-                                break;
-                            }
-                        case 4:
-                            {
-                                Screen.Effect.FogStart = -20;
-                                Screen.Effect.FogEnd = 99;
-
-                                GameVariables.Camera.FarPlane = 100;
-                                break;
-                            }
-                    }
-
-                    break;
-                }
-            case EnvironmentTypes.Inside:
-                {
-                    switch (Core.GameOptions.RenderDistance)
-                    {
-                        case 0:
-                            {
-                                Screen.Effect.FogStart = 16;
-                                Screen.Effect.FogEnd = 19;
-
-                                GameVariables.Camera.FarPlane = 20;
-                                break;
-                            }
-                        case 1:
-                            {
-                                Screen.Effect.FogStart = 36;
-                                Screen.Effect.FogEnd = 39;
-
-                                GameVariables.Camera.FarPlane = 40;
-                                break;
-                            }
-                        case 2:
-                            {
-                                Screen.Effect.FogStart = 56;
-                                Screen.Effect.FogEnd = 59;
-
-                                GameVariables.Camera.FarPlane = 60;
-                                break;
-                            }
-                        case 3:
-                            {
-                                Screen.Effect.FogStart = 76;
-                                Screen.Effect.FogEnd = 79;
-
-                                GameVariables.Camera.FarPlane = 80;
-                                break;
-                            }
-                        case 4:
-                            {
-                                Screen.Effect.FogStart = 96;
-                                Screen.Effect.FogEnd = 99;
-
-                                GameVariables.Camera.FarPlane = 100;
-                                break;
-                            }
-                    }
-
-                    break;
-                }
-            case EnvironmentTypes.Outside:
-                {
-                    switch (World.GetTime)
-                    {
-                        case DayTime.Night:
-                            {
-                                switch (Core.GameOptions.RenderDistance)
-                                {
-                                    case 0:
-                                        {
-                                            Screen.Effect.FogStart = -2;
-                                            Screen.Effect.FogEnd = 19;
-
-                                            GameVariables.Camera.FarPlane = 20;
-                                            break;
-                                        }
-                                    case 1:
-                                        {
-                                            Screen.Effect.FogStart = -2;
-                                            Screen.Effect.FogEnd = 39;
-
-                                            GameVariables.Camera.FarPlane = 40;
-                                            break;
-                                        }
-                                    case 2:
-                                        {
-                                            Screen.Effect.FogStart = -2;
-                                            Screen.Effect.FogEnd = 59;
-
-                                            GameVariables.Camera.FarPlane = 60;
-                                            break;
-                                        }
-                                    case 3:
-                                        {
-                                            Screen.Effect.FogStart = -5;
-                                            Screen.Effect.FogEnd = 79;
-
-                                            GameVariables.Camera.FarPlane = 80;
-                                            break;
-                                        }
-                                    case 4:
-                                        {
-                                            Screen.Effect.FogStart = -20;
-                                            Screen.Effect.FogEnd = 99;
-
-                                            GameVariables.Camera.FarPlane = 100;
-                                            break;
-                                        }
-                                }
-
-                                break;
-                            }
-                        case DayTime.Morning:
-                            {
-                                switch (Core.GameOptions.RenderDistance)
-                                {
-                                    case 0:
-                                        {
-                                            Screen.Effect.FogStart = 16;
-                                            Screen.Effect.FogEnd = 19;
-
-                                            GameVariables.Camera.FarPlane = 20;
-                                            break;
-                                        }
-                                    case 1:
-                                        {
-                                            Screen.Effect.FogStart = 36;
-                                            Screen.Effect.FogEnd = 39;
-
-                                            GameVariables.Camera.FarPlane = 40;
-                                            break;
-                                        }
-                                    case 2:
-                                        {
-                                            Screen.Effect.FogStart = 56;
-                                            Screen.Effect.FogEnd = 59;
-
-                                            GameVariables.Camera.FarPlane = 60;
-                                            break;
-                                        }
-                                    case 3:
-                                        {
-                                            Screen.Effect.FogStart = 76;
-                                            Screen.Effect.FogEnd = 79;
-
-                                            GameVariables.Camera.FarPlane = 80;
-                                            break;
-                                        }
-                                    case 4:
-                                        {
-                                            Screen.Effect.FogStart = 96;
-                                            Screen.Effect.FogEnd = 99;
-
-                                            GameVariables.Camera.FarPlane = 100;
-                                            break;
-                                        }
-                                }
-
-                                break;
-                            }
-                        case DayTime.Day:
-                            {
-                                switch (Core.GameOptions.RenderDistance)
-                                {
-                                    case 0:
-                                        {
-                                            Screen.Effect.FogStart = 16;
-                                            Screen.Effect.FogEnd = 19;
-
-                                            GameVariables.Camera.FarPlane = 20;
-                                            break;
-                                        }
-                                    case 1:
-                                        {
-                                            Screen.Effect.FogStart = 36;
-                                            Screen.Effect.FogEnd = 39;
-
-                                            GameVariables.Camera.FarPlane = 40;
-                                            break;
-                                        }
-                                    case 2:
-                                        {
-                                            Screen.Effect.FogStart = 56;
-                                            Screen.Effect.FogEnd = 59;
-
-                                            GameVariables.Camera.FarPlane = 60;
-                                            break;
-                                        }
-                                    case 3:
-                                        {
-                                            Screen.Effect.FogStart = 76;
-                                            Screen.Effect.FogEnd = 79;
-
-                                            GameVariables.Camera.FarPlane = 80;
-                                            break;
-                                        }
-                                    case 4:
-                                        {
-                                            Screen.Effect.FogStart = 96;
-                                            Screen.Effect.FogEnd = 99;
-
-                                            GameVariables.Camera.FarPlane = 100;
-                                            break;
-                                        }
-                                }
-
-                                break;
-                            }
-                        case DayTime.Evening:
-                            {
-                                switch (Core.GameOptions.RenderDistance)
-                                {
-                                    case 0:
-                                        {
-                                            Screen.Effect.FogStart = 0;
-                                            Screen.Effect.FogEnd = 19;
-
-                                            GameVariables.Camera.FarPlane = 20;
-                                            break;
-                                        }
-                                    case 1:
-                                        {
-                                            Screen.Effect.FogStart = 0;
-                                            Screen.Effect.FogEnd = 39;
-
-                                            GameVariables.Camera.FarPlane = 40;
-                                            break;
-                                        }
-                                    case 2:
-                                        {
-                                            Screen.Effect.FogStart = 0;
-                                            Screen.Effect.FogEnd = 59;
-
-                                            GameVariables.Camera.FarPlane = 60;
-                                            break;
-                                        }
-                                    case 3:
-                                        {
-                                            Screen.Effect.FogStart = 0;
-                                            Screen.Effect.FogEnd = 79;
-
-                                            GameVariables.Camera.FarPlane = 80;
-                                            break;
-                                        }
-                                    case 4:
-                                        {
-                                            Screen.Effect.FogStart = 0;
-                                            Screen.Effect.FogEnd = 99;
-
-                                            GameVariables.Camera.FarPlane = 100;
-                                            break;
-                                        }
-                                }
-
-                                break;
-                            }
-                    }
-
-                    break;
-                }
-            case EnvironmentTypes.Underwater:
-                {
-                    switch (Core.GameOptions.RenderDistance)
-                    {
-                        case 0:
-                            {
-                                Screen.Effect.FogStart = 0;
-                                Screen.Effect.FogEnd = 19;
-
-                                GameVariables.Camera.FarPlane = 20;
-                                break;
-                            }
-                        case 1:
-                            {
-                                Screen.Effect.FogStart = 0;
-                                Screen.Effect.FogEnd = 39;
-
-                                GameVariables.Camera.FarPlane = 40;
-                                break;
-                            }
-                        case 2:
-                            {
-                                Screen.Effect.FogStart = 0;
-                                Screen.Effect.FogEnd = 59;
-
-                                GameVariables.Camera.FarPlane = 60;
-                                break;
-                            }
-                        case 3:
-                            {
-                                Screen.Effect.FogStart = 0;
-                                Screen.Effect.FogEnd = 79;
-
-                                GameVariables.Camera.FarPlane = 80;
-                                break;
-                            }
-                        case 4:
-                            {
-                                Screen.Effect.FogStart = 0;
-                                Screen.Effect.FogEnd = 99;
-
-                                GameVariables.Camera.FarPlane = 100;
-                                break;
-                            }
-                    }
-
-                    break;
-                }
-        }
-
-        if (Core.GameOptions.RenderDistance >= 5)
-        {
-            Screen.Effect.FogStart = 999;
-            Screen.Effect.FogEnd = 1000;
-
-            GameVariables.Camera.FarPlane = 1000;
-        }
-
-    endsub:
+    //endsub:
         //;
         GameVariables.Camera.CreateNewProjection(GameVariables.Camera.FOV);
     }
@@ -789,57 +789,57 @@ public class World
 
     private void SetWeatherLevelColor()
     {
-        switch (CurrentMapWeather)
-        {
-            case Weathers.Clear:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(1f, 1f, 1f);
-                    break;
-                }
-            case Weathers.Rain:
-            case Weathers.Thunderstorm:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.4f, 0.4f, 0.7f);
-                    break;
-                }
-            case Weathers.Snow:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.8f, .8f, .8f);
-                    break;
-                }
-            case Weathers.Underwater:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.1f, 0.3f, 0.9f);
-                    break;
-                }
-            case Weathers.Sunny:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(1.6f, 1.3f, 1.3f);
-                    break;
-                }
-            case Weathers.Fog:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.6f);
-                    break;
-                }
-            case Weathers.Sandstorm:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.8f, 0.5f, 0.2f);
-                    break;
-                }
-            case Weathers.Ash:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
-                    break;
-                }
-            case Weathers.Blizzard:
-                {
-                    Screen.Effect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
-                    break;
-                }
-        }
-
-        Screen.Effect.DiffuseColor = Screen.SkyDome.GetWeatherColorMultiplier(Screen.Effect.DiffuseColor);
+        //switch (CurrentMapWeather)
+        //{
+        //    case Weathers.Clear:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(1f, 1f, 1f);
+        //            break;
+        //        }
+        //    case Weathers.Rain:
+        //    case Weathers.Thunderstorm:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.4f, 0.4f, 0.7f);
+        //            break;
+        //        }
+        //    case Weathers.Snow:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.8f, .8f, .8f);
+        //            break;
+        //        }
+        //    case Weathers.Underwater:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.1f, 0.3f, 0.9f);
+        //            break;
+        //        }
+        //    case Weathers.Sunny:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(1.6f, 1.3f, 1.3f);
+        //            break;
+        //        }
+        //    case Weathers.Fog:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.6f);
+        //            break;
+        //        }
+        //    case Weathers.Sandstorm:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.8f, 0.5f, 0.2f);
+        //            break;
+        //        }
+        //    case Weathers.Ash:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.5f, 0.5f, 0.5f);
+        //            break;
+        //        }
+        //    case Weathers.Blizzard:
+        //        {
+        //            Screen.Effect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
+        //            break;
+        //        }
+        //}
+		//
+        //Screen.Effect.DiffuseColor = Screen.SkyDome.GetWeatherColorMultiplier(Screen.Effect.DiffuseColor);
     }
 
     private UnityEngine.Color GetWeatherBackgroundColor(UnityEngine.Color defaultColor)
@@ -898,60 +898,60 @@ public class World
 
     private void ChangeEnvironment()
     {
-        switch (this.EnvironmentType)
-        {
-            case EnvironmentTypes.Outside:
-                {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(SkyDome.GetDaytimeColor(false));
-                    Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    if (IsAurora)
-                        Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\AuroraBoralis");
-                    else
-                        Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds1");
-                    Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\Stars");
-                    break;
-                }
-            case EnvironmentTypes.Inside:
-                {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(173, 216, 255));
-                    Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds");
-                    Screen.SkyDome.TextureDown = null;
-                    break;
-                }
-            case EnvironmentTypes.Dark:
-                {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(29, 29, 50));
-                    Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Dark");
-                    Screen.SkyDome.TextureDown = null;
-                    break;
-                }
-            case EnvironmentTypes.Cave:
-                {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(34, 19, 12));
-                    Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Cave");
-                    Screen.SkyDome.TextureDown = null;
-                    break;
-                }
-            case EnvironmentTypes.Underwater:
-                {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(19, 54, 117));
-                    Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Underwater");
-                    Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\UnderwaterGround");
-                    break;
-                }
-            case EnvironmentTypes.Forest:
-                {
-                    Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(30, 66, 21));
-                    Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
-                    Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Forest");
-                    Screen.SkyDome.TextureDown = null;
-                    break;
-                }
-        }
+        //switch (this.EnvironmentType)
+        //{
+        //    case EnvironmentTypes.Outside:
+        //        {
+        //            Core.BackgroundColor = GetWeatherBackgroundColor(SkyDome.GetDaytimeColor(false));
+        //            Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
+        //            if (IsAurora)
+        //                Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\AuroraBoralis");
+        //            else
+        //                Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds1");
+        //            Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\Stars");
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Inside:
+        //        {
+        //            Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(173, 216, 255));
+        //            Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
+        //            Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds");
+        //            Screen.SkyDome.TextureDown = null;
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Dark:
+        //        {
+        //            Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(29, 29, 50));
+        //            Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
+        //            Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Dark");
+        //            Screen.SkyDome.TextureDown = null;
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Cave:
+        //        {
+        //            Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(34, 19, 12));
+        //            Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
+        //            Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Cave");
+        //            Screen.SkyDome.TextureDown = null;
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Underwater:
+        //        {
+        //            Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(19, 54, 117));
+        //            Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
+        //            Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Underwater");
+        //            Screen.SkyDome.TextureDown = TextureManager.GetTexture(@"SkyDomeResource\UnderwaterGround");
+        //            break;
+        //        }
+        //    case EnvironmentTypes.Forest:
+        //        {
+        //            Core.BackgroundColor = GetWeatherBackgroundColor(new UnityEngine.Color(30, 66, 21));
+        //            Screen.Effect.FogColor = Core.BackgroundColor.ToVector3();
+        //            Screen.SkyDome.TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Forest");
+        //            Screen.SkyDome.TextureDown = null;
+        //            break;
+        //        }
+        //}
     }
 
     private static Vector2 WeatherOffset = new Vector2(0, 0);
@@ -1037,16 +1037,16 @@ public class World
                         {
                             T = TextureManager.GetTexture(@"Textures\Weather\bubble");
 
-                            if (Settings.Rand.Next(0, 100) == 0)
-                                ObjectsList.Add(new Rectangle(Settings.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
-
-                            for (var i = 0; i <= ObjectsList.Count - 1; i++)
-                            {
-                                Rectangle r = ObjectsList[i];
-                                ObjectsList[i] = new Rectangle(r.x, r.y - 2, r.width, r.height);
-
-                                Core.SpriteBatch.Draw(T, ObjectsList[i], new UnityEngine.Color(255, 255, 255, 150));
-                            }
+                            //if (Settings.Rand.Next(0, 100) == 0)
+                            //    ObjectsList.Add(new Rectangle(Settings.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
+							//
+                            //for (var i = 0; i <= ObjectsList.Count - 1; i++)
+                            //{
+                            //    Rectangle r = ObjectsList[i];
+                            //    ObjectsList[i] = new Rectangle(r.x, r.y - 2, r.width, r.height);
+							//
+                            //    Core.SpriteBatch.Draw(T, ObjectsList[i], new UnityEngine.Color(255, 255, 255, 150));
+                            //}
 
                             break;
                         }
@@ -1076,11 +1076,11 @@ public class World
                     case Weathers.Blizzard:
                     case Weathers.Thunderstorm:
                         {
-                            for (var x = -size; x <= Core.windowSize.width; x += size)
-                            {
-                                for (var y = -size; y <= Core.windowSize.height; y += size)
-                                    Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.x), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new UnityEngine.Color(255, 255, 255, opacity));
-                            }
+                            //for (var x = -size; x <= Core.windowSize.width; x += size)
+                            //{
+                            //    for (var y = -size; y <= Core.windowSize.height; y += size)
+                            //        Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.x), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new UnityEngine.Color(255, 255, 255, opacity));
+                            //}
 
                             break;
                         }
@@ -1101,152 +1101,152 @@ public class World
             }
         }
 
-        if (!LevelLoader.IsBusy)
-        {
-            Screen.Identifications[] validScreen = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen };
-            if (validScreen.Contains(Core.CurrentScreen.Identification))
-            {
-                if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-                {
-                    if (!(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
-                        return;
-                }
-
-                Texture2D T = null;// TODO Change to default(_) if this is not a reference type
-
-                float speed;
-                Vector3 scale = new Vector3(1,1,1);
-                int range = 3;
-
-                switch (MapWeather)
-                {
-                    case Weathers.Rain:
-                        {
-                            speed = 0.1f;
-                            T = TextureManager.GetTexture(@"Textures\Weather\rain3");
-                            if (chance > -1)
-                                chance = 3;
-                            scale = new Vector3(0.03f, 0.06f, 0.1f);
-                            break;
-                        }
-                    case Weathers.Thunderstorm:
-                        {
-                            speed = 0.15f;
-                            switch (Settings.Rand.Next(0, 4))
-                            {
-                                case 0:
-                                    {
-                                        T = TextureManager.GetTexture(@"Textures\Weather\rain2");
-                                        scale = new Vector3(0.1f, 0.1f, 0.1f);
-                                        break;
-                                    }
-
-                                default:
-                                    {
-                                        T = TextureManager.GetTexture(@"Textures\Weather\rain3");
-                                        scale = new Vector3(0.03f, 0.06f, 0.1f);
-                                        break;
-                                    }
-                            }
-                            if (chance > -1)
-                                chance = 1;
-                            break;
-                        }
-                    case Weathers.Snow:
-                        {
-                            speed = 0.02f;
-                            T = TextureManager.GetTexture(@"Textures\Weather\snow2");
-                            if (chance > -1)
-                                chance = 5;
-                            scale = new Vector3(0.03f, 0.03f, 0.1f);
-                            break;
-                        }
-                    case Weathers.Underwater:
-                        {
-                            speed = -0.02f;
-                            T = TextureManager.GetTexture(@"Textures\Weather\bubble");
-                            if (chance > -1)
-                                chance = 60;
-                            scale = new Vector3(0.5f);
-                            range = 1;
-                            break;
-                        }
-                    case Weathers.Sandstorm:
-                        {
-                            speed = 0.1f;
-                            T = TextureManager.GetTexture(@"Textures\Weather\sand");
-                            if (chance > -1)
-                                chance = 4;
-                            scale = new Vector3(0.03f, 0.03f, 0.1f);
-                            break;
-                        }
-                    case Weathers.Ash:
-                        {
-                            speed = 0.02f;
-                            T = TextureManager.GetTexture(@"Textures\Weather\ash");
-                            if (chance > -1)
-                                chance = 20;
-                            scale = new Vector3(0.03f, 0.03f, 0.1f);
-                            break;
-                        }
-                    case Weathers.Blizzard:
-                        {
-                            speed = 0.1f;
-                            T = TextureManager.GetTexture(@"Textures\Weather\snow");
-                            if (chance > -1)
-                                chance = 1;
-                            scale = new Vector3(0.12f, 0.12f, 0.1f);
-                            break;
-                        }
-                }
-
-                if (chance == -1)
-                    chance = 1;
-
-                Vector3 cameraPosition = GameVariables.Camera.Position;
-                if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-                    cameraPosition = (OverworldCamera)GameVariables.Camera.CPosition;
-                else if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-                    cameraPosition = (BattleCamera)GameVariables.Camera.CPosition;
-
-                if (Settings.Rand.Next(0, chance) == 0)
-                {
-                    for (var x = cameraPosition.x - range; x <= cameraPosition.x + range; x++)
-                    {
-                        for (var z = cameraPosition.z - range; z <= cameraPosition.z + range; z++)
-                        {
-                            if (z != 0 | x != 0)
-                            {
-                                float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0f;
-                                float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
-                                float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
-                                Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, UnityEngine.Mesh.BillModel, new Vector3(1f, 1f, 1f));
-                                p.MoveSpeed = speed;
-                                if (MapWeather == Weathers.Rain)
-                                    p.Opacity = 0.7f;
-                                if (MapWeather == Weathers.Thunderstorm)
-                                    p.Opacity = 1.0f;
-                                if (MapWeather == Weathers.Underwater)
-                                {
-                                    p.Position.y = 0.0f;
-                                    p.Destination = 10;
-                                    p.Behavior = Particle.Behaviors.Rising;
-                                }
-                                if (MapWeather == Weathers.Sandstorm)
-                                {
-                                    p.Behavior = Particle.Behaviors.LeftToRight;
-                                    p.Destination = cameraPosition.x + 5;
-                                    p.Position.x -= 2;
-                                }
-                                if (MapWeather == Weathers.Blizzard)
-                                    p.Opacity = 1.0f;
-                                GameVariables.Level.Entities.Add(p);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //if (!LevelLoader.IsBusy)
+        //{
+        //    Screen.Identifications[] validScreen = new[] { Screen.Identifications.OverworldScreen, Screen.Identifications.BattleScreen, Screen.Identifications.BattleCatchScreen, Screen.Identifications.MainMenuScreen };
+        //    if (validScreen.Contains(Core.CurrentScreen.Identification))
+        //    {
+        //        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+        //        {
+        //            if (!(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
+        //                return;
+        //        }
+		//
+        //        Texture2D T = null;// TODO Change to default(_) if this is not a reference type
+		//
+        //        float speed;
+        //        Vector3 scale = new Vector3(1,1,1);
+        //        int range = 3;
+		//
+        //        switch (MapWeather)
+        //        {
+        //            case Weathers.Rain:
+        //                {
+        //                    speed = 0.1f;
+        //                    T = TextureManager.GetTexture(@"Textures\Weather\rain3");
+        //                    if (chance > -1)
+        //                        chance = 3;
+        //                    scale = new Vector3(0.03f, 0.06f, 0.1f);
+        //                    break;
+        //                }
+        //            case Weathers.Thunderstorm:
+        //                {
+        //                    speed = 0.15f;
+        //                    switch (Settings.Rand.Next(0, 4))
+        //                    {
+        //                        case 0:
+        //                            {
+        //                                T = TextureManager.GetTexture(@"Textures\Weather\rain2");
+        //                                scale = new Vector3(0.1f, 0.1f, 0.1f);
+        //                                break;
+        //                            }
+		//
+        //                        default:
+        //                            {
+        //                                T = TextureManager.GetTexture(@"Textures\Weather\rain3");
+        //                                scale = new Vector3(0.03f, 0.06f, 0.1f);
+        //                                break;
+        //                            }
+        //                    }
+        //                    if (chance > -1)
+        //                        chance = 1;
+        //                    break;
+        //                }
+        //            case Weathers.Snow:
+        //                {
+        //                    speed = 0.02f;
+        //                    T = TextureManager.GetTexture(@"Textures\Weather\snow2");
+        //                    if (chance > -1)
+        //                        chance = 5;
+        //                    scale = new Vector3(0.03f, 0.03f, 0.1f);
+        //                    break;
+        //                }
+        //            case Weathers.Underwater:
+        //                {
+        //                    speed = -0.02f;
+        //                    T = TextureManager.GetTexture(@"Textures\Weather\bubble");
+        //                    if (chance > -1)
+        //                        chance = 60;
+        //                    scale = new Vector3(0.5f, 0.5f, 0.5f);
+        //                    range = 1;
+        //                    break;
+        //                }
+        //            case Weathers.Sandstorm:
+        //                {
+        //                    speed = 0.1f;
+        //                    T = TextureManager.GetTexture(@"Textures\Weather\sand");
+        //                    if (chance > -1)
+        //                        chance = 4;
+        //                    scale = new Vector3(0.03f, 0.03f, 0.1f);
+        //                    break;
+        //                }
+        //            case Weathers.Ash:
+        //                {
+        //                    speed = 0.02f;
+        //                    T = TextureManager.GetTexture(@"Textures\Weather\ash");
+        //                    if (chance > -1)
+        //                        chance = 20;
+        //                    scale = new Vector3(0.03f, 0.03f, 0.1f);
+        //                    break;
+        //                }
+        //            case Weathers.Blizzard:
+        //                {
+        //                    speed = 0.1f;
+        //                    T = TextureManager.GetTexture(@"Textures\Weather\snow");
+        //                    if (chance > -1)
+        //                        chance = 1;
+        //                    scale = new Vector3(0.12f, 0.12f, 0.1f);
+        //                    break;
+        //                }
+        //        }
+		//
+        //        if (chance == -1)
+        //            chance = 1;
+		//
+        //        Vector3 cameraPosition = GameVariables.Camera.Position;
+        //        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+        //            cameraPosition = (OverworldCamera)GameVariables.Camera.CPosition;
+        //        else if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
+        //            cameraPosition = (BattleCamera)GameVariables.Camera.CPosition;
+		//
+        //        if (Settings.Rand.Next(0, chance) == 0)
+        //        {
+        //            for (var x = cameraPosition.x - range; x <= cameraPosition.x + range; x++)
+        //            {
+        //                for (var z = cameraPosition.z - range; z <= cameraPosition.z + range; z++)
+        //                {
+        //                    if (z != 0 | x != 0)
+        //                    {
+        //                        float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0f;
+        //                        float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
+        //                        float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
+        //                        Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, UnityEngine.Mesh.BillModel, new Vector3(1f, 1f, 1f));
+        //                        p.MoveSpeed = speed;
+        //                        if (MapWeather == Weathers.Rain)
+        //                            p.Opacity = 0.7f;
+        //                        if (MapWeather == Weathers.Thunderstorm)
+        //                            p.Opacity = 1.0f;
+        //                        if (MapWeather == Weathers.Underwater)
+        //                        {
+        //                            p.Position.y = 0.0f;
+        //                            p.Destination = 10;
+        //                            p.Behavior = Particle.Behaviors.Rising;
+        //                        }
+        //                        if (MapWeather == Weathers.Sandstorm)
+        //                        {
+        //                            p.Behavior = Particle.Behaviors.LeftToRight;
+        //                            p.Destination = cameraPosition.x + 5;
+        //                            p.Position.x -= 2;
+        //                        }
+        //                        if (MapWeather == Weathers.Blizzard)
+        //                            p.Opacity = 1.0f;
+        //                        GameVariables.Level.Entities.Add(p);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     private static Dictionary<Texture2D, Texture2D> SeasonTextureBuffer = new Dictionary<Texture2D, Texture2D>();

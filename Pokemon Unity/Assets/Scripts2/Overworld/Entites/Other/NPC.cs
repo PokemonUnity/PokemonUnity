@@ -7,7 +7,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 {
 public class NPC : Entity
 {
-	const float STANDARD_SPEED = 0.04f;
+	private const float STANDARD_SPEED = 0.04f;
 
 	public enum Movements
 	{
@@ -145,10 +145,10 @@ public class NPC : Entity
 				PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 		}
 
-		if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
-			this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
-		else
-			this.Texture = TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
+		//if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
+		//	this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
+		//else
+		//	this.Texture = TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
 
 		this.FrameSize = new Vector2(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 
@@ -427,7 +427,7 @@ public class NPC : Entity
 											else
 											{
 												Trainer t = new Trainer(trainerID);
-												InSightMusic = t.GetInSightMusic();
+												//InSightMusic = t.GetInSightMusic();
 											}
 										}
 										else if (line.ToLower().StartsWith("@battle.starttrainer("))
@@ -438,7 +438,7 @@ public class NPC : Entity
 											else
 											{
 												Trainer t = new Trainer(trainerID);
-												InSightMusic = t.GetInSightMusic();
+												//InSightMusic = t.GetInSightMusic();
 											}
 										}
 									}
@@ -507,7 +507,7 @@ public class NPC : Entity
 
 								{
 									var withBlock = (OverworldCamera)GameVariables.Camera;
-									if ((OverworldCamera)GameVariables.Camera.ThirdPerson & !IsOnScreen())
+									if (((OverworldCamera)GameVariables.Camera).ThirdPerson & !IsOnScreen())
 									{
 										s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 										var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
@@ -519,7 +519,7 @@ public class NPC : Entity
 
 
 								GameVariables.Level.OwnPlayer.Opacity = 0.5f;
-								(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
+								((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
 								ActionScript.IsInsightScript = true;
 							}
 						}
@@ -565,19 +565,19 @@ public class NPC : Entity
 
 	public override void Render()
 	{
-		var state = GraphicsDevice.DepthStencilState;
-		GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
-		Draw(this.Model, this.Textures, true);
-		GraphicsDevice.DepthStencilState = state;
+		//var state = GraphicsDevice.DepthStencilState;
+		//GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+		//Draw(this.Model, this.Textures, true);
+		//GraphicsDevice.DepthStencilState = state;
 	}
 
 	private void NPCMovement()
 	{
-		if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-		{
-			if (!(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
-				return;
-		}
+		//if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+		//{
+		//	if (!(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
+		//		return;
+		//}
 		switch (this.Movement)
 		{
 			case Movements.Still:
@@ -736,7 +736,7 @@ public class NPC : Entity
 		Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1f, newPosition.z);
 		foreach (Entity Floor in GameVariables.Level.Floors)
 		{
-			if (Floor.boundingBox.Contains(Position2D) == ContainmentType.Contains)
+			if (Floor.boundingBox.Contains(Position2D))// == ContainmentType.Contains
 				HasFloor = true;
 		}
 
@@ -745,7 +745,7 @@ public class NPC : Entity
 
 		foreach (Entity Entity in GameVariables.Level.Entities)
 		{
-			if (Entity.boundingBox.Contains(newPosition) == ContainmentType.Contains)
+			if (Entity.boundingBox.Contains(newPosition))// == ContainmentType.Contains
 			{
 				if (Entity.Collision)
 					return false;
@@ -879,8 +879,8 @@ public class NPC : Entity
 	private void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in GameVariables.Level.Shaders)
-			Shader.ApplyShader(this);
+		//foreach (Shader Shader in GameVariables.Level.Shaders)
+		//	Shader.ApplyShader(this);
 	}
 
 	internal bool InCameraFocus()
@@ -900,7 +900,7 @@ public class NPC : Entity
 
 	private bool IsOnScreen()
 	{
-		return GameVariables.Camera.BoundingFrustum.Contains(this.Position) != ContainmentType.Disjoint;
+		return GameVariables.Camera.BoundingFrustum.Contains(this.Position);// != ContainmentType.Disjoint
 	}
 }
 }

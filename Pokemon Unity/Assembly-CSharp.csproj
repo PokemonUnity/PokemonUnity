@@ -64,6 +64,8 @@
     <Compile Include="Assets\Scripts2\Overworld\Camera.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Entites\BaseEntity.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Player.cs" />
+    <Compile Include="Assets\Scripts2\Berry.cs" />
+    <Compile Include="Assets\Scripts2\TextureManager.cs" />
     <Compile Include="Assets\Scripts2\Settings.cs" />
     <Compile Include="Assets\Scripts2\Pokedex.cs" />
     <Compile Include="Assets\Scripts2\Battle\Attack.cs" />

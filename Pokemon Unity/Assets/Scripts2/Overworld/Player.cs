@@ -459,7 +459,9 @@ namespace P3D
 		#region Non-base datatypes:
 		public List<Pokemon> Pokemons = new List<Pokemon>();
 		public List<Pokedex> Pokedexes = new List<Pokedex>();
-		public PlayerInventory Inventory = new PlayerInventory();
+		//public PlayerInventory Inventory = new PlayerInventory();
+		//public List<PokemonUnity.Item.Items> Inventory { get { return GameVariables.Bag_Items; } }
+		public GameVariables.TrainerBag Inventory { get { return GameVariables.playerTrainer.Bag; } }
 		public List<int> Badges = new List<int>();
 		public TimeSpan PlayTime;
 		public DateTime GameStart;
@@ -468,7 +470,7 @@ namespace P3D
 		public List<string> EarnedAchievements = new List<string>();
 		public List<int> PokegearModules = new List<int>();
 		public List<string> PhoneContacts = new List<string>();
-		public List<Items.MailItem.MailData> Mails = new List<Items.MailItem.MailData>();
+		public List<PokemonUnity.Item.Item.Mail.MailData> Mails = new List<PokemonUnity.Item.Item.Mail.MailData>();
 		public List<int> Trophies = new List<int>();
 		#endregion
 		
@@ -558,7 +560,7 @@ namespace P3D
 			public static bool[] MapSwitch = new bool[4];
 			public static Vector3 LastPosition;
 			public static bool IsInBattle = false;
-			public static Vector3 BeforeBattlePosition = new Vector3(0);
+			public static Vector3 BeforeBattlePosition = new Vector3(0,0,0);
 			public static string BeforeBattleLevelFile = "yourroom.dat";
 			public static int BeforeBattleFacing = 0;
 			public static int PokedexModeIndex = 0;
@@ -569,9 +571,9 @@ namespace P3D
 			public static int MapSteps = 0;
 			public static int HallOfFameIndex = 0;
 			public static bool PCBoxChooseMode = false;
-			public static StorageSystemScreen.SelectionModes PCSelectionType = StorageSystemScreen.SelectionModes.SingleMove;
+			//public static StorageSystemScreen.SelectionModes PCSelectionType = StorageSystemScreen.SelectionModes.SingleMove;
 			public static decimal RadioStation = 0M;
-			public static GameJolt.PokegearScreen.MenuScreens LastPokegearPage = GameJolt.PokegearScreen.MenuScreens.Main;
+			//public static GameJolt.PokegearScreen.MenuScreens LastPokegearPage = GameJolt.PokegearScreen.MenuScreens.Main;
 		}
 
 		private void ResetTemp()
@@ -598,9 +600,9 @@ namespace P3D
 			Temp.HallOfFameIndex = 0;
 			Temp.PCBoxChooseMode = false;
 			Temp.StorageSystemCursorPosition = new Vector2(1, 0);
-			Temp.PCSelectionType = StorageSystemScreen.SelectionModes.SingleMove;
+			//Temp.PCSelectionType = StorageSystemScreen.SelectionModes.SingleMove;
 			Temp.RadioStation = 0M;
-			Temp.LastPokegearPage = GameJolt.PokegearScreen.MenuScreens.Main;
+			//Temp.LastPokegearPage = GameJolt.PokegearScreen.MenuScreens.Main;
 		}
 
 
@@ -608,19 +610,19 @@ namespace P3D
 		#endregion
 		public void LoadGame(string filePrefix)
 		{
-			foreach (string s in Core.GameOptions.ContentPackNames)
-				ContentPackManager.Load(GameController.GamePath + @"\ContentPacks\" + s + @"\exceptions.dat");
+			//foreach (string s in Core.GameOptions.ContentPackNames)
+			//	ContentPackManager.Load(GameController.GamePath + @"\ContentPacks\" + s + @"\exceptions.dat");
 
-			GameModeManager.CreateGameModesFolder();
-			GameModeManager.CreateKolbenMode();
-
-			ScriptStorage.Clear();
-			ScriptBlock.TriggeredScriptBlock = false;
-			MysteryEventScreen.ClearActivatedEvents();
-			Pokedex.AutoDetect = true;
-			LevelLoader.ClearTempStructures();
-			BattleSystem.BattleScreen.ResetVars();
-			World.RegionWeatherSet = false;
+			//GameModeManager.CreateGameModesFolder();
+			//GameModeManager.CreateKolbenMode();
+			//
+			//ScriptStorage.Clear();
+			//ScriptBlock.TriggeredScriptBlock = false;
+			//MysteryEventScreen.ClearActivatedEvents();
+			//Pokedex.AutoDetect = true;
+			//LevelLoader.ClearTempStructures();
+			//BattleSystem.BattleScreen.ResetVars();
+			PokemonUnity.Overworld.World.RegionWeatherSet = false;
 
 			this.filePrefix = filePrefix;
 			PokeFiles.Clear();
@@ -628,26 +630,26 @@ namespace P3D
 
 			LoadPlayer();
 
-			if (!GameModeManager.GameModeExists(GameMode))
-			{
-				GameMode = "Kolben";
-				GameModeManager.SetGameModePointer("Kolben");
-			}
-			else
-				GameModeManager.SetGameModePointer(GameMode);
+			//if (!GameModeManager.GameModeExists(GameMode))
+			//{
+			//	GameMode = "Kolben";
+			//	GameModeManager.SetGameModePointer("Kolben");
+			//}
+			//else
+			//	GameModeManager.SetGameModePointer(GameMode);
 
-			BattleSystem.GameModeAttackLoader.Load();
+			//BattleSystem.GameModeAttackLoader.Load();
 
 			if (IsGameJoltSave)
 				SandBoxMode = false;
 
-			Localization.ReloadGameModeTokens();
+			//Localization.ReloadGameModeTokens();
 
-			SmashRock.Load();
-			Badge.Load();
-			Pokedex.Load();
-			PokemonInteractions.Load();
-			PokemonForms.Initialize();
+			//SmashRock.Load();
+			//Badge.Load();
+			//Pokedex.Load();
+			//PokemonInteractions.Load();
+			//PokemonForms.Initialize();
 
 			LoadPokedex();
 			LoadParty();
@@ -665,9 +667,9 @@ namespace P3D
 			LoadRoamingPokemonData();
 			LoadStatistics();
 
-			PlayerTemp.Reset();
-			ResetTemp();
-			Chat.ClearChat();
+			//PlayerTemp.Reset();
+			//ResetTemp();
+			//Chat.ClearChat();
 
 			if (AutosaveUsed)
 			{
@@ -678,53 +680,55 @@ namespace P3D
 
 				string outputString = newFilePrefix;
 
-				Core.GameMessage.ShowMessage(Localization.GetString("game_message_continue_autosave") + " \"" + outputString + "\"", 12, FontManager.MainFont, Color.White);
+				//Core.GameMessage.ShowMessage(Localization.GetString("game_message_continue_autosave") + " \"" + outputString + "\"", 12, FontManager.MainFont, Color.White);
 
 				newFilePrefix = "";
 			}
 
-			if (IsGameJoltSave)
-			{
-				lastLevel = GameJolt.Emblem.GetPlayerLevel(GameJoltSave.Points);
-				OT = GameJoltSave.GameJoltID;
-			}
-
-			Entity.MakeShake = Name.ToLower() == "drunknilllzz";
+			//if (IsGameJoltSave)
+			//{
+			//	lastLevel = GameJolt.Emblem.GetPlayerLevel(GameJoltSave.Points);
+			//	OT = GameJoltSave.GameJoltID;
+			//}
+			//
+			//Entity.MakeShake = Name.ToLower() == "drunknilllzz";
 
 			/// Indev 0.54 Removal List
-			///         ''' 1. All Mega Stones. [ID: 507 - 553]
-			///         ''' 2. Shiny Candy [ID: 501]
+			/// 1. All Mega Stones. [ID: 507 - 553]
+			/// 2. Shiny Candy [ID: 501]
 			if (!ActionScript.IsRegistered("PokemonIndev054Update"))
 			{
 				// Check Inventory.
-				Inventory.RemoveItem(501);
+				Inventory.RemoveItem((PokemonUnity.Item.Items)501);
+				//Inventory.Remove((PokemonUnity.Item.Items)501);
 				for (int i = 507; i >= 553; i += +1)
-					Inventory.RemoveItem(i);
+					Inventory.RemoveItem((PokemonUnity.Item.Items)i);
+					//Inventory.Remove((PokemonUnity.Item.Items)i);
 
 				// Check Party Pokemon.
 				foreach (Pokemon Pokemon in Pokemons)
 				{
-					if (Pokemon.Item != null && (Pokemon.Item.ID >= 501 || (Pokemon.Item.ID >= 507 && Pokemon.Item.ID <= 553)))
-						Pokemon.Item = null;
+					if (Pokemon.Item != PokemonUnity.Item.Items.NONE && (Pokemon.Item >= (PokemonUnity.Item.Items)501 || (Pokemon.Item >= (PokemonUnity.Item.Items)507 && Pokemon.Item <= (PokemonUnity.Item.Items)553)))
+						Pokemon.Item = PokemonUnity.Item.Items.NONE;
 				}
 
 				// Check PC Boxes.
-				if (!string.IsNullOrWhiteSpace(BoxData))
+				if (!string.IsNullOrEmpty(BoxData))
 				{
 					List<string> TempBoxData = new List<string>();
 					TempBoxData.AddRange(BoxData.SplitAtNewline());
 
 					foreach (string item in TempBoxData)
 					{
-						if (!string.IsNullOrWhiteSpace(item) && !item.StartsWith("BOX"))
+						if (!string.IsNullOrEmpty(item) && !item.StartsWith("BOX"))
 						{
 							string TempString = item.Remove(item.IndexOf("{"));
 							Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
 
-							if (TempPokemon.Item != null && (TempPokemon.Item.ID >= 501 || (TempPokemon.Item.ID >= 507 && TempPokemon.Item.ID <= 553)))
-								TempPokemon.Item = null;
+							if (TempPokemon.Item != PokemonUnity.Item.Items.NONE && (TempPokemon.Item >= (PokemonUnity.Item.Items)501 || (TempPokemon.Item >= (PokemonUnity.Item.Items)507 && TempPokemon.Item <= (PokemonUnity.Item.Items)553)))
+								TempPokemon.Item = PokemonUnity.Item.Items.NONE;
 
-							item = TempString + TempPokemon.ToString();
+							//item = TempString + TempPokemon.ToString();
 						}
 					}
 
@@ -732,22 +736,22 @@ namespace P3D
 				}
 
 				// Check Day Care.
-				if (!string.IsNullOrWhiteSpace(DaycareData))
+				if (!string.IsNullOrEmpty(DaycareData))
 				{
 					List<string> TempDaycareData = new List<string>();
 					TempDaycareData.AddRange(DaycareData.SplitAtNewline());
 
 					foreach (string item in TempDaycareData)
 					{
-						if (!string.IsNullOrWhiteSpace(item) && item.Contains("{"))
+						if (!string.IsNullOrEmpty(item) && item.Contains("{"))
 						{
 							string TempString = ItemData.Remove(item.IndexOf("{"));
 							Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
 
-							if (TempPokemon.Item != null && (TempPokemon.Item.ID >= 501 || (TempPokemon.Item.ID >= 507 && TempPokemon.Item.ID <= 553)))
-								TempPokemon.Item = null;
+							if (TempPokemon.Item != PokemonUnity.Item.Items.NONE && (TempPokemon.Item >= (PokemonUnity.Item.Items)501 || (TempPokemon.Item >= (PokemonUnity.Item.Items)507 && TempPokemon.Item <= (PokemonUnity.Item.Items)553)))
+								TempPokemon.Item = PokemonUnity.Item.Items.NONE;
 
-							item = TempString + TempPokemon.ToString();
+							//item = TempString + TempPokemon.ToString();
 						}
 					}
 
@@ -758,66 +762,66 @@ namespace P3D
 			}
 
 			/// Indev 0.54.2 OT Fix List.
-			if (!ActionScript.IsRegistered("PokemonIndev0542Update"))
-			{
-				// Check Party Pokemon.
-				foreach (Pokemon Pokemon in Pokemons)
-				{
-					if (string.Equals(Pokemon.CatchTrainerName, Core.Player.Name, StringComparison.OrdinalIgnoreCase) && Pokemon.OT != GameJoltSave.GameJoltID)
-						Pokemon.OT = GameJoltSave.GameJoltID;
-				}
-
-				// Check PC Boxes.
-				if (!string.IsNullOrWhiteSpace(BoxData))
-				{
-					List<string> TempBoxData = new List<string>();
-					TempBoxData.AddRange(BoxData.SplitAtNewline());
-
-					foreach (string item in TempBoxData)
-					{
-						if (!string.IsNullOrWhiteSpace(item) && !item.StartsWith("BOX"))
-						{
-							string TempString = item.Remove(item.IndexOf("{"));
-							Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
-
-							if (string.Equals(TempPokemon.CatchTrainerName, Core.Player.Name, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
-								TempPokemon.OT = GameJoltSave.GameJoltID;
-
-							item = TempString + TempPokemon.ToString();
-						}
-					}
-
-					BoxData = string.Join(Environment.NewLine, TempBoxData);
-				}
-
-				// Check Day Care.
-				if (!string.IsNullOrWhiteSpace(DaycareData))
-				{
-					List<string> TempDaycareData = new List<string>();
-					TempDaycareData.AddRange(DaycareData.SplitAtNewline());
-
-					foreach (string item in TempDaycareData)
-					{
-						if (!string.IsNullOrWhiteSpace(item) && item.Contains("{"))
-						{
-							string TempString = ItemData.Remove(item.IndexOf("{"));
-							Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
-
-							if (string.Equals(TempPokemon.CatchTrainerName, Core.Player.Name, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
-								TempPokemon.OT = GameJoltSave.GameJoltID;
-
-							item = TempString + TempPokemon.ToString();
-						}
-					}
-
-					DaycareData = string.Join(Environment.NewLine, TempDaycareData);
-				}
-
-				// Remove Duplicate data.
-				Core.Player.PokeFiles = Core.Player.PokeFiles.Distinct().ToList();
-
-				ActionScript.RegisterID("PokemonIndev0542Update");
-			}
+			//if (!ActionScript.IsRegistered("PokemonIndev0542Update"))
+			//{
+			//	// Check Party Pokemon.
+			//	foreach (Pokemon Pokemon in Pokemons)
+			//	{
+			//		if (string.Equals(Pokemon.CatchTrainerName, GameVariables.playerTrainer.PlayerName, StringComparison.OrdinalIgnoreCase) && Pokemon.OT != GameJoltSave.GameJoltID)
+			//			Pokemon.OT = GameJoltSave.GameJoltID;
+			//	}
+			//
+			//	// Check PC Boxes.
+			//	if (!string.IsNullOrEmpty(BoxData))
+			//	{
+			//		List<string> TempBoxData = new List<string>();
+			//		TempBoxData.AddRange(BoxData.SplitAtNewline());
+			//
+			//		foreach (string item in TempBoxData)
+			//		{
+			//			if (!string.IsNullOrEmpty(item) && !item.StartsWith("BOX"))
+			//			{
+			//				string TempString = item.Remove(item.IndexOf("{"));
+			//				Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
+			//
+			//				if (string.Equals(TempPokemon.CatchTrainerName, GameVariables.playerTrainer.PlayerName, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
+			//					TempPokemon.OT = GameJoltSave.GameJoltID;
+			//
+			//				item = TempString + TempPokemon.ToString();
+			//			}
+			//		}
+			//
+			//		BoxData = string.Join(Environment.NewLine, TempBoxData);
+			//	}
+			//
+			//	// Check Day Care.
+			//	if (!string.IsNullOrEmpty(DaycareData))
+			//	{
+			//		List<string> TempDaycareData = new List<string>();
+			//		TempDaycareData.AddRange(DaycareData.SplitAtNewline());
+			//
+			//		foreach (string item in TempDaycareData)
+			//		{
+			//			if (!string.IsNullOrEmpty(item) && item.Contains("{"))
+			//			{
+			//				string TempString = ItemData.Remove(item.IndexOf("{"));
+			//				Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
+			//
+			//				if (string.Equals(TempPokemon.CatchTrainerName, GameVariables.playerTrainer.PlayerName, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
+			//					TempPokemon.OT = GameJoltSave.GameJoltID;
+			//
+			//				item = TempString + TempPokemon.ToString();
+			//			}
+			//		}
+			//
+			//		DaycareData = string.Join(Environment.NewLine, TempDaycareData);
+			//	}
+			//
+			//	// Remove Duplicate data.
+			//	GameVariables.playerTrainer.PokeFiles = GameVariables.playerTrainer.PokeFiles.Distinct().ToList();
+			//
+			//	ActionScript.RegisterID("PokemonIndev0542Update");
+			//}
 
 			loadedSave = true;
 		}
@@ -838,7 +842,7 @@ namespace P3D
 				{
 					if (Line.StartsWith("{") & Line.EndsWith("}"))
 					{
-						Pokemon p = Pokemon.GetPokemonByData(Line);
+						Pokemon p = new Pokemon();//Pokemon.GetPokemonByData(Line);
 
 						if (!p.isEgg)
 						{
@@ -879,11 +883,11 @@ namespace P3D
 							{
 								Name = Value;
 
-								if (IsGameJoltSave)
-								{
-									if (Name.ToLower() != GameJolt.API.username.ToLower())
-										Name = GameJolt.API.username;
-								}
+								//if (IsGameJoltSave)
+								//{
+								//	if (Name.ToLower() != GameJolt.API.username.ToLower())
+								//		Name = GameJolt.API.username;
+								//}
 
 								break;
 							}
@@ -1193,7 +1197,7 @@ namespace P3D
 							}
 						case "textspeed":
 							{
-								TextBox.TextSpeed = System.Convert.ToInt32(Value);
+								GameVariables.textSpeed = System.Convert.ToInt32(Value);
 								break;
 							}
 						case "mousespeed":
@@ -1208,7 +1212,8 @@ namespace P3D
 
 		private void LoadItems()
 		{
-			Inventory.Clear();
+			//Inventory.Clear();
+			GameVariables.Bag_Items.Clear();
 			Mails.Clear();
 
 			string Data;
@@ -1231,7 +1236,7 @@ namespace P3D
 						int amount = System.Convert.ToInt32(ItemID.Remove(0, ItemID.IndexOf("|") + 1));
 						ItemID = ItemID.Remove(ItemID.IndexOf("|"));
 
-						Inventory.AddItem(System.Convert.ToInt32(ItemID), amount);
+						Inventory.AddItem((PokemonUnity.Item.Items)System.Convert.ToInt32(ItemID), amount);
 					}
 					else if (ItemDat != "" & ItemDat.StartsWith("Mail|"))
 					{
@@ -1244,127 +1249,127 @@ namespace P3D
 
 		private void LoadBerries()
 		{
-			if (IsGameJoltSave)
-				Core.Player.BerryData = GameJoltSave.Berries;
-			else
-				Core.Player.BerryData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Berries.dat");
+			//if (IsGameJoltSave)
+			//	GameVariables.playerTrainer.BerryData = GameJoltSave.Berries;
+			//else
+			//	GameVariables.playerTrainer.BerryData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Berries.dat");
 		}
 
 		private void LoadApricorns()
 		{
-			if (IsGameJoltSave)
-				Core.Player.ApricornData = GameJoltSave.Apricorns;
-			else
-				Core.Player.ApricornData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Apricorns.dat");
+			//if (IsGameJoltSave)
+			//	GameVariables.playerTrainer.ApricornData = GameJoltSave.Apricorns;
+			//else
+			//	GameVariables.playerTrainer.ApricornData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Apricorns.dat");
 		}
 
 		private void LoadDaycare()
 		{
-			Core.Player.DaycareData = "";
-			if (IsGameJoltSave)
-				Core.Player.DaycareData = GameJoltSave.Daycare;
-			else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\Daycare.dat"))
-				Core.Player.DaycareData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Daycare.dat");
+			//GameVariables.playerTrainer.DaycareData = "";
+			//if (IsGameJoltSave)
+			//	GameVariables.playerTrainer.DaycareData = GameJoltSave.Daycare;
+			//else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\Daycare.dat"))
+			//	GameVariables.playerTrainer.DaycareData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Daycare.dat");
 		}
 
 		private void LoadPokedex()
 		{
-			if (IsGameJoltSave)
-				PokedexData = GameJoltSave.Pokedex;
-			else
-				PokedexData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Pokedex.dat");
-
-			if (PokedexData == "")
-				PokedexData = Pokedex.NewPokedex();
+			//if (IsGameJoltSave)
+			//	PokedexData = GameJoltSave.Pokedex;
+			//else
+			//	PokedexData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Pokedex.dat");
+			//
+			//if (PokedexData == "")
+			//	PokedexData = Pokedex.NewPokedex();
 		}
 
 		private void LoadRegister()
 		{
-			if (IsGameJoltSave)
-				RegisterData = GameJoltSave.Register;
-			else
-				RegisterData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Register.dat");
+			//if (IsGameJoltSave)
+			//	RegisterData = GameJoltSave.Register;
+			//else
+			//	RegisterData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Register.dat");
 		}
 
 		private void LoadItemData()
 		{
-			if (IsGameJoltSave)
-				ItemData = GameJoltSave.ItemData;
-			else
-				ItemData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\ItemData.dat");
+			//if (IsGameJoltSave)
+			//	ItemData = GameJoltSave.ItemData;
+			//else
+			//	ItemData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\ItemData.dat");
 		}
 
 		private void LoadBoxData()
 		{
-			if (IsGameJoltSave)
-				BoxData = GameJoltSave.Box;
-			else
-				BoxData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Box.dat");
+			//if (IsGameJoltSave)
+			//	BoxData = GameJoltSave.Box;
+			//else
+			//	BoxData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Box.dat");
 		}
 
 		private void LoadNPCData()
 		{
-			if (IsGameJoltSave)
-				NPCData = GameJoltSave.NPC;
-			else
-				NPCData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\NPC.dat");
+			//if (IsGameJoltSave)
+			//	NPCData = GameJoltSave.NPC;
+			//else
+			//	NPCData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\NPC.dat");
 		}
 
 		private void LoadHallOfFameData()
 		{
-			if (IsGameJoltSave)
-				HallOfFameData = GameJoltSave.HallOfFame;
-			else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\HallOfFame.dat"))
-				HallOfFameData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\HallOfFame.dat");
-			else
-				HallOfFameData = "";
+			//if (IsGameJoltSave)
+			//	HallOfFameData = GameJoltSave.HallOfFame;
+			//else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\HallOfFame.dat"))
+			//	HallOfFameData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\HallOfFame.dat");
+			//else
+			//	HallOfFameData = "";
 		}
 
 		private void LoadSecretBaseData()
 		{
-			if (IsGameJoltSave)
-				SecretBaseData = GameJoltSave.SecretBase;
-			else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\SecretBase.dat"))
-				SecretBaseData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\SecretBase.dat");
-			else
-				SecretBaseData = "";
+			//if (IsGameJoltSave)
+			//	SecretBaseData = GameJoltSave.SecretBase;
+			//else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\SecretBase.dat"))
+			//	SecretBaseData = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\SecretBase.dat");
+			//else
+			//	SecretBaseData = "";
 		}
 
 		private void LoadRoamingPokemonData()
 		{
-			RoamingPokemonData = "";
-			if (IsGameJoltSave)
-				RoamingPokemonData = GameJoltSave.RoamingPokemon;
-			else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\RoamingPokemon.dat"))
-			{
-				foreach (string line in System.IO.File.ReadAllLines(GameController.GamePath + @"\Save\" + filePrefix + @"\RoamingPokemon.dat"))
-				{
-					if (RoamingPokemonData != "")
-						RoamingPokemonData += Environment.NewLine;
-					if (line.CountSeperators("|") < 5)
-					{
-						// Convert potential old data:
-						string[] data = line.Split(System.Convert.ToChar("|"));
-						Pokemon newP = Pokemon.GetPokemonByID(System.Convert.ToInt32(data[0]));
-						newP.Generate(System.Convert.ToInt32(data[1]), true);
-
-						RoamingPokemonData += newP.Number.ToString() + "|" + newP.Level.ToString() + "|" + data[2] + "|" + data[3] + "||" + newP.GetSaveData();
-					}
-					else
-						RoamingPokemonData += line;
-				}
-			}
+			//RoamingPokemonData = "";
+			//if (IsGameJoltSave)
+			//	RoamingPokemonData = GameJoltSave.RoamingPokemon;
+			//else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\RoamingPokemon.dat"))
+			//{
+			//	foreach (string line in System.IO.File.ReadAllLines(GameController.GamePath + @"\Save\" + filePrefix + @"\RoamingPokemon.dat"))
+			//	{
+			//		if (RoamingPokemonData != "")
+			//			RoamingPokemonData += Environment.NewLine;
+			//		if (line.CountSeperators("|") < 5)
+			//		{
+			//			// Convert potential old data:
+			//			string[] data = line.Split(System.Convert.ToChar("|"));
+			//			Pokemon newP = new Pokemon((Pokemons)System.Convert.ToInt32(data[0]));
+			//			newP.Generate(System.Convert.ToInt32(data[1]), true);
+			//
+			//			RoamingPokemonData += ((int)newP.Species).ToString() + "|" + newP.Level.ToString() + "|" + data[2] + "|" + data[3] + "||" + newP.GetSaveData();
+			//		}
+			//		else
+			//			RoamingPokemonData += line;
+			//	}
+			//}
 		}
 
 		private void LoadStatistics()
 		{
-			if (IsGameJoltSave)
-				Statistics = GameJoltSave.Statistics;
-			else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat"))
-				Statistics = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat");
-			else
-				Statistics = "";
-			PlayerStatistics.Load(Statistics);
+			//if (IsGameJoltSave)
+			//	Statistics = GameJoltSave.Statistics;
+			//else if (System.IO.File.Exists(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat"))
+			//	Statistics = System.IO.File.ReadAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat");
+			//else
+			//	Statistics = "";
+			//PlayerStatistics.Load(Statistics);
 		}
 
 
@@ -1373,15 +1378,15 @@ namespace P3D
 
 		public void SaveGame(bool IsAutosave)
 		{
-			SaveGameHelpers.ResetSaveCounter();
+			//SaveGameHelpers.ResetSaveCounter();
 
 			if (IsAutosave)
 			{
 				newFilePrefix = filePrefix;
 				filePrefix = "autosave";
 
-				if (!System.IO.Directory.Exists(GameController.GamePath + @"\Save\autosave"))
-					System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\autosave");
+				//if (!System.IO.Directory.Exists(GameController.GamePath + @"\Save\autosave"))
+				//	System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\autosave");
 			}
 			else
 				newFilePrefix = filePrefix;
@@ -1390,8 +1395,8 @@ namespace P3D
 
 			if (!IsGameJoltSave)
 			{
-				if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\" + !filePrefix))
-					System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\" + filePrefix);
+				//if (System.IO.Directory.Exists(GameController.GamePath + @"\Save\" + !filePrefix))
+				//	System.IO.Directory.CreateDirectory(GameController.GamePath + @"\Save\" + filePrefix);
 			}
 
 			SavePlayer(IsAutosave);
@@ -1415,37 +1420,37 @@ namespace P3D
 
 			if (IsGameJoltSave)
 			{
-				if (Core.GameOptions.Extras.Contains("Backup Save Feature"))
-				{
-					if (!Directory.Exists(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID.ToString() + "/Encrypted"))
-						Directory.CreateDirectory(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID.ToString() + "/Encrypted");
-
-					string OriginalHASH = Encryption.EncryptString(GetApricornsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetBerriesData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetBoxData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetDaycareData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetHallOfFameData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetItemDataData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetItemsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetNPCDataData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetOptionsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetPartyData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetPlayerData(false), StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetPokedexData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetRegisterData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetRoamingPokemonData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetSecretBaseData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetStatisticsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID));
-
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID.ToString() + "/Encrypted/Encrypted.dat", OriginalHASH + "|" + Encryption.EncryptString(OriginalHASH, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)));
-
-					string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
-
-					if (!Directory.Exists(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp))
-						Directory.CreateDirectory(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp);
-
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Apricorns.dat", GetApricornsData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Berries.dat", GetBerriesData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Box.dat", GetBoxData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Daycare.dat", GetDaycareData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/HallOfFame.dat", GetHallOfFameData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/ItemData.dat", GetItemDataData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Items.dat", GetItemsData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/NPC.dat", GetNPCDataData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Options.dat", GetOptionsData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Party.dat", GetPartyData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Player.dat", GetPlayerData(false));
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Pokedex.dat", GetPokedexData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Register.dat", GetRegisterData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/RoamingPokemon.dat", GetRoamingPokemonData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/SecretBase.dat", GetSecretBaseData);
-					File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Statistics.dat", GetStatisticsData);
-				}
+				//if (Core.GameOptions.Extras.Contains("Backup Save Feature"))
+				//{
+				//	if (!Directory.Exists(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID.ToString() + "/Encrypted"))
+				//		Directory.CreateDirectory(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID.ToString() + "/Encrypted");
+				//
+				//	string OriginalHASH = Encryption.EncryptString(GetApricornsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetBerriesData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetBoxData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetDaycareData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetHallOfFameData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetItemDataData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetItemsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetNPCDataData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetOptionsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetPartyData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetPlayerData(false), StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetPokedexData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetRegisterData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetRoamingPokemonData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetSecretBaseData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)) + "|" + Encryption.EncryptString(GetStatisticsData, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID));
+				//
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID.ToString() + "/Encrypted/Encrypted.dat", OriginalHASH + "|" + Encryption.EncryptString(OriginalHASH, StringObfuscation.Obfuscate(GameJoltSave.GameJoltID)));
+				//
+				//	string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
+				//
+				//	if (!Directory.Exists(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp))
+				//		Directory.CreateDirectory(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp);
+				//
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Apricorns.dat", GetApricornsData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Berries.dat", GetBerriesData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Box.dat", GetBoxData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Daycare.dat", GetDaycareData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/HallOfFame.dat", GetHallOfFameData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/ItemData.dat", GetItemDataData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Items.dat", GetItemsData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/NPC.dat", GetNPCDataData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Options.dat", GetOptionsData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Party.dat", GetPartyData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Player.dat", GetPlayerData(false));
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Pokedex.dat", GetPokedexData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Register.dat", GetRegisterData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/RoamingPokemon.dat", GetRoamingPokemonData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/SecretBase.dat", GetSecretBaseData);
+				//	File.WriteAllText(GameController.GamePath + "/Backup Save/" + GameJoltSave.GameJoltID + "/" + timestamp + "/Statistics.dat", GetStatisticsData);
+				//}
 
 				//GameJolt.APICall APICallSave = new GameJolt.APICall(SaveGameHelpers.CompleteGameJoltSave);
 				//APICallSave.CallFails += Exception ex =>
@@ -1457,17 +1462,17 @@ namespace P3D
 				List<string> dataItems = new List<string>();
 				List<bool> useUsername = new List<bool>();
 
-				for (var i = 0; i <= GameJoltTempStoreString.Count - 1; i++)
-				{
-					keys.Add(GameJoltTempStoreString.Keys(i));
-					dataItems.Add(GameJoltTempStoreString.Values(i));
-					useUsername.Add(true);
-				}
+				//for (var i = 0; i <= GameJoltTempStoreString.Count - 1; i++)
+				//{
+				//	keys.Add(GameJoltTempStoreString.Keys(i));
+				//	dataItems.Add(GameJoltTempStoreString.Values(i));
+				//	useUsername.Add(true);
+				//}
 				//APICallSave.SetStorageData(keys.ToArray(), dataItems.ToArray(), useUsername.ToArray());
 
 				//SavePublicVars();
 
-				GameJoltSave.UpdatePlayerScore();
+				//GameJoltSave.UpdatePlayerScore();
 			}
 		}
 
@@ -1493,7 +1498,7 @@ namespace P3D
 			{
 				if (Data != "")
 					Data += Environment.NewLine;
-				Data += Pokemons[i].GetSaveData();
+				//Data += Pokemons[i].GetSaveData();
 			}
 			return Data;
 		}
@@ -1521,8 +1526,8 @@ namespace P3D
 
 			string hasPokedexString = HasPokedex.ToNumberString();
 
-			OverworldCamera c = GetOverworldCamera();
-			string freeCameraString = c.FreeCameraMode.ToNumberString();
+			//OverworldCamera c = GetOverworldCamera();
+			//string freeCameraString = c.FreeCameraMode.ToNumberString();
 
 			TimeSpan diff = (DateTime.Now - GameStart);
 			TimeSpan p = PlayTime + diff;
@@ -1560,7 +1565,7 @@ namespace P3D
 			if (GameVariables.Level.Riding)
 				skin = TempRideSkin;
 
-			string Data = "Name|" + Name + Environment.NewLine + "Position|" + c.Position.X.ToString().Replace(StringHelper.DecSeparator, ".") + "," + c.Position.Y.ToString.Replace(StringHelper.DecSeparator, ".") + "," + c.Position.Z.ToString().Replace(StringHelper.DecSeparator, ".") + Environment.NewLine + "MapFile|" + GameVariables.Level.LevelFile + Environment.NewLine + "Rotation|" + c.Yaw.ToString.Replace(StringHelper.DecSeparator, ".") + Environment.NewLine + "RivalName|" + RivalName + Environment.NewLine + "Money|" + Money + Environment.NewLine + "Badges|" + badgeString + Environment.NewLine + "Gender|" + GenderString + Environment.NewLine + "PlayTime|" + PlayTimeString + Environment.NewLine + "OT|" + OT + Environment.NewLine + "Points|" + Points.ToString() + Environment.NewLine + "hasPokedex|" + hasPokedexString + Environment.NewLine + "hasPokegear|" + HasPokegear.ToNumberString() + Environment.NewLine + "freeCamera|" + freeCameraString + Environment.NewLine + "thirdPerson|" + c.ThirdPerson.ToNumberString() + Environment.NewLine + "skin|" + skin + Environment.NewLine + "location|" + GameVariables.Level.MapName + Environment.NewLine + "battleAnimations|" + ShowBattleAnimations.ToString() + Environment.NewLine + "BoxAmount|" + BoxAmount.ToString() + Environment.NewLine + "LastRestPlace|" + LastRestPlace + Environment.NewLine + "LastRestPlacePosition|" + LastRestPlacePosition + Environment.NewLine + "DiagonalMovement|" + DiagonalMovement.ToNumberString() + Environment.NewLine + "RepelSteps|" + RepelSteps.ToString() + Environment.NewLine + "LastSavePlace|" + LastSavePlace + Environment.NewLine + "LastSavePlacePosition|" + LastSavePlacePosition + Environment.NewLine + "Difficulty|" + DifficultyMode.ToString() + Environment.NewLine + "BattleStyle|" + BattleStyle.ToString() + Environment.NewLine + "saveCreated|" + SaveCreated + Environment.NewLine + "LastPokemonPosition|" + lastPokemonPosition + Environment.NewLine + "DaycareSteps|" + DaycareSteps.ToString() + Environment.NewLine + "GameMode|" + GameMode + Environment.NewLine + "PokeFiles|" + PokeFilesString + Environment.NewLine + "VisitedMaps|" + VisitedMaps + Environment.NewLine + "TempSurfSkin|" + TempSurfSkin + Environment.NewLine + "Surfing|" + GameVariables.Level.Surfing.ToNumberString() + Environment.NewLine + "BP|" + BP + Environment.NewLine + "ShowModels|" + ShowModelsInBattle.ToNumberString() + Environment.NewLine + "GTSStars|" + GTSStars + Environment.NewLine + "SandBoxMode|" + SandBoxMode.ToNumberString() + Environment.NewLine + "EarnedAchievements|" + EarnedAchievementsString;
+			string Data = "";//"Name|" + Name + Environment.NewLine + "Position|" + c.Position.X.ToString().Replace(StringHelper.DecSeparator, ".") + "," + c.Position.Y.ToString.Replace(StringHelper.DecSeparator, ".") + "," + c.Position.Z.ToString().Replace(StringHelper.DecSeparator, ".") + Environment.NewLine + "MapFile|" + GameVariables.Level.LevelFile + Environment.NewLine + "Rotation|" + c.Yaw.ToString.Replace(StringHelper.DecSeparator, ".") + Environment.NewLine + "RivalName|" + RivalName + Environment.NewLine + "Money|" + Money + Environment.NewLine + "Badges|" + badgeString + Environment.NewLine + "Gender|" + GenderString + Environment.NewLine + "PlayTime|" + PlayTimeString + Environment.NewLine + "OT|" + OT + Environment.NewLine + "Points|" + Points.ToString() + Environment.NewLine + "hasPokedex|" + hasPokedexString + Environment.NewLine + "hasPokegear|" + HasPokegear.ToNumberString() + Environment.NewLine + "freeCamera|" + freeCameraString + Environment.NewLine + "thirdPerson|" + c.ThirdPerson.ToNumberString() + Environment.NewLine + "skin|" + skin + Environment.NewLine + "location|" + GameVariables.Level.MapName + Environment.NewLine + "battleAnimations|" + ShowBattleAnimations.ToString() + Environment.NewLine + "BoxAmount|" + BoxAmount.ToString() + Environment.NewLine + "LastRestPlace|" + LastRestPlace + Environment.NewLine + "LastRestPlacePosition|" + LastRestPlacePosition + Environment.NewLine + "DiagonalMovement|" + DiagonalMovement.ToNumberString() + Environment.NewLine + "RepelSteps|" + RepelSteps.ToString() + Environment.NewLine + "LastSavePlace|" + LastSavePlace + Environment.NewLine + "LastSavePlacePosition|" + LastSavePlacePosition + Environment.NewLine + "Difficulty|" + DifficultyMode.ToString() + Environment.NewLine + "BattleStyle|" + BattleStyle.ToString() + Environment.NewLine + "saveCreated|" + SaveCreated + Environment.NewLine + "LastPokemonPosition|" + lastPokemonPosition + Environment.NewLine + "DaycareSteps|" + DaycareSteps.ToString() + Environment.NewLine + "GameMode|" + GameMode + Environment.NewLine + "PokeFiles|" + PokeFilesString + Environment.NewLine + "VisitedMaps|" + VisitedMaps + Environment.NewLine + "TempSurfSkin|" + TempSurfSkin + Environment.NewLine + "Surfing|" + GameVariables.Level.Surfing.ToNumberString() + Environment.NewLine + "BP|" + BP + Environment.NewLine + "ShowModels|" + ShowModelsInBattle.ToNumberString() + Environment.NewLine + "GTSStars|" + GTSStars + Environment.NewLine + "SandBoxMode|" + SandBoxMode.ToNumberString() + Environment.NewLine + "EarnedAchievements|" + EarnedAchievementsString;
 
 			if (IsAutosave)
 				Data += Environment.NewLine + "AutoSave|" + newFilePrefix;
@@ -1570,27 +1575,27 @@ namespace P3D
 
 		public string GetOptionsData()
 		{
-			OverworldCamera c = GetOverworldCamera();
+			//OverworldCamera c = GetOverworldCamera();
+			//
+			//string FOVstring = c.FOV.ToString.Replace(",", ".");
+			//string MouseSpeedString = System.Convert.ToString(c.RotationSpeed * 10000);
+			//string TextSpeedString = System.Convert.ToString(GameVariables.textSpeed);
+			//
+			//string Data = "FOV|" + FOVstring + Environment.NewLine + "TextSpeed|" + TextSpeedString + Environment.NewLine + "MouseSpeed|" + MouseSpeedString;
 
-			string FOVstring = c.FOV.ToString.Replace(",", ".");
-			string MouseSpeedString = System.Convert.ToString(c.RotationSpeed * 10000);
-			string TextSpeedString = System.Convert.ToString(TextBox.TextSpeed);
-
-			string Data = "FOV|" + FOVstring + Environment.NewLine + "TextSpeed|" + TextSpeedString + Environment.NewLine + "MouseSpeed|" + MouseSpeedString;
-
-			return Data;
+			return "";//Data;
 		}
 
 		public string GetItemsData()
 		{
 			string Data = "";
 
-			foreach (var c in Inventory)
+			foreach (var c in Inventory.Sort(GameVariables.TrainerBag.Order.Category))
 			{
 				if (Data != "")
 					Data += Environment.NewLine;
 
-				Data += "{" + c.ItemID + "|" + c.Amount + "}";
+				Data += "{" + c.Key.ItemId + "|" + c.Value + "}";
 			}
 
 			//foreach (Item.Mail.MailData mail in Mails)
@@ -1663,163 +1668,161 @@ namespace P3D
 			return Statistics;
 		}
 
-		private OverworldCamera GetOverworldCamera()
-		{
-			Screen baseScreen = CurrentScreen;
-			while (!baseScreen.PreScreen == null)
-				baseScreen = baseScreen.PreScreen;
-
-			if (baseScreen.Identification == Screen.Identifications.BattleScreen)
-				return (OverworldCamera)(BattleSystem.BattleScreen)baseScreen.SavedOverworld.Camera;
-			else if (baseScreen.Identification == Screen.Identifications.CreditsScreen)
-				return (OverworldCamera)(CreditsScreen)baseScreen.SavedOverworld.Camera;
-			else if (baseScreen.Identification == Screen.Identifications.HallofFameScreen)
-				return (OverworldCamera)(HallOfFameScreen)baseScreen.SavedOverworld.Camera;
-
-			return (OverworldCamera)Screen.Camera;
-		}
+		//private OverworldCamera GetOverworldCamera()
+		//{
+		//	Screen baseScreen = CurrentScreen;
+		//	while (!baseScreen.PreScreen == null)
+		//		baseScreen = baseScreen.PreScreen;
+		//
+		//	if (baseScreen.Identification == Screen.Identifications.BattleScreen)
+		//		return (OverworldCamera)(BattleSystem.BattleScreen)baseScreen.SavedOverworld.Camera;
+		//	else if (baseScreen.Identification == Screen.Identifications.CreditsScreen)
+		//		return (OverworldCamera)(CreditsScreen)baseScreen.SavedOverworld.Camera;
+		//	else if (baseScreen.Identification == Screen.Identifications.HallofFameScreen)
+		//		return (OverworldCamera)(HallOfFameScreen)baseScreen.SavedOverworld.Camera;
+		//
+		//	return (OverworldCamera)Screen.Camera;
+		//}
 
 		private void SaveParty()
 		{
 			string Data = GetPartyData();
 
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|party", Data);
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Party.dat", Data);
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|party", Data);
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Party.dat", Data);
 		}
 
 		private void SavePlayer(bool IsAutosave)
 		{
 			string Data = GetPlayerData(IsAutosave);
 
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|player", Data);
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Player.dat", Data);
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|player", Data);
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Player.dat", Data);
 		}
 
 		private void SaveOptions()
 		{
 			string Data = GetOptionsData();
 
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|options", Data);
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Options.dat", Data);
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|options", Data);
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Options.dat", Data);
 		}
 
 		private void SaveItems()
 		{
-			Inventory.RemoveItem(177); // Removing Sport Balls if player has those.
+			Inventory.RemoveItem((PokemonUnity.Item.Items)177); // Removing Sport Balls if player has those.
 
 			string Data = GetItemsData();
 
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|items", Data);
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Items.dat", Data);
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|items", Data);
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Items.dat", Data);
 		}
 
 		private void SaveBerries()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|berries", GetBerriesData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Berries.dat", GetBerriesData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|berries", GetBerriesData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Berries.dat", GetBerriesData());
 		}
 
 		private void SaveApricorns()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|apricorns", GetApricornsData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Apricorns.dat", GetApricornsData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|apricorns", GetApricornsData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Apricorns.dat", GetApricornsData());
 		}
 
 		private void SaveDaycare()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|daycare", GetDaycareData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Daycare.dat", GetDaycareData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|daycare", GetDaycareData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Daycare.dat", GetDaycareData());
 		}
 
 		private void SavePokedex()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|pokedex", GetPokedexData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Pokedex.dat", GetPokedexData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|pokedex", GetPokedexData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Pokedex.dat", GetPokedexData());
 		}
 
 		private void SaveRegister()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|register", GetRegisterData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Register.dat", GetRegisterData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|register", GetRegisterData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Register.dat", GetRegisterData());
 		}
 
 		private void SaveItemData()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|itemdata", GetItemDataData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\ItemData.dat", GetItemDataData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|itemdata", GetItemDataData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\ItemData.dat", GetItemDataData());
 		}
 
 		private void SaveBoxData()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|box", GetBoxData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Box.dat", GetBoxData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|box", GetBoxData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Box.dat", GetBoxData());
 		}
 
 		private void SaveNPCData()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|npc", GetNPCDataData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\NPC.dat", GetNPCDataData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|npc", GetNPCDataData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\NPC.dat", GetNPCDataData());
 		}
 
 		private void SaveHallOfFameData()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|halloffame", GetHallOfFameData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\HallOfFame.dat", GetHallOfFameData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|halloffame", GetHallOfFameData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\HallOfFame.dat", GetHallOfFameData());
 		}
 
 		private void SaveSecretBaseData()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|secretbase", GetSecretBaseData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\SecretBase.dat", GetSecretBaseData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|secretbase", GetSecretBaseData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\SecretBase.dat", GetSecretBaseData());
 		}
 
 		private void SaveRoamingPokemonData()
 		{
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|roamingpokemon", GetRoamingPokemonData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\RoamingPokemon.dat", GetRoamingPokemonData());
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|roamingpokemon", GetRoamingPokemonData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\RoamingPokemon.dat", GetRoamingPokemonData());
 		}
 
 		private void SaveStatistics()
 		{
-			Statistics = PlayerStatistics.GetData();
-			if (IsGameJoltSave)
-				GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|statistics", GetStatisticsData());
-			else
-				System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat", GetStatisticsData());
+			//Statistics = PlayerStatistics.GetData();
+			//if (IsGameJoltSave)
+			//	GameJoltTempStoreString.Add("saveStorageV" + SaveManager.BuildVersion + "|" + GameJoltSave.GameJoltID + "|statistics", GetStatisticsData());
+			//else
+			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat", GetStatisticsData());
 		}
-
-
-
+		
 		public void HealParty()
 		{
 			for (var i = 0; i <= Pokemons.Count - 1; i++)
@@ -1834,9 +1837,7 @@ namespace P3D
 					Pokemons[member].Heal();
 			}
 		}
-
-
-
+		
 		public int CountFightablePokemon
 		{
 			get
@@ -1845,7 +1846,7 @@ namespace P3D
 
 				foreach (Pokemon Pokemon in Pokemons)
 				{
-					if (Pokemon.Status != Pokemon.StatusProblems.Fainted & Pokemon.EggSteps == 0 & Pokemon.HP > 0)
+					if (Pokemon.Status != Status.FAINT & Pokemon.EggSteps == 0 & Pokemon.HP > 0)
 						i += 1;
 				}
 				return i;
@@ -1894,7 +1895,7 @@ namespace P3D
 
 			for (var i = 0; i <= Pokemons.Count - 1; i++)
 			{
-				if (Pokemons[i].Status != Pokemon.StatusProblems.Fainted & !Pokemons[i].isEgg)
+				if (Pokemons[i].Status != Status.FAINT & !Pokemons[i].isEgg)
 					return Pokemons[i];
 			}
 			return null/* TODO Change to default(_) if this is not a reference type */;
@@ -1905,7 +1906,7 @@ namespace P3D
 			int c = 0;
 			foreach (Pokemon p in GameVariables.playerTrainer.Party)
 			{
-				if (p.Status != Pokemon.StatusProblems.Fainted & p.EggSteps == 0)
+				if (p.Status != Status.FAINT & p.EggSteps == 0)
 					c += 1;
 			}
 			return c;
@@ -1917,12 +1918,12 @@ namespace P3D
 
 		// ===STEP EVENT INFORMATION===
 		// Events when taking a step	| Priority	| Event Type    | Resolution if Not fired
-		// ---------------------------|-----------|---------------|--------------------------------------------------------------------------------
-		// ScriptBlock trigger		| 0		    | ScriptBlock	| Always fire!
-		// Trainer Is in sight		| 1		    | Script		| Ignore, will be activated when walked by on a different tile. Design failure.
-		// Egg hatches			    | 2		    | Screen change	| Will happen On Next Step automatically.
-		// Repel wears out			| 3		    | Script		| Add one Step To the repel counter, so the Event happens On the Next Step.
-		// Wild Pokémon appears		| 4		    | WildPokemon	| Just ignore, random Event
+		// ---------------------------	|-----------|---------------|--------------------------------------------------------------------------------
+		// ScriptBlock trigger			| 0		    | ScriptBlock	| Always fire!
+		// Trainer Is in sight			| 1		    | Script		| Ignore, will be activated when walked by on a different tile. Design failure.
+		// Egg hatches					| 2		    | Screen change	| Will happen On Next Step automatically.
+		// Repel wears out				| 3		    | Script		| Add one Step To the repel counter, so the Event happens On the Next Step.
+		// Wild Pokémon appears			| 4		    | WildPokemon	| Just ignore, random Event
 		// Pokegear call			    | 5		    | Script		| Just ignore, Not too important
 		// ----------------------------------------------------------------------------------------------------------------------------------------
 		// All Script Events need a special check condition set.
@@ -1955,7 +1956,7 @@ namespace P3D
 				GameVariables.Level.WalkedSteps += 1;
 				Temp.MapSteps += 1;
 				DaycareSteps += stepAmount;
-				PlayerStatistics.Track("Steps taken", stepAmount);
+				//PlayerStatistics.Track("Steps taken", stepAmount);
 
 				// Daycare cycle:
 				PlayerTemp.DayCareCycle -= stepAmount;
@@ -1966,13 +1967,13 @@ namespace P3D
 					// Every 256 steps, add friendship to the Pokémon in the player's team.
 					foreach (Pokemon p in Pokemons)
 					{
-						if (p.Status != Pokemon.StatusProblems.Fainted & !p.IsEgg())
+						if (p.Status != Status.FAINT & !p.isEgg)
 							p.ChangeFriendShip(Pokemon.FriendShipCauses.Walking);
 					}
 
 					AddPoints(1, "Completed an Egg Circle.");
 
-					PokemonInteractions.CheckForRandomPickup();
+					//PokemonInteractions.CheckForRandomPickup();
 				}
 
 				// Apply shaders and set following pokemon:
@@ -2000,11 +2001,11 @@ namespace P3D
 			if (CanFireStepEvent())
 			{
 				GameVariables.Level.CheckTrainerSights();
-				if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-				{
-					if (!(OverworldScreen)CurrentScreen.ActionScript.IsReady)
-						_stepEventStartedTrainer = true;
-				}
+				//if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+				//{
+				//	if (!(OverworldScreen)CurrentScreen.ActionScript.IsReady)
+				//		_stepEventStartedTrainer = true;
+				//}
 			}
 		}
 
@@ -2015,11 +2016,11 @@ namespace P3D
 				int addEggSteps = stepAmount;
 				foreach (Pokemon p in Pokemons)
 				{
-					if (p.Ability != null)
+					if (p.Ability != Abilities.NONE)
 					{
-						if (p.Ability.Name.ToLower() == "magma armor" || p.Ability.Name.ToLower() == "flame body")
+						if (p.Ability == Abilities.MAGMA_ARMOR || p.Ability == Abilities.FLAME_BODY)
 						{
-							addEggSteps *= Random.Next(1, 4);
+							addEggSteps *= Settings.Rand.Next(1, 4);
 							break;
 						}
 					}
@@ -2030,8 +2031,9 @@ namespace P3D
 				{
 					if (p.EggSteps > 0)
 					{
-						p.EggSteps += addEggSteps;
-						if (p.EggSteps >= p.BaseEggSteps)
+						//p.EggSteps += addEggSteps;
+						p.AddSteps((byte)addEggSteps);
+						if (p.EggSteps >= Pokemon.PokemonData.GetPokemon(p.Species).HatchTime)
 							eggsReady.Add(p);
 					}
 				}
@@ -2041,7 +2043,7 @@ namespace P3D
 					foreach (Pokemon p in eggsReady)
 						Pokemons.Remove(p);
 
-					SetScreen(new TransitionScreen(CurrentScreen, new HatchEggScreen(CurrentScreen, eggsReady), Color.White, false));
+					//SetScreen(new TransitionScreen(CurrentScreen, new HatchEggScreen(CurrentScreen, eggsReady), Color.White, false));
 
 					_stepEventEggHatched = true;
 				}
@@ -2056,28 +2058,28 @@ namespace P3D
 
 				if (RepelSteps <= 0)
 				{
-					if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-					{
-						if (CanFireStepEvent())
-						{
-							GameVariables.Level.WalkedSteps = 0;
-
-							string s = "version=2" + Environment.NewLine + "@Text.Show(Your repel effect wore off.)" + Environment.NewLine + ":end";
-
-							if (Temp.LastUsedRepel > -1)
-							{
-								bool haveItemLeft = Inventory.GetItemAmount(Temp.LastUsedRepel) > 0;
-
-								if (haveItemLeft)
-									s = "version=2" + Environment.NewLine + "@Text.Show(Your repel effect wore off.*Do you want to use~another <inventory.name(" + Temp.LastUsedRepel + ")>?)" + Environment.NewLine + "@Options.Show(Yes,No)" + Environment.NewLine + ":when:Yes" + Environment.NewLine + "@sound.play(repel_use)" + Environment.NewLine + "@Text.Show(<player.name> used~a <inventory.name(" + Temp.LastUsedRepel + ")>.)" + Environment.NewLine + "@item.repel(" + Temp.LastUsedRepel + ")" + Environment.NewLine + "@item.remove(" + Temp.LastUsedRepel + ",1,0)" + Environment.NewLine + ":endwhen" + Environment.NewLine + ":end";
-							}
-
-							(OverworldScreen)CurrentScreen.ActionScript.StartScript(s, 2, false);
-							_stepEventRepelMessage = true;
-						}
-						else
-							_repelSteps = 1;
-					}
+					//if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+					//{
+					//	if (CanFireStepEvent())
+					//	{
+					//		GameVariables.Level.WalkedSteps = 0;
+					//
+					//		string s = "version=2" + Environment.NewLine + "@Text.Show(Your repel effect wore off.)" + Environment.NewLine + ":end";
+					//
+					//		if (Temp.LastUsedRepel > -1)
+					//		{
+					//			bool haveItemLeft = Inventory.GetItemAmount(Temp.LastUsedRepel) > 0;
+					//
+					//			if (haveItemLeft)
+					//				s = "version=2" + Environment.NewLine + "@Text.Show(Your repel effect wore off.*Do you want to use~another <inventory.name(" + Temp.LastUsedRepel + ")>?)" + Environment.NewLine + "@Options.Show(Yes,No)" + Environment.NewLine + ":when:Yes" + Environment.NewLine + "@sound.play(repel_use)" + Environment.NewLine + "@Text.Show(<player.name> used~a <inventory.name(" + Temp.LastUsedRepel + ")>.)" + Environment.NewLine + "@item.repel(" + Temp.LastUsedRepel + ")" + Environment.NewLine + "@item.remove(" + Temp.LastUsedRepel + ",1,0)" + Environment.NewLine + ":endwhen" + Environment.NewLine + ":end";
+					//		}
+					//
+					//		((OverworldScreen)CurrentScreen).ActionScript.StartScript(s, 2, false);
+					//		_stepEventRepelMessage = true;
+					//	}
+					//	else
+					//		_repelSteps = 1;
+					//}
 				}
 			}
 		}
@@ -2099,7 +2101,7 @@ namespace P3D
 				{
 					if (Temp.LastCall < 256)
 						Temp.LastCall += 1;
-					else if (Random.Next(0, 700) == 0)
+					else if (Settings.Rand.Next(0, 700) == 0)
 					{
 						GameJolt.PokegearScreen.RandomCall();
 						Temp.LastCall = 0;
@@ -2135,8 +2137,8 @@ namespace P3D
 				{
 					Pokemon p = Spawner.GetPokemon(GameVariables.Level.LevelFile, Spawner.EncounterMethods.Land, false, "");
 
-					if (!p == null)
-						PlayWildPokemonNoise(p.Number);
+					if (p != null || p.Species != PokemonUnity.Pokemons.NONE)
+						PlayWildPokemonNoise((int)p.Species);
 				}
 			}
 			if (GameVariables.Level.WildPokemonFloor)
@@ -2147,7 +2149,7 @@ namespace P3D
 
 					if (p != null)
 					{
-						PlayWildPokemonNoise(p.Number);
+						PlayWildPokemonNoise((int)p.Species);
 						return;
 					}
 				}
@@ -2160,7 +2162,7 @@ namespace P3D
 
 					if (p != null)
 					{
-						PlayWildPokemonNoise(p.Number);
+						PlayWildPokemonNoise((int)p.Species);
 						return;
 					}
 				}
@@ -2194,33 +2196,33 @@ namespace P3D
 		{
 			int addPoints = amount;
 
-			foreach (MysteryEventScreen.MysteryEvent mysteryEvent in MysteryEventScreen.ActivatedMysteryEvents)
-			{
-				if (mysteryEvent.EventType == MysteryEventScreen.EventTypes.PointsMultiplier)
-					addPoints = System.Convert.ToInt32(addPoints * System.Convert.ToSingle(mysteryEvent.Value.Replace(".", StringHelper.DecSeparator)));
-			}
-
-			if (IsGameJoltSave)
-			{
-				if (!GameJolt.LogInScreen.UserBanned(GameJoltSave.GameJoltID))
-					GameJoltSave.Points += addPoints;
-			}
-			else
-				Points += addPoints;
-
-			HistoryScreen.HistoryHandler.AddHistoryItem("Obtained game points", "Amount: " + addPoints.ToString() + "; Reason: " + reason, false, false);
+			//foreach (MysteryEventScreen.MysteryEvent mysteryEvent in MysteryEventScreen.ActivatedMysteryEvents)
+			//{
+			//	if (mysteryEvent.EventType == MysteryEventScreen.EventTypes.PointsMultiplier)
+			//		addPoints = System.Convert.ToInt32(addPoints * System.Convert.ToSingle(mysteryEvent.Value.Replace(".", StringHelper.DecSeparator)));
+			//}
+			//
+			//if (IsGameJoltSave)
+			//{
+			//	if (!GameJolt.LogInScreen.UserBanned(GameJoltSave.GameJoltID))
+			//		GameJoltSave.Points += addPoints;
+			//}
+			//else
+			//	Points += addPoints;
+			//
+			//HistoryScreen.HistoryHandler.AddHistoryItem("Obtained game points", "Amount: " + addPoints.ToString() + "; Reason: " + reason, false, false);
 		}
 
 		public void ResetNewLevel()
 		{
 			lastLevel = 0;
 			displayEmblemDelay = 0.0f;
-			emblemPositionX = windowSize.Width;
+			//emblemPositionX = windowSize.Width;
 		}
 
 		private int lastLevel = 0;
 		private float displayEmblemDelay = 0.0f;
-		private int emblemPositionX = windowSize.Width;
+		//private int emblemPositionX = windowSize.Width;
 
 		public void DrawLevelUp()
 		{
@@ -2233,25 +2235,25 @@ namespace P3D
 				//	Skin = GameJolt.Emblem.GetPlayerSpriteFile(lastLevel, GameJoltSave.GameJoltID, GameJoltSave.Gender);
 				//}
 
-				if (displayEmblemDelay > 0.0f)
-				{
-					displayEmblemDelay -= 0.1f;
-					if (displayEmblemDelay <= 6.4f)
-					{
-						if (emblemPositionX < windowSize.Width)
-							emblemPositionX += 8;
-					}
-					else if (emblemPositionX > windowSize.Width - 512)
-						emblemPositionX -= 8;
-
-					GameJolt.Emblem.Draw(GameJolt.API.username, GameJoltSave.GameJoltID, GameJoltSave.Points, GameJoltSave.Gender, GameJoltSave.Emblem, new Vector2(emblemPositionX, 0), 4, GameJoltSave.DownloadedSprite);
-
-					if (displayEmblemDelay <= 0.0f)
-					{
-						displayEmblemDelay = 0.0f;
-						emblemPositionX = windowSize.Width;
-					}
-				}
+				//if (displayEmblemDelay > 0.0f)
+				//{
+				//	displayEmblemDelay -= 0.1f;
+				//	if (displayEmblemDelay <= 6.4f)
+				//	{
+				//		if (emblemPositionX < windowSize.Width)
+				//			emblemPositionX += 8;
+				//	}
+				//	else if (emblemPositionX > windowSize.Width - 512)
+				//		emblemPositionX -= 8;
+				//
+				//	//GameJolt.Emblem.Draw(GameJolt.API.username, GameJoltSave.GameJoltID, GameJoltSave.Points, GameJoltSave.Gender, GameJoltSave.Emblem, new Vector2(emblemPositionX, 0), 4, GameJoltSave.DownloadedSprite);
+				//
+				//	if (displayEmblemDelay <= 0.0f)
+				//	{
+				//		displayEmblemDelay = 0.0f;
+				//		emblemPositionX = windowSize.Width;
+				//	}
+				//}
 			}
 		}
 
@@ -2272,9 +2274,10 @@ namespace P3D
 
 		public bool IsRunning()
 		{
-			if (KeyBoardHandler.KeyDown(Keys.LeftShift) | ControllerHandler.ButtonDown(Buttons.B))
+			//if (KeyBoardHandler.KeyDown(Keys.LeftShift) | ControllerHandler.ButtonDown(Buttons.B))
+			if (Input.GetKeyDown(KeyCode.LeftShift) | Input.GetButtonDown(""))
 			{
-				if (!GameVariables.Level.Riding & !GameVariables.Level.Surfing & Inventory.HasRunningShoes)
+				if (!GameVariables.Level.Riding & !GameVariables.Level.Surfing & Inventory.HasRunningShoes())
 					return true;
 			}
 
@@ -2290,7 +2293,8 @@ namespace P3D
 				// Clearning lists:
 				Pokemons.Clear();
 				Pokedexes.Clear();
-				Inventory.Clear();
+				//Inventory.Clear();
+				GameVariables.Bag_Items.Clear();
 				Badges.Clear();
 				PokeFiles.Clear();
 				EarnedAchievements.Clear();
@@ -2324,7 +2328,7 @@ namespace P3D
 				BattleStyle = 1;
 				ShowModelsInBattle = true;
 				SaveCreated = "Pre 0.21";
-				LastPokemonPosition = new Vector3(999);
+				LastPokemonPosition = new Vector3(999,999,999);
 				DaycareSteps = 0;
 				GameMode = "Kolben";
 				VisitedMaps = "";

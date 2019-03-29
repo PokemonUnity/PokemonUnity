@@ -1,4 +1,6 @@
-﻿namespace PokemonUnity.Overworld.Entity.Misc
+﻿using UnityEngine;
+
+namespace PokemonUnity.Overworld.Entity.Misc
 {
 	public class MessageBulb : Entity
 {
@@ -30,7 +32,7 @@
 		new int[] {
 			0,
 			0
-		}, false, 0, new Vector3(0.8f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f))
+		}, false, 0, new Vector3(0.8f,.8f,.8f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f,1,1))
     {
         this.NotificationType = NotificationType;
 
@@ -60,110 +62,110 @@
 		{
 			this.setTexture = true;
 
-			Rectangle r = new Rectangle(0, 0, 16, 16);
-			switch (this.NotificationType)
-			{
-				case NotifcationTypes.Waiting:
-					{
-						r = new Rectangle(0, 0, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Exclamation:
-					{
-						r = new Rectangle(16, 0, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Shouting:
-					{
-						r = new Rectangle(32, 0, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Question:
-					{
-						r = new Rectangle(48, 0, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Note:
-					{
-						r = new Rectangle(0, 16, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Heart:
-					{
-						r = new Rectangle(16, 16, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Unhappy:
-					{
-						r = new Rectangle(32, 16, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Happy:
-					{
-						r = new Rectangle(0, 32, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Friendly:
-					{
-						r = new Rectangle(16, 32, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Poisoned:
-					{
-						r = new Rectangle(32, 32, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Battle:
-					{
-						r = new Rectangle(48, 16, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Wink:
-					{
-						r = new Rectangle(48, 32, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.AFK:
-					{
-						r = new Rectangle(0, 48, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Angry:
-					{
-						r = new Rectangle(16, 48, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.CatFace:
-					{
-						r = new Rectangle(32, 48, 16, 16);
-						break;
-					}
-
-				case NotifcationTypes.Unsure:
-					{
-						r = new Rectangle(48, 48, 16, 16);
-						break;
-					}
-			}
+			//Rectangle r = new Rectangle(0, 0, 16, 16);
+			//switch (this.NotificationType)
+			//{
+			//	case NotifcationTypes.Waiting:
+			//		{
+			//			r = new Rectangle(0, 0, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Exclamation:
+			//		{
+			//			r = new Rectangle(16, 0, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Shouting:
+			//		{
+			//			r = new Rectangle(32, 0, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Question:
+			//		{
+			//			r = new Rectangle(48, 0, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Note:
+			//		{
+			//			r = new Rectangle(0, 16, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Heart:
+			//		{
+			//			r = new Rectangle(16, 16, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Unhappy:
+			//		{
+			//			r = new Rectangle(32, 16, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Happy:
+			//		{
+			//			r = new Rectangle(0, 32, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Friendly:
+			//		{
+			//			r = new Rectangle(16, 32, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Poisoned:
+			//		{
+			//			r = new Rectangle(32, 32, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Battle:
+			//		{
+			//			r = new Rectangle(48, 16, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Wink:
+			//		{
+			//			r = new Rectangle(48, 32, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.AFK:
+			//		{
+			//			r = new Rectangle(0, 48, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Angry:
+			//		{
+			//			r = new Rectangle(16, 48, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.CatFace:
+			//		{
+			//			r = new Rectangle(32, 48, 16, 16);
+			//			break;
+			//		}
+			//
+			//	case NotifcationTypes.Unsure:
+			//		{
+			//			r = new Rectangle(48, 48, 16, 16);
+			//			break;
+			//		}
+			//}
 
 			this.Textures =
-				new UnityEngine.Texture2D()
+				new UnityEngine.Texture2D[]
 				{
-					TextureManager.GetTexture("emoticons", r)
+					//TextureManager.GetTexture("emoticons", r)
 				};
 		}
 	}

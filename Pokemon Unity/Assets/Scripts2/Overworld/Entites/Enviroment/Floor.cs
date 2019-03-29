@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
@@ -81,10 +82,10 @@ public class Floor : Entity
     private void ChangeSnow()
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
-        if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-            this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
-        else
-        {
+        //if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
+        //    this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
+        //else
+        //{
             bool hasEntityOnAllSides = true;
             Entity[] ent = new Entity[5];
             int[] sides = new[] { -1, -1, -1, -1 };
@@ -125,7 +126,7 @@ public class Floor : Entity
                     TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 2)),
                     TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16))
                 };
-                this.Model = UnityEngine.Mesh.BlockModel;
+                //this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
                 this.Scale = new Vector3(1, 0.1f, 1);
                 this.Position.y -= 0.45f;
@@ -135,7 +136,7 @@ public class Floor : Entity
                 this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
                 this.Position.y += 0.1f;
             }
-        }
+        //}
 
         this.Visible = true;
         this.CreatedWorld = false;
@@ -150,10 +151,10 @@ public class Floor : Entity
     private void ChangeSand()
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
-        if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-            this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
-        else
-        {
+        //if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
+        //    this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
+        //else
+        //{
             bool hasEntityOnAllSides = true;
             Entity[] ent = new Entity[5];
             int[] sides = new[] { -1, -1, -1, -1 };
@@ -194,7 +195,7 @@ public class Floor : Entity
                     TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 2)),
                     TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16))
                 };
-                this.Model = UnityEngine.Mesh.BlockModel;
+                //this.Model = UnityEngine.Mesh.BlockModel;
                 this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
                 this.Scale = new Vector3(1, 0.1f, 1);
                 this.Position.y -= 0.45f;
@@ -204,7 +205,7 @@ public class Floor : Entity
                 this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
                 this.Position.y += 0.1f;
             }
-        }
+        //}
 
         this.Visible = true;
         this.CreatedWorld = false;
@@ -226,14 +227,14 @@ public class Floor : Entity
         bool foundSteps = true;
         while (foundSteps)
         {
-            Entity e = base.GetEntity(GameVariables.Level.Floors, checkPosition, true, typeof(Floor));
+            Entity e = base.GetEntity(GameVariables.Level.Floors, checkPosition, true, new System.Type[] { typeof(Floor) });
             if (e != null)
             {
                 if (e.EntityID == Entities.Floor)
                 {
                     if (((Floor)e).IsIce)
                     {
-                        if (!(OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition))
+                        if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
                         {
                             Steps += 1;
                             checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
@@ -247,7 +248,7 @@ public class Floor : Entity
                     }
                     else
                     {
-                        if (!(OverworldCamera)GameVariables.Camera.CheckCollision(checkPosition))
+                        if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
                             Steps += 1;
                         foundSteps = false;
                     }
@@ -268,7 +269,7 @@ public class Floor : Entity
         if (!FloorDictionary.ContainsKey(positionString))
             FloorDictionary.Add(positionString, (from ent in List
                                                  where ent.Position == Position
-                                                 select ent)(0));
+                                                 select ent).ToArray()[0]);
 
         return FloorDictionary[positionString];
     }
