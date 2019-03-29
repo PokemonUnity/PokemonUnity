@@ -361,7 +361,7 @@ public class Waterfall : Entity
 
             s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + pNumber + ")" + System.Environment.NewLine + "@sound.play(select)" + System.Environment.NewLine + "@text.show(" + pName + " used~Waterfall.)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(2)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + ":end";
 
-            PlayerStatistics.Track("Waterfall used", 1);
+            //PlayerStatistics.Track("Waterfall used", 1);
             (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
 
             return false;

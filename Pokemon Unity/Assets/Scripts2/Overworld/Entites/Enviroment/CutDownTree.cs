@@ -77,7 +77,7 @@ public class CutDownTree : Entity
 
 			string s = "version=2" + System.Environment.NewLine + "@text.show(" + Text + ")" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + ":end";
 
-			PlayerStatistics.Track("Cut used", 1);
+			//PlayerStatistics.Track("Cut used", 1);
 			(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
 		}
 	}

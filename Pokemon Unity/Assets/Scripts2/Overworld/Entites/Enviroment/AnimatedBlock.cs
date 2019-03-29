@@ -224,7 +224,7 @@ public class AnimatedBlock : Entity
 			Screen.TextBox.Show(GameVariables.playerTrainer.Party(GameVariables.playerTrainer.SurfPokemon).Name + " used~Surf!", this);
 			GameVariables.Level.Surfing = true;
 			GameVariables.Camera.Move(1);
-			PlayerStatistics.Track("Surf used", 1);
+			//PlayerStatistics.Track("Surf used", 1);
 
 			{
 				var withBlock = GameVariables.Level.OwnPlayer;

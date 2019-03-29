@@ -20,6 +20,7 @@
 		{
 			#region Variables
 			public int PhaseTime;
+			public Items ID					{ get; private set; }
 			public bool IsFruit				{ get; private set; }
 
 			public string Size				{ get; private set; }

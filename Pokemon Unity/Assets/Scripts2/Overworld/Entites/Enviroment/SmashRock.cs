@@ -90,7 +90,7 @@ public class SmashRock : Entity
                 string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + ":end";
                 (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
             }
-            PlayerStatistics.Track("Rock Smash used", 1);
+            //PlayerStatistics.Track("Rock Smash used", 1);
 
             this.CanBeRemoved = true;
         }

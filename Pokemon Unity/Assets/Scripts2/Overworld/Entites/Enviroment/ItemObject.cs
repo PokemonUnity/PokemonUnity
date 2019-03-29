@@ -169,7 +169,7 @@ public class ItemObject : Entity
             Screen.TextBox.TextColor = TextBox.PlayerColor;
             Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Bag.GetMessageReceive(this.Item, 1), this);
             GameVariables.playerTrainer.Bag.AddItem(this.Item.ItemId, 1);
-            PlayerStatistics.Track("Items found", 1);
+            //PlayerStatistics.Track("Items found", 1);
 
             GameVariables.playerTrainer.AddPoints(1, "Found an item.");
         }

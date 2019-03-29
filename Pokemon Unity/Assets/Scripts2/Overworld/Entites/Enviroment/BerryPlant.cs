@@ -231,7 +231,7 @@ public class BerryPlant : Entity
                             Text = GameVariables.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
 
                         GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
-                        PlayerStatistics.Track("[2006]Berries picked", this.Berries);
+                        //PlayerStatistics.Track("[2006]Berries picked", this.Berries);
 
                         SoundManager.PlaySound("item_found", true);
                         Screen.TextBox.TextColor = TextBox.PlayerColor;

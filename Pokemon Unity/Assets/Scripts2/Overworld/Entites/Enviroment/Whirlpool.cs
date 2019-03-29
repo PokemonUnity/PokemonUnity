@@ -122,7 +122,7 @@ public class Whirlpool : Entity
 @text.show(" + pName + @" used~Whirlpool!)
 @player.move(2)
 :end";
-                PlayerStatistics.Track("Whirlpool used", 1);
+                //PlayerStatistics.Track("Whirlpool used", 1);
             }
             else
                 s = @"version=2
