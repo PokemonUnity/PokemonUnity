@@ -37,6 +37,9 @@ public class Player
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
 	//ToDo: Missing (Trainer)Player.Rival variable
 	public string ItemData { get; set; }
+	public string BerryData { get; set; }
+	public string NPCData { get; set; }
+	public bool SandBoxMode { get; set; }
 
 	#region UI/Game Engine
 	public int mapName { get; set; }

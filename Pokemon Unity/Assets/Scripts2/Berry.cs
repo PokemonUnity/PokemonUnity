@@ -16,7 +16,7 @@
 		}
 		private Berry berry { get; set; }
 
-		public class Berry //: Item//: MedicineItem
+		public class Berry : Item//: MedicineItem
 		{
 			#region Variables
 			public int PhaseTime;
@@ -85,8 +85,8 @@
 			public Berry(Item berry) : this(berry.ItemId)
 			{
 			}
-
-			private Berry() //: base()
+			
+			private Berry(Items berry) : base(berry)
 			{
 				Spicy = 0;
 				Dry = 0;
@@ -101,10 +101,7 @@
 
 				Power = 60;
 				this.Type = Types.NONE;
-			}
 
-			private Berry(Items berry) : this()//base(berry)
-			{
 				IsFruit = true;
 				//assign background art of letter based on item
 				switch (berry)

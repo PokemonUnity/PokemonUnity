@@ -369,7 +369,7 @@ public class NPC : Entity
 	{
 		if (this.TrainerSight > -1 & !GameVariables.Level.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 		{
-			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & !GameVariables.Camera.IsMoving())
+			if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & !GameVariables.Camera.IsMoving)
 			{
 				if (Moved == 0.0f & !this.CanBeRemoved)
 				{
@@ -419,28 +419,28 @@ public class NPC : Entity
 									string[] trainerContent = System.IO.File.ReadAllLines(trainerFilePath);
 									foreach (string line in trainerContent)
 									{
-										if (line.StartsWith("@Trainer:"))
-										{
-											string trainerID = line.GetSplit(1, ":");
-											if (Trainer.IsBeaten(trainerID))
-												return;
-											else
-											{
-												Trainer t = new Trainer(trainerID);
-												//InSightMusic = t.GetInSightMusic();
-											}
-										}
-										else if (line.ToLower().StartsWith("@battle.starttrainer("))
-										{
-											string trainerID = line.Remove(line.Length - 1, 1).Remove(0, "@battle.starttrainer(".Length);
-											if (Trainer.IsBeaten(trainerID))
-												return;
-											else
-											{
-												Trainer t = new Trainer(trainerID);
-												//InSightMusic = t.GetInSightMusic();
-											}
-										}
+										//if (line.StartsWith("@Trainer:"))
+										//{
+										//	string trainerID = line.GetSplit(1, ":");
+										//	if (Trainer.IsBeaten(trainerID))
+										//		return;
+										//	else
+										//	{
+										//		Trainer t = new Trainer(trainerID);
+										//		InSightMusic = t.GetInSightMusic();
+										//	}
+										//}
+										//else if (line.ToLower().StartsWith("@battle.starttrainer("))
+										//{
+										//	string trainerID = line.Remove(line.Length - 1, 1).Remove(0, "@battle.starttrainer(".Length);
+										//	if (Trainer.IsBeaten(trainerID))
+										//		return;
+										//	else
+										//	{
+										//		Trainer t = new Trainer(trainerID);
+										//		InSightMusic = t.GetInSightMusic();
+										//	}
+										//}
 									}
 								}
 
@@ -472,7 +472,7 @@ public class NPC : Entity
 								if (turns < 0)
 									turns = 4 - turns.ToPositive();
 
-								(OverworldScreen)Core.CurrentScreen.TrainerEncountered = true;
+								((OverworldScreen)Core.CurrentScreen).TrainerEncountered = true;
 								if (InSightMusic != "nomusic" & InSightMusic != "")
 									MusicManager.Play(InSightMusic, true, 0.0f);
 								GameVariables.Camera.StopMovement();
@@ -663,14 +663,14 @@ public class NPC : Entity
 							Vector3 newPosition = Vector3.Lerp(this.Position, GetMove() / (float)Speed, (float)Speed);
 							if (CheckCollision(newPosition))
 							{
-								foreach (Rectangle r in this.MoveRectangles)
-								{
-									if (r.Contains(new Vector3(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.z))))
-									{
-										contains = true;
-										break;
-									}
-								}
+								//foreach (Rectangle r in this.MoveRectangles)
+								//{
+								//	if (r.Contains(new Vector3(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.z))))
+								//	{
+								//		contains = true;
+								//		break;
+								//	}
+								//}
 								if (contains)
 									Moved = 1.0f;
 							}
@@ -695,14 +695,14 @@ public class NPC : Entity
 						Vector3 newPosition = Vector3.Lerp(this.Position, GetMove() / (float)Speed, (float)Speed);
 						if (CheckCollision(newPosition))
 						{
-							foreach (Rectangle r in this.MoveRectangles)
-							{
-								if (r.Contains(new Vector3(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.z))))
-								{
-									contains = true;
-									break;
-								}
-							}
+							//foreach (Rectangle r in this.MoveRectangles)
+							//{
+							//	if (r.Contains(new Vector3(System.Convert.ToInt32(newPosition.x), System.Convert.ToInt32(newPosition.z))))
+							//	{
+							//		contains = true;
+							//		break;
+							//	}
+							//}
 							if (contains)
 								Moved = 1.0f;
 						}
@@ -719,7 +719,7 @@ public class NPC : Entity
 
 		bool interactPlayer = true;
 
-		if (!GameVariables.Camera.IsMoving())
+		if (!GameVariables.Camera.IsMoving)
 		{
 			if (System.Convert.ToInt32(GameVariables.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(GameVariables.Camera.Position.z) != newPosition.z)
 			{
@@ -887,13 +887,13 @@ public class NPC : Entity
 	{
 		if (GameVariables.Camera.Name == "Overworld")
 		{
-			var c = (OverworldCamera)GameVariables.Camera;
-
-			if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.NPC)
-			{
-				if (c.CameraFocusID == this.NPCID)
-					return true;
-			}
+			//var c = (OverworldCamera)GameVariables.Camera;
+			//
+			//if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.NPC)
+			//{
+			//	if (c.CameraFocusID == this.NPCID)
+			//		return true;
+			//}
 		}
 		return false;
 	}

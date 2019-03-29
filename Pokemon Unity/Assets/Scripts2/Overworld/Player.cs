@@ -541,7 +541,7 @@ namespace P3D
 		public bool AutosaveUsed = false;
 		public bool loadedSave = false;
 
-		public PlayerTemp PlayerTemp = new PlayerTemp();
+		//public PlayerTemp PlayerTemp = new PlayerTemp();
 
 		public struct Temp
 		{
@@ -606,8 +606,7 @@ namespace P3D
 		}
 
 
-		#region 
-		#endregion
+		#region Load
 		public void LoadGame(string filePrefix)
 		{
 			//foreach (string s in Core.GameOptions.ContentPackNames)
@@ -709,7 +708,8 @@ namespace P3D
 				foreach (Pokemon Pokemon in Pokemons)
 				{
 					if (Pokemon.Item != PokemonUnity.Item.Items.NONE && (Pokemon.Item >= (PokemonUnity.Item.Items)501 || (Pokemon.Item >= (PokemonUnity.Item.Items)507 && Pokemon.Item <= (PokemonUnity.Item.Items)553)))
-						Pokemon.Item = PokemonUnity.Item.Items.NONE;
+						//Pokemon.Item = PokemonUnity.Item.Items.NONE;
+						Pokemon.SwapItem(PokemonUnity.Item.Items.NONE);
 				}
 
 				// Check PC Boxes.
@@ -723,16 +723,18 @@ namespace P3D
 						if (!string.IsNullOrEmpty(item) && !item.StartsWith("BOX"))
 						{
 							string TempString = item.Remove(item.IndexOf("{"));
-							Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
+							//Pokemon TempPokemon = Pokemon.GetPokemonByData((Pokemons)System.Convert.ToInt32(item.Remove(0, item.IndexOf("{"))));
+							Pokemon TempPokemon = new Pokemon((Pokemons)System.Convert.ToInt32(item.Remove(0, item.IndexOf("{"))));
 
 							if (TempPokemon.Item != PokemonUnity.Item.Items.NONE && (TempPokemon.Item >= (PokemonUnity.Item.Items)501 || (TempPokemon.Item >= (PokemonUnity.Item.Items)507 && TempPokemon.Item <= (PokemonUnity.Item.Items)553)))
-								TempPokemon.Item = PokemonUnity.Item.Items.NONE;
+								//TempPokemon.Item = PokemonUnity.Item.Items.NONE;
+								TempPokemon.SwapItem(PokemonUnity.Item.Items.NONE);
 
 							//item = TempString + TempPokemon.ToString();
 						}
 					}
 
-					BoxData = string.Join(Environment.NewLine, TempBoxData);
+					BoxData = string.Join(Environment.NewLine, TempBoxData.ToArray());
 				}
 
 				// Check Day Care.
@@ -746,16 +748,18 @@ namespace P3D
 						if (!string.IsNullOrEmpty(item) && item.Contains("{"))
 						{
 							string TempString = ItemData.Remove(item.IndexOf("{"));
-							Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
+							//Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
+							Pokemon TempPokemon = new Pokemon((Pokemons)System.Convert.ToInt32(item.Remove(0, item.IndexOf("{"))));
 
 							if (TempPokemon.Item != PokemonUnity.Item.Items.NONE && (TempPokemon.Item >= (PokemonUnity.Item.Items)501 || (TempPokemon.Item >= (PokemonUnity.Item.Items)507 && TempPokemon.Item <= (PokemonUnity.Item.Items)553)))
-								TempPokemon.Item = PokemonUnity.Item.Items.NONE;
+								//TempPokemon.Item = PokemonUnity.Item.Items.NONE;
+								TempPokemon.SwapItem(PokemonUnity.Item.Items.NONE);
 
 							//item = TempString + TempPokemon.ToString();
 						}
 					}
 
-					DaycareData = string.Join(Environment.NewLine, TempDaycareData);
+					DaycareData = string.Join(Environment.NewLine, TempDaycareData.ToArray());
 				}
 
 				ActionScript.RegisterID("PokemonIndev054Update");
@@ -1197,7 +1201,7 @@ namespace P3D
 							}
 						case "textspeed":
 							{
-								GameVariables.textSpeed = System.Convert.ToInt32(Value);
+								GameVariables.textSpeed = System.Convert.ToByte(Value);
 								break;
 							}
 						case "mousespeed":
@@ -1246,7 +1250,9 @@ namespace P3D
 				}
 			}
 		}
+		#endregion
 
+		#region Loading Misc Data
 		private void LoadBerries()
 		{
 			//if (IsGameJoltSave)
@@ -1371,8 +1377,7 @@ namespace P3D
 			//	Statistics = "";
 			//PlayerStatistics.Load(Statistics);
 		}
-
-
+		#endregion
 
 		private Dictionary<string, string> GameJoltTempStoreString = new Dictionary<string, string>();
 
@@ -1491,6 +1496,7 @@ namespace P3D
 		//	}
 		//}
 
+		#region Get
 		public string GetPartyData()
 		{
 			string Data = "";
@@ -1683,7 +1689,9 @@ namespace P3D
 		//
 		//	return (OverworldCamera)Screen.Camera;
 		//}
+		#endregion
 
+		#region Save
 		private void SaveParty()
 		{
 			string Data = GetPartyData();
@@ -1822,6 +1830,7 @@ namespace P3D
 			//else
 			//	System.IO.File.WriteAllText(GameController.GamePath + @"\Save\" + filePrefix + @"\Statistics.dat", GetStatisticsData());
 		}
+		#endregion
 		
 		public void HealParty()
 		{
@@ -1950,7 +1959,7 @@ namespace P3D
 			if (!IsFlying)
 			{
 				// Set the last position:
-				Temp.LastPosition = Screen.Camera.Position;
+				//Temp.LastPosition = Screen.Camera.Position;
 
 				// Increment step counters:
 				GameVariables.Level.WalkedSteps += 1;
@@ -1959,22 +1968,22 @@ namespace P3D
 				//PlayerStatistics.Track("Steps taken", stepAmount);
 
 				// Daycare cycle:
-				PlayerTemp.DayCareCycle -= stepAmount;
-				if (PlayerTemp.DayCareCycle <= 0)
-				{
-					Daycare.EggCircle();
-
-					// Every 256 steps, add friendship to the Pokémon in the player's team.
-					foreach (Pokemon p in Pokemons)
-					{
-						if (p.Status != Status.FAINT & !p.isEgg)
-							p.ChangeFriendShip(Pokemon.FriendShipCauses.Walking);
-					}
-
-					AddPoints(1, "Completed an Egg Circle.");
-
-					//PokemonInteractions.CheckForRandomPickup();
-				}
+				//PlayerTemp.DayCareCycle -= stepAmount;
+				//if (PlayerTemp.DayCareCycle <= 0)
+				//{
+				//	Daycare.EggCircle();
+				//
+				//	// Every 256 steps, add friendship to the Pokémon in the player's team.
+				//	foreach (Pokemon p in Pokemons)
+				//	{
+				//		if (p.Status != Status.FAINT & !p.isEgg)
+				//			p.ChangeFriendShip(Pokemon.FriendShipCauses.Walking);
+				//	}
+				//
+				//	AddPoints(1, "Completed an Egg Circle.");
+				//
+				//	//PokemonInteractions.CheckForRandomPickup();
+				//}
 
 				// Apply shaders and set following pokemon:
 				GameVariables.Level.OwnPlayer.ApplyShaders();

@@ -629,7 +629,8 @@ namespace PokemonUnity
 		POISON,
 		PARALYSIS,
 		BURN,
-		FROZEN
+		FROZEN,
+		FAINT
 	}
 	/// <summary>
 	/// Move ids are connected to XML file.

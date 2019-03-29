@@ -22,7 +22,7 @@ public class BerryPlant : Entity
 
     public new void Initialize(int BerryIndex, int BerriesYield, string Watered, string Time, bool FullGrown)
     {
-        this.Berry = (Item.Item.Berry)Item.Item.GetItem(BerryIndex + 2000);
+        this.Berry = (Item.Item.Berry)Item.Item.GetItem((Item.Items)BerryIndex + 2000);
         this.Berries = BerriesYield;
         this.PlantDate = Time;
         this.BerryIndex = BerryIndex;
@@ -116,40 +116,40 @@ public class BerryPlant : Entity
 
     private void NewTexture()
     {
-        Texture2D t;
-        if (this.Phase > 1)
-        {
-            int x = this.Berry.BerryIndex * 128 + ((Phase - 1) * 32);
-            int y = 0;
-            while (x > 512)
-            {
-                x -= 512;
-                y += 32;
-            }
-            Rectangle r = new Rectangle(x, y, 32, 32);
-            t = TextureManager.GetTexture(@"Textures\Berries", r, "");
-        }
-        else
-        {
-            Rectangle r;
-            switch (this.Phase)
-            {
-                case 0:
-                    {
-                        r = new Rectangle(448, 480, 32, 32);
-                        break;
-                    }
+        //Texture2D t;
+        //if (this.Phase > 1)
+        //{
+        //    int x = this.Berry.BerryIndex * 128 + ((Phase - 1) * 32);
+        //    int y = 0;
+        //    while (x > 512)
+        //    {
+        //        x -= 512;
+        //        y += 32;
+        //    }
+        //    Rectangle r = new Rectangle(x, y, 32, 32);
+        //    t = TextureManager.GetTexture(@"Textures\Berries", r, "");
+        //}
+        //else
+        //{
+        //    Rectangle r;
+        //    switch (this.Phase)
+        //    {
+        //        case 0:
+        //            {
+        //                r = new Rectangle(448, 480, 32, 32);
+        //                break;
+        //            }
+		//
+        //        case 1:
+        //            {
+        //                r = new Rectangle(480, 480, 32, 32);
+        //                break;
+        //            }
+        //    }
+        //    t = TextureManager.GetTexture(@"Items\ItemSheet", r, "");
+        //}
 
-                case 1:
-                    {
-                        r = new Rectangle(480, 480, 32, 32);
-                        break;
-                    }
-            }
-            t = TextureManager.GetTexture(@"Items\ItemSheet", r, "");
-        }
-
-        this.Textures[0] = t;
+        //this.Textures[0] = t;
     }
 
     private int ResultIndex = 0;
@@ -159,7 +159,7 @@ public class BerryPlant : Entity
         string text = "";
 
         bool hasBottle = false;
-        if (GameVariables.playerTrainer.Bag.GetItemAmount(175) > 0)
+        if (GameVariables.playerTrainer.Bag.GetItemAmount((PokemonUnity.Item.Items)175) > 0)
             hasBottle = true;
 
         switch (this.Phase)
@@ -230,11 +230,11 @@ public class BerryPlant : Entity
                         else
                             Text = GameVariables.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
 
-                        GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
+                        //GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
                         //PlayerStatistics.Track("[2006]Berries picked", this.Berries);
 
                         SoundManager.PlaySound("item_found", true);
-                        Screen.TextBox.TextColor = TextBox.PlayerColor;
+                        //Screen.TextBox.TextColor = TextBox.PlayerColor;
                         Screen.TextBox.Show(Text, this);
                         RemoveBerry();
                         GameVariables.Level.Entities.Remove(this);
@@ -282,7 +282,7 @@ public class BerryPlant : Entity
         DateTime cD = DateTime.Now;
         string DateData = cD.Year + "," + cD.Month + "," + cD.Day + "," + cD.TimeOfDay.Hours + "," + cD.TimeOfDay.Minutes + "," + cD.TimeOfDay.Seconds;
 
-        Item.Item.Berry Berry = (Item.Item.Berry)Item.Item.GetItem(BerryIndex + 2000);
+        Item.Item.Berry Berry = (Item.Item.Berry)Item.Item.GetItem((Item.Items)BerryIndex + 2000);
 
         int BerryAmount = GetBerryAmount(Berry, 0);
 
@@ -310,7 +310,7 @@ public class BerryPlant : Entity
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         GameVariables.Level.Entities.Add(newEnt);
 
-        GameVariables.playerTrainer.Bag.RemoveItem(BerryIndex + 2000, 1);
+        GameVariables.playerTrainer.Bag.RemoveItem((Item.Items)BerryIndex + 2000, 1);
     }
 
     private static int GetBerryAmount(Item.Item.Berry Berry, int Watered)
@@ -393,7 +393,7 @@ public class BerryPlant : Entity
 
             string DateData = PlantDate;
 
-            Item.Item.Berry Berry = (Item.Item.Berry)Item.Item.GetItem(BerryIndex + 2000);
+            Item.Item.Berry Berry = (Item.Item.Berry)Item.Item.GetItem((Item.Items)BerryIndex + 2000);
 
             string WateredData = "";
             int wateredCount = 0;

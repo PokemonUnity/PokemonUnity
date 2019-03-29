@@ -18,7 +18,7 @@ public class Floor : Entity
     {
     }
 
-    public Floor(float X, float Y, float Z, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, Vector3 Shader, bool hasSnow, bool IsIce, bool hasSand) : base(X, Y, Z, "Floor", Textures, TextureIndex, Collision, Rotation, Scale, Model, ActionValue, AdditionalValue, Shader)
+    public Floor(float X, float Y, float Z, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, Vector3 Shader, bool hasSnow, bool IsIce, bool hasSand) : base(X, Y, Z, Entities.Floor, Textures, TextureIndex, Collision, Rotation, Scale, Model, ActionValue, AdditionalValue, Shader)
     {
         this.hasSnow = hasSnow;
         this.hasSand = hasSand;
