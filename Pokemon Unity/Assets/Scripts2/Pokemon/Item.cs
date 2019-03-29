@@ -13,7 +13,7 @@ public class PBItems
 
 namespace PokemonUnity.Item
 {
-    public class Item
+    public partial class Item
     {
         #region Variables
         public string Name { get; private set; }
