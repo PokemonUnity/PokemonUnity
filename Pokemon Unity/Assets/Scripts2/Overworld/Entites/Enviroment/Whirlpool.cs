@@ -11,7 +11,7 @@ public class Whirlpool : Entity
     public static List<Texture2D> WaterTexturesTemp = new List<Texture2D>();
 
     private Animation WaterAnimation;
-    private Rectangle currentRectangle = new Rectangle(0, 0, 0, 0);
+    private Vector4 currentRectangle = new Vector4(0, 0, 0, 0);
 
     public override void Initialize()
     {
@@ -30,10 +30,10 @@ public class Whirlpool : Entity
         //{
         //    Whirlpool.WaterTexturesTemp.Clear();
 		//
-        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(0, 176, 16, 16)));
-        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(16, 176, 16, 16)));
-        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(32, 176, 16, 16)));
-        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Rectangle(48, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Vector4(0, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Vector4(16, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Vector4(32, 176, 16, 16)));
+        //    Whirlpool.WaterTexturesTemp.Add(TextureManager.GetTexture("Routes", new Vector4(48, 176, 16, 16)));
         //    Whirlpool.LoadedWaterTemp = true;
         //}
     }
@@ -88,7 +88,7 @@ public class Whirlpool : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 
     private string ReturnWhirlPoolPokemonName()
@@ -156,7 +156,7 @@ public class Whirlpool : Entity
 @text.show(It's a vicious~whirlpool!*A Pokémon may be~able to pass it.)
 :end";
 
-            (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2);
+            //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
             return true;
         }
 

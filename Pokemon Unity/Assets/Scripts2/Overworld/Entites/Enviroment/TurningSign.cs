@@ -59,7 +59,7 @@ public class TurningSign : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, true);
+ //this.Draw(this.Model, Textures, true);
     }
 }
 }

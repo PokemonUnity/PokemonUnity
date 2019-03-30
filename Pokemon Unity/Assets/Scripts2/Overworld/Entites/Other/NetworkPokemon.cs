@@ -11,14 +11,14 @@ public class NetworkPokemon : Entity
 	public int faceRotation = 0;
 
 	private Texture2D Texture;
-	private Rectangle lastRectangle = new Rectangle(0, 0, 0, 0);
+	private Vector4 lastRectangle = new Vector4(0, 0, 0, 0);
 	private string loadedTexture = "";
 
 	private int AnimationX = 1;
 	private float AnimationDelayLenght = 2.2f;
-	private float AnimationDelay = AnimationDelayLenght;
+	private float AnimationDelay = 2.2f;
 
-	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.x, pos.y, pos.z, "NetworkPokemon",
+	public NetworkPokemon(Vector3 pos, string PokemonTexture, bool visible) : base(pos.x, pos.y, pos.z, Entities.NetworkPokemon,
 		new Texture2D[]
 	{
 		TextureManager.DefaultTexture
@@ -27,7 +27,7 @@ public class NetworkPokemon : Entity
     {
         0,
         0
-    }, false, 0, new Vector3(0.9f,0.9f,0.9f), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1,1,1))
+    }, false, 0, new Vector3(0.9f,0.9f,0.9f)/*, UnityEngine.Mesh.BillModel*/, 0, "", new Vector3(1,1,1))
     {
         this.Visible = visible;
 
@@ -134,7 +134,7 @@ public class NetworkPokemon : Entity
 			this.Texture = TextureManager.GetTexture(path);
 		}
 
-		Rectangle r = new Rectangle(0, 0, 0, 0);
+		Vector4 r = new Vector4(0, 0, 0, 0);
 		int cameraRotation = GameVariables.Camera.GetFacingDirection();
 		int spriteIndex = this.faceRotation - cameraRotation;
 
@@ -159,7 +159,7 @@ public class NetworkPokemon : Entity
 		y += 2;
 		height -= 2;
 
-		r = new Rectangle(x, y, dimension, height);
+		r = new Vector4(x, y, dimension, height);
 
 		if (r != lastRectangle)
 		{

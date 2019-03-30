@@ -955,7 +955,7 @@ public class World
     }
 
     private static Vector2 WeatherOffset = new Vector2(0, 0);
-    private static List<Rectangle> ObjectsList = new List<Rectangle>();
+    private static List<Vector4> ObjectsList = new List<Vector4>();
 
     public static Weathers[] NoParticlesList = new[] { Weathers.Clear, Weathers.Sunny, Weathers.Fog };
 
@@ -970,7 +970,7 @@ public class World
             //    {
             //        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
             //        {
-            //            if (!Screen.TextBox.Showing)
+            //            if (!GameVariables.TextBox.Showing)
             //                GenerateParticles(0, MapWeather);
             //        }
             //        else
@@ -1038,12 +1038,12 @@ public class World
                             T = TextureManager.GetTexture(@"Textures\Weather\bubble");
 
                             //if (Settings.Rand.Next(0, 100) == 0)
-                            //    ObjectsList.Add(new Rectangle(Settings.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
+                            //    ObjectsList.Add(new Vector4(Settings.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
 							//
                             //for (var i = 0; i <= ObjectsList.Count - 1; i++)
                             //{
-                            //    Rectangle r = ObjectsList[i];
-                            //    ObjectsList[i] = new Rectangle(r.x, r.y - 2, r.width, r.height);
+                            //    Vector4 r = ObjectsList[i];
+                            //    ObjectsList[i] = new Vector4(r.x, r.y - 2, r.width, r.height);
 							//
                             //    Core.SpriteBatch.Draw(T, ObjectsList[i], new UnityEngine.Color(255, 255, 255, 150));
                             //}
@@ -1079,7 +1079,7 @@ public class World
                             //for (var x = -size; x <= Core.windowSize.width; x += size)
                             //{
                             //    for (var y = -size; y <= Core.windowSize.height; y += size)
-                            //        Core.SpriteBatch.Draw(T, new Rectangle(System.Convert.ToInt32(x + WeatherOffset.x), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new UnityEngine.Color(255, 255, 255, opacity));
+                            //        Core.SpriteBatch.Draw(T, new Vector4(System.Convert.ToInt32(x + WeatherOffset.x), System.Convert.ToInt32(y + WeatherOffset.y), size, size), new UnityEngine.Color(255, 255, 255, opacity));
                             //}
 
                             break;
@@ -1220,7 +1220,7 @@ public class World
         //                        float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0f;
         //                        float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
         //                        float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
-        //                        Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale, UnityEngine.Mesh.BillModel, new Vector3(1f, 1f, 1f));
+        //                        Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale/*, UnityEngine.Mesh.BillModel*/, new Vector3(1f, 1f, 1f));
         //                        p.MoveSpeed = speed;
         //                        if (MapWeather == Weathers.Rain)
         //                            p.Opacity = 0.7f;
@@ -1305,7 +1305,7 @@ public class World
             List<UnityEngine.Color> outputColors = new List<UnityEngine.Color>();
 
             UnityEngine.Color[] Data = new UnityEngine.Color[4];
-            seasonTexture.GetData(0, new Rectangle(x, y, 2, 2), Data, 0, 4);
+            //seasonTexture.GetData(0, new Vector4(x, y, 2, 2), Data, 0, 4);
 
             SeasonTextureBuffer.Add(T, T.ReplaceColors(inputColors, Data));
             return SeasonTextureBuffer[T];

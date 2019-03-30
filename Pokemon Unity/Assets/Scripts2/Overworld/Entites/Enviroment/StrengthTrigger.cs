@@ -37,7 +37,7 @@ public class StrengthTrigger : Entity
             }
         }
 
-        string[] registers = GameVariables.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
+        string[] registers = null;//GameVariables.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
         foreach (string r in registers)
         {
             if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_"))
@@ -69,12 +69,12 @@ public class StrengthTrigger : Entity
                     {
                         if (RemoveRock)
                             ((StrengthRock)sRock).CanBeRemoved = true;
-                        if (RemoveForever)
-                            ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_" + sRock.ID.ToString());
+                        //if (RemoveForever)
+                        //    ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_" + sRock.ID.ToString());
                         if (ActivateScript != "")
                         {
-                            if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-                                (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(this.ActivateScript, 0, false);
+                            //if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+                            //    ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(this.ActivateScript, 0, false);
                         }
 
                         Activated = true;
@@ -88,7 +88,7 @@ public class StrengthTrigger : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, true);
+ //this.Draw(this.Model, Textures, true);
     }
 }
 }

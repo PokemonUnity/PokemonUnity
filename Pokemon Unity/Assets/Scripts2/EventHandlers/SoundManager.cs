@@ -84,7 +84,7 @@ public class SoundManager
 			{
 
 				// load sound
-				var filePath = Path.Combine(GameController.GamePath, @"Content\Sounds", soundFile + ".wav");
+				var filePath = Path.Combine(PokemonUnity.Saving.SaveManager.saveLocation, @"Content\Sounds" + soundFile + ".wav");
 				if (File.Exists(filePath))
 				{
 					using (FileStream stream = new FileStream(filePath, FileMode.OpenOrCreate))

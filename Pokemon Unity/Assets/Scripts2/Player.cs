@@ -39,7 +39,14 @@ public class Player
 	public string ItemData { get; set; }
 	public string BerryData { get; set; }
 	public string NPCData { get; set; }
+	public string ApricornData { get; set; }
+	public UnityEngine.Vector3 LastPokemonPosition { get; set; }
 	public bool SandBoxMode { get; set; }
+	public bool IsRunning() { return false; }
+	public bool startSurfing { get; set; }
+	public int RepelSteps { get; set; }
+	public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
+	public Pokemon GetWalkPokemon() { return null; }
 
 	#region UI/Game Engine
 	public int mapName { get; set; }
@@ -58,6 +65,7 @@ public class Player
 
 	#region Player Records
 	public string PlayerName { get; private set; }
+	public string RivalName { get; private set; }
 	/// <summary>
 	/// </summary>
 	/// ToDo: consider create AddMoney(value)... 

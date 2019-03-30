@@ -22,7 +22,7 @@ public class WallBill : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 }
 }

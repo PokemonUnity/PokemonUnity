@@ -15,9 +15,9 @@ public class SlideBlock : Entity
 
         GameVariables.Camera.PlannedMovement = Vector3.zero;
 
-        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & !GameVariables.Camera.IsMoving())
+        if (GameVariables.Camera.GetPlayerFacingDirection() == facing & !GameVariables.Camera.IsMoving)
         {
-            ((OverworldCamera)GameVariables.Camera).DidWalkAgainst = false;
+            //((OverworldCamera)GameVariables.Camera).DidWalkAgainst = false;
 
             int Steps = 0;
 
@@ -68,7 +68,7 @@ public class SlideBlock : Entity
 
             s += ":end";
 
-            ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
+            //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
             return true;
         }
 
@@ -116,7 +116,7 @@ public class SlideBlock : Entity
 
         if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
         {
-            ((OverworldCamera)GameVariables.Camera).DidWalkAgainst = false;
+            //((OverworldCamera)GameVariables.Camera).DidWalkAgainst = false;
 
             int Steps = 0;
 
@@ -167,13 +167,13 @@ public class SlideBlock : Entity
 
             s += ":end";
 
-            ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
+            //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
         }
     }
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+		//this.Draw(this.Model, Textures, false);
     }
 }
 }

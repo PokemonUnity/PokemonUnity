@@ -171,7 +171,7 @@
 
 				//Description = Description;
 				//_textureSource = @"Textures\Berries";
-				//_textureRectangle = new Rectangle(x, y, 32, 32);
+				//_textureRectangle = new Vector4(x, y, 32, 32);
 			}
 
 			/// <summary>

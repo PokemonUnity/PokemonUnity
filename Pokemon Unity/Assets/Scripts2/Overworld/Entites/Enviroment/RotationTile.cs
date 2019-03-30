@@ -115,7 +115,7 @@ public class RotationTile : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 
     public override bool LetPlayerMove()
@@ -125,8 +125,8 @@ public class RotationTile : Entity
 
     public override bool WalkIntoFunction()
     {
-        if (this.RotationType == RotationTypes.StartSpin)
-            ((OverworldCamera)GameVariables.Camera).YawLocked = true;
+        //if (this.RotationType == RotationTypes.StartSpin)
+        //    ((OverworldCamera)GameVariables.Camera).YawLocked = true;
         return false;
     }
 }

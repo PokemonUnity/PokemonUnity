@@ -24,7 +24,7 @@ public class Particle : Entity
 	private Vector3 LastPosition;
 	private float time = 0;
 
-	public Particle(Vector3 Position, Texture2D[] Textures, int[] TextureIndex, int Rotation, Vector3 Scale, UnityEngine.Mesh Model, Vector3 Shader) : base(Position.x, Position.y, Position.z, Entities.Particle, Textures, TextureIndex, false, Rotation, Scale, Model, 0, "", Shader)
+	public Particle(Vector3 Position, Texture2D[] Textures, int[] TextureIndex, int Rotation, Vector3 Scale/*, UnityEngine.Mesh Model*/, Vector3 Shader) : base(Position.x, Position.y, Position.z, Entities.Particle, Textures, TextureIndex, false, Rotation, Scale/*, Model*/, 0, "", Shader)
 	{
 		this.NeedsUpdate = true;
 		this.CreateWorldEveryFrame = true;
@@ -132,7 +132,7 @@ public class Particle : Entity
 
 	public override void Render()
 	{
-		base.Draw(this.Model, this.Textures, false);
+		//base.Draw(this.Model, this.Textures, false);
 	}
 }
 }

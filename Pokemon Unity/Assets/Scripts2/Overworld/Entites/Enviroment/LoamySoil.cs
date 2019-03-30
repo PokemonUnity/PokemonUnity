@@ -25,7 +25,7 @@ public class LoamySoil : Entity
         }
         if (!hasBerry)
         {
-            Screen.TextBox.Show("Do you want to plant a~berry here?%Yes|No%", this);
+            GameVariables.TextBox.Show("Do you want to plant a~berry here?%Yes|No%", new Entity[] { this });
             SoundManager.PlaySound("select");
         }
     }
@@ -59,14 +59,14 @@ public class LoamySoil : Entity
             Item.Item.Berry Berry = testItem.IsBerry;//(Item.Item.Berry)Item.Item.GetItem(ChosenBerry);
 
             BerryPlant.AddBerryPlant(GameVariables.Level.LevelFile, this.Position, Berry.BerryIndex);
-            Screen.TextBox.reDelay = 0.0f;
-            Screen.TextBox.Show("You planted a~" + /*Berry*/testItem.Name + " Berry here.", null);
+            GameVariables.TextBox.reDelay = 0.0f;
+            GameVariables.TextBox.Show("You planted a~" + /*Berry*/testItem.Name + " Berry here.", null);
         }
     }
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 }
 }

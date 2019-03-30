@@ -26,4 +26,8 @@ public static class MathHelper
 		else
 			return amount;
 	}
+
+	public const int PiOver2 = 0;
+	public const int TwoPi = 0;
+	public const int Pi = 0;
 }

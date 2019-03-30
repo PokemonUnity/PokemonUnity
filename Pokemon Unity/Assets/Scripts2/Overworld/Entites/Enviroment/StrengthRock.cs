@@ -18,7 +18,7 @@ public class StrengthRock : Entity
         if (GameVariables.Level.UsedStrength)
         {
             string text = "Pokémon with Strength are~able to move this.";
-            Screen.TextBox.Show(text, this);
+            GameVariables.TextBox.Show(text, new Entity[] { this });
             SoundManager.PlaySound("select");
         }
         else
@@ -48,7 +48,7 @@ public class StrengthRock : Entity
             if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                 text += "~Do you want to~use Strength?%Yes|No%";
 
-            Screen.TextBox.Show(text, this);
+            GameVariables.TextBox.Show(text, new Entity[] { this });
             SoundManager.PlaySound("select");
         }
     }
@@ -89,7 +89,7 @@ public class StrengthRock : Entity
             GameVariables.Level.UsedStrength = true;
 
             SoundManager.PlayPokemonCry(pNumber);
-            Screen.TextBox.Show(pName + " used~Strength!", null, true, false);
+            GameVariables.TextBox.Show(pName + " used~Strength!", null, true, false);
             //PlayerStatistics.Track("Strength used", 1);
         }
     }
@@ -149,7 +149,7 @@ public class StrengthRock : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 }
 }

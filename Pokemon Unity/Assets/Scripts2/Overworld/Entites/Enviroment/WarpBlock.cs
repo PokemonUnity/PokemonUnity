@@ -8,7 +8,7 @@ public class WarpBlock : Entity
 {
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 
     public override bool WalkAgainstFunction()
@@ -40,7 +40,7 @@ public class WarpBlock : Entity
                     return true;
             }
 
-            if (System.IO.File.Exists(GameController.GamePath + @"\" + GameModeManager.ActiveGameMode.MapPath + destination) | System.IO.File.Exists(GameController.GamePath + @"\Content\Data\maps\" + destination))
+            if (System.IO.File.Exists(Saving.SaveManager.saveLocation + @"\" + /*GameModeManager.ActiveGameMode.*/"" + destination) | System.IO.File.Exists(Saving.SaveManager.saveLocation + @"\Content\Data\maps\" + destination))
             {
                 if (!MapViewMode)
                 {
@@ -51,7 +51,7 @@ public class WarpBlock : Entity
                     GameVariables.Level.WarpData.CorrectCameraYaw = GameVariables.Camera.Yaw;
                     GameVariables.Level.WarpData.IsWarpBlock = true;
                     GameVariables.DebugLog("Lock Camera");
-                    ((OverworldCamera)GameVariables.Camera).YawLocked = true;
+                    //((OverworldCamera)GameVariables.Camera).YawLocked = true;
                 }
                 else
                 {
@@ -63,7 +63,7 @@ public class WarpBlock : Entity
                 }
             }
             else
-                CallError("Map file \"" + GameModeManager.ActiveGameMode.MapPath + destination + "\" does not exist.");
+                CallError("Map file \"" + /*GameModeManager.ActiveGameMode.MapPath*/"" + destination + "\" does not exist.");
         }
 
         return false;

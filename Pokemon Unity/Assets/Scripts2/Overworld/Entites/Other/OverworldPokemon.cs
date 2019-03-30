@@ -8,11 +8,11 @@ namespace PokemonUnity.Overworld.Entity.Misc
 {
 public class OverworldPokemon : Entity
 {
-	public OverworldPokemon(float X, float Y, float Z) : base(X, Y, Z, "OverworldPokemon", TextureManager.DefaultTexture,
+	public OverworldPokemon(float X, float Y, float Z) : base(X, Y, Z, Entities.OverworldPokemon, new Texture2D[] { TextureManager.DefaultTexture },
 		new int[]{
 			0,
 			0
-		}, false, 0, new Vector3(1.0f,1,1), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1,1,1))
+		}, false, 0, new Vector3(1.0f,1,1)/*, UnityEngine.Mesh.BillModel*/, 0, "", new Vector3(1,1,1))
     {
         PokemonReference = null/* TODO Change to default(_) if this is not a reference type */;
         this.Respawn();
@@ -48,35 +48,35 @@ public class OverworldPokemon : Entity
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		set
 		{
-			if (_PokemonReference != null)
-			{
-				_PokemonReference.TexturesCleared -= PokemonReference_TexturesCleared;
-			}
-
+			//if (_PokemonReference != null)
+			//{
+			//	_PokemonReference.TexturesCleared -= PokemonReference_TexturesCleared;
+			//}
+			//
 			_PokemonReference = value;
-			if (_PokemonReference != null)
-			{
-				_PokemonReference.TexturesCleared += PokemonReference_TexturesCleared;
-			}
+			//if (_PokemonReference != null)
+			//{
+			//	_PokemonReference.TexturesCleared += PokemonReference_TexturesCleared;
+			//}
 		}
 	}
 
 	public Texture2D Texture;
-	private Rectangle lastRectangle = new Rectangle(0, 0, 0, 0);
+	private Vector4 lastRectangle = new Vector4(0, 0, 0, 0);
 	public int faceRotation = 0;
 	public float MoveSpeed = 0.04f;
 	public bool warped = true;
 
 	private int AnimationX = 1;
 	private float AnimationDelayLenght = 2.2f;
-	private float AnimationDelay = AnimationDelayLenght;
+	private float AnimationDelay = 2.2f;
 
 	private void ChangeTexture()
 	{
-		if (this.Texture == null)
-			this.Texture = PokemonReference.GetOverworldTexture();
+		//if (this.Texture == null)
+		//	this.Texture = PokemonReference.GetOverworldTexture();
 
-		Rectangle r = new Rectangle(0, 0, 0, 0);
+		Vector4 r = new Vector4(0, 0, 0, 0);
 		int cameraRotation = GameVariables.Camera.GetFacingDirection();
 		int spriteIndex = this.faceRotation - cameraRotation;
 
@@ -93,7 +93,7 @@ public class OverworldPokemon : Entity
 
 		int y = height * spriteIndex;
 
-		r = new Rectangle(x, y, width, height);
+		r = new Vector4(x, y, width, height);
 
 		if (r != lastRectangle)
 		{
@@ -112,7 +112,7 @@ public class OverworldPokemon : Entity
 			bool differentShinyState = false;
 			if (this.PokemonReference != null)
 			{
-				differentAdditionalData = (this.PokemonReference.AdditionalData != GameVariables.playerTrainer.GetWalkPokemon().AdditionalData);
+				//differentAdditionalData = (this.PokemonReference.AdditionalData != GameVariables.playerTrainer.GetWalkPokemon().AdditionalData);
 				differentShinyState = (this.PokemonReference.IsShiny != GameVariables.playerTrainer.GetWalkPokemon().IsShiny);
 			}
 
@@ -169,7 +169,7 @@ public class OverworldPokemon : Entity
 	/// </summary>
 	public bool IsVisible()
 	{
-		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
+		if (System.Convert.ToBoolean(/*GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")*/""))
 		{
 			if (GameVariables.Level.ShowOverworldPokemon)
 			{
@@ -210,7 +210,7 @@ public class OverworldPokemon : Entity
 
 	private void ChangePosition()
 	{
-		if (GameVariables.Camera.IsMoving())
+		if (GameVariables.Camera.IsMoving)
 		{
 			if (System.Convert.ToInt32(this.Position.x) != System.Convert.ToInt32(GameVariables.Camera.Position.x) | System.Convert.ToInt32(this.Position.z) != System.Convert.ToInt32(GameVariables.Camera.Position.z))
 			{
@@ -286,8 +286,8 @@ public class OverworldPokemon : Entity
 	public void Respawn()
 	{
 		Vector3 newPosition = new Vector3(0, -2, 0);
-		if (GameVariables.Camera.Name == "Overworld")
-			newPosition = (OverworldCamera)GameVariables.Camera.LastStepPosition;
+		//if (GameVariables.Camera.Name == "Overworld")
+		//	newPosition = ((OverworldCamera)GameVariables.Camera).LastStepPosition;
 		if (newPosition != new Vector3(0, -2, 0))
 			this.Position = newPosition;
 		else
@@ -320,18 +320,18 @@ public class OverworldPokemon : Entity
 
 	public override void ClickFunction()
 	{
-		if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
+		if (System.Convert.ToBoolean(/*GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")*/""))
 		{
 			if (this.Visible & (GameVariables.playerTrainer.GetWalkPokemon() != null || GameVariables.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & !GameVariables.Level.Surfing & !GameVariables.Level.Riding & GameVariables.Level.ShowOverworldPokemon)
 			{
 				Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
-				string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
-
-				if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-				{
-					if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
-						(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(scriptString, 2);
-				}
+				//string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
+				//
+				//if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+				//{
+				//	if (((OverworldScreen)Core.CurrentScreen).ActionScript.IsReady)
+				//		((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(scriptString, 2);
+				//}
 			}
 		}
 	}
@@ -339,8 +339,8 @@ public class OverworldPokemon : Entity
 	public void ApplyShaders()
 	{
 		this.Shaders.Clear();
-		foreach (Shader Shader in GameVariables.Level.Shaders)
-			Shader.ApplyShader(this);
+		//foreach (Shader Shader in GameVariables.Level.Shaders)
+		//	Shader.ApplyShader(this);
 	}
 
 	private void PokemonReference_TexturesCleared(object sender, EventArgs e)
@@ -356,7 +356,7 @@ public class OverworldPokemon : Entity
 
 	public void ForceTextureChange()
 	{
-		this.lastRectangle = new Rectangle(0, 0, 0, 0);
+		this.lastRectangle = new Vector4(0, 0, 0, 0);
 		this.ChangeTexture();
 	}
 }

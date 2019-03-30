@@ -29,29 +29,29 @@ public class ApricornPlant : Entity
 
 		ApricornColor = GetApricornColor(System.Convert.ToInt32(AdditionalValue));
 		CheckHasApricorn();
-		ChangeTexture();
+		//ChangeTexture();
 	}
 
-	private void ChangeTexture()
-	{
-		Rectangle r = new Rectangle(16, 32, 16, 16);
-
-		if (hasApricorn)
-		{
-			int x = GetColorCode(ApricornColor);
-			int y = 0;
-
-			while (x > 2)
-			{
-				x -= 3;
-				y += 1;
-			}
-
-			r = new Rectangle(x * 16, y * 16, 16, 16);
-		}
-
-		Textures[0] = TextureManager.GetTexture("Apricorn", r);
-	}
+	//private void ChangeTexture()
+	//{
+	//	Vector4 r = new Vector4(16, 32, 16, 16);
+	//
+	//	if (hasApricorn)
+	//	{
+	//		int x = GetColorCode(ApricornColor);
+	//		int y = 0;
+	//
+	//		while (x > 2)
+	//		{
+	//			x -= 3;
+	//			y += 1;
+	//		}
+	//
+	//		r = new Vector4(x * 16, y * 16, 16, 16);
+	//	}
+	//
+	//	Textures[0] = TextureManager.GetTexture("Apricorn", r);
+	//}
 
 	private void CheckHasApricorn()
 	{
@@ -136,7 +136,7 @@ public class ApricornPlant : Entity
 
 	public override void Render()
 	{
-		Draw(Model, Textures, false);
+		//Draw(Model, Textures, false);
 	}
 
 	public override void ClickFunction()
@@ -150,7 +150,7 @@ public class ApricornPlant : Entity
 			text = "There is a " + Item.Name + "~on this tree.*Do you want to pick it?%Yes|No%";
 		}
 
-		Screen.TextBox.Show(text, this);
+		GameVariables.TextBox.Show(text, new Entity[] { this });
 		SoundManager.PlaySound("select");
 	}
 
@@ -164,11 +164,11 @@ public class ApricornPlant : Entity
 			//GameVariables.playerTrainer.Bag.AddItem(Item);
 			//PlayerStatistics.Track("[85]Apricorns picked", 1);
 			SoundManager.PlaySound("item_found", true);
-			//Screen.TextBox.TextColor = TextBox.PlayerColor;
-			Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Item, 1), this);
+			//GameVariables.TextBox.TextColor = TextBox.PlayerColor;
+			GameVariables.TextBox.Show(GameVariables.playerTrainer.PlayerName + " picked the~" + Item.Name + ".*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Item, 1), new Entity[] { this });
 			AddApriconSave();
 			hasApricorn = false;
-			ChangeTexture();
+			//ChangeTexture();
 		}
 	}
 

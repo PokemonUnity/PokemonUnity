@@ -14,7 +14,7 @@ public class OwnPlayer : Entity
 
 	public bool HasPokemonTexture = false;
 
-	private Rectangle lastRectangle = new Rectangle(0, 0, 0, 0);
+	private Vector4 lastRectangle = new Vector4(0, 0, 0, 0);
 	private string lastTexture = "";
 
 	private int AnimationX = 1;
@@ -24,12 +24,12 @@ public class OwnPlayer : Entity
 
 	public bool UsingGameJoltTexture = false;
 
-	public OwnPlayer(float X, float Y, float Z, Texture2D[] Textures, string TextureID, int Rotation, int ActionValue, string AdditionalValue, string Name, int ID) : base(X, Y, Z, "OwnPlayer", Textures,
+	public OwnPlayer(float X, float Y, float Z, Texture2D[] Textures, string TextureID, int Rotation, int ActionValue, string AdditionalValue, string Name, int ID) : base(X, Y, Z, Entities.OwnPlayer, Textures,
 		new int[]
 		{
 			0,
 			0
-		}, false, 0, new Vector3(1.0f,1,1), UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f,1,1))
+		}, false, 0, new Vector3(1.0f,1,1)/*, UnityEngine.Mesh.BillModel*/, 0, "", new Vector3(1.0f,1,1))
     {
 		SetTexture(TextureID, true);
 
@@ -93,19 +93,19 @@ public class OwnPlayer : Entity
 
 	public override void UpdateEntity()
 	{
-		if (Core.CurrentScreen != null)
-		{
-			if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-			{
-				if (GameVariables.Camera.Name == "Overworld")
-				{
-					OverworldCamera c = (OverworldCamera)GameVariables.Camera;
-					this.Position = new Vector3(c.Position.x, c.Position.y - 0.1f, c.Position.z);
-				}
-			}
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
-				this.Rotation.y = GameVariables.Camera.Yaw;
-		}
+		//if (Core.CurrentScreen != null)
+		//{
+		//	if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+		//	{
+		//		if (GameVariables.Camera.Name == "Overworld")
+		//		{
+		//			OverworldCamera c = (OverworldCamera)GameVariables.Camera;
+		//			this.Position = new Vector3(c.Position.x, c.Position.y - 0.1f, c.Position.z);
+		//		}
+		//	}
+		//	if (this.Rotation.y != GameVariables.Camera.Yaw)
+		//		this.Rotation.y = GameVariables.Camera.Yaw;
+		//}
 
 		Move();
 		ChangeTexture();
@@ -115,7 +115,7 @@ public class OwnPlayer : Entity
 
 	private void Move()
 	{
-		if ((GameVariables.Camera.IsMoving() & this.DoAnimation) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
+		if ((GameVariables.Camera.IsMoving & this.DoAnimation) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
 		{
 			this.AnimationDelay -= 0.13f;
 			if (AnimationDelay <= 0.0f)
@@ -143,7 +143,7 @@ public class OwnPlayer : Entity
 	{
 		//if (this.Texture != null)
 		//{
-		//	Rectangle r = new Rectangle(0, 0, 0, 0);
+		//	Vector4 r = new Vector4(0, 0, 0, 0);
 		//	int cameraRotation = 0;
 		//	int spriteIndex = 0;
 		//
@@ -164,7 +164,7 @@ public class OwnPlayer : Entity
 		//	if (GameVariables.Camera.IsMoving())
 		//		x = GetAnimationX() * frameSize.width;
 		//
-		//	r = new Rectangle(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
+		//	r = new Vector4(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
 		//
 		//	if (r != lastRectangle | lastTexture != SkinName)
 		//	{
@@ -226,13 +226,13 @@ public class OwnPlayer : Entity
 
 	internal bool InCameraFocus()
 	{
-		if (GameVariables.Camera.Name == "Overworld")
-		{
-			var c = (OverworldCamera)GameVariables.Camera;
-
-			if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.Player & c.ThirdPerson | c.CameraFocusType != OverworldCamera.CameraFocusTypes.Player)
-				return true;
-		}
+		//if (GameVariables.Camera.Name == "Overworld")
+		//{
+		//	var c = (OverworldCamera)GameVariables.Camera;
+		//
+		//	if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.Player & c.ThirdPerson | c.CameraFocusType != OverworldCamera.CameraFocusTypes.Player)
+		//		return true;
+		//}
 		return false;
 	}
 

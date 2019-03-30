@@ -18,7 +18,7 @@ public class Floor : Entity
     {
     }
 
-    public Floor(float X, float Y, float Z, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, Vector3 Shader, bool hasSnow, bool IsIce, bool hasSand) : base(X, Y, Z, Entities.Floor, Textures, TextureIndex, Collision, Rotation, Scale, Model, ActionValue, AdditionalValue, Shader)
+    public Floor(float X, float Y, float Z, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, Vector3 Scale/*, UnityEngine.Mesh Model*/, int ActionValue, string AdditionalValue, bool Visible, Vector3 Shader, bool hasSnow, bool IsIce, bool hasSand) : base(X, Y, Z, Entities.Floor, Textures, TextureIndex, Collision, Rotation, Scale/*, Model*/, ActionValue, AdditionalValue, Shader)
     {
         this.hasSnow = hasSnow;
         this.hasSand = hasSand;
@@ -74,7 +74,7 @@ public class Floor : Entity
                 ChangeSand();
         }
 
-        this.Draw(this.Model, Textures, false);
+        //this.Draw(this.Model, Textures, false);
     }
 
     private static Dictionary<string, Entity> FloorDictionary = new Dictionary<string, Entity>();
@@ -83,7 +83,7 @@ public class Floor : Entity
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
         //if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-        //    this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
+        //    this.Textures[0] = TextureManager.GetTexture("Routes", new Vector4(208, 16, 16, 16));
         //else
         //{
             bool hasEntityOnAllSides = true;
@@ -119,23 +119,23 @@ public class Floor : Entity
                 }
             }
 
-            if (!hasEntityOnAllSides)
-            {
-                this.Textures = new Texture2D[]
-                {
-                    TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 2)),
-                    TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16))
-                };
-                //this.Model = UnityEngine.Mesh.BlockModel;
-                this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
-                this.Scale = new Vector3(1, 0.1f, 1);
-                this.Position.y -= 0.45f;
-            }
-            else
-            {
-                this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(208, 16, 16, 16));
-                this.Position.y += 0.1f;
-            }
+            //if (!hasEntityOnAllSides)
+            //{
+            //    this.Textures = new Texture2D[]
+            //    {
+            //        TextureManager.GetTexture("Routes", new Vector4(208, 16, 16, 2)),
+            //        TextureManager.GetTexture("Routes", new Vector4(208, 16, 16, 16))
+            //    };
+            //    //this.Model = UnityEngine.Mesh.BlockModel;
+            //    this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
+            //    this.Scale = new Vector3(1, 0.1f, 1);
+            //    this.Position.y -= 0.45f;
+            //}
+            //else
+            //{
+            //    this.Textures[0] = TextureManager.GetTexture("Routes", new Vector4(208, 16, 16, 16));
+            //    this.Position.y += 0.1f;
+            //}
         //}
 
         this.Visible = true;
@@ -152,7 +152,7 @@ public class Floor : Entity
     {
         this.Rotation = new Vector3(this.Rotation.x, 0.0f, this.Rotation.z);
         //if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-        //    this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
+        //    this.Textures[0] = TextureManager.GetTexture("Routes", new Vector4(240, 80, 16, 16));
         //else
         //{
             bool hasEntityOnAllSides = true;
@@ -188,23 +188,23 @@ public class Floor : Entity
                 }
             }
 
-            if (!hasEntityOnAllSides)
-            {
-                this.Textures = new Texture2D[]
-                {
-                    TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 2)),
-                    TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16))
-                };
-                //this.Model = UnityEngine.Mesh.BlockModel;
-                this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
-                this.Scale = new Vector3(1, 0.1f, 1);
-                this.Position.y -= 0.45f;
-            }
-            else
-            {
-                this.Textures[0] = TextureManager.GetTexture("Routes", new Rectangle(240, 80, 16, 16));
-                this.Position.y += 0.1f;
-            }
+            //if (!hasEntityOnAllSides)
+            //{
+            //    this.Textures = new Texture2D[]
+            //    {
+            //        TextureManager.GetTexture("Routes", new Vector4(240, 80, 16, 2)),
+            //        TextureManager.GetTexture("Routes", new Vector4(240, 80, 16, 16))
+            //    };
+            //    //this.Model = UnityEngine.Mesh.BlockModel;
+            //    this.TextureIndex = new[] { sides[0], sides[0], sides[1], sides[1], sides[2], sides[2], sides[3], sides[3], 1, 1 };
+            //    this.Scale = new Vector3(1, 0.1f, 1);
+            //    this.Position.y -= 0.45f;
+            //}
+            //else
+            //{
+            //    this.Textures[0] = TextureManager.GetTexture("Routes", new Vector4(240, 80, 16, 16));
+            //    this.Position.y += 0.1f;
+            //}
         //}
 
         this.Visible = true;
@@ -232,26 +232,26 @@ public class Floor : Entity
             {
                 if (e.EntityID == Entities.Floor)
                 {
-                    if (((Floor)e).IsIce)
-                    {
-                        if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
-                        {
-                            Steps += 1;
-                            checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
-                            checkPosition.z += GameVariables.Camera.GetMoveDirection().z;
-
-                            GameVariables.Level.OverworldPokemon.Visible = false;
-                            GameVariables.Level.OverworldPokemon.warped = true;
-                        }
-                        else
-                            foundSteps = false;
-                    }
-                    else
-                    {
-                        if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
-                            Steps += 1;
-                        foundSteps = false;
-                    }
+                    //if (((Floor)e).IsIce)
+                    //{
+                    //    if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
+                    //    {
+                    //        Steps += 1;
+                    //        checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
+                    //        checkPosition.z += GameVariables.Camera.GetMoveDirection().z;
+					//
+                    //        GameVariables.Level.OverworldPokemon.Visible = false;
+                    //        GameVariables.Level.OverworldPokemon.warped = true;
+                    //    }
+                    //    else
+                    //        foundSteps = false;
+                    //}
+                    //else
+                    //{
+                    //    if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
+                    //        Steps += 1;
+                    //    foundSteps = false;
+                    //}
                 }
                 else
                     foundSteps = false;

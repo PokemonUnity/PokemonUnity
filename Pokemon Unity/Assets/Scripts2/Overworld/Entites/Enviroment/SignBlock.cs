@@ -45,41 +45,41 @@ public class SignBlock : Entity
 
         if (canRead)
         {
-            OverworldScreen oScreen = (OverworldScreen)Core.CurrentScreen;
-            if (oScreen.ActionScript.IsReady)
-            {
-                SoundManager.PlaySound("select");
-                switch (this.ActionValue)
-                {
-                    case 0:
-                    case 3:
-                        {
-                            oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
-                            break;
-                        }
-                    case 1:
-                        {
-                            oScreen.ActionScript.StartScript(this.AdditionalValue, 0);
-                            break;
-                        }
-                    case 2:
-                        {
-                            oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", System.Environment.NewLine), 2);
-                            break;
-                        }
-                    default:
-                        {
-                            oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
-                            break;
-                        }
-                }
-            }
+            //OverworldScreen oScreen = (OverworldScreen)Core.CurrentScreen;
+            //if (oScreen.ActionScript.IsReady)
+            //{
+            //    SoundManager.PlaySound("select");
+            //    switch (this.ActionValue)
+            //    {
+            //        case 0:
+            //        case 3:
+            //            {
+            //                oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
+            //                break;
+            //            }
+            //        case 1:
+            //            {
+            //                oScreen.ActionScript.StartScript(this.AdditionalValue, 0);
+            //                break;
+            //            }
+            //        case 2:
+            //            {
+            //                oScreen.ActionScript.StartScript(this.AdditionalValue.Replace("<br>", System.Environment.NewLine), 2);
+            //                break;
+            //            }
+            //        default:
+            //            {
+            //                oScreen.ActionScript.StartScript(this.AdditionalValue, 1);
+            //                break;
+            //            }
+            //    }
+            //}
         }
     }
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, true);
+ //this.Draw(this.Model, Textures, true);
     }
 }
 }

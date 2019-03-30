@@ -14,7 +14,7 @@ public class AnimatedBlock : Entity
 	private List<string> AnimationNames;
 
 	private List<Animation> Animations;
-	private List<Rectangle> currentRectangle;
+	private List<Vector4> currentRectangle;
 
 	private List<int> X, Y, width, height, rows, columns, animationSpeed, startRow, startColumn;
 
@@ -34,7 +34,7 @@ public class AnimatedBlock : Entity
 		startColumn = new List<int>();
 
 		AnimationNames = new List<string>();
-		currentRectangle = new List<Rectangle>();
+		currentRectangle = new List<Vector4>();
 		Animations = new List<Animation>();
 	}
 
@@ -54,7 +54,7 @@ public class AnimatedBlock : Entity
 			startColumn.Add(AnimationData[i][8]);
 
 			AnimationNames.Add("");
-			currentRectangle.Add(new Rectangle(0, 0, 0, 0));
+			currentRectangle.Add(new Vector4(0, 0, 0, 0));
 
 			//Animations.Add(new Animation(TextureManager.GetTexture(@"Textures\Routes"), rows[i], columns[i], 16, 16, animationSpeed[i], startRow[i], startColumn[i]));
 
@@ -75,14 +75,14 @@ public class AnimatedBlock : Entity
 
 		for (var n = 0; n <= Animations.Count - 1; n++)
 		{
-			Rectangle r = new Rectangle(X[n], Y[n], width[n], height[n]);
+			Vector4 r = new Vector4(X[n], Y[n], width[n], height[n]);
 			this.AnimationNames[n] = AdditionalValue + "," + X[n] + "," + Y[n] + "," + height[n] + "," + width[n];
 			if (!BlockTexturesTemp.ContainsKey(AnimationNames[n] + "_0"))
 			{
 				for (var i = 0; i <= this.rows[n] - 1; i++)
 				{
-					for (var j = 0; j <= this.columns[n] - 1; j++)
-						BlockTexturesTemp.Add(AnimationNames[n] + "_" + (j + columns[n] * i).ToString(), TextureManager.GetTexture(AdditionalValue, new Rectangle(r.x + r.width * j, r.y + r.height * i, r.width, r.height)));
+					//for (var j = 0; j <= this.columns[n] - 1; j++)
+					//	BlockTexturesTemp.Add(AnimationNames[n] + "_" + (j + columns[n] * i).ToString(), TextureManager.GetTexture(AdditionalValue, new Vector4(r.x + r.width * j, r.y + r.height * i, r.width, r.height)));
 				}
 			}
 		}
@@ -129,7 +129,7 @@ public class AnimatedBlock : Entity
 			{
 				GameVariables.Camera.Move(1);
 
-				GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Surfing, "");
+				//GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Surfing, "");
 			}
 		}
 	}
@@ -142,8 +142,8 @@ public class AnimatedBlock : Entity
 			{
 				if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
 				{
-					if (!Screen.ChooseBox.Showing)
-					{
+					//if (!Screen.ChooseBox.Showing)
+					//{
 						bool canSurf = false;
 
 						if (this.ActionValue == 0)
@@ -172,10 +172,10 @@ public class AnimatedBlock : Entity
 						if (canSurf)
 						{
 							string message = "Do you want to Surf?%Yes|No%";
-							Screen.TextBox.Show(message, this, true, true);
+							GameVariables.TextBox.Show(message, new Entity[] { this }, true, true);
 							SoundManager.PlaySound("select");
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -223,28 +223,28 @@ public class AnimatedBlock : Entity
 	{
 		if (Result == 0)
 		{
-			Screen.TextBox.Show(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Name + " used~Surf!", this);
+			GameVariables.TextBox.Show(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Name + " used~Surf!", new Entity[] { this });
 			GameVariables.Level.Surfing = true;
 			GameVariables.Camera.Move(1);
 			//PlayerStatistics.Track("Surf used", 1);
 
 			{
 				var withBlock = GameVariables.Level.OwnPlayer;
-				GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
+				//GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
 				int pokemonNumber = (int)GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Species;
-				string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
-				if (GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].IsShiny)
-					SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
+				//string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
+				//if (GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].IsShiny)
+				//	SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
 
-				withBlock.SetTexture(SkinName, false);
+				//withBlock.SetTexture(SkinName, false);
 
 				withBlock.UpdateEntity();
 
 				SoundManager.PlayPokemonCry(pokemonNumber);
 
-				if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
-					MusicManager.Play("surf", true);
+				//if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
+				//	MusicManager.Play("surf", true);
 			}
 		}
 	}

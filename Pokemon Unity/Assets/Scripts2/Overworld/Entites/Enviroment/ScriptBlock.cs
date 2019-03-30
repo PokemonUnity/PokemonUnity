@@ -42,13 +42,13 @@ public class ScriptBlock : Entity
         {
             ActivateScript = true;
             TriggeredScriptBlock = true;
-            if (ActionScript.TempInputDirection == -1)
-                ActionScript.TempInputDirection = GameVariables.Camera.GetPlayerFacingDirection();
+            //if (ActionScript.TempInputDirection == -1)
+            //    ActionScript.TempInputDirection = GameVariables.Camera.GetPlayerFacingDirection();
 
             if (GameVariables.Camera.Name == "Overworld")
             {
-                if (!(OverworldCamera)GameVariables.Camera.FreeCameraMode)
-                    (OverworldCamera)GameVariables.Camera.YawLocked = true;
+                //if (!((OverworldCamera)GameVariables.Camera).FreeCameraMode)
+                //    ((OverworldCamera)GameVariables.Camera).YawLocked = true;
             }
 
             GameVariables.Level.WalkedSteps = 0;
@@ -62,7 +62,7 @@ public class ScriptBlock : Entity
     {
         if (this.TriggerID == 1)
         {
-            ActionScript.TempInputDirection = -1;
+            //ActionScript.TempInputDirection = -1;
             this.clickedToActivate = true;
             TriggerScript(false);
         }
@@ -82,25 +82,25 @@ public class ScriptBlock : Entity
 
     public void TriggerScript(bool canAttach)
     {
-        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-        {
-            OverworldScreen oS = (OverworldScreen)Core.CurrentScreen;
-
-            if (oS.ActionScript.IsReady | canAttach)
-            {
-                if (this.CorrectRotation())
-                {
-                    if (this.clickedToActivate)
-                    {
-                        this.clickedToActivate = false;
-                        SoundManager.PlaySound("select");
-                    }
-
-                    oS.ActionScript.StartScript(this._scriptID, GetActivationID());
-                    ActionScript.TempSpin = true;
-                }
-            }
-        }
+        //if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+        //{
+        //    OverworldScreen oS = (OverworldScreen)Core.CurrentScreen;
+		//
+        //    if (oS.ActionScript.IsReady | canAttach)
+        //    {
+        //        if (this.CorrectRotation())
+        //        {
+        //            if (this.clickedToActivate)
+        //            {
+        //                this.clickedToActivate = false;
+        //                SoundManager.PlaySound("select");
+        //            }
+		//
+        //            oS.ActionScript.StartScript(this._scriptID, GetActivationID());
+        //            ActionScript.TempSpin = true;
+        //        }
+        //    }
+        //}
         TriggeredScriptBlock = false;
     }
 
@@ -145,7 +145,7 @@ public class ScriptBlock : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, true);
+ //this.Draw(this.Model, Textures, true);
     }
 
     public string ScriptID

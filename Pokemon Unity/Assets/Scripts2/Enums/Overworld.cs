@@ -24,6 +24,7 @@ namespace PokemonUnity.Overworld
 	/// </summary>
 	public enum Terrain
 	{
+		Plain,
 		Grass,
 		Sand,
 		Rock,
@@ -68,7 +69,8 @@ namespace PokemonUnity.Overworld
 		Surfing, Fishing,                           //= 0x7	
 		Building,                                   //= 0x9	
 		Great_Marsh, //(Safari Zone)				//= 0xA	
-		Starter, Fossil, Gift //(Eevee)				//= 0xC	
+		Starter, Fossil, Gift, //(Eevee)				//= 0xC	
+		Land
 	}
 	/*enum EncounterActions
 	{

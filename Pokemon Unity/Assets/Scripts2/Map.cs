@@ -2237,7 +2237,12 @@ namespace PokemonUnity
 		NPC,
 		ModelEntity,
 		RotationTile,
-		AnimatedBlock
+		AnimatedBlock,
+		NetworkPokemon,
+		MessageBulb,
+		OverworldPokemon,
+		OwnPlayer,
+		Particle
 	}
 	#endregion
 }

@@ -26,7 +26,7 @@ public class Entity : BaseEntity
 	public int[] TextureIndex;
 	public int ActionValue;
 	public string AdditionalValue;
-	public UnityEngine.Mesh Model;
+	//public UnityEngine.Mesh Model;
 	public bool Visible = true;
 	public UnityEngine.Vector3 Shader = new UnityEngine.Vector3(1.0f,1,1);
 	public List<UnityEngine.Vector3> Shaders = new List<UnityEngine.Vector3>();
@@ -63,7 +63,7 @@ public class Entity : BaseEntity
 	public UnityEngine.Vector3 viewBoxScale = new UnityEngine.Vector3(1.0f,1,1);
 
 	public float CameraDistance;
-	public Matrix World;
+	//public Matrix World;
 	public bool CreatedWorld = false;
 	public bool CreateWorldEveryFrame = false;
 
@@ -87,7 +87,7 @@ public class Entity : BaseEntity
 	{
 	}
 
-	public Entity(float X, float Y, float Z, Entities EntityID, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, UnityEngine.Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, UnityEngine.Vector3 Shader) : base(EntityTypes.Entity)
+	public Entity(float X, float Y, float Z, Entities EntityID, Texture2D[] Textures, int[] TextureIndex, bool Collision, int Rotation, UnityEngine.Vector3 Scale/*, UnityEngine.Mesh Model*/, int ActionValue, string AdditionalValue, UnityEngine.Vector3 Shader) : base(EntityTypes.Entity)
 	{
 		this.Position = new UnityEngine.Vector3(X, Y, Z);
 		this.EntityID = EntityID;
@@ -96,7 +96,7 @@ public class Entity : BaseEntity
 		this.Collision = Collision;
 		this.Rotation = GetRotationFromInteger(Rotation);
 		this.Scale = Scale;
-		this.Model = Model;
+		//this.Model = Model;
 		this.ActionValue = ActionValue;
 		this.AdditionalValue = AdditionalValue;
 		this.Shader = Shader;
@@ -150,7 +150,7 @@ public class Entity : BaseEntity
 		this.UpdateEntity();
 	}
 
-	public static Entity GetNewEntity(Entities EntityID, UnityEngine.Vector3 Position, Texture2D[] Textures, int[] TextureIndex, bool Collision, UnityEngine.Vector3 Rotation, UnityEngine.Vector3 Scale, UnityEngine.Mesh Model, int ActionValue, string AdditionalValue, bool Visible, UnityEngine.Vector3 Shader, int ID, string MapOrigin, string SeasonColorTexture, UnityEngine.Vector3 Offset, object[] Params = null, float Opacity = 1.0f, List<List<int>> AnimationData = null, float CameraDistanceDelta = 0.0f)
+	public static Entity GetNewEntity(Entities EntityID, UnityEngine.Vector3 Position, Texture2D[] Textures, int[] TextureIndex, bool Collision, UnityEngine.Vector3 Rotation, UnityEngine.Vector3 Scale/*, UnityEngine.Mesh Model*/, int ActionValue, string AdditionalValue, bool Visible, UnityEngine.Vector3 Shader, int ID, string MapOrigin, string SeasonColorTexture, UnityEngine.Vector3 Offset, object[] Params = null, float Opacity = 1.0f, List<List<int>> AnimationData = null, float CameraDistanceDelta = 0.0f)
 	{
 		Entity newEnt = new Entity();
 		Entity propertiesEnt = new Entity();
@@ -162,7 +162,7 @@ public class Entity : BaseEntity
 		propertiesEnt.Collision = Collision;
 		propertiesEnt.Rotation = Rotation;
 		propertiesEnt.Scale = Scale;
-		propertiesEnt.Model = Model;
+		//propertiesEnt.Model = Model;
 		propertiesEnt.ActionValue = ActionValue;
 		propertiesEnt.AdditionalValue = AdditionalValue;
 		propertiesEnt.Visible = Visible;
@@ -335,8 +335,8 @@ public class Entity : BaseEntity
 						System.Convert.ToString(Params[2]), 
 						System.Convert.ToInt32(Params[3]), 
 						System.Convert.ToBoolean(Params[4]), 
-						System.Convert.ToString(Params[5]), 
-						(List<Rectangle>)Params[6]);
+						System.Convert.ToString(Params[5])); 
+						//,(List<Vector4>)Params[6]);
 					break;
 				}
 			case Entities.Waterfall:
@@ -402,7 +402,7 @@ public class Entity : BaseEntity
 		newEnt.Collision = PropertiesEnt.Collision;
 		newEnt.Rotation = PropertiesEnt.Rotation;
 		newEnt.Scale = PropertiesEnt.Scale;
-		newEnt.Model = PropertiesEnt.Model;
+		//newEnt.Model = PropertiesEnt.Model;
 		newEnt.ActionValue = PropertiesEnt.ActionValue;
 		newEnt.AdditionalValue = PropertiesEnt.AdditionalValue;
 		newEnt.Visible = PropertiesEnt.Visible;
@@ -447,18 +447,18 @@ public class Entity : BaseEntity
 				{
 					return 0;
 				}
-			case MathHelper.PiOver2:
-                {
-					return 1;
-				}
-			case MathHelper.Pi:
-                {
-					return 2;
-				}
-			case MathHelper.Pi * 1.5f:
-                {
-					return 3;
-				}
+			//case MathHelper.PiOver2.ToString():
+            //    {
+			//		return 1;
+			//	}
+			//case MathHelper.Pi.ToString():
+            //    {
+			//		return 2;
+			//	}
+			//case (MathHelper.Pi * 1.5f).ToString():
+            //    {
+			//		return 3;
+			//	}
 		}
 
 		return 0;
@@ -491,23 +491,23 @@ public class Entity : BaseEntity
 		if (GameVariables.Camera.Name == "Overworld" && !notNames.ToList().Contains(this.EntityID.ToString()))
 		{
 			this.Opacity = this._normalOpactity;
-			if (((OverworldCamera)GameVariables.Camera).ThirdPerson)
-			{
-				UnityEngine.Ray Ray = GameVariables.Camera.Ray;
-				//float? result = Ray.Intersects(this.boundingBox);
-				UnityEngine.RaycastHit result;// = new UnityEngine.RaycastHit(). Ray.Intersects(this.boundingBox);
-				//if (result.HasValue)
-				if (UnityEngine.Physics.Raycast(Ray, out result))
-				{
-					//if (result.Value < 0.3f + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5f))
-					if (result.distance < 0.3f + (((OverworldCamera)GameVariables.Camera).ThirdPersonOffset.z - 1.5f))
-					{
-						this.Opacity = this._normalOpactity - 0.5f;
-						if (this.Opacity < 0.3f)
-							this.Opacity = 0.3f;
-					}
-				}
-			}
+			//if (((OverworldCamera)GameVariables.Camera).ThirdPerson)
+			//{
+			//	UnityEngine.Ray Ray = GameVariables.Camera.Ray;
+			//	//float? result = Ray.Intersects(this.boundingBox);
+			//	UnityEngine.RaycastHit result;// = new UnityEngine.RaycastHit(). Ray.Intersects(this.boundingBox);
+			//	//if (result.HasValue)
+			//	if (UnityEngine.Physics.Raycast(Ray, out result))
+			//	{
+			//		//if (result.Value < 0.3f + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5f))
+			//		if (result.distance < 0.3f + (((OverworldCamera)GameVariables.Camera).ThirdPersonOffset.z - 1.5f))
+			//		{
+			//			this.Opacity = this._normalOpactity - 0.5f;
+			//			if (this.Opacity < 0.3f)
+			//				this.Opacity = 0.3f;
+			//		}
+			//	}
+			//}
 		}
 	}
 
@@ -683,20 +683,20 @@ public class Entity : BaseEntity
 		{
 			UnityEngine.Vector3 v = UnityEngine.Vector3.zero; // (Me.ViewBox.Min - Me.Position) + (Me.ViewBox.Max - Me.Position)
 
-			if (this.Model != null)
-			{
-				//switch (this.Model.ID)
-				//{
-				//	case 0:
-				//	case 9:
-				//	case 10:
-				//	case 11:
-				//		{
-				//			v.y -= 0.5f;
-				//			break;
-				//		}
-				//}
-			}
+			//if (this.Model != null)
+			//{
+			//	//switch (this.Model.ID)
+			//	//{
+			//	//	case 0:
+			//	//	case 9:
+			//	//	case 10:
+			//	//	case 11:
+			//	//		{
+			//	//			v.y -= 0.5f;
+			//	//			break;
+			//	//		}
+			//	//}
+			//}
 			this.tempCenterVector = v;
 		}
 
@@ -768,16 +768,16 @@ public class Entity : BaseEntity
 
 	public bool IsInFieldOfView()
 	{
-		if (GameVariables.Camera.BoundingFrustum.Contains(this.ViewBox))// != ContainmentType.Disjoint
-		{
-			this._visibleLastFrame = true;
-			return true;
-		}
-		else
-		{
+		//if (GameVariables.Camera.BoundingFrustum.Contains(this.ViewBox))// != ContainmentType.Disjoint
+		//{
+		//	this._visibleLastFrame = true;
+		//	return true;
+		//}
+		//else
+		//{
 			this._visibleLastFrame = false;
 			return false;
-		}
+		//}
 	}
 
 	private int _cachedVertexCount = -1; // Stores the vertex count so it doesnt need to be recalculated.
@@ -788,24 +788,24 @@ public class Entity : BaseEntity
 		{
 			if (this._cachedVertexCount == -1)
 			{
-				if (this.Model != null)
-				{
-					int c = System.Convert.ToInt32(this.Model.vertexCount / (double)3);
-					int min = 0;
-
-					for (var i = 0; i <= this.TextureIndex.Length - 1; i++)
-					{
-						if (i <= c - 1)
-						{
-							if (TextureIndex[i] > -1)
-								min += 1;
-						}
-					}
-
-					this._cachedVertexCount = min;
-				}
-				else
-					this._cachedVertexCount = 0;
+				//if (this.Model != null)
+				//{
+				//	int c = System.Convert.ToInt32(this.Model.vertexCount / (double)3);
+				//	int min = 0;
+				//
+				//	for (var i = 0; i <= this.TextureIndex.Length - 1; i++)
+				//	{
+				//		if (i <= c - 1)
+				//		{
+				//			if (TextureIndex[i] > -1)
+				//				min += 1;
+				//		}
+				//	}
+				//
+				//	this._cachedVertexCount = min;
+				//}
+				//else
+				//	this._cachedVertexCount = 0;
 			}
 			return this._cachedVertexCount;
 		}

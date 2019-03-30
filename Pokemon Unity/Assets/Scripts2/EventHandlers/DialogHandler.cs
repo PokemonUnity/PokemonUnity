@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PokemonUnity.Overworld.Entity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 
 public class DialogHandler : UnityEngine.MonoBehaviour
@@ -354,6 +356,359 @@ public class DialogHandler : UnityEngine.MonoBehaviour
     {
         DialogUIText.text = DialogUITextDump.text = DialogUIScrollText.text = DialogText = null;
     }
+
+	#region MyRegion
+	public static readonly Color DefaultColor = new Color(16, 24, 32);
+	public static readonly Color PlayerColor = new Color(0, 0, 180);
+
+	public static int TextSpeed = 1;
+
+	public string Text;
+	private int currentChar = 0;
+	private int currentLine = 0;
+	private int fullLines = 0;
+	private bool through = false;
+	private bool clearNextLine = false;
+
+	private string[] showText = new string[3];
+
+	public bool Showing = false;
+	private float Delay = 0.2F;
+	private bool doReDelay = true;
+	public float reDelay = 1.5F;
+	public float PositionY = 0;
+	public bool CanProceed = true;
+	public Color TextColor = new Color(16, 24, 33);
+
+	//public FontContainer TextFont = FontManager.GetFontContainer("textfont");
+
+	private Entity[] Entities;
+
+	private ChooseBox.DoAnswer ResultFunction = null;// TODO Change to default(_) if this is not a reference type
+
+	public delegate void FollowUpDelegate();
+	public FollowUpDelegate FollowUp = null;
+
+	public void Show(string Text, ChooseBox.DoAnswer ResultFunction, bool doReDelay, bool CheckDelay, Color TextColor)
+	{
+		if (reDelay == 0.0F | CheckDelay == false)
+		{
+			if (this.Showing == false)
+			{
+				//PositionY = Core.windowSize.Height;
+				Showing = true;
+			}
+			this.doReDelay = doReDelay;
+			this.Text = Text;
+			this.ResultFunction = ResultFunction;
+			this.TextColor = TextColor;
+			showText[0] = "";
+			showText[1] = "";
+			through = false;
+			currentLine = 0;
+			currentChar = 0;
+			Delay = 0.2F;
+			clearNextLine = false;
+
+			FormatText();
+		}
+	}
+
+	public void Show(string Text, Entity[] Entities, bool doReDelay, bool CheckDelay, Color TextColor)
+	{
+		if (reDelay == 0.0F | CheckDelay == false)
+		{
+			if (this.Showing == false)
+			{
+				//PositionY = Core.windowSize.Height;
+				Showing = true;
+			}
+			this.doReDelay = doReDelay;
+			this.Text = Text;
+			this.Entities = Entities;
+			this.TextColor = TextColor;
+			showText[0] = "";
+			showText[1] = "";
+			through = false;
+			currentLine = 0;
+			currentChar = 0;
+			Delay = 0.2F;
+			clearNextLine = false;
+
+			FormatText();
+		}
+	}
+
+	public void Show(string Text, Entity[] Entities, bool doReDelay, bool CheckDelay)
+	{
+		this.Show(Text, Entities, doReDelay, CheckDelay, this.TextColor);
+	}
+
+	public void Show(string Text, Entity[] Entities, bool doReDelay)
+	{
+		this.Show(Text, Entities, doReDelay, true);
+	}
+
+	public void Show(string Text)
+	{
+		this.Show(Text,
+			new Entity[]
+		{
+		}, false, false);
+	}
+
+	public void Hide()
+	{
+		Showing = false;
+		if (this.doReDelay == true)
+			this.reDelay = 1.0F;
+	}
+
+	public void Show(string Text, Entity[] Entities)
+	{
+		this.Show(Text, Entities, true);
+	}
+
+	private void FormatText()
+	{
+		string[] tokenSearchBuffer = this.Text.Split(System.Convert.ToChar("<"));
+		int tokenEndIdx = 0;
+		string validToken = "";
+		//Token token = null;// TODO Change to default(_) if this is not a reference type 
+		//foreach (string possibleToken in tokenSearchBuffer)
+		//{
+		//	tokenEndIdx = possibleToken.IndexOf(">");
+		//	if (!tokenEndIdx == -1)
+		//	{
+		//		validToken = possibleToken.Substring(0, tokenEndIdx);
+		//		if (Localization.LocalizationTokens.ContainsKey(validToken) == true)
+		//		{
+		//			if (Localization.LocalizationTokens.TryGetValue(validToken, token) == true)
+		//				this.Text = this.Text.Replace("<" + validToken + ">", token.TokenContent);
+		//		}
+		//	}
+		//}
+
+		this.Text = this.Text.Replace("<playername>", GameVariables.playerTrainer.PlayerName);
+		this.Text = this.Text.Replace("<rivalname>", GameVariables.playerTrainer.RivalName);
+
+		this.Text = this.Text.Replace("[POKE]", "Poké");
+		this.Text = this.Text.Replace("[POKEMON]", "Pokémon");
+	}
+
+	//public void Update()
+	//{
+	//	if (Showing == true)
+	//	{
+	//		ResetCursor();
+	//		if (PositionY <= Core.windowSize.Height - 160.0F)
+	//		{
+	//			if (through == false)
+	//			{
+	//				if (Text.Count() > currentChar)
+	//				{
+	//					if (Delay <= 0.0F)
+	//					{
+	//						if (Text[currentChar].ToString() == @"\")
+	//						{
+	//							if (Text.Count() > currentChar + 1)
+	//							{
+	//								showText[currentLine] += Text[currentChar + 1];
+
+	//								currentChar += 2;
+	//							}
+	//							else
+	//								currentChar += 1;
+	//						}
+	//						else
+	//						{
+	//							switch (Text[currentChar])
+	//							{
+	//								case System.Convert.ToChar("~"):
+	//									{
+	//										if (currentLine == 1)
+	//											through = true;
+	//										else
+	//											currentLine += 1;
+	//										break;
+	//									}
+
+	//								case System.Convert.ToChar("*"):
+	//									{
+	//										currentLine = 0;
+	//										clearNextLine = true;
+	//										through = true;
+	//										break;
+	//									}
+
+	//								case System.Convert.ToChar("%"):
+	//									{
+	//										ProcessChooseBox();
+	//										break;
+	//									}
+
+	//								default:
+	//									{
+	//										showText[currentLine] += Text[currentChar];
+	//										break;
+	//									}
+	//							}
+
+	//							currentChar += 1;
+	//						}
+
+	//						if (KeyBoardHandler.KeyDown(KeyBindings.EnterKey1) | KeyBoardHandler.KeyDown(KeyBindings.EnterKey2) | MouseHandler.ButtonDown(MouseHandler.MouseButtons.LeftButton) == true | ControllerHandler.ButtonDown(Buttons.A) == true | ControllerHandler.ButtonDown(Buttons.B) == true)
+	//							Delay = 0.0F;
+	//						else
+	//							Delay = GetTextSpeed();
+	//					}
+	//					else
+	//						Delay -= 0.1F;
+	//				}
+	//				else
+	//					through = true;
+	//			}
+	//			else if (Controls.Accept() | Controls.Dismiss())
+	//			{
+	//				SoundManager.PlaySound("select");
+	//				if (Text.Count() <= currentChar)
+	//				{
+	//					if (CanProceed == true)
+	//					{
+	//						Showing = false;
+	//						ResetCursor();
+
+	//						if (!this.FollowUp == null)
+	//						{
+	//							this.FollowUp();
+	//							this.FollowUp = null;
+	//						}
+
+	//						this.TextFont = FontManager.GetFontContainer("textfont");
+	//						this.TextColor = TextBox.DefaultColor;
+	//						if (this.doReDelay == true)
+	//							this.reDelay = 1.0F;
+	//					}
+	//				}
+	//				else
+	//				{
+	//					if (clearNextLine == true)
+	//						showText[0] = "";
+	//					else
+	//						showText[0] = showText[1];
+	//					showText[1] = "";
+	//					through = false;
+	//					clearNextLine = false;
+	//				}
+	//			}
+	//		}
+	//		else
+	//		{
+	//			float ySpeed = 3.5F;
+	//			switch (TextSpeed)
+	//			{
+	//				case 1:
+	//					{
+	//						ySpeed = 3.5F;
+	//						break;
+	//					}
+	//				case 2:
+	//					{
+	//						ySpeed = 4.5F;
+	//						break;
+	//					}
+	//				case 3:
+	//					{
+	//						ySpeed = 6.5F;
+	//						break;
+	//					}
+	//			}
+	//			this.PositionY -= ySpeed;
+	//		}
+	//	}
+	//	else if (reDelay > 0.0F)
+	//	{
+	//		reDelay -= 0.1F;
+	//		if (reDelay <= 0.0F)
+	//			reDelay = 0.0F;
+	//	}
+	//}
+
+	//private void ResetCursor()
+	//{
+	//	if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+	//	{
+	//		OverworldCamera c = (OverworldCamera)Screen.Camera;
+	//		Mouse.SetPosition(System.Convert.ToInt32(Core.windowSize.Width / (double)2), System.Convert.ToInt32(Core.windowSize.Height / (double)2));
+	//		c.oldX = System.Convert.ToInt32(Core.windowSize.Width / (double)2);
+	//		c.oldY = System.Convert.ToInt32(Core.windowSize.Height / (double)2);
+	//	}
+	//}
+
+	//public void Draw()
+	//{
+	//	if (this.Showing == true)
+	//	{
+	//		{
+	//			var withBlock = Core.SpriteBatch;
+	//			withBlock.Draw(TextureManager.GetTexture(@"GUI\Overworld\TextBox"), new Rectangle(System.Convert.ToInt32(Core.windowSize.Width / (double)2) - 240, System.Convert.ToInt32(PositionY), 480, 144), new Rectangle(0, 0, 160, 48), Color.White);
+
+	//			float m = 1.0F;
+	//			switch (this.TextFont.FontName.ToLower())
+	//			{
+	//				case "textfont":
+	//				case "braille":
+	//					{
+	//						m = 2.0F;
+	//						break;
+	//					}
+	//			}
+
+	//			withBlock.DrawString(this.TextFont.SpriteFont, this.showText[0], new Vector2(System.Convert.ToInt32(Core.windowSize.Width / (double)2) - 210, System.Convert.ToInt32(PositionY) + 40), this.TextColor, 0.0F, Vector2.Zero, m, SpriteEffects.None, 0.0F);
+	//			withBlock.DrawString(this.TextFont.SpriteFont, this.showText[1], new Vector2(System.Convert.ToInt32(Core.windowSize.Width / (double)2) - 210, System.Convert.ToInt32(PositionY) + 75), this.TextColor, 0.0F, Vector2.Zero, m, SpriteEffects.None, 0.0F);
+
+	//			if (this.CanProceed == true & this.through == true)
+	//				withBlock.Draw(TextureManager.GetTexture(@"GUI\Overworld\TextBox"), new Rectangle(System.Convert.ToInt32(Core.windowSize.Width / (double)2) + 192, System.Convert.ToInt32(PositionY) + 128, 16, 16), new Rectangle(0, 48, 16, 16), Color.White);
+	//		}
+	//	}
+	//}
+
+	private void ProcessChooseBox()
+	{
+		string SplitText = Text.Remove(0, currentChar + 1);
+		SplitText = SplitText.Remove(SplitText.IndexOf("%"));
+		through = true;
+		string[] Options = SplitText.Split(System.Convert.ToChar("|"));
+		Text = Text.Remove(currentChar, SplitText.Length + 1);
+		if (this.Entities == null & this.ResultFunction != null || this.Entities.Length == 0 & this.ResultFunction != null)
+			new ChooseBox().Show(Options, this.ResultFunction);
+		else
+			new ChooseBox().Show(Options, 0, Entities);
+		//ChooseBox.TextFont = this.TextFont;
+	}
+
+	private float GetTextSpeed()
+	{
+		switch (TextSpeed)
+		{
+			case 1:
+				{
+					return 0.3F;
+				}
+
+			case 2:
+				{
+					return 0.2F;
+				}
+
+			case 3:
+				{
+					return 0.1F;
+				}
+		}
+		return 0.2F;
+	}
+	#endregion
 	#endregion
 
 	#region Change a Pokémon's level
@@ -462,4 +817,199 @@ public class DialogPromptHandler //: UnityEngine.MonoBehaviour
     {
         DialogPromptValue = promptvalue;
     }
+}
+
+public class ChooseBox
+{
+	public delegate void DoAnswer(int result);
+
+	public string[] Options;
+	public int index = 0;
+
+	private float PositionY = 0;
+
+	public bool Showing = false;
+	public bool readyForResult = false;
+	public int result = 0;
+	public int resultID = 0;
+	public bool ActionScript = false;
+
+	public static int CancelIndex = -1;
+
+	//public FontContainer TextFont;
+
+	public bool DoDelegate = false;
+
+	private DoAnswer Subs;
+
+	public Entity[] UpdateEntities;
+
+	public void Show(string[] Options, DoAnswer DoSubs)
+	{
+		this.resultID = 0;
+		this.Options = Options;
+		this.index = 0;
+		this.readyForResult = false;
+		this.Showing = true;
+		this.Subs = DoSubs;
+		this.ActionScript = false;
+		this.DoDelegate = true;
+		//this.TextFont = FontManager.GetFontContainer("textfont");
+
+		SetupOptions();
+	}
+
+	public void Show(string[] Options, int ID, bool ActionScript)
+	{
+		this.resultID = ID;
+		this.Options = Options;
+		this.index = 0;
+		this.readyForResult = false;
+		this.Showing = true;
+		this.ActionScript = ActionScript;
+		this.DoDelegate = false;
+		//this.TextFont = FontManager.GetFontContainer("textfont");
+
+		SetupOptions();
+	}
+
+	public void Show(string[] Options, int ID, Entity[] UpdateEntities)
+	{
+		this.resultID = ID;
+		this.Options = Options;
+		this.index = 0;
+		this.readyForResult = false;
+		this.Showing = true;
+		this.UpdateEntities = UpdateEntities;
+		this.ActionScript = false;
+		this.DoDelegate = false;
+		//this.TextFont = FontManager.GetFontContainer("textfont");
+
+		SetupOptions();
+	}
+
+	private void SetupOptions()
+	{
+		for (var i = 0; i <= Options.Count() - 1; i++)
+			Options[i] = Options[i].Replace("<playername>", GameVariables.playerTrainer.PlayerName);
+	}
+
+	public int getResult(int ID)
+	{
+		if (this.readyForResult == true)
+		{
+			if (this.resultID == ID)
+				return result;
+			else
+				return -1;
+		}
+		else
+			return -1;
+	}
+
+	//public void Update()
+	//{
+	//	Update(true);
+	//}
+
+	//public void Update(bool RaiseClickEvent)
+	//{
+	//	if (this.Showing == true)
+	//	{
+	//		if (Controls.Down(true, true, true))
+	//			this.index += 1;
+	//		if (Controls.Up(true, true, true))
+	//			this.index -= 1;
+
+	//		if (this.index < 0)
+	//			this.index = this.Options.Count() - 1;
+	//		if (this.index == this.Options.Count())
+	//			this.index = 0;
+	//		if (RaiseClickEvent == true)
+	//		{
+	//			if (Controls.Accept() == true)
+	//			{
+	//				this.PlayClickSound();
+	//				this.result = index;
+	//				this.HandleResult();
+	//			}
+	//			if (Controls.Dismiss() == true & CancelIndex > -1)
+	//			{
+	//				this.PlayClickSound();
+	//				this.result = CancelIndex;
+	//				this.HandleResult();
+	//			}
+	//		}
+	//	}
+	//}
+
+	private void PlayClickSound()
+	{
+		if (GameVariables.TextBox.Showing == false)
+			SoundManager.PlaySound("select");
+	}
+
+	private void HandleResult()
+	{
+		ChooseBox.CancelIndex = -1;
+		this.readyForResult = true;
+		this.Showing = false;
+		//if (this.DoDelegate == true)
+		//	Subs(result);
+		//else if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+		//{
+		//	if (this.ActionScript == true)
+		//	{
+		//		OverworldScreen c = (OverworldScreen)Core.CurrentScreen;
+		//		c.ActionScript.Switch(this.Options[result]);
+		//	}
+		//	else
+		//		foreach (Entity Entity in UpdateEntities)
+		//			Entity.ResultFunction(result);
+		//}
+	}
+
+	//public void Draw(Vector2 Position, bool DrawBox = true, float Size = 1.0F)
+	//{
+	//	if (this.Showing == true)
+	//	{
+	//		{
+	//			var withBlock = Core.SpriteBatch;
+	//			// Bounding box
+	//			if (DrawBox)
+	//			{
+	//				withBlock.Draw(TextureManager.GetTexture(@"GUI\Overworld\ChooseBox"), new Rectangle(System.Convert.ToInt32(Position.X), System.Convert.ToInt32(Position.Y), 288, 48), new Rectangle(0, 0, 96, 16), Color.White);
+	//				for (var i = 0; i <= Options.Count() - 2; i++)
+	//					withBlock.Draw(TextureManager.GetTexture(@"GUI\Overworld\ChooseBox"), new Rectangle(System.Convert.ToInt32(Position.X), System.Convert.ToInt32(Position.Y) + 48 + i * 48, 288, 48), new Rectangle(0, 16, 96, 16), Color.White);
+	//				withBlock.Draw(TextureManager.GetTexture(@"GUI\Overworld\ChooseBox"), new Rectangle(System.Convert.ToInt32(Position.X), System.Convert.ToInt32(Position.Y) + 96 + (Options.Count() - 2) * 48, 288, 48), new Rectangle(0, 32, 96, 16), Color.White);
+	//			}
+	//			// Text
+	//			for (var i = 0; i <= Options.Count() - 1; i++)
+	//			{
+	//				float useSize = Size;
+	//				switch (this.TextFont.FontName.ToLower())
+	//				{
+	//					case "textfont":
+	//					case "braille":
+	//						{
+	//							useSize = 2 * Size;
+	//							break;
+	//						}
+	//				}
+	//				withBlock.DrawString(this.TextFont.SpriteFont, Options[i].Replace("[POKE]", "Poké"), new Vector2(System.Convert.ToInt32(Position.X + 40), System.Convert.ToInt32(Position.Y) + 32 + i * 48 * Size), Color.Black, 0.0F, Vector2.Zero, useSize, SpriteEffects.None, 0.0F);
+	//			}
+	//			// Cursor
+	//			withBlock.Draw(TextureManager.GetTexture(@"GUI\Overworld\ChooseBox"), new Rectangle(System.Convert.ToInt32(Position.X + 20), System.Convert.ToInt32(Position.Y) + 36 + System.Convert.ToInt32(index * 48 * Size), System.Convert.ToInt32(10 * Size), System.Convert.ToInt32(20 * Size)), new Rectangle(96, 0, 3, 6), Color.White);
+	//		}
+	//	}
+	//}
+
+	//public void Draw()
+	//{
+	//	if (this.Showing == true)
+	//	{
+	//		Vector2 Position = new Vector2(System.Convert.ToInt32(Core.windowSize.Width / (double)2) - 48, Core.windowSize.Height - 160.0F - 96.0F - (Options.Count() - 1) * 48);
+	//		this.Draw(Position);
+	//	}
+	//}
 }

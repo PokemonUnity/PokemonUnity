@@ -1,4 +1,4 @@
-﻿using PokemonUnity.Player;
+﻿using PokemonUnity.Character;
 using PokemonUnity.Pokemon;
 using System;
 
@@ -44,7 +44,7 @@ public class CutDownTree : Entity
 		if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
 			text += "~Do you want to~use Cut?%Yes|No%";
 
-		Screen.TextBox.Show(text, this);
+		GameVariables.TextBox.Show(text, new Entity[] { this });
 		SoundManager.PlaySound("select");
 	}
 
@@ -78,13 +78,13 @@ public class CutDownTree : Entity
 			string s = "version=2" + System.Environment.NewLine + "@text.show(" + Text + ")" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + ":end";
 
 			//PlayerStatistics.Track("Cut used", 1);
-			(OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
+			//((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
 		}
 	}
 
 	public override void Render()
 	{
-		this.Draw(this.Model, Textures, false);
+		//this.Draw(this.Model, Textures, false);
 	}
 }
 }

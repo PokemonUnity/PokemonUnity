@@ -93,13 +93,13 @@ public class LevelLoader
 			//ToDo: Change Screen to Scene
             GameVariables.Level.LevelFile = levelPath;
 
-            GameVariables.playerTrainer.LastSavePlace = GameVariables.Level.LevelFile;
-            GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
+            //GameVariables.playerTrainer.LastSavePlace = GameVariables.Level.LevelFile;
+            //GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
             GameVariables.Level.Entities.Clear();
             GameVariables.Level.Floors.Clear();
             GameVariables.Level.Shaders.Clear();
-            GameVariables.Level.BackdropRenderer.Clear();
+            //GameVariables.Level.BackdropRenderer.Clear();
 
             GameVariables.Level.OffsetmapFloors.Clear();
             GameVariables.Level.OffsetmapEntities.Clear();
@@ -111,14 +111,14 @@ public class LevelLoader
             LoadedOffsetMapOffsets.Clear();
             Floor.ClearFloorTemp();
 
-            Player.Temp.MapSteps = 0;
+            //Player.Temp.MapSteps = 0;
 
             sessionMapsLoaded.Add(levelPath);
         }
 
-        levelPath = GameModeManager.GetMapPath(levelPath);
+        levelPath = "";//GameModeManager.GetMapPath(levelPath);
 
-		GameVariables.DebugLog("Loading map: " + levelPath.Remove(0, GameController.GamePath.Length));
+		GameVariables.DebugLog("Loading map: " + levelPath.Remove(0, Saving.SaveManager.saveLocation.Length));
         //System.Security.FileValidation.CheckFileValid(levelPath, false, "LevelLoader.vb");
 
         if (!System.IO.File.Exists(levelPath))
@@ -239,7 +239,7 @@ public class LevelLoader
                                 }
                             case TagTypes.Entity:
                                 {
-                                    AddEntity(Tags, new Size(1, 1), 1, true, new Vector3(1, 1, 1));
+                                    //AddEntity(Tags, new Size(1, 1), 1, true, new Vector3(1, 1, 1));
                                     break;
                                 }
                             case TagTypes.Floor:
@@ -272,8 +272,8 @@ public class LevelLoader
                                 }
                             case TagTypes.OffsetMap:
                                 {
-                                    if (!loadOffsetMap | offsetMapLevel <= Core.GameOptions.MaxOffsetLevel)
-                                        AddOffsetMap(Tags);
+                                    //if (!loadOffsetMap | offsetMapLevel <= Core.GameOptions.MaxOffsetLevel)
+                                    //    AddOffsetMap(Tags);
                                     break;
                                 }
                             case TagTypes.Backdrop:
@@ -304,7 +304,7 @@ public class LevelLoader
             //}
         }
 
-        GameVariables.DebugLog("Map loading finished: " + levelPath.Remove(0, GameController.GamePath.Length));
+        GameVariables.DebugLog("Map loading finished: " + levelPath.Remove(0, Saving.SaveManager.saveLocation.Length));
         GameVariables.DebugLog("Loaded textures: " + TextureManager.TextureList.Count.ToString());
         timer.Stop();
         GameVariables.DebugLog("Map loading time: " + timer.ElapsedTicks + " Ticks; " + timer.ElapsedMilliseconds + " Milliseconds.");
@@ -411,13 +411,13 @@ public class LevelLoader
                     case "rec":
                         {
                             string[] content = subTagValue.Split(System.Convert.ToChar(","));
-                            Dictionary.Add(TagName, new Rectangle(System.Convert.ToInt32(content[0]), System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3])));
+                            Dictionary.Add(TagName, new Vector4(System.Convert.ToInt32(content[0]), System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3])));
                             break;
                         }
                     case "recarr":
                         {
                             string[] values = subTagValue.Split(System.Convert.ToChar("]"));
-                            List<Rectangle> arr = new List<Rectangle>();
+                            List<Vector4> arr = new List<Vector4>();
                             foreach (string value in values)
                             {
                                 if (value.Length > 0)
@@ -425,7 +425,7 @@ public class LevelLoader
                                     string v = value.Remove(0, 1);
 
                                     string[] content = v.Split(System.Convert.ToChar(","));
-                                    arr.Add(new Rectangle(System.Convert.ToInt32(content[0]), System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3])));
+                                    arr.Add(new Vector4(System.Convert.ToInt32(content[0]), System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3])));
                                 }
                             }
                             Dictionary.Add(TagName, arr);
@@ -598,7 +598,7 @@ public class LevelLoader
 
         if (!tempStructureList.ContainsKey(structureKey))
         {
-            string filepath = GameModeManager.GetMapPath(MapName);
+            string filepath = "";//GameModeManager.GetMapPath(MapName);
             //System.Security.FileValidation.CheckFileValid(filepath, false, "LevelLoader.vb/StructureSpawner");
 
             if (!System.IO.File.Exists(filepath))
@@ -716,10 +716,10 @@ public class LevelLoader
                 Steps = new Vector3(StepList[0], 1, StepList[1]);
         }
 
-        if (SizeList.Count == 3)
-            AddEntity(Tags, new Size(SizeList[0], SizeList[2]), SizeList[1], Fill, Steps);
-        else
-            AddEntity(Tags, new Size(SizeList[0], SizeList[1]), 1, Fill, Steps);
+        //if (SizeList.Count == 3)
+        //    AddEntity(Tags, new Size(SizeList[0], SizeList[2]), SizeList[1], Fill, Steps);
+        //else
+        //    AddEntity(Tags, new Size(SizeList[0], SizeList[1]), 1, Fill, Steps);
     }
 
     private void AddNPC(Dictionary<string, object> Tags)
@@ -743,7 +743,7 @@ public class LevelLoader
         int ID = System.Convert.ToInt32(GetTag(Tags, "ID"));
 
         string Movement = System.Convert.ToString(GetTag(Tags, "Movement"));
-        List<Rectangle> MoveRectangles = (List<Rectangle>)GetTag(Tags, "MoveRectangles");
+        List<Vector4> MoveRectangles = (List<Vector4>)GetTag(Tags, "MoveRectangles");
 
         Vector3 Shader = new Vector3(1.0f,1,1);
         if (TagExists(Tags, "Shader"))
@@ -756,20 +756,20 @@ public class LevelLoader
         if (TagExists(Tags, "AnimateIdle"))
             AnimateIdle = System.Convert.ToBoolean(GetTag(Tags, "AnimateIdle"));
 
-        NPC NPC = (NPC)Entity.Entity.GetNewEntity("NPC", Position, null, // TODO Change to default(_) if this is not a reference type 
+        NPC NPC = (NPC)Entity.Entity.GetNewEntity(PokemonUnity.Entities.NPC, Position, null, // TODO Change to default(_) if this is not a reference type 
         new int[]
         {
             0,
             0
-        }, true, new Vector3(0,0,0), Scale, UnityEngine.Mesh.BillModel, ActionValue, AdditionalValue, true, Shader, -1, MapOrigin, "", Offset, new
+        }, true, new Vector3(0,0,0), Scale/*, UnityEngine.Mesh.BillModel*/, ActionValue, AdditionalValue, true, Shader, -1, MapOrigin, "", Offset, new[]
         {
-            TextureID,
-            Rotation,
-            Name,
-            ID,
-            AnimateIdle,
-            Movement,
-            MoveRectangles
+            (object)TextureID,
+            (object)Rotation,
+            (object)Name,
+            (object)ID,
+            (object)AnimateIdle,
+            (object)Movement,
+            (object)MoveRectangles
         });
 
         if (!loadOffsetMap)
@@ -781,13 +781,13 @@ public class LevelLoader
     private void AddFloor(Dictionary<string, object> Tags)
     {
         List<int> sizeList = (List<int>)GetTag(Tags, "Size");
-        Size Size = new Size(sizeList[0], sizeList[1]);
+        //Size Size = new Size(sizeList[0], sizeList[1]);
 
         List<int> PosList = (List<int>)GetTag(Tags, "Position");
         Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
         string TexturePath = System.Convert.ToString(GetTag(Tags, "TexturePath"));
-        Rectangle TextureRectangle = (Rectangle)GetTag(Tags, "Texture");
+        Vector4 TextureRectangle = (Vector4)GetTag(Tags, "Texture");
         Texture2D Texture = TextureManager.GetTexture(TexturePath, TextureRectangle);
 
         bool Visible = true;
@@ -831,205 +831,205 @@ public class LevelLoader
 
         if (!RemoveFloor)
         {
-            for (var x = 0; x <= Size.width - 1; x++)
-            {
-                for (var z = 0; z <= Size.height - 1; z++)
-                {
-                    bool exists = false;
-
-                    int iZ = z;
-                    int iX = x;
-
-                    Entity.Entity Ent = null;// TODO Change to default(_) if this is not a reference type 
-
-                    if (loadOffsetMap)
-                    {
-                        Ent = GameVariables.Level.OffsetmapFloors.Find(e =>
-                        {
-                            return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
-                        });
-                    }
-                    else
-                        Ent = GameVariables.Level.Floors.Find(e =>
-                        {
-                            return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
-                        });
-
-                    if (Ent != null)
-                    {
-                        Ent.Textures = new[] { Texture };
-                        Ent.Visible = Visible;
-                        Ent.SeasonColorTexture = SeasonTexture;
-                        Ent.LoadSeasonTextures();
-                        ((Floor)Ent).SetRotation(rotation);
-                        ((Floor)Ent).hasSnow = hasSnow;
-                        ((Floor)Ent).IsIce = hasIce;
-                        ((Floor)Ent).hasSand = hasSand;
-                        exists = true;
-                    }
-
-                    if (!exists)
-                    {
-                        Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0f, 1.0f, 1.0f), UnityEngine.Mesh.FloorModel, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
-                        f.MapOrigin = MapOrigin;
-                        f.SeasonColorTexture = SeasonTexture;
-                        f.LoadSeasonTextures();
-                        f.IsOffsetMapContent = loadOffsetMap;
-                        floorList.Add(f);
-                    }
-                }
-            }
+            //for (var x = 0; x <= Size.width - 1; x++)
+            //{
+            //    for (var z = 0; z <= Size.height - 1; z++)
+            //    {
+            //        bool exists = false;
+			//
+            //        int iZ = z;
+            //        int iX = x;
+			//
+            //        Entity.Entity Ent = null;// TODO Change to default(_) if this is not a reference type 
+			//
+            //        if (loadOffsetMap)
+            //        {
+            //            Ent = GameVariables.Level.OffsetmapFloors.Find(e =>
+            //            {
+            //                return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
+            //            });
+            //        }
+            //        else
+            //            Ent = GameVariables.Level.Floors.Find(e =>
+            //            {
+            //                return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
+            //            });
+			//
+            //        if (Ent != null)
+            //        {
+            //            Ent.Textures = new[] { Texture };
+            //            Ent.Visible = Visible;
+            //            Ent.SeasonColorTexture = SeasonTexture;
+            //            Ent.LoadSeasonTextures();
+            //            ((Floor)Ent).SetRotation(rotation);
+            //            ((Floor)Ent).hasSnow = hasSnow;
+            //            ((Floor)Ent).IsIce = hasIce;
+            //            ((Floor)Ent).hasSand = hasSand;
+            //            exists = true;
+            //        }
+			//
+            //        if (!exists)
+            //        {
+            //            Floor f = new Floor(Position.x + x, Position.y, Position.z + z, TextureManager.GetTexture(TexturePath, TextureRectangle), new[] { 0, 0 }, false, rotation, new Vector3(1.0f, 1.0f, 1.0f)/*, UnityEngine.Mesh.FloorModel*/, 0, "", Visible, Shader, hasSnow, hasIce, hasSand);
+            //            f.MapOrigin = MapOrigin;
+            //            f.SeasonColorTexture = SeasonTexture;
+            //            f.LoadSeasonTextures();
+            //            f.IsOffsetMapContent = loadOffsetMap;
+            //            floorList.Add(f);
+            //        }
+            //    }
+            //}
         }
         else
-            for (int x = 0; x <= Size.width - 1; x++)
+            //for (int x = 0; x <= Size.width - 1; x++)
             {
-                for (int z = 0; z <= Size.height - 1; z++)
-                {
-                    for (int i = 0; i <= floorList.Count; i++)
-                    {
-                        if (i < floorList.Count)
-                        {
-                            Entity.Entity floor = floorList[i];
-                            if (floor.Position.x == Position.x + x & floor.Position.y == Position.y & floor.Position.z == Position.z + z)
-                            {
-                                floorList.RemoveAt(i);
-                                i -= 1;
-                            }
-                        }
-                    }
-                }
+            //    for (int z = 0; z <= Size.height - 1; z++)
+            //    {
+            //        for (int i = 0; i <= floorList.Count; i++)
+            //        {
+            //            if (i < floorList.Count)
+            //            {
+            //                Entity.Entity floor = floorList[i];
+            //                if (floor.Position.x == Position.x + x & floor.Position.y == Position.y & floor.Position.z == Position.z + z)
+            //                {
+            //                    floorList.RemoveAt(i);
+            //                    i -= 1;
+            //                }
+            //            }
+            //        }
+            //    }
             }
     }
 
-    private void AddEntity(Dictionary<string, object> Tags, Size Size, int SizeY, bool Fill, Vector3 Steps)
-    {
-        string EntityID = System.Convert.ToString(GetTag(Tags, "EntityID"));
+	//private void AddEntity(Dictionary<string, object> Tags, Size Size, int SizeY, bool Fill, Vector3 Steps)
+	//{
+	//	string EntityID = System.Convert.ToString(GetTag(Tags, "EntityID"));
 
-        int ID = -1;
-        if (TagExists(Tags, "ID"))
-            ID = System.Convert.ToInt32(GetTag(Tags, "ID"));
+	//	int ID = -1;
+	//	if (TagExists(Tags, "ID"))
+	//		ID = System.Convert.ToInt32(GetTag(Tags, "ID"));
 
-        List<float> PosList = (List<float>)GetTag(Tags, "Position");
-        Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
+	//	List<float> PosList = (List<float>)GetTag(Tags, "Position");
+	//	Vector3 Position = new Vector3(PosList[0] + Offset.x, PosList[1] + Offset.y, PosList[2] + Offset.z);
 
-        List<Rectangle> TexList = (List<Rectangle>)GetTag(Tags, "Textures");
-        List<Texture2D> TextureList = new List<Texture2D>();
-        string TexturePath = System.Convert.ToString(GetTag(Tags, "TexturePath"));
-        foreach (Rectangle TextureRectangle in TexList)
-            TextureList.Add(TextureManager.GetTexture(TexturePath, TextureRectangle));
-        Texture2D[] TextureArray = TextureList.ToArray();
+	//	List<Vector4> TexList = (List<Vector4>)GetTag(Tags, "Textures");
+	//	List<Texture2D> TextureList = new List<Texture2D>();
+	//	string TexturePath = System.Convert.ToString(GetTag(Tags, "TexturePath"));
+	//	foreach (Vector4 TextureRectangle in TexList)
+	//		TextureList.Add(TextureManager.GetTexture(TexturePath, TextureRectangle));
+	//	Texture2D[] TextureArray = TextureList.ToArray();
 
-        List<int> TextureIndexList = (List<int>)GetTag(Tags, "TextureIndex");
-        int[] TextureIndex = TextureIndexList.ToArray();
+	//	List<int> TextureIndexList = (List<int>)GetTag(Tags, "TextureIndex");
+	//	int[] TextureIndex = TextureIndexList.ToArray();
 
-        List<float> ScaleList;
-        Vector3 Scale = new Vector3(1,1,1);
-        if (TagExists(Tags, "Scale"))
-        {
-            ScaleList = (List<float>)GetTag(Tags, "Scale");
-            Scale = new Vector3(ScaleList[0], ScaleList[1], ScaleList[2]);
-        }
+	//	List<float> ScaleList;
+	//	Vector3 Scale = new Vector3(1,1,1);
+	//	if (TagExists(Tags, "Scale"))
+	//	{
+	//		ScaleList = (List<float>)GetTag(Tags, "Scale");
+	//		Scale = new Vector3(ScaleList[0], ScaleList[1], ScaleList[2]);
+	//	}
 
-        bool Collision = System.Convert.ToBoolean(GetTag(Tags, "Collision"));
+	//	bool Collision = System.Convert.ToBoolean(GetTag(Tags, "Collision"));
 
-        int ModelID = System.Convert.ToInt32(GetTag(Tags, "ModelID"));
+	//	int ModelID = System.Convert.ToInt32(GetTag(Tags, "ModelID"));
 
-        int ActionValue = System.Convert.ToInt32(GetTag(Tags, "Action"));
+	//	int ActionValue = System.Convert.ToInt32(GetTag(Tags, "Action"));
 
-        string AdditionalValue = "";
-        if (TagExists(Tags, "AdditionalValue"))
-            AdditionalValue = System.Convert.ToString(GetTag(Tags, "AdditionalValue"));
+	//	string AdditionalValue = "";
+	//	if (TagExists(Tags, "AdditionalValue"))
+	//		AdditionalValue = System.Convert.ToString(GetTag(Tags, "AdditionalValue"));
 
-        List<List<int>> AnimationData = null;
-        if (TagExists(Tags, "AnimationData"))
-            AnimationData = (List<List<int>>)GetTag(Tags, "AnimationData");
+	//	List<List<int>> AnimationData = null;
+	//	if (TagExists(Tags, "AnimationData"))
+	//		AnimationData = (List<List<int>>)GetTag(Tags, "AnimationData");
 
-        Vector3 Rotation = Entity.Entity.GetRotationFromInteger(System.Convert.ToInt32(GetTag(Tags, "Rotation")));
+	//	Vector3 Rotation = Entity.Entity.GetRotationFromInteger(System.Convert.ToInt32(GetTag(Tags, "Rotation")));
 
-        bool Visible = true;
-        if (TagExists(Tags, "Visible"))
-            Visible = System.Convert.ToBoolean(GetTag(Tags, "Visible"));
+	//	bool Visible = true;
+	//	if (TagExists(Tags, "Visible"))
+	//		Visible = System.Convert.ToBoolean(GetTag(Tags, "Visible"));
 
-        Vector3 Shader = new Vector3(1.0f,1,1);
-        if (TagExists(Tags, "Shader"))
-        {
-            List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
-            Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
-        }
+	//	Vector3 Shader = new Vector3(1.0f,1,1);
+	//	if (TagExists(Tags, "Shader"))
+	//	{
+	//		List<float> ShaderList = (List<float>)GetTag(Tags, "Shader");
+	//		Shader = new Vector3(ShaderList[0], ShaderList[1], ShaderList[2]);
+	//	}
 
-		//Vector3 RotationXYZ = null; // TODO Change to default(_) if this is not a reference type 
-        if (TagExists(Tags, "RotationXYZ"))
-        {
-            List<float> rotationList = (List<float>)GetTag(Tags, "RotationXYZ");
-            Rotation = new Vector3(rotationList[0], rotationList[1], rotationList[2]);
-        }
+	//	//Vector3 RotationXYZ = null; // TODO Change to default(_) if this is not a reference type 
+	//	if (TagExists(Tags, "RotationXYZ"))
+	//	{
+	//		List<float> rotationList = (List<float>)GetTag(Tags, "RotationXYZ");
+	//		Rotation = new Vector3(rotationList[0], rotationList[1], rotationList[2]);
+	//	}
 
-        string SeasonTexture = "";
-        if (TagExists(Tags, "SeasonTexture"))
-            SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
+	//	string SeasonTexture = "";
+	//	if (TagExists(Tags, "SeasonTexture"))
+	//		SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
 
-        string SeasonToggle = "";
-        if (TagExists(Tags, "SeasonToggle"))
-            SeasonToggle = System.Convert.ToString(GetTag(Tags, "SeasonToggle"));
+	//	string SeasonToggle = "";
+	//	if (TagExists(Tags, "SeasonToggle"))
+	//		SeasonToggle = System.Convert.ToString(GetTag(Tags, "SeasonToggle"));
 
-        float Opacity = 1.0f;
-        if (TagExists(Tags, "Opacity"))
-            Opacity = System.Convert.ToSingle(GetTag(Tags, "Opacity"));
+	//	float Opacity = 1.0f;
+	//	if (TagExists(Tags, "Opacity"))
+	//		Opacity = System.Convert.ToSingle(GetTag(Tags, "Opacity"));
 
-        float CameraDistanceDelta = 0.0f;
-        if (TagExists(Tags, "CameraDistanceDelta"))
-            CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
+	//	float CameraDistanceDelta = 0.0f;
+	//	if (TagExists(Tags, "CameraDistanceDelta"))
+	//		CameraDistanceDelta = System.Convert.ToSingle(GetTag(Tags, "CameraDistanceDelta"));
 
-        for (float X = 0; X <= Size.width - 1; X += Steps.x)
-        {
-            for (float Z = 0; Z <= Size.height - 1; Z += Steps.z)
-            {
-                for (float Y = 0; Y <= SizeY - 1; Y += Steps.y)
-                {
-                    bool DoAdd = false;
-                    if (!Fill)
-                    {
-                        if (X == 0 | Z == 0 | Z == Size.height - 1 | X == Size.width - 1)
-                            DoAdd = true;
-                    }
-                    else
-                        DoAdd = true;
+	//	for (float X = 0; X <= Size.width - 1; X += Steps.x)
+	//	{
+	//		for (float Z = 0; Z <= Size.height - 1; Z += Steps.z)
+	//		{
+	//			for (float Y = 0; Y <= SizeY - 1; Y += Steps.y)
+	//			{
+	//				bool DoAdd = false;
+	//				if (!Fill)
+	//				{
+	//					if (X == 0 | Z == 0 | Z == Size.height - 1 | X == Size.width - 1)
+	//						DoAdd = true;
+	//				}
+	//				else
+	//					DoAdd = true;
 
-                    if (SeasonToggle != "")
-                    {
-                        if (!SeasonToggle.Contains(","))
-                        {
-                            if (SeasonToggle.ToLower() != World.CurrentSeason.ToString().ToLower())
-                                DoAdd = false;
-                        }
-                        else
-                        {
-                            string[] seasons = SeasonToggle.ToLower().Split(System.Convert.ToChar(","));
-                            if (!seasons.Contains(World.CurrentSeason.ToString().ToLower()))
-                                DoAdd = false;
-                        }
-                    }
+	//				if (SeasonToggle != "")
+	//				{
+	//					if (!SeasonToggle.Contains(","))
+	//					{
+	//						if (SeasonToggle.ToLower() != World.CurrentSeason.ToString().ToLower())
+	//							DoAdd = false;
+	//					}
+	//					else
+	//					{
+	//						string[] seasons = SeasonToggle.ToLower().Split(System.Convert.ToChar(","));
+	//						if (!seasons.Contains(World.CurrentSeason.ToString().ToLower()))
+	//							DoAdd = false;
+	//					}
+	//				}
 
-                    if (AnimationData != null && AnimationData.Count == 5)
-                    {
-                    }
-                    if (DoAdd)
-                    {
-                        Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.x + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, UnityEngine.Mesh.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
-                        newEnt.IsOffsetMapContent = loadOffsetMap;
+	//				if (AnimationData != null && AnimationData.Count == 5)
+	//				{
+	//				}
+	//				if (DoAdd)
+	//				{
+	//					Entity.Entity newEnt = Entity.Entity.GetNewEntity(EntityID, new Vector3(Position.x + X, Position.y + Y, Position.z + Z), TextureArray, TextureIndex, Collision, Rotation, Scale, UnityEngine.Mesh.getModelbyID(ModelID), ActionValue, AdditionalValue, Visible, Shader, ID, MapOrigin, SeasonTexture, Offset, null, Opacity, AnimationData, CameraDistanceDelta);
+	//					newEnt.IsOffsetMapContent = loadOffsetMap;
 
-                        if (newEnt != null)
-                        {
-                            if (!loadOffsetMap)
-                                GameVariables.Level.Entities.Add(newEnt);
-                            else
-                                GameVariables.Level.OffsetmapEntities.Add(newEnt);
-                        }
-                    }
-                }
-            }
-        }
-    }
+	//					if (newEnt != null)
+	//					{
+	//						if (!loadOffsetMap)
+	//							GameVariables.Level.Entities.Add(newEnt);
+	//						else
+	//							GameVariables.Level.OffsetmapEntities.Add(newEnt);
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
     private void SetupLevel(Dictionary<string, object> Tags)
     {
@@ -1222,7 +1222,7 @@ public class LevelLoader
         string BackdropType = System.Convert.ToString(GetTag(Tags, "Type"));
 
         string TexturePath = System.Convert.ToString(GetTag(Tags, "TexturePath"));
-        Rectangle TextureRectangle = (Rectangle)GetTag(Tags, "Texture");
+        Vector4 TextureRectangle = (Vector4)GetTag(Tags, "Texture");
         Texture2D Texture = TextureManager.GetTexture(TexturePath, TextureRectangle);
 
         string trigger = "";
@@ -1270,12 +1270,12 @@ public class LevelLoader
 
                 if (BData[0].ToLower() == GameVariables.Level.LevelFile.ToLower())
                 {
-                    Entity.Entity newEnt = Entity.Entity.GetNewEntity("BerryPlant", new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
+                    Entity.Entity newEnt = Entity.Entity.GetNewEntity(PokemonUnity.Entities.BerryPlant, new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
                     new int[]
                     {
                         0,
                         0
-                    }, true, new Vector3(0,0,0), new Vector3(1,1,1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0f,1,1), -1, MapOrigin, "", Offset);
+                    }, true, new Vector3(0,0,0), new Vector3(1,1,1)/*, UnityEngine.Mesh.BillModel*/, 0, "", true, new Vector3(1.0f,1,1), -1, MapOrigin, "", Offset);
                     ((BerryPlant)newEnt).Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
 
                     GameVariables.Level.Entities.Add(newEnt);

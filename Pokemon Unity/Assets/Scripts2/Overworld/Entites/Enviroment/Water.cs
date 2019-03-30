@@ -11,7 +11,7 @@ public class Water : Entity
     private string waterTextureName = "";
 
     private Animation WaterAnimation;
-    private Rectangle currentRectangle = new Rectangle(0, 0, 0, 0);
+    private Vector4 currentRectangle = new Vector4(0, 0, 0, 0);
 
     public override void Initialize()
     {
@@ -34,39 +34,39 @@ public class Water : Entity
         //    List<string> textureData = this.AdditionalValue.Split(System.Convert.ToChar(",")).ToList();
         //    if (textureData.Count >= 5)
         //    {
-        //        Rectangle r = new Rectangle(System.Convert.ToInt32(textureData[1]), System.Convert.ToInt32(textureData[2]), System.Convert.ToInt32(textureData[3]), System.Convert.ToInt32(textureData[4]));
+        //        Vector4 r = new Vector4(System.Convert.ToInt32(textureData[1]), System.Convert.ToInt32(textureData[2]), System.Convert.ToInt32(textureData[3]), System.Convert.ToInt32(textureData[4]));
         //        string texturePath = textureData[0];
         //        this.waterTextureName = AdditionalValue;
         //        if (!Water.WaterTexturesTemp.ContainsKey(AdditionalValue + "_0"))
         //        {
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Rectangle(r.x, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 2, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 3, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 4, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 5, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 6, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 7, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 8, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 9, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 10, r.y, r.width, r.height)));
-        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Rectangle(r.x + r.width * 11, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_0", TextureManager.GetTexture(texturePath, new Vector4(r.x, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_1", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_2", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 2, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_3", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 3, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_4", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 4, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_5", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 5, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_6", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 6, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_7", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 7, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_8", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 8, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_9", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 9, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_10", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 10, r.y, r.width, r.height)));
+        //            Water.WaterTexturesTemp.Add(AdditionalValue + "_11", TextureManager.GetTexture(texturePath, new Vector4(r.x + r.width * 11, r.y, r.width, r.height)));
         //        }
         //    }
         //    else if (!Water.WaterTexturesTemp.ContainsKey("_0"))
         //    {
-        //        Water.WaterTexturesTemp.Add("_0", TextureManager.GetTexture("Routes", new Rectangle(0, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_1", TextureManager.GetTexture("Routes", new Rectangle(20, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_2", TextureManager.GetTexture("Routes", new Rectangle(40, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_3", TextureManager.GetTexture("Routes", new Rectangle(60, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_4", TextureManager.GetTexture("Routes", new Rectangle(80, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_5", TextureManager.GetTexture("Routes", new Rectangle(100, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_6", TextureManager.GetTexture("Routes", new Rectangle(120, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_7", TextureManager.GetTexture("Routes", new Rectangle(140, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_8", TextureManager.GetTexture("Routes", new Rectangle(160, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_9", TextureManager.GetTexture("Routes", new Rectangle(180, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_10", TextureManager.GetTexture("Routes", new Rectangle(200, 220, 20, 20)));
-        //        Water.WaterTexturesTemp.Add("_11", TextureManager.GetTexture("Routes", new Rectangle(220, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_0", TextureManager.GetTexture("Routes", new Vector4(0, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_1", TextureManager.GetTexture("Routes", new Vector4(20, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_2", TextureManager.GetTexture("Routes", new Vector4(40, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_3", TextureManager.GetTexture("Routes", new Vector4(60, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_4", TextureManager.GetTexture("Routes", new Vector4(80, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_5", TextureManager.GetTexture("Routes", new Vector4(100, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_6", TextureManager.GetTexture("Routes", new Vector4(120, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_7", TextureManager.GetTexture("Routes", new Vector4(140, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_8", TextureManager.GetTexture("Routes", new Vector4(160, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_9", TextureManager.GetTexture("Routes", new Vector4(180, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_10", TextureManager.GetTexture("Routes", new Vector4(200, 220, 20, 20)));
+        //        Water.WaterTexturesTemp.Add("_11", TextureManager.GetTexture("Routes", new Vector4(220, 220, 20, 20)));
         //    }
         //}
     }
@@ -112,7 +112,7 @@ public class Water : Entity
             {
                 GameVariables.Camera.Move(1);
 
-                GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Surfing, "");
+                GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Surfing, "");
             }
         }
     }
@@ -125,7 +125,7 @@ public class Water : Entity
             {
                 if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
                 {
-                    if (!Screen.ChooseBox.Showing)
+                    if (!new ChooseBox().Showing)
                     {
                         bool canSurf = false;
 
@@ -184,7 +184,7 @@ public class Water : Entity
                                     }
                             }
 
-                            Screen.TextBox.Show(message, this, true, true);
+                            GameVariables.TextBox.Show(message, new Entity[] { this }, true, true);
                             SoundManager.PlaySound("select");
                         }
                     }
@@ -327,7 +327,7 @@ public class Water : Entity
     {
         if (Result == 0)
         {
-            Screen.TextBox.Show(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Name + " used~Surf!", this);
+            GameVariables.TextBox.Show(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Name + " used~Surf!", new Entity[] { this });
             GameVariables.Level.Surfing = true;
             GameVariables.Camera.Move(1);
             //PlayerStatistics.Track("Surf used", 1);
@@ -336,28 +336,28 @@ public class Water : Entity
                 var withBlock = GameVariables.Level.OwnPlayer;
                 //GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
-                int pokemonNumber = GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Species;
-                string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
-                if (GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].IsShiny)
-                    SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
+                //int pokemonNumber = GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Species;
+                //string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
+                //if (GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].IsShiny)
+                //    SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
 
-                withBlock.SetTexture(SkinName, false);
-
-                withBlock.UpdateEntity();
-
-                SoundManager.PlayPokemonCry(pokemonNumber);
-
-                if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
-                    MusicManager.Play("surf", true);
+                //withBlock.SetTexture(SkinName, false);
+				//
+                //withBlock.UpdateEntity();
+				//
+                //SoundManager.PlayPokemonCry(pokemonNumber);
+				//
+                //if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
+                //    MusicManager.Play("surf", true);
             }
         }
     }
 
     public override void Render()
     {
-        bool setRasterizerState = this.Model.ID != 0;
-
-        this.Draw(this.Model, Textures, setRasterizerState);
+        //bool setRasterizerState = this.Model.ID != 0;
+		//
+        //this.Draw(this.Model, Textures, setRasterizerState);
     }
 }
 }

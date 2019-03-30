@@ -126,23 +126,23 @@ public class BerryPlant : Entity
         //        x -= 512;
         //        y += 32;
         //    }
-        //    Rectangle r = new Rectangle(x, y, 32, 32);
+        //    Vector4 r = new Vector4(x, y, 32, 32);
         //    t = TextureManager.GetTexture(@"Textures\Berries", r, "");
         //}
         //else
         //{
-        //    Rectangle r;
+        //    Vector4 r;
         //    switch (this.Phase)
         //    {
         //        case 0:
         //            {
-        //                r = new Rectangle(448, 480, 32, 32);
+        //                r = new Vector4(448, 480, 32, 32);
         //                break;
         //            }
 		//
         //        case 1:
         //            {
-        //                r = new Rectangle(480, 480, 32, 32);
+        //                r = new Vector4(480, 480, 32, 32);
         //                break;
         //            }
         //    }
@@ -211,7 +211,7 @@ public class BerryPlant : Entity
                 }
         }
 
-        Screen.TextBox.Show(text, this);
+        GameVariables.TextBox.Show(text, new Entity[] { this });
         SoundManager.PlaySound("select");
     }
 
@@ -234,8 +234,8 @@ public class BerryPlant : Entity
                         //PlayerStatistics.Track("[2006]Berries picked", this.Berries);
 
                         SoundManager.PlaySound("item_found", true);
-                        //Screen.TextBox.TextColor = TextBox.PlayerColor;
-                        Screen.TextBox.Show(Text, this);
+                        //GameVariables.TextBox.TextColor = TextBox.PlayerColor;
+                        GameVariables.TextBox.Show(Text, new Entity[] { this });
                         RemoveBerry();
                         GameVariables.Level.Entities.Remove(this);
                         break;
@@ -244,7 +244,7 @@ public class BerryPlant : Entity
                     {
                         WaterBerry();
                         string Text = GameVariables.playerTrainer.PlayerName + " watered~the " + Berry.Name + ".";
-                        Screen.TextBox.Show(Text, this);
+                        GameVariables.TextBox.Show(Text, new Entity[] { this });
                         break;
                     }
             }
@@ -253,7 +253,7 @@ public class BerryPlant : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+        //this.Draw(this.Model, Textures, false);
     }
 
     private void RemoveBerry()
@@ -299,14 +299,14 @@ public class BerryPlant : Entity
 
         GameVariables.playerTrainer.BerryData = OldData;
 
-        Entity newEnt = Entity.GetNewEntity("BerryPlant", Position, new string[]
+        Entity newEnt = Entity.GetNewEntity(Entities.BerryPlant, Position, new Texture2D[]
         {
             null/* TODO Change to default(_) if this is not a reference type */
         }, new int[]
         {
             0,
             0
-        }, true, new Vector3(0,0,0), new Vector3(1,1,1), UnityEngine.Mesh.BillModel, 0, "", true, new Vector3(1.0f,1,1), -1, "", "", new Vector3(0,0,0));
+        }, true, new Vector3(0,0,0), new Vector3(1,1,1)/*, UnityEngine.Mesh.BillModel*/, 0, "", true, new Vector3(1.0f,1,1), -1, "", "", new Vector3(0,0,0));
         ((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
         GameVariables.Level.Entities.Add(newEnt);
 

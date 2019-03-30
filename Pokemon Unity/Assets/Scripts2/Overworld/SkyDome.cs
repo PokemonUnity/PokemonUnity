@@ -18,7 +18,7 @@ public class SkyDome : MonoBehaviour
 	//ToDo: Replace with Awake, and use GetComponents below
     public SkyDome()
     {
-        SkydomeModel = Core.Content.Load<Model>(@"SkyDomeResource\SkyDome");
+        //SkydomeModel = Core.Content.Load<Model>(@"SkyDomeResource\SkyDome");
 
         TextureUp = TextureManager.GetTexture(@"SkyDomeResource\Clouds");
         TextureDown = TextureManager.GetTexture(@"SkyDomeResource\Clouds");
@@ -193,7 +193,7 @@ public class SkyDome : MonoBehaviour
         {
             Texture2D DaycycleTexture = TextureManager.GetTexture(@"SkyDomeResource\daycycle");
             DaycycleTextureData = new UnityEngine.Color[DaycycleTexture.width * DaycycleTexture.height - 1 + 1];
-            DaycycleTexture.GetData(DaycycleTextureData);
+            //DaycycleTexture.GetData(DaycycleTextureData);
             SkyDome.DaycycleTexture = DaycycleTexture;
         }
 

@@ -27,7 +27,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	public Texture2D Texture;
 
 	public bool moving = false;
-	private Rectangle lastRectangle = new Rectangle(0, 0, 0, 0);
+	private Vector4 lastRectangle = new Vector4(0, 0, 0, 0);
 	private int AnimationX = 1;
 	const float AnimationDelayLenght = 1.1f;
 	private float AnimationDelay = AnimationDelayLenght;
@@ -49,7 +49,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	//	{
 	//		0,
 	//		0
-	//	}, true, Rotation, Scale, UnityEngine.Mesh.BillModel, 0, "", new Vector3(1.0f,1,1))
+	//	}, true, Rotation, Scale/*, UnityEngine.Mesh.BillModel*/, 0, "", new Vector3(1.0f,1,1))
     //{
     //    this.Name = Name;
     //    this.NetworkID = ID;
@@ -147,7 +147,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	{
 		if (this.Texture != null)
 		{
-			Rectangle r = new Rectangle(0, 0, 0, 0);
+			Vector4 r = new Vector4(0, 0, 0, 0);
 			int cameraRotation = GameVariables.Camera.GetFacingDirection();
 			int spriteIndex = this.faceRotation - cameraRotation;
 
@@ -178,7 +178,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//if (this.moving)
 			//	x = GetAnimationX() * spriteSize.width;
 			//
-			//r = new Rectangle(x, spriteSize.height * spriteIndex, spriteSize.width, spriteSize.height);
+			//r = new Vector4(x, spriteSize.height * spriteIndex, spriteSize.width, spriteSize.height);
 			//
 			//if (r != lastRectangle)
 			//{
@@ -422,7 +422,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 	public static void ScreenRegionChanged()
 	{
-		if (Core.CurrentScreen != null && GameVariables.Level != null)
+		if (/*Core.CurrentScreen != null &&*/ GameVariables.Level != null)
 		{
 			foreach (NetworkPlayer netPlayer in GameVariables.Level.NetworkPlayers)
 				netPlayer.LastName = "";
@@ -446,7 +446,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 	//			Core.GraphicsDevice.Clear(new UnityEngine.Color(0,0,0,0));//ToDo: Transparent Color, check alpha
 	//
 	//			Core.SpriteBatch.Begin();
-	//			Canvas.DrawRectangle(new Rectangle(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new UnityEngine.Color(0, 0, 0, 150));
+	//			Canvas.DrawRectangle(new Vector4(0, 0, System.Convert.ToInt32(size.x), System.Convert.ToInt32(size.y)), new UnityEngine.Color(0, 0, 0, 150));
 	//			Core.SpriteBatch.DrawString(font, text, Vector2.Zero, UnityEngine.Color.white);
 	//			Core.SpriteBatch.End();
 	//

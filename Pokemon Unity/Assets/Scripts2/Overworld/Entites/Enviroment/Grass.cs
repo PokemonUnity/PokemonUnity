@@ -23,14 +23,14 @@ public class Grass : Entity
 
     public override bool WalkIntoFunction()
     {
-        GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, Spawner.EncounterMethods.Land, this.AdditionalValue);
+        GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Land, this.AdditionalValue);
 
         return false;
     }
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+ //this.Draw(this.Model, Textures, false);
     }
 
     public static List<Entity> GetGrassTilesAroundPlayer(float radius)

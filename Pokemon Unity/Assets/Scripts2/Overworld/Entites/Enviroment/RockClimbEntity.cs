@@ -17,9 +17,9 @@ public class RockClimbEntity : Entity
         {
             TempClicked = true;
             if (GetRockClimbPokemon() == null)
-                Screen.TextBox.Show("A Pokémon could~climb this rock...", this, true, true);
+                GameVariables.TextBox.Show("A Pokémon could~climb this rock...", new Entity[] { this }, true, true);
             else
-                Screen.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%", this, true, true);
+                GameVariables.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%", new Entity[] { this }, true, true);
         }
     }
 
@@ -29,13 +29,13 @@ public class RockClimbEntity : Entity
         {
             TempClicked = false;
             if (GetRockClimbPokemon() == null)
-                Screen.TextBox.Show("A Pokémon could~climb this rock...", this, true, true);
+                GameVariables.TextBox.Show("A Pokémon could~climb this rock...", new Entity[] { this }, true, true);
             else
-                Screen.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%", this, true, true);
+                GameVariables.TextBox.Show("A Pokémon could~climb this rock.*Do you want to~use Rock Climb?%Yes|No%", new Entity[] { this }, true, true);
             SoundManager.PlaySound("select");
         }
         else
-            Screen.TextBox.Show("A path is engraved~into this rock...", this, true, true);
+            GameVariables.TextBox.Show("A path is engraved~into this rock...", new Entity[] { this }, true, true);
     }
 
     public override void ResultFunction(int Result)
@@ -133,7 +133,7 @@ public class RockClimbEntity : Entity
 
             Pokemon.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
-            GameVariables.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
+            //GameVariables.Level.OwnPlayer.Texture = RockClimbPokemon.GetOverworldTexture();
             GameVariables.Level.OwnPlayer.ChangeTexture();
 
             string s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + (int)RockClimbPokemon.Species + ")" + System.Environment.NewLine + "@player.setmovement(" + GameVariables.Camera.GetMoveDirection().x + ",1," + GameVariables.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@player.setmovement(" + GameVariables.Camera.GetMoveDirection().x + ",0," + GameVariables.Camera.GetMoveDirection().z + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(1)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.wearskin(" + tempSkin + ")" + System.Environment.NewLine;
@@ -149,7 +149,7 @@ public class RockClimbEntity : Entity
             // Reset the player's transparency:
             GameVariables.Level.OwnPlayer.Opacity = 1.0f;
 
-            (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
+            //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
         }
 
         facing = System.Convert.ToInt32(this.Rotation.y / (double)MathHelper.PiOver2);
@@ -224,7 +224,7 @@ public class RockClimbEntity : Entity
             // Reset the player's transparency:
             GameVariables.Level.OwnPlayer.Opacity = 1.0f;
 
-            (OverworldScreen)Core.CurrentScreen.ActionScript.StartScript(s, 2, false);
+            //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
         }
     }
 
@@ -257,7 +257,7 @@ public class RockClimbEntity : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+        //this.Draw(this.Model, Textures, false);
     }
 }
 }

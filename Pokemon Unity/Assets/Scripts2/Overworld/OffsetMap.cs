@@ -48,8 +48,8 @@ public class OffsetMap
         this.MapName = MapName;
 
         // Set the identifier:
-        // Offset Map                   Map Weather                             Region Weather                       Time                   Season
-        Identifier = MapName + "|" + GameVariables.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
+        // Offset Map                   Map Weather										 Region Weather                          Time                   Season
+        //Identifier = MapName + "|" + GameVariables.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
     }
 
     /// <summary>

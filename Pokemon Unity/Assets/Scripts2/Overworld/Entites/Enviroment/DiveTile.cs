@@ -43,7 +43,7 @@ public class DiveTile : Entity
 
             if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
                 t += "*Do you want to~use Dive?%Yes|No%";
-            Screen.TextBox.Show(t, (DiveTile)this);
+            GameVariables.TextBox.Show(t, new Entity[] { (DiveTile)this });
             SoundManager.PlaySound("select");
         }
         else if (diveUp == 1)
@@ -51,7 +51,7 @@ public class DiveTile : Entity
             // Up
             string t = "Light shines down from~the surface.*Do you want to~use Dive?%Yes|No%";
 
-            Screen.TextBox.Show(t, (DiveTile)this);
+            GameVariables.TextBox.Show(t, new Entity[] { this });
             SoundManager.PlaySound("select");
         }
         else if (diveUp == 2)
@@ -59,7 +59,7 @@ public class DiveTile : Entity
             // Up
             string t = "The boat's shadow is cast~upon the ocean floor.*Do you want to~use Dive?%Yes|No%";
 
-            Screen.TextBox.Show(t, (DiveTile)this);
+            GameVariables.TextBox.Show(t, new Entity[] { this });
             SoundManager.PlaySound("select");
         }
     }
@@ -73,21 +73,21 @@ public class DiveTile : Entity
                 // Down
                 string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@player.setmovement(0,-0.5f,0)" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + "@player.move(8)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + ":end";
 
-                ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
+                //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
             }
             else if (diveUp == 1)
             {
                 // Up
                 string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@player.setmovement(0,0.5f,0)" + System.Environment.NewLine + "@player.move(8)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + ":end";
 
-                ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
+                //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
             }
             else if (diveUp == 2)
             {
                 // Up
                 string s = "version=2" + System.Environment.NewLine + "@text.show(" + GetDivePokemon() + "~used Dive!)" + System.Environment.NewLine + "@player.setmovement(0,0.5f,0)" + System.Environment.NewLine + "@player.move(6)" + System.Environment.NewLine + "@player.resetmovement" + System.Environment.NewLine + "@screen.fadeout" + System.Environment.NewLine + "@player.warp(" + this.AdditionalValue + ")" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@screen.fadein" + System.Environment.NewLine + ":end";
 
-                ((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
+                //((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
             }
         }
     }
@@ -107,7 +107,7 @@ public class DiveTile : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+        //this.Draw(this.Model, Textures, false);
     }
 }
 }

@@ -16,7 +16,7 @@ namespace PokemonUnity.Overworld
 /// </summary>
 public class Level
 {
-    private RouteSign _routeSign = null;// TODO Change to default(_) if this is not a reference type 
+    //private RouteSign _routeSign = null;// TODO Change to default(_) if this is not a reference type 
 	private World _world = null;// TODO Change to default(_) if this is not a reference type
 	private PokemonEncounter _pokemonEncounter = null;// TODO Change to default(_) if this is not a reference type 
 
@@ -43,7 +43,7 @@ public class Level
     private int _offsetMapUpdateDelay = 50;
 
     // Map properties:
-    private Terrain _terrain = new Terrain(Terrain.TerrainTypes.Plain);
+    private Terrain _terrain = Terrain.Plain;
     private string _mapName = "";
     private string _musicLoop = "";
     private string _levelFile = "";
@@ -73,7 +73,7 @@ public class Level
     private List<Entity.Entity> _entities = new List<Entity.Entity>();
     private List<Entity.Entity> _floors = new List<Entity.Entity>();
     private List<Shader> _shaders = new List<Shader>();
-    private BackdropRenderer _backdropRenderer;
+    //private BackdropRenderer _backdropRenderer;
 
     private List<Entity.Misc.NetworkPlayer> _networkPlayers = new List<Entity.Misc.NetworkPlayer>();
     private List<NetworkPokemon> _networkPokemon = new List<NetworkPokemon>();
@@ -83,7 +83,7 @@ public class Level
 
     // Radio:
     private bool _isRadioOn = false;
-	private GameJolt.PokegearScreen.RadioStation _selectedRadioStation = null;// TODO Change to default(_) if this is not a reference type 
+	private int? _selectedRadioStation = null;// TODO Change to default(_) if this is not a reference type 
     private List<decimal> _radioChannels = new List<decimal>();
 
     private System.Timers.Timer _offsetTimer = new System.Timers.Timer();
@@ -102,16 +102,16 @@ public class Level
         }
     }
 
-    /// <summary>
-    /// A RouteSign on the top left corner of the screen to display the map's name.
-    /// </summary>
-    public RouteSign RouteSign
-    {
-        get
-        {
-            return this._routeSign;
-        }
-    }
+    ///// <summary>
+    ///// A RouteSign on the top left corner of the screen to display the map's name.
+    ///// </summary>
+    //public RouteSign RouteSign
+    //{
+    //    get
+    //    {
+    //        return this._routeSign;
+    //    }
+    //}
 
     /// <summary>
     /// Indicates whether the player is Surfing.
@@ -670,7 +670,7 @@ public class Level
     /// <summary>
     /// The currently selected Radio station. If possible, this will replace the Music Loop.
     /// </summary>
-    public GameJolt.PokegearScreen.RadioStation SelectedRadioStation
+    public int? SelectedRadioStation //PokegearScreen.RadioStation
     {
         get
         {
@@ -708,16 +708,16 @@ public class Level
         }
     }
 
-    /// <summary>
-    /// The backdrop renderer of this level.
-    /// </summary>
-    public BackdropRenderer BackdropRenderer
-    {
-        get
-        {
-            return _backdropRenderer;
-        }
-    }
+    ///// <summary>
+    ///// The backdrop renderer of this level.
+    ///// </summary>
+    //public BackdropRenderer BackdropRenderer
+    //{
+    //    get
+    //    {
+    //        return _backdropRenderer;
+    //    }
+    //}
 
 
 
@@ -775,7 +775,7 @@ public class Level
         /// <summary>
         /// The encounter method.
         /// </summary>
-        public Spawner.EncounterMethods Method;
+        public EncounterTypes Method;
 
         /// <summary>
         /// The link to the .poke file used to spawn the Pokémon in.
@@ -789,15 +789,15 @@ public class Level
     /// </summary>
     public Level()
     {
-        this._routeSign = new RouteSign();
+        //this._routeSign = new RouteSign();
         this.WarpData = new WarpDataStruct();
         this.PokemonEncounterData = new PokemonEcounterDataStruct();
         this._pokemonEncounter = new PokemonEncounter(this);
 
         this.StartOffsetMapUpdate();
 
-        this._backdropRenderer = new BackdropRenderer();
-        this._backdropRenderer.Initialize();
+        //this._backdropRenderer = new BackdropRenderer();
+        //this._backdropRenderer.Initialize();
     }
 
     /// <summary>
@@ -811,7 +811,7 @@ public class Level
         this._offsetTimer = new System.Timers.Timer();
         this._offsetTimer.Interval = 16;
         this._offsetTimer.AutoReset = true;
-        this._offsetTimer.Elapsed += this.UpdateOffsetMap();
+        //this._offsetTimer.Elapsed += this.UpdateOffsetMap();
         this._offsetTimer.Start();
 
         GameVariables.DebugLog("Started Offset map update");
@@ -834,8 +834,8 @@ public class Level
     {
 
         // copy all changed files
-        if (GameVariables.IS_DEBUG_ACTIVE)
-            DebugFileWatcher.TriggerReload();
+        //if (GameVariables.IS_DEBUG_ACTIVE)
+        //    DebugFileWatcher.TriggerReload();
 
         // Create a parameter array to pass over to the LevelLoader:
         List<object> @params = new List<object>();
@@ -861,7 +861,7 @@ public class Level
             GameVariables.DebugLog("Don't attempt to load a levelfile.");
 
         // Create own player Entity and OverworldPokémon Entity and add them to the Entity enumeration:
-        OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
+        //OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
         OverworldPokemon = new OverworldPokemon(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + 1);
         OverworldPokemon.ChangeRotation();
         Entities.AddRange(new Entity.Entity[]
@@ -879,16 +879,16 @@ public class Level
     /// </summary>
     public void Draw()
     {
-        this._backdropRenderer.Draw();
+        //this._backdropRenderer.Draw();
 
         // Set the effect's View and Projection matrices:
-        Screen.Effect.View = GameVariables.Camera.View;
-        Screen.Effect.Projection = GameVariables.Camera.Projection;
+        //Screen.Effect.View = GameVariables.Camera.View;
+        //Screen.Effect.Projection = GameVariables.Camera.Projection;
 
         // Reset the Debug values:
-        DebugDisplay.DrawnVertices = 0;
-        DebugDisplay.MaxVertices = 0;
-        DebugDisplay.MaxDistance = 0;
+        //DebugDisplay.DrawnVertices = 0;
+        //DebugDisplay.MaxVertices = 0;
+        //DebugDisplay.MaxDistance = 0;
 
         List<Entity.Entity> AllEntities = new List<Entity.Entity>();
         List<Entity.Entity> AllFloors = new List<Entity.Entity>();
@@ -896,11 +896,11 @@ public class Level
         AllEntities.AddRange(Entities);
         AllFloors.AddRange(Floors);
 
-        if (Core.GameOptions.LoadOffsetMaps > 0)
-        {
-            AllEntities.AddRange(OffsetmapEntities);
-            AllFloors.AddRange(OffsetmapFloors);
-        }
+        //if (Core.GameOptions.LoadOffsetMaps > 0)
+        //{
+        //    AllEntities.AddRange(OffsetmapEntities);
+        //    AllFloors.AddRange(OffsetmapFloors);
+        //}
 
         AllEntities = (from f in AllEntities
                        orderby f.CameraDistance descending
@@ -915,7 +915,7 @@ public class Level
             if (i <= AllFloors.Count - 1)
             {
                 AllFloors[i].Render();
-                DebugDisplay.MaxVertices += AllFloors[i].VertexCount;
+                //DebugDisplay.MaxVertices += AllFloors[i].VertexCount;
             }
         }
 
@@ -925,7 +925,7 @@ public class Level
             if (i <= AllEntities.Count - 1)
             {
                 AllEntities[i].Render();
-                DebugDisplay.MaxVertices += AllEntities[i].VertexCount;
+                //DebugDisplay.MaxVertices += AllEntities[i].VertexCount;
             }
         }
 
@@ -938,7 +938,7 @@ public class Level
     /// </summary>
     public void Update()
     {
-        this._backdropRenderer.Update();
+        //this._backdropRenderer.Update();
 
         this.UpdatePlayerWarp();
         this._pokemonEncounter.TriggerBattle();
@@ -946,17 +946,17 @@ public class Level
         // Reload map from file (Debug or Sandbox Mode):
         if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
         {
-            if (KeyBoardHandler.KeyPressed(Keys.R) & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-            {
-                Core.OffsetMaps.Clear();
-                GameVariables.DebugLog(string.Format("Reload map file: {0}", this._levelFile));
-                this.Load(LevelFile);
-            }
+            //if (KeyBoardHandler.KeyPressed(Keys.R) & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+            //{
+            //    Core.OffsetMaps.Clear();
+            //    GameVariables.DebugLog(string.Format("Reload map file: {0}", this._levelFile));
+            //    this.Load(LevelFile);
+            //}
         }
 
         // Update all network players and Pokémon:
-        if (JoinServerScreen.Online)
-            Core.ServersManager.PlayerManager.UpdatePlayers();
+        //if (JoinServerScreen.Online)
+        //    Core.ServersManager.PlayerManager.UpdatePlayers();
 
         // Call Update and UpdateEntity methods of all entities:
         this.UpdateEntities();
@@ -1020,48 +1020,48 @@ public class Level
     public void UpdateOffsetMap()
     {
         this._isUpdatingOffsetMaps = true;
-        if (Core.GameOptions.LoadOffsetMaps > 0)
-        {
-            // The Update function of entities on offset maps are not getting called.
-
-            if (this._offsetMapUpdateDelay <= 0)
-            {
-                // Sort the list:
-                if (!LevelLoader.IsBusy)
-                    OffsetmapEntities = (from e in OffsetmapEntities
-                                         orderby e.CameraDistance descending
-                                         select e).ToList();
-
-                this._offsetMapUpdateDelay = Core.GameOptions.LoadOffsetMaps - 1; // Set the new delay
-
-                // Remove entities that CanBeRemoved (see what I did there?):
-                // Now it also updates the remaining entities.
-                for (var i = 0; i <= OffsetmapEntities.Count - 1; i++)
-                {
-                    if (i <= OffsetmapEntities.Count - 1)
-                    {
-                        if (OffsetmapEntities[i].CanBeRemoved)
-                        {
-                            OffsetmapEntities.RemoveAt(i);
-                            i -= 1;
-                        }
-                        else
-                            OffsetmapEntities[i].UpdateEntity();
-                    }
-                    else
-                        break;
-                }
-
-                // Call UpdateEntity on all offset map floors:
-                for (int i = this.OffsetmapFloors.Count - 1; i >= 0; i += -1)
-                {
-                    if (i <= this.OffsetmapFloors.Count - 1)
-                        this.OffsetmapFloors[i].UpdateEntity();
-                }
-            }
-            else
-                this._offsetMapUpdateDelay -= 1;
-        }
+        //if (Core.GameOptions.LoadOffsetMaps > 0)
+        //{
+        //    // The Update function of entities on offset maps are not getting called.
+		//
+        //    if (this._offsetMapUpdateDelay <= 0)
+        //    {
+        //        // Sort the list:
+        //        if (!LevelLoader.IsBusy)
+        //            OffsetmapEntities = (from e in OffsetmapEntities
+        //                                 orderby e.CameraDistance descending
+        //                                 select e).ToList();
+		//
+        //        //this._offsetMapUpdateDelay = Core.GameOptions.LoadOffsetMaps - 1; // Set the new delay
+		//
+        //        // Remove entities that CanBeRemoved (see what I did there?):
+        //        // Now it also updates the remaining entities.
+        //        for (var i = 0; i <= OffsetmapEntities.Count - 1; i++)
+        //        {
+        //            if (i <= OffsetmapEntities.Count - 1)
+        //            {
+        //                if (OffsetmapEntities[i].CanBeRemoved)
+        //                {
+        //                    OffsetmapEntities.RemoveAt(i);
+        //                    i -= 1;
+        //                }
+        //                else
+        //                    OffsetmapEntities[i].UpdateEntity();
+        //            }
+        //            else
+        //                break;
+        //        }
+		//
+        //        // Call UpdateEntity on all offset map floors:
+        //        for (int i = this.OffsetmapFloors.Count - 1; i >= 0; i += -1)
+        //        {
+        //            if (i <= this.OffsetmapFloors.Count - 1)
+        //                this.OffsetmapFloors[i].UpdateEntity();
+        //        }
+        //    }
+        //    else
+        //        this._offsetMapUpdateDelay -= 1;
+        //}
         this._isUpdatingOffsetMaps = false;
     }
 
@@ -1078,7 +1078,7 @@ public class Level
                 if (this.OffsetmapFloors[i] != null)
                 {
                     this.OffsetmapFloors[i].Render();
-                    DebugDisplay.MaxVertices += this.OffsetmapFloors[i].VertexCount;
+                    //DebugDisplay.MaxVertices += this.OffsetmapFloors[i].VertexCount;
                 }
             }
         }
@@ -1091,7 +1091,7 @@ public class Level
                 if (this.OffsetmapEntities[i] != null)
                 {
                     this.OffsetmapEntities[i].Render();
-                    DebugDisplay.MaxVertices += this.OffsetmapEntities[i].VertexCount;
+                    //DebugDisplay.MaxVertices += this.OffsetmapEntities[i].VertexCount;
                 }
             }
         }
@@ -1102,7 +1102,7 @@ public class Level
     /// </summary>
     private void DrawFlashOverlay()
     {
-        Core.SpriteBatch.Draw(TextureManager.GetTexture(@"GUI\Overworld\flash_overlay"), new Rectangle(0, 0, Core.windowSize.width, Core.windowSize.height), UnityEngine.Color.white);
+        //Core.SpriteBatch.Draw(TextureManager.GetTexture(@"GUI\Overworld\flash_overlay"), new Vector4(0, 0, Core.windowSize.width, Core.windowSize.height), UnityEngine.Color.white);
     }
 
     /// <summary>
@@ -1126,7 +1126,7 @@ public class Level
 
             // Store skin values:
             bool usingGameJoltTexture = OwnPlayer.UsingGameJoltTexture;
-            GameVariables.playerTrainer.Skin = OwnPlayer.SkinName;
+            //GameVariables.playerTrainer.Skin = OwnPlayer.SkinName;
 
             // Load the new level:
             List<object> @params = new List<object>();
@@ -1145,13 +1145,13 @@ public class Level
             LevelLoader levelLoader = new LevelLoader();
             levelLoader.LoadLevel(@params.ToArray());
 
-            GameVariables.playerTrainer.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
+            //GameVariables.playerTrainer.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
             UsedStrength = false; // Disable Strength usuage upon map switch.
             this.Surfing = GameVariables.playerTrainer.startSurfing; // Set the Surfing property after map switch.
 
             // Create player and Pokémon entities:
-            OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
-            OwnPlayer.SetTexture(GameVariables.playerTrainer.Skin, usingGameJoltTexture);
+            //OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
+            //OwnPlayer.SetTexture(GameVariables.playerTrainer.Skin, usingGameJoltTexture);
 
             OverworldPokemon = new OverworldPokemon(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + 1);
             OverworldPokemon.Visible = false;
@@ -1166,43 +1166,43 @@ public class Level
             if (Riding & !CanRide())
             {
                 Riding = false;
-                OwnPlayer.SetTexture(GameVariables.playerTrainer.TempRideSkin, true);
-                GameVariables.playerTrainer.Skin = GameVariables.playerTrainer.TempRideSkin;
+                //OwnPlayer.SetTexture(GameVariables.playerTrainer.TempRideSkin, true);
+                //GameVariables.playerTrainer.Skin = GameVariables.playerTrainer.TempRideSkin;
             }
 
             // If any turns after the warp are defined, apply them:
             GameVariables.Camera.InstantTurn(WarpData.WarpRotations);
 
             // Make the RouteSign appear:
-            this._routeSign.Setup(MapName);
+            //this._routeSign.Setup(MapName);
 
             // Play the correct music track:
-            if (IsRadioOn && GameJolt.PokegearScreen.StationCanPlay(this.SelectedRadioStation))
-                MusicManager.Play(SelectedRadioStation.Music, true);
-            else
-            {
-                IsRadioOn = false;
-                if (this.Surfing)
-                    MusicManager.Play("surf", true);
-                else if (this.Riding)
-                    MusicManager.Play("ride", true);
-                else
-                    MusicManager.Play(MusicLoop, true);
-            }
+            //if (IsRadioOn && GameJolt.PokegearScreen.StationCanPlay(this.SelectedRadioStation))
+            //    MusicManager.Play(SelectedRadioStation.Music, true);
+            //else
+            //{
+            //    IsRadioOn = false;
+            //    if (this.Surfing)
+            //        MusicManager.Play("surf", true);
+            //    else if (this.Riding)
+            //        MusicManager.Play("ride", true);
+            //    else
+            //        MusicManager.Play(MusicLoop, true);
+            //}
 
             // Initialize the world with newly loaded environment variables:
             World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
 
             // If this map is on the restplaces list, set the player's last restplace to this map:
-            List<string> restplaces = System.IO.File.ReadAllLines(GameModeManager.GetMapPath("restplaces.dat")).ToList();
+            List<string> restplaces = System.IO.File.ReadAllLines(/*GameModeManager.GetMapPath("restplaces.dat")*/"").ToList();
 
             foreach (string line in restplaces)
             {
                 string place = line.GetSplit(0, "|");
                 if (place == LevelFile)
                 {
-                    GameVariables.playerTrainer.LastRestPlace = place;
-                    GameVariables.playerTrainer.LastRestPlacePosition = line.GetSplit(1, "|");
+                    //GameVariables.playerTrainer.LastRestPlace = place;
+                    //GameVariables.playerTrainer.LastRestPlacePosition = line.GetSplit(1, "|");
                 }
             }
 
@@ -1214,14 +1214,14 @@ public class Level
             }
 
             // Because of the map change, Roaming Pokémon are moving to their next location on the world map:
-            RoamingPokemon.ShiftRoamingPokemon(-1);
+            //RoamingPokemon.ShiftRoamingPokemon(-1);
 
             // Check if the enter sound should be played by checking if CanDig or CanFly properties are different from the last map:
             if (tempProperties != this.CanDig.ToString() + "," + this.CanFly.ToString())
                 SoundManager.PlaySound("enter", false);
 
             // Unlock the yaw on the camera:
-            (OverworldCamera)GameVariables.Camera.YawLocked = false;
+            //((OverworldCamera)GameVariables.Camera).YawLocked = false;
             Entity.Misc.NetworkPlayer.ScreenRegionChanged();
 
             // If a warp occured, update the camera:
@@ -1231,9 +1231,9 @@ public class Level
             this.WarpData.DoWarpInNextTick = false;
             WarpData.IsWarpBlock = false;
 
-            if (Core.ServersManager.ServerConnection.Connected)
-                // Update network players:
-                Core.ServersManager.PlayerManager.NeedsUpdate = true;
+            //if (Core.ServersManager.ServerConnection.Connected)
+            //    // Update network players:
+            //    Core.ServersManager.PlayerManager.NeedsUpdate = true;
         }
     }
 

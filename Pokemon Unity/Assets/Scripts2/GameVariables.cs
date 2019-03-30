@@ -138,7 +138,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 
 	#region Unity Scene Manager
 	public static CanvasUIHandler CanvasManager { get; private set; }
-	public static DialogHandler DialogScene { get; private set; }
+	public static DialogHandler TextBox { get; private set; }
 	public static StartupSceneHandler StartScene { get; private set; }
 	public static BattlePokemonHandler BattleScene { get; private set; }
 	//public static ItemHandler ItemScene { get; private set; }

@@ -15,7 +15,7 @@ public class ItemObject : Entity
     private bool checkedExistence = false;
     private string AnimationPath = "";
     private int X, Y, width, height, rows, columns, animationSpeed, startRow, startColumn;
-    private Rectangle CurrentRectangle = new Rectangle(0, 0, 0, 0);
+    private Vector4 CurrentRectangle = new Vector4(0, 0, 0, 0);
     private bool CanInteractWith = true;
 
     public new void Initialize(List<List<int>> AnimationData = null)
@@ -88,14 +88,14 @@ public class ItemObject : Entity
     private void CreateAnimationTextureTemp()
     {
         // If Core.GameOptions.GraphicStyle = 1 Then
-        Rectangle r = new Rectangle(X, Y, width, height);
+        Vector4 r = new Vector4(X, Y, width, height);
         this.AnimationName = AnimationPath + "," + X + "," + Y + "," + height + "," + width;
         if (!AnimationTexturesTemp.ContainsKey(AnimationName + "_0"))
         {
             for (var i = 0; i <= this.rows - 1; i++)
             {
-                for (var j = 0; j <= this.columns - 1; j++)
-                    AnimationTexturesTemp.Add(AnimationName + "_" + (j + columns * i).ToString(), TextureManager.GetTexture(AnimationPath, new Rectangle(r.x + r.width * j, r.y + r.height * i, r.width, r.height)));
+                //for (var j = 0; j <= this.columns - 1; j++)
+                //    AnimationTexturesTemp.Add(AnimationName + "_" + (j + columns * i).ToString(), TextureManager.GetTexture(AnimationPath, new Vector4(r.x + r.width * j, r.y + r.height * i, r.width, r.height)));
             }
         }
     }
@@ -167,8 +167,8 @@ public class ItemObject : Entity
         {
             RemoveItem(this);
             SoundManager.PlaySound("item_found", true);
-            Screen.TextBox.TextColor = TextBox.PlayerColor;
-            Screen.TextBox.Show(GameVariables.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Bag.GetMessageReceive(this.Item, 1), this);
+            //GameVariables.TextBox.TextColor = TextBox.PlayerColor;
+            GameVariables.TextBox.Show(GameVariables.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + GameVariables.playerTrainer.Bag.GetMessageReceive(this.Item, 1), new Entity[] { this });
             GameVariables.playerTrainer.Bag.AddItem(this.Item.ItemId, 1);
             //PlayerStatistics.Track("Items found", 1);
 
@@ -178,7 +178,7 @@ public class ItemObject : Entity
 
     public override void Render()
     {
-        this.Draw(this.Model, Textures, false);
+        //this.Draw(this.Model, Textures, false);
     }
 
     public static bool ItemExists(ItemObject ItemObject)

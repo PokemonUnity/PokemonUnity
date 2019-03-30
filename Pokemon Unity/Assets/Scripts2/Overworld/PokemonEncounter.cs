@@ -29,7 +29,7 @@ public class PokemonEncounter
     /// <param name="Position">The position the encounter should happen.</param>
     /// <param name="Method">The method of the encounter.</param>
     /// <param name="pokeFile">The source .poke file. If left empty, the game will assume the levelfile as source .poke file.</param>
-    public void TryEncounterWildPokemon(Vector3 Position, Spawner.EncounterMethods Method, string pokeFile)
+    public void TryEncounterWildPokemon(Vector3 Position, EncounterTypes Method, string pokeFile)
     {
         {
             var withBlock = this._levelReference;
@@ -39,7 +39,7 @@ public class PokemonEncounter
                 if (pokeFile == "")
                     pokeFile = withBlock.LevelFile.Remove(withBlock.LevelFile.Length - 4, 4) + ".poke";
 
-                if (System.IO.File.Exists(GameModeManager.GetPokeFilePath(pokeFile)))
+                if (System.IO.File.Exists(/*GameModeManager.GetPokeFilePath(pokeFile)*/""))
                 {
                     int startRandomValue = 12;
                     int minRandomValue = 5;
@@ -99,7 +99,7 @@ public class PokemonEncounter
 
                         withBlock.PokemonEncounterData.Position = Position;
                         withBlock.PokemonEncounterData.EncounteredPokemon = true;
-                        withBlock.PokemonEncounterData.Method = Method;
+                        //withBlock.PokemonEncounterData.Method = Method;
                         withBlock.PokemonEncounterData.PokeFile = pokeFile;
                     }
                 }
@@ -113,73 +113,73 @@ public class PokemonEncounter
     public void TriggerBattle()
     {
         // If the encounter check is true:
-        if (this._levelReference.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-        {
-            // If the player met the set position:
-            if (GameVariables.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & GameVariables.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
-            {
-                // Make the player stop and set encounter check to false:
-                this._levelReference.PokemonEncounterData.EncounteredPokemon = false;
-                GameVariables.Camera.StopMovement();
-
-                // Generate new wild Pokémon:
-                Pokemon.Pokemon Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
-
-                if (Pokemon != null & !(OverworldScreen)Core.CurrentScreen.TrainerEncountered & (OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
-                {
-                    GameVariables.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
-
-                    // If the player has a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
-                    if (GameVariables.playerTrainer.RepelSteps > 0)
-                    {
-                        Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
-                        if (p != null)
-                        {
-                            if (p.Level >= Pokemon.Level)
-                                return;
-                        }
-                    }
-
-                    // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
-                    if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
-                    {
-                        if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
-                        {
-                            if (GameVariables.playerTrainer.Party[0].Item == Item.Items.CLEANSE_TAG)
-                            {
-                                if (Settings.Rand.Next(0, 3) == 0)
-                                    return;
-                            }
-                        }
-                    }
-
-                    // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
-                    if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
-                    {
-                        if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
-                        {
-                            if (GameVariables.playerTrainer.Party[0].Item == Item.Items.PURE_INCENSE)
-                            {
-                                if (Settings.Rand.Next(0, 3) == 0)
-                                    return;
-                            }
-                        }
-                    }
-
-                    // Register the wild Pokémon as Seen in the Pokédex:
-                    //GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Species, 1);
-                    GameVariables.playerTrainer.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
-
-                    // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
-                    int introType = Settings.Rand.Next(0, 10);
-                    //if (BattleSystem.BattleScreen.RoamingBattle)
-                    //    introType = 12;
-					//
-                    //BattleSystem.BattleScreen b = new BattleSystem.BattleScreen(Pokemon, Core.CurrentScreen, this._levelReference.PokemonEncounterData.Method);
-                    //Core.SetScreen(new BattleIntroScreen(Core.CurrentScreen, b, introType));
-                }
-            }
-        }
+        //if (this._levelReference.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+        //{
+        //    // If the player met the set position:
+        //    if (GameVariables.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & GameVariables.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
+        //    {
+        //        // Make the player stop and set encounter check to false:
+        //        this._levelReference.PokemonEncounterData.EncounteredPokemon = false;
+        //        GameVariables.Camera.StopMovement();
+		//
+        //        // Generate new wild Pokémon:
+        //        Pokemon.Pokemon Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
+		//
+        //        if (Pokemon != null & !((OverworldScreen)Core.CurrentScreen).TrainerEncountered & ((OverworldScreen)Core.CurrentScreen).ActionScript.IsReady)
+        //        {
+        //            GameVariables.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
+		//
+        //            // If the player has a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
+        //            if (GameVariables.playerTrainer.RepelSteps > 0)
+        //            {
+        //                Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
+        //                if (p != null)
+        //                {
+        //                    if (p.Level >= Pokemon.Level)
+        //                        return;
+        //                }
+        //            }
+		//
+        //            // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
+        //            if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
+        //            {
+        //                if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
+        //                {
+        //                    if (GameVariables.playerTrainer.Party[0].Item == Item.Items.CLEANSE_TAG)
+        //                    {
+        //                        if (Settings.Rand.Next(0, 3) == 0)
+        //                            return;
+        //                    }
+        //                }
+        //            }
+		//
+        //            // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
+        //            if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
+        //            {
+        //                if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
+        //                {
+        //                    if (GameVariables.playerTrainer.Party[0].Item == Item.Items.PURE_INCENSE)
+        //                    {
+        //                        if (Settings.Rand.Next(0, 3) == 0)
+        //                            return;
+        //                    }
+        //                }
+        //            }
+		//
+        //            // Register the wild Pokémon as Seen in the Pokédex:
+        //            //GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Species, 1);
+        //            GameVariables.playerTrainer.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
+		//
+        //            // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
+        //            int introType = Settings.Rand.Next(0, 10);
+        //            //if (BattleSystem.BattleScreen.RoamingBattle)
+        //            //    introType = 12;
+		//			//
+        //            //BattleSystem.BattleScreen b = new BattleSystem.BattleScreen(Pokemon, Core.CurrentScreen, this._levelReference.PokemonEncounterData.Method);
+        //            //Core.SetScreen(new BattleIntroScreen(Core.CurrentScreen, b, introType));
+        //        }
+        //    }
+        //}
     }
 }
 }

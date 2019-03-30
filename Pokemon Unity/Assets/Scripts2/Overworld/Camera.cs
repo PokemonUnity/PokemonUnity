@@ -5,8 +5,8 @@ namespace PokemonUnity.Overworld
 {
 	public class Camera
 	{
-		public BoundingFrustum BoundingFrustum;
-		public Matrix View, Projection;
+		//public BoundingFrustum BoundingFrustum;
+		//public Matrix View, Projection;
 		public Vector3 Position;
 
 		public float Yaw, Pitch;
@@ -112,7 +112,7 @@ namespace PokemonUnity.Overworld
 
 		public void CreateNewProjection(float newFOV)
 		{
-			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(newFOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01f, this.FarPlane);
+			//Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(newFOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01f, this.FarPlane);
 			this.FOV = newFOV;
 		}
 		public virtual Vector3 CPosition

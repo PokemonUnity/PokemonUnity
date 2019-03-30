@@ -37,7 +37,7 @@ public class Badge
         public string Name = "";
         public int LevelCap = -1;
         public List<HMMoves> HMs = new List<HMMoves>();
-        public Rectangle TextureRectangle = new Rectangle(0, 0, 50, 50);
+        public UnityEngine.Vector4 TextureRectangle = new UnityEngine.Vector4(0, 0, 50, 50);
         public string TexturePath = @"GUI\Badges";
         public string Region = "Johto";
 
@@ -128,7 +128,7 @@ public class Badge
                             {
                                 string[] texData = argData.Split(System.Convert.ToChar(","));
                                 this.TexturePath = texData[0];
-                                this.TextureRectangle = new Rectangle(System.Convert.ToInt32(texData[1]), System.Convert.ToInt32(texData[2]), System.Convert.ToInt32(texData[3]), System.Convert.ToInt32(texData[4]));
+                                this.TextureRectangle = new UnityEngine.Vector4(System.Convert.ToInt32(texData[1]), System.Convert.ToInt32(texData[2]), System.Convert.ToInt32(texData[3]), System.Convert.ToInt32(texData[4]));
                                 break;
                             }
                         case "region":
@@ -149,7 +149,7 @@ public class Badge
     {
         Badges.Clear();
 
-        string file = GameModeManager.GetContentFilePath(@"Data\badges.dat");
+        string file = "";//GameModeManager.GetContentFilePath(@"Data\badges.dat");
         //System.Security.FileValidation.CheckFileValid(file, false, "Badge.vb");
         string[] data = System.IO.File.ReadAllLines(file);
         foreach (string line in data)
@@ -185,7 +185,7 @@ public class Badge
             if (b.ID == ID)
                 return TextureManager.GetTexture(b.TexturePath, b.TextureRectangle, "");
         }
-        return TextureManager.GetTexture(@"GUI\Badges", new Rectangle(0, 0, 50, 50), "");
+        return TextureManager.GetTexture(@"GUI\Badges", new UnityEngine.Vector4(0, 0, 50, 50), "");
     }
 
     /// <summary>
