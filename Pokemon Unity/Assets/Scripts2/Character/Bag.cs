@@ -21,6 +21,7 @@ public partial class Game
 	/// it was a {get;} only, that returned an iqueryable
 	/// ToDo: remove static <see cref="GameVariables.Bag_Items"/>
 	/// so trainerbag can load multiple players (for netplay)
+	///ToDo: Pokemonunity.Character.Bag?...
 	public class TrainerBag
 	{
 		private Player trainer { get; set; }

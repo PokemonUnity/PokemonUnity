@@ -2,6 +2,7 @@
 using PokemonUnity;
 using PokemonUnity.Monster;
 
+//ToDo: Pokemonunity.Character.Trainer?...
 namespace PokemonUnity
 {
 	/// <summary>

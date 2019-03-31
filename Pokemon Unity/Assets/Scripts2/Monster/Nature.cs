@@ -5,7 +5,6 @@ namespace PokemonUnity.Monster
 {
     public class Nature
     {
-
         public Natures Natures { get; private set; }
         float[] Stat_mod { get; set; }//= new float[5];
         public float ATK { get { return Stat_mod[0]; } }
@@ -38,31 +37,31 @@ namespace PokemonUnity.Monster
 
         private static Nature[] natures = new Nature[]
         {
-        new Nature(Natures.HARDY, 1, 1, 1, 1, 1),
-        new Nature(Natures.LONELY, 1.1f, 0.9f, 1, 1, 1),
-        new Nature(Natures.BRAVE, 1.1f, 1, 1, 1, 0.9f),
-        new Nature(Natures.ADAMANT, 1.1f, 1, 0.9f, 1, 1),
-        new Nature(Natures.NAUGHTY, 1.1f, 1, 1, 0.9f, 1),
-        new Nature(Natures.BOLD, 0.9f, 1.1f, 1, 1, 1),
-        new Nature(Natures.DOCILE, 1, 1, 1, 1, 1),
-        new Nature(Natures.RELAXED, 1, 1.1f, 1, 1, 0.9f),
-        new Nature(Natures.IMPISH, 1, 1.1f, 0.9f, 1, 1),
-        new Nature(Natures.LAX, 1, 1.1f, 1, 0.9f, 1),
-        new Nature(Natures.TIMID, 0.9f, 1, 1, 1, 1.1f),
-        new Nature(Natures.HASTY, 1, 0.9f, 1, 1, 1.1f),
-        new Nature(Natures.SERIOUS, 1, 1, 1, 1, 1),
-        new Nature(Natures.JOLLY, 1, 1, 0.9f, 1, 1.1f),
-        new Nature(Natures.NAIVE, 1, 1, 1, 0.9f, 1.1f),
-        new Nature(Natures.MODEST, 0.9f, 1, 1.1f, 1, 1),
-        new Nature(Natures.MILD, 1, 0.9f, 1.1f, 1, 1),
-        new Nature(Natures.QUIET, 1, 1, 1.1f, 1, 0.9f),
-        new Nature(Natures.BASHFUL, 1, 1, 1, 1, 1),
-        new Nature(Natures.RASH, 1, 1, 1.1f, 0.9f, 1),
-        new Nature(Natures.CALM, 0.9f, 1, 1, 1.1f, 1),
-        new Nature(Natures.GENTLE, 1, 0.9f, 1, 1.1f, 1),
-        new Nature(Natures.SASSY, 1, 1, 1, 1.1f, 0.9f),
-        new Nature(Natures.CAREFUL, 1, 1, 0.9f, 1.1f, 1),
-        new Nature(Natures.QUIRKY, 1, 1, 1, 1, 1)
+			new Nature(Natures.HARDY, 1, 1, 1, 1, 1),
+			new Nature(Natures.LONELY, 1.1f, 0.9f, 1, 1, 1),
+			new Nature(Natures.BRAVE, 1.1f, 1, 1, 1, 0.9f),
+			new Nature(Natures.ADAMANT, 1.1f, 1, 0.9f, 1, 1),
+			new Nature(Natures.NAUGHTY, 1.1f, 1, 1, 0.9f, 1),
+			new Nature(Natures.BOLD, 0.9f, 1.1f, 1, 1, 1),
+			new Nature(Natures.DOCILE, 1, 1, 1, 1, 1),
+			new Nature(Natures.RELAXED, 1, 1.1f, 1, 1, 0.9f),
+			new Nature(Natures.IMPISH, 1, 1.1f, 0.9f, 1, 1),
+			new Nature(Natures.LAX, 1, 1.1f, 1, 0.9f, 1),
+			new Nature(Natures.TIMID, 0.9f, 1, 1, 1, 1.1f),
+			new Nature(Natures.HASTY, 1, 0.9f, 1, 1, 1.1f),
+			new Nature(Natures.SERIOUS, 1, 1, 1, 1, 1),
+			new Nature(Natures.JOLLY, 1, 1, 0.9f, 1, 1.1f),
+			new Nature(Natures.NAIVE, 1, 1, 1, 0.9f, 1.1f),
+			new Nature(Natures.MODEST, 0.9f, 1, 1.1f, 1, 1),
+			new Nature(Natures.MILD, 1, 0.9f, 1.1f, 1, 1),
+			new Nature(Natures.QUIET, 1, 1, 1.1f, 1, 0.9f),
+			new Nature(Natures.BASHFUL, 1, 1, 1, 1, 1),
+			new Nature(Natures.RASH, 1, 1, 1.1f, 0.9f, 1),
+			new Nature(Natures.CALM, 0.9f, 1, 1, 1.1f, 1),
+			new Nature(Natures.GENTLE, 1, 0.9f, 1, 1.1f, 1),
+			new Nature(Natures.SASSY, 1, 1, 1, 1.1f, 0.9f),
+			new Nature(Natures.CAREFUL, 1, 1, 0.9f, 1.1f, 1),
+			new Nature(Natures.QUIRKY, 1, 1, 1, 1, 1)
         };
 
         private static Natures getRandomNature()

@@ -10,6 +10,11 @@ using PokemonUnity;
 
 namespace P3D
 {
+	/// <summary>
+	/// This is only here to be deconstructed and merged into the current Player class
+	/// </summary>
+	/// ToDo: Convert to PokemonUnity.Player
+	[System.Obsolete]
 	public class Player //: System.Security.HashSecureBase
 	{
 		#region 
@@ -1925,6 +1930,7 @@ namespace P3D
 
 		public bool IsFlying = false;
 
+		#region Step Events
 		// ===STEP EVENT INFORMATION===
 		// Events when taking a step	| Priority	| Event Type    | Resolution if Not fired
 		// ---------------------------	|-----------|---------------|--------------------------------------------------------------------------------
@@ -2200,6 +2206,7 @@ namespace P3D
 				}
 			}
 		}
+		#endregion
 
 		public void AddPoints(int amount, string reason)
 		{

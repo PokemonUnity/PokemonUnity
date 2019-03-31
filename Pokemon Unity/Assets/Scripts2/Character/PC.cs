@@ -11,6 +11,7 @@ using PokemonUnity.Character;
 
 public partial class Game
 {
+	//ToDo: Pokemonunity.Character.PC?...
 	public class TrainerPC
 	{
 		//public static PC

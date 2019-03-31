@@ -9,9 +9,10 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
 
+//ToDo: Pokemonunity.Character.Player?...
 namespace PokemonUnity
 {	
-	[Serializable]
+	[Serializable] 
 	public class Player
 	{
 		#region Variables
