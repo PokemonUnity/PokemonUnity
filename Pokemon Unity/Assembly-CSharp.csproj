@@ -90,7 +90,9 @@
     <Compile Include="Assets\Scripts2\Overworld\Entites\BaseEntity.cs" />
     <Compile Include="Assets\Scripts2\Character\P3D.Player.cs" />
     <Compile Include="Assets\Scripts2\Inventory\Item\Berry.cs" />
-    <Compile Include="Assets\Scripts2\TextureManager.cs" />
+    <Compile Include="Assets\Scripts2\Overworld\Map\Sample\Test.cs" />
+    <Compile Include="Assets\Scripts2\Overworld\Map\Tile.cs" />
+    <Compile Include="Assets\Scripts2\EventHandlers\TextureManager.cs" />
     <Compile Include="Assets\Scripts2\Settings.cs" />
     <Compile Include="Assets\Scripts2\Character\Gear\Pokedex.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Attack.cs" />

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using PokemonUnity;
 using PokemonUnity.Monster;
 
 public class MapSettings : MonoBehaviour
@@ -12,7 +13,7 @@ public class MapSettings : MonoBehaviour
     public int mapBGMNightLoopStartSamples = 0;
     public string mapName;
     public Texture mapNameBoxTexture;
-    public Color mapNameColor = new Color(0.066f, 0.066f, 0.066f, 1);
+    public UnityEngine.Color mapNameColor = new UnityEngine.Color(0.066f, 0.066f, 0.066f, 1);
 
     public enum PokemonRarity
     {
