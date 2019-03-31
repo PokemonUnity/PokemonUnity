@@ -385,6 +385,7 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 #if !DEBUG
 			UnityEngine.Debug.Log(value);
 #endif
+			_battle = value;
 		}
 	}
 	private static PokemonUnity.Battle.Battle _battle { get; set; }
