@@ -98,7 +98,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 	//public Color fade = new Color32(255, 113, 0, 255);			// Orange
 	#endregion
 	#region Pokemon Battler
-	//public PokemonUnity.Item.ItemCategory
+	//public PokemonUnity.Inventory.ItemCategory
 	public Sprite Pokemon, Shadow, Pokeball;
 	public AnimationClip BattlerAnim, PokeBallAnim;
 	#endregion
@@ -113,7 +113,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 		hpSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
 		//ToDo: Below cant be null, please review component
-		//if (BattleIndex > -1 && BattleIndex < GameVariables.battle.battlers.Length) GameVariables.battle.battlers[BattleIndex].BattlerUI(this);
+		//if (BattleIndex > -1 && BattleIndex < Game.battle.battlers.Length) Game.battle.battlers[BattleIndex].BattlerUI(this);
 	}
 
     void OnEnable()

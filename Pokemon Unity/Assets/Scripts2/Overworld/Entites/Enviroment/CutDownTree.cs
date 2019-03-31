@@ -1,60 +1,27 @@
 ﻿using PokemonUnity.Character;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 using System;
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
-public class CutDownTree : Entity
-{
-	public override void UpdateEntity()
+	public class CutDownTree : Entity
 	{
-		if (this.Rotation.y != GameVariables.Camera.Yaw)
+		public override void UpdateEntity()
 		{
-			this.Rotation.y = GameVariables.Camera.Yaw;
-			this.CreatedWorld = false;
-		}
-
-		base.UpdateEntity();
-	}
-
-	public override void ClickFunction()
-	{
-		string pName = "";
-
-		foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
-		{
-			if (!p.isEgg)
+			if (this.Rotation.y != Game.Camera.Yaw)
 			{
-				foreach (Attack.Move a in p.moves)
-				{
-					if (a.MoveId == Moves.CUT)
-					{
-						pName = p.Name;
-						break;
-					}
-				}
+				this.Rotation.y = Game.Camera.Yaw;
+				this.CreatedWorld = false;
 			}
 
-			if (pName != "")
-				break;
+			base.UpdateEntity();
 		}
 
-		string text = "This tree looks like it~can be Cut down!";
-
-		if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
-			text += "~Do you want to~use Cut?%Yes|No%";
-
-		GameVariables.TextBox.Show(text, new Entity[] { this });
-		SoundManager.PlaySound("select");
-	}
-
-	public override void ResultFunction(int Result)
-	{
-		if (Result == 0)
+		public override void ClickFunction()
 		{
 			string pName = "";
 
-			foreach (Pokemon.Pokemon p in GameVariables.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.Player.Party)
 			{
 				if (!p.isEgg)
 				{
@@ -72,19 +39,52 @@ public class CutDownTree : Entity
 					break;
 			}
 
-			string Text = pName + " used~Cut!";
-			this.CanBeRemoved = true;
+			string text = "This tree looks like it~can be Cut down!";
 
-			string s = "version=2" + System.Environment.NewLine + "@text.show(" + Text + ")" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + ":end";
+			if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | Game.Player.SandBoxMode | Game.IS_DEBUG_ACTIVE)
+				text += "~Do you want to~use Cut?%Yes|No%";
 
-			//PlayerStatistics.Track("Cut used", 1);
-			//((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
+			Game.TextBox.Show(text, new Entity[] { this });
+			SoundManager.PlaySound("select");
+		}
+
+		public override void ResultFunction(int Result)
+		{
+			if (Result == 0)
+			{
+				string pName = "";
+
+				foreach (Monster.Pokemon p in Game.Player.Party)
+				{
+					if (!p.isEgg)
+					{
+						foreach (Attack.Move a in p.moves)
+						{
+							if (a.MoveId == Moves.CUT)
+							{
+								pName = p.Name;
+								break;
+							}
+						}
+					}
+
+					if (pName != "")
+						break;
+				}
+
+				string Text = pName + " used~Cut!";
+				this.CanBeRemoved = true;
+
+				string s = "version=2" + System.Environment.NewLine + "@text.show(" + Text + ")" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + ":end";
+
+				//PlayerStatistics.Track("Cut used", 1);
+				//((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2, false);
+			}
+		}
+
+		public override void Render()
+		{
+			//this.Draw(this.Model, Textures, false);
 		}
 	}
-
-	public override void Render()
-	{
-		//this.Draw(this.Model, Textures, false);
-	}
-}
 }

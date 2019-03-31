@@ -13,7 +13,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int[] BoxTextures { get; private set; }
         public static int[] Items { get; private set; }
 
-        public SeriPC(Pokemon.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Item.Item> boxItems)
+        public SeriPC(Monster.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Inventory.Item> boxItems)
         {
             Pokemons = new SeriPokemon[pokemons.GetLength(0), pokemons.GetLength(1)];
             for (int i = 0; i < Pokemons.GetLength(0); i++)
@@ -33,29 +33,29 @@ namespace PokemonUnity.Saving.SerializableClasses
             }
         }
 
-		public Pokemon.Pokemon[,] GetPokemonsFromSeri()
+		public Monster.Pokemon[,] GetPokemonsFromSeri()
 		{
-			Pokemon.Pokemon[,] pkmn = new Pokemon.Pokemon[Pokemons.GetLength(0), Pokemons.GetLength(1)];
+			Monster.Pokemon[,] pkmn = new Monster.Pokemon[Pokemons.GetLength(0), Pokemons.GetLength(1)];
             for (int i = 0; i < Pokemons.GetLength(0); i++)
             {
                 for (int j = 0; j < Pokemons.GetLength(1); j++)
                 {
 					//Easier if it only grabs actual pokemons (with values), than trying to copy everything...
                     if(Pokemons[i,j] == null || (PokemonUnity.Pokemons)Pokemons[i, j].Species != PokemonUnity.Pokemons.NONE)
-						pkmn[i, j] = (Pokemon.Pokemon)Pokemons[i, j];
+						pkmn[i, j] = (Monster.Pokemon)Pokemons[i, j];
 					else
-						pkmn[i, j] = new Pokemon.Pokemon(PokemonUnity.Pokemons.NONE);
+						pkmn[i, j] = new Monster.Pokemon(PokemonUnity.Pokemons.NONE);
                 }
             }
 			return pkmn;
 		}
 
-		public Item.Item[] GetItemsFromSeri()
+		public Inventory.Item[] GetItemsFromSeri()
 		{
-			Item.Item[] items = new Item.Item[Items.Length];
+			Inventory.Item[] items = new Inventory.Item[Items.Length];
 			for (int i = 0; i < Items.Length; i++)
 			{
-				items[i] = new Item.Item((Item.Items)Items[i]);
+				items[i] = new Inventory.Item((Inventory.Items)Items[i]);
 			}
 			return items;
 		}

@@ -53,7 +53,7 @@ namespace Tests
 			Trainer trainer = new Trainer(player, tID: trainerID, sID: secretID);
 			player = new Player(trainer);
 			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);
-			player.addPokemon(new PokemonUnity.Pokemon.Pokemon(Pokemons.CHARMANDER, trainer));
+			player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,
@@ -147,9 +147,9 @@ namespace Tests
         public void Trainer_RideBike_Fail_If_Item_NotInInventory()
         {
 			//if(
-			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.BICYCLE] != null ||
-			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.ACRO_BIKE] != null ||
-			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.MACH_BIKE] != null
+			//	Game.Player.Bag[PokemonUnity.Inventory.Items.BICYCLE] != null ||
+			//	Game.Player.Bag[PokemonUnity.Inventory.Items.ACRO_BIKE] != null ||
+			//	Game.Player.Bag[PokemonUnity.Inventory.Items.MACH_BIKE] != null
 			//)
             Assert.Inconclusive();
         }
@@ -241,7 +241,7 @@ namespace Tests
 		//	SaveDataOld.currentSave.playerHours = 0;
 		//	SaveDataOld.currentSave.playerMinutes = 7;
 		//	SaveDataOld.currentSave.playerSeconds = 12;
-		//	SaveDataOld.currentSave.playerTime = new System.TimeSpan(0,7,12);
+		//	SaveDataOld.currentSave.PlayTime = new System.TimeSpan(0,7,12);
 		//
 		//	////////////////////////////////////////////////////////////////////////////////////////////////////
 		//
@@ -314,7 +314,7 @@ namespace Tests
 			//Create 3 SaveState of Dummy Data
 
 			//Save to File
-			//GameVariables.Save();
+			//Game.Save();
 
 			//Delete one
 		}

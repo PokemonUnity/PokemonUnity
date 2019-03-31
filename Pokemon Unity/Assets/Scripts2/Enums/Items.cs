@@ -8,7 +8,7 @@ using PokemonUnity;
 /// <summary>
 /// Namespace to nest all Pokemon Item Enums
 /// </summary>
-namespace PokemonUnity.Item
+namespace PokemonUnity.Inventory
 {
 	/// <summary>
 	/// Item ids are connected to XML file. 

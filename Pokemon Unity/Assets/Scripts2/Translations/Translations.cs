@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 using PokemonUnity;
 
 #region Deprecated/Obsolete
-[System.Serializable]
+/*[System.Serializable]
 [System.Obsolete]
 public class PokedexTranslation //: ITranslation, ITranslationPokedex
 {
@@ -65,7 +65,7 @@ public interface ITranslationPokedex
 {
     string Species { get; set; }
     string[] Forms { get; set; }
-}
+}*/
 #endregion
 
 #region Extras
@@ -235,7 +235,7 @@ public static class LanguageExtension //: GameText
 	/// ToDo: Overload this where TextId can also be an Int?
     public static Translator.Language.LocalizedString Translate(PokemonUnity.Text text, string textId, params string[] fieldValues)
     {
-		var Failure = new Translator.Language.LocalizedString("Failed", "The contents of this dictionary were unable to be found", Settings.UserLanguage);
+		var Failure = new Translator.Language.LocalizedString("Failed", "The contents of this dictionary were unable to be found", Core.UserLanguage);
         /*
         if (_pokeTranslations == null) //should return english if player's default language is null
         {
@@ -258,7 +258,7 @@ public static class LanguageExtension //: GameText
 		
         List<string> fieldvalues = new List<string>();
 		//For each NODE in TranslationDictionary.XML
-		foreach (var node in _dictionary.NodeDictionaries[Settings.UserLanguage.ToString()])
+		foreach (var node in _dictionary.NodeDictionaries[Core.UserLanguage.ToString()])
 		{
 			//And the Category.Id the translation string the Text.Id belongs to 
 			switch (text)
@@ -297,8 +297,8 @@ public static class LanguageExtension //: GameText
 							{
 								//fieldnames.Add(field);
 								/*if (field.Key.Contains("form")){
-									//_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
-									//_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+									//_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
+									//_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
 									formvalues.Add(field.Value);
 								}*/
 								if (field.Key.Contains("field"))
@@ -372,10 +372,10 @@ public static class LanguageExtension //: GameText
             Initialize("PokemonUnity");
         }*/
 
-        //if(_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Count < _dictionary.Dictionaries[Translator.Languages.English.ToString()].GetAllStrings().Count) _dictionary.Dictionaries[Settings.UserLanguage.ToString()]
+        //if(_dictionary.Dictionaries[Core.UserLanguage.ToString()].GetAllStrings().Count < _dictionary.Dictionaries[Translator.Languages.English.ToString()].GetAllStrings().Count) _dictionary.Dictionaries[Core.UserLanguage.ToString()]
 
         //int arrayId = (int)id;// GetPokemon(id).ArrayId; //unless db is set, it'll keep looping null...
-        /*if (!_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(text))//&& language == Languages.English
+        /*if (!_dictionary.Dictionaries[Core.UserLanguage.ToString()].GetAllStrings().Contains(text))//&& language == Languages.English
         {
             //Debug.LogError("Failed to load pokedex translation for pokemon with id: " + (int)id); //ToDo: Throw exception error
             //throw new System.Exception(string.Format("Failed to load pokedex translation for pokemon with id: {0}_{1}", (int)id, id.ToString()));
@@ -389,44 +389,44 @@ public static class LanguageExtension //: GameText
         }*/
         //
         
-        //if (_dictionary.Dictionaries[Settings.UserLanguage.ToString()].GetAllStrings().Contains(text))
+        //if (_dictionary.Dictionaries[Core.UserLanguage.ToString()].GetAllStrings().Contains(text))
 		//{
-            //if(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames.Length > 0){
+            //if(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames.Length > 0){
             //List<string> formvalues = new List<string>();
             List<string> fieldvalues = new List<string>();
             //List<KeyValuePair<string,string>> fieldnames = new List<KeyValuePair<string,string>>();
-            foreach (KeyValuePair<string, string> field in _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+            foreach (KeyValuePair<string, string> field in _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
             {
                 if (field.Key != "id" || field.Key != "identifier" || field.Key != "language")// || field.Key != "name"
                 {
                     //fieldnames.Add(field);
                     /*if (field.Key.Contains("form")){
-                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
-                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
                         formvalues.Add(field.Value);
                     }*/
                     if (field.Key.Contains("field"))
                     {
-                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
-                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
                         fieldvalues.Add(field.Value);
                     }
                 }
             }
             /*if (formvalues.Count > 0)
             {
-                _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = formvalues.JoinAsString("; ") + Environment.NewLine + _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;
+                _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = formvalues.JoinAsString("; ") + Environment.NewLine + _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;
             }*/
-            //if (_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames.Contains("form")){ //Name vs LocalName?
+            //if (_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames.Contains("form")){ //Name vs LocalName?
             if (fieldvalues.Count > 0)
             { //fieldnames.Contains("form")
-                _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldValues);// + 
+                _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, fieldValues);// + 
 				//Adding form value to output string, so that if a pokemon isnt being translated, it would be easy to decide between description or name
 				//formvalues.Count > 0? "|" + formvalues.JoinAsString(";"):"";
-                //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = formvalues.JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = formvalues.JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
             }
 
-			return _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text];
+			return _dictionary.Dictionaries[Core.UserLanguage.ToString()][text];
 		//} else
 			//throw new System.Exception("No Translation Found For: " + text);
 			//return "No Translation Found For: " + text;
@@ -542,7 +542,7 @@ public static class gameTextExtension //: LanguageExtension
                 case "Pokemons":
                     foreach(var pokemon in System.Enum.GetNames(typeof(PokemonUnity.Pokemons)))
                     {
-						//ToDo: Use Settings => ToColorHEX methods...
+						//ToDo: Use Core => ToColorHEX methods...
                         RichTextAssignColor(ref text, pokemon, "blue");
                     }
                     break;
@@ -566,15 +566,15 @@ namespace PokemonUnity
 	/// </summary>
 	public enum Text
 	{
-		Species           = 1	,
-		Kinds             = 2	,
-		Entries           = 3	,
-		FormNames         = 4	,
-		Moves             = 5	,
-		MoveDescriptions  = 6	,
-		Items             = 7	,
-		ItemPlurals       = 8	,
-		ItemDescriptions  = 9	,
+		Species           = 1 ,
+		Kinds             = 2 ,
+		Entries           = 3 ,
+		FormNames         = 4 ,
+		Moves             = 5 ,
+		MoveDescriptions  = 6 ,
+		Items             = 7 ,
+		ItemPlurals       = 8 ,
+		ItemDescriptions  = 9 ,
 		Abilities         = 10,
 		AbilityDescs      = 11,
 		Types             = 12,

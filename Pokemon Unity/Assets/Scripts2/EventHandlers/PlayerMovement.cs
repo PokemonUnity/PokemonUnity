@@ -41,9 +41,9 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 			{
 				//ToDo: Unity UI should push value to GameVariable
 				MapMatrix map = new MapMatrix();
-				Tile x = map.mapHeader.MapArray[(int)GameVariables.playerTrainer.playerPosition.z]
-					[ (int)GameVariables.playerTrainer.playerPosition.x
-					, (int)GameVariables.playerTrainer.playerPosition.y];
+				Tile x = map.mapHeader.MapArray[(int)Game.Player.playerPosition.z]
+					[ (int)Game.Player.playerPosition.x
+					, (int)Game.Player.playerPosition.y];
 				//if (currentTile != x)
 				//{
 				//	currentTile = x;
@@ -679,7 +679,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 							yield return StartCoroutine(moveForward());
 						}
 					}
-					else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE)
+					else if (Input.GetKeyDown("g") && Game.IS_DEBUG_ACTIVE)
 					{
 						//DEBUG
 						Debug.Log(currentMap.getTileTag(transform.position));

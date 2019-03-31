@@ -2,27 +2,27 @@
 
 namespace PokemonUnity.Overworld.Entity.Environment
 {
-public class WallBill : Entity
-{
-    protected override float CalculateCameraDistance(Vector3 CPosition)
-    {
-        return base.CalculateCameraDistance(CPosition) - 0.4f;
-    }
+	public class WallBill : Entity
+	{
+		protected override float CalculateCameraDistance(Vector3 CPosition)
+		{
+			return base.CalculateCameraDistance(CPosition) - 0.4f;
+		}
 
-    public override void UpdateEntity()
-    {
-        if (this.Rotation.y != GameVariables.Camera.Yaw)
-        {
-            this.Rotation.y = GameVariables.Camera.Yaw;
-            CreatedWorld = false;
-        }
+		public override void UpdateEntity()
+		{
+			if (this.Rotation.y != Game.Camera.Yaw)
+			{
+				this.Rotation.y = Game.Camera.Yaw;
+				CreatedWorld = false;
+			}
 
-        base.UpdateEntity();
-    }
+			base.UpdateEntity();
+		}
 
-    public override void Render()
-    {
- //this.Draw(this.Model, Textures, false);
-    }
-}
+		public override void Render()
+		{
+			//this.Draw(this.Model, Textures, false);
+		}
+	}
 }

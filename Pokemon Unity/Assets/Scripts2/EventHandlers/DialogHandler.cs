@@ -39,7 +39,7 @@ public class DialogHandler : UnityEngine.MonoBehaviour
         get { return secPerChar; }
         set
         {
-            int txtSpd = GameVariables.textSpeed + 1;
+            int txtSpd = Game.textSpeed + 1;
             value = 1 / (16 + (txtSpd * txtSpd * 9));
         }
     }
@@ -85,7 +85,7 @@ public class DialogHandler : UnityEngine.MonoBehaviour
 	#region Prompts
     public void PromptYesNo()
     {
-        PromptOptions(new string[] { LanguageExtension.Translate(GameVariables.UserLanguage, "Yes"), LanguageExtension.Translate(GameVariables.UserLanguage, "No") });
+        PromptOptions(new string[] { LanguageExtension.Translate(Game.UserLanguage, "Yes"), LanguageExtension.Translate(Game.UserLanguage, "No") });
     }
 
     public void PromptOptions(string options)
@@ -489,8 +489,8 @@ public class DialogHandler : UnityEngine.MonoBehaviour
 		//	}
 		//}
 
-		this.Text = this.Text.Replace("<playername>", GameVariables.playerTrainer.PlayerName);
-		this.Text = this.Text.Replace("<rivalname>", GameVariables.playerTrainer.RivalName);
+		this.Text = this.Text.Replace("<playername>", Game.Player.Name);
+		this.Text = this.Text.Replace("<rivalname>", Game.Player.RivalName);
 
 		this.Text = this.Text.Replace("[POKE]", "Poké");
 		this.Text = this.Text.Replace("[POKEMON]", "Pokémon");
@@ -891,7 +891,7 @@ public class ChooseBox
 	private void SetupOptions()
 	{
 		for (var i = 0; i <= Options.Count() - 1; i++)
-			Options[i] = Options[i].Replace("<playername>", GameVariables.playerTrainer.PlayerName);
+			Options[i] = Options[i].Replace("<playername>", Game.Player.Name);
 	}
 
 	public int getResult(int ID)
@@ -945,7 +945,7 @@ public class ChooseBox
 
 	private void PlayClickSound()
 	{
-		if (GameVariables.TextBox.Showing == false)
+		if (Game.TextBox.Showing == false)
 			SoundManager.PlaySound("select");
 	}
 

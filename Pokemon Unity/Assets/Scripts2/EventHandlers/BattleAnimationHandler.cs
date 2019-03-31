@@ -10,10 +10,10 @@ using PokemonUnity.Battle;
 //[ExecuteInEditMode]
 public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 {
-	//private static GameVariables PersistantPlayerData { get { return StartupSceneHandler.PersistantPlayerData; } }
+	//private static Game PersistantPlayerData { get { return StartupSceneHandler.PersistantPlayerData; } }
 	public static IEnumerator<BattleResults> BattleCoroutineResults { get; private set; }
 	public IEnumerator<BattleResults> BattleCoroutine { get; private set; }
-	public BattleResults victor { get { return GameVariables.battle.decision; } }
+	public BattleResults victor { get { return Game.battle.decision; } }
     //public float time;
     //AnimationClip anim;
 
@@ -465,9 +465,9 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
         itemList = bagObject.transform.Find("Items").gameObject;
         for (int i = 0; i < 8; i++)
         {
-            buttonItemList[i] = itemList.transform.Find("Item" + i).GetComponent<Image>();
+            buttonItemList[i] = itemList.transform.Find("Inventory" + i).GetComponent<Image>();
             itemListIcon[i] = buttonItemList[i].transform.Find("Icon").GetComponent<Image>();
-            itemListNameShadow[i] = buttonItemList[i].transform.Find("Item").GetComponent<Text>();
+            itemListNameShadow[i] = buttonItemList[i].transform.Find("Inventory").GetComponent<Text>();
             itemListName[i] = itemListNameShadow[i].transform.Find("Text").GetComponent<Text>();
             itemListQuantityShadow[i] = buttonItemList[i].transform.Find("Quantity").GetComponent<Text>();
             itemListQuantity[i] = itemListQuantityShadow[i].transform.Find("Text").GetComponent<Text>();
@@ -489,7 +489,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
             pokemonSlotMaxHP[i] = pokemonSlotMaxHPShadow[i].transform.Find("Text").GetComponent<Text>();
             pokemonSlotHPBar[i] = buttonPokemonSlot[i].transform.Find("HPBar").GetComponent<Image>();
             pokemonSlotStatus[i] = buttonPokemonSlot[i].transform.Find("Status").GetComponent<Image>();
-            pokemonSlotItem[i] = buttonPokemonSlot[i].transform.Find("Item").GetComponent<Image>();
+            pokemonSlotItem[i] = buttonPokemonSlot[i].transform.Find("Inventory").GetComponent<Image>();
         }
 
         buttonSwitch = pokeObject.transform.Find("ButtonSwitch").GetComponent<Image>();
@@ -532,7 +532,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
         pokemonSummaryNextLevelEXP = pokemonSummaryNextLevelEXPShadow.transform.Find("Text").GetComponent<Text>();
         pokemonSummaryEXPBar = pokemonSummary.transform.Find("ExpBar").GetComponent<Image>();
         pokemonSummaryItemIcon = pokemonSummary.transform.Find("ItemIcon").GetComponent<Image>();
-        pokemonSummaryItemNameShadow = pokemonSummary.transform.Find("Item").GetComponent<Text>();
+        pokemonSummaryItemNameShadow = pokemonSummary.transform.Find("Inventory").GetComponent<Text>();
         pokemonSummaryItemName = pokemonSummaryItemNameShadow.transform.Find("Text").GetComponent<Text>();
         pokemonSummaryAbilityNameShadow = pokemonSummary.transform.Find("Ability").GetComponent<Text>();
         pokemonSummaryAbilityName = pokemonSummaryAbilityNameShadow.transform.Find("Text").GetComponent<Text>();
@@ -592,7 +592,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
             //While scene is enabled, run coroutine to ping server
             break;
         }*/
-		//int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Settings.framesPerSecond);
+		//int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Core.framesPerSecond);
 		//index = index % sprites[].Length;string[] dir = AssetDatabase.GetSubFolders("Assets/Pokemons");
 	}
 
@@ -603,7 +603,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		//Foreach UI Child in Unity
 		for (int i = 0; i < playerParty.childCount; i++)
 		{
-			var pkmn = GameVariables.battle.party1[i];
+			var pkmn = Game.battle.party1[i];
 			if (pkmn.Species != PokemonUnity.Pokemons.NONE)
 			{
 				var status = pkmn.Status;
@@ -630,7 +630,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 
 		for (int i = 0; i < opponentParty.childCount; i++)
 		{
-			var pkmn = GameVariables.battle.party1[i];
+			var pkmn = Game.battle.party1[i];
 			if (pkmn.Species != PokemonUnity.Pokemons.NONE)
 			{
 				var status = pkmn.Status;
@@ -2726,7 +2726,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 				{
 					calculatedPokemonPriority = 6;
 				}
-				else if (command[i] == CommandType.Item)
+				else if (command[i] == CommandType.Inventory)
 				{
 					calculatedPokemonPriority = 6;
 				}
@@ -4319,7 +4319,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 												{
 													//if an item was chosen.
 													SfxHandler.Play(selectClip);
-													command[currentPokemon] = CommandType.Item;
+													command[currentPokemon] = CommandType.Inventory;
 													updateCurrentTask(-1);
 												}
 											}
@@ -4796,7 +4796,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 
 							pokemonHasMoved[movingPokemon] = true;
 						}
-						else if (command[movingPokemon] == CommandType.Item)
+						else if (command[movingPokemon] == CommandType.Inventory)
 						{
 							//ITEM
 							//item effects not yet implemented fully

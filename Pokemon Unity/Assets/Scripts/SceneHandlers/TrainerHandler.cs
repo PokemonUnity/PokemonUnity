@@ -328,7 +328,7 @@ public class TrainerHandler : MonoBehaviour
         pokedexDataShadow.text = pokedexData.text;
         //scoreData.text = SaveDataOld.currentSave.playerScore;
         scoreDataShadow.text = scoreData.text;
-        //System.TimeSpan playTime = SaveDataOld.currentSave.playerTime + SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
+        //System.TimeSpan playTime = SaveDataOld.currentSave.PlayTime + SaveDataOld.currentSave.startTime.Subtract(System.DateTime.UtcNow);
         timeHour.text = "";//playTime.Hours.ToString();//"" + SaveData.currentSave.playerHours;
         timeHourShadow.text = timeHour.text;
         //timeMinute.text = System.String.Format("{0}   {1:00}", playTime.Hours, playTime.Minutes); //playTime.Minutes.ToString("00");//"" + SaveData.currentSave.playerMinutes;

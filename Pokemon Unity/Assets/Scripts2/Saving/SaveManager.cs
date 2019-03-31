@@ -6,8 +6,8 @@ using System;
 
 namespace PokemonUnity.Saving
 {
-	using PokemonUnity.Pokemon;
-	using PokemonUnity.Item;
+	using PokemonUnity.Monster;
+	using PokemonUnity.Inventory;
 	using Newtonsoft.Json;
 
 	public static class SaveManager
@@ -53,7 +53,7 @@ namespace PokemonUnity.Saving
 		//{
 		//    Player = player;
 		//    //UnityEngine.Debug.Log("Registered Player.");
-		//	GameVariables.DebugLog("Registered Player.");
+		//	Game.DebugLog("Registered Player.");
 		//}
 
 		/// <summary>
@@ -65,7 +65,7 @@ namespace PokemonUnity.Saving
 			EventSaves.Add(customEvent);
 			EventSaves = EventSaves.OrderBy(x => x.EventTime).ToList();
 			//UnityEngine.Debug.Log(customEvent.ToString());
-			GameVariables.DebugLog(customEvent.ToString());
+			Game.DebugLog(customEvent.ToString());
 		}
 
 		/// <summary>
@@ -80,19 +80,19 @@ namespace PokemonUnity.Saving
 
 		/*private static SaveData CreateSaveFile(string saveName, int activeScene)
 		{
-			Pokemon[] Party = GameVariables.playerTrainer.Trainer.Party;
-			Pokemon[,] PC = GameVariables.PC_Poke;
-			List<Items> PlayerBag = GameVariables.Bag_Items;
+			Pokemon[] Party = Game.Player.Trainer.Party;
+			Pokemon[,] PC = Game.PC_Poke;
+			List<Items> PlayerBag = Game.Bag_Items;
 
 			return new SaveData
 				(
 				saveName,
 				activeScene,
-				GameVariables.playerTrainer.Trainer.Name,
-				GameVariables.playerTrainer.TrainerID, GameVariables.playerTrainer.SecretID,
-				GameVariables.playerTrainer.isMale, //GameVariables.playerTrainer.GymBadges,
-				GameVariables.playerTrainer.playerPokedex,
-				GameVariables.playerTrainer.playerTime,
+				Game.Player.Trainer.Name,
+				Game.Player.TrainerID, Game.Player.SecretID,
+				Game.Player.isMale, //Game.Player.GymBadges,
+				Game.Player.playerPokedex,
+				Game.Player.PlayTime,
 				Player.transform.position, Player.GetComponent<Player>().playerDirection,
 				Player.transform.Find("Follower").transform.position, Player.GetComponent<FollowerMovement>().direction,
 				Party, PC, PlayerBag,
@@ -200,7 +200,7 @@ namespace PokemonUnity.Saving
 
 				if (null != DataToLoad)
 				{
-					//!Pass the data through to GameVariables!
+					//!Pass the data through to Game!
 
 					/*
 					//EventSaves contains all the Events that the Player has encountered
@@ -212,16 +212,16 @@ namespace PokemonUnity.Saving
 					}
 					else
 					{
-						//Loads the Trainer's Party into the GameVariables
+						//Loads the Trainer's Party into the Game
 						for (int i = 0; i < DataToLoad.PlayerParty.Length; i++)
 						{
 							//The Trainer.Party is `private set;`, so we just loop through it and set it individually
-							GameVariables.playerTrainer.Trainer.Party[i] = DataToLoad.PlayerParty[i];
+							Game.Player.Trainer.Party[i] = DataToLoad.PlayerParty[i];
 						}
-						GameVariables.PC_Poke = DataToLoad.PC;
+						Game.PC_Poke = DataToLoad.PC;
 
-						//Loads the Bag (containing the Items that the player owns) into the GameVariables
-						GameVariables.Bag_Items = DataToLoad.PlayerBag;
+						//Loads the Bag (containing the Items that the player owns) into the Game
+						Game.Bag_Items = DataToLoad.PlayerBag;
 
 
 						//Loading Player
@@ -241,7 +241,7 @@ namespace PokemonUnity.Saving
 			catch (FileNotFoundException)
 			{
 				//UnityEngine.Debug.Log("Couldn't find \"Save" + saveIndex + ".pku\".");
-				GameVariables.DebugLog("Couldn't find \"Save" + saveIndex + ".pku\".");
+				Game.DebugLog("Couldn't find \"Save" + saveIndex + ".pku\".");
 
 			}
 		}
@@ -295,7 +295,7 @@ namespace PokemonUnity.Saving
 							catch (Exception e)
 							{
 								//UnityEngine.Debug.Log(e.ToString());
-								GameVariables.DebugLog(e.ToString());
+								Game.DebugLog(e.ToString());
 							}
 						}
 					}
@@ -382,13 +382,13 @@ namespace PokemonUnity.Saving
 				{
 					//ToDo: Create Custom class from anon
 					var data = new {
-						Language			= GameVariables.UserLanguage,//(int)language;
-						WindowBorder		= GameVariables.WindowSkin,
-						DialogBorder		= GameVariables.DialogSkin,
-						TextSpeed			= GameVariables.textSpeed,
-						mVol				= GameVariables.mvol,
-						sVol				= GameVariables.svol,
-						Fullscreen			= GameVariables.fullscreen,
+						Language			= Game.UserLanguage,//(int)language;
+						WindowBorder		= Game.WindowSkin,
+						DialogBorder		= Game.DialogSkin,
+						TextSpeed			= Game.textSpeed,
+						mVol				= Game.mvol,
+						sVol				= Game.svol,
+						Fullscreen			= Game.fullscreen,
 					};
 #if DEBUG
 					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
@@ -399,13 +399,13 @@ namespace PokemonUnity.Saving
 #else
 					data = bf.Deserialize(fs).CastTo(data);
 #endif
-					//GameVariables.UserLanguage	= (Languages)data.Language;
-					//GameVariables.WindowSkin	= data.WindowBorder;
-					//GameVariables.DialogSkin	= data.DialogBorder;
-					GameVariables.textSpeed		= data.TextSpeed;
-					//GameVariables.mvol			= data.mVol;
-					//GameVariables.svol			= data.sVol;
-					GameVariables.fullscreen	= data.Fullscreen;
+					//Game.UserLanguage	= (Languages)data.Language;
+					//Game.WindowSkin	= data.WindowBorder;
+					//Game.DialogSkin	= data.DialogBorder;
+					Game.textSpeed		= data.TextSpeed;
+					//Game.mvol			= data.mVol;
+					//Game.svol			= data.sVol;
+					Game.fullscreen	= data.Fullscreen;
 				}
 			}
 			else
@@ -423,13 +423,13 @@ namespace PokemonUnity.Saving
 				//	sw.Write(
 					File.WriteAllText(playerSave, JsonConvert.SerializeObject(new
 					{
-						Language			= GameVariables.UserLanguage,//(int)language;
-						WindowBorder		= GameVariables.WindowSkin,
-						DialogBorder		= GameVariables.DialogSkin,
-						TextSpeed			= GameVariables.textSpeed,
-						mVol				= GameVariables.mvol,
-						sVol				= GameVariables.svol,
-						Fullscreen			= GameVariables.fullscreen,
+						Language			= Game.UserLanguage,//(int)language;
+						WindowBorder		= Game.WindowSkin,
+						DialogBorder		= Game.DialogSkin,
+						TextSpeed			= Game.textSpeed,
+						mVol				= Game.mvol,
+						sVol				= Game.svol,
+						Fullscreen			= Game.fullscreen,
 					}, Formatting.Indented));
 				//}
 #else

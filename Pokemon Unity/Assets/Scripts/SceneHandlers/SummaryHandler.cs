@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 
 public class SummaryHandler : MonoBehaviour
@@ -307,7 +307,7 @@ public class SummaryHandler : MonoBehaviour
         //{
         //    selectedSprite.sprite = selectedSpriteAnimation[0];
         //}
-        if (selectedPokemon.Item == PokemonUnity.Item.Items.NONE)
+        if (selectedPokemon.Item == PokemonUnity.Inventory.Items.NONE)
         {
             selectedHeldItem.text = "None";
         }

@@ -66,12 +66,12 @@ public class SoundManager
 
 	public static void PlaySound(string soundFile)
 	{
-		PlaySound(soundFile, 0.0f, 0.0f, GameVariables.sVol, false);
+		PlaySound(soundFile, 0.0f, 0.0f, Game.sVol, false);
 	}
 
 	public static void PlaySound(string soundFile, bool stopMusic)
 	{
-		PlaySound(soundFile, 0.0f, 0.0f, GameVariables.sVol, stopMusic);
+		PlaySound(soundFile, 0.0f, 0.0f, Game.sVol, stopMusic);
 	}
 
 	public static void PlaySound(string soundFile, float pitch, float pan, float volume, bool stopMusic)
@@ -97,7 +97,7 @@ public class SoundManager
 						}
 						catch (Exception ex)
 						{
-							GameVariables.DebugLog("Failed to load sound at \"" + soundFile + "\": " + ex.Message, true);
+							Game.DebugLog("Failed to load sound at \"" + soundFile + "\": " + ex.Message, true);
 						}
 					}
 				}
@@ -107,7 +107,7 @@ public class SoundManager
 			{
 				if (HasOutputDeviceAvailable())
 				{
-					GameVariables.DebugLog("SoundEffect [" + soundFile + "]");
+					Game.DebugLog("SoundEffect [" + soundFile + "]");
 
 					//sound.Play(volume, pitch, pan)
 					PlaySound(sound, volume, stopMusic);
@@ -116,19 +116,19 @@ public class SoundManager
 					//	MusicManager.PauseForSound(sound);
 				}
 				else
-					GameVariables.DebugLog("Failed to play sound: no audio device available.", true);
+					Game.DebugLog("Failed to play sound: no audio device available.", true);
 			}
 		}
 	}
 
 	public static void PlayPokemonCry(int pokemonId)
 	{
-		PlaySound("Cries/" + pokemonId.ToString(), 0F, 0F, GameVariables.sVol * POKEMON_CRY_VOLUME_MULTIPLIER, false);
+		PlaySound("Cries/" + pokemonId.ToString(), 0F, 0F, Game.sVol * POKEMON_CRY_VOLUME_MULTIPLIER, false);
 	}
 
 	public static void PlayPokemonCry(int pokemonId, float pitch, float pan)
 	{
-		PlaySound("Cries/" + pokemonId.ToString(), pitch, pan, GameVariables.sVol * POKEMON_CRY_VOLUME_MULTIPLIER, false);
+		PlaySound("Cries/" + pokemonId.ToString(), pitch, pan, Game.sVol * POKEMON_CRY_VOLUME_MULTIPLIER, false);
 	}
 
 	public static void PlayPokemonCry(int pokemonId, float pitch, float pan, float volume)

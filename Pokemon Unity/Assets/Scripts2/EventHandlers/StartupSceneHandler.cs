@@ -1,5 +1,5 @@
-﻿using PokemonUnity.Item;
-using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
 using PokemonUnity.Battle;
 using PokemonUnity;
 using System;
@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventSystems.ISubmitHandler, UnityEngine.EventSystems.IScrollHandler
 {
 	#region Variables
-	//public static GameVariables PersistantPlayerData { get; private set; }
+	//public static Game PersistantPlayerData { get; private set; }
 	public UnityEngine.UI.Image DialogSkin, WindowSkin;
     private static UnityEngine.GameObject MainMenu;// = UnityEngine.GameObject.Find("MainMenu");
     /// <summary>
@@ -29,9 +29,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	#region Unity MonoBehavior
     void Awake()
     {
-		//PersistantPlayerData = new GameVariables();
-		//ToDo: On Start-up, Load & Process GameVariables, to begin and instantiate game
-		GameVariables.SetStartScene(this);
+		//PersistantPlayerData = new Game();
+		//ToDo: On Start-up, Load & Process Game, to begin and instantiate game
+		Game.SetStartScene(this);
         MainMenu = UnityEngine.GameObject.Find("MainMenu");
         FileDataPanel = MainMenu.transform.GetChild(0).gameObject;
         MenuOptions = MainMenu.transform.GetChild(1).gameObject;
@@ -48,9 +48,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
          */
         //Load Any/All GameSaves
         //"ContinuePanel"
-        MenuOptions.transform.GetChild(0).gameObject.SetActive(GameVariables.SaveFileFound);
-        FileDataPanel.SetActive(GameVariables.SaveFileFound);
-        if (!GameVariables.SaveFileFound)
+        MenuOptions.transform.GetChild(0).gameObject.SetActive(Game.SaveFileFound);
+        FileDataPanel.SetActive(Game.SaveFileFound);
+        if (!Game.SaveFileFound)
         {
             //"MainMenu"
             //Stretch menu to fit width across
@@ -86,7 +86,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
             //While scene is enabled, run coroutine to ping server
             break;
         }*/
-        //int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Settings.framesPerSecond);
+        //int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Core.framesPerSecond);
         //index = index % sprites[].Length;
     }
 	#endregion
@@ -104,7 +104,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
         {
 			//Get Toggle Value from Toggle group for which toggleOption is selected
 			//use gamesave toggle to load game from that slot
-			GameVariables.Load();
+			Game.Load();
         }
     }
 
@@ -134,7 +134,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
     }
 
 	/* If settings option is accessed, 
-     * Use GameVariables.ChangeScene to transition
+     * Use Game.ChangeScene to transition
      */
 	#endregion
 		
@@ -144,31 +144,31 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Start a single wild battle
 	/// </summary>
-	public bool WildBattle(PokemonUnity.Pokemon.Pokemon pkmn, bool cantescape = true, bool canlose = false)
+	public bool WildBattle(PokemonUnity.Monster.Pokemon pkmn, bool cantescape = true, bool canlose = false)
 	{
-		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.IS_DEBUG_ACTIVE))
+		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
 		{
-			if (GameVariables.playerTrainer.Trainer.Party.Length > 0)
-				GameVariables.DebugLog("SKIPPING BATTLE...");
-			GameVariables.nextBattleBGM = null;
-			GameVariables.nextBattleME = null;
-			GameVariables.nextBattleBack = null;
+			if (Game.Player.Trainer.Party.Length > 0)
+				Game.DebugLog("SKIPPING BATTLE...");
+			Game.nextBattleBGM = null;
+			Game.nextBattleME = null;
+			Game.nextBattleBack = null;
 			return true;
 		}
-		PokemonUnity.Pokemon.Pokemon[] generateWildPkmn = new PokemonUnity.Pokemon.Pokemon[1];
+		PokemonUnity.Monster.Pokemon[] generateWildPkmn = new PokemonUnity.Monster.Pokemon[1];
 		generateWildPkmn[0] = pkmn; //new Pokemon();
 		//int decision = 0;
 		Battle battle =
-		//GameVariables.battle =
+		//Game.battle =
 			new Battle(
-				GameVariables.playerTrainer.Trainer,
+				Game.Player.Trainer,
 				new Trainer(generateWildPkmn)
 			)
 			.InternalBattle(true)
 			.CantEscape(!cantescape);
 			//.StartBattle(canlose); //Switch to battle scene and trigger coroutine 
 			//.AfterBattle(ref decision,canlose);
-		//GameVariables.battle.StartBattle(canlose);  
+		//Game.battle.StartBattle(canlose);  
 		IEnumerator<BattleResults> e = BattleAnimationHandler.BattleCoroutineResults;
 		//while battle scene is active
 		//delay results of battle
@@ -180,30 +180,30 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Start a double wild battle
 	/// </summary>
-	public bool DoubleWildBattle(PokemonUnity.Pokemon.Pokemon pkmn1, PokemonUnity.Pokemon.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
+	public bool DoubleWildBattle(PokemonUnity.Monster.Pokemon pkmn1, PokemonUnity.Monster.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
 	{
-		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.IS_DEBUG_ACTIVE))
+		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
 		{
-			if (GameVariables.playerTrainer.Trainer.Party.Length > 0)
-				GameVariables.DebugLog("SKIPPING BATTLE...");
-			GameVariables.nextBattleBGM = null;
-			GameVariables.nextBattleME = null;
-			GameVariables.nextBattleBack = null;
+			if (Game.Player.Trainer.Party.Length > 0)
+				Game.DebugLog("SKIPPING BATTLE...");
+			Game.nextBattleBGM = null;
+			Game.nextBattleME = null;
+			Game.nextBattleBack = null;
 			return true;
 		}
-		PokemonUnity.Pokemon.Pokemon[] generateWildPkmn = new PokemonUnity.Pokemon.Pokemon[] { pkmn1, pkmn2 };//new Pokemon(), new Pokemon()
+		PokemonUnity.Monster.Pokemon[] generateWildPkmn = new PokemonUnity.Monster.Pokemon[] { pkmn1, pkmn2 };//new Pokemon(), new Pokemon()
 		//int decision = 0;
 		Battle battle =
-		//GameVariables.battle =
+		//Game.battle =
 			new Battle(
-				GameVariables.playerTrainer.Trainer,
+				Game.Player.Trainer,
 				new Trainer(generateWildPkmn) { IsDouble = true }
 			)
 			.InternalBattle(true)
 			.CantEscape(!cantescape);
 			//.StartBattle(canlose); //Switch to battle scene and trigger coroutine 
 			//.AfterBattle(ref decision,canlose);
-		//GameVariables.battle.StartBattle(canlose);  
+		//Game.battle.StartBattle(canlose);  
 		IEnumerator<BattleResults> e = BattleAnimationHandler.BattleCoroutineResults;
 		//while battle scene is active
 		//delay results of battle
@@ -215,30 +215,30 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 
 	public void AfterBattle()//BattleResults decision, bool canlose
 	{
-		BattleResults decision = GameVariables.battle.decision;
-		bool canlose = GameVariables.battle.canLose;
-		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+		BattleResults decision = Game.battle.decision;
+		bool canlose = Game.battle.canLose;
+		for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 		{
-			//GameVariables.playerTrainer.Trainer.Party[i].MakeUnMega();
-			//GameVariables.playerTrainer.Trainer.Party[i].MakeUnPrimal();
+			//Game.Player.Trainer.Party[i].MakeUnMega();
+			//Game.Player.Trainer.Party[i].MakeUnPrimal();
 		}
 		//if () //In a party
 		//{
 		//	HealAll();
-		//	for (int i = 0; i < GameVariables.Partner.Trainer.Party.Length; i++)
+		//	for (int i = 0; i < Game.Partner.Trainer.Party.Length; i++)
 		//	{
-		//		//GameVariables.Partner.Trainer.Party[i].Heal();
-		//		//GameVariables.Partner.Trainer.Party[i].MakeUnMega();
-		//		//GameVariables.Partner.Trainer.Party[i].MakeUnPrimal();
+		//		//Game.Partner.Trainer.Party[i].Heal();
+		//		//Game.Partner.Trainer.Party[i].MakeUnMega();
+		//		//Game.Partner.Trainer.Party[i].MakeUnPrimal();
 		//	}
 		//}
 		if (decision == BattleResults.LOST || decision == BattleResults.DRAW)
 		{
 			if (canlose)
 			{
-				for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+				for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 				{
-					GameVariables.playerTrainer.Trainer.Party[i].Heal();
+					Game.Player.Trainer.Party[i].Heal();
 				}
 			}
 		}
@@ -247,21 +247,21 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 
 	public System.Collections.IEnumerator OnEndBattle()
 	{
-		BattleResults decision = GameVariables.battle.decision;
-		bool canlose = GameVariables.battle.canLose;
-		//if (Settings.USENEWBATTLEMECHANICS || (decision == BattleResults.LOST || decision == BattleResults.DRAW))
+		BattleResults decision = Game.battle.decision;
+		bool canlose = Game.battle.canLose;
+		//if (Core.USENEWBATTLEMECHANICS || (decision == BattleResults.LOST || decision == BattleResults.DRAW))
 		//	if()
 		if(decision == BattleResults.WON)
 		{
-			for (int pkmn = 0; pkmn < GameVariables.playerTrainer.Trainer.Party.Length; pkmn++)
+			for (int pkmn = 0; pkmn < Game.Player.Trainer.Party.Length; pkmn++)
 			{
-				if (GameVariables.playerTrainer.Trainer.Party[pkmn].hasAbility(Abilities.HONEY_GATHER) &&
-					GameVariables.playerTrainer.Trainer.Party[pkmn].Item == Items.NONE)
+				if (Game.Player.Trainer.Party[pkmn].hasAbility(Abilities.HONEY_GATHER) &&
+					Game.Player.Trainer.Party[pkmn].Item == Items.NONE)
 				{
-					int chance = 5 + (int)Math.Floor((GameVariables.playerTrainer.Trainer.Party[pkmn].Level - 1) / 10f) * 5;
-					if (Settings.Rand.Next(100) < chance)
+					int chance = 5 + (int)Math.Floor((Game.Player.Trainer.Party[pkmn].Level - 1) / 10f) * 5;
+					if (Core.Rand.Next(100) < chance)
 						//ToDo: Create class to give items to pokemon?... or maybe remove `private set`?
-						continue;//GameVariables.playerTrainer.Trainer.Party[pkmn].SetItem(Items.HONEY);						
+						continue;//Game.Player.Trainer.Party[pkmn].SetItem(Items.HONEY);						
 				}
 			}
 		}
@@ -275,12 +275,12 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		return null;
 	}
 
-	public void EvolutionCheck(PokemonUnity.Pokemon.Pokemon[] currentlevels)
+	public void EvolutionCheck(PokemonUnity.Monster.Pokemon[] currentlevels)
 	{
-		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+		for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 		{
-			PokemonUnity.Pokemon.Pokemon pokemon = GameVariables.playerTrainer.Trainer.Party[i];
-			if (pokemon.HP == 0 && !Settings.USENEWBATTLEMECHANICS) continue;
+			PokemonUnity.Monster.Pokemon pokemon = Game.Player.Trainer.Party[i];
+			if (pokemon.HP == 0 && !Core.USENEWBATTLEMECHANICS) continue;
 			if(pokemon.Species != Pokemons.NONE &&
 				(currentlevels[i].Species == Pokemons.NONE
 			//|| pokemon.Level != currentlevels[i]
@@ -301,11 +301,11 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
 	/// </summary>
-	public void Pickup(PokemonUnity.Pokemon.Pokemon pokemon)
+	public void Pickup(PokemonUnity.Monster.Pokemon pokemon)
 	{
 		if (pokemon.Ability == Abilities.PICKUP || pokemon.isEgg) return;
 		if (pokemon.Item != Items.NONE) return;
-		if (Settings.Rand.Next(10) != 0) return;
+		if (Core.Rand.Next(10) != 0) return;
 		Items[] pickupList = new Items[]
 		{
 			Items.POTION,
@@ -356,7 +356,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		{
 			items.Add(pickupListRare[itemstart + i]);
 		}
-		int rand = Settings.Rand.Next(100);
+		int rand = Core.Rand.Next(100);
 		int cumnumber = 0;
 		for (int i = 0; i < randlist.Length; i++)
 		{
