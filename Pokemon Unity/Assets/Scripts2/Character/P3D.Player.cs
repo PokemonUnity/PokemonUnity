@@ -771,7 +771,7 @@ namespace P3D
 			//	// Check Party Pokemon.
 			//	foreach (Pokemon Pokemon in Pokemons)
 			//	{
-			//		if (string.Equals(Pokemon.CatchTrainerName, Game.Player.PlayerName, StringComparison.OrdinalIgnoreCase) && Pokemon.OT != GameJoltSave.GameJoltID)
+			//		if (string.Equals(Pokemon.CatchTrainerName, Game.Player.Name, StringComparison.OrdinalIgnoreCase) && Pokemon.OT != GameJoltSave.GameJoltID)
 			//			Pokemon.OT = GameJoltSave.GameJoltID;
 			//	}
 			//
@@ -788,7 +788,7 @@ namespace P3D
 			//				string TempString = item.Remove(item.IndexOf("{"));
 			//				Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
 			//
-			//				if (string.Equals(TempPokemon.CatchTrainerName, Game.Player.PlayerName, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
+			//				if (string.Equals(TempPokemon.CatchTrainerName, Game.Player.Name, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
 			//					TempPokemon.OT = GameJoltSave.GameJoltID;
 			//
 			//				item = TempString + TempPokemon.ToString();
@@ -811,7 +811,7 @@ namespace P3D
 			//				string TempString = ItemData.Remove(item.IndexOf("{"));
 			//				Pokemon TempPokemon = Pokemon.GetPokemonByData(item.Remove(0, item.IndexOf("{")));
 			//
-			//				if (string.Equals(TempPokemon.CatchTrainerName, Game.Player.PlayerName, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
+			//				if (string.Equals(TempPokemon.CatchTrainerName, Game.Player.Name, StringComparison.OrdinalIgnoreCase) && TempPokemon.OT != GameJoltSave.GameJoltID)
 			//					TempPokemon.OT = GameJoltSave.GameJoltID;
 			//
 			//				item = TempString + TempPokemon.ToString();
@@ -852,10 +852,10 @@ namespace P3D
 						{
 							if (p.IsShiny)
 								//PokedexData = Pokedex.ChangeEntry(PokedexData, p.Number, 3);
-								Game.Player.PlayerPokedex[(int)p.Species, 1] = 2;
+								Game.Player.Pokedex[(int)p.Species, 1] = 2;
 							else
 								//PokedexData = Pokedex.ChangeEntry(PokedexData, p.Number, 2);
-								Game.Player.PlayerPokedex[(int)p.Species, 1] = 1;
+								Game.Player.Pokedex[(int)p.Species, 1] = 1;
 						}
 
 						Pokemons.Add(p);

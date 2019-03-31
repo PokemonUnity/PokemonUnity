@@ -241,7 +241,7 @@ namespace Tests
 		//	SaveDataOld.currentSave.playerHours = 0;
 		//	SaveDataOld.currentSave.playerMinutes = 7;
 		//	SaveDataOld.currentSave.playerSeconds = 12;
-		//	SaveDataOld.currentSave.playerTime = new System.TimeSpan(0,7,12);
+		//	SaveDataOld.currentSave.PlayTime = new System.TimeSpan(0,7,12);
 		//
 		//	////////////////////////////////////////////////////////////////////////////////////////////////////
 		//

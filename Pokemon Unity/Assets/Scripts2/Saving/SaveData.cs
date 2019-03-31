@@ -100,7 +100,7 @@ namespace PokemonUnity.Saving
 			TimeSpan? time = null, SeriV3 position = null, float? direction = null, int? scene = null, 
 			int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
 			SeriPC pc = null, List<SaveEvent> eventList = null) 
-				: this(name: player.PlayerName, money: money, coin: coin, trainer: player.Trainer.TrainerID,
+				: this(name: player.Name, money: money, coin: coin, trainer: player.Trainer.TrainerID,
 					  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
 					  time: time, position: position, direction: direction, scene: scene, pokecenter: pokecenter,
 					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize(), pc: pc, eventList: eventList)
@@ -117,16 +117,16 @@ namespace PokemonUnity.Saving
 			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
-			PlayerName			= name			?? Game.Player.PlayerName;
-			PlayerMoney			= money			?? Game.Player.PlayerMoney;
-			PlayerCoins			= coin			?? Game.Player.PlayerCoins;
+			PlayerName			= name			?? Game.Player.Name;
+			PlayerMoney			= money			?? Game.Player.Money;
+			PlayerCoins			= coin			?? Game.Player.Coins;
 			GymsChallenged		= gym			?? Game.Player.GymsBeatTime;
 			PlayerBag			= bag			?? Game.Bag_Items;//Player.Bag; //playerBag;
 			TrainerID			= trainer		?? Game.Player.Trainer.TrainerID;
 			SecretID			= secret		?? Game.Player.Trainer.SecretID;
 			IsMale				= gender		?? Game.Player.isMale;
-			Pokedex2			= pokedex		?? Game.Player.PlayerPokedex;
-			PlayerTime			= time			?? Game.Player.playerTime;
+			Pokedex2			= pokedex		?? Game.Player.Pokedex;
+			PlayerTime			= time			?? Game.Player.PlayTime;
 			PlayerPosition		= position		?? Game.Player.playerPosition;
 			PlayerDirection		= direction		?? Game.Player.playerDirection;
 			//FollowerPokemon	= Game.Player.followerPokemon;
@@ -164,7 +164,7 @@ namespace PokemonUnity.Saving
 		//		bool isMale,
 		//
 		//		bool?[] pokedex,
-		//		TimeSpan playerTime,
+		//		TimeSpan PlayTime,
 		//
 		//		SeriV3 playerPosition,
 		//		int playerDirection,
@@ -189,13 +189,13 @@ namespace PokemonUnity.Saving
         //    //mVol = mvol;
         //    //sVol = svol;
 		//
-        //    PlayerName = playerName;
+        //    Name = playerName;
         //    TrainerID = trainerID;
         //    SecretID = secretID;
         //    IsMale = isMale;
 		//
         //    Pokedex = pokedex;
-        //    PlayerTime = playerTime;
+        //    PlayerTime = PlayTime;
 		//
         //    PlayerPosition = playerPosition;
         //    PlayerDirection = playerDirection;

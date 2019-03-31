@@ -70,7 +70,7 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public byte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return Game.Player.PlayerPokedex[_base.ArrayId, 1] == 1; } }
+		public bool IsOwned { get { return Game.Player.Pokedex[_base.ArrayId, 1] == 1; } }
 		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }

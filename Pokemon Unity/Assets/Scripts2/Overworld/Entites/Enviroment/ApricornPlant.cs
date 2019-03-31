@@ -165,7 +165,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				//PlayerStatistics.Track("[85]Apricorns picked", 1);
 				SoundManager.PlaySound("item_found", true);
 				//Game.TextBox.TextColor = TextBox.PlayerColor;
-				Game.TextBox.Show(Game.Player.PlayerName + " picked the~" + Item.Name + ".*" + Game.Player.Bag.GetMessageReceive(Item, 1), new Entity[] { this });
+				Game.TextBox.Show(Game.Player.Name + " picked the~" + Item.Name + ".*" + Game.Player.Bag.GetMessageReceive(Item, 1), new Entity[] { this });
 				AddApriconSave();
 				hasApricorn = false;
 				//ChangeTexture();

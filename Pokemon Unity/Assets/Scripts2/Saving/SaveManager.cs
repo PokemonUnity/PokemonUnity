@@ -92,7 +92,7 @@ namespace PokemonUnity.Saving
 				Game.Player.TrainerID, Game.Player.SecretID,
 				Game.Player.isMale, //Game.Player.GymBadges,
 				Game.Player.playerPokedex,
-				Game.Player.playerTime,
+				Game.Player.PlayTime,
 				Player.transform.position, Player.GetComponent<Player>().playerDirection,
 				Player.transform.Find("Follower").transform.position, Player.GetComponent<FollowerMovement>().direction,
 				Party, PC, PlayerBag,

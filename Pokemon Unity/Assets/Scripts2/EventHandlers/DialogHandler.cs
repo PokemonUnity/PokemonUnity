@@ -489,7 +489,7 @@ public class DialogHandler : UnityEngine.MonoBehaviour
 		//	}
 		//}
 
-		this.Text = this.Text.Replace("<playername>", Game.Player.PlayerName);
+		this.Text = this.Text.Replace("<playername>", Game.Player.Name);
 		this.Text = this.Text.Replace("<rivalname>", Game.Player.RivalName);
 
 		this.Text = this.Text.Replace("[POKE]", "Poké");
@@ -891,7 +891,7 @@ public class ChooseBox
 	private void SetupOptions()
 	{
 		for (var i = 0; i <= Options.Count() - 1; i++)
-			Options[i] = Options[i].Replace("<playername>", Game.Player.PlayerName);
+			Options[i] = Options[i].Replace("<playername>", Game.Player.Name);
 	}
 
 	public int getResult(int ID)

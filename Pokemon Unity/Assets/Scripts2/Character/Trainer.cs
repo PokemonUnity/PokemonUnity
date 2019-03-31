@@ -170,7 +170,7 @@ namespace PokemonUnity
 			if (tID.HasValue) TrainerID = tID.Value; //trainer.Trainer.TrainerID;
 			if (sID.HasValue) SecretID = sID.Value; //trainer.Trainer.SecretID;
 			//Change name being loaded
-			Name = trainer.PlayerName; //name;
+			Name = trainer.Name; //name;
 			//Load player's gender as well
 			Gender = trainer.isMale; //gender;
 		}

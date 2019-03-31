@@ -168,7 +168,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				RemoveItem(this);
 				SoundManager.PlaySound("item_found", true);
 				//Game.TextBox.TextColor = TextBox.PlayerColor;
-				Game.TextBox.Show(Game.Player.PlayerName + " found~" + this.Item.Name + "!*" + Game.Player.Bag.GetMessageReceive(this.Item, 1), new Entity[] { this });
+				Game.TextBox.Show(Game.Player.Name + " found~" + this.Item.Name + "!*" + Game.Player.Bag.GetMessageReceive(this.Item, 1), new Entity[] { this });
 				Game.Player.Bag.AddItem(this.Item.ItemId, 1);
 				//PlayerStatistics.Track("Items found", 1);
 

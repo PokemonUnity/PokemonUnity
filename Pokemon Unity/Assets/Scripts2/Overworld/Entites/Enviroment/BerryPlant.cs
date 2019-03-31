@@ -226,9 +226,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 							Game.Player.Bag.AddItem(this.Berry.ID, this.Berries);
 							string Text = "";
 							if (this.Berries == 1)
-								Text = Game.Player.PlayerName + " picked the~" + Berry.Name + " Berry.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
+								Text = Game.Player.Name + " picked the~" + Berry.Name + " Berry.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
 							else
-								Text = Game.Player.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
+								Text = Game.Player.Name + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
 
 							//Game.Player.AddPoints(2, "Picked berries.");
 							//PlayerStatistics.Track("[2006]Berries picked", this.Berries);
@@ -243,7 +243,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					case 1:
 						{
 							WaterBerry();
-							string Text = Game.Player.PlayerName + " watered~the " + Berry.Name + ".";
+							string Text = Game.Player.Name + " watered~the " + Berry.Name + ".";
 							Game.TextBox.Show(Text, new Entity[] { this });
 							break;
 						}

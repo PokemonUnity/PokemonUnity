@@ -168,7 +168,7 @@ namespace PokemonUnity.Overworld
 			//
 			//            // Register the wild Pokémon as Seen in the Pokédex:
 			//            //Game.Player.PokedexData = Pokedex.ChangeEntry(Game.Player.PokedexData, Pokemon.Species, 1);
-			//            Game.Player.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
+			//            Game.Player.Pokedex[(int)Pokemon.Species, 0] = 1;
 			//
 			//            // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
 			//            int introType = Settings.Rand.Next(0, 10);

@@ -31,7 +31,7 @@ namespace PokemonUnity
 		/// hold the `Trainer` data, and instantiate a new Trainer
 		/// whenever it's needed...
 		public Pokemon[] Party { get; private set; }
-		public Trainer Trainer { get { return new Trainer(this, /*name: PlayerName, gender: isMale,*/ party: Party, tID: trainerId, sID: secretId); } }
+		public Trainer Trainer { get { return new Trainer(this, /*name: Name, gender: isMale,*/ party: Party, tID: trainerId, sID: secretId); } }
 		/// <summary>
 		/// When displaying items in bag, do a foreach loop and filter by item category
 		/// </summary>
@@ -66,13 +66,13 @@ namespace PokemonUnity
 		#endregion
 
 		#region Player Records
-		public string PlayerName { get; private set; }
+		public string Name { get; private set; }
 		public string RivalName { get; private set; }
 		/// <summary>
 		/// </summary>
 		/// ToDo: consider create AddMoney(value)... 
-		public int PlayerMoney { get { return playerMoney; } set { playerMoney = value > Settings.MAXMONEY ? Settings.MAXMONEY : value; } }
-		public int PlayerCoins { get { return playerCoins; } set { playerCoins = value > Settings.MAXCOINS ? Settings.MAXCOINS : value; } }
+		public int Money { get { return playerMoney; } set { playerMoney = value > Settings.MAXMONEY ? Settings.MAXMONEY : value; } }
+		public int Coins { get { return playerCoins; } set { playerCoins = value > Settings.MAXCOINS ? Settings.MAXCOINS : value; } }
 		private int playerMoney { get; set; }
 		private int playerCoins { get; set; }
 		private int playerSavings { get; set; }
@@ -89,7 +89,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
 		/// ToDo: Add variable for "Shiny"?...
-		public byte[,] PlayerPokedex { get; private set; }
+		public byte[,] Pokedex { get; private set; }
 		///// <summary>
 		///// Usage:<para>
 		///// <code>playerPokedex[1] == false; means pokemonId #1 has been seen, and not captured</code>
@@ -101,10 +101,10 @@ namespace PokemonUnity
 		//public bool?[] playerPokedex { get; set; }
 		//public int pokedexCaught { get { return (from caught in playerPokedex where caught == true select caught).Count(); } }
 		//public int pokedexSeen  { get { return (from seen in playerPokedex where seen != null select seen).Count(); } }
-		public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 1] == 1 select PlayerPokedex[index, 1]).Count(); } }
-		public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 0] == 1 select PlayerPokedex[index, 0]).Count(); } }
+		public int PokedexCaught { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 1] == 1 select Pokedex[index, 1]).Count(); } }
+		public int PokedexSeen { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 0] == 1 select Pokedex[index, 0]).Count(); } }
 		//ToDo: Adventure Start Date
-		public System.TimeSpan playerTime { get; private set; }
+		public System.TimeSpan PlayTime { get; private set; }
 		//public int playerHours;
 		//public int playerMinutes;
 		//public int playerSeconds;
@@ -156,8 +156,8 @@ namespace PokemonUnity
 		public Player()
 		{
 			//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
-			PlayerPokedex = new byte[Pokemon.PokemonData.Database.Length, 3];
-			playerTime = new TimeSpan();
+			Pokedex = new byte[Pokemon.PokemonData.Database.Length, 3];
+			PlayTime = new TimeSpan();
 			Party = new Pokemon[]
 			{
 				new Pokemon(Pokemons.NONE),
@@ -183,7 +183,7 @@ namespace PokemonUnity
 
 		public Player(string name, bool gender, Pokemon[] party = null) : this()
 		{
-			PlayerName = name;
+			Name = name;
 			isMale = gender;
 			Party = party ?? Party;
 		}
@@ -206,11 +206,11 @@ namespace PokemonUnity
 			playerPosition = trainerSaveData.PlayerPosition;
 			playerDirection = trainerSaveData.PlayerDirection;
 			respawnScene = trainerSaveData.pCenterScene;
-			PlayerMoney = trainerSaveData.PlayerMoney;
-			PlayerCoins = trainerSaveData.PlayerCoins;
-			PlayerPokedex = trainerSaveData.Pokedex2;
-			PlayerName = trainerSaveData.PlayerName;
-			playerTime = trainerSaveData.PlayerTime;
+			Money = trainerSaveData.PlayerMoney;
+			Coins = trainerSaveData.PlayerCoins;
+			Pokedex = trainerSaveData.Pokedex2;
+			Name = trainerSaveData.PlayerName;
+			PlayTime = trainerSaveData.PlayerTime;
 			isMale = trainerSaveData.IsMale;
 			GymsBeatTime = trainerSaveData.GymsChallenged;
 			//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)

@@ -667,8 +667,8 @@ namespace PokemonUnity.Battle
 				battler = battlers[idxPokemon].OppositeOpposing;
 			if (battler.isFainted())
 				battler = battler.Partner;
-			//DisplayBrief(L(Text.ScriptTexts,"ThrowBall", Player.PlayerName, itemname));
-			//Game.TextBox.Show(L(Text.ScriptTexts,"ThrowBall", Player.PlayerName, itemname));
+			//DisplayBrief(L(Text.ScriptTexts,"ThrowBall", Player.Name, itemname));
+			//Game.TextBox.Show(L(Text.ScriptTexts,"ThrowBall", Player.Name, itemname));
 			if (battler.isFainted())
 			{
 				//"But there was no target..."
