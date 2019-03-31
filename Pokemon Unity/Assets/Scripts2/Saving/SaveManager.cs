@@ -6,8 +6,8 @@ using System;
 
 namespace PokemonUnity.Saving
 {
-	using PokemonUnity.Pokemon;
-	using PokemonUnity.Item;
+	using PokemonUnity.Monster;
+	using PokemonUnity.Inventory;
 	using Newtonsoft.Json;
 
 	public static class SaveManager

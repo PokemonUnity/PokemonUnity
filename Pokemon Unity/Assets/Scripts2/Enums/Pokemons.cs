@@ -8,7 +8,7 @@ using PokemonUnity;
 /// <summary>
 /// Namespace to nest all Pokemon Enums
 /// </summary>
-namespace PokemonUnity.Pokemon
+namespace PokemonUnity.Monster
 {
 	#region PokemonData Enumerators
 	public enum Rarity

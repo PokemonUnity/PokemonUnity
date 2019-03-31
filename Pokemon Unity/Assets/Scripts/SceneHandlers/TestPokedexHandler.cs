@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 
 public class TestPokedexHandler : MonoBehaviour
 {
@@ -413,7 +413,7 @@ public class TestPokedexHandler : MonoBehaviour
                 //    PokemonDatabaseOld.getPokemon(selectedPokemonOld.getID()).getAbility(selectedPokemonOld.getAbility());
                 selectedAbilityShadow.text = selectedAbility.text;
                 selectedItem.text = "None";
-                if (selectedPokemonOld.Item != PokemonUnity.Item.Items.NONE)
+                if (selectedPokemonOld.Item != PokemonUnity.Inventory.Items.NONE)
                 {
                     selectedItem.text = selectedPokemonOld.Item.ToString();
                 }
@@ -1380,7 +1380,7 @@ public class TestPokedexHandler : MonoBehaviour
 
                                     Dialog.undrawChoiceBox();
                                     Dialog.drawDialogBox();
-                                    if (currentPokemon.Item != PokemonUnity.Item.Items.NONE)
+                                    if (currentPokemon.Item != PokemonUnity.Inventory.Items.NONE)
                                     {
                                         //yield return
                                         //    StartCoroutine(
@@ -1847,7 +1847,7 @@ public class TestPokedexHandler : MonoBehaviour
 
                                         Dialog.undrawChoiceBox();
                                         Dialog.drawDialogBox();
-                                        if (currentPokemon.Item != PokemonUnity.Item.Items.NONE)
+                                        if (currentPokemon.Item != PokemonUnity.Inventory.Items.NONE)
                                         {
                                             //yield return
                                             //    StartCoroutine(

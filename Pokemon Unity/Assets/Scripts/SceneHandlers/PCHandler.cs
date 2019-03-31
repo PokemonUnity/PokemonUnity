@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 
 public class PCHandler : MonoBehaviour
 {
@@ -413,7 +413,7 @@ public class PCHandler : MonoBehaviour
                 //    PokemonDatabaseOld.getPokemon(selectedPokemon.getID()).getAbility(selectedPokemon.getAbility());
                 selectedAbilityShadow.text = selectedAbility.text;
                 selectedItem.text = "None";
-                if (selectedPokemon.Item != PokemonUnity.Item.Items.NONE)
+                if (selectedPokemon.Item != PokemonUnity.Inventory.Items.NONE)
                 {
                     selectedItem.text = selectedPokemon.Item.ToString();
                 }

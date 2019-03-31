@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using PokemonUnity.Item;
+using PokemonUnity.Inventory;
 
 public class BagHandler : MonoBehaviour
 {

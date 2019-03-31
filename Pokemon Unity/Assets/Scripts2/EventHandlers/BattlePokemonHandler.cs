@@ -98,7 +98,7 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 	//public Color fade = new Color32(255, 113, 0, 255);			// Orange
 	#endregion
 	#region Pokemon Battler
-	//public PokemonUnity.Item.ItemCategory
+	//public PokemonUnity.Inventory.ItemCategory
 	public Sprite Pokemon, Shadow, Pokeball;
 	public AnimationClip BattlerAnim, PokeBallAnim;
 	#endregion

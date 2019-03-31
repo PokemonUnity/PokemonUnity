@@ -1,5 +1,5 @@
 ﻿using System;
-using PokemonUnity.Item;
+using PokemonUnity.Inventory;
 
 namespace PokemonUnity
 {

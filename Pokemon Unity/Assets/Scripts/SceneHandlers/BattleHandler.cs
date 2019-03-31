@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 
 public class BattleHandler : MonoBehaviour
 {
@@ -454,10 +454,10 @@ public class BattleHandler : MonoBehaviour
     }
 
     /// Basic Trainer Battle
-    public IEnumerator control(Trainer trainer)
+    public IEnumerator control(PokemonUnity.Trainer trainer)
     {
         yield return StartCoroutine(control(true, trainer, false));
     }
 
-	public IEnumerator control(bool isTrainerBattle, Trainer trainer, bool healedOnDefeat) { yield return null; }
+	public IEnumerator control(bool isTrainerBattle, PokemonUnity.Trainer trainer, bool healedOnDefeat) { yield return null; }
 }

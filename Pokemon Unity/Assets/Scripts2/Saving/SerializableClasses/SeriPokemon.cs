@@ -2,9 +2,9 @@
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
-    using PokemonUnity.Pokemon;
+    using PokemonUnity.Monster;
     using PokemonUnity.Attack;
-    using PokemonUnity.Item;
+    using PokemonUnity.Inventory;
     using PokemonUnity;
 
 	/// <summary>
@@ -190,7 +190,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				seriPokemon.EggSteps			= pokemon.EggSteps;
 
 				seriPokemon.BallUsed			= (int)pokemon.ballUsed;
-				if (pokemon.Item != Items.NONE && PokemonUnity.Item.Item.Mail.IsMail(pokemon.Item))
+				if (pokemon.Item != Items.NONE && PokemonUnity.Inventory.Item.Mail.IsMail(pokemon.Item))
 				{
 					seriPokemon.Mail			= new SeriMail(pokemon.Item, pokemon.Mail);
 				}

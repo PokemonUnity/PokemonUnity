@@ -1,5 +1,5 @@
-﻿using PokemonUnity.Item;
-using PokemonUnity.Pokemon;
+﻿using PokemonUnity.Inventory;
+using PokemonUnity.Monster;
 using PokemonUnity.Battle;
 using PokemonUnity;
 using System;
@@ -144,7 +144,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Start a single wild battle
 	/// </summary>
-	public bool WildBattle(PokemonUnity.Pokemon.Pokemon pkmn, bool cantescape = true, bool canlose = false)
+	public bool WildBattle(PokemonUnity.Monster.Pokemon pkmn, bool cantescape = true, bool canlose = false)
 	{
 		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.IS_DEBUG_ACTIVE))
 		{
@@ -155,7 +155,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 			GameVariables.nextBattleBack = null;
 			return true;
 		}
-		PokemonUnity.Pokemon.Pokemon[] generateWildPkmn = new PokemonUnity.Pokemon.Pokemon[1];
+		PokemonUnity.Monster.Pokemon[] generateWildPkmn = new PokemonUnity.Monster.Pokemon[1];
 		generateWildPkmn[0] = pkmn; //new Pokemon();
 		//int decision = 0;
 		Battle battle =
@@ -180,7 +180,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Start a double wild battle
 	/// </summary>
-	public bool DoubleWildBattle(PokemonUnity.Pokemon.Pokemon pkmn1, PokemonUnity.Pokemon.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
+	public bool DoubleWildBattle(PokemonUnity.Monster.Pokemon pkmn1, PokemonUnity.Monster.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
 	{
 		if (GameVariables.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && GameVariables.IS_DEBUG_ACTIVE))
 		{
@@ -191,7 +191,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 			GameVariables.nextBattleBack = null;
 			return true;
 		}
-		PokemonUnity.Pokemon.Pokemon[] generateWildPkmn = new PokemonUnity.Pokemon.Pokemon[] { pkmn1, pkmn2 };//new Pokemon(), new Pokemon()
+		PokemonUnity.Monster.Pokemon[] generateWildPkmn = new PokemonUnity.Monster.Pokemon[] { pkmn1, pkmn2 };//new Pokemon(), new Pokemon()
 		//int decision = 0;
 		Battle battle =
 		//GameVariables.battle =
@@ -275,11 +275,11 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		return null;
 	}
 
-	public void EvolutionCheck(PokemonUnity.Pokemon.Pokemon[] currentlevels)
+	public void EvolutionCheck(PokemonUnity.Monster.Pokemon[] currentlevels)
 	{
 		for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
 		{
-			PokemonUnity.Pokemon.Pokemon pokemon = GameVariables.playerTrainer.Trainer.Party[i];
+			PokemonUnity.Monster.Pokemon pokemon = GameVariables.playerTrainer.Trainer.Party[i];
 			if (pokemon.HP == 0 && !Settings.USENEWBATTLEMECHANICS) continue;
 			if(pokemon.Species != Pokemons.NONE &&
 				(currentlevels[i].Species == Pokemons.NONE
@@ -301,7 +301,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// <summary>
 	/// Runs the Pickup event after a battle if a Pokemon has the ability Pickup.
 	/// </summary>
-	public void Pickup(PokemonUnity.Pokemon.Pokemon pokemon)
+	public void Pickup(PokemonUnity.Monster.Pokemon pokemon)
 	{
 		if (pokemon.Ability == Abilities.PICKUP || pokemon.isEgg) return;
 		if (pokemon.Item != Items.NONE) return;

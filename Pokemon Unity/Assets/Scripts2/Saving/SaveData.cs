@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using PokemonUnity.Item;
+using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 
 namespace PokemonUnity.Saving

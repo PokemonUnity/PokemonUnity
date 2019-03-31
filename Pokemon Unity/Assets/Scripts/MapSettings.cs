@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 
 public class MapSettings : MonoBehaviour
 {

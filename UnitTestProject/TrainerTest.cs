@@ -53,7 +53,7 @@ namespace Tests
 			Trainer trainer = new Trainer(player, tID: trainerID, sID: secretID);
 			player = new Player(trainer);
 			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);
-			player.addPokemon(new PokemonUnity.Pokemon.Pokemon(Pokemons.CHARMANDER, trainer));
+			player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
 				name,
@@ -147,9 +147,9 @@ namespace Tests
         public void Trainer_RideBike_Fail_If_Item_NotInInventory()
         {
 			//if(
-			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.BICYCLE] != null ||
-			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.ACRO_BIKE] != null ||
-			//	GameVariables.playerTrainer.Bag[PokemonUnity.Item.Items.MACH_BIKE] != null
+			//	GameVariables.playerTrainer.Bag[PokemonUnity.Inventory.Items.BICYCLE] != null ||
+			//	GameVariables.playerTrainer.Bag[PokemonUnity.Inventory.Items.ACRO_BIKE] != null ||
+			//	GameVariables.playerTrainer.Bag[PokemonUnity.Inventory.Items.MACH_BIKE] != null
 			//)
             Assert.Inconclusive();
         }

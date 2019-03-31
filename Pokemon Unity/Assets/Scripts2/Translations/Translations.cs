@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PokemonUnity.Pokemon;
+using PokemonUnity.Monster;
 using PokemonUnity;
 
 #region Deprecated/Obsolete
-[System.Serializable]
+/*[System.Serializable]
 [System.Obsolete]
 public class PokedexTranslation //: ITranslation, ITranslationPokedex
 {
@@ -65,7 +65,7 @@ public interface ITranslationPokedex
 {
     string Species { get; set; }
     string[] Forms { get; set; }
-}
+}*/
 #endregion
 
 #region Extras
@@ -566,15 +566,15 @@ namespace PokemonUnity
 	/// </summary>
 	public enum Text
 	{
-		Species           = 1	,
-		Kinds             = 2	,
-		Entries           = 3	,
-		FormNames         = 4	,
-		Moves             = 5	,
-		MoveDescriptions  = 6	,
-		Items             = 7	,
-		ItemPlurals       = 8	,
-		ItemDescriptions  = 9	,
+		Species           = 1 ,
+		Kinds             = 2 ,
+		Entries           = 3 ,
+		FormNames         = 4 ,
+		Moves             = 5 ,
+		MoveDescriptions  = 6 ,
+		Items             = 7 ,
+		ItemPlurals       = 8 ,
+		ItemDescriptions  = 9 ,
 		Abilities         = 10,
 		AbilityDescs      = 11,
 		Types             = 12,
