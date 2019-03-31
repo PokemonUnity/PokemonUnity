@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts2\Attack\Move\Flag.cs" />
     <Compile Include="Assets\Scripts2\Attack\Move\MoveTarget.cs" />
     <Compile Include="Assets\Scripts2\Attack\Move\MoveBattle.cs" />
+    <Compile Include="Assets\Scripts2\Core.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Battle\Choice.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Battle\SuccessState.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Battle\DamageState.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="Assets\Scripts2\Overworld\Map\Sample\Test.cs" />
     <Compile Include="Assets\Scripts2\Overworld\Map\Tile.cs" />
     <Compile Include="Assets\Scripts2\EventHandlers\TextureManager.cs" />
-    <Compile Include="Assets\Scripts2\Settings.cs" />
     <Compile Include="Assets\Scripts2\Character\Gear\Pokedex.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Attack.cs" />
     <Compile Include="Assets\Scripts2\Enums\Battles.cs" />
