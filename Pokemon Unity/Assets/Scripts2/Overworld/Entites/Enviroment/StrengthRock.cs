@@ -15,17 +15,17 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void ClickFunction()
 		{
-			if (GameVariables.Level.UsedStrength)
+			if (Game.Level.UsedStrength)
 			{
 				string text = "Pokémon with Strength are~able to move this.";
-				GameVariables.TextBox.Show(text, new Entity[] { this });
+				Game.TextBox.Show(text, new Entity[] { this });
 				SoundManager.PlaySound("select");
 			}
 			else
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -45,10 +45,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				string text = "A Pokémon may be~able to move this.";
 
-				if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+				if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 					text += "~Do you want to~use Strength?%Yes|No%";
 
-				GameVariables.TextBox.Show(text, new Entity[] { this });
+				Game.TextBox.Show(text, new Entity[] { this });
 				SoundManager.PlaySound("select");
 			}
 		}
@@ -59,7 +59,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				Monster.Pokemon useP = null;// TODO Change to default(_) if this is not a reference type 
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -86,27 +86,27 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					pNumber = (int)useP.Species;
 				}
 
-				GameVariables.Level.UsedStrength = true;
+				Game.Level.UsedStrength = true;
 
 				SoundManager.PlayPokemonCry(pNumber);
-				GameVariables.TextBox.Show(pName + " used~Strength!", null, true, false);
+				Game.TextBox.Show(pName + " used~Strength!", null, true, false);
 				//PlayerStatistics.Track("Strength used", 1);
 			}
 		}
 
 		public override bool WalkAgainstFunction()
 		{
-			if (GameVariables.Level.UsedStrength & this.Moved == 0.0f)
+			if (Game.Level.UsedStrength & this.Moved == 0.0f)
 			{
-				Vector3 newPosition = GameVariables.Camera.GetForwardMovedPosition();
+				Vector3 newPosition = Game.Camera.GetForwardMovedPosition();
 				newPosition.y = newPosition.y.ToInteger();
-				newPosition.x += GameVariables.Camera.GetMoveDirection().x;
-				newPosition.z += GameVariables.Camera.GetMoveDirection().z;
+				newPosition.x += Game.Camera.GetMoveDirection().x;
+				newPosition.z += Game.Camera.GetMoveDirection().z;
 
 				if (CheckCollision(newPosition))
 				{
 					this.Moved = 1;
-					this.FaceDirection = GameVariables.Camera.GetPlayerFacingDirection();
+					this.FaceDirection = Game.Camera.GetPlayerFacingDirection();
 					SoundManager.PlaySound("destroy", false);
 				}
 			}
@@ -121,7 +121,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			bool HasFloor = false;
 
 			Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1f, newPosition.z);
-			foreach (Entity Floor in GameVariables.Level.Floors)
+			foreach (Entity Floor in Game.Level.Floors)
 			{
 				if (Floor.boundingBox.Contains(Position2D))// == ContainmentType.Contains
 					HasFloor = true;
@@ -130,7 +130,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			if (!HasFloor)
 				return false;
 
-			foreach (Entity Entity in GameVariables.Level.Entities)
+			foreach (Entity Entity in Game.Level.Entities)
 			{
 				if (Entity.boundingBox.Contains(newPosition))// == ContainmentType.Contains
 				{

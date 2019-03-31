@@ -145,7 +145,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				//	PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 			}
 
-			//if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
+			//if (UseGameJoltID & Game.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
 			//	this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
 			//else
 			//	this.Texture = TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
@@ -164,9 +164,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		private void ApplyNPCData()
 		{
-			if (GameVariables.playerTrainer.NPCData != "")
+			if (Game.playerTrainer.NPCData != "")
 			{
-				string[] Data = GameVariables.playerTrainer.NPCData.SplitAtNewline();
+				string[] Data = Game.playerTrainer.NPCData.SplitAtNewline();
 
 				foreach (string line in Data)
 				{
@@ -203,17 +203,17 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			Data = "{" + Data + "}";
 
-			if (GameVariables.playerTrainer.NPCData == "")
-				GameVariables.playerTrainer.NPCData = Data;
+			if (Game.playerTrainer.NPCData == "")
+				Game.playerTrainer.NPCData = Data;
 			else
-				GameVariables.playerTrainer.NPCData += System.Environment.NewLine + Data;
+				Game.playerTrainer.NPCData += System.Environment.NewLine + Data;
 		}
 
 		public static void RemoveNPCData(string file, int ID, string action, string addition)
 		{
 			string Data = "{" + file + "|" + ID + "|" + action + "|" + addition + "}";
 
-			string[] NData = GameVariables.playerTrainer.NPCData.SplitAtNewline();
+			string[] NData = Game.playerTrainer.NPCData.SplitAtNewline();
 			List<string> nList = NData.ToList();
 			if (nList.Contains(Data))
 				nList.Remove(Data);
@@ -228,7 +228,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				Data += NData[i];
 			}
 
-			GameVariables.playerTrainer.NPCData = Data;
+			Game.playerTrainer.NPCData = Data;
 		}
 
 		public static void RemoveNPCData(string FullData)
@@ -367,20 +367,20 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public void CheckInSight()
 		{
-			//if (this.TrainerSight > -1 & !GameVariables.Level.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
+			//if (this.TrainerSight > -1 & !Game.Level.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 			//{
-			//	if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & !GameVariables.Camera.IsMoving)
+			//	if (System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Game.Camera.Position.y) & !Game.Camera.IsMoving)
 			//	{
 			//		if (Moved == 0.0f & !this.CanBeRemoved)
 			//		{
-			//			if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == GameVariables.Camera.Position.z)
+			//			if (Game.Camera.Position.x == System.Convert.ToInt32(this.Position.x) | System.Convert.ToInt32(this.Position.z) == Game.Camera.Position.z)
 			//			{
 			//				int distance = 0;
 			//				bool correctFacing = false;
 			//
-			//				if (GameVariables.Camera.Position.x == System.Convert.ToInt32(this.Position.x))
+			//				if (Game.Camera.Position.x == System.Convert.ToInt32(this.Position.x))
 			//				{
-			//					distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.z) - GameVariables.Camera.Position.z);
+			//					distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.z) - Game.Camera.Position.z);
 			//
 			//					if (distance > 0)
 			//					{
@@ -390,9 +390,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//					else if (this.faceRotation == 2)
 			//						correctFacing = true;
 			//				}
-			//				else if (GameVariables.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
+			//				else if (Game.Camera.Position.z == System.Convert.ToInt32(this.Position.z))
 			//				{
-			//					distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.x) - GameVariables.Camera.Position.x);
+			//					distance = System.Convert.ToInt32(System.Convert.ToInt32(this.Position.x) - Game.Camera.Position.x);
 			//
 			//					if (distance > 0)
 			//					{
@@ -468,14 +468,14 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//									break;
 			//								}
 			//						}
-			//						int turns = needFacing - GameVariables.Camera.GetPlayerFacingDirection();
+			//						int turns = needFacing - Game.Camera.GetPlayerFacingDirection();
 			//						if (turns < 0)
 			//							turns = 4 - turns.ToPositive();
 			//
 			//						//((OverworldScreen)Core.CurrentScreen).TrainerEncountered = true;
 			//						if (InSightMusic != "nomusic" & InSightMusic != "")
 			//							MusicManager.Play(InSightMusic, true, 0.0f);
-			//						GameVariables.Camera.StopMovement();
+			//						Game.Camera.StopMovement();
 			//						this.Movement = Movements.Still;
 			//
 			//						Vector2 offset = new Vector2(0, 0);
@@ -506,8 +506,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//						string s = "version=2" + System.Environment.NewLine + "@player.turn(" + turns + ")" + System.Environment.NewLine;
 			//
 			//						{
-			//							var withBlock = (OverworldCamera)GameVariables.Camera;
-			//							if (((OverworldCamera)GameVariables.Camera).ThirdPerson & !IsOnScreen())
+			//							var withBlock = (OverworldCamera)Game.Camera;
+			//							if (((OverworldCamera)Game.Camera).ThirdPerson & !IsOnScreen())
 			//							{
 			//								s += "@camera.setfocus(npc," + this.NPCID + ")" + System.Environment.NewLine;
 			//								var cPosition = withBlock.ThirdPersonOffset.x.ToString() + "," + withBlock.ThirdPersonOffset.y.ToString() + "," + withBlock.ThirdPersonOffset.z.ToString();
@@ -518,7 +518,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//						}
 			//
 			//
-			//						GameVariables.Level.OwnPlayer.Opacity = 0.5f;
+			//						Game.Level.OwnPlayer.Opacity = 0.5f;
 			//						//((OverworldScreen)Core.CurrentScreen).ActionScript.StartScript(s, 2);
 			//						ActionScript.IsInsightScript = true;
 			//					}
@@ -531,7 +531,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void ClickFunction()
 		{
-			int newHeading = GameVariables.Camera.GetPlayerFacingDirection() - 2;
+			int newHeading = Game.Camera.GetPlayerFacingDirection() - 2;
 			if (newHeading < 0)
 				newHeading += 4;
 			this.faceRotation = newHeading;
@@ -557,8 +557,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
-				this.Rotation.y = GameVariables.Camera.Yaw;
+			if (this.Rotation.y != Game.Camera.Yaw)
+				this.Rotation.y = Game.Camera.Yaw;
 
 			base.UpdateEntity();
 		}
@@ -627,15 +627,15 @@ namespace PokemonUnity.Overworld.Entity.Misc
 						{
 							int oldRotation = this.faceRotation;
 
-							if (GameVariables.Camera.Position.x == this.Position.x | GameVariables.Camera.Position.z == this.Position.z)
+							if (Game.Camera.Position.x == this.Position.x | Game.Camera.Position.z == this.Position.z)
 							{
-								if (this.Position.x < GameVariables.Camera.Position.x)
+								if (this.Position.x < Game.Camera.Position.x)
 									this.faceRotation = 3;
-								else if (this.Position.x > GameVariables.Camera.Position.x)
+								else if (this.Position.x > Game.Camera.Position.x)
 									this.faceRotation = 1;
-								if (this.Position.z < GameVariables.Camera.Position.z)
+								if (this.Position.z < Game.Camera.Position.z)
 									this.faceRotation = 2;
-								else if (this.Position.z > GameVariables.Camera.Position.z)
+								else if (this.Position.z > Game.Camera.Position.z)
 									this.faceRotation = 0;
 							}
 
@@ -719,11 +719,11 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 			bool interactPlayer = true;
 
-			if (!GameVariables.Camera.IsMoving)
+			if (!Game.Camera.IsMoving)
 			{
-				if (System.Convert.ToInt32(GameVariables.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(GameVariables.Camera.Position.z) != newPosition.z)
+				if (System.Convert.ToInt32(Game.Camera.Position.x) != newPosition.x | System.Convert.ToInt32(Game.Camera.Position.z) != newPosition.z)
 				{
-					if (System.Convert.ToInt32(GameVariables.Level.OverworldPokemon.Position.x) != newPosition.x | System.Convert.ToInt32(GameVariables.Level.OverworldPokemon.Position.z) != newPosition.z)
+					if (System.Convert.ToInt32(Game.Level.OverworldPokemon.Position.x) != newPosition.x | System.Convert.ToInt32(Game.Level.OverworldPokemon.Position.z) != newPosition.z)
 						interactPlayer = false;
 				}
 			}
@@ -734,7 +734,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			bool HasFloor = false;
 
 			Vector3 Position2D = new Vector3(newPosition.x, newPosition.y - 0.1f, newPosition.z);
-			foreach (Entity Floor in GameVariables.Level.Floors)
+			foreach (Entity Floor in Game.Level.Floors)
 			{
 				if (Floor.boundingBox.Contains(Position2D))// == ContainmentType.Contains
 					HasFloor = true;
@@ -743,7 +743,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			if (!HasFloor)
 				return false;
 
-			foreach (Entity Entity in GameVariables.Level.Entities)
+			foreach (Entity Entity in Game.Level.Entities)
 			{
 				if (Entity.boundingBox.Contains(newPosition))// == ContainmentType.Contains
 				{
@@ -857,7 +857,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		private int getCameraRotation()
 		{
 			int cameraRotation = 0;
-			Camera c = GameVariables.Camera;
+			Camera c = Game.Camera;
 
 			float Yaw = c.Yaw;
 
@@ -879,15 +879,15 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		private void ApplyShaders()
 		{
 			this.Shaders.Clear();
-			//foreach (Shader Shader in GameVariables.Level.Shaders)
+			//foreach (Shader Shader in Game.Level.Shaders)
 			//	Shader.ApplyShader(this);
 		}
 
 		internal bool InCameraFocus()
 		{
-			if (GameVariables.Camera.Name == "Overworld")
+			if (Game.Camera.Name == "Overworld")
 			{
-				//var c = (OverworldCamera)GameVariables.Camera;
+				//var c = (OverworldCamera)Game.Camera;
 				//
 				//if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.NPC)
 				//{
@@ -900,7 +900,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		//private bool IsOnScreen()
 		//{
-		//	return GameVariables.Camera.BoundingFrustum.Contains(this.Position);// != ContainmentType.Disjoint
+		//	return Game.Camera.BoundingFrustum.Contains(this.Position);// != ContainmentType.Disjoint
 		//}
 	}
 }

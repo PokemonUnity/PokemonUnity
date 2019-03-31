@@ -117,7 +117,7 @@ namespace PokemonUnity
 								{
 									if (v2 == 0)
 									{
-										GameVariables.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
+										Game.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
 										hasError = true;
 										return 0;
 									}
@@ -141,7 +141,7 @@ namespace PokemonUnity
 					}
 					else
 					{
-						GameVariables.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
+						Game.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
 						hasError = true;
 						return 0;
 					}
@@ -152,7 +152,7 @@ namespace PokemonUnity
 				return stack[0];
 			else
 			{
-				GameVariables.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
+				Game.DebugLog("Script.vb: Cannot evaluate \"" + input.ToString() + "\" as an arithmetic expression.", false);
 				hasError = true;
 				return 0;
 			}
@@ -230,7 +230,7 @@ namespace PokemonUnity
 					}
 					else
 					{
-						GameVariables.DebugLog("Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.", false);
+						Game.DebugLog("Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.", false);
 						hasError = true;
 						return "0";
 					}
@@ -241,7 +241,7 @@ namespace PokemonUnity
 			{
 				if (stack[0] == '(' | stack[0] == ')')
 				{
-					GameVariables.DebugLog("Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.", false);
+					Game.DebugLog("Script.vb: Cannot convert \"" + input.ToString() + "\" to an arithmetic expression.", false);
 					hasError = true;
 					return "0";
 				}

@@ -65,21 +65,21 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//if (StringHelper.IsNumeric(TextureID) & texturePath.StartsWith(@"Pokemon\Overworld\"))
 			//	PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 
-			//if (GameVariables.playerTrainer.IsGameJoltSave)
+			//if (Game.playerTrainer.IsGameJoltSave)
 			//{
 			//	if (texturePath + TextureID + PokemonAddition == @"Textures\NPC\" + GameJolt.Emblem.GetPlayerSpriteFile(GameJolt.Emblem.GetPlayerLevel(Core.GameJoltSave.Points), Core.GameJoltSave.GameJoltID, Core.GameJoltSave.Gender))
 			//		UseGameJoltID = true;
 			//}
 
-			//if (UseGameJoltID & GameVariables.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) != null)
+			//if (UseGameJoltID & Game.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) != null)
 			//{
-			//	GameVariables.DebugLog("Change player texture to the online sprite.");
+			//	Game.DebugLog("Change player texture to the online sprite.");
 			//	this.Texture = GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID);
 			//	UsingGameJoltTexture = true;
 			//}
 			//else
 			//{
-			//	GameVariables.DebugLog("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
+			//	Game.DebugLog("Change player texture to [" + texturePath + TextureID + PokemonAddition + "]");
 			//
 			//	this.Texture = TextureManager.GetTexture(texturePath + TextureID + PokemonAddition);
 			//	UsingGameJoltTexture = false;
@@ -97,14 +97,14 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//{
 			//	if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 			//	{
-			//		if (GameVariables.Camera.Name == "Overworld")
+			//		if (Game.Camera.Name == "Overworld")
 			//		{
-			//			OverworldCamera c = (OverworldCamera)GameVariables.Camera;
+			//			OverworldCamera c = (OverworldCamera)Game.Camera;
 			//			this.Position = new Vector3(c.Position.x, c.Position.y - 0.1f, c.Position.z);
 			//		}
 			//	}
-			//	if (this.Rotation.y != GameVariables.Camera.Yaw)
-			//		this.Rotation.y = GameVariables.Camera.Yaw;
+			//	if (this.Rotation.y != Game.Camera.Yaw)
+			//		this.Rotation.y = Game.Camera.Yaw;
 			//}
 
 			Move();
@@ -115,7 +115,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		private void Move()
 		{
-			if ((GameVariables.Camera.IsMoving & this.DoAnimation) || (GameVariables.Level.OwnPlayer != null && GameVariables.Level.OwnPlayer.isDancing))
+			if ((Game.Camera.IsMoving & this.DoAnimation) || (Game.Level.OwnPlayer != null && Game.Level.OwnPlayer.isDancing))
 			{
 				this.AnimationDelay -= 0.13f;
 				if (AnimationDelay <= 0.0f)
@@ -149,9 +149,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//
 			//	spriteIndex = 0;
 			//
-			//	if (GameVariables.Camera.Name == "Overworld")
+			//	if (Game.Camera.Name == "Overworld")
 			//	{
-			//		spriteIndex = GameVariables.Camera.GetPlayerFacingDirection() - GameVariables.Camera.GetFacingDirection();
+			//		spriteIndex = Game.Camera.GetPlayerFacingDirection() - Game.Camera.GetFacingDirection();
 			//		while (spriteIndex > 3)
 			//			spriteIndex -= 4;
 			//		while (spriteIndex < 0)
@@ -161,7 +161,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//	Size frameSize = new Size(System.Convert.ToInt32(this.Texture.width / (double)3), System.Convert.ToInt32(this.Texture.height / (double)4));
 			//
 			//	int x = 0;
-			//	if (GameVariables.Camera.IsMoving())
+			//	if (Game.Camera.IsMoving())
 			//		x = GetAnimationX() * frameSize.width;
 			//
 			//	r = new Vector4(x, frameSize.width * spriteIndex, frameSize.width, frameSize.height);
@@ -170,7 +170,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//	{
 			//		lastRectangle = r;
 			//		lastTexture = SkinName;
-			//		GameVariables.playerTrainer.Skin = SkinName;
+			//		Game.playerTrainer.Skin = SkinName;
 			//
 			//		try
 			//		{
@@ -179,7 +179,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//		}
 			//		catch
 			//		{
-			//			GameVariables.DebugLog("OwnPlayer.vb: Error assigning a new texture to the player.", false);
+			//			Game.DebugLog("OwnPlayer.vb: Error assigning a new texture to the player.", false);
 			//		}
 			//	}
 			//}
@@ -226,9 +226,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		internal bool InCameraFocus()
 		{
-			//if (GameVariables.Camera.Name == "Overworld")
+			//if (Game.Camera.Name == "Overworld")
 			//{
-			//	var c = (OverworldCamera)GameVariables.Camera;
+			//	var c = (OverworldCamera)Game.Camera;
 			//
 			//	if (c.CameraFocusType == OverworldCamera.CameraFocusTypes.Player & c.ThirdPerson | c.CameraFocusType != OverworldCamera.CameraFocusTypes.Player)
 			//		return true;
@@ -239,13 +239,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		public void ApplyShaders()
 		{
 			this.Shaders.Clear();
-			//foreach (Shader Shader in GameVariables.Level.Shaders)
+			//foreach (Shader Shader in Game.Level.Shaders)
 			//	Shader.ApplyShader(this);
 		}
 
 		private float GetAnimationDelay()
 		{
-			if (GameVariables.playerTrainer.IsRunning())
+			if (Game.playerTrainer.IsRunning())
 				return OwnPlayer.AnimationDelayLenght / (float)1.4f;
 			return OwnPlayer.AnimationDelayLenght;
 		}

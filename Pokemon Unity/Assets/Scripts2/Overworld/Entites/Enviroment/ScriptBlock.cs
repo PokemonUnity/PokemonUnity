@@ -43,16 +43,16 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				ActivateScript = true;
 				TriggeredScriptBlock = true;
 				//if (ActionScript.TempInputDirection == -1)
-				//    ActionScript.TempInputDirection = GameVariables.Camera.GetPlayerFacingDirection();
+				//    ActionScript.TempInputDirection = Game.Camera.GetPlayerFacingDirection();
 
-				if (GameVariables.Camera.Name == "Overworld")
+				if (Game.Camera.Name == "Overworld")
 				{
-					//if (!((OverworldCamera)GameVariables.Camera).FreeCameraMode)
-					//    ((OverworldCamera)GameVariables.Camera).YawLocked = true;
+					//if (!((OverworldCamera)Game.Camera).FreeCameraMode)
+					//    ((OverworldCamera)Game.Camera).YawLocked = true;
 				}
 
-				GameVariables.Level.WalkedSteps = 0;
-				GameVariables.Level.PokemonEncounterData.EncounteredPokemon = false;
+				Game.Level.WalkedSteps = 0;
+				Game.Level.PokemonEncounterData.EncounteredPokemon = false;
 			}
 
 			return false;
@@ -70,9 +70,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void Update()
 		{
-			if (this.ActivateScript & GameVariables.Camera.Position.x == this.Position.x & GameVariables.Camera.Position.z == this.Position.z & System.Convert.ToInt32(GameVariables.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
+			if (this.ActivateScript & Game.Camera.Position.x == this.Position.x & Game.Camera.Position.z == this.Position.z & System.Convert.ToInt32(Game.Camera.Position.y) == System.Convert.ToInt32(this.Position.y))
 			{
-				GameVariables.Camera.StopMovement();
+				Game.Camera.StopMovement();
 				ActivateScript = false;
 				TriggerScript(false);
 			}
@@ -135,7 +135,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			bool activate = false;
 			if (AcceptedRotations.Count > 0)
 			{
-				if (AcceptedRotations.Contains(GameVariables.Camera.GetPlayerFacingDirection()))
+				if (AcceptedRotations.Contains(Game.Camera.GetPlayerFacingDirection()))
 					activate = true;
 			}
 			else

@@ -43,7 +43,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			//    {
 			//        if ((OverworldScreen)Core.CurrentScreen.ActionScript.IsReady)
 			//        {
-			//            if (this.Position.x == GameVariables.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & this.Position.z == GameVariables.Camera.Position.z)
+			//            if (this.Position.x == Game.Camera.Position.x & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Game.Camera.Position.y) & this.Position.z == Game.Camera.Position.z)
 			//            {
 			//                int steps = GetSteps();
 			//	
@@ -93,7 +93,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				for (var y = 0; y <= direction.y * 100; y += stepY)
 				{
 					Vector3 p = new Vector3(x, 0, y) + this.Position;
-					foreach (Entity e in GameVariables.Level.Entities)
+					foreach (Entity e in Game.Level.Entities)
 					{
 						if (!e.Equals(this))
 						{
@@ -126,7 +126,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		public override bool WalkIntoFunction()
 		{
 			//if (this.RotationType == RotationTypes.StartSpin)
-			//    ((OverworldCamera)GameVariables.Camera).YawLocked = true;
+			//    ((OverworldCamera)Game.Camera).YawLocked = true;
 			return false;
 		}
 	}

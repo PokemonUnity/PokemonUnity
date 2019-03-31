@@ -247,7 +247,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private Monster.Pokemon ReturnWaterFallPokemonName()
 		{
-			foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 			{
 				if (!p.isEgg)
 				{
@@ -268,7 +268,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			bool isOnTop = true;
 			Vector3 OnTopcheckPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
-			Entity Oe = GetEntity(GameVariables.Level.Entities, OnTopcheckPosition, true, new System.Type[]
+			Entity Oe = GetEntity(Game.Level.Entities, OnTopcheckPosition, true, new System.Type[]
 			{
 				typeof(Waterfall)
 			});
@@ -283,14 +283,14 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				string s = "";
 
 				int Steps = 0;
-				if (!GameVariables.Level.Surfing)
+				if (!Game.Level.Surfing)
 					Steps = 1;
 
 				Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y - 1, this.Position.z);
 				bool foundSteps = true;
 				while (foundSteps)
 				{
-					Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
+					Entity e = GetEntity(Game.Level.Entities, checkPosition, true, new System.Type[]
 					{
 						typeof(Waterfall)
 					});
@@ -320,7 +320,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				return this.Collision;
 
 			Monster.Pokemon p = ReturnWaterFallPokemonName();
-			if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) & p != null | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+			if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) & p != null | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 			{
 				string s = "";
 
@@ -333,14 +333,14 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				}
 
 				int Steps = 1;
-				if (!GameVariables.Level.Surfing)
+				if (!Game.Level.Surfing)
 					Steps = 0;
 
 				Vector3 checkPosition = new Vector3(this.Position.x, this.Position.y + 1, this.Position.z);
 				bool foundSteps = true;
 				while (foundSteps)
 				{
-					Entity e = GetEntity(GameVariables.Level.Entities, checkPosition, true, new System.Type[]
+					Entity e = GetEntity(Game.Level.Entities, checkPosition, true, new System.Type[]
 					{
 						typeof(Waterfall)
 					});
@@ -358,7 +358,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 						foundSteps = false;
 				}
 
-				GameVariables.Camera.PlannedMovement = new Vector3(0, 1, 0);
+				Game.Camera.PlannedMovement = new Vector3(0, 1, 0);
 
 				s = "version=2" + System.Environment.NewLine + "@pokemon.cry(" + pNumber + ")" + System.Environment.NewLine + "@sound.play(select)" + System.Environment.NewLine + "@text.show(" + pName + " used~Waterfall.)" + System.Environment.NewLine + "@player.move(" + Steps + ")" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + "@player.move(2)" + System.Environment.NewLine + "@pokemon.hide" + System.Environment.NewLine + ":end";
 

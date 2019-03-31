@@ -172,9 +172,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
+			if (this.Rotation.y != Game.Camera.Yaw)
 			{
-				this.Rotation.y = GameVariables.Camera.Yaw;
+				this.Rotation.y = Game.Camera.Yaw;
 				CreatedWorld = false;
 			}
 

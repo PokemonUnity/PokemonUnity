@@ -25,7 +25,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			bool canRead = false;
 
-			switch (GameVariables.Camera.GetPlayerFacingDirection())
+			switch (Game.Camera.GetPlayerFacingDirection())
 			{
 				case 1:
 				case 3:

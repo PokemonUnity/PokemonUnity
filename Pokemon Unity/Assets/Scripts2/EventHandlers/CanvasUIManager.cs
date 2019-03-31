@@ -23,12 +23,12 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 	/// </summary>
 	private static UnityEngine.UI.Text DialogUITextDump { get; set; }// = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
     private static UnityEngine.UI.Text DialogUIScrollText;// = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
-    private static bool InstantLine; //ToDo: Global Bool => GameVariables.Instant, maybe?
+    private static bool InstantLine; //ToDo: Global Bool => Game.Instant, maybe?
     private static float secPerChar
     {
         get 
         {
-            int txtSpd = GameVariables.textSpeed + 1;
+            int txtSpd = Game.textSpeed + 1;
             return 1 / (16 + (txtSpd * txtSpd * 9));
         }
     }
@@ -36,7 +36,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 	#region Unity Stuff
 	void Awake()
     {
-		GameVariables.SetCanvasManager(this);
+		Game.SetCanvasManager(this);
         DialogUIText = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
         DialogUITextDump = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
         DialogUIScrollText = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
@@ -95,12 +95,12 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 	/// </summary>
 	public static void RefreshWindowSkin()
     {
-        if (GameVariables.WindowSkinSprite != null)
+        if (Game.WindowSkinSprite != null)
         {
             UnityEngine.GameObject[] gos = UnityEngine.GameObject.FindGameObjectsWithTag("DialogWindow");
             foreach (UnityEngine.GameObject go in gos)
             {
-                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.WindowSkinSprite;
+                go.GetComponent<UnityEngine.UI.Image>().sprite = Game.WindowSkinSprite;
             }
         }
         else return;
@@ -112,12 +112,12 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     /// </summary>
     public static void RefreshDialogSkin()
     {
-        if (GameVariables.DialogSkinSprite != null)
+        if (Game.DialogSkinSprite != null)
         {
             UnityEngine.GameObject[] gos = UnityEngine.GameObject.FindGameObjectsWithTag("DialogWindow");
             foreach (UnityEngine.GameObject go in gos)
             {
-                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.DialogSkinSprite;
+                go.GetComponent<UnityEngine.UI.Image>().sprite = Game.DialogSkinSprite;
             }
         }
         else return;

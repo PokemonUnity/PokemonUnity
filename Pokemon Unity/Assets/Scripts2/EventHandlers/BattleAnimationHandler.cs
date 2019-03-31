@@ -10,10 +10,10 @@ using PokemonUnity.Battle;
 //[ExecuteInEditMode]
 public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 {
-	//private static GameVariables PersistantPlayerData { get { return StartupSceneHandler.PersistantPlayerData; } }
+	//private static Game PersistantPlayerData { get { return StartupSceneHandler.PersistantPlayerData; } }
 	public static IEnumerator<BattleResults> BattleCoroutineResults { get; private set; }
 	public IEnumerator<BattleResults> BattleCoroutine { get; private set; }
-	public BattleResults victor { get { return GameVariables.battle.decision; } }
+	public BattleResults victor { get { return Game.battle.decision; } }
     //public float time;
     //AnimationClip anim;
 
@@ -603,7 +603,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		//Foreach UI Child in Unity
 		for (int i = 0; i < playerParty.childCount; i++)
 		{
-			var pkmn = GameVariables.battle.party1[i];
+			var pkmn = Game.battle.party1[i];
 			if (pkmn.Species != PokemonUnity.Pokemons.NONE)
 			{
 				var status = pkmn.Status;
@@ -630,7 +630,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 
 		for (int i = 0; i < opponentParty.childCount; i++)
 		{
-			var pkmn = GameVariables.battle.party1[i];
+			var pkmn = Game.battle.party1[i];
 			if (pkmn.Species != PokemonUnity.Pokemons.NONE)
 			{
 				var status = pkmn.Status;

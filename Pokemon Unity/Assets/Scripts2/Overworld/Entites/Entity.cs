@@ -481,26 +481,26 @@ namespace PokemonUnity.Overworld.Entity
 
 		public virtual void OpacityCheck()
 		{
-			if (this.CameraDistance > 10.0f | GameVariables.Level.OwnPlayer != null && CameraDistance > GameVariables.Level.OwnPlayer.CameraDistance)
+			if (this.CameraDistance > 10.0f | Game.Level.OwnPlayer != null && CameraDistance > Game.Level.OwnPlayer.CameraDistance)
 			{
 				this.Opacity = this._normalOpactity;
 				return;
 			}
 
 			string[] notNames = new string[] { "Floor", "OwnPlayer", "Water", "Whirlpool", "Particle", "OverworldPokemon", "ItemObject", "NetworkPokemon", "NetworkPlayer" };
-			if (GameVariables.Camera.Name == "Overworld" && !notNames.ToList().Contains(this.EntityID.ToString()))
+			if (Game.Camera.Name == "Overworld" && !notNames.ToList().Contains(this.EntityID.ToString()))
 			{
 				this.Opacity = this._normalOpactity;
-				//if (((OverworldCamera)GameVariables.Camera).ThirdPerson)
+				//if (((OverworldCamera)Game.Camera).ThirdPerson)
 				//{
-				//	UnityEngine.Ray Ray = GameVariables.Camera.Ray;
+				//	UnityEngine.Ray Ray = Game.Camera.Ray;
 				//	//float? result = Ray.Intersects(this.boundingBox);
 				//	UnityEngine.RaycastHit result;// = new UnityEngine.RaycastHit(). Ray.Intersects(this.boundingBox);
 				//	//if (result.HasValue)
 				//	if (UnityEngine.Physics.Raycast(Ray, out result))
 				//	{
-				//		//if (result.Value < 0.3f + ((OverworldCamera)GameVariables.Camera.ThirdPersonOffset.z - 1.5f))
-				//		if (result.distance < 0.3f + (((OverworldCamera)GameVariables.Camera).ThirdPersonOffset.z - 1.5f))
+				//		//if (result.Value < 0.3f + ((OverworldCamera)Game.Camera.ThirdPersonOffset.z - 1.5f))
+				//		if (result.distance < 0.3f + (((OverworldCamera)Game.Camera).ThirdPersonOffset.z - 1.5f))
 				//		{
 				//			this.Opacity = this._normalOpactity - 0.5f;
 				//			if (this.Opacity < 0.3f)
@@ -523,13 +523,13 @@ namespace PokemonUnity.Overworld.Entity
 
 		public virtual void UpdateEntity()
 		{
-			//UnityEngine.Vector3 CPosition = GameVariables.Camera.Position;
+			//UnityEngine.Vector3 CPosition = Game.Camera.Position;
 			//bool ActionScriptActive = false;
 			//
 			//
 			//if (Core.CurrentScreen != null)
 			//{
-			//	CPosition = GameVariables.Camera.CPosition;
+			//	CPosition = Game.Camera.CPosition;
 			//	if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 			//		ActionScriptActive = !(OverworldScreen)Core.CurrentScreen.ActionScript.IsReady;
 			//}
@@ -593,7 +593,7 @@ namespace PokemonUnity.Overworld.Entity
 			//	CreatedWorld = true;
 			//}
 			//
-			//if (CameraDistance < GameVariables.Camera.FarPlane * 2)
+			//if (CameraDistance < Game.Camera.FarPlane * 2)
 			//{
 			//	if (this.Position != this.BoundingPositionCreated)
 			//	{
@@ -646,9 +646,9 @@ namespace PokemonUnity.Overworld.Entity
 			//	}
 			//}
 			//
-			//if (GameVariables.Level.World != null)
+			//if (Game.Level.World != null)
 			//{
-			//	switch (GameVariables.Level.World.EnvironmentType)
+			//	switch (Game.Level.World.EnvironmentType)
 			//	{
 			//		case World.EnvironmentTypes.Outside:
 			//            {
@@ -722,7 +722,7 @@ namespace PokemonUnity.Overworld.Entity
 					if (this.EntityID != Entities.Floor & this.EntityID != Entities.Water)
 					{
 						//if (drawViewBox)
-						//	BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, new UnityEngine.Color(240,128,128));
+						//	BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Game.Camera.View, Game.Camera.Projection, new UnityEngine.Color(240,128,128));
 					}
 				}
 				else
@@ -768,7 +768,7 @@ namespace PokemonUnity.Overworld.Entity
 
 		public bool IsInFieldOfView()
 		{
-			//if (GameVariables.Camera.BoundingFrustum.Contains(this.ViewBox))// != ContainmentType.Disjoint
+			//if (Game.Camera.BoundingFrustum.Contains(this.ViewBox))// != ContainmentType.Disjoint
 			//{
 			//	this._visibleLastFrame = true;
 			//	return true;

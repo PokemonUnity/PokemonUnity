@@ -9,15 +9,15 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
 
-public partial class GameVariables
+public partial class Game
 {
 	public class TrainerPC
 	{
 		//public static PC
 		private Player trainer { get; set; }
 		private int activeBox { get; set; }
-		public string Name { get { return GameVariables.PC_boxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
-		public int Texture { get { return GameVariables.PC_boxTexture[activeBox]; } }
+		public string Name { get { return Game.PC_boxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
+		public int Texture { get { return Game.PC_boxTexture[activeBox]; } }
 		public Pokemon[] Pokemons
 		{
 			get
@@ -25,7 +25,7 @@ public partial class GameVariables
 				Pokemon[] p = new Pokemon[30];
 				for (int t = 0; t < 30; t++)
 				{
-					p[t] = GameVariables.PC_Poke[activeBox, t];
+					p[t] = Game.PC_Poke[activeBox, t];
 				}
 				return p;
 			}
@@ -33,7 +33,7 @@ public partial class GameVariables
 		/// <summary>
 		/// </summary>
 		/// ToDo: Add filter to add/remove items...
-		public List<Item> Items { get { return GameVariables.PC_Items; } set { GameVariables.PC_Items = value; } }
+		public List<Item> Items { get { return Game.PC_Items; } set { Game.PC_Items = value; } }
 
 		public TrainerPC this[int i]
 		{
@@ -44,11 +44,11 @@ public partial class GameVariables
 				//Pokemon[] p = new Pokemon[30];
 				//for (int t = 0; t < 30; t++)
 				//{
-				//	p[t] = GameVariables.PC_Poke[i, t];
+				//	p[t] = Game.PC_Poke[i, t];
 				//}
 				//this.Pokemons = p;
-				//this.Texture = GameVariables.PC_boxTexture[i];
-				//this.Name = GameVariables.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
+				//this.Texture = Game.PC_boxTexture[i];
+				//this.Name = Game.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
 				return this;
 			}
 		}
@@ -121,7 +121,7 @@ public partial class GameVariables
 			if (hasSpace())
 			{
 				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				GameVariables.PC_Poke[activeBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+				Game.PC_Poke[activeBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
 				return true;
 			}
 			//if could not add a pokemon, return false. Party and PC are both full.
@@ -130,9 +130,9 @@ public partial class GameVariables
 
 		public void swapPokemon(int box1, int pos1, int box2, int pos2)
 		{
-			Pokemon temp = GameVariables.PC_Poke[box1, pos1];
-			GameVariables.PC_Poke[box1, pos1] = GameVariables.PC_Poke[box2, pos2];
-			GameVariables.PC_Poke[box2, pos2] = temp;
+			Pokemon temp = Game.PC_Poke[box1, pos1];
+			Game.PC_Poke[box1, pos1] = Game.PC_Poke[box2, pos2];
+			Game.PC_Poke[box2, pos2] = temp;
 		}
 	}
 }

@@ -12,9 +12,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
+			if (this.Rotation.y != Game.Camera.Yaw)
 			{
-				this.Rotation.y = GameVariables.Camera.Yaw;
+				this.Rotation.y = Game.Camera.Yaw;
 				CreatedWorld = false;
 			}
 
@@ -23,7 +23,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override bool WalkIntoFunction()
 		{
-			GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Land, this.AdditionalValue);
+			Game.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Land, this.AdditionalValue);
 
 			return false;
 		}
@@ -37,15 +37,15 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			List<Entity> l = new List<Entity>();
 
-			foreach (Entity e in GameVariables.Level.Entities)
+			foreach (Entity e in Game.Level.Entities)
 			{
 				if (e.EntityID == Entities.Grass)
 				{
 					if (e.Visible)
 					{
-						if (System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y))
+						if (System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(Game.Camera.Position.y))
 						{
-							float distance = Vector3.Distance(GameVariables.Camera.Position, e.Position);
+							float distance = Vector3.Distance(Game.Camera.Position, e.Position);
 
 							if (distance <= radius)
 								l.Add(e);

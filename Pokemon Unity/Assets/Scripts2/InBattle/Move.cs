@@ -56,7 +56,7 @@ namespace PokemonUnity.Battle
 		public string Nothing = "But nothing happened!";
 		#endregion
 
-		private Battle Battle { get { return GameVariables.battle; } }
+		private Battle Battle { get { return Game.battle; } }
 
 		//NOTYPE          = 0x01,
 		//IGNOREPKMNTYPES = 0x02,
@@ -474,7 +474,7 @@ namespace PokemonUnity.Battle
 					break;
 				case Effect.FailedMove:
 					//by default, both should result in failure
-					//GameVariables.battle.pbDisplay("But it failed!");
+					//Game.battle.pbDisplay("But it failed!");
 					break;
 				case Effect.UnimplementedMove:
 				default:

@@ -43,9 +43,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			//
 			//                    withBlock.DiffuseColor = Screen.Effect.DiffuseColor;
 			//
-			//                    if (GameVariables.Level.World != null)
+			//                    if (Game.Level.World != null)
 			//                    {
-			//                        if (GameVariables.Level.World.EnvironmentType == PokemonUnity.Overworld.World.EnvironmentTypes.Outside)
+			//                        if (Game.Level.World.EnvironmentType == PokemonUnity.Overworld.World.EnvironmentTypes.Outside)
 			//                            withBlock.DiffuseColor *= SkyDome.GetDaytimeColor(true).ToVector3();
 			//                    }
 			//
@@ -72,10 +72,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			if (Visible)
 			{
 				//if (_model != null)
-				//    _model.Draw(this.World, GameVariables.Camera.View, GameVariables.Camera.Projection);
+				//    _model.Draw(this.World, Game.Camera.View, Game.Camera.Projection);
 				//
 				//if (drawViewBox)
-				//    BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, GameVariables.Camera.View, GameVariables.Camera.Projection, UnityEngine.Color.red);
+				//    BoundingBoxRenderer.Render(ViewBox, Core.GraphicsDevice, Game.Camera.View, Game.Camera.Projection, UnityEngine.Color.red);
 			}
 		}
 	}

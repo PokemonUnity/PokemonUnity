@@ -68,9 +68,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			if (!changedWeatherTexture)
 			{
 				changedWeatherTexture = true;
-				if ((GameVariables.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Snow | GameVariables.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Blizzard) & this.hasSnow)
+				if ((Game.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Snow | Game.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Blizzard) & this.hasSnow)
 					ChangeSnow();
-				if (GameVariables.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Sandstorm & this.hasSand)
+				if (Game.Level.World.CurrentMapWeather == PokemonUnity.Overworld.World.Weathers.Sandstorm & this.hasSand)
 					ChangeSand();
 			}
 
@@ -92,17 +92,17 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			if (this.IsOffsetMapContent)
 			{
-				ent[0] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-				ent[1] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-				ent[2] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-				ent[3] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+				ent[0] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+				ent[1] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+				ent[2] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+				ent[3] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
 			}
 			else
 			{
-				ent[0] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-				ent[1] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-				ent[2] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-				ent[3] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+				ent[0] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+				ent[1] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+				ent[2] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+				ent[3] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
 			}
 
 			for (var i = 0; i <= 3; i++)
@@ -161,17 +161,17 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			if (this.IsOffsetMapContent)
 			{
-				ent[0] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-				ent[1] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-				ent[2] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-				ent[3] = GetEntity(GameVariables.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+				ent[0] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+				ent[1] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+				ent[2] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+				ent[3] = GetEntity(Game.Level.OffsetmapFloors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
 			}
 			else
 			{
-				ent[0] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
-				ent[1] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
-				ent[2] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
-				ent[3] = GetEntity(GameVariables.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
+				ent[0] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z + 1));
+				ent[1] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x + 1, this.Position.y, this.Position.z));
+				ent[2] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x - 1, this.Position.y, this.Position.z));
+				ent[3] = GetEntity(Game.Level.Floors, new Vector3(this.Position.x, this.Position.y, this.Position.z - 1));
 			}
 
 			for (var i = 0; i <= 3; i++)
@@ -221,34 +221,34 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			int Steps = 0;
 
-			Vector3 checkPosition = GameVariables.Camera.GetForwardMovedPosition();
+			Vector3 checkPosition = Game.Camera.GetForwardMovedPosition();
 			checkPosition.y = checkPosition.y.ToInteger();
 
 			bool foundSteps = true;
 			while (foundSteps)
 			{
-				Entity e = base.GetEntity(GameVariables.Level.Floors, checkPosition, true, new System.Type[] { typeof(Floor) });
+				Entity e = base.GetEntity(Game.Level.Floors, checkPosition, true, new System.Type[] { typeof(Floor) });
 				if (e != null)
 				{
 					if (e.EntityID == Entities.Floor)
 					{
 						//if (((Floor)e).IsIce)
 						//{
-						//    if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
+						//    if (!((OverworldCamera)Game.Camera).CheckCollision(checkPosition))
 						//    {
 						//        Steps += 1;
-						//        checkPosition.x += GameVariables.Camera.GetMoveDirection().x;
-						//        checkPosition.z += GameVariables.Camera.GetMoveDirection().z;
+						//        checkPosition.x += Game.Camera.GetMoveDirection().x;
+						//        checkPosition.z += Game.Camera.GetMoveDirection().z;
 						//
-						//        GameVariables.Level.OverworldPokemon.Visible = false;
-						//        GameVariables.Level.OverworldPokemon.warped = true;
+						//        Game.Level.OverworldPokemon.Visible = false;
+						//        Game.Level.OverworldPokemon.warped = true;
 						//    }
 						//    else
 						//        foundSteps = false;
 						//}
 						//else
 						//{
-						//    if (!((OverworldCamera)GameVariables.Camera).CheckCollision(checkPosition))
+						//    if (!((OverworldCamera)Game.Camera).CheckCollision(checkPosition))
 						//        Steps += 1;
 						//    foundSteps = false;
 						//}

@@ -17,9 +17,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void Update()
 		{
-			if (GameVariables.Level.Surfing)
+			if (Game.Level.Surfing)
 			{
-				if (System.Convert.ToInt32(this.Position.x) == System.Convert.ToInt32(GameVariables.Camera.Position.x) & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y) & System.Convert.ToInt32(this.Position.z) == System.Convert.ToInt32(GameVariables.Camera.Position.z))
+				if (System.Convert.ToInt32(this.Position.x) == System.Convert.ToInt32(Game.Camera.Position.x) & System.Convert.ToInt32(this.Position.y) == System.Convert.ToInt32(Game.Camera.Position.y) & System.Convert.ToInt32(this.Position.z) == System.Convert.ToInt32(Game.Camera.Position.z))
 				{
 					//if (Controls.Accept(true, true, true))
 					//{
@@ -41,9 +41,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				string t = "The water seems to be~really deep at this point.";
 				string d = GetDivePokemon();
 
-				if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
+				if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) | Game.playerTrainer.SandBoxMode | Game.IS_DEBUG_ACTIVE)
 					t += "*Do you want to~use Dive?%Yes|No%";
-				GameVariables.TextBox.Show(t, new Entity[] { (DiveTile)this });
+				Game.TextBox.Show(t, new Entity[] { (DiveTile)this });
 				SoundManager.PlaySound("select");
 			}
 			else if (diveUp == 1)
@@ -51,7 +51,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				// Up
 				string t = "Light shines down from~the surface.*Do you want to~use Dive?%Yes|No%";
 
-				GameVariables.TextBox.Show(t, new Entity[] { this });
+				Game.TextBox.Show(t, new Entity[] { this });
 				SoundManager.PlaySound("select");
 			}
 			else if (diveUp == 2)
@@ -59,7 +59,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				// Up
 				string t = "The boat's shadow is cast~upon the ocean floor.*Do you want to~use Dive?%Yes|No%";
 
-				GameVariables.TextBox.Show(t, new Entity[] { this });
+				Game.TextBox.Show(t, new Entity[] { this });
 				SoundManager.PlaySound("select");
 			}
 		}
@@ -94,7 +94,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private string GetDivePokemon()
 		{
-			foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 			{
 				foreach (Attack.Move a in p.moves)
 				{

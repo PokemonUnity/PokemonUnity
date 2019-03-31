@@ -100,7 +100,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				this.Texture = OnlineSprite;
 			else if (TextureManager.TextureExist(texturePath))
 			{
-				GameVariables.DebugLog("Change network texture to [" + texturePath + "]");
+				Game.DebugLog("Change network texture to [" + texturePath + "]");
 
 				if (texturePath.StartsWith(@"Pokemon\"))
 					this.HasPokemonTexture = true;
@@ -111,7 +111,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			}
 			else
 			{
-				GameVariables.DebugLog("Texture fallback!");
+				Game.DebugLog("Texture fallback!");
 				this.Texture = TextureManager.GetTexture(@"Textures\NPC\" + FallBack[this.NetworkID]);
 			}
 		}
@@ -148,7 +148,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			if (this.Texture != null)
 			{
 				Vector4 r = new Vector4(0, 0, 0, 0);
-				int cameraRotation = GameVariables.Camera.GetFacingDirection();
+				int cameraRotation = Game.Camera.GetFacingDirection();
 				int spriteIndex = this.faceRotation - cameraRotation;
 
 				spriteIndex = this.faceRotation - cameraRotation;
@@ -257,8 +257,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
-				this.Rotation.y = GameVariables.Camera.Yaw;
+			if (this.Rotation.y != Game.Camera.Yaw)
+				this.Rotation.y = Game.Camera.Yaw;
 			if (this.TextureID != null && this.TextureID.ToLower() == "nilllzz" & this.GameJoltID == "17441")
 			{
 				this.Rotation.z = MathHelper.Pi;
@@ -394,7 +394,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		//		this.BusyType = p.BusyType.ToString();
 		//		this.Visible = false;
 		//
-		//		if (GameVariables.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
+		//		if (Game.Level.LevelFile.ToLower() == p.LevelFile.ToLower())
 		//			this.Visible = true;
 		//		else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
 		//		{
@@ -407,7 +407,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		//	}
 		//	catch (Exception ex)
 		//	{
-		//		GameVariables.DebugLog("NetworkPlayer.vb: Error while assigning player data over network: " + ex.Message);
+		//		Game.DebugLog("NetworkPlayer.vb: Error while assigning player data over network: " + ex.Message);
 		//	}
 		//}
 
@@ -422,9 +422,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public static void ScreenRegionChanged()
 		{
-			if (/*Core.CurrentScreen != null &&*/ GameVariables.Level != null)
+			if (/*Core.CurrentScreen != null &&*/ Game.Level != null)
 			{
-				foreach (NetworkPlayer netPlayer in GameVariables.Level.NetworkPlayers)
+				foreach (NetworkPlayer netPlayer in Game.Level.NetworkPlayers)
 					netPlayer.LastName = "";
 			}
 		}

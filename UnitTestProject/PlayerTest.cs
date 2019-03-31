@@ -51,8 +51,8 @@ namespace Tests
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
-			GameVariables.playerTrainer = new Player(red, playerParty);
-			red = GameVariables.playerTrainer.Trainer;
+			Game.playerTrainer = new Player(red, playerParty);
+			red = Game.playerTrainer.Trainer;
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
@@ -60,7 +60,7 @@ namespace Tests
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
-			Pokemon[,] playerPC = GameVariables.PC_Poke; //new Pokemon[Settings.STORAGEBOXES, 30];
+			Pokemon[,] playerPC = Game.PC_Poke; //new Pokemon[Settings.STORAGEBOXES, 30];
             //for (int i = 0; i < playerPC.GetLength(1); i++)
             //{
             //	for (int j = 0; j < playerPC.GetLength(0); j++)
@@ -74,7 +74,7 @@ namespace Tests
             playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON, red);
             playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP, red);
 			
-            GameVariables.Bag_Items = new List<Items>()
+            Game.Bag_Items = new List<Items>()
 			//Created random inventory list for player bag
 			{
 				Items.ADAMANT_ORB,
@@ -86,7 +86,7 @@ namespace Tests
 				Items.POKE_BALL,
 				Items.GREAT_BALL
 			};
-			List<Items> playerBag = GameVariables.Bag_Items;
+			List<Items> playerBag = Game.Bag_Items;
 
 			List<SaveEvent> eventList = new List<SaveEvent>();
             eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
@@ -373,9 +373,9 @@ namespace Tests
             //Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
-			GameVariables.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
+			Game.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
 
-			GameVariables.Load(saveSlot);
+			Game.Load(saveSlot);
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]
 			//{
@@ -401,8 +401,8 @@ namespace Tests
 			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
 			//}
 			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
-				new Pokemons[] { GameVariables.playerTrainer.Trainer.Party[0].Species, GameVariables.playerTrainer.Trainer.Party[1].Species, GameVariables.playerTrainer.Trainer.Party[2].Species,
-					GameVariables.playerTrainer.Trainer.Party[3].Species, GameVariables.playerTrainer.Trainer.Party[4].Species, GameVariables.playerTrainer.Trainer.Party[5].Species });
+				new Pokemons[] { Game.playerTrainer.Trainer.Party[0].Species, Game.playerTrainer.Trainer.Party[1].Species, Game.playerTrainer.Trainer.Party[2].Species,
+					Game.playerTrainer.Trainer.Party[3].Species, Game.playerTrainer.Trainer.Party[4].Species, Game.playerTrainer.Trainer.Party[5].Species });
         }
         [TestMethod]
         public void Player_Load_Pokedex()

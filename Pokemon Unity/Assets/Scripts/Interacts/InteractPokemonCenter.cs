@@ -106,7 +106,7 @@ public class InteractPokemonCenter : MonoBehaviour
                 //place balls on machine, healing as they get shown
                 for (int i = 0; i < 6; i++)
                 {
-                    if (GameVariables.PC_Poke[0,i] != null)
+                    if (Game.PC_Poke[0,i] != null)
                     {
                         //SaveDataOld.currentSave.PC.boxes[0][i].healFull();
                         pokeBalls[i].enabled = true;
@@ -199,7 +199,7 @@ public class InteractPokemonCenter : MonoBehaviour
             //place balls on machine, healing as they get shown
             for (int i = 0; i < 6; i++)
             {
-                if (GameVariables.PC_Poke[0,i] != null)
+                if (Game.PC_Poke[0,i] != null)
                 {
                     //SaveDataOld.currentSave.PC.boxes[0][i].healFull();
                     pokeBalls[i].enabled = true;

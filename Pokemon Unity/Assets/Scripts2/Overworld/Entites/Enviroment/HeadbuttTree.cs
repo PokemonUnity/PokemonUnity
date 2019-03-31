@@ -8,9 +8,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 	{
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
+			if (this.Rotation.y != Game.Camera.Yaw)
 			{
-				this.Rotation.y = GameVariables.Camera.Yaw;
+				this.Rotation.y = Game.Camera.Yaw;
 				CreatedWorld = false;
 			}
 
@@ -19,11 +19,11 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void ClickFunction()
 		{
-			if (!GameVariables.Level.Surfing)
+			if (!Game.Level.Surfing)
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -41,10 +41,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					}
 				}
 
-				if (pName != "" & GameVariables.playerTrainer.Badges.Contains(10))
+				if (pName != "" & Game.playerTrainer.Badges.Contains(10))
 				{
 					string text = "This tree could have~a Pokémon in it.*Do you want to~use Headbutt?%Yes|No%";
-					GameVariables.TextBox.Show(text, new Entity[] { this });
+					Game.TextBox.Show(text, new Entity[] { this });
 					SoundManager.PlaySound("select");
 				}
 			}
@@ -56,7 +56,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					foreach (Attack.Move a in p.moves)
 					{
@@ -72,7 +72,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				}
 
 				Monster.Pokemon spawnedPokemon = null;
-				//Pokemon.Pokemon spawnedPokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, EncounterTypes.Headbutt, false);
+				//Pokemon.Pokemon spawnedPokemon = Spawner.GetPokemon(Game.Level.LevelFile, EncounterTypes.Headbutt, false);
 				if (spawnedPokemon == null)
 				{
 					string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Headbutt!)" + System.Environment.NewLine + "@sound.play(destroy,0)" + System.Environment.NewLine + "@level.wait(20)" + System.Environment.NewLine + "@text.show(Nothing happened...)" + System.Environment.NewLine + ":end";

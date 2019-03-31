@@ -75,9 +75,9 @@ namespace PokemonUnity.Overworld
 		{
 			//if (Core.GameOptions.GraphicStyle == 1)
 			//{
-			//    if (GameVariables.Level.World.EnvironmentType == World.EnvironmentTypes.Outside)
+			//    if (Game.Level.World.EnvironmentType == World.EnvironmentTypes.Outside)
 			//    {
-			//        if (World.GetWeatherFromWeatherType(GameVariables.Level.WeatherType) != World.Weathers.Fog)
+			//        if (World.GetWeatherFromWeatherType(Game.Level.WeatherType) != World.Weathers.Fog)
 			//        {
 			//            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch() + Math.PI), true, TextureSun, 100, this.GetSunAlpha()); // Draw the Sun.
 			//            RenderHalf(FOV, MathHelper.PiOver2, System.Convert.ToSingle(GetUniversePitch()), true, TextureMoon, 100, GetStarsAlpha()); // Draw the Moon.
@@ -110,16 +110,16 @@ namespace PokemonUnity.Overworld
 			//{
 			//    foreach (BasicEffect BasicEffect in ModelMesh.Effects)
 			//    {
-			//        BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(GameVariables.Camera.Position.x, -5, GameVariables.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
+			//        BasicEffect.World = Matrix.CreateScale(scale) * Matrix.CreateTranslation(new Vector3(Game.Camera.Position.x, -5, Game.Camera.Position.z)) * Matrix.CreateFromYawPitchRoll(useYaw, usePitch, Roll);
 			//
-			//        BasicEffect.View = GameVariables.Camera.View;
+			//        BasicEffect.View = Game.Camera.View;
 			//        BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), Core.GraphicsDevice.Viewport.AspectRatio, 0.01f, 10000);
 			//
 			//        BasicEffect.TextureEnabled = true;
 			//        BasicEffect.Texture = texture;
 			//        BasicEffect.Alpha = alpha;
 			//
-			//        switch (GameVariables.Level.World.CurrentMapWeather)
+			//        switch (Game.Level.World.CurrentMapWeather)
 			//        {
 			//            case World.Weathers.Clear:
 			//            case World.Weathers.Sunny:
@@ -209,7 +209,7 @@ namespace PokemonUnity.Overworld
 
 		private float GetCloudAlpha()
 		{
-			switch (GameVariables.Level.World.CurrentMapWeather)
+			switch (Game.Level.World.CurrentMapWeather)
 			{
 				case World.Weathers.Rain:
 				case World.Weathers.Blizzard:
@@ -279,7 +279,7 @@ namespace PokemonUnity.Overworld
 
 		private Texture2D GetCloudsTexture()
 		{
-			switch (GameVariables.Level.World.CurrentMapWeather)
+			switch (Game.Level.World.CurrentMapWeather)
 			{
 				case World.Weathers.Rain:
 				case World.Weathers.Blizzard:

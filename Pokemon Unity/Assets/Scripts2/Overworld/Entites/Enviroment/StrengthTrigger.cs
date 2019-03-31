@@ -37,13 +37,13 @@
 				}
 			}
 
-			string[] registers = null;//GameVariables.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
+			string[] registers = null;//Game.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
 			foreach (string r in registers)
 			{
-				if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_"))
+				if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Game.Level.LevelFile + "_"))
 				{
-					string RemoveID = r.Remove(0, ("ACTIVATOR_REMOVE_STRENGTHT_ROCK_" + GameVariables.Level.LevelFile + "_").Length - 1);
-					foreach (Entity sRock in GameVariables.Level.Entities)
+					string RemoveID = r.Remove(0, ("ACTIVATOR_REMOVE_STRENGTHT_ROCK_" + Game.Level.LevelFile + "_").Length - 1);
+					foreach (Entity sRock in Game.Level.Entities)
 					{
 						if (sRock.EntityID == Entities.StrengthRock)
 						{
@@ -61,7 +61,7 @@
 		{
 			if (!Activated)
 			{
-				foreach (Entity sRock in GameVariables.Level.Entities)
+				foreach (Entity sRock in Game.Level.Entities)
 				{
 					if (sRock.EntityID == Entities.StrengthRock)
 					{
@@ -70,7 +70,7 @@
 							if (RemoveRock)
 								((StrengthRock)sRock).CanBeRemoved = true;
 							//if (RemoveForever)
-							//    ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + GameVariables.Level.LevelFile + "_" + sRock.ID.ToString());
+							//    ActionScript.RegisterID("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Game.Level.LevelFile + "_" + sRock.ID.ToString());
 							if (ActivateScript != "")
 							{
 								//if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)

@@ -8,11 +8,11 @@ namespace PokemonUnity.Overworld.Entity.Environment
 	{
 		public override void ClickFunction()
 		{
-			if (!GameVariables.TextBox.Showing)
+			if (!Game.TextBox.Showing)
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -32,10 +32,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				string text = "This rock looks like~it can be broken!";
 
-				if (pName != "" | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+				if (pName != "" | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 					text += "~Do you want to~use Rock Smash?%Yes|No%";
 
-				GameVariables.TextBox.Show(text, new Entity[] { this });
+				Game.TextBox.Show(text, new Entity[] { this });
 				SoundManager.PlaySound("select");
 			}
 		}
@@ -46,7 +46,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -67,7 +67,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				Monster.Pokemon spawnedPokemon = null/* TODO Change to default(_) if this is not a reference type */;
 				if (Settings.Rand.Next(0, 100) < 20)
 				{
-					//spawnedPokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, EncounterTypes.RockSmash, false);
+					//spawnedPokemon = Spawner.GetPokemon(Game.Level.LevelFile, EncounterTypes.RockSmash, false);
 					if (spawnedPokemon == null)
 					{
 						string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + ":end";
@@ -102,7 +102,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			List<int> Chances = new List<int>();
 			foreach (ItemContainer c in ItemContainerlist)
 			{
-				if (c.MapFile.ToLower() == GameVariables.Level.LevelFile.ToLower())
+				if (c.MapFile.ToLower() == Game.Level.LevelFile.ToLower())
 				{
 					MatchingContainers.Add(c);
 					Chances.Add(c.Chance);
@@ -155,9 +155,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			base.UpdateEntity();
 
-			if (Rotation.y != GameVariables.Camera.Yaw)
+			if (Rotation.y != Game.Camera.Yaw)
 			{
-				this.Rotation.y = GameVariables.Camera.Yaw;
+				this.Rotation.y = Game.Camera.Yaw;
 				this.CreatedWorld = false;
 			}
 		}

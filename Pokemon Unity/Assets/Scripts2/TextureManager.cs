@@ -53,14 +53,14 @@ namespace PokemonUnity
 			//				}
 			//				catch (Exception ex)
 			//				{
-			//					GameVariables.DebugLog("Something went wrong while XNA tried to load a texture. Return default.", true);
+			//					Game.DebugLog("Something went wrong while XNA tried to load a texture. Return default.", true);
 			//					return DefaultTexture;
 			//				}
 			//			}
 			//		}
 			//		else
 			//		{
-			//			GameVariables.DebugLog("Texures.vb: Texture \"" + SaveManager.saveLocation + @"\" + cContent.RootDirectory + @"\" + Name + "\" was not found!", true);
+			//			Game.DebugLog("Texures.vb: Texture \"" + SaveManager.saveLocation + @"\" + cContent.RootDirectory + @"\" + Name + "\" was not found!", true);
 			//			return DefaultTexture;
 			//		}
 			//	}
@@ -133,14 +133,14 @@ namespace PokemonUnity
 			//					}
 			//					catch (Exception ex)
 			//					{
-			//						GameVariables.DebugLog("Something went wrong while XNA tried to load a texture. Return default.", true);
+			//						Game.DebugLog("Something went wrong while XNA tried to load a texture. Return default.", true);
 			//						return DefaultTexture;
 			//					}
 			//				}
 			//			}
 			//			else
 			//			{
-			//				GameVariables.DebugLog("Texures.vb: Texture \"" + SaveManager.saveLocation + @"\" + cContent.RootDirectory + @"\" + Name + "\" was not found!", true);
+			//				Game.DebugLog("Texures.vb: Texture \"" + SaveManager.saveLocation + @"\" + cContent.RootDirectory + @"\" + Name + "\" was not found!", true);
 			//				return DefaultTexture;
 			//			}
 			//		}
@@ -199,7 +199,7 @@ namespace PokemonUnity
 			//	Vector4 tRectangle = new Vector4(0, 0, Texture.Width, Texture.Height);
 			//	if (tRectangle.Contains(Vector4) == false)
 			//	{
-			//		GameVariables.DebugLog(GameVariables.DebugLogTypes.ErrorMessage, "Textures.vb: The rectangle for a texture was out of bounds!");
+			//		Game.DebugLog(Game.DebugLogTypes.ErrorMessage, "Textures.vb: The rectangle for a texture was out of bounds!");
 			//		return DefaultTexture;
 			//	}
 			//

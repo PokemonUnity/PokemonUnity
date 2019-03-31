@@ -14,7 +14,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		public override void ClickFunction()
 		{
 			bool hasBerry = false;
-			foreach (Entity Entity in GameVariables.Level.Entities)
+			foreach (Entity Entity in Game.Level.Entities)
 			{
 				if (Entity.EntityID == Entities.BerryPlant & Entity.Position == this.Position)
 				{
@@ -25,7 +25,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			}
 			if (!hasBerry)
 			{
-				GameVariables.TextBox.Show("Do you want to plant a~berry here?%Yes|No%", new Entity[] { this });
+				Game.TextBox.Show("Do you want to plant a~berry here?%Yes|No%", new Entity[] { this });
 				SoundManager.PlaySound("select");
 			}
 		}
@@ -58,9 +58,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				Inventory.Item.Berry Berry = testItem.IsBerry;//(Inventory.Inventory.Berry)Inventory.Inventory.GetItem(ChosenBerry);
 
-				BerryPlant.AddBerryPlant(GameVariables.Level.LevelFile, this.Position, Berry.BerryIndex);
-				GameVariables.TextBox.reDelay = 0.0f;
-				GameVariables.TextBox.Show("You planted a~" + /*Berry*/testItem.Name + " Berry here.", null);
+				BerryPlant.AddBerryPlant(Game.Level.LevelFile, this.Position, Berry.BerryIndex);
+				Game.TextBox.reDelay = 0.0f;
+				Game.TextBox.Show("You planted a~" + /*Berry*/testItem.Name + " Berry here.", null);
 			}
 		}
 

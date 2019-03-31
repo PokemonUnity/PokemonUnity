@@ -121,10 +121,10 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
-				this.Rotation.y = GameVariables.Camera.Yaw;
+			if (this.Rotation.y != Game.Camera.Yaw)
+				this.Rotation.y = Game.Camera.Yaw;
 
-			float c_pitch = GameVariables.Camera.Pitch;
+			float c_pitch = Game.Camera.Pitch;
 			this.Rotation.x = c_pitch / (float)2.0f;
 
 			base.UpdateEntity();

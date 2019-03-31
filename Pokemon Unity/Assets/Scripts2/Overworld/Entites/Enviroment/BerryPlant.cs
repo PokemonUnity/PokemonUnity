@@ -108,8 +108,8 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
-				this.Rotation.y = GameVariables.Camera.Yaw;
+			if (this.Rotation.y != Game.Camera.Yaw)
+				this.Rotation.y = Game.Camera.Yaw;
 
 			base.UpdateEntity();
 		}
@@ -159,7 +159,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			string text = "";
 
 			bool hasBottle = false;
-			if (GameVariables.playerTrainer.Bag.GetItemAmount((PokemonUnity.Inventory.Items)175) > 0)
+			if (Game.playerTrainer.Bag.GetItemAmount((PokemonUnity.Inventory.Items)175) > 0)
 				hasBottle = true;
 
 			switch (this.Phase)
@@ -211,7 +211,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					}
 			}
 
-			GameVariables.TextBox.Show(text, new Entity[] { this });
+			Game.TextBox.Show(text, new Entity[] { this });
 			SoundManager.PlaySound("select");
 		}
 
@@ -223,28 +223,28 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				{
 					case 0:
 						{
-							GameVariables.playerTrainer.Bag.AddItem(this.Berry.ID, this.Berries);
+							Game.playerTrainer.Bag.AddItem(this.Berry.ID, this.Berries);
 							string Text = "";
 							if (this.Berries == 1)
-								Text = GameVariables.playerTrainer.PlayerName + " picked the~" + Berry.Name + " Berry.*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
+								Text = Game.playerTrainer.PlayerName + " picked the~" + Berry.Name + " Berry.*" + Game.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
 							else
-								Text = GameVariables.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + GameVariables.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
+								Text = Game.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + Game.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
 
-							//GameVariables.playerTrainer.AddPoints(2, "Picked berries.");
+							//Game.playerTrainer.AddPoints(2, "Picked berries.");
 							//PlayerStatistics.Track("[2006]Berries picked", this.Berries);
 
 							SoundManager.PlaySound("item_found", true);
-							//GameVariables.TextBox.TextColor = TextBox.PlayerColor;
-							GameVariables.TextBox.Show(Text, new Entity[] { this });
+							//Game.TextBox.TextColor = TextBox.PlayerColor;
+							Game.TextBox.Show(Text, new Entity[] { this });
 							RemoveBerry();
-							GameVariables.Level.Entities.Remove(this);
+							Game.Level.Entities.Remove(this);
 							break;
 						}
 					case 1:
 						{
 							WaterBerry();
-							string Text = GameVariables.playerTrainer.PlayerName + " watered~the " + Berry.Name + ".";
-							GameVariables.TextBox.Show(Text, new Entity[] { this });
+							string Text = Game.playerTrainer.PlayerName + " watered~the " + Berry.Name + ".";
+							Game.TextBox.Show(Text, new Entity[] { this });
 							break;
 						}
 				}
@@ -258,14 +258,14 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private void RemoveBerry()
 		{
-			string[] Data = GameVariables.playerTrainer.BerryData.SplitAtNewline();
+			string[] Data = Game.playerTrainer.BerryData.SplitAtNewline();
 			string OutData = "";
 
 			foreach (string Berry in Data)
 			{
 				if (Berry != "")
 				{
-					if (!Berry.ToLower().StartsWith("{" + GameVariables.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|"))
+					if (!Berry.ToLower().StartsWith("{" + Game.Level.LevelFile.ToLower() + "|" + (this.Position.x + "," + this.Position.y + "," + this.Position.z).ToLower() + "|"))
 					{
 						if (OutData != "")
 							OutData += System.Environment.NewLine;
@@ -274,7 +274,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				}
 			}
 
-			GameVariables.playerTrainer.BerryData = OutData;
+			Game.playerTrainer.BerryData = OutData;
 		}
 
 		public static void AddBerryPlant(string LevelFile, Vector3 Position, int BerryIndex)
@@ -292,12 +292,12 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			string Data = "{" + LevelFile + "|" + Position.x + "," + Position.y + "," + Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "|" + FullGrownData + "}";
 
-			string OldData = GameVariables.playerTrainer.BerryData;
+			string OldData = Game.playerTrainer.BerryData;
 			if (OldData != "")
 				OldData += System.Environment.NewLine;
 			OldData += Data;
 
-			GameVariables.playerTrainer.BerryData = OldData;
+			Game.playerTrainer.BerryData = OldData;
 
 			Entity newEnt = Entity.GetNewEntity(Entities.BerryPlant, Position, new Texture2D[]
 			{
@@ -308,9 +308,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				0
 			}, true, new Vector3(0,0,0), new Vector3(1,1,1)/*, UnityEngine.Mesh.BillModel*/, 0, "", true, new Vector3(1.0f,1,1), -1, "", "", new Vector3(0,0,0));
 			((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
-			GameVariables.Level.Entities.Add(newEnt);
+			Game.Level.Entities.Add(newEnt);
 
-			GameVariables.playerTrainer.Bag.RemoveItem((Inventory.Items)BerryIndex + 2000, 1);
+			Game.playerTrainer.Bag.RemoveItem((Inventory.Items)BerryIndex + 2000, 1);
 		}
 
 		private static int GetBerryAmount(Inventory.Item.Berry Berry, int Watered)
@@ -412,14 +412,14 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				int BerryAmount = GetBerryAmount(Berry, wateredCount);
 
-				string Data = "{" + GameVariables.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
+				string Data = "{" + Game.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
 
-				string OldData = GameVariables.playerTrainer.BerryData;
+				string OldData = Game.playerTrainer.BerryData;
 				if (OldData != "")
 					OldData += System.Environment.NewLine;
 				OldData += Data;
 
-				GameVariables.playerTrainer.BerryData = OldData;
+				Game.playerTrainer.BerryData = OldData;
 			}
 		}
 	}

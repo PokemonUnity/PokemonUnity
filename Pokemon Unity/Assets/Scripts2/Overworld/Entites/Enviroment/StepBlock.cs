@@ -11,16 +11,16 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			if (facing < 0)
 				facing += 4;
 
-			if (GameVariables.Camera.GetPlayerFacingDirection() == facing)
+			if (Game.Camera.GetPlayerFacingDirection() == facing)
 			{
-				// Dim newPos As New Vector3(GameVariables.Camera.Position.x + GameVariables.Camera.moveDirectionX * 2, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + GameVariables.Camera.moveDirectionZ * 2)
-				// If CType(GameVariables.Camera, OverworldCamera).CheckCollision(newPos) = True Then
+				// Dim newPos As New Vector3(Game.Camera.Position.x + Game.Camera.moveDirectionX * 2, Game.Camera.Position.y, Game.Camera.Position.z + Game.Camera.moveDirectionZ * 2)
+				// If CType(Game.Camera, OverworldCamera).CheckCollision(newPos) = True Then
 
 				// End If
-				GameVariables.Camera.AddToPlannedMovement(new Vector3(0, 0.15f, 0));
-				GameVariables.Camera.Move(1.0f);
-				GameVariables.Level.OverworldPokemon.Visible = false;
-				GameVariables.Level.OverworldPokemon.warped = true;
+				Game.Camera.AddToPlannedMovement(new Vector3(0, 0.15f, 0));
+				Game.Camera.Move(1.0f);
+				Game.Level.OverworldPokemon.Visible = false;
+				Game.Level.OverworldPokemon.warped = true;
 
 				SoundManager.PlaySound("jump_ledge", false);
 

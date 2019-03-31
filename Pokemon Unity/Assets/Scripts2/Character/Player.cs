@@ -35,8 +35,8 @@ namespace PokemonUnity
 		/// <summary>
 		/// When displaying items in bag, do a foreach loop and filter by item category
 		/// </summary>
-		public GameVariables.TrainerBag Bag { get { return new GameVariables.TrainerBag(this); } }
-		public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
+		public Game.TrainerBag Bag { get { return new Game.TrainerBag(this); } }
+		public Game.TrainerPC PC { get { return new Game.TrainerPC(this, ActivePcBox); } }
 		//ToDo: Missing (Trainer)Player.Rival variable
 		public string ItemData { get; set; }
 		public string BerryData { get; set; }
@@ -213,7 +213,7 @@ namespace PokemonUnity
 			playerTime = trainerSaveData.PlayerTime;
 			isMale = trainerSaveData.IsMale;
 			GymsBeatTime = trainerSaveData.GymsChallenged;
-			//for (int i = 0; i < /*GameVariables.playerTrainer.Trainer.*/Party.Length; i++)
+			//for (int i = 0; i < /*Game.playerTrainer.Trainer.*/Party.Length; i++)
 			//{
 			//	Party[i] = trainerSaveData.PlayerParty[i];
 			//}
@@ -237,7 +237,7 @@ namespace PokemonUnity
 			}
 			else
 				//attempt to add to the earliest available PC box. 
-				for (int i = 0, b = ActivePcBox; i < GameVariables.PC_Poke.GetUpperBound(0); i++, b++)
+				for (int i = 0, b = ActivePcBox; i < Game.PC_Poke.GetUpperBound(0); i++, b++)
 				{
 					bool added = this.PC[b % Settings.STORAGEBOXES].addPokemon(pokemon);
 					if (added)

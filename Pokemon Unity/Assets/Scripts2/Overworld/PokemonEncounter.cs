@@ -44,9 +44,9 @@ namespace PokemonUnity.Overworld
 						int startRandomValue = 12;
 						int minRandomValue = 5;
 
-						if (GameVariables.playerTrainer.Party.GetCount() > 0)
+						if (Game.playerTrainer.Party.GetCount() > 0)
 						{
-							PokemonUnity.Monster.Pokemon p = GameVariables.playerTrainer.Party[0];
+							PokemonUnity.Monster.Pokemon p = Game.playerTrainer.Party[0];
 
 							// Arena Trap/Illuminate/No Guard/Swarm Ability:
 							if (p.Ability == Abilities.ARENA_TRAP | p.Ability == Abilities.ILLUMINATE | p.Ability == Abilities.NO_GUARD | p.Ability == Abilities.SWARM)
@@ -87,7 +87,7 @@ namespace PokemonUnity.Overworld
 						if (Settings.Rand.Next(0, randomValue * 2) == 0)
 						{
 							// Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
-							if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+							if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 							{
 								//if (KeyBoardHandler.KeyDown(Keys.LeftControl))
 								if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -116,23 +116,23 @@ namespace PokemonUnity.Overworld
 			//if (this._levelReference.PokemonEncounterData.EncounteredPokemon & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 			//{
 			//    // If the player met the set position:
-			//    if (GameVariables.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & GameVariables.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
+			//    if (Game.Camera.Position.x == this._levelReference.PokemonEncounterData.Position.x & Game.Camera.Position.z == this._levelReference.PokemonEncounterData.Position.z)
 			//    {
 			//        // Make the player stop and set encounter check to false:
 			//        this._levelReference.PokemonEncounterData.EncounteredPokemon = false;
-			//        GameVariables.Camera.StopMovement();
+			//        Game.Camera.StopMovement();
 			//
 			//        // Generate new wild Pokémon:
-			//        Pokemon.Pokemon Pokemon = Spawner.GetPokemon(GameVariables.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
+			//        Pokemon.Pokemon Pokemon = Spawner.GetPokemon(Game.Level.LevelFile, this._levelReference.PokemonEncounterData.Method, true, this._levelReference.PokemonEncounterData.PokeFile);
 			//
 			//        if (Pokemon != null & !((OverworldScreen)Core.CurrentScreen).TrainerEncountered & ((OverworldScreen)Core.CurrentScreen).ActionScript.IsReady)
 			//        {
-			//            GameVariables.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
+			//            Game.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 			//
 			//            // If the player has a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
-			//            if (GameVariables.playerTrainer.RepelSteps > 0)
+			//            if (Game.playerTrainer.RepelSteps > 0)
 			//            {
-			//                Pokemon.Pokemon p = GameVariables.playerTrainer.GetWalkPokemon();
+			//                Pokemon.Pokemon p = Game.playerTrainer.GetWalkPokemon();
 			//                if (p != null)
 			//                {
 			//                    if (p.Level >= Pokemon.Level)
@@ -141,11 +141,11 @@ namespace PokemonUnity.Overworld
 			//            }
 			//
 			//            // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
-			//            if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
+			//            if (Game.playerTrainer.Party[0].Level >= Pokemon.Level)
 			//            {
-			//                if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
+			//                if (Game.playerTrainer.Party[0].Item != Item.Items.NONE)
 			//                {
-			//                    if (GameVariables.playerTrainer.Party[0].Item == Item.Items.CLEANSE_TAG)
+			//                    if (Game.playerTrainer.Party[0].Item == Item.Items.CLEANSE_TAG)
 			//                    {
 			//                        if (Settings.Rand.Next(0, 3) == 0)
 			//                            return;
@@ -154,11 +154,11 @@ namespace PokemonUnity.Overworld
 			//            }
 			//
 			//            // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
-			//            if (GameVariables.playerTrainer.Party[0].Level >= Pokemon.Level)
+			//            if (Game.playerTrainer.Party[0].Level >= Pokemon.Level)
 			//            {
-			//                if (GameVariables.playerTrainer.Party[0].Item != Item.Items.NONE)
+			//                if (Game.playerTrainer.Party[0].Item != Item.Items.NONE)
 			//                {
-			//                    if (GameVariables.playerTrainer.Party[0].Item == Item.Items.PURE_INCENSE)
+			//                    if (Game.playerTrainer.Party[0].Item == Item.Items.PURE_INCENSE)
 			//                    {
 			//                        if (Settings.Rand.Next(0, 3) == 0)
 			//                            return;
@@ -167,8 +167,8 @@ namespace PokemonUnity.Overworld
 			//            }
 			//
 			//            // Register the wild Pokémon as Seen in the Pokédex:
-			//            //GameVariables.playerTrainer.PokedexData = Pokedex.ChangeEntry(GameVariables.playerTrainer.PokedexData, Pokemon.Species, 1);
-			//            GameVariables.playerTrainer.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
+			//            //Game.playerTrainer.PokedexData = Pokedex.ChangeEntry(Game.playerTrainer.PokedexData, Pokemon.Species, 1);
+			//            Game.playerTrainer.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
 			//
 			//            // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
 			//            int introType = Settings.Rand.Next(0, 10);

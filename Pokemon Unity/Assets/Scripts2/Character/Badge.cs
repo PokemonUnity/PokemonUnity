@@ -194,7 +194,7 @@ namespace PokemonUnity.Character
 		/// </summary>
 		public static int GetLevelCap()
 		{
-			int[] trainerBadges = GameVariables.playerTrainer.Badges;
+			int[] trainerBadges = Game.playerTrainer.Badges;
 			int highestCap = 10;
 			foreach (BadgeDeclaration b in Badges)
 			{
@@ -210,7 +210,7 @@ namespace PokemonUnity.Character
 		/// <param name="HM">The Hidden Machine move the player tries to use.</param>
 		public static bool CanUseHMMove(HMMoves HM)
 		{
-			int[] trainerBadges = GameVariables.playerTrainer.Badges;
+			int[] trainerBadges = Game.playerTrainer.Badges;
 			foreach (BadgeDeclaration b in Badges)
 			{
 				if (b.HMs.Contains(HM) & trainerBadges.Contains(b.ID) | b.ID == 0)
@@ -291,7 +291,7 @@ namespace PokemonUnity.Character
 		/// <param name="BadgeID">The Badge ID to check for.</param>
 		public static bool PlayerHasBadge(int BadgeID)
 		{
-			return GameVariables.playerTrainer.Badges.Contains(BadgeID);
+			return Game.playerTrainer.Badges.Contains(BadgeID);
 		}
 	}
 }

@@ -1302,8 +1302,8 @@ namespace PokemonUnity
 		#endregion
 
 		//UnityEngine.GameObject mapTile;
-		//ToDo: Fetch from GameVariables
-		MapMatrix map; //{ get { return GameVariables.Map; } }
+		//ToDo: Fetch from Game
+		MapMatrix map; //{ get { return Game.Map; } }
  
 		/// <summary>
 		/// Build map from Array of GameObjects[]

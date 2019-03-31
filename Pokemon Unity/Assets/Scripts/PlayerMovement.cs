@@ -437,7 +437,7 @@ public class PlayerMovement : MonoBehaviour
                         yield return StartCoroutine(moveForward());
                     }
                 }
-                else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE)
+                else if (Input.GetKeyDown("g") && Game.IS_DEBUG_ACTIVE)
                 {
                     //DEBUG
                     Debug.Log(currentMap.getTileTag(transform.position));

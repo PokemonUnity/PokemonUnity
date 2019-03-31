@@ -91,21 +91,21 @@ namespace PokemonUnity.Overworld
 			if (!loadOffsetMap)
 			{
 				//ToDo: Change Screen to Scene
-				GameVariables.Level.LevelFile = levelPath;
+				Game.Level.LevelFile = levelPath;
 
-				//GameVariables.playerTrainer.LastSavePlace = GameVariables.Level.LevelFile;
-				//GameVariables.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
+				//Game.playerTrainer.LastSavePlace = Game.Level.LevelFile;
+				//Game.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
-				GameVariables.Level.Entities.Clear();
-				GameVariables.Level.Floors.Clear();
-				GameVariables.Level.Shaders.Clear();
-				//GameVariables.Level.BackdropRenderer.Clear();
+				Game.Level.Entities.Clear();
+				Game.Level.Floors.Clear();
+				Game.Level.Shaders.Clear();
+				//Game.Level.BackdropRenderer.Clear();
 
-				GameVariables.Level.OffsetmapFloors.Clear();
-				GameVariables.Level.OffsetmapEntities.Clear();
+				Game.Level.OffsetmapFloors.Clear();
+				Game.Level.OffsetmapEntities.Clear();
 
-				GameVariables.Level.WildPokemonFloor = false;
-				GameVariables.Level.WalkedSteps = 0;
+				Game.Level.WildPokemonFloor = false;
+				Game.Level.WalkedSteps = 0;
 
 				LoadedOffsetMapNames.Clear();
 				LoadedOffsetMapOffsets.Clear();
@@ -118,12 +118,12 @@ namespace PokemonUnity.Overworld
 
 			levelPath = "";//GameModeManager.GetMapPath(levelPath);
 
-			GameVariables.DebugLog("Loading map: " + levelPath.Remove(0, Saving.SaveManager.saveLocation.Length));
+			Game.DebugLog("Loading map: " + levelPath.Remove(0, Saving.SaveManager.saveLocation.Length));
 			//System.Security.FileValidation.CheckFileValid(levelPath, false, "LevelLoader.vb");
 
 			if (!System.IO.File.Exists(levelPath))
 			{
-				GameVariables.DebugLog("LevelLoader.vb: Error accessing map file \"" + levelPath + "\". File not found.", true);
+				Game.DebugLog("LevelLoader.vb: Error accessing map file \"" + levelPath + "\". File not found.", true);
 				Busy -= 1;
 
 				//if (CurrentScreen.Identification == Screen.Identifications.OverworldScreen & !loadOffsetMap)
@@ -148,7 +148,7 @@ namespace PokemonUnity.Overworld
 						l = l.Remove(0, l.IndexOf("[") + 1);
 						l = l.Remove(l.IndexOf("]"));
 
-						GameVariables.DebugLog(l);
+						Game.DebugLog(l);
 					}
 				}
 			}
@@ -186,7 +186,7 @@ namespace PokemonUnity.Overworld
 					}
 					catch (Exception ex)
 					{
-						GameVariables.DebugLog("LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") from mapfile: " + levelPath + "; Error message: " + ex.Message, false);
+						Game.DebugLog("LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") from mapfile: " + levelPath + "; Error message: " + ex.Message, false);
 					}
 				}
 			}
@@ -287,7 +287,7 @@ namespace PokemonUnity.Overworld
 					}
 					catch (Exception ex)
 					{
-						GameVariables.DebugLog("LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") (Line: " + orgLine + ") from mapfile: " + levelPath + "; Error message: " + ex.Message, false);
+						Game.DebugLog("LevelLoader.vb: Failed to load map object! (Index: " + countLines + ") (Line: " + orgLine + ") from mapfile: " + levelPath + "; Error message: " + ex.Message, false);
 					}
 				}
 			}
@@ -295,19 +295,19 @@ namespace PokemonUnity.Overworld
 			if (!loadOffsetMap)
 				LoadBerries();
 
-			foreach (Shader s in GameVariables.Level.Shaders)
+			foreach (Shader s in Game.Level.Shaders)
 			{
 				//if (!s.HasBeenApplied)
 				//{
-				//    s.ApplyShader(GameVariables.Level.Entities.ToArray());
-				//    s.ApplyShader(GameVariables.Level.Floors.ToArray());
+				//    s.ApplyShader(Game.Level.Entities.ToArray());
+				//    s.ApplyShader(Game.Level.Floors.ToArray());
 				//}
 			}
 
-			GameVariables.DebugLog("Map loading finished: " + levelPath.Remove(0, Saving.SaveManager.saveLocation.Length));
-			GameVariables.DebugLog("Loaded textures: " + TextureManager.TextureList.Count.ToString());
+			Game.DebugLog("Map loading finished: " + levelPath.Remove(0, Saving.SaveManager.saveLocation.Length));
+			Game.DebugLog("Loaded textures: " + TextureManager.TextureList.Count.ToString());
 			timer.Stop();
-			GameVariables.DebugLog("Map loading time: " + timer.ElapsedTicks + " Ticks; " + timer.ElapsedMilliseconds + " Milliseconds.");
+			Game.DebugLog("Map loading time: " + timer.ElapsedTicks + " Ticks; " + timer.ElapsedMilliseconds + " Milliseconds.");
 
 			// Dim xmlLevelLoader As New XmlLevelLoader.
 			// xmlLevelLoader.Load(My.Computer.FileSystem.SpecialDirectories.Desktop & "\t.xml", _5DHero.XmlLevelLoader.LevelTypes.Default, Vector3.Zero)
@@ -315,7 +315,7 @@ namespace PokemonUnity.Overworld
 			Busy -= 1;
 
 			if (Busy == 0)
-				GameVariables.Level.StartOffsetMapUpdate();
+				Game.Level.StartOffsetMapUpdate();
 		}
 
 		private Dictionary<string, object> GetTags(string line)
@@ -498,7 +498,7 @@ namespace PokemonUnity.Overworld
 			//    LoadedOffsetMapNames.Add(MapName);
 			//    LoadedOffsetMapOffsets.Add(MapOffset);
 			//
-			//    string listName = GameVariables.Level.LevelFile + "|" + MapName + "|" + GameVariables.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
+			//    string listName = Game.Level.LevelFile + "|" + MapName + "|" + Game.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
 			//    if (!OffsetMaps.ContainsKey(listName))
 			//    {
 			//        List<List<Entity.Entity>> mapList = new List<List<Entity.Entity>>();
@@ -513,18 +513,18 @@ namespace PokemonUnity.Overworld
 			//            (object)sessionMapsLoaded
 			//        });
 			//
-			//        int offsetEntityCount = GameVariables.Level.OffsetmapEntities.Count;
-			//        int offsetFloorCount = GameVariables.Level.OffsetmapFloors.Count;
+			//        int offsetEntityCount = Game.Level.OffsetmapEntities.Count;
+			//        int offsetFloorCount = Game.Level.OffsetmapFloors.Count;
 			//
 			//        LevelLoader levelLoader = new LevelLoader();
 			//        levelLoader.LoadLevel(@params.ToArray());
 			//        List<Entity.Entity> entList = new List<Entity.Entity>();
 			//        List<Entity.Entity> floorList = new List<Entity.Entity>();
 			//
-			//        for (int i = offsetEntityCount; i <= GameVariables.Level.OffsetmapEntities.Count - 1; i++)
-			//            entList.Add(GameVariables.Level.OffsetmapEntities(i));
-			//        for (int i = offsetFloorCount; i <= GameVariables.Level.OffsetmapFloors.Count - 1; i++)
-			//            floorList.Add(GameVariables.Level.OffsetmapFloors(i));
+			//        for (int i = offsetEntityCount; i <= Game.Level.OffsetmapEntities.Count - 1; i++)
+			//            entList.Add(Game.Level.OffsetmapEntities(i));
+			//        for (int i = offsetFloorCount; i <= Game.Level.OffsetmapFloors.Count - 1; i++)
+			//            floorList.Add(Game.Level.OffsetmapFloors(i));
 			//        mapList.AddRange(new List<List<Entity.Entity>>()
 			//        {
 			//            entList,
@@ -535,14 +535,14 @@ namespace PokemonUnity.Overworld
 			//    }
 			//    else
 			//    {
-			//        GameVariables.DebugLog("Loaded Offsetmap from store: " + MapName);
+			//        Game.DebugLog("Loaded Offsetmap from store: " + MapName);
 			//
 			//        foreach (Entity.Entity e in OffsetMaps(listName)(0))
 			//        {
 			//            if (e.MapOrigin == MapName)
 			//            {
 			//                e.IsOffsetMapContent = true;
-			//                GameVariables.Level.OffsetmapEntities.Add(e);
+			//                Game.Level.OffsetmapEntities.Add(e);
 			//            }
 			//        }
 			//        foreach (Entity.Entity e in OffsetMaps(listName)(1))
@@ -550,19 +550,19 @@ namespace PokemonUnity.Overworld
 			//            if (e.MapOrigin == MapName)
 			//            {
 			//                e.IsOffsetMapContent = true;
-			//                GameVariables.Level.OffsetmapFloors.Add(e);
+			//                Game.Level.OffsetmapFloors.Add(e);
 			//            }
 			//        }
 			//    }
-			//    GameVariables.DebugLog("Offset maps in store: " + OffsetMaps.Count);
+			//    Game.DebugLog("Offset maps in store: " + OffsetMaps.Count);
 			//
-			//    GameVariables.Level.OffsetmapEntities = (from e in GameVariables.Level.OffsetmapEntities
+			//    Game.Level.OffsetmapEntities = (from e in Game.Level.OffsetmapEntities
 			//                                      orderby e.CameraDistance descending
 			//                                      select e).ToList();
 			//
-			//    foreach (Entity.Entity Entity in GameVariables.Level.OffsetmapEntities)
+			//    foreach (Entity.Entity Entity in Game.Level.OffsetmapEntities)
 			//        Entity.UpdateEntity();
-			//    foreach (Entity.Entity Floor in GameVariables.Level.OffsetmapFloors)
+			//    foreach (Entity.Entity Floor in Game.Level.OffsetmapFloors)
 			//        Floor.UpdateEntity();
 			//}
 		}
@@ -603,7 +603,7 @@ namespace PokemonUnity.Overworld
 
 				if (!System.IO.File.Exists(filepath))
 				{
-					GameVariables.DebugLog("LevelLoader.vb: Error loading structure from \"" + filepath + "\". File not found.", true);
+					Game.DebugLog("LevelLoader.vb: Error loading structure from \"" + filepath + "\". File not found.", true);
 
 					return new string[] { };
 				}
@@ -773,9 +773,9 @@ namespace PokemonUnity.Overworld
 			});
 
 			if (!loadOffsetMap)
-				GameVariables.Level.Entities.Add(NPC);
+				Game.Level.Entities.Add(NPC);
 			else
-				GameVariables.Level.OffsetmapEntities.Add(NPC);
+				Game.Level.OffsetmapEntities.Add(NPC);
 		}
 
 		private void AddFloor(Dictionary<string, object> Tags)
@@ -825,9 +825,9 @@ namespace PokemonUnity.Overworld
 			if (TagExists(Tags, "SeasonTexture"))
 				SeasonTexture = System.Convert.ToString(GetTag(Tags, "SeasonTexture"));
 
-			List<Entity.Entity> floorList = GameVariables.Level.Floors;
+			List<Entity.Entity> floorList = Game.Level.Floors;
 			if (loadOffsetMap)
-				floorList = GameVariables.Level.OffsetmapFloors;
+				floorList = Game.Level.OffsetmapFloors;
 
 			if (!RemoveFloor)
 			{
@@ -844,13 +844,13 @@ namespace PokemonUnity.Overworld
 				//
 				//        if (loadOffsetMap)
 				//        {
-				//            Ent = GameVariables.Level.OffsetmapFloors.Find(e =>
+				//            Ent = Game.Level.OffsetmapFloors.Find(e =>
 				//            {
 				//                return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
 				//            });
 				//        }
 				//        else
-				//            Ent = GameVariables.Level.Floors.Find(e =>
+				//            Ent = Game.Level.Floors.Find(e =>
 				//            {
 				//                return ((Entity.Entity)e).Position == new Vector3(Position.x + iX, Position.y, Position.z + iZ);
 				//            });
@@ -1021,9 +1021,9 @@ namespace PokemonUnity.Overworld
 		//					if (newEnt != null)
 		//					{
 		//						if (!loadOffsetMap)
-		//							GameVariables.Level.Entities.Add(newEnt);
+		//							Game.Level.Entities.Add(newEnt);
 		//						else
-		//							GameVariables.Level.OffsetmapEntities.Add(newEnt);
+		//							Game.Level.OffsetmapEntities.Add(newEnt);
 		//					}
 		//				}
 		//			}
@@ -1037,26 +1037,26 @@ namespace PokemonUnity.Overworld
 			string MusicLoop = System.Convert.ToString(GetTag(Tags, "MusicLoop"));
 
 			if (TagExists(Tags, "WildPokemon"))
-				GameVariables.Level.WildPokemonFloor = System.Convert.ToBoolean(GetTag(Tags, "WildPokemon"));
+				Game.Level.WildPokemonFloor = System.Convert.ToBoolean(GetTag(Tags, "WildPokemon"));
 			else
-				GameVariables.Level.WildPokemonFloor = false;
+				Game.Level.WildPokemonFloor = false;
 
 			if (TagExists(Tags, "OverworldPokemon"))
-				GameVariables.Level.ShowOverworldPokemon = System.Convert.ToBoolean(GetTag(Tags, "OverworldPokemon"));
+				Game.Level.ShowOverworldPokemon = System.Convert.ToBoolean(GetTag(Tags, "OverworldPokemon"));
 			else
-				GameVariables.Level.ShowOverworldPokemon = true;
+				Game.Level.ShowOverworldPokemon = true;
 
 			if (TagExists(Tags, "CurrentRegion"))
-				GameVariables.Level.CurrentRegion = System.Convert.ToString(GetTag(Tags, "CurrentRegion"));
+				Game.Level.CurrentRegion = System.Convert.ToString(GetTag(Tags, "CurrentRegion"));
 			else
-				GameVariables.Level.CurrentRegion = "Johto";
+				Game.Level.CurrentRegion = "Johto";
 
 			if (TagExists(Tags, "HiddenAbility"))
-				GameVariables.Level.HiddenAbilityChance = System.Convert.ToInt32(GetTag(Tags, "HiddenAbility"));
+				Game.Level.HiddenAbilityChance = System.Convert.ToInt32(GetTag(Tags, "HiddenAbility"));
 			else
-				GameVariables.Level.HiddenAbilityChance = 0;
-			GameVariables.Level.MapName = Name;
-			GameVariables.Level.MusicLoop = MusicLoop;
+				Game.Level.HiddenAbilityChance = 0;
+			Game.Level.MapName = Name;
+			Game.Level.MusicLoop = MusicLoop;
 		}
 
 		public static string MapScript = "";
@@ -1064,73 +1064,73 @@ namespace PokemonUnity.Overworld
 		private void SetupActions(Dictionary<string, object> Tags)
 		{
 			if (TagExists(Tags, "CanTeleport"))
-				GameVariables.Level.CanTeleport = System.Convert.ToBoolean(GetTag(Tags, "CanTeleport"));
+				Game.Level.CanTeleport = System.Convert.ToBoolean(GetTag(Tags, "CanTeleport"));
 			else
-				GameVariables.Level.CanTeleport = false;
+				Game.Level.CanTeleport = false;
 
 			if (TagExists(Tags, "CanDig"))
-				GameVariables.Level.CanDig = System.Convert.ToBoolean(GetTag(Tags, "CanDig"));
+				Game.Level.CanDig = System.Convert.ToBoolean(GetTag(Tags, "CanDig"));
 			else
-				GameVariables.Level.CanDig = false;
+				Game.Level.CanDig = false;
 
 			if (TagExists(Tags, "CanFly"))
-				GameVariables.Level.CanFly = System.Convert.ToBoolean(GetTag(Tags, "CanFly"));
+				Game.Level.CanFly = System.Convert.ToBoolean(GetTag(Tags, "CanFly"));
 			else
-				GameVariables.Level.CanFly = false;
+				Game.Level.CanFly = false;
 
 			if (TagExists(Tags, "RideType"))
-				GameVariables.Level.RideType = System.Convert.ToInt32(GetTag(Tags, "RideType"));
+				Game.Level.RideType = System.Convert.ToInt32(GetTag(Tags, "RideType"));
 			else
-				GameVariables.Level.RideType = 0;
+				Game.Level.RideType = 0;
 
 			if (TagExists(Tags, "EnviromentType"))
-				GameVariables.Level.EnvironmentType = System.Convert.ToInt32(GetTag(Tags, "EnviromentType"));
+				Game.Level.EnvironmentType = System.Convert.ToInt32(GetTag(Tags, "EnviromentType"));
 			else
-				GameVariables.Level.EnvironmentType = 0;
+				Game.Level.EnvironmentType = 0;
 
 			if (TagExists(Tags, "Weather"))
-				GameVariables.Level.WeatherType = System.Convert.ToInt32(GetTag(Tags, "Weather"));
+				Game.Level.WeatherType = System.Convert.ToInt32(GetTag(Tags, "Weather"));
 			else
-				GameVariables.Level.WeatherType = 0;
+				Game.Level.WeatherType = 0;
 
 			// It's not my fault, I swear. The keyboard was slippy, I was partly sick, and there was fog on the road and I couldn't see.
 			bool lightningExists = TagExists(Tags, "Lightning");
 			bool lightingExists = TagExists(Tags, "Lighting");
 
 			if (lightningExists & lightingExists)
-				GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
+				Game.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
 			else if (lightingExists)
-				GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
+				Game.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lighting"));
 			else if (lightningExists)
-				GameVariables.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lightning"));
+				Game.Level.LightingType = System.Convert.ToInt32(GetTag(Tags, "Lightning"));
 			else
-				GameVariables.Level.LightingType = 1;
+				Game.Level.LightingType = 1;
 
 			if (TagExists(Tags, "IsDark"))
-				GameVariables.Level.IsDark = System.Convert.ToBoolean(GetTag(Tags, "IsDark"));
+				Game.Level.IsDark = System.Convert.ToBoolean(GetTag(Tags, "IsDark"));
 			else
-				GameVariables.Level.IsDark = false;
+				Game.Level.IsDark = false;
 
 			//ToDo: Uncomment below?...
 			//if (TagExists(Tags, "Terrain"))
-			//    GameVariables.Level.Terrain.TerrainType = (Terrain)(System.Convert.ToInt32(GetTag(Tags, "Terrain")));
+			//    Game.Level.Terrain.TerrainType = (Terrain)(System.Convert.ToInt32(GetTag(Tags, "Terrain")));
 			//else
-			//    GameVariables.Level.Terrain.TerrainType = Terrain.Plain;
+			//    Game.Level.Terrain.TerrainType = Terrain.Plain;
 
 			if (TagExists(Tags, "IsSafariZone"))
-				GameVariables.Level.IsSafariZone = System.Convert.ToBoolean(GetTag(Tags, "IsSafariZone"));
+				Game.Level.IsSafariZone = System.Convert.ToBoolean(GetTag(Tags, "IsSafariZone"));
 			else
-				GameVariables.Level.IsSafariZone = false;
+				Game.Level.IsSafariZone = false;
 
 			if (TagExists(Tags, "BugCatchingContest"))
 			{
-				GameVariables.Level.IsBugCatchingContest = true;
-				GameVariables.Level.BugCatchingContestData = System.Convert.ToString(GetTag(Tags, "BugCatchingContest"));
+				Game.Level.IsBugCatchingContest = true;
+				Game.Level.BugCatchingContestData = System.Convert.ToString(GetTag(Tags, "BugCatchingContest"));
 			}
 			else
 			{
-				GameVariables.Level.IsBugCatchingContest = false;
-				GameVariables.Level.BugCatchingContestData = "";
+				Game.Level.IsBugCatchingContest = false;
+				Game.Level.BugCatchingContestData = "";
 			}
 
 			if (TagExists(Tags, "MapScript"))
@@ -1156,22 +1156,22 @@ namespace PokemonUnity.Overworld
 			{
 				string[] channels = System.Convert.ToString(GetTag(Tags, "RadioChannels")).Split(System.Convert.ToChar(","));
 				foreach (string c in channels)
-					GameVariables.Level.AllowedRadioChannels.Add(System.Convert.ToDecimal(c.Replace(".", StringHelper.DecSeparator)));
+					Game.Level.AllowedRadioChannels.Add(System.Convert.ToDecimal(c.Replace(".", StringHelper.DecSeparator)));
 			}
 			else
-				GameVariables.Level.AllowedRadioChannels.Clear();
+				Game.Level.AllowedRadioChannels.Clear();
 
 			if (TagExists(Tags, "BattleMap"))
-				GameVariables.Level.BattleMapData = System.Convert.ToString(GetTag(Tags, "BattleMap"));
+				Game.Level.BattleMapData = System.Convert.ToString(GetTag(Tags, "BattleMap"));
 			else
-				GameVariables.Level.BattleMapData = "";
+				Game.Level.BattleMapData = "";
 
 			if (TagExists(Tags, "SurfingBattleMap"))
-				GameVariables.Level.SurfingBattleMapData = System.Convert.ToString(GetTag(Tags, "SurfingBattleMap"));
+				Game.Level.SurfingBattleMapData = System.Convert.ToString(GetTag(Tags, "SurfingBattleMap"));
 			else
-				GameVariables.Level.SurfingBattleMapData = "";
+				Game.Level.SurfingBattleMapData = "";
 
-			GameVariables.Level.World = new World(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
+			Game.Level.World = new World(Game.Level.EnvironmentType, Game.Level.WeatherType);
 		}
 
 		private void AddShader(Dictionary<string, object> Tags)
@@ -1199,7 +1199,7 @@ namespace PokemonUnity.Overworld
 			//if (DayTime.Contains(World.GetTime()) | DayTime.Contains(-1) | DayTime.Count == 0)
 			//{
 			//    Shader NewShader = new Shader(Position, Size, Shader, StopOnContact);
-			//    GameVariables.Level.Shaders.Add(NewShader);
+			//    Game.Level.Shaders.Add(NewShader);
 			//}
 		}
 
@@ -1248,13 +1248,13 @@ namespace PokemonUnity.Overworld
 			}
 
 			//if (isTriggered)
-			//    GameVariables.Level.BackdropRenderer.AddBackdrop(new BackdropRenderer.Backdrop(BackdropType, Position, Rotation, Width, Height, Texture));
+			//    Game.Level.BackdropRenderer.AddBackdrop(new BackdropRenderer.Backdrop(BackdropType, Position, Rotation, Width, Height, Texture));
 		}
 
 
 		private void LoadBerries()
 		{
-			string[] Data = GameVariables.playerTrainer.BerryData.Replace("}" + System.Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
+			string[] Data = Game.playerTrainer.BerryData.Replace("}" + System.Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
 			foreach (string Berry in Data)
 			{
 				if (Berry.Contains("{"))
@@ -1268,7 +1268,7 @@ namespace PokemonUnity.Overworld
 					if (BData.Count == 6)
 						BData.Add("0");
 
-					if (BData[0].ToLower() == GameVariables.Level.LevelFile.ToLower())
+					if (BData[0].ToLower() == Game.Level.LevelFile.ToLower())
 					{
 						Entity.Entity newEnt = Entity.Entity.GetNewEntity(PokemonUnity.Entities.BerryPlant, new Vector3(System.Convert.ToSingle(PData[0]), System.Convert.ToSingle(PData[1]), System.Convert.ToSingle(PData[2])), null, // TODO Change to default(_) if this is not a reference type 
 						new int[]
@@ -1278,7 +1278,7 @@ namespace PokemonUnity.Overworld
 						}, true, new Vector3(0, 0, 0), new Vector3(1, 1, 1)/*, UnityEngine.Mesh.BillModel*/, 0, "", true, new Vector3(1.0f, 1, 1), -1, MapOrigin, "", Offset);
 						((BerryPlant)newEnt).Initialize(System.Convert.ToInt32(BData[2]), System.Convert.ToInt32(BData[3]), System.Convert.ToString(BData[4]), BData[5], System.Convert.ToBoolean(BData[6]));
 
-						GameVariables.Level.Entities.Add(newEnt);
+						Game.Level.Entities.Add(newEnt);
 					}
 				}
 			}

@@ -49,7 +49,7 @@ namespace PokemonUnity.Overworld
 
 			// Set the identifier:
 			// Offset Map                   Map Weather										 Region Weather                          Time                   Season
-			//Identifier = MapName + "|" + GameVariables.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
+			//Identifier = MapName + "|" + Game.Level.World.CurrentMapWeather + "|" + World.GetCurrentRegionWeather() + "|" + World.GetTime() + "|" + World.CurrentSeason();
 		}
 
 		/// <summary>

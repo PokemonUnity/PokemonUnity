@@ -426,7 +426,7 @@ namespace PokemonUnity.Monster
 		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null) 
 			: this (
 			species: pkmn.Species,
-			original: GameVariables.playerTrainer.Trainer,
+			original: Game.playerTrainer.Trainer,
 			nickName: nickname, form: pkmn.Form,
 			ability: pkmn.Ability, nature: pkmn.Nature,
 			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
@@ -622,9 +622,9 @@ namespace PokemonUnity.Monster
 		public void SetCatchInfos(Items Ball, ObtainedMethod Method)
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
-			//this.obtainMap = GameVariables.Level.MapName;
-			//this.CatchTrainerName = GameVariables.playerTrainer.Name;
-			this.OT = GameVariables.playerTrainer.Trainer;
+			//this.obtainMap = Game.Level.MapName;
+			//this.CatchTrainerName = Game.playerTrainer.Name;
+			this.OT = Game.playerTrainer.Trainer;
 
 			this.ObtainedMode = Method;
 			this.ballUsed = Ball;
@@ -642,13 +642,13 @@ namespace PokemonUnity.Monster
             private set
             {
                 if (value < 1 || value > 100) //Experience.MAXLEVEL
-                    GameVariables.DebugLog(string.Format("The level number {0} is invalid", value), true);
+                    Game.DebugLog(string.Format("The level number {0} is invalid", value), true);
                 if (value > this.Level)
                     this.Exp.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
                 else
                 {
                     //ToDo: Not Designed to go backwards yet...
-                    GameVariables.DebugLog(string.Format("The level number {0} is invalid", value), true);
+                    Game.DebugLog(string.Format("The level number {0} is invalid", value), true);
                 }
             }
 		}
@@ -1037,11 +1037,11 @@ namespace PokemonUnity.Monster
 				//int d = b ^ c;
 				//New Math Equation from Bulbapedia, gen 2 to 6...
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
-				//int d = (GameVariables.playerTrainer.Trainer.TrainerID ^ GameVariables.playerTrainer.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				//int d = (Game.playerTrainer.Trainer.TrainerID ^ Game.playerTrainer.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null)? OT.TrainerID : GameVariables.playerTrainer.Trainer.TrainerID) 
-					^ (!OT.Equals((object)null) ? OT.SecretID : GameVariables.playerTrainer.Trainer.SecretID)) 
-					^ ((GameVariables.playerTrainer.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Settings.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Settings.SHINYPOKEMONCHANCE) / 65536) 
+				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.playerTrainer.Trainer.TrainerID) 
+					^ (!OT.Equals((object)null) ? OT.SecretID : Game.playerTrainer.Trainer.SecretID)) 
+					^ ((Game.playerTrainer.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Settings.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Settings.SHINYPOKEMONCHANCE) / 65536) 
 					^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
@@ -1245,7 +1245,7 @@ namespace PokemonUnity.Monster
 			resetMoves();
             int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
-            if (isEgg || GameVariables.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+            if (isEgg || Game.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			int?[] rejected = new int?[movelist.Count];
             switch (level)
             {
@@ -1382,7 +1382,7 @@ namespace PokemonUnity.Monster
             if ((int)move <= 0) return;
             if (!getMoveList().Contains(move))
             {
-                GameVariables.DebugLog("Move is not compatible");
+                Game.DebugLog("Move is not compatible");
                 return;
             }
             /*for (int i = 0; i < 4; i++) {
@@ -1400,7 +1400,7 @@ namespace PokemonUnity.Monster
             }*/
             if (hasMove(move))
             {
-                GameVariables.DebugLog("Already knows move...");
+                Game.DebugLog("Already knows move...");
                 return;
             }
             for (int i = 0; i < 4; i++)
@@ -1413,7 +1413,7 @@ namespace PokemonUnity.Monster
             }
             if (!silently)
 			{
-                GameVariables.DebugLog("Cannot learn move, pokmeon moveset is full", false);
+                Game.DebugLog("Cannot learn move, pokmeon moveset is full", false);
 			}
             else
             {
@@ -1433,7 +1433,7 @@ namespace PokemonUnity.Monster
 		{
 			bool moveLearned = false;
 			List<Moves> movelist = new List<Moves>();
-			if (isEgg || GameVariables.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+			if (isEgg || Game.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			int?[] rejected = new int?[movelist.Count];
 			//if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value == level).Select(x => x.Key));

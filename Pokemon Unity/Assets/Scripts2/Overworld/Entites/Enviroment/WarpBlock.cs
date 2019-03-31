@@ -36,7 +36,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					string[] rotationData = link.GetSplit(5, ",").Split(System.Convert.ToChar("|"));
 					foreach (string Element in rotationData)
 						validRotations.Add(System.Convert.ToInt32(Element));
-					if (!validRotations.Contains(GameVariables.Camera.GetPlayerFacingDirection()))
+					if (!validRotations.Contains(Game.Camera.GetPlayerFacingDirection()))
 						return true;
 				}
 
@@ -44,22 +44,22 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				{
 					if (!MapViewMode)
 					{
-						GameVariables.Level.WarpData.WarpDestination = this.AdditionalValue.GetSplit(0);
-						GameVariables.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
-						GameVariables.Level.WarpData.WarpRotations = System.Convert.ToInt32(this.AdditionalValue.GetSplit(4));
-						GameVariables.Level.WarpData.DoWarpInNextTick = true;
-						GameVariables.Level.WarpData.CorrectCameraYaw = GameVariables.Camera.Yaw;
-						GameVariables.Level.WarpData.IsWarpBlock = true;
-						GameVariables.DebugLog("Lock Camera");
-						//((OverworldCamera)GameVariables.Camera).YawLocked = true;
+						Game.Level.WarpData.WarpDestination = this.AdditionalValue.GetSplit(0);
+						Game.Level.WarpData.WarpPosition = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
+						Game.Level.WarpData.WarpRotations = System.Convert.ToInt32(this.AdditionalValue.GetSplit(4));
+						Game.Level.WarpData.DoWarpInNextTick = true;
+						Game.Level.WarpData.CorrectCameraYaw = Game.Camera.Yaw;
+						Game.Level.WarpData.IsWarpBlock = true;
+						Game.DebugLog("Lock Camera");
+						//((OverworldCamera)Game.Camera).YawLocked = true;
 					}
 					else
 					{
-						GameVariables.Level = new Level();
-						GameVariables.Level.Load(this.AdditionalValue.GetSplit(0));
-						GameVariables.Level.World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
+						Game.Level = new Level();
+						Game.Level.Load(this.AdditionalValue.GetSplit(0));
+						Game.Level.World.Initialize(Game.Level.EnvironmentType, Game.Level.WeatherType);
 
-						GameVariables.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
+						Game.Camera.Position = new Vector3(System.Convert.ToSingle(this.AdditionalValue.GetSplit(1)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(2).Replace(".", StringHelper.DecSeparator)), System.Convert.ToSingle(this.AdditionalValue.GetSplit(3)));
 					}
 				}
 				else
@@ -126,7 +126,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private static void CallError(string ex)
 		{
-			GameVariables.DebugLog("WarpBlock.vb: Invalid warp! More information:" + ex, true);
+			Game.DebugLog("WarpBlock.vb: Invalid warp! More information:" + ex, true);
 		}
 	}
 }

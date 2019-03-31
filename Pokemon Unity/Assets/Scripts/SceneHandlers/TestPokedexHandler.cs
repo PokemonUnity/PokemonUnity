@@ -884,7 +884,7 @@ public class TestPokedexHandler : MonoBehaviour
 
     private IEnumerator switchPokemon(int currentBoxID, int currentPosition)
     {
-        if (GameVariables.PC_Poke[currentBoxID,currentPosition] != null)
+        if (Game.PC_Poke[currentBoxID,currentPosition] != null)
         {
             Texture targetIcon = null;
             Texture targetItem = null;
@@ -981,7 +981,7 @@ public class TestPokedexHandler : MonoBehaviour
         int targetPosition = 6;
         for (int i = 1; i < 6; i++)
         {
-            if (GameVariables.PC_Poke[0,i] == null)
+            if (Game.PC_Poke[0,i] == null)
             {
                 targetPosition = i;
                 i = 6;
@@ -1324,7 +1324,7 @@ public class TestPokedexHandler : MonoBehaviour
                 }
                 else if (Input.GetButton("Select"))
                 {
-                    if (GameVariables.PC_Poke[currentBoxID,currentPosition - 3] != null)
+                    if (Game.PC_Poke[currentBoxID,currentPosition - 3] != null)
                     {
                         //updateSelectedInfo(SaveDataOld.currentSave.PC.boxes[currentBoxID][currentPosition - 3]);
                         //STANDARD
@@ -1376,7 +1376,7 @@ public class TestPokedexHandler : MonoBehaviour
                                 {
                                     //ITEM
                                     Pokemon currentPokemon =
-                                        GameVariables.PC_Poke[currentBoxID,currentPosition - 3];
+                                        Game.PC_Poke[currentBoxID,currentPosition - 3];
 
                                     Dialog.undrawChoiceBox();
                                     Dialog.drawDialogBox();
@@ -1547,7 +1547,7 @@ public class TestPokedexHandler : MonoBehaviour
                                 else if (chosenIndex == 2)
                                 {
                                     //WITHDRAW
-                                    if (GameVariables.PC_Poke[0,5] != null)
+                                    if (Game.PC_Poke[0,5] != null)
                                     {
                                         //if party is full
                                         Dialog.drawDialogBox();
@@ -1572,7 +1572,7 @@ public class TestPokedexHandler : MonoBehaviour
                                     //RELEASE
                                     int releaseIndex = 1;
                                     string pokemonName =
-										GameVariables.PC_Poke[currentBoxID,currentPosition - 3].Name;
+										Game.PC_Poke[currentBoxID,currentPosition - 3].Name;
                                     while (releaseIndex != 0)
                                     {
                                         Dialog.drawDialogBox();
@@ -1603,7 +1603,7 @@ public class TestPokedexHandler : MonoBehaviour
                                             releaseIndex = 0;
                                             chosenIndex = 0;
                                             //updateSelectedInfo(
-											//	GameVariables.PC_Poke[currentBoxID,currentPosition - 3]);
+											//	Game.PC_Poke[currentBoxID,currentPosition - 3]);
                                         }
                                         Dialog.undrawDialogBox();
                                     }
@@ -1642,7 +1642,7 @@ public class TestPokedexHandler : MonoBehaviour
                         //WITHDRAW DEPOSIT
                         else
                         {
-                            if (GameVariables.PC_Poke[0,5] != null) //GameVariables.playerTrainer.Trainer.Party[5]
+                            if (Game.PC_Poke[0,5] != null) //Game.playerTrainer.Trainer.Party[5]
                             {
                                 //if party is full
                                 Dialog.drawDialogBox();
@@ -1777,7 +1777,7 @@ public class TestPokedexHandler : MonoBehaviour
                 }
                 else if (Input.GetButton("Select"))
                 {
-                    if (GameVariables.PC_Poke[0,currentPosition - 33] != null)
+                    if (Game.PC_Poke[0,currentPosition - 33] != null)
                     {
                         //STANDARD
                         if (cursorMode == CursorMode.Standard)
@@ -1801,7 +1801,7 @@ public class TestPokedexHandler : MonoBehaviour
                                     if (chosenIndex == 5)
                                     {
                                         //PICK UP
-                                        if (GameVariables.PC_Poke[0,1] != null)
+                                        if (Game.PC_Poke[0,1] != null)
                                         {
                                             //if there is more than one pokemon in the party
                                             yield return StartCoroutine(pickUpPokemon(0, currentPosition - 33));
@@ -1843,7 +1843,7 @@ public class TestPokedexHandler : MonoBehaviour
                                     else if (chosenIndex == 3)
                                     {
                                         //ITEM
-                                        Pokemon currentPokemon = GameVariables.PC_Poke[0,currentPosition - 33];
+                                        Pokemon currentPokemon = Game.PC_Poke[0,currentPosition - 33];
 
                                         Dialog.undrawChoiceBox();
                                         Dialog.drawDialogBox();
@@ -2017,13 +2017,13 @@ public class TestPokedexHandler : MonoBehaviour
                                     else if (chosenIndex == 2)
                                     {
                                         //DEPOSIT
-                                        if (GameVariables.PC_Poke[0,1] != null)
+                                        if (Game.PC_Poke[0,1] != null)
                                         {
                                             //if there is more than one pokemon in the party
                                             int targetPosition = 30;
                                             for (int i = 0; i < 30; i++)
                                             {
-                                                if (GameVariables.PC_Poke[currentBoxID,i] == null)
+                                                if (Game.PC_Poke[currentBoxID,i] == null)
                                                 {
                                                     targetPosition = i;
                                                     i = 30;
@@ -2065,12 +2065,12 @@ public class TestPokedexHandler : MonoBehaviour
                                     else if (chosenIndex == 1)
                                     {
                                         //RELEASE
-                                        if (GameVariables.PC_Poke[0,1] != null)
+                                        if (Game.PC_Poke[0,1] != null)
                                         {
                                             //if there is more than one pokemon in the party
                                             int releaseIndex = 1;
                                             string pokemonName =
-												GameVariables.PC_Poke[0,currentPosition - 33].Name;
+												Game.PC_Poke[0,currentPosition - 33].Name;
                                             while (releaseIndex != 0)
                                             {
                                                 Dialog.drawDialogBox();
@@ -2137,7 +2137,7 @@ public class TestPokedexHandler : MonoBehaviour
                         {
                             if (!carrying)
                             {
-                                if (GameVariables.PC_Poke[0,1] != null)
+                                if (Game.PC_Poke[0,1] != null)
                                 {
                                     //if there is more than one pokemon in the party
                                     yield return StartCoroutine(pickUpPokemon(0, currentPosition - 33));
@@ -2168,13 +2168,13 @@ public class TestPokedexHandler : MonoBehaviour
                         //WITHDRAW DEPOSIT
                         else
                         {
-                            if (GameVariables.PC_Poke[0,1] != null)
+                            if (Game.PC_Poke[0,1] != null)
                             {
                                 //if there is more than one pokemon in the party
                                 int targetPosition = 30;
                                 for (int i = 0; i < 30; i++)
                                 {
-                                    if (GameVariables.PC_Poke[currentBoxID,i] == null)
+                                    if (Game.PC_Poke[currentBoxID,i] == null)
                                     {
                                         targetPosition = i;
                                         i = 30;

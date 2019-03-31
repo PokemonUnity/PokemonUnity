@@ -117,34 +117,34 @@ namespace PokemonUnity.Saving
 			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
-			PlayerName			= name			?? GameVariables.playerTrainer.PlayerName;
-			PlayerMoney			= money			?? GameVariables.playerTrainer.PlayerMoney;
-			PlayerCoins			= coin			?? GameVariables.playerTrainer.PlayerCoins;
-			GymsChallenged		= gym			?? GameVariables.playerTrainer.GymsBeatTime;
-			PlayerBag			= bag			?? GameVariables.Bag_Items;//playerTrainer.Bag; //playerBag;
-			TrainerID			= trainer		?? GameVariables.playerTrainer.Trainer.TrainerID;
-			SecretID			= secret		?? GameVariables.playerTrainer.Trainer.SecretID;
-			IsMale				= gender		?? GameVariables.playerTrainer.isMale;
-			Pokedex2			= pokedex		?? GameVariables.playerTrainer.PlayerPokedex;
-			PlayerTime			= time			?? GameVariables.playerTrainer.playerTime;
-			PlayerPosition		= position		?? GameVariables.playerTrainer.playerPosition;
-			PlayerDirection		= direction		?? GameVariables.playerTrainer.playerDirection;
-			//FollowerPokemon	= GameVariables.playerTrainer.followerPokemon;
-			//FollowerPosition	= GameVariables.playerTrainer.followerPosition;
-			//FollowerDirection	= GameVariables.playerTrainer.followerDirection;
-			ActiveScene			= scene			?? GameVariables.playerTrainer.mapName;//.activeScene;
-			pCenterScene		= pokecenter	?? GameVariables.playerTrainer.respawnScene;//pkmnCenter;
-			PlayerParty			= party			?? GameVariables.playerTrainer.Trainer.Party.Serialize();
-			//	new SeriPokemon[GameVariables.playerTrainer.Trainer.Party.Length];
+			PlayerName			= name			?? Game.playerTrainer.PlayerName;
+			PlayerMoney			= money			?? Game.playerTrainer.PlayerMoney;
+			PlayerCoins			= coin			?? Game.playerTrainer.PlayerCoins;
+			GymsChallenged		= gym			?? Game.playerTrainer.GymsBeatTime;
+			PlayerBag			= bag			?? Game.Bag_Items;//playerTrainer.Bag; //playerBag;
+			TrainerID			= trainer		?? Game.playerTrainer.Trainer.TrainerID;
+			SecretID			= secret		?? Game.playerTrainer.Trainer.SecretID;
+			IsMale				= gender		?? Game.playerTrainer.isMale;
+			Pokedex2			= pokedex		?? Game.playerTrainer.PlayerPokedex;
+			PlayerTime			= time			?? Game.playerTrainer.playerTime;
+			PlayerPosition		= position		?? Game.playerTrainer.playerPosition;
+			PlayerDirection		= direction		?? Game.playerTrainer.playerDirection;
+			//FollowerPokemon	= Game.playerTrainer.followerPokemon;
+			//FollowerPosition	= Game.playerTrainer.followerPosition;
+			//FollowerDirection	= Game.playerTrainer.followerDirection;
+			ActiveScene			= scene			?? Game.playerTrainer.mapName;//.activeScene;
+			pCenterScene		= pokecenter	?? Game.playerTrainer.respawnScene;//pkmnCenter;
+			PlayerParty			= party			?? Game.playerTrainer.Trainer.Party.Serialize();
+			//	new SeriPokemon[Game.playerTrainer.Trainer.Party.Length];
 			//if(party != null)
-			//	for (int i = 0; i < GameVariables.playerTrainer.Trainer.Party.Length; i++)
+			//	for (int i = 0; i < Game.playerTrainer.Trainer.Party.Length; i++)
 			//	{
-			//		PlayerParty[i]	= GameVariables.playerTrainer.Trainer.Party[i];
+			//		PlayerParty[i]	= Game.playerTrainer.Trainer.Party[i];
 			//	}
 				
 			//ToDo: Store user's Active PC
-			PC = pc ?? new SeriPC(GameVariables.PC_Poke, GameVariables.PC_boxNames, GameVariables.PC_boxTexture, GameVariables.PC_Items);
-			EventList			= eventList; //GameVariables.EventList;
+			PC = pc ?? new SeriPC(Game.PC_Poke, Game.PC_boxNames, Game.PC_boxTexture, Game.PC_Items);
+			EventList			= eventList; //Game.EventList;
         }
 
 		//public SaveData

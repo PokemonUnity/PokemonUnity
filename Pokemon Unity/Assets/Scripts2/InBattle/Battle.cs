@@ -352,19 +352,19 @@ namespace PokemonUnity.Battle
 			PokemonUnity.Monster.Pokemon[] p2 = opponent.Party;
 			if (p1.Length == 0) {
 				//raise ArgumentError.new(_INTL("Party 1 has no Pokémon."))
-				GameVariables.DebugLog("Party 1 has no Pokémon.", true);
+				Game.DebugLog("Party 1 has no Pokémon.", true);
 				return;
 			}
 		
 			if (p2.Length == 0) { 
 				//raise ArgumentError.new(_INTL("Party 2 has no Pokémon."))
-				GameVariables.DebugLog("Party 2 has no Pokémon.", true);
+				Game.DebugLog("Party 2 has no Pokémon.", true);
 				return;
 			}
 		
 			if (p2.Length > 2 && opponent.ID == TrainerTypes.WildPokemon) { //opponent != null
 				//raise ArgumentError.new(_INTL("Wild battles with more than two Pokémon are not allowed."))
-				GameVariables.DebugLog("Wild battles with more than two Pokémon are not allowed.", true);
+				Game.DebugLog("Wild battles with more than two Pokémon are not allowed.", true);
 				return;
 			}
 
@@ -540,12 +540,12 @@ namespace PokemonUnity.Battle
 		//public void StartBattle(bool canlose)
 		//{
 		//	//return this;
-		//	GameVariables.battle = this;
+		//	Game.battle = this;
 		//}
 		public IEnumerator<BattleResults> StartBattle(bool canlose)
 		{
 			//return this;
-			GameVariables.battle = this;
+			Game.battle = this;
 			while (this.decision == BattleResults.InProgress)
 			{
 				yield return BattleResults.InProgress;
@@ -635,7 +635,7 @@ namespace PokemonUnity.Battle
 			//		//"{1}'s nickname?"
 			//		pokemon.SetNickname(scene.NameEntry(LanguageExtension.Translate(Text.ScriptTexts, "SetNick", pokemon.Name).Value, pokemon));
 			//	}
-			//int oldcurbox = GameVariables.CurrentBox;
+			//int oldcurbox = Game.CurrentBox;
 			//int storedbox = GameVariable.StorePokemon(GameVariable.Player,pokemon)
 			//string creator = GameVariable.GetStorageCreator()
 			//if (storedbox < 0) return;
@@ -668,12 +668,12 @@ namespace PokemonUnity.Battle
 			if (battler.isFainted())
 				battler = battler.Partner;
 			//DisplayBrief(L(Text.ScriptTexts,"ThrowBall", Player.PlayerName, itemname));
-			//GameVariables.TextBox.Show(L(Text.ScriptTexts,"ThrowBall", Player.PlayerName, itemname));
+			//Game.TextBox.Show(L(Text.ScriptTexts,"ThrowBall", Player.PlayerName, itemname));
 			if (battler.isFainted())
 			{
 				//"But there was no target..."
 				//Display(L(Text.ScriptTexts, "NoTarget"));
-				//GameVariables.TextBox.Show(L(Text.ScriptTexts, "NoTarget"));
+				//Game.TextBox.Show(L(Text.ScriptTexts, "NoTarget"));
 				return;
 			}
 			if (opponent.ID != TrainerTypes.WildPokemon) 
@@ -682,7 +682,7 @@ namespace PokemonUnity.Battle
 				//scene.ThrowAndDeflect(ball, 1);
 				//"The Trainer blocked the Ball!\nDon't be a thief!"
 				//Display(L(Text.ScriptTexts, "SnagRejected"));
-				//GameVariables.TextBox.Show(L(Text.ScriptTexts, "SnagRejected"));
+				//Game.TextBox.Show(L(Text.ScriptTexts, "SnagRejected"));
 			}
 			else
 			{
@@ -700,15 +700,15 @@ namespace PokemonUnity.Battle
 				else if (battler.Status != Status.NONE)
 					x = (int)Math.Floor(x * 1.5f);
 				int c = 0;
-				if (GameVariables.playerTrainer.PokedexCaught > 600)
+				if (Game.playerTrainer.PokedexCaught > 600)
 					c = (int)Math.Floor(x * 2.5f / 6);
-				else if (GameVariables.playerTrainer.PokedexCaught > 450)
+				else if (Game.playerTrainer.PokedexCaught > 450)
 					c = (int)Math.Floor(x * 2f / 6);
-				else if (GameVariables.playerTrainer.PokedexCaught > 300)
+				else if (Game.playerTrainer.PokedexCaught > 300)
 					c = (int)Math.Floor(x * 1.5f / 6);
-				else if (GameVariables.playerTrainer.PokedexCaught > 150)
+				else if (Game.playerTrainer.PokedexCaught > 150)
 					c = (int)Math.Floor(x * 1f / 6);
-				else if (GameVariables.playerTrainer.PokedexCaught > 30)
+				else if (Game.playerTrainer.PokedexCaught > 30)
 					c = (int)Math.Floor(x * .5 / 6);
 			}
 

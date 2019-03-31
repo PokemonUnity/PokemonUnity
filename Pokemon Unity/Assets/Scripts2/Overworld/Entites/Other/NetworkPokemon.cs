@@ -49,8 +49,8 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
-				this.Rotation.y = GameVariables.Camera.Yaw;
+			if (this.Rotation.y != Game.Camera.Yaw)
+				this.Rotation.y = Game.Camera.Yaw;
 
 			base.UpdateEntity();
 		}
@@ -82,7 +82,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//{
 			//	if (System.Convert.ToBoolean(GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")))
 			//	{
-			//		if (GameVariables.Level.ShowOverworldPokemon)
+			//		if (Game.Level.ShowOverworldPokemon)
 			//		{
 			//			if (IsCorrectScreen())
 			//			{
@@ -135,7 +135,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			}
 
 			Vector4 r = new Vector4(0, 0, 0, 0);
-			int cameraRotation = GameVariables.Camera.GetFacingDirection();
+			int cameraRotation = Game.Camera.GetFacingDirection();
 			int spriteIndex = this.faceRotation - cameraRotation;
 
 			spriteIndex = this.faceRotation - cameraRotation;
@@ -172,7 +172,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		//public void ApplyShaders()
 		//{
 		//	this.Shaders.Clear();
-		//	foreach (Shader Shader in GameVariables.Level.Shaders)
+		//	foreach (Shader Shader in Game.Level.Shaders)
 		//		Shader.ApplyShader(this);
 		//}
 		//
@@ -192,7 +192,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		//		if (this.Visible)
 		//		{
 		//			this.Visible = false;
-		//			if (GameVariables.Level.LevelFile == p.LevelFile)
+		//			if (Game.Level.LevelFile == p.LevelFile)
 		//				this.Visible = true;
 		//			else if (LevelLoader.LoadedOffsetMapNames.Contains(p.LevelFile))
 		//			{

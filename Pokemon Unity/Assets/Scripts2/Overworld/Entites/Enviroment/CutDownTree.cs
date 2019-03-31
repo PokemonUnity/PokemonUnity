@@ -8,9 +8,9 @@ namespace PokemonUnity.Overworld.Entity.Environment
 	{
 		public override void UpdateEntity()
 		{
-			if (this.Rotation.y != GameVariables.Camera.Yaw)
+			if (this.Rotation.y != Game.Camera.Yaw)
 			{
-				this.Rotation.y = GameVariables.Camera.Yaw;
+				this.Rotation.y = Game.Camera.Yaw;
 				this.CreatedWorld = false;
 			}
 
@@ -21,7 +21,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			string pName = "";
 
-			foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 			{
 				if (!p.isEgg)
 				{
@@ -41,10 +41,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			string text = "This tree looks like it~can be Cut down!";
 
-			if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | GameVariables.playerTrainer.SandBoxMode | GameVariables.IS_DEBUG_ACTIVE)
+			if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | Game.playerTrainer.SandBoxMode | Game.IS_DEBUG_ACTIVE)
 				text += "~Do you want to~use Cut?%Yes|No%";
 
-			GameVariables.TextBox.Show(text, new Entity[] { this });
+			Game.TextBox.Show(text, new Entity[] { this });
 			SoundManager.PlaySound("select");
 		}
 
@@ -54,7 +54,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in GameVariables.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
 				{
 					if (!p.isEgg)
 					{

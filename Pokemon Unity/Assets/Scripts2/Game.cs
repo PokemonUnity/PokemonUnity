@@ -20,17 +20,17 @@ using PokemonUnity.Saving;
 /// Variables that are stored when game is saved, and other temp values used for gameplay.
 /// This class should be called once, when the game boots-up.
 /// During boot-up, game will check directory for save files and load data.
-/// GameVariables class will overwrite all the other class default values when player triggers a load state.
+/// Game class will overwrite all the other class default values when player triggers a load state.
 /// </summary>
 /// This class should be static...
-public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
+public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
 {
 	#region Player and Overworld Data
 	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 	public static Player playerTrainer { get; set; }
 	public static PokemonUnity.Overworld.Level Level { get; set; }
 	public static PokemonUnity.Overworld.Camera Camera { get; set; }
-	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
+	//public Game.TrainerPC PC { get { return new Game.TrainerPC(playerTrainer); } }
 	#endregion
 
 	#region Private Records of Player Storage Data
@@ -67,7 +67,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     #endregion
 
 	#region Constructor
-	static GameVariables()
+	static Game()
 	{
 		GameDebug.Init(null, "GameTestLog");
 		UserLanguage  = Languages.English;
@@ -178,28 +178,28 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	public static void Load(byte i)
     {
 		slotIndex = i > 0 && i < 3 ? i : slotIndex;
-        //GameVariables.SaveLoad.Load();
+        //Game.SaveLoad.Load();
 		PokemonUnity.Saving.SaveData data = PokemonUnity.Saving.SaveManager.GetSave(i);
-		GameVariables.playerTrainer = new Player();
+		Game.playerTrainer = new Player();
 
 		switch (data.BuildVersion)
 		{
 			case "0.0.1":
 			//Next one gets added to list, and default is copied above, and modified below...
 			default:
-				GameVariables.playerTrainer.LoadTrainer(data); 
-				GameVariables.PC_Poke = data.PC.GetPokemonsFromSeri();
-				GameVariables.PC_boxNames = data.PC.BoxNames;
-				GameVariables.PC_boxTexture = data.PC.BoxTextures;
-				GameVariables.PC_Items = new List<Item>(data.PC.GetItemsFromSeri());
-				GameVariables.Bag_Items = data.PlayerBag;
+				Game.playerTrainer.LoadTrainer(data); 
+				Game.PC_Poke = data.PC.GetPokemonsFromSeri();
+				Game.PC_boxNames = data.PC.BoxNames;
+				Game.PC_boxTexture = data.PC.BoxTextures;
+				Game.PC_Items = new List<Item>(data.PC.GetItemsFromSeri());
+				Game.Bag_Items = data.PlayerBag;
 				break;
 		}
 	}
     public static void Save()
     {
 		//using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Open(FILE_NAME,)))
-		//GameVariables.SaveLoad.Save();
+		//Game.SaveLoad.Save();
 
 		//PokemonUnity.Saving.SaveManager.Overwrite(new PokemonUnity.Saving.SaveData(), slotIndex);
 		SaveData[] save = SaveManager.GetSaves();
@@ -227,8 +227,8 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
         System.IO.FileStream fs;
         //BinaryWriter w; //= new BinaryWriter(fs);
         System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        //GameVariables data = new GameVariables();
-        GameVariables[] gamesaves = new GameVariables[3];
+        //Game data = new Game();
+        Game[] gamesaves = new Game[3];
         Translator.Languages userpreflanguage = Translator.Languages.English;
 #if DEBUG
 		private const string FILE_NAME = @"Test.pkud"; //TestProject\bin\Debug
@@ -261,7 +261,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
                 fs = System.IO.File.Open(FILE_NAME, System.IO.FileMode.Open, System.IO.FileAccess.Read);
                 //UnityEngine.Debug.Log("Information Loaded.");
                 //UnityEngine.Debug.Log("Deserializing Information...");
-                //data = (GameVariables)bf.Deserialize(fs);
+                //data = (Game)bf.Deserialize(fs);
                 SaveLoad d = (SaveLoad)bf.Deserialize(fs);
                 //UnityEngine.Debug.Log("Rewriting TextField/Variables...");
 
@@ -269,8 +269,8 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
                 //rememberme = data.rememberme;
                 Settings.UserLanguage = d.userpreflanguage;
 
-                //An Array[3] of GameVariables representing GameSaves
-                gamesaves = d.gamesaves;//(GameVariables[])bf.Deserialize(fs);
+                //An Array[3] of Game representing GameSaves
+                gamesaves = d.gamesaves;//(Game[])bf.Deserialize(fs);
                 SaveFileFound = true;
 
                 //UnityEngine.Debug.Log("Information Loaded and Updated.");
@@ -567,11 +567,11 @@ public class UnityUtilityIntegration
 	/// <summary>
 	/// Frame Style for all System Prompts and Text Displays
 	/// </summary>
-	public static UnityEngine.Sprite WindowSkinSprite { get { return LoadAllWindowSkinSprites()[GameVariables.WindowSkin]; } }
+	public static UnityEngine.Sprite WindowSkinSprite { get { return LoadAllWindowSkinSprites()[Game.WindowSkin]; } }
 	/// <summary>
 	/// Frame Style for all player and non-playable characters Speech bubbles
 	/// </summary>
-	public static UnityEngine.Sprite DialogSkinSprite { get { return LoadAllDialogSkinSprites()[GameVariables.DialogSkin]; } }
+	public static UnityEngine.Sprite DialogSkinSprite { get { return LoadAllDialogSkinSprites()[Game.DialogSkin]; } }
 	/// <summary>
 	/// In-game UI dialog window to prompt message to user
 	/// </summary>

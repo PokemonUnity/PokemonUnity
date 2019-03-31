@@ -49,7 +49,7 @@ namespace PokemonUnity.Battle
 		public bool tookDamage { get; set; }
 		public List<Moves> movesUsed { get; set; }
 		public Effects.Battler effects { get; private set; }
-		public Battle battle { get { return GameVariables.battle; } }
+		public Battle battle { get { return Game.battle; } }
 		public bool captured { get; private set; }
 		//public bool Fainted { get { return isFainted(); } }
 		public Battle.DamageState damagestate { get; set; }
@@ -70,7 +70,7 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public byte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return GameVariables.playerTrainer.PlayerPokedex[_base.ArrayId, 1] == 1; } }
+		public bool IsOwned { get { return Game.playerTrainer.PlayerPokedex[_base.ArrayId, 1] == 1; } }
 		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }
@@ -450,7 +450,7 @@ namespace PokemonUnity.Battle
 				//Remove/Disable UI for Egg 
 				//Pause game to display error message?
 				//"An egg can't be an active Pokémon"
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "ActiveEgg").Value);
+				Game.Dialog(LanguageExtension.Translate(Text.Errors, "ActiveEgg").Value);
 			}
 			else
 			{
@@ -728,7 +728,7 @@ namespace PokemonUnity.Battle
 				speedmult = (int)Math.Round(speedmult / 4f);
 			if (battle.internalbattle && 
 				//battle.OwnedByPlayer(Index) &&
-				GameVariables.playerTrainer.BadgesCount >= Settings.BADGESBOOSTSPEED)
+				Game.playerTrainer.BadgesCount >= Settings.BADGESBOOSTSPEED)
 				speedmult = (int)Math.Round(speedmult * 1.1f);
 			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
 			return Math.Max(speed, 1);
@@ -746,10 +746,10 @@ namespace PokemonUnity.Battle
 			HP -= amt;
 			if (HP < 0)
 				//"HP less than 0"
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
 			if (HP > TotalHP)
 				//"HP greater than total HP"
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
 			//ToDo: Pass to UnityEngine
 			//if (amt > 0)
 			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
@@ -769,10 +769,10 @@ namespace PokemonUnity.Battle
 			HP += amount;
 			if (HP < 0)
 				//"HP less than 0"
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
 			if (HP > TotalHP)
 				//"HP greater than total HP"
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
 			//ToDo: Pass to UnityEngine
 			//if(amount > 0)
 			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
@@ -784,12 +784,12 @@ namespace PokemonUnity.Battle
 		{
 			if(!isFainted() && HP > 0)
 			{
-				GameVariables.DebugLog("Can't faint with HP greater than 0", true);
+				Game.DebugLog("Can't faint with HP greater than 0", true);
 				//return true;
 			}
 			if(isFainted())
 			{
-				GameVariables.DebugLog("Can't faint if already fainted", false);
+				Game.DebugLog("Can't faint if already fainted", false);
 				//return true;
 			}
 			//battle.scene.Fainted(Index);
@@ -808,7 +808,7 @@ namespace PokemonUnity.Battle
 			battle.choices[Index] = new Battle.Choice(ChoiceAction.NoAction);
 			OwnSide.LastRoundFainted = battle.turncount;
 			if (showMessage)
-				GameVariables.Dialog(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
+				Game.Dialog(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
 			//return true;
 		}
 		#endregion
@@ -976,7 +976,7 @@ namespace PokemonUnity.Battle
 				Update(true);
 				//battle.scene.ChangePokemon();
 				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
-				GameVariables.DebugLog(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form));
+				Game.DebugLog(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form));
 			}
 		}
 		public void ResetForm()
@@ -1009,7 +1009,7 @@ namespace PokemonUnity.Battle
 					//battle.CommonAnimation("HeavyRain", null, null);
 					//"{1}'s {2} made a heavy rain begin to fall!"
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HeavyRainStart", ToString(), Ability.ToString().Translate().Value).Value);
-					GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Primordial Sea made it rain heavily", ToString()));
+					Game.DebugLog(string.Format("[Ability triggered] {0}'s Primordial Sea made it rain heavily", ToString()));
 				}
 				if(hasWorkingAbility(Abilities.DESOLATE_LAND) && battle.Weather != Weather.HARSHSUN)
 				{
@@ -1018,7 +1018,7 @@ namespace PokemonUnity.Battle
 					//battle.CommonAnimation("HarshSun", null, null);
 					//"{1}'s {2} turned the sunlight extremely harsh!"
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HarshSunStart", ToString(), Ability.ToString().Translate().Value).Value);
-					GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Desolate Land made the sun shine harshly", ToString()));
+					Game.DebugLog(string.Format("[Ability triggered] {0}'s Desolate Land made the sun shine harshly", ToString()));
 				}
 				if(hasWorkingAbility(Abilities.DELTA_STREAM) && battle.Weather != Weather.STRONGWINDS)
 				{
@@ -1027,7 +1027,7 @@ namespace PokemonUnity.Battle
 					//battle.CommonAnimation("StrongWinds", null, null);
 					//"{1}'s {2} caused a mysterious air current that protects Flying-type Pokémon!"
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "StrongWindsStart", ToString(), Ability.ToString().Translate().Value).Value);
-					GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Delta Stream made an air current blow", ToString()));
+					Game.DebugLog(string.Format("[Ability triggered] {0}'s Delta Stream made an air current blow", ToString()));
 				}
 				if (battle.Weather != Weather.HEAVYRAIN &&
 					battle.Weather != Weather.HARSHSUN &&
@@ -1048,7 +1048,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Rain", null, null);
 						//"{1}'s {2} made it rain!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "RainStart", ToString(), Ability.ToString().Translate().Value).Value);
-						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Drizzle made it rain", ToString()));
+						Game.DebugLog(string.Format("[Ability triggered] {0}'s Drizzle made it rain", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.DROUGHT) && 
 						(battle.Weather != Weather.SUNNYDAY || battle.weatherduration != -1))
@@ -1065,7 +1065,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Sunny", null, null);
 						//"{1}'s {2} intensified the sun's rays!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SunnyStart", ToString(), Ability.ToString().Translate().Value).Value);
-						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Drought made it sunny", ToString()));
+						Game.DebugLog(string.Format("[Ability triggered] {0}'s Drought made it sunny", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.SAND_STREAM) && 
 						(battle.Weather != Weather.SANDSTORM || battle.weatherduration != -1))
@@ -1082,7 +1082,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Sandstorm", null, null);
 						//"{1}'s {2} whipped up a sandstorm!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SandstormStart", ToString(), Ability.ToString().Translate().Value).Value);
-						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Sand Stream made it sandstorm", ToString()));
+						Game.DebugLog(string.Format("[Ability triggered] {0}'s Sand Stream made it sandstorm", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.SNOW_WARNING) && 
 						(battle.Weather != Weather.HAIL || battle.weatherduration != -1))
@@ -1099,7 +1099,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Hail", null, null);
 						//"{1}'s {2} madeit hail!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HailStart", ToString(), Ability.ToString().Translate().Value).Value);
-						GameVariables.DebugLog(string.Format("[Ability triggered] {0}'s Snow Warning made it hail", ToString()));
+						Game.DebugLog(string.Format("[Ability triggered] {0}'s Snow Warning made it hail", ToString()));
 					}
 				}
 				if(hasWorkingAbility(Abilities.AIR_LOCK) || hasWorkingAbility(Abilities.CLOUD_NINE))
@@ -1110,7 +1110,7 @@ namespace PokemonUnity.Battle
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HasAbility", ToString(), Ability.ToString().Translate().Value).Value);
 					//"The effects of the weather disappeared."
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "WeatherNullified").Value);
-					GameVariables.DebugLog(string.Format("[Ability nullified] {0}'s Ability cancelled weather effects", ToString()));
+					Game.DebugLog(string.Format("[Ability nullified] {0}'s Ability cancelled weather effects", ToString()));
 				}
 			}
 			//battle.PrimordialWeather();

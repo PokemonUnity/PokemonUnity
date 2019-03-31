@@ -174,7 +174,7 @@ namespace PokemonUnity.Overworld
 			//    Screen.Effect.FogStart = -40;
 			//    Screen.Effect.FogEnd = 12;
 			//
-			//    GameVariables.Camera.FarPlane = 15;
+			//    Game.Camera.FarPlane = 15;
 			//    goto endsub;
 			//}
 			//
@@ -183,7 +183,7 @@ namespace PokemonUnity.Overworld
 			//    Screen.Effect.FogStart = -40;
 			//    Screen.Effect.FogEnd = 20;
 			//
-			//    GameVariables.Camera.FarPlane = 24;
+			//    Game.Camera.FarPlane = 24;
 			//    goto endsub;
 			//}
 			//
@@ -192,7 +192,7 @@ namespace PokemonUnity.Overworld
 			//    Screen.Effect.FogStart = -40;
 			//    Screen.Effect.FogEnd = 20;
 			//
-			//    GameVariables.Camera.FarPlane = 24;
+			//    Game.Camera.FarPlane = 24;
 			//    goto endsub;
 			//}
 			//
@@ -209,7 +209,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = -2;
 			//                        Screen.Effect.FogEnd = 19;
 			//
-			//                        GameVariables.Camera.FarPlane = 20;
+			//                        Game.Camera.FarPlane = 20;
 			//                        break;
 			//                    }
 			//                case 1:
@@ -217,7 +217,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = -2;
 			//                        Screen.Effect.FogEnd = 39;
 			//
-			//                        GameVariables.Camera.FarPlane = 40;
+			//                        Game.Camera.FarPlane = 40;
 			//                        break;
 			//                    }
 			//                case 2:
@@ -225,7 +225,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = -2;
 			//                        Screen.Effect.FogEnd = 59;
 			//
-			//                        GameVariables.Camera.FarPlane = 60;
+			//                        Game.Camera.FarPlane = 60;
 			//                        break;
 			//                    }
 			//                case 3:
@@ -233,7 +233,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = -5;
 			//                        Screen.Effect.FogEnd = 79;
 			//
-			//                        GameVariables.Camera.FarPlane = 80;
+			//                        Game.Camera.FarPlane = 80;
 			//                        break;
 			//                    }
 			//                case 4:
@@ -241,7 +241,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = -20;
 			//                        Screen.Effect.FogEnd = 99;
 			//
-			//                        GameVariables.Camera.FarPlane = 100;
+			//                        Game.Camera.FarPlane = 100;
 			//                        break;
 			//                    }
 			//            }
@@ -257,7 +257,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 16;
 			//                        Screen.Effect.FogEnd = 19;
 			//
-			//                        GameVariables.Camera.FarPlane = 20;
+			//                        Game.Camera.FarPlane = 20;
 			//                        break;
 			//                    }
 			//                case 1:
@@ -265,7 +265,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 36;
 			//                        Screen.Effect.FogEnd = 39;
 			//
-			//                        GameVariables.Camera.FarPlane = 40;
+			//                        Game.Camera.FarPlane = 40;
 			//                        break;
 			//                    }
 			//                case 2:
@@ -273,7 +273,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 56;
 			//                        Screen.Effect.FogEnd = 59;
 			//
-			//                        GameVariables.Camera.FarPlane = 60;
+			//                        Game.Camera.FarPlane = 60;
 			//                        break;
 			//                    }
 			//                case 3:
@@ -281,7 +281,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 76;
 			//                        Screen.Effect.FogEnd = 79;
 			//
-			//                        GameVariables.Camera.FarPlane = 80;
+			//                        Game.Camera.FarPlane = 80;
 			//                        break;
 			//                    }
 			//                case 4:
@@ -289,7 +289,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 96;
 			//                        Screen.Effect.FogEnd = 99;
 			//
-			//                        GameVariables.Camera.FarPlane = 100;
+			//                        Game.Camera.FarPlane = 100;
 			//                        break;
 			//                    }
 			//            }
@@ -309,7 +309,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = -2;
 			//                                    Screen.Effect.FogEnd = 19;
 			//
-			//                                    GameVariables.Camera.FarPlane = 20;
+			//                                    Game.Camera.FarPlane = 20;
 			//                                    break;
 			//                                }
 			//                            case 1:
@@ -317,7 +317,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = -2;
 			//                                    Screen.Effect.FogEnd = 39;
 			//
-			//                                    GameVariables.Camera.FarPlane = 40;
+			//                                    Game.Camera.FarPlane = 40;
 			//                                    break;
 			//                                }
 			//                            case 2:
@@ -325,7 +325,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = -2;
 			//                                    Screen.Effect.FogEnd = 59;
 			//
-			//                                    GameVariables.Camera.FarPlane = 60;
+			//                                    Game.Camera.FarPlane = 60;
 			//                                    break;
 			//                                }
 			//                            case 3:
@@ -333,7 +333,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = -5;
 			//                                    Screen.Effect.FogEnd = 79;
 			//
-			//                                    GameVariables.Camera.FarPlane = 80;
+			//                                    Game.Camera.FarPlane = 80;
 			//                                    break;
 			//                                }
 			//                            case 4:
@@ -341,7 +341,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = -20;
 			//                                    Screen.Effect.FogEnd = 99;
 			//
-			//                                    GameVariables.Camera.FarPlane = 100;
+			//                                    Game.Camera.FarPlane = 100;
 			//                                    break;
 			//                                }
 			//                        }
@@ -357,7 +357,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 16;
 			//                                    Screen.Effect.FogEnd = 19;
 			//
-			//                                    GameVariables.Camera.FarPlane = 20;
+			//                                    Game.Camera.FarPlane = 20;
 			//                                    break;
 			//                                }
 			//                            case 1:
@@ -365,7 +365,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 36;
 			//                                    Screen.Effect.FogEnd = 39;
 			//
-			//                                    GameVariables.Camera.FarPlane = 40;
+			//                                    Game.Camera.FarPlane = 40;
 			//                                    break;
 			//                                }
 			//                            case 2:
@@ -373,7 +373,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 56;
 			//                                    Screen.Effect.FogEnd = 59;
 			//
-			//                                    GameVariables.Camera.FarPlane = 60;
+			//                                    Game.Camera.FarPlane = 60;
 			//                                    break;
 			//                                }
 			//                            case 3:
@@ -381,7 +381,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 76;
 			//                                    Screen.Effect.FogEnd = 79;
 			//
-			//                                    GameVariables.Camera.FarPlane = 80;
+			//                                    Game.Camera.FarPlane = 80;
 			//                                    break;
 			//                                }
 			//                            case 4:
@@ -389,7 +389,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 96;
 			//                                    Screen.Effect.FogEnd = 99;
 			//
-			//                                    GameVariables.Camera.FarPlane = 100;
+			//                                    Game.Camera.FarPlane = 100;
 			//                                    break;
 			//                                }
 			//                        }
@@ -405,7 +405,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 16;
 			//                                    Screen.Effect.FogEnd = 19;
 			//
-			//                                    GameVariables.Camera.FarPlane = 20;
+			//                                    Game.Camera.FarPlane = 20;
 			//                                    break;
 			//                                }
 			//                            case 1:
@@ -413,7 +413,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 36;
 			//                                    Screen.Effect.FogEnd = 39;
 			//
-			//                                    GameVariables.Camera.FarPlane = 40;
+			//                                    Game.Camera.FarPlane = 40;
 			//                                    break;
 			//                                }
 			//                            case 2:
@@ -421,7 +421,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 56;
 			//                                    Screen.Effect.FogEnd = 59;
 			//
-			//                                    GameVariables.Camera.FarPlane = 60;
+			//                                    Game.Camera.FarPlane = 60;
 			//                                    break;
 			//                                }
 			//                            case 3:
@@ -429,7 +429,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 76;
 			//                                    Screen.Effect.FogEnd = 79;
 			//
-			//                                    GameVariables.Camera.FarPlane = 80;
+			//                                    Game.Camera.FarPlane = 80;
 			//                                    break;
 			//                                }
 			//                            case 4:
@@ -437,7 +437,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 96;
 			//                                    Screen.Effect.FogEnd = 99;
 			//
-			//                                    GameVariables.Camera.FarPlane = 100;
+			//                                    Game.Camera.FarPlane = 100;
 			//                                    break;
 			//                                }
 			//                        }
@@ -453,7 +453,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 0;
 			//                                    Screen.Effect.FogEnd = 19;
 			//
-			//                                    GameVariables.Camera.FarPlane = 20;
+			//                                    Game.Camera.FarPlane = 20;
 			//                                    break;
 			//                                }
 			//                            case 1:
@@ -461,7 +461,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 0;
 			//                                    Screen.Effect.FogEnd = 39;
 			//
-			//                                    GameVariables.Camera.FarPlane = 40;
+			//                                    Game.Camera.FarPlane = 40;
 			//                                    break;
 			//                                }
 			//                            case 2:
@@ -469,7 +469,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 0;
 			//                                    Screen.Effect.FogEnd = 59;
 			//
-			//                                    GameVariables.Camera.FarPlane = 60;
+			//                                    Game.Camera.FarPlane = 60;
 			//                                    break;
 			//                                }
 			//                            case 3:
@@ -477,7 +477,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 0;
 			//                                    Screen.Effect.FogEnd = 79;
 			//
-			//                                    GameVariables.Camera.FarPlane = 80;
+			//                                    Game.Camera.FarPlane = 80;
 			//                                    break;
 			//                                }
 			//                            case 4:
@@ -485,7 +485,7 @@ namespace PokemonUnity.Overworld
 			//                                    Screen.Effect.FogStart = 0;
 			//                                    Screen.Effect.FogEnd = 99;
 			//
-			//                                    GameVariables.Camera.FarPlane = 100;
+			//                                    Game.Camera.FarPlane = 100;
 			//                                    break;
 			//                                }
 			//                        }
@@ -505,7 +505,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 0;
 			//                        Screen.Effect.FogEnd = 19;
 			//
-			//                        GameVariables.Camera.FarPlane = 20;
+			//                        Game.Camera.FarPlane = 20;
 			//                        break;
 			//                    }
 			//                case 1:
@@ -513,7 +513,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 0;
 			//                        Screen.Effect.FogEnd = 39;
 			//
-			//                        GameVariables.Camera.FarPlane = 40;
+			//                        Game.Camera.FarPlane = 40;
 			//                        break;
 			//                    }
 			//                case 2:
@@ -521,7 +521,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 0;
 			//                        Screen.Effect.FogEnd = 59;
 			//
-			//                        GameVariables.Camera.FarPlane = 60;
+			//                        Game.Camera.FarPlane = 60;
 			//                        break;
 			//                    }
 			//                case 3:
@@ -529,7 +529,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 0;
 			//                        Screen.Effect.FogEnd = 79;
 			//
-			//                        GameVariables.Camera.FarPlane = 80;
+			//                        Game.Camera.FarPlane = 80;
 			//                        break;
 			//                    }
 			//                case 4:
@@ -537,7 +537,7 @@ namespace PokemonUnity.Overworld
 			//                        Screen.Effect.FogStart = 0;
 			//                        Screen.Effect.FogEnd = 99;
 			//
-			//                        GameVariables.Camera.FarPlane = 100;
+			//                        Game.Camera.FarPlane = 100;
 			//                        break;
 			//                    }
 			//            }
@@ -551,12 +551,12 @@ namespace PokemonUnity.Overworld
 			//    Screen.Effect.FogStart = 999;
 			//    Screen.Effect.FogEnd = 1000;
 			//
-			//    GameVariables.Camera.FarPlane = 1000;
+			//    Game.Camera.FarPlane = 1000;
 			//}
 
 			//endsub:
 			//;
-			GameVariables.Camera.CreateNewProjection(GameVariables.Camera.FOV);
+			Game.Camera.CreateNewProjection(Game.Camera.FOV);
 		}
 
 		private static Weathers GetRegionWeather(Seasons Season)
@@ -970,7 +970,7 @@ namespace PokemonUnity.Overworld
 				//    {
 				//        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 				//        {
-				//            if (!GameVariables.TextBox.Showing)
+				//            if (!Game.TextBox.Showing)
 				//                GenerateParticles(0, MapWeather);
 				//        }
 				//        else
@@ -1096,8 +1096,8 @@ namespace PokemonUnity.Overworld
 				if (Settings.Rand.Next(0, 250) == 0)
 				{
 					float pitch = -(Settings.Rand.Next(8, 11) / 10.0f);
-					GameVariables.DebugLog(pitch.ToString());
-					SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, GameVariables.sVol, false);
+					Game.DebugLog(pitch.ToString());
+					SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, Game.sVol, false);
 				}
 			}
 
@@ -1203,11 +1203,11 @@ namespace PokemonUnity.Overworld
 			//        if (chance == -1)
 			//            chance = 1;
 			//
-			//        Vector3 cameraPosition = GameVariables.Camera.Position;
+			//        Vector3 cameraPosition = Game.Camera.Position;
 			//        if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
-			//            cameraPosition = (OverworldCamera)GameVariables.Camera.CPosition;
+			//            cameraPosition = (OverworldCamera)Game.Camera.CPosition;
 			//        else if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
-			//            cameraPosition = (BattleCamera)GameVariables.Camera.CPosition;
+			//            cameraPosition = (BattleCamera)Game.Camera.CPosition;
 			//
 			//        if (Settings.Rand.Next(0, chance) == 0)
 			//        {
@@ -1240,7 +1240,7 @@ namespace PokemonUnity.Overworld
 			//                        }
 			//                        if (MapWeather == Weathers.Blizzard)
 			//                            p.Opacity = 1.0f;
-			//                        GameVariables.Level.Entities.Add(p);
+			//                        Game.Level.Entities.Add(p);
 			//                    }
 			//                }
 			//            }

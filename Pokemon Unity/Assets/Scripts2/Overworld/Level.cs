@@ -814,7 +814,7 @@ namespace PokemonUnity.Overworld
 			//this._offsetTimer.Elapsed += this.UpdateOffsetMap();
 			this._offsetTimer.Start();
 
-			GameVariables.DebugLog("Started Offset map update");
+			Game.DebugLog("Started Offset map update");
 		}
 
 		public void StopOffsetMapUpdate()
@@ -823,7 +823,7 @@ namespace PokemonUnity.Overworld
 			while (this._isUpdatingOffsetMaps)
 				Thread.Sleep(1);
 
-			GameVariables.DebugLog("Stopped Offset map update");
+			Game.DebugLog("Stopped Offset map update");
 		}
 
 		/// <summary>
@@ -834,7 +834,7 @@ namespace PokemonUnity.Overworld
 		{
 
 			// copy all changed files
-			//if (GameVariables.IS_DEBUG_ACTIVE)
+			//if (Game.IS_DEBUG_ACTIVE)
 			//    DebugFileWatcher.TriggerReload();
 
 			// Create a parameter array to pass over to the LevelLoader:
@@ -858,11 +858,11 @@ namespace PokemonUnity.Overworld
 				levelLoader.LoadLevel(@params.ToArray());
 			}
 			else
-				GameVariables.DebugLog("Don't attempt to load a levelfile.");
+				Game.DebugLog("Don't attempt to load a levelfile.");
 
 			// Create own player Entity and OverworldPokémon Entity and add them to the Entity enumeration:
-			//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
-			OverworldPokemon = new OverworldPokemon(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + 1);
+			//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Game.playerTrainer.Skin, 0, 0, "", "Gold", 0);
+			OverworldPokemon = new OverworldPokemon(Game.Camera.Position.x, Game.Camera.Position.y, Game.Camera.Position.z + 1);
 			OverworldPokemon.ChangeRotation();
 			Entities.AddRange(new Entity.Entity[]
 			{
@@ -870,7 +870,7 @@ namespace PokemonUnity.Overworld
 			OverworldPokemon
 			});
 
-			this.Surfing = GameVariables.playerTrainer.startSurfing;
+			this.Surfing = Game.playerTrainer.startSurfing;
 			this.StartOffsetMapUpdate();
 		}
 
@@ -882,8 +882,8 @@ namespace PokemonUnity.Overworld
 			//this._backdropRenderer.Draw();
 
 			// Set the effect's View and Projection matrices:
-			//Screen.Effect.View = GameVariables.Camera.View;
-			//Screen.Effect.Projection = GameVariables.Camera.Projection;
+			//Screen.Effect.View = Game.Camera.View;
+			//Screen.Effect.Projection = Game.Camera.Projection;
 
 			// Reset the Debug values:
 			//DebugDisplay.DrawnVertices = 0;
@@ -944,12 +944,12 @@ namespace PokemonUnity.Overworld
 			this._pokemonEncounter.TriggerBattle();
 
 			// Reload map from file (Debug or Sandbox Mode):
-			if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+			if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 			{
 				//if (KeyBoardHandler.KeyPressed(Keys.R) & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 				//{
 				//    Core.OffsetMaps.Clear();
-				//    GameVariables.DebugLog(string.Format("Reload map file: {0}", this._levelFile));
+				//    Game.DebugLog(string.Format("Reload map file: {0}", this._levelFile));
 				//    this.Load(LevelFile);
 				//}
 			}
@@ -1117,16 +1117,16 @@ namespace PokemonUnity.Overworld
 				this.PokemonEncounterData.EncounteredPokemon = false;
 
 				// Set the Surfing flag for the next map:
-				GameVariables.playerTrainer.startSurfing = Surfing;
+				Game.playerTrainer.startSurfing = Surfing;
 
 				// Change the player position:
-				GameVariables.Camera.Position = WarpData.WarpPosition;
+				Game.Camera.Position = WarpData.WarpPosition;
 
 				string tempProperties = this.CanDig.ToString() + "," + this.CanFly.ToString(); // Store properties to determine if the "enter" sound should be played.
 
 				// Store skin values:
 				bool usingGameJoltTexture = OwnPlayer.UsingGameJoltTexture;
-				//GameVariables.playerTrainer.Skin = OwnPlayer.SkinName;
+				//Game.playerTrainer.Skin = OwnPlayer.SkinName;
 
 				// Load the new level:
 				List<object> @params = new List<object>();
@@ -1145,15 +1145,15 @@ namespace PokemonUnity.Overworld
 				LevelLoader levelLoader = new LevelLoader();
 				levelLoader.LoadLevel(@params.ToArray());
 
-				//GameVariables.playerTrainer.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
+				//Game.playerTrainer.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
 				UsedStrength = false; // Disable Strength usuage upon map switch.
-				this.Surfing = GameVariables.playerTrainer.startSurfing; // Set the Surfing property after map switch.
+				this.Surfing = Game.playerTrainer.startSurfing; // Set the Surfing property after map switch.
 
 				// Create player and Pokémon entities:
-				//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, GameVariables.playerTrainer.Skin, 0, 0, "", "Gold", 0);
-				//OwnPlayer.SetTexture(GameVariables.playerTrainer.Skin, usingGameJoltTexture);
+				//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Game.playerTrainer.Skin, 0, 0, "", "Gold", 0);
+				//OwnPlayer.SetTexture(Game.playerTrainer.Skin, usingGameJoltTexture);
 
-				OverworldPokemon = new OverworldPokemon(GameVariables.Camera.Position.x, GameVariables.Camera.Position.y, GameVariables.Camera.Position.z + 1);
+				OverworldPokemon = new OverworldPokemon(Game.Camera.Position.x, Game.Camera.Position.y, Game.Camera.Position.z + 1);
 				OverworldPokemon.Visible = false;
 				OverworldPokemon.warped = true;
 				Entities.AddRange(new Entity.Entity[]
@@ -1166,12 +1166,12 @@ namespace PokemonUnity.Overworld
 				if (Riding & !CanRide())
 				{
 					Riding = false;
-					//OwnPlayer.SetTexture(GameVariables.playerTrainer.TempRideSkin, true);
-					//GameVariables.playerTrainer.Skin = GameVariables.playerTrainer.TempRideSkin;
+					//OwnPlayer.SetTexture(Game.playerTrainer.TempRideSkin, true);
+					//Game.playerTrainer.Skin = Game.playerTrainer.TempRideSkin;
 				}
 
 				// If any turns after the warp are defined, apply them:
-				GameVariables.Camera.InstantTurn(WarpData.WarpRotations);
+				Game.Camera.InstantTurn(WarpData.WarpRotations);
 
 				// Make the RouteSign appear:
 				//this._routeSign.Setup(MapName);
@@ -1191,7 +1191,7 @@ namespace PokemonUnity.Overworld
 				//}
 
 				// Initialize the world with newly loaded environment variables:
-				World.Initialize(GameVariables.Level.EnvironmentType, GameVariables.Level.WeatherType);
+				World.Initialize(Game.Level.EnvironmentType, Game.Level.WeatherType);
 
 				// If this map is on the restplaces list, set the player's last restplace to this map:
 				List<string> restplaces = System.IO.File.ReadAllLines(/*GameModeManager.GetMapPath("restplaces.dat")*/"").ToList();
@@ -1201,16 +1201,16 @@ namespace PokemonUnity.Overworld
 					string place = line.GetSplit(0, "|");
 					if (place == LevelFile)
 					{
-						//GameVariables.playerTrainer.LastRestPlace = place;
-						//GameVariables.playerTrainer.LastRestPlacePosition = line.GetSplit(1, "|");
+						//Game.playerTrainer.LastRestPlace = place;
+						//Game.playerTrainer.LastRestPlacePosition = line.GetSplit(1, "|");
 					}
 				}
 
 				// If the warp happened through a warp block, make the player walk one step forward after switching to the new map:
-				if (GameVariables.Camera.IsMoving & WarpData.IsWarpBlock)
+				if (Game.Camera.IsMoving & WarpData.IsWarpBlock)
 				{
-					GameVariables.Camera.StopMovement();
-					GameVariables.Camera.Move(1.0f);
+					Game.Camera.StopMovement();
+					Game.Camera.Move(1.0f);
 				}
 
 				// Because of the map change, Roaming Pokémon are moving to their next location on the world map:
@@ -1221,11 +1221,11 @@ namespace PokemonUnity.Overworld
 					SoundManager.PlaySound("enter", false);
 
 				// Unlock the yaw on the camera:
-				//((OverworldCamera)GameVariables.Camera).YawLocked = false;
+				//((OverworldCamera)Game.Camera).YawLocked = false;
 				Entity.Misc.NetworkPlayer.ScreenRegionChanged();
 
 				// If a warp occured, update the camera:
-				GameVariables.Camera.Update();
+				Game.Camera.Update();
 
 				// Disable the warp check:
 				this.WarpData.DoWarpInNextTick = false;
@@ -1307,7 +1307,7 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		public bool CanRide()
 		{
-			if (GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+			if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 				return true;
 			if (RideType > 0)
 			{
@@ -1323,7 +1323,7 @@ namespace PokemonUnity.Overworld
 						}
 				}
 			}
-			if (!GameVariables.Level.CanDig & !GameVariables.Level.CanFly)
+			if (!Game.Level.CanDig & !Game.Level.CanFly)
 				return false;
 			else
 				return true;
@@ -1336,7 +1336,7 @@ namespace PokemonUnity.Overworld
 		{
 			foreach (Entity.Entity e in this.Entities)
 			{
-				if (e.Position.x == GameVariables.Camera.Position.x & e.Position.z == GameVariables.Camera.Position.z & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(GameVariables.Camera.Position.y))
+				if (e.Position.x == Game.Camera.Position.x & e.Position.z == Game.Camera.Position.z & System.Convert.ToInt32(e.Position.y) == System.Convert.ToInt32(Game.Camera.Position.y))
 					return e.LetPlayerMove();
 			}
 			return true;

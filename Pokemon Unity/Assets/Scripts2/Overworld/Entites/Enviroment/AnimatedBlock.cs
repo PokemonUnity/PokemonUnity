@@ -107,13 +107,13 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void WalkOntoFunction()
 		{
-			if (GameVariables.Level.Surfing)
+			if (Game.Level.Surfing)
 			{
 				bool canSurf = false;
 
-				foreach (Entity Entity in GameVariables.Level.Entities)
+				foreach (Entity Entity in Game.Level.Entities)
 				{
-					if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()))// == ContainmentType.Contains
+					if (Entity.boundingBox.Contains(Game.Camera.GetForwardMovedPosition()))// == ContainmentType.Contains
 					{
 						if (Entity.ActionValue == 0 && (Entity.EntityID == Entities.AnimatedBlock || Entity.EntityID == Entities.Water))
 							canSurf = true;
@@ -127,20 +127,20 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				if (canSurf)
 				{
-					GameVariables.Camera.Move(1);
+					Game.Camera.Move(1);
 
-					//GameVariables.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Surfing, "");
+					//Game.Level.PokemonEncounter.TryEncounterWildPokemon(this.Position, EncounterTypes.Surfing, "");
 				}
 			}
 		}
 
 		private void Surf()
 		{
-			if (!GameVariables.Camera.Turning)
+			if (!Game.Camera.Turning)
 			{
-				if (!GameVariables.Level.Surfing)
+				if (!Game.Level.Surfing)
 				{
-					if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | GameVariables.IS_DEBUG_ACTIVE | GameVariables.playerTrainer.SandBoxMode)
+					if (Badge.CanUseHMMove(Badge.HMMoves.Surf) | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
 					{
 						//if (!Screen.ChooseBox.Showing)
 						//{
@@ -148,13 +148,13 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 							if (this.ActionValue == 0)
 							{
-								foreach (Entity Entity in GameVariables.Level.Entities)
+								foreach (Entity Entity in Game.Level.Entities)
 								{
-									if (Entity.boundingBox.Contains(GameVariables.Camera.GetForwardMovedPosition()))// == ContainmentType.Contains
+									if (Entity.boundingBox.Contains(Game.Camera.GetForwardMovedPosition()))// == ContainmentType.Contains
 									{
 										if (Entity.EntityID == Entities.AnimatedBlock)
 										{
-											if (GameVariables.playerTrainer.SurfPokemon > -1)
+											if (Game.playerTrainer.SurfPokemon > -1)
 												canSurf = true;
 										}
 										else if (Entity.Collision)
@@ -166,13 +166,13 @@ namespace PokemonUnity.Overworld.Entity.Environment
 								}
 							}
 
-							if (GameVariables.Level.Riding)
+							if (Game.Level.Riding)
 								canSurf = false;
 
 							if (canSurf)
 							{
 								string message = "Do you want to Surf?%Yes|No%";
-								GameVariables.TextBox.Show(message, new Entity[] { this }, true, true);
+								Game.TextBox.Show(message, new Entity[] { this }, true, true);
 								SoundManager.PlaySound("select");
 							}
 						//}
@@ -223,19 +223,19 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			if (Result == 0)
 			{
-				GameVariables.TextBox.Show(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Name + " used~Surf!", new Entity[] { this });
-				GameVariables.Level.Surfing = true;
-				GameVariables.Camera.Move(1);
+				Game.TextBox.Show(Game.playerTrainer.Party[Game.playerTrainer.SurfPokemon].Name + " used~Surf!", new Entity[] { this });
+				Game.Level.Surfing = true;
+				Game.Camera.Move(1);
 				//PlayerStatistics.Track("Surf used", 1);
 
 				{
-					var withBlock = GameVariables.Level.OwnPlayer;
-					//GameVariables.playerTrainer.TempSurfSkin = withBlock.SkinName;
+					var withBlock = Game.Level.OwnPlayer;
+					//Game.playerTrainer.TempSurfSkin = withBlock.SkinName;
 
-					int pokemonNumber = (int)GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].Species;
-					//string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
-					//if (GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon].IsShiny)
-					//	SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(GameVariables.playerTrainer.Party[GameVariables.playerTrainer.SurfPokemon]);
+					int pokemonNumber = (int)Game.playerTrainer.Party[Game.playerTrainer.SurfPokemon].Species;
+					//string SkinName = "[POKEMON|N]" + pokemonNumber + PokemonForms.GetOverworldAddition(Game.playerTrainer.Party[Game.playerTrainer.SurfPokemon]);
+					//if (Game.playerTrainer.Party[Game.playerTrainer.SurfPokemon].IsShiny)
+					//	SkinName = "[POKEMON|S]" + pokemonNumber + PokemonForms.GetOverworldAddition(Game.playerTrainer.Party[Game.playerTrainer.SurfPokemon]);
 
 					//withBlock.SetTexture(SkinName, false);
 
@@ -243,7 +243,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 					SoundManager.PlayPokemonCry(pokemonNumber);
 
-					//if (!GameVariables.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(GameVariables.Level.SelectedRadioStation))
+					//if (!Game.Level.IsRadioOn || !GameJolt.PokegearScreen.StationCanPlay(Game.Level.SelectedRadioStation))
 					//	MusicManager.Play("surf", true);
 				}
 			}
