@@ -8,11 +8,22 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 {
     public CanvasUI CurrentCanvas;
     public UICanvas ActiveCanvasUI { get; private set; }
+	/// <summary>
+	/// This is text-script meant to be rendered by front-end UI
+	/// </summary>
     private string DialogText { get; set; }
-    private static UnityEngine.UI.Text DialogUIText;// = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
-    private static UnityEngine.UI.Text DialogUITextDump;// = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
+	/// <summary>
+	/// This is the text that's displayed to user on front-end.
+	/// The text is properly formatted for real-time rendering display in Unity.
+	/// </summary>
+    private static UnityEngine.UI.Text DialogUIText { get; set; }// = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
+	/// <summary>
+	/// This is the text that's hidden from user, and is used in background processing.
+	/// The text is the final rendered display of the text properly formatted for UI in Unity
+	/// </summary>
+	private static UnityEngine.UI.Text DialogUITextDump { get; set; }// = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
     private static UnityEngine.UI.Text DialogUIScrollText;// = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
-    private static bool InstantLine;
+    private static bool InstantLine; //ToDo: Global Bool => GameVariables.Instant, maybe?
     private static float secPerChar
     {
         get 

@@ -13,7 +13,7 @@ public class PBItems
 
 namespace PokemonUnity.Item
 {
-    public class Item
+    public partial class Item
     {
         #region Variables
         public string Name { get; private set; }
@@ -97,9 +97,10 @@ namespace PokemonUnity.Item
         }
         public ItemFlingEffect ItemFlingEffect { get; private set; }
         #endregion
+		public string MailData { get; set; }
 
-        #region Constructor
-        public Item(Items itemId)
+		#region Constructor
+		public Item(Items itemId)
         {
             ItemId = itemId;
             Item item = GetItem(itemId);

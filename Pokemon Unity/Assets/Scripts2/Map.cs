@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
+using System.IO;
+//using Newtonsoft.Json;
+//using Newtonsoft.Json.Serialization;
+//using UnityEngine;
 using PokemonUnity;
 using PokemonUnity.Pokemon;
+using PokemonUnity.Overworld;
 
+namespace PokemonUnity.Samples
+{using UnityEngine;
 /// ToDo: Store maps as GameObjects in code
 /// Find a way to associate code-variables to Maps
 /// Generate code to load maps based on above
@@ -41,10 +47,10 @@ class Map : MonoBehaviour
     #endregion
 
     #region Idea2: Overworld tiles as individual GameObject
-    /// a 2D grid of cubes
-    /// every position in the grid must have a cube
-    /// the height is different for each position in the grid
-    /// The way would be to loop through every x position, and within that every z position.
+    // a 2D grid of cubes
+    // every position in the grid must have a cube
+    // the height is different for each position in the grid
+    // The way would be to loop through every x position, and within that every z position.
 
     GameObject mapTile; 
  
@@ -153,6 +159,7 @@ class Map : MonoBehaviour
 		/// <summary>
 		/// Texture around Name when entering Map
 		/// </summary>
+		/// ToDo: Volcanic, Snow, Spring, etc...
 		int NameStyle;
 		int MapType;
 		//int Texture1;
@@ -178,76 +185,79 @@ class Map : MonoBehaviour
 		/// need to map collision to X,Y value as well...
 		int[,] MapArray;
 	}
-	#endregion
+		#endregion
+
+		#region Global and map metadata
+		//ToDo: Each time map changes, new values are loaded/replaced below
+		public class Global
+		{
+			/// <summary>
+			/// Location you return to when you respawn
+			/// </summary>
+			public string MetadataHome;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// String below should point to Audio/Sound files
+			public string MetadataWildBattleBGM;
+			public string MetadataTrainerBattleBGM;
+			public string MetadataWildVictoryME;
+			public string MetadataTrainerVictoryME;
+			public string MetadataSurfBGM;
+			public string MetadataBicycleBGM;
+			/* TrainerClass
+			Trainer MetadataPlayerA;
+			Trainer MetadataPlayerB;
+			Trainer MetadataPlayerC;
+			Trainer MetadataPlayerD;
+			Trainer MetadataPlayerE;
+			Trainer MetadataPlayerF;
+			Trainer MetadataPlayerG;
+			Trainer MetadataPlayerH;*/
+		}
+
+		public class NonGlobalTypes : Global
+		{
+			bool MetadataOutdoor;
+			bool MetadataShowArea;
+			bool MetadataBicycle;
+			bool MetadataBicycleAlways;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// "uuu"
+			int[,] MetadataHealingSpot;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// return WeatherType
+			bool MetadataWeather;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// "uuu"
+			int[] MetadataMapPosition;
+			int MetadataDiveMap;
+			bool MetadataDarkMap;
+			bool MetadataSafariMap;
+			bool MetadataSnapEdges;
+			bool MetadataDungeon;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// String below should point to Audio/Sound files
+			public string MetadataBattleBack;
+			//public string MetadataMapWildBattleBGM;
+			//public string MetadataMapTrainerBattleBGM;
+			//public string MetadataMapWildVictoryME;
+			//public string MetadataMapTrainerVictoryME;
+			int[,] MetadataMapSize;
+		}
+		#endregion
+	}
 }
 
-/// <summary>
-/// Map GameObject will be an Array of tiles
-/// mapEnum = MapId = BlenderJsonToUnity[]
-/// </summary>
-class BlenderJsonToUnity
-{
-	/// <summary>
-	/// Vector3 || (float x, float y, float z)
-	/// </summary>
-	/// we dont need ray casting anymore, since all the x,y,z's are recorded
-    float tileLocation; 
-	/// <summary>
-	/// Quaternion || (float x, float y, float z)
-	/// </summary>
-    float tileRotation;
-	/// <summary>
-	/// Mesh object
-	/// </summary>
-    string tileShape; 
-	/// <summary>
-	/// Texture enum or filename
-	/// </summary>
-    string tileTexture; 
-	/// <summary>
-    /// Tile Tags:
-    /// 0 - Default Environment
-    /// 1 - Impassable
-    /// 2 - Surf Water
-    /// 3 - Environment 2
-    /// 4? - Dive Water
-	/// </summary>
-	/// ToDo: enum here... Mesh object will determine collision mapping
-    int tileCollision; 
-
-    /*
-     * Read all of the json files in the blender/json/ folder
-     * Each file should represent 1 map file, filled with many tilesArray
-     * convert json file into an array of tiles, to be used with Map.BuildMap()
-     * 
-     * Consider writing unity script to convert json map tiles to a saved prefab asset
-     * to view texture configuration for better hard-code adjustments
-     * https://forum.unity.com/threads/saving-a-custom-map-object-hierarchy-and-keeping-prefabs-looking-for-ideas.156963/
-     * 
-     * What if textures were stored as a single map sprite
-     * broken down into a grid and used to load the textures 
-     * on the tiles x,y by sprite's x,y? Only issue is Z value
-     * build from buttom up x,y,(z|0 to z|n+), if empty: skip, 
-     * use sprite x,y texture for each z?
-     * https://gamedev.stackexchange.com/questions/87696/how-do-i-draw-a-tilemap-within-unity3d
-     * https://answers.unity.com/questions/974007/what-is-the-best-way-to-create-3d-tile-based-level.html
-    private static Dictionary<int, PokemonData> LoadPokedex()
-    {
-        var data = new Dictionary<int, PokemonData>(); //Why not convert dictionary to Array? It's faster, more streamlined, and simpler to work with
-
-        string[] fileEntries = Directory.GetFiles(Application.streamingAssetsPath + "/Pokemons", "*.json");  // Filter on only json files, otherwise you can also get other files (.meta)
-        foreach (string fileName in fileEntries)
-        {
-            string dataAsJson = File.ReadAllText(fileName, Encoding.UTF8);
-            PokemonData pokemonData = new PokemonData();
-            JsonUtility.FromJsonOverwrite(dataAsJson, pokemonData);
-            data.Add(pokemonData.ID, pokemonData);
-        }
-
-        return data; //Right here, a ".ToArray()" or maybe a for-loop Array[n] = Dictionary<n>
-    }*/
-}
-
+#region Encounter Scripts
 /// <summary>
 /// Idea 1 for Pokemon Encounters
 /// </summary>
@@ -1010,265 +1020,1229 @@ public class WildPokemonInitialiser
 		return packedList;
 	}
 }
+/* Another Idea...
+	#1
+		The encounter code. Dictate how the Pokemon is encountered. There are currently 2 options:
+
+		0 - Grass/floor
+		1 - Headbutt trees
+	
+	#2
+		This is the Pokemon code. Finds the Pokemon whose national dex number is given.
+
+	#3
+		The chance of encounter. This number decides how easy it will be to find this Pokemon. The higher the number the more likely it will be.
+
+	#4
+		Time code. This decides when this Pokemon will be available. There are 5 options:
+
+		-1 - All times.
+		0 - Night.
+		1 - Morning.
+		2 - Day.
+		3 - Evening.
+	#5
+		The Minimum level.
+
+	#6
+		The maximum level. If the Pokemon should only appear at one level this number should be the same as ##5.
+ */
+#endregion
 
 namespace PokemonUnity
 {
-	/*enum EncounterActions
+	public struct Tile
 	{
-		Land,
+		#region Variables
 		/// <summary>
-		/// If null or empty, defaults to Land
+		/// Y measurement of this Tile's Node in Scene; 
+		/// starts at Bottom and stretches Up
 		/// </summary>
-		LandMorning,
-		LandDay,
-		LandNight,
-		//ToDo: Missing Grass, and Tall grass...
-		Cave,
-		BugContest,
+		public int Length 
+		{
+			get
+			{
+				switch (Shape)
+				{
+					case Shape.WalkPath:
+						return 2;
+					default:
+						return 1;
+				}
+			}
+		}
+		/// <summary>
+		/// X measurement of this Tile's Node in Scene;
+		/// Starts at Left and stretches Right
+		/// </summary>
+		public int Width
+		{
+			get
+			{
+				switch (Shape)
+				{
+					case Shape.WalkPath:
+						return 2;
+					default:
+						return 1;
+				}
+			}
+		}
+		/// <summary>
+		/// X position of this Tile's Node in Scene
+		/// </summary>
+		public int X { get; private set; }
+		/// <summary>
+		/// Y position of this Tile's Node in Scene
+		/// </summary>
+		public int Y { get; private set; }
+		/// <summary>
+		/// Z position of this Tile's Node in Scene
+		/// </summary>
+		public float Z { get; private set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// ToDo: Enum?
+		public int Map { get; private set; } 
+		//public bool Passable {
+		//	get
+		//	{
+		//		switch (Shape)
+		//		{
+		//			default:
+		//				return true;
+		//		}
+		//	}
+		//}
+		//public bool Encounter {
+		//	get
+		//	{
+		//		switch (Terrain)
+		//		{
+		//			case Terrain.Grass:
+		//			case Terrain.Sand:
+		//			case Terrain.Rock:
+		//			case Terrain.DeepWater:
+		//			case Terrain.StillWater:
+		//			case Terrain.Water:
+		//			case Terrain.TallGrass:
+		//			case Terrain.SootGrass:
+		//				return true;
+		//			case Terrain.Puddle:
+		//			default:
+		//				return false;
+		//		}
+		//	}
+		//}
+		//public bool NeedsSurf {
+		//	get
+		//	{
+		//		switch (Terrain)
+		//		{
+		//			default:
+		//				return false;
+		//		}
+		//	}
+		//}
+		public bool hasSnow { get; set; }
+		public bool hasSand { get; set; }
+		public bool isIce { get; set; }
+		#endregion
+		#region Enums
+		public Terrain Terrain { get; set; }
+		//public Environment Environment { get; set; }
+		///// <summary>
+		///// What Season Texture to apply
+		///// </summary>
+		//public Season Texture { get; set; }
+		public Shape Shape { get; set; }
+		/// <summary>
+		/// Direction this Tile Node is facing;
+		/// Rotation to use on this Tile's Node
+		/// </summary>
+		public Direction Direction { get; set; }
+		#endregion
+
+		//public Tile(int x, int y, int z) { }
+
+		#region Explicit Operators
+		/// <summary>
+		/// Two Tile objects are equal if they each occupy by the same physical location.
+		/// </summary>
+		/// <param name="tile1">Tile Location 1</param>
+		/// <param name="tile2">Tile Attempting to Occupy 2</param>
+		/// <returns>Returns whether or not the two Tile entities are overlapping the same physical location</returns>
+		public static bool operator == (Tile tile1, Tile tile2)
+		{
+			for (int x = 0; x < tile1.Width; x++)
+			{
+				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
+					//return true;
+					for (int y = 0; y < tile1.Length; y++)
+					{
+						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
+							return true;
+					}
+			}
+			return tile1.X == tile2.X && tile1.Y == tile2.Y /*&& tile1.Z == tile2.Z*/ && tile1.Map == tile2.Map;
+		}
+		public static bool operator != (Tile tile1, Tile tile2)
+		{
+			if (/*tile1.Z != tile2.Z ||*/ tile1.Map != tile2.Map)
+				return true;
+			for (int x = 0; x < tile1.Width; x++)
+			{
+				if (tile1.X + x == tile2.X && (/*tile1.Y == tile2.Y &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
+					//return true;
+					for (int y = 0; y < tile1.Length; y++)
+					{
+						if (tile1.Y + y == tile2.Y && (/*tile1.X == tile2.X &&* tile1.Z == tile2.Z &&*/ tile1.Map == tile2.Map))
+							return false;
+					}
+			}
+			return tile1.X != tile2.X && tile1.Y != tile2.Y /*&& tile1.Z != tile2.Z*/ && tile1.Map != tile2.Map;
+		}
+		//public bool Equals(Tile obj)
+		//{
+		//	return this == obj;
+		//}
+		public bool Equals(int x, int y)
+		{
+			//return this.X == x && this.Y == y;
+			Tile obj = new Tile() { X = x, Y = y };
+			return base.Equals(obj);
+		}
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Tile)) return false;
+			return this == (Tile)obj;
+		}
+		public override int GetHashCode()
+		{
+			//ToDo: Test HashCode? Also, MapId should also be included...
+			//Math was copied from Unity's Vector3
+			//return X.GetHashCode() ^ Y.GetHashCode() << 2 ^ Z.GetHashCode() >> 2;
+			//return X.GetHashCode() ^ Y.GetHashCode() << 2 ^ Map.GetHashCode() >> 2;
+			unchecked
+			{
+				int hash = 17;
+				hash = hash * 23 + X.GetHashCode();
+				hash = hash * 23 + Y.GetHashCode();
+				return hash;
+			}
+		}
+		#endregion
+	}
+
+	public class SceneTiles : UnityEngine.MonoBehaviour
+	{
+		public Tile[] Tiles { get; private set; }
+	}
+
+	/// ToDo: Store maps as GameObjects in code
+	/// Find a way to associate code-variables to Maps
+	/// Generate code to load maps based on above
+	/// Consider each overworld Route (1,21,26, PalletTown...)
+	/// a separate GameObject versus a single map
+	/// Decide whether to load all GameObjects together or
+	/// relative to/based on a player's given position
+	[UnityEngine.RequireComponent(typeof(UnityEngine.MeshFilter),typeof(UnityEngine.MeshRenderer))]
+	public class Map : UnityEngine.MonoBehaviour
+	{
+		/// <summary>
+		/// Set this variable in the inspector
+		/// </summary>
+		//public UnityEngine.GameObject mapPrefab;
+		public string MapName;
+		private UnityEngine.Mesh mesh { get; set; }
+		public List<UnityEngine.Vector3> vertices { get; private set; }
+		public List<int> tris { get; private set; }
+		public List<UnityEngine.Vector3> normals { get; private set; }
+		public List<UnityEngine.Vector2> uvs { get; private set; }
+
+		#region Unity UI Resources
+		private void Awake()
+		{
+			//If mesh is not null, use value already stored
+			if (!mesh)
+			{
+				mesh = new UnityEngine.Mesh();
+				UnityEngine.MeshFilter f = (UnityEngine.MeshFilter)GetComponent<UnityEngine.MeshFilter>();
+				f.mesh = mesh;
+				mesh.name = string.Format("{0}Mesh", gameObject.name);
+			}
+			else 
+				mesh = GetComponent<UnityEngine.MeshFilter>().mesh;
+			//foreach (Vector3 objectPos in objectPositions)
+			//{
+			//	GameObject mapObject = Instantiate(mapPrefab) as GameObject;
+			//	mapObject.transform.position = objectPos;
+			//}
+		}
+
+		void Start()
+		{
+			//CreateMesh();
+			BuildMap();
+		}
+
+		void OnEnable()
+		{
+			UpdateMesh();
+			//if mapName not null, scan directory for file/filename that matches "MapName"
+			//if file exist, load map and content on screen
+				//create a layer for each terrain asset
+				//for each terrain, generate mesh map (from file)
+				//for each asset, instantiate obj prefab (based on file)
+				//Create Components with values (if terrain add SceneTile, if tallGrass add PokemonEncounter) 
+				//Add Component to Tiles/Squares
+			//else do nothing
+		}
+		#endregion
+
+		//UnityEngine.GameObject mapTile;
+		//ToDo: Fetch from GameVariables
+		MapMatrix map; //{ get { return GameVariables.Map; } }
+ 
+		/// <summary>
+		/// Build map from Array of GameObjects[]
+		/// </summary>
+		/// ToDo: How to save map as Array of Objects?
+		/// ToDo: Blender-to-Unity => Read object name in if-check
+		/// A tile Array for Location, Rotation, and Name
+		void BuildMap(/*UnityEngine.GameObject layer, Terrain terrain*/) 
+		{
+			//int minX = -20;
+			int maxX = map.Width;
+			//int minY = 0;
+			int maxY = map.Length;
+			//int minZ = -20;
+			int maxZ = map.mapHeader.MapHeight;
+
+			List<Tile> tArray = new List<Tile>();
+			//UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			UnityEngine.MeshFilter mf = transform.GetComponent<UnityEngine.MeshFilter>();
+			UnityEngine.Mesh quad = mf.mesh; //new UnityEngine.Mesh();
+			//UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
+
+			//Foreach Tile in Map that matches Terrain...
+
+			// loop for every z position in the grid
+			//for (int z = 0; z < maxZ; z++ )
+			//{
+				// now loop for every x position in the grid
+				for (int x = 0; x < maxX; x++ )
+				{
+					//loop for every y position in the grid
+					for (int y = 0; y < maxY; y++ )
+					{
+						//Tile t = map.mapHeader.MapArray[z][x, y];
+						Tile t = map.mapHeader.Tiles[x, y];
+
+						if(!tArray.Exists(i => i.Equals(t))) tArray.Add(t);
+
+						//switch (t.Terrain)
+						//{
+						//	case Terrain.Grass:
+						//		//floor.Add(TileToQuad(t));
+						//		TileToQuad(ref quad, t);
+						//		break;
+						//	case Terrain.Sand:
+						//	case Terrain.Rock:
+						//	case Terrain.DeepWater:
+						//	case Terrain.StillWater:
+						//	case Terrain.Water:
+						//	case Terrain.TallGrass:
+						//	case Terrain.SootGrass:
+						//	case Terrain.Puddle:
+						//	default:
+						//		break;
+						//}
+						switch (t.Shape)
+						{
+							case Shape.Flat:
+								//floor.Add(TileToQuad(t));
+								//TileToQuad(ref quad, t);
+								//TileToQuad(t);
+								break;
+							case Shape.CliffSide:
+							//case Shape.CliffCorner:
+							case Shape.LedgeJump:
+							case Shape.LedgeWater:
+							//case Shape.WalkPath:
+							default:
+								break;
+						}
+					}
+				}
+			//	//TileToQuad(ref quad, tArray.ToArray(), z);
+			//	TileToQuad(tArray.ToArray(), z);
+			//}
+
+			mf.mesh = quad;
+			//quad.RecalculateBounds();
+			mf.mesh.RecalculateBounds();
+			//quad.Optimize();
+		}
+ 
+		/// <summary>
+		/// Add assets to map from Array of GameObjects[]
+		/// </summary>
+		/// ToDo: Redo method to instantiate non-floor tiles
+		/// ToDo: Save assets on map as Array of Objects?
+		/// A tile Array for Location, Rotation, and Name
+		void SpawnAssets() 
+		{
+			//int minX = -20;
+			//int maxX = map.Width;
+			//int minY = 0;
+			//int maxY = map.Length;
+			//int minZ = -20;
+			//int maxZ = map.mapHeader.MapHeight;
+			//
+			//List<UnityEngine.Mesh> floor = new List<UnityEngine.Mesh>();
+			//UnityEngine.Mesh floorQuad = new UnityEngine.Mesh();
+			//
+			//UnityEngine.MeshFilter mf = mapTile.AddComponent<UnityEngine.MeshFilter>();
+			//UnityEngine.MeshRenderer mr = mapTile.AddComponent<UnityEngine.MeshRenderer>();
+			//
+			//// loop for every z position in the grid
+			//for (int z = minZ; z < maxZ; z++ )
+			//{
+			//	// now loop for every x position in the grid
+			//	for (int x = minX; x < maxX; x++ )
+			//	{
+			//		//loop for every y position in the grid
+			//		for (int y = minY; y < maxY; y++ )
+			//		{
+			//			Tile t = map.mapHeader.MapArray[z][x, y];
+			//
+			//			switch (t.Terrain)
+			//			{
+			//				case Terrain.Grass:
+			//					//floor.Add(TileToQuad(t));
+			//					//TileToQuad(ref floorQuad, t);
+			//					//TileToQuad(t);
+			//					break;
+			//				case Terrain.Sand:
+			//				case Terrain.Rock:
+			//				case Terrain.DeepWater:
+			//				case Terrain.StillWater:
+			//				case Terrain.Water:
+			//				case Terrain.TallGrass:
+			//				case Terrain.SootGrass:
+			//				case Terrain.Puddle:
+			//				default:
+			//					// put it all to together to assign a position
+			//					UnityEngine.Vector3 pos = new UnityEngine.Vector3(x, y, z);
+			//
+			//					// instantiate the cube into a variable, so you can do other things with it
+			//					UnityEngine.GameObject clone = (UnityEngine.GameObject)Instantiate(mapTile, pos, new UnityEngine.Quaternion());
+			//
+			//					//ToDO: Add 'if(tile)' => collision-map
+			//
+			//					// change the name of the object, include the x and z position in the name
+			//					clone.name = "Tile_" + x.ToString() + "_" + z.ToString();
+			//
+			//					// in future, 
+			//					// this would be stored in a 3D array for future reference
+			//					// so you could modify the position, material, anything!
+			//					// cubeArray[x,y,z] = clone;
+			//					break;
+			//			}
+			//
+			//		}
+			//	}
+			//}
+			//
+			//mf.mesh = floorQuad;
+			//floorQuad.RecalculateBounds();
+		}
+
+		#region Methods
+		void UpdateMesh()
+		{
+			//int index = 0;
+			//for (int z = 0; z < length; z++)
+			//{
+			//	for (int x = 0; x < length; x++)
+			//	{
+			//		vertices[index] = Tile[x, z]; //mapGrid
+			//		index++;
+			//	}
+			//}
+
+			//mesh.Clear();
+			mesh.vertices = vertices.ToArray();
+			mesh.triangles = tris.ToArray();
+			mesh.uv = uvs.ToArray();
+
+			mesh.RecalculateBounds();
+			mesh.RecalculateNormals();
+		}
+		/// <summary>
+		/// Reads the MeshFilter component of Mesh 
+		/// to combine into single game object.
+		/// </summary>
+		/// <param name="go"></param>
+		void Combine(UnityEngine.GameObject go)
+		{
+			#region Mesh UVs Part 1
+			#endregion
+			//Grab all the mesh filters (from parent + children) on Map layer
+			UnityEngine.MeshFilter[] meshFilters = GetComponentsInChildren<UnityEngine.MeshFilter>();
+			//An array to hold all of the pending mesh data
+			UnityEngine.CombineInstance[] combine = new UnityEngine.CombineInstance[meshFilters.Length];
+			//Remove collider (will add again at end)
+			Destroy(this.gameObject.GetComponent<UnityEngine.MeshCollider>());
+
+			#region Mesh UVs Part 1
+			//Get current UVs before combining the multiple mesh data
+			UnityEngine.Vector2[] oldUVs = transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv;
+			#endregion
+
+			#region Mesh Vertices
+			int i = 0;
+			while(i < meshFilters.Length)
+			{
+				combine[i].mesh = meshFilters[i].sharedMesh;
+				combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+				//Disables objects added, so that they can be merged/removed
+				meshFilters[i].gameObject.SetActive(false);
+				i++;
+			}
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh = new UnityEngine.Mesh();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.CombineMeshes(combine, true);
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.RecalculateBounds();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.RecalculateNormals();
+			//transform.GetComponent<UnityEngine.MeshFilter>().mesh.Optimize();
+			//UnityEditor.MeshUtility.Optimize(transform.GetComponent<UnityEngine.MeshFilter>().mesh);
+			#endregion
+
+			#region Mesh UVs Part 2
+			//Reset UV array to hold both the old and new UVs
+			UnityEngine.Vector2[] newUVs = new UnityEngine.Vector2[oldUVs.Length]; //Old.count + New.count = length
+			//Add the new UVs to the old UVs (the newer textures are added towards the end...)
+			for (i = 0; i < oldUVs.Length; i++)
+				newUVs[i] = oldUVs[i];
+
+			//Add new UVs to array
+			//SetUVs suv = go.GetComponent<UnityEngine.set>
+			//go.GetComponent<UnityEngine.MeshFilter>().mesh.GetUVs()
+
+			//Override with the new combined UVs 
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv = newUVs;
+			#endregion
+
+			this.gameObject.AddComponent<UnityEngine.MeshCollider>();
+			transform.gameObject.SetActive(true);
+
+			//remove object since it's been added already
+			Destroy(go);
+		}
+		/// <summary>
+		/// Use this for Mesh objects that share the same texture/material atlas.
+		/// When meshes are merged into one, they use the same materials as parent.
+		/// </summary>
+		/// <param name="go"></param>
+		public void AddGameObjectToMapMesh(UnityEngine.GameObject go)
+		{
+			//Makes GameObject a child of Map 
+			go.transform.parent = this.transform;
+			//Merges the two objects into one unit
+			Combine(go);
+		}
+		public void TileToQuad(Tile[] tiles, int Z = 0)
+		{
+			//UnityEngine.MeshFilter mf = new UnityEngine.MeshFilter();
+			//UnityEngine.Mesh m = new UnityEngine.Mesh();
+			//All vertices are on mid point, because when player position is rounded to 0, it would be in middle of quad
+			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
+			List<int> tri = new List<int>();
+			List<UnityEngine.Vector3> normals = new List<UnityEngine.Vector3>();
+			List<UnityEngine.Vector2> uv = new List<UnityEngine.Vector2>();
+			//int xLo, xHi, yLo, yHi;
+			
+			foreach (Tile tile in tiles)
+			{
+				switch (tile.Shape)
+				{
+					case Shape.Flat:
+						vertices.AddRange(new UnityEngine.Vector3[] 
+						{
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Length	- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Length - .5f,	Z)
+						});
+						//tri.AddRange(new int[] 
+						//{
+						//	//Lower Left Triangle
+						//	//0, 2, 1,
+						//	tri.Count, tri.Count + 2, tri.Count + 1,
+						//	//Upper Right Triangle
+						//	//2, 3, 1
+						//	tri.Count + 2, tri.Count + 3, tri.Count + 1
+						//});
+						tri.AddRange(new int[] 
+						{
+							//2, 1, 0,
+							tri.Count + 2, tri.Count + 1, tri.Count,
+							//2, 3, 1
+							tri.Count + 2, tri.Count + 3, tri.Count + 1
+						});
+						normals.AddRange(new UnityEngine.Vector3[] 
+						{
+							//Floor Tiles Should point UP
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
+						});
+						uv.AddRange(new UnityEngine.Vector2[]
+						{
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Y) + 0f),//(0f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Y) + 0f),//(1f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Length) + 1f),//(0f, 1f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Length) + 1f) //(1f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 0f),//(0f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 0f),//(1f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 1f),//(0f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 1f) //(1f, 1f)
+						});
+						//xLo = Math.Min(0, tile.X);
+						//yLo = Math.Min(0, tile.Y);
+						//xHi = Math.Max(1, tile.X + tile.Width);
+						//yHi = Math.Max(1, tile.Y + tile.Length);
+						//uv = new UnityEngine.Vector2[vertices.Count];
+						//for (int i = 0; i < vertices.Count; i++)
+						//{
+						//	//Each UV should be a fraction of the total dimension 
+						//	uv[i] = new UnityEngine.Vector2((float)i / (xHi - xLo), (float)i / (yHi - yLo));
+						//}
+						break;
+					case Shape.CliffSide:
+						break;
+					//case Shape.CliffCorner:
+					//	break;
+					case Shape.LedgeJump:
+						break;
+					case Shape.LedgeWater:
+						break;
+					case Shape.WalkPath:
+						break;
+					case Shape.NULL:
+						break;
+					default:
+						break;
+				}
+			}
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.vertices = vertices.ToArray();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.triangles = tri.ToArray();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.normals = normals.ToArray();
+			transform.GetComponent<UnityEngine.MeshFilter>().mesh.uv = uv.ToArray();
+			//return mesh;
+		}
+		#region Old Idea...
+		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile[] tiles, int Z = 0)
+		{
+			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			//All vertices are on mid point, because when player position is rounded to 0, it would be in middle of quad
+			List<UnityEngine.Vector3> vertices = new List<UnityEngine.Vector3>();
+			List<int> tri = new List<int>();
+			List<UnityEngine.Vector3> normals = new List<UnityEngine.Vector3>();
+			List<UnityEngine.Vector2> uv = new List<UnityEngine.Vector2>();
+			//int xLo, xHi, yLo, yHi;
+			
+			foreach (Tile tile in tiles)
+			{
+				switch (tile.Shape)
+				{
+					case Shape.Flat:
+						vertices.AddRange(new UnityEngine.Vector3[] 
+						{
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Y		- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.X		- .5f, MidpointRounding.AwayFromZero),	tile.Length	- .5f,	Z),
+							new UnityEngine.Vector3 ((float) Math.Round(tile.Width	- .5f, MidpointRounding.AwayFromZero),	tile.Length - .5f,	Z)
+						});
+						//tri.AddRange(new int[] 
+						//{
+						//	//Lower Left Triangle
+						//	//0, 2, 1,
+						//	tri.Count, tri.Count + 2, tri.Count + 1,
+						//	//Upper Right Triangle
+						//	//2, 3, 1
+						//	tri.Count + 2, tri.Count + 3, tri.Count + 1
+						//});
+						tri.AddRange(new int[] 
+						{
+							//2, 1, 0,
+							tri.Count + 2, tri.Count + 1, tri.Count,
+							//2, 3, 1
+							tri.Count + 2, tri.Count + 3, tri.Count + 1
+						});
+						normals.AddRange(new UnityEngine.Vector3[] 
+						{
+							//Floor Tiles Should point UP
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+							-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
+						});
+						uv.AddRange(new UnityEngine.Vector2[]
+						{
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Y) + 0f),//(0f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Y) + 0f),//(1f, 0f)
+							new UnityEngine.Vector2 ((float)(tile.X) + 0f,		(float)(tile.Length) + 1f),//(0f, 1f)
+							new UnityEngine.Vector2 ((float)(tile.Width) + 1f,	(float)(tile.Length) + 1f) //(1f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 0f),//(0f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 0f),//(1f, 0f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 0f, (float)(vertices.Count - 4f) + 1f),//(0f, 1f)
+							//new Vector2 ((float)(vertices.Count - 4f) + 1f, (float)(vertices.Count - 4f) + 1f) //(1f, 1f)
+						});
+						//xLo = Math.Min(0, tile.X);
+						//yLo = Math.Min(0, tile.Y);
+						//xHi = Math.Max(1, tile.X + tile.Width);
+						//yHi = Math.Max(1, tile.Y + tile.Length);
+						//uv = new UnityEngine.Vector2[vertices.Count];
+						//for (int i = 0; i < vertices.Count; i++)
+						//{
+						//	//Each UV should be a fraction of the total dimension 
+						//	uv[i] = new UnityEngine.Vector2((float)i / (xHi - xLo), (float)i / (yHi - yLo));
+						//}
+						break;
+					case Shape.CliffSide:
+						break;
+					//case Shape.CliffCorner:
+					//	break;
+					case Shape.LedgeJump:
+						break;
+					case Shape.LedgeWater:
+						break;
+					case Shape.WalkPath:
+						break;
+					case Shape.NULL:
+						break;
+					default:
+						break;
+				}
+			}
+			mesh.vertices = vertices.ToArray();
+			mesh.triangles = tri.ToArray();
+			mesh.normals = normals.ToArray();
+			mesh.uv = uv.ToArray();
+			return mesh;
+		}
+		public UnityEngine.Mesh TileToQuad(ref UnityEngine.Mesh mesh, Tile tile, int Z = 0)
+		{
+			//UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[0];
+			int[] tri = new int[0];
+			UnityEngine.Vector3[] normals = new UnityEngine.Vector3[0];
+			UnityEngine.Vector2[] uvs = new UnityEngine.Vector2[0];
+			switch (tile.Shape)
+			{
+				case Shape.Flat:
+					vertices = new UnityEngine.Vector3[] 
+					{
+						new UnityEngine.Vector3 (tile.X,tile.Y,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Y, Z),
+						new UnityEngine.Vector3 (tile.X,tile.Length,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
+					};
+					tri = new int[6];
+					normals = new UnityEngine.Vector3[] 
+					{
+						//Floor Tiles Should point UP
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
+					};
+					uvs = new UnityEngine.Vector2[]
+					{
+						new UnityEngine.Vector2 (0, 0),
+						new UnityEngine.Vector2 (1, 0),
+						new UnityEngine.Vector2 (0, 1),
+						new UnityEngine.Vector2 (1, 1)
+					};
+					break;
+				case Shape.CliffSide:
+					break;
+				//case Shape.CliffCorner:
+				//	break;
+				case Shape.LedgeJump:
+					break;
+				case Shape.LedgeWater:
+					break;
+				case Shape.WalkPath:
+					break;
+				case Shape.NULL:
+					break;
+				default:
+					break;
+			}
+			mesh.vertices = vertices;
+			mesh.triangles = tri;
+			mesh.normals = normals;
+			mesh.uv = uvs;
+			return mesh;
+		}
+		public UnityEngine.Mesh TileToQuad(Tile tile, int Z = 0)
+		{
+			UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+			UnityEngine.Vector3[] vertices = new UnityEngine.Vector3[0];
+			int[] tri = new int[0];
+			UnityEngine.Vector3[] normals = new UnityEngine.Vector3[0];
+			switch (tile.Shape)
+			{
+				case Shape.Flat:
+					vertices = new UnityEngine.Vector3[] 
+					{
+						new UnityEngine.Vector3 (tile.X,tile.Y,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Y, Z),
+						new UnityEngine.Vector3 (tile.X,tile.Length,Z),
+						new UnityEngine.Vector3 (tile.Width, tile.Length, Z)
+					};
+					tri = new int[] //new int[6]; 
+					{
+						2, 1, 0,
+						//tri.Count + 2, tri.Count + 1, tri.Count,
+						2, 3, 1
+						//tri.Count + 2, tri.Count + 3, tri.Count + 1
+					};
+					normals = new UnityEngine.Vector3[] 
+					{
+						//Floor Tiles Should point UP
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up, //-UnityEngine.Vector3.forward,
+						-UnityEngine.Vector3.up  //-UnityEngine.Vector3.forward
+					};
+					break;
+				case Shape.CliffSide:
+					break;
+				//case Shape.CliffCorner:
+				//	break;
+				case Shape.LedgeJump:
+					break;
+				case Shape.LedgeWater:
+					break;
+				case Shape.WalkPath:
+					break;
+				case Shape.NULL:
+					break;
+				default:
+					break;
+			}
+			mesh.vertices = vertices;
+			mesh.triangles = tri;
+			mesh.normals = normals;
+			mesh.uv = new UnityEngine.Vector2[]
+			{
+				new UnityEngine.Vector2 (0, 0),
+				new UnityEngine.Vector2 (1, 0),
+				new UnityEngine.Vector2 (0, 1),
+				new UnityEngine.Vector2 (1, 1)
+			};
+			return mesh;
+		}
+		#endregion
+		#endregion
+	}
+
+	#region Idea4: 3d map chunk from 2d array
+	/// <summary>
+	/// Overworld excel grid of map headers 
+	/// </summary>
+	public class MapMatrix
+	{
+		/// <summary>
+		/// The first matrix (Matrix 0), resembles the present routes of Pokémon Version.
+		/// </summary>
+		/// enum of map matrix (i.e. Custom, PokemonDiamond, PokemonEmerald, etc...)
+		/// if MAP then it allows you to load mapHeaders
+		/// else it's a small chunk or dungeon
+		public Worlds WorldId { get; private set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// enum label of matrix
+		/// matrix id 0 is the overworld map
+		public Regions MatrixId { get; private set; }
+		public int Length { get; private set; }
+		public int Width { get; private set; }
+		public MapHeader mapHeader { get; private set; }
+	}
+	/// <summary>
+	/// Header data contains map x,y size
+	/// </summary>
+	public class MapHeader
+	{
+		#region Level
+		/// <summary>
+		/// 
+		/// </summary>
+		/// Internal Name
+		public Maps MapId;
+		public string Name;
+		/// <summary>
+		/// Texture around Name when entering Map
+		/// </summary>
+		/// ToDo: Volcanic, Snow, Spring, etc...
+		public int NameStyle { get; private set; }
+		public int MapType;
+		/// <summary>
+		/// Lists the maps of the "edges", 
+		/// ie those maps which have a block of trees, 
+		/// a block of the sea, a block of rock, etc. 
+		/// ... to continue the maps. 
+		/// Each block has its own height.
+		/// </summary>
+		public int MapHeight;
+		///// <summary>
+		///// An Array of Ints that specify elevation for specific tile node (individual quads).
+		///// Z elevation to <see cref="Tiles"/>' [X,Y]
+		///// </summary>
+		//public sbyte[] HeightMap;
+		public int MusicDay { get; private set; }
+		public int MusicNight { get; private set; }
+		/// <summary>
+		/// If true, Wild Pokemon can be found every step you take and not just in grass.
+		/// </summary>
+		public bool WildPokemon2 { get; private set; }
+		/// <summary>
+		/// Allows the following pokemon to show.
+		/// </summary>
+		public bool OverworldPokemon { get; private set; }
+		#endregion
+		#region Actions
+		/// <summary>
+		/// Allows Teleporting
+		/// </summary>
+		public bool CanTeleport { get; private set; }
+		/// <summary>
+		/// Allows Digging
+		/// </summary>
+		public bool CanDig { get; private set; }
+		/// <summary>
+		/// Allows Flying
+		/// </summary>
+		public bool CanFly { get; private set; }
+		/// <summary>
+		/// Allows Riding
+		/// </summary>
+		/// RideType
+		/// null=> 0 - If both CanDig and CanFly = false then Cannot ride.
+		/// 1	=> 1 - Can Ride.
+		/// 0	=> 2 - Cannot Ride.
+		public bool? CanRide { get; private set; }
+		/// <summary>
+		/// Determines the Environment(the background).
+		/// </summary>
+		/// 0 - Day/Night cycle
+		/// 1 - Day
+		/// 2 - Cave
+		/// 3 - Night
+		/// 4 - UnderWater
+		/// Anything not listed defaults to 0.
+		public Overworld.Environment Environment { get; set; }
+		//ToDo: 0:Random, 1:Normal, Bubbles?
+		public Weather Weather;
+		/// <summary>
+		/// A variety(0-3) of different lighting effects.
+		/// </summary>
+		public byte Lightning;
+		/// <summary>
+		/// Makes the cave dark to use flash for.
+		/// </summary>
+		public bool IsDark { get; private set; }
+		/// <summary>
+		/// Makes all wild battles into "Safari" Battles
+		/// </summary>
+		public bool IsSafariZone { get; private set; }
+		/// <summary>
+		/// Used during bug catching contest.
+		/// </summary>
+		public string BugCatchingContest { get; private set; }
+		#endregion
+		//int Texture1;
+		//int Texture2;
+		public int Scripts;
+		/// <summary>
+		/// </summary>
+		/// A script to run upon entering the map(after landing if flying).
+		public int MapScripts;
+		public int Texts;
+		/// <summary>
+		/// Table or Encounter chart for pokemons expected to find on map.
+		/// <para></para>
+		/// Points to another array id, 
+		/// where the Pokemon Encounters are expressed in detail
+		/// </summary>
+		public int WildPokemon;
+		public int Events;
+		public int Flags;
+		public int Camera;
+		/// <summary>
+		/// </summary>
+		/// For height loop or For width loop
+		/// [Z,i] = gameobject int value
+		/// each value in for loop should be rounded to nearest whole number
+		/// need to map collision to X,Y value as well...
+		public Tile[][,] MapArray;
+		public Tile[,] Tiles { get; private set; }
+	}
+	#endregion
+
+	#region Enums
+	public enum Worlds
+	{
+		GLOBAL = 0,
+		Emerald 
+	}
+	/// <summary>
+	/// Each "world" has their own smaller regions
+	/// </summary>
+	public enum Regions
+	{
+		Overworld = 0
+	}
+	/// <summary>
+	/// Each "region" has their own individual maps
+	/// </summary>
+	public enum Maps
+	{
+		Safari = 0
+	}
+	public enum Direction
+	{
+		/// <summary>
+		/// Facing Foward, towards camera
+		/// </summary>
+		Down = 0,
+		Up,
+		Left,
+		Right
+	}
+
+	public enum Shape
+	{
+		/// <summary>
+		/// Flat surface. 
+		/// </summary>
+		/// Stairs use flats too
+		Flat,
+		/// <summary>
+		/// Box(five sides)
+		/// </summary>
+		Entrance,
+		/// <summary>
+		/// 45 degree slant.
+		/// </summary>
+		Slant,
+		/// <summary>
+		/// Flat vertical surface
+		/// </summary>
+		CliffSide,
+		/// <summary>
+		/// "In" corner.
+		/// </summary>
+		CliffCornerIn,
+		/// <summary>
+		/// "Out" corner.
+		/// </summary>
+		CliffCornerOut,
+		/// <summary>
+		/// Ledge.
+		/// </summary>
+		LedgeJump,
+		/// <summary>
+		/// Ledge Corner.
+		/// </summary>
+		LedgeJumpCorner,
+		/// <summary>
+		/// Water's edge.
+		/// </summary>
+		LedgeWater,
+		/// <summary>
+		/// Water's edge "in" corner.
+		/// </summary>
+		LedgeWaterIn,
+		/// <summary>
+		/// Water's edge "out" corner.
+		/// </summary>
+		LedgeWaterOut,
+		/// <summary>
+		/// Only here because 3ds using a 2x2 dirt path
+		/// </summary>
+		WalkPath,
+		/// <summary>
+		/// Thin block. 4 Pixels wide.
+		/// </summary>
+		Fence,
+		/// <summary>
+		/// Double floor (a floor with a floor above it)
+		/// </summary>
+		Bridge,
+		/// <summary>
+		/// Two Flat pieces intersecting in their centers at 90 degree angles.
+		/// </summary>
+		Crossway,
+		/// <summary>
+		/// Box (Six Sides).
+		/// </summary>
+		NULL
+	}
+
+	public enum Season
+	{
+		Summer,
+		Winter,
+		Fall,
+		Spring,
+		Volcanic
+	}
+
+	public enum Entities
+	{
+		Floor,//Default?...
+		/// <summary>
+		/// Renders sides from all directions.
+		/// </summary>
+		AllSidesObject,// or 
+		Cube, 
+		/// <summary>
+		/// Creates an Apricorn Plant.
+		/// <para></para>
+		/// An integer defining which Apricorn is used.
+		/// </summary>
+		/// 0 - White
+		/// 1 - Black
+		/// 2 - Pink
+		/// 3 - Blue
+		/// 4 - Red
+		/// 5 - Green
+		/// 6 - Yellow
+		ApricornPlant,
+		BerryPlant,
+		/// <summary>
+		/// Allows the player to use cut on the Entity.
+		/// </summary>
+		CutTree,
+		/// <summary>
+		/// Creates long grass where the player may run into wild pokemon.
+		/// <para></para>
+		/// An integer defining properties of grass.
+		/// </summary>
+		Grass,
+		/// <summary>
+		/// Allows the player to use headbutt on the Entity.
+		/// </summary>
+		HeadbuttTree,
+		/// <summary>
+		/// Creates an item, if the "Action" tag = 1 then it is a "hidden" item.
+		/// <para></para>
+		/// int,int - the first value is the ID for the item on that map(each item should have a unique ID) The second is the item's ID.
+		/// </summary>
+		ItemObject,
+		/// <summary>
+		/// Creates a spot to grow a berry in.
+		/// </summary>
+		LoamySoil,
+		/// <summary>
+		/// Creates a block to trigger a script when it is either walked on or clicked on.
+		/// <para></para>
+		/// Depending on the "Action" tag the way the "AdditionalValue" tag is interpreted is changed
+		/// </summary>
+		/// 0 - Activates the given script when walked on. Automatically invisible.
+		/// 1 - Activates the given script when clicked on.
+		/// 2 - Displays the given text when clicked on.
+		/// 3 - Interprets the given text as a script.
+		/// 4 - Activates the given script when walked on.
+		ScriptBlock,
+		/// <summary>
+		/// Creates an entity that either displays text or activates a script when the player "talks" to it.
+		/// <para></para>
+		/// Based on the "Action" tag the "AdditionalValue" tag is interpreted differently:
+		/// </summary>
+		/// 0 - Displays the given text as text.
+		/// 1 - Activates the given script.
+		/// 2 - Converts the given text to a script.
+		SignBlock,
+		/// <summary>
+		/// Creates a stairway.
+		/// </summary>
+		SlideBlock,
+		/// <summary>
+		/// Allows the player to use rock smash on the Entity.
+		/// </summary>
+		SmashRock,
+		/// <summary>
+		/// Creates a ledge the player can lead down.
+		/// </summary>
+		Step,
+		/// <summary>
+		///  Allows the player to use strength on the Entity.
+		/// </summary>
+		StrengthRock,
+		/// <summary>
+		/// Creates a Trigger that activates when a "StrengthRock" is pushed onto it.
+		/// <para></para>
+		/// bool,bool, str - the bools are for if the rock is removed immediately, and if the rock is nolonger loaded with the map, the string is the script activated when the trigger is activated.
+		/// </summary>
+		StrengthTrigger,
+		/// <summary>
+		/// A sign that spins at the center.
+		/// <para></para>
+		/// An int defining what texture is used for the sign.
+		/// </summary>
+		/// 0 - PokeCenter
+		/// 1 - Mart
+		/// 2 - Gym Sign
+		TurningSign,
+		/// <summary>
+		/// An entity that always shows the same face to the player(spins on the center.
+		/// </summary>
+		WallBill,
+		/// <summary>
+		/// Basic Entity.
+		/// </summary>
+		WallBlock,
+		/// <summary>
+		/// Creates a warp.
+		/// <para></para>
+		/// mapfilepath, X, Y, Z, R, E - The mapfile, position, number of 1/4 turns to warp, and directions from which it can be accessed separated by "|".
+		/// </summary>
+		WarpBlock,
+		/// <summary>
+		/// Creates a surf spot, ignores texture(s) given.
+		/// </summary>
 		Water,
-		RockSmash,
-		OldRod,
-		GoodRod,
-		SuperRod,
-		HeadbuttLow,
-		HeadbuttHigh
-	}*/
-
-	/// <summary>
-	/// Encounter method
-	/// </summary>
-	public enum Method
-	{
 		/// <summary>
-		/// Walking in tall grass or a cave
+		/// Creates a Waterfall, ignores texture(s) given.
 		/// </summary>
-		WALK = 1,
+		Waterfall,
 		/// <summary>
-		/// Walking in rustling grass
+		/// Creates a Whirlpool, ignores texture(s) given.
 		/// </summary>
-		GRASS_SPOTS = 9,
+		Whirlpool,
 		/// <summary>
-		/// Walking in dust clouds
+		/// Creates a dive spot, ignores texture(s) given.
 		/// </summary>
-		CAVE_SPOTS = 10,
-		/// <summary>
-		/// Walking in bridge shadows
-		/// </summary>
-		BRIDGE_SPOTS = 11,
-		/// <summary>
-		/// Walking in dark grass
-		/// </summary>
-		DARK_GRASS = 8,
-		/// <summary>
-		/// Walking in yellow flowers
-		/// </summary>
-		YELLOW_FLOWERS = 14,
-		/// <summary>
-		/// Walking in purple flowers
-		/// </summary>
-		PURPLE_FLOWERS = 15,
-		/// <summary>
-		/// Walking in red flowers
-		/// </summary>
-		RED_FLOWERS = 16,
-		/// <summary>
-		/// Walking on rough terrain
-		/// </summary>
-		ROUGH_TERRAIN = 17,
-		/// <summary>
-		/// Fishing with an <see cref="eItems.Item.OLD_ROD"/>
-		/// </summary>
-		OLD_ROD = 2,
-		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.GOOD_ROD"/> 
-		/// </summary>
-		GOOD_ROD = 3,
-		/// <summary>
-		/// Fishing with a <see cref="eItems.Item.SUPER_ROD"/> 
-		/// </summary>
-		SUPER_ROD = 4,
-		/// <summary>
-		/// Fishing in dark spots
-		/// </summary>
-		SUPER_ROD_SPOTS = 12,
-		/// <summary>
-		/// Surfing
-		/// </summary>
-		SURF = 5,
-		/// <summary>
-		/// Surfing in dark spots
-		/// </summary>
-		SURF_SPOTS = 13,
-		/// <summary>
-		/// Smashing rocks
-		/// </summary>
-		ROCK_SMASH = 6,
-		/// <summary>
-		/// Headbutting trees
-		/// </summary>
-		HEADBUTT = 7
+		DiveTile,
+		RockClimbEntity,
+		NPC,
+		ModelEntity,
+		RotationTile,
+		AnimatedBlock,
+		NetworkPokemon,
+		MessageBulb,
+		OverworldPokemon,
+		OwnPlayer,
+		Particle
 	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public enum Condition
-	{
-		SWARM = 1,
-		TIME = 2,
-		RADAR = 3,
-		SLOT = 4,
-		RADIO = 5,
-		SEASON = 6
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <remarks>
-	/// default: swarm-no, time-day, radar-off, slot-none, radio-off
-	/// </remarks>
-	/// ToDo: Change from Enum to class with Bool values
-	public enum ConditionValue
-	{
-		/// <summary>
-		/// During a swarm
-		/// <para>
-		/// <seealso cref="Condition.SWARM"/>
-		/// </para>
-		/// </summary>
-		SWARM_YES = 1,
-		/// <summary>
-		/// Not during a swarm
-		/// <para>
-		/// <seealso cref="Condition.SWARM"/>
-		/// </para>
-		/// </summary>
-		SWARM_NO = 2,
-
-		/// <summary>
-		/// In the morning
-		/// <para>
-		/// <seealso cref="Condition.TIME"/>
-		/// </para>
-		/// </summary>
-		TIME_MORNING = 3,
-		/// <summary>
-		/// During the day
-		/// <para>
-		/// <seealso cref="Condition.TIME"/>
-		/// </para>
-		/// </summary>
-		TIME_DAY = 4,
-		/// <summary>
-		/// At night
-		/// <para>
-		/// <seealso cref="Condition.TIME"/>
-		/// </para>
-		/// </summary>
-		TIME_NIGHT = 5,
-
-		/// <summary>
-		/// Using PokeRadar
-		/// <para>
-		/// <seealso cref="Condition.RADAR"/>
-		/// </para>
-		/// </summary>
-		RADAR_ON = 6,
-		/// <summary>
-		/// Not using PokeRadar
-		/// <para>
-		/// <seealso cref="Condition.RADAR"/>
-		/// </para>
-		/// </summary>
-		RADAR_OFF = 7,
-
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_NONE = 8,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_RUBY = 9,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_SAPPHIRE = 10,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_EMERALD = 11,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_FIRERED = 12,
-		/// <summary>
-		/// <para>
-		/// <seealso cref="Condition.SLOT"/>
-		/// </para>
-		/// </summary>
-		SLOT_LEAFGREEN = 13,
-
-		/// <summary>
-		/// Radio off
-		/// <para>
-		/// <seealso cref="Condition.RADIO"/>
-		/// </para>
-		/// </summary>
-		RADIO_OFF = 14,
-		/// <summary>
-		/// Hoenn radio
-		/// <para>
-		/// <seealso cref="Condition.RADIO"/>
-		/// </para>
-		/// </summary>
-		RADIO_HOENN = 15,
-		/// <summary>
-		/// Sinnoh radio
-		/// <para>
-		/// <seealso cref="Condition.RADIO"/>
-		/// </para>
-		/// </summary>
-		RADIO_SINNOH = 16,
-
-		/// <summary>
-		/// During Spring
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_SPRING = 17,
-		/// <summary>
-		/// During Summer
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_SUMMER = 18,
-		/// <summary>
-		/// During Autumn
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_AUTUMN = 19,
-		/// <summary>
-		/// During Winter
-		/// <para>
-		/// <seealso cref="Condition.SEASON"/>
-		/// </para>
-		/// </summary>
-		SEASON_WINTER = 20
-	}
+	#endregion
 }

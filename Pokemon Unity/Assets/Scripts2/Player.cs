@@ -7,6 +7,7 @@ using PokemonUnity.Pokemon;
 using PokemonUnity.Attack;
 using PokemonUnity.Item;
 using PokemonUnity.Saving.SerializableClasses;
+using PokemonUnity.Character;
 
 [Serializable]
 public class Player
@@ -19,7 +20,7 @@ public class Player
 	/// <summary>
 	/// Please use the values stored in <see cref="Trainer.SecretID"/>
 	/// </summary>
-	private int? secretId { get; set; } 
+	private int? secretId { get; set; }
 	/// <summary>
 	/// Player's Pokemon Party is stored in Player class, 
 	/// and then reflected in Trainer, to match what occurs
@@ -35,6 +36,17 @@ public class Player
 	public GameVariables.TrainerBag Bag { get { return new GameVariables.TrainerBag(this); } }
 	public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(this, ActivePcBox); } }
 	//ToDo: Missing (Trainer)Player.Rival variable
+	public string ItemData { get; set; }
+	public string BerryData { get; set; }
+	public string NPCData { get; set; }
+	public string ApricornData { get; set; }
+	public UnityEngine.Vector3 LastPokemonPosition { get; set; }
+	public bool SandBoxMode { get; set; }
+	public bool IsRunning() { return false; }
+	public bool startSurfing { get; set; }
+	public int RepelSteps { get; set; }
+	public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
+	public Pokemon GetWalkPokemon() { return null; }
 
 	#region UI/Game Engine
 	public int mapName { get; set; }
@@ -53,8 +65,8 @@ public class Player
 
 	#region Player Records
 	public string PlayerName { get; private set; }
+	public string RivalName { get; private set; }
 	/// <summary>
-	/// 
 	/// </summary>
 	/// ToDo: consider create AddMoney(value)... 
 	public int PlayerMoney { get { return playerMoney; } set { playerMoney = value > Settings.MAXMONEY ? Settings.MAXMONEY : value; } }
@@ -74,6 +86,7 @@ public class Player
 	/// <code>playerPokedex[1,2] == 3; means the 3rd form of pokemonId was first to be scanned into pokedex</code>
 	/// </summary>
 	/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
+	/// ToDo: Add variable for "Shiny"?...
 	public byte[,] PlayerPokedex { get; private set; }
 	///// <summary>
 	///// Usage:<para>
@@ -89,19 +102,19 @@ public class Player
 	public int PokedexCaught { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 1] == 1 select PlayerPokedex[index, 1]).Count(); } }
 	public int PokedexSeen { get { return (from int index in Enumerable.Range(0, PlayerPokedex.GetUpperBound(0)) where PlayerPokedex[index, 0] == 1 select PlayerPokedex[index, 0]).Count(); } }
 	//ToDo: Adventure Start Date
-    public System.TimeSpan playerTime { get; private set; }
-    //public int playerHours;
-    //public int playerMinutes;
-    //public int playerSeconds;
+	public System.TimeSpan playerTime { get; private set; }
+	//public int playerHours;
+	//public int playerMinutes;
+	//public int playerSeconds;
 
-    ///// <summary>
-    ///// Multiple Gens/Regions can be looked-up using
-    ///// </summary>
-    ///// <remarks>I thought there were only 8 badges?</remarks>
-    ///// ToDo: Array[Region/MapId,GymBadge] / or Array[i,8]
-    ///// gymsEncountered[1,5] == 2nd gen/region, 6th gym badge
+	///// <summary>
+	///// Multiple Gens/Regions can be looked-up using
+	///// </summary>
+	///// <remarks>I thought there were only 8 badges?</remarks>
+	///// ToDo: Array[Region/MapId,GymBadge] / or Array[i,8]
+	///// gymsEncountered[1,5] == 2nd gen/region, 6th gym badge
 	//[Obsolete]
-    //public bool[,] gymsEncountered { get; private set; }
+	//public bool[,] gymsEncountered { get; private set; }
 	///// <summary>
 	///// if <see cref="gymsBeatTime"/> is null, then value is false.
 	///// </summary>
@@ -117,6 +130,8 @@ public class Player
 	/// regardless of how they're set in game. One value per badge.
 	/// </summary>
 	public Dictionary<GymBadges, System.DateTime?> GymsBeatTime { get; private set; }
+	//public Badge Badges { get; set; }
+	public int[] Badges { get { return GymsBeatTime.Where(x => x.Value.HasValue).Select(x => (int)x.Key).ToArray(); } }
 	#endregion
 
 	#region Player Customization
@@ -760,6 +775,121 @@ public partial class GameVariables
 			return items.ToArray();
 		}
 
+		/// <summary>
+		/// If the player has the Mega Bracelet in their inventory.
+		/// </summary>
+		/// <returns></returns>
+		public bool HasMegaBracelet()
+		{
+            //If GameVariables.playerTrainer.SandBoxMode = True Or GameVariables.IS_DEBUG_ACTIVE = True Then
+            //    Return True
+            //Else
+            //    If Me.GetItemAmount(78) > 0 Then
+            //        Return True
+            //    End If
+            //End If
+
+			return false;
+		}
+
+		/// <summary>
+		/// If the player has the Mega Bracelet in their inventory.
+		/// </summary>
+		/// <returns></returns>
+		public bool HasRunningShoes()
+		{
+            //If Me.GetItemAmount(576) > 0 Then
+            //    Return True
+            //End If
+
+			return false;
+		}
+
+		/// <summary>
+		/// Adds items to the inventory.
+		/// </summary>
+		/// <param name="item">The ID of the item.</param>
+		/// <param name="quantity">Amount of items to add.</param>
+		public void AddItem(Items item, int quantity = 1)
+		{
+			//Dim newItem As Item = P3D.Item.GetItemByID(ID)
+			//
+			//For Each c As ItemContainer In Me
+			//    If c.ItemID = ID Then
+			//        c.Amount += Amount
+			//        Exit Sub
+			//    End If
+			//Next
+			//
+			//Me.Add(New ItemContainer(ID, Amount))
+			for (int i = 0; i < quantity; i++)
+			{
+				GameVariables.Bag_Items.Add(item);
+			}
+		}
+
+		/// <summary>
+		/// Removes items from the inventory.
+		/// </summary>
+		/// <param name="item">The ID of the item to remove.</param>
+		/// <param name="quantity">The amount of items to remove.</param>
+		public void RemoveItem(Items item, int quantity = 1)
+		{
+			//If Amount > 0 Then
+			//    For Each c As ItemContainer In Me
+			//        If c.ItemID = ID Then
+			//            If c.Amount - Amount <= 0 Then
+			//                Me.Remove(c)
+			//                Exit Sub
+			//            Else
+			//                c.Amount -= Amount
+			//            End If
+			//        End If
+			//    Next
+			//End If
+			if(quantity > 0)
+				for (int i = 0; i < quantity; i++)
+				{
+					if(GameVariables.Bag_Items.Contains(item))
+						GameVariables.Bag_Items.Remove(item);
+				}
+		}
+
+		/// <summary>
+		/// Returns the count of the item in the inventory.
+		/// </summary>
+		/// <param name="item">The ID of the item to be counted.</param>
+		/// <returns></returns>
+		public int GetItemAmount(Items item)
+		{
+			//For Each c As ItemContainer In Me
+			//    If c.ItemID = ID Then
+			//        Return c.Amount
+			//    End If
+			//Next
+			//
+			//Return 0
+			return GameVariables.Bag_Items.Where(x => x == item).Count();
+		}
+
+		/// <summary>
+		/// Returns a message that displays the event of putting an item into the inventory.
+		/// </summary>
+		/// <param name="item">The Item to store in the inventory.</param>
+		/// <param name="quantity">The amount.</param>
+		/// <returns></returns>
+		public string GetMessageReceive(Item item, int quantity = 1)
+		{
+			//Dim Message As String = ""
+			//If Amount = 1 Then
+			//	Message = GameVariables.playerTrainer.Name & " stored it in the~" & GameVariables.playerTrainer.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//Else
+			//	Message = GameVariables.playerTrainer.Name & " stored them~in the " & GameVariables.playerTrainer.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//End If
+			//Return Message
+			return "";
+		}
+
 		public enum Order
 		{
 			Alphabet,
@@ -771,6 +901,6 @@ public partial class GameVariables
 }
 #endregion
 
-namespace PokemonUnity
+namespace PokemonUnity.Character
 {	
 }

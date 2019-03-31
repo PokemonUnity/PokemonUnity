@@ -28,19 +28,19 @@ namespace PokemonUnity.Saving
 		/// </remarks>
 		private const bool UseAppdate = false;
 #if DEBUG
-		public static string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
-		public static string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
+		public static readonly string gameConfig = @"\Saves\ConfigFile.pku"; //TestProject\bin\Debug
+		public static readonly string playerSave = @"\Saves\SaveFile.pku"; //TestProject\bin\Debug
 		//private static string playerSave = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/SaveFile.pku"; //TestProject\bin\Debug
-		private static string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
+		public static readonly string saveLocation = "\\Saves\\"; //TestProject\bin\Debug
 		//private static string saveLocation = @"..\..\..\\Pokemon Unity\Assets\Scripts2\Test.data"; 
 		//private static string saveLocation = System.Environment.CurrentDirectory + @"\SaveDirectory\SaveFile.pku"; //@"\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; 
 		//private static string saveLocation = @"$(SolutionDir)\Assets\Resources\Database\Pokemon\Pokemon_" + fileLanguage + ".xml"; //Doesnt work
 #else
-		private static string gameConfig = UnityEngine.Application.persistentDataPath + "/ConfigFile.pku";
-		private static string playerSave = UnityEngine.Application.persistentDataPath + "/SaveFile.pku";
+		private static readonly string gameConfig = UnityEngine.Application.persistentDataPath + "/ConfigFile.pku";
+		private static readonly string playerSave = UnityEngine.Application.persistentDataPath + "/SaveFile.pku";
 		//private static string saveLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\Pokemon Unity\Saves\";
 		//private static string saveLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6) + "/Saves/";
-		private static string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
+		public static readonly string saveLocation = UnityEngine.Application.persistentDataPath + "/Saves/";
 		//private static string saveLocation = UnityEngine.Application.dataPath + "/Saves/"; //Use for production
 #endif
 		#endregion

@@ -34,6 +34,23 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 		private Coroutine _warmUpCoroutine;
 		private Coroutine _warmUpTimeoutCoroutine;
 
+		public Tile currentTile { get; private set; }
+		private Tile nextTile
+		{
+			get
+			{
+				//ToDo: Unity UI should push value to GameVariable
+				MapMatrix map = new MapMatrix();
+				Tile x = map.mapHeader.MapArray[(int)GameVariables.playerTrainer.playerPosition.z]
+					[ (int)GameVariables.playerTrainer.playerPosition.x
+					, (int)GameVariables.playerTrainer.playerPosition.y];
+				//if (currentTile != x)
+				//{
+				//	currentTile = x;
+					return x;
+				//}
+			}
+		} 
 
 		#region Animation Properties
 		private bool IsWalking
@@ -81,7 +98,7 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 				return;
 			}
 
-			if (_warmingUpCanActivate == false && _warmUpTimeoutCoroutine == null)
+			if (!_warmingUpCanActivate && _warmUpTimeoutCoroutine == null)
 			{
 				_warmUpTimeoutCoroutine = StartCoroutine(WarmUpTimeout());
 			}
@@ -98,7 +115,7 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 				DisableWarmUp();
 
 				IsRunning = Input.GetButton("Fire3");
-				if (IsRunning == false)
+				if (!IsRunning)
 				{
 					IsSneaking = Input.GetButton("Fire1");
 					IsWalking = !IsSneaking;
@@ -129,7 +146,7 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 
 				if (IsSneaking)
 				{
-					if (_sneakingActived == false)
+					if (!_sneakingActived)
 					{
 						StartCoroutine(SneakMovement());
 					}
@@ -662,7 +679,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 							yield return StartCoroutine(moveForward());
 						}
 					}
-					else if (Input.GetKeyDown("g") && GameVariables.debugMode == true)
+					else if (Input.GetKeyDown("g") && GameVariables.IS_DEBUG_ACTIVE)
 					{
 						//DEBUG
 						Debug.Log(currentMap.getTileTag(transform.position));
@@ -675,7 +692,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 							followerScript.canMove = true;
 						}
 					}
-					/*else if (Input.GetKeyDown(",") && SaveData.currentSave.debugMode == true+)
+					/*else if (Input.GetKeyDown(",") && SaveData.currentSave.IS_DEBUG_ACTIVE+)
 					{
 						//GlobalVariables.debug(GlobalVariables.GetDebugText());
 						//DEBUG

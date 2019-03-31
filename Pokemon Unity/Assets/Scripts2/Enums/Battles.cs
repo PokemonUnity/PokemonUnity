@@ -251,4 +251,57 @@ namespace PokemonUnity.Battle
 		TotalDamage = 3
 	}
 	#endregion
+	#region Maps & Overworld
+	public enum Weather
+	{
+		NONE,
+		RAINDANCE,
+		HEAVYRAIN,
+		SUNNYDAY,
+		HARSHSUN,
+		SANDSTORM,
+		STRONGWINDS,
+		HAIL
+	}
+	/// <summary>
+	/// Terrain Tags or Tiles a player can be stepping on;
+	/// used to contruct map floor plane
+	/// </summary>
+	public enum Terrain
+	{
+		Grass,
+		Sand,
+		Rock,
+		DeepWater,
+		StillWater,
+		Water,
+		TallGrass,
+		SootGrass,
+		Puddle
+	}
+	public enum Environment
+	{
+		None,
+		/// <summary>
+		/// Normal Grass, and Sooty Tall Grass, are both grass but different colors
+		/// </summary>
+		Grass,
+		Cave,
+		Sand,
+		Rock,
+		MovingWater,
+		StillWater,
+		Underwater,
+		/// <summary>
+		/// Tall Grass
+		/// </summary>
+		TallGrass,
+		Forest,
+		Snow,
+		Volcano,
+		Graveyard,
+		Sky,
+		Space
+	}
+	#endregion
 }

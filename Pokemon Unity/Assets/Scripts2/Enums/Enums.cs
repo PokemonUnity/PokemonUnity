@@ -540,68 +540,6 @@ namespace PokemonUnity
         ENERGYROOT,
         REVIVALHERB
 	}
-	public enum EncounterTypes
-	{
-		Pal_Park, Egg, Hatched, Special_Event,		//= 0x0
-		Tall_Grass,									//= 0x2
-		Plot_Event, //Dialga/Palkia In-Game Event,	//= 0x4
-		Cave, Hall_of_Origin,						//= 0x5
-		Surfing, Fishing,							//= 0x7	
-		Building,									//= 0x9	
-		Great_Marsh, //(Safari Zone)				//= 0xA	
-		Starter, Fossil, Gift //(Eevee)				//= 0xC	
-	}
-	public enum Weather
-	{
-		NONE,
-		RAINDANCE,
-		HEAVYRAIN,
-		SUNNYDAY,
-		HARSHSUN,
-		SANDSTORM,
-		STRONGWINDS,
-		HAIL
-	}
-	/// <summary>
-	/// Terrain Tags or Tiles a player can be stepping on;
-	/// used to contruct map floor plane
-	/// </summary>
-	public enum Terrain
-	{
-		Grass,
-		Sand,
-		Rock,
-		DeepWater,
-		StillWater,
-		Water,
-		TallGrass,
-		SootGrass,
-		Puddle
-	}
-	public enum Environment
-	{
-		None,
-		/// <summary>
-		/// Normal Grass, and Sooty Tall Grass, are both grass but different colors
-		/// </summary>
-		Grass,
-		Cave,
-		Sand,
-		Rock,
-		MovingWater,
-		StillWater,
-		Underwater,
-		/// <summary>
-		/// Tall Grass
-		/// </summary>
-		TallGrass,
-		Forest,
-		Snow,
-		Volcano,
-		Graveyard,
-		Sky,
-		Space
-	}
 	#region Game Variables
 	/// <summary>
 	/// Still need to sort out Language Enums
@@ -691,7 +629,8 @@ namespace PokemonUnity
 		POISON,
 		PARALYSIS,
 		BURN,
-		FROZEN
+		FROZEN,
+		FAINT
 	}
 	/// <summary>
 	/// Move ids are connected to XML file.

@@ -191,7 +191,7 @@ public class Battle : UnityUtilityIntegration
 	/// </summary>
 	/// ToDo: Might be a static get value from global/map variables.
 	//public void Environment (PokemonUnity.Environment environment) { this.environment = environment; }
-	public PokemonUnity.Environment environment { get; set; }
+	public Environment environment { get; set; }
 	public Weather weather { get; set; }
 	/// <summary>
 	/// Current weather, custom methods should use <see cref="SetWeather"/>  instead
@@ -331,7 +331,7 @@ public class Battle : UnityUtilityIntegration
 	public bool Owned {
 		get
 		{
-			return (int)species > 0 && player.playerPokedex[(int)species].HasValue ? player.playerPokedex[(int)species].Value == true : false;
+			return (int)species > 0 && player.playerPokedex[(int)species].HasValue ? player.playerPokedex[(int)species].Value : false;
 		}
 		set
 		{
@@ -417,7 +417,7 @@ public class Battle : UnityUtilityIntegration
 		//                   PokeBattle_ActiveSide.new]		// Foe's side
 		sides = new Effects.Side[4];						//ToDo: Not sure if it's 2 sides, or 4 sides (foreach pokemon)
 		field = new Effects.Field();                        // Whole field (gravity/rooms)
-		environment = PokemonUnity.Environment.None;		// e.g. Tall grass, cave, still water
+		environment = Environment.None;		// e.g. Tall grass, cave, still water
 		weather = 0;
 
 		weatherduration = 0;
@@ -694,16 +694,16 @@ public class Battle : UnityUtilityIntegration
 			//rareness = BallHandlers.ModifyCatchRate(ball, rareness, battler);
 			int x = (int)Math.Floor(((a * 3 - b * 2) * rareness.Value) / (a * 3f));
 			if (battler.Status == Status.SLEEP || battler.Status == Status.FROZEN)
-				x = (int)Math.Floor(x * 2.5);
+				x = (int)Math.Floor(x * 2.5f);
 			else if (battler.Status != Status.NONE)
-				x = (int)Math.Floor(x * 1.5);
+				x = (int)Math.Floor(x * 1.5f);
 			int c = 0;
 			if (GameVariables.playerTrainer.PokedexCaught > 600)
-				c = (int)Math.Floor(x * 2.5 / 6);
+				c = (int)Math.Floor(x * 2.5f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 450)
 				c = (int)Math.Floor(x * 2f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 300)
-				c = (int)Math.Floor(x * 1.5 / 6);
+				c = (int)Math.Floor(x * 1.5f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 150)
 				c = (int)Math.Floor(x * 1f / 6);
 			else if (GameVariables.playerTrainer.PokedexCaught > 30)
@@ -1525,7 +1525,7 @@ public class Battle : UnityUtilityIntegration
 					(Move)base.moves[3]
 				};
 			}
-#if (DEBUG == false || UNITY_EDITOR == true)
+#if (DEBUG == false || UNITY_EDITOR)
 			UpdateUI();
 #endif
 		}
@@ -1726,26 +1726,26 @@ public class Battle : UnityUtilityIntegration
 			int speedmult = 0x1000;
 			switch (battle.weather)
 			{
-				case PokemonUnity.Weather.RAINDANCE:
-				case PokemonUnity.Weather.HEAVYRAIN:
+				case Weather.RAINDANCE:
+				case Weather.HEAVYRAIN:
 					speedmult = hasWorkingAbility(Abilities.SWIFT_SWIM) ? speedmult * 2 : speedmult;
 					break;
-				case PokemonUnity.Weather.SUNNYDAY:
-				case PokemonUnity.Weather.HARSHSUN:
+				case Weather.SUNNYDAY:
+				case Weather.HARSHSUN:
 					speedmult = hasWorkingAbility(Abilities.CHLOROPHYLL) ? speedmult * 2 : speedmult;
 					break;
-				case PokemonUnity.Weather.SANDSTORM:
+				case Weather.SANDSTORM:
 					speedmult = hasWorkingAbility(Abilities.SAND_RUSH) ? speedmult * 2 : speedmult;
 					break;
 				default:
 					break;
 			}
 			if (hasWorkingAbility(Abilities.QUICK_FEET) && Status > 0)
-				speedmult = (int)Math.Round(speedmult * 1.5);
+				speedmult = (int)Math.Round(speedmult * 1.5f);
 			if (hasWorkingAbility(Abilities.UNBURDEN) && effects.Unburden && Item == Items.NONE)
 				speedmult = speedmult * 2;
 			if (hasWorkingAbility(Abilities.SLOW_START) && battle.turncount > 0)
-				speedmult = (int)Math.Round(speedmult * 1.5);
+				speedmult = (int)Math.Round(speedmult * 1.5f);
 			if (hasWorkingItem(Items.MACHO_BRACE) || 
 				hasWorkingItem(Items.POWER_WEIGHT) ||
 				hasWorkingItem(Items.POWER_BRACER) ||

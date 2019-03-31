@@ -28,6 +28,8 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#region Player and Overworld Data
 	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 	public static Player playerTrainer { get; set; }
+	public static PokemonUnity.Overworld.Level Level { get; set; }
+	public static PokemonUnity.Overworld.Camera Camera { get; set; }
 	//public GameVariables.TrainerPC PC { get { return new GameVariables.TrainerPC(playerTrainer); } }
 	#endregion
 
@@ -67,6 +69,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#region Constructor
 	static GameVariables()
 	{
+		GameDebug.Init(null, "GameTestLog");
 		UserLanguage  = Languages.English;
 		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
 		PC_boxNames = new string[Settings.STORAGEBOXES];
@@ -131,79 +134,11 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
     public static bool battleScene = true;
     public static bool fullscreen;
     public static byte textSpeed = 2;
-
-	#region Global and map metadata
-	//ToDo: Each time map changes, new values are loaded/replaced below
-	public class Global
-	{
-		/// <summary>
-		/// Location you return to when you respawn
-		/// </summary>
-		public string MetadataHome;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// String below should point to Audio/Sound files
-		public string MetadataWildBattleBGM;
-		public string MetadataTrainerBattleBGM;
-		public string MetadataWildVictoryME;
-		public string MetadataTrainerVictoryME;
-		public string MetadataSurfBGM;
-		public string MetadataBicycleBGM;
-		/* TrainerClass
-		Trainer MetadataPlayerA          ;
-		Trainer MetadataPlayerB          ;
-		Trainer MetadataPlayerC          ;
-		Trainer MetadataPlayerD          ;
-		Trainer MetadataPlayerE          ;
-		Trainer MetadataPlayerF          ;
-		Trainer MetadataPlayerG          ;
-		Trainer MetadataPlayerH;*/
-	}
-
-	public class NonGlobalTypes : Global
-	{
-		bool MetadataOutdoor;
-		bool MetadataShowArea;
-		bool MetadataBicycle;
-		bool MetadataBicycleAlways;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// "uuu"
-		int[,] MetadataHealingSpot; 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// return WeatherType
-		bool MetadataWeather;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// "uuu"
-		int[] MetadataMapPosition; 
-		int MetadataDiveMap;
-		bool MetadataDarkMap;
-		bool MetadataSafariMap;
-		bool MetadataSnapEdges;
-		bool MetadataDungeon;
-		/// <summary>
-		/// 
-		/// </summary>
-		/// String below should point to Audio/Sound files
-		public string MetadataBattleBack;
-		//public string MetadataMapWildBattleBGM;
-		//public string MetadataMapTrainerBattleBGM;
-		//public string MetadataMapWildVictoryME;
-		//public string MetadataMapTrainerVictoryME;
-		int[,] MetadataMapSize;
-	}
-	#endregion
 	#endregion
 
 	#region Unity Scene Manager
 	public static CanvasUIHandler CanvasManager { get; private set; }
-	public static DialogHandler DialogScene { get; private set; }
+	public static DialogHandler TextBox { get; private set; }
 	public static StartupSceneHandler StartScene { get; private set; }
 	public static BattlePokemonHandler BattleScene { get; private set; }
 	//public static ItemHandler ItemScene { get; private set; }
@@ -456,6 +391,7 @@ public partial class GameVariables : UnityUtilityIntegration//: UnityEngine.Mono
 	#endregion
 
 	#region Audio 
+	public UnityEngine.Audio.AudioMixer audioMixer;
 	public static int? nextBattleBGM { get; set; }
 	public static int? nextBattleME { get; set; }
 	public static int? nextBattleBack { get; set; }
@@ -473,43 +409,142 @@ public class UnityUtilityIntegration
 	: UnityEngine.MonoBehaviour
 #endif
 {
+	#region Unity Monobehaviour Stuff
+#if !DEBUG //|| UNITY_EDITOR 
+	public static GameVariables game;
+    //public LevelManager levelManager;
+	public void Awake()
+	{
+		//Log bool results in debugger...
+		//GameDebug.Assert(game == null);
+		DontDestroyOnLoad(this.gameObject);
+		game = this;
+
+		var commandLineArgs = new List<string>(System.Environment.GetCommandLineArgs());
+
+		// If -logfile was passed, we try to put our own logs next to the engine's logfile
+		var engineLogFileLocation = ".";
+		var logfileArgIdx = commandLineArgs.IndexOf("-logfile");
+		if (logfileArgIdx >= 0 && commandLineArgs.Count >= logfileArgIdx)
+		{
+			engineLogFileLocation = System.IO.Path.GetDirectoryName(commandLineArgs[logfileArgIdx + 1]);
+		}
+
+		//Headless means if it's offline...
+		var logName = true ? "game_" + DateTime.UtcNow.ToString("yyyyMMdd_HHmmss_fff") : "game";
+		GameDebug.Init(engineLogFileLocation, logName);
+
+#if UNITY_EDITOR
+        GameDebug.Log("Build type: editor");
+#elif DEVELOPMENT_BUILD
+        GameDebug.Log("Build type: development");
+#else
+        GameDebug.Log("Build type: release");
+#endif
+		//ToDo: Load asssembly build version into logger
+        GameDebug.Log("BuildID: " + buildId);
+
+        //levelManager = new LevelManager();
+        //levelManager.Init();
+        //GameDebug.Log("LevelManager initialized");
+
+        inputSystem = new InputSystem();
+        GameDebug.Log("InputSystem initialized");
+	}
+	
+    void OnDestroy()
+    {
+        GameDebug.Shutdown();
+        Console.Shutdown();
+        //if (m_DebugOverlay != null)
+        //    m_DebugOverlay.Shutdown();
+    }
+
+    void OnApplicationQuit()
+    {
+#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
+        GameDebug.Log("Farewell, cruel world...");
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
+        ShutdownGameLoops();
+    }
+
+	public void LoadLevel(string levelname)
+	{
+		if (!Game.game.levelManager.CanLoadLevel(levelname))
+		{
+			GameDebug.Log("ERROR : Cannot load level : " + levelname);
+			return;
+		}
+
+		Game.game.levelManager.LoadLevel(levelname);
+	}
+#endif
+	#endregion
+
 	#region Debug Functions and Features
-	public static bool debugMode { get; set; }
+	public static bool IS_DEBUG_ACTIVE { get; set; }
 	public static void DebugLog(string text, bool? error = null)
 	{
-		if(!error.HasValue)
-			Debug = text;
+		if (!error.HasValue)
+			//Debug = text;
+			GameDebug.Log(text);
 		else
 		{
-			//ToDo: If during production and game logs an ERROR, or maybe a warning too, store to text file, and upload to dev team?
-			if(error.Value)
-				DebugError = text;
+			if (error.Value)
+				//DebugError = text;
+				GameDebug.LogError(text);
 			else
-				DebugWarning = text;
+				//DebugWarning = text;
+				GameDebug.LogWarning(text);
 		}
 	}
-	private static string Debug {
-		set
+	#endregion
+
+	#region MyRegion
+	public static class Input
+	{
+		[Flags]
+		public enum Blocker
 		{
-#if !DEBUG
-			UnityEngine.Debug.Log(value);
-#endif
+			None = 0,
+			Console = 1,
+			Chat = 2,
+			Debug = 4,
 		}
-	}
-	private static string DebugWarning {
-		set
+		static Blocker blocks;
+
+		public static void SetBlock(Blocker b, bool value)
 		{
-#if !DEBUG
-			UnityEngine.Debug.LogWarning(value);
-#endif
+			if (value)
+				blocks |= b;
+			else
+				blocks &= ~b;
 		}
-	}
-	private static string DebugError {
-		set
+
+		internal static float GetAxisRaw(string axis)
 		{
-#if !DEBUG
-			UnityEngine.Debug.LogError(value);
-#endif
+			return blocks != Blocker.None ? 0.0f : UnityEngine.Input.GetAxisRaw(axis);
+		}
+
+		internal static bool GetKey(UnityEngine.KeyCode key)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetKey(key);
+		}
+
+		internal static bool GetKeyDown(UnityEngine.KeyCode key)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetKeyDown(key);
+		}
+
+		internal static bool GetMouseButton(int button)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetMouseButton(button);
+		}
+
+		internal static bool GetKeyUp(UnityEngine.KeyCode key)
+		{
+			return blocks != Blocker.None ? false : UnityEngine.Input.GetKeyUp(key);
 		}
 	}
 	#endregion
@@ -549,15 +584,16 @@ public class UnityUtilityIntegration
 		//ToDo: Pass values directly to DialogEventHandler
 		//ToDo: Make a struct for each non-class (enum, etc) type and add a ToString(bool) override that output unity richtext color tags
 		//Consider adding a Queue to dialog text... so messages arent replaced but appended
-		if (!error.HasValue)
-			Debug = text;
-		else
-		{
-			if (error.Value)
-				DebugError = text;
-			else
-				DebugWarning = text;
-		}
+		//if (!error.HasValue)
+		//	Debug = text;
+		//else
+		//{
+		//	if (error.Value)
+		//		DebugError = text;
+		//	else
+		//		DebugWarning = text;
+		//}
+		DebugLog(text, error);
 	}
 	protected static void Display(string text)
 	{

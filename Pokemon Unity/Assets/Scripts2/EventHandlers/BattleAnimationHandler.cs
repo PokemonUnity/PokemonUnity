@@ -2315,21 +2315,21 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
 		{
 			if (attackerCriticalRatio == 0)
 			{
-				if (Random.value <= 0.0625)
+				if (Random.value <= 0.0625f)
 				{
 					applyCritical = true;
 				}
 			}
 			else if (attackerCriticalRatio == 1)
 			{
-				if (Random.value <= 0.125)
+				if (Random.value <= 0.125f)
 				{
 					applyCritical = true;
 				}
 			}
 			else if (attackerCriticalRatio == 2)
 			{
-				if (Random.value <= 0.5)
+				if (Random.value <= 0.5f)
 				{
 					applyCritical = true;
 				}
