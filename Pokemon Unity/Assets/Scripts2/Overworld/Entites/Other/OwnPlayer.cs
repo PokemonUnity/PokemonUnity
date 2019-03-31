@@ -65,13 +65,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//if (StringHelper.IsNumeric(TextureID) & texturePath.StartsWith(@"Pokemon\Overworld\"))
 			//	PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 
-			//if (Game.playerTrainer.IsGameJoltSave)
+			//if (Game.Player.IsGameJoltSave)
 			//{
 			//	if (texturePath + TextureID + PokemonAddition == @"Textures\NPC\" + GameJolt.Emblem.GetPlayerSpriteFile(GameJolt.Emblem.GetPlayerLevel(Core.GameJoltSave.Points), Core.GameJoltSave.GameJoltID, Core.GameJoltSave.Gender))
 			//		UseGameJoltID = true;
 			//}
 
-			//if (UseGameJoltID & Game.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) != null)
+			//if (UseGameJoltID & Game.Player.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID) != null)
 			//{
 			//	Game.DebugLog("Change player texture to the online sprite.");
 			//	this.Texture = GameJolt.Emblem.GetOnlineSprite(Core.GameJoltSave.GameJoltID);
@@ -170,7 +170,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 			//	{
 			//		lastRectangle = r;
 			//		lastTexture = SkinName;
-			//		Game.playerTrainer.Skin = SkinName;
+			//		Game.Player.Skin = SkinName;
 			//
 			//		try
 			//		{
@@ -245,7 +245,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		private float GetAnimationDelay()
 		{
-			if (Game.playerTrainer.IsRunning())
+			if (Game.Player.IsRunning())
 				return OwnPlayer.AnimationDelayLenght / (float)1.4f;
 			return OwnPlayer.AnimationDelayLenght;
 		}

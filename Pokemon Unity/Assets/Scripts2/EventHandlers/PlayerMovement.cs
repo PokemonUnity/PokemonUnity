@@ -41,9 +41,9 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 			{
 				//ToDo: Unity UI should push value to GameVariable
 				MapMatrix map = new MapMatrix();
-				Tile x = map.mapHeader.MapArray[(int)Game.playerTrainer.playerPosition.z]
-					[ (int)Game.playerTrainer.playerPosition.x
-					, (int)Game.playerTrainer.playerPosition.y];
+				Tile x = map.mapHeader.MapArray[(int)Game.Player.playerPosition.z]
+					[ (int)Game.Player.playerPosition.x
+					, (int)Game.Player.playerPosition.y];
 				//if (currentTile != x)
 				//{
 				//	currentTile = x;

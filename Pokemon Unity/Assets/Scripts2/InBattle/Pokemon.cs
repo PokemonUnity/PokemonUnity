@@ -70,7 +70,7 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public byte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return Game.playerTrainer.PlayerPokedex[_base.ArrayId, 1] == 1; } }
+		public bool IsOwned { get { return Game.Player.PlayerPokedex[_base.ArrayId, 1] == 1; } }
 		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }
@@ -728,7 +728,7 @@ namespace PokemonUnity.Battle
 				speedmult = (int)Math.Round(speedmult / 4f);
 			if (battle.internalbattle && 
 				//battle.OwnedByPlayer(Index) &&
-				Game.playerTrainer.BadgesCount >= Settings.BADGESBOOSTSPEED)
+				Game.Player.BadgesCount >= Settings.BADGESBOOSTSPEED)
 				speedmult = (int)Math.Round(speedmult * 1.1f);
 			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
 			return Math.Max(speed, 1);

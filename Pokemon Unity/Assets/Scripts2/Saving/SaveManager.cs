@@ -80,7 +80,7 @@ namespace PokemonUnity.Saving
 
 		/*private static SaveData CreateSaveFile(string saveName, int activeScene)
 		{
-			Pokemon[] Party = Game.playerTrainer.Trainer.Party;
+			Pokemon[] Party = Game.Player.Trainer.Party;
 			Pokemon[,] PC = Game.PC_Poke;
 			List<Items> PlayerBag = Game.Bag_Items;
 
@@ -88,11 +88,11 @@ namespace PokemonUnity.Saving
 				(
 				saveName,
 				activeScene,
-				Game.playerTrainer.Trainer.Name,
-				Game.playerTrainer.TrainerID, Game.playerTrainer.SecretID,
-				Game.playerTrainer.isMale, //Game.playerTrainer.GymBadges,
-				Game.playerTrainer.playerPokedex,
-				Game.playerTrainer.playerTime,
+				Game.Player.Trainer.Name,
+				Game.Player.TrainerID, Game.Player.SecretID,
+				Game.Player.isMale, //Game.Player.GymBadges,
+				Game.Player.playerPokedex,
+				Game.Player.playerTime,
 				Player.transform.position, Player.GetComponent<Player>().playerDirection,
 				Player.transform.Find("Follower").transform.position, Player.GetComponent<FollowerMovement>().direction,
 				Party, PC, PlayerBag,
@@ -216,7 +216,7 @@ namespace PokemonUnity.Saving
 						for (int i = 0; i < DataToLoad.PlayerParty.Length; i++)
 						{
 							//The Trainer.Party is `private set;`, so we just loop through it and set it individually
-							Game.playerTrainer.Trainer.Party[i] = DataToLoad.PlayerParty[i];
+							Game.Player.Trainer.Party[i] = DataToLoad.PlayerParty[i];
 						}
 						Game.PC_Poke = DataToLoad.PC;
 

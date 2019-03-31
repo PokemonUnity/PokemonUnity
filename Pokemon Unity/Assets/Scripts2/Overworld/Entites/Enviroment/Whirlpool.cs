@@ -93,7 +93,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private string ReturnWhirlPoolPokemonName()
 		{
-			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.Player.Party)
 			{
 				if (!p.isEgg)
 				{
@@ -117,7 +117,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				string pName = ReturnWhirlPoolPokemonName();
 				string s = "";
 
-				if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) & pName != "" | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+				if (Badge.CanUseHMMove(Badge.HMMoves.Whirlpool) & pName != "" | Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 				{
 					s = @"version=2
 	@text.show(" + pName + @" used~Whirlpool!)

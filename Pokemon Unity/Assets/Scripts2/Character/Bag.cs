@@ -416,7 +416,7 @@ public partial class Game
 		/// <returns></returns>
 		public bool HasMegaBracelet()
 		{
-            //If Game.playerTrainer.SandBoxMode = True Or Game.IS_DEBUG_ACTIVE = True Then
+            //If Game.Player.SandBoxMode = True Or Game.IS_DEBUG_ACTIVE = True Then
             //    Return True
             //Else
             //    If Me.GetItemAmount(78) > 0 Then
@@ -517,9 +517,9 @@ public partial class Game
 		{
 			//Dim Message As String = ""
 			//If Amount = 1 Then
-			//	Message = Game.playerTrainer.Name & " stored it in the~" & Game.playerTrainer.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//	Message = Game.Player.Name & " stored it in the~" & Game.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
 			//Else
-			//	Message = Game.playerTrainer.Name & " stored them~in the " & Game.playerTrainer.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
+			//	Message = Game.Player.Name & " stored them~in the " & Game.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
 			//End If
 			//Return Message
 			return "";

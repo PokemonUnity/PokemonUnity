@@ -27,10 +27,10 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 {
 	#region Player and Overworld Data
 	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
-	public static Player playerTrainer { get; set; }
+	public static Player Player { get; set; }
 	public static PokemonUnity.Overworld.Level Level { get; set; }
 	public static PokemonUnity.Overworld.Camera Camera { get; set; }
-	//public Game.TrainerPC PC { get { return new Game.TrainerPC(playerTrainer); } }
+	//public Game.TrainerPC PC { get { return new Game.TrainerPC(Player); } }
 	#endregion
 
 	#region Private Records of Player Storage Data
@@ -180,14 +180,14 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 		slotIndex = i > 0 && i < 3 ? i : slotIndex;
         //Game.SaveLoad.Load();
 		PokemonUnity.Saving.SaveData data = PokemonUnity.Saving.SaveManager.GetSave(i);
-		Game.playerTrainer = new Player();
+		Game.Player = new Player();
 
 		switch (data.BuildVersion)
 		{
 			case "0.0.1":
 			//Next one gets added to list, and default is copied above, and modified below...
 			default:
-				Game.playerTrainer.LoadTrainer(data); 
+				Game.Player.LoadTrainer(data); 
 				Game.PC_Poke = data.PC.GetPokemonsFromSeri();
 				Game.PC_boxNames = data.PC.BoxNames;
 				Game.PC_boxTexture = data.PC.BoxTextures;
@@ -318,7 +318,7 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 				System.IO.FileStream file = System.IO.File.Open(FILE_NAME, System.IO.FileMode.Open);
 				//SaveLoad.savedGames = (SaveDataOld[])bf.Deserialize(file);
 
-				//playerTrainer = new Trainer().LoadTrainer(trainerSaveData: trainerData);
+				//Player = new Trainer().LoadTrainer(trainerSaveData: trainerData);
 
 				file.Close();
 				return true;

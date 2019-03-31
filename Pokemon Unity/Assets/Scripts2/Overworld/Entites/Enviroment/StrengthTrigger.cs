@@ -37,7 +37,7 @@
 				}
 			}
 
-			string[] registers = null;//Game.playerTrainer.RegisterData.Split(System.Convert.ToChar(","));
+			string[] registers = null;//Game.Player.RegisterData.Split(System.Convert.ToChar(","));
 			foreach (string r in registers)
 			{
 				if (r.StartsWith("ACTIVATOR_REMOVE_STRENGTH_ROCK_" + Game.Level.LevelFile + "_"))

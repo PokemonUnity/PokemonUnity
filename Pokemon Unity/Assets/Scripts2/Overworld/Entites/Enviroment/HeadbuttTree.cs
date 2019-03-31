@@ -23,7 +23,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -41,7 +41,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					}
 				}
 
-				if (pName != "" & Game.playerTrainer.Badges.Contains(10))
+				if (pName != "" & Game.Player.Badges.Contains(10))
 				{
 					string text = "This tree could have~a Pokémon in it.*Do you want to~use Headbutt?%Yes|No%";
 					Game.TextBox.Show(text, new Entity[] { this });
@@ -56,7 +56,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					foreach (Attack.Move a in p.moves)
 					{

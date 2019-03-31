@@ -25,7 +25,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -45,7 +45,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				string text = "A Pokémon may be~able to move this.";
 
-				if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+				if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Strength) | Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 					text += "~Do you want to~use Strength?%Yes|No%";
 
 				Game.TextBox.Show(text, new Entity[] { this });
@@ -59,7 +59,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				Monster.Pokemon useP = null;// TODO Change to default(_) if this is not a reference type 
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					if (!p.isEgg)
 					{

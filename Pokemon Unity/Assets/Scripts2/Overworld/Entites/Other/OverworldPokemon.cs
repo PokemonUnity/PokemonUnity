@@ -16,14 +16,14 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			PokemonReference = null/* TODO Change to default(_) if this is not a reference type */;
 			this.Respawn();
-			if (Game.playerTrainer.LastPokemonPosition == new Vector3(999, 999, 999))
+			if (Game.Player.LastPokemonPosition == new Vector3(999, 999, 999))
 			{
 				this.Position = new Vector3(Game.Camera.Position.x, Game.Camera.Position.y, Game.Camera.Position.z);
 				this.Visible = false;
 				this.warped = false;
 			}
 			else
-				this.Position = Game.playerTrainer.LastPokemonPosition;
+				this.Position = Game.Player.LastPokemonPosition;
 
 			this.Position = new Vector3(System.Convert.ToInt32(this.Position.x), this.GetYPosition(), System.Convert.ToInt32(this.Position.z));
 			this.NeedsUpdate = true;
@@ -106,21 +106,21 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		public override void Update()
 		{
-			if (Game.playerTrainer.GetWalkPokemon() != null)
+			if (Game.Player.GetWalkPokemon() != null)
 			{
 				bool differentAdditionalData = false;
 				bool differentShinyState = false;
 				if (this.PokemonReference != null)
 				{
-					//differentAdditionalData = (this.PokemonReference.AdditionalData != Game.playerTrainer.GetWalkPokemon().AdditionalData);
-					differentShinyState = (this.PokemonReference.IsShiny != Game.playerTrainer.GetWalkPokemon().IsShiny);
+					//differentAdditionalData = (this.PokemonReference.AdditionalData != Game.Player.GetWalkPokemon().AdditionalData);
+					differentShinyState = (this.PokemonReference.IsShiny != Game.Player.GetWalkPokemon().IsShiny);
 				}
 
-				if (this.PokemonID != Game.playerTrainer.GetWalkPokemon().Species | differentAdditionalData | differentShinyState)
+				if (this.PokemonID != Game.Player.GetWalkPokemon().Species | differentAdditionalData | differentShinyState)
 				{
 					this.Texture = null;
-					this.PokemonID = Game.playerTrainer.GetWalkPokemon().Species;
-					this.PokemonReference = Game.playerTrainer.GetWalkPokemon();
+					this.PokemonID = Game.Player.GetWalkPokemon().Species;
+					this.PokemonReference = Game.Player.GetWalkPokemon();
 				}
 
 				this.ChangeTexture();
@@ -175,7 +175,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				{
 					if (IsCorrectScreen())
 					{
-						if (Game.playerTrainer.GetWalkPokemon() != null || Game.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE)
+						if (Game.Player.GetWalkPokemon() != null || Game.Player.GetWalkPokemon().Species != Pokemons.NONE)
 						{
 							if (!Game.Level.Surfing & !Game.Level.Riding)
 							{
@@ -322,9 +322,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			if (System.Convert.ToBoolean(/*GameModeManager.GetGameRuleValue("ShowFollowPokemon", "1")*/""))
 			{
-				if (this.Visible & (Game.playerTrainer.GetWalkPokemon() != null || Game.playerTrainer.GetWalkPokemon().Species != Pokemons.NONE) & !Game.Level.Surfing & !Game.Level.Riding & Game.Level.ShowOverworldPokemon)
+				if (this.Visible & (Game.Player.GetWalkPokemon() != null || Game.Player.GetWalkPokemon().Species != Pokemons.NONE) & !Game.Level.Surfing & !Game.Level.Riding & Game.Level.ShowOverworldPokemon)
 				{
-					Monster.Pokemon p = Game.playerTrainer.GetWalkPokemon();
+					Monster.Pokemon p = Game.Player.GetWalkPokemon();
 					//string scriptString = PokemonInteractions.GetScriptString(p, this.Position, this.faceRotation);
 					//
 					//if (Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)

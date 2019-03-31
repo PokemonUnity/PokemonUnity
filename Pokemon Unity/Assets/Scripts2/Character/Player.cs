@@ -213,7 +213,7 @@ namespace PokemonUnity
 			playerTime = trainerSaveData.PlayerTime;
 			isMale = trainerSaveData.IsMale;
 			GymsBeatTime = trainerSaveData.GymsChallenged;
-			//for (int i = 0; i < /*Game.playerTrainer.Trainer.*/Party.Length; i++)
+			//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
 			//{
 			//	Party[i] = trainerSaveData.PlayerParty[i];
 			//}

@@ -21,7 +21,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			string pName = "";
 
-			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.Player.Party)
 			{
 				if (!p.isEgg)
 				{
@@ -41,7 +41,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			string text = "This tree looks like it~can be Cut down!";
 
-			if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | Game.playerTrainer.SandBoxMode | Game.IS_DEBUG_ACTIVE)
+			if (pName != "" & Badge.CanUseHMMove(Badge.HMMoves.Cut) | Game.Player.SandBoxMode | Game.IS_DEBUG_ACTIVE)
 				text += "~Do you want to~use Cut?%Yes|No%";
 
 			Game.TextBox.Show(text, new Entity[] { this });
@@ -54,7 +54,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					if (!p.isEgg)
 					{

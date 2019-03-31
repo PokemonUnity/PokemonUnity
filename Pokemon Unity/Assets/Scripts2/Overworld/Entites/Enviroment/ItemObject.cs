@@ -35,7 +35,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			}
 			else if (this.ActionValue == 2)
 			{
-				if (Game.playerTrainer.Bag.HasMegaBracelet())
+				if (Game.Player.Bag.HasMegaBracelet())
 				{
 					this.Visible = Visible;
 					// sparkles
@@ -168,11 +168,11 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				RemoveItem(this);
 				SoundManager.PlaySound("item_found", true);
 				//Game.TextBox.TextColor = TextBox.PlayerColor;
-				Game.TextBox.Show(Game.playerTrainer.PlayerName + " found~" + this.Item.Name + "!*" + Game.playerTrainer.Bag.GetMessageReceive(this.Item, 1), new Entity[] { this });
-				Game.playerTrainer.Bag.AddItem(this.Item.ItemId, 1);
+				Game.TextBox.Show(Game.Player.PlayerName + " found~" + this.Item.Name + "!*" + Game.Player.Bag.GetMessageReceive(this.Item, 1), new Entity[] { this });
+				Game.Player.Bag.AddItem(this.Item.ItemId, 1);
 				//PlayerStatistics.Track("Items found", 1);
 
-				//Game.playerTrainer.AddPoints(1, "Found an item.");
+				//Game.Player.AddPoints(1, "Found an item.");
 			}
 		}
 
@@ -183,18 +183,18 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public static bool ItemExists(ItemObject ItemObject)
 		{
-			if (Game.playerTrainer.ItemData != "")
+			if (Game.Player.ItemData != "")
 			{
-				if (Game.playerTrainer.ItemData.Contains(","))
+				if (Game.Player.ItemData.Contains(","))
 				{
-					string[] IDs = Game.playerTrainer.ItemData.ToLower().Split(System.Convert.ToChar(","));
+					string[] IDs = Game.Player.ItemData.ToLower().Split(System.Convert.ToChar(","));
 
 					if (IDs.Contains((Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()))
 						return true;
 					else
 						return false;
 				}
-				else if (Game.playerTrainer.ItemData.ToLower() == (Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower())
+				else if (Game.Player.ItemData.ToLower() == (Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower())
 					return true;
 				else
 					return false;
@@ -207,13 +207,13 @@ namespace PokemonUnity.Overworld.Entity.Environment
 		{
 			Game.Level.Entities.Remove(ItemObject);
 
-			if (Game.playerTrainer.ItemData == "")
-				Game.playerTrainer.ItemData = (Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
+			if (Game.Player.ItemData == "")
+				Game.Player.ItemData = (Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
 			else
 			{
-				string[] IDs = Game.playerTrainer.ItemData.Split(System.Convert.ToChar(","));
+				string[] IDs = Game.Player.ItemData.Split(System.Convert.ToChar(","));
 				if (!IDs.Contains((Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower()))
-					Game.playerTrainer.ItemData += "," + (Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
+					Game.Player.ItemData += "," + (Game.Level.LevelFile + "|" + ItemObject.ItemID.ToString()).ToLower();
 			}
 		}
 

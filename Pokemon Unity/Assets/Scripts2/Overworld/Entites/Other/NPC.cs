@@ -145,7 +145,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				//	PokemonAddition = PokemonForms.GetDefaultOverworldSpriteAddition(System.Convert.ToInt32(TextureID));
 			}
 
-			//if (UseGameJoltID & Game.playerTrainer.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
+			//if (UseGameJoltID & Game.Player.IsGameJoltSave & GameJolt.API.LoggedIn && GameJolt.Emblem.GetOnlineSprite(GameJoltID) != null)
 			//	this.Texture = GameJolt.Emblem.GetOnlineSprite(GameJoltID);
 			//else
 			//	this.Texture = TextureManager.GetTexture(texturePath + this.TextureID + PokemonAddition);
@@ -164,9 +164,9 @@ namespace PokemonUnity.Overworld.Entity.Misc
 
 		private void ApplyNPCData()
 		{
-			if (Game.playerTrainer.NPCData != "")
+			if (Game.Player.NPCData != "")
 			{
-				string[] Data = Game.playerTrainer.NPCData.SplitAtNewline();
+				string[] Data = Game.Player.NPCData.SplitAtNewline();
 
 				foreach (string line in Data)
 				{
@@ -203,17 +203,17 @@ namespace PokemonUnity.Overworld.Entity.Misc
 		{
 			Data = "{" + Data + "}";
 
-			if (Game.playerTrainer.NPCData == "")
-				Game.playerTrainer.NPCData = Data;
+			if (Game.Player.NPCData == "")
+				Game.Player.NPCData = Data;
 			else
-				Game.playerTrainer.NPCData += System.Environment.NewLine + Data;
+				Game.Player.NPCData += System.Environment.NewLine + Data;
 		}
 
 		public static void RemoveNPCData(string file, int ID, string action, string addition)
 		{
 			string Data = "{" + file + "|" + ID + "|" + action + "|" + addition + "}";
 
-			string[] NData = Game.playerTrainer.NPCData.SplitAtNewline();
+			string[] NData = Game.Player.NPCData.SplitAtNewline();
 			List<string> nList = NData.ToList();
 			if (nList.Contains(Data))
 				nList.Remove(Data);
@@ -228,7 +228,7 @@ namespace PokemonUnity.Overworld.Entity.Misc
 				Data += NData[i];
 			}
 
-			Game.playerTrainer.NPCData = Data;
+			Game.Player.NPCData = Data;
 		}
 
 		public static void RemoveNPCData(string FullData)

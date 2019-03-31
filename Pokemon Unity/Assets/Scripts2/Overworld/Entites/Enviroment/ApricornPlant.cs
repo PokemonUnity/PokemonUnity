@@ -55,11 +55,11 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private void CheckHasApricorn()
 		{
-			if (Game.playerTrainer.ApricornData == "")
+			if (Game.Player.ApricornData == "")
 				hasApricorn = true;
 			else
 			{
-				List<string> ApricornsData = Game.playerTrainer.ApricornData.SplitAtNewline().ToList();
+				List<string> ApricornsData = Game.Player.ApricornData.SplitAtNewline().ToList();
 
 				bool hasRemoved = false;
 
@@ -105,12 +105,12 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				if (hasRemoved)
 				{
-					Game.playerTrainer.ApricornData = "";
+					Game.Player.ApricornData = "";
 					foreach (string Apricorn in ApricornsData)
 					{
-						if (Game.playerTrainer.ApricornData != "")
-							Game.playerTrainer.ApricornData += System.Environment.NewLine;
-						Game.playerTrainer.ApricornData += Apricorn;
+						if (Game.Player.ApricornData != "")
+							Game.Player.ApricornData += System.Environment.NewLine;
+						Game.Player.ApricornData += Apricorn;
 					}
 				}
 			}
@@ -160,12 +160,12 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				Inventory.Item Item = new PokemonUnity.Inventory.Item(GetItem());
 
-				Game.playerTrainer.Bag.AddItem(Item.ItemId, 1);
-				//Game.playerTrainer.Bag.AddItem(Item);
+				Game.Player.Bag.AddItem(Item.ItemId, 1);
+				//Game.Player.Bag.AddItem(Item);
 				//PlayerStatistics.Track("[85]Apricorns picked", 1);
 				SoundManager.PlaySound("item_found", true);
 				//Game.TextBox.TextColor = TextBox.PlayerColor;
-				Game.TextBox.Show(Game.playerTrainer.PlayerName + " picked the~" + Item.Name + ".*" + Game.playerTrainer.Bag.GetMessageReceive(Item, 1), new Entity[] { this });
+				Game.TextBox.Show(Game.Player.PlayerName + " picked the~" + Item.Name + ".*" + Game.Player.Bag.GetMessageReceive(Item, 1), new Entity[] { this });
 				AddApriconSave();
 				hasApricorn = false;
 				//ChangeTexture();
@@ -179,10 +179,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			DateTime d = DateTime.Now;
 			s += Game.Level.LevelFile + "|" + System.Convert.ToInt32(Position.x) + "," + System.Convert.ToInt32(Position.y) + "," + System.Convert.ToInt32(Position.z) + "|" + d.Year + "," + d.Month + "," + d.Day + "," + d.Hour + "," + d.Minute + "," + d.Second + "}";
 
-			if (Game.playerTrainer.ApricornData != "")
-				Game.playerTrainer.ApricornData += System.Environment.NewLine;
+			if (Game.Player.ApricornData != "")
+				Game.Player.ApricornData += System.Environment.NewLine;
 
-			Game.playerTrainer.ApricornData += s;
+			Game.Player.ApricornData += s;
 		}
 
 		private Items GetItem()

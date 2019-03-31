@@ -146,9 +146,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// </summary>
 	public bool WildBattle(PokemonUnity.Monster.Pokemon pkmn, bool cantescape = true, bool canlose = false)
 	{
-		if (Game.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
+		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
 		{
-			if (Game.playerTrainer.Trainer.Party.Length > 0)
+			if (Game.Player.Trainer.Party.Length > 0)
 				Game.DebugLog("SKIPPING BATTLE...");
 			Game.nextBattleBGM = null;
 			Game.nextBattleME = null;
@@ -161,7 +161,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		Battle battle =
 		//Game.battle =
 			new Battle(
-				Game.playerTrainer.Trainer,
+				Game.Player.Trainer,
 				new Trainer(generateWildPkmn)
 			)
 			.InternalBattle(true)
@@ -182,9 +182,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	/// </summary>
 	public bool DoubleWildBattle(PokemonUnity.Monster.Pokemon pkmn1, PokemonUnity.Monster.Pokemon pkmn2, bool cantescape = true, bool canlose = false)
 	{
-		if (Game.playerTrainer.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
+		if (Game.Player.Trainer.Party.Length == 0 || (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.LeftControl) && Game.IS_DEBUG_ACTIVE))
 		{
-			if (Game.playerTrainer.Trainer.Party.Length > 0)
+			if (Game.Player.Trainer.Party.Length > 0)
 				Game.DebugLog("SKIPPING BATTLE...");
 			Game.nextBattleBGM = null;
 			Game.nextBattleME = null;
@@ -196,7 +196,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		Battle battle =
 		//Game.battle =
 			new Battle(
-				Game.playerTrainer.Trainer,
+				Game.Player.Trainer,
 				new Trainer(generateWildPkmn) { IsDouble = true }
 			)
 			.InternalBattle(true)
@@ -217,10 +217,10 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	{
 		BattleResults decision = Game.battle.decision;
 		bool canlose = Game.battle.canLose;
-		for (int i = 0; i < Game.playerTrainer.Trainer.Party.Length; i++)
+		for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 		{
-			//Game.playerTrainer.Trainer.Party[i].MakeUnMega();
-			//Game.playerTrainer.Trainer.Party[i].MakeUnPrimal();
+			//Game.Player.Trainer.Party[i].MakeUnMega();
+			//Game.Player.Trainer.Party[i].MakeUnPrimal();
 		}
 		//if () //In a party
 		//{
@@ -236,9 +236,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		{
 			if (canlose)
 			{
-				for (int i = 0; i < Game.playerTrainer.Trainer.Party.Length; i++)
+				for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 				{
-					Game.playerTrainer.Trainer.Party[i].Heal();
+					Game.Player.Trainer.Party[i].Heal();
 				}
 			}
 		}
@@ -253,15 +253,15 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		//	if()
 		if(decision == BattleResults.WON)
 		{
-			for (int pkmn = 0; pkmn < Game.playerTrainer.Trainer.Party.Length; pkmn++)
+			for (int pkmn = 0; pkmn < Game.Player.Trainer.Party.Length; pkmn++)
 			{
-				if (Game.playerTrainer.Trainer.Party[pkmn].hasAbility(Abilities.HONEY_GATHER) &&
-					Game.playerTrainer.Trainer.Party[pkmn].Item == Items.NONE)
+				if (Game.Player.Trainer.Party[pkmn].hasAbility(Abilities.HONEY_GATHER) &&
+					Game.Player.Trainer.Party[pkmn].Item == Items.NONE)
 				{
-					int chance = 5 + (int)Math.Floor((Game.playerTrainer.Trainer.Party[pkmn].Level - 1) / 10f) * 5;
+					int chance = 5 + (int)Math.Floor((Game.Player.Trainer.Party[pkmn].Level - 1) / 10f) * 5;
 					if (Settings.Rand.Next(100) < chance)
 						//ToDo: Create class to give items to pokemon?... or maybe remove `private set`?
-						continue;//Game.playerTrainer.Trainer.Party[pkmn].SetItem(Items.HONEY);						
+						continue;//Game.Player.Trainer.Party[pkmn].SetItem(Items.HONEY);						
 				}
 			}
 		}
@@ -277,9 +277,9 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 
 	public void EvolutionCheck(PokemonUnity.Monster.Pokemon[] currentlevels)
 	{
-		for (int i = 0; i < Game.playerTrainer.Trainer.Party.Length; i++)
+		for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 		{
-			PokemonUnity.Monster.Pokemon pokemon = Game.playerTrainer.Trainer.Party[i];
+			PokemonUnity.Monster.Pokemon pokemon = Game.Player.Trainer.Party[i];
 			if (pokemon.HP == 0 && !Settings.USENEWBATTLEMECHANICS) continue;
 			if(pokemon.Species != Pokemons.NONE &&
 				(currentlevels[i].Species == Pokemons.NONE

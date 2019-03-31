@@ -861,7 +861,7 @@ namespace PokemonUnity.Overworld
 				Game.DebugLog("Don't attempt to load a levelfile.");
 
 			// Create own player Entity and OverworldPokémon Entity and add them to the Entity enumeration:
-			//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Game.playerTrainer.Skin, 0, 0, "", "Gold", 0);
+			//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Game.Player.Skin, 0, 0, "", "Gold", 0);
 			OverworldPokemon = new OverworldPokemon(Game.Camera.Position.x, Game.Camera.Position.y, Game.Camera.Position.z + 1);
 			OverworldPokemon.ChangeRotation();
 			Entities.AddRange(new Entity.Entity[]
@@ -870,7 +870,7 @@ namespace PokemonUnity.Overworld
 			OverworldPokemon
 			});
 
-			this.Surfing = Game.playerTrainer.startSurfing;
+			this.Surfing = Game.Player.startSurfing;
 			this.StartOffsetMapUpdate();
 		}
 
@@ -944,7 +944,7 @@ namespace PokemonUnity.Overworld
 			this._pokemonEncounter.TriggerBattle();
 
 			// Reload map from file (Debug or Sandbox Mode):
-			if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+			if (Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 			{
 				//if (KeyBoardHandler.KeyPressed(Keys.R) & Core.CurrentScreen.Identification == Screen.Identifications.OverworldScreen)
 				//{
@@ -1117,7 +1117,7 @@ namespace PokemonUnity.Overworld
 				this.PokemonEncounterData.EncounteredPokemon = false;
 
 				// Set the Surfing flag for the next map:
-				Game.playerTrainer.startSurfing = Surfing;
+				Game.Player.startSurfing = Surfing;
 
 				// Change the player position:
 				Game.Camera.Position = WarpData.WarpPosition;
@@ -1126,7 +1126,7 @@ namespace PokemonUnity.Overworld
 
 				// Store skin values:
 				bool usingGameJoltTexture = OwnPlayer.UsingGameJoltTexture;
-				//Game.playerTrainer.Skin = OwnPlayer.SkinName;
+				//Game.Player.Skin = OwnPlayer.SkinName;
 
 				// Load the new level:
 				List<object> @params = new List<object>();
@@ -1145,13 +1145,13 @@ namespace PokemonUnity.Overworld
 				LevelLoader levelLoader = new LevelLoader();
 				levelLoader.LoadLevel(@params.ToArray());
 
-				//Game.playerTrainer.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
+				//Game.Player.AddVisitedMap(this.LevelFile); // Add new map to visited maps list.
 				UsedStrength = false; // Disable Strength usuage upon map switch.
-				this.Surfing = Game.playerTrainer.startSurfing; // Set the Surfing property after map switch.
+				this.Surfing = Game.Player.startSurfing; // Set the Surfing property after map switch.
 
 				// Create player and Pokémon entities:
-				//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Game.playerTrainer.Skin, 0, 0, "", "Gold", 0);
-				//OwnPlayer.SetTexture(Game.playerTrainer.Skin, usingGameJoltTexture);
+				//OwnPlayer = new OwnPlayer(0, 0, 0, TextureManager.DefaultTexture, Game.Player.Skin, 0, 0, "", "Gold", 0);
+				//OwnPlayer.SetTexture(Game.Player.Skin, usingGameJoltTexture);
 
 				OverworldPokemon = new OverworldPokemon(Game.Camera.Position.x, Game.Camera.Position.y, Game.Camera.Position.z + 1);
 				OverworldPokemon.Visible = false;
@@ -1166,8 +1166,8 @@ namespace PokemonUnity.Overworld
 				if (Riding & !CanRide())
 				{
 					Riding = false;
-					//OwnPlayer.SetTexture(Game.playerTrainer.TempRideSkin, true);
-					//Game.playerTrainer.Skin = Game.playerTrainer.TempRideSkin;
+					//OwnPlayer.SetTexture(Game.Player.TempRideSkin, true);
+					//Game.Player.Skin = Game.Player.TempRideSkin;
 				}
 
 				// If any turns after the warp are defined, apply them:
@@ -1201,8 +1201,8 @@ namespace PokemonUnity.Overworld
 					string place = line.GetSplit(0, "|");
 					if (place == LevelFile)
 					{
-						//Game.playerTrainer.LastRestPlace = place;
-						//Game.playerTrainer.LastRestPlacePosition = line.GetSplit(1, "|");
+						//Game.Player.LastRestPlace = place;
+						//Game.Player.LastRestPlacePosition = line.GetSplit(1, "|");
 					}
 				}
 
@@ -1307,7 +1307,7 @@ namespace PokemonUnity.Overworld
 		/// </summary>
 		public bool CanRide()
 		{
-			if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+			if (Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 				return true;
 			if (RideType > 0)
 			{

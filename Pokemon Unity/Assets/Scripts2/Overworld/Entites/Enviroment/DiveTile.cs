@@ -41,7 +41,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				string t = "The water seems to be~really deep at this point.";
 				string d = GetDivePokemon();
 
-				if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) | Game.playerTrainer.SandBoxMode | Game.IS_DEBUG_ACTIVE)
+				if (d != "" & Badge.CanUseHMMove(Badge.HMMoves.Dive) | Game.Player.SandBoxMode | Game.IS_DEBUG_ACTIVE)
 					t += "*Do you want to~use Dive?%Yes|No%";
 				Game.TextBox.Show(t, new Entity[] { (DiveTile)this });
 				SoundManager.PlaySound("select");
@@ -94,7 +94,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private string GetDivePokemon()
 		{
-			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.Player.Party)
 			{
 				foreach (Attack.Move a in p.moves)
 				{

@@ -247,7 +247,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private Monster.Pokemon ReturnWaterFallPokemonName()
 		{
-			foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+			foreach (Monster.Pokemon p in Game.Player.Party)
 			{
 				if (!p.isEgg)
 				{
@@ -320,7 +320,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				return this.Collision;
 
 			Monster.Pokemon p = ReturnWaterFallPokemonName();
-			if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) & p != null | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+			if (Badge.CanUseHMMove(Badge.HMMoves.Waterfall) & p != null | Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 			{
 				string s = "";
 

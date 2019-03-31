@@ -93,8 +93,8 @@ namespace PokemonUnity.Overworld
 				//ToDo: Change Screen to Scene
 				Game.Level.LevelFile = levelPath;
 
-				//Game.playerTrainer.LastSavePlace = Game.Level.LevelFile;
-				//Game.playerTrainer.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
+				//Game.Player.LastSavePlace = Game.Level.LevelFile;
+				//Game.Player.LastSavePlacePosition = Player.Temp.LastPosition.X + "," + Player.Temp.LastPosition.y.ToString().Replace(StringHelper.DecSeparator, ".") + "," + Player.Temp.LastPosition.z;
 
 				Game.Level.Entities.Clear();
 				Game.Level.Floors.Clear();
@@ -1254,7 +1254,7 @@ namespace PokemonUnity.Overworld
 
 		private void LoadBerries()
 		{
-			string[] Data = Game.playerTrainer.BerryData.Replace("}" + System.Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
+			string[] Data = Game.Player.BerryData.Replace("}" + System.Environment.NewLine, "}").Split(System.Convert.ToChar("}"));
 			foreach (string Berry in Data)
 			{
 				if (Berry.Contains("{"))

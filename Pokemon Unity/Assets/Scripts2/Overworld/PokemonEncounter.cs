@@ -44,9 +44,9 @@ namespace PokemonUnity.Overworld
 						int startRandomValue = 12;
 						int minRandomValue = 5;
 
-						if (Game.playerTrainer.Party.GetCount() > 0)
+						if (Game.Player.Party.GetCount() > 0)
 						{
-							PokemonUnity.Monster.Pokemon p = Game.playerTrainer.Party[0];
+							PokemonUnity.Monster.Pokemon p = Game.Player.Party[0];
 
 							// Arena Trap/Illuminate/No Guard/Swarm Ability:
 							if (p.Ability == Abilities.ARENA_TRAP | p.Ability == Abilities.ILLUMINATE | p.Ability == Abilities.NO_GUARD | p.Ability == Abilities.SWARM)
@@ -87,7 +87,7 @@ namespace PokemonUnity.Overworld
 						if (Settings.Rand.Next(0, randomValue * 2) == 0)
 						{
 							// Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
-							if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+							if (Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 							{
 								//if (KeyBoardHandler.KeyDown(Keys.LeftControl))
 								if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -130,9 +130,9 @@ namespace PokemonUnity.Overworld
 			//            Game.Level.RouteSign.Hide(); // When a battle starts, hide the Route sign.
 			//
 			//            // If the player has a Repel going and the first Pokémon in the party's le.xl is greater than the wild Pokémon's level, don't start the battle:
-			//            if (Game.playerTrainer.RepelSteps > 0)
+			//            if (Game.Player.RepelSteps > 0)
 			//            {
-			//                Pokemon.Pokemon p = Game.playerTrainer.GetWalkPokemon();
+			//                Pokemon.Pokemon p = Game.Player.GetWalkPokemon();
 			//                if (p != null)
 			//                {
 			//                    if (p.Level >= Pokemon.Level)
@@ -141,11 +141,11 @@ namespace PokemonUnity.Overworld
 			//            }
 			//
 			//            // Cleanse Tag prevents wild Pokémon encounters if held by the first Pokémon in the party:
-			//            if (Game.playerTrainer.Party[0].Level >= Pokemon.Level)
+			//            if (Game.Player.Party[0].Level >= Pokemon.Level)
 			//            {
-			//                if (Game.playerTrainer.Party[0].Item != Item.Items.NONE)
+			//                if (Game.Player.Party[0].Item != Item.Items.NONE)
 			//                {
-			//                    if (Game.playerTrainer.Party[0].Item == Item.Items.CLEANSE_TAG)
+			//                    if (Game.Player.Party[0].Item == Item.Items.CLEANSE_TAG)
 			//                    {
 			//                        if (Settings.Rand.Next(0, 3) == 0)
 			//                            return;
@@ -154,11 +154,11 @@ namespace PokemonUnity.Overworld
 			//            }
 			//
 			//            // Pure Incense lowers the chance of encountering wild Pokémon if held by the first Pokémon in the party:
-			//            if (Game.playerTrainer.Party[0].Level >= Pokemon.Level)
+			//            if (Game.Player.Party[0].Level >= Pokemon.Level)
 			//            {
-			//                if (Game.playerTrainer.Party[0].Item != Item.Items.NONE)
+			//                if (Game.Player.Party[0].Item != Item.Items.NONE)
 			//                {
-			//                    if (Game.playerTrainer.Party[0].Item == Item.Items.PURE_INCENSE)
+			//                    if (Game.Player.Party[0].Item == Item.Items.PURE_INCENSE)
 			//                    {
 			//                        if (Settings.Rand.Next(0, 3) == 0)
 			//                            return;
@@ -167,8 +167,8 @@ namespace PokemonUnity.Overworld
 			//            }
 			//
 			//            // Register the wild Pokémon as Seen in the Pokédex:
-			//            //Game.playerTrainer.PokedexData = Pokedex.ChangeEntry(Game.playerTrainer.PokedexData, Pokemon.Species, 1);
-			//            Game.playerTrainer.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
+			//            //Game.Player.PokedexData = Pokedex.ChangeEntry(Game.Player.PokedexData, Pokemon.Species, 1);
+			//            Game.Player.PlayerPokedex[(int)Pokemon.Species, 0] = 1;
 			//
 			//            // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
 			//            int introType = Settings.Rand.Next(0, 10);

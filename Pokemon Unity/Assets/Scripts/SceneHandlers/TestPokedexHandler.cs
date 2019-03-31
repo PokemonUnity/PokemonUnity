@@ -1642,7 +1642,7 @@ public class TestPokedexHandler : MonoBehaviour
                         //WITHDRAW DEPOSIT
                         else
                         {
-                            if (Game.PC_Poke[0,5] != null) //Game.playerTrainer.Trainer.Party[5]
+                            if (Game.PC_Poke[0,5] != null) //Game.Player.Trainer.Party[5]
                             {
                                 //if party is full
                                 Dialog.drawDialogBox();

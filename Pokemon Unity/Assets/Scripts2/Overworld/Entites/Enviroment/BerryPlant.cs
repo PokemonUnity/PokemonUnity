@@ -159,7 +159,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			string text = "";
 
 			bool hasBottle = false;
-			if (Game.playerTrainer.Bag.GetItemAmount((PokemonUnity.Inventory.Items)175) > 0)
+			if (Game.Player.Bag.GetItemAmount((PokemonUnity.Inventory.Items)175) > 0)
 				hasBottle = true;
 
 			switch (this.Phase)
@@ -223,14 +223,14 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				{
 					case 0:
 						{
-							Game.playerTrainer.Bag.AddItem(this.Berry.ID, this.Berries);
+							Game.Player.Bag.AddItem(this.Berry.ID, this.Berries);
 							string Text = "";
 							if (this.Berries == 1)
-								Text = Game.playerTrainer.PlayerName + " picked the~" + Berry.Name + " Berry.*" + Game.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
+								Text = Game.Player.PlayerName + " picked the~" + Berry.Name + " Berry.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
 							else
-								Text = Game.playerTrainer.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + Game.playerTrainer.Bag.GetMessageReceive(Berry, this.Berries);
+								Text = Game.Player.PlayerName + " picked the " + Berries + "~" + Berry.Name + " Berries.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
 
-							//Game.playerTrainer.AddPoints(2, "Picked berries.");
+							//Game.Player.AddPoints(2, "Picked berries.");
 							//PlayerStatistics.Track("[2006]Berries picked", this.Berries);
 
 							SoundManager.PlaySound("item_found", true);
@@ -243,7 +243,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 					case 1:
 						{
 							WaterBerry();
-							string Text = Game.playerTrainer.PlayerName + " watered~the " + Berry.Name + ".";
+							string Text = Game.Player.PlayerName + " watered~the " + Berry.Name + ".";
 							Game.TextBox.Show(Text, new Entity[] { this });
 							break;
 						}
@@ -258,7 +258,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private void RemoveBerry()
 		{
-			string[] Data = Game.playerTrainer.BerryData.SplitAtNewline();
+			string[] Data = Game.Player.BerryData.SplitAtNewline();
 			string OutData = "";
 
 			foreach (string Berry in Data)
@@ -274,7 +274,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				}
 			}
 
-			Game.playerTrainer.BerryData = OutData;
+			Game.Player.BerryData = OutData;
 		}
 
 		public static void AddBerryPlant(string LevelFile, Vector3 Position, int BerryIndex)
@@ -292,12 +292,12 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 			string Data = "{" + LevelFile + "|" + Position.x + "," + Position.y + "," + Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "|" + FullGrownData + "}";
 
-			string OldData = Game.playerTrainer.BerryData;
+			string OldData = Game.Player.BerryData;
 			if (OldData != "")
 				OldData += System.Environment.NewLine;
 			OldData += Data;
 
-			Game.playerTrainer.BerryData = OldData;
+			Game.Player.BerryData = OldData;
 
 			Entity newEnt = Entity.GetNewEntity(Entities.BerryPlant, Position, new Texture2D[]
 			{
@@ -310,7 +310,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			((BerryPlant)newEnt).Initialize(BerryIndex, 0, "", DateData, false);
 			Game.Level.Entities.Add(newEnt);
 
-			Game.playerTrainer.Bag.RemoveItem((Inventory.Items)BerryIndex + 2000, 1);
+			Game.Player.Bag.RemoveItem((Inventory.Items)BerryIndex + 2000, 1);
 		}
 
 		private static int GetBerryAmount(Inventory.Item.Berry Berry, int Watered)
@@ -414,12 +414,12 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				string Data = "{" + Game.Level.LevelFile + "|" + this.Position.x + "," + this.Position.y + "," + this.Position.z + "|" + BerryIndex + "|" + BerryAmount + "|" + WateredData + "|" + DateData + "}";
 
-				string OldData = Game.playerTrainer.BerryData;
+				string OldData = Game.Player.BerryData;
 				if (OldData != "")
 					OldData += System.Environment.NewLine;
 				OldData += Data;
 
-				Game.playerTrainer.BerryData = OldData;
+				Game.Player.BerryData = OldData;
 			}
 		}
 	}

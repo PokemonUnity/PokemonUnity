@@ -147,9 +147,9 @@ namespace Tests
         public void Trainer_RideBike_Fail_If_Item_NotInInventory()
         {
 			//if(
-			//	Game.playerTrainer.Bag[PokemonUnity.Inventory.Items.BICYCLE] != null ||
-			//	Game.playerTrainer.Bag[PokemonUnity.Inventory.Items.ACRO_BIKE] != null ||
-			//	Game.playerTrainer.Bag[PokemonUnity.Inventory.Items.MACH_BIKE] != null
+			//	Game.Player.Bag[PokemonUnity.Inventory.Items.BICYCLE] != null ||
+			//	Game.Player.Bag[PokemonUnity.Inventory.Items.ACRO_BIKE] != null ||
+			//	Game.Player.Bag[PokemonUnity.Inventory.Items.MACH_BIKE] != null
 			//)
             Assert.Inconclusive();
         }

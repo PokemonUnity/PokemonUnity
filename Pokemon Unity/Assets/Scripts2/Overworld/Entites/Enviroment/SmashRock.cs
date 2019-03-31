@@ -12,7 +12,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					if (!p.isEgg)
 					{
@@ -32,7 +32,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 				string text = "This rock looks like~it can be broken!";
 
-				if (pName != "" | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+				if (pName != "" | Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 					text += "~Do you want to~use Rock Smash?%Yes|No%";
 
 				Game.TextBox.Show(text, new Entity[] { this });
@@ -46,7 +46,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			{
 				string pName = "";
 
-				foreach (Monster.Pokemon p in Game.playerTrainer.Party)
+				foreach (Monster.Pokemon p in Game.Player.Party)
 				{
 					if (!p.isEgg)
 					{

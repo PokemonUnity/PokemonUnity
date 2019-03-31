@@ -51,8 +51,8 @@ namespace Tests
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
-			Game.playerTrainer = new Player(red, playerParty);
-			red = Game.playerTrainer.Trainer;
+			Game.Player = new Player(red, playerParty);
+			red = Game.Player.Trainer;
 
             //bool?[] pokedex = new bool?[] { null, false, true, false, null };
             TimeSpan playerTime = new TimeSpan(4, 20, 53);
@@ -401,8 +401,8 @@ namespace Tests
 			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
 			//}
 			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
-				new Pokemons[] { Game.playerTrainer.Trainer.Party[0].Species, Game.playerTrainer.Trainer.Party[1].Species, Game.playerTrainer.Trainer.Party[2].Species,
-					Game.playerTrainer.Trainer.Party[3].Species, Game.playerTrainer.Trainer.Party[4].Species, Game.playerTrainer.Trainer.Party[5].Species });
+				new Pokemons[] { Game.Player.Trainer.Party[0].Species, Game.Player.Trainer.Party[1].Species, Game.Player.Trainer.Party[2].Species,
+					Game.Player.Trainer.Party[3].Species, Game.Player.Trainer.Party[4].Species, Game.Player.Trainer.Party[5].Species });
         }
         [TestMethod]
         public void Player_Load_Pokedex()

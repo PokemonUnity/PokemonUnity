@@ -700,15 +700,15 @@ namespace PokemonUnity.Battle
 				else if (battler.Status != Status.NONE)
 					x = (int)Math.Floor(x * 1.5f);
 				int c = 0;
-				if (Game.playerTrainer.PokedexCaught > 600)
+				if (Game.Player.PokedexCaught > 600)
 					c = (int)Math.Floor(x * 2.5f / 6);
-				else if (Game.playerTrainer.PokedexCaught > 450)
+				else if (Game.Player.PokedexCaught > 450)
 					c = (int)Math.Floor(x * 2f / 6);
-				else if (Game.playerTrainer.PokedexCaught > 300)
+				else if (Game.Player.PokedexCaught > 300)
 					c = (int)Math.Floor(x * 1.5f / 6);
-				else if (Game.playerTrainer.PokedexCaught > 150)
+				else if (Game.Player.PokedexCaught > 150)
 					c = (int)Math.Floor(x * 1f / 6);
-				else if (Game.playerTrainer.PokedexCaught > 30)
+				else if (Game.Player.PokedexCaught > 30)
 					c = (int)Math.Floor(x * .5 / 6);
 			}
 

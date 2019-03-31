@@ -13,7 +13,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void ClickFunction()
 		{
-			if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+			if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) | Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 			{
 				TempClicked = true;
 				if (GetRockClimbPokemon() == null)
@@ -25,7 +25,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public override void WalkOntoFunction()
 		{
-			if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) | Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+			if (Badge.CanUseHMMove(Badge.HMMoves.RockClimb) | Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 			{
 				TempClicked = false;
 				if (GetRockClimbPokemon() == null)
@@ -51,7 +51,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private Monster.Pokemon GetRockClimbPokemon()
 		{
-			foreach (Monster.Pokemon teamPokemon in Game.playerTrainer.Party)
+			foreach (Monster.Pokemon teamPokemon in Game.Player.Party)
 			{
 				if (!teamPokemon.isEgg)
 				{
@@ -64,10 +64,10 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			}
 
 			// No rock climb in team:
-			if (Game.IS_DEBUG_ACTIVE | Game.playerTrainer.SandBoxMode)
+			if (Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
 			{
-				if (Game.playerTrainer.Party.GetCount() > 0)
-					return Game.playerTrainer.Party[0];
+				if (Game.Player.Party.GetCount() > 0)
+					return Game.Player.Party[0];
 				else
 				{
 					Monster.Pokemon p = new Monster.Pokemon((Pokemons)10, false);//Pokemon.GetPokemonByID(10);
@@ -129,7 +129,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				Game.Level.OverworldPokemon.Visible = false;
 				Game.Level.OverworldPokemon.warped = true;
 
-				string tempSkin = "";//Game.playerTrainer.Skin;
+				string tempSkin = "";//Game.Player.Skin;
 
 				Monster.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 
@@ -204,7 +204,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				Game.Level.OverworldPokemon.Visible = false;
 				Game.Level.OverworldPokemon.warped = true;
 
-				string tempSkin = "";//Game.playerTrainer.Skin;
+				string tempSkin = "";//Game.Player.Skin;
 
 				Monster.Pokemon RockClimbPokemon = GetRockClimbPokemon();
 

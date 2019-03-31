@@ -426,7 +426,7 @@ namespace PokemonUnity.Monster
 		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null) 
 			: this (
 			species: pkmn.Species,
-			original: Game.playerTrainer.Trainer,
+			original: Game.Player.Trainer,
 			nickName: nickname, form: pkmn.Form,
 			ability: pkmn.Ability, nature: pkmn.Nature,
 			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
@@ -623,8 +623,8 @@ namespace PokemonUnity.Monster
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
 			//this.obtainMap = Game.Level.MapName;
-			//this.CatchTrainerName = Game.playerTrainer.Name;
-			this.OT = Game.playerTrainer.Trainer;
+			//this.CatchTrainerName = Game.Player.Name;
+			this.OT = Game.Player.Trainer;
 
 			this.ObtainedMode = Method;
 			this.ballUsed = Ball;
@@ -1037,11 +1037,11 @@ namespace PokemonUnity.Monster
 				//int d = b ^ c;
 				//New Math Equation from Bulbapedia, gen 2 to 6...
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
-				//int d = (Game.playerTrainer.Trainer.TrainerID ^ Game.playerTrainer.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				//int d = (Game.Player.Trainer.TrainerID ^ Game.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.playerTrainer.Trainer.TrainerID) 
-					^ (!OT.Equals((object)null) ? OT.SecretID : Game.playerTrainer.Trainer.SecretID)) 
-					^ ((Game.playerTrainer.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Settings.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Settings.SHINYPOKEMONCHANCE) / 65536) 
+				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.Player.Trainer.TrainerID) 
+					^ (!OT.Equals((object)null) ? OT.SecretID : Game.Player.Trainer.SecretID)) 
+					^ ((Game.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Settings.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Settings.SHINYPOKEMONCHANCE) / 65536) 
 					^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;

@@ -117,29 +117,29 @@ namespace PokemonUnity.Saving
 			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
 			TimeCreated = DateTime.UtcNow;
 
-			PlayerName			= name			?? Game.playerTrainer.PlayerName;
-			PlayerMoney			= money			?? Game.playerTrainer.PlayerMoney;
-			PlayerCoins			= coin			?? Game.playerTrainer.PlayerCoins;
-			GymsChallenged		= gym			?? Game.playerTrainer.GymsBeatTime;
-			PlayerBag			= bag			?? Game.Bag_Items;//playerTrainer.Bag; //playerBag;
-			TrainerID			= trainer		?? Game.playerTrainer.Trainer.TrainerID;
-			SecretID			= secret		?? Game.playerTrainer.Trainer.SecretID;
-			IsMale				= gender		?? Game.playerTrainer.isMale;
-			Pokedex2			= pokedex		?? Game.playerTrainer.PlayerPokedex;
-			PlayerTime			= time			?? Game.playerTrainer.playerTime;
-			PlayerPosition		= position		?? Game.playerTrainer.playerPosition;
-			PlayerDirection		= direction		?? Game.playerTrainer.playerDirection;
-			//FollowerPokemon	= Game.playerTrainer.followerPokemon;
-			//FollowerPosition	= Game.playerTrainer.followerPosition;
-			//FollowerDirection	= Game.playerTrainer.followerDirection;
-			ActiveScene			= scene			?? Game.playerTrainer.mapName;//.activeScene;
-			pCenterScene		= pokecenter	?? Game.playerTrainer.respawnScene;//pkmnCenter;
-			PlayerParty			= party			?? Game.playerTrainer.Trainer.Party.Serialize();
-			//	new SeriPokemon[Game.playerTrainer.Trainer.Party.Length];
+			PlayerName			= name			?? Game.Player.PlayerName;
+			PlayerMoney			= money			?? Game.Player.PlayerMoney;
+			PlayerCoins			= coin			?? Game.Player.PlayerCoins;
+			GymsChallenged		= gym			?? Game.Player.GymsBeatTime;
+			PlayerBag			= bag			?? Game.Bag_Items;//Player.Bag; //playerBag;
+			TrainerID			= trainer		?? Game.Player.Trainer.TrainerID;
+			SecretID			= secret		?? Game.Player.Trainer.SecretID;
+			IsMale				= gender		?? Game.Player.isMale;
+			Pokedex2			= pokedex		?? Game.Player.PlayerPokedex;
+			PlayerTime			= time			?? Game.Player.playerTime;
+			PlayerPosition		= position		?? Game.Player.playerPosition;
+			PlayerDirection		= direction		?? Game.Player.playerDirection;
+			//FollowerPokemon	= Game.Player.followerPokemon;
+			//FollowerPosition	= Game.Player.followerPosition;
+			//FollowerDirection	= Game.Player.followerDirection;
+			ActiveScene			= scene			?? Game.Player.mapName;//.activeScene;
+			pCenterScene		= pokecenter	?? Game.Player.respawnScene;//pkmnCenter;
+			PlayerParty			= party			?? Game.Player.Trainer.Party.Serialize();
+			//	new SeriPokemon[Game.Player.Trainer.Party.Length];
 			//if(party != null)
-			//	for (int i = 0; i < Game.playerTrainer.Trainer.Party.Length; i++)
+			//	for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 			//	{
-			//		PlayerParty[i]	= Game.playerTrainer.Trainer.Party[i];
+			//		PlayerParty[i]	= Game.Player.Trainer.Party[i];
 			//	}
 				
 			//ToDo: Store user's Active PC
