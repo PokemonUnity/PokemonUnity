@@ -132,8 +132,8 @@ namespace PokemonUnity
 
 		public Trainer(TrainerTypes trainer)
 		{
-			TrainerID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
-			SecretID = Settings.Rand.Next(1000000); //random number between 0 and 999999, including 0
+			TrainerID = Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
+			SecretID = Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
 			IsDouble = false;
 			Party = new Pokemon[]
 			{

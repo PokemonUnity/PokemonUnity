@@ -162,7 +162,7 @@ namespace PokemonUnity
 
 			public TravelGround(Method? tile = null)
 			{
-				switch ((Generation)Settings.pokemonGeneration)
+				switch ((Generation)Core.pokemonGeneration)
 				{
 					case Generation.All:
 					case Generation.RedBlueYellow:
@@ -306,7 +306,7 @@ namespace PokemonUnity
 
 			public TravelWater(Method? tile = null)
 			{
-				switch ((Generation)Settings.pokemonGeneration)
+				switch ((Generation)Core.pokemonGeneration)
 				{
 					case Generation.All:
 					case Generation.RedBlueYellow:
@@ -615,7 +615,7 @@ namespace PokemonUnity
 				}
 			}
 			//randomly pick a number from the list's length
-			int encounterIndex = Settings.Rand.Next(0, chanceSplitList.Length);
+			int encounterIndex = Core.Rand.Next(0, chanceSplitList.Length);
 
 #if DEBUG
 			//string debugtext = "";
@@ -628,7 +628,7 @@ namespace PokemonUnity
 
 			return new Pokemon();
 			// chanceSplitList[encounterIndex].ID, PokemonOld.Gender.CALCULATE,
-			//Settings.Rand.Next(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
+			//Core.Rand.Next(chanceSplitList[encounterIndex].minLevel, chanceSplitList[encounterIndex].maxLevel + 1),
 			//null, null, null, -1);
 		}
 
@@ -644,7 +644,7 @@ namespace PokemonUnity
 			WildPokemonInitialiser[] list = getEncounterList(location);
 
 			//From list of 100 pokemons, select 1.
-			int randomPokemon = Settings.Rand.Next(0, 100);
+			int randomPokemon = Core.Rand.Next(0, 100);
 
 			/*int totalEncounterLikelihood = 0; //add up the total Likelihood
 			for (int i = 0; i < list.Length; i++)
@@ -665,7 +665,7 @@ namespace PokemonUnity
 				}
 			}
 			//randomly pick a number from the list's length
-			int encounterIndex = Settings.Rand.Next(0, chanceSplitList.Length);
+			int encounterIndex = Core.Rand.Next(0, chanceSplitList.Length);
 
 	#if DEBUG
 			string debugtext = "";
@@ -676,7 +676,7 @@ namespace PokemonUnity
 			*/
 			return new Pokemon();
 			// list[randomPokemon].ID, PokemonOld.Gender.CALCULATE,
-			//Settings.Rand.Next(list[randomPokemon].minLevel, list[randomPokemon].maxLevel + 1),
+			//Core.Rand.Next(list[randomPokemon].minLevel, list[randomPokemon].maxLevel + 1),
 			//null, null, null, -1);
 		}
 

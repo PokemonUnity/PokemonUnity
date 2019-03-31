@@ -728,7 +728,7 @@ namespace PokemonUnity.Battle
 				speedmult = (int)Math.Round(speedmult / 4f);
 			if (battle.internalbattle && 
 				//battle.OwnedByPlayer(Index) &&
-				Game.Player.BadgesCount >= Settings.BADGESBOOSTSPEED)
+				Game.Player.BadgesCount >= Core.BADGESBOOSTSPEED)
 				speedmult = (int)Math.Round(speedmult * 1.1f);
 			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
 			return Math.Max(speed, 1);
@@ -1037,7 +1037,7 @@ namespace PokemonUnity.Battle
 						(battle.Weather != Weather.RAINDANCE || battle.weatherduration != -1))
 					{
 						battle.SetWeather(Weather.RAINDANCE);
-						if (Settings.USENEWBATTLEMECHANICS)
+						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
 							if (hasWorkingItem(Items.DAMP_ROCK))
@@ -1054,7 +1054,7 @@ namespace PokemonUnity.Battle
 						(battle.Weather != Weather.SUNNYDAY || battle.weatherduration != -1))
 					{
 						battle.SetWeather(Weather.SUNNYDAY);
-						if (Settings.USENEWBATTLEMECHANICS)
+						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
 							if (hasWorkingItem(Items.HEAT_ROCK))
@@ -1071,7 +1071,7 @@ namespace PokemonUnity.Battle
 						(battle.Weather != Weather.SANDSTORM || battle.weatherduration != -1))
 					{
 						battle.SetWeather(Weather.SANDSTORM);
-						if (Settings.USENEWBATTLEMECHANICS)
+						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
 							if (hasWorkingItem(Items.SMOOTH_ROCK))
@@ -1088,7 +1088,7 @@ namespace PokemonUnity.Battle
 						(battle.Weather != Weather.HAIL || battle.weatherduration != -1))
 					{
 						battle.SetWeather(Weather.HAIL);
-						if (Settings.USENEWBATTLEMECHANICS)
+						if (Core.USENEWBATTLEMECHANICS)
 						{
 							battle.weatherduration = 5;
 							if (hasWorkingItem(Items.ICY_ROCK))

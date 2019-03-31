@@ -65,7 +65,7 @@ namespace PokemonUnity.Overworld
 							// Sand Veil Ability:
 							if (withBlock.WeatherType == 7 & p.Ability == Abilities.SAND_VEIL)
 							{
-								if (Settings.Rand.Next(0, 100) < 50)
+								if (Core.Rand.Next(0, 100) < 50)
 									return;
 							}
 
@@ -74,7 +74,7 @@ namespace PokemonUnity.Overworld
 							{
 								if (withBlock.WeatherType == 2 | withBlock.WeatherType == 9)
 								{
-									if (Settings.Rand.Next(0, 100) < 50)
+									if (Core.Rand.Next(0, 100) < 50)
 										return;
 								}
 							}
@@ -84,7 +84,7 @@ namespace PokemonUnity.Overworld
 						int randomValue = startRandomValue - withBlock.WalkedSteps;
 						randomValue = System.Convert.ToInt32(MathHelper.Clamp(randomValue, minRandomValue, startRandomValue));
 
-						if (Settings.Rand.Next(0, randomValue * 2) == 0)
+						if (Core.Rand.Next(0, randomValue * 2) == 0)
 						{
 							// Don't encounter a Pokémon if the left control key is held down, for Debug or Sandbox Mode:
 							if (Game.IS_DEBUG_ACTIVE | Game.Player.SandBoxMode)
@@ -147,7 +147,7 @@ namespace PokemonUnity.Overworld
 			//                {
 			//                    if (Game.Player.Party[0].Item == Item.Items.CLEANSE_TAG)
 			//                    {
-			//                        if (Settings.Rand.Next(0, 3) == 0)
+			//                        if (Core.Rand.Next(0, 3) == 0)
 			//                            return;
 			//                    }
 			//                }
@@ -160,7 +160,7 @@ namespace PokemonUnity.Overworld
 			//                {
 			//                    if (Game.Player.Party[0].Item == Item.Items.PURE_INCENSE)
 			//                    {
-			//                        if (Settings.Rand.Next(0, 3) == 0)
+			//                        if (Core.Rand.Next(0, 3) == 0)
 			//                            return;
 			//                    }
 			//                }
@@ -171,7 +171,7 @@ namespace PokemonUnity.Overworld
 			//            Game.Player.Pokedex[(int)Pokemon.Species, 0] = 1;
 			//
 			//            // Determine wild Pokémon intro type. If it's a Roaming Pokémon battle, set to 12:
-			//            int introType = Settings.Rand.Next(0, 10);
+			//            int introType = Core.Rand.Next(0, 10);
 			//            //if (BattleSystem.BattleScreen.RoamingBattle)
 			//            //    introType = 12;
 			//			//

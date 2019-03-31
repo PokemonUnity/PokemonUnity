@@ -60,7 +60,7 @@ namespace Tests
             int playerDirection = 2;
 			SeriV3 followerPosition = new SeriV3(1, 0, 0);
             int followerDirection = 1;
-			Pokemon[,] playerPC = Game.PC_Poke; //new Pokemon[Settings.STORAGEBOXES, 30];
+			Pokemon[,] playerPC = Game.PC_Poke; //new Pokemon[Core.STORAGEBOXES, 30];
             //for (int i = 0; i < playerPC.GetLength(1); i++)
             //{
             //	for (int j = 0; j < playerPC.GetLength(0); j++)

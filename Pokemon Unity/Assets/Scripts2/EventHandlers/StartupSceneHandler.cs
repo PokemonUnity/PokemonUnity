@@ -86,7 +86,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
             //While scene is enabled, run coroutine to ping server
             break;
         }*/
-        //int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Settings.framesPerSecond);
+        //int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Core.framesPerSecond);
         //index = index % sprites[].Length;
     }
 	#endregion
@@ -249,7 +249,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	{
 		BattleResults decision = Game.battle.decision;
 		bool canlose = Game.battle.canLose;
-		//if (Settings.USENEWBATTLEMECHANICS || (decision == BattleResults.LOST || decision == BattleResults.DRAW))
+		//if (Core.USENEWBATTLEMECHANICS || (decision == BattleResults.LOST || decision == BattleResults.DRAW))
 		//	if()
 		if(decision == BattleResults.WON)
 		{
@@ -259,7 +259,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 					Game.Player.Trainer.Party[pkmn].Item == Items.NONE)
 				{
 					int chance = 5 + (int)Math.Floor((Game.Player.Trainer.Party[pkmn].Level - 1) / 10f) * 5;
-					if (Settings.Rand.Next(100) < chance)
+					if (Core.Rand.Next(100) < chance)
 						//ToDo: Create class to give items to pokemon?... or maybe remove `private set`?
 						continue;//Game.Player.Trainer.Party[pkmn].SetItem(Items.HONEY);						
 				}
@@ -280,7 +280,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
 		{
 			PokemonUnity.Monster.Pokemon pokemon = Game.Player.Trainer.Party[i];
-			if (pokemon.HP == 0 && !Settings.USENEWBATTLEMECHANICS) continue;
+			if (pokemon.HP == 0 && !Core.USENEWBATTLEMECHANICS) continue;
 			if(pokemon.Species != Pokemons.NONE &&
 				(currentlevels[i].Species == Pokemons.NONE
 			//|| pokemon.Level != currentlevels[i]
@@ -305,7 +305,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 	{
 		if (pokemon.Ability == Abilities.PICKUP || pokemon.isEgg) return;
 		if (pokemon.Item != Items.NONE) return;
-		if (Settings.Rand.Next(10) != 0) return;
+		if (Core.Rand.Next(10) != 0) return;
 		Items[] pickupList = new Items[]
 		{
 			Items.POTION,
@@ -356,7 +356,7 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
 		{
 			items.Add(pickupListRare[itemstart + i]);
 		}
-		int rand = Settings.Rand.Next(100);
+		int rand = Core.Rand.Next(100);
 		int cumnumber = 0;
 		for (int i = 0; i < randlist.Length; i++)
 		{

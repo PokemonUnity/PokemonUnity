@@ -72,8 +72,8 @@ namespace PokemonUnity
 		/// <summary>
 		/// </summary>
 		/// ToDo: consider create AddMoney(value)... 
-		public int Money { get { return playerMoney; } set { playerMoney = value > Settings.MAXMONEY ? Settings.MAXMONEY : value; } }
-		public int Coins { get { return playerCoins; } set { playerCoins = value > Settings.MAXCOINS ? Settings.MAXCOINS : value; } }
+		public int Money { get { return playerMoney; } set { playerMoney = value > Core.MAXMONEY ? Core.MAXMONEY : value; } }
+		public int Coins { get { return playerCoins; } set { playerCoins = value > Core.MAXCOINS ? Core.MAXCOINS : value; } }
 		private int playerMoney { get; set; }
 		private int playerCoins { get; set; }
 		private int playerSavings { get; set; }
@@ -240,7 +240,7 @@ namespace PokemonUnity
 				//attempt to add to the earliest available PC box. 
 				for (int i = 0, b = ActivePcBox; i < Game.PC_Poke.GetUpperBound(0); i++, b++)
 				{
-					bool added = this.PC[b % Settings.STORAGEBOXES].addPokemon(pokemon);
+					bool added = this.PC[b % Core.STORAGEBOXES].addPokemon(pokemon);
 					if (added)
 					{
 						return b; //true

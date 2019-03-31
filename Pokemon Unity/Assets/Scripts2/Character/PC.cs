@@ -40,7 +40,7 @@ public partial class Game
 		{
 			get
 			{
-				i = i % Settings.STORAGEBOXES;
+				i = i % Core.STORAGEBOXES;
 				this.activeBox = i;
 				//Pokemon[] p = new Pokemon[30];
 				//for (int t = 0; t < 30; t++)
@@ -62,7 +62,7 @@ public partial class Game
 		{
 			trainer = t;
 			if (box.HasValue)
-				activeBox = box.Value % Settings.STORAGEBOXES;
+				activeBox = box.Value % Core.STORAGEBOXES;
 		}
 
 		public bool hasSpace()

@@ -680,8 +680,8 @@ namespace PokemonUnity.Battle
 
 		public object tramplesMinimize(byte param = 1)
 		{
-			if (id == Moves.DRAGON_RUSH && !Settings.USENEWBATTLEMECHANICS) return false;
-			if (param == 1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+			if (id == Moves.DRAGON_RUSH && !Core.USENEWBATTLEMECHANICS) return false;
+			if (param == 1 && Core.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 			if (param == 2) return true; // Double damage
 			return false;
 		}
@@ -768,7 +768,7 @@ namespace PokemonUnity.Battle
 		{
 			get
 			{
-				if (Settings.USENEWBATTLEMECHANICS) return 100;
+				if (Core.USENEWBATTLEMECHANICS) return 100;
 				//if (attacker.Species != Pokemons.NONE && attacker.chatter != null) {
 				//	return attacker.pokemon.chatter.intensity * 10 / 127;
 				//}
@@ -962,7 +962,7 @@ namespace PokemonUnity.Battle
 				if (attacker.IsOpposing(i.Index) || i.isFainted()) continue; //next
 				activepkmn.Add(i.pokemonIndex);
 
-				if (Settings.USENEWBATTLEMECHANICS && i.Index != attacker.Index &&
+				if (Core.USENEWBATTLEMECHANICS && i.Index != attacker.Index &&
 				   pbTypeImmunityByAbility(pbType(this.type, attacker, i), attacker, i)) continue; //next
 				switch (i.Status)
 				{
@@ -2361,7 +2361,7 @@ namespace PokemonUnity.Battle
 			if (!opponent.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			byte increment = (Settings.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
+			byte increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
 			bool ret = opponent.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
 			return ret ? 0 : -1;
 		}
@@ -2371,7 +2371,7 @@ namespace PokemonUnity.Battle
 			if (opponent.damagestate.Substitute) return;
 			if (opponent.pbCanReduceStatStage(Stats.EVASION, attacker, false, this))
 			{
-				byte increment = (Settings.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
+				byte increment = (Core.USENEWBATTLEMECHANICS) ? (byte)2 : (byte)1;
 				opponent.pbReduceStat(Stats.EVASION, increment, attacker, false, this);
 			}
 		}
@@ -2397,7 +2397,7 @@ namespace PokemonUnity.Battle
 			opponent.OwnSide.StealthRock = false;
 			opponent.OwnSide.StickyWeb = false;
 			opponent.OwnSide.ToxicSpikes = 0;
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				opponent.OpposingSide.Reflect = 0;
 
@@ -2438,7 +2438,7 @@ namespace PokemonUnity.Battle
 			opponent.OwnSide.StealthRock = false;
 			opponent.OwnSide.StickyWeb = false;
 			opponent.OwnSide.ToxicSpikes = 0;
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				opponent.OpposingSide.Reflect = 0;
 
@@ -2589,7 +2589,7 @@ namespace PokemonUnity.Battle
 			if (!opponent.pbCanReduceStatStage(Stats.SPEED, attacker, true, this)) return -1;
 			pbShowAnimation(this.id, attacker, opponent, hitnum, alltargets, showanimation);
 
-			byte increment = (id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
+			byte increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
 			bool ret = opponent.pbReduceStat(Stats.SPEED, increment, attacker, false, this);
 			return ret ? 0 : -1;
 		}
@@ -2599,7 +2599,7 @@ namespace PokemonUnity.Battle
 			if (opponent.damagestate.Substitute) return;
 			if (opponent.pbCanReduceStatStage(Stats.SPEED, attacker, false, this))
 			{
-				byte increment = (id == Moves.STRING_SHOT && !Settings.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
+				byte increment = (id == Moves.STRING_SHOT && !Core.USENEWBATTLEMECHANICS) ? (byte)1 : (byte)2;
 				opponent.pbReduceStat(Stats.SPEED, increment, attacker, false, this);
 			}
 		}
@@ -3101,7 +3101,7 @@ namespace PokemonUnity.Battle
 				if (!types.Contains(i.Type))
 				{
 					types.Add(i.Type);
-					if (Settings.USENEWBATTLEMECHANICS) break;
+					if (Core.USENEWBATTLEMECHANICS) break;
 				}
 
 			}
@@ -3508,7 +3508,7 @@ namespace PokemonUnity.Battle
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if ((attacker.Ability == 0 && opponent.Ability == 0) ||
-			   (attacker.Ability == opponent.Ability && !Settings.USENEWBATTLEMECHANICS) ||
+			   (attacker.Ability == opponent.Ability && !Core.USENEWBATTLEMECHANICS) ||
 			   attacker.Ability == Abilities.ILLUSION ||
 			   opponent.Ability == Abilities.ILLUSION ||
 			   attacker.Ability == Abilities.MULTITYPE ||
@@ -4439,7 +4439,7 @@ namespace PokemonUnity.Battle
 
 		public object pbBaseDamage(int basedmg, Pokemon attacker, Pokemon opponent)
 		{
-			if (Settings.USENEWBATTLEMECHANICS) return 60;
+			if (Core.USENEWBATTLEMECHANICS) return 60;
 			int[] hp = pbHiddenPower(attacker.IV);
 			return hp[1];
 		}
@@ -4663,7 +4663,7 @@ namespace PokemonUnity.Battle
 						{
 							int ret = damagearray[i];
 
-							if (Settings.USENEWBATTLEMECHANICS) ret += 20;
+							if (Core.USENEWBATTLEMECHANICS) ret += 20;
 							return ret;
 						}
 				//	}
@@ -4856,7 +4856,7 @@ namespace PokemonUnity.Battle
 	{
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				if (this.battle.field.MudSportField > 0)
 				{
@@ -4897,7 +4897,7 @@ namespace PokemonUnity.Battle
 	{
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				if (this.battle.field.WaterSportField > 0)
 				{
@@ -5142,7 +5142,7 @@ namespace PokemonUnity.Battle
 					}
 					break;
 				case Environment.Rock:
-					if (Settings.USENEWBATTLEMECHANICS)
+					if (Core.USENEWBATTLEMECHANICS)
 					{
 						if (opponent.pbCanReduceStatStage(Stats.ACCURACY, attacker, false, this))
 						{
@@ -5206,7 +5206,7 @@ namespace PokemonUnity.Battle
 				{
 					case Environment.Grass:
 					case Environment.TallGrass:
-						id = (Settings.USENEWBATTLEMECHANICS) ? Moves.VINE_WHIP : Moves.NEEDLE_ARM; break;
+						id = (Core.USENEWBATTLEMECHANICS) ? Moves.VINE_WHIP : Moves.NEEDLE_ARM; break;
 
 					case Environment.MovingWater: id = Moves.WATER_PULSE; break;
 					case Environment.StillWater: id = Moves.MUD_SHOT; break;
@@ -5393,7 +5393,7 @@ namespace PokemonUnity.Battle
 				}
 			}
 			if (!unmoved ||
-			   (!Settings.USENEWBATTLEMECHANICS &&
+			   (!Core.USENEWBATTLEMECHANICS &&
 			   this.battle.pbRandom(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate)))
 			{
 				attacker.effects.ProtectRate = 1;
@@ -5452,7 +5452,7 @@ namespace PokemonUnity.Battle
 				}
 			}
 			if (!unmoved ||
-			   (!Settings.USENEWBATTLEMECHANICS &&
+			   (!Core.USENEWBATTLEMECHANICS &&
 			   this.battle.pbRandom(65536) >= (int)Math.Floor(65536f / attacker.effects.ProtectRate)))
 			{
 				attacker.effects.ProtectRate = 1;
@@ -5541,7 +5541,7 @@ namespace PokemonUnity.Battle
 		   (Move.Effect)0x117,   // Follow Me, Rage Powder
 		   (Move.Effect)0x158    // Belch
 		 };
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				blacklist.AddRange(new List<Move.Effect> {
 			 (Move.Effect)0xEB,		// Roar, Whirlwind
@@ -5653,23 +5653,23 @@ namespace PokemonUnity.Battle
 				case Environment.Grass:
 				case Environment.TallGrass:
 				case Environment.Forest:
-					move = (Settings.USENEWBATTLEMECHANICS) ? Moves.ENERGY_BALL : Moves.SEED_BOMB; break;
+					move = (Core.USENEWBATTLEMECHANICS) ? Moves.ENERGY_BALL : Moves.SEED_BOMB; break;
 
 				case Environment.MovingWater: move = Moves.HYDRO_PUMP; break;
 				case Environment.StillWater: move = Moves.MUD_BOMB; break;
 				case Environment.Underwater: move = Moves.HYDRO_PUMP; break;
 				case Environment.Cave:
-					move = (Settings.USENEWBATTLEMECHANICS) ? Moves.POWER_GEM : Moves.ROCK_SLIDE; break;
+					move = (Core.USENEWBATTLEMECHANICS) ? Moves.POWER_GEM : Moves.ROCK_SLIDE; break;
 
 				case Environment.Rock:
 
-					move = (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.ROCK_SLIDE; break;
+					move = (Core.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.ROCK_SLIDE; break;
 
 				case Environment.Sand:
-					move = (Settings.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.EARTHQUAKE; break;
+					move = (Core.USENEWBATTLEMECHANICS) ? Moves.EARTH_POWER : Moves.EARTHQUAKE; break;
 				// Ice tiles in Gen 6 should be Ice Beam
 				case Environment.Snow:
-					move = (Settings.USENEWBATTLEMECHANICS) ? Moves.FROST_BREATH : Moves.ICE_BEAM; break;
+					move = (Core.USENEWBATTLEMECHANICS) ? Moves.FROST_BREATH : Moves.ICE_BEAM; break;
 
 				case Environment.Volcano: move = Moves.LAVA_PLUME; break;
 				case Environment.Graveyard: move = Moves.SHADOW_BALL; break;
@@ -5697,7 +5697,7 @@ namespace PokemonUnity.Battle
 
 			string movename = PBMoves.getName(move);
 			//battle.pbDisplay(_INTL("{1} turned into {2}!", thismovename, movename))
-			int target = (Settings.USENEWBATTLEMECHANICS && opponent.Species != Pokemons.NONE) ? opponent.Index : -1;
+			int target = (Core.USENEWBATTLEMECHANICS && opponent.Species != Pokemons.NONE) ? opponent.Index : -1;
 			attacker.pbUseMoveSimple(move, -1, target);
 			return 0;
 		}
@@ -5817,7 +5817,7 @@ namespace PokemonUnity.Battle
 		   (Move.Effect)0x14D,		// Phantom Force
 		   (Move.Effect)0x158		// Belch
 		};
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				blacklist.AddRange(new List<Move.Effect>{
 									// Two-turn attacks
@@ -5842,7 +5842,7 @@ namespace PokemonUnity.Battle
 			Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: pbParty is common to both allies in multi battles
 			for (int i = 0; i < party.Length; i++)
 			{
-				if (i != attacker.pokemonIndex && party[i].Species != Pokemons.NONE && !(Settings.USENEWBATTLEMECHANICS && party[i].isEgg))
+				if (i != attacker.pokemonIndex && party[i].Species != Pokemons.NONE && !(Core.USENEWBATTLEMECHANICS && party[i].isEgg))
 				{
 					foreach (var j in party[i].moves)
 					{
@@ -6061,7 +6061,7 @@ namespace PokemonUnity.Battle
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
 			if (opponent.effects.Taunt > 0 ||
-			   (Settings.USENEWBATTLEMECHANICS &&
+			   (Core.USENEWBATTLEMECHANICS &&
 			   !attacker.hasMoldBreaker() && opponent.hasWorkingAbility(Abilities.OBLIVIOUS)))
 			{
 				//battle.pbDisplay(_INTL("But it failed!"))
@@ -6854,7 +6854,7 @@ namespace PokemonUnity.Battle
 			if (opponent.effects.TwoTurnAttack > 0) ret = true;
 			if (opponent.effects.SkyDrop && attacker.effects.TwoTurnAttack > 0) ret = true;
 			if (!opponent.IsOpposing(attacker.Index)) ret = true;
-			if (Settings.USENEWBATTLEMECHANICS && opponent.Weight(attacker) >= 2000) ret = true;
+			if (Core.USENEWBATTLEMECHANICS && opponent.Weight(attacker) >= 2000) ret = true;
 			return ret;
 		}
 
@@ -6905,7 +6905,7 @@ namespace PokemonUnity.Battle
 					opponent.effects.MultiTurn = 5 + this.battle.pbRandom(2);
 					if (attacker.hasWorkingItem(Items.GRIP_CLAW))
 					{
-						opponent.effects.MultiTurn = (Settings.USENEWBATTLEMECHANICS) ? 8 : 6;
+						opponent.effects.MultiTurn = (Core.USENEWBATTLEMECHANICS) ? 8 : 6;
 					}
 					opponent.effects.MultiTurnAttack = this.id;
 
@@ -6968,7 +6968,7 @@ namespace PokemonUnity.Battle
 					opponent.effects.MultiTurn = 5 + this.battle.pbRandom(2);
 					if (attacker.hasWorkingItem(Items.GRIP_CLAW))
 					{
-						opponent.effects.MultiTurn = (Settings.USENEWBATTLEMECHANICS) ? 8 : 6;
+						opponent.effects.MultiTurn = (Core.USENEWBATTLEMECHANICS) ? 8 : 6;
 					}
 					opponent.effects.MultiTurnAttack = this.id;
 
@@ -7141,7 +7141,7 @@ namespace PokemonUnity.Battle
 				//battle.pbDisplay(_INTL("But it failed!"))
 				return -1;
 			}
-			if (Settings.USENEWBATTLEMECHANICS)
+			if (Core.USENEWBATTLEMECHANICS)
 			{
 				Types typemod = pbTypeModifier(pbType(this.type, attacker, opponent), attacker, opponent);
 				if (typemod == 0)
@@ -7405,7 +7405,7 @@ namespace PokemonUnity.Battle
 	{
 		public bool isHealingMove()
 		{
-			return Settings.USENEWBATTLEMECHANICS;
+			return Core.USENEWBATTLEMECHANICS;
 		}
 
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
@@ -7440,7 +7440,7 @@ namespace PokemonUnity.Battle
 	{
 		public bool isHealingMove()
 		{
-			return Settings.USENEWBATTLEMECHANICS;
+			return Core.USENEWBATTLEMECHANICS;
 		}
 
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
@@ -7953,7 +7953,7 @@ namespace PokemonUnity.Battle
 				   !opponent.isFainted())
 				{
 					if (opponent.effects.MeanLook < 0 &&
-					   (!Settings.USENEWBATTLEMECHANICS || !opponent.hasType(Types.GHOST)))
+					   (!Core.USENEWBATTLEMECHANICS || !opponent.hasType(Types.GHOST)))
 					{
 						opponent.effects.MeanLook = attacker.Index;
 						//battle.pbDisplay(_INTL("{1} can no longer escape!", opponent.pbThis))
@@ -7967,7 +7967,7 @@ namespace PokemonUnity.Battle
 				//battle.pbDisplay(_INTL("But it failed!"))
 				return -1;
 			}
-			if (Settings.USENEWBATTLEMECHANICS && opponent.hasType(Types.GHOST))
+			if (Core.USENEWBATTLEMECHANICS && opponent.hasType(Types.GHOST))
 			{
 				//battle.pbDisplay(_INTL("It doesn't affect {1}...",opponent.pbThis(true)))
 				return -1;
@@ -8010,7 +8010,7 @@ namespace PokemonUnity.Battle
 
 		public object pbModifyDamage(int damagemult, Pokemon attacker, Pokemon opponent)
 		{
-			if (Settings.USENEWBATTLEMECHANICS &&
+			if (Core.USENEWBATTLEMECHANICS &&
 			   !this.battle.pbIsUnlosableItem(opponent, opponent.Item))
 			{
 				// Still boosts damage even if opponent has Sticky Hold
@@ -8234,7 +8234,7 @@ namespace PokemonUnity.Battle
 			object ret = base.pbEffect(attacker, opponent, hitnum, alltargets, showanimation);
 			if (!attacker.isFainted() && opponent.damagestate.CalcDamage > 0 &&
 			   !opponent.damagestate.Substitute &&
-			   (pbIsBerry(opponent.Item) || (Settings.USENEWBATTLEMECHANICS && pbIsGem(opponent.Item))))
+			   (pbIsBerry(opponent.Item) || (Core.USENEWBATTLEMECHANICS && pbIsGem(opponent.Item))))
 			{
 				string itemname = PBItems.getName(opponent.Item);
 				opponent.pbConsumeItem(false, false);
@@ -9347,7 +9347,7 @@ namespace PokemonUnity.Battle
 				if (this.battle.pbOwnedByPlayer(attacker.Index))
 				{
 					this.battle.extramoney += 5 * attacker.level;
-					if (this.battle.extramoney > Settings.MAXMONEY) this.battle.extramoney = Settings.MAXMONEY;
+					if (this.battle.extramoney > Core.MAXMONEY) this.battle.extramoney = Core.MAXMONEY;
 				}
 
 				//battle.pbDisplay(_INTL("Coins were scattered everywhere!"))
@@ -10743,7 +10743,7 @@ namespace PokemonUnity.Battle
 
 		public bool tramplesMinimize(byte param = 1)
 		{
-			if (param == 1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+			if (param == 1 && Core.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 			if (param == 2) return true; // Double damage
 			return false;
 		}
@@ -10941,7 +10941,7 @@ namespace PokemonUnity.Battle
 				}
 			}
 			if (!unmoved ||
-			   (!Settings.USENEWBATTLEMECHANICS &&
+			   (!Core.USENEWBATTLEMECHANICS &&
 			   this.battle.pbRandom(65536) >= Math.Floor(65536f / attacker.effects.ProtectRate)))
 			{
 				attacker.effects.ProtectRate = 1;
@@ -11055,7 +11055,7 @@ namespace PokemonUnity.Battle
 
 		public bool tramplesMinimize(byte param = 1)
 		{
-			if (param == 1 && Settings.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
+			if (param == 1 && Core.USENEWBATTLEMECHANICS) return true; // Perfect accuracy
 			if (param == 2) return true; // Double damage
 			return false;
 		}
@@ -11129,7 +11129,7 @@ namespace PokemonUnity.Battle
 	{
 		public object isHealingMove()
 		{
-			return Settings.USENEWBATTLEMECHANICS;
+			return Core.USENEWBATTLEMECHANICS;
 		}
 
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)

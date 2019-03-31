@@ -145,7 +145,7 @@ namespace PokemonUnity.Monster
             {
                 if (eggSteps > 0 && value == 0)
                 {
-                    this.Level = Settings.EGGINITIALLEVEL;
+                    this.Level = Core.EGGINITIALLEVEL;
                     this.GenerateMoveset();
                 }
                 eggSteps =
@@ -200,17 +200,17 @@ namespace PokemonUnity.Monster
         public Pokemon()
         {
             _base = PokemonData.GetPokemon(Pokemons.NONE);
-            PersonalId = Settings.Rand.Next(256);
-            PersonalId |= Settings.Rand.Next(256) << 8;
-            PersonalId |= Settings.Rand.Next(256) << 16;
-            PersonalId |= Settings.Rand.Next(256) << 24;
+            PersonalId = Core.Rand.Next(256);
+            PersonalId |= Core.Rand.Next(256) << 8;
+            PersonalId |= Core.Rand.Next(256) << 16;
+            PersonalId |= Core.Rand.Next(256) << 24;
             Ability = Abilities.NONE;
-            natureFlag = new Nature();//(Natures)(Settings.Rand.Next(0, 24));
+            natureFlag = new Nature();//(Natures)(Core.Rand.Next(0, 24));
 			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
 			//shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
-            IV = new byte[] { (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32), (byte)Settings.Rand.Next(32) };
+            IV = new byte[] { (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32) };
             EV = new byte[6];
             Exp = new Experience(GrowthRate);
 			TempLevel = Level;
@@ -237,7 +237,7 @@ namespace PokemonUnity.Monster
 			eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
-			Item = (Items)_base.HeldItem[0,Settings.pokemonGeneration];
+			Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
             GenerateMoveset();
 
             //calcStats();
@@ -277,7 +277,7 @@ namespace PokemonUnity.Monster
 		/// of this pokemon. 
 		/// Affects ability to command pokemon, if player is not OT</param>
 		/// <param name="level">Level this pokemon start ats</param>
-		public Pokemon(Pokemons pkmn, Trainer original, byte level = Settings.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
+		public Pokemon(Pokemons pkmn, Trainer original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
         public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
             byte TPLEVEL = 10,
@@ -298,7 +298,7 @@ namespace PokemonUnity.Monster
             bool EGG = false,
             Items TPBALL = Items.NONE) : this(TPSPECIES, level: TPLEVEL, isEgg: EGG)
         {
-            //Random rand = new Random(Settings.Seed());//(int)TPSPECIES+TPLEVEL
+            //Random rand = new Random(Core.Seed());//(int)TPSPECIES+TPLEVEL
             IV = TPIV ?? IV;
             //EV = new int[6];
 
@@ -671,8 +671,8 @@ namespace PokemonUnity.Monster
 			//while (this.Exp.Current >= this.Exp.NextLevel)
 			while (Level > TempLevel)
 				this.LevelUp(LearnRandomAttack);
-			this.TempLevel = TempLevel < 1 ? 1 : (TempLevel > Settings.MAXIMUMLEVEL ? Settings.MAXIMUMLEVEL : TempLevel);
-			//this.TempLevel = Level.Clamp(1, Settings.MAXIMUMLEVEL);
+			this.TempLevel = TempLevel < 1 ? 1 : (TempLevel > Core.MAXIMUMLEVEL ? Core.MAXIMUMLEVEL : TempLevel);
+			//this.TempLevel = Level.Clamp(1, Core.MAXIMUMLEVEL);
 		}
 
 		/// <summary>
@@ -892,8 +892,8 @@ namespace PokemonUnity.Monster
                 case GenderRatio.Genderless:
                     return null;
                 default:
-                    //byte n = (byte)(Settings.Rand.Next(0, 100) + 1);
-                    double n = (Settings.Rand.NextDouble() * 100) + 1;
+                    //byte n = (byte)(Core.Rand.Next(0, 100) + 1);
+                    double n = (Core.Rand.NextDouble() * 100) + 1;
                     if (_base.MaleRatio == GenderRatio.AlwaysFemale && n > 0f && n < 12.5f) return false;
                     else if (_base.MaleRatio == GenderRatio.FemaleSevenEighths && n >= 12.5f && n < 25f) return false;
                     else if (_base.MaleRatio == GenderRatio.Female75Percent && n >= 25f && n < 37.5f) return false;
@@ -920,16 +920,16 @@ namespace PokemonUnity.Monster
                 {
                     if (_base.Ability[1] != Abilities.NONE)
                     {
-                        return _base.Ability[Settings.Rand.Next(0, 3)];                            
+                        return _base.Ability[Core.Rand.Next(0, 3)];                            
                     }
                     else
                     {
-                        return _base.Ability[Settings.Rand.Next(0, 2) == 1 ? 2 : 0];
+                        return _base.Ability[Core.Rand.Next(0, 2) == 1 ? 2 : 0];
                     }
                 }
                 else
                 {
-                    return _base.Ability[Settings.Rand.Next(0, 2)];
+                    return _base.Ability[Core.Rand.Next(0, 2)];
                 }
                 
             }
@@ -1027,7 +1027,7 @@ namespace PokemonUnity.Monster
 				if (Species == Pokemons.NONE) return false;
 				//return shinyFlag ?? isShiny();
 				if (shinyFlag != null && shinyFlag.HasValue) return shinyFlag.Value;
-				if (Settings.SHINY_WILD_POKEMON_SWITCH) return true;
+				if (Core.SHINY_WILD_POKEMON_SWITCH) return true;
 				// Use this when rolling for shiny...
 				// Honestly, without this math, i probably would've done something a lot more primative.
 				// Look forward to primative math on wild pokemon encounter chances...
@@ -1041,7 +1041,7 @@ namespace PokemonUnity.Monster
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
 				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.Player.Trainer.TrainerID) 
 					^ (!OT.Equals((object)null) ? OT.SecretID : Game.Player.Trainer.SecretID)) 
-					^ ((Game.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Settings.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Settings.SHINYPOKEMONCHANCE) / 65536) 
+					^ ((Game.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536) 
 					^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
@@ -1123,7 +1123,7 @@ namespace PokemonUnity.Monster
         public void GivePokerus(int strain = 0)
         {
             if (this.PokerusStage.HasValue ? !this.PokerusStage.Value : false) return; // Cant re-infect a cured Pokemon
-            if (strain <= 0 || strain >= 16) strain = Settings.Rand.Next(1, 16);
+            if (strain <= 0 || strain >= 16) strain = Core.Rand.Next(1, 16);
             pokerus[1] = 1 + (strain % 4);
             pokerus[0] |= strain; //strain << 4
         }
@@ -1243,7 +1243,7 @@ namespace PokemonUnity.Monster
             //	level = -1;
             ClearFirstMoves();
 			resetMoves();
-            int numMove = Settings.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
+            int numMove = Core.Rand.Next(3)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
             if (isEgg || Game.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			int?[] rejected = new int?[movelist.Count];
@@ -1307,11 +1307,11 @@ namespace PokemonUnity.Monster
                         if (this.countMoves() < numMove)
                         {
 							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Settings.Rand.Next(movelist.Count);
+							int x = Core.Rand.Next(movelist.Count);
 							while(rejected.Contains(x))
-								x = Settings.Rand.Next(movelist.Count);
+								x = Core.Rand.Next(movelist.Count);
 							rejected[n] = x;
-							if (Convert.ToBoolean(Settings.Rand.Next(2)))
+							if (Convert.ToBoolean(Core.Rand.Next(2)))
 							{
 								LearnMove((Moves)movelist[x], out err);
 							}
@@ -1321,7 +1321,7 @@ namespace PokemonUnity.Monster
                     }
                     break;
                 default:
-                    //if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+                    //if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
                     movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
 					rejected = new int?[movelist.Count];
                     //int listend = movelist.Count - 4;
@@ -1333,11 +1333,11 @@ namespace PokemonUnity.Monster
                         if (this.countMoves() < numMove) //j
                         {
 							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Settings.Rand.Next(movelist.Count);
+							int x = Core.Rand.Next(movelist.Count);
 							while(rejected.Contains(x))
-								x = Settings.Rand.Next(movelist.Count);
+								x = Core.Rand.Next(movelist.Count);
 							rejected[n] = x;
-							if (Convert.ToBoolean(Settings.Rand.Next(2)))
+							if (Convert.ToBoolean(Core.Rand.Next(2)))
 							{
 								//this.moves[j] = new Move(movelist[n]);
 								//j += 1;
@@ -1435,7 +1435,7 @@ namespace PokemonUnity.Monster
 			List<Moves> movelist = new List<Moves>();
 			if (isEgg || Game.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			int?[] rejected = new int?[movelist.Count];
-			//if (isEgg || Settings.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
+			//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(_base.MoveTree.Egg);
 			movelist.AddRange(_base.MoveTree.LevelUp.Where(x => x.Value == level).Select(x => x.Key));
 			rejected = new int?[movelist.Count];
 			//int listend = movelist.Count - 4;
@@ -1446,11 +1446,11 @@ namespace PokemonUnity.Monster
 				if (!moveLearned) //j
 				{
 					//For a truly random approach, instead of just adding moves in the order they're listed
-					int x = Settings.Rand.Next(movelist.Count);
+					int x = Core.Rand.Next(movelist.Count);
 					while (rejected.Contains(x))
-						x = Settings.Rand.Next(movelist.Count);
+						x = Core.Rand.Next(movelist.Count);
 					rejected[n] = x;
-					if (Convert.ToBoolean(Settings.Rand.Next(2)))
+					if (Convert.ToBoolean(Core.Rand.Next(2)))
 					{
 						//this.moves[j] = new Move(movelist[n]);
 						//j += 1;

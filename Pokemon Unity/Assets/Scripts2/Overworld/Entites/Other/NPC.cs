@@ -608,11 +608,11 @@ namespace PokemonUnity.Overworld.Entity.Misc
 					{
 						if (this.Moved == 0.0f)
 						{
-							if (Settings.Rand.Next(0, 220) == 0)
+							if (Core.Rand.Next(0, 220) == 0)
 							{
 								int newRotation = this.faceRotation;
 								while (newRotation == this.faceRotation)
-									newRotation = Settings.Rand.Next(0, 4);
+									newRotation = Core.Rand.Next(0, 4);
 								this.faceRotation = newRotation;
 								if (this.IsTrainer)
 									CheckInSight();
@@ -649,13 +649,13 @@ namespace PokemonUnity.Overworld.Entity.Misc
 					{
 						if (this.Moved == 0.0f)
 						{
-							if (Settings.Rand.Next(0, 120) == 0)
+							if (Core.Rand.Next(0, 120) == 0)
 							{
-								if (Settings.Rand.Next(0, 3) == 0)
+								if (Core.Rand.Next(0, 3) == 0)
 								{
 									int newRotation = this.faceRotation;
 									while (newRotation == this.faceRotation)
-										newRotation = Settings.Rand.Next(0, 4);
+										newRotation = Core.Rand.Next(0, 4);
 									this.faceRotation = newRotation;
 								}
 								bool contains = false;
@@ -683,11 +683,11 @@ namespace PokemonUnity.Overworld.Entity.Misc
 					{
 						if (this.Moved == 0.0f)
 						{
-							if (Settings.Rand.Next(0, 15) == 0)
+							if (Core.Rand.Next(0, 15) == 0)
 							{
 								int newRotation = this.faceRotation;
 								while (newRotation == this.faceRotation)
-									newRotation = Settings.Rand.Next(0, 4);
+									newRotation = Core.Rand.Next(0, 4);
 								this.faceRotation = newRotation;
 							}
 							bool contains = false;

@@ -35,9 +35,9 @@ namespace PokemonUnity.Battle
 		public bool doublebattle { get; private set; }
 		public bool isDoubleBattleAllowed { get
 			{
-				/*if (!fullparty1 && party1.Length > Settings.MAXPARTYSIZE) return false;
+				/*if (!fullparty1 && party1.Length > Core.MAXPARTYSIZE) return false;
 
-				if (!fullparty2 && party2.Length > Settings.MAXPARTYSIZE) return false;
+				if (!fullparty2 && party2.Length > Core.MAXPARTYSIZE) return false;
 
 				//_opponent = opponent;
 				//_player = player;
@@ -561,7 +561,7 @@ namespace PokemonUnity.Battle
 		}
 		public int pbRandom(int index)
 		{
-			return Settings.Rand.Next(index);
+			return Core.Rand.Next(index);
 		}
 		/// <summary>
 		/// Returns the trainer party of pokemon at this index?

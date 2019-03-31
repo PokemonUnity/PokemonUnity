@@ -84,7 +84,7 @@ namespace PokemonUnity.Monster
                     foreach (PokemonMoveset move in moveset)
                     {
                         //ToDo: Generation Filter
-                        //if(move.Generation == Settings.pokemonGeneration || Settings.pokemonGeneration < 1)
+                        //if(move.Generation == Core.pokemonGeneration || Core.pokemonGeneration < 1)
                         switch (move.TeachMethod)
                         {
                             case LearnMethod.levelup:

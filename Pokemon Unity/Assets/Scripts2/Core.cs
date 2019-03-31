@@ -4,13 +4,14 @@ using PokemonUnity.Inventory;
 namespace PokemonUnity
 {
 	/// <summary>
-	/// <see cref="GameVariables"/> is a <see cref="UnityEngine.GameObject"/>
+	/// Static and unchanging rules for game to function off of.<para></para>
+	/// <see cref="Game"/> is a <see cref="UnityEngine.GameObject"/>
 	/// that persist throughout the game and inbetween scene levels.
-	/// <see cref="Settings"/> is not an <see cref="object"/>
-	/// but a series of const variables that will be used as rules or 
-	/// placeholders for the game mechanics.
+	/// <see cref="Core"/> is not an <see cref="object"/>
+	/// but a series of const variables that will be used as rules 
+	/// for the game mechanics or structure.
 	/// </summary>
-	public static class Settings //: Settings<Translations.Languages>
+	public static class Core //: Core<Translations.Languages>
 	{
 		#region Constant Values and Game Rules
 		public static Translator.Languages UserLanguage = Translator.Languages.English;

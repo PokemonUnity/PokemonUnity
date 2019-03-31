@@ -628,19 +628,19 @@ namespace PokemonUnity.Overworld.Entity
 			//
 			//if (MakeShake)
 			//{
-			//	if (Settings.Rand.Next(0, 1) == 0)
+			//	if (Core.Rand.Next(0, 1) == 0)
 			//	{
-			//		this.Rotation.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-			//		this.Rotation.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-			//		this.Rotation.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Rotation.x += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Rotation.z += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Rotation.y += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
 			//
-			//		this.Position.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-			//		this.Position.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-			//		this.Position.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Position.x += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Position.z += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Position.y += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
 			//
-			//		this.Scale.x += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-			//		this.Scale.z += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
-			//		this.Scale.y += System.Convert.ToSingle((Settings.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Scale.x += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Scale.z += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
+			//		this.Scale.y += System.Convert.ToSingle((Core.Rand.Next(1, 6) - 3) / (double)100);
 			//
 			//		CreatedWorld = false;
 			//	}

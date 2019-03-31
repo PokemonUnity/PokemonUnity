@@ -2035,7 +2035,7 @@ namespace P3D
 					{
 						if (p.Ability == Abilities.MAGMA_ARMOR || p.Ability == Abilities.FLAME_BODY)
 						{
-							addEggSteps *= Settings.Rand.Next(1, 4);
+							addEggSteps *= Core.Rand.Next(1, 4);
 							break;
 						}
 					}
@@ -2116,7 +2116,7 @@ namespace P3D
 				{
 					if (Temp.LastCall < 256)
 						Temp.LastCall += 1;
-					else if (Settings.Rand.Next(0, 700) == 0)
+					else if (Core.Rand.Next(0, 700) == 0)
 					{
 						//GameJolt.PokegearScreen.RandomCall();
 						Temp.LastCall = 0;
@@ -2148,7 +2148,7 @@ namespace P3D
 		{
 			//if (Game.Level.WildPokemonGrass)
 			//{
-			//	if (Settings.Rand.Next(0, 193) == 0)
+			//	if (Core.Rand.Next(0, 193) == 0)
 			//	{
 			//		Pokemon p = Spawner.GetPokemon(Game.Level.LevelFile, EncounterTypes.Land, false, "");
 			//
@@ -2158,7 +2158,7 @@ namespace P3D
 			//}
 			//if (Game.Level.WildPokemonFloor)
 			//{
-			//	if (Settings.Rand.Next(0, 193) == 0)
+			//	if (Core.Rand.Next(0, 193) == 0)
 			//	{
 			//		Pokemon p = Spawner.GetPokemon(Game.Level.LevelFile, EncounterTypes.Land, false, "");
 			//
@@ -2171,7 +2171,7 @@ namespace P3D
 			//}
 			//if (Game.Level.WildPokemonWater)
 			//{
-			//	if (Settings.Rand.Next(0, 193) == 0)
+			//	if (Core.Rand.Next(0, 193) == 0)
 			//	{
 			//		Pokemon p = Spawner.GetPokemon(Game.Level.LevelFile, EncounterTypes.Surfing, false, "");
 			//
@@ -2186,7 +2186,7 @@ namespace P3D
 
 		private void PlayWildPokemonNoise(int number)
 		{
-			SoundManager.PlayPokemonCry(number, Settings.Rand.Next(0, 6) / (float)10.0f, Settings.Rand.Next(0, 20) / (float)10.0f - 1, Game.sVol * 0.35f);
+			SoundManager.PlayPokemonCry(number, Core.Rand.Next(0, 6) / (float)10.0f, Core.Rand.Next(0, 20) / (float)10.0f - 1, Game.sVol * 0.35f);
 		}
 
 

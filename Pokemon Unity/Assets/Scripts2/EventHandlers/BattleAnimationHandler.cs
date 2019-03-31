@@ -592,7 +592,7 @@ public class BattleAnimationHandler : UnityEngine.MonoBehaviour
             //While scene is enabled, run coroutine to ping server
             break;
         }*/
-		//int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Settings.framesPerSecond);
+		//int index = (int)(UnityEngine.Time.timeSinceLevelLoad * Core.framesPerSecond);
 		//index = index % sprites[].Length;string[] dir = AssetDatabase.GetSubFolders("Assets/Pokemons");
 	}
 

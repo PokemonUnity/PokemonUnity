@@ -66,7 +66,7 @@ namespace PokemonUnity.Monster
 
         private static Natures getRandomNature()
         {
-            return natures[new System.Random(Settings.Seed()).Next(0, natures.Length)].Natures;
+            return natures[new System.Random(Core.Seed()).Next(0, natures.Length)].Natures;
         }
     }
 }

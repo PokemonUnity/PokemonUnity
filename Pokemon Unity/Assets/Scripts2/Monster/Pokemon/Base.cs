@@ -141,8 +141,8 @@ namespace PokemonUnity.Monster
                     foreach (var formValue in this.ID.ToString().Translate().FieldNames) {
                         //fieldnames.Add(field);
                         if (formValue.Key.Contains("form")){
-                            //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
-                            //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                            //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
+                            //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
                             formvalues.Add(formValue.Value);
                         }
                     }
@@ -316,8 +316,8 @@ namespace PokemonUnity.Monster
                     //fieldnames.Add(field);
                     if (fieldValue.Key.Contains("form"))
                     {
-                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
-                        //_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Settings.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = string.Format(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, fieldnames.ToArray());//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
+                        //_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value = fieldnames.Where() .JoinAsString("; ") +"\n"+ _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value;//(_dictionary.Dictionaries[Core.UserLanguage.ToString()][text].Value, _dictionary.Dictionaries[Core.UserLanguage.ToString()][text].FieldNames)
                         formvalues.Add(fieldValue.Value);
                     }
                     if (fieldValue.Key.Contains("genus"))

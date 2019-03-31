@@ -8,7 +8,7 @@
 		{
 			base.Initialize();
 
-			float randomValue = System.Convert.ToSingle(MathHelper.TwoPi * Settings.Rand.NextDouble());
+			float randomValue = System.Convert.ToSingle(MathHelper.TwoPi * Core.Rand.NextDouble());
 			switch (this.ActionValue)
 			{
 				case 1:

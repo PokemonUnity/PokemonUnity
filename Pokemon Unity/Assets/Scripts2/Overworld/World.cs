@@ -564,7 +564,7 @@ namespace PokemonUnity.Overworld
 			if (IsMainMenu)
 				return Weathers.Clear;
 
-			int r = Settings.Rand.Next(0, 100);
+			int r = Core.Rand.Next(0, 100);
 
 			switch (Season)
 			{
@@ -1037,8 +1037,8 @@ namespace PokemonUnity.Overworld
 						{
 							T = TextureManager.GetTexture(@"Textures\Weather\bubble");
 
-							//if (Settings.Rand.Next(0, 100) == 0)
-							//    ObjectsList.Add(new Vector4(Settings.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
+							//if (Core.Rand.Next(0, 100) == 0)
+							//    ObjectsList.Add(new Vector4(Core.Rand.Next(0, Core.windowSize.width - 32), Core.windowSize.height, 32, 32));
 							//
 							//for (var i = 0; i <= ObjectsList.Count - 1; i++)
 							//{
@@ -1093,9 +1093,9 @@ namespace PokemonUnity.Overworld
 		{
 			if (MapWeather == Weathers.Thunderstorm)
 			{
-				if (Settings.Rand.Next(0, 250) == 0)
+				if (Core.Rand.Next(0, 250) == 0)
 				{
-					float pitch = -(Settings.Rand.Next(8, 11) / 10.0f);
+					float pitch = -(Core.Rand.Next(8, 11) / 10.0f);
 					Game.DebugLog(pitch.ToString());
 					SoundManager.PlaySound(@"Battle\Effects\effect_thunderbolt", pitch, 0F, Game.sVol, false);
 				}
@@ -1132,7 +1132,7 @@ namespace PokemonUnity.Overworld
 			//            case Weathers.Thunderstorm:
 			//                {
 			//                    speed = 0.15f;
-			//                    switch (Settings.Rand.Next(0, 4))
+			//                    switch (Core.Rand.Next(0, 4))
 			//                    {
 			//                        case 0:
 			//                            {
@@ -1209,7 +1209,7 @@ namespace PokemonUnity.Overworld
 			//        else if (Core.CurrentScreen.Identification == Screen.Identifications.BattleScreen)
 			//            cameraPosition = (BattleCamera)Game.Camera.CPosition;
 			//
-			//        if (Settings.Rand.Next(0, chance) == 0)
+			//        if (Core.Rand.Next(0, chance) == 0)
 			//        {
 			//            for (var x = cameraPosition.x - range; x <= cameraPosition.x + range; x++)
 			//            {
@@ -1217,10 +1217,10 @@ namespace PokemonUnity.Overworld
 			//                {
 			//                    if (z != 0 | x != 0)
 			//                    {
-			//                        float rY = System.Convert.ToSingle(Settings.Rand.Next(0, 40) / (double)10) - 2.0f;
-			//                        float rX = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
-			//                        float rZ = System.Convert.ToSingle(Settings.Rand.NextDouble()) - 0.5f;
-			//                        Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Settings.Rand.Next(0, 2), scale/*, UnityEngine.Mesh.BillModel*/, new Vector3(1f, 1f, 1f));
+			//                        float rY = System.Convert.ToSingle(Core.Rand.Next(0, 40) / (double)10) - 2.0f;
+			//                        float rX = System.Convert.ToSingle(Core.Rand.NextDouble()) - 0.5f;
+			//                        float rZ = System.Convert.ToSingle(Core.Rand.NextDouble()) - 0.5f;
+			//                        Particle p = new Particle(new Vector3(x + rX, cameraPosition.y + 1.8f + rY, z + rZ), new[] { T }, new int[] { 0, 0 }, Core.Rand.Next(0, 2), scale/*, UnityEngine.Mesh.BillModel*/, new Vector3(1f, 1f, 1f));
 			//                        p.MoveSpeed = speed;
 			//                        if (MapWeather == Weathers.Rain)
 			//                            p.Opacity = 0.7f;

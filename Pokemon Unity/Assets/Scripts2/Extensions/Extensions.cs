@@ -373,7 +373,7 @@ static class Extensions
         foreach (int c in chances)
             totalNumber += c;
 
-        int r = PokemonUnity.Settings.Rand.Next(0, totalNumber + 1);
+        int r = PokemonUnity.Core.Rand.Next(0, totalNumber + 1);
 
         int x = 0;
         for (var i = 0; i <= chances.Count - 1; i++)

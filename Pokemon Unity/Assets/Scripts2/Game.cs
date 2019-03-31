@@ -71,10 +71,10 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	{
 		GameDebug.Init(null, "GameTestLog");
 		UserLanguage  = Languages.English;
-		PC_Poke = new Pokemon[Settings.STORAGEBOXES, 30];
-		PC_boxNames = new string[Settings.STORAGEBOXES];
-		PC_boxTexture = new int[Settings.STORAGEBOXES];
-		for (int i = 0; i < Settings.STORAGEBOXES; i++)
+		PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
+		PC_boxNames = new string[Core.STORAGEBOXES];
+		PC_boxTexture = new int[Core.STORAGEBOXES];
+		for (int i = 0; i < Core.STORAGEBOXES; i++)
 		{
 			//Initialize the PC storage so pokemons arent null (in value)
 			for (int j = 0; j < PC_Poke.GetLength(1); j++)
@@ -267,7 +267,7 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 
                 //username = data.username;
                 //rememberme = data.rememberme;
-                Settings.UserLanguage = d.userpreflanguage;
+                Core.UserLanguage = d.userpreflanguage;
 
                 //An Array[3] of Game representing GameSaves
                 gamesaves = d.gamesaves;//(Game[])bf.Deserialize(fs);

@@ -65,7 +65,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				}
 
 				Monster.Pokemon spawnedPokemon = null/* TODO Change to default(_) if this is not a reference type */;
-				if (Settings.Rand.Next(0, 100) < 20)
+				if (Core.Rand.Next(0, 100) < 20)
 				{
 					//spawnedPokemon = Spawner.GetPokemon(Game.Level.LevelFile, EncounterTypes.RockSmash, false);
 					if (spawnedPokemon == null)
@@ -79,7 +79,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 						//((OverworldScreen)Core.CurrentScreen.)ActionScript.StartScript(s, 2);
 					}
 				}
-				else if (Settings.Rand.Next(0, 100) < 20)
+				else if (Core.Rand.Next(0, 100) < 20)
 				{
 					int ItemID = GetItemID();
 					string s = "version=2" + System.Environment.NewLine + "@text.show(" + pName + " used~Rock Smash!)" + System.Environment.NewLine + "@sound.play(destroy)" + System.Environment.NewLine + "@level.update" + System.Environment.NewLine + "@item.give(" + ItemID + ",1)" + System.Environment.NewLine + "@item.messagegive(" + ItemID + ",1)" + System.Environment.NewLine + ":end";

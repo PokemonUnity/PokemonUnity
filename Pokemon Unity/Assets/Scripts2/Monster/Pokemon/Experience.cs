@@ -117,7 +117,7 @@ namespace PokemonUnity.Monster
             public void AddExperience(int experienceGain)
             {
                 Current += experienceGain;
-                int maxexp = GetExperience(Growth, Settings.MAXIMUMLEVEL);
+                int maxexp = GetExperience(Growth, Core.MAXIMUMLEVEL);
                 if (Current > maxexp) Current = maxexp;
             }
 			// <summary>
@@ -132,7 +132,7 @@ namespace PokemonUnity.Monster
 			//public int AddExperience(LevelingRate levelingRate, int currentExperience, int experienceGain)
 			//{
 			//	int exp = currentExperience + experienceGain;
-			//	int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+			//	int maxexp = GetExperience(levelingRate, Core.MAXIMUMLEVEL);
 			//	if (exp > maxexp) exp = maxexp;
 			//	return exp;
 			//}
@@ -143,7 +143,7 @@ namespace PokemonUnity.Monster
             {
                 int exp = 0;
                 //if (currentLevel > 100) currentLevel = 100; 
-                //if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL; 
+                //if (currentLevel > Core.MAXIMUMLEVEL) currentLevel = Core.MAXIMUMLEVEL; 
                 if (levelingRate == LevelingRate.ERRATIC)
                 {
                     if (currentLevel > 99)
@@ -212,7 +212,7 @@ namespace PokemonUnity.Monster
             /// <returns></returns>
             public static int GetMaxExperience(LevelingRate levelingRate)
             {
-                return GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+                return GetExperience(levelingRate, Core.MAXIMUMLEVEL);
             }
             /// <summary>
             /// Gets the number of Exp Points needed to reach the given
@@ -224,7 +224,7 @@ namespace PokemonUnity.Monster
             public static int GetStartExperience(LevelingRate levelingRate, int currentLevel)
             {
                 if (currentLevel < 0) currentLevel = 1;
-                if (currentLevel > Settings.MAXIMUMLEVEL) currentLevel = Settings.MAXIMUMLEVEL;
+                if (currentLevel > Core.MAXIMUMLEVEL) currentLevel = Core.MAXIMUMLEVEL;
                 return GetExperience(levelingRate, currentLevel);
             }
             /// <summary>
@@ -236,12 +236,12 @@ namespace PokemonUnity.Monster
             public static byte GetLevelFromExperience(LevelingRate levelingRate, int experiencePoints)
             {
                 if (experiencePoints <= 0) return 0;
-                int maxexp = GetExperience(levelingRate, Settings.MAXIMUMLEVEL);
+                int maxexp = GetExperience(levelingRate, Core.MAXIMUMLEVEL);
                 if (experiencePoints > maxexp) experiencePoints = maxexp;
-                for (byte i = 0; i < Settings.MAXIMUMLEVEL; i++)
+                for (byte i = 0; i < Core.MAXIMUMLEVEL; i++)
                 {
-                    if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) == experiencePoints) return Settings.MAXIMUMLEVEL;
-                    if (GetExperience(levelingRate, Settings.MAXIMUMLEVEL) < experiencePoints) return Settings.MAXIMUMLEVEL;
+                    if (GetExperience(levelingRate, Core.MAXIMUMLEVEL) == experiencePoints) return Core.MAXIMUMLEVEL;
+                    if (GetExperience(levelingRate, Core.MAXIMUMLEVEL) < experiencePoints) return Core.MAXIMUMLEVEL;
                     if (GetExperience(levelingRate, i) > experiencePoints) return (byte)(i - 1);
                 }
                 return 0;
