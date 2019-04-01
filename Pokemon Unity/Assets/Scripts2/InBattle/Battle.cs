@@ -668,12 +668,12 @@ namespace PokemonUnity.Battle
 			if (battler.isFainted())
 				battler = battler.Partner;
 			//DisplayBrief(L(Text.ScriptTexts,"ThrowBall", Player.Name, itemname));
-			//Game.TextBox.Show(L(Text.ScriptTexts,"ThrowBall", Player.Name, itemname));
+			Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts,"ThrowBall", Player.Name, itemname).Value);
 			if (battler.isFainted())
 			{
 				//"But there was no target..."
 				//Display(L(Text.ScriptTexts, "NoTarget"));
-				//Game.TextBox.Show(L(Text.ScriptTexts, "NoTarget"));
+				Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts, "NoTarget").Value);
 				return;
 			}
 			if (opponent.ID != TrainerTypes.WildPokemon) 
@@ -682,7 +682,7 @@ namespace PokemonUnity.Battle
 				//scene.ThrowAndDeflect(ball, 1);
 				//"The Trainer blocked the Ball!\nDon't be a thief!"
 				//Display(L(Text.ScriptTexts, "SnagRejected"));
-				//Game.TextBox.Show(L(Text.ScriptTexts, "SnagRejected"));
+				Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts, "SnagRejected").Value);
 			}
 			else
 			{
@@ -820,7 +820,7 @@ namespace PokemonUnity.Battle
 					thismove.MoveId == opp1.moves[3].MoveId)
 				{
 					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-					//PBDebug.log("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]")
+					GameDebug.Log("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]")
 					return false;
 				}
 			}
@@ -832,7 +832,7 @@ namespace PokemonUnity.Battle
 					 thismove.MoveId == opp2.moves[3].MoveId)
 				{
 					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-					//PBDebug.log("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]")
+					GameDebug.Log("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]")
 					return false;
 				}
 			}

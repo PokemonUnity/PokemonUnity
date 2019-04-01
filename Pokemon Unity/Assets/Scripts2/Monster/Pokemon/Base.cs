@@ -345,17 +345,17 @@ namespace PokemonUnity.Monster
                                 float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
                                 //int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,
                                 int evHP = 0, int evATK = 0, int evDEF = 0, int evSPA = 0, int evSPD = 0, int evSPE = 0,
-                                Color pokedexColor = Color.NONE, int baseFriendship = 0,//* / string species, string pokedexEntry,*/
+                                Color pokedexColor = Color.NONE, int baseFriendship = 0,// string species, string pokedexEntry,
                                 int baseStatsHP = 0, int baseStatsATK = 0, int baseStatsDEF = 0, int baseStatsSPA = 0, int baseStatsSPD = 0, int baseStatsSPE = 0,
                                 Rarity rarity = Rarity.Common, float luminance = 0f, //Color lightColor,
                                 PokemonMoveset[] movesetmoves = null,
                                 int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
                                 IPokemonEvolution[] evolution = null,
-                                int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, /*string[] evolutionRequirements,*/
-                                                                                                                     //ToDo: What if: `Pokemons form` to point back to base pokemon, and Pokemons.NONE, if they are the base form?
-                                                                                                                     //that way, we can assign values to pokemons with forms that give stat bonuses...
-                                                                                                                     //want to find a way to add pokemon froms from a different method. Maybe something like overwriting the `Database` values to match those of base pokemon for values that are duplicated.
-                                                                                                                     //Or I'll just add it at the bottom towards end of array using copy-paste method.
+                                int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, //string[] evolutionRequirements,
+                                //ToDo: What if: `Pokemons form` to point back to base pokemon, and Pokemons.NONE, if they are the base form?
+                                //that way, we can assign values to pokemons with forms that give stat bonuses...
+                                //want to find a way to add pokemon froms from a different method. Maybe something like overwriting the `Database` values to match those of base pokemon for values that are duplicated.
+                                //Or I'll just add it at the bottom towards end of array using copy-paste method.
                                 Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
                                 int[,] heldItem = null) : this(Id)
             {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})

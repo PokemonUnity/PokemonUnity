@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts2\InBattle\Battle\SuccessState.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Battle\DamageState.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Battle\Scene.cs" />
+    <Compile Include="Assets\Scripts2\InBattle\Form.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Move.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Pokemon.cs" />
     <Compile Include="Assets\Scripts2\InBattle\Effects\Battler.cs" />
@@ -248,7 +249,6 @@
     <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
     <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
-    <None Include="Assets\StreamingAssets\How to enable custom sprites.txt" />
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
