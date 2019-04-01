@@ -9,10 +9,13 @@ using PokemonUnity.Inventory;
 
 namespace PokemonUnity.Battle
 {
+	//ToDo: Move to PokemonData Class?...
+	//ToDo: Change Pokemon.Form from type `int` to `Form`
 	public partial class Form : PokemonUnity.Monster.Pokemon.PokemonData
 	{
 		public Pokemons BaseSpecies { get; private set; }
-		public Form(Pokemons Id = Pokemons.NONE, Pokemons baseSpecies = Pokemons.NONE, //int[] regionalDex = null, //string name, 
+		public bool IsMega { get; private set; }
+		public Form(Pokemons Id = Pokemons.NONE, Pokemons baseSpecies = Pokemons.NONE, bool isMega = false, //int[] regionalDex = null, //string name, 
 								Types type1 = Types.NONE, Types type2 = Types.NONE, Abilities ability1 = Abilities.NONE, Abilities ability2 = Abilities.NONE, Abilities hiddenAbility = Abilities.NONE,//Abilities[] abilities,
 								GenderRatio genderRatio = GenderRatio.Genderless, float? maleRatio = null, int catchRate = 1, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
 								float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
@@ -88,16 +91,17 @@ namespace PokemonUnity.Battle
 		}
 
 		//public static readonly PokemonUnity.Monster.Pokemon.PokemonData[] Mega; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
-		public static readonly Form[] Mega; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
+		public static readonly Form[] Forms; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
 		static Form()
 		{
 			//ToDo: Add values for forms
 			//Mega = new PokemonUnity.Monster.Pokemon.PokemonData[] {
-			Mega = new Form[] {
+			Forms = new Form[] {
 			#region Mega Evolve Forms
         new Form(
                 Id: Pokemons.VENUSAUR_MEGA ,
 				baseForm: Pokemons.VENUSAUR ,
+				isMega: true,
                 //regionalDex: new int[]{3} ,
                 type1: Types.GRASS ,
                 type2: Types.POISON ,
@@ -114,6 +118,7 @@ namespace PokemonUnity.Battle
         new Form(
                 Id: Pokemons.CHARIZARD_MEGA_X ,
 				baseForm: Pokemons.CHARIZARD ,
+				isMega: true,
                 //regionalDex: new int[]{6} ,
                 type1: Types.FIRE ,
                 type2: Types.DRAGON ,
@@ -130,6 +135,7 @@ namespace PokemonUnity.Battle
         new Form(
                 Id: Pokemons.CHARIZARD_MEGA_Y ,
 				baseForm: Pokemons.CHARIZARD ,
+				isMega: true,
                 //regionalDex: new int[]{6} ,
                 type1: Types.FIRE ,
                 type2: Types.DRAGON ,
