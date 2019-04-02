@@ -158,13 +158,15 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		Level,
 		/// <summary>
-		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be male.<para></para>
+		///	Exactly the same as <see cref="Level"/>, 
+		///	except the Pokémon must also be male.<para></para>
 		/// <code>Level,int level</code>
 		/// </summary>
 		/// <example>Burmy</example>
 		LevelMale,
 		/// <summary>
-		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be female.<para></para>
+		///	Exactly the same as <see cref="Level"/>, 
+		///	except the Pokémon must also be female.<para></para>
 		/// <code>Level,int level</code>
 		/// </summary>
 		/// <example>Burmy, Combee</example>
@@ -216,7 +218,7 @@ namespace PokemonUnity.Monster
 		/// <example>Karrablast, Shelmet</example>
 		TradeSpecies,
 		/// <summary>
-		///	if pokemon's happiness is greater or equal to 220.
+		///	if pokemon's happiness is greater or equal to 220.<para></para>
 		///	Note: Happiness checks should come last before all other methods.
 		///	</summary>
 		/// <example>Azurill, Buneary, Chansey, Cleffa, Golbat, 
@@ -246,33 +248,33 @@ namespace PokemonUnity.Monster
 		Hatred,
 		/// <summary>
 		///	if time is between 9PM and 4AM time is "Night". else time is "Day".
-		///	if time is equal to string dayNight (either Day, or Night).
+		///	if time is equal to string dayNight (either Day, or Night).<para></para>
 		///	<code>Time,DatetimeOffset/bool dayNight</code>
 		/// </summary>
 		Time,
 		/// <summary>
 		///	if date is between Day-Month or maybe certain 1/4 (quarter) of the year.
-		///	if date is equal to string season (either Summer, Winter, Spring, or Fall).
+		///	if date is equal to string season (either Summer, Winter, Spring, or Fall).<para></para>
 		///	<code>Time,DatetimeOffset/bool season</code>
 		/// </summary>
-        /// is holiday to "spot-on" as an occasion or requirement for leveling-up?
+		/// is holiday to "spot-on" as an occasion or requirement for leveling-up?
 		Season,
 		/// <summary>
-		///	if pokemon's heldItem is equal to string itemName
+		///	if pokemon's heldItem is equal to string itemName<para></para>
 		/// <example>Item,string itemName</example>
 		/// </summary>
 		/// Holding a certain item after leveling-up?
 		HoldItem,
 		/// <summary>
 		///	The Pokémon will evolve if it levels up during the daytime 
-		///	while holding a particular item (named by the parameter).
+		///	while holding a particular item (named by the parameter).<para></para>
 		/// <code>Item,string itemName</code>
 		/// </summary>
 		/// <example>Happiny</example>
 		HoldItemDay,
 		/// <summary>
 		///	The Pokémon will evolve if it levels up during the night-time 
-		///	while holding a particular item (named by the parameter).
+		///	while holding a particular item (named by the parameter).<para></para>
 		/// <code>Item,string itemName</code>
 		/// </summary>
 		/// <example>Gligar, Sneasel</example>
