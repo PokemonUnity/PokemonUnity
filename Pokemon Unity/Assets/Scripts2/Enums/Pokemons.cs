@@ -153,26 +153,26 @@ namespace PokemonUnity.Monster
 	public enum EvolutionMethod
 	{
 		/// <summary>
-		///	if pokemon's level is greater or equal to int level
+		///	if pokemon's level is greater or equal to int level<para></para>
 		/// <code>Level,int level</code>
 		/// </summary>
 		Level,
 		/// <summary>
-		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be male.
+		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be male.<para></para>
 		/// <code>Level,int level</code>
 		/// </summary>
 		/// <example>Burmy</example>
 		LevelMale,
 		/// <summary>
-		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be female.
+		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be female.<para></para>
 		/// <code>Level,int level</code>
 		/// </summary>
 		/// <example>Burmy, Combee</example>
 		LevelFemale,
 		///	<summary>
 		///	The Pokémon will evolve if a particular item is used on it 
-		///	(named by the parameter - typically an evolution stone).
-		/// <code>Stone,string itemName</code>
+		///	(named by the parameter - typically an evolution stone).<para></para>
+		/// <code>Stone,<see cref="Inventory.Items"/> itemName</code>
 		///	</summary>
 		/// <example>Clefairy, Cottonee, Eelektrik, Eevee, Exeggcute, Gloom, 
 		/// Growlithe, Jigglypuff, Lampent, Lombre, Minccino, Misdreavus, 
@@ -193,7 +193,7 @@ namespace PokemonUnity.Monster
 		/// <example>Snorunt</example>
 		ItemFemale,
 		/// <summary>
-		///	The Pokémon will evolve immediately after it is traded.
+		///	The Pokémon will evolve immediately after it is 
 		///	<seealso cref="Pokemon.ObtainedMethod.TRADED"/>
 		///	</summary>
 		/// <example>Boldore, Graveler, Gurdurr, Haunter, Kadabra, Machoke</example>
@@ -284,23 +284,27 @@ namespace PokemonUnity.Monster
 		/// <example>Feebas</example>
 		Beauty,
 		/// <summary>
-		///	The Pokémon will evolve if it levels up while knowing a particular move (named by the parameter).
+		///	The Pokémon will evolve if it levels up 
+		///	while knowing a particular move 
+		///	(named by the parameter).<para></para>
 		/// <example>Move,string moveName</example>
 		/// </summary>
 		/// <example>Aipom, Bonsly, Lickitung, Mime Jr., Piloswine, Tangela, Yanma</example>
 		Move,
 		/// <summary>
-		///	The Pokémon will evolve if it levels up while the player has a Pokémon of a certain species in their party 
+		///	The Pokémon will evolve if it levels up 
+		///	while the player has a Pokémon of a certain species in their party 
 		///	(named by the parameter). 
-		///	The named Pokémon is unaffected.
+		///	The named Pokémon is unaffected.<para></para>
 		/// <example>Pokemon,string pokemonName</example>
 		/// </summary>
 		/// <example>Mantyke, Mantine</example>
 		/// if party contains a Remoraid
 		Party,
 		/// <summary>
-		///	The Pokémon will evolve if it levels up while the player has a Pokémon of a certain type in their party 
-		///	(named by the parameter). 
+		///	The Pokémon will evolve if it levels up while 
+		///	the player has a Pokémon of a certain type in their party 
+		///	(named by the parameter). <para></para>
 		/// <example>Type,string pokemonTypeName</example>
 		/// </summary>
 		/// <example>Pangoro</example>
@@ -308,7 +312,7 @@ namespace PokemonUnity.Monster
 		Type,
 		/// <summary>
 		/// The Pokémon will evolve when it levels up, 
-		/// if the player is currently on the map given by the parameter.
+		/// if the player is currently on the map given by the parameter.<para></para>
 		///	<code>Map,string mapName</code>
 		/// </summary>
 		Location,
@@ -348,9 +352,9 @@ namespace PokemonUnity.Monster
 		Cascoon,
 		///	<summary>
 		///	Unique evolution methods: 
-		///	Exactly the same as "Level". 
+		///	Exactly the same as <see cref="Level"/>. 
 		///	There is no difference between the two methods at all. 
-		///	Is used alongside the method "Shedinja".
+		///	Is used alongside the method <see cref="Shedinja"/>.
 		///	</summary>
 		Ninjask,
 		///	<summary>
