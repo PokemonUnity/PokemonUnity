@@ -1418,6 +1418,7 @@ namespace PokemonUnity
 	}
 	#endregion
 	#region Pokemon
+	public enum Contest { Cool, Beauty, Cute, Smart, Tough, Sheen }
 	/// <summary>
 	/// Pokemon ids are connected to XML file.
 	/// </summary>

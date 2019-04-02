@@ -212,6 +212,7 @@ namespace PokemonUnity.Monster
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
             IV = new byte[] { (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32) };
             EV = new byte[6];
+            Contest = new byte[6];
             Exp = new Experience(GrowthRate);
 			TempLevel = Level;
             moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
@@ -1575,7 +1576,8 @@ namespace PokemonUnity.Monster
         /// Contest stats; Max value is 255
         /// </summary>
 		/// ToDo: Should make into an Array, and use Enum to get value?
-        public int Cool, Beauty, Cute, Smart, Tough, Sheen;
+		public byte[] Contest { get; private set; }
+        //public int Cool, Beauty, Cute, Smart, Tough, Sheen;
         /// <summary>
         /// Returns whether this Pokémon has the specified ribbon.
         /// </summary>
