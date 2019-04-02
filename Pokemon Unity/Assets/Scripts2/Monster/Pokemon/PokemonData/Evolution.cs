@@ -83,11 +83,14 @@ namespace PokemonUnity.Monster
                         case EvolutionMethod.HappinessNight:
                         case EvolutionMethod.Hatred:
                             //if(typeof(T) || this.GetType() == typeof(string))
-                            if (Value.GetType() != typeof(int))
+                            if (T.GetType() != typeof(int))
+							{
                                 //throw new Exception("Type not acceptable for Method-Value pair.");
                                 //Instead of throwing an exception, i'll correct the problem instead?
-                                Convert.ChangeType(Value, typeof(int));
-                            Value = default(T);
+								//int.TryParse(Value.ToString, out EvolveValue);
+								Convert.ChangeType(T, typeof(int));
+								Value = 0; //default(T);
+							}
                             break;
                         case EvolutionMethod.Item:
                         case EvolutionMethod.ItemFemale:
@@ -96,27 +99,36 @@ namespace PokemonUnity.Monster
                         case EvolutionMethod.HoldItem:
                         case EvolutionMethod.HoldItemDay:
                         case EvolutionMethod.HoldItemNight:
-                            if (this.EvolveValue.GetType() != typeof(Items))
-                                Convert.ChangeType(Value, typeof(Items));
-                            Value = default(T);
+                            if (T.GetType() != typeof(Items))
+							{
+								Convert.ChangeType(T, typeof(Items));
+								Value = Items.NONE; //default(T);
+							}
                             break;
                         case EvolutionMethod.TradeSpecies:
                         case EvolutionMethod.Party:
-                        case EvolutionMethod.Shedinja:
-                            if (this.EvolveValue.GetType() != typeof(Pokemons))
-                                Convert.ChangeType(Value, typeof(Pokemons));
-                            Value = default(T);
+                        //case EvolutionMethod.Shedinja:
+                            if (T.GetType() != typeof(Pokemons))
+							{
+								Convert.ChangeType(T, typeof(Pokemons));
+								Value = Pokemons.NONE; //default(T);
+							}
                             break;
                         case EvolutionMethod.Move:
-                            if (this.EvolveValue.GetType() != typeof(Moves))
-                                Convert.ChangeType(Value, typeof(Moves));
-                            Value = default(T);
+                            if (T.GetType() != typeof(Moves))
+							{
+								Convert.ChangeType(T, typeof(Moves));
+								Value = Moves.NONE; //default(T);
+							}
                             break;
                         case EvolutionMethod.Type:
-                            if (this.EvolveValue.GetType() != typeof(Types))
-                                Convert.ChangeType(Value, typeof(Types));
-                            Value = default(T);
+                            if (T.GetType() != typeof(Types))
+							{
+								Convert.ChangeType(T, typeof(Types));
+								Value = Types.NONE; //default(T);
+							}
                             break;
+                        case EvolutionMethod.Shedinja:
                         case EvolutionMethod.Time:
                         case EvolutionMethod.Season:
                         case EvolutionMethod.Location:

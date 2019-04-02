@@ -158,13 +158,13 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		Level,
 		/// <summary>
-		///	Exactly the same as "Level", except the Pokémon must also be male.
+		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be male.
 		/// <code>Level,int level</code>
 		/// </summary>
 		/// <example>Burmy</example>
 		LevelMale,
 		/// <summary>
-		///	Exactly the same as "Level", except the Pokémon must also be female.
+		///	Exactly the same as <see cref="Level"/>, except the Pokémon must also be female.
 		/// <code>Level,int level</code>
 		/// </summary>
 		/// <example>Burmy, Combee</example>
@@ -194,11 +194,12 @@ namespace PokemonUnity.Monster
 		ItemFemale,
 		/// <summary>
 		///	The Pokémon will evolve immediately after it is traded.
+		///	<seealso cref="Pokemon.ObtainedMethod.TRADED"/>
 		///	</summary>
 		/// <example>Boldore, Graveler, Gurdurr, Haunter, Kadabra, Machoke</example>
 		Trade,
 		/// <summary>
-		///	Exactly the same as "Trade", 
+		///	Exactly the same as <see cref="Trade"/>, 
 		///	except the Pokémon must also be holding a particular item 
 		///	(named by the parameter). 
 		///	That item is removed afterwards.
@@ -208,7 +209,7 @@ namespace PokemonUnity.Monster
 		/// Slowpoke</example>
 		TradeItem,
 		/// <summary>
-		///	Exactly the same as "Trade", 
+		///	Exactly the same as <see cref="Trade"/>, 
 		///	except the Pokémon must have been traded for a Pokémon of a certain species 
 		///	(named by the parameter).
 		///	</summary>
@@ -222,19 +223,19 @@ namespace PokemonUnity.Monster
 		/// Igglybuff, Munchlax, Pichu, Swadloon, Togepi, Woobat</example>
 		Happiness,
 		/// <summary>
-		///	Exactly the same as "Happiness", 
+		///	Exactly the same as <see cref="Happiness"/>, 
 		///	but will only evolve during the daytime.
 		///	</summary>
 		/// <example>Budew, Eevee, Riolu</example>
 		HappinessDay,
 		/// <summary>
-		///	Exactly the same as "Happiness", 
+		///	Exactly the same as <see cref="Happiness"/>, 
 		///	but will only evolve during the night-time.
 		///	</summary>
 		/// <example>Chingling, Eevee</example>
 		HappinessNight,
 		/// <summary>
-		///	This method is almost identical to "Happiness", 
+		///	This method is almost identical to <see cref="Happiness"/>, 
 		///	with the sole changes of replacing the "greater than" sign 
 		///	to a "less than" sign, and changing the threshold value. 
 		///	If you use this method, 
@@ -318,19 +319,19 @@ namespace PokemonUnity.Monster
 		///	if currentMap's weather is rain
 		Weather,
 		///	<summary>
-		///	Exactly the same as "Level", 
+		///	Exactly the same as <see cref="Level"/>, 
 		///	except the Pokémon's Attack stat must also be greater than its Defense stat.
 		///	</summary>
 		/// <example>Hitmonlee</example>
 		AttackGreater,
 		///	<summary>
-		///	Exactly the same as "Level", 
+		///	Exactly the same as <see cref="Level"/>, 
 		///	except the Pokémon's Attack stat must also be lower than its Defense stat.
 		///	</summary>
 		/// <example>Hitmonchan</example>
 		DefenseGreater,
 		/// <summary>
-		/// Exactly the same as "Level", 
+		/// Exactly the same as <see cref="Level"/>, 
 		/// except the Pokémon's Attack stat must also be equal to its Defense stat.
 		/// </summary>
 		/// <example>Hitmontop</example>
@@ -354,13 +355,20 @@ namespace PokemonUnity.Monster
 		Ninjask,
 		///	<summary>
 		///	Unique evolution methods: 
-		///	Must be used with the method "Ninjask". 
+		///	Must be used with the method <see cref="Ninjask"/>. 
 		///	Duplicates the Pokémon that just evolved 
 		///	(if there is an empty space in the party), 
 		///	and changes the duplicate's species to the given species.
 		///	</summary>
-        ///	how is this different from "party"?
+		///	how is this different from "party"?
 		Shedinja,
+		///	<summary>
+		///	Unique evolution methods: 
+		///	This method is almost identical to <see cref="Level"/>. 
+		///	However evolution only triggers if Pokemon has ability <see cref="Abilities.OWN_TEMPO"/>
+		///	and time is Dusk (between hours of 5 pm to 5:59 pm in in-game time)
+		///	</summary>
+		Lycanroc,
         /// <summary>
         /// </summary>
         /// Just wanted to see a requirement for after "fainting" too many times, your pokemon just died, and became a ghost-type...  
