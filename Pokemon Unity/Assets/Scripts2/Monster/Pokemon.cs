@@ -2169,7 +2169,7 @@ namespace PokemonUnity.Monster
 			{
 				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
-                if (this.hp == 0) this.Status = Status.FAINT; // statusCount = 0; //ToDo: Fainted
+				if (isFainted()) { this.Status = Status.FAINT; statusCount = 0; } 
             }
         }
 
