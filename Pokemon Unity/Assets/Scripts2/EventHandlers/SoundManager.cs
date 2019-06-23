@@ -92,7 +92,7 @@ public class SoundManager
 						try
 						{
 							//sound = SoundEffect.FromStream(stream);
-							sound = new AudioClip();
+							//sound = new AudioClip();
 							_sounds.Add(key, sound);
 						}
 						catch (Exception ex)
