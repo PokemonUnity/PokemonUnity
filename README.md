@@ -1,8 +1,9 @@
+
 <p align="center">
-  <img alt="Pokémon Unity Logo" src="https://styles.redditmedia.com/t5_39moy/styles/bannerPositionedImage_6is405sk53j01.png" />
-  <h1 align="center">Pokémon Unity by IIcolour Spectrum</h3>
+  <img alt="Pokémon Unity Logo" src="https://i.imgur.com/SKRgrq9.png" />
+  <h1 align="center">Pokémon Unity</h3>
   <p align="center">
-    <a href="https://discord.gg/aftYdfV"><img alt="Discord Server" src="https://img.shields.io/discord/285560546244427777.svg"></a>
+    <a href="https://discord.gg/CCF2YVP"><img alt="Discord Server" src="https://img.shields.io/discord/285560546244427777.svg"></a>
     <a href="https://www.reddit.com/r/PokemonUnity/"><img alt="Reddit" src="https://img.shields.io/badge/join%20us%20on-reddit-ff5700.svg"></a>
     <a href="https://pokemonunity.gitbooks.io/pokemon-unity/content/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"></a>
   </p>
