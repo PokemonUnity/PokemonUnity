@@ -9,36 +9,15 @@
   </p>
 </p>
 
-Pokémon Unity was in development for about a year before I could not continue working on the project. Rather than let it
-die, I released the source as is.
+Pokémon Unity is a framework dedicated to providing a framework built in the Unity3D engine for creating RPG-esque games. It's being developed by a large, enthusiastic community on Discord! We welcome any and all improvements or pull requests. If you'd like to take a look at the source, you can clone the `develop` branch and take a look at that. Most of the branches right now are in a very unstable form, so bugs and glitches may (and probably will) occur!
 
-Naturally this leaves it in a fairly incomplete state, albeit functional.
-
-There's a lot of legacy code left over from when I was learning to use Unity, so some scripts (namely the PC and Bag interfaces) are 
-functional though implemented rather poorly.
-
-I'm hoping that the Pokémon Game Development Community will be able to continue my work and eventually get this project into a fully 
-functional state.
-
-If you need to contact me regarding the project for any reason, you can reach me via my YouTube channel, or the subreddit 
-/r/PokemonUnity although I can't guarantee when I'll see it or how much I can help. I will try though.
-
-Thank you to everyone who supported me during the development of Pokémon Unity. I hope this source is useful.
-
+Full Disclaimer: We are not related to Nintendo in any way, and hold none of their copyright, intellectual property, and make otherwise no claims to any assets belonging to Game Freak.
 ## Demo and Downloads
 
-There are demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! Please report any bugs if found.
+There are demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! These are very old and need to be updated, however. They show the state at which the engine was originally abandoned, and we've been hard at work since. I recommend hopping onto our [Discord](https://discord.gg/CCF2YVP) and asking us how to best look at the current state of the game until we have a `stable` branch.
 
-## Credits
-
-* Project lead: [TeamPopplio](https://github.com/TeamPopplio/)
-* Project author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
-* Project maintainer: [superusercode](https://www.reddit.com/user/Lucas_One/)
-* Logo author: [Kaihatsu](https://twitter.com/KaihatsuYT)
-
-## Links
+## External Links
 
 * Reddit: <https://www.reddit.com/r/PokemonUnity/>
-* YouTube: <https://www.youtube.com/c/IIcolourSpectrum>
-* Discord server: <https://discord.gg/aftYdfV>
+* Discord server: <https://discord.gg/CCF2YVP>
 * Documentation: <https://pokemonunity.gitbooks.io/pokemon-unity/content/>
