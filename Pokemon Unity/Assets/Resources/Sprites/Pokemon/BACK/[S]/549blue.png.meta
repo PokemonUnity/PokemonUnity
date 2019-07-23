@@ -1,186 +1,564 @@
 fileFormatVersion: 2
 guid: e9380e4828eb7cd408f230f3374a4fe2
-timeCreated: 1527400786
-licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: 549blue_10
-    21300002: 549blue_11
-    21300004: 549blue_12
-    21300006: 549blue_13
-    21300008: 549blue_14
-    21300010: 549blue_15
-    21300012: 549blue_16
-    21300014: 549blue_17
-    21300016: 549blue_18
-    21300018: 549blue_19
-    21300020: 549blue_20
-    21300022: 549blue_21
-    21300024: 549blue_22
-    21300026: 549blue_23
-    21300028: 549blue_24
-    21300030: 549blue_25
-    21300032: 549blue_26
-    21300034: 549blue_27
-    21300036: 549blue_28
-    21300038: 549blue_29
-    21300040: 549blue_30
-    21300042: 549blue_31
-    21300044: 549blue_32
-    21300046: 549blue_33
-    21300048: 549blue_34
-    21300050: 549blue_35
-    21300052: 549blue_36
-    21300054: 549blue_37
-    21300056: 549blue_38
-    21300058: 549blue_39
-    21300060: 549blue_40
-    21300062: 549blue_41
-    21300064: 549blue_42
-    21300066: 549blue_43
-    21300068: 549blue_44
-    21300070: 549blue_45
-    21300072: 549blue_46
-    21300074: 549blue_47
-    21300076: 549blue_48
-    21300078: 549blue_49
-    21300080: 549blue_50
-    21300082: 549blue_51
-    21300084: 549blue_52
-    21300086: 549blue_53
-    21300088: 549blue_54
-    21300090: 549blue_55
-    21300092: 549blue_56
-    21300094: 549blue_57
-    21300096: 549blue_58
-    21300098: 549blue_59
-    21300100: 549blue_60
-    21300102: 549blue_61
-    21300104: 549blue_62
-    21300106: 549blue_63
-    21300108: 549blue_64
-    21300110: 549blue_65
-    21300112: 549blue_66
-    21300114: 549blue_67
-    21300116: 549blue_68
-    21300118: 549blue_69
-    21300120: 549blue_70
-    21300122: 549blue_71
-    21300124: 549blue_72
-    21300126: 549blue_73
-    21300128: 549blue_74
-    21300130: 549blue_75
-    21300132: 549blue_76
-    21300134: 549blue_77
-    21300136: 549blue_78
-    21300138: 549blue_79
-    21300140: 549blue_80
-    21300142: 549blue_81
-    21300144: 549blue_82
-    21300146: 549blue_83
-    21300148: 549blue_84
-    21300150: 549blue_85
-    21300152: 549blue_86
-    21300154: 549blue_87
-    21300156: 549blue_88
-    21300158: 549blue_89
-    21300160: 549blue_90
-    21300162: 549blue_91
-    21300164: 549blue_92
-    21300166: 549blue_93
-    21300168: 549blue_94
-    21300170: 549blue_95
-    21300172: 549blue_96
-    21300174: 549blue_97
-    21300176: 549blue_98
-    21300178: 549blue_99
-    21300180: 549blue_100
-    21300182: 549blue_101
-    21300184: 549blue_102
-    21300186: 549blue_103
-    21300188: 549blue_104
-    21300190: 549blue_105
-    21300192: 549blue_106
-    21300194: 549blue_107
-    21300196: 549blue_108
-    21300198: 549blue_109
-    21300200: 549blue_110
-    21300202: 549blue_111
-    21300204: 549blue_112
-    21300206: 549blue_113
-    21300208: 549blue_114
-    21300210: 549blue_115
-    21300212: 549blue_116
-    21300214: 549blue_117
-    21300216: 549blue_118
-    21300218: 549blue_119
-    21300220: 549blue_120
-    21300222: 549blue_121
-    21300224: 549blue_122
-    21300226: 549blue_123
-    21300228: 549blue_124
-    21300230: 549blue_125
-    21300232: 549blue_126
-    21300234: 549blue_127
-    21300236: 549blue_128
-    21300238: 549blue_129
-    21300240: 549blue_130
-    21300242: 549blue_131
-    21300244: 549blue_132
-    21300246: 549blue_133
-    21300248: 549blue_134
-    21300250: 549blue_135
-    21300252: 549blue_136
-    21300254: 549blue_137
-    21300256: 549blue_138
-    21300258: 549blue_139
-    21300260: 549blue_140
-    21300262: 549blue_141
-    21300264: 549blue_142
-    21300266: 549blue_143
-    21300268: 549blue_144
-    21300270: 549blue_145
-    21300272: 549blue_146
-    21300274: 549blue_147
-    21300276: 549blue_148
-    21300278: 549blue_149
-    21300280: 549blue_150
-    21300282: 549blue_151
-    21300284: 549blue_152
-    21300286: 549blue_153
-    21300288: 549blue_154
-    21300290: 549blue_155
-    21300292: 549blue_156
-    21300294: 549blue_157
-    21300296: 549blue_158
-    21300298: 549blue_159
-    21300300: 549blue_160
-    21300302: 549blue_161
-    21300304: 549blue_162
-    21300306: 549blue_163
-    21300308: 549blue_164
-    21300310: 549blue_165
-    21300312: 549blue_166
-    21300314: 549blue_167
-    21300316: 549blue_168
-    21300318: 549blue_169
-    21300320: 549blue_170
-    21300322: 549blue_171
-    21300324: 549blue_172
-    21300326: 549blue_173
-    21300328: 549blue_174
-    21300330: 549blue_175
-    21300332: 549blue_176
-    21300334: 549blue_177
-    21300336: 549blue_178
-    21300338: 549blue_179
-    21300340: 549blue_180
-    21300342: 549blue_181
-    21300344: 549blue_182
-    21300346: 549blue_183
-    21300348: 549blue_184
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: 549blue_10
+  - first:
+      213: 21300002
+    second: 549blue_11
+  - first:
+      213: 21300004
+    second: 549blue_12
+  - first:
+      213: 21300006
+    second: 549blue_13
+  - first:
+      213: 21300008
+    second: 549blue_14
+  - first:
+      213: 21300010
+    second: 549blue_15
+  - first:
+      213: 21300012
+    second: 549blue_16
+  - first:
+      213: 21300014
+    second: 549blue_17
+  - first:
+      213: 21300016
+    second: 549blue_18
+  - first:
+      213: 21300018
+    second: 549blue_19
+  - first:
+      213: 21300020
+    second: 549blue_20
+  - first:
+      213: 21300022
+    second: 549blue_21
+  - first:
+      213: 21300024
+    second: 549blue_22
+  - first:
+      213: 21300026
+    second: 549blue_23
+  - first:
+      213: 21300028
+    second: 549blue_24
+  - first:
+      213: 21300030
+    second: 549blue_25
+  - first:
+      213: 21300032
+    second: 549blue_26
+  - first:
+      213: 21300034
+    second: 549blue_27
+  - first:
+      213: 21300036
+    second: 549blue_28
+  - first:
+      213: 21300038
+    second: 549blue_29
+  - first:
+      213: 21300040
+    second: 549blue_30
+  - first:
+      213: 21300042
+    second: 549blue_31
+  - first:
+      213: 21300044
+    second: 549blue_32
+  - first:
+      213: 21300046
+    second: 549blue_33
+  - first:
+      213: 21300048
+    second: 549blue_34
+  - first:
+      213: 21300050
+    second: 549blue_35
+  - first:
+      213: 21300052
+    second: 549blue_36
+  - first:
+      213: 21300054
+    second: 549blue_37
+  - first:
+      213: 21300056
+    second: 549blue_38
+  - first:
+      213: 21300058
+    second: 549blue_39
+  - first:
+      213: 21300060
+    second: 549blue_40
+  - first:
+      213: 21300062
+    second: 549blue_41
+  - first:
+      213: 21300064
+    second: 549blue_42
+  - first:
+      213: 21300066
+    second: 549blue_43
+  - first:
+      213: 21300068
+    second: 549blue_44
+  - first:
+      213: 21300070
+    second: 549blue_45
+  - first:
+      213: 21300072
+    second: 549blue_46
+  - first:
+      213: 21300074
+    second: 549blue_47
+  - first:
+      213: 21300076
+    second: 549blue_48
+  - first:
+      213: 21300078
+    second: 549blue_49
+  - first:
+      213: 21300080
+    second: 549blue_50
+  - first:
+      213: 21300082
+    second: 549blue_51
+  - first:
+      213: 21300084
+    second: 549blue_52
+  - first:
+      213: 21300086
+    second: 549blue_53
+  - first:
+      213: 21300088
+    second: 549blue_54
+  - first:
+      213: 21300090
+    second: 549blue_55
+  - first:
+      213: 21300092
+    second: 549blue_56
+  - first:
+      213: 21300094
+    second: 549blue_57
+  - first:
+      213: 21300096
+    second: 549blue_58
+  - first:
+      213: 21300098
+    second: 549blue_59
+  - first:
+      213: 21300100
+    second: 549blue_60
+  - first:
+      213: 21300102
+    second: 549blue_61
+  - first:
+      213: 21300104
+    second: 549blue_62
+  - first:
+      213: 21300106
+    second: 549blue_63
+  - first:
+      213: 21300108
+    second: 549blue_64
+  - first:
+      213: 21300110
+    second: 549blue_65
+  - first:
+      213: 21300112
+    second: 549blue_66
+  - first:
+      213: 21300114
+    second: 549blue_67
+  - first:
+      213: 21300116
+    second: 549blue_68
+  - first:
+      213: 21300118
+    second: 549blue_69
+  - first:
+      213: 21300120
+    second: 549blue_70
+  - first:
+      213: 21300122
+    second: 549blue_71
+  - first:
+      213: 21300124
+    second: 549blue_72
+  - first:
+      213: 21300126
+    second: 549blue_73
+  - first:
+      213: 21300128
+    second: 549blue_74
+  - first:
+      213: 21300130
+    second: 549blue_75
+  - first:
+      213: 21300132
+    second: 549blue_76
+  - first:
+      213: 21300134
+    second: 549blue_77
+  - first:
+      213: 21300136
+    second: 549blue_78
+  - first:
+      213: 21300138
+    second: 549blue_79
+  - first:
+      213: 21300140
+    second: 549blue_80
+  - first:
+      213: 21300142
+    second: 549blue_81
+  - first:
+      213: 21300144
+    second: 549blue_82
+  - first:
+      213: 21300146
+    second: 549blue_83
+  - first:
+      213: 21300148
+    second: 549blue_84
+  - first:
+      213: 21300150
+    second: 549blue_85
+  - first:
+      213: 21300152
+    second: 549blue_86
+  - first:
+      213: 21300154
+    second: 549blue_87
+  - first:
+      213: 21300156
+    second: 549blue_88
+  - first:
+      213: 21300158
+    second: 549blue_89
+  - first:
+      213: 21300160
+    second: 549blue_90
+  - first:
+      213: 21300162
+    second: 549blue_91
+  - first:
+      213: 21300164
+    second: 549blue_92
+  - first:
+      213: 21300166
+    second: 549blue_93
+  - first:
+      213: 21300168
+    second: 549blue_94
+  - first:
+      213: 21300170
+    second: 549blue_95
+  - first:
+      213: 21300172
+    second: 549blue_96
+  - first:
+      213: 21300174
+    second: 549blue_97
+  - first:
+      213: 21300176
+    second: 549blue_98
+  - first:
+      213: 21300178
+    second: 549blue_99
+  - first:
+      213: 21300180
+    second: 549blue_100
+  - first:
+      213: 21300182
+    second: 549blue_101
+  - first:
+      213: 21300184
+    second: 549blue_102
+  - first:
+      213: 21300186
+    second: 549blue_103
+  - first:
+      213: 21300188
+    second: 549blue_104
+  - first:
+      213: 21300190
+    second: 549blue_105
+  - first:
+      213: 21300192
+    second: 549blue_106
+  - first:
+      213: 21300194
+    second: 549blue_107
+  - first:
+      213: 21300196
+    second: 549blue_108
+  - first:
+      213: 21300198
+    second: 549blue_109
+  - first:
+      213: 21300200
+    second: 549blue_110
+  - first:
+      213: 21300202
+    second: 549blue_111
+  - first:
+      213: 21300204
+    second: 549blue_112
+  - first:
+      213: 21300206
+    second: 549blue_113
+  - first:
+      213: 21300208
+    second: 549blue_114
+  - first:
+      213: 21300210
+    second: 549blue_115
+  - first:
+      213: 21300212
+    second: 549blue_116
+  - first:
+      213: 21300214
+    second: 549blue_117
+  - first:
+      213: 21300216
+    second: 549blue_118
+  - first:
+      213: 21300218
+    second: 549blue_119
+  - first:
+      213: 21300220
+    second: 549blue_120
+  - first:
+      213: 21300222
+    second: 549blue_121
+  - first:
+      213: 21300224
+    second: 549blue_122
+  - first:
+      213: 21300226
+    second: 549blue_123
+  - first:
+      213: 21300228
+    second: 549blue_124
+  - first:
+      213: 21300230
+    second: 549blue_125
+  - first:
+      213: 21300232
+    second: 549blue_126
+  - first:
+      213: 21300234
+    second: 549blue_127
+  - first:
+      213: 21300236
+    second: 549blue_128
+  - first:
+      213: 21300238
+    second: 549blue_129
+  - first:
+      213: 21300240
+    second: 549blue_130
+  - first:
+      213: 21300242
+    second: 549blue_131
+  - first:
+      213: 21300244
+    second: 549blue_132
+  - first:
+      213: 21300246
+    second: 549blue_133
+  - first:
+      213: 21300248
+    second: 549blue_134
+  - first:
+      213: 21300250
+    second: 549blue_135
+  - first:
+      213: 21300252
+    second: 549blue_136
+  - first:
+      213: 21300254
+    second: 549blue_137
+  - first:
+      213: 21300256
+    second: 549blue_138
+  - first:
+      213: 21300258
+    second: 549blue_139
+  - first:
+      213: 21300260
+    second: 549blue_140
+  - first:
+      213: 21300262
+    second: 549blue_141
+  - first:
+      213: 21300264
+    second: 549blue_142
+  - first:
+      213: 21300266
+    second: 549blue_143
+  - first:
+      213: 21300268
+    second: 549blue_144
+  - first:
+      213: 21300270
+    second: 549blue_145
+  - first:
+      213: 21300272
+    second: 549blue_146
+  - first:
+      213: 21300274
+    second: 549blue_147
+  - first:
+      213: 21300276
+    second: 549blue_148
+  - first:
+      213: 21300278
+    second: 549blue_149
+  - first:
+      213: 21300280
+    second: 549blue_150
+  - first:
+      213: 21300282
+    second: 549blue_151
+  - first:
+      213: 21300284
+    second: 549blue_152
+  - first:
+      213: 21300286
+    second: 549blue_153
+  - first:
+      213: 21300288
+    second: 549blue_154
+  - first:
+      213: 21300290
+    second: 549blue_155
+  - first:
+      213: 21300292
+    second: 549blue_156
+  - first:
+      213: 21300294
+    second: 549blue_157
+  - first:
+      213: 21300296
+    second: 549blue_158
+  - first:
+      213: 21300298
+    second: 549blue_159
+  - first:
+      213: 21300300
+    second: 549blue_160
+  - first:
+      213: 21300302
+    second: 549blue_161
+  - first:
+      213: 21300304
+    second: 549blue_162
+  - first:
+      213: 21300306
+    second: 549blue_163
+  - first:
+      213: 21300308
+    second: 549blue_164
+  - first:
+      213: 21300310
+    second: 549blue_165
+  - first:
+      213: 21300312
+    second: 549blue_166
+  - first:
+      213: 21300314
+    second: 549blue_167
+  - first:
+      213: 21300316
+    second: 549blue_168
+  - first:
+      213: 21300318
+    second: 549blue_169
+  - first:
+      213: 21300320
+    second: 549blue_170
+  - first:
+      213: 21300322
+    second: 549blue_171
+  - first:
+      213: 21300324
+    second: 549blue_172
+  - first:
+      213: 21300326
+    second: 549blue_173
+  - first:
+      213: 21300328
+    second: 549blue_174
+  - first:
+      213: 21300330
+    second: 549blue_175
+  - first:
+      213: 21300332
+    second: 549blue_176
+  - first:
+      213: 21300334
+    second: 549blue_177
+  - first:
+      213: 21300336
+    second: 549blue_178
+  - first:
+      213: 21300338
+    second: 549blue_179
+  - first:
+      213: 21300340
+    second: 549blue_180
+  - first:
+      213: 21300342
+    second: 549blue_181
+  - first:
+      213: 21300344
+    second: 549blue_182
+  - first:
+      213: 21300346
+    second: 549blue_183
+  - first:
+      213: 21300348
+    second: 549blue_184
+  - first:
+      213: -6046654879156846147
+    second: 549blue_0
+  - first:
+      213: -7921715488735186712
+    second: 549blue_1
+  - first:
+      213: 5605572924979975813
+    second: 549blue_2
+  - first:
+      213: 1710725303310443903
+    second: 549blue_3
+  - first:
+      213: -1121648276269242737
+    second: 549blue_4
+  - first:
+      213: -2398784135104520876
+    second: 549blue_5
+  - first:
+      213: -1011380089621948306
+    second: 549blue_6
+  - first:
+      213: -2208232358733998932
+    second: 549blue_7
+  - first:
+      213: 7343791603442043535
+    second: 549blue_8
+  - first:
+      213: 7358926235874599030
+    second: 549blue_9
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -198,6 +576,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -208,7 +588,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: -1
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -220,18 +600,21 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
     textureFormat: -1
@@ -241,7 +624,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
     textureFormat: -1
@@ -268,6 +652,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9edc5d1559022dd4fb1fceacbe461811
+      internalID: -6046654879156846147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_1
       rect:
@@ -282,6 +673,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee98d1a7c97f30c46b6e7849ec587500
+      internalID: -7921715488735186712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_2
       rect:
@@ -296,6 +694,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1384e6ca1abf56941967c0b76a27c32b
+      internalID: 5605572924979975813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_3
       rect:
@@ -310,6 +715,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d1d6b52472ec6b8449768ddedb8dd9d7
+      internalID: 1710725303310443903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_4
       rect:
@@ -324,6 +736,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8ecf359d4ff92414fa5606c6eb2da1a5
+      internalID: -1121648276269242737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_5
       rect:
@@ -338,6 +757,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3417167e9b510549ac86a84b2995a4f
+      internalID: -2398784135104520876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_6
       rect:
@@ -352,6 +778,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3a85d26f6a1cf584c8dc02e8198845d3
+      internalID: -1011380089621948306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_7
       rect:
@@ -366,6 +799,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f6788ebd978b374438272e37a4bc8acd
+      internalID: -2208232358733998932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_8
       rect:
@@ -380,6 +820,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cdec74ded355a92459b013aac20263e6
+      internalID: 7343791603442043535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_9
       rect:
@@ -394,6 +841,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a695a85fbbac9040bbdddefcfcbbc89
+      internalID: 7358926235874599030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_10
       rect:
@@ -408,6 +862,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4c7cc03043af3e64ba8b78aba4cc530f
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_11
       rect:
@@ -422,6 +883,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8ab2a67432de2a141baa70e857b90fb6
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_12
       rect:
@@ -436,6 +904,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d71a435934b98f342baa3825f77397b9
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_13
       rect:
@@ -450,6 +925,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 214db34f5d7151047a5abff8086c8dc0
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_14
       rect:
@@ -464,6 +946,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ae417e2ea2f5ad5449fffaa7dcb307b7
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_15
       rect:
@@ -478,6 +967,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 51b94e0447642eb43a076743f43266e1
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_16
       rect:
@@ -492,6 +988,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 00079ebcf4df6b543b64b4cc3e2fc1ab
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_17
       rect:
@@ -506,6 +1009,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fa0b4a76ae77269478ea79df353c5579
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_18
       rect:
@@ -520,6 +1030,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77b6953c294901c488077f3b9a9cc9a2
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_19
       rect:
@@ -534,6 +1051,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4ae99489d6f1e664abe36831cc81faa7
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_20
       rect:
@@ -548,6 +1072,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d44e28f3d62c86248be0078ee11629d7
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_21
       rect:
@@ -562,6 +1093,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 89189f14d139cba4d95db111a1aa7909
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_22
       rect:
@@ -576,6 +1114,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 16daa622b7afc6e4d8f410c5325a6bcb
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_23
       rect:
@@ -590,6 +1135,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3e0774e9182584d449f85159b79c871c
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_24
       rect:
@@ -604,6 +1156,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 96b64da93900d694faf131b3dc48dedf
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_25
       rect:
@@ -618,6 +1177,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 688f28ecd8a3c3c43a6094e1316fcb38
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_26
       rect:
@@ -632,6 +1198,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ccbf43406e8ff6144b58c52ecf8f3768
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_27
       rect:
@@ -646,6 +1219,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8b98a349c971b5d4390529860ef525aa
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_28
       rect:
@@ -660,6 +1240,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9b896133e3dcf00438b64dfcc9f24b39
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_29
       rect:
@@ -674,6 +1261,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ae2a039f041b42044bb72cd9f4f10024
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_30
       rect:
@@ -688,6 +1282,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9d3870b0c05065e4d89a93cf551859f3
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_31
       rect:
@@ -702,6 +1303,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 64ed1706c7fb79c47badc152864262a5
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_32
       rect:
@@ -716,6 +1324,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c2a8fffd0ed533c499df148d4863b2e2
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_33
       rect:
@@ -730,6 +1345,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 254a7ec83889c0d4497b2c0c641d47b7
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_34
       rect:
@@ -744,6 +1366,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8e0af9c82ae199d46ad226ed4874f91e
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_35
       rect:
@@ -758,6 +1387,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e7210c7ee6ed2db4ab9a405e2dbd6a42
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_36
       rect:
@@ -772,6 +1408,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ac0aad32658475541a503ea93a21c43b
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_37
       rect:
@@ -786,6 +1429,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: df4954be65a21a14da04dbd5afc9d647
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_38
       rect:
@@ -800,6 +1450,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5285c5e6f0f0f7a44bb9ac4f21801e97
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_39
       rect:
@@ -814,6 +1471,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 24c51576d36c25e4aa2abb1316a4d316
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_40
       rect:
@@ -828,6 +1492,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 878ea52ad7467d542be0177d534ae039
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_41
       rect:
@@ -842,6 +1513,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: da0bb6831eb210d408de8cbf329112e7
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_42
       rect:
@@ -856,6 +1534,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b9978a629518b8c41ba3807005e6a26e
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_43
       rect:
@@ -870,6 +1555,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 73ec14636bb72b249977ae08fa60ca95
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_44
       rect:
@@ -884,6 +1576,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fb52a07a7518bc1409439df11e36f3af
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_45
       rect:
@@ -898,6 +1597,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 039f84ffed966604fbf89c2ed434f6fd
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_46
       rect:
@@ -912,6 +1618,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 27b16d51d00e337459fdd6ef99adb718
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_47
       rect:
@@ -926,6 +1639,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 16b8b56216a13224ab8462bf297c7878
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_48
       rect:
@@ -940,6 +1660,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4f64b7b79bdb7854cbabb058efb648d1
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_49
       rect:
@@ -954,6 +1681,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0898cd873f1a3f4db7d7880ac807967
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_50
       rect:
@@ -968,6 +1702,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 304ea40abf8d19f41a06bc6ae568ec35
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_51
       rect:
@@ -982,6 +1723,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d583bde81aed3614cace7f04254014f1
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_52
       rect:
@@ -996,6 +1744,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 40b2f327d5279124f8a6309ecb35228c
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_53
       rect:
@@ -1010,6 +1765,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5b4de05c3ceb7c842b0401bd01ad8948
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_54
       rect:
@@ -1024,6 +1786,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 692fc5cd0221b8e49a0b0cfa3a4970c1
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_55
       rect:
@@ -1038,6 +1807,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ca1047a30079f2d4d8401744ab2853ed
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_56
       rect:
@@ -1052,6 +1828,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fda706e0461c0194caf9c0fe5b4565e9
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_57
       rect:
@@ -1066,6 +1849,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 20a2263e4fd7c2347a855e458e71a435
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_58
       rect:
@@ -1080,6 +1870,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 71d744ef79e5781449751070dabe6dd2
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_59
       rect:
@@ -1094,6 +1891,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 959d6895ddebc8c4b9f2229ace823b0e
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_60
       rect:
@@ -1108,6 +1912,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a4941db19252c3a49b88768750a1b396
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_61
       rect:
@@ -1122,6 +1933,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 898766238e954fb4d9ec40ca002c4d7f
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_62
       rect:
@@ -1136,6 +1954,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e4b801c645bbca4c9a507ea5646b5bf
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_63
       rect:
@@ -1150,6 +1975,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f53260f552b18664bbdee70f7e519789
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_64
       rect:
@@ -1164,6 +1996,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e16d21ee8cd04fd40bb68170b794a327
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_65
       rect:
@@ -1178,6 +2017,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6954e7fb06e1c0849a1c09736d7ee066
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_66
       rect:
@@ -1192,6 +2038,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 91e3a8cb08afbf644bfcf16c84865163
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_67
       rect:
@@ -1206,6 +2059,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9b9b7e4bf11a6cb4ba91976f32b6cbd0
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_68
       rect:
@@ -1220,6 +2080,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c8f9db2ffd32d3d4ca4942fbce7f860e
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_69
       rect:
@@ -1234,6 +2101,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d797f9e1382faac4299e5cde7e2f50cb
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_70
       rect:
@@ -1248,6 +2122,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 30f93b1cd459405408c503f3b5989c50
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_71
       rect:
@@ -1262,6 +2143,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 052b42e37fd3df646ac698f50459d2e4
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_72
       rect:
@@ -1276,6 +2164,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 45e775b68013e27459e83c68f1c3f2dd
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_73
       rect:
@@ -1290,6 +2185,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 077c2981e05df2d4daa80e4d82a8db22
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_74
       rect:
@@ -1304,6 +2206,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d585f39fa0e5b0e4f9e5757ef5d337d3
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_75
       rect:
@@ -1318,6 +2227,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dcaef2bfaf3909241b0bf814757221a0
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_76
       rect:
@@ -1332,6 +2248,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f234b774745d5aa46a935a6363536d51
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_77
       rect:
@@ -1346,6 +2269,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bd4510143c2eb034cacc4a63417da7f6
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_78
       rect:
@@ -1360,6 +2290,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c21b67d1c5997e542a13eb72b770b38b
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_79
       rect:
@@ -1374,6 +2311,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 556982f4d48f88b4397957fe613f02ca
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_80
       rect:
@@ -1388,6 +2332,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1cf11651ee54cdf479f48d147d934389
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_81
       rect:
@@ -1402,6 +2353,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dada4cf8daa499444bd7c88a112d73e9
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_82
       rect:
@@ -1416,6 +2374,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ae90ea35201278c4bb6669b49a8def82
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_83
       rect:
@@ -1430,6 +2395,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ce6b55381cf93164795493fdfd7f1dd5
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_84
       rect:
@@ -1444,6 +2416,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4797506f7dd2d4a40a15d18e33e0330d
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_85
       rect:
@@ -1458,6 +2437,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: feadca0c1f0bb0249b269ea272746966
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_86
       rect:
@@ -1472,6 +2458,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b278ab26011b2ba42b5ba2128e213a90
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_87
       rect:
@@ -1486,6 +2479,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 63e136553b805d54b84ab79b070c5cde
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_88
       rect:
@@ -1500,6 +2500,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 845c2a24d1110b1489199033f54f79ae
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_89
       rect:
@@ -1514,6 +2521,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7d1bf755673b54e489290fa8f73c8d3d
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_90
       rect:
@@ -1528,6 +2542,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ce7d3044727527c4da015fabbb15330c
+      internalID: 21300160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_91
       rect:
@@ -1542,6 +2563,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a5dfabac640091547ae3c3f7fcacefb4
+      internalID: 21300162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_92
       rect:
@@ -1556,6 +2584,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a23df8e4583a8ee419f4e8645de2b282
+      internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_93
       rect:
@@ -1570,6 +2605,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c9f59de053ac59743afbb86b3d0270f5
+      internalID: 21300166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_94
       rect:
@@ -1584,6 +2626,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 11c0b32ccbfdcca4f902b05ffc6830d3
+      internalID: 21300168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_95
       rect:
@@ -1598,6 +2647,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9748974a93b120248ada7917811f6bda
+      internalID: 21300170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_96
       rect:
@@ -1612,6 +2668,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b740e74b975d6bf4d9c702c51b715e74
+      internalID: 21300172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_97
       rect:
@@ -1626,6 +2689,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9af5ca2161847484e8fb302c98c9c57e
+      internalID: 21300174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_98
       rect:
@@ -1640,6 +2710,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: afc9fb051d83dd94a8bac142d12d9aa4
+      internalID: 21300176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_99
       rect:
@@ -1654,6 +2731,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0f58bc22e3d5caf48903c60204c3ca25
+      internalID: 21300178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_100
       rect:
@@ -1668,6 +2752,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2ce560597d0efbc45bced659a7827ad2
+      internalID: 21300180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_101
       rect:
@@ -1682,6 +2773,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 86115596a07892147bcd310186e3ff3a
+      internalID: 21300182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_102
       rect:
@@ -1696,6 +2794,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 354d00f2632f27146a08757b7b77bc00
+      internalID: 21300184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_103
       rect:
@@ -1710,6 +2815,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 049d4eaf79153f94fac1c8f7a0a18448
+      internalID: 21300186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_104
       rect:
@@ -1724,6 +2836,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2c159fea5c469814fa109d16b89ea427
+      internalID: 21300188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_105
       rect:
@@ -1738,6 +2857,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1eb5c4c07ae2b1042b42025fd90add4c
+      internalID: 21300190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_106
       rect:
@@ -1752,6 +2878,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 925dada0e77fc934bb18433da10c05a4
+      internalID: 21300192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_107
       rect:
@@ -1766,6 +2899,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f3f31327129403040887ff57b7f329ca
+      internalID: 21300194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_108
       rect:
@@ -1780,6 +2920,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 804125b1c665df54aab254b0381f3a45
+      internalID: 21300196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_109
       rect:
@@ -1794,6 +2941,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7d586cade645ae749a646b5e9088d9cf
+      internalID: 21300198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_110
       rect:
@@ -1808,6 +2962,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d015cd177abb3b146a113783c2fa9dc7
+      internalID: 21300200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_111
       rect:
@@ -1822,6 +2983,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c3a69e54cfb0efd4f9e3244cdc43a941
+      internalID: 21300202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_112
       rect:
@@ -1836,6 +3004,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 85d3aca65350409418297caec6c9867f
+      internalID: 21300204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_113
       rect:
@@ -1850,6 +3025,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a43fb1ca8251c44a90d859a5e6c4433
+      internalID: 21300206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_114
       rect:
@@ -1864,6 +3046,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78f4385dbc23c3f4c97e6885899a1754
+      internalID: 21300208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_115
       rect:
@@ -1878,6 +3067,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3ce7f4374891c894d964dcd7186313a6
+      internalID: 21300210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_116
       rect:
@@ -1892,6 +3088,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 90c6a64172f2cff47a349da183e4d8d8
+      internalID: 21300212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_117
       rect:
@@ -1906,6 +3109,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d301e010261c3a145b3dc5198b8e8617
+      internalID: 21300214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_118
       rect:
@@ -1920,6 +3130,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1991be65631e1684aba68b59841a3b5e
+      internalID: 21300216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_119
       rect:
@@ -1934,6 +3151,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7b17089b01fa7e34196cad9dc86dfd9e
+      internalID: 21300218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_120
       rect:
@@ -1948,6 +3172,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f0f23ebce2b3c354c9a41bc8b517fe4d
+      internalID: 21300220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_121
       rect:
@@ -1962,6 +3193,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d1757cd76bca3b7469e01a7b817abd81
+      internalID: 21300222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_122
       rect:
@@ -1976,6 +3214,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cd80935e75cc11a4181f3b4808ea75d1
+      internalID: 21300224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_123
       rect:
@@ -1990,6 +3235,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 98eec9beba30b6349bb2e6188dd754f9
+      internalID: 21300226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_124
       rect:
@@ -2004,6 +3256,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 66b4982af8b95e1428ea909bf8891e2c
+      internalID: 21300228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_125
       rect:
@@ -2018,6 +3277,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d875adf5d55ed774884186c9927c3207
+      internalID: 21300230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_126
       rect:
@@ -2032,6 +3298,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c60881dabe57e2c4c9442e89af0cbad3
+      internalID: 21300232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_127
       rect:
@@ -2046,6 +3319,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ebeec00a7bed00b42b6634cfb3fcd00c
+      internalID: 21300234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_128
       rect:
@@ -2060,6 +3340,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09eb6aa84a4863345b091be858c6b5ab
+      internalID: 21300236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_129
       rect:
@@ -2074,6 +3361,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 72830d58b39414c439572dd71c6cb0a0
+      internalID: 21300238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_130
       rect:
@@ -2088,6 +3382,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d7c8623ca9ce68349be58bd14db4c99e
+      internalID: 21300240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_131
       rect:
@@ -2102,6 +3403,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ec2dddd2608d2e94cbdf2d152aa67556
+      internalID: 21300242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_132
       rect:
@@ -2116,6 +3424,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4606d699c49bcea4cb541cffddf28781
+      internalID: 21300244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_133
       rect:
@@ -2130,6 +3445,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1c8ae52f1e71f844c885b59c55e22d23
+      internalID: 21300246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_134
       rect:
@@ -2144,6 +3466,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 73c3efaa2f337aa4ab03502ad1f58983
+      internalID: 21300248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_135
       rect:
@@ -2158,6 +3487,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b28f73aeed6611340887e24ab286d403
+      internalID: 21300250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_136
       rect:
@@ -2172,6 +3508,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9ca7717a6e2d39747bf81ddfb2c720f4
+      internalID: 21300252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_137
       rect:
@@ -2186,6 +3529,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 36e42541165fb5b42adab73fadb7822c
+      internalID: 21300254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_138
       rect:
@@ -2200,6 +3550,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5f3863735e20ba479842bc08de6cf06
+      internalID: 21300256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_139
       rect:
@@ -2214,6 +3571,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3b31a2606d417f349803b06c8b44d49d
+      internalID: 21300258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_140
       rect:
@@ -2228,6 +3592,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 41965ea401463ac4abba6621a95f4758
+      internalID: 21300260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_141
       rect:
@@ -2242,6 +3613,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 360aa2ab3b4461a499f6763041501416
+      internalID: 21300262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_142
       rect:
@@ -2256,6 +3634,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 423e6f78fdae71e438acab6aceab3d12
+      internalID: 21300264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_143
       rect:
@@ -2270,6 +3655,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ab13f74bbce24c34f8f61e7bf7f76bff
+      internalID: 21300266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_144
       rect:
@@ -2284,6 +3676,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6bb957373f28fb24fb8944b4ce9a7253
+      internalID: 21300268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_145
       rect:
@@ -2298,6 +3697,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 26b3cbe650237414abe49453b148a3d6
+      internalID: 21300270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_146
       rect:
@@ -2312,6 +3718,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5b17605e9abe47645b99029ec4bb0954
+      internalID: 21300272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_147
       rect:
@@ -2326,6 +3739,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd3c6d918a9c2a446b4391937ef856fc
+      internalID: 21300274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_148
       rect:
@@ -2340,6 +3760,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bcb85b30b11734740a71674648a93970
+      internalID: 21300276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_149
       rect:
@@ -2354,6 +3781,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba9a2387758a20040bca56c8529b3239
+      internalID: 21300278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_150
       rect:
@@ -2368,6 +3802,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 361a7931fef9cb84cad9077f101b68f3
+      internalID: 21300280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_151
       rect:
@@ -2382,6 +3823,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1dbcf93f858e7794eb5578b5be252af8
+      internalID: 21300282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_152
       rect:
@@ -2396,6 +3844,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c35993528602264592ebb6b950b470b
+      internalID: 21300284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_153
       rect:
@@ -2410,6 +3865,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ca39a5742d8ddbb419532809e18af5b0
+      internalID: 21300286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_154
       rect:
@@ -2424,6 +3886,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a32d648f9b87784aa14f1d27084a536
+      internalID: 21300288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_155
       rect:
@@ -2438,6 +3907,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 108f35e9733a5144caef3a1fe0c289d6
+      internalID: 21300290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_156
       rect:
@@ -2452,6 +3928,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f7a66eb983b7f5a49a88f9dc0222724e
+      internalID: 21300292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_157
       rect:
@@ -2466,6 +3949,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 87e9235b26233d347aa314a6abf2e404
+      internalID: 21300294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_158
       rect:
@@ -2480,6 +3970,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d8e25dac6f1a3754ba26e9802dabfe3e
+      internalID: 21300296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_159
       rect:
@@ -2494,6 +3991,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 01a6ec38477db2042b31580e7a2d9694
+      internalID: 21300298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_160
       rect:
@@ -2508,6 +4012,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 11bedee68e287924a983672d7216ebc8
+      internalID: 21300300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_161
       rect:
@@ -2522,6 +4033,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 223cc51e206642845a66c83a48138441
+      internalID: 21300302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_162
       rect:
@@ -2536,6 +4054,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 427024e07b0d3d64d9777b402ad47796
+      internalID: 21300304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_163
       rect:
@@ -2550,6 +4075,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5d82b2f28c3ca2744b95de6a08091ad8
+      internalID: 21300306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_164
       rect:
@@ -2564,6 +4096,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 450c983a149602e44a88091830912b89
+      internalID: 21300308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_165
       rect:
@@ -2578,6 +4117,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7df2c984fe0aa354e95ac1651c57d9b3
+      internalID: 21300310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_166
       rect:
@@ -2592,6 +4138,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 26fccd98a43bb2442956c2bc8cf6919a
+      internalID: 21300312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_167
       rect:
@@ -2606,6 +4159,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b1112af858b45642a6b369ab50d06d4
+      internalID: 21300314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_168
       rect:
@@ -2620,6 +4180,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff2783693ebccf249b29a5b436f1035c
+      internalID: 21300316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_169
       rect:
@@ -2634,6 +4201,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e5ea6528d64eb3488ce3b5e65807e6e
+      internalID: 21300318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_170
       rect:
@@ -2648,6 +4222,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 669800d24ccb8494bb32d3c70dd7e6be
+      internalID: 21300320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_171
       rect:
@@ -2662,6 +4243,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1f1b0a01aebc31146a8a8757106d5321
+      internalID: 21300322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_172
       rect:
@@ -2676,6 +4264,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bad487a56650ee8489ad9fd548d6a1cd
+      internalID: 21300324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_173
       rect:
@@ -2690,6 +4285,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7bebbf5ddf31f4f4f8e5c1168e1b1aaf
+      internalID: 21300326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_174
       rect:
@@ -2704,6 +4306,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3ae093a4c974f524d8ed37256f2413d6
+      internalID: 21300328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_175
       rect:
@@ -2718,6 +4327,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e3543cd91888c574998181833ae15a36
+      internalID: 21300330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_176
       rect:
@@ -2732,6 +4348,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b5449143fb682ba4daf33d910d931f12
+      internalID: 21300332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_177
       rect:
@@ -2746,6 +4369,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b083d594f51cdce4fa2897676de645e1
+      internalID: 21300334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_178
       rect:
@@ -2760,6 +4390,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b9721116586ef724b8ac026b122baea7
+      internalID: 21300336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_179
       rect:
@@ -2774,6 +4411,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 40cf86d8b1a2e624f8d0958a700efd9b
+      internalID: 21300338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_180
       rect:
@@ -2788,6 +4432,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 020877cadd6493642bc977c8e722dbc8
+      internalID: 21300340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_181
       rect:
@@ -2802,6 +4453,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09075a2ee3feb9740b681b898d6f2973
+      internalID: 21300342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_182
       rect:
@@ -2816,6 +4474,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 321e0753165395c4aae4251056ea7c71
+      internalID: 21300344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_183
       rect:
@@ -2830,6 +4495,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 02ce74f383cd54d4195eb53bec4875e6
+      internalID: 21300346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 549blue_184
       rect:
@@ -2844,9 +4516,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7de10e15ef5906843afd9e7ab671bf3a
+      internalID: 21300348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

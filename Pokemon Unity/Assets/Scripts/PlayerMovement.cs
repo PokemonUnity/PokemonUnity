@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private DialogBoxHandler Dialog;
     private MapNameBoxHandler MapName;
 
+    private PauseMenu pauseMenu;
+    public CanvasUIHandler CanvasUI;
+
     //before a script runs, it'll check if the player is busy with another script's GameObject.
     public GameObject busyWith = null;
 
@@ -103,8 +106,15 @@ public class PlayerMovement : MonoBehaviour
         //set up the reference to this script.
         player = this;
 
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
-        MapName = GameObject.Find("GUI").GetComponent<MapNameBoxHandler>();
+        Dialog = GameObject.Find("CanvasUI").GetComponent<DialogBoxHandler>();
+        MapName = GameObject.Find("MapName").GetComponent<MapNameBoxHandler>();
+        Debug.Log(GameObject.Find("CanvasUI").GetComponent<CanvasUIHandler>());
+        CanvasUI = GameObject.FindGameObjectWithTag("CanvasUI").GetComponent<CanvasUIHandler>();
+        //CanvasUI = GameObject.Find("CanvasUI").GetComponent<CanvasUIHandler>();
+        CanvasUI.setInactive(CanvasUIHandler.UICanvas.PauseMenu);
+
+        /* pauseMenu = GameObject.Find("PauseMenu").GetComponent<PauseMenu>();
+        pauseMenu.setInactive(); */
 
         canInput = true;
         speed = walkSpeed;
@@ -131,6 +141,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+
+        
         if (!surfing)//playerMoveAction != playerMoveMethod.Surfing
         {
             updateMount(false);
@@ -141,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         animPause = true;
 
         reflect(false);
-        followerScript.reflect(false);
+        //followerScript.reflect(false);
 
         updateDirection(direction);
 
@@ -257,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
         }*/
         //
 
-        GlobalVariables.global.resetFollower();
+        //GlobalVariables.global.resetFollower();
     }
 
 
@@ -295,7 +307,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDirectionKeyHeld(int directionCheck)
     {
         bool directionHeld = false;
-        if (directionCheck == 0 && Input.GetAxisRaw("Vertical") > 0)
+        if (directionCheck == 0 && Input.GetAxisRaw("Vertical") < 0)
         {
             directionHeld = true;
         }
@@ -303,7 +315,7 @@ public class PlayerMovement : MonoBehaviour
         {
             directionHeld = true;
         }
-        else if (directionCheck == 2 && Input.GetAxisRaw("Vertical") < 0)
+        else if (directionCheck == 2 && Input.GetAxisRaw("Vertical") > 0)
         {
             directionHeld = true;
         }
@@ -350,7 +362,17 @@ public class PlayerMovement : MonoBehaviour
                     //open Pause Menu
                     if (moving || Input.GetButtonDown("Start"))
                     {
-                        if (setCheckBusyWith(Scene.main.Pause.gameObject))
+                        //pauseMenu.openAnim();
+                        if (setCheckBusyWith(CanvasUI.gameObject)){
+                            animPause =true;
+                            CanvasUI.switchScene(CanvasUIHandler.UICanvas.PauseMenu);
+                            while (CanvasUI.active(CanvasUIHandler.UICanvas.PauseMenu))
+                            {
+                                yield return null;
+                            }
+                            unsetCheckBusyWith(CanvasUI.gameObject);
+                        }
+                        /* if (setCheckBusyWith(Scene.main.Pause.gameObject))
                         {
                             animPause = true;
                             Scene.main.Pause.gameObject.SetActive(true);
@@ -360,7 +382,7 @@ public class PlayerMovement : MonoBehaviour
                                 yield return null;
                             }
                             unsetCheckBusyWith(Scene.main.Pause.gameObject);
-                        }
+                        } */
                     }
                 }
                 else if (Input.GetButtonDown("Select"))
@@ -552,6 +574,7 @@ public class PlayerMovement : MonoBehaviour
             //        Resources.LoadAll<Sprite>("PlayerSprites/" + SaveDataOld.currentSave.getPlayerSpritePrefix() + newAnimationName);
             //    //pawnReflectionSprite.SetTexture("_MainTex", Resources.Load<Texture>("PlayerSprites/"+SaveData.currentSave.getPlayerSpritePrefix()+newAnimationName));
             //}
+            spriteSheet = Resources.LoadAll<Sprite>("Sprites/PlayerSprites/m_hgss_" + newAnimationName);
             framesPerSec = fps;
             secPerFrame = 1f / (float) framesPerSec;
             frames = Mathf.RoundToInt((float) spriteSheet.Length / 4f);
@@ -940,7 +963,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (!lockFollower)
             {
-                StartCoroutine(followerScript.move(startPosition, speed));
+                //StartCoroutine(followerScript.move(startPosition, speed));
             }
             animPause = false;
             while (increment < 1f)

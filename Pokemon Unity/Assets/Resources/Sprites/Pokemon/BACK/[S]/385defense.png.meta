@@ -1,117 +1,387 @@
 fileFormatVersion: 2
 guid: c23e9e75f54108d4fb45d4c61d25d957
-timeCreated: 1527397601
-licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: 385defense_20
-    21300002: 385defense_21
-    21300004: 385defense_22
-    21300006: 385defense_23
-    21300008: 385defense_24
-    21300010: 385defense_25
-    21300012: 385defense_26
-    21300014: 385defense_27
-    21300016: 385defense_28
-    21300018: 385defense_29
-    21300020: 385defense_30
-    21300022: 385defense_31
-    21300024: 385defense_32
-    21300026: 385defense_33
-    21300028: 385defense_34
-    21300030: 385defense_35
-    21300032: 385defense_36
-    21300034: 385defense_37
-    21300036: 385defense_38
-    21300038: 385defense_39
-    21300040: 385defense_40
-    21300042: 385defense_41
-    21300044: 385defense_42
-    21300046: 385defense_43
-    21300048: 385defense_44
-    21300050: 385defense_45
-    21300052: 385defense_46
-    21300054: 385defense_47
-    21300056: 385defense_48
-    21300058: 385defense_49
-    21300060: 385defense_50
-    21300062: 385defense_51
-    21300064: 385defense_52
-    21300066: 385defense_53
-    21300068: 385defense_54
-    21300070: 385defense_55
-    21300072: 385defense_56
-    21300074: 385defense_57
-    21300076: 385defense_58
-    21300078: 385defense_59
-    21300080: 385defense_60
-    21300082: 385defense_61
-    21300084: 385defense_62
-    21300086: 385defense_63
-    21300088: 385defense_64
-    21300090: 385defense_65
-    21300092: 385defense_66
-    21300094: 385defense_67
-    21300096: 385defense_68
-    21300098: 385defense_69
-    21300100: 385defense_70
-    21300102: 385defense_71
-    21300104: 385defense_72
-    21300106: 385defense_73
-    21300108: 385defense_74
-    21300110: 385defense_75
-    21300112: 385defense_76
-    21300114: 385defense_77
-    21300116: 385defense_78
-    21300118: 385defense_79
-    21300120: 385defense_80
-    21300122: 385defense_81
-    21300124: 385defense_82
-    21300126: 385defense_83
-    21300128: 385defense_84
-    21300130: 385defense_85
-    21300132: 385defense_86
-    21300134: 385defense_87
-    21300136: 385defense_88
-    21300138: 385defense_89
-    21300140: 385defense_90
-    21300142: 385defense_91
-    21300144: 385defense_92
-    21300146: 385defense_93
-    21300148: 385defense_94
-    21300150: 385defense_95
-    21300152: 385defense_96
-    21300154: 385defense_97
-    21300156: 385defense_98
-    21300158: 385defense_99
-    21300160: 385defense_100
-    21300162: 385defense_101
-    21300164: 385defense_102
-    21300166: 385defense_103
-    21300168: 385defense_104
-    21300170: 385defense_105
-    21300172: 385defense_106
-    21300174: 385defense_107
-    21300176: 385defense_108
-    21300178: 385defense_109
-    21300180: 385defense_110
-    21300182: 385defense_111
-    21300184: 385defense_112
-    21300186: 385defense_113
-    21300188: 385defense_114
-    21300190: 385defense_115
-    21300192: 385defense_116
-    21300194: 385defense_117
-    21300196: 385defense_118
-    21300198: 385defense_119
-    21300200: 385defense_120
-    21300202: 385defense_121
-    21300204: 385defense_122
-    21300206: 385defense_123
-    21300208: 385defense_124
-    21300210: 385defense_125
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: 385defense_20
+  - first:
+      213: 21300002
+    second: 385defense_21
+  - first:
+      213: 21300004
+    second: 385defense_22
+  - first:
+      213: 21300006
+    second: 385defense_23
+  - first:
+      213: 21300008
+    second: 385defense_24
+  - first:
+      213: 21300010
+    second: 385defense_25
+  - first:
+      213: 21300012
+    second: 385defense_26
+  - first:
+      213: 21300014
+    second: 385defense_27
+  - first:
+      213: 21300016
+    second: 385defense_28
+  - first:
+      213: 21300018
+    second: 385defense_29
+  - first:
+      213: 21300020
+    second: 385defense_30
+  - first:
+      213: 21300022
+    second: 385defense_31
+  - first:
+      213: 21300024
+    second: 385defense_32
+  - first:
+      213: 21300026
+    second: 385defense_33
+  - first:
+      213: 21300028
+    second: 385defense_34
+  - first:
+      213: 21300030
+    second: 385defense_35
+  - first:
+      213: 21300032
+    second: 385defense_36
+  - first:
+      213: 21300034
+    second: 385defense_37
+  - first:
+      213: 21300036
+    second: 385defense_38
+  - first:
+      213: 21300038
+    second: 385defense_39
+  - first:
+      213: 21300040
+    second: 385defense_40
+  - first:
+      213: 21300042
+    second: 385defense_41
+  - first:
+      213: 21300044
+    second: 385defense_42
+  - first:
+      213: 21300046
+    second: 385defense_43
+  - first:
+      213: 21300048
+    second: 385defense_44
+  - first:
+      213: 21300050
+    second: 385defense_45
+  - first:
+      213: 21300052
+    second: 385defense_46
+  - first:
+      213: 21300054
+    second: 385defense_47
+  - first:
+      213: 21300056
+    second: 385defense_48
+  - first:
+      213: 21300058
+    second: 385defense_49
+  - first:
+      213: 21300060
+    second: 385defense_50
+  - first:
+      213: 21300062
+    second: 385defense_51
+  - first:
+      213: 21300064
+    second: 385defense_52
+  - first:
+      213: 21300066
+    second: 385defense_53
+  - first:
+      213: 21300068
+    second: 385defense_54
+  - first:
+      213: 21300070
+    second: 385defense_55
+  - first:
+      213: 21300072
+    second: 385defense_56
+  - first:
+      213: 21300074
+    second: 385defense_57
+  - first:
+      213: 21300076
+    second: 385defense_58
+  - first:
+      213: 21300078
+    second: 385defense_59
+  - first:
+      213: 21300080
+    second: 385defense_60
+  - first:
+      213: 21300082
+    second: 385defense_61
+  - first:
+      213: 21300084
+    second: 385defense_62
+  - first:
+      213: 21300086
+    second: 385defense_63
+  - first:
+      213: 21300088
+    second: 385defense_64
+  - first:
+      213: 21300090
+    second: 385defense_65
+  - first:
+      213: 21300092
+    second: 385defense_66
+  - first:
+      213: 21300094
+    second: 385defense_67
+  - first:
+      213: 21300096
+    second: 385defense_68
+  - first:
+      213: 21300098
+    second: 385defense_69
+  - first:
+      213: 21300100
+    second: 385defense_70
+  - first:
+      213: 21300102
+    second: 385defense_71
+  - first:
+      213: 21300104
+    second: 385defense_72
+  - first:
+      213: 21300106
+    second: 385defense_73
+  - first:
+      213: 21300108
+    second: 385defense_74
+  - first:
+      213: 21300110
+    second: 385defense_75
+  - first:
+      213: 21300112
+    second: 385defense_76
+  - first:
+      213: 21300114
+    second: 385defense_77
+  - first:
+      213: 21300116
+    second: 385defense_78
+  - first:
+      213: 21300118
+    second: 385defense_79
+  - first:
+      213: 21300120
+    second: 385defense_80
+  - first:
+      213: 21300122
+    second: 385defense_81
+  - first:
+      213: 21300124
+    second: 385defense_82
+  - first:
+      213: 21300126
+    second: 385defense_83
+  - first:
+      213: 21300128
+    second: 385defense_84
+  - first:
+      213: 21300130
+    second: 385defense_85
+  - first:
+      213: 21300132
+    second: 385defense_86
+  - first:
+      213: 21300134
+    second: 385defense_87
+  - first:
+      213: 21300136
+    second: 385defense_88
+  - first:
+      213: 21300138
+    second: 385defense_89
+  - first:
+      213: 21300140
+    second: 385defense_90
+  - first:
+      213: 21300142
+    second: 385defense_91
+  - first:
+      213: 21300144
+    second: 385defense_92
+  - first:
+      213: 21300146
+    second: 385defense_93
+  - first:
+      213: 21300148
+    second: 385defense_94
+  - first:
+      213: 21300150
+    second: 385defense_95
+  - first:
+      213: 21300152
+    second: 385defense_96
+  - first:
+      213: 21300154
+    second: 385defense_97
+  - first:
+      213: 21300156
+    second: 385defense_98
+  - first:
+      213: 21300158
+    second: 385defense_99
+  - first:
+      213: 21300160
+    second: 385defense_100
+  - first:
+      213: 21300162
+    second: 385defense_101
+  - first:
+      213: 21300164
+    second: 385defense_102
+  - first:
+      213: 21300166
+    second: 385defense_103
+  - first:
+      213: 21300168
+    second: 385defense_104
+  - first:
+      213: 21300170
+    second: 385defense_105
+  - first:
+      213: 21300172
+    second: 385defense_106
+  - first:
+      213: 21300174
+    second: 385defense_107
+  - first:
+      213: 21300176
+    second: 385defense_108
+  - first:
+      213: 21300178
+    second: 385defense_109
+  - first:
+      213: 21300180
+    second: 385defense_110
+  - first:
+      213: 21300182
+    second: 385defense_111
+  - first:
+      213: 21300184
+    second: 385defense_112
+  - first:
+      213: 21300186
+    second: 385defense_113
+  - first:
+      213: 21300188
+    second: 385defense_114
+  - first:
+      213: 21300190
+    second: 385defense_115
+  - first:
+      213: 21300192
+    second: 385defense_116
+  - first:
+      213: 21300194
+    second: 385defense_117
+  - first:
+      213: 21300196
+    second: 385defense_118
+  - first:
+      213: 21300198
+    second: 385defense_119
+  - first:
+      213: 21300200
+    second: 385defense_120
+  - first:
+      213: 21300202
+    second: 385defense_121
+  - first:
+      213: 21300204
+    second: 385defense_122
+  - first:
+      213: 21300206
+    second: 385defense_123
+  - first:
+      213: 21300208
+    second: 385defense_124
+  - first:
+      213: 21300210
+    second: 385defense_125
+  - first:
+      213: 1574389487982953560
+    second: 385defense_0
+  - first:
+      213: 1464075266735151028
+    second: 385defense_1
+  - first:
+      213: 7623181882119920368
+    second: 385defense_2
+  - first:
+      213: 4702924808448717650
+    second: 385defense_3
+  - first:
+      213: -116833040815959885
+    second: 385defense_4
+  - first:
+      213: -461814225852321376
+    second: 385defense_5
+  - first:
+      213: -4732678133638508287
+    second: 385defense_6
+  - first:
+      213: 1732974704081034063
+    second: 385defense_7
+  - first:
+      213: -5320986299802961243
+    second: 385defense_8
+  - first:
+      213: -2813506248770355614
+    second: 385defense_9
+  - first:
+      213: -1516343018067002337
+    second: 385defense_10
+  - first:
+      213: -2111358691056609167
+    second: 385defense_11
+  - first:
+      213: 6330276275412833890
+    second: 385defense_12
+  - first:
+      213: -4606904851982030709
+    second: 385defense_13
+  - first:
+      213: -411464150032056404
+    second: 385defense_14
+  - first:
+      213: -7366251025954197223
+    second: 385defense_15
+  - first:
+      213: -2654553835258119388
+    second: 385defense_16
+  - first:
+      213: -5087109060135696399
+    second: 385defense_17
+  - first:
+      213: 5654165135491229870
+    second: 385defense_18
+  - first:
+      213: -9131069943169187855
+    second: 385defense_19
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -129,6 +399,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -139,7 +411,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: -1
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -151,18 +423,21 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
     textureFormat: -1
@@ -172,7 +447,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
     textureFormat: -1
@@ -199,6 +475,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a7d457bf848e5b4b89710574c0e8822
+      internalID: 1574389487982953560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_1
       rect:
@@ -213,6 +496,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5a5b7096cbe099d43ae50cc68780bd82
+      internalID: 1464075266735151028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_2
       rect:
@@ -227,6 +517,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b4388dd270533c4d91b0ac57fef617e
+      internalID: 7623181882119920368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_3
       rect:
@@ -241,6 +538,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd7a56bf994123b4b88915247e810a44
+      internalID: 4702924808448717650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_4
       rect:
@@ -255,6 +559,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cc8643de95f33614c9b79b317c485cd4
+      internalID: -116833040815959885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_5
       rect:
@@ -269,6 +580,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fb7398dc2d81eee4fab8e508a41e89ee
+      internalID: -461814225852321376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_6
       rect:
@@ -283,6 +601,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7464a721b97303241b39dbe965031ae9
+      internalID: -4732678133638508287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_7
       rect:
@@ -297,6 +622,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 428a3e19d1a595a4385dd75b0c4a3932
+      internalID: 1732974704081034063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_8
       rect:
@@ -311,6 +643,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 31755ea0927f9ce43b742f3790ab31e5
+      internalID: -5320986299802961243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_9
       rect:
@@ -325,6 +664,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1098032368243f74ca96135285f15075
+      internalID: -2813506248770355614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_10
       rect:
@@ -339,6 +685,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8b1f87a5b178dae4ea0e689e3058cb3d
+      internalID: -1516343018067002337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_11
       rect:
@@ -353,6 +706,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0bf694164c5ca614a82a273d5c2dd67d
+      internalID: -2111358691056609167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_12
       rect:
@@ -367,6 +727,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 420c3f4025745ed4c8ec8d9691d8160d
+      internalID: 6330276275412833890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_13
       rect:
@@ -381,6 +748,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eacb317ca3073214b8207352f2c72137
+      internalID: -4606904851982030709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_14
       rect:
@@ -395,6 +769,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 42b1eac7636a4b1468f133d1b192253f
+      internalID: -411464150032056404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_15
       rect:
@@ -409,6 +790,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5d2b01b0b669684182d7d27c196af58
+      internalID: -7366251025954197223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_16
       rect:
@@ -423,6 +811,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ed67200853f69a843ba6718afaa44a02
+      internalID: -2654553835258119388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_17
       rect:
@@ -437,6 +832,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bafd9fd34505931459ab57044fdf9d4a
+      internalID: -5087109060135696399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_18
       rect:
@@ -451,6 +853,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2bffa073ae81cf7438724b168efc1f19
+      internalID: 5654165135491229870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_19
       rect:
@@ -465,6 +874,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5ca28239a56051e4199acfd5a11d4376
+      internalID: -9131069943169187855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_20
       rect:
@@ -479,6 +895,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7299f609c97297d45bffb1b94025ad6f
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_21
       rect:
@@ -493,6 +916,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a4def6ee2d4493745b61f752c9c36f12
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_22
       rect:
@@ -507,6 +937,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c5fd3b4bd97e7424ca5e5965daf1fab8
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_23
       rect:
@@ -521,6 +958,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7814d6766cd365a4d90241da7316191b
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_24
       rect:
@@ -535,6 +979,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1451ed2aae0f7e24085a3f54ab3bbcd5
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_25
       rect:
@@ -549,6 +1000,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c504e5c22f0205343b605b3810ea1746
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_26
       rect:
@@ -563,6 +1021,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c8b508a3f6072234e9589e0d966c8789
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_27
       rect:
@@ -577,6 +1042,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8470342d8fd59d749ac3420be2327fc7
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_28
       rect:
@@ -591,6 +1063,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 54e4c0b1de8f6194f8e4b3e836cb134b
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_29
       rect:
@@ -605,6 +1084,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b52e5bd9d040ea644a2bd711f52a35ff
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_30
       rect:
@@ -619,6 +1105,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3047408378372dc4789d48df0aee484f
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_31
       rect:
@@ -633,6 +1126,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 046367b43c2bf4c4aa05ccbe6d513308
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_32
       rect:
@@ -647,6 +1147,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b80f66114a6da14ba78731ab245f26b
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_33
       rect:
@@ -661,6 +1168,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d050bd4f285edf346b952776d48d6179
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_34
       rect:
@@ -675,6 +1189,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3e61fbbb7bc9a2342974eb67130457d4
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_35
       rect:
@@ -689,6 +1210,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f4472339c08f4644e8e4971eaeb633c0
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_36
       rect:
@@ -703,6 +1231,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6018a82431f2c604f802e7714999d3c4
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_37
       rect:
@@ -717,6 +1252,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c20548db2c37b774ea7a481e84d1a628
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_38
       rect:
@@ -731,6 +1273,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d67099523e0dffe499fc003f0d9fecd0
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_39
       rect:
@@ -745,6 +1294,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bddeae816f57b47498103939556f4872
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_40
       rect:
@@ -759,6 +1315,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 37df44dce3641dd4ba64b274db1217c1
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_41
       rect:
@@ -773,6 +1336,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 778b02ec38b33354dbe6d61b1b29f34a
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_42
       rect:
@@ -787,6 +1357,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ffe6af0baa0be6247b2fed9761e452b7
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_43
       rect:
@@ -801,6 +1378,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 16a399fa1816b3d4a8905be5cee059e3
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_44
       rect:
@@ -815,6 +1399,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7ffd4cd19f643b04abc9fa82b3b072b8
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_45
       rect:
@@ -829,6 +1420,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a1a569b103ea1bb4384bea5327bd5bca
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_46
       rect:
@@ -843,6 +1441,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b9cf19ffbfae70241a6e15e76473fd75
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_47
       rect:
@@ -857,6 +1462,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b3491f64b0278454a9c30e7e661b9ddc
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_48
       rect:
@@ -871,6 +1483,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2c292f03912badb499643c1c9d3d01ab
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_49
       rect:
@@ -885,6 +1504,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6df90884c18609546b2c5821545df8ae
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_50
       rect:
@@ -899,6 +1525,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4387f1a3ef58a114b984b71324861f74
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_51
       rect:
@@ -913,6 +1546,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b0faa08fa865d3e4392ebe787229a695
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_52
       rect:
@@ -927,6 +1567,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea5cfb66c9b468c409e79a3c416b572c
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_53
       rect:
@@ -941,6 +1588,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 498e517b44850f24d9b418e31328e04c
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_54
       rect:
@@ -955,6 +1609,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c4d6a43f669617f4f80f289d35d10f94
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_55
       rect:
@@ -969,6 +1630,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: db2011452438fd34690cef6c0b75c7d4
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_56
       rect:
@@ -983,6 +1651,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5e4424b61c62c1f49a915834b3e6128a
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_57
       rect:
@@ -997,6 +1672,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 901e0831496c41e408a8760e7b78c80f
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_58
       rect:
@@ -1011,6 +1693,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8b5a32666854f0a4e97d526be5cb76e7
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_59
       rect:
@@ -1025,6 +1714,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cd7de9a2b1bc621419b3887e8329dcad
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_60
       rect:
@@ -1039,6 +1735,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 34c02df00fa822149a6ba36b741f6719
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_61
       rect:
@@ -1053,6 +1756,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ef0a3417743d7ef4eb373c6e01e2c85f
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_62
       rect:
@@ -1067,6 +1777,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d1503eb6505689c4aa51d70aacb00e23
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_63
       rect:
@@ -1081,6 +1798,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ccc1f4bfac0ad0f4292a8b67e2cfb598
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_64
       rect:
@@ -1095,6 +1819,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 960160fb388e4814fbaef7a0b753c647
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_65
       rect:
@@ -1109,6 +1840,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cf0ad942fadd5c3488568d5e63e8035f
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_66
       rect:
@@ -1123,6 +1861,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2bbc332f7e755d343a5613068dfcbead
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_67
       rect:
@@ -1137,6 +1882,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 16e735abca3bfeb4790d575ea0fec5a9
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_68
       rect:
@@ -1151,6 +1903,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d38b28b0a93ec6e45ac84fabcb66121a
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_69
       rect:
@@ -1165,6 +1924,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a20baea6b9c150b42a9acc90ca69df3b
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_70
       rect:
@@ -1179,6 +1945,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7b0fc8de0bd9f3d45a24ebb83cb3f588
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_71
       rect:
@@ -1193,6 +1966,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7229fd6d6c7be9e45b2e343e4f0ed8e6
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_72
       rect:
@@ -1207,6 +1987,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4fc9ec9d0014465468c637f68cc3ec3a
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_73
       rect:
@@ -1221,6 +2008,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ed9bc3480a7d1424ba3ffb98c5458039
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_74
       rect:
@@ -1235,6 +2029,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6ac1555b9c32788499ae5a09e4052922
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_75
       rect:
@@ -1249,6 +2050,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 51f94459129416d44a13cadb0519a7bd
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_76
       rect:
@@ -1263,6 +2071,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6ab7d2a06e8215544a4b48754ac4177d
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_77
       rect:
@@ -1277,6 +2092,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dd24ec5fcdc69bb458d59ffa65401e3a
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_78
       rect:
@@ -1291,6 +2113,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4a5c269699846c6468c696f726a44584
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_79
       rect:
@@ -1305,6 +2134,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e6f1911ef468464469921599afa10f37
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_80
       rect:
@@ -1319,6 +2155,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b56572adc6f86141a4a21cf8a84ba76
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_81
       rect:
@@ -1333,6 +2176,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c9300e54d360aae4d853efe1c448c3f1
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_82
       rect:
@@ -1347,6 +2197,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 634ced1d71bc0a2418fe4a963dbdc0aa
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_83
       rect:
@@ -1361,6 +2218,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 14cb9c1dc4c1f6c4b9a191762fd62627
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_84
       rect:
@@ -1375,6 +2239,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8a95c38814cd95244914ddc5f0ce884b
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_85
       rect:
@@ -1389,6 +2260,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee340f53b8384c6478fbf567262b6ed5
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_86
       rect:
@@ -1403,6 +2281,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c6e3c8540ee14b243a09c83e3c9c15fb
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_87
       rect:
@@ -1417,6 +2302,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8dd2c31462c02a84fb3772509082e899
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_88
       rect:
@@ -1431,6 +2323,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 94d5befcddfe66147a376cff0ee09f4a
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_89
       rect:
@@ -1445,6 +2344,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fdf68b0a760f1ac4999af5852473208d
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_90
       rect:
@@ -1459,6 +2365,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3c67feb3cec0ce440b5d8844e161a13b
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_91
       rect:
@@ -1473,6 +2386,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 31ecc4aca1d491140af67e446e126a9d
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_92
       rect:
@@ -1487,6 +2407,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 55d3d35768a555246abb2d466ffcd8bc
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_93
       rect:
@@ -1501,6 +2428,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d4c5b706df63369418e17aa50aa64d66
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_94
       rect:
@@ -1515,6 +2449,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d43533da1a978f647b1b382580084667
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_95
       rect:
@@ -1529,6 +2470,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 560ac4d8b2801b240b885df675975f41
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_96
       rect:
@@ -1543,6 +2491,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b0299879816f3ad44b4ad58195887c45
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_97
       rect:
@@ -1557,6 +2512,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 84266f1992f20a14cbf2968c55b3efdc
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_98
       rect:
@@ -1571,6 +2533,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 891b568f56f1f4843b097c2d03254b93
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_99
       rect:
@@ -1585,6 +2554,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 67b9dfb5a097cff4cba050905ef51c6b
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_100
       rect:
@@ -1599,6 +2575,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d2bf090ade38be44ca6a4737a152d5e5
+      internalID: 21300160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_101
       rect:
@@ -1613,6 +2596,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1856e40f805889f4c876e22bbac81942
+      internalID: 21300162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_102
       rect:
@@ -1627,6 +2617,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 44f6223a3b5162c43b43b390851b20fb
+      internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_103
       rect:
@@ -1641,6 +2638,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a9666de4c8f264d4fa0aacaac27b9e55
+      internalID: 21300166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_104
       rect:
@@ -1655,6 +2659,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c10085bc2ba7d294897519a665646ca1
+      internalID: 21300168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_105
       rect:
@@ -1669,6 +2680,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e511980939d27a749ba4e8970eb4396b
+      internalID: 21300170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_106
       rect:
@@ -1683,6 +2701,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4fad3840ea5802a4b9a07c58943dd89e
+      internalID: 21300172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_107
       rect:
@@ -1697,6 +2722,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3b7216000164b0f4ab468ec49d4139a1
+      internalID: 21300174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_108
       rect:
@@ -1711,6 +2743,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7ae4fb14ac3b3514b9f0eecdbadf1110
+      internalID: 21300176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_109
       rect:
@@ -1725,6 +2764,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5c45c02d0ea98164d89277529041bfe2
+      internalID: 21300178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_110
       rect:
@@ -1739,6 +2785,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7899b2c83c396d541bee91bf88411ce5
+      internalID: 21300180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_111
       rect:
@@ -1753,6 +2806,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f9670c5e2ab36c343a5074a84048a4a9
+      internalID: 21300182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_112
       rect:
@@ -1767,6 +2827,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2e7aecceead6a7f438e8b80b20d4c761
+      internalID: 21300184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_113
       rect:
@@ -1781,6 +2848,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5a83499888dc74f4d911f4b3b22519de
+      internalID: 21300186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_114
       rect:
@@ -1795,6 +2869,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9edc1e877f90ff94d97e140fd0d2e76c
+      internalID: 21300188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_115
       rect:
@@ -1809,6 +2890,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2416fe727275ce24aac1128e56e4d0d8
+      internalID: 21300190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_116
       rect:
@@ -1823,6 +2911,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09dc3a55945d4534282d1c5d281f7cf0
+      internalID: 21300192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_117
       rect:
@@ -1837,6 +2932,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c75e96066b1c9d4ab97b4c15e817d99
+      internalID: 21300194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_118
       rect:
@@ -1851,6 +2953,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e0c84399db6c7941ad5e80948e6ac34
+      internalID: 21300196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_119
       rect:
@@ -1865,6 +2974,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aa7ef64e0f7b457449881aad5f726a70
+      internalID: 21300198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_120
       rect:
@@ -1879,6 +2995,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8cde2fab965f8404e959d9cbba7a3251
+      internalID: 21300200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_121
       rect:
@@ -1893,6 +3016,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dafeaed9d6ad767478a7c03235e261a2
+      internalID: 21300202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_122
       rect:
@@ -1907,6 +3037,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 93f8fc9863692f844b5d63c33f0e658d
+      internalID: 21300204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_123
       rect:
@@ -1921,6 +3058,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9b08bb2b203d60747b860dd5e78721a8
+      internalID: 21300206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_124
       rect:
@@ -1935,6 +3079,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b46d7ceedc84e8b4ab27f4549032cb50
+      internalID: 21300208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 385defense_125
       rect:
@@ -1949,9 +3100,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 32bbf4887e99da34d9165213546e623f
+      internalID: 21300210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

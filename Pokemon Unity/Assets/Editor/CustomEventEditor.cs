@@ -1,4 +1,4 @@
-﻿/*using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -385,9 +385,10 @@ public class CustomEventEditor : Editor
                 break;
 
             case CustomEventDetails.CustomEventType.ReceivePokemon:
-                eventDescription = "Receive a Lv. " + ints_Prop.GetArrayElementAtIndex(1).intValue + " \"";
-                PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
-                eventDescription += (pkd != null) ? pkd.getName() : "null";
+                eventDescription = "NOT CURRENTLY FUNCTIONAL AWAITING FIX";
+                //eventDescription = "Receive a Lv. " + ints_Prop.GetArrayElementAtIndex(1).intValue + " \"";
+                //PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
+                //eventDescription += (pkd != null) ? pkd.getName() : "null";
                 eventDescription += "\" or Jump to " + int0_Prop.intValue + ".";
                 break;
 
@@ -457,8 +458,11 @@ public class CustomEventEditor : Editor
                     eventDescription += ", Jump To " + int0_Prop.intValue + " on Loss";
                 }
                 break;
+            case CustomEventDetails.CustomEventType.Teleport:
+                eventDescription = "Teleport Player to ";
+                break;
 
-            case CustomEventDetails.CustomEventType.ReturnToTitle:
+            /*case CustomEventDetails.CustomEventType.ReturnToTitle:
 			    eventDescription = "Return to Title Screen";
 			    break;
 
@@ -468,7 +472,7 @@ public class CustomEventEditor : Editor
 
 		    case CustomEventDetails.CustomEventType.MoveCamera:
 			    eventDescription = "Move camera to "+ints_Prop.GetArrayElementAtIndex(0).intValue+", "+ints_Prop.GetArrayElementAtIndex(1).intValue+", "+ints_Prop.GetArrayElementAtIndex(2).intValue+"";;
-			    break;
+			    break;*/
         }
 
 
@@ -597,7 +601,7 @@ public class CustomEventEditor : Editor
 
                 ints_Prop.GetArrayElementAtIndex(0).intValue = EditorGUILayout.IntField(new GUIContent("Pokemon ID"),
                     ints_Prop.GetArrayElementAtIndex(0).intValue);
-                PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
+                /*PokemonDataOld pkd = PokemonDatabaseOld.getPokemon(ints_Prop.GetArrayElementAtIndex(0).intValue);
                 string pokemonName = (pkd != null) ? pkd.getName() : "null";
                 EditorGUILayout.LabelField(new GUIContent(" "), new GUIContent(pokemonName));
                 EditorGUILayout.Space();
@@ -634,7 +638,7 @@ public class CustomEventEditor : Editor
                 else
                 {
                     EditorGUILayout.LabelField(new GUIContent("Gender"));
-                }
+                }*/
                 EditorGUILayout.PropertyField(bool0_Prop, new GUIContent("Is Shiny"));
                 strings_Prop.GetArrayElementAtIndex(1).stringValue =
                     EditorGUILayout.TextField(new GUIContent("Original Trainer"),
@@ -646,7 +650,7 @@ public class CustomEventEditor : Editor
                     EditorGUILayout.TextField(new GUIContent("Held Item"),
                         strings_Prop.GetArrayElementAtIndex(3).stringValue);
                 //Nature
-                string[] natureNames = NatureDatabase.getNatureNames();
+                /* string[] natureNames = NatureDatabase.getNatureNames();
                 GUIContent[] natures = new GUIContent[natureNames.Length + 1];
                 natures[0] = new GUIContent("Random");
                 for (int i = 1; i < natures.Length; i++)
@@ -658,9 +662,9 @@ public class CustomEventEditor : Editor
                                        NatureDatabase.getNature(i - 1).getDownStat() + "-");
                 }
                 ints_Prop.GetArrayElementAtIndex(3).intValue = EditorGUILayout.Popup(new GUIContent("Nature"),
-                    ints_Prop.GetArrayElementAtIndex(3).intValue, natures);
+                    ints_Prop.GetArrayElementAtIndex(3).intValue, natures); */
                 //Ability
-                if (pkd != null)
+                /*if (pkd != null)
                 {
                     ints_Prop.GetArrayElementAtIndex(4).intValue = EditorGUILayout.Popup(new GUIContent("Ability"),
                         ints_Prop.GetArrayElementAtIndex(4).intValue, new GUIContent[]
@@ -670,9 +674,9 @@ public class CustomEventEditor : Editor
                         });
                 }
                 else
-                {
+                {/* */
                     EditorGUILayout.LabelField(new GUIContent("Ability"));
-                }
+                //}
 
                 EditorGUILayout.Space();
 
@@ -720,7 +724,7 @@ public class CustomEventEditor : Editor
                 }
                 break;
 
-            case CustomEventDetails.CustomEventType.JumpTo:
+            /*case CustomEventDetails.CustomEventType.JumpTo:
 			    EditorGUILayout.PropertyField( int0_Prop, new GUIContent("Jump to Tree:") );
 			    break;
 
@@ -731,7 +735,7 @@ public class CustomEventEditor : Editor
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(1), new GUIContent("Y"));
                 EditorGUILayout.PropertyField(ints_Prop.GetArrayElementAtIndex(2), new GUIContent("Z"));
                 EditorGUILayout.PropertyField(float0_Prop, new GUIContent("Speed"));
-			    break;
+			    break;*/
         }
 
         // Draw a line 
@@ -770,4 +774,4 @@ public class CustomEventEditor : Editor
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space();
     }
-}*/
+}

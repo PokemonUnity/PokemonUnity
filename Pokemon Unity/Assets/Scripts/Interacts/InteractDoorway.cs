@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class InteractDoorway : MonoBehaviour
 {
     //private GameObject Player;
-    private DialogBoxHandler Dialog;
+    private DialogBoxManager Dialog;
 
     private Animator myAnimator;
     private SpriteRenderer objectSprite;
@@ -52,7 +52,7 @@ public class InteractDoorway : MonoBehaviour
     void Start()
     {
         //Player = PlayerMovement.player.gameObject;
-        Dialog = GameObject.Find("GUI").GetComponent<DialogBoxHandler>();
+        Dialog = GameObject.Find("CanvasUI").GetComponent<DialogBoxManager>();
 
         objectLight = this.GetComponentInChildren<Light>();
         if (objectLight != null)

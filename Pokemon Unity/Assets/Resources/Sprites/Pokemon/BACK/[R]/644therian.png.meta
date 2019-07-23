@@ -1,318 +1,960 @@
 fileFormatVersion: 2
 guid: 936bb922a26592f4eb42b2356fc920e2
-timeCreated: 1527401836
-licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: 644therian_10
-    21300002: 644therian_11
-    21300004: 644therian_12
-    21300006: 644therian_13
-    21300008: 644therian_14
-    21300010: 644therian_15
-    21300012: 644therian_16
-    21300014: 644therian_17
-    21300016: 644therian_18
-    21300018: 644therian_19
-    21300020: 644therian_20
-    21300022: 644therian_21
-    21300024: 644therian_22
-    21300026: 644therian_23
-    21300028: 644therian_24
-    21300030: 644therian_25
-    21300032: 644therian_26
-    21300034: 644therian_27
-    21300036: 644therian_28
-    21300038: 644therian_29
-    21300040: 644therian_30
-    21300042: 644therian_31
-    21300044: 644therian_32
-    21300046: 644therian_33
-    21300048: 644therian_34
-    21300050: 644therian_35
-    21300052: 644therian_36
-    21300054: 644therian_37
-    21300056: 644therian_38
-    21300058: 644therian_39
-    21300060: 644therian_40
-    21300062: 644therian_41
-    21300064: 644therian_42
-    21300066: 644therian_43
-    21300068: 644therian_44
-    21300070: 644therian_45
-    21300072: 644therian_46
-    21300074: 644therian_47
-    21300076: 644therian_48
-    21300078: 644therian_49
-    21300080: 644therian_50
-    21300082: 644therian_51
-    21300084: 644therian_52
-    21300086: 644therian_53
-    21300088: 644therian_54
-    21300090: 644therian_55
-    21300092: 644therian_56
-    21300094: 644therian_57
-    21300096: 644therian_58
-    21300098: 644therian_59
-    21300100: 644therian_60
-    21300102: 644therian_61
-    21300104: 644therian_62
-    21300106: 644therian_63
-    21300108: 644therian_64
-    21300110: 644therian_65
-    21300112: 644therian_66
-    21300114: 644therian_67
-    21300116: 644therian_68
-    21300118: 644therian_69
-    21300120: 644therian_70
-    21300122: 644therian_71
-    21300124: 644therian_72
-    21300126: 644therian_73
-    21300128: 644therian_74
-    21300130: 644therian_75
-    21300132: 644therian_76
-    21300134: 644therian_77
-    21300136: 644therian_78
-    21300138: 644therian_79
-    21300140: 644therian_80
-    21300142: 644therian_81
-    21300144: 644therian_82
-    21300146: 644therian_83
-    21300148: 644therian_84
-    21300150: 644therian_85
-    21300152: 644therian_86
-    21300154: 644therian_87
-    21300156: 644therian_88
-    21300158: 644therian_89
-    21300160: 644therian_90
-    21300162: 644therian_91
-    21300164: 644therian_92
-    21300166: 644therian_93
-    21300168: 644therian_94
-    21300170: 644therian_95
-    21300172: 644therian_96
-    21300174: 644therian_97
-    21300176: 644therian_98
-    21300178: 644therian_99
-    21300180: 644therian_100
-    21300182: 644therian_101
-    21300184: 644therian_102
-    21300186: 644therian_103
-    21300188: 644therian_104
-    21300190: 644therian_105
-    21300192: 644therian_106
-    21300194: 644therian_107
-    21300196: 644therian_108
-    21300198: 644therian_109
-    21300200: 644therian_110
-    21300202: 644therian_111
-    21300204: 644therian_112
-    21300206: 644therian_113
-    21300208: 644therian_114
-    21300210: 644therian_115
-    21300212: 644therian_116
-    21300214: 644therian_117
-    21300216: 644therian_118
-    21300218: 644therian_119
-    21300220: 644therian_120
-    21300222: 644therian_121
-    21300224: 644therian_122
-    21300226: 644therian_123
-    21300228: 644therian_124
-    21300230: 644therian_125
-    21300232: 644therian_126
-    21300234: 644therian_127
-    21300236: 644therian_128
-    21300238: 644therian_129
-    21300240: 644therian_130
-    21300242: 644therian_131
-    21300244: 644therian_132
-    21300246: 644therian_133
-    21300248: 644therian_134
-    21300250: 644therian_135
-    21300252: 644therian_136
-    21300254: 644therian_137
-    21300256: 644therian_138
-    21300258: 644therian_139
-    21300260: 644therian_140
-    21300262: 644therian_141
-    21300264: 644therian_142
-    21300266: 644therian_143
-    21300268: 644therian_144
-    21300270: 644therian_145
-    21300272: 644therian_146
-    21300274: 644therian_147
-    21300276: 644therian_148
-    21300278: 644therian_149
-    21300280: 644therian_150
-    21300282: 644therian_151
-    21300284: 644therian_152
-    21300286: 644therian_153
-    21300288: 644therian_154
-    21300290: 644therian_155
-    21300292: 644therian_156
-    21300294: 644therian_157
-    21300296: 644therian_158
-    21300298: 644therian_159
-    21300300: 644therian_160
-    21300302: 644therian_161
-    21300304: 644therian_162
-    21300306: 644therian_163
-    21300308: 644therian_164
-    21300310: 644therian_165
-    21300312: 644therian_166
-    21300314: 644therian_167
-    21300316: 644therian_168
-    21300318: 644therian_169
-    21300320: 644therian_170
-    21300322: 644therian_171
-    21300324: 644therian_172
-    21300326: 644therian_173
-    21300328: 644therian_174
-    21300330: 644therian_175
-    21300332: 644therian_176
-    21300334: 644therian_177
-    21300336: 644therian_178
-    21300338: 644therian_179
-    21300340: 644therian_180
-    21300342: 644therian_181
-    21300344: 644therian_182
-    21300346: 644therian_183
-    21300348: 644therian_184
-    21300350: 644therian_185
-    21300352: 644therian_186
-    21300354: 644therian_187
-    21300356: 644therian_188
-    21300358: 644therian_189
-    21300360: 644therian_190
-    21300362: 644therian_191
-    21300364: 644therian_192
-    21300366: 644therian_193
-    21300368: 644therian_194
-    21300370: 644therian_195
-    21300372: 644therian_196
-    21300374: 644therian_197
-    21300376: 644therian_198
-    21300378: 644therian_199
-    21300380: 644therian_200
-    21300382: 644therian_201
-    21300384: 644therian_202
-    21300386: 644therian_203
-    21300388: 644therian_204
-    21300390: 644therian_205
-    21300392: 644therian_206
-    21300394: 644therian_207
-    21300396: 644therian_208
-    21300398: 644therian_209
-    21300400: 644therian_210
-    21300402: 644therian_211
-    21300404: 644therian_212
-    21300406: 644therian_213
-    21300408: 644therian_214
-    21300410: 644therian_215
-    21300412: 644therian_216
-    21300414: 644therian_217
-    21300416: 644therian_218
-    21300418: 644therian_219
-    21300420: 644therian_220
-    21300422: 644therian_221
-    21300424: 644therian_222
-    21300426: 644therian_223
-    21300428: 644therian_224
-    21300430: 644therian_225
-    21300432: 644therian_226
-    21300434: 644therian_227
-    21300436: 644therian_228
-    21300438: 644therian_229
-    21300440: 644therian_230
-    21300442: 644therian_231
-    21300444: 644therian_232
-    21300446: 644therian_233
-    21300448: 644therian_234
-    21300450: 644therian_235
-    21300452: 644therian_236
-    21300454: 644therian_237
-    21300456: 644therian_238
-    21300458: 644therian_239
-    21300460: 644therian_240
-    21300462: 644therian_241
-    21300464: 644therian_242
-    21300466: 644therian_243
-    21300468: 644therian_244
-    21300470: 644therian_245
-    21300472: 644therian_246
-    21300474: 644therian_247
-    21300476: 644therian_248
-    21300478: 644therian_249
-    21300480: 644therian_250
-    21300482: 644therian_251
-    21300484: 644therian_252
-    21300486: 644therian_253
-    21300488: 644therian_254
-    21300490: 644therian_255
-    21300492: 644therian_256
-    21300494: 644therian_257
-    21300496: 644therian_258
-    21300498: 644therian_259
-    21300500: 644therian_260
-    21300502: 644therian_261
-    21300504: 644therian_262
-    21300506: 644therian_263
-    21300508: 644therian_264
-    21300510: 644therian_265
-    21300512: 644therian_266
-    21300514: 644therian_267
-    21300516: 644therian_268
-    21300518: 644therian_269
-    21300520: 644therian_270
-    21300522: 644therian_271
-    21300524: 644therian_272
-    21300526: 644therian_273
-    21300528: 644therian_274
-    21300530: 644therian_275
-    21300532: 644therian_276
-    21300534: 644therian_277
-    21300536: 644therian_278
-    21300538: 644therian_279
-    21300540: 644therian_280
-    21300542: 644therian_281
-    21300544: 644therian_282
-    21300546: 644therian_283
-    21300548: 644therian_284
-    21300550: 644therian_285
-    21300552: 644therian_286
-    21300554: 644therian_287
-    21300556: 644therian_288
-    21300558: 644therian_289
-    21300560: 644therian_290
-    21300562: 644therian_291
-    21300564: 644therian_292
-    21300566: 644therian_293
-    21300568: 644therian_294
-    21300570: 644therian_295
-    21300572: 644therian_296
-    21300574: 644therian_297
-    21300576: 644therian_298
-    21300578: 644therian_299
-    21300580: 644therian_300
-    21300582: 644therian_301
-    21300584: 644therian_302
-    21300586: 644therian_303
-    21300588: 644therian_304
-    21300590: 644therian_305
-    21300592: 644therian_306
-    21300594: 644therian_307
-    21300596: 644therian_308
-    21300598: 644therian_309
-    21300600: 644therian_310
-    21300602: 644therian_311
-    21300604: 644therian_312
-    21300606: 644therian_313
-    21300608: 644therian_314
-    21300610: 644therian_315
-    21300612: 644therian_316
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: 644therian_10
+  - first:
+      213: 21300002
+    second: 644therian_11
+  - first:
+      213: 21300004
+    second: 644therian_12
+  - first:
+      213: 21300006
+    second: 644therian_13
+  - first:
+      213: 21300008
+    second: 644therian_14
+  - first:
+      213: 21300010
+    second: 644therian_15
+  - first:
+      213: 21300012
+    second: 644therian_16
+  - first:
+      213: 21300014
+    second: 644therian_17
+  - first:
+      213: 21300016
+    second: 644therian_18
+  - first:
+      213: 21300018
+    second: 644therian_19
+  - first:
+      213: 21300020
+    second: 644therian_20
+  - first:
+      213: 21300022
+    second: 644therian_21
+  - first:
+      213: 21300024
+    second: 644therian_22
+  - first:
+      213: 21300026
+    second: 644therian_23
+  - first:
+      213: 21300028
+    second: 644therian_24
+  - first:
+      213: 21300030
+    second: 644therian_25
+  - first:
+      213: 21300032
+    second: 644therian_26
+  - first:
+      213: 21300034
+    second: 644therian_27
+  - first:
+      213: 21300036
+    second: 644therian_28
+  - first:
+      213: 21300038
+    second: 644therian_29
+  - first:
+      213: 21300040
+    second: 644therian_30
+  - first:
+      213: 21300042
+    second: 644therian_31
+  - first:
+      213: 21300044
+    second: 644therian_32
+  - first:
+      213: 21300046
+    second: 644therian_33
+  - first:
+      213: 21300048
+    second: 644therian_34
+  - first:
+      213: 21300050
+    second: 644therian_35
+  - first:
+      213: 21300052
+    second: 644therian_36
+  - first:
+      213: 21300054
+    second: 644therian_37
+  - first:
+      213: 21300056
+    second: 644therian_38
+  - first:
+      213: 21300058
+    second: 644therian_39
+  - first:
+      213: 21300060
+    second: 644therian_40
+  - first:
+      213: 21300062
+    second: 644therian_41
+  - first:
+      213: 21300064
+    second: 644therian_42
+  - first:
+      213: 21300066
+    second: 644therian_43
+  - first:
+      213: 21300068
+    second: 644therian_44
+  - first:
+      213: 21300070
+    second: 644therian_45
+  - first:
+      213: 21300072
+    second: 644therian_46
+  - first:
+      213: 21300074
+    second: 644therian_47
+  - first:
+      213: 21300076
+    second: 644therian_48
+  - first:
+      213: 21300078
+    second: 644therian_49
+  - first:
+      213: 21300080
+    second: 644therian_50
+  - first:
+      213: 21300082
+    second: 644therian_51
+  - first:
+      213: 21300084
+    second: 644therian_52
+  - first:
+      213: 21300086
+    second: 644therian_53
+  - first:
+      213: 21300088
+    second: 644therian_54
+  - first:
+      213: 21300090
+    second: 644therian_55
+  - first:
+      213: 21300092
+    second: 644therian_56
+  - first:
+      213: 21300094
+    second: 644therian_57
+  - first:
+      213: 21300096
+    second: 644therian_58
+  - first:
+      213: 21300098
+    second: 644therian_59
+  - first:
+      213: 21300100
+    second: 644therian_60
+  - first:
+      213: 21300102
+    second: 644therian_61
+  - first:
+      213: 21300104
+    second: 644therian_62
+  - first:
+      213: 21300106
+    second: 644therian_63
+  - first:
+      213: 21300108
+    second: 644therian_64
+  - first:
+      213: 21300110
+    second: 644therian_65
+  - first:
+      213: 21300112
+    second: 644therian_66
+  - first:
+      213: 21300114
+    second: 644therian_67
+  - first:
+      213: 21300116
+    second: 644therian_68
+  - first:
+      213: 21300118
+    second: 644therian_69
+  - first:
+      213: 21300120
+    second: 644therian_70
+  - first:
+      213: 21300122
+    second: 644therian_71
+  - first:
+      213: 21300124
+    second: 644therian_72
+  - first:
+      213: 21300126
+    second: 644therian_73
+  - first:
+      213: 21300128
+    second: 644therian_74
+  - first:
+      213: 21300130
+    second: 644therian_75
+  - first:
+      213: 21300132
+    second: 644therian_76
+  - first:
+      213: 21300134
+    second: 644therian_77
+  - first:
+      213: 21300136
+    second: 644therian_78
+  - first:
+      213: 21300138
+    second: 644therian_79
+  - first:
+      213: 21300140
+    second: 644therian_80
+  - first:
+      213: 21300142
+    second: 644therian_81
+  - first:
+      213: 21300144
+    second: 644therian_82
+  - first:
+      213: 21300146
+    second: 644therian_83
+  - first:
+      213: 21300148
+    second: 644therian_84
+  - first:
+      213: 21300150
+    second: 644therian_85
+  - first:
+      213: 21300152
+    second: 644therian_86
+  - first:
+      213: 21300154
+    second: 644therian_87
+  - first:
+      213: 21300156
+    second: 644therian_88
+  - first:
+      213: 21300158
+    second: 644therian_89
+  - first:
+      213: 21300160
+    second: 644therian_90
+  - first:
+      213: 21300162
+    second: 644therian_91
+  - first:
+      213: 21300164
+    second: 644therian_92
+  - first:
+      213: 21300166
+    second: 644therian_93
+  - first:
+      213: 21300168
+    second: 644therian_94
+  - first:
+      213: 21300170
+    second: 644therian_95
+  - first:
+      213: 21300172
+    second: 644therian_96
+  - first:
+      213: 21300174
+    second: 644therian_97
+  - first:
+      213: 21300176
+    second: 644therian_98
+  - first:
+      213: 21300178
+    second: 644therian_99
+  - first:
+      213: 21300180
+    second: 644therian_100
+  - first:
+      213: 21300182
+    second: 644therian_101
+  - first:
+      213: 21300184
+    second: 644therian_102
+  - first:
+      213: 21300186
+    second: 644therian_103
+  - first:
+      213: 21300188
+    second: 644therian_104
+  - first:
+      213: 21300190
+    second: 644therian_105
+  - first:
+      213: 21300192
+    second: 644therian_106
+  - first:
+      213: 21300194
+    second: 644therian_107
+  - first:
+      213: 21300196
+    second: 644therian_108
+  - first:
+      213: 21300198
+    second: 644therian_109
+  - first:
+      213: 21300200
+    second: 644therian_110
+  - first:
+      213: 21300202
+    second: 644therian_111
+  - first:
+      213: 21300204
+    second: 644therian_112
+  - first:
+      213: 21300206
+    second: 644therian_113
+  - first:
+      213: 21300208
+    second: 644therian_114
+  - first:
+      213: 21300210
+    second: 644therian_115
+  - first:
+      213: 21300212
+    second: 644therian_116
+  - first:
+      213: 21300214
+    second: 644therian_117
+  - first:
+      213: 21300216
+    second: 644therian_118
+  - first:
+      213: 21300218
+    second: 644therian_119
+  - first:
+      213: 21300220
+    second: 644therian_120
+  - first:
+      213: 21300222
+    second: 644therian_121
+  - first:
+      213: 21300224
+    second: 644therian_122
+  - first:
+      213: 21300226
+    second: 644therian_123
+  - first:
+      213: 21300228
+    second: 644therian_124
+  - first:
+      213: 21300230
+    second: 644therian_125
+  - first:
+      213: 21300232
+    second: 644therian_126
+  - first:
+      213: 21300234
+    second: 644therian_127
+  - first:
+      213: 21300236
+    second: 644therian_128
+  - first:
+      213: 21300238
+    second: 644therian_129
+  - first:
+      213: 21300240
+    second: 644therian_130
+  - first:
+      213: 21300242
+    second: 644therian_131
+  - first:
+      213: 21300244
+    second: 644therian_132
+  - first:
+      213: 21300246
+    second: 644therian_133
+  - first:
+      213: 21300248
+    second: 644therian_134
+  - first:
+      213: 21300250
+    second: 644therian_135
+  - first:
+      213: 21300252
+    second: 644therian_136
+  - first:
+      213: 21300254
+    second: 644therian_137
+  - first:
+      213: 21300256
+    second: 644therian_138
+  - first:
+      213: 21300258
+    second: 644therian_139
+  - first:
+      213: 21300260
+    second: 644therian_140
+  - first:
+      213: 21300262
+    second: 644therian_141
+  - first:
+      213: 21300264
+    second: 644therian_142
+  - first:
+      213: 21300266
+    second: 644therian_143
+  - first:
+      213: 21300268
+    second: 644therian_144
+  - first:
+      213: 21300270
+    second: 644therian_145
+  - first:
+      213: 21300272
+    second: 644therian_146
+  - first:
+      213: 21300274
+    second: 644therian_147
+  - first:
+      213: 21300276
+    second: 644therian_148
+  - first:
+      213: 21300278
+    second: 644therian_149
+  - first:
+      213: 21300280
+    second: 644therian_150
+  - first:
+      213: 21300282
+    second: 644therian_151
+  - first:
+      213: 21300284
+    second: 644therian_152
+  - first:
+      213: 21300286
+    second: 644therian_153
+  - first:
+      213: 21300288
+    second: 644therian_154
+  - first:
+      213: 21300290
+    second: 644therian_155
+  - first:
+      213: 21300292
+    second: 644therian_156
+  - first:
+      213: 21300294
+    second: 644therian_157
+  - first:
+      213: 21300296
+    second: 644therian_158
+  - first:
+      213: 21300298
+    second: 644therian_159
+  - first:
+      213: 21300300
+    second: 644therian_160
+  - first:
+      213: 21300302
+    second: 644therian_161
+  - first:
+      213: 21300304
+    second: 644therian_162
+  - first:
+      213: 21300306
+    second: 644therian_163
+  - first:
+      213: 21300308
+    second: 644therian_164
+  - first:
+      213: 21300310
+    second: 644therian_165
+  - first:
+      213: 21300312
+    second: 644therian_166
+  - first:
+      213: 21300314
+    second: 644therian_167
+  - first:
+      213: 21300316
+    second: 644therian_168
+  - first:
+      213: 21300318
+    second: 644therian_169
+  - first:
+      213: 21300320
+    second: 644therian_170
+  - first:
+      213: 21300322
+    second: 644therian_171
+  - first:
+      213: 21300324
+    second: 644therian_172
+  - first:
+      213: 21300326
+    second: 644therian_173
+  - first:
+      213: 21300328
+    second: 644therian_174
+  - first:
+      213: 21300330
+    second: 644therian_175
+  - first:
+      213: 21300332
+    second: 644therian_176
+  - first:
+      213: 21300334
+    second: 644therian_177
+  - first:
+      213: 21300336
+    second: 644therian_178
+  - first:
+      213: 21300338
+    second: 644therian_179
+  - first:
+      213: 21300340
+    second: 644therian_180
+  - first:
+      213: 21300342
+    second: 644therian_181
+  - first:
+      213: 21300344
+    second: 644therian_182
+  - first:
+      213: 21300346
+    second: 644therian_183
+  - first:
+      213: 21300348
+    second: 644therian_184
+  - first:
+      213: 21300350
+    second: 644therian_185
+  - first:
+      213: 21300352
+    second: 644therian_186
+  - first:
+      213: 21300354
+    second: 644therian_187
+  - first:
+      213: 21300356
+    second: 644therian_188
+  - first:
+      213: 21300358
+    second: 644therian_189
+  - first:
+      213: 21300360
+    second: 644therian_190
+  - first:
+      213: 21300362
+    second: 644therian_191
+  - first:
+      213: 21300364
+    second: 644therian_192
+  - first:
+      213: 21300366
+    second: 644therian_193
+  - first:
+      213: 21300368
+    second: 644therian_194
+  - first:
+      213: 21300370
+    second: 644therian_195
+  - first:
+      213: 21300372
+    second: 644therian_196
+  - first:
+      213: 21300374
+    second: 644therian_197
+  - first:
+      213: 21300376
+    second: 644therian_198
+  - first:
+      213: 21300378
+    second: 644therian_199
+  - first:
+      213: 21300380
+    second: 644therian_200
+  - first:
+      213: 21300382
+    second: 644therian_201
+  - first:
+      213: 21300384
+    second: 644therian_202
+  - first:
+      213: 21300386
+    second: 644therian_203
+  - first:
+      213: 21300388
+    second: 644therian_204
+  - first:
+      213: 21300390
+    second: 644therian_205
+  - first:
+      213: 21300392
+    second: 644therian_206
+  - first:
+      213: 21300394
+    second: 644therian_207
+  - first:
+      213: 21300396
+    second: 644therian_208
+  - first:
+      213: 21300398
+    second: 644therian_209
+  - first:
+      213: 21300400
+    second: 644therian_210
+  - first:
+      213: 21300402
+    second: 644therian_211
+  - first:
+      213: 21300404
+    second: 644therian_212
+  - first:
+      213: 21300406
+    second: 644therian_213
+  - first:
+      213: 21300408
+    second: 644therian_214
+  - first:
+      213: 21300410
+    second: 644therian_215
+  - first:
+      213: 21300412
+    second: 644therian_216
+  - first:
+      213: 21300414
+    second: 644therian_217
+  - first:
+      213: 21300416
+    second: 644therian_218
+  - first:
+      213: 21300418
+    second: 644therian_219
+  - first:
+      213: 21300420
+    second: 644therian_220
+  - first:
+      213: 21300422
+    second: 644therian_221
+  - first:
+      213: 21300424
+    second: 644therian_222
+  - first:
+      213: 21300426
+    second: 644therian_223
+  - first:
+      213: 21300428
+    second: 644therian_224
+  - first:
+      213: 21300430
+    second: 644therian_225
+  - first:
+      213: 21300432
+    second: 644therian_226
+  - first:
+      213: 21300434
+    second: 644therian_227
+  - first:
+      213: 21300436
+    second: 644therian_228
+  - first:
+      213: 21300438
+    second: 644therian_229
+  - first:
+      213: 21300440
+    second: 644therian_230
+  - first:
+      213: 21300442
+    second: 644therian_231
+  - first:
+      213: 21300444
+    second: 644therian_232
+  - first:
+      213: 21300446
+    second: 644therian_233
+  - first:
+      213: 21300448
+    second: 644therian_234
+  - first:
+      213: 21300450
+    second: 644therian_235
+  - first:
+      213: 21300452
+    second: 644therian_236
+  - first:
+      213: 21300454
+    second: 644therian_237
+  - first:
+      213: 21300456
+    second: 644therian_238
+  - first:
+      213: 21300458
+    second: 644therian_239
+  - first:
+      213: 21300460
+    second: 644therian_240
+  - first:
+      213: 21300462
+    second: 644therian_241
+  - first:
+      213: 21300464
+    second: 644therian_242
+  - first:
+      213: 21300466
+    second: 644therian_243
+  - first:
+      213: 21300468
+    second: 644therian_244
+  - first:
+      213: 21300470
+    second: 644therian_245
+  - first:
+      213: 21300472
+    second: 644therian_246
+  - first:
+      213: 21300474
+    second: 644therian_247
+  - first:
+      213: 21300476
+    second: 644therian_248
+  - first:
+      213: 21300478
+    second: 644therian_249
+  - first:
+      213: 21300480
+    second: 644therian_250
+  - first:
+      213: 21300482
+    second: 644therian_251
+  - first:
+      213: 21300484
+    second: 644therian_252
+  - first:
+      213: 21300486
+    second: 644therian_253
+  - first:
+      213: 21300488
+    second: 644therian_254
+  - first:
+      213: 21300490
+    second: 644therian_255
+  - first:
+      213: 21300492
+    second: 644therian_256
+  - first:
+      213: 21300494
+    second: 644therian_257
+  - first:
+      213: 21300496
+    second: 644therian_258
+  - first:
+      213: 21300498
+    second: 644therian_259
+  - first:
+      213: 21300500
+    second: 644therian_260
+  - first:
+      213: 21300502
+    second: 644therian_261
+  - first:
+      213: 21300504
+    second: 644therian_262
+  - first:
+      213: 21300506
+    second: 644therian_263
+  - first:
+      213: 21300508
+    second: 644therian_264
+  - first:
+      213: 21300510
+    second: 644therian_265
+  - first:
+      213: 21300512
+    second: 644therian_266
+  - first:
+      213: 21300514
+    second: 644therian_267
+  - first:
+      213: 21300516
+    second: 644therian_268
+  - first:
+      213: 21300518
+    second: 644therian_269
+  - first:
+      213: 21300520
+    second: 644therian_270
+  - first:
+      213: 21300522
+    second: 644therian_271
+  - first:
+      213: 21300524
+    second: 644therian_272
+  - first:
+      213: 21300526
+    second: 644therian_273
+  - first:
+      213: 21300528
+    second: 644therian_274
+  - first:
+      213: 21300530
+    second: 644therian_275
+  - first:
+      213: 21300532
+    second: 644therian_276
+  - first:
+      213: 21300534
+    second: 644therian_277
+  - first:
+      213: 21300536
+    second: 644therian_278
+  - first:
+      213: 21300538
+    second: 644therian_279
+  - first:
+      213: 21300540
+    second: 644therian_280
+  - first:
+      213: 21300542
+    second: 644therian_281
+  - first:
+      213: 21300544
+    second: 644therian_282
+  - first:
+      213: 21300546
+    second: 644therian_283
+  - first:
+      213: 21300548
+    second: 644therian_284
+  - first:
+      213: 21300550
+    second: 644therian_285
+  - first:
+      213: 21300552
+    second: 644therian_286
+  - first:
+      213: 21300554
+    second: 644therian_287
+  - first:
+      213: 21300556
+    second: 644therian_288
+  - first:
+      213: 21300558
+    second: 644therian_289
+  - first:
+      213: 21300560
+    second: 644therian_290
+  - first:
+      213: 21300562
+    second: 644therian_291
+  - first:
+      213: 21300564
+    second: 644therian_292
+  - first:
+      213: 21300566
+    second: 644therian_293
+  - first:
+      213: 21300568
+    second: 644therian_294
+  - first:
+      213: 21300570
+    second: 644therian_295
+  - first:
+      213: 21300572
+    second: 644therian_296
+  - first:
+      213: 21300574
+    second: 644therian_297
+  - first:
+      213: 21300576
+    second: 644therian_298
+  - first:
+      213: 21300578
+    second: 644therian_299
+  - first:
+      213: 21300580
+    second: 644therian_300
+  - first:
+      213: 21300582
+    second: 644therian_301
+  - first:
+      213: 21300584
+    second: 644therian_302
+  - first:
+      213: 21300586
+    second: 644therian_303
+  - first:
+      213: 21300588
+    second: 644therian_304
+  - first:
+      213: 21300590
+    second: 644therian_305
+  - first:
+      213: 21300592
+    second: 644therian_306
+  - first:
+      213: 21300594
+    second: 644therian_307
+  - first:
+      213: 21300596
+    second: 644therian_308
+  - first:
+      213: 21300598
+    second: 644therian_309
+  - first:
+      213: 21300600
+    second: 644therian_310
+  - first:
+      213: 21300602
+    second: 644therian_311
+  - first:
+      213: 21300604
+    second: 644therian_312
+  - first:
+      213: 21300606
+    second: 644therian_313
+  - first:
+      213: 21300608
+    second: 644therian_314
+  - first:
+      213: 21300610
+    second: 644therian_315
+  - first:
+      213: 21300612
+    second: 644therian_316
+  - first:
+      213: -286976935780782262
+    second: 644therian_0
+  - first:
+      213: 2417111194982659664
+    second: 644therian_1
+  - first:
+      213: -507657016400470349
+    second: 644therian_2
+  - first:
+      213: 4712158768071052702
+    second: 644therian_3
+  - first:
+      213: 1681699408843916377
+    second: 644therian_4
+  - first:
+      213: -5649105314490620119
+    second: 644therian_5
+  - first:
+      213: -1290802013138649490
+    second: 644therian_6
+  - first:
+      213: 1272827991111214703
+    second: 644therian_7
+  - first:
+      213: 5428532484782801596
+    second: 644therian_8
+  - first:
+      213: 4574100985248462171
+    second: 644therian_9
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -330,6 +972,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -340,7 +984,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: -1
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -352,18 +996,21 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 128
     resizeAlgorithm: 1
     textureFormat: -1
@@ -373,7 +1020,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 128
     resizeAlgorithm: 1
     textureFormat: -1
@@ -400,6 +1048,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 99b3826e80c83a24b902bdaeba5f68ea
+      internalID: -286976935780782262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_1
       rect:
@@ -414,6 +1069,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3f95753c5a7be8a4c8677792f096af92
+      internalID: 2417111194982659664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_2
       rect:
@@ -428,6 +1090,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d657ae603d7e5b643aaf5a08694740a7
+      internalID: -507657016400470349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_3
       rect:
@@ -442,6 +1111,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b6ea578708d953a42864c66260d32bba
+      internalID: 4712158768071052702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_4
       rect:
@@ -456,6 +1132,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9ae5a57538a3f064f8365842e782ba58
+      internalID: 1681699408843916377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_5
       rect:
@@ -470,6 +1153,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: be8a435fbfe76974db8105e2b9045382
+      internalID: -5649105314490620119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_6
       rect:
@@ -484,6 +1174,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 039286b0390c591479ac8d7f91e9725b
+      internalID: -1290802013138649490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_7
       rect:
@@ -498,6 +1195,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 377d811fd860cfa468364dd3f3d0cca2
+      internalID: 1272827991111214703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_8
       rect:
@@ -512,6 +1216,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc61c4bc9eea9ac4a822692caff2aab8
+      internalID: 5428532484782801596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_9
       rect:
@@ -526,6 +1237,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c664d9e766ea62940b0967501bdbf76e
+      internalID: 4574100985248462171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_10
       rect:
@@ -540,6 +1258,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 704fbd8fc24face4ca52319876812a56
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_11
       rect:
@@ -554,6 +1279,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 743d58fe97f1a394b84e03763dc3e40b
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_12
       rect:
@@ -568,6 +1300,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a9dcf707aa133364eabb9ab762e3fcba
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_13
       rect:
@@ -582,6 +1321,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 19acba5f394a4de448748ccfe9f7bfd0
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_14
       rect:
@@ -596,6 +1342,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a684db7205406a24fb9ec05e06f9d571
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_15
       rect:
@@ -610,6 +1363,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4a5c1f814298a78408a0eb84e899fbcd
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_16
       rect:
@@ -624,6 +1384,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 13ba548fb1dfcef4f955af0ab9691299
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_17
       rect:
@@ -638,6 +1405,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b8299290e16ec3e479ba8afdd5e33651
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_18
       rect:
@@ -652,6 +1426,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 75fc715c902a9bb45b916437f3038680
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_19
       rect:
@@ -666,6 +1447,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0796e1ad071d1904da6c7c6d18765707
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_20
       rect:
@@ -680,6 +1468,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 284e05852e4b13a478f2050243f154e9
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_21
       rect:
@@ -694,6 +1489,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 269e05f0673106c439d0e1baaa7b6330
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_22
       rect:
@@ -708,6 +1510,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 478f2861dac871042a8f61ecc3ddfdff
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_23
       rect:
@@ -722,6 +1531,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9bfda9ef45b042047abe9e4172d19af0
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_24
       rect:
@@ -736,6 +1552,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7ad5c5ed18133bb469a1a1de4cb55fa4
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_25
       rect:
@@ -750,6 +1573,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 29a53c39570f36749ab731b0ddf8389f
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_26
       rect:
@@ -764,6 +1594,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3540ce43a80871743b9ba3dea8ef765c
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_27
       rect:
@@ -778,6 +1615,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 673b8914aab6cbb4b953246493e2eb91
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_28
       rect:
@@ -792,6 +1636,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f50be7209b6545e40b799a6517763375
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_29
       rect:
@@ -806,6 +1657,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 10a49e13c5b7c6140975616d5e68d6ad
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_30
       rect:
@@ -820,6 +1678,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c2c08f7c51de86f4b8fea3a8b8b17c38
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_31
       rect:
@@ -834,6 +1699,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b6a23e786d1ba2a47b4f3e5215761706
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_32
       rect:
@@ -848,6 +1720,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 90e4775939469624c91ede47b303b6a2
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_33
       rect:
@@ -862,6 +1741,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: edfcdaedc5f36b84793663b10de6d758
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_34
       rect:
@@ -876,6 +1762,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: efc05630aacd1534b80f15a403b6e478
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_35
       rect:
@@ -890,6 +1783,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0095d65434eb35442a61f53dd134b19b
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_36
       rect:
@@ -904,6 +1804,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 997b47f7454f9b54880c1219effb1de5
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_37
       rect:
@@ -918,6 +1825,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ccebc73b0da2f5846afcf4d8204c5311
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_38
       rect:
@@ -932,6 +1846,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9fd790e1955f2e241bdcd483009df600
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_39
       rect:
@@ -946,6 +1867,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 822a663839c876f4aa42a9fb465800f3
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_40
       rect:
@@ -960,6 +1888,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e7e85510927bbe340a2607e2129b8e63
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_41
       rect:
@@ -974,6 +1909,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e62f96ef230b35b4dadcf8a199a8bac7
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_42
       rect:
@@ -988,6 +1930,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6676f5986d2892441ad21c3d8ee8adfe
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_43
       rect:
@@ -1002,6 +1951,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f99770a59224a31459c3761bc0660dd9
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_44
       rect:
@@ -1016,6 +1972,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: aae376f3e906a0147aa4837e8ee22487
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_45
       rect:
@@ -1030,6 +1993,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f1badc2a70d111844b940a3b39cf54c7
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_46
       rect:
@@ -1044,6 +2014,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d52096e97039aa74ca3dbd3c85e18fee
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_47
       rect:
@@ -1058,6 +2035,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 32ed9900eb83cd24ab5d78c6f6c14cbe
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_48
       rect:
@@ -1072,6 +2056,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4fea43855ac722c4383128b06e0179ab
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_49
       rect:
@@ -1086,6 +2077,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2081894776ba6f0458c48ce346f0587e
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_50
       rect:
@@ -1100,6 +2098,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bab942c3e974f234eb69e05f6733cdab
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_51
       rect:
@@ -1114,6 +2119,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 15e664eb04e03584c9da981e947e1181
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_52
       rect:
@@ -1128,6 +2140,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 466940827ac054f4c96ef53f0be5ce09
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_53
       rect:
@@ -1142,6 +2161,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 75ab41ac373d39b459157896b757c20d
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_54
       rect:
@@ -1156,6 +2182,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2ccafdd07058b1f4390ad32c82a76fba
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_55
       rect:
@@ -1170,6 +2203,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 62db3301cc5db8449ae109903e54f521
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_56
       rect:
@@ -1184,6 +2224,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9d5d24298133f5d43b3fe65cbf736172
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_57
       rect:
@@ -1198,6 +2245,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1c07030bc285c824c95eecd4246cd9f2
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_58
       rect:
@@ -1212,6 +2266,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7226efd5e76b49746a4f27c67a8e0f2b
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_59
       rect:
@@ -1226,6 +2287,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3aa3243830bc40c4482fd3eaaaac210a
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_60
       rect:
@@ -1240,6 +2308,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5b8559d057f3b914285c41499c121ad8
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_61
       rect:
@@ -1254,6 +2329,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a93fd7c462e03c247a4685ee87af347c
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_62
       rect:
@@ -1268,6 +2350,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 16922b1082c1ce448acf9d9f633adb8e
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_63
       rect:
@@ -1282,6 +2371,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7d41fd5e9d3699041be74437d4fd08a9
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_64
       rect:
@@ -1296,6 +2392,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b8b49014c226042478e55f53910bd93f
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_65
       rect:
@@ -1310,6 +2413,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1139aa05b980c134f9e80ff2c75e7134
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_66
       rect:
@@ -1324,6 +2434,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 38496a4c64096d249b019715285e5f88
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_67
       rect:
@@ -1338,6 +2455,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 84696e807ab68934ebf80c81639ff8d0
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_68
       rect:
@@ -1352,6 +2476,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7a549497f0ed5914fac5b6531e3d6665
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_69
       rect:
@@ -1366,6 +2497,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a575af9207500e44488d19241d0eddde
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_70
       rect:
@@ -1380,6 +2518,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 496514058a4264447a9e4a8972c77e48
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_71
       rect:
@@ -1394,6 +2539,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 61addc3604a05ad459d4679a6a2947ba
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_72
       rect:
@@ -1408,6 +2560,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba5ca12e6f1fc00469fa2f2dbf55040b
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_73
       rect:
@@ -1422,6 +2581,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ea90373d888cc794facfbc199120e338
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_74
       rect:
@@ -1436,6 +2602,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1a2607f6d23c2774f9ff2e862093b98a
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_75
       rect:
@@ -1450,6 +2623,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: da5dc58c87758374097e69f3e610e503
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_76
       rect:
@@ -1464,6 +2644,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5792d319bad0483439d2dcedd8208807
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_77
       rect:
@@ -1478,6 +2665,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e5e2eb2a1f189d42a36f1f1e43dce11
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_78
       rect:
@@ -1492,6 +2686,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 03cd540ce72ada843a1289c911ce62ac
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_79
       rect:
@@ -1506,6 +2707,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d0516df5d50aab14ea3b7d3cbf340347
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_80
       rect:
@@ -1520,6 +2728,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: beb46507125074c43b5318cbd55743cf
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_81
       rect:
@@ -1534,6 +2749,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fbc6f4f8dc1ee9646abb22ce79f83349
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_82
       rect:
@@ -1548,6 +2770,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fd84222a9772e0e4e9d6563122404965
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_83
       rect:
@@ -1562,6 +2791,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 46a83f714fc953a48bb52952e032e8c4
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_84
       rect:
@@ -1576,6 +2812,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6ab958238053399498a990d35db379e6
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_85
       rect:
@@ -1590,6 +2833,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: accf2dfa01355da4fa40018fa92ab0d0
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_86
       rect:
@@ -1604,6 +2854,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8e5fe360e943f4542b7d6d7580452e2b
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_87
       rect:
@@ -1618,6 +2875,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7ec26f84cab62904eba2d69db5e356f0
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_88
       rect:
@@ -1632,6 +2896,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9ae9a5916cb5c0c468ecd366135f700d
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_89
       rect:
@@ -1646,6 +2917,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: add83f8e0975dd54283ddd996804e0d8
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_90
       rect:
@@ -1660,6 +2938,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2417ee9c36a69dc4abd27c5852136058
+      internalID: 21300160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_91
       rect:
@@ -1674,6 +2959,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d317da9a350295e4b9a742b4de05b331
+      internalID: 21300162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_92
       rect:
@@ -1688,6 +2980,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bd6938382da65504a8d8a1a8b572523f
+      internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_93
       rect:
@@ -1702,6 +3001,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff7e0309a835c6d448fda129f90a108f
+      internalID: 21300166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_94
       rect:
@@ -1716,6 +3022,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f04059927b27cd54ca3e35814277e54e
+      internalID: 21300168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_95
       rect:
@@ -1730,6 +3043,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5566656ebef11074aafcef6bbffe51c8
+      internalID: 21300170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_96
       rect:
@@ -1744,6 +3064,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6eda9e735670d974e86cf9a00956474a
+      internalID: 21300172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_97
       rect:
@@ -1758,6 +3085,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0f886183999a62c4298570be3babb9db
+      internalID: 21300174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_98
       rect:
@@ -1772,6 +3106,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff0f79254a574d54db2e42e57e37f218
+      internalID: 21300176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_99
       rect:
@@ -1786,6 +3127,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8da25c45a1fcd1343a5e9af544e5976f
+      internalID: 21300178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_100
       rect:
@@ -1800,6 +3148,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e6213db170bb10746bae62664b70d158
+      internalID: 21300180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_101
       rect:
@@ -1814,6 +3169,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2ae9bbb813823ef4aaab1968fd5ca47e
+      internalID: 21300182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_102
       rect:
@@ -1828,6 +3190,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 169851afc14de634193335250574c508
+      internalID: 21300184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_103
       rect:
@@ -1842,6 +3211,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 50d359ec7cde1f241bb77a79a687b0b7
+      internalID: 21300186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_104
       rect:
@@ -1856,6 +3232,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 463ea1e4d61456242b6a6ea99a68f53f
+      internalID: 21300188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_105
       rect:
@@ -1870,6 +3253,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 890e763d2a868dd4bb2950ab091999e6
+      internalID: 21300190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_106
       rect:
@@ -1884,6 +3274,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eca16b0a3f238a44eb5d32fec5580144
+      internalID: 21300192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_107
       rect:
@@ -1898,6 +3295,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 91a35f95d8e13f04c855db11d804af28
+      internalID: 21300194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_108
       rect:
@@ -1912,6 +3316,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d94473932fb20294f9f0a7e9d0369b19
+      internalID: 21300196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_109
       rect:
@@ -1926,6 +3337,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cf8677343e8aa1945ab297c0df49174e
+      internalID: 21300198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_110
       rect:
@@ -1940,6 +3358,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 44d260c1226b4834e8965823d876cf22
+      internalID: 21300200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_111
       rect:
@@ -1954,6 +3379,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eeb74265851088e4ba9401f87bd4beb0
+      internalID: 21300202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_112
       rect:
@@ -1968,6 +3400,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a6158c76466e33a429fb131ec73abc15
+      internalID: 21300204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_113
       rect:
@@ -1982,6 +3421,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 41af2037f8af9da4890580388d007dcb
+      internalID: 21300206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_114
       rect:
@@ -1996,6 +3442,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b783dbd582180324292bb9675450a6ec
+      internalID: 21300208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_115
       rect:
@@ -2010,6 +3463,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c39143ae11786534bb544c09cd3d3e4d
+      internalID: 21300210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_116
       rect:
@@ -2024,6 +3484,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 025867d1c09220e4695b3ade1a6523f1
+      internalID: 21300212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_117
       rect:
@@ -2038,6 +3505,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a4a1adf6ffc182045acd41ab9c97dae6
+      internalID: 21300214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_118
       rect:
@@ -2052,6 +3526,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d39aba8e37573fd45af1ec548ef12adf
+      internalID: 21300216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_119
       rect:
@@ -2066,6 +3547,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 750dadc9abedf574aa5688185b7ed168
+      internalID: 21300218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_120
       rect:
@@ -2080,6 +3568,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f84ecfd5606ba2d4ea63398842b55d81
+      internalID: 21300220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_121
       rect:
@@ -2094,6 +3589,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4e312ef6e5af7064692471adfa81fbf3
+      internalID: 21300222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_122
       rect:
@@ -2108,6 +3610,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e7bed17fd1fc9d549953a5c0a0a5cfc7
+      internalID: 21300224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_123
       rect:
@@ -2122,6 +3631,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f8e8d44b1156cc04ebc7cd4d01207d05
+      internalID: 21300226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_124
       rect:
@@ -2136,6 +3652,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b59f7380ec13104e97867116aad5da8
+      internalID: 21300228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_125
       rect:
@@ -2150,6 +3673,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 30db5c34c3abe1342ad10944c38a5722
+      internalID: 21300230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_126
       rect:
@@ -2164,6 +3694,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4449b805e79f02249914077928f88fd0
+      internalID: 21300232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_127
       rect:
@@ -2178,6 +3715,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 436d0b1ed409acb41a0c06e1c3b3d173
+      internalID: 21300234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_128
       rect:
@@ -2192,6 +3736,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eac042d851801ab4bac2ffe0afd84adf
+      internalID: 21300236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_129
       rect:
@@ -2206,6 +3757,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 39c508be5a72441409c910c84cbd9482
+      internalID: 21300238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_130
       rect:
@@ -2220,6 +3778,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 960eff347034a1b4e94ee315aa966a67
+      internalID: 21300240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_131
       rect:
@@ -2234,6 +3799,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2f33c523af5af86459914e07366f4119
+      internalID: 21300242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_132
       rect:
@@ -2248,6 +3820,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c9c00f6ae73adc548866baedc2d8bbbb
+      internalID: 21300244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_133
       rect:
@@ -2262,6 +3841,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 75bf93e9143be1f4883971160211df38
+      internalID: 21300246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_134
       rect:
@@ -2276,6 +3862,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 354db4384e6aaea4280e4e673f754cb9
+      internalID: 21300248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_135
       rect:
@@ -2290,6 +3883,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 399ee4aad504d064ca4ffe21508bd9e7
+      internalID: 21300250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_136
       rect:
@@ -2304,6 +3904,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b27cae16fe838564389fa643de7fbd3c
+      internalID: 21300252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_137
       rect:
@@ -2318,6 +3925,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 52328731f92fb004180d664e2a0f5741
+      internalID: 21300254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_138
       rect:
@@ -2332,6 +3946,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1bbd476f8ca426d498a8225e40a7b005
+      internalID: 21300256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_139
       rect:
@@ -2346,6 +3967,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 42afaeb41d94262469d2e29406afcc20
+      internalID: 21300258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_140
       rect:
@@ -2360,6 +3988,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 83c3996e40dc29245bfcdcc345e99bf3
+      internalID: 21300260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_141
       rect:
@@ -2374,6 +4009,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8fbd909ec71aa7a429f2c2d64f41441d
+      internalID: 21300262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_142
       rect:
@@ -2388,6 +4030,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d56765691dbdc9248aa5681728c9ed06
+      internalID: 21300264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_143
       rect:
@@ -2402,6 +4051,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc57233732d183f48a98ed5e448f258c
+      internalID: 21300266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_144
       rect:
@@ -2416,6 +4072,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 767244d076612c649854c318e5bd5bba
+      internalID: 21300268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_145
       rect:
@@ -2430,6 +4093,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e581aa864025e0b4a87954644b45a38e
+      internalID: 21300270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_146
       rect:
@@ -2444,6 +4114,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7f29f10b319150e4fb35472a47616e81
+      internalID: 21300272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_147
       rect:
@@ -2458,6 +4135,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 72e8b4bd728a44745a1b0e228e60705e
+      internalID: 21300274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_148
       rect:
@@ -2472,6 +4156,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7f1f543af3ca4794fbeabf88eb0de1c2
+      internalID: 21300276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_149
       rect:
@@ -2486,6 +4177,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f2224fdfb55d28845bc3af952b16e8f1
+      internalID: 21300278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_150
       rect:
@@ -2500,6 +4198,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 61af257d0322b644f868f5832e19ef60
+      internalID: 21300280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_151
       rect:
@@ -2514,6 +4219,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e940a0b83fdae9b4da81129439d44fdd
+      internalID: 21300282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_152
       rect:
@@ -2528,6 +4240,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 63100b53199fcc84b82ba0be5ed61fe0
+      internalID: 21300284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_153
       rect:
@@ -2542,6 +4261,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9163557c7d56c944eb55e4a23e3436e7
+      internalID: 21300286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_154
       rect:
@@ -2556,6 +4282,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 47b7580fa3127f8428a7cc6f574b21b1
+      internalID: 21300288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_155
       rect:
@@ -2570,6 +4303,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 277e684e8ec82b04ca092156527bc733
+      internalID: 21300290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_156
       rect:
@@ -2584,6 +4324,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: af6e725ded3a1964fb3e85cffdfbafd4
+      internalID: 21300292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_157
       rect:
@@ -2598,6 +4345,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4eaa83eb6fb5ae346b0fd2094d8466e8
+      internalID: 21300294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_158
       rect:
@@ -2612,6 +4366,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ca9dee0f4f23e0e40a7b45dbb2453944
+      internalID: 21300296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_159
       rect:
@@ -2626,6 +4387,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c8702f4a9b9a69f47b53dd94c6767057
+      internalID: 21300298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_160
       rect:
@@ -2640,6 +4408,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7fd161045d109d74fbb7104f37b60306
+      internalID: 21300300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_161
       rect:
@@ -2654,6 +4429,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1fd122dafb19b7b469b7d3ae41de4fb7
+      internalID: 21300302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_162
       rect:
@@ -2668,6 +4450,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9eafb1d6f8e55c144872134e1c7855e3
+      internalID: 21300304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_163
       rect:
@@ -2682,6 +4471,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: af9997d0750996c46bf1386af19e1d2f
+      internalID: 21300306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_164
       rect:
@@ -2696,6 +4492,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9a11db9f642df5441aabc68d9bdca9df
+      internalID: 21300308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_165
       rect:
@@ -2710,6 +4513,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0c3773854d6c97642ac0b8455cec1946
+      internalID: 21300310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_166
       rect:
@@ -2724,6 +4534,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5183d015feb8b7847ae7c7cd52f0a973
+      internalID: 21300312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_167
       rect:
@@ -2738,6 +4555,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8432f4f7ba4fd2e4381a0e6ca865e8bd
+      internalID: 21300314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_168
       rect:
@@ -2752,6 +4576,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6e086337948b7a94c9d35ed4da3efcef
+      internalID: 21300316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_169
       rect:
@@ -2766,6 +4597,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 10cf4a96566743f46b87f37f8d53eaf2
+      internalID: 21300318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_170
       rect:
@@ -2780,6 +4618,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: de294d253c35e8e4a99d5aef6882dc6f
+      internalID: 21300320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_171
       rect:
@@ -2794,6 +4639,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 47ebf1d8b3ac8a446ac04c50bf48a0cf
+      internalID: 21300322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_172
       rect:
@@ -2808,6 +4660,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 626915eaef552ac4cab623b347eca354
+      internalID: 21300324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_173
       rect:
@@ -2822,6 +4681,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 33ffcf35ba397f64f8496d010fee244d
+      internalID: 21300326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_174
       rect:
@@ -2836,6 +4702,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eed97445469d23146976574aaaa87eb8
+      internalID: 21300328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_175
       rect:
@@ -2850,6 +4723,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b76c631959b7da548bfaf4a28f2157d4
+      internalID: 21300330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_176
       rect:
@@ -2864,6 +4744,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 34157f87fe0d544429b759022899e13f
+      internalID: 21300332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_177
       rect:
@@ -2878,6 +4765,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 962bcd6e269ba7e458eba96c6c87d4d4
+      internalID: 21300334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_178
       rect:
@@ -2892,6 +4786,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8d6db24e18685f94b9f58d943ee73d2c
+      internalID: 21300336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_179
       rect:
@@ -2906,6 +4807,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9545e298174f58f48be55758c992b59b
+      internalID: 21300338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_180
       rect:
@@ -2920,6 +4828,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 50f5d189d8a65424089c175b96d4446f
+      internalID: 21300340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_181
       rect:
@@ -2934,6 +4849,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bf034897944c2d5489309a2818233d1b
+      internalID: 21300342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_182
       rect:
@@ -2948,6 +4870,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2b2cfd0cabebc0c41b4564063383faff
+      internalID: 21300344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_183
       rect:
@@ -2962,6 +4891,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: eeaf06b6d6a995545950436709b6812f
+      internalID: 21300346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_184
       rect:
@@ -2976,6 +4912,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4d642f241b4bf7248a68e57deb1fbaeb
+      internalID: 21300348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_185
       rect:
@@ -2990,6 +4933,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4095dc0e3ad4f4b40a293c50199f0951
+      internalID: 21300350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_186
       rect:
@@ -3004,6 +4954,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 25619aa7630963345ab95dc51dcff625
+      internalID: 21300352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_187
       rect:
@@ -3018,6 +4975,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bef9ec3a23d88b6488484d0c20b9625a
+      internalID: 21300354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_188
       rect:
@@ -3032,6 +4996,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a9f23f3bc2aec24ca2b51f45bf937e7
+      internalID: 21300356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_189
       rect:
@@ -3046,6 +5017,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cbeda0dad617a644e9c3fc336aa97e36
+      internalID: 21300358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_190
       rect:
@@ -3060,6 +5038,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 74fd5430eecc1124db9e19e9f40a7d88
+      internalID: 21300360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_191
       rect:
@@ -3074,6 +5059,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 50b7e331ada26454887e32bc360aa157
+      internalID: 21300362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_192
       rect:
@@ -3088,6 +5080,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 15348ed36384dc74a97a259e328011b5
+      internalID: 21300364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_193
       rect:
@@ -3102,6 +5101,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 101d2c4ca2692d64d8f93a3dfa8e9814
+      internalID: 21300366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_194
       rect:
@@ -3116,6 +5122,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 84e2bc71f00b05f42917a2495f0c39dc
+      internalID: 21300368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_195
       rect:
@@ -3130,6 +5143,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: cbbc75d95f643ba468656620483e3fc8
+      internalID: 21300370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_196
       rect:
@@ -3144,6 +5164,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ce6579512acb00c4f9e6bfa4e16920da
+      internalID: 21300372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_197
       rect:
@@ -3158,6 +5185,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f3d3b572f285bb5499fb017dac6f9dae
+      internalID: 21300374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_198
       rect:
@@ -3172,6 +5206,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5535dfc7447fcee4c8f578e339783b01
+      internalID: 21300376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_199
       rect:
@@ -3186,6 +5227,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5f35807887728334fba2e61dba7475aa
+      internalID: 21300378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_200
       rect:
@@ -3200,6 +5248,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 55cc2084fc3f9a44baa3a18801ef7c08
+      internalID: 21300380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_201
       rect:
@@ -3214,6 +5269,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 70a8f127381daa94d8aa8cfef79e0d06
+      internalID: 21300382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_202
       rect:
@@ -3228,6 +5290,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1a396e7a366ca0b4cb25061793f8600a
+      internalID: 21300384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_203
       rect:
@@ -3242,6 +5311,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8620904e277f8514f8a41e07d899cdc3
+      internalID: 21300386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_204
       rect:
@@ -3256,6 +5332,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 520c617c8235506428edc0f5e137cba6
+      internalID: 21300388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_205
       rect:
@@ -3270,6 +5353,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f26740975cbd49c40862d4b7dfb33c9f
+      internalID: 21300390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_206
       rect:
@@ -3284,6 +5374,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d6976fb5b6ee45347890d2d4da57313f
+      internalID: 21300392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_207
       rect:
@@ -3298,6 +5395,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ee28bb8a77d6d724786b4e10c714e582
+      internalID: 21300394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_208
       rect:
@@ -3312,6 +5416,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d44d7ebe07fd1184a99a9080dca08e7f
+      internalID: 21300396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_209
       rect:
@@ -3326,6 +5437,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0c9cd06731b90549962032874fceac9
+      internalID: 21300398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_210
       rect:
@@ -3340,6 +5458,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8de0248becea84e489480a6af2fd2868
+      internalID: 21300400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_211
       rect:
@@ -3354,6 +5479,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7085ef1a4df7790478bf37ea46637ebc
+      internalID: 21300402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_212
       rect:
@@ -3368,6 +5500,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0e5391eb0ca195b4e9dad9dbba1f3364
+      internalID: 21300404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_213
       rect:
@@ -3382,6 +5521,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9eb5d26cadf960045bd17d27dc47a817
+      internalID: 21300406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_214
       rect:
@@ -3396,6 +5542,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7d6266bcb9263df48a5ae1ee7b9fc996
+      internalID: 21300408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_215
       rect:
@@ -3410,6 +5563,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b7be383d4d9e47040af1fe253bffbe61
+      internalID: 21300410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_216
       rect:
@@ -3424,6 +5584,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 43a81d5a70b93da49b11d16828852270
+      internalID: 21300412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_217
       rect:
@@ -3438,6 +5605,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a47b1b91fa37e8740a93e4b21dd51d2b
+      internalID: 21300414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_218
       rect:
@@ -3452,6 +5626,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9996ce202aebdb74b959a29743612bc1
+      internalID: 21300416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_219
       rect:
@@ -3466,6 +5647,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f4d5e0a7d37415348a1996350e53c5c2
+      internalID: 21300418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_220
       rect:
@@ -3480,6 +5668,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fe10a3a177647da4e9b8275eedbca992
+      internalID: 21300420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_221
       rect:
@@ -3494,6 +5689,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f45e253768b763e4daaa255831b6a3a1
+      internalID: 21300422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_222
       rect:
@@ -3508,6 +5710,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 37e2a9e91124b9149acb65bc51873a57
+      internalID: 21300424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_223
       rect:
@@ -3522,6 +5731,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a5226da08b9ced94699710ecda11b689
+      internalID: 21300426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_224
       rect:
@@ -3536,6 +5752,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 53a235b4dc9fef9439f8ce2f301dbd94
+      internalID: 21300428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_225
       rect:
@@ -3550,6 +5773,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff6d32db21c28da44bdc6a7f06c89b2e
+      internalID: 21300430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_226
       rect:
@@ -3564,6 +5794,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 982b729f2f1ac184b96100e17993d79a
+      internalID: 21300432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_227
       rect:
@@ -3578,6 +5815,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4ec6b165ab51f0545936962c708586a5
+      internalID: 21300434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_228
       rect:
@@ -3592,6 +5836,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 02d525d271591694b8b7850fe06d9c61
+      internalID: 21300436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_229
       rect:
@@ -3606,6 +5857,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1003d95a61e709945a8742bd9d45a7f5
+      internalID: 21300438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_230
       rect:
@@ -3620,6 +5878,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6ce5806659a29a34fa377cee65d21b9d
+      internalID: 21300440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_231
       rect:
@@ -3634,6 +5899,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: fce2cee9205735c47a5a697b6a0f0d2e
+      internalID: 21300442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_232
       rect:
@@ -3648,6 +5920,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ff28a4270462cb54e97af19fc2f16c49
+      internalID: 21300444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_233
       rect:
@@ -3662,6 +5941,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2167b57eba714cf42a5985e891721eef
+      internalID: 21300446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_234
       rect:
@@ -3676,6 +5962,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f60bbe30e4aade44a9f6dae06328da88
+      internalID: 21300448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_235
       rect:
@@ -3690,6 +5983,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a0ef4b5c63fe7c14381c5f461f04929e
+      internalID: 21300450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_236
       rect:
@@ -3704,6 +6004,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ad93c97986589d44dadf95fe95bc0343
+      internalID: 21300452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_237
       rect:
@@ -3718,6 +6025,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0865f7efb1fe6c2418d29e674323cfc1
+      internalID: 21300454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_238
       rect:
@@ -3732,6 +6046,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 78bcb2df713c1274ea7aa3d1c946fb4f
+      internalID: 21300456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_239
       rect:
@@ -3746,6 +6067,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 0bc95ce8dc6f37a48860e0581e9e3c8a
+      internalID: 21300458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_240
       rect:
@@ -3760,6 +6088,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 248cbc9be3f40794fb0305fe065e88be
+      internalID: 21300460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_241
       rect:
@@ -3774,6 +6109,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9cf89e06fc4b8be4c86ddcbd7406f001
+      internalID: 21300462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_242
       rect:
@@ -3788,6 +6130,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b19cd463efdc74e4d9c2f1d2338216ce
+      internalID: 21300464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_243
       rect:
@@ -3802,6 +6151,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2090ad846ebc9194093335fe120b1336
+      internalID: 21300466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_244
       rect:
@@ -3816,6 +6172,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 21198217b9afc1448b8fddd26abf5532
+      internalID: 21300468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_245
       rect:
@@ -3830,6 +6193,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 20db7482c66a9e949aa0526ba68187f3
+      internalID: 21300470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_246
       rect:
@@ -3844,6 +6214,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2897e216ef2769c42aefaf28a8c83363
+      internalID: 21300472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_247
       rect:
@@ -3858,6 +6235,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 14517b4a69e84b44dbaae97055dbaf17
+      internalID: 21300474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_248
       rect:
@@ -3872,6 +6256,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: dc62a3c562d41454f9243a4b3425a955
+      internalID: 21300476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_249
       rect:
@@ -3886,6 +6277,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e0744f77ce57ff945b1acbcdcd9984b1
+      internalID: 21300478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_250
       rect:
@@ -3900,6 +6298,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: d8bd2bad747cc7f4a9a6688d68446af7
+      internalID: 21300480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_251
       rect:
@@ -3914,6 +6319,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 53b52aea9fa63b34aa6c0513070c0bf8
+      internalID: 21300482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_252
       rect:
@@ -3928,6 +6340,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 465e6d908c55cc94f9846433551f752a
+      internalID: 21300484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_253
       rect:
@@ -3942,6 +6361,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 67b844d9964011f4a8e157286ea76519
+      internalID: 21300486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_254
       rect:
@@ -3956,6 +6382,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 83e39d4ae67edf34ab26264732abcb44
+      internalID: 21300488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_255
       rect:
@@ -3970,6 +6403,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 09bcd7a263eeaf942a55ad699c0a2a75
+      internalID: 21300490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_256
       rect:
@@ -3984,6 +6424,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 25c3c494ad930a643aabb40f2ddf2a98
+      internalID: 21300492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_257
       rect:
@@ -3998,6 +6445,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c1c78bd3cec5eb74db83e75c8705dd20
+      internalID: 21300494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_258
       rect:
@@ -4012,6 +6466,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 067c5655c2b929d49916b8784ace0409
+      internalID: 21300496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_259
       rect:
@@ -4026,6 +6487,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 206051f177d391b418be290881994405
+      internalID: 21300498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_260
       rect:
@@ -4040,6 +6508,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 9c43239596948734190fb10e0b676552
+      internalID: 21300500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_261
       rect:
@@ -4054,6 +6529,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 511434fb5957ff048a0b0d015ae1fe08
+      internalID: 21300502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_262
       rect:
@@ -4068,6 +6550,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4dcddd19043a1054c8905f5cc2b15be3
+      internalID: 21300504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_263
       rect:
@@ -4082,6 +6571,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 453acece96d089a48bd162a4fc5c1e5e
+      internalID: 21300506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_264
       rect:
@@ -4096,6 +6592,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 8282ef28dc77772469ab8facc576d7f2
+      internalID: 21300508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_265
       rect:
@@ -4110,6 +6613,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5d1ce8ea9b6fedf4b989d4a01fff3f0b
+      internalID: 21300510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_266
       rect:
@@ -4124,6 +6634,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ca8c6f7dde5537e41a20cec06e3f9b36
+      internalID: 21300512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_267
       rect:
@@ -4138,6 +6655,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c412e6edab23e574bb5c40ff930ac30b
+      internalID: 21300514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_268
       rect:
@@ -4152,6 +6676,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e67595e8f624da94e846ac59eb88f435
+      internalID: 21300516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_269
       rect:
@@ -4166,6 +6697,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 716a819d86db9204980c09fab26e4e7f
+      internalID: 21300518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_270
       rect:
@@ -4180,6 +6718,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c1ff55bce0d9178449013a32cf6c4dbd
+      internalID: 21300520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_271
       rect:
@@ -4194,6 +6739,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e59a004b6d8415b49a1190f23f01e135
+      internalID: 21300522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_272
       rect:
@@ -4208,6 +6760,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 761b1e20675434448bd0ce0f92aaf5ce
+      internalID: 21300524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_273
       rect:
@@ -4222,6 +6781,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2c2d7f32d1f2b5342a2e10681ad02bc9
+      internalID: 21300526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_274
       rect:
@@ -4236,6 +6802,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2105cacd8d0a738458ccb82eea9a64a8
+      internalID: 21300528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_275
       rect:
@@ -4250,6 +6823,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 51a2371b4e3303d4585250f76f6e159a
+      internalID: 21300530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_276
       rect:
@@ -4264,6 +6844,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 53492ba707b42584ba0a89375d9288bd
+      internalID: 21300532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_277
       rect:
@@ -4278,6 +6865,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 00f102c5a743820408894f5abc06594f
+      internalID: 21300534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_278
       rect:
@@ -4292,6 +6886,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e00f624e075180447841c00c6046978b
+      internalID: 21300536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_279
       rect:
@@ -4306,6 +6907,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6f263a5cbf172054da5fc312dc45afd0
+      internalID: 21300538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_280
       rect:
@@ -4320,6 +6928,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5a9f17a81f814374f870feac3240c572
+      internalID: 21300540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_281
       rect:
@@ -4334,6 +6949,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5360bab184aa38e4a815bdfb368ba9dd
+      internalID: 21300542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_282
       rect:
@@ -4348,6 +6970,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f2409f1b4a04be441ad67f98453944a9
+      internalID: 21300544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_283
       rect:
@@ -4362,6 +6991,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 5ab8e4b1aeea3ea49a3a4f7c64eb9cda
+      internalID: 21300546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_284
       rect:
@@ -4376,6 +7012,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6b94102e71444ba41bf67b394babe891
+      internalID: 21300548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_285
       rect:
@@ -4390,6 +7033,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e696b67b4c6128344a4ea00b3e9cf041
+      internalID: 21300550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_286
       rect:
@@ -4404,6 +7054,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2a3214cc7d9694748999c560d659695a
+      internalID: 21300552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_287
       rect:
@@ -4418,6 +7075,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 592b61992f168eb4ab598929084ed2fa
+      internalID: 21300554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_288
       rect:
@@ -4432,6 +7096,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ba787c475a6f36f42b9206c161ab718c
+      internalID: 21300556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_289
       rect:
@@ -4446,6 +7117,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: acb022a20c8b01c4d82f02bc88025e81
+      internalID: 21300558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_290
       rect:
@@ -4460,6 +7138,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: ac22e813cafbd954a8153e29f6b3d9f4
+      internalID: 21300560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_291
       rect:
@@ -4474,6 +7159,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 84251bb3d26b8a7449e39fc5ae876528
+      internalID: 21300562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_292
       rect:
@@ -4488,6 +7180,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 95290e6aa7cbd3e4e8077988d1a9b4d8
+      internalID: 21300564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_293
       rect:
@@ -4502,6 +7201,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1aae17f4d38098c43a9d2614989be243
+      internalID: 21300566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_294
       rect:
@@ -4516,6 +7222,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c17c7dbf434c51b4fb6f5b0ee09b3252
+      internalID: 21300568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_295
       rect:
@@ -4530,6 +7243,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1582a93422746684687c64f4fa6151e4
+      internalID: 21300570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_296
       rect:
@@ -4544,6 +7264,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: daddac081d32ecd48b781531bb14d8ce
+      internalID: 21300572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_297
       rect:
@@ -4558,6 +7285,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: e12ee55bcb9a2c9429cdd440deb7645f
+      internalID: 21300574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_298
       rect:
@@ -4572,6 +7306,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 6f4e00c3b0b68b14abddf4567078770d
+      internalID: 21300576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_299
       rect:
@@ -4586,6 +7327,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b3c1958b7e668664ea63815e36406cd1
+      internalID: 21300578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_300
       rect:
@@ -4600,6 +7348,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: a44a08a598aa932409040d598567dd4c
+      internalID: 21300580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_301
       rect:
@@ -4614,6 +7369,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 902023f608f99d745bb6342cb273fb02
+      internalID: 21300582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_302
       rect:
@@ -4628,6 +7390,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 7fe8bacc829b6d24c95c7bcf33802023
+      internalID: 21300584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_303
       rect:
@@ -4642,6 +7411,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: b3da43670f1a201488bc126ad848aa40
+      internalID: 21300586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_304
       rect:
@@ -4656,6 +7432,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: c4cb9f0c51f114d4ba56c25bad7c1a27
+      internalID: 21300588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_305
       rect:
@@ -4670,6 +7453,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 3e791f0e335b41c40b8da27c8e015bdb
+      internalID: 21300590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_306
       rect:
@@ -4684,6 +7474,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 77d4afdc318f3d241adf4126287b7384
+      internalID: 21300592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_307
       rect:
@@ -4698,6 +7495,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 39e5ebd2037296c46b6a3618025cf599
+      internalID: 21300594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_308
       rect:
@@ -4712,6 +7516,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: db00541d26853c4489a050ca888ca173
+      internalID: 21300596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_309
       rect:
@@ -4726,6 +7537,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: f3a28a006b66eb24f9285808d1a4c17b
+      internalID: 21300598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_310
       rect:
@@ -4740,6 +7558,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 2ab1af80c2feea74bbd89d29fe27ad1f
+      internalID: 21300600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_311
       rect:
@@ -4754,6 +7579,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 68cb321767adff04dae3bedede43dc9c
+      internalID: 21300602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_312
       rect:
@@ -4768,6 +7600,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 90640cfacd378ec439a0cba6ff1007dc
+      internalID: 21300604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_313
       rect:
@@ -4782,6 +7621,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 972a9b18123091340be462de75ac1f54
+      internalID: 21300606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_314
       rect:
@@ -4796,6 +7642,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 4346c739e98924b40b47c215f5309155
+      internalID: 21300608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_315
       rect:
@@ -4810,6 +7663,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: 1f8d61c9abe299641be079e32cd69f45
+      internalID: 21300610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: 644therian_316
       rect:
@@ -4824,9 +7684,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: -1
+      bones: []
+      spriteID: bc4cdc68571345b4587448bbedba36e1
+      internalID: 21300612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

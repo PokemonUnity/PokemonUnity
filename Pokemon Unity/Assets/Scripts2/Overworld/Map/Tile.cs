@@ -65,6 +65,11 @@ namespace PokemonUnity
 		/// 
 		/// </summary>
 		/// ToDo: Enum?
+		//public float[] Position {
+		//	get{
+		//		
+		//	}
+		// }
 		public int Map { get; private set; } 
 		//public bool Passable {
 		//	get
