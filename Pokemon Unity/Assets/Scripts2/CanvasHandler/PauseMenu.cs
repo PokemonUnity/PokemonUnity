@@ -215,7 +215,7 @@ public class PauseMenu : MonoBehaviour
             if (Input.GetButtonDown("Select")){
                 if (index==0 && Game.Player.Party.Length>0){
 
-                    StartCoroutine(canvasUI.FadeFromTo(this.gameObject,canvasUI.scenes[2]));
+                    StartCoroutine(canvasUI.FadeFromTo(this.gameObject,canvasUI.scenes[1]));
                     while (canvasUI.fading==true){
                         yield return null;
                     }
