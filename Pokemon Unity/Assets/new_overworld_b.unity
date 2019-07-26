@@ -647,6 +647,42 @@ PrefabInstance:
       propertyPath: scenes.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1457296625, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: PauseMenu [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 115120417, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: Save [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 631553284, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: TopPaused [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 845241746, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: Pokedex [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137171384, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: Trainer [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349353972, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: Bag [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878625663, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: SelectedText [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1977979464, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: Pokemon [ns]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104948680, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+      propertyPath: m_Name
+      value: Settings [ns]
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 620176938, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
@@ -989,7 +1025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1159151580
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1007,7 +1043,7 @@ Camera:
   m_GameObject: {fileID: 1159151579}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1029,7 +1065,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
