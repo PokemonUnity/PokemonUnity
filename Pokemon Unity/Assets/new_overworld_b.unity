@@ -126,30 +126,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1412892191}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &47202067 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6274900150924994843, guid: ec0a87f79e941cd4cbbb654156ac7d21,
-    type: 3}
-  m_PrefabInstance: {fileID: 609408766}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &47202068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47202067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d2122d865c5864f8b09801db514d6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentCanvas: {fileID: 0}
-  scenes:
-  - {fileID: 1787925747}
-  - {fileID: 289800844}
-  fadeScreen: {fileID: 1259819571}
-  fading: 0
 --- !u!1001 &55124309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,12 +219,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b867fe3c0cbc1744a843871f4a22e5a3, type: 3}
---- !u!1 &289800844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6274900151507858983, guid: ec0a87f79e941cd4cbbb654156ac7d21,
-    type: 3}
-  m_PrefabInstance: {fileID: 609408766}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &352462633
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,11 +467,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6274900150924994843, guid: ec0a87f79e941cd4cbbb654156ac7d21,
-        type: 3}
-      propertyPath: m_TagString
-      value: CanvasUI
-      objectReference: {fileID: 0}
     - target: {fileID: 6274900150924994847, guid: ec0a87f79e941cd4cbbb654156ac7d21,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -607,84 +572,7 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: animationSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: offset
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.data[0]
-      value: "Pok\xE9mon"
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.data[1]
-      value: "Pok\xE9dex"
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.data[2]
-      value: Bag
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.data[3]
-      value: Trainer
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.data[4]
-      value: Save Game
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541051143, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: texts.Array.data[5]
-      value: Settings
-      objectReference: {fileID: 0}
-    - target: {fileID: 620176938, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: scenes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1457296625, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: PauseMenu [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 115120417, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: Save [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 631553284, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: TopPaused [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 845241746, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: Pokedex [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 1137171384, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: Trainer [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 1349353972, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: Bag [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878625663, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: SelectedText [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 1977979464, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: Pokemon [ns]
-      objectReference: {fileID: 0}
-    - target: {fileID: 2104948680, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
-      propertyPath: m_Name
-      value: Settings [ns]
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 620176938, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec0a87f79e941cd4cbbb654156ac7d21, type: 3}
 --- !u!1 &666530912
 GameObject:
@@ -1165,18 +1053,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29bc2dec560e9a408a7645a4e4855ed, type: 3}
---- !u!114 &1259819571 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1081934136, guid: ec0a87f79e941cd4cbbb654156ac7d21,
-    type: 3}
-  m_PrefabInstance: {fileID: 609408766}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1271894809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1928,12 +1804,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1787925747 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1457296625, guid: ec0a87f79e941cd4cbbb654156ac7d21,
-    type: 3}
-  m_PrefabInstance: {fileID: 609408766}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3912599215038558952
 PrefabInstance:
   m_ObjectHideFlags: 0

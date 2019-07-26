@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 115120420}
   - component: {fileID: 115120419}
   m_Layer: 5
-  m_Name: Save
+  m_Name: Save [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,7 +693,7 @@ Animator:
   m_GameObject: {fileID: 190738609}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a94642132af62074c8ac7e5a9147bdff, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2994,7 +2994,7 @@ GameObject:
   - component: {fileID: 631553287}
   - component: {fileID: 631553286}
   m_Layer: 5
-  m_Name: TopPaused
+  m_Name: TopPaused [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3709,7 +3709,7 @@ GameObject:
   - component: {fileID: 845241749}
   - component: {fileID: 845241748}
   m_Layer: 5
-  m_Name: Pokedex
+  m_Name: Pokedex [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4861,7 +4861,7 @@ GameObject:
   - component: {fileID: 1137171387}
   - component: {fileID: 1137171386}
   m_Layer: 5
-  m_Name: Trainer
+  m_Name: Trainer [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6626,7 +6626,7 @@ GameObject:
   - component: {fileID: 1349353975}
   - component: {fileID: 1349353974}
   m_Layer: 5
-  m_Name: Bag
+  m_Name: Bag [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7120,7 +7120,7 @@ GameObject:
   - component: {fileID: 1457296627}
   - component: {fileID: 1541051143}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: PauseMenu [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8883,7 +8883,7 @@ GameObject:
   - component: {fileID: 1878625665}
   - component: {fileID: 1878625667}
   m_Layer: 5
-  m_Name: SelectedText
+  m_Name: SelectedText [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9125,7 +9125,7 @@ GameObject:
   - component: {fileID: 1977979467}
   - component: {fileID: 1977979466}
   m_Layer: 5
-  m_Name: Pokemon
+  m_Name: Pokemon [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9273,7 +9273,7 @@ GameObject:
   - component: {fileID: 2104948683}
   - component: {fileID: 2104948682}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: Settings [ns]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9848,10 +9848,10 @@ GameObject:
   - component: {fileID: 6274900150924994816}
   - component: {fileID: 1643400008}
   - component: {fileID: 620176932}
-  - component: {fileID: 620176938}
+  - component: {fileID: 47202068}
   m_Layer: 5
   m_Name: CanvasUI
-  m_TagString: Untagged
+  m_TagString: CanvasUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9998,7 +9998,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &620176938
+--- !u!114 &47202068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10007,14 +10007,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6274900150924994843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73538d2c153716c48ad2607fac1331a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 21d2122d865c5864f8b09801db514d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentCanvas: {fileID: 0}
   scenes:
   - {fileID: 1457296625}
   - {fileID: 6274900151507858983}
-  - {fileID: 6274900152709194658}
   fadeScreen: {fileID: 1081934136}
   fading: 0
 --- !u!1 &6274900150926861871
@@ -66115,11 +66114,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6274900150924994847}
     m_Modifications:
-    - target: {fileID: 2894900761685383731, guid: 92da730c303b7ea45966cb3d8df87e4e,
-        type: 3}
-      propertyPath: m_Name
-      value: GameCanvas
-      objectReference: {fileID: 0}
     - target: {fileID: 2894900761685383728, guid: 92da730c303b7ea45966cb3d8df87e4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66224,6 +66218,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2894900761685383731, guid: 92da730c303b7ea45966cb3d8df87e4e,
+        type: 3}
+      propertyPath: m_Name
+      value: GameCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92da730c303b7ea45966cb3d8df87e4e, type: 3}

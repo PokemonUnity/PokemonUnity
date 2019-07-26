@@ -141,8 +141,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-
-        
         if (!surfing)//playerMoveAction != playerMoveMethod.Surfing
         {
             updateMount(false);
