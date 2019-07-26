@@ -12,7 +12,7 @@ public class MapSettings : MonoBehaviour
     public AudioClip mapBGMNightClip = null;
     public int mapBGMNightLoopStartSamples = 0;
     public string mapName;
-    public Texture mapNameBoxTexture;
+    public Sprite mapNameBoxTexture;
     public UnityEngine.Color mapNameColor = new UnityEngine.Color(0.066f, 0.066f, 0.066f, 1);
 
     public enum PokemonRarity

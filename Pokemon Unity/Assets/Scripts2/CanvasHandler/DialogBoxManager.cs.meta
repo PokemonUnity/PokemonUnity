@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 73538d2c153716c48ad2607fac1331a2
-timeCreated: 1524281218
-licenseType: Free
+guid: 2e0e2af219066cb4d97cde00ee55253e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - selectClip: {fileID: 8300000, guid: 02766f301753af9469c46d685fb3d48c, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

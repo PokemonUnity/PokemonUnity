@@ -175,22 +175,22 @@ namespace PokemonUnity.Unity.ThreeDimensional {
 		{
 			//if (_frontTile != null && _frontTile.Position.y != transform.position.y && _frontTile.CanWalk)
 			//{
-			//	_movementDirection.y = _frontTile.Position.y > transform.position.y ? .25f : -.25f;
-			//	_movementDirection.y *= movementSpeed;
-			//
-			//	float moveVertical = _movementDirection.z < 0 ? _movementDirection.z * -1 : _movementDirection.z;
-			//	float moveHorizontal = _movementDirection.x < 0 ? _movementDirection.x * -1 : _movementDirection.x;
-			//	float subSpeed = Mathf.Max(moveHorizontal, moveVertical);
-			//
-			//	if (subSpeed % 1 != 0)
-			//	{
-			//		_movementDirection.y *= subSpeed % 1 * 2;
-			//	}
+				_movementDirection.y =.25f;// _frontTile.Position.y > transform.position.y ? .25f : -.25f;
+				_movementDirection.y *= movementSpeed;
+			
+				float moveVertical = _movementDirection.z < 0 ? _movementDirection.z * -1 : _movementDirection.z;
+				float moveHorizontal = _movementDirection.x < 0 ? _movementDirection.x * -1 : _movementDirection.x;
+				float subSpeed = Mathf.Max(moveHorizontal, moveVertical);
+			
+				if (subSpeed % 1 != 0)
+				{
+					_movementDirection.y *= subSpeed % 1 * 2;
+				}
 			//}
 			//if (Mathf.Abs(_curTile.Position.y - transform.position.y) < 0.02f)
 			//{
-			//	transform.position = new Vector3(transform.position.x, _curTile.Position.y, transform.position.z);
-			//	_movementDirection.y = 0;
+				transform.position = new Vector3(transform.position.x, 0, transform.position.z); // Y = _curTile.Position.y
+				_movementDirection.y = 0;
 			//}
 		}
 

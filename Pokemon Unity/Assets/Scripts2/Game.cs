@@ -69,6 +69,23 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	#region Constructor
 	static Game()
 	{
+		/* string playerName = "Red";
+		int trainerID = 55323;
+		int secretID = 64123;
+		bool isMale = false;
+		Trainer red = new Trainer(new Player(playerName, isMale), tID: trainerID, sID: secretID);
+
+		Pokemon[] playerParty = new Pokemon[]
+		{
+			new Pokemon(Pokemons.CRANIDOS, red),
+			new Pokemon(Pokemons.UMBREON, red),
+			new Pokemon(Pokemons.ARIADOS, red),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE),
+			new Pokemon(Pokemons.NONE)
+		};
+
+		Game.Player = new Player(red, playerParty); */
 		GameDebug.Init(null, "GameTestLog");
 		UserLanguage  = Languages.English;
 		PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];

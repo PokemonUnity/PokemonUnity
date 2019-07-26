@@ -108,6 +108,33 @@ public class StartupSceneHandler : UnityEngine.MonoBehaviour, UnityEngine.EventS
         }
     }
 
+	public void Continue()
+    {
+        string playerName = "Red";
+		int trainerID = 55323;
+		int secretID = 64123;
+		bool isMale = false;
+		Trainer red = new Trainer(new Player(playerName, isMale/*, playerParty*/), tID: trainerID, sID: secretID);
+
+		PokemonUnity.Monster.Pokemon[] playerParty = new PokemonUnity.Monster.Pokemon[]
+		{
+			new PokemonUnity.Monster.Pokemon(Pokemons.CRANIDOS, red),
+			new PokemonUnity.Monster.Pokemon(Pokemons.UMBREON, red),
+			new PokemonUnity.Monster.Pokemon(Pokemons.ARIADOS, red),
+			new PokemonUnity.Monster.Pokemon(Pokemons.NONE),
+			new PokemonUnity.Monster.Pokemon(Pokemons.NONE),
+			new PokemonUnity.Monster.Pokemon(Pokemons.NONE)
+		};
+
+		Game.Player = new Player(red, playerParty);
+		bool damn = false;
+		if (Game.Player != null){
+			damn = true;
+		}
+
+		UnityEngine.Debug.Log(damn);
+    }
+
     public void ChangeDataPanel(int slot)
     {
         //Refresh the panel for continue screen to reflect gamesave data

@@ -329,7 +329,7 @@ namespace PokemonUnity.Battle
 					attacker.Update(true);
 					this.battle.scene.pbChangePokemon(attacker, attacker.Species); //ToDo: Feed animation thru Battle or make a Scene class
 					//battle.pbDisplay(_INTL("{1} transformed!", attacker.pbThis))
-					Game.DebugLog("[Form changed] #{attacker.pbThis} changed to form #{attacker.Form}");
+					//GameDebug.Log("[Form changed] #{attacker.pbThis} changed to form #{attacker.Form}");
 				}
 			}
 		}
@@ -3346,7 +3346,7 @@ namespace PokemonUnity.Battle
 			//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				Game.DebugLog("[Ability triggered] #{opponent.pbThis}'s Illusion ended");    
+				//GameDebug.Log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 				opponent.effects.Illusion = null;
 				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
 
@@ -3385,7 +3385,7 @@ namespace PokemonUnity.Battle
 			//battle.pbDisplay(_INTL("{1} acquired {2}!",opponent.pbThis,abilityname))
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				Game.DebugLog("[Ability triggered] #{opponent.pbThis}'s Illusion ended");    
+				//GameDebug.Log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 				opponent.effects.Illusion = null;
 				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
 
@@ -3433,7 +3433,7 @@ namespace PokemonUnity.Battle
 			//battle.pbDisplay(_INTL("{1} copied {2}'s {3}!", attacker.pbThis, opponent.pbThis(true),abilityname))
 			if (attacker.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				Game.DebugLog("[Ability triggered] #{attacker.pbThis}'s Illusion ended");    
+				//GameDebug.Log("[Ability triggered] #{attacker.pbThis}'s Illusion ended")    
 				attacker.effects.Illusion = null;
 				this.battle.scene.pbChangePokemon(attacker, attacker.Species);
 
@@ -3490,7 +3490,7 @@ namespace PokemonUnity.Battle
 			//battle.pbDisplay(_INTL("{1} acquired {2}!", opponent.pbThis, abilityname))
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				Game.DebugLog("[Ability triggered] #{opponent.pbThis}'s Illusion ended");    
+				//GameDebug.Log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 				opponent.effects.Illusion = null;
 				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
 
@@ -3564,7 +3564,7 @@ namespace PokemonUnity.Battle
 			//battle.pbDisplay(_INTL("{1}'s Ability was suppressed!", opponent.pbThis)) 
 			if (opponent.effects.Illusion.Species != Pokemons.NONE && oldabil == Abilities.ILLUSION)
 			{
-				Game.DebugLog("[Ability triggered] #{opponent.pbThis}'s Illusion ended");    
+				//GameDebug.Log("[Ability triggered] #{opponent.pbThis}'s Illusion ended")    
 				opponent.effects.Illusion = null;
 				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
 
