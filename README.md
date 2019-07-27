@@ -1,43 +1,23 @@
+
 <p align="center">
-  <img alt="Pokémon Unity Logo" src="https://styles.redditmedia.com/t5_39moy/styles/bannerPositionedImage_6is405sk53j01.png" />
-  <h1 align="center">Pokémon Unity by IIcolour Spectrum</h1>
+  <img alt="Pokémon Unity Logo" src="https://i.imgur.com/SKRgrq9.png" />
+  <h1 align="center">Pokémon Unity</h3>
   <p align="center">
-    <a href="https://opensource.org/licenses/BSD-3-Clause"><img alt="License" src="https://img.shields.io/badge/license-New%20BSD-blue.svg"/></a>
-    <a href="https://discord.gg/SggHcXP"><img alt="Discord Server" src="https://img.shields.io/badge/join%20us%20on-discord-7289DA.svg"/></a>
-    <a href="https://www.reddit.com/r/PokemonUnity/"><img alt="Reddit" src="https://img.shields.io/badge/join%20us%20on-reddit-ff5700.svg"/></a>
-  <a href="https://trello.com/b/BXmwFOBt/pokémon-unity-develop-beta"><img alt="Trello" src="https://img.shields.io/badge/view%20progress%20on-trello-026AA7.svg"></a>
-    <a href="https://herbertmilhomme.github.io/PokemonUnity/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"/></a>
-    <a href="https://herbertmilhomme.visualstudio.com/PokemonUnity/_build/index?definitionId=3"><img src="https://herbertmilhomme.visualstudio.com/_apis/public/build/definitions/90a2f24a-6d43-47cd-9e21-be259c022c96/3/badge"/></a>
+    <a href="https://discord.gg/CCF2YVP"><img alt="Discord Server" src="https://img.shields.io/discord/285560546244427777.svg"></a>
+    <a href="https://www.reddit.com/r/PokemonUnity/"><img alt="Reddit" src="https://img.shields.io/badge/join%20us%20on-reddit-ff5700.svg"></a>
+    <a href="https://pokemonunity.gitbooks.io/pokemon-unity/content/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"></a>
   </p>
 </p>
 
-"Pokémon Unity was in development for about a year before I could not continue working on the project. Rather than let it 
-die, I released the source as is." - Lucas.
+Pokémon Unity is a framework dedicated to providing a framework built in the Unity3D engine for creating RPG-esque games. It's being developed by a large, enthusiastic community on Discord! We welcome any and all improvements or pull requests. If you'd like to take a look at the source, you can clone the `develop` branch and take a look at that. Most of the branches right now are in a very unstable form, so bugs and glitches may (and probably will) occur!
 
-I have changed a lot of code that was either unused (most unused assets were removed) or were obsolete. There can be a lot of conflicts if you're looking forward to using this branch as a framework rather than the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject). Please be aware that some features in this branch are incomplete (the features in the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject) is being tracked and monitored by the build status).
-
-I strongly recommend that you use the master branch as a base rather than the [test-project branch](https://github.com/herbertmilhomme/PokemonUnity/tree/TestProject). This branch is entirely experimental and the process of being completely redone all over -- possibility of breaking your fangame or other project.
-
-I'm basing the code mimic and emulate the [Pokemon Essentials](http://pokemonessentials.wikia.com/wiki/Pok%C3%A9mon_Essentials_Wiki) package for RPG Maker MV, which is written in Ruby. But since Ruby follows similar object-oriented coding structures, it's easy to mirror the code to function the same.
-
+Full Disclaimer: We are not related to Nintendo in any way, and hold none of their copyright, intellectual property, and make otherwise no claims to any assets belonging to Game Freak.
 ## Demo and Downloads
-### _These links point back to the Origin-Repo. release_
-There is a demo WebGL for testing available here: [Link to Unity Cloud Build](https://developer.cloud.unity3d.com/share/Wy-y2uSUhG/)
 
-There are also demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)!  Please report any bugs if found.
+There are demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! These are very old and need to be updated, however. They show the state at which the engine was originally abandoned, and we've been hard at work since. I recommend hopping onto our [Discord](https://discord.gg/CCF2YVP) and asking us how to best look at the current state of the game until we have a `stable` branch.
 
-## Credits
-### _Names below are from Origin-Fork_
+## External Links
 
-* PKUnity Project Lead: [TeamPopplio](https://github.com/TeamPopplio/)
-* PKUnity Base author: [IIcolour Spectrum](https://www.reddit.com/user/IIcolour_Spectrum)
-* PKUnity Maintainer: [superusercode](https://www.reddit.com/user/Lucas_One/)
-* PKUnity Logo artist: [Kaihatsu](https://twitter.com/KaihatsuYT)
-
-## Links
-
-* Project: https://github.com/herbertmilhomme/PokemonUnity/projects/1
-* Discord server: https://discord.gg/SggHcXP
-* Documentation: https://herbertmilhomme.github.io/PokemonUnity/ (or http://pokemonessentials.wikia.com/wiki/Pok%C3%A9mon_Essentials_Wiki)
-* Documentation-Repo: https://github.com/herbertmilhomme/PokemonUnity/tree/gh-pages
-* Web-Server:
+* Reddit: <https://www.reddit.com/r/PokemonUnity/>
+* Discord server: <https://discord.gg/CCF2YVP>
+* Documentation: <https://pokemonunity.gitbooks.io/pokemon-unity/content/>
