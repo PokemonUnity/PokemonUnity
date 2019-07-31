@@ -9,12 +9,12 @@
   </p>
 </p>
 
-Pokémon Unity is a framework dedicated to providing a framework built in the Unity3D engine for creating RPG-esque games. It's being developed by a large, enthusiastic community on Discord! We welcome any and all improvements or pull requests. If you'd like to take a look at the source, you can clone the `develop` branch and take a look at that. Most of the branches right now are in a very unstable form, so bugs and glitches may (and probably will) occur!
+Pokémon Unity is a framework dedicated to providing a framework built in the Unity3D engine for creating RPG-esque games. It's being developed privately currently. We welcome any and all improvements or pull requests. If you'd like to take a look at the source, you can clone the `beta` branch and take a look at that. This project is under active development, so everything will change. If you want to submit a pull request with any improvements, feel free. I make no guarantees about the usability of anything in this project.
 
 Full Disclaimer: We are not related to Nintendo in any way, and hold none of their copyright, intellectual property, and make otherwise no claims to any assets belonging to Game Freak.
 ## Demo and Downloads
 
-There are demos for Windows, Linux, and Mac zipped in [Releases](https://github.com/superusercode/PokemonUnity/releases)! These are very old and need to be updated, however. They show the state at which the engine was originally abandoned, and we've been hard at work since. I recommend hopping onto our [Discord](https://discord.gg/CCF2YVP) and asking us how to best look at the current state of the game until we have a `stable` branch.
+There are examples for Windows, Linux, and Mac zipped in [Releases](https://github.com/PokemonUnity/PokemonUnity/releases)! These are very old and need to be updated, however. They show the state at which the engine was originally abandoned, and we've been hard at work since.
 
 ## External Links
 
