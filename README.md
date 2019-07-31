@@ -4,8 +4,9 @@
   <h1 align="center">Pokémon Unity</h3>
   <p align="center">
     <a href="https://discord.gg/CCF2YVP"><img alt="Discord Server" src="https://img.shields.io/discord/285560546244427777.svg"></a>
-    <a href="https://www.reddit.com/r/PokemonUnity/"><img alt="Reddit" src="https://img.shields.io/badge/join%20us%20on-reddit-ff5700.svg"></a>
-    <a href="https://pokemonunity.gitbooks.io/pokemon-unity/content/"><img alt="GitBook" src="https://img.shields.io/badge/view%20docs%20on-gitbook-blue.svg"></a>
+<a href="https://github.com/PokemonUnity/PokemonUnity/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/PokemonUnity/PokemonUnity"></a>
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/PokemonUnity/PokemonUnity">
+  <a href="https://github.com/PokemonUnity/PokemonUnity/blob/beta/LICENSE.txt"><img alt="GitHub license" src="https://img.shields.io/github/license/PokemonUnity/PokemonUnity"></a>
   </p>
 </p>
 
