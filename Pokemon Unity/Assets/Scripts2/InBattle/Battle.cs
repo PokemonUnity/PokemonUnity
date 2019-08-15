@@ -813,7 +813,7 @@ namespace PokemonUnity.Battle
 					thismove.MoveId == opp1.moves[3].MoveId)
 				{
 					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-					GameDebug.Log("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]")
+					Game.DebugLog("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]");
 					return false;
 				}
 			}
@@ -825,7 +825,7 @@ namespace PokemonUnity.Battle
 					 thismove.MoveId == opp2.moves[3].MoveId)
 				{
 					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-					GameDebug.Log("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]")
+					Game.DebugLog("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]");
 					return false;
 				}
 			}
