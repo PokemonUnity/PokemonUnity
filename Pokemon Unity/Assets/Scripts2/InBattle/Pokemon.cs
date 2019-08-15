@@ -52,6 +52,7 @@ namespace PokemonUnity.Battle
 		public Battle battle { get { return Game.battle; } }
 		public bool captured { get; private set; }
 		//public bool Fainted { get { return isFainted(); } }
+		public bool isFainted { get; private set; }
 		public Battle.DamageState damagestate { get; set; }
 		/// <summary>
 		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
@@ -69,7 +70,7 @@ namespace PokemonUnity.Battle
 		/// Returns the position of this pkmn in party lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
-		public byte pokemonIndex { get; private set; }
+		public sbyte pokemonIndex { get; private set; }
 		public bool IsOwned { get { return Game.Player.Pokedex[_base.ArrayId, 1] == 1; } }
 		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
@@ -140,6 +141,9 @@ namespace PokemonUnity.Battle
 		public bool IsPrimal { get; private set; }
 		//public override bool hasPrimalForm { get { if (effects.Transform) return false; return base.hasPrimalForm; } }
 		public BattlePokemonHandler playerHUD { get; private set; }
+		/// <summary>
+		/// UI for AI or Ally controlled Pokemons 
+		/// </summary>
 		public BattlePokemonHandler nonplayerHUD { get; private set; }
 		#endregion
 
@@ -153,11 +157,11 @@ namespace PokemonUnity.Battle
 		{
 			//battle		= btl;
 			//Index			= idx;
-			//hp			= 0;
-			//totalhp		= 0;
-			//fainted		= true;
+			//HP			= 0;
+			//TotalHP		= 0;
+			isFainted		= true;
 			captured		= false;
-			stages			= new int[7];
+			stages			= new int[Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length];
 			effects			= new Effects.Battler(false);
 			damagestate		= new Battle.DamageState();
 			InitBlank();
@@ -180,18 +184,19 @@ namespace PokemonUnity.Battle
 				this.RecoverHP((int)Math.Floor((decimal)this.TotalHP / 3));
 			InitPokemon(pkmn, index);
 			InitEffects(batonpass);
+			#region Moved Below into InitEffects
 			/*effects = new Effects.Pokemon(batonpass);
 			effects = new Effects.Pokemon(batonpass);
 			if (!batonpass)
 			{
 				//These effects are retained if Baton Pass is used
-				//stages[PBStats::ATTACK]   = 0;
-				//stages[PBStats::DEFENSE]  = 0;
-				//stages[PBStats::SPEED]    = 0;
-				//stages[PBStats::SPATK]    = 0;
-				//stages[PBStats::SPDEF]    = 0;
-				//stages[PBStats::EVASION]  = 0;
-				//stages[PBStats::ACCURACY] = 0;
+				//stages[PokemonUnity.Battle.Stats.ATTACK]   = 0;
+				//stages[PokemonUnity.Battle.Stats.DEFENSE]  = 0;
+				//stages[PokemonUnity.Battle.Stats.SPEED]    = 0;
+				//stages[PokemonUnity.Battle.Stats.SPATK]    = 0;
+				//stages[PokemonUnity.Battle.Stats.SPDEF]    = 0;
+				//stages[PokemonUnity.Battle.Stats.EVASION]  = 0;
+				//stages[PokemonUnity.Battle.Stats.ACCURACY] = 0;
 				stages = new int[7];
 				//lastMoveUsedSketch        = -1;
 				
@@ -248,13 +253,14 @@ namespace PokemonUnity.Battle
 				//	this.Illusion     = battle.Party(index)[lastpoke]
 				//}
 			}*/
+			#endregion InitEffects
 			return this;
 		}
 		private void InitBlank()
 		{
 			//Pokemon blank = new Pokemon();
 			//Level = 0;
-			//pokemonIndex = -1;
+			pokemonIndex = -1;
 			participants = new List<byte>();
 		}
 		private void InitEffects(bool batonpass)
@@ -269,8 +275,8 @@ namespace PokemonUnity.Battle
 				//stages[4]	= 0; // [SPDEF]   
 				//stages[5]	= 0; // [EVASION] 
 				//stages[6]	= 0; // [ACCURACY]
-				stages = new int[7];
-				//lastMoveUsedSketch        = -1;
+				stages = new int[Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length];
+				lastMoveUsedSketch 	= Moves.NONE; //-1;
 				effects.AquaRing	= false;
 				effects.Confusion	= 0;
 				effects.Curse		= false;
@@ -308,12 +314,14 @@ namespace PokemonUnity.Battle
 				
 				if (effects.PowerTrick)
 				{
+					//int a = this.ATK;
 					//this.ATK = this.DEF;
 					//this.DEF = this.ATK;
+					//this.DEF = a;
 				}
 			}			
 			damagestate.Reset();
-			//isFainted				 = false;
+			isFainted				 = false;
 			//battle.lastAttacker    = []
 			lastHPLost				 = 0;
 			tookDamage				 = false;
@@ -424,8 +432,8 @@ namespace PokemonUnity.Battle
 			}
 			if (this.hasWorkingAbility(Abilities.ILLUSION))
 			{
-				//lastpoke = battle.GetLastPokeInTeam(index);
-				//if (lastpoke!=pokemonIndex){
+				//int lastpoke = battle.GetLastPokeInTeam(index);
+				//if (lastpoke != pokemonIndex){
 				//	this.Illusion     = battle.Party(index)[lastpoke]
 				//}
 			}
@@ -489,7 +497,7 @@ namespace PokemonUnity.Battle
 		{
 			if(Species != Pokemons.NONE)
 			{
-				//calcStats(); //Not needed since fetching stats from base ( Pokemon => Pokemon )
+				//calcStats(); //Not needed since fetching stats from base ( Pokemon => Battler )
 				//ToDo: Uncomment and fetch data from baseClass
 				//Level		= pokemon.Level;
 				//HP		= pokemon.HP;
@@ -520,9 +528,9 @@ namespace PokemonUnity.Battle
 			Index		= -1;
 			InitEffects(false);
 			//reset status
-			Status		= Status.NONE;
+			Status		= Status.NONE; //ToDo: Status.FAINT?
 			StatusCount	= 0;
-			//IsFainted	= true;
+			isFainted	= true;
 			//reset choice
 			battle.choices[Index] = new Battle.Choice(ChoiceAction.NoAction);
 			return this;
@@ -870,6 +878,9 @@ namespace PokemonUnity.Battle
 		/// 
 		/// </summary>
 		/// ToDo: Changes stats on form changes here?
+		/// ToDo: Use PokemonUnity.Battle.Form to modify Pokemon._base, 
+		/// Which will override and modify base stats for values that inherit it
+		/// Castform and Unown should use (int)Form, and others will use (PokemonData)Form
 		public void CheckForm()
 		{
 			if (effects.Transform) return;
@@ -981,7 +992,7 @@ namespace PokemonUnity.Battle
 		}
 		public void ResetForm()
 		{
-			if (!effects.Transform)
+			if (!effects.Transform){
 				if (Species == Pokemons.CASTFORM ||
 					Species == Pokemons.CHERRIM ||
 					Species == Pokemons.DARMANITAN ||
@@ -989,6 +1000,7 @@ namespace PokemonUnity.Battle
 					Species == Pokemons.AEGISLASH ||
 					Species == Pokemons.XERNEAS)
 					Form = 0;
+			}
 			Update(true);
 		}
 		#endregion
@@ -999,7 +1011,7 @@ namespace PokemonUnity.Battle
 			if (isFainted()) return;
 			//if (onactive)
 			//	battle.PrimalReversion(Index);
-			///Weather
+			#region Weather
 			if (onactive)
 			{
 				if(hasWorkingAbility(Abilities.PRIMORDIAL_SEA) && battle.Weather != Weather.HEAVYRAIN)
@@ -1113,8 +1125,9 @@ namespace PokemonUnity.Battle
 					Game.DebugLog(string.Format("[Ability nullified] {0}'s Ability cancelled weather effects", ToString()));
 				}
 			}
+			#endregion Weather
 			//battle.PrimordialWeather();
-			///Trace
+			#region Trace
 			if (hasWorkingAbility(Abilities.TRACE))
 			{
 				//Choice[] choices = new Choice[4];
@@ -1140,7 +1153,7 @@ namespace PokemonUnity.Battle
 					//ToDo: WIP; Finish from here...
 				}
 			}
-
+			#endregion Trace
 		}
 		#endregion
 
@@ -1311,17 +1324,18 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Refreshes the HUD of this Pokemon
 		/// </summary>
+		/// ToDo: Make this into a MonoBehaviour Class?
 		private void UpdateUI()
 		{
-			playerHUD.HP = nonplayerHUD.HP = HP;
-			playerHUD.TotalHP = nonplayerHUD.TotalHP = TotalHP;
-			playerHUD.expSlider.value = nonplayerHUD.expSlider.value = Exp.Current;
+			playerHUD.HP 				= nonplayerHUD.HP 				= HP;
+			playerHUD.TotalHP 			= nonplayerHUD.TotalHP 			= TotalHP;
+			playerHUD.expSlider.value 	= nonplayerHUD.expSlider.value 	= Exp.Current;
 			playerHUD.expSlider.maxValue = nonplayerHUD.expSlider.maxValue = Exp.NextLevel;
-			playerHUD.Level.text = nonplayerHUD.Level.text = Level.ToString();
-			playerHUD.Name.text = nonplayerHUD.Name.text = Name;
-			playerHUD.Gender = nonplayerHUD.Gender = Gender;
-			playerHUD.Status = nonplayerHUD.Status = Status;
-			playerHUD.Item = nonplayerHUD.Item = Item != Items.NONE;
+			playerHUD.Level.text 		= nonplayerHUD.Level.text 		= Level.ToString();
+			playerHUD.Name.text 		= nonplayerHUD.Name.text 		= Name;
+			playerHUD.Gender 			= nonplayerHUD.Gender 			= Gender;
+			playerHUD.Status 			= nonplayerHUD.Status 			= Status;
+			playerHUD.Item 				= nonplayerHUD.Item 			= Item != Items.NONE;
 		}
 	}
 }

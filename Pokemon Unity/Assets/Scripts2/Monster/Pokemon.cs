@@ -307,7 +307,7 @@ namespace PokemonUnity.Monster
         }
 
 		/// <summary>
-		/// This is used SPECIFICALLY for regenerating a pokemon from a 
+		/// This is used SPECIFICALLY for regenerating a pokemon from 
 		/// <see cref="PokemonUnity.Saving.SerializableClasses.SeriPokemon"/>
 		/// </summary>
 		/// <param name="species"></param>
@@ -2169,7 +2169,7 @@ namespace PokemonUnity.Monster
 			{
 				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
-				if (isFainted()) { this.Status = Status.FAINT; statusCount = 0; } 
+				if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; } 
             }
         }
 

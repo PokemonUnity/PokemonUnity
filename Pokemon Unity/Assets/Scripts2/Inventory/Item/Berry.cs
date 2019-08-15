@@ -25,6 +25,7 @@
 
 			public string Size				{ get; private set; }
 			public FirmnessLevel Firmness	{ get; private set; }
+			public int Smooth				{ get; private set; }
 			public int BerryIndex			{ get; private set; }
 			public int minBerries			{ get; private set; }
 			public int maxBerries			{ get; private set; }
@@ -361,6 +362,10 @@
 			}
 			public enum FirmnessLevel
 			{
+				VerySoft,
+				Soft,
+				Hard,
+				VeryHard,
 				SuperHard
 			}
 			#endregion

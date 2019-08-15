@@ -579,6 +579,7 @@ namespace PokemonUnity
 		#endregion
 
 		#region Battling and Encounter
+		public const int MAXPARTYSIZE = 6;
 		/// <summary>
 		/// The Global Switch that is set to ON when the player whites out.
 		/// </summary>

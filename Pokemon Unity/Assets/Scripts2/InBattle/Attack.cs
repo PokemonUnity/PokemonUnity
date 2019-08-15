@@ -956,7 +956,7 @@ namespace PokemonUnity.Battle
 			{
 				//battle.pbDisplay(_INTL("A bell chimed!"))
 			}
-			List<byte> activepkmn = new List<byte>();
+			List<sbyte> activepkmn = new List<sbyte>();
 			foreach (Pokemon i in this.battle.battlers)
 			{
 				if (attacker.IsOpposing(i.Index) || i.isFainted()) continue; //next
@@ -991,7 +991,7 @@ namespace PokemonUnity.Battle
 
 			}
 			Pokemon[] party = this.battle.pbParty(attacker.Index); // NOTE: Considers both parties in multi battles
-			for (byte i = 0; i < party.Length; i++)
+			for (sbyte i = 0; i < party.Length; i++)
 			{
 				if (activepkmn.Contains(i)) continue; //next
 				if (party[i].Species == Pokemons.NONE || party[i].isEgg || party[i].HP <= 0) continue; //next

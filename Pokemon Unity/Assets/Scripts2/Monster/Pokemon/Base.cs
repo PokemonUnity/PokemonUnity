@@ -115,9 +115,16 @@ namespace PokemonUnity.Monster
             /// <remarks>If game event/gm wants to "give" player Deoxys-Power form and not Speed form</remarks>
             public Pokemons ID { get; private set; }
             /// <summary>
+            /// Supposed to be the order the pokemons were released, 
+            /// the order they would appear in if their pre-evolves were sorted,
+            /// and also the order they're assigned for specific gen/region.
+            /// <para></para>
+            /// Zero's mean they're absent for that particular pokedex
+            /// </summary>
+            /// <example>
             /// Different Gens assign different pokedex num
             /// example: Bulbasaur = [1,231]
-            /// </summary>
+            /// </example>
             /// <remarks>Think there is 3 pokedex</remarks>
             public int[] RegionalPokedex { get; private set; }
             /// <summary>
@@ -335,7 +342,7 @@ namespace PokemonUnity.Monster
                 }
                 else
                 {
-                    this.forms = new string[1] { null };
+                    this.forms = new string[] { null };
                 }
             }
 
@@ -363,7 +370,7 @@ namespace PokemonUnity.Monster
 
                 this.type1 = type1; //!= null ? (Types)type1 : Types.NONE;
                 this.type2 = type2; //!= null ? (Types)type2 : Types.NONE;
-                                    //this.ability = abilities;
+                //this.ability = abilities;
                 this.ability1 = (Abilities)ability1;
                 this.ability2 = (Abilities)ability2;
                 this.abilityh = (Abilities)hiddenAbility;

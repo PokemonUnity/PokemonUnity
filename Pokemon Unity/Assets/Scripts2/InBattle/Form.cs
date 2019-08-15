@@ -11,11 +11,15 @@ namespace PokemonUnity.Battle
 {
 	//ToDo: Move to PokemonData Class?...
 	//ToDo: Change Pokemon.Form from type `int` to `Form`
+	//ToDo: What if: `Pokemons form` to point back to base pokemon, and Pokemons.NONE, if they are the base form?
+	//that way, we can assign values to pokemons with forms that give stat bonuses...
+	//want to find a way to add pokemon froms from a different method. Maybe something like overwriting the `Database` values to match those of base pokemon for values that are duplicated.
+	//Or I'll just add it at the bottom towards end of array using copy-paste method.
 	public partial class Form : PokemonUnity.Monster.Pokemon.PokemonData
 	{
 		public Pokemons BaseSpecies { get; private set; }
 		public bool IsMega { get; private set; }
-		public Form(Pokemons Id = Pokemons.NONE, Pokemons baseSpecies = Pokemons.NONE, bool isMega = false, //int[] regionalDex = null, //string name, 
+		public Form(Pokemons Id, Pokemons baseSpecies = Pokemons.NONE, bool isMega = false, //int[] regionalDex = null, //string name, 
 								Types type1 = Types.NONE, Types type2 = Types.NONE, Abilities ability1 = Abilities.NONE, Abilities ability2 = Abilities.NONE, Abilities hiddenAbility = Abilities.NONE,//Abilities[] abilities,
 								GenderRatio genderRatio = GenderRatio.Genderless, float? maleRatio = null, int catchRate = 1, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
 								float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
@@ -26,17 +30,27 @@ namespace PokemonUnity.Battle
 								Rarity rarity = Rarity.Common, float luminance = 0f, //Color lightColor,
 								PokemonMoveset[] movesetmoves = null,
 								int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
-								IPokemonEvolution[] evolution = null,
-								int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, //string[] evolutionRequirements,
-								//ToDo: What if: `Pokemons form` to point back to base pokemon, and Pokemons.NONE, if they are the base form?
-								//that way, we can assign values to pokemons with forms that give stat bonuses...
-								//want to find a way to add pokemon froms from a different method. Maybe something like overwriting the `Database` values to match those of base pokemon for values that are duplicated.
-								//Or I'll just add it at the bottom towards end of array using copy-paste method.
-								Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
-								int[,] heldItem = null) :  base (Id)
+								//IPokemonEvolution[] evolution = null, int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, //string[] evolutionRequirements,
+								//Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
+								int[,] heldItem = null) :  base (Id: Id, BaseSpecies: baseSpecies)
 		{
-			PokemonUnity.Monster.Pokemon.PokemonData _base = GetPokemon(BaseSpecies);
-			this.RegionalPokedex = _base.regionalDex;
+			this.BaseSpecies = baseSpecies;
+			this.IsMega = isMega;
+            //Rather than overwriting stats, create a new PokemonData entry, and load it as reference
+			//SetForm(type1, type2, ability1, ability2, hiddenAbility,
+			//		genderRatio, maleRatio, catchRate, eggGroup1, eggGroup2, hatchTime,
+			//		height, weight, baseExpYield, levelingRate,
+            //    	evHP, evATK, evDEF, evSPA, evSPD, evSPE,
+            //    	pokedexColor, //baseFriendship,// string species, string pokedexEntry,
+			//		baseStatsHP, baseStatsATK, baseStatsDEF, baseStatsSPA, baseStatsSPD, baseStatsSPE,
+			//		//Rarity rarity, float luminance, //Color lightColor,
+			//		//PokemonMoveset[] movesetmoves, int[] movesetLevels, Moves[] movesetMoves, int[] tmList, IPokemonEvolution[] evolution,
+			//		//int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //string[] evolutionRequirements,
+			//		//Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
+			//		heldItem);
+
+			/*PokemonUnity.Monster.Pokemon.PokemonData _base = GetPokemon(baseSpecies);
+			//this.RegionalPokedex = _base.regionalDex;
 
 			this.type1 = type1; //!= null ? (Types)type1 : Types.NONE;
 			this.type2 = type2; //!= null ? (Types)type2 : Types.NONE;
@@ -45,8 +59,8 @@ namespace PokemonUnity.Battle
 			this.ability2 = (Abilities)ability2;
 			this.abilityh = (Abilities)hiddenAbility;
 
-			this.MaleRatio = maleRatio.HasValue ? getGenderRatio(maleRatio.Value) : genderRatio; //ToDo: maleRatio; maybe `GenderRatio genderRatio(maleRatio);`
-			this.CatchRate = catchRate;
+			this.MaleRatio = maleRatio.HasValue ? getGenderRatio(maleRatio.Value) : genderRatio; 
+			this.CatchRate = _base.catchRate;
 			this.eggGroup1 = eggGroup1;
 			this.eggGroup2 = eggGroup2;
 			this.HatchTime = hatchTime;
@@ -76,7 +90,6 @@ namespace PokemonUnity.Battle
 			//this.lightColor = lightColor;
 			this.PokedexColor = _base.pokedexColor | Color.NONE;
 
-			//ToDo: wild pokemon held items not yet implemented
 			this.HeldItem = _base.heldItem; //[item id,% chance]
 
 			this.MoveTree = _base.MoveTree;//new PokemonMoveTree(movesetmoves);
@@ -87,11 +100,11 @@ namespace PokemonUnity.Battle
 			this.Evolutions = _base.evolution ?? new IPokemonEvolution[0];
 			//this.EvolutionID = evolutionID;
 			//this.evolutionMethod = evolutionMethod; 
-			//this.evolutionRequirements = evolutionRequirements;
+			//this.evolutionRequirements = evolutionRequirements;*/
 		}
 
 		//public static readonly PokemonUnity.Monster.Pokemon.PokemonData[] Mega; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
-		public static readonly Form[] Forms; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
+		new public static readonly Form[] Forms; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
 		static Form()
 		{
 			//ToDo: Add values for forms
@@ -100,7 +113,7 @@ namespace PokemonUnity.Battle
 			#region Mega Evolve Forms
         new Form(
                 Id: Pokemons.VENUSAUR_MEGA ,
-				baseForm: Pokemons.VENUSAUR ,
+				baseSpecies: Pokemons.VENUSAUR ,
 				isMega: true,
                 //regionalDex: new int[]{3} ,
                 type1: Types.GRASS ,
@@ -117,7 +130,7 @@ namespace PokemonUnity.Battle
 
         new Form(
                 Id: Pokemons.CHARIZARD_MEGA_X ,
-				baseForm: Pokemons.CHARIZARD ,
+				baseSpecies: Pokemons.CHARIZARD ,
 				isMega: true,
                 //regionalDex: new int[]{6} ,
                 type1: Types.FIRE ,
@@ -134,7 +147,7 @@ namespace PokemonUnity.Battle
 
         new Form(
                 Id: Pokemons.CHARIZARD_MEGA_Y ,
-				baseForm: Pokemons.CHARIZARD ,
+				baseSpecies: Pokemons.CHARIZARD ,
 				isMega: true,
                 //regionalDex: new int[]{6} ,
                 type1: Types.FIRE ,

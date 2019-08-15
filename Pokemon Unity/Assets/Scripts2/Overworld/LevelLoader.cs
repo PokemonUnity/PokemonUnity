@@ -309,7 +309,7 @@ namespace PokemonUnity.Overworld
 			timer.Stop();
 			Game.DebugLog("Map loading time: " + timer.ElapsedTicks + " Ticks; " + timer.ElapsedMilliseconds + " Milliseconds.");
 
-			// Dim xmlLevelLoader As New XmlLevelLoader.
+			// var xmlLevelLoader = mew XmlLevelLoader();
 			// xmlLevelLoader.Load(My.Computer.FileSystem.SpecialDirectories.Desktop & "\t.xml", _5DHero.XmlLevelLoader.LevelTypes.Default, Vector3.Zero)
 
 			Busy -= 1;

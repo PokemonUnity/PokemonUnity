@@ -184,7 +184,6 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Effects common to the whole of a battle
 		/// </summary>
-		/// static
 		/// public List<FieldEffects> field { get; private set; }
 		public Effects.Field field { get; private set; }
 		/// <summary>
@@ -444,13 +443,13 @@ namespace PokemonUnity.Battle
 
 			nextPickupUse = 0;
 
-			megaEvolution = new bool?[] { new bool?[0], new bool?[0] }; 	//list, [2,], or [2][]...
+			megaEvolution = new bool?[][] { new bool?[0], new bool?[0] }; 	//list, [2,], or [2][]...
 			if (this.player != null) 										//ToDo: single/double or party?
-				megaEvolution[0] = new bool?[this.player.Length]; 			//[-1] * player.Length;
+				megaEvolution[0] = new bool?[this.player.Party.Length]; 	//[-1] * player.Length; 
 			else
 				megaEvolution[0] = new bool?[]{ null }; 					//[-1];
 			if (this.opponent != null)
-				megaEvolution[1] = new bool?[this.opponent.Length]; 		//[-1] * opponent.Length;
+				megaEvolution[1] = new bool?[this.opponent.Party.Length]; 	//[-1] * opponent.Length;
 			else
 				megaEvolution[1] = new bool?[]{ null }; 					//[-1];
 
@@ -766,7 +765,7 @@ namespace PokemonUnity.Battle
 				return false;
 
 			// Encore
-			if (thispkmn.effects.Encore) return false;
+			if (thispkmn.effects.Encore > 0) return false;
 			return true;
 		}
 		bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
