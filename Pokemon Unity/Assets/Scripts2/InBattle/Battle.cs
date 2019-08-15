@@ -35,15 +35,15 @@ namespace PokemonUnity.Battle
 		public bool doublebattle { get; private set; }
 		public bool isDoubleBattleAllowed { get
 			{
-				/*if (!fullparty1 && party1.Length > Core.MAXPARTYSIZE) return false;
-
+				if (!fullparty1 && party1.Length > Core.MAXPARTYSIZE) return false;
 				if (!fullparty2 && party2.Length > Core.MAXPARTYSIZE) return false;
 
-				//_opponent = opponent;
-				//_player = player;
+				/*
+				//Trainer[] _opponent = this.opponent;
+				//Trainer[] _player = this.player;
 
-				// Wild battle
-				if (!_opponent)
+				#region Wild battle
+				if (_opponent == null)
 				{
 					if (party2.Length == 1)
 						return false;
@@ -52,10 +52,11 @@ namespace PokemonUnity.Battle
 					else
 						return false;
 				}
-				// Trainer battle
+				#endregion Wild
+				#region Trainer battle
 				else
 				{
-					if (_opponent.is_a ? (Array))
+					if (_opponent != null)
 					{
 						if (_opponent.Length == 1)
 							_opponent = _opponent[0];
@@ -65,7 +66,7 @@ namespace PokemonUnity.Battle
 
 					//_player = _player
 
-					if (_player.is_a ? (Array))
+					if (_player != null)
 					{
 						if (_player.Length == 1)
 							_player = _player[0];
@@ -73,30 +74,31 @@ namespace PokemonUnity.Battle
 							return false;
 					}
 
-					if (_opponent.is_a ? (Array))
+					if (_opponent != null)
 					{
-						sendout1 = pbFindNextUnfainted(party2, 0, pbSecondPartyBegin(1));
-						sendout2 = pbFindNextUnfainted(party2, pbSecondPartyBegin(1));
+						int sendout1 = pbFindNextUnfainted(party2, 0, pbSecondPartyBegin(1));
+						int sendout2 = pbFindNextUnfainted(party2, pbSecondPartyBegin(1));
 						if (sendout1 < 0 || sendout2 < 0) return false;
 					}
 					else
 					{
-						sendout1 = pbFindNextUnfainted(party2, 0);
-						sendout2 = pbFindNextUnfainted(party2, sendout1 + 1);
+						int sendout1 = pbFindNextUnfainted(party2, 0);
+						int sendout2 = pbFindNextUnfainted(party2, sendout1 + 1);
 						if (sendout1 < 0 || sendout2 < 0) return false;
 					}
 				}
+				#endregion Trainer
 
-				if (_player.is_a ? (Array))
+				if (_player != null) 
 				{
-					sendout1 = pbFindNextUnfainted(party1, 0, pbSecondPartyBegin(0));
-					sendout2 = pbFindNextUnfainted(party1, pbSecondPartyBegin(0));
+					int sendout1 = pbFindNextUnfainted(party1, 0, pbSecondPartyBegin(0));
+					int sendout2 = pbFindNextUnfainted(party1, pbSecondPartyBegin(0));
 					if (sendout1 < 0 || sendout2 < 0) return false;
 				}
-				else
+				else //AI:wild vs wild?
 				{
-					sendout1 = pbFindNextUnfainted(party1, 0);
-					sendout2 = pbFindNextUnfainted(party1, sendout1 + 1);
+					int sendout1 = pbFindNextUnfainted(party1, 0);
+					int sendout2 = pbFindNextUnfainted(party1, sendout1 + 1);
 					if (sendout1 < 0 || sendout2 < 0) return false;
 				}*/
 				return true;
@@ -132,6 +134,7 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Opponent trainer
 		/// </summary>
+		/// ToDo: Make Array, if null => wild encounter
 		/// If wild encounter...
 		/// Dont show pokeballs,
 		/// Dont show trainer sprite
@@ -243,7 +246,7 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Battle index of each trainer's Pokémon to Mega Evolve
 		/// </summary>
-		public sbyte[] megaEvolution { get; private set; }
+		public bool?[][] megaEvolution { get; private set; }
 		/// <summary>
 		/// Whether Amulet Coin's effect applies
 		/// </summary>
@@ -362,7 +365,7 @@ namespace PokemonUnity.Battle
 				return;
 			}
 		
-			if (p2.Length > 2 && opponent.ID == TrainerTypes.WildPokemon) { //opponent != null
+			if (p2.Length > 2 && opponent.ID == TrainerTypes.WildPokemon) { //opponent == null
 				//raise ArgumentError.new(_INTL("Wild battles with more than two Pokémon are not allowed."))
 				Game.DebugLog("Wild battles with more than two Pokémon are not allowed.", true);
 				return;
@@ -378,11 +381,11 @@ namespace PokemonUnity.Battle
 			debug = false;
 			//debugupdate = 0;
 
-			//if (opponent && player.is_a ? (Array) && player.Party.Length == 0)
-			//	player = player[0];
+			//if (opponent != null && player.is_a ? (Array) && player.Party.Length == 0)
+			//	this.player = player[0]; //Why zero if empty?
 
-			//if (opponent && opponent.is_a ? (Array) && opponent.Length == 0)
-			//	opponent = opponent[0];
+			//if (opponent != null && opponent.is_a ? (Array) && opponent.Length == 0)
+			//	this.opponent = opponent[0];
 
 			this.player = player;
 			this.opponent = opponent;
@@ -391,8 +394,8 @@ namespace PokemonUnity.Battle
 
 			party1order = new List<int>();
 
-			//the #12 represents a double battle with 2 trainers using 6 pokemons on 1 side
-			/*for (int i = 0; i < 12; i++)
+			//the #12 represents a double battle with 2 trainers using 6 pokemons each on 1 side
+			for (int i = 0; i < 12; i++)
 			{
 				party1order.Add(i);
 			}
@@ -403,7 +406,7 @@ namespace PokemonUnity.Battle
 			for (int i = 0; i < 12; i++)
 			{
 				party2order.Add(i);
-			}*/
+			}
 
 			fullparty1 = false;
 
@@ -415,9 +418,9 @@ namespace PokemonUnity.Battle
 
 			//sides = [PokeBattle_ActiveSide.new,				// Player's side
 			//                   PokeBattle_ActiveSide.new]		// Foe's side
-			sides = new Effects.Side[4];						//ToDo: Not sure if it's 2 sides, or 4 sides (foreach pokemon)
+			sides = new Effects.Side[2];						//ToDo: Not sure if it's 2 sides, or 4 sides (foreach pokemon)
 			field = new Effects.Field();                        // Whole field (gravity/rooms)
-			environment = Environment.None;		// e.g. Tall grass, cave, still water
+			environment = Environment.None;						// e.g. Tall grass, cave, still water
 			weather = 0;
 
 			weatherduration = 0;
@@ -441,15 +444,15 @@ namespace PokemonUnity.Battle
 
 			nextPickupUse = 0;
 
-			//megaEvolution = [] //list, [2,], or [2][]...
-			//if player.is_a ? (Array) //ToDo: single/double or party?
-			//	megaEvolution[0] =[-1] * player.Length;
-			//else
-			//	megaEvolution[0] =[-1];
-			//if opponent.is_a ? (Array)
-			//	megaEvolution[1] =[-1] * opponent.Length;
-			//else
-			//	megaEvolution[1] =[-1];
+			megaEvolution = new bool?[] { new bool?[0], new bool?[0] }; 	//list, [2,], or [2][]...
+			if (this.player != null) 										//ToDo: single/double or party?
+				megaEvolution[0] = new bool?[this.player.Length]; 			//[-1] * player.Length;
+			else
+				megaEvolution[0] = new bool?[]{ null }; 					//[-1];
+			if (this.opponent != null)
+				megaEvolution[1] = new bool?[this.opponent.Length]; 		//[-1] * opponent.Length;
+			else
+				megaEvolution[1] = new bool?[]{ null }; 					//[-1];
 
 			amuletcoin = false;
 
@@ -458,14 +461,12 @@ namespace PokemonUnity.Battle
 			doublemoney = false;
 
 			//endspeech = opponent.ScriptBattleEnd;
-			//
 			//endspeech2 = "";
-			//
 			//endspeechwin = "";
-			//
 			//endspeechwin2 = "";
 
 			rules = new List<string>() { };
+
 			turncount = 0;
 
 			//peer = PokeBattle_BattlePeer.create()
@@ -493,22 +494,16 @@ namespace PokemonUnity.Battle
 			foreach (var i in party1)
 			{
 				if (i.Species == Pokemons.NONE) continue;
-
 				i.itemRecycle = 0;
-
 				i.itemInitial = i.Item;
-
 				i.belch = false;
 			}
 
 			foreach (var i in party2)
 			{
 				if (i.Species == Pokemons.NONE) continue;
-
 				i.itemRecycle = 0;
-
 				i.itemInitial = i.Item;
-
 				i.belch = false;
 			}
 		}
@@ -636,25 +631,25 @@ namespace PokemonUnity.Battle
 			//		pokemon.SetNickname(scene.NameEntry(LanguageExtension.Translate(Text.ScriptTexts, "SetNick", pokemon.Name).Value, pokemon));
 			//	}
 			//int oldcurbox = Game.CurrentBox;
-			//int storedbox = GameVariable.StorePokemon(GameVariable.Player,pokemon)
-			//string creator = GameVariable.GetStorageCreator()
+			//int storedbox = Game.StorePokemon(Game.Player, pokemon)
+			//string creator = Game.GetStorageCreator()
 			//if (storedbox < 0) return;
-			//string curboxname = GameVariable.BoxName(oldcurbox)
-			//string boxname = GameVariable.BoxName(storedbox)
-			//if (storedbox!=oldcurbox) {
-			//	if (GameVariable.isCreator)
-			//		GameVariable.DisplayPaused("Box \"{1}\" on {2}'s PC was full.",curboxname,creator)
+			//string curboxname = Game.BoxName(oldcurbox)
+			//string boxname = Game.BoxName(storedbox)
+			//if (storedbox != oldcurbox) {
+			//	if (Game.IsCreator)
+			//		Game.DisplayPaused("Box \"{1}\" on {2}'s PC was full.", curboxname, creator)
 			//	else
-			//		DisplayPaused("Box \"{1}\" on someone's PC was full.",curboxname)
-			//	DisplayPaused("{1} was transferred to box \"{2}\".",pokemon.name,boxname)
+			//		DisplayPaused("Box \"{1}\" on someone's PC was full.", curboxname)
+			//	DisplayPaused("{1} was transferred to box \"{2}\".", pokemon.name, boxname)
 			//}else
 			//{
-			//  if (GameVariable.isCreator)
-			//		DisplayPaused("{1} was transferred to {2}'s PC.",pokemon.name,creator)
-			//  else
-			//		DisplayPaused("{1} was transferred to someone's PC.",pokemon.name)
+			//  if (Game.IsCreator)
+			//		DisplayPaused("{1} was transferred to {2}'s PC.", pokemon.name, creator)
+			//  else {}
+			//		DisplayPaused("{1} was transferred to someone's PC.", pokemon.name)
 			//	}
-			//	DisplayPaused("It was stored in box \"{1}\".",boxname)
+			//	DisplayPaused("It was stored in box \"{1}\".", boxname)
 			//}		
 		}
 		public void ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
@@ -711,7 +706,6 @@ namespace PokemonUnity.Battle
 				else if (Game.Player.PokedexCaught > 30)
 					c = (int)Math.Floor(x * .5 / 6);
 			}
-
 		}
 		#endregion
 
@@ -749,7 +743,6 @@ namespace PokemonUnity.Battle
 		/// <returns></returns>
 		bool CanShowCommands(int idxPokemon)
 		{
-			//List<BattlerEffects> thispkmn = new List<PokemonUnity.Effects.BattlerEffects>(); //battlers[idxPokemon].
 			PokemonUnity.Battle.Pokemon thispkmn = this.battlers[idxPokemon];
 			if (thispkmn.isFainted()) return false;
 			if (thispkmn.effects.TwoTurnAttack > 0) return false; 
@@ -773,7 +766,7 @@ namespace PokemonUnity.Battle
 				return false;
 
 			// Encore
-			//if (thispkmn.Effects.Contains(BattlerEffects.Encore)) return false;
+			if (thispkmn.effects.Encore) return false;
 			return true;
 		}
 		bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
@@ -793,7 +786,7 @@ namespace PokemonUnity.Battle
 				//if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", PBItems.getName(thispkmn.item)))
 				return false;
 			}
-			if (//thispkmn.effects.ChoiceBand>=0 &&
+			if ((int)thispkmn.effects.ChoiceBand >= 0 &&
 			   (thispkmn.Item == Items.CHOICE_BAND ||
 			   thispkmn.Item == Items.CHOICE_SPECS ||
 			   thispkmn.Item == Items.CHOICE_SCARF))
