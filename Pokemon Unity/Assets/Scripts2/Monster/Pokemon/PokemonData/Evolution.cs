@@ -143,6 +143,7 @@ namespace PokemonUnity.Monster
                     return true;// base.isGenericT();
                 }
 
+				/* ToDo: Why is build failing to compile this method?
 				/// <summary>
 				/// This is used to ensure that the constructor class was created properly,
 				/// by returning a new instance if the class was used incorrectly.
@@ -245,7 +246,7 @@ namespace PokemonUnity.Monster
 					//this.EvolveValue = value; //Value;
 					//this.EvolveValue = Convert.ChangeType(value, typeof(T));
 					return this;
-				}
+				}*/
 
 				//void evolve(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) { }
 			}
