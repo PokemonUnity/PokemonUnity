@@ -33,10 +33,12 @@ public class FollowerMovement : MonoBehaviour
     private SpriteRenderer sLRenderer;
     private SpriteRenderer sReflectionRenderer;
     private SpriteRenderer sLReflectionRenderer;
-    private Sprite[] spriteSheet;
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	private Sprite[] spriteSheet;
     private Sprite[] lightSheet;
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 
-    private SpriteRenderer pawnShadow;
+	private SpriteRenderer pawnShadow;
 
     public bool hide;
     public bool canMove = true;

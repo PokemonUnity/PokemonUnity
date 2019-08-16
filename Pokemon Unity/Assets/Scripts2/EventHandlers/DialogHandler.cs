@@ -122,16 +122,17 @@ public class DialogHandler : UnityEngine.MonoBehaviour
     }
 	#endregion
 
+#pragma warning disable 0414 //Warning CS0414  ...is assigned but it's never used 
 	#region Text and Message Display
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="prompt"></param>
-    /// <param name="promptOptions"></param>
-    /// <returns></returns>
-    /// ToDo: Add a Param to adjust the width of the DialogPromptWindow
-    public IEnumerator<int> DisplayDialogMessage(string message, bool prompt = false, params string[] promptOptions)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="message"></param>
+	/// <param name="prompt"></param>
+	/// <param name="promptOptions"></param>
+	/// <returns></returns>
+	/// ToDo: Add a Param to adjust the width of the DialogPromptWindow
+	public IEnumerator<int> DisplayDialogMessage(string message, bool prompt = false, params string[] promptOptions)
     {
         DialogPromptDump.SetActive(false);
         //Pause player/lock controller actions
@@ -710,6 +711,7 @@ public class DialogHandler : UnityEngine.MonoBehaviour
 	}
 	#endregion
 	#endregion
+#pragma warning restore 0414 //Warning CS0414  ...is assigned but it's never used 
 
 	#region Change a Pokémon's level
 	/*
@@ -824,7 +826,9 @@ public class ChooseBox
 	public delegate void DoAnswer(int result);
 
 	public string[] Options;
+#pragma warning disable 0414 //Warning CS0414  ...is assigned but it's never used 
 	public int index = 0;
+#pragma warning restore 0414 //Warning CS0414  ...is assigned but it's never used 
 
 	private float PositionY = 0;
 

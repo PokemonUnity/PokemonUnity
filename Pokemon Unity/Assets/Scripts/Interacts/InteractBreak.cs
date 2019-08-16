@@ -12,9 +12,11 @@ public class InteractBreak : MonoBehaviour
     private Collider hitBox;
     private Light objectLight;
 
-    private bool breaking = false;
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	private bool breaking = false;
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 
-    private AudioSource breakSound;
+	private AudioSource breakSound;
 
     public string examineText;
     public string interactText;

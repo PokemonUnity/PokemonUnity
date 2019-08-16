@@ -39,7 +39,8 @@ public class PCHandler : MonoBehaviour
 
     private Transform selectedInfo;
 
-    private Text selectedName;
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	private Text selectedName;
     private Text selectedNameShadow;
     private Text selectedGender;
     private Text selectedGenderShadow;
@@ -76,8 +77,9 @@ public class PCHandler : MonoBehaviour
     private Text currentBoxHeaderShadow;
     private Text nextBoxHeaderShadow;
     private Text previousBoxHeaderShadow;
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 
-    private Transform currentBoxIcons;
+	private Transform currentBoxIcons;
     private Texture[] currentBoxIconsArray	= new Texture[30];
     private Texture[] currentBoxItemsArray	= new Texture[30];
     private Transform nextBoxIcons;

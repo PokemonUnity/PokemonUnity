@@ -16,9 +16,10 @@ public class DialogBoxHandler : MonoBehaviour
     }
 
     public string DialogBoxString;
-    //private string[] DialogBoxStringArray;
+	//private string[] DialogBoxStringArray;
 
-    private GameObject DialogBox;
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	private GameObject DialogBox;
     private Texture DialogBoxTexture;
     private Text DialogBoxText;
     private Text DialogBoxTextShadow;
@@ -29,8 +30,9 @@ public class DialogBoxHandler : MonoBehaviour
     private Text ChoiceBoxText;
     private Text ChoiceBoxTextShadow;
     private Texture ChoiceBoxSelect;
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 
-    public AudioClip selectClip;
+	public AudioClip selectClip;
     private AudioSource DialogAudio;
 
     private float charPerSec = 60f;

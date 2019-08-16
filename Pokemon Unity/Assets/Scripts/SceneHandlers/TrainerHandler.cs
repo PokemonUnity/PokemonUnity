@@ -15,7 +15,8 @@ public class TrainerHandler : MonoBehaviour
 
     private Texture card;
 
-    private Texture IDnoBox;
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	private Texture IDnoBox;
     private Text IDnoText;
     private Text IDnoTextShadow;
     private Text IDnoData;
@@ -87,9 +88,10 @@ public class TrainerHandler : MonoBehaviour
     private bool interactingScreen;
     private int currentBadge;
     private bool cancelSelected;
-    #endregion
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	#endregion
 
-    void Awake()
+	void Awake()
     {
         //sceneTransition = transform.GetComponent<SceneTransition>();
         TrainerAudio = transform.GetComponent<AudioSource>();

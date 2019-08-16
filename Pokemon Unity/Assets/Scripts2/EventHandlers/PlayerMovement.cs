@@ -245,6 +245,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 {
 	public class PlayerMovement : MonoBehaviour
 	{
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 		#region Variables
 		public static PlayerMovement player;
 
@@ -336,6 +337,7 @@ namespace PokemonUnity.Unity.TwoDimensional
 		public AudioClip jumpClip;
 		public AudioClip landClip;
 		#endregion
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 640 ...will always be null
 
 		#region Unity Properties
 		//void Awake()

@@ -43,7 +43,8 @@ public class BagHandler : MonoBehaviour
     private Text[] itemQuantity			= new Text[8];
     private Text[] itemQuantityShadow	= new Text[8];
 
-    private Text itemDescription;
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+	private Text itemDescription;
     private Text itemDescriptionShadow;
 
     private GameObject[] screens = new GameObject[6];
@@ -130,8 +131,9 @@ public class BagHandler : MonoBehaviour
 
     private string[] currentItemStringList;
     private Item[] currentItemList;
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 
-    private bool shopMode;
+	private bool shopMode;
     private string[] shopItemList;
     private int shopSelectedQuantity;
 

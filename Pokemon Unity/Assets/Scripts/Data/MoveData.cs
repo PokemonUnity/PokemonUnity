@@ -77,6 +77,7 @@ public class MoveDataOld {
 		ALLALLY
 	}
 
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 	private string name;
 
 	//private PokemonDataOld.Type type { get; set; }
@@ -97,7 +98,8 @@ public class MoveDataOld {
 	private int jamming;
 	private string description;
 	private string fieldEffect;
-	
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
+
 
 	public string getName(){
 		return name;}
