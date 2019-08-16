@@ -20,7 +20,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private DateTime LastUpdateDate;
 
-		public new void Initialize(int BerryIndex, int BerriesYield, string Watered, string Time, bool FullGrown)
+		public void Initialize(int BerryIndex, int BerriesYield, string Watered, string Time, bool FullGrown)
 		{
 			this.Berry = (Inventory.Item.Berry)Inventory.Item.GetItem((Inventory.Items)BerryIndex + 2000);
 			this.Berries = BerriesYield;

@@ -10,6 +10,8 @@ using System.Text;
 
 namespace PokemonUnity.Battle
 {
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
+
 	/// <summary>
 	/// A Pokemon placeholder class to be used while in-battle, 
 	/// to prevent changes from being permanent to original pokemon profile
@@ -52,7 +54,7 @@ namespace PokemonUnity.Battle
 		public Battle battle { get { return Game.battle; } }
 		public bool captured { get; private set; }
 		//public bool Fainted { get { return isFainted(); } }
-		public bool isFainted { get; private set; }
+		new public bool isFainted { get; private set; }
 		public Battle.DamageState damagestate { get; set; }
 		/// <summary>
 		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
@@ -1338,4 +1340,5 @@ namespace PokemonUnity.Battle
 			playerHUD.Item 				= nonplayerHUD.Item 			= Item != Items.NONE;
 		}
 	}
+#pragma warning restore 0162
 }

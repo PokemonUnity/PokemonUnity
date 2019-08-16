@@ -215,7 +215,7 @@
 								return false;
 							break;
 						}
-
+					case Monster.Natures.BOLD:
 						{
 							if (Flavour == Flavours.Sour)
 								return true;

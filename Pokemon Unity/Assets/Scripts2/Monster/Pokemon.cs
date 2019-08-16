@@ -2117,6 +2117,8 @@ namespace PokemonUnity.Monster
         /// Maybe a method, where when a form is changed
         /// checks pokemon value and overwrites name and stats
         /// Some forms have a SpeciesId and others are battle only
+        /// Note: All of the forms appear to be registered as Enums already...
+        /// Why not just change from `INT` to `(enum)Pokemons`?
         public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 
         /// <summary>

@@ -6,6 +6,19 @@ using UnityEngine;
 
 static class Extensions
 {
+    public static T ToEnum<T>(this string value, T defaultValue)
+    {
+		if (string.IsNullOrEmpty(value))
+		{
+		    return defaultValue;
+		}
+
+		//T result;
+		//return Enum.TryParse<T>(value, true, out result) ? result : defaultValue;
+		//return Convert.ChangeType((Enum.Parse(typeof(T), value, true) ?? defaultValue), typeof(T));
+		return (T)((Enum.Parse(typeof(T), value, true) ?? defaultValue));
+	}
+
     public static void Move<T>(this List<T> l, int moveItemIndex, int destinationIndex)
     {
         T i = l[moveItemIndex];

@@ -26,6 +26,7 @@ namespace PokemonUnity
 
 		public const sbyte pokemonGeneration = (sbyte)Generation.All;
 
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
 		public static int pokemonGenerationCount { 
 			get { 
 				int MaxPoke = 0;
@@ -66,8 +67,9 @@ namespace PokemonUnity
 						break;
 				}
 				#endregion
-				return MaxPoke; } 
+				return MaxPoke; }
 		}
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
 		#endregion
 
 		#region Variables

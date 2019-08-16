@@ -791,9 +791,9 @@ namespace PokemonUnity.Battle
 			   thispkmn.Item == Items.CHOICE_SCARF))
 			{
 				bool hasmove = false;
-				for (int i = 0; i < party.Length; i++)
+				for (int i = 0; i < thispkmn.moves.Length; i++) 
 				{
-					//if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand) 
+					if (thispkmn.moves[i].MoveId==thispkmn.effects.ChoiceBand) 
 					hasmove = true; break;
 				}
 				if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand) {
@@ -852,7 +852,7 @@ namespace PokemonUnity.Battle
 			}
 			return true;
 		}
-		//ToDo: Renaame to match above, delete after replacing all calls pointing to this method
+		//ToDo: Rename to match above, delete after replacing all calls pointing to this method
 		public bool pbCanChooseMove(int pkmn, int index, bool uhh, bool uh)
 		{
 			return false;

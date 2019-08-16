@@ -135,6 +135,7 @@ namespace PokemonUnity.Battle
 // </summary>
 //public class Function
 //{
+#pragma warning disable 0162 //Warning CS0162  Unreachable code detected 
 	#region Battle Class Functions
 	/// <summary>
 	/// Superclass that handles moves using a non-existent function code.
@@ -11361,6 +11362,7 @@ namespace PokemonUnity.Battle
 		}
 	}
 	#endregion
+#pragma warning restore 0162 //Warning CS0162  Unreachable code detected 
 	//===============================================================================
 	// NOTE: If you're inventing new move effects, use function code 159 and onwards.
 	//===============================================================================
