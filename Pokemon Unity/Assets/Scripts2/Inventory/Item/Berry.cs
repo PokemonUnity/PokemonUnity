@@ -143,7 +143,37 @@
 					case Items.MAGO_BERRY:
 					case Items.MARANGA_BERRY:
 					case Items.MICLE_BERRY:
-					//ToDo: Finish other half...
+					case Items.NANAB_BERRY:
+					case Items.NOMEL_BERRY:
+					case Items.OCCA_BERRY:
+					case Items.ORAN_BERRY:
+					case Items.PAMTRE_BERRY:
+					case Items.PASSHO_BERRY:
+					case Items.PAYAPA_BERRY:
+					case Items.PECHA_BERRY:
+					case Items.PERSIM_BERRY:
+					case Items.PETAYA_BERRY:
+					case Items.PINAP_BERRY:
+					case Items.POMEG_BERRY:
+					case Items.QUALOT_BERRY:
+					case Items.RABUTA_BERRY:
+					case Items.RAWST_BERRY:
+					case Items.RAZZ_BERRY:
+					case Items.RINDO_BERRY:
+					case Items.ROSELI_BERRY:
+					case Items.ROWAP_BERRY:
+					case Items.SALAC_BERRY:
+					case Items.SHUCA_BERRY:
+					case Items.SITRUS_BERRY:
+					case Items.SPELON_BERRY:
+					case Items.STARF_BERRY:
+					case Items.TAMATO_BERRY:
+					case Items.TANGA_BERRY:
+					case Items.WACAN_BERRY:
+					case Items.WATMEL_BERRY:
+					case Items.WEPEAR_BERRY:
+					case Items.WIKI_BERRY:
+					case Items.YACHE_BERRY:
 						break;
 					default:
 						IsFruit = false;
