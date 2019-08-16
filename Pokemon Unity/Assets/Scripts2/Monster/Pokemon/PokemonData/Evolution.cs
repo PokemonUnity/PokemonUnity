@@ -69,6 +69,8 @@ namespace PokemonUnity.Monster
 
                 public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow)
                 {
+					/* ToDo: Repurpose this inside method that checks pokemon evolve values
+					//dynamic value = null;
                     #region Switch
                     //This should trigger after the class has been initialized, right?
                     switch (EvolveHow)
@@ -83,13 +85,16 @@ namespace PokemonUnity.Monster
                         case EvolutionMethod.HappinessNight:
                         case EvolutionMethod.Hatred:
                             //if(typeof(T) || this.GetType() == typeof(string))
-                            if (T.GetType() != typeof(int))
+                            if (!typeof(T).Equals(typeof(int)))
 							{
                                 //throw new Exception("Type not acceptable for Method-Value pair.");
                                 //Instead of throwing an exception, i'll correct the problem instead?
 								//int.TryParse(Value.ToString, out EvolveValue);
-								Convert.ChangeType(T, typeof(int));
-								Value = 0; //default(T);
+								Convert.ChangeType(EvolveValue, typeof(int));
+								Convert.ChangeType(Value, typeof(int));
+								//Value = 0; //default(T);
+								//value = 0;
+								this.EvolveValue = 0;
 							}
                             break;
                         case EvolutionMethod.Item:
@@ -99,33 +104,45 @@ namespace PokemonUnity.Monster
                         case EvolutionMethod.HoldItem:
                         case EvolutionMethod.HoldItemDay:
                         case EvolutionMethod.HoldItemNight:
-                            if (T.GetType() != typeof(Items))
+                            if (!typeof(T).Equals(typeof(Items)))
 							{
-								Convert.ChangeType(T, typeof(Items));
-								Value = Items.NONE; //default(T);
+								Convert.ChangeType(EvolveValue, typeof(Items));
+								Convert.ChangeType(Value, typeof(Items));
+								//Value = Items.NONE; //default(T);
+								//value = Items.NONE; //default(T);
+								this.EvolveValue = Items.NONE;
 							}
                             break;
                         case EvolutionMethod.TradeSpecies:
                         case EvolutionMethod.Party:
                         //case EvolutionMethod.Shedinja:
-                            if (T.GetType() != typeof(Pokemons))
+                            if (!typeof(T).Equals(typeof(Pokemons)))
 							{
-								Convert.ChangeType(T, typeof(Pokemons));
-								Value = Pokemons.NONE; //default(T);
+								Convert.ChangeType(EvolveValue, typeof(Pokemons));
+								Convert.ChangeType(Value, typeof(Pokemons));
+								//Value = Pokemons.NONE; //default(T);
+								//value = Pokemons.NONE; //default(T);
+								this.EvolveValue = Pokemons.NONE;
 							}
                             break;
                         case EvolutionMethod.Move:
-                            if (T.GetType() != typeof(Moves))
+                            if (!typeof(T).Equals(typeof(Moves)))
 							{
-								Convert.ChangeType(T, typeof(Moves));
-								Value = Moves.NONE; //default(T);
+								Convert.ChangeType(EvolveValue, typeof(Moves));
+								Convert.ChangeType(Value, typeof(Moves));
+								//Value = Moves.NONE; //default(T);
+								//value = Moves.NONE; //default(T);
+								this.EvolveValue = Moves.NONE;
 							}
                             break;
                         case EvolutionMethod.Type:
-                            if (T.GetType() != typeof(Types))
+                            if (!typeof(T).Equals(typeof(Types)))
 							{
-								Convert.ChangeType(T, typeof(Types));
-								Value = Types.NONE; //default(T);
+								Convert.ChangeType(EvolveValue, typeof(Types));
+								Convert.ChangeType(Value, typeof(Types));
+								//Value = Types.NONE; //default(T);
+								//value = Types.NONE; //default(T);
+								this.EvolveValue = Types.NONE;
 							}
                             break;
                         case EvolutionMethod.Shedinja:
@@ -134,11 +151,14 @@ namespace PokemonUnity.Monster
                         case EvolutionMethod.Location:
                         case EvolutionMethod.Weather:
                         default:
-                            //if there's no problem, just ignore it, and move on...
-                            break;
+							//if there's no problem, just ignore it, and move on...
+							//value = Value;
+							this.EvolveValue = Value;
+							break;
                     }
-                    #endregion
-                    this.EvolveValue = Value;
+					#endregion
+					//this.EvolveValue = value; //Value;
+					//this.EvolveValue = Convert.ChangeType(value, typeof(T));*/
                 }
                 /*public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
                     #region Switch
