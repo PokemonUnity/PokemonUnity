@@ -48,16 +48,25 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		public void PlantBerryHandler(params object[] @params)
 		{
-			PlantBerry((Items)System.Convert.ToInt32(@params[0]));
+			//PlantBerry((Items)System.Convert.ToInt32(@params[0]));
+			PlantBerryHandler(System.Convert.ToInt32(@params[0]));
+		}
+
+		public void PlantBerryHandler(int itemId)
+		{
+			PlantBerry((Items)itemId);
 		}
 
 		public void PlantBerry(Items ChosenBerry)
 		{
 			Inventory.Item testItem = Inventory.Item.GetItem(ChosenBerry);
-			if (testItem.IsBerry != null)
+			if (testItem.IsBerry)
 			{
-				Inventory.Item.Berry Berry = testItem.IsBerry;//(Inventory.Inventory.Berry)Inventory.Inventory.GetItem(ChosenBerry);
+				Inventory.Item.Berry Berry = new Item.Berry(testItem);//(Inventory.Inventory.Berry)Inventory.Inventory.GetItem(ChosenBerry);
+				//ToDo: minus item count from player inventory
+				Game.Player.Bag.RemoveItem(ChosenBerry);
 
+				//Add data to player's profile & sync with map
 				BerryPlant.AddBerryPlant(Game.Level.LevelFile, this.Position, Berry.BerryIndex);
 				Game.TextBox.reDelay = 0.0f;
 				Game.TextBox.Show("You planted a~" + /*Berry*/testItem.Name + " Berry here.", null);

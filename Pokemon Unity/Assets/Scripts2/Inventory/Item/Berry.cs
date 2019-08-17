@@ -2,16 +2,35 @@
 {
 	public partial class Item
 	{
-		//public bool IsBerry { get; private set; }
-		public Berry IsBerry {
+		public bool IsBerry
+		{
 			get
 			{
 				if (ItemPocket.HasValue && ItemPocket.Value == ItemPockets.BERRY)
 				{
-					return new Berry(this);
+					return true; //new Berry(this);
 				}
 				else
-					return null;
+					return false; //null;
+			}
+		}
+		public bool IsApricon
+		{
+			get
+			{
+				switch (ItemId)
+				{
+					case Items.BLACK_APRICORN:
+					case Items.BLUE_APRICORN:
+					case Items.GREEN_APRICORN:
+					case Items.PINK_APRICORN:
+					case Items.RED_APRICORN:
+					case Items.WHITE_APRICORN:
+					case Items.YELLOW_APRICORN:
+						return true;
+					default:
+						return false;
+				}
 			}
 		}
 		private Berry berry { get; set; }
@@ -23,7 +42,7 @@
 			public Items ID					{ get; private set; }
 			public bool IsFruit				{ get; private set; }
 
-			public string Size				{ get; private set; }
+			public float Size				{ get; private set; }
 			public FirmnessLevel Firmness	{ get; private set; }
 			public int Smooth				{ get; private set; }
 			public int BerryIndex			{ get; private set; }
@@ -181,7 +200,7 @@
 				}
 			}
 
-			public Berry(Items berry, int PhaseTime, string Size = "", FirmnessLevel Firmness = 0, int minBerries = 0, int maxBerries = 0) : this(berry)
+			public Berry(Items berry, int PhaseTime, float Size, FirmnessLevel Firmness = 0, int minBerries = 0, int maxBerries = 0) : this(berry)
 			{
 				//SortValue = ID - 1999;
 
