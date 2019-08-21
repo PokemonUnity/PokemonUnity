@@ -199,7 +199,10 @@ namespace PokemonUnity.Monster
         /// </summary>
         public Pokemon()
         {
-            _base = PokemonData.GetPokemon(Pokemons.NONE);
+            //Literally causes a stack too big error
+            //https://i.imgur.com/npK7tn1.png
+            //_base = PokemonData.GetPokemon(Pokemons.NONE);
+            _base = PokemonData.GetPokemon(Pokemons.BULBASAUR);
             PersonalId = Core.Rand.Next(256);
             PersonalId |= Core.Rand.Next(256) << 8;
             PersonalId |= Core.Rand.Next(256) << 16;

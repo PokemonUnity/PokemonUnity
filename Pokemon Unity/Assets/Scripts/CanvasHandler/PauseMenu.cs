@@ -251,15 +251,78 @@ public class PauseMenu : MonoBehaviour
 
             if (Input.GetButtonDown("Select"))
             {
-                if (index == 0 && Game.Player.Party.Length > 0)
+                Debug.Log("Testing");
+                Debug.Log("Index: " + index);
+                /*if (index == 0 && Game.Player.Party.Length > 0)
                 {
-
+                    Debug.Log("Selected party?");
                     StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[1]));
                     while (canvasUI.fading == true)
                     {
                         yield return null;
                     }
 
+                }*/
+                //Pokemon
+                if(index == 0)
+                {
+                    StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[2]));
+                    while (canvasUI.fading == true)
+                    {
+                        yield return null;
+                    }
+                }
+                //Pokedex
+                if (index == 1)
+                {
+                    StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[3]));
+                    while (canvasUI.fading == true)
+                    {
+                        yield return null;
+                    }
+                }
+                //Bag
+                if (index == 2)
+                {
+                    Debug.Log("Bag");
+                    /*StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[?]));
+                    while (canvasUI.fading == true)
+                    {
+                        yield return null;
+                    }
+                    */
+                }
+                //Trainer ID/Card
+                if (index == 3)
+                {
+                    Debug.Log("Trainer ID");
+                    /*StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[?]));
+                    while (canvasUI.fading == true)
+                    {
+                        yield return null;
+                    }
+                    */
+                }
+                //Save Game
+                if (index == 4)
+                {
+                    Debug.Log("Save Game");
+                    /*StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[?]));
+                    while (canvasUI.fading == true)
+                    {
+                        yield return null;
+                    }*/
+                }
+                //Settings
+                if (index == 5)
+                {
+                    Debug.Log("Settings");
+                    /*StartCoroutine(canvasUI.FadeFromTo(this.gameObject, canvasUI.scenes[2]));
+                    while (canvasUI.fading == true)
+                    {
+                        yield return null;
+                    }
+                    */
                 }
             }
 
