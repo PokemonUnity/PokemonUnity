@@ -59,13 +59,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pokemon Unity\Assembly-CSharp-Editor.csproj">
-      <Project>{f6278824-ef26-0b19-80ec-89090458c325}</Project>
-      <Name>Assembly-CSharp-Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pokemon Unity\Assembly-CSharp.csproj">
       <Project>{10f42e31-4957-fd75-9899-6b6e9b1c9ea8}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
+      <Project>{bd1460b5-f283-4305-8d89-a0f8d17a8828}</Project>
+      <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

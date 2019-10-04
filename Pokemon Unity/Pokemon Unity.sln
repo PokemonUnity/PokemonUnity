@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2041
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}"
 EndProject
@@ -10,10 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{F6278824-EF26-0B19-80EC-89090458C325}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitTestProject\UnitTestProject.csproj", "{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F6278824-EF26-0B19-80EC-89090458C325} = {F6278824-EF26-0B19-80EC-89090458C325}
-		{10F42E31-4957-FD75-9899-6B6E9B1C9EA8} = {10F42E31-4957-FD75-9899-6B6E9B1C9EA8}
-	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonUnity.Shared", "..\PokemonUnity.Shared\PokemonUnity.Shared.csproj", "{BD1460B5-F283-4305-8D89-A0F8D17A8828}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,12 +35,16 @@ Global
 		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD1460B5-F283-4305-8D89-A0F8D17A8828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD1460B5-F283-4305-8D89-A0F8D17A8828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD1460B5-F283-4305-8D89-A0F8D17A8828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD1460B5-F283-4305-8D89-A0F8D17A8828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {83306DE1-D9BA-4CA7-98D3-CF8842C8CB57}
+		SolutionGuid = {6B7CCC5A-5BDA-4295-A977-56ADC6BEEB57}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj

@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Attack\Move.cs.meta" />
+    <None Remove="Attack\Move.meta" />
+    <None Remove="Attack\Move\Base.cs.meta" />
+    <None Remove="Attack\Move\Database.cs.meta" />
+    <None Remove="Attack\Move\Flag.cs.meta" />
+    <None Remove="Attack\Move\MoveBattle.cs.meta" />
+    <None Remove="Attack\Move\MoveTarget.cs.meta" />
+    <None Remove="Character\Badge.cs.meta" />
+    <None Remove="Character\Bag.cs.meta" />
+    <None Remove="Character\Gear.meta" />
+    <None Remove="Character\Gear\Phone.cs.meta" />
+    <None Remove="Character\Gear\Pokedex.cs.meta" />
+    <None Remove="Character\Gear\PokeRadar.cs.meta" />
+    <None Remove="Character\P3D.Player.cs.meta" />
+    <None Remove="Character\PC.cs.meta" />
+    <None Remove="Character\Player.cs.meta" />
+    <None Remove="Character\Trainer.cs.meta" />
+    <None Remove="Character\Trainer.meta" />
+    <None Remove="Character\Trainer\Database.cs.meta" />
+    <None Remove="Enums\Battles.cs.meta" />
+    <None Remove="Enums\Enums.cs.meta" />
+    <None Remove="Enums\Items.cs.meta" />
+    <None Remove="Enums\Moves.cs.meta" />
+    <None Remove="Enums\Overworld.cs.meta" />
+    <None Remove="Enums\Pokemons.cs.meta" />
+    <None Remove="Enums\SaveEvent.cs.meta" />
+    <None Remove="Extensions\Extensions.cs.meta" />
+    <None Remove="Extensions\MathHelper.cs.meta" />
+    <None Remove="Extensions\ScriptConversion.cs.meta" />
+    <None Remove="Extensions\StringHelper.cs.meta" />
+    <None Remove="Extensions\TransformExtension.cs.meta" />
+    <None Remove="InBattle\Attack.cs.meta" />
+    <None Remove="InBattle\Battle.cs.meta" />
+    <None Remove="InBattle\Battle.meta" />
+    <None Remove="InBattle\Battle\Choice.cs.meta" />
+    <None Remove="InBattle\Battle\DamageState.cs.meta" />
+    <None Remove="InBattle\Battle\Scene.cs.meta" />
+    <None Remove="InBattle\Battle\SuccessState.cs.meta" />
+    <None Remove="InBattle\Effects.meta" />
+    <None Remove="InBattle\Effects\Battler.cs.meta" />
+    <None Remove="InBattle\Effects\Field.cs.meta" />
+    <None Remove="InBattle\Effects\Move.cs.meta" />
+    <None Remove="InBattle\Effects\Side.cs.meta" />
+    <None Remove="InBattle\Form.cs.meta" />
+    <None Remove="InBattle\Move.cs.meta" />
+    <None Remove="InBattle\Pokemon.cs.meta" />
+    <None Remove="Inventory\Item.cs.meta" />
+    <None Remove="Inventory\Item.meta" />
+    <None Remove="Inventory\Item\Berry.cs.meta" />
+    <None Remove="Inventory\Item\Database.cs.meta" />
+    <None Remove="Inventory\Item\ItemFlags.cs.meta" />
+    <None Remove="Inventory\Item\ItemHandler.cs.meta" />
+    <None Remove="Inventory\Item\Mail.cs.meta" />
+    <None Remove="Monster\Ability.cs.meta" />
+    <None Remove="Monster\Nature.cs.meta" />
+    <None Remove="Monster\Pokemon.cs.meta" />
+    <None Remove="Monster\Pokemon.meta" />
+    <None Remove="Monster\Pokemon\Base.cs.meta" />
+    <None Remove="Monster\Pokemon\Database.cs.meta" />
+    <None Remove="Monster\Pokemon\Experience.cs.meta" />
+    <None Remove="Monster\Pokemon\PokemonData.meta" />
+    <None Remove="Monster\Pokemon\PokemonData\Evolution.cs.meta" />
+    <None Remove="Monster\Pokemon\PokemonData\Moveset.cs.meta" />
+    <None Remove="Monster\Pokemon\PokemonData\MoveTree.cs.meta" />
+    <None Remove="Monster\Type.cs.meta" />
+    <None Remove="Saving\EventListener.cs.meta" />
+    <None Remove="Saving\SaveData.cs.meta" />
+    <None Remove="Saving\SaveEvent.cs.meta" />
+    <None Remove="Saving\SaveManager.cs.meta" />
+    <None Remove="Saving\SerializableClasses.meta" />
+    <None Remove="Saving\SerializableClasses\SeriMove.cs.meta" />
+    <None Remove="Saving\SerializableClasses\SeriPC.cs.meta" />
+    <None Remove="Saving\SerializableClasses\SeriPokemon.cs.meta" />
+    <None Remove="Saving\SerializableClasses\SeriV3.cs.meta" />
+  </ItemGroup>
+
+</Project>
