@@ -223,7 +223,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				{
 					case 0:
 						{
-							Game.Player.Bag.AddItem(this.Berry.ID, this.Berries);
+							Game.Player.Bag.AddItem(this.Berry.ItemId, this.Berries);
 							string Text = "";
 							if (this.Berries == 1)
 								Text = Game.Player.Name + " picked the~" + Berry.Name + " Berry.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);

@@ -29,20 +29,96 @@ namespace PokemonUnity.Monster
                 /// The evolution method.
                 /// </summary>
                 public EvolutionMethod EvolveMethod { get; private set; }
-                //public object EvolutionMethodValue;
-                //public PokemonEvolution<T> EvolutionMethodValue;
-                //public class T { }
-                //public PokemonEvolution(){}
-                public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow)
+				/// <summary>
+				/// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
+				/// </summary>
+				public object EvolveValue { get; private set; }
+				//public object EvolutionMethodValue;
+				//public PokemonEvolution<T> EvolutionMethodValue;
+				//public class T { }
+				//public PokemonEvolution(){}
+				public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow)
                 {
                     this.Species = EvolveTo;
                     this.EvolveMethod = EvolveHow;
+					this.EvolveValue = null;
                 }
-                /*public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, Type ValueType, object ObjectValue) 
-                {
-                    PokemonEvolution<ValueType>(EvolveTo, EvolveHow, ObjectValue);
-                }*/
-                public virtual bool isGenericT()
+				//public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, Type ValueType, object ObjectValue) 
+                //{
+                //    PokemonEvolution<ValueType>(EvolveTo, EvolveHow, ObjectValue);
+                //}
+				public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, object Value) : this(EvolveTo: EvolveTo, EvolveHow: EvolveHow)
+				{
+					#region Switch
+					switch (EvolveHow)
+					{
+						case EvolutionMethod.Level:
+						case EvolutionMethod.LevelFemale:
+						case EvolutionMethod.LevelMale:
+						case EvolutionMethod.Ninjask:
+						case EvolutionMethod.Beauty:
+						case EvolutionMethod.Happiness:
+						case EvolutionMethod.HappinessDay:
+						case EvolutionMethod.HappinessNight:
+						case EvolutionMethod.Hatred:
+							if (!Value.GetType().Equals(typeof(int)))
+							{
+								this.EvolveValue = (int)0;
+							}
+							break;
+						case EvolutionMethod.Item:
+						case EvolutionMethod.ItemFemale:
+						case EvolutionMethod.ItemMale:
+						case EvolutionMethod.TradeItem:
+						case EvolutionMethod.HoldItem:
+						case EvolutionMethod.HoldItemDay:
+						case EvolutionMethod.HoldItemNight:
+							if (!Value.GetType().Equals(typeof(Items)))
+							{
+								this.EvolveValue = (Items)Items.NONE;
+							}
+							break;
+						case EvolutionMethod.TradeSpecies:
+						case EvolutionMethod.Party:
+							//case EvolutionMethod.Shedinja:
+							if (!Value.GetType().Equals(typeof(Pokemons)))
+							{
+								this.EvolveValue = (Pokemons)Pokemons.NONE;
+							}
+							break;
+						case EvolutionMethod.Move:
+							if (!Value.GetType().Equals(typeof(Moves)))
+							{
+								this.EvolveValue = (Moves)Moves.NONE;
+							}
+							break;
+						case EvolutionMethod.Type:
+							if (!Value.GetType().Equals(typeof(Types)))
+							{
+								this.EvolveValue = (Types)Types.NONE;
+							}
+							break;
+						case EvolutionMethod.Shedinja:
+						case EvolutionMethod.Time:
+						case EvolutionMethod.Season:
+						case EvolutionMethod.Location:
+						case EvolutionMethod.Weather:
+						default:
+							//if there's no problem, just ignore it, and move on...
+							this.EvolveValue = Value;
+							break;
+					}
+					#endregion
+				}
+				//public PokemonEvolution<T>(Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) where T : object
+				//	: this(EvolveTo: EvolveTo, EvolveHow: EvolveHow)
+				//{
+				//}
+				public IPokemonEvolution GetEvolution()
+				{
+					return this;
+				}
+				public virtual bool isGenericT()
                 {
                     return false;
                 }
@@ -62,11 +138,18 @@ namespace PokemonUnity.Monster
                 /// <summary>
                 /// The value-parameter to <see cref="EvolveMethod"/> as mentioned KEY.
                 /// </summary>
-                public T EvolveValue { get; private set; }
+                new public T EvolveValue { get; private set; }
 
-                public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow)
-                {					
-                }
+                public PokemonEvolution(Pokemons EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow, Value: Value)
+                {
+					//if (!typeof(T).Equals(base.EvolveValue.GetType()))
+					//{
+					//	Convert.ChangeType(base.EvolveValue, typeof(T));
+					//	this.EvolveValue = (T)base.EvolveValue;
+					//}
+					//else
+						this.EvolveValue = (T)base.EvolveValue;
+				}
                 /*public PokemonEvolution(PokemonData.Pokemon EvolveTo, EvolutionMethod EvolveHow, T Value) : base(EvolveTo: EvolveTo, EvolveHow: EvolveHow) {
                     #region Switch
                     //This should trigger after the class has been initialized, right?

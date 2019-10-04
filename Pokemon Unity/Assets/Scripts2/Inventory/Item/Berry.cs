@@ -33,21 +33,68 @@
 				}
 			}
 		}
-		private Berry berry { get; set; }
 
 		public class Berry : Item//: MedicineItem
 		{
 			#region Variables
-			public int PhaseTime;
-			public Items ID					{ get; private set; }
+			public int PhaseTime			{ get; private set; }
 			public bool IsFruit				{ get; private set; }
 
+			/// <summary>
+			/// In inches...
+			/// </summary>
 			public float Size				{ get; private set; }
 			public FirmnessLevel Firmness	{ get; private set; }
 			public int Smooth				{ get; private set; }
+			/// <summary>
+			/// Berry Id
+			/// </summary>
 			public int BerryIndex			{ get; private set; }
 			public int minBerries			{ get; private set; }
+			/// <summary>
+			/// The berry yield is set to the maximum berry yield whenever a new Berry is planted 
+			/// or whenever a new plant grows where the old plant used to be.
+			/// </summary>
 			public int maxBerries			{ get; private set; }
+
+			/// <summary>
+			/// The time it takes to advance from one growth stage to the next is:
+			/// <para></para>
+			/// <list type="">
+			/// <item>If planted with Growth Mulch, 45 minutes times the growth rate.</item>
+			/// <para>
+			/// <item>If planted with Damp Mulch, 90 minutes times the growth rate.</item>
+			/// </para>
+			/// <item>Otherwise, 60 minutes times the growth rate.</item>
+			/// </list>
+			/// </summary>
+			/// Pokemon Gen4 (2nd gen with berries), plants take days to mature...
+			/// <seealso cref="growthTime"/>
+			public int growthRate			{ get; private set; }
+			/// <summary>
+			/// The time it takes for berry plant to fully mature, and reach final stage.
+			/// int duration is measured in hours
+			/// </summary>
+			/// Gen 5 onward reduced plant growth time from days to hours...
+			public int growthTime			{ get; private set; }
+			/// <summary>
+			/// The soil moisture is reduced by X times the moisture intake value, rounded down, 
+			/// but not to less than 0, where X is 0.5 if planted with Damp Mulch, 
+			/// 1.5 if planted with Growth Mulch, and 1 otherwise.
+			/// </summary>
+			/// <remarks>
+			/// Every 60 minutes after that point or after a new plant grows where the old plant used to be 
+			/// (whichever occurs last), if the plant hasn't reached its final growth stage 
+			/// (no berries can be picked yet)
+			/// </remarks>
+			/// <example>
+			/// If the soil moisture is 0, the berry yield for that plant is reduced 
+			/// by the maximum berry yield divided by 5, but not to less than 2.
+			/// </example>
+			public int moistIntake			{ get; private set; }
+			public float watering			{ get; private set; }
+			public float weeding			{ get; private set; }
+			public float pests				{ get; private set; }
 
 			public int Spicy				{ get; private set; }
 			public int Dry					{ get; private set; }
@@ -58,6 +105,8 @@
 			public int Power				{ get; private set; }
 			public Types Type				{ get; private set; }
 
+			//This isnt actually a thing...
+			//Berry growth arnt seasonal in official game
 			public int WinterGrow = 0;
 			public int SpringGrow = 3;
 			public int SummerGrow = 2;
@@ -102,6 +151,7 @@
 			}
 			#endregion
 
+			#region Constructors
 			public Berry(Item berry) : this(berry.ItemId)
 			{
 			}
@@ -123,10 +173,76 @@
 				this.Type = Types.NONE;
 
 				IsFruit = true;
-				//assign background art of letter based on item
+				//gen 4 is loaded by default
 				switch (berry)
 				{
+					//(\d+)\s+(\w+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)
+					//BerryIndex = $1;\tmaxBerries = $3;\tgrowthRate = $4;\tmoistIntake = $5;\tSpicy = $6;\tDry = $7;\tSweet = $8;\tBitter = $9;\tSour = $10;\tSmooth = $11;\tPower = 60;\tthis.Type = Types.NONE;\tbreak;\t//$2
 					case Items.AGUAV_BERRY:
+BerryIndex = 14;	maxBerries = 5;		growthRate = 5;	moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Smooth = 25;	break;	//Aguav
+BerryIndex = 57;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 10;	Dry = 30;	Sweet = 0;	Bitter = 0;	Sour = 30;	Smooth = 40;	break;	//Apicot
+BerryIndex = 5;		maxBerries = 5;		growthRate = 3;	moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 10;	Smooth = 25;	break;	//Aspear
+BerryIndex = 51;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 25;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 35;	break;	//Babiri
+BerryIndex = 35;	maxBerries = 15;	growthRate = 15;	moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 30;	Smooth = 35;	break;	//Belue
+BerryIndex = 17;	maxBerries = 10;	growthRate = 2;	moistIntake = 35;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 20;	break;	//Bluk
+BerryIndex = 47;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 20;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 35;	break;	//Charti
+BerryIndex = 1;		maxBerries = 5;		growthRate = 3;	moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 25;	break;	//Cheri
+BerryIndex = 2;		maxBerries = 5;		growthRate = 3;	moistIntake = 15;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 25;	break;	//Chesto
+BerryIndex = 52;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 25;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 35;	break;	//Chilan
+BerryIndex = 41;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Smooth = 30;	break;	//Chople
+BerryIndex = 44;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 15;	Sour = 0;	Smooth = 30;	break;	//Coba
+BerryIndex = 50;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 20;	Smooth = 35;	break;	//Colbur
+BerryIndex = 27;	maxBerries = 10;	growthRate = 6;	moistIntake = 10;	Spicy = 0;	Dry = 20;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 30;	break;	//Cornn
+BerryIndex = 62;	maxBerries = 5;		growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 40;	Bitter = 10;	Sour = 0;	Smooth = 60;	break;	//Custap
+BerryIndex = 34;	maxBerries = 15;	growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Smooth = 35;	break;	//Durin
+BerryIndex = 60;	maxBerries = 5;		growthRate = 24;	moistIntake = 7;	Spicy = 40;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 60;	break;	//Enigma
+BerryIndex = 11;	maxBerries = 5;		growthRate = 5;	moistIntake = 10;	Spicy = 15;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 25;	break;	//Figy
+BerryIndex = 54;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 30;	Sour = 0;	Smooth = 40;	break;	//Ganlon
+BerryIndex = 25;	maxBerries = 5;		growthRate = 8;	moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 0;	Sour = 10;	Smooth = 20;	break;	//Grepa
+BerryIndex = 49;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 20;	Sour = 0;	Smooth = 35;	break;	//Haban
+BerryIndex = 24;	maxBerries = 5;		growthRate = 8;	moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 0;	Smooth = 20;	break;	//Hondew
+BerryIndex = 15;	maxBerries = 5;		growthRate = 5;	moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 15;	Smooth = 25;	break;	//Iapapa
+BerryIndex = 63;	maxBerries = 5;		growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 40;	Sour = 10;	Smooth = 60;	break;	//Jaboca
+BerryIndex = 48;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 20;	Bitter = 0;	Sour = 0;	Smooth = 35;	break;	//Kasib
+BerryIndex = 42;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 0;	Sour = 10;	Smooth = 30;	break;	//Kebia
+BerryIndex = 22;	maxBerries = 5;		growthRate = 8;	moistIntake = 8;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Smooth = 20;	break;	//Kelpsy
+BerryIndex = 58;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Smooth = 50;	break;	//Lansat
+BerryIndex = 6;		maxBerries = 5;		growthRate = 4;	moistIntake = 15;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 10;	Smooth = 20;	break;	//Leppa
+BerryIndex = 53;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 0;	Sour = 0;	Smooth = 40;	break;	//Liechi
+BerryIndex = 9;		maxBerries = 5;		growthRate = 12;	moistIntake = 8;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 0;	Smooth = 20;	break;	//Lum
+BerryIndex = 13;	maxBerries = 5;		growthRate = 5;	moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 15;	Bitter = 0;	Sour = 0;	Smooth = 25;	break;	//Mago
+BerryIndex = 28;	maxBerries = 10;	growthRate = 6;	moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 20;	Bitter = 10;	Sour = 0;	Smooth = 30;	break;	//Magost
+BerryIndex = 61;	maxBerries = 5;		growthRate = 24;	moistIntake = 7;	Spicy = 0;	Dry = 40;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 60;	break;	//Micle
+BerryIndex = 18;	maxBerries = 10;	growthRate = 2;	moistIntake = 35;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Smooth = 20;	break;	//Nanab
+BerryIndex = 30;	maxBerries = 10;	growthRate = 6;	moistIntake = 10;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 20;	Smooth = 30;	break;	//Nomel
+BerryIndex = 36;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 15;	Dry = 0;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 30;	break;	//Occa
+BerryIndex = 7;		maxBerries = 5;		growthRate = 4;	moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 10;	Sour = 10;	Smooth = 20;	break;	//Oran
+BerryIndex = 32;	maxBerries = 15;	growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 30;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 35;	break;	//Pamtre
+BerryIndex = 37;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 10;	Sour = 0;	Smooth = 30;	break;	//Passho
+BerryIndex = 45;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 0;	Sour = 15;	Smooth = 30;	break;	//Payapa
+BerryIndex = 3;		maxBerries = 5;		growthRate = 3;	moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 10;	Bitter = 0;	Sour = 0;	Smooth = 25;	break;	//Pecha
+BerryIndex = 8;		maxBerries = 5;		growthRate = 4;	moistIntake = 15;	Spicy = 10;	Dry = 10;	Sweet = 10;	Bitter = 0;	Sour = 10;	Smooth = 20;	break;	//Persim
+BerryIndex = 56;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 0;	Sweet = 0;	Bitter = 30;	Sour = 10;	Smooth = 40;	break;	//Petaya
+BerryIndex = 20;	maxBerries = 10;	growthRate = 2;	moistIntake = 35;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 10;	Smooth = 20;	break;	//Pinap
+BerryIndex = 21;	maxBerries = 5;		growthRate = 8;	moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 10;	Sour = 0;	Smooth = 20;	break;	//Pomeg
+BerryIndex = 23;	maxBerries = 5;		growthRate = 8;	moistIntake = 8;	Spicy = 10;	Dry = 0;	Sweet = 10;	Bitter = 0;	Sour = 10;	Smooth = 20;	break;	//Qualot
+BerryIndex = 29;	maxBerries = 10;	growthRate = 6;	moistIntake = 10;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 20;	Sour = 10;	Smooth = 30;	break;	//Rabuta
+BerryIndex = 4;		maxBerries = 5;		growthRate = 3;	moistIntake = 15;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 0;	Smooth = 25;	break;	//Rawst
+BerryIndex = 16;	maxBerries = 10;	growthRate = 2;	moistIntake = 35;	Spicy = 10;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 20;	break;	//Razz
+BerryIndex = 39;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 15;	Sour = 0;	Smooth = 30;	break;	//Rindo
+BerryIndex = 64;	maxBerries = 5;		growthRate = 24;	moistIntake = 7;	Spicy = 10;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 40;	Smooth = 60;	break;	//Rowap
+BerryIndex = 55;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 0;	Dry = 0;	Sweet = 30;	Bitter = 10;	Sour = 30;	Smooth = 40;	break;	//Salac
+BerryIndex = 43;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 10;	Dry = 0;	Sweet = 15;	Bitter = 0;	Sour = 0;	Smooth = 30;	break;	//Shuca
+BerryIndex = 10;	maxBerries = 5;		growthRate = 8;	moistIntake = 7;	Spicy = 0;	Dry = 10;	Sweet = 10;	Bitter = 10;	Sour = 10;	Smooth = 20;	break;	//Sitrus
+BerryIndex = 31;	maxBerries = 15;	growthRate = 15;	moistIntake = 8;	Spicy = 30;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 35;	break;	//Spelon
+BerryIndex = 59;	maxBerries = 5;		growthRate = 24;	moistIntake = 4;	Spicy = 30;	Dry = 10;	Sweet = 30;	Bitter = 10;	Sour = 30;	Smooth = 50;	break;	//Starf
+BerryIndex = 26;	maxBerries = 5;		growthRate = 8;	moistIntake = 8;	Spicy = 20;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 30;	break;	//Tamato
+BerryIndex = 46;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 20;	Dry = 0;	Sweet = 0;	Bitter = 0;	Sour = 10;	Smooth = 35;	break;	//Tanga
+BerryIndex = 38;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 0;	Sweet = 15;	Bitter = 0;	Sour = 10;	Smooth = 30;	break;	//Wacan
+BerryIndex = 33;	maxBerries = 15;	growthRate = 15;	moistIntake = 8;	Spicy = 0;	Dry = 0;	Sweet = 30;	Bitter = 10;	Sour = 0;	Smooth = 35;	break;	//Watmel
+BerryIndex = 19;	maxBerries = 10;	growthRate = 2;	moistIntake = 35;	Spicy = 0;	Dry = 0;	Sweet = 0;	Bitter = 10;	Sour = 10;	Smooth = 20;	break;	//Wepear
+BerryIndex = 12;	maxBerries = 5;		growthRate = 5;	moistIntake = 10;	Spicy = 0;	Dry = 15;	Sweet = 0;	Bitter = 0;	Sour = 0;	Smooth = 25;	break;	//Wiki
+BerryIndex = 40;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	Dry = 10;	Sweet = 0;	Bitter = 0;	Sour = 15;	Smooth = 30;	break;	//Yache
 					case Items.APICOT_BERRY:
 					case Items.ASPEAR_BERRY:
 					case Items.BABIRI_BERRY:
@@ -193,6 +309,15 @@
 					case Items.WEPEAR_BERRY:
 					case Items.WIKI_BERRY:
 					case Items.YACHE_BERRY:
+					#region Apricons
+					case Items.BLACK_APRICORN:
+					case Items.BLUE_APRICORN:
+					case Items.GREEN_APRICORN:
+					case Items.PINK_APRICORN:
+					case Items.RED_APRICORN:
+					case Items.WHITE_APRICORN:
+					case Items.YELLOW_APRICORN:
+					#endregion
 						break;
 					default:
 						IsFruit = false;
@@ -223,7 +348,9 @@
 				//_textureSource = @"Textures\Berries";
 				//_textureRectangle = new Vector4(x, y, 32, 32);
 			}
+			#endregion			
 
+			#region Methods
 			/// <summary>
 			/// Returns if a Pokémon likes this berry based on its flavour.
 			/// </summary>
@@ -399,6 +526,20 @@
 				}
 				return true;
 			}
+
+			public Berry ToGenIV()
+			{
+				return this;
+			}
+			public Berry ToGenV()
+			{
+				return this;
+			}
+			public Berry ToGenVI()
+			{
+				return this;
+			}
+			#endregion
 		
 			#region Enum
 			public enum Flavours

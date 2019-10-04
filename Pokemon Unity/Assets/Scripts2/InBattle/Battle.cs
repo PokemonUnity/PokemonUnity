@@ -245,6 +245,7 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Battle index of each trainer's Pokémon to Mega Evolve
 		/// </summary>
+        /// Instead of reflecting entire party, it displays for active on field?
 		public bool?[][] megaEvolution { get; private set; }
 		/// <summary>
 		/// Whether Amulet Coin's effect applies

@@ -31,9 +31,40 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	public static PokemonUnity.Overworld.Level Level { get; set; }
 	public static PokemonUnity.Overworld.Camera Camera { get; set; }
 	//public Game.TrainerPC PC { get { return new Game.TrainerPC(Player); } }
+	/*public static PokemonUnity.Overworld.Season Season 
+	{ 
+		get 
+		{
+			int month = System.DateTime.Today.Month;
+			
+			if (Jan, May, Sept)
+			{
+				return Season.Spring;
+			}
+			if (Feb, Jun, Oct)
+			{
+				return Season.Summer;
+			}
+			if (Mar,Jul, Nov)
+			{
+				return Season.Autumn;
+			}
+			if (Apr, Aug, Dec)
+			{
+				return Season.Spring
+			}
+		}	
+	}*/
 	#endregion
 
 	#region Private Records of Player Storage Data
+	public static bool IsCreator { get; private set; }
+	private static bool isCreator { get; set; }
+	/// <summary>
+	/// Name of PC Admin, for Pokemon Storage
+	/// </summary>
+	//public static string CreatorName { get { return isCreator ? "someone" : Player.Name; } }
+	public string GetStorageCreator() { return ""; }
 	//ToDo: Berry Field Data (0x18 per tree, 36 trees)
 	//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
 	//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
@@ -51,7 +82,7 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	public static Pokemon[,] PC_Poke { get; set; }
 	public static string[] PC_boxNames { get; set; }
 	public static int[] PC_boxTexture { get; set; }
-	public static List<Item> PC_Items { get; set; }
+	public static List<Item> PC_Items { get; set; } //ToDo: Why not ItemS?
 	public static List<Items> Bag_Items { get; set; }
 	#endregion
 
@@ -70,26 +101,38 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	static Game()
 	{
 		GameDebug.Init(null, "GameTestLog");
-		UserLanguage  = Languages.English;
-		PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
-		PC_boxNames = new string[Core.STORAGEBOXES];
-		PC_boxTexture = new int[Core.STORAGEBOXES];
-		for (int i = 0; i < Core.STORAGEBOXES; i++)
-		{
-			//Initialize the PC storage so pokemons arent null (in value)
-			for (int j = 0; j < PC_Poke.GetLength(1); j++)
+		if(LoadInitFile())
+		{		
+			PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
+			PC_boxNames = new string[Core.STORAGEBOXES];
+			PC_boxTexture = new int[Core.STORAGEBOXES];
+			for (int i = 0; i < Core.STORAGEBOXES; i++)
 			{
-				//All default values must be `NONE`
-				PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
+				//Initialize the PC storage so pokemons arent null (in value)
+				for (int j = 0; j < PC_Poke.GetLength(1); j++)
+				{
+					//All default values must be `NONE`
+					PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
+				}
+				//ToDo: Using string from translator here
+				PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
+				//ToDo: Make sure there's enough texture in library for array size
+				PC_boxTexture[i] = i; 
 			}
-			//ToDo: Using string from translator here
-			PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
-			//ToDo: Make sure there's enough texture in library for array size
-			PC_boxTexture[i] = i; 
+			PC_Items = new List<Item>();
+			Bag_Items = new List<Items>();
 		}
-
-		PC_Items = new List<Item>();
-		Bag_Items = new List<Items>();
+	}
+	private static bool LoadInitFile()
+	{
+		//Load User Saved Preferences and then apply it to start-up variable below
+		//Or create new User Preference file
+		UserLanguage  = Languages.English;
+		//Load Localization
+		//Then Import Databases
+		//if (SaveFileFound)
+		//LoadPokemonDatabase();
+		return true;
 	}
 	#endregion
 

@@ -2111,7 +2111,8 @@ namespace PokemonUnity.Monster
         ///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
         ///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.
         ///	<see cref="Pokemons.CASTFORM"/>? = different weather forms
-        ///	<see cref="Pokemons.PIKACHU"/>, and MegaEvolutions?
+        ///	<see cref="Pokemons.PIKACHU"/>, 
+        /// and MegaEvolutions?
         /// </remarks>
         /// ToDo: Fix Forms and uncomment
         /// Maybe a method, where when a form is changed

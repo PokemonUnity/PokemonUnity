@@ -11,6 +11,7 @@ namespace PokemonUnity.Monster
 {
     public partial class Pokemon
     {
+        //ToDo: Make into interface...
 		public partial class PokemonData
         {
             #region Variables
@@ -40,6 +41,7 @@ namespace PokemonUnity.Monster
             /// and help with linking pokemon forms with original
             /// Or a new form class, to help with changing base data
             private string[] forms = new string[0];
+            private Pokemons[] forms2 { get { return PokemonUnity.Battle.Form.Forms.Where( x => x.BaseSpecies == this.ID ).Select( y => y.ID ).ToArray(); } } 
             /*// <summary>
             /// Represents CURRENT form, if no form is active, current or does not exist
             /// then value is 0.
@@ -184,7 +186,9 @@ namespace PokemonUnity.Monster
             /// <see cref="Pokemons"/> and <see cref="Form"/>
             /// Maybe the stats set/reated for pokemon of this form #?
             /// Ex. Form 1 would have +10 more HP than base form...
+            /// ToDo: use with `this.forms2[this.Form]`?
             public int Form { get; set; }
+            //public Pokemons Form2 { get; private set; }
             /// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
             public int Forms { get { return this.forms.Length; } }
             /// <summary>
@@ -419,9 +423,271 @@ namespace PokemonUnity.Monster
                 //this.evolutionMethod = evolutionMethod; 
                 //this.evolutionRequirements = evolutionRequirements;
             }
+            
+            public PokemonData(Pokemons Id, Pokemons BaseSpecies) :  this (Id)
+            {
+                PokemonUnity.Monster.Pokemon.PokemonData _base = GetPokemon(BaseSpecies);
+                this.RegionalPokedex = _base.RegionalPokedex;
+
+                this.type1 = _base.type1; //!= null ? (Types)type1 : Types.NONE;
+                this.type2 = _base.type2; //!= null ? (Types)type2 : Types.NONE;
+                //this.ability = abilities;
+                this.ability1 = (Abilities)_base.ability1;
+                this.ability2 = (Abilities)_base.ability2;
+                this.abilityh = (Abilities)_base.abilityh;
+
+                this.MaleRatio = _base.MaleRatio; 
+                this.CatchRate = _base.CatchRate;
+                this.eggGroup1 = _base.eggGroup1;
+                this.eggGroup2 = _base.eggGroup2;
+                this.HatchTime = _base.HatchTime;
+
+                this.Height = _base.Height;
+                this.Weight = _base.Weight;
+                this.BaseExpYield = _base.BaseExpYield;
+                this.GrowthRate = (LevelingRate)_base.GrowthRate; //== null ? (LevelingRate)levelingRate : LevelingRate.NONE;
+
+                this.evYieldHP  = _base.evYieldHP;
+                this.evYieldATK = _base.evYieldATK;
+                this.evYieldDEF = _base.evYieldDEF;
+                this.evYieldSPA = _base.evYieldSPA;
+                this.evYieldSPD = _base.evYieldSPD;
+                this.evYieldSPE = _base.evYieldSPE;
+
+                this.BaseStatsHP  = _base.BaseStatsHP;
+                this.BaseStatsATK = _base.BaseStatsATK;
+                this.BaseStatsDEF = _base.BaseStatsDEF;
+                this.BaseStatsSPA = _base.BaseStatsSPA;
+                this.BaseStatsSPD = _base.BaseStatsSPD;
+                this.BaseStatsSPE = _base.BaseStatsSPE;
+                this.BaseFriendship = _base.BaseFriendship;
+
+                this.Rarity = _base.Rarity;
+                this.Luminance = _base.Luminance;
+                //this.lightColor = lightColor;
+                this.PokedexColor = _base.PokedexColor | Color.NONE;
+
+                //ToDo: wild pokemon held items not yet implemented
+                this.HeldItem = _base.HeldItem; //[item id,% chance]
+
+                this.MoveTree = _base.MoveTree;//new PokemonMoveTree(movesetmoves);
+                //this.MovesetLevels = movesetLevels;
+                //this.MovesetMoves = movesetMoves; 
+                //this.tmList = tmList; 
+
+                this.Evolutions = _base.Evolutions ?? new IPokemonEvolution[0];
+                //this.EvolutionID = evolutionID;
+                //this.evolutionMethod = evolutionMethod; 
+                //this.evolutionRequirements = evolutionRequirements;
+            }
             #endregion
 
             #region Methods
+      //      private static bool LoadPokemonLocale()
+      //      {
+      //          //public static readonly PokemonData[] Database; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
+      //          //static PokemonData()
+      //          //{
+      //          //    Database = new PokemonData[] {
+      //          var xmlDocument = new System.Xml.XmlDocument();
+      //          xmlDocument.LoadXml(System..IO.File.ReadAllText(Core.FILEPATH));
+
+      //          var localizationDictionaryNode = xmlDocument.SelectNodes("/localizationDictionary");
+      //          if (localizationDictionaryNode == null || localizationDictionaryNode.Count <= 0)
+      //          {
+      //              //throw new Exception("A Localization Xml must include localizationDictionary as root node.");
+      //              GameDebug.Log("A Localization Xml must include localizationDictionary as root node.");
+      //              return false;
+      //          }
+
+      //          var cultureName = localizationDictionaryNode[0].GetAttributeValueOrNull("culture");
+      //          if (string.IsNullOrEmpty(cultureName))
+      //          {
+      //              //throw new Exception("culture is not defined in language XML file!");
+      //              GameDebug.Log("culture is not defined in language XML file!");
+      //              return false;
+      //          }
+
+      //          int? languageInt = (int?)localizationDictionaryNode[0].GetAttributeValueOrNull("id");
+      //          if (languageInt == null) //is not an int
+      //          {
+      //              //throw new Exception("Language int/enum value is not defined in language XML file!");
+      //              GameDebug.Log("Language int/enum value is not defined in language XML file!");
+      //              return false;
+      //          }
+
+      //          //var dictionary = new XmlLocalizationDictionary(CultureInfo.GetCultureInfo(cultureName));
+      //          var dictionary = new XmlLocalizationDictionary((Languages)int.Parse(languageInt));
+
+      //          var dublicateNames = new List<string>();
+      //          //Make a list of all the node types
+      //          //Maybe a dictionary<string,nodeType>?
+
+      //          var nodes = xmlDocument.SelectSingleNode("/localizationDictionary/Species").ChildNodes;
+      //          if (nodes != null)
+      //          {
+      //              PokemonData[] database = new PokemonData[nodes.Length];
+      //              foreach (System.Xml.XmlNode node in nodes)
+      //              {
+      //                  //if (nodes.HasChildNodes)
+      //                  //{
+						//	//if(!nodeType.ContainsKey(nodes.Name.ToUpperInvariant())) nodeType.Add(nodes.Name.ToUpperInvariant(), new List<LocalizedString>());
+      //                      //foreach (XmlNode node in nodes)
+      //                      //{
+      //                          if (node.HasChildNodes && node.FirstChild.NodeType == System.Xml.XmlNodeType.Text /*node.NodeType != XmlNodeType.Comment*/)
+      //                          {
+      //                              string id = node.GetAttributeValueOrNull("identifier");// ?? node.GetAttributeValueOrNull("name");
+      //                              if (string.IsNullOrEmpty(id))
+      //                              {
+      //                                  id = node.LocalName.ToString();
+      //                                  //throw new Exception("name attribute of a text is empty in given xml string.");
+      //                              }
+
+      //                              if (dictionary.Contains(id))
+      //                              {
+      //                                  dublicateNames.Add(id);
+      //                              }
+
+      //                              //dictionary[name] = (node.GetAttributeValueOrNull("value") ?? node.InnerText).NormalizeLineEndings();
+      //                              dictionary[id] = new LocalizedString() { Identifier = id };
+      //                              dictionary[id].Value = node.InnerText.TrimStart(new char[] { '\r', '\n' });//.NormalizeLineEndings();
+      //                              //dictionary[id].Name =  node.GetAttributeValueOrNull("name") ?? id;//.NormalizeLineEndings();
+
+      //                              #region MyRegion
+      //                              //ToDo: Maybe add a forms array, and a new method for single name calls
+      //                              dictionary[id].FieldNames = new KeyValuePair<string, string>[node.Attributes.Count];//new string
+      //                              //int n = 0;//dictionary.Forms[0] = node.Attributes["name"].Value;//that or return an empty array T[0]
+      //                              for (int i = 0; i < node.Attributes.Count; i++)//foreach(System.Xml.XmlAttribute attr in node)
+      //                              {
+      //                                  //Skipping first 4 values will save processing
+      //                                  /*if (node.Attributes[i].LocalName.Contains("form")) //Name vs LocalName?
+      //                                  {
+      //                                      //translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values 
+      //                                      dictionary.FieldNames[n] = node.Attributes[i].Value; n++;
+      //                                  }*/
+      //                                  //dictionary[name].FieldNames[i] = node.Attributes[i].Value; //n++;
+      //                                  dictionary[id].FieldNames[i] = new KeyValuePair<string, string>(node.Attributes[i].LocalName, node.Attributes[i].Value); //n++;
+      //                              }
+
+      //                              //fieldArray.Add(node.LocalName.ToString());
+      //                              dictionary[id].NodeType = node.LocalName.ToString();
+      //                              //nodeType.Add(node.LocalName.ToString());
+      //                              #endregion
+      //                          }
+						//	//}
+						//	//nodeType[nodes.Name.ToUpperInvariant()] = dictionary;
+						////}
+      //              }
+      //          }
+      //          else 
+      //              return false;
+
+      //          if (dublicateNames.Count > 0)
+      //          {
+      //              //throw new Exception("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
+      //              GameDebug.Log("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
+      //          }
+
+      //          xmlDocument = null;
+      //          //return dictionary; 
+      //          return true;           
+      //      }
+      //      private static bool LoadPokemonDatabase()
+      //      {
+      //          //public static readonly PokemonData[] Database; //{ get { if(_database == null) _database = LoadDatabase(); return _database; } private set; }
+      //          //static PokemonData()
+      //          //{
+      //          //    Database = new PokemonData[] {
+      //          var xmlDocument = new System.Xml.XmlDocument();
+      //          //try/catch if read file then loadxml?... else error/fail
+      //          //ToDo: Ping Server and CheckForUpdate(filename)
+      //          xmlDocument.LoadXml(System.IO.File.ReadAllText(Core.FILEPATH));
+
+      //          var localizationDictionaryNode = xmlDocument.SelectNodes("/localizationDictionary");
+      //          if (localizationDictionaryNode == null || localizationDictionaryNode.Count <= 0)
+      //          {
+      //              //throw new Exception("A Localization Xml must include localizationDictionary as root node.");
+      //              GameDebug.Log("A Localization Xml must include localizationDictionary as root node.");
+      //              return false;
+      //          }
+
+      //          //var dictionary = new XmlLocalizationDictionary(CultureInfo.GetCultureInfo(cultureName));
+      //          //var dictionary = new XmlLocalizationDictionary((Languages)int.Parse(languageInt));
+
+      //          var dublicateNames = new List<string>();
+      //          //Make a list of all the node types
+      //          //Maybe a dictionary<string,nodeType>?
+
+      //          var textNodes = xmlDocument.SelectSingleNode("/localizationDictionary/Species").ChildNodes;
+      //          if (textNodes != null)
+      //          {
+      //              PokemonData[] database = new PokemonData[textNodes.Count];
+      //              foreach (System.Xml.XmlNode nodes in textNodes)
+      //              {
+      //                  if (nodes.HasChildNodes)
+      //                  {
+						//	//if(!nodeType.ContainsKey(nodes.Name.ToUpperInvariant())) nodeType.Add(nodes.Name.ToUpperInvariant(), new List<LocalizedString>());
+      //                      foreach (System.Xml.XmlNode node in nodes)
+      //                      {
+      //                          if (node.HasChildNodes && node.FirstChild.NodeType == System.Xml.XmlNodeType.Text /*node.NodeType != XmlNodeType.Comment*/)
+      //                          {
+      //                              var id = node.GetAttributeValueOrNull("identifier");// ?? node.GetAttributeValueOrNull("name");
+      //                              if (string.IsNullOrEmpty(id))
+      //                              {
+      //                                  id = node.LocalName.ToString();
+      //                                  //throw new Exception("name attribute of a text is empty in given xml string.");
+      //                              }
+
+      //                              if (dictionary.Contains(id))
+      //                              {
+      //                                  dublicateNames.Add(id);
+      //                              }
+
+      //                              //dictionary[name] = (node.GetAttributeValueOrNull("value") ?? node.InnerText).NormalizeLineEndings();
+      //                              dictionary[id] = new LocalizedString() { Identifier = id };
+      //                              dictionary[id].Value = node.InnerText.TrimStart(new char[] { '\r', '\n' });//.NormalizeLineEndings();
+      //                              //dictionary[id].Name =  node.GetAttributeValueOrNull("name") ?? id;//.NormalizeLineEndings();
+
+      //                              #region MyRegion
+      //                              //ToDo: Maybe add a forms array, and a new method for single name calls
+      //                              dictionary[id].FieldNames = new KeyValuePair<string, string>[node.Attributes.Count];//new string
+      //                              //int n = 0;//dictionary.Forms[0] = node.Attributes["name"].Value;//that or return an empty array T[0]
+      //                              for (int i = 0; i < node.Attributes.Count; i++)//foreach(System.Xml.XmlAttribute attr in node)
+      //                              {
+      //                                  //Skipping first 4 values will save processing
+      //                                  /*if (node.Attributes[i].LocalName.Contains("form")) //Name vs LocalName?
+      //                                  {
+      //                                      //translation.Forms[i-4] = node.Attributes[i].Value; //limits xml to only 4 set values 
+      //                                      dictionary.FieldNames[n] = node.Attributes[i].Value; n++;
+      //                                  }*/
+      //                                  //dictionary[name].FieldNames[i] = node.Attributes[i].Value; //n++;
+      //                                  dictionary[id].FieldNames[i] = new KeyValuePair<string, string>(node.Attributes[i].LocalName, node.Attributes[i].Value); //n++;
+      //                              }
+
+      //                              //fieldArray.Add(node.LocalName.ToString());
+      //                              dictionary[id].NodeType = node.LocalName.ToString();
+      //                              //nodeType.Add(node.LocalName.ToString());
+      //                              #endregion
+      //                          }
+						//	}
+						//	nodeType[nodes.Name.ToUpperInvariant()] = dictionary;
+						//}
+      //              }
+      //          }
+      //          else 
+      //              return false;
+
+      //          if (dublicateNames.Count > 0)
+      //          {
+      //              //throw new Exception("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
+      //              GameDebug.Log("A dictionary can not contain same key twice. There are some duplicated names: " + dublicateNames.JoinAsString(", "));//string.Join(", ",dublicateNames.ToArray())
+      //          }
+
+      //          xmlDocument = null;
+      //          //return dictionary; 
+      //          return true;           
+      //      }
+
 			/// <summary>
             /// 
             /// </summary>
@@ -449,6 +715,77 @@ namespace PokemonUnity.Monster
                 }
                 throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
                 //return null;
+            }
+
+			/// <summary>
+            /// 
+            /// </summary>
+            /// <param name="ID"></param>
+            /// <returns>Either PokemonData or PokemonUnity.Battle.Form (Inherits PokemonData)</returns>
+            private void SetForm(Types type1, Types type2, Abilities ability1, Abilities ability2, Abilities hiddenAbility, //Abilities[] abilities,
+                /*GenderRatio genderRatio,*/ float? maleRatio, int catchRate, EggGroups eggGroup1, EggGroups eggGroup2, int hatchTime,
+                float height, float weight, int baseExpYield, LevelingRate levelingRate,
+                //int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,
+                int evHP, int evATK, int evDEF, int evSPA, int evSPD, int evSPE,
+                Color pokedexColor, //int baseFriendship, //string species, string pokedexEntry,
+                int baseStatsHP, int baseStatsATK, int baseStatsDEF, int baseStatsSPA, int baseStatsSPD, int baseStatsSPE,
+                //Rarity rarity, float luminance, //Color lightColor,
+                //PokemonMoveset[] movesetmoves, int[] movesetLevels, Moves[] movesetMoves, int[] tmList, IPokemonEvolution[] evolution,
+                //int[] evolutionID, int[] evolutionLevel, int[] evolutionMethod, //string[] evolutionRequirements,
+                //Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
+                int[,] heldItem)
+            {
+                //this.RegionalPokedex = _base.regionalDex;
+
+                this.type1 = type1; //!= null ? (Types)type1 : Types.NONE;
+                this.type2 = type2; //!= null ? (Types)type2 : Types.NONE;
+                //this.ability = abilities;
+                this.ability1 = (Abilities)ability1;
+                this.ability2 = (Abilities)ability2;
+                this.abilityh = (Abilities)hiddenAbility;
+
+                this.MaleRatio = (GenderRatio)(maleRatio.HasValue ? (GenderRatio)getGenderRatio((float)maleRatio.Value) : GenderRatio.Genderless);
+				this.CatchRate = catchRate;
+                this.eggGroup1 = eggGroup1;
+                this.eggGroup2 = eggGroup2;
+                this.HatchTime = hatchTime;
+
+                this.Height = height;
+                this.Weight = weight;
+                this.BaseExpYield = baseExpYield;
+                this.GrowthRate = (LevelingRate)levelingRate; 
+
+                this.evYieldHP = evHP;
+                this.evYieldATK = evATK;
+                this.evYieldDEF = evDEF;
+                this.evYieldSPA = evSPA;
+                this.evYieldSPD = evSPD;
+                this.evYieldSPE = evSPE;
+
+                this.BaseStatsHP = baseStatsHP;
+                this.BaseStatsATK = baseStatsATK;
+                this.BaseStatsDEF = baseStatsDEF;
+                this.BaseStatsSPA = baseStatsSPA;
+                this.BaseStatsSPD = baseStatsSPD;
+                this.BaseStatsSPE = baseStatsSPE;
+                //this.BaseFriendship = baseFriendship;
+
+                //this.Rarity = rarity;
+                //this.Luminance = luminance;
+                //this.lightColor = lightColor;
+                this.PokedexColor = pokedexColor | Color.NONE;
+
+                this.HeldItem = heldItem; //[item id,% chance]
+
+                /*this.MoveTree = new PokemonMoveTree(movesetmoves);
+                //this.MovesetLevels = movesetLevels;
+                //this.MovesetMoves = movesetMoves; 
+                //this.tmList = tmList; 
+
+                this.Evolutions = evolution ?? new IPokemonEvolution[0];
+                //this.EvolutionID = evolutionID;
+                //this.evolutionMethod = evolutionMethod; 
+                //this.evolutionRequirements = evolutionRequirements;*/
             }
 
             /// <summary>

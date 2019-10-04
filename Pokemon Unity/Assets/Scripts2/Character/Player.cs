@@ -90,6 +90,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
 		/// ToDo: Add variable for "Shiny"?...
+		/// ToDo: switch from byte to Pokemons.Enum:short, value [1,2] = Pokemon.Form, other array values remain same.
 		public byte[,] Pokedex { get; private set; }
 		///// <summary>
 		///// Usage:<para>
