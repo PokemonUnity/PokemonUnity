@@ -49,8 +49,9 @@ namespace PokemonUnity.Attack
 
             public MoveData()
             {
-                Name = LanguageExtension.Translate(Text.Moves, ID.ToString()).Name;
-                Description = LanguageExtension.Translate(Text.Moves, ID.ToString()).Value;
+				//ToDo: Load Text
+                //Name = LanguageExtension.Translate(Text.Moves, ID.ToString()).Name;
+                //Description = LanguageExtension.Translate(Text.Moves, ID.ToString()).Value;
             }
 
             internal MoveData getMove(Moves ID)

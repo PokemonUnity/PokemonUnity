@@ -3,10 +3,10 @@
 using System;
 using System.Collections;
 using System.Runtime.Serialization;
-#if (DEBUG == false || UNITY_EDITOR == true)
+//#if (DEBUG == false || UNITY_EDITOR == true)
 using UnityEngine;
 //using UnityEditor;
-#endif
+//#endif
 
 namespace PokemonUnity
 {
@@ -101,7 +101,7 @@ namespace PokemonUnity
 	/// Custom extension for Vector3.
 	/// Used with replacing a value of a single axis
 	/// </summary>
-	public static class Utex
+	public static partial class Utex
 	{
 		public static Vector3 WithX(this Vector3 v, float x)
 		{

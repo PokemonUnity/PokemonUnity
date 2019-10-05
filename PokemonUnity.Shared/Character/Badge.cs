@@ -38,12 +38,14 @@ namespace PokemonUnity.Character
 			public string Name = "";
 			public int LevelCap = -1;
 			public List<HMMoves> HMs = new List<HMMoves>();
-			public UnityEngine.Vector4 TextureRectangle = new UnityEngine.Vector4(0, 0, 50, 50);
+			//ToDo: Vector4 to SeriV4
+			//public UnityEngine.Vector4 TextureRectangle { get; set; }
 			public string TexturePath = @"GUI\Badges";
 			public string Region = "Johto";
 
 			public BadgeDeclaration(string inputData)
 			{
+				//TextureRectangle = new UnityEngine.Vector4(0, 0, 50, 50);
 				string[] data = inputData.Split(System.Convert.ToChar("|"));
 
 				this.ID = System.Convert.ToInt32(data[0]);
@@ -129,7 +131,7 @@ namespace PokemonUnity.Character
 								{
 									string[] texData = argData.Split(System.Convert.ToChar(","));
 									this.TexturePath = texData[0];
-									this.TextureRectangle = new UnityEngine.Vector4(System.Convert.ToInt32(texData[1]), System.Convert.ToInt32(texData[2]), System.Convert.ToInt32(texData[3]), System.Convert.ToInt32(texData[4]));
+									//this.TextureRectangle = new UnityEngine.Vector4(System.Convert.ToInt32(texData[1]), System.Convert.ToInt32(texData[2]), System.Convert.ToInt32(texData[3]), System.Convert.ToInt32(texData[4]));
 									break;
 								}
 							case "region":
@@ -175,6 +177,7 @@ namespace PokemonUnity.Character
 			return "Plain";
 		}
 
+		/* ToDo: use XML
 		/// <summary>
 		/// Gets the badge texture.
 		/// </summary>
@@ -187,7 +190,7 @@ namespace PokemonUnity.Character
 					return TextureManager.GetTexture(b.TexturePath, b.TextureRectangle, "");
 			}
 			return TextureManager.GetTexture(@"GUI\Badges", new UnityEngine.Vector4(0, 0, 50, 50), "");
-		}
+		}*/
 
 		/// <summary>
 		/// Gets the highest level cap the player can use traded Pokémon on.

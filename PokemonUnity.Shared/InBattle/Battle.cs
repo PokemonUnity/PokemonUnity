@@ -296,7 +296,8 @@ namespace PokemonUnity.Battle
 		//attr_accessor :controlPlayer
 		private Player Player { get; set; }
 
-		public BattleAnimationHandler BattleScene { get; private set; }
+		//ToDo: Fix here... maybe new scene variable?...
+		//public BattleAnimationHandler BattleScene { get; private set; }
 		new public string Display
 		{
 			/* Don't need a get, since value is not being stored/logged
@@ -652,9 +653,11 @@ namespace PokemonUnity.Battle
 			//	DisplayPaused("It was stored in box \"{1}\".", boxname)
 			//}		
 		}
+		//ToDo: Maybe an abstract?... or move method to mono layer...
 		public void ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 		{
-			string itemname = LanguageExtension.Translate(Text.Items, ball.ToString()).Value;
+			//ToDo: Repair Text Translation Dictionary
+			string itemname = string.Empty;//LanguageExtension.Translate(Text.Items, ball.ToString()).Value;
 			Pokemon battler = null;
 			if (isOpposing(idxPokemon))
 				battler = battlers[idxPokemon];
@@ -663,12 +666,14 @@ namespace PokemonUnity.Battle
 			if (battler.isFainted())
 				battler = battler.Partner;
 			//DisplayBrief(L(Text.ScriptTexts,"ThrowBall", Player.Name, itemname));
-			Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts,"ThrowBall", Player.Name, itemname).Value);
+			//ToDo: Undo Comment
+			//Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts,"ThrowBall", Player.Name, itemname).Value);
 			if (battler.isFainted())
 			{
 				//"But there was no target..."
 				//Display(L(Text.ScriptTexts, "NoTarget"));
-				Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts, "NoTarget").Value);
+				//ToDo: Undo comment
+				//Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts, "NoTarget").Value);
 				return;
 			}
 			if (opponent.ID != TrainerTypes.WildPokemon) 
@@ -677,7 +682,8 @@ namespace PokemonUnity.Battle
 				//scene.ThrowAndDeflect(ball, 1);
 				//"The Trainer blocked the Ball!\nDon't be a thief!"
 				//Display(L(Text.ScriptTexts, "SnagRejected"));
-				Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts, "SnagRejected").Value);
+				//ToDo: Undo comment
+				//Game.TextBox.Show(LanguageExtension.Translate(Text.ScriptTexts, "SnagRejected").Value);
 			}
 			else
 			{

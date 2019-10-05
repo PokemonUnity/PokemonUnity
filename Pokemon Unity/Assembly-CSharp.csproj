@@ -184,8 +184,6 @@
     <Compile Include="Assets\Scripts2\Overworld\Roaming.cs" />
     <Compile Include="Assets\Scripts2\Overworld\SkyDome.cs" />
     <Compile Include="Assets\Scripts2\Overworld\World.cs" />
-    <Compile Include="Assets\Scripts2\Translations\Translations.cs" />
-    <Compile Include="Assets\Scripts2\Translations\Translator.cs" />
     <None Include="Assets\Scripts2\XML\Localization\EN_US\SCRIPTS.xml" />
     <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
     <None Include="Assets\Scripts2\XML\MONSTERS.xml" />

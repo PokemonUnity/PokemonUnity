@@ -142,11 +142,12 @@ namespace PokemonUnity.Battle
 		//public override bool hasMegaForm { get { if (effects.Transform) return false; return base.hasMegaForm; } }
 		public bool IsPrimal { get; private set; }
 		//public override bool hasPrimalForm { get { if (effects.Transform) return false; return base.hasPrimalForm; } }
-		public BattlePokemonHandler playerHUD { get; private set; }
-		/// <summary>
-		/// UI for AI or Ally controlled Pokemons 
-		/// </summary>
-		public BattlePokemonHandler nonplayerHUD { get; private set; }
+		//ToDo: move to ui layer
+		//public BattlePokemonHandler playerHUD { get; private set; }
+		///// <summary>
+		///// UI for AI or Ally controlled Pokemons 
+		///// </summary>
+		//public BattlePokemonHandler nonplayerHUD { get; private set; }
 		#endregion
 
 		#region Constructors
@@ -1318,6 +1319,7 @@ namespace PokemonUnity.Battle
 			}
 			return battlers;
 		}
+		/* ToDo: Move to mono class...
 		public void BattlerUI(BattlePokemonHandler gameObject, bool player = false)
 		{
 			if (player) playerHUD = gameObject;
@@ -1338,7 +1340,7 @@ namespace PokemonUnity.Battle
 			playerHUD.Gender 			= nonplayerHUD.Gender 			= Gender;
 			playerHUD.Status 			= nonplayerHUD.Status 			= Status;
 			playerHUD.Item 				= nonplayerHUD.Item 			= Item != Items.NONE;
-		}
+		}*/
 	}
 #pragma warning restore 0162
 }

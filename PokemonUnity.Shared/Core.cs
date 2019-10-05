@@ -14,7 +14,7 @@ namespace PokemonUnity
 	public static class Core //: Core<Translations.Languages>
 	{
 		#region Constant Values and Game Rules
-		public static Translator.Languages UserLanguage = Translator.Languages.English;
+		public static Translator.Languages UserLanguage { get; set; } //= Translator.Languages.English;
 		public static bool TextLTR { get; private set; }
 		//Ping server for latest hash value?...
 		//public const string PKU_Server_Address = "";

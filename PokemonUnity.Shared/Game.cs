@@ -28,8 +28,9 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	#region Player and Overworld Data
 	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 	public static Player Player { get; set; }
-	public static PokemonUnity.Overworld.Level Level { get; set; }
-	public static PokemonUnity.Overworld.Camera Camera { get; set; }
+	//ToDo: Unity implentation through funnel
+	//public static PokemonUnity.Overworld.Level Level { get; set; }
+	//public static PokemonUnity.Overworld.Camera Camera { get; set; }
 	//public Game.TrainerPC PC { get { return new Game.TrainerPC(Player); } }
 	/*public static PokemonUnity.Overworld.Season Season 
 	{ 
@@ -180,17 +181,18 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	#endregion
 
 	#region Unity Scene Manager
-	public static CanvasUIHandler CanvasManager { get; private set; }
-	public static DialogHandler TextBox { get; private set; }
-	public static StartupSceneHandler StartScene { get; private set; }
-	public static BattlePokemonHandler BattleScene { get; private set; }
-	//public static ItemHandler ItemScene { get; private set; }
-	//public static SummaryHandler SummaryScene { get; private set; }
-	//public static SettingsHandler SettingsScene { get; private set; }
-	#region Scene Manager Methods
-	public static void SetCanvasManager(CanvasUIHandler canvas) { CanvasManager = canvas; }
-	public static void SetStartScene(StartupSceneHandler start) { StartScene = start; }
-	#endregion
+	//ToDo: This whole region to be redone... maybe as abstract/virtual?
+	//public static CanvasUIHandler CanvasManager { get; private set; }
+	//public static DialogHandler TextBox { get; private set; }
+	//public static StartupSceneHandler StartScene { get; private set; }
+	//public static BattlePokemonHandler BattleScene { get; private set; }
+	////public static ItemHandler ItemScene { get; private set; }
+	////public static SummaryHandler SummaryScene { get; private set; }
+	////public static SettingsHandler SettingsScene { get; private set; }
+	//#region Scene Manager Methods
+	//public static void SetCanvasManager(CanvasUIHandler canvas) { CanvasManager = canvas; }
+	//public static void SetStartScene(StartupSceneHandler start) { StartScene = start; }
+	//#endregion
 	#endregion
 
 	#region Save/Load Data
@@ -655,10 +657,10 @@ public class UnityUtilityIntegration
 	{
 
 	}
-	protected static string L(Text text, string textid, params string[] vs)
-	{
-		return LanguageExtension.Translate(text, textid, vs).Value;
-	}
+	//protected static string L(Text text, string textid, params string[] vs)
+	//{
+	//	return LanguageExtension.Translate(text, textid, vs).Value;
+	//}
 	#endregion
 }
 

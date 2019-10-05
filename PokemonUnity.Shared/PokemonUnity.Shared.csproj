@@ -79,6 +79,18 @@
     <None Remove="Saving\SerializableClasses\SeriPC.cs.meta" />
     <None Remove="Saving\SerializableClasses\SeriPokemon.cs.meta" />
     <None Remove="Saving\SerializableClasses\SeriV3.cs.meta" />
+    <None Remove="Translations\PokemonUnity.xml.meta" />
+    <None Remove="Translations\Translations.cs.meta" />
+    <None Remove="Translations\Translator.cs.meta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Pokemon Unity\Temp\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\Pokemon Unity\Temp\bin\Debug\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
