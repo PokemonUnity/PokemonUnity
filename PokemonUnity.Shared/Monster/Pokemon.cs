@@ -2528,6 +2528,7 @@ namespace PokemonUnity.Monster
 		#endregion
 
 		#region Unity Engine Stuff...
+		/*ToDo: Move to unity...
 		/// <summary>
 		/// Plays the cry of this Pokémon.
 		/// </summary>
@@ -2546,7 +2547,7 @@ namespace PokemonUnity.Monster
 				Pitch = -1.0f;
 
 			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
-		}
+		}*/
 		#endregion
     }
     public interface IPokemonEvolution

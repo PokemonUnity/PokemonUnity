@@ -17,6 +17,7 @@ namespace PokemonUnity.Battle
 	/// to prevent changes from being permanent to original pokemon profile
 	/// </summary>
 	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
+	/// ToDo: Move entire class to Unity?...
 	public class Pokemon : PokemonUnity.Monster.Pokemon
 	{
 		#region Variables
@@ -492,9 +493,9 @@ namespace PokemonUnity.Battle
 					(Move)base.moves[3]
 				};
 			}
-#if (DEBUG == false || UNITY_EDITOR)
-			UpdateUI();
-#endif
+//#if (DEBUG == false || UNITY_EDITOR)
+//			UpdateUI();
+//#endif
 		}
 		public Pokemon Update(bool fullchange = false)
 		{
