@@ -460,7 +460,7 @@
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
-      <Project>{bd1460b5-f283-4305-8d89-a0f8d17a8828}</Project>
+      <Project>{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}</Project>
       <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
   </ItemGroup>

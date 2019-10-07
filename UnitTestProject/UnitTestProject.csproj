@@ -64,7 +64,7 @@
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
-      <Project>{bd1460b5-f283-4305-8d89-a0f8d17a8828}</Project>
+      <Project>{c4bd7ac0-1333-4d62-a6cd-881a1806ffad}</Project>
       <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
   </ItemGroup>
