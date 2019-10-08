@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonUnity.Shared", "..\PokemonUnity.Shared\PokemonUnity.Shared.csproj", "{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameFramework.Runtime", "UnityGameFramework.Runtime.csproj", "{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

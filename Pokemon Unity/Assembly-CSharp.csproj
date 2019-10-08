@@ -61,143 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ActivateOnCVariable.cs" />
-    <Compile Include="Assets\Scripts\ActivateTimeBased.cs" />
-    <Compile Include="Assets\Scripts\BgmHandler.cs" />
-    <Compile Include="Assets\Scripts\BridgeHandler.cs" />
-    <Compile Include="Assets\Scripts\Data\MoveData.cs" />
-    <Compile Include="Assets\Scripts\Data\MoveDatabase.cs" />
-    <Compile Include="Assets\Scripts\Data\PC.cs" />
-    <Compile Include="Assets\Scripts\DayNightCycle.cs" />
-    <Compile Include="Assets\Scripts\DialogBoxHandler.cs" />
-    <Compile Include="Assets\Scripts\DialogBoxHandlerNew.cs" />
-    <Compile Include="Assets\Scripts\flycameraDebug.cs" />
-    <Compile Include="Assets\Scripts\FollowerMovement.cs" />
-    <Compile Include="Assets\Scripts\GlobalVariables.cs" />
-    <Compile Include="Assets\Scripts\GrassPatchHandler.cs" />
-    <Compile Include="Assets\Scripts\GUIParticleHandler.cs" />
-    <Compile Include="Assets\Scripts\ImportedScripts\AspectUtilityEnhanced.cs" />
-    <Compile Include="Assets\Scripts\ImportedScripts\RotatableGUIItem.cs" />
-    <Compile Include="Assets\Scripts\Interacts\BumpLedge.cs" />
-    <Compile Include="Assets\Scripts\Interacts\BumpPokemonCenterRespawn.cs" />
-    <Compile Include="Assets\Scripts\Interacts\BumpRespawnSet.cs" />
-    <Compile Include="Assets\Scripts\Interacts\CustomEvent.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractBreak.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractDoorway.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractItem.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractPC.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractPokemonCenter.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractPush.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractRedirect.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractShop.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractSign.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractTrainer.cs" />
-    <Compile Include="Assets\Scripts\Interacts\InteractTrainerSight.cs" />
-    <Compile Include="Assets\Scripts\MapCollider.cs" />
-    <Compile Include="Assets\Scripts\MapNameBoxHandler.cs" />
-    <Compile Include="Assets\Scripts\MapSettings.cs" />
-    <Compile Include="Assets\Scripts\NonResettingHandler.cs" />
-    <Compile Include="Assets\Scripts\NPCHandler.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\ReflectiveWaterHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\BagHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\BattleHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\EvolutionHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PartyHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PauseHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PCHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\PokedexHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\Scene.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\SettingsHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\SummaryHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\TestPokedexHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\TrainerHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneHandlers\TypingHandler.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition.cs" />
-    <Compile Include="Assets\Scripts\ScreenFade.cs" />
-    <Compile Include="Assets\Scripts\SetMatTint.cs" />
-    <Compile Include="Assets\Scripts\SetSortingOrder.cs" />
-    <Compile Include="Assets\Scripts\SfxHandler.cs" />
-    <Compile Include="Assets\Scripts\SpriteAnimation.cs" />
-    <Compile Include="Assets\Scripts\TextureTileAnimation.cs" />
-    <Compile Include="Assets\Scripts\TextureTileToScale.cs" />
-    <Compile Include="Assets\Scripts\WindowLight.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\AnimationEffect.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\AudioHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\BattleAnimationHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\BattlePokemonHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\Billboard.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\CanvasUIManager.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\DialogHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\ItemHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\ReSkinAnimation.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\SoundManager.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\StartupSceneHandler.cs" />
-    <Compile Include="Assets\Scripts2\EventHandlers\TextureManager.cs" />
-    <Compile Include="Assets\Scripts2\External\FileToMaps.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Camera.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\BaseEntity.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Entity.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\AllSidesObject.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\AnimatedBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\ApricornPlant.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\BerryPlant.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\CutDownTree.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\DiveTile.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\Floor.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\Grass.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\HeadbuttTree.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\ItemObject.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\LoamySoil.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\ModelEntity.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\RockClimbEntity.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\RotationTile.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\ScriptBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\SignBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\SlideBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\SmashRock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\StepBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\StrengthRock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\StrengthTrigger.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\TurningSign.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\WallBill.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\WallBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\WarpBlock.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\Water.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\Waterfall.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Enviroment\Whirlpool.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\MessageBulb.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\NetworkPlayer.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\NetworkPokemon.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\NPC.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\OverworldPokemon.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\OwnPlayer.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Entites\Other\Particle.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Level.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\LevelLoader.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Map.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Map\Sample\Test.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Map\Tile.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\OffsetMap.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\PokemonEncounter.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\Roaming.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\SkyDome.cs" />
-    <Compile Include="Assets\Scripts2\Overworld\World.cs" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\SCRIPTS.xml" />
-    <None Include="Assets\Scripts2\Translations\PokemonUnity.xml" />
-    <None Include="Assets\Scripts2\XML\MONSTERS.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\MOVES.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\ABILITIES.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\BATTLE.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\ITEMS.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\MESSAGES.xml" />
-    <None Include="Assets\Scripts2\XML\FORMS.xml" />
-    <None Include="Assets\Scripts2\XML\POKEMONS.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\SPECIES.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\CONTEST.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\NATURES.xml" />
-    <None Include="Assets\Scripts2\XML\Localization\EN_US\RIBBONS.xml" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -422,6 +285,18 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="GameFramework">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameFramework/Libraries/GameFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/GameFramework/Libraries/ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Assets/Libraries/protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -778,6 +653,110 @@
       <Project>{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}</Project>
       <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="UnityGameFramework.Runtime.csproj">
+      <Project>{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}</Project>
+      <Name>UnityGameFramework.Runtime</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\Base\GameEntry.Builtin.cs" />
+    <Compile Include="Assets\Scripts\Base\GameEntry.cs" />
+    <Compile Include="Assets\Scripts\Base\GameEntry.Custom.cs" />
+    <Compile Include="Assets\Scripts\BuiltinData\BuiltinDataComponent.cs" />
+    <Compile Include="Assets\Scripts\Config\ConfigExtension.cs" />
+    <Compile Include="Assets\Scripts\DataTable\BinaryReaderExtension.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DataTableExtension.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRAircraft.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRArmor.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRAsteroid.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DREntity.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRMusic.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRScene.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRSound.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRTest.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRThruster.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRUIForm.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRUISound.cs" />
+    <Compile Include="Assets\Scripts\DataTable\DRWeapon.cs" />
+    <Compile Include="Assets\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
+    <Compile Include="Assets\Scripts\Definition\Constant\Constant.AssetPriority.cs" />
+    <Compile Include="Assets\Scripts\Definition\Constant\Constant.Layer.cs" />
+    <Compile Include="Assets\Scripts\Definition\Constant\Constant.ProcedureData.cs" />
+    <Compile Include="Assets\Scripts\Definition\Constant\Constant.Setting.cs" />
+    <Compile Include="Assets\Scripts\Definition\DataStruct\BuildInfo.cs" />
+    <Compile Include="Assets\Scripts\Definition\DataStruct\ImpactData.cs" />
+    <Compile Include="Assets\Scripts\Definition\DataStruct\VersionInfo.cs" />
+    <Compile Include="Assets\Scripts\Definition\Enum\CampType.cs" />
+    <Compile Include="Assets\Scripts\Definition\Enum\QualityLevelType.cs" />
+    <Compile Include="Assets\Scripts\Definition\Enum\RelationType.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\AccessoryObjectData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\AircraftData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\ArmorData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\AsteroidData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\BulletData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\EffectData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\EntityData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\MyAircraftData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\TargetableObjectData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\ThrusterData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData\WeaponData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityExtension.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Aircraft.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Armor.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Asteroid.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Effect.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Entity.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\MyAircraft.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\TargetableObject.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Thruster.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityLogic\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Game\GameBase.cs" />
+    <Compile Include="Assets\Scripts\Game\GameMode.cs" />
+    <Compile Include="Assets\Scripts\Game\SurvivalGame.cs" />
+    <Compile Include="Assets\Scripts\Localization\LocalizationExtension.cs" />
+    <Compile Include="Assets\Scripts\Localization\XmlLocalizationHelper.cs" />
+    <Compile Include="Assets\Scripts\Network\CSPacketBase.cs" />
+    <Compile Include="Assets\Scripts\Network\CSPacketHeader.cs" />
+    <Compile Include="Assets\Scripts\Network\NetworkChannelHelper.cs" />
+    <Compile Include="Assets\Scripts\Network\PacketBase.cs" />
+    <Compile Include="Assets\Scripts\Network\PacketHandlerBase.cs" />
+    <Compile Include="Assets\Scripts\Network\PacketHandler\SCHeartBeatHandler.cs" />
+    <Compile Include="Assets\Scripts\Network\PacketHeaderBase.cs" />
+    <Compile Include="Assets\Scripts\Network\PacketType.cs" />
+    <Compile Include="Assets\Scripts\Network\Packet\CSHeartBeat.cs" />
+    <Compile Include="Assets\Scripts\Network\Packet\SCHeartBeat.cs" />
+    <Compile Include="Assets\Scripts\Network\SCPacketBase.cs" />
+    <Compile Include="Assets\Scripts\Network\SCPacketHeader.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureBase.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureChangeScene.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureCheckVersion.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureLaunch.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureMain.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureMenu.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedurePreload.cs" />
+    <Compile Include="Assets\Scripts\Procedure\ProcedureSplash.cs" />
+    <Compile Include="Assets\Scripts\Scene\HideByBoundary.cs" />
+    <Compile Include="Assets\Scripts\Scene\ScrollableBackground.cs" />
+    <Compile Include="Assets\Scripts\Sound\SoundExtension.cs" />
+    <Compile Include="Assets\Scripts\UI\AboutForm.cs" />
+    <Compile Include="Assets\Scripts\UI\CommonButton.cs" />
+    <Compile Include="Assets\Scripts\UI\DialogForm.cs" />
+    <Compile Include="Assets\Scripts\UI\DialogParams.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuForm.cs" />
+    <Compile Include="Assets\Scripts\UI\SettingForm.cs" />
+    <Compile Include="Assets\Scripts\UI\UGuiForm.cs" />
+    <Compile Include="Assets\Scripts\UI\UGuiGroupHelper.cs" />
+    <Compile Include="Assets\Scripts\UI\UIExtension.cs" />
+    <Compile Include="Assets\Scripts\UI\UIFormId.cs" />
+    <Compile Include="Assets\Scripts\UnityMonoHandlers\HPBar\HPBarComponent.cs" />
+    <Compile Include="Assets\Scripts\UnityMonoHandlers\HPBar\HPBarItem.cs" />
+    <Compile Include="Assets\Scripts\UnityMonoHandlers\HPBar\HPBarItemObject.cs" />
+    <Compile Include="Assets\Scripts\Utility\AIUtility.cs" />
+    <Compile Include="Assets\Scripts\Utility\AssetUtility.cs" />
+    <Compile Include="Assets\Scripts\Utility\LitJsonHelper.cs" />
+    <Compile Include="Assets\Scripts\Utility\WebUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

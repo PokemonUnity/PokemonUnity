@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using PokemonUnity.Monster;
 using PokemonUnity;
+using PokemonUnity.Localization;
 
 #region Deprecated/Obsolete
 /*[System.Serializable]
@@ -233,7 +234,7 @@ public static class LanguageExtension //: GameText
 	/// <param name="fieldValues"></param>
 	/// <returns></returns>
 	/// ToDo: Overload this where TextId can also be an Int?
-    public static Translator.Language.LocalizedString Translate(PokemonUnity.Text text, string textId, params string[] fieldValues)
+    public static Translator.Language.LocalizedString Translate(PokemonUnity.Localization.Text text, string textId, params string[] fieldValues)
     {
 		var Failure = new Translator.Language.LocalizedString("Failed", "The contents of this dictionary were unable to be found", Core.UserLanguage);
         /*
@@ -289,7 +290,7 @@ public static class LanguageExtension //: GameText
 				case PokemonUnity.Text.PhoneMessages:
 				case PokemonUnity.Text.ScriptTexts:*/
 				default:
-					if (node.Key == System.Enum.GetName(typeof(PokemonUnity.Text), text).ToUpper())
+					if (node.Key == System.Enum.GetName(typeof(PokemonUnity.Localization.Text), text).ToUpper())
 					{
 						foreach (KeyValuePair<string, string> field in node.Value[textId].FieldNames)
 						{
@@ -559,7 +560,7 @@ public static class gameTextExtension //: LanguageExtension
 }
 #endregion
 
-namespace PokemonUnity
+namespace PokemonUnity.Localization
 {
 	/// <summary>
 	/// Different category sections a piece of translated text could belong to

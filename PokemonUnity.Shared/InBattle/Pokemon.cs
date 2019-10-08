@@ -2,6 +2,7 @@
 //using PokemonUnity.Pokemon;
 using PokemonUnity.Inventory;
 //using PokemonUnity.Attack;
+using PokemonUnity.Localization;
 using PokemonUnity.Battle;
 using System;
 using System.Collections.Generic;

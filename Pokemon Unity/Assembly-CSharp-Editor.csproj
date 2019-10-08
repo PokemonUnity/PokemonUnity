@@ -376,6 +376,10 @@
       <Project>{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
+      <Project>{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}</Project>
+      <Name>PokemonUnity.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
