@@ -715,10 +715,11 @@ namespace PokemonUnity.Monster
                         return null;}
                 }
                 return result;*/
-                foreach (PokemonData pokemon in Database)
-                {
-                    if (pokemon.ID == ID) return pokemon;
-                }
+                //foreach (PokemonData pokemon in Database)
+                //{
+                //    if (pokemon.ID == ID) return pokemon;
+                //}
+                return Game.PokemonData[ID];
                 throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
                 //return null;
             }
@@ -825,35 +826,35 @@ namespace PokemonUnity.Monster
                 }
             }
 
-            static int getPokemonArrayId(Pokemons ID)
-            {
-                //Debug.Log("Get Pokemons");
-                /*PokemonData result = null;
-                int i = 1;
-                while(result == null){
-                    if(Database[i].ID == ID){
-                        //Debug.Log("Pokemon DB Success");
-                        return result = Database[i];
-                    }
-                    i += 1;
-                    if(i >= Database.Length){
-                        Debug.Log("Pokemon DB Fail");
-                        return null;}
-                }
-                return result;*/
-                /*foreach(PokemonData pokemon in Database)
-                {
-                    if (pokemon.ID == ID) return pokemon;
-                }*/
-                for (int i = 0; i < Database.Length; i++)
-                {
-                    if (Database[i].ID == ID)
-                    {
-                        return i;
-                    }
-                }
-                throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
-            }
+            //static int getPokemonArrayId(Pokemons ID)
+            //{
+            //    //Debug.Log("Get Pokemons");
+            //    /*PokemonData result = null;
+            //    int i = 1;
+            //    while(result == null){
+            //        if(Database[i].ID == ID){
+            //            //Debug.Log("Pokemon DB Success");
+            //            return result = Database[i];
+            //        }
+            //        i += 1;
+            //        if(i >= Database.Length){
+            //            Debug.Log("Pokemon DB Fail");
+            //            return null;}
+            //    }
+            //    return result;*/
+            //    /*foreach(PokemonData pokemon in Database)
+            //    {
+            //        if (pokemon.ID == ID) return pokemon;
+            //    }*/
+            //    for (int i = 0; i < Database.Length; i++)
+            //    {
+            //        if (Database[i].ID == ID)
+            //        {
+            //            return i;
+            //        }
+            //    }
+            //    throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
+            //}
 
             /// <summary>
             /// Returns int value of Pokemon from PokemonData[] <see cref="Database"/>
@@ -880,9 +881,16 @@ namespace PokemonUnity.Monster
                     {
                         if (pokemon.ID == ID) return pokemon;
                     }*/
-                    for (int i = 0; i < Database.Length; i++)
+                    //for (int i = 0; i < Database.Length; i++)
+                    //{
+                    //    if (Database[i].ID == ID)
+                    //    {
+                    //        return i;
+                    //    }
+                    //}
+                    for (int i = 0; i < Game.PokemonData.Count; i++)
                     {
-                        if (Database[i].ID == ID)
+                        if (Game.PokemonData.ElementAt(i).Value.ID == ID)
                         {
                             return i;
                         }

@@ -158,7 +158,7 @@ namespace PokemonUnity
 		public Player()
 		{
 			//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
-			Pokedex = new byte[Pokemon.PokemonData.Database.Length, 3];
+			Pokedex = new byte[Game.PokemonData.Where(x => x.Value.IsBaseForm).Count(), 3];
 			PlayTime = new TimeSpan();
 			Party = new Pokemon[]
 			{
