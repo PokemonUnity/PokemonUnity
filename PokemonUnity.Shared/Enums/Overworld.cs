@@ -59,8 +59,7 @@ namespace PokemonUnity.Overworld
 		Sky,
 		Space
 	}
-
-	public enum EncounterTypes
+		public enum EncounterTypes
 	{
 		Pal_Park, Egg, Hatched, Special_Event,      //= 0x0
 		Tall_Grass,                                 //= 0x2
@@ -331,41 +330,6 @@ namespace PokemonUnity.Overworld
 		SEASON_WINTER = 20
 	}
 	#endregion
-}
-
-
-namespace PokemonUnity
-{
-	#region Enums
-	public enum Worlds
-	{
-		GLOBAL = 0,
-		Emerald
-	}
-	/// <summary>
-	/// Each "world" has their own smaller regions
-	/// </summary>
-	public enum Regions
-	{
-		Overworld = 0
-	}
-	/// <summary>
-	/// Each "region" has their own individual maps
-	/// </summary>
-	public enum Maps
-	{
-		Safari = 0
-	}
-	public enum Direction
-	{
-		/// <summary>
-		/// Facing Foward, towards camera
-		/// </summary>
-		Down = 0,
-		Up,
-		Left,
-		Right
-	}
 
 	public enum Shape
 	{
@@ -435,16 +399,6 @@ namespace PokemonUnity
 		/// </summary>
 		NULL
 	}
-
-	public enum Season
-	{
-		Summer,
-		Winter,
-		Fall,
-		Spring,
-		Volcanic
-	}
-
 	public enum Entities
 	{
 		Floor,//Default?...
@@ -582,6 +536,49 @@ namespace PokemonUnity
 		OverworldPokemon,
 		OwnPlayer,
 		Particle
+	}
+}
+
+
+namespace PokemonUnity
+{
+	#region Enums
+	public enum Worlds
+	{
+		GLOBAL = 0,
+		Emerald
+	}
+	/// <summary>
+	/// Each "world" has their own smaller regions
+	/// </summary>
+	public enum Regions
+	{
+		Overworld = 0
+	}
+	/// <summary>
+	/// Each "region" has their own individual maps
+	/// </summary>
+	public enum Maps
+	{
+		Safari = 0
+	}
+	public enum Direction
+	{
+		/// <summary>
+		/// Facing Foward, towards camera
+		/// </summary>
+		Down = 0,
+		Up,
+		Left,
+		Right
+	}
+	public enum Season
+	{
+		Summer,
+		Winter,
+		Fall,
+		Spring,
+		Volcanic
 	}
 	#endregion
 }

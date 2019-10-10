@@ -128,7 +128,9 @@ namespace PokemonUnity.Monster
             /// example: Bulbasaur = [1,231]
             /// </example>
             /// <remarks>Think there is 3 pokedex</remarks>
+            public int RegionalDex { get; private set; }
             public int[] RegionalPokedex { get; private set; }
+            public byte GenerationId { get; private set; }
             /// <summary>
             /// Name of the specific pokemon+form
             /// for given Id in database
@@ -191,6 +193,10 @@ namespace PokemonUnity.Monster
             //public Pokemons Form2 { get; private set; }
             /// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
             public int Forms { get { return this.forms.Length; } }
+            public bool IsBaseForm { get; private set; }
+            public bool FormSwitchable { get; private set; }
+            public bool HasGenderDiff { get; private set; }
+            public bool IsBaby { get; private set; }
             /// <summary>
             /// Best used in battle simulator. 
             /// Check to see if pokemons are legendary, and exclude from battle
@@ -217,7 +223,7 @@ namespace PokemonUnity.Monster
             /// The male ratio.
             /// <value>-1f is interpreted as genderless</value>
             /// </summary>
-            public GenderRatio MaleRatio { get; private set; }
+            public GenderRatio GenderEnum { get; private set; }
             /// <summary>
             /// Returns whether this Pokemon species is restricted to only ever being one gender (or genderless)
             /// </summary>
@@ -225,7 +231,7 @@ namespace PokemonUnity.Monster
             {
                 get
                 {
-                    switch (MaleRatio)
+                    switch (GenderEnum)
                     {
                         case GenderRatio.AlwaysMale:
                         case GenderRatio.AlwaysFemale:
@@ -251,8 +257,8 @@ namespace PokemonUnity.Monster
             //public float hitboxWidth { get { return this.hitboxWidth; } } //used for 3d battles just use collision detection from models
             public float Height { get; private set; }
             public float Weight { get; private set; }
-            /// ToDo: Make this an enum
-            public int ShapeID { get; private set; }
+            public Shape ShapeId { get; private set; }
+            public Habitat HabitatId { get; private set; }
             public LevelingRate GrowthRate { get; private set; }
             public Color PokedexColor { get; private set; }
 
@@ -379,7 +385,7 @@ namespace PokemonUnity.Monster
                 this.ability2 = (Abilities)ability2;
                 this.abilityh = (Abilities)hiddenAbility;
 
-                this.MaleRatio = maleRatio.HasValue ? getGenderRatio(maleRatio.Value) : genderRatio; //ToDo: maleRatio; maybe `GenderRatio genderRatio(maleRatio);`
+                this.GenderEnum = maleRatio.HasValue ? getGenderRatio(maleRatio.Value) : genderRatio; //ToDo: maleRatio; maybe `GenderRatio genderRatio(maleRatio);`
                 this.CatchRate = catchRate;
                 this.eggGroup1 = eggGroup1;
                 this.eggGroup2 = eggGroup2;
@@ -436,7 +442,7 @@ namespace PokemonUnity.Monster
                 this.ability2 = (Abilities)_base.ability2;
                 this.abilityh = (Abilities)_base.abilityh;
 
-                this.MaleRatio = _base.MaleRatio; 
+                this.GenderEnum = _base.GenderEnum; 
                 this.CatchRate = _base.CatchRate;
                 this.eggGroup1 = _base.eggGroup1;
                 this.eggGroup2 = _base.eggGroup2;
@@ -744,7 +750,7 @@ namespace PokemonUnity.Monster
                 this.ability2 = (Abilities)ability2;
                 this.abilityh = (Abilities)hiddenAbility;
 
-                this.MaleRatio = (GenderRatio)(maleRatio.HasValue ? (GenderRatio)getGenderRatio((float)maleRatio.Value) : GenderRatio.Genderless);
+                this.GenderEnum = (GenderRatio)(maleRatio.HasValue ? (GenderRatio)getGenderRatio((float)maleRatio.Value) : GenderRatio.Genderless);
 				this.CatchRate = catchRate;
                 this.eggGroup1 = eggGroup1;
                 this.eggGroup2 = eggGroup2;

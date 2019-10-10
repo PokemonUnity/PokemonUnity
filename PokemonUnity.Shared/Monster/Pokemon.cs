@@ -864,17 +864,17 @@ namespace PokemonUnity.Monster
             get
             {
                 //if (genderRate == 100f) return true; 
-                if (_base.MaleRatio == GenderRatio.AlwaysMale) return true;
+                if (_base.GenderEnum == GenderRatio.AlwaysMale) return true;
                 //if (genderRate == 100f) return false; //Always female
-                if (_base.MaleRatio == GenderRatio.AlwaysFemale) return false;
-                if (_base.MaleRatio == GenderRatio.Genderless) return null; //genderless
+                if (_base.GenderEnum == GenderRatio.AlwaysFemale) return false;
+                if (_base.GenderEnum == GenderRatio.Genderless) return null; //genderless
                 return getGender();
             }
         }
 
         private bool? getGender()
         {
-            switch (_base.MaleRatio)
+            switch (_base.GenderEnum)
             {
                 //case GenderRatio.FemaleOneEighth:
                 //	break;
@@ -895,14 +895,14 @@ namespace PokemonUnity.Monster
                 default:
                     //byte n = (byte)(Core.Rand.Next(0, 100) + 1);
                     double n = (Core.Rand.NextDouble() * 100) + 1;
-                    if (_base.MaleRatio == GenderRatio.AlwaysFemale && n > 0f && n < 12.5f) return false;
-                    else if (_base.MaleRatio == GenderRatio.FemaleSevenEighths && n >= 12.5f && n < 25f) return false;
-                    else if (_base.MaleRatio == GenderRatio.Female75Percent && n >= 25f && n < 37.5f) return false;
-                    else if (_base.MaleRatio == GenderRatio.Female75Percent && n >= 37.5f && n < 50f) return false;
-                    else if (_base.MaleRatio == GenderRatio.Female50Percent && n >= 50f && n < 62.5f) return false;
-                    else if (_base.MaleRatio == GenderRatio.Female50Percent && n >= 62.5f && n < 75f) return false;
-                    else if (_base.MaleRatio == GenderRatio.Female25Percent && n >= 75f && n < 87.5f) return false;
-                    else if (_base.MaleRatio == GenderRatio.FemaleOneEighth && n >= 87.5f && n < 100f) return false;
+                    if (_base.GenderEnum == GenderRatio.AlwaysFemale && n > 0f && n < 12.5f) return false;
+                    else if (_base.GenderEnum == GenderRatio.FemaleSevenEighths && n >= 12.5f && n < 25f) return false;
+                    else if (_base.GenderEnum == GenderRatio.Female75Percent && n >= 25f && n < 37.5f) return false;
+                    else if (_base.GenderEnum == GenderRatio.Female75Percent && n >= 37.5f && n < 50f) return false;
+                    else if (_base.GenderEnum == GenderRatio.Female50Percent && n >= 50f && n < 62.5f) return false;
+                    else if (_base.GenderEnum == GenderRatio.Female50Percent && n >= 62.5f && n < 75f) return false;
+                    else if (_base.GenderEnum == GenderRatio.Female25Percent && n >= 75f && n < 87.5f) return false;
+                    else if (_base.GenderEnum == GenderRatio.FemaleOneEighth && n >= 87.5f && n < 100f) return false;
                     else return true;
             }
         }

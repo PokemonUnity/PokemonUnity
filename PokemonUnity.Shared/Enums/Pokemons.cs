@@ -67,6 +67,35 @@ namespace PokemonUnity.Monster
 		DRAGON = 14,
 		UNDISCOVERED = 15 //"no-eggs"
 	};
+	public enum Shape
+	{
+		BALL		= 1,
+		SQUIGGLE	= 2,
+		FISH		= 3,
+		ARMS		= 4,
+		BLOB		= 5,
+		UPRIGHT		= 6,
+		LEGS		= 7,
+		QUADRUPED	= 8,
+		WINGS		= 9,
+		TENTACLES	= 10,
+		HEADS		= 11,
+		HUMANOID	= 12,
+		BUG_WINGS	= 13,
+		ARMOR		= 14
+	}
+	public enum Habitat
+	{
+		CAVE			= 1,
+		FOREST			= 2,
+		GRASSLAND		= 3,
+		MOUNTAIN		= 4,
+		RARE			= 5,
+		ROUGH_TERRAIN	= 6,
+		SEA				= 7,
+		URBAN			= 8,
+		WATERS_EDGE		= 9
+	}
 	#endregion
 	#region Nature
 	public enum Natures
