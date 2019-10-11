@@ -28,6 +28,11 @@ public partial class Game
 	public static Dictionary<Natures,Nature> NatureData { get; private set; }
 	//public static Dictionary<Berries,Item.Berry> BerryData { get; private set; }
 	//ability
+	//forms
+	//held items
+	//evolutions
+	//locations
+	//location encounters
 
 	public void InitPokemons()
 	{

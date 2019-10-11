@@ -81,44 +81,45 @@ namespace PokemonUnity.Monster
                     List<Moves> shadow = new List<Moves>();
                     List<Moves> purify = new List<Moves>();
                     List<Moves> form = new List<Moves>();
-                    foreach (PokemonMoveset move in moveset)
-                    {
-                        //ToDo: Generation Filter
-                        //if(move.Generation == Core.pokemonGeneration || Core.pokemonGeneration < 1)
-                        switch (move.TeachMethod)
-                        {
-                            case LearnMethod.levelup:
-                                if (!level.ContainsKey(move.MoveId)) level.Add(move.MoveId, move.Level);
-                                break;
-                            case LearnMethod.egg:
-                                if (!egg.Contains(move.MoveId)) egg.Add(move.MoveId);
-                                break;
-                            case LearnMethod.tutor:
-                                if (!tutor.Contains(move.MoveId)) tutor.Add(move.MoveId);
-                                break;
-                            case LearnMethod.machine:
-                                if (!machine.Contains(move.MoveId)) machine.Add(move.MoveId);
-                                break;
-                            case LearnMethod.stadium_surfing_pikachu:
-                                break;
-                            case LearnMethod.light_ball_egg:
-                                break;
-                            case LearnMethod.purification:
-                            case LearnMethod.xd_purification:
-                            case LearnMethod.colosseum_purification:
-                                if (!purify.Contains(move.MoveId)) purify.Add(move.MoveId);
-                                break;
-                            case LearnMethod.shadow:
-                            case LearnMethod.xd_shadow:
-                                if (!shadow.Contains(move.MoveId)) shadow.Add(move.MoveId);
-                                break;
-                            case LearnMethod.form_change:
-                                if (!form.Contains(move.MoveId)) form.Add(move.MoveId);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+					if(moveset != null)
+						foreach (PokemonMoveset move in moveset)
+						{
+							//ToDo: Generation Filter
+							//if(move.Generation == Core.pokemonGeneration || Core.pokemonGeneration < 1)
+							switch (move.TeachMethod)
+							{
+								case LearnMethod.levelup:
+									if (!level.ContainsKey(move.MoveId)) level.Add(move.MoveId, move.Level);
+									break;
+								case LearnMethod.egg:
+									if (!egg.Contains(move.MoveId)) egg.Add(move.MoveId);
+									break;
+								case LearnMethod.tutor:
+									if (!tutor.Contains(move.MoveId)) tutor.Add(move.MoveId);
+									break;
+								case LearnMethod.machine:
+									if (!machine.Contains(move.MoveId)) machine.Add(move.MoveId);
+									break;
+								case LearnMethod.stadium_surfing_pikachu:
+									break;
+								case LearnMethod.light_ball_egg:
+									break;
+								case LearnMethod.purification:
+								case LearnMethod.xd_purification:
+								case LearnMethod.colosseum_purification:
+									if (!purify.Contains(move.MoveId)) purify.Add(move.MoveId);
+									break;
+								case LearnMethod.shadow:
+								case LearnMethod.xd_shadow:
+									if (!shadow.Contains(move.MoveId)) shadow.Add(move.MoveId);
+									break;
+								case LearnMethod.form_change:
+									if (!form.Contains(move.MoveId)) form.Add(move.MoveId);
+									break;
+								default:
+									break;
+							}
+						}
                     #endregion
                     /*return PokemonMoveTree(
                             levelup: level,

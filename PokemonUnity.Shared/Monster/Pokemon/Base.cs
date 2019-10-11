@@ -176,6 +176,7 @@ namespace PokemonUnity.Monster
             /// <summary>
             /// </summary>
             public string PokedexEntry { get; private set; }
+            public int EvoChainId { get; private set; }
             /// <summary>
             /// Form is the same Pokemon Pokedex entry. 
             /// Changing forms should change name value.
@@ -193,7 +194,7 @@ namespace PokemonUnity.Monster
             //public Pokemons Form2 { get; private set; }
             /// ToDo: I should use the # of Forms from the .xml rather than from the database initializer/constructor
             public int Forms { get { return this.forms.Length; } }
-            public bool IsBaseForm { get; private set; }
+            public bool IsDefault { get; private set; }
             public bool FormSwitchable { get; private set; }
             public bool HasGenderDiff { get; private set; }
             public bool IsBaby { get; private set; }
@@ -320,12 +321,12 @@ namespace PokemonUnity.Monster
             public PokemonData(Pokemons Id) //: this()
             {
                 //PokedexTranslation translation = PokemonData.GetPokedexTranslation(Id);
-                var translation = Id.ToString().Translate();
+                //var translation = Id.ToString().Translate();
                 this.ID = Id;
                 //this.name = translation.Name;
                 //this.species = translation.Species;
                 //this.pokedexEntry = translation.PokedexEntry;
-                this.PokedexEntry = translation.Value.Trim('\n');
+                /*this.PokedexEntry = translation.Value.Trim('\n');
                 //this.forms = forms; //| new Pokemon[] { Id }; //ToDo: need new mechanic for how this should work
                 List<string> formvalues = new List<string>();
                 foreach (var fieldValue in translation.FieldNames)
@@ -353,12 +354,12 @@ namespace PokemonUnity.Monster
                 else
                 {
                     this.forms = new string[] { null };
-                }
+                }*/
             }
 
             public PokemonData(Pokemons Id = Pokemons.NONE, int[] regionalDex = null, //string name, 
                                 Types type1 = Types.NONE, Types type2 = Types.NONE, Abilities ability1 = Abilities.NONE, Abilities ability2 = Abilities.NONE, Abilities hiddenAbility = Abilities.NONE,//Abilities[] abilities,
-                                GenderRatio genderRatio = GenderRatio.Genderless, float? maleRatio = null, int catchRate = 1, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
+                                GenderRatio? genderRatio = null, float? maleRatio = null, int catchRate = 1, EggGroups eggGroup1 = EggGroups.NONE, EggGroups eggGroup2 = EggGroups.NONE, int hatchTime = 0,
                                 float height = 0f, float weight = 0f, int baseExpYield = 0, LevelingRate levelingRate = LevelingRate.MEDIUMFAST,
                                 //int? evYieldHP, int? evYieldATK, int? evYieldDEF, int? evYieldSPA, int? evYieldSPD, int? evYieldSPE,
                                 int evHP = 0, int evATK = 0, int evDEF = 0, int evSPA = 0, int evSPD = 0, int evSPE = 0,
@@ -369,11 +370,14 @@ namespace PokemonUnity.Monster
                                 int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
                                 IPokemonEvolution[] evolution = null,
                                 int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, //string[] evolutionRequirements,
-                                //ToDo: What if: `Pokemons form` to point back to base pokemon, and Pokemons.NONE, if they are the base form?
-                                //that way, we can assign values to pokemons with forms that give stat bonuses...
-                                //want to find a way to add pokemon froms from a different method. Maybe something like overwriting the `Database` values to match those of base pokemon for values that are duplicated.
-                                //Or I'll just add it at the bottom towards end of array using copy-paste method.
-                                Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
+								Pokemons evolutionFROM = Pokemons.NONE, List<int> evolutionTO = null, 
+								int evoChainId = 0, byte generationId = 0, bool isDefault = false, bool isBaby = false, bool formSwitchable = false, bool hasGenderDiff = false, 
+								Habitat habitatId = Habitat.RARE, Shape shapeId = Shape.BLOB,
+								//ToDo: What if: `Pokemons form` to point back to base pokemon, and Pokemons.NONE, if they are the base form?
+								//that way, we can assign values to pokemons with forms that give stat bonuses...
+								//want to find a way to add pokemon froms from a different method. Maybe something like overwriting the `Database` values to match those of base pokemon for values that are duplicated.
+								//Or I'll just add it at the bottom towards end of array using copy-paste method.
+								Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
                                 int[,] heldItem = null) : this(Id)
             {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
                 this.RegionalPokedex = regionalDex;
@@ -385,7 +389,10 @@ namespace PokemonUnity.Monster
                 this.ability2 = (Abilities)ability2;
                 this.abilityh = (Abilities)hiddenAbility;
 
-                this.GenderEnum = maleRatio.HasValue ? getGenderRatio(maleRatio.Value) : genderRatio; //ToDo: maleRatio; maybe `GenderRatio genderRatio(maleRatio);`
+				if (genderRatio.HasValue) 
+					this.GenderEnum = genderRatio.Value; 
+				else
+                this.GenderEnum = maleRatio.HasValue ? getGenderRatio(maleRatio.Value) : getGenderRatio(-1); //genderRatio.Value;
                 this.CatchRate = catchRate;
                 this.eggGroup1 = eggGroup1;
                 this.eggGroup2 = eggGroup2;
@@ -419,16 +426,29 @@ namespace PokemonUnity.Monster
                 //ToDo: wild pokemon held items not yet implemented
                 this.HeldItem = heldItem; //[item id,% chance]
 
-                this.MoveTree = new PokemonMoveTree(movesetmoves);
+				//if(movesetmoves != null)
+				this.MoveTree = new PokemonMoveTree(movesetmoves);
                 //this.MovesetLevels = movesetLevels;
                 //this.MovesetMoves = movesetMoves; 
                 //this.tmList = tmList; 
 
                 this.Evolutions = evolution ?? new IPokemonEvolution[0];
-                //this.EvolutionID = evolutionID;
-                //this.evolutionMethod = evolutionMethod; 
-                //this.evolutionRequirements = evolutionRequirements;
-            }
+				//this.EvolutionID = evolutionID;
+				//this.evolutionMethod = evolutionMethod; 
+				//this.evolutionRequirements = evolutionRequirements;
+
+
+				this.IsDefault		= isDefault		;
+				this.IsBaby 		= isBaby 		;
+				this.FormSwitchable	= formSwitchable; 
+				this.HasGenderDiff 	= hasGenderDiff ;
+				//this.EvolutionFROM= evolutionFROM ;
+				//this.EvolutionTO 	= evolutionTO 	;
+				this.EvoChainId 	= evoChainId 	;
+				this.GenerationId 	= generationId 	;
+				this.HabitatId 		= habitatId 	;
+				this.ShapeId 		= shapeId 		;
+		}
             
             public PokemonData(Pokemons Id, Pokemons BaseSpecies) :  this (Id)
             {
