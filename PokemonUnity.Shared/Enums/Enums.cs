@@ -17,8 +17,6 @@ namespace PokemonUnity
 		Rock
 	}
 	#endregion
-	#region 
-	#endregion
 	#region Type
 	public enum Types
 	{
@@ -350,6 +348,7 @@ namespace PokemonUnity
 		SHIELD = 10060
 	}
 	#endregion
+	#region 
 	public enum Ribbon
 	{
 		NONE = 0,
@@ -540,6 +539,7 @@ namespace PokemonUnity
         ENERGYROOT,
         REVIVALHERB
 	}
+	#endregion
 	#region Game Variables
 	/// <summary>
 	/// Still need to sort out Language Enums

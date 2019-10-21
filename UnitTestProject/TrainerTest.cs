@@ -8,17 +8,6 @@ namespace Tests
     [TestClass]
     public class TrainerTest
     {
-        #region Nicknames
-        [TestMethod]
-		public void Trainer_SetPokemon_Nickname()
-		{
-			Trainer trainer = new Trainer(TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
-			//Pokemon pokemon = new Pokemon(Pokemons.NONE);
-			//trainer.Party[0].Name
-			Assert.AreEqual("testname", trainer.Party[0].Name);
-		}
-        #endregion
-
         #region TrainerProperties
         //public void Trainer_() { 
         //	/*SaveDataOld.currentSave.playerName = name;
@@ -44,7 +33,9 @@ namespace Tests
 
         #region TrainerPokemon
         [TestMethod]
-        public void Trainer_Party_AddPokemon() {
+        public void Trainer_Party_AddPokemon()
+		{
+			Assert.Inconclusive();
 			string playerName = "Red";
 			int trainerID = 55323;
 			int secretID = 64123;

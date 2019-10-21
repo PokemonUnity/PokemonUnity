@@ -34,6 +34,36 @@ namespace PokemonUnity.Overworld
 		TallGrass,
 		SootGrass,
 		Puddle
+/* Veekun's Database
+
+Terrain        
+-------------- 
+Building       
+Cave           
+Desert         
+Grass          
+Mountain       
+Ocean          
+Pond           
+Road           
+Snow           
+Tall grass     
+
+In Pokémon Battle Revolution:
+
+Terrain        
+-------------- 
+Courtyard      
+Crystal        
+Gateway        
+Magma          
+Main Street    
+Neon           
+Stargazer      
+Sunny Park     
+Sunset         
+Waterfall      
+*/
 	}
 	public enum Environment
 	{

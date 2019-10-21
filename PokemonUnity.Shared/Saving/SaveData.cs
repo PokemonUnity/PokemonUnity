@@ -38,7 +38,7 @@ namespace PokemonUnity.Saving
 
         #region PlayerInfo
         public bool?[] Pokedex { get; private set; }
-        public byte[,] Pokedex2 { get; private set; }
+        public byte[][] Pokedex2 { get; private set; }
 		/// <summary>
 		/// Duration of time accumulated on save file
 		/// </summary>
@@ -47,14 +47,14 @@ namespace PokemonUnity.Saving
 		public int PlayerCoins { get; private set; }
 
 		//Player
-		public SeriV3 PlayerPosition { get; private set; }
 		public float PlayerDirection { get; private set; }
-		//Follower
-		/// <summary>
-		/// </summary>
-		/// i would really just make this an offset of player position, i.e. 1-back, 1-left. 
-		/// don't think it's necessary to store full on x,y,z position of something that's always xy-distance away from player
-		public SeriV3 FollowerPosition { get; private set; }
+		//public SeriV3 PlayerPosition { get; private set; }
+		////Follower
+		///// <summary>
+		///// </summary>
+		///// i would really just make this an offset of player position, i.e. 1-back, 1-left. 
+		///// don't think it's necessary to store full on x,y,z position of something that's always xy-distance away from player
+		//public SeriV3 FollowerPosition { get; private set; }
 		/// <summary>
 		/// </summary>
 		/// Don't need to save follower direction... should just be the same direction player is facing...
@@ -82,7 +82,7 @@ namespace PokemonUnity.Saving
 		public SeriPC PC { get; private set; }
 		public List<Items> PlayerBag { get; private set; }
 		public Dictionary<GymBadges,DateTime?> GymsChallenged { get; private set; }
-		public List<SaveEvent> EventList { get; private set; }
+		//public List<SaveEvent> EventList { get; private set; }
 		#endregion
 
 		//public void AddPokemonCenter(int scene, SeriV3 position, int direction, SeriV3 fPosition, int fDirection)
@@ -97,21 +97,27 @@ namespace PokemonUnity.Saving
 		//}
 
 		public SaveData (Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
-			TimeSpan? time = null, SeriV3 position = null, float? direction = null, int? scene = null, 
+			TimeSpan? time = null, //SeriV3 position = null, 
+			float? direction = null, int? scene = null, 
 			int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
-			SeriPC pc = null, List<SaveEvent> eventList = null) 
+			SeriPC pc = null//, List<SaveEvent> eventList = null
+			) 
 				: this(name: player.Name, money: money, coin: coin, trainer: player.Trainer.TrainerID,
 					  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
-					  time: time, position: position, direction: direction, scene: scene, pokecenter: pokecenter,
-					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize(), pc: pc, eventList: eventList)
+					  time: time, //position: position, 
+					  direction: direction, scene: scene, pokecenter: pokecenter,
+					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize()//, pc: pc, eventList: eventList
+					  )
 		{
 			// Just made this one for fun... might be useful in future, than doing things the long way, like below
 		}
 
 		public SaveData (string name = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
-			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, SeriV3 position = null, float? direction = null, 
+			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, //SeriV3 position = null, 
+			float? direction = null, 
 			int? scene = null, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
-			SeriPokemon[] party = null, SeriPC pc = null, List<SaveEvent> eventList = null)
+			SeriPokemon[] party = null, SeriPC pc = null//, List<SaveEvent> eventList = null
+			)
         {
 			//SaveName = saveName;
 			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
@@ -125,9 +131,9 @@ namespace PokemonUnity.Saving
 			TrainerID			= trainer		?? Game.Player.Trainer.TrainerID;
 			SecretID			= secret		?? Game.Player.Trainer.SecretID;
 			IsMale				= gender		?? Game.Player.isMale;
-			Pokedex2			= pokedex		?? Game.Player.Pokedex;
+			//Pokedex2			= pokedex		?? Game.Player.Pokedex;
 			PlayerTime			= time			?? Game.Player.PlayTime;
-			PlayerPosition		= position		?? Game.Player.playerPosition;
+			//PlayerPosition		= position		?? Game.Player.playerPosition;
 			PlayerDirection		= direction		?? Game.Player.playerDirection;
 			//FollowerPokemon	= Game.Player.followerPokemon;
 			//FollowerPosition	= Game.Player.followerPosition;
@@ -141,10 +147,21 @@ namespace PokemonUnity.Saving
 			//	{
 			//		PlayerParty[i]	= Game.Player.Trainer.Party[i];
 			//	}
+
+			byte[,] dex2		= pokedex		?? Game.Player.Pokedex;
+			Pokedex2 = new byte[dex2.GetLength(0)][];
+			for (int i = 0; i < Pokedex2.GetLength(0); i++)
+			{
+				Pokedex2[i] = new byte[dex2.GetLength(1)];
+				for (int j = 0; j < Pokedex2.GetLength(1); j++)
+				{
+					Pokedex2[i][j] = (byte)dex2[i, j];
+				}
+			}
 				
 			//ToDo: Store user's Active PC
 			PC = pc ?? new SeriPC(Game.PC_Poke, Game.PC_boxNames, Game.PC_boxTexture, Game.PC_Items);
-			EventList			= eventList; //Game.EventList;
+			//EventList			= eventList; //Game.EventList;
         }
 
 		//public SaveData

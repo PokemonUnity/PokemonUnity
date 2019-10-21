@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Runtime.Serialization;
 //#if (DEBUG == false || UNITY_EDITOR == true)
-using UnityEngine;
+//using UnityEngine;
 //using UnityEditor;
 //#endif
 
@@ -21,7 +21,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Serializable Vector 3
 		/// </summary>
-		public Vector3 v3 { get; set; }
+		public UnityEngine.Vector3 v3 { get; set; }
 
 		public float x
 		{
@@ -41,7 +41,7 @@ namespace PokemonUnity
 			set { v3 = v3.WithZ(value); }
 		}
 
-		public SeriV3(Vector3 v)
+		public SeriV3(UnityEngine.Vector3 v)
 		{
 			v3 = v;
 		}
@@ -61,7 +61,7 @@ namespace PokemonUnity
 		public SeriV3(SerializationInfo info, StreamingContext context)
 		{
 			// Reset the property value using the GetValue method.
-			v3 = new Vector3(
+			v3 = new UnityEngine.Vector3(
 				(float)info.GetValue("x", typeof(float)),
 				(float)info.GetValue("y", typeof(float)),
 				(float)info.GetValue("z", typeof(float))
@@ -69,17 +69,17 @@ namespace PokemonUnity
 		}
 
 
-		public static implicit operator Vector3(SeriV3 v)
+		public static implicit operator UnityEngine.Vector3(SeriV3 v)
 		{
 			return v.v3;
 		}
 
-		public static explicit operator SeriV3(Vector3 v)
+		public static explicit operator SeriV3(UnityEngine.Vector3 v)
 		{
 			return new SeriV3(v);
 		}
 
-		public static Vector3 operator *(SeriV3 v, float f)
+		public static UnityEngine.Vector3 operator *(SeriV3 v, float f)
 		{
 			return v.v3 * f;
 		}
@@ -103,19 +103,19 @@ namespace PokemonUnity
 	/// </summary>
 	public static partial class Utex
 	{
-		public static Vector3 WithX(this Vector3 v, float x)
+		public static UnityEngine.Vector3 WithX(this UnityEngine.Vector3 v, float x)
 		{
-			return new Vector3(x, v.y, v.z);
+			return new UnityEngine.Vector3(x, v.y, v.z);
 		}
 
-		public static Vector3 WithY(this Vector3 v, float y)
+		public static UnityEngine.Vector3 WithY(this UnityEngine.Vector3 v, float y)
 		{
-			return new Vector3(v.x, y, v.z);
+			return new UnityEngine.Vector3(v.x, y, v.z);
 		}
 
-		public static Vector3 WithZ(this Vector3 v, float z)
+		public static UnityEngine.Vector3 WithZ(this UnityEngine.Vector3 v, float z)
 		{
-			return new Vector3(v.x, v.y, z);
+			return new UnityEngine.Vector3(v.x, v.y, z);
 		}
 	}
 }

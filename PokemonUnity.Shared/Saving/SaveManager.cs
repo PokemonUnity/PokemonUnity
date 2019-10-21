@@ -47,7 +47,7 @@ namespace PokemonUnity.Saving
 		
 		#region 0.0.1 Original Save Mechanic
 		//private static UnityEngine.GameObject Player;
-		private static List<SaveEvent> EventSaves = new List<SaveEvent>();
+		//private static List<SaveEvent> EventSaves = new List<SaveEvent>();
 
 		//public static void RegisterPlayer(UnityEngine.GameObject player)
 		//{
@@ -56,27 +56,27 @@ namespace PokemonUnity.Saving
 		//	Game.DebugLog("Registered Player.");
 		//}
 
-		/// <summary>
-		/// Registers an event into the EventSaves List<>
-		/// </summary>
-		/// <param name="customEvent">The event that needs to be registered</param>
-		public static void RegisterEvent(SaveEvent customEvent)
-		{
-			EventSaves.Add(customEvent);
-			EventSaves = EventSaves.OrderBy(x => x.EventTime).ToList();
-			//UnityEngine.Debug.Log(customEvent.ToString());
-			Game.DebugLog(customEvent.ToString());
-		}
-
-		/// <summary>
-		/// Get's the relevant CustomSaveEvents for the current Scene.
-		/// </summary>
-		/// <param name="sceneIndex">The scene index that the Player is currently on.</param>
-		/// <returns></returns>
-		public static List<SaveEvent> GetRelaventSaveData(int sceneIndex)
-		{
-			return EventSaves.Where(x => x.SceneIndex == sceneIndex).ToList();
-		}
+		///// <summary>
+		///// Registers an event into the EventSaves List<>
+		///// </summary>
+		///// <param name="customEvent">The event that needs to be registered</param>
+		//public static void RegisterEvent(SaveEvent customEvent)
+		//{
+		//	EventSaves.Add(customEvent);
+		//	EventSaves = EventSaves.OrderBy(x => x.EventTime).ToList();
+		//	//UnityEngine.Debug.Log(customEvent.ToString());
+		//	Game.DebugLog(customEvent.ToString());
+		//}
+		//
+		///// <summary>
+		///// Get's the relevant CustomSaveEvents for the current Scene.
+		///// </summary>
+		///// <param name="sceneIndex">The scene index that the Player is currently on.</param>
+		///// <returns></returns>
+		//public static List<SaveEvent> GetRelaventSaveData(int sceneIndex)
+		//{
+		//	return EventSaves.Where(x => x.SceneIndex == sceneIndex).ToList();
+		//}
 
 		/*private static SaveData CreateSaveFile(string saveName, int activeScene)
 		{
@@ -241,7 +241,7 @@ namespace PokemonUnity.Saving
 			catch (FileNotFoundException)
 			{
 				//UnityEngine.Debug.Log("Couldn't find \"Save" + saveIndex + ".pku\".");
-				Game.DebugLog("Couldn't find \"Save" + saveIndex + ".pku\".");
+				//Game.DebugLog("Couldn't find \"Save" + saveIndex + ".pku\".");
 
 			}
 		}
@@ -295,7 +295,7 @@ namespace PokemonUnity.Saving
 							catch (Exception e)
 							{
 								//UnityEngine.Debug.Log(e.ToString());
-								Game.DebugLog(e.ToString());
+								//Game.DebugLog(e.ToString());
 							}
 						}
 					}

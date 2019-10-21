@@ -735,11 +735,11 @@ namespace PokemonUnity.Monster
                         return null;}
                 }
                 return result;*/
-                //foreach (PokemonData pokemon in Database)
-                //{
-                //    if (pokemon.ID == ID) return pokemon;
-                //}
-                return Game.PokemonData[ID];
+                foreach (PokemonData pokemon in Database)
+                {
+                    if (pokemon.ID == ID) return pokemon;
+                }
+                //return Game.PokemonData[ID];
                 throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
                 //return null;
             }

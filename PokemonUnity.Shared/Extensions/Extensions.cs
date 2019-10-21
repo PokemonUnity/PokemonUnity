@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEngine;
+//using UnityEngine;
 
 static class Extensions
 {
@@ -26,18 +26,18 @@ static class Extensions
         l.Insert(destinationIndex, i);
     }
 
-    public static Texture2D Copy(this Texture2D t)
-    {
-		//Texture2D newT = new Texture2D(Core.GraphicsDevice, t.width, t.height);
-		//
-		//Color[] cArr = new Color[newT.width * newT.height - 1 + 1];
-		//t.GetData(cArr);
-		//
-		//newT.SetData(cArr);
-		//
-		//return newT;
-		return t;
-    }
+    //public static Texture2D Copy(this Texture2D t)
+    //{
+	//	//Texture2D newT = new Texture2D(Core.GraphicsDevice, t.width, t.height);
+	//	//
+	//	//Color[] cArr = new Color[newT.width * newT.height - 1 + 1];
+	//	//t.GetData(cArr);
+	//	//
+	//	//newT.SetData(cArr);
+	//	//
+	//	//return newT;
+	//	return t;
+    //}
 
     public static string GetSplit(this string fullString, int valueIndex, string seperator)
     {
@@ -273,46 +273,46 @@ static class Extensions
     //    return CropStringToWidth(s, font, 1.0f, width);
     //}
 
-    public static Color ToColor(this Vector3 v)
-    {
-        return new Color(System.Convert.ToInt32(v.x * 255), System.Convert.ToInt32(v.y * 255), System.Convert.ToInt32(v.z * 255));
-    }
-
-    public static Texture2D ReplaceColors(this Texture2D t, Color[] InputColors, Color[] OutputColors)
-    {
-		//Texture2D newTexture = new Texture2D(Core.GraphicsDevice, t.width, t.height);
-		//
-		//if (InputColors.Length == OutputColors.Length & InputColors.Length > 0)
-		//{
-		//    Color[] Data = new Color[t.width * t.height - 1 + 1];
-		//    List<Color> newData = new List<Color>();
-		//    t.GetData(0, null/* TODO Change to default(_) if this is not a reference type */, Data, 0, t.width * t.height);
-		//
-		//    for (var i = 0; i <= Data.Length - 1; i++)
-		//    {
-		//        Color c = Data[i];
-		//        if (InputColors.Contains(c))
-		//        {
-		//            for (var iC = 0; iC <= InputColors.Length - 1; iC++)
-		//            {
-		//                if (InputColors[iC] == c)
-		//                {
-		//                    c = OutputColors[iC];
-		//                    break;
-		//                }
-		//            }
-		//        }
-		//        newData.Add(c);
-		//    }
-		//
-		//    newTexture.SetData(newData.ToArray());
-		//}
-		//else
-		//    newTexture = t;
-		//
-		//return newTexture;
-		return t;
-    }
+    //public static Color ToColor(this Vector3 v)
+    //{
+    //    return new Color(System.Convert.ToInt32(v.x * 255), System.Convert.ToInt32(v.y * 255), System.Convert.ToInt32(v.z * 255));
+    //}
+	//
+    //public static Texture2D ReplaceColors(this Texture2D t, Color[] InputColors, Color[] OutputColors)
+    //{
+	//	//Texture2D newTexture = new Texture2D(Core.GraphicsDevice, t.width, t.height);
+	//	//
+	//	//if (InputColors.Length == OutputColors.Length & InputColors.Length > 0)
+	//	//{
+	//	//    Color[] Data = new Color[t.width * t.height - 1 + 1];
+	//	//    List<Color> newData = new List<Color>();
+	//	//    t.GetData(0, null/* TODO Change to default(_) if this is not a reference type */, Data, 0, t.width * t.height);
+	//	//
+	//	//    for (var i = 0; i <= Data.Length - 1; i++)
+	//	//    {
+	//	//        Color c = Data[i];
+	//	//        if (InputColors.Contains(c))
+	//	//        {
+	//	//            for (var iC = 0; iC <= InputColors.Length - 1; iC++)
+	//	//            {
+	//	//                if (InputColors[iC] == c)
+	//	//                {
+	//	//                    c = OutputColors[iC];
+	//	//                    break;
+	//	//                }
+	//	//            }
+	//	//        }
+	//	//        newData.Add(c);
+	//	//    }
+	//	//
+	//	//    newTexture.SetData(newData.ToArray());
+	//	//}
+	//	//else
+	//	//    newTexture = t;
+	//	//
+	//	//return newTexture;
+	//	return t;
+    //}
 
     public static double xRoot(this int root, double number)
     {
@@ -413,13 +413,13 @@ static class Extensions
         return System.Convert.ToInt32(s);
     }
 
-    /// <summary>
-    /// Inverts the Color.
-    /// </summary>
-    public static Color Invert(this Color c)
-    {
-        return new Color(255 - c.r, 255 - c.g, 255 - c.b, c.a);
-    }
+    ///// <summary>
+    ///// Inverts the Color.
+    ///// </summary>
+    //public static Color Invert(this Color c)
+    //{
+    //    return new Color(255 - c.r, 255 - c.g, 255 - c.b, c.a);
+    //}
 
     public static string ReplaceDecSeparator(this string s)
     {

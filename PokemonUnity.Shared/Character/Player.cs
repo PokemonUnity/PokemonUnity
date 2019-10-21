@@ -43,7 +43,7 @@ namespace PokemonUnity
 		public string BerryData { get; set; }
 		public string NPCData { get; set; }
 		public string ApricornData { get; set; }
-		public UnityEngine.Vector3 LastPokemonPosition { get; set; }
+		//public UnityEngine.Vector3 LastPokemonPosition { get; set; }
 		public bool SandBoxMode { get; set; }
 		public bool IsRunning() { return false; }
 		public bool startSurfing { get; set; }
@@ -54,7 +54,8 @@ namespace PokemonUnity
 		#region UI/Game Engine
 		public int mapName { get; set; }
 		//public int levelName;
-		public SeriV3 playerPosition { get; set; }
+		//ToDo: Move player position to platform engine..
+		//public SeriV3 playerPosition { get; set; }
 		/// <summary>
 		/// Rotation of player model in overworld scene
 		/// </summary>
@@ -205,16 +206,25 @@ namespace PokemonUnity
 			trainerId = trainerSaveData.TrainerID;
 			secretId = trainerSaveData.SecretID;
 			mapName = trainerSaveData.ActiveScene;
-			playerPosition = trainerSaveData.PlayerPosition;
+			//playerPosition = trainerSaveData.PlayerPosition;
 			playerDirection = trainerSaveData.PlayerDirection;
 			respawnScene = trainerSaveData.pCenterScene;
 			Money = trainerSaveData.PlayerMoney;
 			Coins = trainerSaveData.PlayerCoins;
-			Pokedex = trainerSaveData.Pokedex2;
+			//Pokedex = trainerSaveData.Pokedex2; //ToDo: Uncomment
 			Name = trainerSaveData.PlayerName;
 			PlayTime = trainerSaveData.PlayerTime;
 			isMale = trainerSaveData.IsMale;
 			GymsBeatTime = trainerSaveData.GymsChallenged;
+			//Pokedex2 = new byte[dex2.GetLength(0)][];
+			//for (int i = 0; i < Pokedex2.GetLength(0); i++)
+			//{
+			//	Pokedex2[i] = new byte[dex2.GetLength(1)];
+			//	for (int j = 0; j < Pokedex2.GetLength(1); j++)
+			//	{
+			//		Pokedex2[i][j] = (byte)dex2[i, j];
+			//	}
+			//}
 			//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
 			//{
 			//	Party[i] = trainerSaveData.PlayerParty[i];

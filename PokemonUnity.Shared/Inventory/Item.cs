@@ -207,7 +207,7 @@ namespace PokemonUnity.Inventory
                     }
                 }
                 //throw new System.Exception("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.");
-                Game.DebugLog("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.", true);
+                //Game.DebugLog("Pokemon ID doesnt exist in the database. Please check PokemonData constructor.", true);
                 return -1;
             }
         }

@@ -16,6 +16,8 @@ using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
 
+namespace PokemonUnity
+{
 /// <summary>
 /// Variables that are stored when game is saved, and other temp values used for gameplay.
 /// This class should be called once, when the game boots-up.
@@ -23,7 +25,7 @@ using PokemonUnity.Saving;
 /// Game class will overwrite all the other class default values when player triggers a load state.
 /// </summary>
 /// This class should be static...
-public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour//, UnityEngine.EventSystems.
+public partial class Game
 {
 	#region Player and Overworld Data
 	//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
@@ -101,28 +103,34 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	#region Constructor
 	static Game()
 	{
-		GameDebug.Init(null, "GameTestLog");
-		if(LoadInitFile())
-		{		
-			PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
-			PC_boxNames = new string[Core.STORAGEBOXES];
-			PC_boxTexture = new int[Core.STORAGEBOXES];
-			for (int i = 0; i < Core.STORAGEBOXES; i++)
-			{
-				//Initialize the PC storage so pokemons arent null (in value)
-				for (int j = 0; j < PC_Poke.GetLength(1); j++)
-				{
-					//All default values must be `NONE`
-					PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
-				}
-				//ToDo: Using string from translator here
-				PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
-				//ToDo: Make sure there's enough texture in library for array size
-				PC_boxTexture[i] = i; 
-			}
-			PC_Items = new List<Item>();
-			Bag_Items = new List<Items>();
-		}
+		//ToDo: Move to public Constructor
+		#region Public Constructor
+		con.Open();
+		InitPokemonMoves();
+		InitPokemons();
+		#endregion
+		//GameDebug.Init(null, "GameTestLog");
+		//if(LoadInitFile())
+		//{		
+		//	PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
+		//	PC_boxNames = new string[Core.STORAGEBOXES];
+		//	PC_boxTexture = new int[Core.STORAGEBOXES];
+		//	for (int i = 0; i < Core.STORAGEBOXES; i++)
+		//	{
+		//		//Initialize the PC storage so pokemons arent null (in value)
+		//		for (int j = 0; j < PC_Poke.GetLength(1); j++)
+		//		{
+		//			//All default values must be `NONE`
+		//			PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
+		//		}
+		//		//ToDo: Using string from translator here
+		//		PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
+		//		//ToDo: Make sure there's enough texture in library for array size
+		//		PC_boxTexture[i] = i; 
+		//	}
+		//	PC_Items = new List<Item>();
+		//	Bag_Items = new List<Items>();
+		//}
 	}
 	private static bool LoadInitFile()
 	{
@@ -397,12 +405,13 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 	#endregion
 
 	#region Active Battle and Misc Battle related Data
-	/// <summary>
+	/*// <summary>
 	/// Active Pokemon Battle the Player is currently involved in.
 	/// Matches being spectated would be pass thru a non-static method
 	/// </summary>
 	/// ToDo: On Set, trigger UnityEngine EventHandler,
 	/// Switch scenes, load rules, and animate pokemons
+	/// Move to platform engine
 	//public static Battle Battle { get; set; }
 	public static PokemonUnity.Battle.Battle battle
 	{
@@ -418,305 +427,14 @@ public partial class Game : UnityUtilityIntegration//: UnityEngine.MonoBehaviour
 			_battle = value;
 		}
 	}
-	private static PokemonUnity.Battle.Battle _battle { get; set; }
+	private static PokemonUnity.Battle.Battle _battle { get; set; }*/
 	#endregion
 
 	#region Audio 
-	public UnityEngine.Audio.AudioMixer audioMixer;
+	//public UnityEngine.Audio.AudioMixer audioMixer;
 	public static int? nextBattleBGM { get; set; }
 	public static int? nextBattleME { get; set; }
 	public static int? nextBattleBack { get; set; }
 	#endregion
 }
-
-/// <summary>
-/// This class will be inherited by all other classes, 
-/// and offer a direct link to Unity's Engine
-/// for ease of use utility and integration.
-/// </summary>
-public class UnityUtilityIntegration
-#if !DEBUG //|| UNITY_EDITOR 
-	//Not sure if this is something i want inheriting monobehavior...
-	: UnityEngine.MonoBehaviour
-#endif
-{
-	#region Unity Monobehaviour Stuff
-#if !DEBUG //|| UNITY_EDITOR 
-	public static GameVariables game;
-    //public LevelManager levelManager;
-	public void Awake()
-	{
-		//Log bool results in debugger...
-		//GameDebug.Assert(game == null);
-		DontDestroyOnLoad(this.gameObject);
-		game = this;
-
-		var commandLineArgs = new List<string>(System.Environment.GetCommandLineArgs());
-
-		// If -logfile was passed, we try to put our own logs next to the engine's logfile
-		var engineLogFileLocation = ".";
-		var logfileArgIdx = commandLineArgs.IndexOf("-logfile");
-		if (logfileArgIdx >= 0 && commandLineArgs.Count >= logfileArgIdx)
-		{
-			engineLogFileLocation = System.IO.Path.GetDirectoryName(commandLineArgs[logfileArgIdx + 1]);
-		}
-
-		//Headless means if it's offline...
-		var logName = true ? "game_" + DateTime.UtcNow.ToString("yyyyMMdd_HHmmss_fff") : "game";
-		GameDebug.Init(engineLogFileLocation, logName);
-
-#if UNITY_EDITOR
-        GameDebug.Log("Build type: editor");
-#elif DEVELOPMENT_BUILD
-        GameDebug.Log("Build type: development");
-#else
-        GameDebug.Log("Build type: release");
-#endif
-		//ToDo: Load asssembly build version into logger
-        GameDebug.Log("BuildID: " + buildId);
-
-        //levelManager = new LevelManager();
-        //levelManager.Init();
-        //GameDebug.Log("LevelManager initialized");
-
-        inputSystem = new InputSystem();
-        GameDebug.Log("InputSystem initialized");
-	}
-	
-    void OnDestroy()
-    {
-        GameDebug.Shutdown();
-        Console.Shutdown();
-        //if (m_DebugOverlay != null)
-        //    m_DebugOverlay.Shutdown();
-    }
-
-    void OnApplicationQuit()
-    {
-#if !UNITY_EDITOR && UNITY_STANDALONE_WIN
-        GameDebug.Log("Farewell, cruel world...");
-        System.Diagnostics.Process.GetCurrentProcess().Kill();
-#endif
-        ShutdownGameLoops();
-    }
-
-	public void LoadLevel(string levelname)
-	{
-		if (!Game.game.levelManager.CanLoadLevel(levelname))
-		{
-			GameDebug.Log("ERROR : Cannot load level : " + levelname);
-			return;
-		}
-
-		Game.game.levelManager.LoadLevel(levelname);
-	}
-#endif
-	#endregion
-
-	#region Debug Functions and Features
-	public static bool IS_DEBUG_ACTIVE { get; set; }
-	public static void DebugLog(string text, bool? error = null)
-	{
-		if (!error.HasValue)
-			//Debug = text;
-			GameDebug.Log(text);
-		else
-		{
-			if (error.Value)
-				//DebugError = text;
-				GameDebug.LogError(text);
-			else
-				//DebugWarning = text;
-				GameDebug.LogWarning(text);
-		}
-	}
-	#endregion
-
-	#region MyRegion
-	public static class Input
-	{
-		[Flags]
-		public enum Blocker
-		{
-			None = 0,
-			Console = 1,
-			Chat = 2,
-			Debug = 4,
-		}
-		static Blocker blocks;
-
-		public static void SetBlock(Blocker b, bool value)
-		{
-			if (value)
-				blocks |= b;
-			else
-				blocks &= ~b;
-		}
-
-		internal static float GetAxisRaw(string axis)
-		{
-			return blocks != Blocker.None ? 0.0f : UnityEngine.Input.GetAxisRaw(axis);
-		}
-
-		internal static bool GetKey(UnityEngine.KeyCode key)
-		{
-			return blocks != Blocker.None ? false : UnityEngine.Input.GetKey(key);
-		}
-
-		internal static bool GetKeyDown(UnityEngine.KeyCode key)
-		{
-			return blocks != Blocker.None ? false : UnityEngine.Input.GetKeyDown(key);
-		}
-
-		internal static bool GetMouseButton(int button)
-		{
-			return blocks != Blocker.None ? false : UnityEngine.Input.GetMouseButton(button);
-		}
-
-		internal static bool GetKeyUp(UnityEngine.KeyCode key)
-		{
-			return blocks != Blocker.None ? false : UnityEngine.Input.GetKeyUp(key);
-		}
-	}
-	#endregion
-
-	#region Unity Canvas UI
-	#region Resources
-	public static UnityEngine.Sprite[] LoadAllWindowSkinSprites()
-	{
-		return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\WindowSkin");
-	}
-
-	public static UnityEngine.Sprite[] LoadAllDialogSkinSprites()
-	{
-		return UnityEngine.Resources.LoadAll<UnityEngine.Sprite>(@"\Sprites\GUI\Frame\DialogSkin");
-	}
-	#endregion
-	//Game UI
-	//public UnityEngine.Texture2D DialogWindowSkin;
-	//private UnityEngine.UI.Image DialogWindowSkin;
-	/// <summary>
-	/// Frame Style for all System Prompts and Text Displays
-	/// </summary>
-	public static UnityEngine.Sprite WindowSkinSprite { get { return LoadAllWindowSkinSprites()[Game.WindowSkin]; } }
-	/// <summary>
-	/// Frame Style for all player and non-playable characters Speech bubbles
-	/// </summary>
-	public static UnityEngine.Sprite DialogSkinSprite { get { return LoadAllDialogSkinSprites()[Game.DialogSkin]; } }
-	/// <summary>
-	/// In-game UI dialog window to prompt message to user
-	/// </summary>
-	/// ToDo: Allow game logic to pass npc scripts thru this
-	/// ToDo: Option for dialog prompts, i.e. "Yes/No, Continue.."
-	/// <param name="text"></param>
-	/// <param name="error">Maybe something about interupting coroutine</param>
-	public static void Dialog(string text, bool? error = null, params string[] promptOptions)
-	{
-		//ToDo: Pass values directly to DialogEventHandler
-		//ToDo: Make a struct for each non-class (enum, etc) type and add a ToString(bool) override that output unity richtext color tags
-		//Consider adding a Queue to dialog text... so messages arent replaced but appended
-		//if (!error.HasValue)
-		//	Debug = text;
-		//else
-		//{
-		//	if (error.Value)
-		//		DebugError = text;
-		//	else
-		//		DebugWarning = text;
-		//}
-		DebugLog(text, error);
-	}
-	protected static void Display(string text)
-	{
-
-	}
-	protected static void DisplayBrief(string text)
-	{
-
-	}
-	protected static void DisplayPause(string text)
-	{
-
-	}
-	protected static void DisplayConfirm(string text)
-	{
-
-	}
-	//protected static string L(Text text, string textid, params string[] vs)
-	//{
-	//	return LanguageExtension.Translate(text, textid, vs).Value;
-	//}
-	#endregion
-}
-
-namespace PokemonUnity
-{
-	/*// <summary>
-	/// Extension methods for <see cref="MenuItemDefinition"/>.
-	/// </summary>
-	public static class MenuItemDefinitionExtensions
-	{
-		/// <summary>
-		/// Moves a menu item to top in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		public static void MoveMenuItemToTop(this IList<MenuItemDefinition> menuItems, string menuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(0, menuItem);
-		}
-
-		/// <summary>
-		/// Moves a menu item to bottom in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		public static void MoveMenuItemToBottom(this IList<MenuItemDefinition> menuItems, string menuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(menuItems.Count, menuItem);
-		}
-
-		/// <summary>
-		/// Moves a menu item in the list after another menu item in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		/// <param name="targetMenuItemName">Target menu item (to move before it)</param>
-		public static void MoveMenuItemBefore(this IList<MenuItemDefinition> menuItems, string menuItemName, string targetMenuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			var targetMenuItem = GetMenuItem(menuItems, targetMenuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(menuItems.IndexOf(targetMenuItem), menuItem);
-		}
-
-		/// <summary>
-		/// Moves a menu item in the list before another menu item in the list.
-		/// </summary>
-		/// <param name="menuItems">List of menu items</param>
-		/// <param name="menuItemName">Name of the menu item to move</param>
-		/// <param name="targetMenuItemName">Target menu item (to move after it)</param>
-		public static void MoveMenuItemAfter(this IList<MenuItemDefinition> menuItems, string menuItemName, string targetMenuItemName)
-		{
-			var menuItem = GetMenuItem(menuItems, menuItemName);
-			var targetMenuItem = GetMenuItem(menuItems, targetMenuItemName);
-			menuItems.Remove(menuItem);
-			menuItems.Insert(menuItems.IndexOf(targetMenuItem) + 1, menuItem);
-		}
-
-		private static MenuItemDefinition GetMenuItem(IEnumerable<MenuItemDefinition> menuItems, string menuItemName)
-		{
-			var menuItem = menuItems.FirstOrDefault(i => i.Name == menuItemName);
-			if (menuItem == null)
-			{
-				throw new Exception("Can not find menu item: " + menuItemName);
-			}
-
-			return menuItem;
-		}
-	}*/
 }

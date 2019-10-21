@@ -9,6 +9,8 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
 
+namespace PokemonUnity
+{
 public partial class Game
 {
 	//ToDo: Pokemonunity.Character.PC?...
@@ -136,6 +138,7 @@ public partial class Game
 			Game.PC_Poke[box2, pos2] = temp;
 		}
 	}
+}
 }
 
 namespace PokemonUnity.Character

@@ -9,6 +9,8 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
 
+namespace PokemonUnity
+{	
 public partial class Game
 {
 	/// <summary>
@@ -534,6 +536,7 @@ public partial class Game
 			Price
 		}
 	}
+}
 }
 
 namespace PokemonUnity.Character

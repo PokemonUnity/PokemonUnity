@@ -40,18 +40,19 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\Pokemon Unity\Assets\Libraries\New folder\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\Pokemon Unity\Temp\bin\Debug\UnityEngine.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attack\Move.cs" />
     <Compile Include="Attack\Move\Base.cs" />
     <Compile Include="Attack\Move\Database.cs" />
+    <Compile Include="Attack\Move\Data\Base.cs" />
     <Compile Include="Attack\Move\Flag.cs" />
     <Compile Include="Attack\Move\MoveBattle.cs" />
     <Compile Include="Attack\Move\MoveTarget.cs" />
@@ -78,23 +79,9 @@
     <Compile Include="Extensions\MathHelper.cs" />
     <Compile Include="Extensions\ScriptConversion.cs" />
     <Compile Include="Extensions\StringHelper.cs" />
-    <Compile Include="Extensions\TransformExtension.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Game\Game.Database.cs" />
     <Compile Include="Game\Game.cs" />
-    <Compile Include="InBattle\Attack.cs" />
-    <Compile Include="InBattle\Battle.cs" />
-    <Compile Include="InBattle\Battle\Choice.cs" />
-    <Compile Include="InBattle\Battle\DamageState.cs" />
-    <Compile Include="InBattle\Battle\Scene.cs" />
-    <Compile Include="InBattle\Battle\SuccessState.cs" />
-    <Compile Include="InBattle\Effects\Battler.cs" />
-    <Compile Include="InBattle\Effects\Field.cs" />
-    <Compile Include="InBattle\Effects\Move.cs" />
-    <Compile Include="InBattle\Effects\Side.cs" />
-    <Compile Include="InBattle\Form.cs" />
-    <Compile Include="InBattle\Move.cs" />
-    <Compile Include="InBattle\Pokemon.cs" />
     <Compile Include="Inventory\Item.cs" />
     <Compile Include="Inventory\Item\Berry.cs" />
     <Compile Include="Inventory\Item\Database.cs" />
@@ -104,7 +91,11 @@
     <Compile Include="Monster\Ability.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon.cs" />
-    <Compile Include="Monster\Pokemon\Base.cs" />
+    <Compile Include="Monster\Pokemon\Data\Base.cs" />
+    <Compile Include="Monster\Pokemon\Data\Evolution.cs" />
+    <Compile Include="Monster\Pokemon\Data\Experience.cs" />
+    <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
+    <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
     <Compile Include="Monster\Pokemon\Experience.cs" />
     <Compile Include="Monster\Pokemon\PokemonData\Evolution.cs" />
     <Compile Include="Monster\Pokemon\PokemonData\Moveset.cs" />
@@ -113,13 +104,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saving\EventListener.cs" />
     <Compile Include="Saving\SaveData.cs" />
-    <Compile Include="Saving\SaveEvent.cs" />
     <Compile Include="Saving\SaveManager.cs" />
     <Compile Include="Saving\SerializableClasses\SeriMove.cs" />
     <Compile Include="Saving\SerializableClasses\SeriPC.cs" />
     <Compile Include="Saving\SerializableClasses\SeriPokemon.cs" />
-    <Compile Include="Saving\SerializableClasses\SeriV3.cs" />
-    <Compile Include="Saving\SerializableClasses\SeriV4.cs" />
     <Compile Include="Translations\Translations.cs" />
     <Compile Include="Translations\Translator.cs" />
   </ItemGroup>

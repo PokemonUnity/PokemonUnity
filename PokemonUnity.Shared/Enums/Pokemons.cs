@@ -86,6 +86,7 @@ namespace PokemonUnity.Monster
 	}
 	public enum Habitat
 	{
+		NONE			= 0,
 		CAVE			= 1,
 		FOREST			= 2,
 		GRASSLAND		= 3,

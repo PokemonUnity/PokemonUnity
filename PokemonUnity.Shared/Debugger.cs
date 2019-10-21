@@ -88,22 +88,22 @@ namespace PokemonUnity
 			logFile = null;
 		}
 
-		static void LogCallback(string message, string stack, UnityEngine.LogType logtype)
-		{
-			switch (logtype)
-			{
-				default:
-				case UnityEngine.LogType.Log:
-					GameDebug._Log(message);
-					break;
-				case UnityEngine.LogType.Warning:
-					GameDebug._LogWarning(message);
-					break;
-				case UnityEngine.LogType.Error:
-					GameDebug._LogError(message);
-					break;
-			}
-		}
+		//static void LogCallback(string message, string stack, UnityEngine.LogType logtype)
+		//{
+		//	switch (logtype)
+		//	{
+		//		default:
+		//		case UnityEngine.LogType.Log:
+		//			GameDebug._Log(message);
+		//			break;
+		//		case UnityEngine.LogType.Warning:
+		//			GameDebug._LogWarning(message);
+		//			break;
+		//		case UnityEngine.LogType.Error:
+		//			GameDebug._LogError(message);
+		//			break;
+		//	}
+		//}
 
 		public static void Log(string message)
 		{
@@ -116,9 +116,9 @@ namespace PokemonUnity
 
 		static void _Log(string message)
 		{
-			Console.Write(UnityEngine.Time.frameCount + ": " + message);
-			if (logFile != null)
-				logFile.WriteLine(UnityEngine.Time.frameCount + ": " + message + "\n");
+			//Console.Write(UnityEngine.Time.frameCount + ": " + message);
+			//if (logFile != null)
+			//	logFile.WriteLine(UnityEngine.Time.frameCount + ": " + message + "\n");
 		}
 
 		public static void LogError(string message)
@@ -132,7 +132,7 @@ namespace PokemonUnity
 
 		static void _LogError(string message)
 		{
-			Console.Write(UnityEngine.Time.frameCount + ": [ERR] " + message);
+			//Console.Write(UnityEngine.Time.frameCount + ": [ERR] " + message);
 			if (logFile != null)
 				logFile.WriteLine("[ERR] " + message + "\n");
 		}
@@ -148,7 +148,7 @@ namespace PokemonUnity
 
 		static void _LogWarning(string message)
 		{
-			Console.Write(UnityEngine.Time.frameCount + ": [WARN] " + message);
+			//Console.Write(UnityEngine.Time.frameCount + ": [WARN] " + message);
 			if (logFile != null)
 				logFile.WriteLine("[WARN] " + message + "\n");
 		}

@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Runtime.Serialization;
 //#if (DEBUG == false || UNITY_EDITOR == true)
-using UnityEngine;
+//using UnityEngine;
 //using UnityEditor;
 //#endif
 
@@ -21,7 +21,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Serializable Vector 3
 		/// </summary>
-		public Vector4 V4 { get; set; }
+		public UnityEngine.Vector4 V4 { get; set; }
 
 		public float x
 		{
@@ -47,7 +47,7 @@ namespace PokemonUnity
 			set { V4 = V4.WithW(value); }
 		}
 
-		public SeriV4(Vector4 v)
+		public SeriV4(UnityEngine.Vector4 v)
 		{
 			V4 = v;
 		}
@@ -68,7 +68,7 @@ namespace PokemonUnity
 		public SeriV4(SerializationInfo info, StreamingContext context)
 		{
 			// Reset the property value using the GetValue method.
-			V4 = new Vector4(
+			V4 = new UnityEngine.Vector4(
 				(float)info.GetValue("x", typeof(float)),
 				(float)info.GetValue("y", typeof(float)),
 				(float)info.GetValue("z", typeof(float)),
@@ -77,17 +77,17 @@ namespace PokemonUnity
 		}
 
 
-		public static implicit operator Vector4(SeriV4 v)
+		public static implicit operator UnityEngine.Vector4(SeriV4 v)
 		{
 			return v.V4;
 		}
 
-		public static explicit operator SeriV4(Vector4 v)
+		public static explicit operator SeriV4(UnityEngine.Vector4 v)
 		{
 			return new SeriV4(v);
 		}
 
-		public static Vector4 operator *(SeriV4 v, float f)
+		public static UnityEngine.Vector4 operator *(SeriV4 v, float f)
 		{
 			return v.V4 * f;
 		}
@@ -112,24 +112,24 @@ namespace PokemonUnity
 	/// </summary>
 	public static partial class Utex
 	{
-		public static Vector4 WithX(this Vector4 v, float x)
+		public static UnityEngine.Vector4 WithX(this UnityEngine.Vector4 v, float x)
 		{
-			return new Vector4(x, v.y, v.z, v.w);
+			return new UnityEngine.Vector4(x, v.y, v.z, v.w);
 		}
 
-		public static Vector4 WithY(this Vector4 v, float y)
+		public static UnityEngine.Vector4 WithY(this UnityEngine.Vector4 v, float y)
 		{
-			return new Vector4(v.x, y, v.z, v.w);
+			return new UnityEngine.Vector4(v.x, y, v.z, v.w);
 		}
 
-		public static Vector4 WithZ(this Vector4 v, float z)
+		public static UnityEngine.Vector4 WithZ(this UnityEngine.Vector4 v, float z)
 		{
-			return new Vector4(v.x, v.y, z, v.w);
+			return new UnityEngine.Vector4(v.x, v.y, z, v.w);
 		}
 
-		public static Vector4 WithW(this Vector4 v, float w)
+		public static UnityEngine.Vector4 WithW(this UnityEngine.Vector4 v, float w)
 		{
-			return new Vector4(v.x, v.y, v.z, w);
+			return new UnityEngine.Vector4(v.x, v.y, v.z, w);
 		}
 	}
 }

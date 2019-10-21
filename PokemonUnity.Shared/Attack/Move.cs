@@ -985,9 +985,9 @@ namespace PokemonUnity.Attack
             /// <summary>
             /// This move ignores target's Defense, Special Defense and evasion stat changes.
             /// (Chip Away, Sacred Sword)
+            /// Handled in superclass public object pbAccuracyCheck and public object pbCalcDamage, do not edit!
             /// </summary>
             x0A9 = 0x0A9,
-            /// Handled in superclass public object pbAccuracyCheck and public object pbCalcDamage, do not edit!
 
             /// <summary>
             /// User is protected against moves with the "B" flag this round. (Detect, Protect)
@@ -1350,9 +1350,9 @@ namespace PokemonUnity.Attack
 
             /// <summary>
             /// If target would be KO'd by this attack, it survives with 1HP instead. (False Swipe)
+            /// Handled in superclass public object pbReduceHPDamage, do not edit!
             /// </summary>
             x0E9 = 0x0E9,
-            /// Handled in superclass public object pbReduceHPDamage, do not edit!
 
             /// <summary>
             /// User flees from battle. Fails in trainer battles. (Teleport)
@@ -1583,10 +1583,10 @@ namespace PokemonUnity.Attack
 
             /// <summary>
             /// Attacks 2 rounds in the future. (Doom Desire, Future Sight)
+            /// Attack is launched
             /// </summary>
             x111 = 0x111,
 
-            /// Attack is launched
 
             /// <summary>
             /// Increases the user's Defense and Special Defense by 1 stage each. Ups the
@@ -1924,7 +1924,7 @@ namespace PokemonUnity.Attack
             /// <summary>
             /// Fails unless user has consumed a berry at some point. (Belch)
             /// </summary>
-            x158
+            x158 = 0x158
         }
         #endregion
 
