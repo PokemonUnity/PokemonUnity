@@ -60,7 +60,7 @@ namespace PokemonUnity
 		}
 		public static bool InitNatures(bool sql = true)
 		{
-			PokemonData = new Dictionary<Pokemons, Monster.Data.PokemonData>();
+			NatureData = new Dictionary<Natures, Nature>();
 			if (sql) //using (con)
 				return GetNaturesFromSQL(con);
 			else return GetPokemonsFromXML();
@@ -347,8 +347,8 @@ namespace PokemonUnity
 						NatureData.Add((Natures)int.Parse((string)reader["id"].ToString()),
 							new Nature(
 								nature: (Natures)int.Parse((string)reader["id"].ToString())
-								,increase: (Stats)int.Parse((string)reader["increased_stat_id"].ToString())
-								,decrease: (Stats)int.Parse((string)reader["decreased_stat_id"].ToString())
+								,increase: (Stats)(int.Parse((string)reader["increased_stat_id"].ToString())-1)
+								,decrease: (Stats)(int.Parse((string)reader["decreased_stat_id"].ToString())-1)
 								,like: (Flavours)int.Parse((string)reader["likes_flavor_id"].ToString())
 								,dislike: (Flavours)int.Parse((string)reader["hates_flavor_id"].ToString())
 							)
