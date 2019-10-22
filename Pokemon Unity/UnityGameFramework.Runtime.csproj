@@ -483,16 +483,16 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="GameFramework">
-      <HintPath>C:/Users/admin/Documents/GitHub/StarForce/Assets/GameFramework/Libraries/GameFramework.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\GameFramework.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>C:/Users/admin/Documents/GitHub/StarForce/Assets/GameFramework/Libraries/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>C:/Users/admin/Documents/GitHub/StarForce/Assets/GameMain/Libraries/LitJson.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>C:/Users/admin/Documents/GitHub/StarForce/Assets/GameMain/Libraries/protobuf-net.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/admin/Documents/GitHub/StarForce/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>

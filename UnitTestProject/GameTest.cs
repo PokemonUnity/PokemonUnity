@@ -10,6 +10,8 @@ namespace Tests
     [TestClass]
     public class GameTest
 	{
+		//Test if Core.Rand Seed returns new value on each use
+		//Test if Core.Rand keeps the same seed value when bool is true
 		[TestMethod]
 		public void Database_Load_Pokemon_Test()
 		{

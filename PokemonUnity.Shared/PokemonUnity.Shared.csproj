@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pokemon Unity\Temp\bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Pokemon Unity\Assets\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

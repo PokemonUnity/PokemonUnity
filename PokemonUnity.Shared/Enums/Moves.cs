@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PokemonUnity;
+using PokemonUnity.Inventory;
 
 /// <summary>
 /// Namespace to nest all Pokemon Move Enums
@@ -159,12 +160,12 @@ namespace PokemonUnity.Attack
 	{
 		/// <summary>
 		/// Makes contact<para></para>
-		/// User touches the target.  This triggers some abilities (e.g., []{ability:static}) and items (e.g., []{item:sticky-barb}).
+		/// User touches the target.  This triggers some abilities (e.g., <seealso cref="Abilities.STATIC"/>) and items (e.g., <seealso cref="Items.STICKY_BARB"/>).
 		/// </summary>
 		CONTACT			= 1,
 		/// <summary>
 		/// Has a charging turn<para></para>
-		/// This move has a charging turn that can be skipped with a []{item:power-herb}.
+		/// This move has a charging turn that can be skipped with a <seealso cref="Items.POWER_HERB"/>.
 		/// </summary>
 		CHARGE			= 2,
 		/// <summary>
@@ -174,37 +175,37 @@ namespace PokemonUnity.Attack
 		RECHARGE		= 3,
 		/// <summary>
 		/// Blocked by Detect and Protect<para></para>
-		/// This move will not work if the target has used []{move:detect} or []{move:protect} this turn.
+		/// This move will not work if the target has used <seealso cref="Moves.DETECT"/> or <seealso cref="Moves.PROTECT"/> this turn.
 		/// </summary>
 		PROTECT			= 4,
 		/// <summary>
 		/// Reflectable<para></para>
-		/// This move may be reflected back at the user with []{move:magic-coat} or []{ability:magic-bounce}.
+		/// This move may be reflected back at the user with <seealso cref="Moves.MAGIC_COAT"/> or <seealso cref="Abilities.MAGIC_BOUNCE"/>.
 		/// </summary>
 		REFLECTABLE		= 5,
 		/// <summary>
 		/// Snatchable<para></para>
-		/// This move will be stolen if another Pokémon has used []{move:snatch} this turn.
+		/// This move will be stolen if another Pokémon has used <seealso cref="Moves.SNATCH"/> this turn.
 		/// </summary>
 		SNATCH			= 6,
 		/// <summary>
 		/// Copied by Mirror Move<para></para>
-		/// A Pokémon targeted by this move can use []{move:mirror-move} to copy it.
+		/// A Pokémon targeted by this move can use <seealso cref="Moves.MIRROR_MOVE"/> to copy it.
 		/// </summary>
 		MIRROR			= 7,
 		/// <summary>
 		/// Punch-based<para></para>
-		/// This move has 1.2× its usual power when used by a Pokémon with []{ability:iron-fist}.
+		/// This move has 1.2× its usual power when used by a Pokémon with <seealso cref="Abilities.IRON_FIST"/>.
 		/// </summary>
 		PUNCH			= 8,
 		/// <summary>
 		/// Sound-based<para></para>
-		/// Pokémon with []{ability:soundproof} are immune to this move.
+		/// Pokémon with <seealso cref="Abilities.SOUNDPROOF"/> are immune to this move.
 		/// </summary>
 		SOUND			= 9,
 		/// <summary>
 		/// Unusable during Gravity<para></para>
-		/// This move cannot be used in high []{move:gravity}.
+		/// This move cannot be used in high <seealso cref="Moves.GRAVITY"/>.
 		/// </summary>
 		GRAVITY			= 10,
 		/// <summary>
@@ -219,37 +220,37 @@ namespace PokemonUnity.Attack
 		DISTANCE		= 12,
 		/// <summary>
 		/// Heals<para></para>
-		/// This move is blocked by []{move:heal-block}.
+		/// This move is blocked by <seealso cref="Moves.HEAL_BLOCK"/>.
 		/// </summary>
 		HEAL			= 13,
 		/// <summary>
 		/// Ignores Substitute<para></para>
-		/// This move ignores the target's []{move:substitute}.
+		/// This move ignores the target's <seealso cref="Moves.SUBSTITUTE"/>.
 		/// </summary>
 		AUTHENTIC		= 14,
 		/// <summary>
 		/// Powder-based<para></para>
-		/// Pokémon with []{ability:overcoat} and []{type:grass}-type Pokémon are immune to this move.
+		/// Pokémon with <seealso cref="Abilities.OVERCOAT"/> and <seealso cref="Types.GRASS"/>-type Pokémon are immune to this move.
 		/// </summary>
 		POWDER			= 15,
 		/// <summary>
 		/// Jaw-based<para></para>
-		/// This move has 1.5× its usual power when used by a Pokémon with []{ability:strong-jaw}.
+		/// This move has 1.5× its usual power when used by a Pokémon with <seealso cref="Abilities.STRONG_JAW"/>.
 		/// </summary>
 		BITE			= 16,
 		/// <summary>
 		/// Pulse-based<para></para>
-		/// This move has 1.5× its usual power when used by a Pokémon with []{ability:mega-launcher}.
+		/// This move has 1.5× its usual power when used by a Pokémon with <seealso cref="Abilities.MEGA_LAUNCHER"/>.
 		/// </summary>
 		PULSE			= 17,
 		/// <summary>
 		/// Ballistics-based<para></para>
-		/// This move is blocked by []{ability:bulletproof}.
+		/// This move is blocked by <seealso cref="Abilities.BULLETPROOF"/>.
 		/// </summary>
 		BALLISTICS		= 18,
 		/// <summary>
 		/// Mental effects<para></para>
-		/// This move is blocked by []{ability:aroma-veil} and cured by []{item:mental-herb}.
+		/// This move is blocked by <seealso cref="Abilities.AROMA_VEIL"/> and cured by <seealso cref="Items.MENTAL_HERB"/>.
 		/// </summary>
 		MENTAL			= 19,
 		/// <summary>
@@ -259,7 +260,7 @@ namespace PokemonUnity.Attack
 		NON_SKY_BATTLE	= 20,
 		/// <summary>
 		/// Dance<para></para>
-		/// This move triggers []{ability:dancer}.
+		/// This move triggers <seealso cref="Abilities.DANCER"/>.
 		/// </summary>
 		DANCE			= 21
 	}

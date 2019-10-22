@@ -61,17 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\CustomEventEditor.cs" />
-    <Compile Include="Assets\Editor\Database\ItemDatabase.cs" />
-    <Compile Include="Assets\Editor\Database\MoveDatabase.cs" />
-    <Compile Include="Assets\Editor\Database\NatureDatabase.cs" />
-    <Compile Include="Assets\Editor\Database\TrainerDatabase.cs" />
-    <Compile Include="Assets\Editor\DataExporter.cs" />
-    <Compile Include="Assets\Editor\MapBuilder.cs" />
-    <Compile Include="Assets\Editor\MapCompiler.cs" />
-    <Compile Include="Assets\Editor\UnitySpriteEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\EventHandlerTest.cs" />
-    <Compile Include="Assets\Resources\Editor\NewEditModeTest.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/admin/Documents/GitHub/PokemonUnity/Pokemon Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

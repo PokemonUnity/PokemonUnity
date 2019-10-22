@@ -2296,37 +2296,26 @@ namespace PokemonUnity.Monster
 		#endregion
 
 		#region Stat calculations, Pokemon creation
-		/*// <summary>
-        /// Returns the EV yield of this Pokemon
-        /// </summary>
-        /// <returns></returns>
-        public int[] evYield()
-        {
-            return EV;
-        }*
-        //_base.getBaseStats();
-        public int[] evYield { get { return this.EV; } }*/
-
 		/// <summary>
 		/// Adds Effort values (EV) to this Pokémon after defeated another Pokémon, if possible.
 		/// </summary>
 		/// <param name="DefeatedPokemon">The defeated Pokémon.</param>
-		public void GainEffort(Pokemon DefeatedPokemon)
+		public void GainEffort(Pokemons DefeatedPokemon)
 		{
 			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
-			if (allEV >= 510)
+			if (allEV >= EVLIMIT)
 				return;
 
-			int maxEVgain = 510 - allEV;
+			int maxEVgain = EVLIMIT - allEV;
 			int totalEVgain = 0;
 
 			// EV gains
-			int gainEVHP = DefeatedPokemon._base.evYieldHP;
-			int gainEVAttack = DefeatedPokemon._base.evYieldATK;
-			int gainEVDefense = DefeatedPokemon._base.evYieldDEF;
-			int gainEVSpAttack = DefeatedPokemon._base.evYieldSPA;
-			int gainEVSpDefense = DefeatedPokemon._base.evYieldSPD;
-			int gainEVSpeed = DefeatedPokemon._base.evYieldSPE;
+			int gainEVHP = Game.PokemonData[DefeatedPokemon].evYieldHP;
+			int gainEVAttack = Game.PokemonData[DefeatedPokemon].evYieldATK;
+			int gainEVDefense = Game.PokemonData[DefeatedPokemon].evYieldDEF;
+			int gainEVSpAttack = Game.PokemonData[DefeatedPokemon].evYieldSPA;
+			int gainEVSpDefense = Game.PokemonData[DefeatedPokemon].evYieldSPD;
+			int gainEVSpeed = Game.PokemonData[DefeatedPokemon].evYieldSPE;
 
 			int EVfactor = 1;
 

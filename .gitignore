@@ -62,3 +62,6 @@ git-journal.fish
 [Uu]nit[Tt]est[Pp]roject/bin/[Dd]ebug/*.xml
 [Uu]nit[Tt]est[Pp]roject/*.dll
 [Uu]nit[Tt]est[Pp]roject/*.xml
+*/bin/*
+*.nupkg
+*/[Pp]ackages/*
