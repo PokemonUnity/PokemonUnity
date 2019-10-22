@@ -101,8 +101,8 @@ namespace PokemonUnity.Monster
 	#region Nature
 	public enum Natures
 	{
-		UNSET,
-		HARDY,
+		UNSET
+		/*HARDY,
 		LONELY,
 		BRAVE,
 		ADAMANT,
@@ -126,7 +126,32 @@ namespace PokemonUnity.Monster
 		GENTLE,
 		SASSY,
 		CAREFUL,
-		QUIRKY
+		QUIRKY*/
+		,HARDY
+		,BOLD
+		,MODEST
+		,CALM
+		,TIMID
+		,LONELY
+		,DOCILE
+		,MILD
+		,GENTLE
+		,HASTY
+		,ADAMANT
+		,IMPISH
+		,BASHFUL
+		,CAREFUL
+		,RASH
+		,JOLLY
+		,NAUGHTY
+		,LAX
+		,QUIRKY
+		,NAIVE
+		,BRAVE
+		,RELAXED
+		,QUIET
+		,SASSY
+		,SERIOUS
 	}
 	#endregion
 	#region Pokemon

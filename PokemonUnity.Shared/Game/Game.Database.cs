@@ -15,6 +15,7 @@ using System.Data.Common;
 using System.Data.SQLite;
 //using System.Data.SqlClient;
 using System.IO;
+using PokemonUnity.Inventory.Berry;
 //using System.Security.Cryptography.MD5;
 
 namespace PokemonUnity
@@ -31,9 +32,9 @@ namespace PokemonUnity
 		//ToDo: ReadOnly Immutable Dictionaries...
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
+		public static Dictionary<Natures,Nature> NatureData { get; private set; }
 		//public static Dictionary<Moves,Move.MoveData> MoveData { get; private set; }
 		//public static Dictionary<Items,Item> ItemData { get; private set; }
-		//public static Dictionary<Natures,Nature> NatureData { get; private set; }
 		//public static Dictionary<Berries,Item.Berry> BerryData { get; private set; }
 		//ability
 		//forms
@@ -57,65 +58,14 @@ namespace PokemonUnity
 				return GetPokemonMovesFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
-
-		static bool GetPokemonMovesFromSQL(SQLiteConnection con)
+		public static bool InitNatures(bool sql = true)
 		{
-			try
-			{
-				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
-				//{ 
-					//Step 3: Running a Command
-					SQLiteCommand stmt = con.CreateCommand();
-
-					#region DataReader
-					stmt.CommandText = "select distinct move_id, pokemon_id, [level], pokemon_move_method_id from pokemon_moves --where version_group_id=18 order by pokemon_id ASC";
-					//	@"select pokemon_moves.pokemon_id, pokemon_moves.move_id, pokemon_moves.level, pokemon_moves.pokemon_move_method_id, pokemon_moves."order", pokemon_moves.version_group_id,
-					//pokemon_move_methods.identifier 
-					//from pokemon_moves 
-					//left join pokemon_move_methods on pokemon_move_methods.id=pokemon_moves.pokemon_move_method_id 
-					//where version_group_id=18 
-					//--order by pokemon_id ASC";
-					SQLiteDataReader reader = stmt.ExecuteReader();
-
-					//Step 4: Read the results
-					using(reader)
-					{
-						Dictionary<Pokemons, List<Monster.Data.PokemonMoveset>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonMoveset>>();
-						while(reader.Read()) //if(reader.Read())
-						{
-							if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
-								p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
-									new List<Monster.Data.PokemonMoveset>());
-							p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
-								new PokemonUnity.Monster.Data.PokemonMoveset(
-									moveId: (Moves)int.Parse((string)reader["move_id"].ToString())
-									//pokemonId: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
-									//,generation: int.Parse((string)reader["version_group_id"].ToString())
-									,method: (LearnMethod)int.Parse((string)reader["pokemon_move_method_id"].ToString())
-									,level: int.Parse((string)reader["level"].ToString())
-									//,order: int.Parse((string)reader["order"].ToString())
-								)
-							);
-						}
-					//}
-					//Step 5: Closing up
-					reader.Close();
-					reader.Dispose();
-					#endregion
-					PokemonMovesData.Add(Pokemons.NONE, new Monster.Data.PokemonMoveTree(new Monster.Data.PokemonMoveset[] { }));
-					foreach (var pkmn in p)
-					{
-						PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
-					}
-				}
-				return true;
-			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
-				return false;
-			}
+			PokemonData = new Dictionary<Pokemons, Monster.Data.PokemonData>();
+			if (sql) //using (con)
+				return GetNaturesFromSQL(con);
+			else return GetPokemonsFromXML();
 		}
+
 		static bool GetPokemonsFromXML()
 		{
 			PokemonData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData>();
@@ -306,6 +256,104 @@ namespace PokemonUnity
 							);
 						}
 					//}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetPokemonMovesFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
+				//{ 
+					//Step 3: Running a Command
+					SQLiteCommand stmt = con.CreateCommand();
+
+					#region DataReader
+					stmt.CommandText = "select distinct move_id, pokemon_id, [level], pokemon_move_method_id from pokemon_moves --where version_group_id=18 order by pokemon_id ASC";
+					//	@"select pokemon_moves.pokemon_id, pokemon_moves.move_id, pokemon_moves.level, pokemon_moves.pokemon_move_method_id, pokemon_moves."order", pokemon_moves.version_group_id,
+					//pokemon_move_methods.identifier 
+					//from pokemon_moves 
+					//left join pokemon_move_methods on pokemon_move_methods.id=pokemon_moves.pokemon_move_method_id 
+					//where version_group_id=18 
+					//--order by pokemon_id ASC";
+					SQLiteDataReader reader = stmt.ExecuteReader();
+
+					//Step 4: Read the results
+					using(reader)
+					{
+						Dictionary<Pokemons, List<Monster.Data.PokemonMoveset>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonMoveset>>();
+						while(reader.Read()) //if(reader.Read())
+						{
+							if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
+								p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
+									new List<Monster.Data.PokemonMoveset>());
+							p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
+								new PokemonUnity.Monster.Data.PokemonMoveset(
+									moveId: (Moves)int.Parse((string)reader["move_id"].ToString())
+									//pokemonId: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+									//,generation: int.Parse((string)reader["version_group_id"].ToString())
+									,method: (LearnMethod)int.Parse((string)reader["pokemon_move_method_id"].ToString())
+									,level: int.Parse((string)reader["level"].ToString())
+									//,order: int.Parse((string)reader["order"].ToString())
+								)
+							);
+						}
+					//}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+					PokemonMovesData.Add(Pokemons.NONE, new Monster.Data.PokemonMoveTree(new Monster.Data.PokemonMoveset[] { }));
+					foreach (var pkmn in p)
+					{
+						PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetNaturesFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = "select * from natures order by game_index ASC";
+				//	@"";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					while(reader.Read()) //if(reader.Read())
+					{
+						NatureData.Add((Natures)int.Parse((string)reader["id"].ToString()),
+							new Nature(
+								nature: (Natures)int.Parse((string)reader["id"].ToString())
+								,increase: (Stats)int.Parse((string)reader["increased_stat_id"].ToString())
+								,decrease: (Stats)int.Parse((string)reader["decreased_stat_id"].ToString())
+								,like: (Flavours)int.Parse((string)reader["likes_flavor_id"].ToString())
+								,dislike: (Flavours)int.Parse((string)reader["hates_flavor_id"].ToString())
+							)
+						);
+					}
 					//Step 5: Closing up
 					reader.Close();
 					reader.Dispose();

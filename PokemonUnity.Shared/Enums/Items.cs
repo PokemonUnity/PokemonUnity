@@ -2091,4 +2091,25 @@ namespace PokemonUnity.Inventory
 		/// </summary>
 		Seven = 7
 	}
+
+	namespace Berry
+	{
+		public enum Flavours
+		{
+			Spicy,
+			Dry,
+			Sweet,
+			Bitter,
+			Sour
+		}
+
+		public enum FirmnessLevel
+		{
+			VerySoft,
+			Soft,
+			Hard,
+			VeryHard,
+			SuperHard
+		}
+	}
 }

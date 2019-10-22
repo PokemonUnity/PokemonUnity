@@ -1,4 +1,8 @@
-﻿namespace PokemonUnity.Inventory
+﻿using PokemonUnity;
+using PokemonUnity.Inventory;
+using PokemonUnity.Inventory.Berry;
+
+namespace PokemonUnity.Inventory
 {
 	public partial class Item
 	{
@@ -539,26 +543,7 @@ BerryIndex = 40;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	D
 			{
 				return this;
 			}
-			#endregion
-		
-			#region Enum
-			public enum Flavours
-			{
-				Spicy,
-				Dry,
-				Sweet,
-				Bitter,
-				Sour
-			}
-			public enum FirmnessLevel
-			{
-				VerySoft,
-				Soft,
-				Hard,
-				VeryHard,
-				SuperHard
-			}
-			#endregion
+			#endregion		
 		}
 	}
 }

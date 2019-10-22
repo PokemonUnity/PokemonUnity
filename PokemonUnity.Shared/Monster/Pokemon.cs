@@ -38,7 +38,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[(int)Stats.ATTACK] + (EV[(int)Stats.ATTACK] / 4)) * Level) / 100 + 5) * natureFlag.ATK);
+                return (int)Math.Floor((((2 * _base.BaseStatsATK + IV[(int)Stats.ATTACK] + (EV[(int)Stats.ATTACK] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].ATK);
             }
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[(int)Stats.DEFENSE] + (EV[(int)Stats.DEFENSE] / 4)) * Level) / 100 + 5) * natureFlag.DEF);
+                return (int)Math.Floor((((2 * _base.BaseStatsDEF + IV[(int)Stats.DEFENSE] + (EV[(int)Stats.DEFENSE] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].DEF);
             }
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[(int)Stats.SPATK] + (EV[(int)Stats.SPATK] / 4)) * Level) / 100 + 5) * natureFlag.SPA);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPA + IV[(int)Stats.SPATK] + (EV[(int)Stats.SPATK] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].SPA);
             }
         }
         /// <summary>
@@ -68,7 +68,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[(int)Stats.SPDEF] + (EV[(int)Stats.SPDEF] / 4)) * Level) / 100 + 5) * natureFlag.SPD);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPD + IV[(int)Stats.SPDEF] + (EV[(int)Stats.SPDEF] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].SPD);
             }
         }
         /// <summary>
@@ -78,7 +78,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[(int)Stats.SPEED] + (EV[(int)Stats.SPEED] / 4)) * Level) / 100 + 5) * natureFlag.SPE);
+                return (int)Math.Floor((((2 * _base.BaseStatsSPE + IV[(int)Stats.SPEED] + (EV[(int)Stats.SPEED] / 4)) * Level) / 100 + 5) * Game.NatureData[Nature].SPE);
             }
         }
         /// <summary>
@@ -211,7 +211,7 @@ namespace PokemonUnity.Monster
             PersonalId |= Core.Rand.Next(256) << 16;
             PersonalId |= Core.Rand.Next(256) << 24;
             Ability = Abilities.NONE;
-            natureFlag = new Nature();//(Natures)(Core.Rand.Next(0, 24));
+            Nature = (Natures)new System.Random(Core.Seed()).Next(1, Game.NatureData.Count); //Monster.Nature.GetRandomNature()
 			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
 			//shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
@@ -376,7 +376,7 @@ namespace PokemonUnity.Monster
 			Form = form;
 
             Ability = ability;
-            natureFlag = new Nature(nature);
+            Nature = nature;
 
             PersonalId = personalId;
 
@@ -989,15 +989,10 @@ namespace PokemonUnity.Monster
 
         #region Nature
         /// <summary>
-        /// Forces a particular nature
-        /// </summary>
-        /// ToDo: Redo NatureDatabase Class
-        private Nature natureFlag { get; set; }
-        /// <summary>
         /// Returns the ID of this Pokemon's nature or
         /// Sets this Pokemon's nature to a particular nature (and calculates the stat modifications).
         /// </summary>
-        public Natures Nature { get { return this.natureFlag.Natures; } } //set { this.natureFlag = value; calcStats(); } }
+        public Natures Nature { get; private set; }
 
         /// <summary>
         /// Returns whether this Pokemon has a particular nature
@@ -1017,10 +1012,10 @@ namespace PokemonUnity.Monster
         ///// Returns the Nature for the SeriPokemon class to serialize Nature
         ///// </summary>
         ///// <returns></returns>
-		///// Could've just made the natureFlag public if you needed access to it...
+		///// Could've just made the Game.NatureData[Nature] public if you needed access to it...
         //public Nature getNature()
         //{
-        //    return natureFlag;
+        //    return Game.NatureData[Nature];
         //}
         #endregion
 
