@@ -244,6 +244,8 @@ namespace PokemonUnity.Monster
 			eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+			if(pokemon == Pokemons.UNOWN)
+				form = new System.Random(Core.Seed()).Next(Game.PokemonFormsData[pokemon].Length);
 			//ToDo: Undo comment
 			//Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
             GenerateMoveset();
@@ -2126,7 +2128,9 @@ namespace PokemonUnity.Monster
         /// Some forms have a SpeciesId and others are battle only
         /// Note: All of the forms appear to be registered as Enums already...
         /// Why not just change from `INT` to `(enum)Pokemons`?
-        public int Form { get; set; }//{ get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+        //public int Form { get { return form; } set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Count()) form = value; } }
+        public int Form { get { return form; } set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) form = value; } }
+		private int form { get; set; }
 
         /*// <summary>
         /// Returns the species name of this Pokemon
