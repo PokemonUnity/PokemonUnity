@@ -94,6 +94,7 @@
     <Compile Include="Monster\Pokemon\Data\Base.cs" />
     <Compile Include="Monster\Pokemon\Data\Evolution.cs" />
     <Compile Include="Monster\Pokemon\Data\Experience.cs" />
+    <Compile Include="Monster\Pokemon\Data\Form.cs" />
     <Compile Include="Monster\Pokemon\Data\Moveset.cs" />
     <Compile Include="Monster\Pokemon\Data\MoveTree.cs" />
     <Compile Include="Monster\Pokemon\Experience.cs" />
