@@ -176,12 +176,12 @@ namespace PokemonUnity.Monster.Data
                             int[] movesetLevels = null, Moves[] movesetMoves = null, int[] tmList = null,
                             IPokemonEvolution[] evolution = null,
                             int[] evolutionID = null, int[] evolutionLevel = null, int[] evolutionMethod = null, //string[] evolutionRequirements,
-							Pokemons evolutionFROM = Pokemons.NONE, List<int> evolutionTO = null, 
+							Pokemons evolutionFROM = Pokemons.NONE, List<int> evolutionTO = null, Items incense = Items.NONE,
 							int evoChainId = 0, byte generationId = 0, bool isDefault = false, bool isBaby = false, bool formSwitchable = false, bool hasGenderDiff = false, 
 							Habitat habitatId = Habitat.RARE, Shape shapeId = Shape.BLOB, int order = -1,
 							Pokemons baseForm = Pokemons.NONE, //int forms = 0, 
                             int[,] heldItem = null) //: this(Id)
-        {//new PokemonData(1,1,"Bulbasaur",12,4,65,null,34,45,1,7,20,7f,69f,64,4,PokemonData.PokedexColor.GREEN,"Seed","\"Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger.\"",45,49,49,65,65,45,0f,new int[]{1,3,7,9,13,13,15,19,21,25,27,31,33,37},new int[]{33,45,73,22,77,79,36,75,230,74,38,388,235,402},new int[]{14,15,70,76,92,104,113,148,156,164,182,188,207,213,214,216,218,219,237,241,249,263,267,290,412,447,474,496,497,590},new int[]{2},new int[]{16},new int[]{1})
+        {
 			this.ID = Id;
 			this.RegionalPokedex = regionalDex;
 
@@ -237,7 +237,6 @@ namespace PokemonUnity.Monster.Data
 			//this.evolutionRequirements = evolutionRequirements;*/
 
 			this.Order			= order			;
-			this.Incense		= Items.NONE	; //if not baby, item = none
 			this.ShinyChance	= 0				;
 			this.IsDefault		= isDefault		;
 			this.IsBaby 		= isBaby 		;
@@ -245,6 +244,7 @@ namespace PokemonUnity.Monster.Data
 			this.HasGenderDiff 	= hasGenderDiff ;
 			//this.EvolutionFROM= evolutionFROM ;
 			//this.EvolutionTO 	= evolutionTO 	;
+			this.Incense	 	= incense 		;
 			this.EvoChainId 	= evoChainId 	;
 			this.GenerationId 	= generationId 	;
 			this.HabitatId 		= habitatId 	;
