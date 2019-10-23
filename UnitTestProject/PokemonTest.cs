@@ -669,23 +669,63 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		 * Pokemon Vivillion form is based on player's physical GPS location (pc IP Address)
 		 * ToDo: Connect different forms to return correct UI (texture/model matches pokemon id) 
 		 */
-        [TestMethod]
-        public void Pokemon_TestPokemon_SetForm_To_Form2()
+		///	<see cref="Pokemons.UNOWN"/> = letter of the alphabet.
+		///	<see cref="Pokemons.DEOXYS"/> = which of the four forms.
+		///	<see cref="Pokemons.BURMY"/>/<see cref="Pokemons.WORMADAM"/> = cloak type. Does not change for Wormadam.
+		///	<see cref="Pokemons.SHELLOS"/>/<see cref="Pokemons.GASTRODON"/> = west/east alt colours.
+		///	<see cref="Pokemons.ROTOM"/> = different possesed appliance forms.
+		///	<see cref="Pokemons.GIRATINA"/> = Origin/Altered form.
+		///	<see cref="Pokemons.SHAYMIN"/> = Land/Sky form.
+		///	<see cref="Pokemons.ARCEUS"/> = Type.
+		///	<see cref="Pokemons.BASCULIN"/> = appearance.
+		///	<see cref="Pokemons.DEERLING"/>/<see cref="Pokemons.SAWSBUCK"/> = appearance.
+		///	<see cref="Pokemons.TORNADUS"/>/<see cref="Pokemons.THUNDURUS"/>/<see cref="Pokemons.LANDORUS"/> = Incarnate/Therian forms.
+		///	<see cref="Pokemons.KYUREM"/> = Normal/White/Black forms.
+		///	<see cref="Pokemons.KELDEO"/> = Ordinary/Resolute forms.
+		///	<see cref="Pokemons.MELOETTA"/> = Aria/Pirouette forms.
+		///	<see cref="Pokemons.GENESECT"/> = different Drives.
+		///	<see cref="Pokemons.VIVILLON"/> = different Patterns.
+		///	<see cref="Pokemons.FLABEBE"/>/<see cref="Pokemons.FLOETTE"/>/<see cref="Pokemons.FLORGES"/> = Flower colour.
+		///	<see cref="Pokemons.FURFROU"/> = haircut.
+		///	<see cref="Pokemons.PUMPKABOO"/>/<see cref="Pokemons.GOURGEIST"/> = small/average/large/super sizes. 
+		///	<see cref="Pokemons.HOOPA"/> = Confined/Unbound forms.
+		///	<see cref="Pokemons.CASTFORM"/>? = different weather forms
+		///	<see cref="Pokemons.PIKACHU"/>
+		//Test game doesnt crash if no form
+		//Test pokedex to record/show (only) first form seen 
+		//Test pokedex to record/show (different?) form captured 
+		//Test pokemon has mega form
+		//Moves learned changes with form
+		[TestMethod]
+        public void Pokemon_Form_SetForm_To_FormB()
         {
-            Pokemon pokemon = new Pokemon(Pokemons.NONE);
+            Pokemon pokemon = new Pokemon(Pokemons.UNOWN);
+            pokemon.Form = 2;
+			//Assert.AreEqual("test1", pokemon.Name);
+			Assert //CollectionAssert
+				.AreEqual(
+					new { Pokemons.UNOWN, Forms.UNOWN_B }, 
+					new { pokemon.Species, Game.PokemonFormsData[pokemon.Species][pokemon.Form].Id }
+				);
+			//Assert.Inconclusive("Not implemented yet");
+		}
+		[TestMethod]
+        public void Pokemon_Form_SetForm_Fails_On_NoForms()
+        {
+            Pokemon pokemon = new Pokemon(Pokemons.DEOXYS);
             pokemon.Form = 2;
             //Assert.AreEqual("test1", pokemon.Name);
 			Assert.Inconclusive("Not implemented yet");
 		}
-        [TestMethod]
-        //Changing form changes base stats
-        public void Pokemon_TestPokemon_SetForm_IncreasesAtkStats()
-        {
-            Pokemon pokemon = new Pokemon(Pokemons.NONE);
-            pokemon.Form = 1;
-            //Assert.AreNotEqual(Pokemon.PokemonData.GetPokemon(pokemon.Species).BaseStatsATK, pokemon.ATK);
+		[TestMethod]
+		//Changing form changes base stats
+		public void Pokemon_Form_SetForm_IncreasesAtkStats()
+		{
+			Pokemon pokemon = new Pokemon(Pokemons.ROTOM);
+			pokemon.Form = 1; //Rotom_Heat
+			Assert.AreNotEqual(Game.PokemonData[pokemon.Species].BaseStatsATK, pokemon.ATK);
             //Assert.Fail("Need to find way to compare Pokemon.baseStats to Form.baseStats");
-			Assert.Inconclusive("Not implemented yet");
+			//Assert.Inconclusive("Not implemented yet");
 		}
 		#endregion
 
