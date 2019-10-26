@@ -30,6 +30,7 @@ namespace PokemonUnity
 	{
 		const string FilePokemonXML = "";
 		//ToDo: ReadOnly Immutable Dictionaries...
+		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonEvolution[]> PokemonEvolutionsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
 		public static Dictionary<Natures,Nature> NatureData { get; private set; }
@@ -56,6 +57,13 @@ namespace PokemonUnity
 			PokemonMovesData = new Dictionary<Pokemons, Monster.Data.PokemonMoveTree>();
 			if (sql) //using (con)
 				return GetPokemonMovesFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitPokemonEvolutions(bool sql = true)
+		{
+			PokemonEvolutionsData = new Dictionary<Pokemons, Monster.Data.PokemonEvolution[]>();
+			if (sql) //using (con)
+				return GetPokemonEvolutionsFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
 		public static bool InitNatures(bool sql = true)
@@ -318,6 +326,290 @@ namespace PokemonUnity
 					foreach (var pkmn in p)
 					{
 						PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetPokemonEvolutionsFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				Dictionary<Pokemons, List<Monster.Data.EvolutionTrigger>> p = new Dictionary<Pokemons, List<Monster.Data.EvolutionTrigger>>();
+				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
+				{
+					//p.Add(x, new List<Monster.Data.EvolutionTrigger>());
+					PokemonEvolutionsData[x] = new Monster.Data.PokemonEvolution[0];
+				} 
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = "select * from pokemon_evolution_view";
+				//	@"select pokemon_species.id, pokemon_species.identifier, pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species."order",
+				//pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
+				//from pokemon_evolution
+				//left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_species.id
+				//--group by pokemon_species.evolution_chain_id
+				//order by pokemon_species.evolution_chain_id; 
+				//--pokemon_species.evolves_from_species_id, pokemon_species.""order"";";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					while(reader.Read()) //if(reader.Read())
+					{
+						if (!p.ContainsKey((Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString())))
+							p.Add((Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString()),
+								new List<Monster.Data.EvolutionTrigger>());
+						p[(Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString())].Add(
+							new PokemonUnity.Monster.Data.EvolutionTrigger(
+								species: (Pokemons)int.Parse((string)reader["evolved_species_id"].ToString())
+								,evo: (Monster.Data.EvoTrigger)int.Parse((string)reader["evolution_trigger_id"].ToString())
+								,trigger: string.IsNullOrEmpty((string)reader["trigger_item_id"].ToString()) ? (Items)0 : (Items)int.Parse((string)reader["trigger_item_id"].ToString())
+								,minLevel:string.IsNullOrEmpty((string)reader["minimum_level"].ToString()) ? (int?)null : int.Parse((string)reader["minimum_level"].ToString())
+								,gender: string.IsNullOrEmpty((string)reader["gender_id"].ToString()) ? (bool?)null : (bool?)((string)reader["gender_id"].ToString() == "1")
+								,location:string.IsNullOrEmpty((string)reader["location_id"].ToString()) ? (int?)null : int.Parse((string)reader["location_id"].ToString())
+								,held: string.IsNullOrEmpty((string)reader["held_item_id"].ToString()) ? (Items)0 : (Items)int.Parse((string)reader["held_item_id"].ToString())
+								,time:string.IsNullOrEmpty((string)reader["time_of_day"].ToString()) ? (int?)null : int.Parse((string)reader["time_of_day"].ToString())
+								,knownMove: string.IsNullOrEmpty((string)reader["known_move_id"].ToString()) ? (Moves)0 : (Moves)int.Parse((string)reader["known_move_id"].ToString())
+								,knownType: string.IsNullOrEmpty((string)reader["known_move_type_id"].ToString()) ? (Types)0 : (Types)int.Parse((string)reader["known_move_type_id"].ToString())
+								,happiness:string.IsNullOrEmpty((string)reader["minimum_happiness"].ToString()) ? (int?)null : int.Parse((string)reader["minimum_happiness"].ToString())
+								,beauty:string.IsNullOrEmpty((string)reader["minimum_beauty"].ToString()) ? (int?)null : int.Parse((string)reader["minimum_beauty"].ToString())
+								,affection:string.IsNullOrEmpty((string)reader["minimum_affection"].ToString()) ? (int?)null : int.Parse((string)reader["minimum_affection"].ToString())
+								,physicalStat:string.IsNullOrEmpty((string)reader["relative_physical_stats"].ToString()) ? (int?)null : int.Parse((string)reader["relative_physical_stats"].ToString())
+								,partySpecies: string.IsNullOrEmpty((string)reader["party_species_id"].ToString()) ? (Pokemons)0 : (Pokemons)int.Parse((string)reader["party_species_id"].ToString())
+								,partyType: string.IsNullOrEmpty((string)reader["party_type_id"].ToString()) ? (Types)0 : (Types)int.Parse((string)reader["party_type_id"].ToString())
+								,tradeSpecies: string.IsNullOrEmpty((string)reader["trade_species_id"].ToString()) ? (Pokemons)0 : (Pokemons)int.Parse((string)reader["trade_species_id"].ToString())
+								,overworldRain: (string)reader["needs_overworld_rain"].ToString() == "1"
+								,turnUpsideDown: (string)reader["turn_upside_down"].ToString() == "1"
+							)
+						);
+					}
+				}
+				//Step 5: Closing up
+				reader.Close();
+				reader.Dispose();
+				#endregion
+				//PokemonEvolutionsData.Add(Pokemons.NONE, new Monster.Data.PokemonEvolution[] { });
+				foreach (var pkmn in p)
+				{
+					PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count];
+					for(int i = 0; i < pkmn.Value.Count; i++)
+					{
+						#region Happiness Evolution
+						if (pkmn.Value[i].Time.Value == 0 //"night" 
+							&& pkmn.Value[i].Happiness.HasValue)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessNight, pkmn.Value[i].Happiness.Value);
+							continue;
+						}
+						else if (pkmn.Value[i].Time.Value == 1 //"day" 
+								&& pkmn.Value[i].Happiness.HasValue)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessDay, pkmn.Value[i].Happiness.Value);
+							continue;
+						}
+						else if (pkmn.Value[i].Happiness.HasValue)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Happiness, pkmn.Value[i].Happiness.Value);
+							continue;
+						}
+						#endregion
+
+						#region Item Evolution
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.Value == true //"1" 
+							&& pkmn.Value[i].Trigger != Items.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemFemale, pkmn.Value[i].Trigger);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.Value == false //"2" 
+							&& pkmn.Value[i].Trigger != Items.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemMale, pkmn.Value[i].Trigger);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Trigger != Items.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Item, pkmn.Value[i].Trigger);
+							continue;
+						}
+						#endregion
+
+						#region Location Evolution
+						if (pkmn.Value[i].Location.HasValue)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Location, pkmn.Value[i].Location.Value);
+							continue;
+						}
+						#endregion
+
+						#region Trade Evolution
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.trade && pkmn.Value[i].TradeSpecies != Pokemons.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.TradeSpecies, pkmn.Value[i].TradeSpecies);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.trade && pkmn.Value[i].Held != Items.NONE && pkmn.Value[i].TradeSpecies == Pokemons.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.TradeItem, pkmn.Value[i].Held);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.trade && pkmn.Value[i].Held == Items.NONE && pkmn.Value[i].TradeSpecies == Pokemons.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Trade, null);
+							continue;
+						}
+						#endregion
+
+						#region Hold Item
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.Value == 1 //"day" 
+								&& pkmn.Value[i].Held != Items.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemDay, pkmn.Value[i].Held);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.Value == 0 //"night" 
+							&& pkmn.Value[i].Held != Items.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemNight, pkmn.Value[i].Held);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Held != Items.NONE)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItem, pkmn.Value[i].Held);
+							continue;
+						}
+						#endregion
+
+						#region Beauty/Affection
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Beauty.HasValue)
+						{
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Beauty, pkmn.Value[i].Beauty.Value);
+							continue;
+						}
+						//if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Affection.HasValue)
+						//{
+						//	PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Affection, pkmn.Value[i].Affection.Value);
+						//	continue;
+						//}
+						#endregion
+
+						#region Move
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].KnownMove != Moves.NONE && pkmn.Value[i].PartySpecies == Pokemons.NONE)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<Moves>(Pokemons.{name.ToUpper()}, EvolutionMethod.Move, Moves.{tempMove.ToUpper()}),";
+							//break;
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Move, pkmn.Value[i].KnownMove);
+							continue;
+						}
+						#endregion
+
+						#region Party
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PartySpecies != Pokemons.NONE)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<Pokemons>(Pokemons.{name.ToUpper()}, EvolutionMethod.Party, Pokemons.{pkmn.Value[i].Species.ToUpper()}),";
+							//break;
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Party, pkmn.Value[i].PartySpecies);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].KnownType != Types.NONE)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<Types>(Pokemons.{name.ToUpper()}, EvolutionMethod.Move, Types.{tempType.ToUpper()}),";
+							//break;
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Type, pkmn.Value[i].PartyType);
+							continue;
+						}
+						#endregion
+
+						#region Attack > Defense > Equal =
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.Value == 1)           //Attack Greater Than Defense (Attack > Defense)    1
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.AttackGreater),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AttackGreater, pkmn.Value[i].PartyType);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.Value == -1)    //Defense Greater Than Attack (Attack < Defense)    -1
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.DefenseGreater),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.DefenseGreater, pkmn.Value[i].PartyType);
+							continue;
+						}
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.Value == 0)    //Attack Equal To Attack (Attack = Defense)         0
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.AtkDefEqual),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AtkDefEqual, pkmn.Value[i].PartyType);
+							continue;
+						}
+						#endregion
+
+						#region Silcoon
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.SILCOON)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Silcoon),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Silcoon);
+							continue;
+						}
+						#endregion
+
+						#region Cascoon
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.CASCOON)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Cascoon),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Cascoon);
+							continue;
+						}
+						#endregion
+
+						#region Ninjask
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.NINJASK)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Ninjask),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Ninjask);
+							continue;
+						}
+						#endregion
+
+						#region Shedinja
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Species == Pokemons.SHEDINJA)
+						{
+							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.Shedinja),";
+							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Shedinja);
+							continue;
+						}
+						#endregion
+
+						#region Level
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Trigger == Items.NONE && pkmn.Value[i].MinLevel.HasValue && !pkmn.Value[i].Happiness.HasValue && !pkmn.Value[i].TurnUpsideDown)
+						{
+							if (pkmn.Value[i].Gender.Value == true) //"1" 
+							{
+								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelFemale, {csv.Context.Record[4]}),";
+								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelFemale, pkmn.Value[i].MinLevel);
+								continue;
+							}
+							else if (pkmn.Value[i].Gender.Value == false) //"2"
+							{
+								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelMale, {csv.Context.Record[4]}),";
+								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelMale, pkmn.Value[i].MinLevel);
+								continue;
+							}
+							else
+							{
+								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.Level, {csv.Context.Record[4]}),";
+								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Level, pkmn.Value[i].MinLevel);
+								continue;
+							}
+						}
+						#endregion
+						//continue;
 					}
 				}
 				return true;
