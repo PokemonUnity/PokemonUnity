@@ -168,27 +168,28 @@ namespace PokemonUnity
 
 					#region DataReader
 					stmt.CommandText = "select * from pokemon_views --order by id ASC";
-						//	@"select pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon.""order""
-						//pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3, 
-						//pokemon_egg_groups_view.egg_group1, pokemon_egg_groups_view.egg_group2,
-						//pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,
-						//pokemon_types_view.type1, pokemon_types_view.type2,
-						//pokemon_color_names.name as color,
-						//--pokemon_species.base_happiness, pokemon_species.capture_rate, pokemon_species.gender_rate, pokemon_species.hatch_counter, pokemon_species.shape_id, pokemon_species.growth_rate_id,
-						//pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.color_id, pokemon_species.shape_id, pokemon_species.habitat_id, pokemon_species.gender_rate, pokemon_species.capture_rate, pokemon_species.base_happiness, pokemon_species.is_baby, pokemon_species.hatch_counter, pokemon_species.has_gender_differences, pokemon_species.growth_rate_id, pokemon_species.forms_switchable, pokemon_species.""order"",
-						//pokemon_species_names.name,pokemon_species_names.genus,
-						//pokemon_species_flavor_text.flavor_text
-						//from pokemon
-						//left join pokemon_abilities_view on pokemon.id = pokemon_abilities_view.pokemon_id
-						//left join pokemon_egg_groups_view on pokemon_egg_groups_view.pokemon_id = pokemon.id
-						//left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
-						//left join pokemon_types_view on pokemon_types_view.pokemon_id = pokemon.id
-						//left join pokemon_species on pokemon_species.id = pokemon.id
-						//left join pokemon_colors on pokemon_colors.id = pokemon_species.color_id
-						//left join pokemon_color_names on pokemon_color_names.pokemon_color_id = pokemon_colors.id AND pokemon_color_names.local_language_id = 9
-						//left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.id AND pokemon_species_names.local_language_id = 9
-						//left join pokemon_species_flavor_text on pokemon_species_flavor_text.species_id = pokemon.id AND pokemon_species_flavor_text.version_id = 26 AND pokemon_species_flavor_text.language_id = 9
-						//order by pokemon.id ASC;";
+					//	@"select pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon.""order""
+					//pokemon_abilities_view.ability1, pokemon_abilities_view.ability2, pokemon_abilities_view.ability3, 
+					//pokemon_egg_groups_view.egg_group1, pokemon_egg_groups_view.egg_group2,
+					//pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,
+					//pokemon_types_view.type1, pokemon_types_view.type2,
+					//pokemon_color_names.name as color,
+					//pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.color_id, pokemon_species.shape_id, pokemon_species.habitat_id, pokemon_species.gender_rate, pokemon_species.capture_rate, pokemon_species.base_happiness, pokemon_species.is_baby, pokemon_species.hatch_counter, pokemon_species.has_gender_differences, pokemon_species.growth_rate_id, pokemon_species.forms_switchable, pokemon_species.""order"",
+					//evolution_chains.baby_trigger_item_id as incense,
+					//pokemon_species_names.name,pokemon_species_names.genus,
+					//pokemon_species_flavor_text.flavor_text
+					//from pokemon
+					//left join pokemon_abilities_view on pokemon.id = pokemon_abilities_view.pokemon_id
+					//left join pokemon_egg_groups_view on pokemon_egg_groups_view.pokemon_id = pokemon.id
+					//left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
+					//left join pokemon_types_view on pokemon_types_view.pokemon_id = pokemon.id
+					//left join pokemon_species on pokemon_species.id = pokemon.id
+					//left join evolution_chains on evolution_chains.id = pokemon_species.evolution_chain_id
+					//left join pokemon_colors on pokemon_colors.id = pokemon_species.color_id
+					//left join pokemon_color_names on pokemon_color_names.pokemon_color_id = pokemon_colors.id AND pokemon_color_names.local_language_id = 9
+					//left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.id AND pokemon_species_names.local_language_id = 9
+					//left join pokemon_species_flavor_text on pokemon_species_flavor_text.species_id = pokemon.id AND pokemon_species_flavor_text.version_id = 26 AND pokemon_species_flavor_text.language_id = 9
+					//order by pokemon.id ASC;";
 					SQLiteDataReader reader = stmt.ExecuteReader();
 
 					//Step 4: Read the results
