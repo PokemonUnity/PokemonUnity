@@ -166,39 +166,71 @@ namespace Tests
             Assert.AreEqual(lv, Pokemon.Experience.GetLevelFromExperience(pokemon.GrowthRate, pokemon.Exp.Current));
         }
 
-        //[TestMethod]
-        //public void Pokemon_TestPokemon_Set_To_Egg() //Fail set to egg after hatch?
-        //{
-        //	Pokemon pokemon = new Pokemon(Pokemons.NONE);
-        //	//If not egg
-        //	if (!pokemon.isEgg) Assert.Fail();
-        //	//else fail
-        //	//Set to egg
-        //
-        //	//Assert if egg
-        //	Assert.Inconclusive();
-        //}
-
-        //[TestMethod]
-        //public void Pokemon_TestPokemon_Hatch_Egg()
-        //{
-        //	//Set to egg
-        //	Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR)
-        //	{
-        //		//eggSteps = 5;
-        //	};
-        //	//If not egg fail
-        //	if (!pokemon.isEgg) Assert.Fail();
-        //	//for loop until egg hatches
-        //	//Assert if egg
-        //	Assert.Inconclusive();
-        //	//When egg hatches, values need to be set:
-        //	//pkmn.eggsteps = 0
-        //	//pkmn.hatchedMap = 0
-        //	//pkmn.obtainMode = 0
-        //}
-
         [TestMethod]
+        public void test_experience()
+        {
+			/*def test_experience(use_update):
+			pkmn, expected = voltorb_and_dict()
+			for exp in 2197, 2200:
+				if use_update:
+					pkmn.update(exp=exp)
+				else:
+					pkmn.exp = exp
+				assert pkmn.exp == exp
+				assert pkmn.experience_rung.experience <= pkmn.exp
+				assert pkmn.next_experience_rung.experience > pkmn.exp
+				assert pkmn.experience_rung.level + 1 == pkmn.next_experience_rung.level
+				assert (pkmn.experience_rung.growth_rate ==
+					pkmn.next_experience_rung.growth_rate ==
+					pkmn.species.growth_rate)
+				assert pkmn.level == pkmn.experience_rung.level
+				assert pkmn.exp_to_next == pkmn.next_experience_rung.experience - pkmn.exp
+				rung_difference = (pkmn.next_experience_rung.experience -
+					pkmn.experience_rung.experience)
+				assert pkmn.progress_to_next == (
+					pkmn.exp - pkmn.experience_rung.experience) / float(rung_difference)
+				if exp == 2197:
+					expected['level'] = 13
+				else:
+					expected['exp'] = exp
+					expected['level'] = 13
+				check_with_roundtrip(5, pkmn, expected)*/
+			Assert.Inconclusive();
+		}
+
+		//[TestMethod]
+		//public void Pokemon_TestPokemon_Set_To_Egg() //Fail set to egg after hatch?
+		//{
+		//	Pokemon pokemon = new Pokemon(Pokemons.NONE);
+		//	//If not egg
+		//	if (!pokemon.isEgg) Assert.Fail();
+		//	//else fail
+		//	//Set to egg
+		//
+		//	//Assert if egg
+		//	Assert.Inconclusive();
+		//}
+
+		//[TestMethod]
+		//public void Pokemon_TestPokemon_Hatch_Egg()
+		//{
+		//	//Set to egg
+		//	Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR)
+		//	{
+		//		//eggSteps = 5;
+		//	};
+		//	//If not egg fail
+		//	if (!pokemon.isEgg) Assert.Fail();
+		//	//for loop until egg hatches
+		//	//Assert if egg
+		//	Assert.Inconclusive();
+		//	//When egg hatches, values need to be set:
+		//	//pkmn.eggsteps = 0
+		//	//pkmn.hatchedMap = 0
+		//	//pkmn.obtainMode = 0
+		//}
+
+		[TestMethod]
 		public void Pokemon_Egg_Hatches_When_Timer_Reaches_Zero()
 		{
 			Pokemon pokemon = new Pokemon(Pokemons.NONE); //Step counter for test pokemon is 1000
