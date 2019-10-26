@@ -50,7 +50,6 @@ namespace PokemonUnity
 				return GetPokemonsFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
-
 		public static bool InitPokemonMoves(bool sql = true)
 		{
 			PokemonMovesData = new Dictionary<Pokemons, Monster.Data.PokemonMoveTree>();
@@ -244,6 +243,7 @@ namespace PokemonUnity
 									//,evolutionMethod: Data.evolutionMethod						
 									//,evolutionFROM: Data.EvolutionFROM
 									//,evolutionTO: Data.EvolutionTO
+									,incense: (Items)int.Parse(string.IsNullOrEmpty((string)reader["incense"].ToString()) ? "0" : (string)reader["incense"].ToString())
 									,evoChainId: int.Parse(string.IsNullOrEmpty((string)reader["evolution_chain_id"].ToString()) ? "0" : (string)reader["evolution_chain_id"].ToString())
 									,generationId: (byte)int.Parse(string.IsNullOrEmpty((string)reader["generation_id"].ToString()) ? "0" : (string)reader["generation_id"].ToString())
 									//,isDefault: (string)reader["IsBaseForm"].ToString() == "1"
