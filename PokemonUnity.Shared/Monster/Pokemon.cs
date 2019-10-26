@@ -308,8 +308,44 @@ namespace PokemonUnity.Monster
             IV = TPIV ?? IV;
             //EV = new int[6];
 
-            //calcStats();
-        }
+			/*# Japanese Dream World Squirtle from http://projectpokemon.org/events
+			blob = base64.b64decode('J2ZqBgAAICQHAAAAkOaKyTACAABGLAABAAAAAAAAAAAAAAAAA'
+			'AAAACEAJwCRAG4AIx4eKAAAAAD171MHAAAAAAAAAQAAAAAAvDDLMKww4TD//wAAAAAAAA'
+			'AAAAD//wAVAAAAAAAAAAAw/zD/T/9S/0f///8AAAAAAAAACgoOAABLAAAZCgAAAA==')
+		{
+			'ability': {'id': 44, 'name': u'Rain Dish'},
+			'date met': '2010-10-14',
+			'gender': 'male',
+			'genes': {u'attack': 31,
+					u'defense': 27,
+					u'hp': 21,
+					u'special attack': 21,
+					u'special defense': 3,
+					u'speed': 7},
+			'happiness': 70,
+			'level': 10,
+			'met at level': 10,
+			'met location': {'id_dp': 75, 'name': u'Spring Path'},
+			'moves': [{'id': 33, 'name': u'Tackle', 'pp': 35},
+					{'id': 39, 'name': u'Tail Whip', 'pp': 30},
+					{'id': 145, 'name': u'Bubble', 'pp': 30},
+					{'id': 110, 'name': u'Withdraw', 'pp': 40}],
+			'nickname': u'ゼニガメ',
+			'nickname trash': 'vDDLMKww4TD//wAAAAAAAAAAAAD//w==',
+			'nicknamed': False,
+			'oiginal trainer': {'gender': 'male',
+								'id': 59024,
+								'name': u'ＰＰｏｒｇ',
+								'secret': 51594},
+			'original country': 'jp',
+			'original version': 21,
+			'personality': 107636263,
+			'pokeball': {'id_dppt': 25, 'name': u'Hyper Potion'},
+			'species': {'id': 7, 'name': u'Squirtle'}
+		}*/
+
+			//calcStats();
+		}
 
 		/// <summary>
 		/// This is used SPECIFICALLY for regenerating a pokemon from 
