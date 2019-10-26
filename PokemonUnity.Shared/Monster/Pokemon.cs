@@ -382,7 +382,7 @@ namespace PokemonUnity.Monster
 		/// <param name="timeReceived"></param>
 		/// <param name="timeEggHatched"></param>
 		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
-        public Pokemon(Pokemons species, 
+		public Pokemon(Pokemons species, 
 			Trainer original,
 			string nickName, int form,
             Abilities ability, Natures nature,
@@ -2575,11 +2575,5 @@ namespace PokemonUnity.Monster
 			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
 		}*/
 		#endregion
-    }
-    public interface IPokemonEvolution
-    {
-        Pokemons Species { get; }
-
-        EvolutionMethod EvolveMethod { get; }
     }
 }
