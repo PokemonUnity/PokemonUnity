@@ -339,7 +339,7 @@ namespace PokemonUnity
 			try
 			{
 				Dictionary<Pokemons, List<Monster.Data.Form>> p = new Dictionary<Pokemons, List<Monster.Data.Form>>();
-				foreach (Pokemons x in Enum.GetValues(typeof(Pokemons)))//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
+				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
 				{
 					p.Add(x, new List<Monster.Data.Form>());
 				}
