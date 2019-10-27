@@ -30,6 +30,7 @@ namespace PokemonUnity
 	{
 		const string FilePokemonXML = "";
 		//ToDo: ReadOnly Immutable Dictionaries...
+		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]> PokemonItemsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
 		public static Dictionary<Natures,Nature> NatureData { get; private set; }
@@ -55,6 +56,13 @@ namespace PokemonUnity
 			PokemonMovesData = new Dictionary<Pokemons, Monster.Data.PokemonMoveTree>();
 			if (sql) //using (con)
 				return GetPokemonMovesFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitPokemonItems(bool sql = true)
+		{
+			PokemonItemsData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]>();
+			if (sql) //using (con)
+				return GetPokemonItemsFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
 		public static bool InitNatures(bool sql = true)
@@ -318,6 +326,58 @@ namespace PokemonUnity
 					foreach (var pkmn in p)
 					{
 						PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetPokemonItemsFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
+				//{ 
+					//Step 3: Running a Command
+					SQLiteCommand stmt = con.CreateCommand();
+
+					#region DataReader
+					stmt.CommandText = "select * from pokemon_items group by pokemon_id, item_id";
+					//	@"select * 
+					//from pokemon_items
+					//group by pokemon_id, item_id";
+					SQLiteDataReader reader = stmt.ExecuteReader();
+
+					//Step 4: Read the results
+					using(reader)
+					{
+						Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>>();
+						while(reader.Read()) //if(reader.Read())
+						{
+							if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
+								p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
+									new List<Monster.Data.PokemonWildItems>());
+							p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
+								new PokemonUnity.Monster.Data.PokemonWildItems(
+									itemId: (Items)int.Parse((string)reader["item_id"].ToString())
+									,generation: int.Parse((string)reader["version_id"].ToString())
+									,rarity: int.Parse((string)reader["rarity"].ToString())
+								)
+							);
+						}
+					//}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+					PokemonItemsData.Add(Pokemons.NONE, new Monster.Data.PokemonWildItems[] { });
+					foreach (var pkmn in p)
+					{
+						PokemonItemsData.Add(pkmn.Key, pkmn.Value.ToArray());
 					}
 				}
 				return true;
