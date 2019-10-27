@@ -340,41 +340,42 @@ namespace PokemonUnity
 		{
 			try
 			{
-				//for(int n = 1; n <= Enum.GetValues(typeof(Pokemons)).Length; n++)
-				//{ 
-					//Step 3: Running a Command
-					SQLiteCommand stmt = con.CreateCommand();
+				Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>>();
+				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
+				{
+					p.Add(x, new List<Monster.Data.PokemonWildItems>());
+				} 
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
 
-					#region DataReader
-					stmt.CommandText = "select * from pokemon_items group by pokemon_id, item_id";
-					//	@"select * 
-					//from pokemon_items
-					//group by pokemon_id, item_id";
-					SQLiteDataReader reader = stmt.ExecuteReader();
+				#region DataReader
+				stmt.CommandText = "select * from pokemon_items group by pokemon_id, item_id";
+				//	@"select * 
+				//from pokemon_items
+				//group by pokemon_id, item_id";
+				SQLiteDataReader reader = stmt.ExecuteReader();
 
-					//Step 4: Read the results
-					using(reader)
+				//Step 4: Read the results
+				using(reader)
+				{
+					while(reader.Read()) //if(reader.Read())
 					{
-						Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>> p = new Dictionary<Pokemons, List<Monster.Data.PokemonWildItems>>();
-						while(reader.Read()) //if(reader.Read())
-						{
-							if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
-								p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
-									new List<Monster.Data.PokemonWildItems>());
-							p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
-								new PokemonUnity.Monster.Data.PokemonWildItems(
-									itemId: (Items)int.Parse((string)reader["item_id"].ToString())
-									,generation: int.Parse((string)reader["version_id"].ToString())
-									,rarity: int.Parse((string)reader["rarity"].ToString())
-								)
-							);
-						}
-					//}
+						//if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
+						//	p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
+						//		new List<Monster.Data.PokemonWildItems>());
+						p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
+							new PokemonUnity.Monster.Data.PokemonWildItems(
+								itemId: (Items)int.Parse((string)reader["item_id"].ToString())
+								,generation: int.Parse((string)reader["version_id"].ToString())
+								,rarity: int.Parse((string)reader["rarity"].ToString())
+							)
+						);
+					}
 					//Step 5: Closing up
 					reader.Close();
 					reader.Dispose();
 					#endregion
-					PokemonItemsData.Add(Pokemons.NONE, new Monster.Data.PokemonWildItems[] { });
+					//PokemonItemsData.Add(Pokemons.NONE, new Monster.Data.PokemonWildItems[] { });
 					foreach (var pkmn in p)
 					{
 						PokemonItemsData.Add(pkmn.Key, pkmn.Value.ToArray());
