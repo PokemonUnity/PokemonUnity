@@ -737,7 +737,7 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		[TestMethod]
         public void Pokemon_WildPokemon_With_Item()
         {
-			Pokemon pkmn = new Pokemon();
+			Pokemon pkmn = new Pokemon(Pokemons.RATICATE);//Pokemons.BUTTERFREE
 			if (Game.PokemonItemsData[pkmn.Species].Length == 0)
 				Assert.Fail("Pokemon does not contain any held items in wild");
 
