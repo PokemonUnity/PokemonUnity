@@ -202,6 +202,7 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Uses PokemonData to initialize a Pokemon from base stats
         /// </summary>
+		/// ToDo: Make Private
         public Pokemon()
         {
             //_base = PokemonData.GetPokemon(Pokemons.NONE);
@@ -216,7 +217,7 @@ namespace PokemonUnity.Monster
 			//shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
-            IV = new byte[] { (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32), (byte)Core.Rand.Next(32) };
+            IV = new byte[] { (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1) };
             EV = new byte[6];
             Contest = new byte[6];
             Exp = new Experience(GrowthRate);
@@ -244,9 +245,9 @@ namespace PokemonUnity.Monster
 			eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
-			//ToDo: Undo comment
+			//ToDo: Move to Trainer.Wild Pokemon
 			//Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
-            GenerateMoveset();
+			GenerateMoveset();
 
             //calcStats();
         }

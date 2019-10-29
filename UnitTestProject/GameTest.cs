@@ -17,7 +17,8 @@ namespace Tests
 		{
 			System.Collections.Generic.List<string[]> s = new System.Collections.Generic.List<string[]>();
 			s = PokemonUnity.Game.GetArrayFromSQL("select * from pokemon_views limit 3 --order by id ASC");
-			CollectionAssert.AllItemsAreNotNull(s);
+			//CollectionAssert.AllItemsAreNotNull(s);
+			Assert.AreEqual(3, s.Count);
 		}
 	}
 }

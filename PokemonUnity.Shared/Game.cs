@@ -106,9 +106,9 @@ namespace PokemonUnity
 			//ToDo: Move to public Constructor
 			#region Public Constructor
 			con.Open();
-			InitPokemonMoves();
-			InitPokemons();
 			InitNatures();
+			InitPokemons();
+			InitPokemonMoves();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");
 			//if(LoadInitFile())
@@ -127,7 +127,7 @@ namespace PokemonUnity
 			//		//ToDo: Using string from translator here
 			//		PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
 			//		//ToDo: Make sure there's enough texture in library for array size
-			//		PC_boxTexture[i] = i; 
+			//		//PC_boxTexture[i] = i; 
 			//	}
 			//	PC_Items = new List<Item>();
 			//	Bag_Items = new List<Items>();
