@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
 using PokemonUnity.Monster;
+using PokemonUnity.Monster.Data;
 using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
 
@@ -31,6 +32,17 @@ namespace Tests
         public void PokemonMoves_Data_IsLoaded()
         {
 			Assert.IsTrue(Game.PokemonMovesData.Count > 1);
+        }
+        [TestMethod]
+        public void Initialize_PokemonItems_Test()
+        {		
+			//Only good if this function is ran first before any others
+			Assert.IsTrue(Game.InitPokemonItems());
+        }
+        [TestMethod]
+        public void PokemonItems_Data_IsLoaded()
+        {
+			Assert.IsTrue(Game.PokemonItemsData.Count > 1);
         }
 
         //Create 2 assert test; 1 for regular pokemon, and one for pokemon.NONE
@@ -725,12 +737,25 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 		[TestMethod]
         public void Pokemon_WildPokemon_With_Item()
         {
+			Pokemon pkmn = new Pokemon();
+			if (Game.PokemonItemsData[pkmn.Species].Length == 0)
+				Assert.Fail("Pokemon does not contain any held items in wild");
+
 			//Instantiate wild pokemon, maybe 100 times
-			//check to see if wild pokemon is created with held item
-			//pass if held item is true
-            //Maybe this one isnt needed?...
-			//Wild pokemons are (any/instantiated) pkmns without trainers?
-            Assert.Inconclusive();
+			for (int i = 0; i < 100; i++)
+			{
+				//check to see if wild pokemon is created with held item
+				pkmn.SwapItem(PokemonWildItems.GetWildHoldItem(pkmn.Species));
+				//pass if held item is true
+				if (pkmn.Item != Items.NONE)
+					//Assert.AreNotEqual()
+					Assert.IsTrue(true);
+				//Maybe this one isnt needed?...
+				//Wild pokemons are (any/instantiated) pkmns without trainers?
+			}
+			//Assert.Inconclusive();
+			//Assert.Fail("Pokemon did not receive a held item");
+			Assert.AreNotEqual(Items.NONE, pkmn.Item, "Pokemon did not receive a held item");
         }
         //[TestMethod]
         //public void Pokemon_TestPokemon_GetPokemon_From_Form()
