@@ -245,6 +245,7 @@ namespace PokemonUnity.Monster
 			eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
+			if(Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
 			//ToDo: Move to Trainer.Wild Pokemon
 			//Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
 			GenerateMoveset();

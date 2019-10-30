@@ -111,27 +111,27 @@ namespace PokemonUnity
 			InitPokemonMoves();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");
-			//if(LoadInitFile())
-			//{		
-			//	PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
-			//	PC_boxNames = new string[Core.STORAGEBOXES];
-			//	PC_boxTexture = new int[Core.STORAGEBOXES];
-			//	for (int i = 0; i < Core.STORAGEBOXES; i++)
-			//	{
-			//		//Initialize the PC storage so pokemons arent null (in value)
-			//		for (int j = 0; j < PC_Poke.GetLength(1); j++)
-			//		{
-			//			//All default values must be `NONE`
-			//			PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
-			//		}
-			//		//ToDo: Using string from translator here
-			//		PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
-			//		//ToDo: Make sure there's enough texture in library for array size
-			//		//PC_boxTexture[i] = i; 
-			//	}
-			//	PC_Items = new List<Item>();
-			//	Bag_Items = new List<Items>();
-			//}
+			if(LoadInitFile())
+			{		
+				PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
+				PC_boxNames = new string[Core.STORAGEBOXES];
+				PC_boxTexture = new int[Core.STORAGEBOXES];
+				for (int i = 0; i < Core.STORAGEBOXES; i++)
+				{
+					//Initialize the PC storage so pokemons arent null (in value)
+					for (int j = 0; j < PC_Poke.GetLength(1); j++)
+					{
+						//All default values must be `NONE`
+						PC_Poke[i, j] = new Pokemon(Pokemons.NONE);//pokemons[i, j];
+					}
+					//ToDo: Using string from translator here
+					PC_boxNames[i] = string.Format("Box {0}", (i + 1).ToString());
+					//ToDo: Make sure there's enough texture in library for array size
+					//PC_boxTexture[i] = i; 
+				}
+				PC_Items = new List<Item>();
+				Bag_Items = new List<Items>();
+			}
 		}
 		private static bool LoadInitFile()
 		{
