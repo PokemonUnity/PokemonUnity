@@ -105,14 +105,27 @@ namespace PokemonUnity
 		{
 			//ToDo: Move to public Constructor
 			#region Public Constructor
+			//	Game boots up
+			//		* Game engine calls public constructor to begin process
+			//	Check files/database 
+			//		* Issue update patch if files are outdated
+			//		* Redownload if files are corrupt or broken
+			//	Load data one by one, ensure validity
+			//		* maybe even a loading bar
+			//		* give warning to player if problems
+			//	Scan for save files and previous game progress
 			con.Open();
 			InitNatures();
 			InitPokemons();
 			InitPokemonMoves();
+			InitPlayerCharacter();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");
-			if(LoadInitFile())
-			{		
+		}
+		private static bool InitPlayerCharacter()
+		{
+			try
+			{
 				PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
 				PC_boxNames = new string[Core.STORAGEBOXES];
 				PC_boxTexture = new int[Core.STORAGEBOXES];
@@ -132,6 +145,12 @@ namespace PokemonUnity
 				PC_Items = new List<Item>();
 				Bag_Items = new List<Items>();
 			}
+			catch (Exception)
+			{
+				//throw;
+				return false;
+			}
+			return true;
 		}
 		private static bool LoadInitFile()
 		{
