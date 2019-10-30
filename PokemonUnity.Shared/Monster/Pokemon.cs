@@ -743,6 +743,7 @@ namespace PokemonUnity.Monster
 			if (LearnRandomAttack)
 				//this.LearnAttack(this.Level);
 				LearnMove(TempLevel);
+			ChangeHappiness(HappinessMethods.LEVELUP);
 		}
 
 		public bool isEgg
@@ -1611,10 +1612,11 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Each region/ribbon sprite should have it's own Ribbon.EnumId
         /// </summary>
-        /// <example>Pokemon acquired beauty ribbon in region1 AND 2?</example>
+        /// <example>Pokemon acquired beauty ribbon in region 1 AND 2?</example>
         /// I didnt know ribbons could be upgraded...
         /// Make each ribbon into sets, where next number up is upgrade? (or multiply?)
         /// Does it make a difference if pokemon won contest in different regions?
+		/// ToDo: Dictionary(Ribbon,struct[DateTime,Region/Location])
         public List<Ribbon> Ribbons { get { return this.ribbons; } }
         /// <summary>
         /// Contest stats; Max value is 255
@@ -2207,7 +2209,7 @@ namespace PokemonUnity.Monster
 			{
 				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
 				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
-				if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; } 
+				if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; ChangeHappiness(HappinessMethods.FAINT); } 
             }
         }
 
@@ -2345,7 +2347,8 @@ namespace PokemonUnity.Monster
 		/// Adds Effort values (EV) to this Pokémon after defeated another Pokémon, if possible.
 		/// </summary>
 		/// <param name="DefeatedPokemon">The defeated Pokémon.</param>
-		public void GainEffort(Pokemons DefeatedPokemon)
+		/// <param name="SoS">Gen7 SoS Battle, where wild pokemon calls for reinforcements. Only `true` for the additional pokemon.</param>
+		public void GainEffort(Pokemons DefeatedPokemon, bool SoS = false)
 		{
 			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
 			if (allEV >= EVLIMIT || isShadow) //Shadow Pkmns dont earn EV from battles?...
@@ -2363,12 +2366,14 @@ namespace PokemonUnity.Monster
 			int gainEVSpeed = Game.PokemonData[DefeatedPokemon].evYieldSPE;
 
 			int EVfactor = PokerusStage.HasValue && PokerusStage.Value ? 2 : 1; //if pokerus, ev values are doubled
+			if(SoS) //If the SoS-Ally Pokemon is defeated, double EV gain
+				EVfactor *= 2;
 
 			//var itemNumber = 0;
 			//if (Item != Items.NONE)
 			//	itemNumber = (int)Item;
 
-			switch (Item) //ToDo: Redo with Item.Enum, and correct id values below
+			switch (Item)
 			{
 				case Items.MACHO_BRACE:
 					{
@@ -2473,6 +2478,221 @@ namespace PokemonUnity.Monster
 				gainEVSpeed *= EVfactor;
 				gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
 				gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
+				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
+				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
+				totalEVgain += gainEVSpeed;
+			}
+		}
+
+		/// <summary>
+		/// Adds Effort values (EV) to this Pokémon after using an Item, if possible.
+		/// </summary>
+		/// <param name="UsedItem">The item used on Pokémon.</param>
+		/// ToDo: Test Function... Add Method for other Item usage
+		private void GainEffort(Items UsedItem)
+		{
+			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
+			if (allEV >= EVLIMIT) 
+				return;
+
+			int maxEVgain = EVLIMIT - allEV;
+			int totalEVgain = 0;
+
+			// EV gains
+			int gainEVHP		= 0; //Game.PokemonData[UsedItem].evYieldHP;
+			int gainEVAttack	= 0; //Game.PokemonData[UsedItem].evYieldATK;
+			int gainEVDefense	= 0; //Game.PokemonData[UsedItem].evYieldDEF;
+			int gainEVSpAttack	= 0; //Game.PokemonData[UsedItem].evYieldSPA;
+			int gainEVSpDefense	= 0; //Game.PokemonData[UsedItem].evYieldSPD;
+			int gainEVSpeed		= 0; //Game.PokemonData[UsedItem].evYieldSPE;
+
+			int EVfactor = 1; 
+			
+			switch (UsedItem) 
+			{
+				case Items.HP_UP:
+					{
+						if (EV[(int)Stats.HP] < 100) gainEVHP += 10;
+						ChangeHappiness(HappinessMethods.VITAMIN);
+						break;
+					}
+				case Items.PROTEIN:
+					{
+						if (EV[(int)Stats.ATTACK] < 100) gainEVAttack += 10;
+						ChangeHappiness(HappinessMethods.VITAMIN);
+						break;
+					}
+				case Items.IRON:
+					{
+						if (EV[(int)Stats.DEFENSE] < 100) gainEVDefense += 10;
+						ChangeHappiness(HappinessMethods.VITAMIN);
+						break;
+					}
+				case Items.CALCIUM:
+					{
+						if (EV[(int)Stats.SPATK] < 100) gainEVSpAttack += 10;
+						ChangeHappiness(HappinessMethods.VITAMIN);
+						break;
+					}
+				case Items.ZINC:
+					{
+						if (EV[(int)Stats.SPDEF] < 100) gainEVSpDefense += 10;
+						ChangeHappiness(HappinessMethods.VITAMIN);
+						break;
+					}
+				case Items.CARBOS:
+					{
+						if (EV[(int)Stats.SPEED] < 100) gainEVSpeed += 10;
+						ChangeHappiness(HappinessMethods.VITAMIN);
+						break;
+					}
+				case Items.POMEG_BERRY:
+					{
+						gainEVHP -= 10;
+						ChangeHappiness(HappinessMethods.EVBERRY);
+						break;
+					}
+				case Items.KELPSY_BERRY:
+					{
+						gainEVAttack -= 10;
+						ChangeHappiness(HappinessMethods.EVBERRY);
+						break;
+					}
+				case Items.QUALOT_BERRY:
+					{
+						gainEVDefense -= 10;
+						ChangeHappiness(HappinessMethods.EVBERRY);
+						break;
+					}
+				case Items.HONDEW_BERRY:
+					{
+						gainEVSpAttack -= 10;
+						ChangeHappiness(HappinessMethods.EVBERRY);
+						break;
+					}
+				case Items.GREPA_BERRY:
+					{
+						gainEVSpDefense -= 10;
+						ChangeHappiness(HappinessMethods.EVBERRY);
+						break;
+					}
+				case Items.TAMATO_BERRY:
+					{
+						gainEVSpeed -= 10;
+						ChangeHappiness(HappinessMethods.EVBERRY);
+						break;
+					}
+				case Items.HEALTH_WING:
+					{
+						gainEVHP += 1; 
+						break;
+					}
+				case Items.MUSCLE_WING:
+					{
+						gainEVAttack += 1;
+						break;
+					}
+				case Items.RESIST_WING:
+					{
+						gainEVDefense += 1;
+						break;
+					}
+				case Items.GENIUS_WING:
+					{
+						gainEVSpAttack += 1;
+						break;
+					}
+				case Items.CLEVER_WING:
+					{
+						gainEVSpDefense += 1;
+						break;
+					}
+				case Items.SWIFT_WING:
+					{
+						gainEVSpeed += 1;
+						break;
+					}
+			}
+
+			// HP gain
+			if ((gainEVHP > 0 && EV[(int)Stats.HP] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVHP *= EVfactor;
+				gainEVHP = gainEVHP < 0 ? (0 > gainEVHP + EV[(int)Stats.HP] ? 0 - EV[(int)Stats.HP] : gainEVHP)
+					: (gainEVHP > EVSTATLIMIT - EV[(int)Stats.HP] ? EVSTATLIMIT - EV[(int)Stats.HP] : gainEVHP);
+				gainEVHP = gainEVHP < 0 ? (0 > gainEVHP + totalEVgain ? 0 - totalEVgain : gainEVHP)
+					: (gainEVHP > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVHP);
+				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, EVSTATLIMIT - EV[(int)Stats.HP]);
+				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.HP] += (byte)gainEVHP;
+				totalEVgain += gainEVHP;
+			}
+
+			// Attack gain
+			if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVAttack *= EVfactor;
+				gainEVAttack = gainEVAttack < 0 ? (0 > gainEVAttack + EV[(int)Stats.ATTACK] ? 0 - EV[(int)Stats.ATTACK] : gainEVAttack)
+					: (gainEVAttack > EVSTATLIMIT - EV[(int)Stats.ATTACK] ? EVSTATLIMIT - EV[(int)Stats.ATTACK] : gainEVAttack);
+				gainEVAttack = gainEVAttack < 0 ? (0 > gainEVAttack + totalEVgain ? 0 - totalEVgain : gainEVAttack)
+					: (gainEVAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVAttack);
+				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, EVSTATLIMIT - EV[(int)Stats.ATTACK]);
+				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
+				totalEVgain += gainEVAttack;
+			}
+
+			// Defense gain
+			if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVDefense *= EVfactor;
+				gainEVDefense = gainEVDefense < 0 ? (0 > gainEVDefense + EV[(int)Stats.DEFENSE] ? 0 - EV[(int)Stats.DEFENSE] : gainEVDefense)
+					: (gainEVDefense > EVSTATLIMIT - EV[(int)Stats.DEFENSE] ? EVSTATLIMIT - EV[(int)Stats.DEFENSE] : gainEVDefense);
+				gainEVDefense = gainEVDefense < 0 ? (0 > gainEVDefense + totalEVgain ? 0 - totalEVgain : gainEVDefense)
+					: (gainEVDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVDefense);
+				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, EVSTATLIMIT - EV[(int)Stats.DEFENSE]);
+				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
+				totalEVgain += gainEVDefense;
+			}
+
+			// SpAttack gain
+			if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVSpAttack *= EVfactor;
+				gainEVSpAttack = gainEVSpAttack < 0 ? (0 > gainEVSpAttack + EV[(int)Stats.SPATK] ? 0 - EV[(int)Stats.SPATK] : gainEVSpAttack)
+					: (gainEVSpAttack > EVSTATLIMIT - EV[(int)Stats.SPATK] ? EVSTATLIMIT - EV[(int)Stats.SPATK] : gainEVSpAttack);
+				gainEVSpAttack = gainEVSpAttack < 0 ? (0 > gainEVSpAttack + totalEVgain ? 0 - totalEVgain : gainEVSpAttack)
+					: (gainEVSpAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpAttack);
+				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, EVSTATLIMIT - EV[(int)Stats.SPATK]);
+				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
+				totalEVgain += gainEVSpAttack;
+			}
+
+			// SpDefense gain
+			if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVSpDefense *= EVfactor;
+				gainEVSpDefense = gainEVSpDefense < 0 ? (0 > gainEVSpDefense + EV[(int)Stats.SPDEF] ? 0 - EV[(int)Stats.SPDEF] : gainEVSpDefense)
+					: (gainEVSpDefense > EVSTATLIMIT - EV[(int)Stats.SPDEF] ? EVSTATLIMIT - EV[(int)Stats.SPDEF] : gainEVSpDefense);
+				gainEVSpDefense = gainEVSpDefense < 0 ? (0 > gainEVSpDefense + totalEVgain ? 0 - totalEVgain : gainEVSpDefense)
+					: (gainEVSpDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpDefense);
+				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, EVSTATLIMIT - EV[(int)Stats.SPDEF]);
+				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, maxEVgain - totalEVgain);
+				EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
+				totalEVgain += gainEVSpDefense;
+			}
+
+			// Speed gain
+			if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+			{
+				gainEVSpeed *= EVfactor;
+				gainEVSpeed = gainEVSpeed < 0 ? (0 > gainEVSpeed + EV[(int)Stats.SPEED] ? 0 - EV[(int)Stats.SPEED] : gainEVSpeed)
+					: (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
+				gainEVSpeed = gainEVSpeed < 0 ? (0 > gainEVSpeed + totalEVgain ? 0 - totalEVgain : gainEVSpeed)
+					: (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
 				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
 				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
 				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
