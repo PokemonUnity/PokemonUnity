@@ -2125,6 +2125,10 @@ namespace PokemonUnity.Monster
         /// </summary>
         private string name { get; set; }
         /// <summary>
+        /// Nickname
+        /// </summary>
+        public bool IsNicknamed { get { return !string.IsNullOrEmpty(name); } }
+        /// <summary>
         /// Nickname; 
         /// Returns Pokemon species name if not nicknamed.
         /// </summary>
@@ -2166,27 +2170,19 @@ namespace PokemonUnity.Monster
         /// Why not just change from `INT` to `(enum)Pokemons`?
         public int Form { get; set; }//{ get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
 
-        /*// <summary>
+		/*// <summary>
         /// Returns the species name of this Pokemon
         /// </summary>
         public string SpeciesName { get { return this._base.Species; } }*/
 
-        /// <summary>
-        /// Returns the markings this Pokemon has
-        /// </summary>
-        /// <returns>6 Markings</returns>
-        /*public bool[] Markings()
-        {
-            return markings;
-        }
-        public bool[] Markings { get { return this.markings; } }
-        /// <summary>
-        /// Markings
-        /// </summary>*/
-        public bool[] Markings { get; set; }
+		/// <summary>
+		/// Returns the markings this Pokemon has checked
+		/// </summary>
+		/// <returns>●, ▲, ■, ♥︎, ★, and ♦︎.</returns>
+		public bool[] Markings { get; set; }
 
         /// <summary>
-        /// Returns a string stathing the Unown form of this Pokemon
+        /// Returns a string stating the Unown form of this Pokemon
         /// </summary>
         /// <returns></returns>
         public char UnknownShape()
@@ -2224,28 +2220,33 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Heals all HP of this Pokemon
         /// </summary>
-        public void HealHP()
+        public bool HealHP()
         {
-            if (this.isEgg) return;     //ToDo: Throw exception error on returns
-            this.HP = TotalHP;          //ToDo: Return 'true' on success?
+            if (this.isEgg)
+				return false;     
+            this.HP = TotalHP;
+			return true;
         }
 
         /// <summary>
         /// Heals the status problem of this Pokemon
         /// </summary>
-        public void HealStatus()
+        public bool HealStatus()
         {
-            if (this.isEgg) return;
+            if (this.isEgg)
+				return false;
             this.Status = 0; StatusCount = 0; //remove status ailments
+			return true;
         }
 
         /// <summary>
         /// Heals all PP of this Pokemon
         /// </summary>
         /// <param name="index"></param>
-        public void HealPP(int index = -1)
+        public bool HealPP(int index = -1)
         {
-            if (this.isEgg) return;
+            if (this.isEgg)
+				return false;
             if (index >= 0) moves[index] = moves[index]; // ToDo: pp = totalpp
             else
             {
@@ -2254,17 +2255,20 @@ namespace PokemonUnity.Monster
                     moves[index] = moves[index]; // ToDo: pp = totalpp
                 }
             }
+			return true;
         }
 
         /// <summary>
         /// Heals all HP, PP, and status problems of this Pokemon
         /// </summary>
-        public void Heal()
+        public bool Heal()
         {
-            if (this.isEgg) return;
+            if (this.isEgg)
+				return false;
             HealHP();
             HealStatus();
             HealPP();
+			return true;
         }
 
         /// <summary>
@@ -2318,13 +2322,21 @@ namespace PokemonUnity.Monster
                     if (Happiness < 200) gain = -15;
                     break;
                 default:
-                    break;
+					//break;
+					//If not listen above, then stop
+					//Otherwise rest of code will add points
+					return;
             }
             gain += luxury && this.ballUsed == Items.LUXURY_BALL ? 1 : 0;
             if (this.Item == Items.SOOTHE_BELL && gain > 0)
                 gain = (int)Math.Floor(gain * 1.5f);
             Happiness += gain;
-            Happiness = Happiness > 255 ? 255 : Happiness < 0 ? 0 : Happiness; //Max 255, Min 0
+            Happiness = //Max 255, Min 0
+				Happiness > 255 ?	//if 
+					255 
+				: Happiness < 0 ?	//if else
+					0 
+				: Happiness;		//else
         }
 		#endregion
 
@@ -2336,7 +2348,7 @@ namespace PokemonUnity.Monster
 		public void GainEffort(Pokemons DefeatedPokemon)
 		{
 			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
-			if (allEV >= EVLIMIT)
+			if (allEV >= EVLIMIT || isShadow) //Shadow Pkmns dont earn EV from battles?...
 				return;
 
 			int maxEVgain = EVLIMIT - allEV;
@@ -2350,45 +2362,45 @@ namespace PokemonUnity.Monster
 			int gainEVSpDefense = Game.PokemonData[DefeatedPokemon].evYieldSPD;
 			int gainEVSpeed = Game.PokemonData[DefeatedPokemon].evYieldSPE;
 
-			int EVfactor = 1;
+			int EVfactor = PokerusStage.HasValue && PokerusStage.Value ? 2 : 1; //if pokerus, ev values are doubled
 
-			var itemNumber = 0;
-			if (Item != Items.NONE)
-				itemNumber = (int)Item;
+			//var itemNumber = 0;
+			//if (Item != Items.NONE)
+			//	itemNumber = (int)Item;
 
-			switch (itemNumber) //ToDo: Redo with Item.Enum, and correct id values below
+			switch (Item) //ToDo: Redo with Item.Enum, and correct id values below
 			{
-				case 581:
+				case Items.MACHO_BRACE:
 					{
-						EVfactor *= 2;
+						EVfactor *= 2; //with pokerus, should be up to x4
 						break;
 					}
-				case 582:
+				case Items.POWER_WEIGHT:
 					{
-						gainEVHP += 8;
+						gainEVHP += 8; 
 						break;
 					}
-				case 583:
+				case Items.POWER_BRACER:
 					{
 						gainEVAttack += 8;
 						break;
 					}
-				case 584:
+				case Items.POWER_BELT:
 					{
 						gainEVDefense += 8;
 						break;
 					}
-				case 585:
+				case Items.POWER_LENS:
 					{
 						gainEVSpAttack += 8;
 						break;
 					}
-				case 586:
+				case Items.POWER_BAND:
 					{
 						gainEVSpDefense += 8;
 						break;
 					}
-				case 587:
+				case Items.POWER_ANKLET:
 					{
 						gainEVSpeed += 8;
 						break;
