@@ -119,7 +119,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="wildPkmn"></param>
 		/// <param name="isSwarm"></param>
-		public Trainer(Pokemon[] wildPkmn, bool isSwarm = false)
+		public Trainer(Pokemon[] wildPkmn, bool isSwarm = false) //: this (TrainerTypes.WildPokemon)
 		{
 			ID = TrainerTypes.WildPokemon;
 			wildPkmn.PackParty();

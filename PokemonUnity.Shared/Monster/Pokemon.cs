@@ -135,8 +135,6 @@ namespace PokemonUnity.Monster
         /// Pokemon moves auto reset when egg counter reaches 0.
 		/// Double as Friendship Meter after pokemon is hatched.
         /// </summary>
-        /// ToDo: Sequence of events to occur when egg is hatching (roll dice for ability, moves, and animate hatching)
-		/// ToDo: New variable for Friendship, Math.Abs(EggSteps)?
         public int EggSteps
         {
             get
@@ -166,7 +164,6 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Moves (PBMove)
         /// </summary>
-        /// ToDo Move class, not enum
         public Move[] moves { get; private set; }
         /// <summary>
         /// The moves known when this Pokemon was obtained
@@ -175,8 +172,6 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Ball used
         /// </summary>
-        /// ToDo: Interface for Pokeball Only item?
-        /// ToDo: None?
         public Items ballUsed { get; private set; }
         //public int[] EvolveLevels { get { return _base.Evolutions.} }
         //public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
@@ -189,8 +184,6 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Max EVs that a single stat can have
         /// </summary>
-        /// ToDo: use const instead?
-        /// Can be referenced as [Attribute] if is a const value
         public const int EVSTATLIMIT = 252;
         /// <summary>
         /// Maximum length a Pokemon's nickname can be
@@ -214,7 +207,7 @@ namespace PokemonUnity.Monster
             Ability = Abilities.NONE;
             Nature = (Natures)new System.Random(Core.Seed()).Next(1, Game.NatureData.Count); //Monster.Nature.GetRandomNature()
 			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
-			//shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
+			shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
             IV = new byte[] { (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1) };
@@ -405,7 +398,7 @@ namespace PokemonUnity.Monster
             //Check to see if nickName is filled
 			//ToDo: Check if whitespace or empty, then assign it to name, even if null...
             if (!string.IsNullOrEmpty(nickName))
-                name = nickName;
+                name = nickName.Trim();
             else
                 name = null;
 
@@ -729,9 +722,8 @@ namespace PokemonUnity.Monster
 		public void LevelUp(bool LearnRandomAttack)
 		{
 			this.TempLevel += 1;
-
 			int currentMaxHP = this.TotalHP;
-
+			bool success;
 			//this.CalculateStats();
 
 			// Heals the Pokémon by the HP difference.
@@ -742,7 +734,7 @@ namespace PokemonUnity.Monster
 
 			if (LearnRandomAttack)
 				//this.LearnAttack(this.Level);
-				LearnMove(TempLevel);
+				LearnMove(GetMove(TempLevel), out success);
 			ChangeHappiness(HappinessMethods.LEVELUP);
 		}
 
@@ -758,7 +750,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return _base.GrowthRate; //ToDo: Return as int?
+                return _base.GrowthRate; 
             }
         }
 
@@ -769,7 +761,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return _base.BaseExpYield; //ToDo: 
+                return _base.BaseExpYield; 
             }
         }
 
@@ -780,6 +772,7 @@ namespace PokemonUnity.Monster
             EggSteps = i < 0 ? 0 : i;
             //then if we want to continue beyond 0 and into negative values, we may continue...
             if (i < 0) EggSteps = i;
+			ChangeHappiness(HappinessMethods.WALKING);
         }
 
         public void HatchEgg()
@@ -894,19 +887,19 @@ namespace PokemonUnity.Monster
         #region Gender
         //private bool? gender;
         /// <summary>
-        /// Returns this Pokemons gender. male; female; genderless.
+        /// Returns this Pokemons gender.
         /// Sets this Pokemon's gender to a particular gender (if possible)
+		/// True is Male; False is Female; Null is Genderless.
         /// </summary>
         /// <remarks>
-        /// isMale; null = genderless?
         /// Should consider gender as byte? bool takes up same amount of space
         /// </remarks>
+        /// isMale; null = genderless?
         public virtual bool? Gender { get; private set; }
 
         /// <summary>
-        /// Helper function that determines whether the input values would make a female.
+        /// Helper function that determines whether the input values would make a female. 
         /// </summary>
-        /// ToDo: isMale; isFemale; isGenderless... properties?
         private bool? gender//isMale/isFemale/isGenderless//(float genderRate = this._base.MaleRatio)
         {
             get
@@ -987,8 +980,6 @@ namespace PokemonUnity.Monster
         /// Returns the ID of the Pokemons Ability.
         /// </summary>
         /// ToDo: Sets this Pokemon's ability to a particular ability (if possible)
-        /// ToDo: Ability 1 or 2, never both...
-        /// ToDo: Error on non-compatible ability?
         public Abilities Ability { get; set; }//{ get { return abilityFlag; } set { abilityFlag = value; } }//ToDo: Check against getAbilityList()?
 
         /// <summary>
@@ -1022,7 +1013,7 @@ namespace PokemonUnity.Monster
             //foreach(){ list.add() }
             //Abilities[] abilities = abilList.ToArray();
             //return abilities;
-            return this._base.Ability; //ToDo: List of abilities?
+            return this._base.Ability; 
         }
         #endregion
 
@@ -1070,7 +1061,7 @@ namespace PokemonUnity.Monster
 				//Don't bother to generate math for a null value; skip the process...
 				if (Species == Pokemons.NONE) return false;
 				//return shinyFlag ?? isShiny();
-				if (shinyFlag != null && shinyFlag.HasValue) return shinyFlag.Value;
+				if (shinyFlag.HasValue) return shinyFlag.Value;
 				if (Core.SHINY_WILD_POKEMON_SWITCH) return true;
 				// Use this when rolling for shiny...
 				// Honestly, without this math, i probably would've done something a lot more primative.
@@ -1101,12 +1092,8 @@ namespace PokemonUnity.Monster
         #region Pokerus
         /// <summary>
         /// Pokerus strain and infection time
-        /// </summary>
-        /// { 0, 0 };
-        /// <example>
-        /// </example>
+        /// </summary
         /// <remarks>
-        /// ToDo: Custom class?
         /// 3 Values; Not Infected, Cured, Infected.
         /// [0] = Pokerus Strain; [1] = Days until cured.
         /// if ([0] && [1] == 0) => Not Infected
@@ -1131,10 +1118,6 @@ namespace PokemonUnity.Monster
         /// Returns the Pokerus infection stage for this Pokemon
         /// </summary>
         /// <returns></returns>
-        /*public int PokerusStrain()
-        {
-            return this.pokerus[0] / 16;
-        }*/
         public int PokerusStrain { get { return this.pokerus[0] / 16; } }
 
         /// <summary>
@@ -1278,7 +1261,7 @@ namespace PokemonUnity.Monster
         /// </summary>
         /// <param name="level"></param>
         /// <param name="egg">if moves being generated should contain egg only items</param>
-        /// ToDo: Higher the pokemon's level, the greater the chances of generating a full moveset (4 moves)
+        /// Idea: Higher the pokemon's level, the greater the chances of generating a full moveset (4 moves)
         public void GenerateMoveset(int? level = null, bool egg = false)
         {
             if (level.HasValue && level.Value < 0)
@@ -1415,12 +1398,13 @@ namespace PokemonUnity.Monster
         }
 
         /// <summary>
-        /// Silently learns the given move. Will erase the first known move if it has to.
+		/// Teaches new move to pokemon. Will fail if pokemon is unable to learn.
         /// </summary>
         /// <param name="move"></param>
-        /// <param name="silently"></param>
+        /// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
         /// <returns></returns>
-		/// ToDo: Move "bool silent = false" to engine platform (requires UI) 
+        /// Silently learns the given move. Will erase the first known move if it has to.
+		/// ToDo: Change void to string, return errors as in-game prompts; remove `out bool success`
         public void LearnMove(Moves move, out bool success, bool silently = false)
         {
 			success = false;
@@ -1472,14 +1456,14 @@ namespace PokemonUnity.Monster
         }
 
 		/// <summary>
-		/// Replaces a random move of the Pokémon by one that it learns on a given level.
+		/// Gets a random move of the Pokémon by one that it learns on a given level.
 		/// </summary>
 		/// <param name="level">The level the Pokémon learns the desired move on.</param>
-		public void LearnMove(int level)
+		public Moves GetMove(int level, bool egg = false)
 		{
 			bool moveLearned = false;
 			List<Moves> movelist = new List<Moves>();
-			if (isEgg || Game.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+			if (isEgg || egg) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
 			int?[] rejected = new int?[movelist.Count];
 			//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
 			movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value == level).Select(x => x.Key));
@@ -1500,13 +1484,15 @@ namespace PokemonUnity.Monster
 					{
 						//this.moves[j] = new Move(movelist[n]);
 						//j += 1;
-						LearnMove((Moves)movelist[x], out moveLearned);
 						//j += this.countMoves() < numMove ? 0 : 1;
+						//LearnMove((Moves)movelist[x], out moveLearned);
+						return (Moves)movelist[x];
 					}
 				}
 				else
 					break;
 			}
+			return Moves.NONE;
 		}
 
         /// <summary>
@@ -1591,20 +1577,6 @@ namespace PokemonUnity.Monster
         {
             firstMoves.Clear(); //= new Move.MoveData.Move[4];
         }
-
-        /*bool isCompatibleWithMove(Move.MoveData.Move move) {
-            return SpeciesCompatible(this.species, move);
-        }*/
-
-        /*// <summary>
-        /// Reduce the global clutter, and add to more readable 
-        /// and maintainable code by encapsulation to logically 
-        /// group classes that are only used in one place.
-        /// </summary>
-        internal class Moves
-        {
-
-        }*/
         #endregion
 
         #region Contest attributes, ribbons
@@ -1621,7 +1593,6 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Contest stats; Max value is 255
         /// </summary>
-		/// ToDo: Should make into an Array, and use Enum to get value?
 		public byte[] Contest { get; private set; }
         //public int Cool, Beauty, Cute, Smart, Tough, Sheen;
         /// <summary>
@@ -1644,16 +1615,6 @@ namespace PokemonUnity.Monster
             if (!Ribbons.Contains(ribbon)) this.ribbons.Add(ribbon);
         }
         /// <summary>
-        /// Replaces one ribbon with the next one along, if possible.
-        /// </summary>
-        /// <param name="ribbon"></param>
-        /// ToDo: Not finished here...
-        public void upgradeRibbon(params Ribbon[] ribbon)//(Ribbon ribbon, Ribbon? upgradedRibbon = null)
-        {
-            //if(Ribbons.Count)
-            //for(int i = 0; i < ribbon.Length)
-        }
-        /// <summary>
         /// Removes the specified ribbon from this Pokémon.
         /// </summary>
         /// <param name="ribbon"></param>
@@ -1661,15 +1622,17 @@ namespace PokemonUnity.Monster
         {
             if (ribbons.Count == 0) return;
             if (ribbon <= 0) return;
-            for (int i = 0; i < ribbons.Count; i++)
-            {
-                if (Ribbons[i] == ribbon)
-                {
-                    ribbons[i] = Ribbon.NONE;
-                    break;
-                }
-            }
-            ribbons.Remove(Ribbon.NONE); //ToDo: List.RemoveAll(Ribbon == NONE)
+            //for (int i = 0; i < ribbons.Count; i++)
+            //{
+            //    if (Ribbons[i] == ribbon)
+            //    {
+            //        ribbons[i] = Ribbon.NONE;
+            //        break;
+            //    }
+            //}
+			////ribbons.Remove(Ribbon.NONE); 
+			//ribbons.RemoveAll(r => r == Ribbon.NONE);
+			ribbons.RemoveAll(r => r == ribbon);
         }
         /// <summary>
         /// Removes all ribbons from this Pokémon.
@@ -2189,19 +2152,15 @@ namespace PokemonUnity.Monster
         /// <returns></returns>
         public char UnknownShape()
         {
-            return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[Form]; //ToDo: FormId; "if pokemon is an Unknown"
+			if (this.pokemons == Pokemons.UNOWN)
+				return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[Form];
+			else return '*';
         }
 
         /// <summary>
         /// Sets this Pokemon's HP;
         /// Changes status on fainted
         /// </summary>
-        /*// <param name="value"></param>
-        public void HP(int value)
-        {
-            hp = value < 0 ? 0 : value;
-            if (hp == 0) status = 0; // statusCount = 0; //ToDo: Fainted
-        }*/
         public int HP
         {
             get { return this.hp; } //ToDo: If greater than totalHP throw error?
@@ -2249,12 +2208,14 @@ namespace PokemonUnity.Monster
         {
             if (this.isEgg)
 				return false;
-            if (index >= 0) moves[index] = moves[index]; // ToDo: pp = totalpp
+            //if (index >= 0) moves[index] = new Move(moves[index].MoveId, moves[index].PPups, moves[index].TotalPP);
+            if (index >= 0) moves[index].PP = moves[index].TotalPP;
             else
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    moves[index] = moves[index]; // ToDo: pp = totalpp
+					//moves[i] = new Move(moves[i].MoveId, moves[i].PPups, moves[i].TotalPP);
+                    moves[i].PP = moves[i].TotalPP;
                 }
             }
 			return true;
@@ -2267,10 +2228,10 @@ namespace PokemonUnity.Monster
         {
             if (this.isEgg)
 				return false;
-            HealHP();
-            HealStatus();
-            HealPP();
-			return true;
+			return 
+				HealHP() &&
+				HealStatus() &&
+				HealPP();
         }
 
         /// <summary>
@@ -2285,6 +2246,7 @@ namespace PokemonUnity.Monster
                 case HappinessMethods.WALKING:
                     gain = 1;
                     gain += Happiness < 200 ? 1 : 0;
+					//ToDo: if trainer is on map pkmn was captured on, add more happiness on walk
                     //gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
                     break;
                 case HappinessMethods.LEVELUP:

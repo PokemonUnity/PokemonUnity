@@ -21,18 +21,28 @@ namespace PokemonUnity.Attack
 	{
 		#region Properties
 		protected MoveData _base { get; private set; }
+		private byte pp { get; set; }
 		/// <summary>
 		/// The amount of PP remaining for this move
 		/// </summary>
-		public byte PP { get; private set; }
+		/// Could possibly replace SET as a new constructor
+		public byte PP
+		{
+			get { return this.pp; } //ToDo: If greater than totalPP throw error?
+			set
+			{
+				this.pp = value < 0 ? (byte)0 : (value > this.TotalPP ? TotalPP : value);
+				//this.pp = (this.PP + value).Clamp(0, this.TotalPP);
+			}
+		}
 		/// <summary>
 		/// Gets the maximum PP for this move.
 		/// </summary>
-		public int TotalPP
+		public byte TotalPP
 		{
 			get
 			{
-				return _base.PP + (int)Math.Floor(_base.PP * PPups / 5d);
+				return (byte)(_base.PP + (int)Math.Floor(_base.PP * PPups / 5d));
 			}
 		}
 		/// <summary>
@@ -64,11 +74,12 @@ namespace PokemonUnity.Attack
 		/// <summary>
 		/// Initializes this object to the specified move ID, PP and added PPup
 		/// </summary>
-		public Move(Moves move, byte pp, int ppUp)
+		/// Either this or {public get, public set}
+		public Move(Moves move, int ppUp, byte pp)
 		{
 			_base = new MoveData().getMove(move);
-			PP = pp;
 			PPups = ppUp;
+			PP = pp;
 		}
 
 		#region Enumerator
@@ -204,9 +215,9 @@ namespace PokemonUnity.Attack
 			/// <summary>
 			/// Confuses the target. Chance of causing confusion depends on the cry's volume.
 			/// Confusion chance is 0% if user doesn't have a recorded cry. (Chatter)
+			/// </summary>
 			/// TODO: Play the actual chatter cry as part of the move animation
 			///       @battle.scene.pbChatter(attacker,opponent) // Just plays cry
-			/// </summary>
 			x014 = 0x014,
 
 			/// <summary>
@@ -1384,8 +1395,8 @@ namespace PokemonUnity.Attack
 			/// <summary>
 			/// After inflicting damage, user switches out. Ignores trapping moves.
 			/// (U-turn, Volt Switch)
-			/// TODO: Pursuit should interrupt this move.
 			/// </summary>
+			/// TODO: Pursuit should interrupt this move.
 			x0EE = 0x0EE,
 
 			/// <summary>

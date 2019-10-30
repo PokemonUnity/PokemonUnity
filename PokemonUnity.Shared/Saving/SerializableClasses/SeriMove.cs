@@ -22,7 +22,7 @@
 
         public static implicit operator Move(SeriMove move)
         {
-            Move normalMove = new Move((Moves)move.Move, move.PP, move.PPups);
+            Move normalMove = new Move((Moves)move.Move, move.PPups, move.PP);
             return normalMove;
         }
     }
