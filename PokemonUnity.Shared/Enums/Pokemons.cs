@@ -398,7 +398,7 @@ namespace PokemonUnity.Monster
 		/// <example>Hitmontop</example>
 		AtkDefEqual,
 		///	<summary>if pokemon's shinyValue divided by 2's remainder is equal to 0 or 1</summary>
-		///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level-parameter? 
+		///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level or Happiness-parameter? 
 		Shiny,
 		/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
 		/// Shiny value? I thought it was based on "Friendship"
