@@ -885,7 +885,84 @@ namespace PokemonUnity.Monster
             }
             return false;
         }
-        #endregion
+		/// <summary>
+		/// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
+		/// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
+		/// </summary>
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, int level)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Level:
+                case EvolutionMethod.LevelMale:
+                case EvolutionMethod.LevelFemale:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((int)item.EvolveValue < level && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Items itemUsed)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Item:
+                case EvolutionMethod.ItemMale:
+                case EvolutionMethod.ItemFemale:
+                case EvolutionMethod.TradeItem:
+                case EvolutionMethod.HoldItem:
+                case EvolutionMethod.HoldItemDay:
+                case EvolutionMethod.HoldItemNight:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Items)item.EvolveValue == itemUsed && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Pokemons pkmn)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Party:
+                case EvolutionMethod.TradeSpecies:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Pokemons)item.EvolveValue == pkmn && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		#endregion
 
         #region Gender
         //private bool? gender;
