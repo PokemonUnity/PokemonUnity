@@ -790,7 +790,6 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Evolution
-        /* ToDo: Fix this block
 		/// <summary>
         /// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
         /// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
@@ -798,16 +797,16 @@ namespace PokemonUnity.Monster
         /// <returns>null means no evolves for pokemon, int[].Count == 0 means evolutions are not specific to leveling</returns>
         public int[] GetEvolutionLevels()
         {
-            if (_base.Evolutions.Length > 0)
+            if (Game.PokemonEvolutionsData[pokemons].Length > 0)
             {
                 List<int> levels = new List<int>();
-                foreach (IPokemonEvolution evolution in _base.Evolutions)
+                foreach (PokemonEvolution evolution in Game.PokemonEvolutionsData[pokemons])
                 {
                     if (evolution.EvolveMethod == EvolutionMethod.Level ||
                         evolution.EvolveMethod == EvolutionMethod.LevelMale ||
                         evolution.EvolveMethod == EvolutionMethod.LevelFemale)
                     {
-                        levels.Add((evolution as Data.PokemonEvolution<int>).EvolveValue);
+                        levels.Add((int)evolution.EvolveValue);
                     }
                 }
                 if (levels.Count == 0)// && _base.Evolutions.Length > 0
@@ -823,7 +822,7 @@ namespace PokemonUnity.Monster
         /// </summary>
         public bool CanEvolveDuringBattle()
         {
-            foreach (IPokemonEvolution item in _base.Evolutions)
+            foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
             {
                 switch (item.EvolveMethod)
                 {
@@ -870,7 +869,7 @@ namespace PokemonUnity.Monster
         public EvolutionMethod[] GetEvolutionMethods()
         {
             List<EvolutionMethod> methods = new List<EvolutionMethod>();
-            foreach (IPokemonEvolution item in _base.Evolutions)
+            foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
             {
                 if (!methods.Contains(item.EvolveMethod))
                     methods.Add(item.EvolveMethod);
@@ -879,13 +878,13 @@ namespace PokemonUnity.Monster
         }
         public bool hasEvolveMethod(EvolutionMethod method)
         {
-            foreach (IPokemonEvolution item in _base.Evolutions)
+            foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
             {
                 if (item.EvolveMethod == method)
                     return true;
             }
             return false;
-        }*/
+        }
         #endregion
 
         #region Gender
