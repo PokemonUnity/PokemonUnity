@@ -350,14 +350,14 @@ namespace PokemonUnity
 				SQLiteCommand stmt = con.CreateCommand();
 
 				#region DataReader
-				stmt.CommandText = "select * from pokemon_evolution_view";
-				//	@"select pokemon_species.id, pokemon_species.identifier, pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species."order",
-				//pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
-				//from pokemon_evolution
-				//left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_species.id
-				//--group by pokemon_species.evolution_chain_id
-				//order by pokemon_species.evolution_chain_id; 
-				//--pokemon_species.evolves_from_species_id, pokemon_species.""order"";";
+				stmt.CommandText = //"select * from pokemon_evolution_view";
+					@"select pokemon_species.id, pokemon_species.identifier, pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.""order"",
+				pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
+				from pokemon_evolution
+				left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_species.id
+				--group by pokemon_species.evolution_chain_id
+				order by pokemon_species.evolution_chain_id; 
+				--pokemon_species.evolves_from_species_id, pokemon_species.""order"";";
 				SQLiteDataReader reader = stmt.ExecuteReader();
 
 				//Step 4: Read the results
@@ -635,11 +635,12 @@ namespace PokemonUnity
 				//Step 4: Read the results
 				using(reader)
 				{
+					//NatureData.Add(Natures.UNSET, new Nature());
 					while(reader.Read()) //if(reader.Read())
 					{
-						NatureData.Add((Natures)int.Parse((string)reader["id"].ToString()),
+						NatureData.Add((Natures)(int.Parse((string)reader["id"].ToString())-1),
 							new Nature(
-								nature: (Natures)int.Parse((string)reader["id"].ToString())
+								nature: (Natures)(int.Parse((string)reader["id"].ToString())-1)
 								,increase: (Stats)(int.Parse((string)reader["increased_stat_id"].ToString())-1)
 								,decrease: (Stats)(int.Parse((string)reader["decreased_stat_id"].ToString())-1)
 								,like: (Flavours)int.Parse((string)reader["likes_flavor_id"].ToString())
