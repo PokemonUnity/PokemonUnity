@@ -1495,8 +1495,8 @@ select pokemon_species.id, pokemon_species.identifier, pokemon_species.generatio
 pokemon_evolution.evolved_species_id, pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
 from pokemon_evolution
 left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_species.id
-group by pokemon_species.id --pokemon_species.evolution_chain_id
-order by pokemon_species.evolution_chain_id; --ToDo: Foreign/Index key "pokemon_species.evolves_from_species_id"
+--group by pokemon_species."order" --pokemon_species.id --pokemon_species.evolution_chain_id
+order by pokemon_species.evolution_chain_id, pokemon_species.id; --ToDo: Foreign/Index key "pokemon_species.evolves_from_species_id"
 --pokemon_species.evolves_from_species_id, --number order is bad, went 1, 10, 100, instead of 1,2,3
 pokemon_species."order"; 
 CREATE VIEW move_flag_map_view as 

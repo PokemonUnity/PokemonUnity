@@ -355,8 +355,8 @@ namespace PokemonUnity
 				pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
 				from pokemon_evolution
 				left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_species.id
-				--group by pokemon_species.evolution_chain_id
-				order by pokemon_species.evolution_chain_id; 
+				--group by pokemon_species.""order"" --pokemon_species.id --pokemon_species.evolution_chain_id
+				order by pokemon_species.evolution_chain_id, pokemon_species.id;
 				--pokemon_species.evolves_from_species_id, pokemon_species.""order"";";
 				SQLiteDataReader reader = stmt.ExecuteReader();
 
@@ -370,7 +370,7 @@ namespace PokemonUnity
 								new List<Monster.Data.EvolutionTrigger>());
 						p[(Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString())].Add(
 							new PokemonUnity.Monster.Data.EvolutionTrigger(
-								species: (Pokemons)int.Parse((string)reader["evolved_species_id"].ToString())
+								species: (Pokemons)int.Parse((string)reader["id"].ToString())
 								,evo: (Monster.Data.EvoTrigger)int.Parse((string)reader["evolution_trigger_id"].ToString())
 								,trigger: string.IsNullOrEmpty((string)reader["trigger_item_id"].ToString())		? Items.NONE : (Items)int.Parse((string)reader["trigger_item_id"].ToString())
 								,minLevel:string.IsNullOrEmpty((string)reader["minimum_level"].ToString())			? (int?)null : int.Parse((string)reader["minimum_level"].ToString())
