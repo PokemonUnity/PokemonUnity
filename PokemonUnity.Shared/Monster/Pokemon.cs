@@ -914,6 +914,7 @@ namespace PokemonUnity.Monster
                 case EvolutionMethod.Happiness:
                 case EvolutionMethod.HappinessDay:
                 case EvolutionMethod.HappinessNight:
+                case EvolutionMethod.Lycanroc:
 					List<Pokemons> methods = new List<Pokemons>();
 					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
 					{
@@ -994,6 +995,7 @@ namespace PokemonUnity.Monster
 			switch (method)
 			{
                 case EvolutionMethod.Type:
+                case EvolutionMethod.Affection:
 					List<Pokemons> methods = new List<Pokemons>();
 					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
 					{

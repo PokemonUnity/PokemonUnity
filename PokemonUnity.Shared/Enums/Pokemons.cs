@@ -430,6 +430,15 @@ namespace PokemonUnity.Monster
 		///	and time is Dusk (between hours of 5 pm to 5:59 pm in in-game time)
 		///	</summary>
 		Lycanroc,
+		/// <summary>
+		///	The Pokémon will evolve if it levels up while 
+		///	the Pokémon has a move of a certain type in their moveset 
+		///	(named by the parameter). <para></para>
+		/// <example>Type,string pokemonTypeName</example>
+		/// </summary>
+		/// <example>Sylveon</example>
+		/// if pokemon contains a fairy-type move
+		Affection,
         /// <summary>
         /// </summary>
         /// Just wanted to see a requirement for after "fainting" too many times, your pokemon just died, and became a ghost-type...  
