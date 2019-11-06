@@ -101,7 +101,7 @@ namespace PokemonUnity.Monster
 	#region Nature
 	public enum Natures
 	{
-		UNSET
+		//UNSET,
 		/*HARDY,
 		LONELY,
 		BRAVE,
@@ -127,7 +127,7 @@ namespace PokemonUnity.Monster
 		SASSY,
 		CAREFUL,
 		QUIRKY*/
-		,HARDY
+		HARDY
 		,BOLD
 		,MODEST
 		,CALM
@@ -157,12 +157,12 @@ namespace PokemonUnity.Monster
 	#region Pokemon
 	public enum Stats
 	{
-		ATTACK,
-		DEFENSE,
-		SPEED,
-		SPATK,
-		SPDEF,
-		HP
+		ATTACK	= 1
+		,DEFENSE= 2
+		,SPEED	= 3
+		,SPATK	= 4
+		,SPDEF	= 5
+		,HP		= 0
 	}
 	public enum LearnMethod
 	{

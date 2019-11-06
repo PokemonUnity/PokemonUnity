@@ -205,7 +205,7 @@ namespace PokemonUnity.Monster
             PersonalId |= Core.Rand.Next(256) << 16;
             PersonalId |= Core.Rand.Next(256) << 24;
             Ability = Abilities.NONE;
-            Nature = (Natures)new System.Random(Core.Seed()).Next(1, Game.NatureData.Count); //Monster.Nature.GetRandomNature()
+            Nature = (Natures)(Core.Rand.Next(Game.NatureData.Count));//Game.NatureData.Keys.ToArray()[Core.Rand.Next(Game.NatureData.Keys.Count) + 1];
 			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
 			shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
@@ -291,8 +291,8 @@ namespace PokemonUnity.Monster
             int? TPGENDER = null,
             int TPFORM = 0,
             bool TPSHINY = false,
-            Natures TPNATURE = Natures.UNSET,
-            byte[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
+            Natures TPNATURE = (Natures)0, //Natures.UNSET,
+			byte[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
             int TPHAPPINESS = 70,
             string TPNAME = null,
             bool TPSHADOW = false,
@@ -884,18 +884,18 @@ namespace PokemonUnity.Monster
         }*/
         #endregion
 
-        #region Gender
-        //private bool? gender;
-        /// <summary>
-        /// Returns this Pokemons gender.
-        /// Sets this Pokemon's gender to a particular gender (if possible)
+		#region Gender
+		//private bool? gender;
+		/// <summary>
+		/// Returns this Pokemons gender.
+		/// Sets this Pokemon's gender to a particular gender (if possible)
 		/// True is Male; False is Female; Null is Genderless.
-        /// </summary>
-        /// <remarks>
-        /// Should consider gender as byte? bool takes up same amount of space
-        /// </remarks>
-        /// isMale; null = genderless?
-        public virtual bool? Gender { get; private set; }
+		/// </summary>
+		/// <remarks>
+		/// Should consider gender as byte? bool takes up same amount of space
+		/// </remarks>
+		/// isMale; null = genderless?
+		public virtual bool? Gender { get; private set; }
 
         /// <summary>
         /// Helper function that determines whether the input values would make a female. 

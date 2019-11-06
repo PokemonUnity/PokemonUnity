@@ -8,20 +8,20 @@ namespace PokemonUnity.Battle
 {
 	public enum Stats
 	{
-		ATTACK,
-		DEFENSE,
-		SPEED,
-		SPATK,
-		SPDEF,
-		HP,
+		ATTACK	= 1
+		,DEFENSE= 2
+		,SPEED	= 3
+		,SPATK	= 4
+		,SPDEF	= 5
+		,HP		= 0
 		/// <summary>
 		/// battle only stat
 		/// </summary>
-		ACCURACY,
+		,ACCURACY	= 6
 		/// <summary>
 		/// battle only stat
 		/// </summary>
-		EVASION
+		,EVASION	= 7
 	}
 	#region Battle
 	public enum ChoiceAction

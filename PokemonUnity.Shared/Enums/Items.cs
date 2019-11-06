@@ -2096,11 +2096,11 @@ namespace PokemonUnity.Inventory
 	{
 		public enum Flavours
 		{
-			Spicy,
-			Dry,
-			Sweet,
-			Bitter,
-			Sour
+			Spicy	= 1
+			,Dry	= 2
+			,Sweet	= 3
+			,Bitter	= 4
+			,Sour	= 5
 		}
 
 		public enum FirmnessLevel
