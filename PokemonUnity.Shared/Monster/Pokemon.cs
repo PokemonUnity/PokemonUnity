@@ -908,6 +908,12 @@ namespace PokemonUnity.Monster
                 case EvolutionMethod.Level:
                 case EvolutionMethod.LevelMale:
                 case EvolutionMethod.LevelFemale:
+                case EvolutionMethod.Beauty:
+                case EvolutionMethod.Ninjask:
+                case EvolutionMethod.Hatred:
+                case EvolutionMethod.Happiness:
+                case EvolutionMethod.HappinessDay:
+                case EvolutionMethod.HappinessNight:
 					List<Pokemons> methods = new List<Pokemons>();
 					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
 					{
@@ -951,10 +957,47 @@ namespace PokemonUnity.Monster
 			{
                 case EvolutionMethod.Party:
                 case EvolutionMethod.TradeSpecies:
+                case EvolutionMethod.Shedinja:
 					List<Pokemons> methods = new List<Pokemons>();
 					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
 					{
 						if ((Pokemons)item.EvolveValue == pkmn && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Moves move)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Move:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Moves)item.EvolveValue == move && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Types type)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Type:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Types)item.EvolveValue == type && item.EvolveMethod == method)
 							methods.Add(item.Species);
 					}
 					return methods.ToArray();
