@@ -365,10 +365,11 @@ namespace PokemonUnity
 				{
 					while(reader.Read()) //if(reader.Read())
 					{
-						if (!p.ContainsKey((Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString())))
-							p.Add((Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString()),
-								new List<Monster.Data.EvolutionTrigger>());
-						p[(Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString())].Add(
+						Pokemons id = (Pokemons)int.Parse((string)reader["evolves_from_species_id"].ToString());
+						if (!p.ContainsKey(id))
+							p.Add(id, new List<Monster.Data.EvolutionTrigger>());
+						//if list.conains evolve id && evolve by level && (location id == null || gender id == null || )
+						p[id].Add(
 							new PokemonUnity.Monster.Data.EvolutionTrigger(
 								species: (Pokemons)int.Parse((string)reader["id"].ToString())
 								,evo: (Monster.Data.EvoTrigger)int.Parse((string)reader["evolution_trigger_id"].ToString())
