@@ -905,16 +905,16 @@ namespace PokemonUnity.Monster
 				return new Pokemons[] { };
 			switch (method)
 			{
-                case EvolutionMethod.Level:
-                case EvolutionMethod.LevelMale:
-                case EvolutionMethod.LevelFemale:
-                case EvolutionMethod.Beauty:
-                case EvolutionMethod.Ninjask:
-                case EvolutionMethod.Hatred:
-                case EvolutionMethod.Happiness:
-                case EvolutionMethod.HappinessDay:
-                case EvolutionMethod.HappinessNight:
-                case EvolutionMethod.Lycanroc:
+				case EvolutionMethod.Level:
+				case EvolutionMethod.LevelMale:
+				case EvolutionMethod.LevelFemale:
+				case EvolutionMethod.Ninjask:
+				case EvolutionMethod.Lycanroc:
+				case EvolutionMethod.Beauty:            //param int = beauty, not level
+				case EvolutionMethod.Hatred:			//param int = happiness, not level
+				case EvolutionMethod.Happiness:			//param int = happiness, not level
+				case EvolutionMethod.HappinessDay:		//param int = happiness, not level
+				case EvolutionMethod.HappinessNight:	//param int = happiness, not level
 					List<Pokemons> methods = new List<Pokemons>();
 					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
 					{

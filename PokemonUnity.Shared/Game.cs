@@ -106,9 +106,10 @@ namespace PokemonUnity
 			//ToDo: Move to public Constructor
 			#region Public Constructor
 			con.Open();
-			InitPokemonMoves();
-			InitPokemons();
 			InitNatures();
+			InitPokemons();
+			InitPokemonMoves();
+			InitPokemonEvolutions();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");
 			//if(LoadInitFile())

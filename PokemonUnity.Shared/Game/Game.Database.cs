@@ -400,17 +400,30 @@ namespace PokemonUnity
 				//PokemonEvolutionsData.Add(Pokemons.NONE, new Monster.Data.PokemonEvolution[] { });
 				foreach (var pkmn in p)
 				{
-					PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count];
+					//ToDo: Fix bad duplicates
+					//if (pkmn.Key == Pokemons.ROCKRUFF)
+					//{
+					//	PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count+1];
+					//	PokemonEvolutionsData[pkmn.Key][2] = new Monster.Data.PokemonEvolution(pkmn.Value[2].Species, EvolutionMethod.Lycanroc, pkmn.Value[2].MinLevel);
+					//}
+					//else if (pkmn.Key == Pokemons.MAGNETON || pkmn.Key == Pokemons.NOSEPASS)// || pkmn.Key == Pokemons.ESPURR
+					//	PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count-1];
+					//else if (pkmn.Key == Pokemons.EEVEE)
+					//	PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count-2];
+					//else
+						PokemonEvolutionsData[pkmn.Key] = new Monster.Data.PokemonEvolution[pkmn.Value.Count];
 					for(int i = 0; i < pkmn.Value.Count; i++)
 					{
+						//if (!pkmn.Value[i].Location.HasValue && (pkmn.Key == Pokemons.MAGNETON || pkmn.Key == Pokemons.NOSEPASS || pkmn.Value[i].Species == Pokemons.LEAFEON || pkmn.Value[i].Species == Pokemons.GLACEON))// || pkmn.Key == Pokemons.ESPURR
+						//	continue;
 						#region Happiness Evolution
-						if (pkmn.Value[i].Time.Value == 0 //"night" 
+						if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night" 
 							&& pkmn.Value[i].Happiness.HasValue)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessNight, pkmn.Value[i].Happiness.Value);
 							continue;
 						}
-						else if (pkmn.Value[i].Time.Value == 1 //"day" 
+						else if (pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day" 
 								&& pkmn.Value[i].Happiness.HasValue)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HappinessDay, pkmn.Value[i].Happiness.Value);
@@ -424,13 +437,13 @@ namespace PokemonUnity
 						#endregion
 
 						#region Item Evolution
-						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.Value == true //"1" 
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true //"1" 
 							&& pkmn.Value[i].Trigger != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemFemale, pkmn.Value[i].Trigger);
 							continue;
 						}
-						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.Value == false //"2" 
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.use_item && pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == false //"2" 
 							&& pkmn.Value[i].Trigger != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.ItemMale, pkmn.Value[i].Trigger);
@@ -470,13 +483,13 @@ namespace PokemonUnity
 						#endregion
 
 						#region Hold Item
-						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.Value == 1 //"day" 
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 1 //"day" 
 								&& pkmn.Value[i].Held != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemDay, pkmn.Value[i].Held);
 							continue;
 						}
-						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.Value == 0 //"night" 
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Time.HasValue && pkmn.Value[i].Time.Value == 0 //"night" 
 							&& pkmn.Value[i].Held != Items.NONE)
 						{
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.HoldItemNight, pkmn.Value[i].Held);
@@ -530,19 +543,19 @@ namespace PokemonUnity
 						#endregion
 
 						#region Attack > Defense > Equal =
-						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.Value == 1)           //Attack Greater Than Defense (Attack > Defense)    1
+						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.HasValue && pkmn.Value[i].PhysicalStat.Value == 1)           //Attack Greater Than Defense (Attack > Defense)    1
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.AttackGreater),";
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AttackGreater, pkmn.Value[i].PartyType);
 							continue;
 						}
-						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.Value == -1)    //Defense Greater Than Attack (Attack < Defense)    -1
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.HasValue && pkmn.Value[i].PhysicalStat.Value == -1)    //Defense Greater Than Attack (Attack < Defense)    -1
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.DefenseGreater),";
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.DefenseGreater, pkmn.Value[i].PartyType);
 							continue;
 						}
-						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.Value == 0)    //Attack Equal To Attack (Attack = Defense)         0
+						else if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].PhysicalStat.HasValue && pkmn.Value[i].PhysicalStat.Value == 0)    //Attack Equal To Attack (Attack = Defense)         0
 						{
 							//MethodCode = MethodCode + $"\n\tnew PokemonEvolution(Pokemons.{name.ToUpper()}, EvolutionMethod.AtkDefEqual),";
 							PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.AtkDefEqual, pkmn.Value[i].PartyType);
@@ -589,16 +602,22 @@ namespace PokemonUnity
 						#region Level
 						if (pkmn.Value[i].Evo == Monster.Data.EvoTrigger.level_up && pkmn.Value[i].Trigger == Items.NONE && pkmn.Value[i].MinLevel.HasValue && !pkmn.Value[i].Happiness.HasValue && !pkmn.Value[i].TurnUpsideDown)
 						{
-							if (pkmn.Value[i].Gender.Value == true) //"1" 
+							if (pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == true) //"1" 
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelFemale, {csv.Context.Record[4]}),";
 								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelFemale, pkmn.Value[i].MinLevel);
 								continue;
 							}
-							else if (pkmn.Value[i].Gender.Value == false) //"2"
+							else if (pkmn.Value[i].Gender.HasValue && pkmn.Value[i].Gender.Value == false) //"2"
 							{
 								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.LevelMale, {csv.Context.Record[4]}),";
 								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.LevelMale, pkmn.Value[i].MinLevel);
+								continue;
+							}
+							else if (pkmn.Value[i].Time.HasValue) //"Lycanroc"
+							{
+								//MethodCode = MethodCode + $"\n\tnew PokemonEvolution<int>(Pokemons.{name.ToUpper()}, EvolutionMethod.Lycanroc, {csv.Context.Record[4]}),";
+								PokemonEvolutionsData[pkmn.Key][i] = new Monster.Data.PokemonEvolution(pkmn.Value[i].Species, EvolutionMethod.Lycanroc, pkmn.Value[i].MinLevel);
 								continue;
 							}
 							else

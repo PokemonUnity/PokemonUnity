@@ -34,13 +34,13 @@ namespace PokemonUnity.Monster.Data
 		public bool OverworldRain { get; private set; }
 		public bool TurnUpsideDown { get; private set; }
 
-		public EvolutionTrigger(Pokemons species = Pokemons.NONE, EvoTrigger? evo = null, Items trigger = Items.NONE, int? minLevel = null, bool? gender = null, int? location = null, 
+		public EvolutionTrigger(Pokemons species = Pokemons.NONE, EvoTrigger evo = EvoTrigger.level_up, Items trigger = Items.NONE, int? minLevel = null, bool? gender = null, int? location = null, 
 			Items held = Items.NONE, int? time = null, Moves knownMove = Moves.NONE, Types knownType = Types.NONE, int? happiness = null, 
 			int? beauty = null, int? affection = null, int? physicalStat = null, Pokemons partySpecies = Pokemons.NONE, Types partyType = Types.NONE, 
 			Pokemons tradeSpecies = Pokemons.NONE, bool overworldRain = false, bool turnUpsideDown = true)
 		{
 			Species = species;
-			Evo = evo.Value;
+			Evo = evo;
 			Trigger = trigger;
 			MinLevel = minLevel;
 			Gender = gender;
