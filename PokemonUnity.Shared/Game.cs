@@ -118,6 +118,7 @@ namespace PokemonUnity
 			InitNatures();
 			InitPokemons();
 			InitPokemonMoves();
+			InitPokemonEvolutions();
 			InitPlayerCharacter();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");

@@ -398,7 +398,7 @@ namespace PokemonUnity.Monster
 		/// <example>Hitmontop</example>
 		AtkDefEqual,
 		///	<summary>if pokemon's shinyValue divided by 2's remainder is equal to 0 or 1</summary>
-		///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level-parameter? 
+		///	What about level parameter? Maybe "ShinyYes/ShinyNo" or "Shiny0/Shiny1", in combination with Level or Happiness-parameter? 
 		Shiny,
 		/// <summary>Unique evolution methods: if pokemon's shinyValue divided by 2's remainder is equal to 0</summary>
 		/// Shiny value? I thought it was based on "Friendship"
@@ -430,6 +430,15 @@ namespace PokemonUnity.Monster
 		///	and time is Dusk (between hours of 5 pm to 5:59 pm in in-game time)
 		///	</summary>
 		Lycanroc,
+		/// <summary>
+		///	The Pokémon will evolve if it levels up while 
+		///	the Pokémon has a move of a certain type in their moveset 
+		///	(named by the parameter). <para></para>
+		/// <example>Type,string pokemonTypeName</example>
+		/// </summary>
+		/// <example>Sylveon</example>
+		/// if pokemon contains a fairy-type move
+		Affection,
         /// <summary>
         /// </summary>
         /// Just wanted to see a requirement for after "fainting" too many times, your pokemon just died, and became a ghost-type...  

@@ -558,17 +558,17 @@ namespace Tests
 		Similarly, all Snorunt can evolve into Glalie, but only female Snorunt can evolve into Froslass. On the other hand, 
 		male Burmy can only evolve into Mothim, while female Burmy can only evolve into Wormadam.*/
 		//Use eevee to test different evolve code, as it's a perfect practice test
-		//[TestMethod]
-		//public void Pokemon_TestPokemon_CanEvolve()
-		//{
-		//    Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
-		//    //Add exp
-		//    pokemon.Exp.AddExperience(50000);
-		//    //Assert is true
-		//    if (pokemon.hasEvolveMethod(EvolutionMethod.Level))
-		//        Assert.IsTrue(false);
-		//    else Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
-		//}
+		[TestMethod]
+		public void Pokemon_TestPokemon_CanEvolve_AfterLevel()
+		{
+		    Pokemon pokemon = new Pokemon(Pokemons.BULBASAUR);
+		    if (!pokemon.hasEvolveMethod(EvolutionMethod.Level))
+		        Assert.Fail("Unable to test if pokemon can evolve, as it does not have an evolution through leveling-up");
+		    //Add exp
+		    pokemon.Exp.AddExperience(105000);
+			//Assert is true
+			Assert.AreEqual(Pokemons.IVYSAUR, pokemon.CanEvolveAfter(EvolutionMethod.Level, pokemon.Level)[0]);
+		}
 		[TestMethod]
         public void Pokemon_TestPokemon_EvolvePokemon()
         {

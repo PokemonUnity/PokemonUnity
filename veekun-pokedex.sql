@@ -1483,12 +1483,22 @@ left join pokemon_egg_groups_view on pokemon_egg_groups_view.pokemon_id = pokemo
 left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
 left join pokemon_types_view on pokemon_types_view.pokemon_id = pokemon.id 
 left join pokemon_species on pokemon_species.id = pokemon.id
+--left join pokemon_evolution on pokemon_evolution.species_id = pokemon_species.id
 left join evolution_chains on evolution_chains.id = pokemon_species.evolution_chain_id
 left join pokemon_colors on pokemon_colors.id = pokemon_species.color_id
 left join pokemon_color_names on pokemon_color_names.pokemon_color_id=pokemon_colors.id AND pokemon_color_names.local_language_id=9
 left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.species_id AND pokemon_species_names.local_language_id=9
 left join pokemon_species_flavor_text on pokemon_species_flavor_text.species_id = pokemon.species_id AND pokemon_species_flavor_text.version_id=26 AND pokemon_species_flavor_text.language_id=9
 order by pokemon.id ASC;
+CREATE VIEW pokemon_evolution_view as 
+select pokemon_species.id, pokemon_species.identifier, pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species."order",
+pokemon_evolution.evolved_species_id, pokemon_evolution.evolution_trigger_id, pokemon_evolution.trigger_item_id, pokemon_evolution.minimum_level, pokemon_evolution.gender_id, pokemon_evolution.location_id, pokemon_evolution.held_item_id, pokemon_evolution.time_of_day, pokemon_evolution.known_move_id, pokemon_evolution.known_move_type_id, pokemon_evolution.minimum_happiness, pokemon_evolution.minimum_beauty, pokemon_evolution.minimum_affection, pokemon_evolution.relative_physical_stats, pokemon_evolution.party_species_id, pokemon_evolution.party_type_id, pokemon_evolution.trade_species_id, pokemon_evolution.needs_overworld_rain, pokemon_evolution.turn_upside_down
+from pokemon_evolution
+left join pokemon_species on pokemon_evolution.evolved_species_id = pokemon_species.id
+--group by pokemon_species."order" --pokemon_species.id --pokemon_species.evolution_chain_id
+order by pokemon_species.evolution_chain_id, pokemon_species.id; --ToDo: Foreign/Index key "pokemon_species.evolves_from_species_id"
+--pokemon_species.evolves_from_species_id, --number order is bad, went 1, 10, 100, instead of 1,2,3
+pokemon_species."order"; 
 CREATE VIEW move_flag_map_view as 
 select move_id, group_concat(move_flag_id) as move_flag_group
 from move_flag_map 

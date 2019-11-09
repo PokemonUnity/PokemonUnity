@@ -377,7 +377,7 @@ namespace PokemonUnity.Monster
 		/// <param name="timeReceived"></param>
 		/// <param name="timeEggHatched"></param>
 		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
-        public Pokemon(Pokemons species, 
+		public Pokemon(Pokemons species, 
 			Trainer original,
 			string nickName, int form,
             Abilities ability, Natures nature,
@@ -786,7 +786,6 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Evolution
-        /* ToDo: Fix this block
 		/// <summary>
         /// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
         /// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
@@ -794,16 +793,16 @@ namespace PokemonUnity.Monster
         /// <returns>null means no evolves for pokemon, int[].Count == 0 means evolutions are not specific to leveling</returns>
         public int[] GetEvolutionLevels()
         {
-            if (_base.Evolutions.Length > 0)
+            if (Game.PokemonEvolutionsData[pokemons].Length > 0)
             {
                 List<int> levels = new List<int>();
-                foreach (IPokemonEvolution evolution in _base.Evolutions)
+                foreach (PokemonEvolution evolution in Game.PokemonEvolutionsData[pokemons])
                 {
                     if (evolution.EvolveMethod == EvolutionMethod.Level ||
                         evolution.EvolveMethod == EvolutionMethod.LevelMale ||
                         evolution.EvolveMethod == EvolutionMethod.LevelFemale)
                     {
-                        levels.Add((evolution as Data.PokemonEvolution<int>).EvolveValue);
+                        levels.Add((int)evolution.EvolveValue);
                     }
                 }
                 if (levels.Count == 0)// && _base.Evolutions.Length > 0
@@ -819,7 +818,7 @@ namespace PokemonUnity.Monster
         /// </summary>
         public bool CanEvolveDuringBattle()
         {
-            foreach (IPokemonEvolution item in _base.Evolutions)
+            foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
             {
                 switch (item.EvolveMethod)
                 {
@@ -866,7 +865,7 @@ namespace PokemonUnity.Monster
         public EvolutionMethod[] GetEvolutionMethods()
         {
             List<EvolutionMethod> methods = new List<EvolutionMethod>();
-            foreach (IPokemonEvolution item in _base.Evolutions)
+            foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
             {
                 if (!methods.Contains(item.EvolveMethod))
                     methods.Add(item.EvolveMethod);
@@ -875,14 +874,136 @@ namespace PokemonUnity.Monster
         }
         public bool hasEvolveMethod(EvolutionMethod method)
         {
-            foreach (IPokemonEvolution item in _base.Evolutions)
+            foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
             {
                 if (item.EvolveMethod == method)
                     return true;
             }
             return false;
-        }*/
-        #endregion
+        }
+		/// <summary>
+		/// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
+		/// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
+		/// </summary>
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, int level)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+				case EvolutionMethod.Level:
+				case EvolutionMethod.LevelMale:
+				case EvolutionMethod.LevelFemale:
+				case EvolutionMethod.Ninjask:
+				case EvolutionMethod.Lycanroc:
+				case EvolutionMethod.Beauty:            //param int = beauty, not level
+				case EvolutionMethod.Hatred:			//param int = happiness, not level
+				case EvolutionMethod.Happiness:			//param int = happiness, not level
+				case EvolutionMethod.HappinessDay:		//param int = happiness, not level
+				case EvolutionMethod.HappinessNight:	//param int = happiness, not level
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((int)item.EvolveValue < level && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Items itemUsed)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Item:
+                case EvolutionMethod.ItemMale:
+                case EvolutionMethod.ItemFemale:
+                case EvolutionMethod.TradeItem:
+                case EvolutionMethod.HoldItem:
+                case EvolutionMethod.HoldItemDay:
+                case EvolutionMethod.HoldItemNight:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Items)item.EvolveValue == itemUsed && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Pokemons pkmn)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Party:
+                case EvolutionMethod.TradeSpecies:
+                case EvolutionMethod.Shedinja:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Pokemons)item.EvolveValue == pkmn && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Moves move)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Move:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Moves)item.EvolveValue == move && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Types type)
+		{
+			if (!hasEvolveMethod(method))
+				return new Pokemons[] { };
+			switch (method)
+			{
+                case EvolutionMethod.Type:
+                case EvolutionMethod.Affection:
+					List<Pokemons> methods = new List<Pokemons>();
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((Types)item.EvolveValue == type && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
+				default:
+					return new Pokemons[] { };
+			}
+		}
+		#endregion
 
 		#region Gender
 		//private bool? gender;
@@ -2685,11 +2806,5 @@ namespace PokemonUnity.Monster
 			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
 		}*/
 		#endregion
-    }
-    public interface IPokemonEvolution
-    {
-        Pokemons Species { get; }
-
-        EvolutionMethod EvolveMethod { get; }
     }
 }

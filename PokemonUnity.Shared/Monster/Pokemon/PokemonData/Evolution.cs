@@ -335,4 +335,10 @@ namespace PokemonUnity.Monster
 			}
         }
     }
+	public interface IPokemonEvolution
+	{
+		Pokemons Species { get; }
+
+		EvolutionMethod EvolveMethod { get; }
+	}
 }
