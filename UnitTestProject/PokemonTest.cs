@@ -749,7 +749,8 @@ SOS Battles: ≥31			|—		|—			|—		|—		|—					|13/4096
 				//pass if held item is true
 				if (pkmn.Item != Items.NONE)
 					//Assert.AreNotEqual()
-					Assert.IsTrue(true);
+					//Assert.IsTrue(true, "test isnt passing, and i dont know why");
+					Assert.AreNotEqual(Items.NONE, pkmn.Item, "test isnt passing, and i dont know why");
 				//Maybe this one isnt needed?...
 				//Wild pokemons are (any/instantiated) pkmns without trainers?
 			}
