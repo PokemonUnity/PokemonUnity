@@ -176,7 +176,7 @@ namespace PokemonUnity.Monster
         //public int[] EvolveLevels { get { return _base.Evolutions.} }
         //public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
         //protected PokemonData _base { get; private set; }
-        protected Data.PokemonData _base { get { return Game.PokemonData[pokemons]; } }
+        protected Data.PokemonData _base { get { return Game.PokemonData[Game.PokemonFormsData[pokemons][form].Pokemon]; } } 
         /// <summary>
         /// Max total EVs
         /// </summary>
@@ -239,6 +239,8 @@ namespace PokemonUnity.Monster
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
 			if(Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
+			if(pokemon == Pokemons.UNOWN)
+				form = Core.Rand.Next(Game.PokemonFormsData[pokemon].Length);
 			//ToDo: Move to Trainer.Wild Pokemon
 			//Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
 			GenerateMoveset();
@@ -754,16 +756,16 @@ namespace PokemonUnity.Monster
             }
         }
 
-        /// <summary>
-        /// When this pokemon is defeated, this is the amount of experience points it offers
-        /// </summary>
-        public int baseExp
-        {
-            get
-            {
-                return _base.BaseExpYield; 
-            }
-        }
+		///// <summary>
+		///// When this pokemon is defeated, this is the amount of experience points it offers
+		///// </summary>
+		//public int baseExp //ToDo: GetBattleExp()
+		//{
+		//    get
+		//    {
+		//        return _base.BaseExpYield; //Check Pokemon.Form too...
+		//    }
+		//}
 
         public void AddSteps(byte steps = 1)
         {
@@ -1021,7 +1023,8 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Helper function that determines whether the input values would make a female. 
         /// </summary>
-        private bool? gender//isMale/isFemale/isGenderless//(float genderRate = this._base.MaleRatio)
+        /// isMale/isFemale/isGenderless
+        private bool? gender //(float genderRate = this._base.MaleRatio)
         {
             get
             {
@@ -1706,10 +1709,10 @@ namespace PokemonUnity.Monster
         /// Each region/ribbon sprite should have it's own Ribbon.EnumId
         /// </summary>
         /// <example>Pokemon acquired beauty ribbon in region 1 AND 2?</example>
-        /// I didnt know ribbons could be upgraded...
-        /// Make each ribbon into sets, where next number up is upgrade? (or multiply?)
-        /// Does it make a difference if pokemon won contest in different regions?
-		/// ToDo: Dictionary(Ribbon,struct[DateTime,Region/Location])
+        /// Make each ribbon into sets, where next number up is upgrade.
+        /// Does it make a difference if pokemon won contest in different regions? 
+		/// Yes -- ribbons are named after region; Do not need to record region data
+		/// ToDo: Dictionary(Ribbon,struct[DateTime/Bool])
         public List<Ribbon> Ribbons { get { return this.ribbons; } }
         /// <summary>
         /// Contest stats; Max value is 255
@@ -1773,6 +1776,29 @@ namespace PokemonUnity.Monster
 		}
 
 		#region Mail
+        /// <summary>
+        /// Mail?...
+        /// </summary>
+        private PokemonUnity.Inventory.Item.Mail mail { get; set; }
+        /// <summary>
+        /// Perform a null check; if anything other than null, there is a message
+        /// </summary>
+        /// ToDo: Item category
+        public string Mail
+        {
+            get
+            {
+                if (this.mail == null || !PokemonUnity.Inventory.Item.Mail.IsMail(this.Item)) return null; //If empty return null
+				//if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
+				//{
+				//    //mail = null;
+				//	return null;
+				//}
+				//ToDo: Return the string or class?
+                return mail.Message;
+            }
+            //set { mail = value; }
+        }
 		/*public void pbMoveToMailbox(pokemon)
 		{
 			//PokemonGlobal.mailbox = [] if !$PokemonGlobal.mailbox;
@@ -2173,30 +2199,6 @@ namespace PokemonUnity.Monster
 
         #region Other
         /// <summary>
-        /// Mail?...
-        /// </summary>
-        private PokemonUnity.Inventory.Item.Mail mail { get; set; }
-        /// <summary>
-        /// Perform a null check; if anything other than null, there is a message
-        /// </summary>
-        /// ToDo: Item category
-        public string Mail
-        {
-            get
-            {
-                if (this.mail == null || !PokemonUnity.Inventory.Item.Mail.IsMail(this.Item)) return null; //If empty return null
-				//if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
-				//{
-				//    //mail = null;
-				//	return null;
-				//}
-				//ToDo: Return the string or class?
-                return mail.Message;
-            }
-            //set { mail = value; }
-        }
-
-        /// <summary>
         /// The pokemons fused into this one.
         /// </summary>
         /// was int before
@@ -2218,7 +2220,7 @@ namespace PokemonUnity.Monster
         /// Nickname; 
         /// Returns Pokemon species name if not nicknamed.
         /// </summary>
-        public virtual string Name { get { if (this.EggSteps > 0) return "Egg"; return name ?? string.Empty;/*_base.Name;*/ } } //ToDo: Fix this
+        public virtual string Name { get { if (this.EggSteps > 0) return "Egg"; return IsNicknamed ? name : string.Empty;/*_base.Name;*/ } } //ToDo: Fix this
 
         /// <summary>
         ///	Used only for a few pokemon to specify what form it's in. 
@@ -2254,7 +2256,10 @@ namespace PokemonUnity.Monster
         /// Some forms have a SpeciesId and others are battle only
         /// Note: All of the forms appear to be registered as Enums already...
         /// Why not just change from `INT` to `(enum)Pokemons`?
-        public int Form { get; set; }//{ get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+        //public Form Form { get { return Game.PokemonFormsData[pokemons][form]; } }
+        //public bool SetForm (int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { form = value; return true; } else return false; } }
+        public int Form { get { return form; } set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) form = value; } }
+		private int form { get; set; }
 
 		/*// <summary>
         /// Returns the species name of this Pokemon
@@ -2408,7 +2413,7 @@ namespace PokemonUnity.Monster
                     break;
                 default:
 					//break;
-					//If not listen above, then stop
+					//If not listed above, then stop
 					//Otherwise rest of code will add points
 					return;
             }

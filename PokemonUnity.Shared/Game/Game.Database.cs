@@ -32,6 +32,7 @@ namespace PokemonUnity
 		//ToDo: ReadOnly Immutable Dictionaries...
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonEvolution[]> PokemonEvolutionsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]> PokemonItemsData { get; private set; }
+		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.Form[]> PokemonFormsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
 		public static Dictionary<Natures,Nature> NatureData { get; private set; }
@@ -39,9 +40,6 @@ namespace PokemonUnity
 		//public static Dictionary<Items,Item> ItemData { get; private set; }
 		//public static Dictionary<Berries,Item.Berry> BerryData { get; private set; }
 		//ability
-		//forms
-		//held items
-		//evolutions
 		//locations
 		//location encounters
 
@@ -71,6 +69,13 @@ namespace PokemonUnity
 			PokemonItemsData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonWildItems[]>();
 			if (sql) //using (con)
 				return GetPokemonItemsFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitPokemonForms(bool sql = true)
+		{
+			PokemonFormsData = new Dictionary<Pokemons, Monster.Data.Form[]>();
+			if (sql) //using (con)
+				return GetPokemonFormsFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
 		public static bool InitNatures(bool sql = true)
@@ -198,7 +203,7 @@ namespace PokemonUnity
 					//left join pokemon_egg_groups_view on pokemon_egg_groups_view.pokemon_id = pokemon.id
 					//left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id
 					//left join pokemon_types_view on pokemon_types_view.pokemon_id = pokemon.id
-					//left join pokemon_species on pokemon_species.id = pokemon.id
+					//left join pokemon_species on pokemon_species.id = pokemon.species_id
 					//left join evolution_chains on evolution_chains.id = pokemon_species.evolution_chain_id
 					//left join pokemon_colors on pokemon_colors.id = pokemon_species.color_id
 					//left join pokemon_color_names on pokemon_color_names.pokemon_color_id = pokemon_colors.id AND pokemon_color_names.local_language_id = 9
@@ -336,6 +341,107 @@ namespace PokemonUnity
 						PokemonMovesData.Add(pkmn.Key, new Monster.Data.PokemonMoveTree(pkmn.Value.ToArray()));
 					}
 				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetPokemonFormsFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				Dictionary<Pokemons, List<Monster.Data.Form>> p = new Dictionary<Pokemons, List<Monster.Data.Form>>();
+				foreach (Pokemons x in PokemonData.Keys)//for(int n = 1; n <= PokemonData.Keys.Length; n++)
+				{
+					p.Add(x, new List<Monster.Data.Form>());
+				}
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = @"select pokemon_forms.id, pokemon_forms.form_identifier, pokemon_forms.is_default, pokemon_forms.is_battle_only, pokemon_forms.is_mega, pokemon_forms.form_order, pokemon_forms.""order"",
+				pokemon.id as pokemon_id, pokemon.species_id as species_id--, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon.""order""
+				--pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,
+				--pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.color_id, pokemon_species.shape_id, pokemon_species.habitat_id, pokemon_species.gender_rate, pokemon_species.capture_rate, pokemon_species.base_happiness, pokemon_species.is_baby, pokemon_species.hatch_counter, pokemon_species.has_gender_differences, pokemon_species.growth_rate_id, pokemon_species.forms_switchable, pokemon_species.""order""
+				from pokemon
+				left join pokemon_forms on pokemon_forms.pokemon_id = pokemon.id
+				left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
+				left join pokemon_species on pokemon_species.id = pokemon.species_id
+				--where --pokemon_species.id != pokemon.id AND
+				--pokemon_forms.identifier != pokemon.identifier OR
+				--pokemon_forms.id != pokemon.id
+				--pokemon_forms.id != pokemon_species.id
+				order by pokemon.species_id, pokemon_forms.form_order ASC;";
+				//	@"select pokemon_forms.id, pokemon_forms.identifier,
+				//pokemon.id, pokemon.species_id, pokemon.identifier, pokemon.height, pokemon.weight, pokemon.base_experience, --pokemon."order"
+				//pokemon_stats_view.bhp, pokemon_stats_view.batk, pokemon_stats_view.bdef, pokemon_stats_view.bspa, pokemon_stats_view.bspd, pokemon_stats_view.bspe, pokemon_stats_view.ehp, pokemon_stats_view.eatk, pokemon_stats_view.edef, pokemon_stats_view.espa, pokemon_stats_view.espd, pokemon_stats_view.espe,
+				//pokemon_species.generation_id, pokemon_species.evolves_from_species_id, pokemon_species.evolution_chain_id, pokemon_species.color_id, pokemon_species.shape_id, pokemon_species.habitat_id, pokemon_species.gender_rate, pokemon_species.capture_rate, pokemon_species.base_happiness, pokemon_species.is_baby, pokemon_species.hatch_counter, pokemon_species.has_gender_differences, pokemon_species.growth_rate_id, pokemon_species.forms_switchable, pokemon_species."order"
+				//from pokemon
+				//left join pokemon_forms on pokemon_forms.pokemon_id = pokemon.id
+				//left join pokemon_stats_view on pokemon_stats_view.pokemon_id = pokemon.id 
+				//left join pokemon_species on pokemon_species.id = pokemon.species_id
+				//left join pokemon_species_names on pokemon_species_names.pokemon_species_id = pokemon.species_id AND pokemon_species_names.local_language_id=9
+				//where --pokemon_species.id != pokemon.id AND
+				//pokemon_forms.identifier != pokemon.identifier OR
+				//--pokemon_forms.id != pokemon.id
+				//pokemon_forms.id != pokemon_species.id
+				//order by pokemon.species_id, pokemon_forms.id ASC;";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					while(reader.Read()) //if(reader.Read())
+					{
+						//if (!p.ContainsKey((Pokemons)int.Parse((string)reader["pokemon_id"].ToString())))
+						//	p.Add((Pokemons)int.Parse((string)reader["pokemon_id"].ToString()),
+						//		new List<Monster.Data.Form>());
+						p[(Pokemons)int.Parse((string)reader["species_id"].ToString())].Add(
+							new PokemonUnity.Monster.Data.Form(
+								id: (Forms)int.Parse((string)reader["id"].ToString())
+								,pkmn: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+								,species: (Pokemons)int.Parse((string)reader["species_id"].ToString())
+								,identifier: (string)reader["form_identifier"].ToString()
+								,isMega: (string)reader["is_mega"].ToString() == "1"
+								,isDefault: (string)reader["is_default"].ToString() == "1"
+								,isBattleOnly: (string)reader["is_battle_only"].ToString() == "1"
+								,formOrder: (byte)int.Parse((string)reader["form_order"].ToString())
+								,order: int.Parse((string)reader["order"].ToString())
+							)
+						);
+						if (int.Parse((string)reader["pokemon_id"].ToString()) != int.Parse((string)reader["species_id"].ToString()))
+							p[(Pokemons)int.Parse((string)reader["pokemon_id"].ToString())].Add(
+								new PokemonUnity.Monster.Data.Form(
+									id: (Forms)int.Parse((string)reader["id"].ToString())
+									,pkmn: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+									,species: (Pokemons)int.Parse((string)reader["species_id"].ToString())
+									,identifier: (string)reader["form_identifier"].ToString()
+									,isMega: (string)reader["is_mega"].ToString() == "1"
+									,isDefault: (string)reader["is_default"].ToString() == "1"
+									,isBattleOnly: (string)reader["is_battle_only"].ToString() == "1"
+									,formOrder: (byte)int.Parse((string)reader["form_order"].ToString())
+									,order: int.Parse((string)reader["order"].ToString())
+								)
+							);
+					}
+				}
+				//Step 5: Closing up
+				reader.Close();
+				reader.Dispose();
+				#endregion
+				foreach (var pkmn in p)
+				{
+					PokemonFormsData.Add(pkmn.Key, pkmn.Value
+						//.OrderBy(x => x.FormOrder)
+						.ToArray());
+					//if (PokemonFormsData[pkmn.Value[0].Pokemon].Length == 0)
+					if (pkmn.Key != Pokemons.NONE && pkmn.Value[0].Pokemon != pkmn.Value[0].Base)
+						PokemonFormsData[pkmn.Key] = PokemonFormsData[pkmn.Value[0].Base];
+				}
+				PokemonFormsData[Pokemons.NONE] = new Monster.Data.Form[] { new Monster.Data.Form(Forms.NONE, Pokemons.NONE, Pokemons.NONE) };
 				return true;
 			} catch (SQLiteException e) {
 				//Debug.Log("SQL Exception Message:" + e.Message);

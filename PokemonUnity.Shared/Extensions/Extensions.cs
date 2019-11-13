@@ -366,13 +366,12 @@ static class Extensions
 
     public static T[] Randomize<T>(this T[] L)
     {
-        System.Random r = new System.Random();
         T temp;
         int indexRand;
         int indexLast = L.Count() - 1;
         for (int index = 0; index <= indexLast; index++)
         {
-            indexRand = r.Next(index, indexLast);
+            indexRand = PokemonUnity.Core.Rand.Next(index, indexLast);
             temp = L[indexRand];
             L[indexRand] = L[index];
             L[index] = temp;
