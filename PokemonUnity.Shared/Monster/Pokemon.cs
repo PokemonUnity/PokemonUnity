@@ -697,7 +697,9 @@ namespace PokemonUnity.Monster
 		/// Actual pokemon level is calaculated with <see cref="this.Level"/>.
 		/// This is just a temp placeholder for Leveling-Up mechanic.
 		/// </summary>
-		/// ToDo: Move to platform engine
+		/// For each level between temp and <see cref="Experience.GetLevelFromExperience(LevelingRate, int)"/>
+		/// perform stat increase difference (how much it went up, and total) and check to see if evolve is possible
+		/// ToDo: Move to platform engine or yield return ienumerable[int]
 		public int TempLevel { get; private set; } 
 
 		/// <summary>
@@ -887,12 +889,21 @@ namespace PokemonUnity.Monster
 		/// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
 		/// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
 		/// </summary>
+		/// returns an array of all the species this pokemon can currently evolve into
 		public Pokemons[] CanEvolveAfter(EvolutionMethod method)
 		{
 			if (!hasEvolveMethod(method))
 				return new Pokemons[] { };
+			List<Pokemons> methods = new List<Pokemons>();
 			switch (method)
 			{
+				case EvolutionMethod.Ninjask:
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if (item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
 				default:
 					return new Pokemons[] { };
 			}
@@ -901,22 +912,34 @@ namespace PokemonUnity.Monster
 		{
 			if (!hasEvolveMethod(method))
 				return new Pokemons[] { };
+			List<Pokemons> methods = new List<Pokemons>();
 			switch (method)
 			{
 				case EvolutionMethod.Level:
 				case EvolutionMethod.LevelMale:
 				case EvolutionMethod.LevelFemale:
-				case EvolutionMethod.Ninjask:
+				//case EvolutionMethod.Ninjask:
 				case EvolutionMethod.Lycanroc:
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((int)item.EvolveValue < level && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
 				case EvolutionMethod.Beauty:            //param int = beauty, not level
+					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+					{
+						if ((int)item.EvolveValue < Contest[(int)Contests.Beauty] && item.EvolveMethod == method)
+							methods.Add(item.Species);
+					}
+					return methods.ToArray();
 				case EvolutionMethod.Hatred:			//param int = happiness, not level
 				case EvolutionMethod.Happiness:			//param int = happiness, not level
 				case EvolutionMethod.HappinessDay:		//param int = happiness, not level
 				case EvolutionMethod.HappinessNight:	//param int = happiness, not level
-					List<Pokemons> methods = new List<Pokemons>();
 					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
 					{
-						if ((int)item.EvolveValue < level && item.EvolveMethod == method)
+						if ((int)item.EvolveValue < Happiness && item.EvolveMethod == method)
 							methods.Add(item.Species);
 					}
 					return methods.ToArray();
@@ -1096,8 +1119,7 @@ namespace PokemonUnity.Monster
                 else
                 {
                     return _base.Ability[Core.Rand.Next(0, 2)];
-                }
-                
+                }                
             }
         }
         /// <summary>

@@ -29,7 +29,7 @@ namespace PokemonUnity.Attack
             public Flags Flags { get; private set; }
             public Target Target { get; private set; }
             public Types Type { get; private set; }
-            public Contest ContestType { get; private set; }
+            public Contests ContestType { get; private set; }
             public short Function { get; private set; }
             public string FunctionAsString { get; private set; }
             /// <summary>

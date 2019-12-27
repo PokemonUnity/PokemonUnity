@@ -38,25 +38,26 @@ namespace PokemonUnity
 			//public SortedList<Item, byte> Mail { get; private set; }
 			//public SortedList<Item, byte> Battle { get; private set; }
 			//public SortedList<Item, byte> Key { get; private set; }
-			public SortedList<Item, byte> this[ItemPockets pocket]  {
+			public SortedList<Items, byte> this[ItemPockets pocket]  {
 				get
 				{
 					//All items found in the bag
 					List<Items> bag = new List<Items>();
 					//List of items that belong in this pocket, with quantity found
-					SortedList<Item, byte> items = new SortedList<Item, byte>();
+					SortedList<Items, byte> items = new SortedList<Items, byte>();
 					//foreach (KeyValuePair<Items, byte> Item in Game.Bag_Items)
 					foreach (Items Item in Game.Bag_Items)
 					{
 						//Item item = global::Item.GetItem(Item.Key);
-						Item item = PokemonUnity.Inventory.Item.GetItem(Item);
-						switch (item.ItemPocket)
+						ItemData item = Game.ItemData[Item];
+						if(Item != Items.NONE)
+						switch (item.Pocket)
 						{
 							case ItemPockets.MISC:
 								if(pocket == ItemPockets.MISC)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -64,7 +65,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.MEDICINE)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -72,7 +73,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.POKEBALL)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -80,7 +81,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.MACHINE)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -88,7 +89,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.BERRY)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -96,7 +97,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.MAIL)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -104,7 +105,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.BATTLE)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -112,7 +113,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.KEY)
 									if (!bag.Contains(Item))
 									{
-										items.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -123,7 +124,7 @@ namespace PokemonUnity
 					return items;
 				}
 			}
-			private int[] quantity { get; set; }
+			//private int[] quantity { get; set; }
 			private ItemPockets pocket { get; set; }
 			private bool reverseOrder { get; set; }
 
@@ -133,25 +134,25 @@ namespace PokemonUnity
 			/// <param name="item"></param>
 			/// <returns></returns>
 			/// ToDo: Return KeyValuePair<Item, Quantity>?
-			public Item this[Items item]
+			public ItemData this[Items item]
 			{
 				get
 				{
-					return PokemonUnity.Inventory.Item.GetItem(Game.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item));
+					return Game.ItemData[Game.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
 				}
 			}
 
-			public Item this[Item item]
+			public ItemData this[ItemData item]
 			{
 				get
 				{
-					return this[item.ItemId];
+					return this[item.Id];
 				}
 			}
 
 			public TrainerBag(Player t) //: this()
 			{
-				quantity = new int[Bag_Items.Count];
+				//quantity = new int[Bag_Items.Count];
 				trainer = t;
 			}
 
@@ -390,23 +391,25 @@ namespace PokemonUnity
 				return true;
 			}*/
 
-			public KeyValuePair<Item, byte>[] Sort(Order by)
+			public KeyValuePair<Items, byte>[] Sort(Order by)
 			{
-				IQueryable<KeyValuePair<Item, byte>> items = this[pocket].AsQueryable();
+				IQueryable<KeyValuePair<Items, byte>> items = this[pocket].AsQueryable();
 				switch (by)
 				{
 					case Order.Alphabet:
 						reverseOrder = !reverseOrder;
-						return this.reverseOrder? items.OrderBy(x => x.Key.Name).ToArray() : items.OrderByDescending(x => x.Key.Name).ToArray();
+						//ToDo: Connect to text and string localization
+						//return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Name).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Name).ToArray();
+						return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Id.ToString()).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Id.ToString()).ToArray();
 					case Order.Quantity:
 						reverseOrder = !reverseOrder;
 						return this.reverseOrder? items.OrderBy(x => x.Value).ToArray() : items.OrderByDescending(x => x.Value).ToArray();
 					case Order.Price:
 						reverseOrder = !reverseOrder;
-						return this.reverseOrder? items.OrderBy(x => x.Key.Price).ToArray() : items.OrderByDescending(x => x.Key.Price).ToArray();
+						return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Price).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Price).ToArray();
 					case Order.Category:
 						reverseOrder = !reverseOrder;
-						return this.reverseOrder? items.OrderBy(x => x.Key.ItemCategory).ToArray() : items.OrderByDescending(x => x.Key.ItemCategory).ToArray();
+						return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Category).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Category).ToArray();
 					default:
 						break;
 				}
@@ -414,33 +417,32 @@ namespace PokemonUnity
 			}
 
 			/// <summary>
-			/// If the player has the Mega Bracelet in their inventory.
+			/// If the player has the <see cref="Items.MEGA_BRACELET"/> in their inventory.
 			/// </summary>
 			/// <returns></returns>
 			public bool HasMegaBracelet()
 			{
-				//If Game.Player.SandBoxMode = True Or Game.IS_DEBUG_ACTIVE = True Then
-				//    Return True
-				//Else
-				//    If Me.GetItemAmount(78) > 0 Then
-				//        Return True
-				//    End If
-				//End If
+				//if (Game.Player.SandBoxMode || Game.IS_DEBUG_ACTIVE)
+				//	return true;
+				//else {
+					if(Game.Bag_Items.Contains(Items.MEGA_BRACELET)) 
+						return true;
+				//}
 
 				return false;
 			}
 
 			/// <summary>
-			/// If the player has the Mega Bracelet in their inventory.
+			/// If the player has the <see cref="Items.RUNNING_SHOES"/> in their inventory.
 			/// </summary>
 			/// <returns></returns>
+			/// newer gens automatically give at start, so default is true...
 			public bool HasRunningShoes()
 			{
-				//If Me.GetItemAmount(576) > 0 Then
-				//    Return True
-				//End If
+				//if (Game.Bag_Items.Contains(Items.RUNNING_SHOES)) //ToDo: Does not exist?...
+				//	return true;
 
-				return false;
+				return true;
 			}
 
 			/// <summary>
@@ -518,14 +520,12 @@ namespace PokemonUnity
 			/// <returns></returns>
 			public string GetMessageReceive(Item item, int quantity = 1)
 			{
-				//Dim Message As String = ""
-				//If Amount = 1 Then
-				//	Message = Game.Player.Name & " stored it in the~" & Game.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
-				//Else
-				//	Message = Game.Player.Name & " stored them~in the " & Game.Player.Inventory.GetItemPocketChar(Item) & Item.ItemType.ToString() & " pocket."
-				//End If
-				//Return Message
-				return "";
+				string Message = "";
+				//if (quantity == 1)
+				//	Message = Game.Player.Name + " stored it in the~" + Game.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
+				//else
+				//	Message = Game.Player.Name + " stored them~in the " + Game.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
+				return Message;
 			}
 
 			public enum Order

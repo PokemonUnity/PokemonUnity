@@ -2062,37 +2062,38 @@ namespace PokemonUnity.Inventory
 	/// <remarks>Didnt have access to variable names...</remarks>
 	public enum ItemFlingEffect
 	{
+		NONE,
 		/// <summary>
 		/// Badly poisons the target.
 		/// </summary>
-		One = 1,
+		BADLY_POISONS = 1,
 		/// <summary>
 		/// Burns the target.
 		/// </summary>
-		Two = 2,
+		BURNS = 2,
 		/// <summary>
 		/// Immediately activates the berry's effect on the target.
 		/// </summary>
-		Three = 3,
+		USE_BERRY = 3,
 		/// <summary>
 		/// Immediately activates the herb's effect on the target.
 		/// </summary>
-		Four = 4,
+		USE_HERB = 4,
 		/// <summary>
 		/// Paralyzes the target.
 		/// </summary>
-		Five = 5,
+		PARALYZES = 5,
 		/// <summary>
 		/// Poisons the target.
 		/// </summary>
-		Six = 6,
+		POISONS = 6,
 		/// <summary>
 		/// Target will flinch if it has not yet gone this turn.
 		/// </summary>
-		Seven = 7
+		FLINCH = 7
 	}
 
-	namespace Berry
+	namespace Plants
 	{
 		public enum Flavours
 		{

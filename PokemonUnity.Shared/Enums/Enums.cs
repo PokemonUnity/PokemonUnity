@@ -1603,7 +1603,7 @@ namespace PokemonUnity
         public enum Translations.Languages { get; set; } 
     }*/
 
-	enum Generation
+	public enum Generation
 	{
 		All = 0,
 		RedBlueYellow = 1,
@@ -1620,8 +1620,8 @@ namespace PokemonUnity
 		//UltraSunUltraMoon
 		Custom = -1
 	}
-
-	enum Version
+	//ToDo: Remove or Merge Version/Versions
+	public enum Version
 	{
 		//(id, version_group_id, identifier) VALUES 
 		//(0, 0, poke-unity'),
@@ -1666,6 +1666,28 @@ namespace PokemonUnity
 		//(25,16,omega-ruby'),
 		//(26,16,alpha-sapphire')
 		ORAS = 16
+	}
+	public enum Versions
+	{
+		PKUE = 0
+		,RED_BLUE
+		,YELLOW
+		,GOLD_SILVER
+		,CRYSTAL
+		,RUBY_SAPPHIRE
+		,EMERALD
+		,FIRERED_LEAFGREEN
+		,DIAMOND_PEARL
+		,PLATINUM
+		,HEARTGOLD_SOULSILVER
+		,BLACK_WHITE
+		,COLOSSEUM
+		,XD
+		,BLACK_2_WHITE_2
+		,X_Y
+		,OMEGA_RUBY_ALPHA_SAPPHIRE
+		,SUN_MOON
+		,ULTRA_SUN_ULTRA_MOON
 	}
 	#endregion
 	#region Move
@@ -2465,7 +2487,7 @@ namespace PokemonUnity
 	}
 	#endregion
 	#region Pokemon
-	public enum Contest { Cool, Beauty, Cute, Smart, Tough, Sheen }
+	public enum Contests { Cool, Beauty, Cute, Smart, Tough, Sheen }
 	/// <summary>
 	/// Pokemon ids are connected to XML file.
 	/// </summary>

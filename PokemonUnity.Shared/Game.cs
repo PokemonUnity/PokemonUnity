@@ -30,44 +30,23 @@ namespace PokemonUnity
 		#region Player and Overworld Data
 		//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 		public static Player Player { get; set; }
+		public static Regions Region { get; private set; }
+		public static Locations Location { get; private set; }
+		public static int Area { get; private set; }
 		//ToDo: Unity implentation through funnel
 		//public static PokemonUnity.Overworld.Level Level { get; set; }
 		//public static PokemonUnity.Overworld.Camera Camera { get; set; }
 		//public Game.TrainerPC PC { get { return new Game.TrainerPC(Player); } }
-		/*public static PokemonUnity.Overworld.Season Season 
-		{ 
-			get 
-			{
-				int month = System.DateTime.Today.Month;
-			
-				if (Jan, May, Sept)
-				{
-					return Season.Spring;
-				}
-				if (Feb, Jun, Oct)
-				{
-					return Season.Summer;
-				}
-				if (Mar,Jul, Nov)
-				{
-					return Season.Autumn;
-				}
-				if (Apr, Aug, Dec)
-				{
-					return Season.Spring
-				}
-			}	
-		}*/
 		#endregion
 
 		#region Private Records of Player Storage Data
-		public static bool IsCreator { get; private set; }
-		private static bool isCreator { get; set; }
+		public bool IsCreator { get; private set; }
+		private bool isCreator { get; set; }
 		/// <summary>
 		/// Name of PC Admin, for Pokemon Storage
 		/// </summary>
 		//public static string CreatorName { get { return isCreator ? "someone" : Player.Name; } }
-		public string GetStorageCreator() { return ""; }
+		public string GetStorageCreator() { return string.Empty; }
 		//ToDo: Berry Field Data (0x18 per tree, 36 trees)
 		//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
 		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
@@ -89,17 +68,6 @@ namespace PokemonUnity
 		public static List<Items> Bag_Items { get; set; }
 		#endregion
 
-		#region Custom Game Mode
-		//Nuzlocke Challenge => Pokemon Centers cost money, every pokemon must be named, when defeated/fainted pokemon is gone, only allowed to capture first pokemon encountered when entering new map
-		/// <summary>
-		/// Basically, you use the Dexnav to find pokemon in the area, they appear as shadows in the grass, and you need to sneak up on them
-		/// these pokemon can have egg moves, or even their HiddenAbility
-		/// </summary>
-		/// Apparently you can use the Sneaking feature to helps with this. 
-		/// ToDo: OnlyAllowEggMovesWhenUsingDexNav or DexNavAllowsEggMoves
-		public static bool CatchPokemonsWithEggMoves { get; private set; }
-		#endregion
-
 		#region Constructor
 		static Game()
 		{
@@ -114,12 +82,18 @@ namespace PokemonUnity
 			//		* maybe even a loading bar
 			//		* give warning to player if problems
 			//	Scan for save files and previous game progress
+			// Load Player/Character/Overworld THEN Encounter
 			con.Open();
 			InitNatures();
 			InitPokemons();
 			InitPokemonMoves();
 			InitPokemonEvolutions();
 			InitPokemonItems();
+			//InitMoves();
+			//InitItems();
+			//InitBerries();
+			//InitRegions();
+			//InitLocations();
 			InitPlayerCharacter();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");
@@ -146,6 +120,13 @@ namespace PokemonUnity
 				}
 				PC_Items = new List<Item>();
 				Bag_Items = new List<Items>();
+
+				//Overworld Experience
+				Region = Regions.NOT_IN_OVERWORLD;
+				Location = Locations.NOT_IN_OVERWORLD;
+				Area = 0;
+				//<X,Y,Z> Position
+				//<X,Y,Z> Rotation
 			}
 			catch (Exception)
 			{

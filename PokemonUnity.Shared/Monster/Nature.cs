@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using PokemonUnity.Monster;
-using PokemonUnity.Inventory.Berry;
+using PokemonUnity.Inventory.Plants;
 
 namespace PokemonUnity.Monster
 {

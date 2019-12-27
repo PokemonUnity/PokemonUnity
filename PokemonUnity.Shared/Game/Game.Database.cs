@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.IO;
 using System.Globalization;
 using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
+//using PokemonUnity.Inventory.ItemData;
 using PokemonUnity.Attack;
 using PokemonUnity.Saving;
+using PokemonUnity.Overworld;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
+using PokemonUnity.Inventory.Plants;
+using PokemonUnity.Attack.Data;
 //using System.Data.SqlClient;
-using System.IO;
-using PokemonUnity.Inventory.Berry;
 //using System.Security.Cryptography.MD5;
 
 namespace PokemonUnity
@@ -28,6 +31,7 @@ namespace PokemonUnity
 	/// </summary>
 	public partial class Game 
 	{
+		#region Variables
 		const string FilePokemonXML = "";
 		//ToDo: ReadOnly Immutable Dictionaries...
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonEvolution[]> PokemonEvolutionsData { get; private set; }
@@ -36,13 +40,31 @@ namespace PokemonUnity
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
 		public static Dictionary<Natures,Nature> NatureData { get; private set; }
-		//public static Dictionary<Moves,Move.MoveData> MoveData { get; private set; }
-		//public static Dictionary<Items,Item> ItemData { get; private set; }
-		//public static Dictionary<Berries,Item.Berry> BerryData { get; private set; }
+		public static Dictionary<Moves,Attack.Data.MoveData> MoveData { get; private set; }
+		public static Dictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; private set; }
+		public static Dictionary<Items,ItemData> ItemData { get; private set; }
+		public static Dictionary<Items,Berry> BerryData { get; private set; }
+		public static Dictionary<Regions,Locations[]> RegionData { get; private set; }
+		/// <summary>
+		/// Key: <seealso cref="Locations"/> | Value: <seealso cref="Area.Id"/>
+		/// </summary>
+		public static Dictionary<Locations,int[]> LocationData { get; private set; }
+		/// <summary>
+		/// Key: <seealso cref="Area.Id"/> | Value: <seealso cref="Area"/>
+		/// </summary>
+		public static Dictionary<int,Area> AreaData { get; private set; }
+		/// <summary>
+		/// Key: <seealso cref="Method"/> | Value: <seealso cref="Encounter.Id"/>
+		/// </summary>
+		public static Dictionary<Method,int[]> MethodData { get; private set; }
+		/// <summary>
+		/// Key: <seealso cref="Encounter.Id"/> | Value: <seealso cref="Encounter"/>
+		/// </summary>
+		public static Dictionary<int,Encounter> EncounterData { get; private set; }
 		//ability
-		//locations
-		//location encounters
+		#endregion
 
+		#region Initialize Datab From Database
 		public static bool InitPokemons(bool sql = true)
 		{
 			PokemonData = new Dictionary<Pokemons, Monster.Data.PokemonData>();
@@ -85,7 +107,54 @@ namespace PokemonUnity
 				return GetNaturesFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
+		public static bool InitMoves(bool sql = true)
+		{
+			MoveData = new Dictionary<Moves, Attack.Data.MoveData>();
+			MoveMetaData = new Dictionary<Moves, Attack.Data.MetaData>();
+			if (sql) //using (con)
+				return GetMovesFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitItems(bool sql = true)
+		{
+			ItemData = new Dictionary<Items, ItemData>();
+			if (sql) //using (con)
+				return GetItemsFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitBerries(bool sql = true)
+		{
+			BerryData = new Dictionary<Items, Berry>();
+			if (sql) //using (con)
+				return GetBerriesFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitRegions(bool sql = true)
+		{
+			RegionData = new Dictionary<Regions, Locations[]>();
+			if (sql) //using (con)
+				return  GetRegionsFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitLocations(bool sql = true)
+		{
+			LocationData = new Dictionary<Locations, int[]>();
+			AreaData = new Dictionary<int, Area>();
+			if (sql) //using (con)
+				return  GetLocationsFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitEncounters(bool sql = true)
+		{
+			MethodData = new Dictionary<Method, int[]>();
+			EncounterData = new Dictionary<int, Encounter>();
+			if (sql) //using (con)
+				return GetEncountersFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		#endregion
 
+		#region From XML
 		static bool GetPokemonsFromXML()
 		{
 			PokemonData = new Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData>();
@@ -177,6 +246,8 @@ namespace PokemonUnity
 
 			return true; //dictionary;
 		}
+		#endregion
+		#region From SQL
 		static bool GetPokemonsFromSQL(SQLiteConnection con)
 		{
 			try
@@ -848,5 +919,490 @@ namespace PokemonUnity
 				return false;
 			}
 		}
+		static bool GetMovesFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select * from moves_view";
+					@"select moves.id, moves.identifier, moves.generation_id, moves.type_id, moves.power, moves.pp, moves.accuracy, moves.priority, moves.target_id, moves.damage_class_id, moves.effect_id, moves.effect_chance, moves.contest_type_id, moves.contest_effect_id, moves.super_contest_effect_id,
+				contest_effects.appeal, contest_effects.jam, super_contest_effects.appeal as super_appeal,
+				move_meta.meta_category_id, move_meta.meta_ailment_id, move_meta.min_hits, move_meta.max_hits, move_meta.min_turns, move_meta.max_turns, move_meta.drain, move_meta.healing, move_meta.crit_rate, move_meta.ailment_chance, move_meta.flinch_chance, move_meta.stat_chance,
+				--move_flags.identifier as move_flag,
+				move_flag_map_view.move_flag_group,
+				move_effect_prose.short_effect, move_effect_prose.effect,
+				--move_flag_prose.name as flag_name, move_flag_prose.description as flag_description,
+				move_targets.identifier as target_identifier,
+				move_target_prose.name as target_name, move_target_prose.description as target_description,
+				move_names.name,
+				move_flavor_text.flavor_text
+				from moves
+				left join (
+					select move_id, group_concat(DISTINCT move_flag_id) as move_flag_group
+					from move_flag_map 
+					group by move_id
+				) as move_flag_map_view on move_flag_map_view.move_id = moves.id 
+				--left join move_flags on move_flags.id = moves.id 
+				left join move_meta on move_meta.move_id = moves.id 
+				left join contest_effects on moves.contest_effect_id = contest_effects.id
+				left join super_contest_effects on moves.super_contest_effect_id = super_contest_effects.id
+				left join move_targets on move_targets.id = moves.target_id
+				left join move_target_prose on move_target_prose.move_target_id=move_targets.id AND move_target_prose.local_language_id=9
+				left join move_effect_prose on move_effect_prose.move_effect_id = moves.effect_id AND move_effect_prose.local_language_id=9
+				left join move_names on move_names.move_id = moves.id AND move_names.local_language_id=9
+				left join move_flavor_text on move_flavor_text.move_id = moves.id AND move_flavor_text.version_group_id=18 AND move_flavor_text.language_id=9
+				order by moves.id ASC;";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					//MoveData.Add(Moves.NONE, new Attack.Data.MoveData());
+					while(reader.Read()) //if(reader.Read())
+					{
+						string[] f = ((string)reader["move_flag_group"].ToString()).Split(',');
+						MoveData.Add((Moves)int.Parse((string)reader["id"].ToString()),
+							new MoveData(
+								id: (Moves)int.Parse((string)reader["id"].ToString())
+								,category: (Category)int.Parse((string)reader["damage_class_id"].ToString())
+								,generationId: int.Parse((string)reader["generation_id"].ToString())
+								,accuracy: string.IsNullOrEmpty((string)reader["accuracy"].ToString()) ? (int?)null : int.Parse((string)reader["accuracy"].ToString())
+								,baseDamage: string.IsNullOrEmpty((string)reader["power"].ToString()) ? (int?)null : int.Parse((string)reader["power"].ToString())
+								,pp: (byte)int.Parse((string)reader["pp"].ToString())
+								,priority: int.Parse((string)reader["priority"].ToString())
+								,flags: (Flag)new Flag(
+									authentic: f.Contains("14")
+									,bite: f.Contains("16")
+									,bullet: f.Contains("18")
+									,charge: f.Contains("2")
+									,contact: f.Contains("1")
+									//,crit: f.Contains("1")
+									,dance: f.Contains("21")
+									,defrost: f.Contains("11")
+									,distance: f.Contains("12")
+									//,flinch: f.Contains("1")
+									,gravity: f.Contains("10")
+									,heal: f.Contains("13")
+									,mirror: f.Contains("7")
+									,mental: f.Contains("19")
+									,nonsky: f.Contains("20")
+									,powder: f.Contains("15")
+									,protect: f.Contains("4")
+									,pulse: f.Contains("17")
+									,punch: f.Contains("8")
+									,recharge: f.Contains("3")
+									,reflectable: f.Contains("5")
+									,snatch: f.Contains("6")
+									,sound: f.Contains("9"))
+								,target: (Targets)int.Parse((string)reader["target_id"].ToString())
+								,type: (Types)int.Parse((string)reader["type_id"].ToString())
+								,contestType: string.IsNullOrEmpty((string)reader["contest_type_id"].ToString()) ? (Contests?)null : (Contests)int.Parse((string)reader["contest_type_id"].ToString())
+								//,function: int.Parse((string)reader["decreased_stat_id"].ToString())
+								//,functionAsString: int.Parse((string)reader["decreased_stat_id"].ToString())
+								,effects: (Effects)int.Parse((string)reader["effect_id"].ToString())
+								,chance: string.IsNullOrEmpty((string)reader["effect_chance"].ToString()) ? (int?)null : int.Parse((string)reader["effect_chance"].ToString())
+								//,description: int.Parse((string)reader["decreased_stat_id"].ToString())
+								//ToDo:,contestEffects string.IsNullOrEmpty((string)reader["contest_effect_id"].ToString()) ? (int?)null : (ContestEffects)int.Parse((string)reader["contest_effect_id"].ToString())
+								//ToDo:,superContestEffects string.IsNullOrEmpty((string)reader["super_contest_effect_id"].ToString()) ? (int?)null : (SuperContestEffects)int.Parse((string)reader["super_contest_effect_id"].ToString())
+								,appeal: string.IsNullOrEmpty((string)reader["appeal"].ToString()) ? (int?)null : int.Parse((string)reader["appeal"].ToString())
+								,superAppeal: string.IsNullOrEmpty((string)reader["super_appeal"].ToString()) ? (int?)null : int.Parse((string)reader["super_appeal"].ToString())
+								,jamming: string.IsNullOrEmpty((string)reader["jam"].ToString()) ? (int?)null : int.Parse((string)reader["jam"].ToString())
+							)
+						);
+						if(!string.IsNullOrEmpty((string)reader["meta_category_id"].ToString()))
+							MoveMetaData.Add((Moves)int.Parse((string)reader["id"].ToString()),
+								new MetaData(
+									move: (Moves)int.Parse((string)reader["id"].ToString())
+									,category: (MetaCategory)int.Parse((string)reader["meta_category_id"].ToString())
+									,ailment: (MoveMetaAilments)int.Parse((string)reader["meta_ailment_id"].ToString())
+									,minHits:  string.IsNullOrEmpty((string)reader["min_hits"].ToString()) ? (int?)null : int.Parse((string)reader["min_hits"].ToString())
+									,maxHits:  string.IsNullOrEmpty((string)reader["max_hits"].ToString()) ? (int?)null : int.Parse((string)reader["max_hits"].ToString())
+									,minTurns: string.IsNullOrEmpty((string)reader["min_turns"].ToString()) ? (int?)null : int.Parse((string)reader["min_turns"].ToString())
+									,maxTurns: string.IsNullOrEmpty((string)reader["max_turns"].ToString()) ? (int?)null : int.Parse((string)reader["max_turns"].ToString())
+									,drain: int.Parse((string)reader["drain"].ToString())
+									,healing: int.Parse((string)reader["healing"].ToString())
+									,critRate: int.Parse((string)reader["crit_rate"].ToString())
+									,ailmentChance: int.Parse((string)reader["ailment_chance"].ToString())
+									,flinchChance: int.Parse((string)reader["flinch_chance"].ToString())
+								)
+							);
+						//else
+						//	MoveMetaData.Add((Moves)int.Parse((string)reader["id"].ToString()),
+						//		new MetaData(
+						//			move: (Moves)int.Parse((string)reader["id"].ToString())
+						//			//,category: MetaCategory.DAMAGE
+						//			//,ailment: MoveMetaAilments.NONE
+						//			//,minHits:  (int?)null
+						//			//,maxHits:  (int?)null
+						//			//,minTurns: (int?)null
+						//			//,maxTurns: (int?)null
+						//			//,drain: 0
+						//			//,healing: 0
+						//			//,critRate: 0
+						//			//,ailmentChance: 0
+						//			//,flinchChance: 0
+						//		)
+						//	);
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetItemsFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select * from item_views";
+					@"select items.id, items.identifier, items.category_id, items.cost, items.fling_power, items.fling_effect_id,
+				item_flag_map_view.item_flag_group,
+				item_game_indices_view.generation_group, item_game_indices_view.game_index_group,
+				item_prose.short_effect, item_prose.effect,
+				item_categories.pocket_id, 
+				item_pockets.identifier as item_pocket_identifier,
+				item_names.name,
+				item_flavor_text.flavor_text
+				from items
+				left join(
+					select item_id, group_concat(DISTINCT item_flag_id) as item_flag_group
+					from item_flag_map
+					group by item_id
+					) as item_flag_map_view on item_flag_map_view.item_id = items.id
+				left join(
+					select item_id, group_concat(DISTINCT generation_id) as generation_group, group_concat(DISTINCT game_index) as game_index_group
+					from item_game_indices
+					group by item_id
+					) as item_game_indices_view on item_game_indices_view.item_id = items.id
+				left join item_categories on item_categories.id = items.category_id
+				left join item_pockets on item_pockets.id = item_categories.pocket_id
+				left join item_prose on item_prose.item_id = items.id AND item_prose.local_language_id = 9
+				left join item_fling_effect_prose on item_fling_effect_prose.item_fling_effect_id = items.fling_effect_id AND item_fling_effect_prose.local_language_id = 9
+				left join item_names on item_names.item_id = items.id AND item_names.local_language_id = 9
+				left join item_flavor_text on item_flavor_text.item_id = items.id AND item_flavor_text.version_group_id = 18 AND item_flavor_text.language_id = 9
+				order by items.id ASC;";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					//ItemData.Add(Items.NONE, new ItemData());
+					while(reader.Read()) //if(reader.Read())
+					{
+						string[] f = ((string)reader["item_flag_group"].ToString()).Split(',');
+						ItemData.Add((Items)int.Parse((string)reader["id"].ToString()),
+							new ItemData(
+								itemId: (Items)int.Parse((string)reader["id"].ToString())
+								,price: int.Parse((string)reader["cost"].ToString())
+								,itemCategory: (ItemCategory)int.Parse((string)reader["category_id"].ToString())
+								,itemFlag: (ItemFlag)new ItemFlag(
+									countable: f.Contains("1")
+									,consumable: f.Contains("2")
+									,useableOverworld: f.Contains("3")
+									,useableBattle: f.Contains("4")
+									,holdable: f.Contains("5")
+									,holdablePassive: f.Contains("6")
+									,holdableActive: f.Contains("7")
+									,underground: f.Contains("8"))
+								,power: int.Parse((string)reader["fling_power"].ToString())
+								,itemFlingEffect: (ItemFlingEffect)int.Parse((string)reader["fling_effect_id"].ToString())
+								//,pocket: (Flavours)int.Parse((string)reader["pocket_id"].ToString())
+							)
+						);
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetBerriesFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select * from berry_views order by game_index ASC";
+					@"select b.id, b.item_id, b.firmness_id, b.natural_gift_power, b.natural_gift_type_id, b.size, b.max_harvest, b.growth_time, b.soil_dryness, b.smoothness
+				,i.cool, i.beauty, i.cute, i.smart, i.tough
+				from berries as b
+				left join (select 
+					b.id as berry_id
+					,CAST(AVG(CASE WHEN i.contest_type_id = 1 THEN i.flavor
+					END) as int) as cool
+					,CAST(AVG(CASE WHEN i.contest_type_id = 2 THEN i.flavor
+					END) as int) as beauty
+					,CAST(AVG(CASE WHEN i.contest_type_id = 3 THEN i.flavor
+					END) as int) as cute
+					,CAST(AVG(CASE WHEN i.contest_type_id = 4 THEN i.flavor
+					END) as int) as smart
+					,CAST(AVG(CASE WHEN i.contest_type_id = 5 THEN i.flavor
+					END) as int) as tough
+					from berries as b
+					left join berry_flavors as i on b.id = i.berry_id
+					group by b.id
+				) as i on b.id = i.berry_id;";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					//NatureData.Add(Natures.UNSET, new Nature());
+					while(reader.Read()) //if(reader.Read())
+					{
+						BerryData.Add((Items)(int.Parse((string)reader["item_id"].ToString())-1),
+							new Berry(
+								berry: (Items)int.Parse((string)reader["item_id"].ToString())
+								,firmness: (FirmnessLevel)int.Parse((string)reader["firmness_id"].ToString())
+								,power: int.Parse((string)reader["natural_gift_power"].ToString())
+								,type: (Types)int.Parse(string.IsNullOrEmpty((string)reader["natural_gift_type_id"].ToString()) ? "0" : (string)reader["natural_gift_type_id"].ToString())
+								,size: int.Parse((string)reader["size"].ToString())
+								,max: int.Parse((string)reader["max_harvest"].ToString())
+								,growth: int.Parse((string)reader["growth_time"].ToString())
+								,soil: int.Parse((string)reader["soil_dryness"].ToString())
+								,smooth: int.Parse((string)reader["smoothness"].ToString())
+								,cool: int.Parse((string)reader["cool"].ToString())
+								,beauty: int.Parse((string)reader["beauty"].ToString())
+								,cute: int.Parse((string)reader["cute"].ToString())
+								,smart: int.Parse((string)reader["smart"].ToString())
+								,tough: int.Parse((string)reader["tough"].ToString())
+							)
+						);
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetRegionsFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select * from natures order by game_index ASC";
+					@"select l.id, l.region_id, l.identifier,
+				g.generation_id,
+				n.name, n.subtitle
+				from locations as l
+				left join location_game_indices as g on l.id = g.location_id
+				left join location_names as n on l.id = n.location_id AND n.local_language_id = 9; ";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					Dictionary<Regions, List<Locations>> r = new Dictionary<Regions, List<Locations>>();
+					while (reader.Read()) //if(reader.Read())
+					{
+						if (!r.ContainsKey((Regions)int.Parse((string)reader["region_id"].ToString())))
+							r.Add((Regions)int.Parse((string)reader["region_id"].ToString()), new List<Locations>());
+						r[(Regions)int.Parse((string)reader["region_id"].ToString())]
+							.Add((Locations)int.Parse((string)reader["id"].ToString()));
+						//RegionData.Add((Regions)int.Parse((string)reader["region_id"].ToString()),
+						//	r.ToArray()
+						//	//new Location(
+						//	//	location: (Locations)int.Parse((string)reader["id"].ToString())
+						//	//	//,region: (Regions)int.Parse((string)reader["region_id"].ToString())
+						//	//	//,gen: int.Parse((string)reader["generation_id"].ToString())
+						//	//)
+						//);
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+					RegionData.Add(Regions.NOT_IN_OVERWORLD, new Locations[] { Locations.NOT_IN_OVERWORLD });
+					foreach (var reg in r)
+					{
+						RegionData.Add((Regions)int.Parse((string)reader["region_id"].ToString()), reg.Value.ToArray());
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetLocationsFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select * from natures order by game_index ASC";
+					@"select l.id, l.location_id, l.identifier,
+				location_area_encounter_rates_view.location_area_id, location_area_encounter_rates_view.version_group, location_area_encounter_rates_view.encounter_method_id, location_area_encounter_rates_view.rate
+				from location_areas as l
+				left join(
+					select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
+					from location_area_encounter_rates
+					group by location_area_id, encounter_method_id, rate
+				) location_area_encounter_rates_view on l.id = location_area_encounter_rates_view.location_area_id; ";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					Dictionary<Locations, List<int>> l = new Dictionary<Locations, List<int>>();
+					while (reader.Read()) //if(reader.Read())
+					{
+						if (!l.ContainsKey((Locations)int.Parse((string)reader["location_id"].ToString())))
+							l.Add((Locations)int.Parse((string)reader["location_id"].ToString()), new List<int>());
+						l[(Locations)int.Parse((string)reader["location_id"].ToString())]
+							.Add(int.Parse((string)reader["location_area_id"].ToString()));
+						AreaData.Add(int.Parse((string)reader["location_area_id"].ToString()),
+							new Area(
+								id: int.Parse((string)reader["location_area_id"].ToString())
+								,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
+								,rate: int.Parse((string)reader["rate"].ToString())
+							)
+						);
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+					LocationData.Add(Locations.NOT_IN_OVERWORLD, new List<int>() { }.ToArray());
+					foreach (var loc in l)
+					{
+						LocationData.Add((Locations)int.Parse((string)reader["location_id"].ToString()), loc.Value.ToArray());
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetEncountersFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = string.Format(//"select * from natures order by game_index ASC";
+					@"select --e.id, e.version_id, e.location_area_id, e.encounter_slot_id, e.pokemon_id, e.min_level, e.max_level,
+				MIN(e.id) as id, e.location_area_id, group_concat(DISTINCT e.pokemon_id) as pokemon_group, MIN(e.min_level) as min_level, MAX(e.max_level) as max_level, group_concat(DISTINCT e.encounter_slot_id) as encounter_slot_group, group_concat(DISTINCT e.version_id) as version_group,
+				s.encounter_method_id, s.slot, s.rarity, group_concat(DISTINCT s.version_group_id) as encounter_slot_version_group,
+				--i.encounter_condition_value_group,
+				group_concat(DISTINCT i.encounter_condition_value_id) as encounter_condition_value_group,
+				a.location_id,
+				l.region_id,
+				g.generation_id
+				--group_concat(DISTINCT g.generation_id) as generation_group
+				--,n.name, n.subtitle
+				from encounters as e
+				left join encounter_slots as s on s.id = e.encounter_slot_id
+				--left join encounter_condition_value_map_view as i on e.id = i.encounter_id;
+				--left join (
+				--	select encounter_id, group_concat(DISTINCT encounter_condition_value_id) as encounter_condition_value_group
+				--	from encounter_condition_value_map 
+				--	group by encounter_id
+				--) as i on e.id = i.encounter_id
+				left join encounter_condition_value_map as i on e.id = i.encounter_id
+				--left join (
+				--	select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
+				--	from location_area_encounter_rates 
+				--	group by location_area_id, encounter_method_id, rate
+				--) as r on e.location_area_id = r.location_area_id
+				left join location_areas as a on a.id=e.location_area_id
+				left join locations as l on l.id=a.location_id
+				left join location_game_indices as g on l.id = g.location_id
+				left join location_names as n on l.id = n.location_id AND n.local_language_id=9
+				--where i.encounter_condition_value_group IS NOT NULL
+				--where i.encounter_condition_value_id IS NOT NULL
+				where e.location_area_id = {0}
+				group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity; --e.pokemon_id;", Area);
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					Dictionary<Method, List<int>> e = new Dictionary<Method, List<int>>();
+					while (reader.Read()) //if(reader.Read())
+					{
+						if (!e.ContainsKey((Method)int.Parse((string)reader["encounter_method_id"].ToString())))
+							e.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), new List<int>());
+						e[(Method)int.Parse((string)reader["encounter_method_id"].ToString())]
+							.Add(int.Parse((string)reader["id"].ToString())					
+						);
+						EncounterData.Add(int.Parse((string)reader["id"].ToString()),
+							new Encounter(
+								id: int.Parse((string)reader["id"].ToString())
+								,area: int.Parse((string)reader["location_area_id"].ToString())
+								,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
+								,slotId: int.Parse((string)reader["slot"].ToString())
+								//,pokemon: (Pokemons)int.Parse((string)reader["pokemon_id"].ToString())
+								,pokemon: reader["pokemon_group"].ToString().Split(',').Select(x => (Pokemons)int.Parse(x)).ToArray()
+								, conditions: reader["encounter_condition_value_group"].ToString().Split(',').Select(x => (ConditionValue)int.Parse(x)).ToArray()
+								,generation: int.Parse((string)reader["generation_id"].ToString())
+								,minLevel: int.Parse((string)reader["min_level"].ToString())
+								,maxLevel: int.Parse((string)reader["max_level"].ToString())
+								,rarity: int.Parse((string)reader["rarity"].ToString())
+								,versions: reader["encounter_slot_version_group"].ToString().Split(',').Select(x => (Versions)int.Parse(x)).ToArray()
+							)						
+						);
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+					//EncounterData.Add(Method.NONE, new List<Encounter>() { }.ToArray());
+					foreach (var en in e)
+					{
+						MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		#endregion
 	}
 }

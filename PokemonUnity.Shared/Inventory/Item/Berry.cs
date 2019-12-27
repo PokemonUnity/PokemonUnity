@@ -1,6 +1,6 @@
 ﻿using PokemonUnity;
 using PokemonUnity.Inventory;
-using PokemonUnity.Inventory.Berry;
+using PokemonUnity.Inventory.Plants;
 
 namespace PokemonUnity.Inventory
 {

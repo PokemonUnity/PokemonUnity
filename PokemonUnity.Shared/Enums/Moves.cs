@@ -16,19 +16,12 @@ namespace PokemonUnity.Attack
 	/// </summary>
 	public enum Category
 	{
-		PHYSICAL,
-		SPECIAL,
-		STATUS
+		PHYSICAL= 1,
+		SPECIAL	= 2,
+		STATUS	= 3
 	};
-	public enum Contest
-	{
-		COOL,
-		BEAUTIFUL,
-		CUTE,
-		CLEVER,
-		TOUGH
-	}
 	/// <summary>
+	/// Pokemon Essentials Targeting Enum
 	/// </summary>
 	public enum Target
 	{

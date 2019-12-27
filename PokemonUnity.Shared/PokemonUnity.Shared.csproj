@@ -53,6 +53,8 @@
     <Compile Include="Attack\Move\Base.cs" />
     <Compile Include="Attack\Move\Database.cs" />
     <Compile Include="Attack\Move\Data\Base.cs" />
+    <Compile Include="Attack\Move\Data\Meta.cs" />
+    <Compile Include="Attack\Move\Data\Flag.cs" />
     <Compile Include="Attack\Move\Flag.cs" />
     <Compile Include="Attack\Move\MoveBattle.cs" />
     <Compile Include="Attack\Move\MoveTarget.cs" />
@@ -82,12 +84,16 @@
     <Compile Include="Game.cs" />
     <Compile Include="Game\Game.Database.cs" />
     <Compile Include="Game\Game.cs" />
-    <Compile Include="Inventory\Item.cs" />
+    <Compile Include="Inventory\Data\Base.cs" />
     <Compile Include="Inventory\Item\Berry.cs" />
     <Compile Include="Inventory\Item\Database.cs" />
     <Compile Include="Inventory\Item\ItemFlags.cs" />
     <Compile Include="Inventory\Item\ItemHandler.cs" />
     <Compile Include="Inventory\Item\Mail.cs" />
+    <Compile Include="Inventory\Item.cs" />
+    <Compile Include="Inventory\Data\Berry.cs" />
+    <Compile Include="Inventory\Data\ItemFlags.cs" />
+    <Compile Include="Inventory\Data\Mail.cs" />
     <Compile Include="Monster\Ability.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon.cs" />
@@ -103,6 +109,8 @@
     <Compile Include="Monster\Pokemon\PokemonData\Moveset.cs" />
     <Compile Include="Monster\Pokemon\PokemonData\MoveTree.cs" />
     <Compile Include="Monster\Type.cs" />
+    <Compile Include="Overworld\Encounter.cs" />
+    <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saving\EventListener.cs" />
     <Compile Include="Saving\SaveData.cs" />
@@ -116,5 +124,6 @@
   <ItemGroup>
     <Content Include="Translations\PokemonUnity.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

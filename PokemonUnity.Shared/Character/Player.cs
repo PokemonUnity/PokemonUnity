@@ -49,20 +49,26 @@ namespace PokemonUnity
 		public bool startSurfing { get; set; }
 		public int RepelSteps { get; set; }
 		public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
-		public Pokemon GetWalkPokemon() { return null; }
+		//public Pokemon GetWalkPokemon() { return null; }
+		public Forms GetWalkPokemon() { return Forms.NONE; } //ToDo: IsShiny?
 
 		#region UI/Game Engine
 		public int mapName { get; set; }
 		//public int levelName;
-		//ToDo: Move player position to platform engine..
+		//ToDo: Move player position to platform engine or Game class..
 		//public SeriV3 playerPosition { get; set; }
 		/// <summary>
 		/// Rotation of player model in overworld scene
 		/// </summary>
 		/// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
 		/// scratch that... only need rotation on single quantization axis...
+		/// not sure direction is even needed in save/load profile...
+		/// Game should load player facing camera by default.
 		public float playerDirection { get; set; }
-		public int respawnScene { get; set; }
+		/// <summary>
+		/// Pokemon Center that's used as Respawn Point upon a Player's Defeat
+		/// </summary>
+		public Locations respawnCenterId { get; set; }
 		//public SeriV3 respawnScenePosition;
 		//public int respawnSceneDirection;
 		#endregion
@@ -208,7 +214,7 @@ namespace PokemonUnity
 			mapName = trainerSaveData.ActiveScene;
 			//playerPosition = trainerSaveData.PlayerPosition;
 			playerDirection = trainerSaveData.PlayerDirection;
-			respawnScene = trainerSaveData.pCenterScene;
+			respawnCenterId = (Locations)trainerSaveData.PokeCenterId;
 			Money = trainerSaveData.PlayerMoney;
 			Coins = trainerSaveData.PlayerCoins;
 			//Pokedex = trainerSaveData.Pokedex2; //ToDo: Uncomment
