@@ -50,6 +50,8 @@ namespace PokemonUnity
 		/// </summary>
 		public static Dictionary<Locations,int[]> LocationData { get; private set; }
 		/// <summary>
+		/// List of <see cref="Area"/> that triggers <seealso cref="Encounter"/>
+		/// <para></para>
 		/// Key: <seealso cref="Area.Id"/> | Value: <seealso cref="Area"/>
 		/// </summary>
 		public static Dictionary<int,Area> AreaData { get; private set; }
@@ -971,7 +973,7 @@ namespace PokemonUnity
 								,generationId: int.Parse((string)reader["generation_id"].ToString())
 								,accuracy: string.IsNullOrEmpty((string)reader["accuracy"].ToString()) ? (int?)null : int.Parse((string)reader["accuracy"].ToString())
 								,baseDamage: string.IsNullOrEmpty((string)reader["power"].ToString()) ? (int?)null : int.Parse((string)reader["power"].ToString())
-								,pp: (byte)int.Parse((string)reader["pp"].ToString())
+								,pp: string.IsNullOrEmpty((string)reader["pp"].ToString()) ? (byte)0 : (byte)int.Parse((string)reader["pp"].ToString())
 								,priority: int.Parse((string)reader["priority"].ToString())
 								,flags: (Flag)new Flag(
 									authentic: f.Contains("14")
@@ -1005,8 +1007,8 @@ namespace PokemonUnity
 								,effects: (Effects)int.Parse((string)reader["effect_id"].ToString())
 								,chance: string.IsNullOrEmpty((string)reader["effect_chance"].ToString()) ? (int?)null : int.Parse((string)reader["effect_chance"].ToString())
 								//,description: int.Parse((string)reader["decreased_stat_id"].ToString())
-								//ToDo:,contestEffects string.IsNullOrEmpty((string)reader["contest_effect_id"].ToString()) ? (int?)null : (ContestEffects)int.Parse((string)reader["contest_effect_id"].ToString())
-								//ToDo:,superContestEffects string.IsNullOrEmpty((string)reader["super_contest_effect_id"].ToString()) ? (int?)null : (SuperContestEffects)int.Parse((string)reader["super_contest_effect_id"].ToString())
+								//ToDo:,contestEffects: string.IsNullOrEmpty((string)reader["contest_effect_id"].ToString()) ? (int?)null : (ContestEffects)int.Parse((string)reader["contest_effect_id"].ToString())
+								//ToDo:,superContestEffects: string.IsNullOrEmpty((string)reader["super_contest_effect_id"].ToString()) ? (int?)null : (SuperContestEffects)int.Parse((string)reader["super_contest_effect_id"].ToString())
 								,appeal: string.IsNullOrEmpty((string)reader["appeal"].ToString()) ? (int?)null : int.Parse((string)reader["appeal"].ToString())
 								,superAppeal: string.IsNullOrEmpty((string)reader["super_appeal"].ToString()) ? (int?)null : int.Parse((string)reader["super_appeal"].ToString())
 								,jamming: string.IsNullOrEmpty((string)reader["jam"].ToString()) ? (int?)null : int.Parse((string)reader["jam"].ToString())
@@ -1118,9 +1120,10 @@ namespace PokemonUnity
 									,holdablePassive: f.Contains("6")
 									,holdableActive: f.Contains("7")
 									,underground: f.Contains("8"))
-								,power: int.Parse((string)reader["fling_power"].ToString())
-								,itemFlingEffect: (ItemFlingEffect)int.Parse((string)reader["fling_effect_id"].ToString())
+								,power: string.IsNullOrEmpty((string)reader["fling_power"].ToString()) ? (int?)null : int.Parse((string)reader["fling_power"].ToString())
+								,itemFlingEffect: string.IsNullOrEmpty((string)reader["fling_effect_id"].ToString()) ? ItemFlingEffect.NONE : (ItemFlingEffect)int.Parse((string)reader["fling_effect_id"].ToString())
 								//,pocket: (Flavours)int.Parse((string)reader["pocket_id"].ToString())
+								,gens: reader["generation_group"].ToString().Split(',').Select(x => int.Parse(x)).ToArray()
 							)
 						);
 					}
@@ -1219,18 +1222,20 @@ namespace PokemonUnity
 				n.name, n.subtitle
 				from locations as l
 				left join location_game_indices as g on l.id = g.location_id
-				left join location_names as n on l.id = n.location_id AND n.local_language_id = 9; ";
+				left join location_names as n on l.id = n.location_id AND n.local_language_id = 9;";
 				SQLiteDataReader reader = stmt.ExecuteReader();
 
 				//Step 4: Read the results
 				using(reader)
 				{
 					Dictionary<Regions, List<Locations>> r = new Dictionary<Regions, List<Locations>>();
+					r.Add(Regions.NOT_IN_OVERWORLD, new List<Locations>());
+					r[Regions.NOT_IN_OVERWORLD].Add(Locations.NOT_IN_OVERWORLD);
 					while (reader.Read()) //if(reader.Read())
 					{
-						if (!r.ContainsKey((Regions)int.Parse((string)reader["region_id"].ToString())))
+						if (!string.IsNullOrEmpty(reader["region_id"].ToString()) && !r.ContainsKey((Regions)int.Parse((string)reader["region_id"].ToString())))
 							r.Add((Regions)int.Parse((string)reader["region_id"].ToString()), new List<Locations>());
-						r[(Regions)int.Parse((string)reader["region_id"].ToString())]
+						r[string.IsNullOrEmpty(reader["region_id"].ToString()) ? Regions.NOT_IN_OVERWORLD : (Regions)int.Parse((string)reader["region_id"].ToString())]
 							.Add((Locations)int.Parse((string)reader["id"].ToString()));
 						//RegionData.Add((Regions)int.Parse((string)reader["region_id"].ToString()),
 						//	r.ToArray()
@@ -1245,10 +1250,11 @@ namespace PokemonUnity
 					reader.Close();
 					reader.Dispose();
 					#endregion
-					RegionData.Add(Regions.NOT_IN_OVERWORLD, new Locations[] { Locations.NOT_IN_OVERWORLD });
+					//RegionData.Add(Regions.NOT_IN_OVERWORLD, new Locations[] { Locations.NOT_IN_OVERWORLD });
 					foreach (var reg in r)
 					{
-						RegionData.Add((Regions)int.Parse((string)reader["region_id"].ToString()), reg.Value.ToArray());
+						//RegionData.Add((Regions)int.Parse((string)reader["region_id"].ToString()), reg.Value.ToArray());
+						RegionData.Add((Regions)reg.Key, reg.Value.ToArray());
 					}
 				}
 				return true;
@@ -1275,26 +1281,40 @@ namespace PokemonUnity
 					select location_area_id, group_concat(DISTINCT version_id) as version_group, encounter_method_id, rate
 					from location_area_encounter_rates
 					group by location_area_id, encounter_method_id, rate
-				) location_area_encounter_rates_view on l.id = location_area_encounter_rates_view.location_area_id; ";
+				) location_area_encounter_rates_view on l.id = location_area_encounter_rates_view.location_area_id;";
 				SQLiteDataReader reader = stmt.ExecuteReader();
 
 				//Step 4: Read the results
 				using(reader)
 				{
 					Dictionary<Locations, List<int>> l = new Dictionary<Locations, List<int>>();
+					Dictionary<int, List<KeyValuePair<Method, int>>> a = new Dictionary<int, List<KeyValuePair<Method, int>>>();
 					while (reader.Read()) //if(reader.Read())
 					{
 						if (!l.ContainsKey((Locations)int.Parse((string)reader["location_id"].ToString())))
 							l.Add((Locations)int.Parse((string)reader["location_id"].ToString()), new List<int>());
-						l[(Locations)int.Parse((string)reader["location_id"].ToString())]
-							.Add(int.Parse((string)reader["location_area_id"].ToString()));
-						AreaData.Add(int.Parse((string)reader["location_area_id"].ToString()),
-							new Area(
-								id: int.Parse((string)reader["location_area_id"].ToString())
-								,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
-								,rate: int.Parse((string)reader["rate"].ToString())
-							)
-						);
+						if (!l[(Locations)int.Parse((string)reader["location_id"].ToString())]
+							.Contains(int.Parse((string)reader["id"].ToString())))
+							l[(Locations)int.Parse((string)reader["location_id"].ToString())]
+								.Add(int.Parse((string)reader["id"].ToString()));
+						//AreaData.Add(int.Parse((string)reader["location_area_id"].ToString()),
+						//	new Area(
+						//		id: int.Parse((string)reader["location_area_id"].ToString())
+						//		,method: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
+						//		,rate: int.Parse((string)reader["rate"].ToString())
+						//	)
+						//);
+						if (!string.IsNullOrEmpty(reader["location_area_id"].ToString()))
+						{
+							if (!a.ContainsKey(int.Parse((string)reader["location_area_id"].ToString())))
+								a.Add(int.Parse((string)reader["location_area_id"].ToString()), new List<KeyValuePair<Method, int>>());
+							a[int.Parse((string)reader["location_area_id"].ToString())]
+								.Add(new KeyValuePair<Method, int>(//ToDo: int[] { rate, version_group }
+								//id: int.Parse((string)reader["location_area_id"].ToString())
+								key: (Method)int.Parse((string)reader["encounter_method_id"].ToString())
+								,value: int.Parse((string)reader["rate"].ToString())
+							));
+						}
 					}
 					//Step 5: Closing up
 					reader.Close();
@@ -1303,7 +1323,18 @@ namespace PokemonUnity
 					LocationData.Add(Locations.NOT_IN_OVERWORLD, new List<int>() { }.ToArray());
 					foreach (var loc in l)
 					{
-						LocationData.Add((Locations)int.Parse((string)reader["location_id"].ToString()), loc.Value.ToArray());
+						//LocationData.Add((Locations)int.Parse((string)reader["location_id"].ToString()), loc.Value.ToArray());
+						LocationData.Add((Locations)loc.Key, loc.Value.ToArray());
+					}
+					foreach (var area in a)
+					{
+						AreaData.Add(area.Key,//int.Parse((string)reader["location_area_id"].ToString()),
+							new Area(
+								id: area.Key
+								//,rate: a.Where(x => x.Key == area.Key).Select<KeyValuePair<Method, int>>(n => n.Value).ToArray()
+								,rate: a.Single(x => x.Key == area.Key).Value.ToArray()
+							)
+						); ;
 					}
 				}
 				return true;

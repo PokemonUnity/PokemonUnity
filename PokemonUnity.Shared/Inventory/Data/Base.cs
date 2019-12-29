@@ -87,7 +87,8 @@ namespace PokemonUnity.Inventory
 			}
 		}
 		public ItemFlingEffect FlingEffect { get; private set; }
-		public int FlingPower { get; private set; }
+		public int? FlingPower { get; private set; }
+		public int[] Generations { get; private set; }
 
 		public bool IsLetter 
 		{ 
@@ -258,7 +259,7 @@ namespace PokemonUnity.Inventory
 		//	if (m.IsLetter) this.mail = m;
 		//}
 
-		public ItemData(Items itemId, int price = 0, ItemCategory itemCategory = ItemCategory.UNUSED, ItemFlag itemFlag = new ItemFlag(), int power = 0, ItemFlingEffect? itemFlingEffect = null) //: this()
+		public ItemData(Items itemId, int price = 0, ItemCategory itemCategory = ItemCategory.UNUSED, ItemFlag itemFlag = new ItemFlag(), int? power = 0, ItemFlingEffect? itemFlingEffect = null, int[] gens = null) //: this()
 		{
 			Id = itemId;
 			Price = price;
@@ -270,6 +271,7 @@ namespace PokemonUnity.Inventory
 			//this.Name				= ToDo: load from translation
 			//this.Plural			= ToDo: load from translation
 			//this.Description		= ToDo: load from translation
+			Generations = gens ?? new int[] { };
 		}
 		#endregion
 	}

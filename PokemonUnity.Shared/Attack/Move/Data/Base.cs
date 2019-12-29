@@ -25,6 +25,9 @@ namespace PokemonUnity.Attack.Data
 		/// Base Damage
 		/// </summary>
 		public int? Power { get; private set; }
+		/// <summary>
+		/// </summary>
+		/// <remarks>If <see cref="Types.SHADOW"/> PP is EqualTo NULL</remarks>
 		public byte PP { get; private set; }
 		public int Priority { get; private set; }
 		public Flag? Flags { get; private set; }
@@ -44,8 +47,8 @@ namespace PokemonUnity.Attack.Data
 		public int? EffectChance { get; private set; }
 		//public int? ContestEffect { get; private set; }
 		//public int? ContestSuperEffect { get; private set; }
-		public string Name { get; private set; }
-		public string Description { get; private set; }
+		//public string Name { get; private set; }
+		//public string Description { get; private set; }
 		public int? SuperAppeal { get; private set; }
 		public int? Appeal { get; private set; }
 		public int? Jamming { get; private set; }
@@ -73,8 +76,8 @@ namespace PokemonUnity.Attack.Data
 			//FunctionAsString = functionAsString;
 			Effect = effects;
 			EffectChance = chance;
-			Name = name;
-			Description = description;
+			//Name = name;
+			//Description = description;
 			Appeal = appeal;
 			SuperAppeal = superAppeal;
 			Jamming = jamming;

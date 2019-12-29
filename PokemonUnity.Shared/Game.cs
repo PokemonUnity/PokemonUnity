@@ -89,11 +89,11 @@ namespace PokemonUnity
 			InitPokemonMoves();
 			InitPokemonEvolutions();
 			InitPokemonItems();
-			//InitMoves();
-			//InitItems();
-			//InitBerries();
-			//InitRegions();
-			//InitLocations();
+			InitMoves();
+			InitItems();
+			InitBerries();
+			InitRegions();
+			InitLocations();
 			InitPlayerCharacter();
 			#endregion
 			//GameDebug.Init(null, "GameTestLog");

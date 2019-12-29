@@ -11,64 +11,6 @@ namespace Tests
     [TestClass]
     public class PokemonTest
     {
-		#region Data Loading and Tests
-		[TestMethod]
-        public void Initialize_Pokemon_Test()
-        {		
-			//Only good if this function is ran first before any others
-			Assert.IsTrue(Game.InitPokemons());
-        }
-        [TestMethod]
-        public void Pokemon_Data_IsLoaded()
-        {
-			Assert.IsTrue(Game.PokemonData.Count > 1);
-        }
-        [TestMethod]
-        public void Initialize_PokemonMoves_Test()
-        {		
-			//Only good if this function is ran first before any others
-			Assert.IsTrue(Game.InitPokemonMoves());
-        }
-        [TestMethod]
-        public void PokemonMoves_Data_IsLoaded()
-        {
-			Assert.IsTrue(Game.PokemonMovesData.Count > 1);
-        }
-        [TestMethod]
-        public void Initialize_PokemonEvolutions_Test()
-        {		
-			//Only good if this function is ran first before any others
-			Assert.IsTrue(Game.InitPokemonEvolutions());
-        }
-        [TestMethod]
-        public void PokemonEvolutions_Data_IsLoaded()
-        {
-			Assert.IsTrue(Game.PokemonEvolutionsData.Count > 1);
-        }
-        [TestMethod]
-        public void Initialize_PokemonForms_Test()
-        {		
-			//Only good if this function is ran first before any others
-			Assert.IsTrue(Game.InitPokemonForms());
-        }
-        [TestMethod]
-        public void PokemonForms_Data_IsLoaded()
-        {
-			Assert.IsTrue(Game.PokemonFormsData.Count > 1);
-        }
-        [TestMethod]
-        public void Initialize_PokemonItems_Test()
-        {		
-			//Only good if this function is ran first before any others
-			Assert.IsTrue(Game.InitPokemonItems());
-        }
-        [TestMethod]
-        public void PokemonItems_Data_IsLoaded()
-        {
-			Assert.IsTrue(Game.PokemonItemsData.Count > 1);
-        }
-		#endregion
-
         //Create 2 assert test; 1 for regular pokemon, and one for pokemon.NONE
         //Pokemon.NONE cannot receive any changes to data, as it does not exist...
 

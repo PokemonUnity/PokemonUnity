@@ -21,6 +21,132 @@ namespace Tests
 			Assert.AreEqual(3, s.Count);
 		}
 
+		#region Data Loading and Tests
+		[TestMethod]
+		public void Initialize_Pokemon_Test()
+		{
+			Assert.IsTrue(Game.InitPokemons());
+		}
+		[TestMethod]
+		public void Pokemon_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.PokemonData.Count > 1);
+		}
+		[TestMethod]
+		public void Initialize_PokemonMoves_Test()
+		{
+			Assert.IsTrue(Game.InitPokemonMoves());
+		}
+		[TestMethod]
+		public void PokemonMoves_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.PokemonMovesData.Count > 1);
+		}
+		[TestMethod]
+		public void Initialize_PokemonEvolutions_Test()
+		{
+			Assert.IsTrue(Game.InitPokemonEvolutions());
+		}
+		[TestMethod]
+		public void PokemonEvolutions_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.PokemonEvolutionsData.Count > 1);
+		}
+		[TestMethod]
+		public void Initialize_PokemonForms_Test()
+		{
+			Assert.IsTrue(Game.InitPokemonForms());
+		}
+		[TestMethod]
+		public void PokemonForms_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.PokemonFormsData.Count > 1);
+		}
+		[TestMethod]
+		public void Initialize_PokemonItems_Test()
+		{
+			Assert.IsTrue(Game.InitPokemonItems());
+		}
+		[TestMethod]
+		public void PokemonItems_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.PokemonItemsData.Count > 1);
+		}
+		[TestMethod]
+		public void Initialize_Natures_Test()
+		{
+			Assert.IsTrue(Game.InitNatures(), string.Format("NatureData: {0}",Game.NatureData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Natures_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.NatureData.Count > 1, string.Format("NatureData: {0}",Game.NatureData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Initialize_Moves_Test()
+		{
+			Assert.IsTrue(Game.InitMoves(), string.Format("MoveData: {0} | MoveMetaData: {1}",Game.MoveData.Count.ToString(), Game.MoveMetaData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Moves_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.MoveData.Count > 1, string.Format("MoveData: {0} | MoveMetaData: {1}",Game.MoveData.Count.ToString(), Game.MoveMetaData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Initialize_Items_Test()
+		{
+			Assert.IsTrue(Game.InitItems(), string.Format("ItemData: {0}",Game.ItemData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Items_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.ItemData.Count > 1, string.Format("ItemData: {0}",Game.ItemData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Initialize_Berries_Test()
+		{
+			Assert.IsTrue(Game.InitBerries(), string.Format("BerryData: {0}",Game.BerryData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Berries_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.BerryData.Count > 1, string.Format("BerryData: {0}",Game.BerryData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Initialize_Regions_Test()
+		{
+			Assert.IsTrue(Game.InitRegions(), string.Format("RegionData: {0}",Game.RegionData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Regions_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.RegionData.Count > 1, string.Format("RegionData: {0}",Game.RegionData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Initialize_Locations_Test()
+		{
+			Assert.IsTrue(Game.InitLocations(), string.Format("LocationData: {0} | AreaData: {1}",Game.LocationData.Count.ToString(), Game.AreaData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Locations_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.LocationData.Count > 1, string.Format("LocationData: {0} | AreaData: {1}",Game.LocationData.Count.ToString(), Game.AreaData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Initialize_Encounters_Test()
+		{
+			//Set Area Id THEN Test if Encounters loaded
+			Assert.IsTrue(Game.InitEncounters(), string.Format("EncounterData: {0} | MethodData: {1}",Game.EncounterData.Count.ToString(), Game.MethodData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Encounters_Data_IsLoaded()
+		{
+			//Set Area Id THEN Test if Encounters loaded
+			//Assert.IsTrue(Game.EncounterData.Count > 1, string.Format("EncounterData: {0} | MethodData: {1}",Game.EncounterData.Count.ToString(), Game.MethodData.Count.ToString()));
+			Assert.Inconclusive("Set Area Id THEN Test if Encounters loaded");
+		}
+		#endregion
+
 		#region PlayerMovement
 		//[TestMethod]
 		//public void Test_UseBike_While_SurfOrFly_Fails()
