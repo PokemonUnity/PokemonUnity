@@ -8,19 +8,19 @@ using PokemonUnity.Attack;
 
 namespace PokemonUnity.Attack
 {
-    public partial class Move
-    {
-        public class MoveTarget
-        {
-            public bool hasMultipleTargets(Move move)
-            {
-                return move.Targets == Target.AllOpposing || move.Targets == Target.AllNonUsers;
-            }
-            public bool targetsOneOpponent(Move move)
-            {
-                return move.Targets == Target.SingleNonUser || move.Targets == Target.RandomOpposing
-                    || move.Targets == Target.SingleOpposing || move.Targets == Target.OppositeOpposing;
-            }
-        }
-    }
+	/*public partial class Move
+	{
+		public class MoveTarget
+		{
+			public bool hasMultipleTargets(Move move)
+			{
+				return move.Targets == Target.AllOpposing || move.Targets == Target.AllNonUsers;
+			}
+			public bool targetsOneOpponent(Move move)
+			{
+				return move.Targets == Target.SingleNonUser || move.Targets == Target.RandomOpposing
+					|| move.Targets == Target.SingleOpposing || move.Targets == Target.OppositeOpposing;
+			}
+		}
+	}*/
 }

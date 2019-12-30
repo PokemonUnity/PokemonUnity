@@ -30,7 +30,7 @@ namespace PokemonUnity.Attack.Data
 		/// <remarks>If <see cref="Types.SHADOW"/> PP is EqualTo NULL</remarks>
 		public byte PP { get; private set; }
 		public int Priority { get; private set; }
-		public Flag? Flags { get; private set; }
+		public Flag Flags { get; private set; }
 		public Targets Target { get; private set; }
 		public Types Type { get; private set; }
 		public Contests? ContestType { get; private set; }
@@ -68,7 +68,7 @@ namespace PokemonUnity.Attack.Data
 			Power = baseDamage;
 			PP = pp;
 			Priority = priority;
-			Flags = flags;
+			Flags = flags ?? new Flag();
 			Target = target;
 			Type = type;
 			ContestType = contestType;

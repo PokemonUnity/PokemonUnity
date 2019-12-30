@@ -8,7 +8,7 @@ using PokemonUnity.Attack;
 
 namespace PokemonUnity.Attack
 {
-	public partial class Move
+	/*public partial class Move
 	{
 		public partial class MoveData
 		{
@@ -8985,5 +8985,5 @@ new MoveData() {
 				};
 			}
 		}
-	}
+	}*/
 }

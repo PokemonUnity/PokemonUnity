@@ -50,14 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attack\Move.cs" />
-    <Compile Include="Attack\Move\Base.cs" />
-    <Compile Include="Attack\Move\Database.cs" />
-    <Compile Include="Attack\Move\Data\Base.cs" />
-    <Compile Include="Attack\Move\Data\Meta.cs" />
-    <Compile Include="Attack\Move\Data\Flag.cs" />
-    <Compile Include="Attack\Move\Flag.cs" />
-    <Compile Include="Attack\Move\MoveBattle.cs" />
-    <Compile Include="Attack\Move\MoveTarget.cs" />
+    <Compile Include="Attack\Data\Base.cs" />
+    <Compile Include="Attack\Data\Meta.cs" />
+    <Compile Include="Attack\Data\Flag.cs" />
     <Compile Include="Character\Badge.cs" />
     <Compile Include="Character\Bag.cs" />
     <Compile Include="Character\Gear\Phone.cs" />
