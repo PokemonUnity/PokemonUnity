@@ -441,9 +441,9 @@ namespace PokemonUnity.Monster
             EggSteps = eggSteps;
 
             this.ballUsed = ballUsed;
-            if (PokemonUnity.Inventory.Item.Mail.IsMail(item))
+            if (PokemonUnity.Inventory.Mail.IsMail(item))
             {
-                this.mail = new Inventory.Item.Mail((Items)item);
+                this.mail = new Inventory.Mail((Items)item);
                 this.mail.Message = mail;
             }
 
@@ -1801,7 +1801,7 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Mail?...
         /// </summary>
-        private PokemonUnity.Inventory.Item.Mail mail { get; set; }
+        private PokemonUnity.Inventory.Mail mail { get; set; }
         /// <summary>
         /// Perform a null check; if anything other than null, there is a message
         /// </summary>
@@ -1810,7 +1810,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                if (this.mail == null || !PokemonUnity.Inventory.Item.Mail.IsMail(this.Item)) return null; //If empty return null
+                if (this.mail == null || !PokemonUnity.Inventory.Mail.IsMail(this.Item)) return null; //If empty return null
 				//if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
 				//{
 				//    //mail = null;

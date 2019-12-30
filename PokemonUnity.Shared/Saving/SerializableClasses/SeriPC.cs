@@ -13,7 +13,7 @@ namespace PokemonUnity.Saving.SerializableClasses
         public int[] BoxTextures { get; private set; }
         public static int[] Items { get; private set; }
 
-        public SeriPC(Monster.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Inventory.Item> boxItems)
+        public SeriPC(Monster.Pokemon[,] pokemons, string[] boxNames, int[] boxTextures, List<Inventory.Items> boxItems)
         {
             Pokemons = new SeriPokemon[pokemons.GetLength(0)][];
             for (int i = 0; i < Pokemons.GetLength(0); i++)
@@ -30,7 +30,7 @@ namespace PokemonUnity.Saving.SerializableClasses
             Items = new int[boxItems.Count];
             for (int i = 0; i < Items.Length; i++)
             {
-                Items[i] = (int)boxItems[i].ItemId;
+                Items[i] = (int)boxItems[i];
             }
         }
 
@@ -52,12 +52,12 @@ namespace PokemonUnity.Saving.SerializableClasses
 			return pkmn;
 		}
 
-		public Inventory.Item[] GetItemsFromSeri()
+		public Inventory.Items[] GetItemsFromSeri()
 		{
-			Inventory.Item[] items = new Inventory.Item[Items.Length];
+			Inventory.Items[] items = new Inventory.Items[Items.Length];
 			for (int i = 0; i < Items.Length; i++)
 			{
-				items[i] = new Inventory.Item((Inventory.Items)Items[i]);
+				items[i] = (Inventory.Items)Items[i];
 			}
 			return items;
 		}

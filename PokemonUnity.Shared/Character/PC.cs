@@ -36,7 +36,7 @@ namespace PokemonUnity
 			/// <summary>
 			/// </summary>
 			/// ToDo: Add filter to add/remove items...
-			public List<Item> Items { get { return Game.PC_Items; } set { Game.PC_Items = value; } }
+			public List<Items> Items { get { return Game.PC_Items; } set { Game.PC_Items = value; } }
 
 			public TrainerPC this[int i]
 			{

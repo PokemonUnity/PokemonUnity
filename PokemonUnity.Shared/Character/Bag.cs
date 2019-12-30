@@ -518,7 +518,7 @@ namespace PokemonUnity
 			/// <param name="item">The Item to store in the inventory.</param>
 			/// <param name="quantity">The amount.</param>
 			/// <returns></returns>
-			public string GetMessageReceive(Item item, int quantity = 1)
+			public string GetMessageReceive(Items item, int quantity = 1)
 			{
 				string Message = "";
 				//if (quantity == 1)

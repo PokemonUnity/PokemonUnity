@@ -64,7 +64,7 @@ namespace PokemonUnity
 		public static Pokemon[,] PC_Poke { get; set; }
 		public static string[] PC_boxNames { get; set; }
 		public static int[] PC_boxTexture { get; set; }
-		public static List<Item> PC_Items { get; set; } //ToDo: Why not ItemS?
+		public static List<Items> PC_Items { get; set; } 
 		public static List<Items> Bag_Items { get; set; }
 		#endregion
 
@@ -118,7 +118,7 @@ namespace PokemonUnity
 					//ToDo: Make sure there's enough texture in library for array size
 					//PC_boxTexture[i] = i; 
 				}
-				PC_Items = new List<Item>();
+				PC_Items = new List<Items>();
 				Bag_Items = new List<Items>();
 
 				//Overworld Experience
@@ -232,7 +232,7 @@ namespace PokemonUnity
 					Game.PC_Poke = data.PC.GetPokemonsFromSeri();
 					Game.PC_boxNames = data.PC.BoxNames;
 					Game.PC_boxTexture = data.PC.BoxTextures;
-					Game.PC_Items = new List<Item>(data.PC.GetItemsFromSeri());
+					Game.PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
 					Game.Bag_Items = data.PlayerBag;
 					break;
 			}

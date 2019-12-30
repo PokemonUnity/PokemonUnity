@@ -119,7 +119,7 @@ namespace Tests
 				scene: activeScene,
 		
 				party: red.Party.Serialize(), 
-				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Item>()),
+				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Items>()),
 				bag: playerBag
 		
 				//,eventList: eventList

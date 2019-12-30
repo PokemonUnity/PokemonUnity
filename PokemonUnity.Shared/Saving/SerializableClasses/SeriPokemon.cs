@@ -190,7 +190,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				seriPokemon.EggSteps			= pokemon.EggSteps;
 
 				seriPokemon.BallUsed			= (int)pokemon.ballUsed;
-				if (pokemon.Item != Items.NONE && PokemonUnity.Inventory.Item.Mail.IsMail(pokemon.Item))
+				if (pokemon.Item != Items.NONE && Game.ItemData[pokemon.Item].IsLetter)//PokemonUnity.Inventory.Mail.IsMail(pokemon.Item))
 				{
 					seriPokemon.Mail			= new SeriMail(pokemon.Item, pokemon.Mail);
 				}
@@ -236,9 +236,9 @@ namespace PokemonUnity.Saving.SerializableClasses
             //Background will stay 0 (new int) until Mail's background feature is implemented
             //public int Background { get; private set; }
 
-            public static implicit operator Item.Mail(SeriMail mail)
+            public static implicit operator Mail(SeriMail mail)
             {
-                Item.Mail newMail = new Item.Mail((Items)mail.MailId);
+                Mail newMail = new Mail((Items)mail.MailId);
                 newMail.Message = mail.Message;
                 return newMail;
             }

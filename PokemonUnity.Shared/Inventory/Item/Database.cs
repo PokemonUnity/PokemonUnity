@@ -4,7 +4,7 @@ using PokemonUnity.Inventory;
 
 namespace PokemonUnity.Inventory
 {
-    public partial class Item
+    /*public partial class Item
     {
         /// <summary>
         /// Replaces <see cref="oldItems"/>
@@ -764,5 +764,5 @@ new Item(Items.TM99,                ItemCategory.ALL_MACHINES,     0, null, null
 new Item(Items.TM100,               ItemCategory.ALL_MACHINES,     0, null, null, null    )
 };
         }
-    }
+    }*/
 }

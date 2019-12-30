@@ -85,12 +85,6 @@
     <Compile Include="Game\Game.Database.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Inventory\Data\Base.cs" />
-    <Compile Include="Inventory\Item\Berry.cs" />
-    <Compile Include="Inventory\Item\Database.cs" />
-    <Compile Include="Inventory\Item\ItemFlags.cs" />
-    <Compile Include="Inventory\Item\ItemHandler.cs" />
-    <Compile Include="Inventory\Item\Mail.cs" />
-    <Compile Include="Inventory\Item.cs" />
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
     <Compile Include="Inventory\Data\Mail.cs" />

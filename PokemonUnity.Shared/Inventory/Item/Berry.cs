@@ -4,7 +4,7 @@ using PokemonUnity.Inventory.Plants;
 
 namespace PokemonUnity.Inventory
 {
-	public partial class Item
+	/*public partial class Item
 	{
 		public bool IsBerry
 		{
@@ -545,5 +545,5 @@ BerryIndex = 40;	maxBerries = 5;		growthRate = 18;	moistIntake = 6;	Spicy = 0;	D
 			}
 			#endregion		
 		}
-	}
+	}*/
 }

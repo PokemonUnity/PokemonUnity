@@ -19,7 +19,7 @@ namespace PokemonUnity.Inventory//.ItemData
 		private Trainer sender { get; set; }
 		public bool IsLetter { get; private set; }
 
-		public static bool IsMail(Items item) { return new Item(item).IsMail; }
+		public static bool IsMail(Items item) { return Game.ItemData[item].IsLetter; }//{ return new Item(item).IsMail; }
 
 		public Mail(Items letter)
 		{
