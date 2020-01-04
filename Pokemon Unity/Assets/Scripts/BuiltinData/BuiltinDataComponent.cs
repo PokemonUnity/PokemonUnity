@@ -37,7 +37,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_BuildInfo = Utility.Json.ToObject<BuildInfo>(m_BuildInfoTextAsset.text);
+            m_BuildInfo = GameFramework.Utility.Json.ToObject<BuildInfo>(m_BuildInfoTextAsset.text);
             if (m_BuildInfo == null)
             {
                 Log.Warning("Parse build info failure.");

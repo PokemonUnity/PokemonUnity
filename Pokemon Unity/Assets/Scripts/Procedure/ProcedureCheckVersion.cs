@@ -74,7 +74,7 @@ namespace PokemonUnity
             iOSSystemVersion = UnityEngine.iOS.Device.systemVersion;
             iOSVendorIdentifier = UnityEngine.iOS.Device.vendorIdentifier ?? string.Empty;
 #endif
-            string gameVersion = Version.GameVersion;
+            string gameVersion = GameFramework.Version.GameVersion;
             string platform = Application.platform.ToString();
             string language = GameEntry.Localization.Language.ToString();
             string unityVersion = Application.unityVersion;
@@ -84,7 +84,7 @@ namespace PokemonUnity
             string screenHeight = Screen.height.ToString();
             string screenDpi = Screen.dpi.ToString();
             string screenOrientation = Screen.orientation.ToString();
-            string screenResolution = Utility.Text.Format("{0} x {1} @ {2}Hz", Screen.currentResolution.width.ToString(), Screen.currentResolution.height.ToString(), Screen.currentResolution.refreshRate.ToString());
+            string screenResolution = GameFramework.Utility.Text.Format("{0} x {1} @ {2}Hz", Screen.currentResolution.width.ToString(), Screen.currentResolution.height.ToString(), Screen.currentResolution.refreshRate.ToString());
             string useWifi = (Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork).ToString();
 
             WWWForm wwwForm = new WWWForm();
@@ -122,15 +122,15 @@ namespace PokemonUnity
                 return;
             }
 
-            string responseJson = Utility.Converter.GetString(ne.GetWebResponseBytes());
-            VersionInfo versionInfo = Utility.Json.ToObject<VersionInfo>(responseJson);
+            string responseJson = GameFramework.Utility.Converter.GetString(ne.GetWebResponseBytes());
+            VersionInfo versionInfo = GameFramework.Utility.Json.ToObject<VersionInfo>(responseJson);
             if (versionInfo == null)
             {
                 Log.Error("Parse VersionInfo failure.");
                 return;
             }
 
-            Log.Info("Latest game version is '{0}', local game version is '{1}'.", versionInfo.LatestGameVersion, Version.GameVersion);
+            Log.Info("Latest game version is '{0}', local game version is '{1}'.", versionInfo.LatestGameVersion, GameFramework.Version.GameVersion);
 
             if (versionInfo.ForceGameUpdate)
             {

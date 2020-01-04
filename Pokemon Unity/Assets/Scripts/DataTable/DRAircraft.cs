@@ -194,14 +194,14 @@ namespace PokemonUnity
                 }
             }
 
-            throw new GameFrameworkException(Utility.Text.Format("GetWeaponId with invalid id '{0}'.", id.ToString()));
+            throw new GameFrameworkException(GameFramework.Utility.Text.Format("GetWeaponId with invalid id '{0}'.", id.ToString()));
         }
 
         public int GetWeaponIdAt(int index)
         {
             if (index < 0 || index >= m_WeaponId.Length)
             {
-                throw new GameFrameworkException(Utility.Text.Format("GetWeaponIdAt with invalid index '{0}'.", index.ToString()));
+                throw new GameFrameworkException(GameFramework.Utility.Text.Format("GetWeaponIdAt with invalid index '{0}'.", index.ToString()));
             }
 
             return m_WeaponId[index].Value;
@@ -227,14 +227,14 @@ namespace PokemonUnity
                 }
             }
 
-            throw new GameFrameworkException(Utility.Text.Format("GetArmorId with invalid id '{0}'.", id.ToString()));
+            throw new GameFrameworkException(GameFramework.Utility.Text.Format("GetArmorId with invalid id '{0}'.", id.ToString()));
         }
 
         public int GetArmorIdAt(int index)
         {
             if (index < 0 || index >= m_ArmorId.Length)
             {
-                throw new GameFrameworkException(Utility.Text.Format("GetArmorIdAt with invalid index '{0}'.", index.ToString()));
+                throw new GameFrameworkException(GameFramework.Utility.Text.Format("GetArmorIdAt with invalid index '{0}'.", index.ToString()));
             }
 
             return m_ArmorId[index].Value;

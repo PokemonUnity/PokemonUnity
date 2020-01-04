@@ -78,6 +78,8 @@
     <Compile Include="Extensions\ScriptConversion.cs" />
     <Compile Include="Extensions\StringHelper.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Game\Game.Features.cs" />
+    <Compile Include="Game\Game.Conditions.cs" />
     <Compile Include="Game\Game.Database.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Inventory\Data\Base.cs" />

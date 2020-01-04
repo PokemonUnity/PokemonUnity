@@ -109,29 +109,29 @@ namespace PokemonUnity
 
         private void LoadConfig(string configName)
         {
-            m_LoadedFlag.Add(Utility.Text.Format("Config.{0}", configName), false);
+            m_LoadedFlag.Add(GameFramework.Utility.Text.Format("Config.{0}", configName), false);
             GameEntry.Config.LoadConfig(configName, LoadType.Bytes, this);
         }
 
         private void LoadDataTable(string dataTableName)
         {
-            m_LoadedFlag.Add(Utility.Text.Format("DataTable.{0}", dataTableName), false);
+            m_LoadedFlag.Add(GameFramework.Utility.Text.Format("DataTable.{0}", dataTableName), false);
             GameEntry.DataTable.LoadDataTable(dataTableName, LoadType.Bytes, this);
         }
 
         private void LoadDictionary(string dictionaryName)
         {
-            m_LoadedFlag.Add(Utility.Text.Format("Dictionary.{0}", dictionaryName), false);
+            m_LoadedFlag.Add(GameFramework.Utility.Text.Format("Dictionary.{0}", dictionaryName), false);
             GameEntry.Localization.LoadDictionary(dictionaryName, LoadType.Text, this);
         }
 
         private void LoadFont(string fontName)
         {
-            m_LoadedFlag.Add(Utility.Text.Format("Font.{0}", fontName), false);
+            m_LoadedFlag.Add(GameFramework.Utility.Text.Format("Font.{0}", fontName), false);
             GameEntry.Resource.LoadAsset(AssetUtility.GetFontAsset(fontName), Constant.AssetPriority.FontAsset, new LoadAssetCallbacks(
                 (assetName, asset, duration, userData) =>
                 {
-                    m_LoadedFlag[Utility.Text.Format("Font.{0}", fontName)] = true;
+                    m_LoadedFlag[GameFramework.Utility.Text.Format("Font.{0}", fontName)] = true;
                     UGuiForm.SetMainFont((Font)asset);
                     Log.Info("Load font '{0}' OK.", fontName);
                 },
@@ -150,7 +150,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_LoadedFlag[Utility.Text.Format("Config.{0}", ne.ConfigName)] = true;
+            m_LoadedFlag[GameFramework.Utility.Text.Format("Config.{0}", ne.ConfigName)] = true;
             Log.Info("Load config '{0}' OK.", ne.ConfigName);
         }
 
@@ -173,7 +173,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_LoadedFlag[Utility.Text.Format("DataTable.{0}", ne.DataTableName)] = true;
+            m_LoadedFlag[GameFramework.Utility.Text.Format("DataTable.{0}", ne.DataTableName)] = true;
             Log.Info("Load data table '{0}' OK.", ne.DataTableName);
         }
 
@@ -196,7 +196,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_LoadedFlag[Utility.Text.Format("Dictionary.{0}", ne.DictionaryName)] = true;
+            m_LoadedFlag[GameFramework.Utility.Text.Format("Dictionary.{0}", ne.DictionaryName)] = true;
             Log.Info("Load dictionary '{0}' OK.", ne.DictionaryName);
         }
 

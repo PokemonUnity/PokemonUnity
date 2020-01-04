@@ -56,7 +56,7 @@ namespace PokemonUnity
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
-            Name = Utility.Text.Format("Thruster of {0}", parentEntity.Name);
+            Name = GameFramework.Utility.Text.Format("Thruster of {0}", parentEntity.Name);
             CachedTransform.localPosition = Vector3.zero;
         }
     }

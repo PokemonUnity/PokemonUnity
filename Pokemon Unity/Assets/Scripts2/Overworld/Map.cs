@@ -24,6 +24,7 @@ namespace PokemonUnity
 	/// a separate GameObject versus a single map
 	/// Decide whether to load all GameObjects together or
 	/// relative to/based on a player's given position
+	//ToDo: http://studentgamedev.blogspot.com/2013/08/unity-voxel-tutorial-part-1-generating.html 
 	[UnityEngine.RequireComponent(typeof(UnityEngine.MeshFilter),typeof(UnityEngine.MeshRenderer))]
 	public class Map : UnityEngine.MonoBehaviour
 	{

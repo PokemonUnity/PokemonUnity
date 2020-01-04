@@ -44,7 +44,7 @@ namespace PokemonUnity
                 return;
             }
 
-            Name = Utility.Text.Format("Aircraft ({0})", Id.ToString());
+            Name = GameFramework.Utility.Text.Format("Aircraft ({0})", Id.ToString());
 
             GameEntry.Entity.ShowThruster(m_AircraftData.GetThrusterData());
 

@@ -58,7 +58,7 @@ namespace PokemonUnity
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
-            Name = Utility.Text.Format("Weapon of {0}", parentEntity.Name);
+            Name = GameFramework.Utility.Text.Format("Weapon of {0}", parentEntity.Name);
             CachedTransform.localPosition = Vector3.zero;
         }
 

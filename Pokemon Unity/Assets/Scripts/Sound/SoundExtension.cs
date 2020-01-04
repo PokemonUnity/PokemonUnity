@@ -121,7 +121,7 @@ namespace PokemonUnity
 
             soundGroup.Mute = mute;
 
-            GameEntry.Setting.SetBool(Utility.Text.Format(Constant.Setting.SoundGroupMuted, soundGroupName), mute);
+            GameEntry.Setting.SetBool(GameFramework.Utility.Text.Format(Constant.Setting.SoundGroupMuted, soundGroupName), mute);
             GameEntry.Setting.Save();
         }
 
@@ -160,7 +160,7 @@ namespace PokemonUnity
 
             soundGroup.Volume = volume;
 
-            GameEntry.Setting.SetFloat(Utility.Text.Format(Constant.Setting.SoundGroupVolume, soundGroupName), volume);
+            GameEntry.Setting.SetFloat(GameFramework.Utility.Text.Format(Constant.Setting.SoundGroupVolume, soundGroupName), volume);
             GameEntry.Setting.Save();
         }
     }

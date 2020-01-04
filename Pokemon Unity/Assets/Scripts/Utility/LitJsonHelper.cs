@@ -14,7 +14,7 @@ namespace PokemonUnity
     /// <summary>
     /// LitJSON 函数集辅助器。
     /// </summary>
-    internal class LitJsonHelper : Utility.Json.IJsonHelper
+    internal class LitJsonHelper : GameFramework.Utility.Json.IJsonHelper
     {
         /// <summary>
         /// 将对象序列化为 JSON 字符串。
