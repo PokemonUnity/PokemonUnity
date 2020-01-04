@@ -23,7 +23,9 @@ namespace PokemonUnity.Attack
 	/// <see cref="MoveData"/> and <see cref="MoveMetaData"/> should remain immutable in 
 	/// <seealso cref="Game.MoveData"/> and <seealso cref="Game.MoveMetaData"/>
 	/// </summary>
-	public partial class Move
+	/// Does this need to be serialized?
+	[System.Serializable]
+	public class Move
 	{
 		#region Properties
 		private MoveData _base { get; set; }

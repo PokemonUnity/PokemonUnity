@@ -84,7 +84,7 @@ namespace PokemonUnity.Monster
         /// <summary>
         /// Array of 6 Individual Values for HP, Atk, Def, Speed, Sp Atk, and Sp Def
         /// </summary>
-        public byte[] IV { get; private set; }
+        public int[] IV { get; private set; }
         /// <summary>
         /// Effort Values
         /// </summary>
@@ -210,7 +210,7 @@ namespace PokemonUnity.Monster
 			shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
 			//Gender = isMale();
 			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
-            IV = new byte[] { (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1), (byte)(Core.Rand.Next(30) + 1) };
+            IV = new int[] { (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1) };
             EV = new byte[6];
             Contest = new byte[6];
             Exp = new Experience(GrowthRate);
@@ -271,6 +271,45 @@ namespace PokemonUnity.Monster
 		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); }
 
 		/// <summary>
+		/// Use this constructor when creating battle pokemon
+		/// </summary>
+		/// <param name="pkmn"></param>
+		/// <param name="level"></param>
+		/// <param name="moves"></param>
+		/// <param name="ivs"></param>
+		/// <param name="pokeball"></param>
+		/// <param name="obtain"></param>
+		/// <param name="nickname"></param>
+		public Pokemon(Pokemons pkmn, byte level, Move[] moves, int ivs = 0, Items pokeball = Items.POKE_BALL, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null)
+			: this(pkmn, level: level, isEgg: false) 
+			//: this(
+			//species: pkmn.Species,
+			//original: Game.Player.Trainer,
+			//nickName: nickname, form: pkmn.Form,
+			//ability: pkmn.Ability, nature: pkmn.Nature,
+			//isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+			//pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
+			//shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
+			//item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
+			//obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
+			//happiness: pkmn.Happiness, status: pkmn.Status,
+			//statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps,
+			//ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
+			//ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
+			//personalId: pkmn.PersonalId, obtainedMethod: obtain,
+			//timeReceived: DateTimeOffset.Now, timeEggHatched: null)
+		{
+			if (pokeball == Items.NONE
+				|| Game.ItemData[pokeball].Category == ItemCategory.STANDARD_BALLS
+				|| Game.ItemData[pokeball].Category == ItemCategory.SPECIAL_BALLS
+				|| Game.ItemData[pokeball].Category == ItemCategory.APRICORN_BALLS)
+				this.ballUsed = pokeball;
+			if (moves.Length == 4) this.moves = moves;
+			this.name = nickname;
+			IV = Utility.MathHelper.randSum(IV.Length, ivs);
+		}
+
+		/// <summary>
 		/// Instializes a new Pokemon, with values at default. 
 		/// Pokemon is created at the level assigned in parameter, 
 		/// with all stats randomly generated/assigned (new roll).
@@ -294,7 +333,7 @@ namespace PokemonUnity.Monster
             int TPFORM = 0,
             bool TPSHINY = false,
             Natures TPNATURE = (Natures)0, //Natures.UNSET,
-			byte[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
+			int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
             int TPHAPPINESS = 70,
             string TPNAME = null,
             bool TPSHADOW = false,
@@ -387,7 +426,7 @@ namespace PokemonUnity.Monster
             int[] pokerus, bool ishyper,
             int? shadowLevel,
             int currentHp, Items item,
-            byte[] iv, byte[] ev, 
+            int[] iv, byte[] ev, 
             int obtainedLevel, /*int currentLevel,*/ int currentExp,
             int happiness, Status status, int statusCount,
             int eggSteps, Items ballUsed,

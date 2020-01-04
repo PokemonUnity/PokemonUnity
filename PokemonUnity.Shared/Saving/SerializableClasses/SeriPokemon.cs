@@ -24,7 +24,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		TPMOVE4		,
 		TPABILITY	,
 		TPGENDER	,
-		TPFORM		, //ToDo
+		TPFORM		, 
 		TPSHINY		,
 		TPNATURE	,
 		TPIV		,
@@ -57,7 +57,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public int CurrentHP { get; private set; }
 		public int Item { get; private set; }
 
-		public byte[] IV { get; private set; }
+		public int[] IV { get; private set; }
 		public byte[] EV { get; private set; }
 
 		public int ObtainedLevel { get; private set; }
@@ -141,7 +141,6 @@ namespace PokemonUnity.Saving.SerializableClasses
 				//PublicId in pokemon is null, so Pokemon returns null
 				//seriPokemon.PublicId			= pokemon.PublicId;
 
-				//ToDo: Uncomment and fix
 				if (!pokemon.OT.Equals((object)null))
 				{
 					seriPokemon.TrainerName			= pokemon.OT.Name;
@@ -156,11 +155,9 @@ namespace PokemonUnity.Saving.SerializableClasses
 				seriPokemon.NickName			= pokemon.Name;
 
 				seriPokemon.Ability				= (int)pokemon.Ability;
-				//Due to parts of Pokemon that's being reworked
-				//These parts shouldn't be saved yet.
 
 				//seriPokemon.Nature = pokemon.getNature();
-				seriPokemon.Nature				= (int)pokemon.Nature;//new Nature(Natures.SASSY, 0,0,0,0,0); //TESTING ONLY
+				seriPokemon.Nature				= (int)pokemon.Nature;
 				seriPokemon.IsShiny				= pokemon.IsShiny; 
 				seriPokemon.Gender				= pokemon.Gender;
 

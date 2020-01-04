@@ -8,9 +8,23 @@ using System.Runtime.Serialization;
 //using UnityEditor;
 //#endif
 
-namespace PokemonUnity
+namespace PokemonUnity.Utility
 {
-	/// <summary>
+	public struct Vector
+	{
+		public float x { get; set; }
+		public float y { get; set; }
+		public float z { get; set; }
+
+		public Vector(float rX, float rY, float rZ)
+		{
+			x = rX;
+			y = rY;
+			z = rZ;
+		}
+	}
+
+	/*// <summary>
 	/// Since unity doesn't flag the Vector3 as serializable, we
 	/// need to create our own version. This one will automatically convert
 	/// between Vector3 and SerializableVector3
@@ -117,5 +131,5 @@ namespace PokemonUnity
 		{
 			return new UnityEngine.Vector3(v.x, v.y, z);
 		}
-	}
+	}*/
 }

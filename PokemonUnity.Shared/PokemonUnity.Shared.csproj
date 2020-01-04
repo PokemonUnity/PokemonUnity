@@ -61,6 +61,7 @@
     <Compile Include="Character\P3D.Player.cs" />
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player.cs" />
+    <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Trainer.cs" />
     <Compile Include="Character\Trainer\Database.cs" />
     <Compile Include="Core.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="Monster\Pokemon\PokemonData\Moveset.cs" />
     <Compile Include="Monster\Pokemon\PokemonData\MoveTree.cs" />
     <Compile Include="Monster\Type.cs" />
-    <Compile Include="Overworld\Encounter.cs" />
+    <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saving\EventListener.cs" />
@@ -107,6 +108,8 @@
     <Compile Include="Saving\SerializableClasses\SeriMove.cs" />
     <Compile Include="Saving\SerializableClasses\SeriPC.cs" />
     <Compile Include="Saving\SerializableClasses\SeriPokemon.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriV2.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriV3.cs" />
     <Compile Include="Translations\Translations.cs" />
     <Compile Include="Translations\Translator.cs" />
   </ItemGroup>

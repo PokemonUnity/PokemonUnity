@@ -116,7 +116,7 @@ namespace Tests
 				//followerPosition,
 				//followerDirection,
 		
-				scene: activeScene,
+				map: activeScene,
 		
 				party: red.Party.Serialize(), 
 				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Items>()),
@@ -217,7 +217,7 @@ namespace Tests
 					Assert.Fail("Pokedex entries are not the same on index: " + i);
 			}
 
-			if (newSave.PlayerTime != loadedData.PlayerTime)
+			if (newSave.PlayTime != loadedData.PlayTime)
 				Assert.Fail("PlayerTimes are not the same");
 
 			if (
@@ -238,7 +238,7 @@ namespace Tests
 			//if (newSave.FollowerDirection != loadedData.FollowerDirection)
 			//	Assert.Fail("FollowerDirections are not the same");
 
-			if (newSave.ActiveScene != loadedData.ActiveScene)
+			if (newSave.ActiveMapId != loadedData.ActiveMapId)
 				Assert.Fail("ActiveScenes are no the same");
 
 			if (newSave.PlayerParty.Length != loadedData.PlayerParty.Length)
@@ -440,7 +440,7 @@ namespace Tests
 			SaveData newSave = SaveManager.GetSaves()[0];
 			TimeSpan expectedTimeSpan = new TimeSpan(4, 20, 53);
 
-			Assert.AreEqual(expectedTimeSpan, newSave.PlayerTime);
+			Assert.AreEqual(expectedTimeSpan, newSave.PlayTime);
 		}
 
 		#region Game Settings (different from Player Settings)

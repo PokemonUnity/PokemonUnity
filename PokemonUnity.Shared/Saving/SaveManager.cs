@@ -452,5 +452,7 @@ namespace PokemonUnity.Saving
 			return (T)value;
 		}
 		#endregion
+
+		//ToDo: 0.1.1 AND 0.2.0
 	}
 }

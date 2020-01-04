@@ -18,6 +18,7 @@ using System.Data.Common;
 using System.Data.SQLite;
 using PokemonUnity.Inventory.Plants;
 using PokemonUnity.Attack.Data;
+using PokemonUnity.Character;
 //using System.Data.SqlClient;
 //using System.Security.Cryptography.MD5;
 
@@ -63,7 +64,18 @@ namespace PokemonUnity
 		/// Key: <seealso cref="Encounter.Id"/> | Value: <seealso cref="Encounter"/>
 		/// </summary>
 		public static Dictionary<int,Encounter> EncounterData { get; private set; }
-		//ability
+		public static Dictionary<TrainerTypes,TrainerData> TrainerMetaData { get; private set; }
+		//public static Dictionary<Items,KeyValuePair<Moves,int[]>[]> MachineMetaData { get; private set; }
+		//public static Dictionary<int,Machine> MachineData { get; private set; }
+		//public static Dictionary<int,Machine> MapData { get; private set; }
+		//public static Dictionary<int,int> TextureData1 { get; private set; }
+		//public static Dictionary<int,int> TextureData2 { get; private set; }
+		//public static Dictionary<Location,Script[]> ScriptData { get; private set; }
+		//public static Dictionary<Location,Script[]> LevelScriptData { get; private set; }
+		//public static Dictionary<Location,Text[]> TextData { get; private set; }
+		//public static Dictionary<Location,EventData> EventData { get; private set; }
+		//public static Dictionary<Location,Event[]> EventData { get; private set; }
+		//public static Dictionary<Location,EventFlags[]> MapFlagData { get; private set; }
 		#endregion
 
 		#region Initialize Datab From Database
@@ -152,6 +164,22 @@ namespace PokemonUnity
 			EncounterData = new Dictionary<int, Encounter>();
 			if (sql) //using (con)
 				return GetEncountersFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitMachines(bool sql = true)
+		{
+			//MethodData = new Dictionary<Method, int[]>();
+			//EncounterData = new Dictionary<int, Encounter>();
+			if (sql) //using (con)
+				return GetMachinesFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitTrainers(bool sql = true)
+		{
+			TrainerMetaData = new Dictionary<TrainerTypes, TrainerData>();
+			//TrainerData = new Dictionary<int, Encounter>();
+			if (sql) //using (con)
+				return GetTrainersFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
 		#endregion
@@ -1218,17 +1246,20 @@ namespace PokemonUnity
 				#region DataReader
 				stmt.CommandText = //"select * from natures order by game_index ASC";
 					@"select l.id, l.region_id, l.identifier,
-				g.generation_id,
-				n.name, n.subtitle
+				group_concat(DISTINCT g.generation_id) as generation_group, --g.generation_id, 
+				n.name, n.subtitle,
+				group_concat(DISTINCT v.version_group_id) as version_group
 				from locations as l
 				left join location_game_indices as g on l.id = g.location_id
-				left join location_names as n on l.id = n.location_id AND n.local_language_id = 9;";
+				left join location_names as n on l.id = n.location_id AND n.local_language_id = 9
+				left join version_group_regions as v on l.region_id = v.region_id
+				group by l.id; --having count(*) > 1;";
 				SQLiteDataReader reader = stmt.ExecuteReader();
 
 				//Step 4: Read the results
 				using(reader)
 				{
-					Dictionary<Regions, List<Locations>> r = new Dictionary<Regions, List<Locations>>();
+					Dictionary<Regions, List<Locations>> r = new Dictionary<Regions, List<Locations>>();//ToDo: List<Locations,int[]>(Locations.Id,version_group.ToArray())
 					r.Add(Regions.NOT_IN_OVERWORLD, new List<Locations>());
 					r[Regions.NOT_IN_OVERWORLD].Add(Locations.NOT_IN_OVERWORLD);
 					while (reader.Read()) //if(reader.Read())
@@ -1425,6 +1456,321 @@ namespace PokemonUnity
 					{
 						MethodData.Add((Method)int.Parse((string)reader["encounter_method_id"].ToString()), en.Value.ToArray());
 					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetMachinesFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = //"select * from natures order by game_index ASC";
+					@"select row_number() over (order by m.machine_number) as id, m.machine_number as tm_num, m.item_id, group_concat(DISTINCT m.move_id) as move_group, group_concat(DISTINCT m.version_group_id) as version_group,
+				g.identifier, g.type_id
+				--n.name, n.subtitle
+				from machines as m
+				left join moves as g on g.id = m.move_id
+				--left join location_names as n on l.id = n.location_id AND n.local_language_id = 9; 
+				group by m.item_id, m.move_id;";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					Dictionary<Method, List<int>> e = new Dictionary<Method, List<int>>();
+					while (reader.Read()) //if(reader.Read())
+					{
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
+		static bool GetTrainersFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				foreach (TrainerTypes type in Enum.GetValues(typeof(TrainerTypes)))
+				{
+					int BaseMoney = 30;
+					int SkillLevel = 1;
+					bool? gender = null;
+					bool doubel = false;
+					#region Gender & IsDouble
+					switch (type)
+					{
+						case TrainerTypes.POKEMONTRAINER_Red:
+						case TrainerTypes.POKEMONTRAINER_Leaf:
+						case TrainerTypes.POKEMONTRAINER_Brendan:
+						case TrainerTypes.RIVAL1:
+						case TrainerTypes.RIVAL2:
+						case TrainerTypes.BIKER:
+						case TrainerTypes.BIRDKEEPER:
+						case TrainerTypes.BUGCATCHER:
+						case TrainerTypes.BURGLAR:
+						case TrainerTypes.CHANELLER:
+						case TrainerTypes.CUEBALL:
+						case TrainerTypes.ENGINEER:
+						case TrainerTypes.FISHERMAN:
+						case TrainerTypes.GAMBLER:
+						case TrainerTypes.GENTLEMAN:
+						case TrainerTypes.HIKER:
+						case TrainerTypes.JUGGLER:
+						case TrainerTypes.PAINTER:
+						case TrainerTypes.POKEMANIAC:
+						case TrainerTypes.POKEMONBREEDER:
+						case TrainerTypes.PROFESSOR:
+						case TrainerTypes.ROCKER:
+						case TrainerTypes.RUINMANIAC:
+						case TrainerTypes.SAILOR:
+						case TrainerTypes.SCIENTIST:
+						case TrainerTypes.SUPERNERD:
+						case TrainerTypes.TAMER:
+						case TrainerTypes.BLACKBELT:
+						case TrainerTypes.CAMPER:
+						case TrainerTypes.PICNICKER:
+						case TrainerTypes.COOLTRAINER_M:
+						case TrainerTypes.YOUNGSTER:
+						case TrainerTypes.POKEMONRANGER_M:
+						case TrainerTypes.PSYCHIC_M:
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER2_M:
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.CRUSHKIN:
+						case TrainerTypes.TEAMROCKET_M:
+						case TrainerTypes.ROCKETBOSS:
+						case TrainerTypes.LEADER_Brock:
+						case TrainerTypes.LEADER_Surge:
+						case TrainerTypes.LEADER_Koga:
+						case TrainerTypes.LEADER_Blaine:
+						case TrainerTypes.LEADER_Giovanni:
+						case TrainerTypes.ELITEFOUR_Bruno:
+						case TrainerTypes.ELITEFOUR_Lance:
+						case TrainerTypes.CHAMPION:
+							gender = true;
+							break;
+						case TrainerTypes.POKEMONTRAINER_May:
+						case TrainerTypes.AROMALADY:
+						case TrainerTypes.BEAUTY:
+						case TrainerTypes.LADY:
+						case TrainerTypes.CRUSHGIRL:
+						case TrainerTypes.COOLTRAINER_F:
+						case TrainerTypes.LASS:
+						case TrainerTypes.POKEMONRANGER_F:
+						case TrainerTypes.PSYCHIC_F:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_F:
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_F:
+						case TrainerTypes.TEAMROCKET_F:
+						case TrainerTypes.LEADER_Misty:
+						case TrainerTypes.LEADER_Erika:
+						case TrainerTypes.LEADER_Sabrina:
+						case TrainerTypes.ELITEFOUR_Lorelei:
+						case TrainerTypes.ELITEFOUR_Agatha:
+							gender = false;
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.SISANDBRO:
+						case TrainerTypes.TWINS:
+						case TrainerTypes.YOUNGCOUPLE:
+							doubel = true;
+							break;
+						case TrainerTypes.WildPokemon:
+						case TrainerTypes.PLAYER:
+						default:
+							break;
+					}
+					switch (type)
+					{
+						case TrainerTypes.BURGLAR:
+						case TrainerTypes.GAMBLER:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.LADY:
+							SkillLevel = 72;
+							break;
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER2_M:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_F:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_F:
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.SISANDBRO:
+						case TrainerTypes.YOUNGCOUPLE:
+							break;
+						default:
+							break;
+					}
+					#endregion
+					#region Base Money
+					switch (type)
+					{
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_F:
+							BaseMoney = 4;
+							break;
+						case TrainerTypes.RIVAL1:
+						case TrainerTypes.BUGCATCHER:
+						case TrainerTypes.PAINTER:
+						case TrainerTypes.CAMPER:
+						case TrainerTypes.LASS:
+						case TrainerTypes.PICNICKER:
+						case TrainerTypes.SISANDBRO:
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_M:
+						case TrainerTypes.SWIMMER2_F:
+						case TrainerTypes.YOUNGSTER:
+							BaseMoney = 16;
+							break;
+						case TrainerTypes.CUEBALL:
+						case TrainerTypes.CRUSHGIRL:
+						case TrainerTypes.ROCKER:
+						case TrainerTypes.TWINS:
+							BaseMoney = 24;
+							break;
+						case TrainerTypes.AROMALADY:
+						case TrainerTypes.BIKER:
+						case TrainerTypes.BIRDKEEPER:
+						case TrainerTypes.BLACKBELT:
+						case TrainerTypes.CHANELLER:
+						case TrainerTypes.FISHERMAN:
+						case TrainerTypes.HIKER:
+						case TrainerTypes.JUGGLER:
+						case TrainerTypes.PSYCHIC_M:
+						case TrainerTypes.PSYCHIC_F:
+						case TrainerTypes.SAILOR:
+						case TrainerTypes.TEAMROCKET_M:
+						case TrainerTypes.TEAMROCKET_F:
+							BaseMoney = 32;
+							break;
+						case TrainerTypes.RIVAL2:
+							BaseMoney = 36;
+							break;
+						case TrainerTypes.CRUSHKIN:
+						case TrainerTypes.TAMER:
+							BaseMoney = 48;
+							break;
+						case TrainerTypes.ENGINEER:
+						case TrainerTypes.POKEMONBREEDER:
+						case TrainerTypes.RUINMANIAC:
+						case TrainerTypes.SCIENTIST:
+						case TrainerTypes.SUPERNERD:
+							BaseMoney = 48;
+							break;
+						case TrainerTypes.BEAUTY:
+							BaseMoney = 56;
+							break;
+						case TrainerTypes.PLAYER:
+						case TrainerTypes.POKEMONTRAINER_Red:
+						case TrainerTypes.POKEMONTRAINER_Brendan:
+						case TrainerTypes.POKEMONTRAINER_Leaf:
+						case TrainerTypes.POKEMONTRAINER_May:
+						case TrainerTypes.COOLTRAINER_M:
+						case TrainerTypes.COOLTRAINER_F:
+						case TrainerTypes.POKEMONRANGER_M:
+						case TrainerTypes.POKEMONRANGER_F:
+						case TrainerTypes.YOUNGCOUPLE:
+							BaseMoney = 60;
+							break;
+						case TrainerTypes.POKEMANIAC:
+							BaseMoney = 64;
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.GAMBLER:
+						case TrainerTypes.GENTLEMAN:
+							BaseMoney = 72;
+							break;
+						case TrainerTypes.BURGLAR:
+							BaseMoney = 88;
+							break;
+						case TrainerTypes.CHAMPION:
+						case TrainerTypes.LEADER_Brock:
+						case TrainerTypes.LEADER_Surge:
+						case TrainerTypes.LEADER_Koga:
+						case TrainerTypes.LEADER_Blaine:
+						case TrainerTypes.LEADER_Giovanni:
+						case TrainerTypes.LEADER_Misty:
+						case TrainerTypes.LEADER_Erika:
+						case TrainerTypes.LEADER_Sabrina:
+						case TrainerTypes.ELITEFOUR_Lorelei:
+						case TrainerTypes.ELITEFOUR_Agatha:
+						case TrainerTypes.ELITEFOUR_Bruno:
+						case TrainerTypes.ELITEFOUR_Lance:
+						case TrainerTypes.ROCKETBOSS:
+						case TrainerTypes.PROFESSOR:
+							BaseMoney = 100;
+							break;
+						case TrainerTypes.LADY:
+							BaseMoney = 160;
+							break;
+						default:
+							BaseMoney = 30;
+							break;
+					}
+					#endregion
+					#region Skill Level
+					switch (type)
+					{
+						case TrainerTypes.BURGLAR:
+						case TrainerTypes.GAMBLER:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.LADY:
+							SkillLevel = 72;
+							break;
+						case TrainerTypes.SWIMMER_M:
+						case TrainerTypes.SWIMMER_F:
+						case TrainerTypes.SWIMMER2_M:
+						case TrainerTypes.SWIMMER2_F:
+							SkillLevel = 32;
+							break;
+						case TrainerTypes.TUBER_M:
+						case TrainerTypes.TUBER_F:
+						case TrainerTypes.TUBER2_M:
+						case TrainerTypes.TUBER2_F:
+							SkillLevel = 16;
+							break;
+						case TrainerTypes.COOLCOUPLE:
+						case TrainerTypes.SISANDBRO:
+							SkillLevel = 48;
+							break;
+						case TrainerTypes.YOUNGCOUPLE:
+							SkillLevel = 32;
+							break;
+						default:
+							SkillLevel = BaseMoney;
+							break;
+					}
+					#endregion
+					TrainerMetaData.Add(type, new TrainerData());
 				}
 				return true;
 			} catch (SQLiteException e) {

@@ -22,7 +22,7 @@ namespace PokemonUnity.Overworld
 	/// Terrain Tags or Tiles a player can be stepping on;
 	/// used to contruct map floor plane
 	/// </summary>
-	public enum Terrain
+	public enum Terrains
 	{
 		Plain,
 		Grass,
@@ -367,8 +367,12 @@ Waterfall
 		/// </summary>
 		SEASON_WINTER = 20
 	}
-	#endregion
+	public enum MovePermissions
+	{
 
+	}
+	#endregion
+	//ToDo: Rename TileShapes
 	public enum Shape
 	{
 		/// <summary>

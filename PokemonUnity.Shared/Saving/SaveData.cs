@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
+using PokemonUnity.Utility;
 
 namespace PokemonUnity.Saving
 {
@@ -12,7 +13,6 @@ namespace PokemonUnity.Saving
         #region ImportantInfo
         public string BuildVersion { get; private set; } //SaveManager.GetBuildVersion();
         public string SaveName { get; private set; }
-		public int ActiveScene { get; private set; }
 		public DateTime TimeCreated { get; private set; }
 		#endregion
 
@@ -42,23 +42,23 @@ namespace PokemonUnity.Saving
 		/// <summary>
 		/// Duration of time accumulated on save file
 		/// </summary>
-		public System.TimeSpan PlayerTime { get; private set; }
+		public System.TimeSpan PlayTime { get; private set; }
 		public int PlayerMoney { get; private set; }
 		public int PlayerCoins { get; private set; }
+		public int ActiveMapId { get; private set; }
+		public int ActivePcBox { get; private set; }
 
 		//Player
 		public float PlayerDirection { get; private set; }
-		//public SeriV3 PlayerPosition { get; private set; }
+		public Vector PlayerPosition { get; private set; }
 		////Follower
 		///// <summary>
 		///// </summary>
 		///// i would really just make this an offset of player position, i.e. 1-back, 1-left. 
 		///// don't think it's necessary to store full on x,y,z position of something that's always xy-distance away from player
 		//public SeriV3 FollowerPosition { get; private set; }
-		/// <summary>
-		/// </summary>
-		/// Don't need to save follower direction... should just be the same direction player is facing...
-		public int FollowerDirection { get; private set; }
+		// Don't need to save follower direction... should just be the same direction player is facing...
+		//public int FollowerDirection { get; private set; }
 		/// <summary>
 		/// Which pokemon from player party is out in overworld with player
 		/// </summary>
@@ -69,12 +69,11 @@ namespace PokemonUnity.Saving
 		/// <summary>
 		/// When the Player blacks out they need to return to the last visited Pokemon Center
 		/// </summary>
-		public int pCenterScene { get; private set; }
+		public int PokeCenterId { get; private set; }
+		//public int PokeCenterAreaId { get; private set; }
+		//public int pCenterScene { get; private set; }
 		//private SeriV3 pCenterPosition;
 		//private int pCenterDirection;
-
-		//private SeriV3 pCenterFposition;
-		//private int pCenterFdirection;
 		#endregion
 
 		#region SeriClasses
@@ -85,27 +84,24 @@ namespace PokemonUnity.Saving
 		//public List<SaveEvent> EventList { get; private set; }
 		#endregion
 
-		//public void AddPokemonCenter(int scene, SeriV3 position, int direction, SeriV3 fPosition, int fDirection)
+		//public void AddPokemonCenter(int area, SeriV3 position, int direction, SeriV3 fPosition, int fDirection)
 		//{
-		//    pCenterScene = scene;
+		//    PokeCenterAreaId = area;
 		//
 		//    pCenterPosition = position;
 		//    pCenterDirection = direction;
-		//
-		//    pCenterFposition = fPosition;
-		//    pCenterFdirection = fDirection;
 		//}
 
 		public SaveData (Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
-			TimeSpan? time = null, //SeriV3 position = null, 
+			TimeSpan? time = null, Vector position = new Vector(), 
 			float? direction = null, int? scene = null, 
 			int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
 			SeriPC pc = null//, List<SaveEvent> eventList = null
 			) 
 				: this(name: player.Name, money: money, coin: coin, trainer: player.Trainer.TrainerID,
 					  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
-					  time: time, //position: position, 
-					  direction: direction, scene: scene, pokecenter: pokecenter,
+					  time: time, position: position, 
+					  direction: direction, map: scene, pokecenter: pokecenter,
 					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize()//, pc: pc, eventList: eventList
 					  )
 		{
@@ -113,9 +109,9 @@ namespace PokemonUnity.Saving
 		}
 
 		public SaveData (string name = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
-			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, //SeriV3 position = null, 
+			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, Vector? position = null,//new Vector(), 
 			float? direction = null, 
-			int? scene = null, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
+			int? map = null, int box = 0, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
 			SeriPokemon[] party = null, SeriPC pc = null//, List<SaveEvent> eventList = null
 			)
         {
@@ -132,14 +128,15 @@ namespace PokemonUnity.Saving
 			SecretID			= secret		?? Game.Player.Trainer.SecretID;
 			IsMale				= gender		?? Game.Player.isMale;
 			//Pokedex2			= pokedex		?? Game.Player.Pokedex;
-			PlayerTime			= time			?? Game.Player.PlayTime;
-			//PlayerPosition		= position		?? Game.Player.playerPosition;
-			PlayerDirection		= direction		?? Game.Player.playerDirection;
+			PlayTime			= time			?? Game.Player.PlayTime;
+			PlayerPosition		= position		?? Game.PlayerPosition; //Game.Player.playerPosition;
+			PlayerDirection		= direction		?? Game.PlayerDirection;//Game.Player.playerDirection;
 			//FollowerPokemon	= Game.Player.followerPokemon;
 			//FollowerPosition	= Game.Player.followerPosition;
 			//FollowerDirection	= Game.Player.followerDirection;
-			ActiveScene			= scene			?? Game.Player.mapName;//.activeScene;
-			pCenterScene		= pokecenter	?? Game.Player.respawnScene;//pkmnCenter;
+			ActiveMapId			= map			?? Game.Area;//Game.Player.mapName;.activeScene;
+			ActivePcBox			= box;//		?? Game.Player.ActivePcBox;
+			PokeCenterId		= pokecenter	?? (int)Game.Checkpoint;//Game.Player.Checkpoint;pkmnCenter;
 			PlayerParty			= party			?? Game.Player.Trainer.Party.Serialize();
 			//	new SeriPokemon[Game.Player.Trainer.Party.Length];
 			//if(party != null)

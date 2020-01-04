@@ -15,6 +15,7 @@ using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
+using PokemonUnity.Utility;
 
 namespace PokemonUnity
 {
@@ -25,18 +26,51 @@ namespace PokemonUnity
 	/// Game class will overwrite all the other class default values when player triggers a load state.
 	/// </summary>
 	/// This class should be static...
+	//ToDo: Should all variables in Game be static?
 	public partial class Game
 	{
+		public bool SandBoxMode { get; set; }
+
 		#region Player and Overworld Data
-		//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
 		public static Player Player { get; set; }
 		public static Regions Region { get; private set; }
 		public static Locations Location { get; private set; }
+		/// <summary>
+		/// </summary>
+		/// <see cref="Player.mapName"/>
 		public static int Area { get; private set; }
 		//ToDo: Unity implentation through funnel
 		//public static PokemonUnity.Overworld.Level Level { get; set; }
 		//public static PokemonUnity.Overworld.Camera Camera { get; set; }
 		//public Game.TrainerPC PC { get { return new Game.TrainerPC(Player); } }
+		//public int mapName { get; set; }
+		//public int levelName;
+		//ToDo: Move player position to platform engine or Game class..
+		public static Vector PlayerPosition { get; set; }
+		/// <summary>
+		/// Rotation of player model in overworld scene
+		/// </summary>
+		/// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
+		/// scratch that... only need rotation on single quantization axis...
+		/// not sure direction is even needed in save/load profile...
+		/// Game should load player facing camera by default.
+		public static float PlayerDirection { get; set; }
+		/// <summary>
+		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
+		/// </summary>
+		public static Locations Checkpoint { get; set; }
+		//public Locations respawnCenterId { get; set; }
+		//public SeriV3 respawnScenePosition;
+		//public int respawnSceneDirection;
+		//ToDo: Missing Variables for RepelSteps, RepelType, Swarm
+		//ToDo: Missing (Trainer)Player.Rival variable
+		//public bool IsRunning() { return false; }
+		//public bool startSurfing { get; set; }
+		public static int RepelSteps { get; set; } // Should not stack (encourage users to deplete excessive money); reset count based on repel used.
+		//public static int RepelType { get; set; } // Maybe instead of this, use Encounter.Rate or... Different repel only changes number of steps, not potency
+		//public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
+		//public Pokemon GetWalkPokemon() { return null; }
+		//public Forms GetWalkPokemon() { return Forms.NONE; } //ToDo: IsShiny?
 		#endregion
 
 		#region Private Records of Player Storage Data
@@ -61,6 +95,11 @@ namespace PokemonUnity
 		//Flag (egg available) 
 		//RNG Seed
 		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
+		public static string PlayerItemData { get; set; }
+		public static string PlayerDayCareData { get; set; } //KeyValuePair<Pokemon,steps>[]
+		public static string PlayerBerryData { get; set; }
+		public static string PlayerNPCData { get; set; }
+		public static string PlayerApricornData { get; set; }
 		public static Pokemon[,] PC_Poke { get; set; }
 		public static string[] PC_boxNames { get; set; }
 		public static int[] PC_boxTexture { get; set; }
@@ -225,15 +264,58 @@ namespace PokemonUnity
 
 			switch (data.BuildVersion)
 			{
+				#region Obsolete and Deprecated
 				case "0.0.1":
-				//Next one gets added to list, and default is copied above, and modified below...
-				default:
+				case "0.1.0":
 					Game.Player.LoadTrainer(data); 
 					Game.PC_Poke = data.PC.GetPokemonsFromSeri();
 					Game.PC_boxNames = data.PC.BoxNames;
 					Game.PC_boxTexture = data.PC.BoxTextures;
 					Game.PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
 					Game.Bag_Items = data.PlayerBag;
+					break;
+				case "0.1.1":
+					//Game g = new Game();
+					//g.PlayerItemData =
+					//g.PlayerBerryData =
+					//g.PlayerNPCData =
+					//g.PlayerApriconData =
+					//g.RepelSteps =
+					//g.RepelType =
+					//g.Rival =
+					PlayerPosition = data.PlayerPosition;		//g.PlayerPosition = trainerSaveData.PlayerPosition;
+					PlayerDirection = data.PlayerDirection;		//g.PlayerDirection = trainerSaveData.PlayerDirection;
+					Checkpoint = (Locations)data.PokeCenterId;	//g.Checkpoint = (Locations)trainerSaveData.PokeCenterId;
+					Game.Player.LoadTrainer(data);
+					Game.Area = data.ActiveMapId;
+					Game.PC_Poke = data.PC.GetPokemonsFromSeri();
+					Game.PC_boxNames = data.PC.BoxNames;
+					Game.PC_boxTexture = data.PC.BoxTextures;
+					Game.PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
+					Game.Bag_Items = data.PlayerBag;
+					break;
+				#endregion
+				//Next one gets added to list, and default is copied above, and modified below...
+				default:
+					//ToDo: "0.2.0" => Load Game, Player, Bag, and PC data in dedicated classes
+					//Game g = new Game();
+					//g.PlayerItemData =
+					//g.PlayerBerryData =
+					//g.PlayerNPCData =
+					//g.PlayerApriconData =
+					//g.RepelSteps =
+					//g.RepelType =
+					//g.Rival =
+					//PlayerPosition = data.PlayerPosition;		//g.PlayerPosition = trainerSaveData.PlayerPosition;
+					//PlayerDirection = data.PlayerDirection;		//g.PlayerDirection = trainerSaveData.PlayerDirection;
+					//Checkpoint = (Locations)data.PokeCenterId;	//g.Checkpoint = (Locations)trainerSaveData.PokeCenterId;
+					//Game.Player.LoadTrainer(data);
+					//Game.Area = data.ActiveMapId;
+					//Game.PC_Poke = data.PC.GetPokemonsFromSeri();
+					//Game.PC_boxNames = data.PC.BoxNames;
+					//Game.PC_boxTexture = data.PC.BoxTextures;
+					//Game.PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
+					//Game.Bag_Items = data.PlayerBag;
 					break;
 			}
 		}

@@ -267,7 +267,7 @@ namespace PokemonUnity.Battle
 	/// Terrain Tags or Tiles a player can be stepping on;
 	/// used to contruct map floor plane
 	/// </summary>
-	public enum Terrain
+	public enum Terrains
 	{
 		Grass,
 		Sand,

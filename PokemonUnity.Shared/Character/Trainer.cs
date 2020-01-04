@@ -2,7 +2,217 @@
 using PokemonUnity;
 using PokemonUnity.Monster;
 
-//ToDo: Pokemonunity.Character.Trainer?...
+namespace PokemonUnity.Character
+{
+	public struct Trainer
+	{
+		#region Variables
+		public Inventory.Items[] Items { get; private set; }
+		public Pokemon[] Party { get; private set; }
+		public bool Double { get; private set; }
+		public int AI { get; private set; }
+		//public int IVs { get; private set; }
+		/// <summary>
+		/// This is how the scripts refer to the trainer type. 
+		/// Typically this is the trainer type's name, 
+		/// but written in all capital letters and with no spaces or symbols. 
+		/// The internal name is never seen by the player.
+		/// </summary>
+		public TrainerTypes ID { get; private set; }
+		/// <summary>
+		/// The name of the trainer type, as seen by the player. 
+		/// Multiple trainer types can have the same display name, 
+		/// although they cannot share ID numbers or internal names.
+		/// </summary>
+		public string Name { get; private set; }
+		/// <summary>
+		/// The amount of money earned from defeating a trainer of this type. 
+		/// The base money value is multiplied by the highest Level among all the trainer's 
+		/// Pokémon to produce the actual amount of money gained (assuming no other modifiers). 
+		/// Must be a number between 0 and 255.	
+		/// Optional. If undefined, the default is 30.
+		/// </summary>
+		public byte BaseMoney { get; private set; }
+		/// <summary>
+		/// The name of a background music (BGM) file in the folder "Audio/BGM". 
+		/// The music that plays during battles against trainers of this type. 
+		/// Typically only defined for Gym Leaders, Elite Four members and rivals.	
+		/// Optional. If undefined, the default BGM is used.
+		/// </summary>
+		public int 	BattleBGM { get; private set; }
+		/// <summary>
+		/// The name of a background music (BGM) file in the folder "Audio/BGM". 
+		/// The victory background music that plays upon defeat of trainers of this type.	
+		/// Optional. If undefined, the default victory BGM is used.
+		/// </summary>
+		public int 	VictoryBGM { get; private set; }
+		/// <summary>
+		/// The name of a music effect (ME) file in the folder "Audio/ME". 
+		/// The music that plays before the battle begins, while still talking to the trainer.	
+		/// Optional. If undefined, the default ME is used.
+		/// </summary>
+		public int 	IntroME { get; private set; }
+		/// <summary>
+		/// The gender of all trainers of this type. Is one of:
+		/// Male, Female, Mixed(i.e. if the type shows a pair of trainers)
+		/// Optional. If undefined, the default is "Mixed".
+		/// </summary>
+		public bool? Gender { get; private set; }
+		#endregion
+
+		#region Important Trainer Data
+		/// <summary>
+		/// IDfinal = (IDtrainer + IDsecret × 65536).Last6
+		/// </summary>
+		/// <remarks>
+		/// only the last six digits are used so the Trainer Card will display an ID No.
+		/// </remarks>
+		public string PlayerID { get { return GetHashCode().ToString().Substring(GetHashCode().ToString().Length - 6, GetHashCode().ToString().Length); } }
+		public int TrainerID { get; private set; }
+		public int SecretID { get; private set; }
+		#endregion
+
+		#region NPC Details
+		/*// <summary>
+		/// After having defeated the trainer, when speaking to him/her again
+		/// </summary>
+		public string ScriptIdle { get; private set; }
+		/// <summary>
+		/// Start of trainer encounter
+		/// </summary>
+		public string ScriptBattleIntro { get; private set; }
+		/// <summary>
+		/// End of battle
+		/// </summary>
+		public string ScriptBattleEnd { get; private set; }*/
+		#endregion
+
+		#region Constructor
+		public Trainer(TrainerTypes trainer, Pokemon[] party, string name = null, Inventory.Items[] items = null, bool? dub = null, bool? gender = null, 
+			int? tID = null, int? sID = null, int? intro = null, int? end = null, int? idle = null, byte? baseMoney = null, byte? skillLevel = null, 
+			int? battleMusic = null, int? victoryMusic = null, int? introMusic = null) //: this(TrainerTypes.PLAYER)
+		{
+			ID = trainer;
+			TrainerID = tID				?? Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
+			SecretID = sID				?? Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
+			Party = party;
+			Items = items				?? new Inventory.Items[0];
+			Gender = gender				?? Game.TrainerMetaData[trainer].Gender;
+			Double = dub				?? Game.TrainerMetaData[trainer].Double;
+			BaseMoney = baseMoney		?? Game.TrainerMetaData[trainer].BaseMoney;
+			AI = skillLevel				?? Game.TrainerMetaData[trainer].SkillLevel;
+			BattleBGM = battleMusic		?? Game.TrainerMetaData[trainer].BattleBGM;
+			VictoryBGM = victoryMusic	?? Game.TrainerMetaData[trainer].VictoryBGM;
+			IntroME = introMusic		?? Game.TrainerMetaData[trainer].IntroME;
+			//ScriptIdle = idle
+			//ScriptBattleIntro = intro
+			//ScriptBattleEnd = end
+			//if(trainer != TrainerTypes.Player && string.IsNullOrEmpty(name)
+			//if(trainer != TrainerTypes.WildPokemon
+			Name = name				?? ID.ToString();
+		}
+		#endregion
+
+		#region Explicit Operators
+		//public static bool operator ==(Trainer t1, Trainer t2)
+		//{
+		//	return ((t1.Gender == t2.Gender) && (t1.TrainerID == t2.TrainerID) && (t1.SecretID == t2.SecretID)) & (t1.Name == t2.Name);
+		//}
+		//public static bool operator !=(Trainer t1, Trainer t2)
+		//{
+		//	return ((t1.Gender != t2.Gender) || (t1.TrainerID != t2.TrainerID) || (t1.SecretID != t2.SecretID)) | (t1.Name == t2.Name);
+		//}
+		//public bool Equals(Player obj)
+		//{
+		//	return this == obj.Trainer; //Equals(obj.Trainer);
+		//}
+		public override bool Equals(object obj)
+		{
+			return base.Equals(obj);
+		}
+		public override int GetHashCode()
+		{
+			return TrainerID + SecretID * 65536;
+		}
+		#endregion
+	}
+	public struct TrainerData
+	{
+		#region Variables
+		/// <summary>
+		/// This is how the scripts refer to the trainer type. 
+		/// Typically this is the trainer type's name, 
+		/// but written in all capital letters and with no spaces or symbols. 
+		/// The internal name is never seen by the player.
+		/// </summary>
+		public TrainerTypes ID { get; private set; }
+		public bool Double { get; private set; }
+		/// <summary>
+		/// The amount of money earned from defeating a trainer of this type. 
+		/// The base money value is multiplied by the highest Level among all the trainer's 
+		/// Pokémon to produce the actual amount of money gained (assuming no other modifiers). 
+		/// Must be a number between 0 and 255.	
+		/// Optional. If undefined, the default is 30.
+		/// </summary>
+		public byte BaseMoney { get; private set; }
+		/// <summary>
+		/// The name of a background music (BGM) file in the folder "Audio/BGM". 
+		/// The music that plays during battles against trainers of this type. 
+		/// Typically only defined for Gym Leaders, Elite Four members and rivals.	
+		/// Optional. If undefined, the default BGM is used.
+		/// </summary>
+		public int 	BattleBGM { get; private set; }
+		/// <summary>
+		/// The name of a background music (BGM) file in the folder "Audio/BGM". 
+		/// The victory background music that plays upon defeat of trainers of this type.	
+		/// Optional. If undefined, the default victory BGM is used.
+		/// </summary>
+		public int 	VictoryBGM { get; private set; }
+		/// <summary>
+		/// The name of a music effect (ME) file in the folder "Audio/ME". 
+		/// The music that plays before the battle begins, while still talking to the trainer.	
+		/// Optional. If undefined, the default ME is used.
+		/// </summary>
+		public int 	IntroME { get; private set; }
+		/// <summary>
+		/// The gender of all trainers of this type. Is one of:
+		/// Male, Female, Mixed(i.e. if the type shows a pair of trainers)
+		/// Optional. If undefined, the default is "Mixed".
+		/// </summary>
+		public bool? Gender { get; private set; }
+		#endregion
+
+		#region NPC Details
+		/// <summary>
+		/// The skill level of all trainers of this type, used for battle AI. 
+		/// Higher numbers represent higher skill levels. 
+		/// Must be a number between 0 and 255.	
+		/// Optional. If undefined, default is equal to the base money value.
+		/// </summary>
+		public byte SkillLevel { get; private set; }
+		/// <summary>
+		/// A text field which can be used to modify the AI behaviour of all trainers of this type. 
+		/// No such modifiers are defined by default, and there is no standard format. 
+		/// See the page Battle AI for more details.
+		/// Optional. If undefined, the default is blank.
+		/// </summary>
+		public int? SkillCodes { get; private set; }
+		/// <summary>
+		/// After having defeated the trainer, when speaking to him/her again
+		/// </summary>
+		public string ScriptIdle { get; private set; }
+		/// <summary>
+		/// Start of trainer encounter
+		/// </summary>
+		public string ScriptBattleIntro { get; private set; }
+		/// <summary>
+		/// End of battle
+		/// </summary>
+		public string ScriptBattleEnd { get; private set; }
+		#endregion
+	}
+}
+
 namespace PokemonUnity
 {
 	/// <summary>

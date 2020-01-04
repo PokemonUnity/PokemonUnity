@@ -8,6 +8,7 @@ using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
+using PokemonUnity.Utility;
 
 //ToDo: Pokemonunity.Character.Player?...
 namespace PokemonUnity
@@ -38,47 +39,35 @@ namespace PokemonUnity
 		/// </summary>
 		public Game.TrainerBag Bag { get { return new Game.TrainerBag(this); } }
 		public Game.TrainerPC PC { get { return new Game.TrainerPC(this, ActivePcBox); } }
-		//ToDo: Missing (Trainer)Player.Rival variable
-		public string ItemData { get; set; }
-		public string BerryData { get; set; }
-		public string NPCData { get; set; }
-		public string ApricornData { get; set; }
-		//public UnityEngine.Vector3 LastPokemonPosition { get; set; }
-		public bool SandBoxMode { get; set; }
-		public bool IsRunning() { return false; }
-		public bool startSurfing { get; set; }
-		public int RepelSteps { get; set; }
-		public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
-		//public Pokemon GetWalkPokemon() { return null; }
-		public Forms GetWalkPokemon() { return Forms.NONE; } //ToDo: IsShiny?
 
 		#region UI/Game Engine
-		public int mapName { get; set; }
+		//public int mapName { get { return Game.Area; } }
 		//public int levelName;
 		//ToDo: Move player position to platform engine or Game class..
-		//public SeriV3 playerPosition { get; set; }
-		/// <summary>
-		/// Rotation of player model in overworld scene
-		/// </summary>
-		/// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
-		/// scratch that... only need rotation on single quantization axis...
-		/// not sure direction is even needed in save/load profile...
-		/// Game should load player facing camera by default.
-		public float playerDirection { get; set; }
-		/// <summary>
-		/// Pokemon Center that's used as Respawn Point upon a Player's Defeat
-		/// </summary>
-		public Locations respawnCenterId { get; set; }
+		//public Vector playerPosition { get; set; }
+		///// <summary>
+		///// Rotation of player model in overworld scene
+		///// </summary>
+		///// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
+		///// scratch that... only need rotation on single quantization axis...
+		///// not sure direction is even needed in save/load profile...
+		///// Game should load player facing camera by default.
+		//public float playerDirection { get; set; }
+		///// <summary>
+		///// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
+		///// </summary>
+		//public Locations Checkpoint { get; set; }
+		//public Locations respawnCenterId { get; set; }
 		//public SeriV3 respawnScenePosition;
 		//public int respawnSceneDirection;
 		#endregion
 
+		//ToDo: Move EVERYTHING except `Name`, `isMale` to Game Class
 		#region Player Records
 		public string Name { get; private set; }
 		public string RivalName { get; private set; }
 		/// <summary>
 		/// </summary>
-		/// ToDo: consider create AddMoney(value)... 
 		public int Money { get { return playerMoney; } set { playerMoney = value > Core.MAXMONEY ? Core.MAXMONEY : value; } }
 		public int Coins { get { return playerCoins; } set { playerCoins = value > Core.MAXCOINS ? Core.MAXCOINS : value; } }
 		private int playerMoney { get; set; }
@@ -211,15 +200,16 @@ namespace PokemonUnity
 		{
 			trainerId = trainerSaveData.TrainerID;
 			secretId = trainerSaveData.SecretID;
-			mapName = trainerSaveData.ActiveScene;
+			//mapName = trainerSaveData.ActiveScene;
+			ActivePcBox = trainerSaveData.ActivePcBox;
 			//playerPosition = trainerSaveData.PlayerPosition;
-			playerDirection = trainerSaveData.PlayerDirection;
-			respawnCenterId = (Locations)trainerSaveData.PokeCenterId;
-			Money = trainerSaveData.PlayerMoney;
-			Coins = trainerSaveData.PlayerCoins;
-			//Pokedex = trainerSaveData.Pokedex2; //ToDo: Uncomment
+			//playerDirection = trainerSaveData.PlayerDirection;
+			//Checkpoint = (Locations)trainerSaveData.PokeCenterId;
+			Money = trainerSaveData.PlayerMoney;// > Core.MAXMONEY ? Core.MAXMONEY : trainerSaveData.PlayerMoney;
+			Coins = trainerSaveData.PlayerCoins;// > Core.MAXCOINS ? Core.MAXCOINS : trainerSaveData.PlayerCoins;
+			//Pokedex = trainerSaveData.Pokedex2; 
 			Name = trainerSaveData.PlayerName;
-			PlayTime = trainerSaveData.PlayerTime;
+			PlayTime = trainerSaveData.PlayTime;
 			isMale = trainerSaveData.IsMale;
 			GymsBeatTime = trainerSaveData.GymsChallenged;
 			//Pokedex2 = new byte[dex2.GetLength(0)][];
@@ -231,6 +221,13 @@ namespace PokemonUnity
 			//		Pokedex2[i][j] = (byte)dex2[i, j];
 			//	}
 			//}
+			int FirstDim = trainerSaveData.Pokedex2.Length;
+			int SecondDim = trainerSaveData.Pokedex2.GroupBy(row => row.Length).Single().Key;
+			//Pokedex = new byte[trainerSaveData.Pokedex2.GetLength(0),trainerSaveData.Pokedex2.GetLength(1)];
+			Pokedex = new byte[FirstDim, SecondDim];
+			for (int i = 0; i < FirstDim; ++i)
+				for (int j = 0; j < SecondDim; ++j)
+					Pokedex[i, j] = trainerSaveData.Pokedex2[i][j];
 			//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
 			//{
 			//	Party[i] = trainerSaveData.PlayerParty[i];
