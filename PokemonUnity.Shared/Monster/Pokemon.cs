@@ -150,6 +150,11 @@ namespace PokemonUnity.Monster
 					//if hatching, generate new moves to include egg moves 
 					//and everything from current level to below
                     this.GenerateMoveset(egg: true);
+					if (OT != null)
+					{
+						ObtainedMode = ObtainedMethod.EGG;
+						hatchedWhen = new DateTimeOffset(DateTime.UtcNow);
+					}
                 }
                 eggSteps =
                     //if egg hatch counter is going up in positive count
@@ -317,11 +322,14 @@ namespace PokemonUnity.Monster
 		/// with all stats randomly generated/assigned (new roll).
 		/// </summary>
 		/// <param name="pkmn">Pokemon being generated</param>
-		/// <param name="original">Assigns original <see cref="Trainer"/> 
+		/// <param name="original">Assigns original <see cref="TrainerId"/> 
 		/// of this pokemon. 
 		/// Affects ability to command pokemon, if player is not OT</param>
 		/// <param name="level">Level this pokemon start ats</param>
-		public Pokemon(Pokemons pkmn, Trainer original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
+		/// <remarks>
+		/// I think this is only need for tested, not sure of purpose inside framework
+		/// </remarks>
+		public Pokemon(Pokemons pkmn, TrainerId original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
         public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
             byte TPLEVEL = 10,
@@ -421,7 +429,7 @@ namespace PokemonUnity.Monster
 		/// <param name="timeEggHatched"></param>
 		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
 		public Pokemon(Pokemons species, 
-			Trainer original,
+			TrainerId original,
 			string nickName, int form,
             Abilities ability, Natures nature,
             bool isShiny, bool? gender,
@@ -554,7 +562,7 @@ namespace PokemonUnity.Monster
         /// Doubles as "HatchedMap"
         /// ToDo: Make this an enum
         /// </remarks>
-        private int obtainMap { get; set; }
+        public Locations ObtainMap { get; private set; }
         /// <summary>
         /// Replaces the obtain map's name if not null
         /// </summary>
@@ -573,7 +581,7 @@ namespace PokemonUnity.Monster
         /// <remarks>
         /// ToDo: PlayerTrainer's hash value instead of class; maybe GUID?
         /// </remarks>
-        public Trainer OT { get; private set; }
+        public TrainerId OT { get; private set; }
         /// <summary>
         /// Personal/Pokemon ID
         /// </summary>
@@ -601,7 +609,7 @@ namespace PokemonUnity.Monster
         }*/
         public string PublicId
         {
-            get { return OT.ToString(); }
+            get { return OT.PlayerID; }
         }
 
         /// <summary>
@@ -701,15 +709,17 @@ namespace PokemonUnity.Monster
 		/// </summary>
 		/// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
 		/// <param name="Method">The capture method.</param>
-		public void SetCatchInfos(Items Ball, ObtainedMethod Method)
+		public void SetCatchInfos(TrainerId Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
 			//this.obtainMap = Game.GameData.Level.MapName;
 			//this.CatchTrainerName = Game.GameData.Player.Name;
-			this.OT = Game.GameData.Player.Trainer;
+			//this.OT = Game.GameData.Player.Trainer;
+			this.OT = Trainer;
 
 			this.ObtainedMode = Method;
-			this.ballUsed = Ball;
+			if(Game.ItemData[Ball].Pocket == ItemPockets.POKEBALL)
+				this.ballUsed = Ball;
 		}
 		#endregion
 

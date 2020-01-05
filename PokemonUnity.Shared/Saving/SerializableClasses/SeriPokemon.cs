@@ -117,7 +117,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 			Pokemon normalPokemon =
 				new Pokemon
 				(
-					(Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName, pokemon.TrainerIsMale), 
+					(Pokemons)pokemon.Species, new TrainerId(pokemon.TrainerName, pokemon.TrainerIsMale, 
 					tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
@@ -147,7 +147,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				if (!pokemon.OT.Equals((object)null))
 				{
 					seriPokemon.TrainerName			= pokemon.OT.Name;
-					seriPokemon.TrainerIsMale		= pokemon.OT.Gender ?? true;
+					seriPokemon.TrainerIsMale		= pokemon.OT.Gender;
 					seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
 					seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
 				}

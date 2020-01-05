@@ -184,10 +184,10 @@ namespace PokemonUnity.Character
 		{
 			return ((t1.Gender != t2.Gender) || (t1.TrainerID != t2.TrainerID) || (t1.SecretID != t2.SecretID)) | (t1.Name == t2.Name);
 		}
-		public bool Equals(Character.Player obj)
-		{
-			return this == obj.Trainer; //Equals(obj.Trainer);
-		}
+		//public bool Equals(Character.Player obj)
+		//{
+		//	return this == obj.Trainer; //Equals(obj.Trainer);
+		//}
 		public override bool Equals(object obj)
 		{
 			return base.Equals(obj);

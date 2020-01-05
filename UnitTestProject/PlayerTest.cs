@@ -42,7 +42,7 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			Trainer red = new Trainer(new Player(playerName, isMale/*, playerParty*/), tID: trainerID, sID: secretID);
+			TrainerId red = new TrainerId(playerName, isMale, tID: trainerID, sID: secretID);
 
 			Pokemon[] playerParty = new Pokemon[]
 			{
@@ -150,7 +150,7 @@ namespace Tests
 				player: new Player(
 					name: playerName
 					,gender: isMale
-					,party: red.Party
+					,party: playerParty
 					,bag: playerBag.ToArray()
 					,trainerid: trainerID
 					,secretid: secretID
@@ -480,8 +480,8 @@ namespace Tests
 			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
 			//}
 			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
-				new Pokemons[] { Game.GameData.Player.Trainer.Party[0].Species, Game.GameData.Player.Trainer.Party[1].Species, Game.GameData.Player.Trainer.Party[2].Species,
-					Game.GameData.Player.Trainer.Party[3].Species, Game.GameData.Player.Trainer.Party[4].Species, Game.GameData.Player.Trainer.Party[5].Species });
+				new Pokemons[] { Game.GameData.Player.Party[0].Species, Game.GameData.Player.Party[1].Species, Game.GameData.Player.Party[2].Species,
+					Game.GameData.Player.Party[3].Species, Game.GameData.Player.Party[4].Species, Game.GameData.Player.Party[5].Species });
 		}
 		[TestMethod]
 		public void Player_Load_Pokedex()

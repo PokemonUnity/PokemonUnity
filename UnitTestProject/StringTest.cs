@@ -30,10 +30,14 @@ namespace Tests
         [TestMethod]
 		public void Trainer_SetPokemon_Nickname()
 		{
-			Assert.Inconclusive("Not implemented yet");
-			Trainer trainer = new Trainer(TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
-			//Pokemon pokemon = new Pokemon(Pokemons.NONE);
+			//Assert.Inconclusive("Not implemented yet");
+			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
+			Player trainer = new Player();
 			//make sure pokemon is not egg, as eggs cannot be named
+			Pokemon pokemon = new Pokemon(Pokemons.ABRA, false);
+			if (pokemon.IsNicknamed) Assert.Fail("Already named");
+			//Name pokemon and add to trainer party...
+			trainer.addPokemon(pokemon);
 			//trainer.Party[0].Name
 			Assert.AreEqual("testname", trainer.Party[0].Name);
 		}

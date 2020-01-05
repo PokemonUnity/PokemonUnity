@@ -17,11 +17,11 @@ namespace PokemonUnity.Character
 	{
 		#region Variables
 		/// <summary>
-		/// Please use the values stored in <see cref="Trainer.TrainerID"/>
+		/// Please use the values stored in <see cref="TrainerId.TrainerID"/>
 		/// </summary>
 		private int? trainerId { get; set; }
 		/// <summary>
-		/// Please use the values stored in <see cref="Trainer.SecretID"/>
+		/// Please use the values stored in <see cref="TrainerId.SecretID"/>
 		/// </summary>
 		private int? secretId { get; set; }
 		public string Name { get; private set; }
@@ -34,7 +34,7 @@ namespace PokemonUnity.Character
 		/// hold the `Trainer` data, and instantiate a new Trainer
 		/// whenever it's needed...
 		public Pokemon[] Party { get; private set; }
-		public Trainer Trainer { get { return new Trainer(TrainerTypes.PLAYER, name: Name, gender: IsMale, party: Party, items: Bag.Contents, tID: trainerId, sID: secretId); } }
+		public TrainerId Trainer { get { return new TrainerId(name: Name, gender: IsMale, tID: trainerId, sID: secretId); } }
 		/// <summary>
 		/// When displaying items in bag, do a foreach loop and filter by item category
 		/// </summary>
@@ -235,8 +235,8 @@ namespace PokemonUnity.Character
 		{
 		}
 
-		public Player(Trainer trainer, Pokemon[] party = null) 
-			: this (name: trainer.Name, gender: trainer.Gender ?? true, party: party ?? trainer.Party, pc: null, trainerid: trainer.TrainerID, secretid: trainer.SecretID)
+		public Player(TrainerId trainer, Pokemon[] party = null) 
+			: this (name: trainer.Name, gender: trainer.Gender, party: party, pc: null, trainerid: trainer.TrainerID, secretid: trainer.SecretID)
 		{
 		}
 		#endregion
@@ -293,7 +293,7 @@ namespace PokemonUnity.Character
 			if (Party.HasSpace(Party.Length))
 			{
 				Party.PackParty();
-				Party[Trainer.Party.Length - 1] = pokemon;
+				Party[Party.Length - 1] = pokemon;
 				Party.PackParty();
 				return -1; //true
 			}

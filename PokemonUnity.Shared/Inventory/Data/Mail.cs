@@ -17,7 +17,7 @@ namespace PokemonUnity.Inventory//.ItemData
 		/// </summary>
 		public char[] Display { get { return Message.ToCharArray(); } }
 		public string Sender { get { return sender.Name; } }
-		private Trainer sender { get; set; }
+		private TrainerId sender { get; set; }
 		public bool IsLetter { get; private set; }
 
 		public static bool IsMail(Items item) { return Game.ItemData[item].IsLetter; }//{ return new Item(item).IsMail; }
@@ -76,7 +76,7 @@ namespace PokemonUnity.Inventory//.ItemData
 		/// <param name="item">Item represented by this mail</param>
 		/// <param name="message">Message text</param>
 		/// <param name="sender">Name of the message's sender</param>
-		public Mail(Items item, string message, Trainer sender) : this(item)
+		public Mail(Items item, string message, TrainerId sender) : this(item)
 		{
 			if (!string.IsNullOrEmpty(message)) Message = message.Length > 255 ? message.Substring(0, (byte)255) : message;
 			this.sender = sender;

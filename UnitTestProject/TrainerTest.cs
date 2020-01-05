@@ -41,10 +41,8 @@ namespace Tests
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			Player player = new Player(playerName, isMale/*, playerParty*/);
-			Trainer trainer = new Trainer(player, tID: trainerID, sID: secretID);
-			//player = new Player(trainer);
-			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			TrainerId trainer = new TrainerId(playerName, isMale, tID: trainerID, sID: secretID);
+			Player player = new Player(trainer);
 			player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
@@ -70,7 +68,7 @@ namespace Tests
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
 			CollectionAssert.AreNotEqual( //ToDo: Change to AreEqual, and use expected results with more precision...
 				new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, 
-				new Pokemons[] { trainer.Party[0].Species, trainer.Party[1].Species, trainer.Party[2].Species, trainer.Party[3].Species, trainer.Party[4].Species, trainer.Party[5].Species } 
+				new Pokemons[] { player.Party[0].Species, player.Party[1].Species, player.Party[2].Species, player.Party[3].Species, player.Party[4].Species, player.Party[5].Species } 
 			);
 		}
 
