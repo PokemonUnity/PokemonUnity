@@ -125,6 +125,7 @@ namespace PokemonUnity
 			con.Open();
 			InitNatures();
 			InitPokemons();
+			InitPokemonForms();
 			InitPokemonMoves();
 			InitPokemonEvolutions();
 			InitPokemonItems();

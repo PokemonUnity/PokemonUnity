@@ -539,10 +539,11 @@ namespace PokemonUnity
 						//.OrderBy(x => x.FormOrder)
 						.ToArray());
 					//if (PokemonFormsData[pkmn.Value[0].Pokemon].Length == 0)
-					if (pkmn.Key != Pokemons.NONE && pkmn.Value[0].Pokemon != pkmn.Value[0].Base)
+					if (pkmn.Key == Pokemons.NONE)// && pkmn.Value[0].Pokemon != pkmn.Value[0].Base)
+						PokemonFormsData[Pokemons.NONE] = new Monster.Data.Form[] { new Monster.Data.Form(Forms.NONE, Pokemons.NONE, Pokemons.NONE) };
+					else if (pkmn.Key != Pokemons.NONE && pkmn.Value[0].Pokemon != pkmn.Value[0].Base)
 						PokemonFormsData[pkmn.Key] = PokemonFormsData[pkmn.Value[0].Base];
 				}
-				PokemonFormsData[Pokemons.NONE] = new Monster.Data.Form[] { new Monster.Data.Form(Forms.NONE, Pokemons.NONE, Pokemons.NONE) };
 				return true;
 			} catch (SQLiteException e) {
 				//Debug.Log("SQL Exception Message:" + e.Message);
