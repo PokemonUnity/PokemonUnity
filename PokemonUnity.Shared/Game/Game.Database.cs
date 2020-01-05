@@ -991,7 +991,7 @@ namespace PokemonUnity
 				//Step 4: Read the results
 				using(reader)
 				{
-					//MoveData.Add(Moves.NONE, new Attack.Data.MoveData());
+					MoveData.Add(Moves.NONE, new Attack.Data.MoveData());
 					while(reader.Read()) //if(reader.Read())
 					{
 						string[] f = ((string)reader["move_flag_group"].ToString()).Split(',');
