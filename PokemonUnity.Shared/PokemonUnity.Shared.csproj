@@ -61,9 +61,11 @@
     <Compile Include="Character\Gear\PokeRadar.cs" />
     <Compile Include="Character\P3D.Player.cs" />
     <Compile Include="Character\PC.cs" />
-    <Compile Include="Character\Player.cs" />
     <Compile Include="Character\Player\Base.cs" />
+    <Compile Include="Character\Trainer\TrainerId.cs" />
     <Compile Include="Character\Trainer.cs" />
+    <Compile Include="Framework\Core.cs" />
+    <Compile Include="Framework\Debugger.cs" />
     <Compile Include="Enums\Battles.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Enums\Items.cs" />
