@@ -40,6 +40,99 @@ namespace PokemonUnity.Character
 		/// </summary>
 		public Bag Bag { get; private set; }//{ get { return new Bag(this.Items); } }
 		public PC PC { get; private set; }//{ get { return new Game.TrainerPC(this, ActivePcBox); } }
+				
+		#region Player and Overworld Data
+		public Regions Region { get; private set; }
+		public Locations Location { get; private set; }
+		/// <summary>
+		/// </summary>
+		public int Area { get; private set; }
+		public Vector Position { get; set; }
+		/// <summary>
+		/// Rotation of player model in overworld scene
+		/// </summary>
+		/// Might be useful if the game is in 2d, but if in 3d... will need to use x,y... dont need 3rd axis
+		/// scratch that... only need rotation on single quantization axis...
+		/// not sure direction is even needed in save/load profile...
+		/// Game should load player facing camera by default.
+		public float Direction { get; set; }
+		/// <summary>
+		/// Last town or Pokemon Center visited, that's used as Respawn Point upon a Player's Defeat
+		/// </summary>
+		public Locations Checkpoint { get; set; }
+		//public Locations respawnCenterId { get; set; }
+		//public SeriV3 respawnScenePosition;
+		public int RepelSteps { get; set; } // Should not stack (encourage users to deplete excessive money); reset count based on repel used.
+		//public static int RepelType { get; set; } // Maybe instead of this, use Encounter.Rate or... Different repel only changes number of steps, not potency
+		//public int SurfPokemon { get { int i = 0; foreach (Pokemon p in Party) if (p.knowsMove(Moves.SURF)) i++; return i; } }
+		//public Pokemon GetWalkPokemon() { return null; }
+		//public Forms GetWalkPokemon() { return Forms.NONE; } //ToDo: IsShiny?
+		public byte FollowPokemon { get; set; } //ToDo: Player.Party[FollowPokemon]
+		#endregion
+
+		#region Private Records of Player Storage Data
+		public bool IsCreator { get; private set; }
+		//ToDo: Berry Field Data (0x18 per tree, 36 trees)
+		//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
+		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
+		//ToDo: Missing Variable for DayCare, maybe `Pokemon[,]` for multipe locations?
+		//Daycare Data
+		//(Slot 1) Occupied Flag 
+		//(Slot 1) Steps Taken Since Depositing 
+		//(Slot 1) Box EK6 1 
+		//(Slot 2) Occupied Flag 
+		//(Slot 2) Steps Taken Since Depositing2 
+		//(Slot 2) Box EK6 2 
+		//Flag (egg available) 
+		//RNG Seed
+		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
+		public static string PlayerItemData { get; set; }
+		public static string PlayerDayCareData { get; set; } //KeyValuePair<Pokemon,steps>[]
+		public static string PlayerBerryData { get; set; }
+		public static string PlayerNPCData { get; set; }
+		public static string PlayerApricornData { get; set; }
+		#endregion
+
+		#region Player Records
+		public string RivalName { get; private set; }
+		/// <summary>
+		/// </summary>
+		public int Money { get { return playerMoney; } set { playerMoney = value > Core.MAXMONEY ? Core.MAXMONEY : value; } }
+		public int Coins { get { return playerCoins; } set { playerCoins = value > Core.MAXCOINS ? Core.MAXCOINS : value; } }
+		public int Savings { get; private set; }
+		private int playerMoney { get; set; }
+		private int playerCoins { get; set; }
+		//private int playerSavings { get; set; }
+
+		/// <summary>
+		/// Usage:<para>
+		/// <code>playerPokedex[1,0] == 0; means pokemonId #1 not seen</code>
+		/// </para>
+		/// <code>playerPokedex[1,1] == 0; means pokemonId #1 not captured</code>
+		/// <para></para>
+		/// <code>playerPokedex[1,2] == 3; means the 3rd form of pokemonId was first to be scanned into pokedex</code>
+		/// </summary>
+		/// <remarks>Or can be int?[pokedex.count,1]. if null, not seen or captured</remarks>
+		//ToDo: Add variable for "Shiny"?...
+		//ToDo: switch from byte to Pokemons.Enum:short, value [1,2] = Pokemon.Form, other array values remain same.
+		public byte[,] Pokedex { get; private set; }
+		//public int PokedexCaught { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 1] == 1 select Pokedex[index, 1]).Count(); } }
+		//public int PokedexSeen { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 0] == 1 select Pokedex[index, 0]).Count(); } }
+		//public int PokedexCaught { get { return Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 1] == 1).ToArray().Length; } }//.Select( y => Pokedex[y, 1])
+		//public int PokedexSeen { get { return Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 0] == 1).ToArray().Length; } }//.Where(x => Pokedex[x, 0] == 1)
+		//ToDo: Adventure Start Date; Use date of save file (game saves after player is made)
+		public System.TimeSpan PlayTime { get; private set; }
+
+		/// <summary>
+		/// </summary>
+		/// <remarks>
+		/// Each Badge in <see cref="GymBadges"/> is a Key/Value,
+		/// regardless of how they're set in game. One value per badge.
+		/// </remarks>
+		public Dictionary<GymBadges, System.DateTime?> GymsBeatTime { get; private set; }
+		public GymBadges[] Badges { get { return GymsBeatTime.Where(x => x.Value.HasValue).Select(x => x.Key).ToArray(); } }
+		public int BadgesCount { get { return (from gyms in GymsBeatTime where gyms.Value.HasValue select gyms).Count(); } }
+		#endregion
 
 		#region Player Customization
 		///// <summary>
@@ -60,8 +153,9 @@ namespace PokemonUnity.Character
 		public Player()
 		{
 			//playerPokedex = new bool?[Pokemon.PokemonData.Database.Length];
-			//Pokedex = new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count(), 3];
-			//PlayTime = new TimeSpan();
+			Pokedex = new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count(), 3];
+			PlayTime = new TimeSpan();
+			Position = new Vector();
 			Bag = new Bag();
 			PC = new PC();
 			Party = new Pokemon[]
@@ -75,85 +169,118 @@ namespace PokemonUnity.Character
 			};
 
 			//List<GymBadges> gymBadges = new List<GymBadges>();
-			//GymsBeatTime = new Dictionary<GymBadges, DateTime?>();
-			//foreach (GymBadges i in (GymBadges[])Enum.GetValues(typeof(GymBadges)))
-			//{
-			//	//gymBadges.Add(i);
-			//	GymsBeatTime.Add(i, null);
-			//}
+			GymsBeatTime = new Dictionary<GymBadges, DateTime?>();
+			foreach (GymBadges i in (GymBadges[])Enum.GetValues(typeof(GymBadges)))
+			{
+				//gymBadges.Add(i);
+				GymsBeatTime.Add(i, null);
+			}
 			//gymsEncountered = new bool[gymBadges.Count];
 			//gymsBeaten = new bool[gymBadges.Count];
 			//gymsBeatTime = new System.DateTime?[gymBadges.Count];
 			//GymsBeatTime = new System.DateTime?[gymBadges.Count];
+			Checkpoint		= Locations.PALLET_TOWN;
 		}
 
-		public Player(string name, bool gender, Pokemon[] party = null, Items[] bag = null, Pokemon[][] pc_poke = null, KeyValuePair<Items,int>[] pc_items = null, byte? pc_box = null, string[] pc_names = null, int[] pc_textures = null, int? trainerid = null, int? secretid = null) : this()
+		public Player(string name, bool gender, Pokemon[] party = null, Items[] bag = null, Pokemon[][] pc_poke = null, KeyValuePair<Items,int>[] pc_items = null, 
+			byte? pc_box = null, string[] pc_names = null, int[] pc_textures = null, int? trainerid = null, int? secretid = null,
+			int? money = null, int? coin = null, int? bank = null, int? repel = null, string rival = null,
+			byte[][] dex = null, TimeSpan? time = null, Vector? position = null, byte? follower = null,
+			bool? creator = null, int? map = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null) : this()
 		{
 			Name = name;
 			IsMale = gender;
 			Party = party ?? Party;
-			Bag = new Bag(bag);
+			Bag = new Bag(bag ?? new Items[0]);
 			PC = new PC(pkmns: pc_poke, items: pc_items, box: pc_box, names: pc_names, textures: pc_textures);
-			this.trainerId = trainerid;
-			this.secretId = secretid;
+			if(trainerid != null)this.trainerId	= trainerid;
+			if(secretid != null) this.secretId	= secretid;
+			if(time != null) this.PlayTime		= time.Value;
+			if(pokecenter != null) this.Checkpoint = (Locations)pokecenter;
+			if(position != null) this.Position	= position.Value;
+			//Position			= position		?? new Vector()									;
+			Money				= money			?? 0											;
+			Coins				= coin			?? 0											;
+			Savings				= bank			?? 0											;
+			IsCreator			= creator		?? false										;
+			FollowPokemon		= follower		?? 0											;
+			Area				= map			?? 0											;
+			RepelSteps			= repel			?? 0											;
+			RivalName			= rival			?? null											;
+
+			if(gym != null)
+				foreach (KeyValuePair<GymBadges, DateTime?> g in gym)
+					if (!GymsBeatTime.ContainsKey(g.Key))
+						GymsBeatTime.Add(g.Key,g.Value);
+
+			//byte[][] dex		= pokedex		?? new byte[Game.PokemonData.Where(x => x.Value.IsDefault).Count()][]; 
+			//Pokedex = new byte[dex.Length,3];
+			if(dex != null)
+				for (int i = 0; i < dex.Length; i++)
+					//Pokedex[i] = new byte[dex[i].Length];
+					for (int j = 0; j < dex[i].Length; j++)
+						Pokedex[i,j] = (byte)dex[i][j];
 		}
 
-		public Player(string name, bool gender, Pokemon[] party = null, Bag bag = null, PC pc = null)
-			: this(name: name, gender: gender, party: party, bag: bag != null ? bag.Contents : null, 
+		public Player(string name, bool gender, Pokemon[] party, Bag bag = null, PC pc = null, int? trainerid = null, int? secretid = null,
+			int? money = null, int? coin = null, int? bank = null, int? repel = null, string rival = null,
+			byte[][] dex = null, TimeSpan? time = null, Vector? position = null, byte? follower = null,
+			bool? creator = null, int? map = null, int? pokecenter = null, KeyValuePair<GymBadges, DateTime?>[] gym = null)
+			: this (name: name, gender: gender, party: party, bag: bag != null ? bag.Contents : null, 
 				  pc_poke: pc != null ? pc.AllBoxes : null, pc_items: pc != null ? pc.Items : null, 
 				  pc_names: pc != null ? pc.BoxNames : null, pc_textures: pc != null ? pc.BoxTextures : null, 
-				  pc_box: pc != null ? pc.ActiveBox : (byte?)null)
+				  pc_box: pc != null ? pc.ActiveBox : (byte?)null, trainerid: trainerid, secretid: secretid,
+				  money:money, coin:coin, bank:bank,repel:repel, rival:rival, dex: dex, time:time, position:position, follower:follower,
+				  creator:creator, map:map, pokecenter:pokecenter, gym:gym)
 		{
 		}
 
-		//public Player(Trainer trainer, Pokemon[] party = null) 
-		//	: this (name: trainer.Name, gender: trainer.Gender.Value, party: party ?? trainer.Party)
-		//{
-		//	trainerId = trainer.TrainerID;
-		//	secretId = trainer.SecretID;
-		//}
+		public Player(Trainer trainer, Pokemon[] party = null) 
+			: this (name: trainer.Name, gender: trainer.Gender ?? true, party: party ?? trainer.Party, pc: null, trainerid: trainer.TrainerID, secretid: trainer.SecretID)
+		{
+		}
 		#endregion
 
 		#region Methods
 		//public void LoadTrainer(Player trainerSaveData) { }
-		public void LoadTrainer(PokemonUnity.Saving.SaveData trainerSaveData)
-		{
-			trainerId = trainerSaveData.TrainerID;
-			secretId = trainerSaveData.SecretID;
-			Name = trainerSaveData.PlayerName;
-			IsMale = trainerSaveData.IsMale;
-			//mapName = trainerSaveData.ActiveScene;
-			//ActivePcBox = trainerSaveData.ActivePcBox;
-			//playerPosition = trainerSaveData.PlayerPosition;
-			//playerDirection = trainerSaveData.PlayerDirection;
-			//Checkpoint = (Locations)trainerSaveData.PokeCenterId;
-			//Money = trainerSaveData.PlayerMoney;// > Core.MAXMONEY ? Core.MAXMONEY : trainerSaveData.PlayerMoney;
-			//Coins = trainerSaveData.PlayerCoins;// > Core.MAXCOINS ? Core.MAXCOINS : trainerSaveData.PlayerCoins;
-			//Pokedex = trainerSaveData.Pokedex2; 
-			//PlayTime = trainerSaveData.PlayTime;
-			//GymsBeatTime = trainerSaveData.GymsChallenged;
-			//Pokedex2 = new byte[dex2.GetLength(0)][];
-			//for (int i = 0; i < Pokedex2.GetLength(0); i++)
-			//{
-			//	Pokedex2[i] = new byte[dex2.GetLength(1)];
-			//	for (int j = 0; j < Pokedex2.GetLength(1); j++)
-			//	{
-			//		Pokedex2[i][j] = (byte)dex2[i, j];
-			//	}
-			//}
-			//int FirstDim = trainerSaveData.Pokedex2.Length;
-			//int SecondDim = trainerSaveData.Pokedex2.GroupBy(row => row.Length).Single().Key;
-			//Pokedex = new byte[trainerSaveData.Pokedex2.GetLength(0),trainerSaveData.Pokedex2.GetLength(1)];
-			//Pokedex = new byte[FirstDim, SecondDim];
-			//for (int i = 0; i < FirstDim; ++i)
-			//	for (int j = 0; j < SecondDim; ++j)
-			//		Pokedex[i, j] = trainerSaveData.Pokedex2[i][j];
-			//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
-			//{
-			//	Party[i] = trainerSaveData.PlayerParty[i];
-			//}
-			Party = trainerSaveData.PlayerParty.Deserialize();
-		}
+		//public void LoadTrainer(PokemonUnity.Saving.GameState trainerSaveData)
+		//{
+		//	trainerId = trainerSaveData.TrainerID;
+		//	secretId = trainerSaveData.SecretID;
+		//	Name = trainerSaveData.PlayerName;
+		//	IsMale = trainerSaveData.IsMale;
+		//	//mapName = trainerSaveData.ActiveScene;
+		//	//ActivePcBox = trainerSaveData.ActivePcBox;
+		//	//playerPosition = trainerSaveData.PlayerPosition;
+		//	//playerDirection = trainerSaveData.PlayerDirection;
+		//	//Checkpoint = (Locations)trainerSaveData.PokeCenterId;
+		//	//Money = trainerSaveData.PlayerMoney;// > Core.MAXMONEY ? Core.MAXMONEY : trainerSaveData.PlayerMoney;
+		//	//Coins = trainerSaveData.PlayerCoins;// > Core.MAXCOINS ? Core.MAXCOINS : trainerSaveData.PlayerCoins;
+		//	//Pokedex = trainerSaveData.Pokedex2; 
+		//	//PlayTime = trainerSaveData.PlayTime;
+		//	//GymsBeatTime = trainerSaveData.GymsChallenged;
+		//	//Pokedex2 = new byte[dex2.GetLength(0)][];
+		//	//for (int i = 0; i < Pokedex2.GetLength(0); i++)
+		//	//{
+		//	//	Pokedex2[i] = new byte[dex2.GetLength(1)];
+		//	//	for (int j = 0; j < Pokedex2.GetLength(1); j++)
+		//	//	{
+		//	//		Pokedex2[i][j] = (byte)dex2[i, j];
+		//	//	}
+		//	//}
+		//	//int FirstDim = trainerSaveData.Pokedex2.Length;
+		//	//int SecondDim = trainerSaveData.Pokedex2.GroupBy(row => row.Length).Single().Key;
+		//	//Pokedex = new byte[trainerSaveData.Pokedex2.GetLength(0),trainerSaveData.Pokedex2.GetLength(1)];
+		//	//Pokedex = new byte[FirstDim, SecondDim];
+		//	//for (int i = 0; i < FirstDim; ++i)
+		//	//	for (int j = 0; j < SecondDim; ++j)
+		//	//		Pokedex[i, j] = trainerSaveData.Pokedex2[i][j];
+		//	//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
+		//	//{
+		//	//	Party[i] = trainerSaveData.PlayerParty[i];
+		//	//}
+		//	Party = trainerSaveData.PlayerParty.Deserialize();
+		//}
 
 		/// <summary>
 		/// Skims every available box player has, and attempts to add pokemon.
@@ -170,16 +297,17 @@ namespace PokemonUnity.Character
 				Party.PackParty();
 				return -1; //true
 			}
-			//else
-			//	//attempt to add to the earliest available PC box. 
-			//	for (int i = 0, b = Game.ActivePcBox; i < Game.PC_Poke.GetUpperBound(0); i++, b++)
-			//	{
-			//		bool added = this.PC[b % Core.STORAGEBOXES].addPokemon(pokemon);
-			//		if (added)
-			//		{
-			//			return b; //true
-			//		}
-			//	}
+			else
+				//attempt to add to the earliest available PC box. 
+				for (int i = 0, b = PC.ActiveBox; i < PC.AllBoxes.Length; i++, b++)
+				{
+					bool added = PC[(byte)(b % Core.STORAGEBOXES)].addPokemon(pokemon);
+					if (added)
+						//Returns the box pokemon was stored to
+						return b; //true
+					//if (!OverflowPokemonsIntoNextBox) break; else change active box too?
+				}
+			//Could not be stored in PC because all boxes full
 			return null;
 		}
 		#endregion

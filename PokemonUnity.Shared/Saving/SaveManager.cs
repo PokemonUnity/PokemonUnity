@@ -13,7 +13,7 @@ namespace PokemonUnity.Saving
 	public static class SaveManager
 	{
 		#region Variables
-		public const string BuildVersion = "0.1.0";
+		public const string BuildVersion = "0.2.0";
 
 		/// <summary>
 		/// If UseAppdata = true, Pokemon Unity will save the save files into %AppData%/Roaming/Pokemon Unity/Saves
@@ -323,7 +323,7 @@ namespace PokemonUnity.Saving
 		//}
 		#endregion
 
-		#region 0.1.0 Save Mechanic Rewrite
+		#region 0.1.0-0.1.1 Save Mechanic Rewrite
 		public static void CreateSaveFileAndSerialize(SaveData[] saveData)
 		{
 			BinaryFormatter bf = new BinaryFormatter();
@@ -453,6 +453,43 @@ namespace PokemonUnity.Saving
 		}
 		#endregion
 
-		//ToDo: 0.1.1 AND 0.2.0
+		#region 0.2.0 Save Mechanic Rewrite
+		public static void CreateSaveFileAndSerialize(SaveData saveData)
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+#if DEBUG
+				File.WriteAllText(playerSave, JsonConvert.SerializeObject(saveData, Formatting.Indented/*, new JsonSerializerSettings() { Formatting = Formatting.Indented }*/));
+#else
+				using(FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
+				{
+					bf.Serialize(fs, saveData);
+				}
+#endif
+		}
+
+		public static SaveData GetSave()
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			if (System.IO.File.Exists(playerSave))
+			{
+#if DEBUG
+				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					using (StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8))
+					{
+						return JsonConvert.DeserializeObject<SaveData>(sr.ReadToEnd(), new SaveDataConverter());
+					};
+				}
+				//return JsonConvert.DeserializeObject<SaveData>(playerSave);
+#else
+				using (FileStream fs = System.IO.File.Open(playerSave, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+				{
+					return (SaveData[])bf.Deserialize(fs);
+				}
+#endif
+			}
+			else return null;
+		}
+		#endregion
 	}
 }

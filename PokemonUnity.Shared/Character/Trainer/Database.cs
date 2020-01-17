@@ -2,7 +2,7 @@
 using PokemonUnity;
 using PokemonUnity.Monster;
 
-namespace PokemonUnity
+/*namespace PokemonUnity
 {
 	/// <summary>
 	/// It is important to note that the player also has a trainer type, 
@@ -24,4 +24,4 @@ namespace PokemonUnity
 			}
 		}
 	}	
-}
+}*/

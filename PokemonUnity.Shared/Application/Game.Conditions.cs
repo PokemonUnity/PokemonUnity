@@ -11,7 +11,6 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
 using System.IO;
 using PokemonUnity.Overworld;
-//using System.Security.Cryptography.MD5;
 
 namespace PokemonUnity
 {

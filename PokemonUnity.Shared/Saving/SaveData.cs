@@ -6,28 +6,69 @@ using PokemonUnity.Utility;
 
 namespace PokemonUnity.Saving
 {
-
     [System.Serializable]
     public class SaveData
     {
+        public static HashSet<GameState> Saves { get; private set; }
+		//[Newtonsoft.Json.JsonProperty]
+        public GameState[] GameStates
+		{
+			get
+			{
+				GameState[] s = new GameState[Saves.Count];
+				Saves.CopyTo(s);
+				return s;
+			}
+			private set
+			{
+				//Saves = new HashSet<GameState>(value);
+				Saves = new HashSet<GameState>();
+				if (value != null)
+					for (int i = 0; i < value.Length; i++)
+						this[i] = value[i];
+			}
+		}
+		/// <summary>
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
+		public GameState this[int i]
+		{
+			get { return GameStates[i]; } //ToDo: Sort by date
+			set
+			{
+				//There is no "Add new slot" it only overrides what's already present 
+				//GameState[] s = new GameState[Saves.Count];
+				//Saves.CopyTo(s);
+				//s[i] = value;
+				//Saves = new HashSet<GameState>(s);
+
+				//Rewrote to override old save file with new one
+				if (Saves.Contains(value))
+					Saves.Remove(value);
+				if(value.TimeCreated.Ticks != new DateTime().Ticks || (value.TrainerID != 0 && value.SecretID != 0))
+					Saves.Add(value);
+			}
+		} 
         #region ImportantInfo
         public string BuildVersion { get; private set; } //SaveManager.GetBuildVersion();
-        public string SaveName { get; private set; }
+        //public string SaveName { get; private set; }
 		public DateTime TimeCreated { get; private set; }
 		#endregion
 
 		#region User Settings 
 		//GameSettings is different from UserSettings, and should be loaded first before save state is even reached...
-		//public int Language { get; private set; }
-		//public byte WindowBorder { get; private set; }
-		//public byte DialogBorder { get; private set; }
-		//public byte TextSpeed { get; private set; }
+		public int Language { get; private set; }
+		public byte WindowBorder { get; private set; }
+		public byte DialogBorder { get; private set; }
+		public byte TextSpeed { get; private set; }
 		//public bool FullScreen { get; private set; }
-		//public float mVol { get; private set; }
-		//public float sVol { get; private set; }
+		public float mVol { get; private set; }
+		public float sVol { get; private set; }
 		#endregion
 
-		#region Player
+		#region GameState Variables
+		/*#region Player
 		public string PlayerName { get; private set; }		
         //public int playerID { get { return (TrainerID + SecretID) * 65536; } }
         public int TrainerID { get; private set; }
@@ -46,7 +87,7 @@ namespace PokemonUnity.Saving
 		public int PlayerMoney { get; private set; }
 		public int PlayerCoins { get; private set; }
 		public int ActiveMapId { get; private set; }
-		public int ActivePcBox { get; private set; }
+		//public int ActivePcBox { get; private set; }
 
 		//Player
 		public float PlayerDirection { get; private set; }
@@ -63,6 +104,8 @@ namespace PokemonUnity.Saving
 		/// Which pokemon from player party is out in overworld with player
 		/// </summary>
 		public int FollowerPokemon { get; private set; }
+		public int RepelSteps { get; private set; }
+		public string[] Rival { get; private set; }
 		#endregion
 
 		#region Pokemon Center
@@ -79,86 +122,99 @@ namespace PokemonUnity.Saving
 		#region SeriClasses
 		public SeriPokemon[] PlayerParty { get; private set; }
 		public SeriPC PC { get; private set; }
-		public List<Items> PlayerBag { get; private set; }
+		public Items[] PlayerBag { get; private set; }
 		public Dictionary<GymBadges,DateTime?> GymsChallenged { get; private set; }
 		//public List<SaveEvent> EventList { get; private set; }
+		#endregion*/
 		#endregion
 
-		//public void AddPokemonCenter(int area, SeriV3 position, int direction, SeriV3 fPosition, int fDirection)
-		//{
-		//    PokeCenterAreaId = area;
-		//
-		//    pCenterPosition = position;
-		//    pCenterDirection = direction;
-		//}
-
-		public SaveData (Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
-			TimeSpan? time = null, Vector position = new Vector(), 
-			float? direction = null, int? scene = null, 
-			int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
-			SeriPC pc = null//, List<SaveEvent> eventList = null
-			) 
-				: this(name: player.Name, money: money, coin: coin, trainer: player.Trainer.TrainerID,
-					  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
-					  time: time, position: position, 
-					  direction: direction, map: scene, pokecenter: pokecenter,
-					  gym: gym, bag: bag, party: player.Trainer.Party.Serialize()//, pc: pc, eventList: eventList
-					  )
+		static SaveData()
 		{
-			// Just made this one for fun... might be useful in future, than doing things the long way, like below
+			Saves = new HashSet<GameState>();
 		}
 
-		public SaveData (string name = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
-			bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, Vector? position = null,//new Vector(), 
-			float? direction = null, 
-			int? map = null, int box = 0, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
-			SeriPokemon[] party = null, SeriPC pc = null//, List<SaveEvent> eventList = null
-			)
-        {
-			//SaveName = saveName;
-			BuildVersion = SaveManager.BuildVersion;//.GetBuildVersion();
-			TimeCreated = DateTime.UtcNow;
+		//public SaveData (Character.Player player, int? money = null, int? coin = null, byte[,] pokedex = null, 
+		//	TimeSpan? time = null, Vector position = new Vector(), 
+		//	float? direction = null, int? scene = null, 
+		//	int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
+		//	SeriPC? pc = null//, List<SaveEvent> eventList = null
+		//	) 
+		//		: this(name: player.Name, money: money, coin: coin, trainer: player.Trainer.TrainerID,
+		//			  secret: player.Trainer.SecretID, gender: player.Trainer.Gender, pokedex: pokedex,
+		//			  time: time, position: position, 
+		//			  direction: direction, map: scene, pokecenter: pokecenter,
+		//			  gym: gym, bag: bag, party: player.Trainer.Party.Serialize()//, pc: pc, eventList: eventList
+		//			  )
+		//{
+		//	// Just made this one for fun... might be useful in future, than doing things the long way, like below
+		//}
 
-			PlayerName			= name			?? Game.Player.Name;
-			PlayerMoney			= money			?? Game.Player.Money;
-			PlayerCoins			= coin			?? Game.Player.Coins;
-			GymsChallenged		= gym			?? Game.Player.GymsBeatTime;
-			PlayerBag			= bag			?? Game.Bag_Items;//Player.Bag; //playerBag;
-			TrainerID			= trainer		?? Game.Player.Trainer.TrainerID;
-			SecretID			= secret		?? Game.Player.Trainer.SecretID;
-			IsMale				= gender		?? Game.Player.isMale;
-			//Pokedex2			= pokedex		?? Game.Player.Pokedex;
-			PlayTime			= time			?? Game.Player.PlayTime;
-			PlayerPosition		= position		?? Game.PlayerPosition; //Game.Player.playerPosition;
-			PlayerDirection		= direction		?? Game.PlayerDirection;//Game.Player.playerDirection;
-			//FollowerPokemon	= Game.Player.followerPokemon;
-			//FollowerPosition	= Game.Player.followerPosition;
-			//FollowerDirection	= Game.Player.followerDirection;
-			ActiveMapId			= map			?? Game.Area;//Game.Player.mapName;.activeScene;
-			ActivePcBox			= box;//		?? Game.Player.ActivePcBox;
-			PokeCenterId		= pokecenter	?? (int)Game.Checkpoint;//Game.Player.Checkpoint;pkmnCenter;
-			PlayerParty			= party			?? Game.Player.Trainer.Party.Serialize();
-			//	new SeriPokemon[Game.Player.Trainer.Party.Length];
+		[Newtonsoft.Json.JsonConstructor]
+		public SaveData (GameState[] state = null,//string name = null, int? money = null, int? coin = null, int? trainer = null, int? secret = null, 
+			//bool? gender = null, byte[,] pokedex = null, TimeSpan? time = null, Vector? position = null,//new Vector(), 
+			//string[] rival = null, int? repel = null, float? direction = null, 
+			//int? map = null, byte box = 0, int? pokecenter = null, Dictionary<GymBadges, DateTime?> gym = null, List<Items> bag = null, 
+			//SeriPokemon[] party = null, SeriPC? pc = null,// List<SaveEvent> eventList = null
+			string build = null, string date = null,
+			Languages? language = null, byte? windowBorder = null, byte? dialogBorder = null, byte? textSpeed = null, float? mvol = null, float? svol = null
+			)
+		{
+			//SaveName			= saveName;
+			BuildVersion		= build			?? SaveManager.BuildVersion;//.GetBuildVersion();
+			TimeCreated			= date != null	?  DateTime.Parse(date) : DateTime.UtcNow;
+			Language			= (int?)language?? (int)Game.UserLanguage;
+			WindowBorder		= windowBorder	?? Game.WindowSkin;
+			DialogBorder		= dialogBorder	?? Game.DialogSkin;
+			TextSpeed			= textSpeed		?? Game.textSpeed;
+			mVol				= mvol			?? Game.mVol;
+			sVol				= svol			?? Game.sVol;
+
+			/*PlayerName			= name			?? Game.GameData.Player.Name;
+			PlayerMoney			= money			?? Game.GameData.Player.Money;
+			PlayerCoins			= coin			?? Game.GameData.Player.Coins;
+			GymsChallenged		= gym			?? Game.GameData.Player.GymsBeatTime;
+			PlayerBag			= bag.ToArray()	?? Game.GameData.Player.Bag.Contents;//Player.Bag; //playerBag;
+			TrainerID			= trainer		?? Game.GameData.Player.Trainer.TrainerID;
+			SecretID			= secret		?? Game.GameData.Player.Trainer.SecretID;
+			IsMale				= gender		?? Game.GameData.Player.IsMale;
+			//Pokedex2			= pokedex		?? Game.GameData.Player.Pokedex;
+			PlayTime			= time			?? Game.GameData.Player.PlayTime;
+			RepelSteps			= repel			?? Game.GameData.RepelSteps;
+			Rival				= rival			?? Game.GameData.Rival;
+			PlayerPosition		= position		?? Game.GameData.PlayerPosition; //Game.GameData.Player.playerPosition;
+			PlayerDirection		= direction		?? Game.GameData.PlayerDirection;//Game.GameData.Player.playerDirection;
+			//FollowerPokemon	= Game.GameData.Player.followerPokemon;
+			//FollowerPosition	= Game.GameData.Player.followerPosition;
+			//FollowerDirection	= Game.GameData.Player.followerDirection;
+			//ActivePcBox		= box;//		?? Game.GameData.Player.ActivePcBox;
+			ActiveMapId			= map			?? Game.GameData.Area;//Game.GameData.Player.mapName;.activeScene;
+			PokeCenterId		= pokecenter	?? (int)Game.GameData.Checkpoint;//Game.GameData.Player.Checkpoint;pkmnCenter;
+			PlayerParty			= party			?? Game.GameData.Player.Trainer.Party.Serialize();
+			//	new SeriPokemon[Game.GameData.Player.Trainer.Party.Length];
 			//if(party != null)
-			//	for (int i = 0; i < Game.Player.Trainer.Party.Length; i++)
+			//	for (int i = 0; i < Game.GameData.Player.Trainer.Party.Length; i++)
 			//	{
-			//		PlayerParty[i]	= Game.Player.Trainer.Party[i];
+			//		PlayerParty[i]	= Game.GameData.Player.Trainer.Party[i];
 			//	}
 
-			byte[,] dex2		= pokedex		?? Game.Player.Pokedex;
+			byte[,] dex2		= pokedex		?? Game.GameData.Player.Pokedex;
 			Pokedex2 = new byte[dex2.GetLength(0)][];
-			for (int i = 0; i < Pokedex2.GetLength(0); i++)
+			for (int i = 0; i < Pokedex2.Length; i++)
 			{
 				Pokedex2[i] = new byte[dex2.GetLength(1)];
-				for (int j = 0; j < Pokedex2.GetLength(1); j++)
+				for (int j = 0; j < Pokedex2[i].Length; j++)
 				{
 					Pokedex2[i][j] = (byte)dex2[i, j];
 				}
 			}
 				
 			//ToDo: Store user's Active PC
-			PC = pc ?? new SeriPC(Game.PC_Poke, Game.PC_boxNames, Game.PC_boxTexture, Game.PC_Items);
-			//EventList			= eventList; //Game.EventList;
+			PC = pc ?? new SeriPC(
+				//Game.GameData.PC.AllBoxes, Game.GameData.PC.BoxNames, Game.GameData.PC.BoxTextures, Game.GameData.PC.Items
+				new Character.PC(pkmns: Game.GameData.PC.AllBoxes, items: Game.GameData.PC.Items, box: box, names: Game.GameData.PC.BoxNames, textures: Game.GameData.PC.BoxTextures)
+				);
+			//EventList			= eventList; //Game.EventList;*/
+			if (state != null) GameStates = state;
         }
 
 		//public SaveData

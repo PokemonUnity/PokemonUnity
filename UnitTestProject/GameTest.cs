@@ -145,6 +145,16 @@ namespace Tests
 			//Assert.IsTrue(Game.EncounterData.Count > 1, string.Format("EncounterData: {0} | MethodData: {1}",Game.EncounterData.Count.ToString(), Game.MethodData.Count.ToString()));
 			Assert.Inconclusive("Set Area Id THEN Test if Encounters loaded");
 		}
+		[TestMethod]
+		public void Initialize_Trainers_Test()
+		{
+			Assert.IsTrue(Game.InitTrainers(), string.Format("TrainerMetaData: {0}",Game.TrainerMetaData.Count.ToString()));
+		}
+		[TestMethod]
+		public void Trainers_Data_IsLoaded()
+		{
+			Assert.IsTrue(Game.TrainerMetaData.Count > 1, string.Format("TrainerMetaData: {0}",Game.TrainerMetaData.Count.ToString()));
+		}
 		#endregion
 
 		#region PlayerMovement

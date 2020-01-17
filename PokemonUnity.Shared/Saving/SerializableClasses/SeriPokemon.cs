@@ -2,16 +2,19 @@
 
 namespace PokemonUnity.Saving.SerializableClasses
 {
-    using PokemonUnity.Monster;
-    using PokemonUnity.Attack;
-    using PokemonUnity.Inventory;
-    using PokemonUnity;
+	using PokemonUnity.Monster;
+	using PokemonUnity.Attack;
+	using PokemonUnity.Character;
+	using PokemonUnity.Inventory;
+	using PokemonUnity;
+	using System.Collections.Generic;
+	using System.Linq;
 
 	/// <summary>
 	/// Serializable version of Pokemon Unity's Pokemon class
 	/// </summary>
 	[System.Serializable]
-	public class SeriPokemon
+	public struct SeriPokemon
 	{
 		#region Sample of Serialized Pokemon Profile
 		//This is an *IDEA* of what it should look like in save file...
@@ -43,8 +46,8 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public int Ability { get; private set; }
 		public int Nature { get; private set; }
 
-		public virtual bool IsShiny { get; private set; }
-		public virtual bool? Gender { get; private set; }
+		public bool IsShiny { get; private set; }
+		public bool? Gender { get; private set; }
 
 		//public bool? PokerusStage { get; private set; }
 		public int[] Pokerus { get; private set; }
@@ -98,7 +101,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 		public static implicit operator Pokemon(SeriPokemon pokemon)
 		{
 			//if (pokemon == null) return null;
-			if ((Pokemons)pokemon.Species == Pokemons.NONE || pokemon == null) return new Pokemon(Pokemons.NONE);
+			if ((Pokemons)pokemon.Species == Pokemons.NONE) return new Pokemon(Pokemons.NONE);
 			Ribbon[] ribbons = new Ribbon[pokemon.Ribbons.Length];
 			for (int i = 0; i < ribbons.Length; i++)
 			{
@@ -114,8 +117,8 @@ namespace PokemonUnity.Saving.SerializableClasses
 			Pokemon normalPokemon =
 				new Pokemon
 				(
-					(Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName,
-					pokemon.TrainerIsMale), tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
+					(Pokemons)pokemon.Species, new Trainer(new Player(pokemon.TrainerName, pokemon.TrainerIsMale), 
+					tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
 					pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
 					(Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
 					pokemon.Pokerus, pokemon.IsHyperMode, pokemon.ShadowLevel,
@@ -132,8 +135,8 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 		public static implicit operator SeriPokemon(Pokemon pokemon)
 		{
-			if (pokemon == null) return null;
 			SeriPokemon seriPokemon = new SeriPokemon();
+			if (pokemon == null) return seriPokemon;
 
 			if(pokemon != null && pokemon.Species != Pokemons.NONE)
 			{
@@ -144,7 +147,7 @@ namespace PokemonUnity.Saving.SerializableClasses
 				if (!pokemon.OT.Equals((object)null))
 				{
 					seriPokemon.TrainerName			= pokemon.OT.Name;
-					seriPokemon.TrainerIsMale		= pokemon.OT.Gender.Value;
+					seriPokemon.TrainerIsMale		= pokemon.OT.Gender ?? true;
 					seriPokemon.TrainerTrainerId	= pokemon.OT.TrainerID;
 					seriPokemon.TrainerSecretId		= pokemon.OT.SecretID;
 				}
@@ -224,55 +227,109 @@ namespace PokemonUnity.Saving.SerializableClasses
 
 			return seriPokemon;
 		}
-
-        [System.Serializable]
-        public class SeriMail
-        {
-            private int MailId { get; set; }
-            public string Message { get; private set; }
-            //Background will stay 0 (new int) until Mail's background feature is implemented
-            //public int Background { get; private set; }
-
-            public static implicit operator Mail(SeriMail mail)
-            {
-                Mail newMail = new Mail((Items)mail.MailId);
-                newMail.Message = mail.Message;
-                return newMail;
-            }
-
-            public SeriMail(Items mailItem, string messsage)
-            {
-                MailId = (int)mailItem;
-                Message = messsage;
-            }
-        }
     }
 
 	public static class SeriArray
 	{
 		public static Pokemon[] Deserialize (this SeriPokemon[] pkmn)
 		{
-			return new Pokemon[]
+			if (pkmn != null)
 			{
-				pkmn[0],
-				pkmn[1],
-				pkmn[2],
-				pkmn[3],
-				pkmn[4],
-				pkmn[5]
-			};
+				Pokemon[] p = new Pokemon[pkmn.Length];
+				for (int i = 0; i < p.Length; i++)
+					p[i] = pkmn[i];
+				return p;
+			}
+			else return new Pokemon[0];
 		}
 		public static SeriPokemon[] Serialize (this Pokemon[] pkmn)
 		{
-			return new SeriPokemon[]
+			if (pkmn != null)
 			{
-				pkmn[0],
-				pkmn[1],
-				pkmn[2],
-				pkmn[3],
-				pkmn[4],
-				pkmn[5]
-			};
+				SeriPokemon[] p = new SeriPokemon[pkmn.Length];
+				for (int i = 0; i < p.Length; i++)
+					p[i] = pkmn[i];
+				return p;
+			}
+			else return new SeriPokemon[0];
 		}
+		public static Pokemon[][] Deserialize (this SeriPokemon[][] pkmn)
+		{
+			if (pkmn != null)
+			{
+				Pokemon[][] pkmns = new Pokemon[pkmn.Length][];
+				for (int i = 0; i < pkmns.Length; i++)
+					pkmns[i] = pkmn[i].Deserialize();
+				return pkmns;
+			}
+			else
+			{
+				//Pokemon[][] pkmns = new Pokemon[Core.STORAGEBOXES][];
+				Pokemon[][] pkmns = new Pokemon[0][];
+				for (int i = 0; i < pkmns.Length; i++)
+				{
+					pkmns[i] = new Pokemon[0];
+					for (int j = 0; j < pkmns[i].Length; j++)
+					{
+						pkmns[i][j] = new Pokemon(Pokemons.NONE);
+					}
+				}
+				return pkmns;
+			}
+		}
+		public static SeriPokemon[][] Serialize (this Pokemon[][] pkmn)
+		{
+			if (pkmn != null)
+			{
+				SeriPokemon[][] pkmns = new SeriPokemon[pkmn.Length][];
+				for (int i = 0; i < pkmns.Length; i++)
+					pkmns[i] = pkmn[i].Serialize();
+				return pkmns;
+			}
+			else
+			{
+				//SeriPokemon[][] pkmns = new SeriPokemon[Core.STORAGEBOXES][];
+				SeriPokemon[][] pkmns = new SeriPokemon[0][];
+				for (int i = 0; i < pkmns.Length; i++)
+				{
+					pkmns[i] = new SeriPokemon[0];
+					for (int j = 0; j < pkmns[i].Length; j++)
+					{
+						pkmns[i][j] = (SeriPokemon)new Pokemon(Pokemons.NONE);
+					}
+				}
+				return pkmns;
+			}
+		}
+		public static KeyValuePair<Items, int>[] Compress (this Items[] items)
+		{
+				List<KeyValuePair<Items, int>> l = new List<KeyValuePair<Items, int>>();
+				foreach (Items item in items.Distinct())
+				{
+					//int total = 0;
+					int count = items.Where(x => x == item).Count();
+					//int groups = (int)Math.Floor(total / 99d);
+					//for (int i = 0; i < (int)Math.Floor(count / 99d); i++)
+					//{
+					//	l.Add(new KeyValuePair<Items, int>(item, 99));
+					//}
+					//int leftovers = total % 99;
+					//l.Add(new KeyValuePair<Items, int>(item, leftovers));
+					l.Add(new KeyValuePair<Items, int>(item, count));
+				}
+				return l.ToArray();
+		}
+		//public static SeriPC[] Serialize (this Character.PC[] item)
+		//{
+		//	return new SeriPokemon[]
+		//	{
+		//		pkmn[0],
+		//		pkmn[1],
+		//		pkmn[2],
+		//		pkmn[3],
+		//		pkmn[4],
+		//		pkmn[5]
+		//	};
+		//}
 	}
 }

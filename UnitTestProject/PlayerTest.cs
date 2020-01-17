@@ -1,16 +1,18 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
+using PokemonUnity.Character;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
 using PokemonUnity.Saving;
+using PokemonUnity.Utility;
 using System.Collections.Generic;
 using PokemonUnity.Saving.SerializableClasses;
 
 namespace Tests
 {
-	[TestClass] //ToDo: Move Test into a PlayerTest.cs
+	[TestClass] 
 	public class PlayerTest
 	{
 		//[TestMethod] 
@@ -29,12 +31,12 @@ namespace Tests
 			//string saveName = "First Save";
 			int activeScene = 2;
 
-			//Languages language = Languages.English;
-			//byte windowBorder = 2;
-			//byte dialogBorder = 9;
-			//byte textSpeed = 1;
-			//float mvol = 0.4f;
-			//float svol = 0.9f;
+			Languages language = Languages.English;
+			byte windowBorder = 2;
+			byte dialogBorder = 9;
+			byte textSpeed = 1;
+			float mvol = 0.4f;
+			float svol = 0.9f;
 
 			string playerName = "Red";
 			int trainerID = 55323;
@@ -51,42 +53,64 @@ namespace Tests
 				new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE)
 			};
-			Game.Player = new Player(red, playerParty);
-			red = Game.Player.Trainer;
+			Game.GameData.Player = new Player(red, playerParty);
+			red = Game.GameData.Player.Trainer;
 
 			//bool?[] pokedex = new bool?[] { null, false, true, false, null };
+			byte[,] pokedex = new byte[,] { { 0, 0 } };
 			TimeSpan playerTime = new TimeSpan(4, 20, 53);
 			//SeriV3 playerPosition = new SeriV3(0, 1, 0);
-			int playerDirection = 2;
+			Vector playerPosition = new Vector(0, 1, 0);
+			//int playerDirection = 2;
 			//SeriV3 followerPosition = new SeriV3(1, 0, 0);
-			int followerDirection = 1;
-			Pokemon[,] playerPC = Game.PC_Poke; //new Pokemon[Core.STORAGEBOXES, 30];
+			//int followerDirection = 1;
+			//Pokemon[,] playerPC = new Pokemon[Core.STORAGEBOXES, 30];
+			Pokemon[][] playerPC = new Pokemon[Core.STORAGEBOXES][];//, 30];
 			//for (int i = 0; i < playerPC.GetLength(1); i++)
-			//{
-			//	for (int j = 0; j < playerPC.GetLength(0); j++)
-			//	{
-			//		//This should be done by aleady
-			//		//i believe the default value on new Pokemon[,] will return none
-			//		playerPC[i, j] = new Pokemon(Pokemons.NONE);
-			//	}
-			//}
-			playerPC[0, 3] = new Pokemon(Pokemons.CRANIDOS, red);
-			playerPC[1, 2] = new Pokemon(Pokemons.EMPOLEON, red);
-			playerPC[3, 3] = new Pokemon(Pokemons.GARCHOMP, red);
+			for (int i = 0; i < playerPC.Length; i++)
+			{
+				playerPC[i] = new Pokemon[30];
+				//for (int j = 0; j < playerPC.GetLength(0); j++)
+				for (int j = 0; j < playerPC[i].Length; j++)
+				{
+					//This should be done by aleady
+					//i believe the default value on new Pokemon[,] will return none
+					//playerPC[i, j] = new Pokemon(Pokemons.NONE);
+					playerPC[i][j] = new Pokemon(Pokemons.NONE);
+				}
+			}
+			playerPC[0][3] = new Pokemon(Pokemons.CRANIDOS, red);
+			playerPC[1][2] = new Pokemon(Pokemons.EMPOLEON, red);
+			playerPC[3][3] = new Pokemon(Pokemons.GARCHOMP, red);
 			
-			Game.Bag_Items = new List<Items>()
+			//Game.Bag_Items = new List<Items>()
+			List<Items> playerBag = new List<Items>()//Game.Bag_Items;
 			//Created random inventory list for player bag
 			{
 				Items.ADAMANT_ORB,
-				Items.ACRO_BIKE,
-				Items.POKE_BALL,
-				Items.POKE_BALL,
-				Items.POKE_BALL,
-				Items.POKE_BALL,
-				Items.POKE_BALL,
+				Items.ACRO_BIKE,	
+				Items.POKE_BALL,	
+				Items.POKE_BALL,	
+				Items.POKE_BALL,	
+				Items.POKE_BALL,	
+				Items.POKE_BALL,	
 				Items.GREAT_BALL
 			};
-			List<Items> playerBag = Game.Bag_Items;
+
+			List<KeyValuePair<Items, int>> playerPcItem = new List<KeyValuePair<Items, int>>()
+			//Created random inventory list for player bag
+			{
+				new KeyValuePair<Items, int>( Items.ADAMANT_ORB,    1 ),
+				new KeyValuePair<Items, int>( Items.ACRO_BIKE,      1 ),
+				new KeyValuePair<Items, int>( Items.POKE_BALL,      5 ),
+				new KeyValuePair<Items, int>( Items.POKE_BALL,		0 ),
+				new KeyValuePair<Items, int>( Items.POKE_BALL,		0 ),
+				new KeyValuePair<Items, int>( Items.POKE_BALL,		0 ),
+				new KeyValuePair<Items, int>( Items.POKE_BALL,		0 ),
+				new KeyValuePair<Items, int>( Items.GREAT_BALL,     4 )
+			};
+
+			PokemonUnity.Character.PC pc = new PokemonUnity.Character.PC(pkmns: playerPC, items: playerPcItem.ToArray(), names: new string[] { "Box 1", "Box 2" }, textures: new int[] { 0, 1 });
 
 			//List<SaveEvent> eventList = new List<SaveEvent>();
 			//eventList.Add(new SaveEvent(SaveEventType.ITEM, "Item - GreatBall", new SeriV3(4, 0, 2), 2));
@@ -97,41 +121,83 @@ namespace Tests
 			(
 				//saveName,
 		
-				//language,
-				//windowBorder,
-				//dialogBorder,
-				//textSpeed,
-				//mvol,
-				//svol,
+				language: language,
+				windowBorder: windowBorder,
+				dialogBorder: dialogBorder,
+				textSpeed: textSpeed,
+				mvol: mvol,
+				svol: svol
 		
-				name: playerName,
-				trainer: trainerID,
-				secret: secretID,
-				gender: isMale,
-		
+				//name: playerName,
+				//trainer: trainerID,
+				//secret: secretID,
+				//gender: isMale,
+				//
 				//pokedex: pokedex,
-				time: playerTime,
+				//time: playerTime,
 				//position: playerPosition,
-				direction: playerDirection,
-				//followerPosition,
-				//followerDirection,
+				//
+				//map: activeScene,
+				//
+				//party: red.Party.Serialize(), 
+				//pc: new SeriPC(pc),
+				//bag: playerBag
 		
-				map: activeScene,
-		
-				party: red.Party.Serialize(), 
-				pc: new SeriPC(playerPC, new string[] { "Box 1", "Box 2" }, new int[] { 0, 1 }, new List<Items>()),
-				bag: playerBag
-		
-				//,eventList: eventList
+				//,eventLog: eventList
 			);
+			GameState g = new GameState
+			(
+				player: new Player(
+					name: playerName
+					,gender: isMale
+					,party: red.Party
+					,bag: playerBag.ToArray()
+					,trainerid: trainerID
+					,secretid: secretID
+					,pc_poke: playerPC//pc.AllBoxes
+					,pc_items: playerPcItem.ToArray()//pc.Items
+					,pc_box: pc.ActiveBox
+					,pc_names: pc.BoxNames
+					,pc_textures: pc.BoxTextures
+					//,dex: pokedex
+					,time: playerTime
+					,position: playerPosition
+					,map: activeScene
+				)
+
+				//,name: playerName
+
+				//,pc: new SeriPC(pc)
+			)
+			{
+				//PlayerItemData		= state.PlayerItemData
+				//,PlayerBerryData	= state.PlayerBerryData
+				//,PlayerNPCData		= state.PlayerNPCData
+				//,PlayerApricornData	= state.PlayerApricornData
+				//,RepelSteps			= state.Player.RepelSteps
+				//,Rival				= state.Rival
+				//,PlayerPosition		= state.PlayerPosition
+				//,Checkpoint			= (Locations)state.Checkpoint
+				//,Player				= state.Player
+				//,PC					= state.PlayerPC
+				//,Bag				= state.PlayerBag
+				//Area = data.ActiveMapId;
+				//PC_Poke = data.PC.GetPokemonsFromSeri();
+				//PC_boxNames = data.PC.BoxNames;
+				//PC_boxTexture = data.PC.BoxTextures;
+				//PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
+				//Bag_Items = data.PlayerBag;
+			};
 			#endregion
 			//SaveManager.Overwrite(newSave, 0);
+			newSave[0] = g;
 			return newSave;
 		}
 
 		public void Overwrite_New_Save_File_With_Standard_Unit_Test_Values()
 		{
-			SaveManager.Overwrite(New_Save_File_With_Standard_Unit_Test_Values(), 0);
+			//SaveManager.Overwrite(New_Save_File_With_Standard_Unit_Test_Values(), 0);
+			SaveManager.CreateSaveFileAndSerialize(New_Save_File_With_Standard_Unit_Test_Values());
 		}
 
 		[TestMethod]
@@ -172,9 +238,11 @@ namespace Tests
 			#region Save File Setup
 			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
-			SaveManager.Overwrite(newSave, 2);
+			//SaveManager.Overwrite(2, newSave);
+			SaveManager.CreateSaveFileAndSerialize(newSave);
 			#endregion
-			Assert.IsNotNull(SaveManager.GetSaves()[2]);
+			//Assert.IsNotNull(SaveManager.GetSaves()[2]);
+			Assert.IsNotNull(SaveManager.GetSave());
 		}
 
 		[TestMethod]
@@ -183,21 +251,23 @@ namespace Tests
 			//Assert.Inconclusive("Code is temporarily stripped from project");
 			SaveData newSave = New_Save_File_With_Standard_Unit_Test_Values();
 
-			SaveManager.Overwrite(newSave, 1);
+			//SaveManager.Overwrite(newSave, 1);
+			SaveManager.CreateSaveFileAndSerialize(newSave);
 
-			SaveData loadedData = SaveManager.GetSave(1);
+			SaveData loadedData = SaveManager.GetSave();
 
+			//ToDo: Use AssertCollection to test below in one Assert, instead of many
 			#region Assert On Save Values
 			if (newSave.BuildVersion != loadedData.BuildVersion)
 				Assert.Fail("Build versions are not the same");
 
-			if (newSave.SaveName != loadedData.SaveName)
-				Assert.Fail("SaveNames are not the same");
+			//if (newSave.SaveName != loadedData.SaveName)
+			//	Assert.Fail("SaveNames are not the same");
 
 			if (newSave.TimeCreated != loadedData.TimeCreated)
-				Assert.Fail("TimeCreated are not the same");
+				Assert.Fail("TimeCreated are not the same", string.Format("Save: {0} | Load: {1}",newSave.TimeCreated, loadedData.TimeCreated));
 
-			if (newSave.PlayerName != loadedData.PlayerName)
+			/*if (newSave.PlayerName != loadedData.PlayerName)
 				Assert.Fail("PlayerNames are not the same");
 
 			if (newSave.TrainerID != loadedData.TrainerID)
@@ -226,8 +296,8 @@ namespace Tests
 				(newSave.PlayerPosition.z != loadedData.PlayerPosition.z)
 			)
 				Assert.Fail("PlayerPositions are not the same");
-			if (newSave.PlayerDirection != loadedData.PlayerDirection)
-				Assert.Fail("PlayerDirections are not the same");
+			//if (newSave.PlayerDirection != loadedData.PlayerDirection)
+			//	Assert.Fail("PlayerDirections are not the same");
 
 			//if (
 			//    (newSave.FollowerPosition.x != loadedData.FollowerPosition.x) &&
@@ -249,27 +319,28 @@ namespace Tests
 					Assert.Fail("PlayerParty's are not the same on index: " + i);
 			}
 
-			/*if (newSave.PC.GetUpperBound(0) != loadedData.PC.GetUpperBound(0))
+			if (newSave.PlayerPC.GetUpperBound(0) != loadedData.PlayerPC.GetUpperBound(0))
 				Assert.Fail("PC's are not the same on bound: 0");
-			if (newSave.PC.GetUpperBound(1) != loadedData.PC.GetUpperBound(1))
+			if (newSave.PlayerPC.GetUpperBound(1) != loadedData.PlayerPC.GetUpperBound(1))
 				Assert.Fail("PC's are not the same on bound: 1");
-			for (int i = 0; i < newSave.PC.GetUpperBound(0); i++)
+			for (int i = 0; i < newSave.PlayerPC.GetUpperBound(0); i++)
 			{
-				for (int j = 0; j < newSave.PC.GetUpperBound(1); j++)
+				for (int j = 0; j < newSave.PlayerPC.GetUpperBound(1); j++)
 				{
-					if (newSave.PC[i, j].Species != loadedData.PC[i, j].Species)
+					if (newSave.PlayerPC[i, j].Species != loadedData.PlayerPC[i, j].Species)
 						Assert.Fail("PC's are not the same on indexes: " + i + ", " + j);
 				}
-			}*/
+			}
 
-			if (newSave.PlayerBag.Count != loadedData.PlayerBag.Count)
+			if (newSave.PlayerBag.Length != loadedData.PlayerBag.Length)
 				Assert.Fail("PlayerBag's sizes are not the same");
-			for (int i = 0; i < newSave.PlayerBag.Count; i++)
+			for (int i = 0; i < newSave.PlayerBag.Length; i++)
 			{
 				if (newSave.PlayerBag[i] != loadedData.PlayerBag[i])
 					Assert.Fail("PlayerBag's are not the same on index: " + i);
-			}
+			}*/
 			#endregion
+			Assert.Inconclusive("Need better test...");
 		}
 
 		#region Player Properties
@@ -324,10 +395,10 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Name()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-			SaveData newSave = SaveManager.GetSaves()[0];
+			GameState newSave = SaveManager.GetSave()[0];
 
 			Assert.AreEqual("Red", newSave.PlayerName);
 		}
@@ -340,11 +411,11 @@ namespace Tests
 		[TestMethod]
 		public void SaveData_Load_Party()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
-			SaveData newSave = SaveManager.GetSaves()[saveSlot];
+			GameState newSave = SaveManager.GetSave()[saveSlot];
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]
 			//{
@@ -371,18 +442,19 @@ namespace Tests
 			//}
 			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
 				new Pokemons[] { (Pokemons)newSave.PlayerParty[0].Species, (Pokemons)newSave.PlayerParty[1].Species, (Pokemons)newSave.PlayerParty[2].Species,
-					(Pokemons)newSave.PlayerParty[3].Species, (Pokemons)newSave.PlayerParty[4].Species, (Pokemons)newSave.PlayerParty[5].Species });
+					(Pokemons)newSave.PlayerParty[3].Species, (Pokemons)newSave.PlayerParty[4].Species, (Pokemons)newSave.PlayerParty[5].Species }, newSave.PlayerParty.ToString());
 		}
 		[TestMethod]
 		public void Player_Load_Party()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
-			//Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
+			//Assert.Inconclusive("Code is temporarily stripped from project");
+			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
 			byte saveSlot = 0;
-			Game.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
+			//Game.Save(New_Save_File_With_Standard_Unit_Test_Values(), saveSlot);
 
 			Game.Load(saveSlot);
+			//Game.InitLoadFile()[saveSlot];
 			////Party of pokemons should still equal 6, even if other three are empty...
 			//Pokemon[] expectedPlayerParty = new Pokemon[]
 			//{
@@ -408,36 +480,38 @@ namespace Tests
 			//        Assert.Fail("Pokemon Party's Pokemon do not match up on ID: " + i);
 			//}
 			CollectionAssert.AreEqual(new Pokemons[] { Pokemons.CRANIDOS, Pokemons.UMBREON, Pokemons.TURTWIG, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE },
-				new Pokemons[] { Game.Player.Trainer.Party[0].Species, Game.Player.Trainer.Party[1].Species, Game.Player.Trainer.Party[2].Species,
-					Game.Player.Trainer.Party[3].Species, Game.Player.Trainer.Party[4].Species, Game.Player.Trainer.Party[5].Species });
+				new Pokemons[] { Game.GameData.Player.Trainer.Party[0].Species, Game.GameData.Player.Trainer.Party[1].Species, Game.GameData.Player.Trainer.Party[2].Species,
+					Game.GameData.Player.Trainer.Party[3].Species, Game.GameData.Player.Trainer.Party[4].Species, Game.GameData.Player.Trainer.Party[5].Species });
 		}
 		[TestMethod]
 		public void Player_Load_Pokedex()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			Assert.Inconclusive("Need better test...");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-			SaveData newSave = SaveManager.GetSave(0);
+			GameState newSave = SaveManager.GetSave()[0];
 			//this is testing for inferior pokedex... but was still functional code.
 			//i removed pokedex script because i found the expanded version to be more attractive...
-			//may need to redo test again to match active code...
 			bool?[] expectedPokedex = new bool?[] { null, false, true, false, null };
 
 			if (expectedPokedex.Length != newSave.Pokedex.Length)
 				Assert.Fail("Expected- and actual Pokedex's length didn't match up.");
 			for (int i = 0; i < expectedPokedex.Length; i++)
 			{
-				if (expectedPokedex[i] != newSave.Pokedex[i])
-					Assert.Fail("Expected- and actual Pokedex's index didn't match up on index: " + i);
+				//may need to redo test again to match active code...
+				Assert.Inconclusive("Test needs to be redone to match code changes; Pokedex is no longer bool?[] and is now byte[][].");
+				//if (expectedPokedex[i] != newSave.Pokedex[i])
+				//	Assert.Fail("Expected- and actual Pokedex's index didn't match up on index: " + i);
 			}
 		}
 		[TestMethod]
 		public void Player_Load_HoursPlayed()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-			SaveData newSave = SaveManager.GetSaves()[0];
+			GameState newSave = SaveManager.GetSave()[0];
 			TimeSpan expectedTimeSpan = new TimeSpan(4, 20, 53);
 
 			Assert.AreEqual(expectedTimeSpan, newSave.PlayTime);
@@ -450,15 +524,15 @@ namespace Tests
 		[TestMethod]
 		public void Player_Load_Settings_Language()
 		{
-			Assert.Inconclusive("Code is temporarily stripped from project");
+			//Assert.Inconclusive("Code is temporarily stripped from project");
 			Overwrite_New_Save_File_With_Standard_Unit_Test_Values();
 
-			SaveData newSave = SaveManager.GetSave(0);
+			SaveData newSave = SaveManager.GetSave();
 			Languages expectedLanguage = Languages.English;
 
 			//We need to cast newSave.Language to the correct variable, since we save it in an (int)
-			//Assert.AreEqual(expectedLanguage, (Languages)newSave.Language);
-			Assert.Fail("Player Settings are saved separate from Player Game State");
+			Assert.AreEqual(expectedLanguage, (Languages)newSave.Language);
+			//Assert.Fail("Player Settings are saved separate from Player Game State");
 		}
 		/*[TestMethod]
 		public void Player_Load_Settings_Text_WindowBorder()

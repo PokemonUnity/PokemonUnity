@@ -660,6 +660,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Assets\Scripts2\EventHandlers\EventListener.cs" />
     <Compile Include="Assets\Scripts\Base\GameEntry.Builtin.cs" />
     <Compile Include="Assets\Scripts\Base\GameEntry.cs" />
     <Compile Include="Assets\Scripts\Base\GameEntry.Custom.cs" />

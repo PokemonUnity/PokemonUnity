@@ -57,6 +57,7 @@ namespace PokemonUnity.Attack
 		/// The number of PP Ups used for this move
 		/// </summary>
 		public int PPups { get; private set; }
+		#region Values to be Overridden while in Battle?
 		/// <summary>
 		/// Base Damage
 		/// </summary>
@@ -64,7 +65,6 @@ namespace PokemonUnity.Attack
 		public int? Accuracy		{ get; private set; } //{ get { return _base.Accuracy; } }  
 		public Types Type			{ get; private set; } //{ get { return _base.Type; } }
 		public Targets Targets		{ get; private set; } //{ get { return _base.Target; } }
-		public Moves MoveId			{ get; private set; } //{ get { return _base.ID; } }
 		public Flag Flag			{ get; private set; } //{ get { return _base.Flags; } }      
 		public int Priority			{ get; private set; } //{ get { return _base.Priority; } }      
 		public int? Appeal			{ get; private set; } //{ get { return _base.Appeal; } } 
@@ -73,6 +73,8 @@ namespace PokemonUnity.Attack
 		public Effects Effect		{ get; private set; } //{ get { return _base.Effect; } }   
 		public int? EffectChance	{ get; private set; } //{ get { return _base.EffectChance; } }        
 		public Category Category	{ get; private set; } //{ get { return _base.Category; } }  
+		#endregion
+		public Moves MoveId			{ get { return _base.ID; } }
 		//public Effect Function { get { return (Effect)_base.Function; } }
 		//public Effect Function { get { return (Effect)_base.Function; } }
 		//public string FunctionAsString { get { return _base.FunctionAsString; } }

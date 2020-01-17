@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Feature.cs" />
     <Compile Include="Attack\Move.cs" />
     <Compile Include="Attack\Data\Base.cs" />
     <Compile Include="Attack\Data\Meta.cs" />
@@ -63,9 +64,6 @@
     <Compile Include="Character\Player.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Trainer.cs" />
-    <Compile Include="Character\Trainer\Database.cs" />
-    <Compile Include="Core.cs" />
-    <Compile Include="Debugger.cs" />
     <Compile Include="Enums\Battles.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Enums\Items.cs" />
@@ -78,10 +76,10 @@
     <Compile Include="Extensions\ScriptConversion.cs" />
     <Compile Include="Extensions\StringHelper.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Game\Game.Features.cs" />
-    <Compile Include="Game\Game.Conditions.cs" />
-    <Compile Include="Game\Game.Database.cs" />
-    <Compile Include="Game\Game.cs" />
+    <Compile Include="Application\Game.Features.cs" />
+    <Compile Include="Application\Game.Conditions.cs" />
+    <Compile Include="Application\Game.Database.cs" />
+    <Compile Include="Application\Game.Utility.cs" />
     <Compile Include="Inventory\Data\Base.cs" />
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
@@ -104,9 +102,12 @@
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Saving\Data\GameState.cs" />
+    <Compile Include="Saving\Data\SaveDataConverter.cs" />
     <Compile Include="Saving\EventListener.cs" />
     <Compile Include="Saving\SaveData.cs" />
     <Compile Include="Saving\SaveManager.cs" />
+    <Compile Include="Saving\SerializableClasses\SeriMail.cs" />
     <Compile Include="Saving\SerializableClasses\SeriMove.cs" />
     <Compile Include="Saving\SerializableClasses\SeriPC.cs" />
     <Compile Include="Saving\SerializableClasses\SeriPokemon.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
+using PokemonUnity.Character;
 
 
 namespace Tests
@@ -35,14 +36,14 @@ namespace Tests
         [TestMethod]
         public void Trainer_Party_AddPokemon()
 		{
-			Assert.Inconclusive();
+			//Assert.Inconclusive();
 			string playerName = "Red";
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
 			Player player = new Player(playerName, isMale/*, playerParty*/);
 			Trainer trainer = new Trainer(player, tID: trainerID, sID: secretID);
-			player = new Player(trainer);
+			//player = new Player(trainer);
 			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);
 			player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 
@@ -67,7 +68,10 @@ namespace Tests
 				"", name,
 				31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
-			CollectionAssert.AreNotEqual(new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, new Pokemons[] { trainer.Party[0].Species, trainer.Party[1].Species, trainer.Party[2].Species, trainer.Party[3].Species, trainer.Party[4].Species, trainer.Party[5].Species } );
+			CollectionAssert.AreNotEqual( //ToDo: Change to AreEqual, and use expected results with more precision...
+				new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, 
+				new Pokemons[] { trainer.Party[0].Species, trainer.Party[1].Species, trainer.Party[2].Species, trainer.Party[3].Species, trainer.Party[4].Species, trainer.Party[5].Species } 
+			);
 		}
 
         [TestMethod]

@@ -75,17 +75,17 @@ namespace PokemonUnity
             iOSVendorIdentifier = UnityEngine.iOS.Device.vendorIdentifier ?? string.Empty;
 #endif
             string gameVersion = GameFramework.Version.GameVersion;
-            string platform = Application.platform.ToString();
+            string platform = UnityEngine.Application.platform.ToString();
             string language = GameEntry.Localization.Language.ToString();
-            string unityVersion = Application.unityVersion;
-            string installMode = Application.installMode.ToString();
-            string sandboxType = Application.sandboxType.ToString();
+            string unityVersion = UnityEngine.Application.unityVersion;
+            string installMode = UnityEngine.Application.installMode.ToString();
+            string sandboxType = UnityEngine.Application.sandboxType.ToString();
             string screenWidth = Screen.width.ToString();
             string screenHeight = Screen.height.ToString();
             string screenDpi = Screen.dpi.ToString();
             string screenOrientation = Screen.orientation.ToString();
             string screenResolution = GameFramework.Utility.Text.Format("{0} x {1} @ {2}Hz", Screen.currentResolution.width.ToString(), Screen.currentResolution.height.ToString(), Screen.currentResolution.refreshRate.ToString());
-            string useWifi = (Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork).ToString();
+            string useWifi = (UnityEngine.Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork).ToString();
 
             WWWForm wwwForm = new WWWForm();
             wwwForm.AddField("DeviceId", WebUtility.EscapeString(deviceId));
@@ -140,7 +140,7 @@ namespace PokemonUnity
                     Title = GameEntry.Localization.GetString("ForceUpdate.Title"),
                     Message = GameEntry.Localization.GetString("ForceUpdate.Message"),
                     ConfirmText = GameEntry.Localization.GetString("ForceUpdate.UpdateButton"),
-                    OnClickConfirm = delegate (object userData) { Application.OpenURL(versionInfo.GameUpdateUrl); },
+                    OnClickConfirm = delegate (object userData) { UnityEngine.Application.OpenURL(versionInfo.GameUpdateUrl); },
                     CancelText = GameEntry.Localization.GetString("ForceUpdate.QuitButton"),
                     OnClickCancel = delegate (object userData) { UnityGameFramework.Runtime.GameEntry.Shutdown(ShutdownType.Quit); },
                 });

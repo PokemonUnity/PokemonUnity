@@ -6,6 +6,7 @@ using PokemonUnity;
 using PokemonUnity.Attack;
 using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
+using PokemonUnity.Character;
 using PokemonUnity.Monster.Data;
 
 namespace PokemonUnity.Monster
@@ -222,6 +223,7 @@ namespace PokemonUnity.Monster
             StatusCount = 0;
             ballUsed = Items.NONE;
             Item = Items.NONE;
+			ribbons = new List<Ribbon>();
             //calcStats();
         }
 
@@ -506,7 +508,7 @@ namespace PokemonUnity.Monster
 		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null) 
 			: this (
 			species: pkmn.Species,
-			original: Game.Player.Trainer,
+			original: Game.GameData.Player.Trainer,
 			nickName: nickname, form: pkmn.Form,
 			ability: pkmn.Ability, nature: pkmn.Nature,
 			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
@@ -702,9 +704,9 @@ namespace PokemonUnity.Monster
 		public void SetCatchInfos(Items Ball, ObtainedMethod Method)
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
-			//this.obtainMap = Game.Level.MapName;
-			//this.CatchTrainerName = Game.Player.Name;
-			this.OT = Game.Player.Trainer;
+			//this.obtainMap = Game.GameData.Level.MapName;
+			//this.CatchTrainerName = Game.GameData.Player.Name;
+			this.OT = Game.GameData.Player.Trainer;
 
 			this.ObtainedMode = Method;
 			this.ballUsed = Ball;
@@ -1257,11 +1259,11 @@ namespace PokemonUnity.Monster
 				//int d = b ^ c;
 				//New Math Equation from Bulbapedia, gen 2 to 6...
 				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
-				//int d = (Game.Player.Trainer.TrainerID ^ Game.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+				//int d = (Game.GameData.Player.Trainer.TrainerID ^ Game.GameData.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
 				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.Player.Trainer.TrainerID) 
-					^ (!OT.Equals((object)null) ? OT.SecretID : Game.Player.Trainer.SecretID)) 
-					^ ((Game.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536) 
+				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.GameData.Player.Trainer.TrainerID) 
+					^ (!OT.Equals((object)null) ? OT.SecretID : Game.GameData.Player.Trainer.SecretID)) 
+					^ ((Game.GameData.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536) 
 					^ (PersonalId % 65536);
 				shinyFlag = d < _base.ShinyChance;
 				return shinyFlag.Value;
@@ -1388,8 +1390,8 @@ namespace PokemonUnity.Monster
         public byte countMoves()
         {
             byte ret = 0;
-            for (byte i = 0; i < 4; i++){//foreach(var move in this.moves){ 
-                if ((int)this.moves[i].MoveId != 0) ret += 1;//move.id
+            for (int i = 0; i < 4; i++){//foreach(var move in this.moves){ 
+                if (this.moves[i].MoveId != Moves.NONE) ret += 1;//move.id
             }
             return ret;
         }
@@ -1457,7 +1459,8 @@ namespace PokemonUnity.Monster
 			resetMoves();
             int numMove = Core.Rand.Next(4)+1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
-            if (isEgg || egg || Game.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+            if (isEgg || egg || Game.GameData.Features.CatchPokemonsWithEggMoves) 
+				movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
 			int?[] rejected = new int?[movelist.Count];
             switch (level)
             {
@@ -1582,14 +1585,15 @@ namespace PokemonUnity.Monster
             }
         }
 
-        /// <summary>
+		/// <summary>
 		/// Teaches new move to pokemon. Will fail if pokemon is unable to learn.
-        /// </summary>
-        /// <param name="move"></param>
-        /// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
-        /// <returns></returns>
-        /// Silently learns the given move. Will erase the first known move if it has to.
-		/// ToDo: Change void to string, return errors as in-game prompts; remove `out bool success`
+		/// </summary>
+		/// <param name="move"></param>
+		/// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
+		/// <returns></returns>
+		/// Silently learns the given move. Will erase the first known move if it has to.
+		//ToDo: Change void to string, return errors as in-game prompts; 
+		//remove `out bool success` or replace with `out string error`
         public void LearnMove(Moves move, out bool success, bool silently = false)
         {
 			success = false;
@@ -1619,7 +1623,7 @@ namespace PokemonUnity.Monster
             }
             for (int i = 0; i < 4; i++)
             {
-                if (moves[i].MoveId == 0)
+                if (moves[i].MoveId == Moves.NONE)
                 {
                     moves[i] = new Move(move);
 					success = true;
@@ -1765,7 +1769,8 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Contest attributes, ribbons
-        private List<Ribbon> ribbons { get; set; }
+		//ToDo: This is actually a hashset, and not list, because only store one of each
+        private List<Ribbon> ribbons { get; set; } 
         /// <summary>
         /// Each region/ribbon sprite should have it's own Ribbon.EnumId
         /// </summary>
@@ -1774,7 +1779,8 @@ namespace PokemonUnity.Monster
         /// Does it make a difference if pokemon won contest in different regions? 
 		/// Yes -- ribbons are named after region; Do not need to record region data
 		/// ToDo: Dictionary(Ribbon,struct[DateTime/Bool])
-        public List<Ribbon> Ribbons { get { return this.ribbons; } }
+		//ToDo: Change to array, to keep list immutable
+        public List<Ribbon> Ribbons { get { return this.ribbons; } } 
         /// <summary>
         /// Contest stats; Max value is 255
         /// </summary>

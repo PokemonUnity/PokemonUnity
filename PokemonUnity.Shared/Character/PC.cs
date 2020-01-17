@@ -14,7 +14,7 @@ namespace PokemonUnity.Character
 	//ToDo: Add Function to add more boxes to player pc
 	// OR! A function to disable boxes until they're "unlocked"
 	// Max # of boxes would be hard-capped if option 2
-	//ToDo: Add Game.Feature where player unlocks more boxes
+	//ToDo: Add Game.GameData.Feature where player unlocks more boxes
 	public class PC
 	{
 		#region Variables		
@@ -36,7 +36,7 @@ namespace PokemonUnity.Character
 				for (int i = 0; i < pkmns.GetLength(0); i++)
 				{
 					pkmns[i] = new Pokemon[pokemons.GetLength(1)];
-					for (int j = 0; j < pkmns.GetLength(1); j++)
+					for (int j = 0; j < pkmns[i].Length; j++)
 					{
 						pkmns[i][j] = pokemons[i, j];
 					}
@@ -64,7 +64,7 @@ namespace PokemonUnity.Character
 		/// <summary>
 		/// </summary>
 		/// ToDo: Add filter to add/remove items...
-		//public List<Items> Items { get { return Game.PC_Items; } set { Game.PC_Items = value; } }
+		//public List<Items> Items { get { return Game.GameData.PC_Items; } set { Game.GameData.PC_Items = value; } }
 		public KeyValuePair<Items, int>[] Items
 		{
 			get
@@ -73,7 +73,7 @@ namespace PokemonUnity.Character
 			//	KeyValuePair<Items, int>[] pairs = new KeyValuePair<Items, int>[50];
 				List<KeyValuePair<Items, int>> l = new List<KeyValuePair<Items, int>>();
 			//	int index = 0;
-				//foreach (Items item in items.Distinct().Where(x => Game.ItemData[x].Pocket == ItemPockets.MISC))
+				//foreach (Items item in items.Distinct().Where(x => Game.GameData.ItemData[x].Pocket == ItemPockets.MISC))
 				foreach (KeyValuePair<Items, int> item in items)
 				{
 					//Can only display the amount of items the PC can hold
@@ -101,7 +101,7 @@ namespace PokemonUnity.Character
 				return l.ToArray();
 			}
 		}
-
+		//ToDo: return pokemon box, without changing activebox
 		public PC this[byte i]
 		{
 			get
@@ -111,11 +111,11 @@ namespace PokemonUnity.Character
 				//Pokemon[] p = new Pokemon[30];
 				//for (int t = 0; t < 30; t++)
 				//{
-				//	p[t] = Game.PC_Poke[i, t];
+				//	p[t] = Game.GameData.PC_Poke[i, t];
 				//}
 				//this.Pokemons = p;
-				//this.Texture = Game.PC_boxTexture[i];
-				//this.Name = Game.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
+				//this.Texture = Game.GameData.PC_boxTexture[i];
+				//this.Name = Game.GameData.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
 				return this;
 			}
 		}
@@ -166,7 +166,7 @@ namespace PokemonUnity.Character
 			if (pkmns != null)
 				for (int x = 0; x < Core.STORAGEBOXES; x++)
 					for (int y = 0; y < 30; y++)
-						if (pkmns.Length < x || pkmns[x].Length < y)
+						if (pkmns.Length - 1 < x || pkmns[x].Length - 1 < y)
 							pokemons[x, y] = new Pokemon(PokemonUnity.Pokemons.NONE);
 						else
 							pokemons[x, y] = pkmns[x][y];
@@ -232,7 +232,7 @@ namespace PokemonUnity.Character
 			if (hasSpace())
 			{
 				//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-				Game.PC_Poke[ActiveBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+				pokemons[ActiveBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
 				return true;
 			}
 			//if could not add a pokemon, return false. Party and PC are both full.
@@ -241,15 +241,15 @@ namespace PokemonUnity.Character
 
 		public void swapPokemon(int box1, int pos1, int box2, int pos2)
 		{
-			Pokemon temp = Game.PC_Poke[box1, pos1];
-			Game.PC_Poke[box1, pos1] = Game.PC_Poke[box2, pos2];
-			Game.PC_Poke[box2, pos2] = temp;
+			Pokemon temp = pokemons[box1, pos1];
+			pokemons[box1, pos1] = pokemons[box2, pos2];
+			pokemons[box2, pos2] = temp;
 		}
 		#endregion
 	}
 }
 
-namespace PokemonUnity
+/*namespace PokemonUnity
 {
 	public partial class Game
 	{
@@ -258,8 +258,10 @@ namespace PokemonUnity
 			//public static PC
 			private Player trainer { get; set; }
 			private int activeBox { get; set; }
-			public string Name { get { return Game.PC_boxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
-			public int Texture { get { return Game.PC_boxTexture[activeBox]; } }
+			//public string Name { get { return Game.GameData.PC_boxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
+			public string Name { get { return Game.GameData.PC.BoxNames[activeBox] ?? "Box " + (activeBox + 1).ToString(); } }
+			//public int Texture { get { return Game.GameData.PC_boxTexture[activeBox]; } }
+			public int Texture { get { return Game.GameData.PC.BoxTextures[activeBox]; } }
 			public Pokemon[] Pokemons
 			{
 				get
@@ -267,7 +269,8 @@ namespace PokemonUnity
 					Pokemon[] p = new Pokemon[30];
 					for (int t = 0; t < 30; t++)
 					{
-						p[t] = Game.PC_Poke[activeBox, t];
+						//p[t] = Game.GameData.PC_Poke[activeBox, t];
+						p[t] = Game.GameData.PC.AllBoxes[activeBox][t];
 					}
 					return p;
 				}
@@ -275,7 +278,8 @@ namespace PokemonUnity
 			/// <summary>
 			/// </summary>
 			/// ToDo: Add filter to add/remove items...
-			public List<Items> Items { get { return Game.PC_Items; } set { Game.PC_Items = value; } }
+			//public List<Items> Items { get { return Game.GameData.PC_Items; } set { Game.GameData.PC_Items = value; } }
+			public List<Items> Items { get { return Game.GameData.PC.Items; } set { Game.GameData.PC.Items = value; } }
 
 			public TrainerPC this[int i]
 			{
@@ -286,11 +290,11 @@ namespace PokemonUnity
 					//Pokemon[] p = new Pokemon[30];
 					//for (int t = 0; t < 30; t++)
 					//{
-					//	p[t] = Game.PC_Poke[i, t];
+					//	p[t] = Game.GameData.PC_Poke[i, t];
 					//}
 					//this.Pokemons = p;
-					//this.Texture = Game.PC_boxTexture[i];
-					//this.Name = Game.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
+					//this.Texture = Game.GameData.PC_boxTexture[i];
+					//this.Name = Game.GameData.PC_boxNames[i] ?? "Box " + (i + 1).ToString();
 					return this;
 				}
 			}
@@ -349,7 +353,7 @@ namespace PokemonUnity
 					}
 				}
 				return result;
-			}*/
+			}* /
 
 			/// <summary>
 			/// Add a new pokemon directly to active box. 
@@ -363,7 +367,8 @@ namespace PokemonUnity
 				if (hasSpace())
 				{
 					//Pokemons[getIndexOfFirstEmpty().Value] = acquiredPokemon;
-					Game.PC_Poke[activeBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+					//Game.GameData.PC_Poke[activeBox, getIndexOfFirstEmpty().Value] = acquiredPokemon;
+					Game.GameData.PC.AllBoxes[activeBox][getIndexOfFirstEmpty().Value] = acquiredPokemon;
 					return true;
 				}
 				//if could not add a pokemon, return false. Party and PC are both full.
@@ -372,10 +377,13 @@ namespace PokemonUnity
 
 			public void swapPokemon(int box1, int pos1, int box2, int pos2)
 			{
-				Pokemon temp = Game.PC_Poke[box1, pos1];
-				Game.PC_Poke[box1, pos1] = Game.PC_Poke[box2, pos2];
-				Game.PC_Poke[box2, pos2] = temp;
+				//Pokemon temp = Game.GameData.PC_Poke[box1, pos1];
+				//Game.GameData.PC_Poke[box1, pos1] = Game.GameData.PC_Poke[box2, pos2];
+				//Game.GameData.PC_Poke[box2, pos2] = temp;
+				Pokemon temp = Game.GameData.PC.AllBoxes[box1][pos1];
+				Game.GameData.PC.AllBoxes[box1][pos1] = Game.GameData.PC.AllBoxes[box2][pos2];
+				Game.GameData.PC.AllBoxes[box2][pos2] = temp;
 			}
 		}
 	}
-}
+}*/

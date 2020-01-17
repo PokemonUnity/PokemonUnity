@@ -10,8 +10,7 @@ using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Character;
 using PokemonUnity.Utility;
 
-//ToDo: Pokemonunity.Character.Player?...
-namespace PokemonUnity
+/*namespace PokemonUnity
 {	
 	[Serializable] 
 	public class Player
@@ -33,12 +32,12 @@ namespace PokemonUnity
 		/// hold the `Trainer` data, and instantiate a new Trainer
 		/// whenever it's needed...
 		public Pokemon[] Party { get; private set; }
-		public Trainer Trainer { get { return new Trainer(this, /*name: Name, gender: isMale,*/ party: Party, tID: trainerId, sID: secretId); } }
-		/// <summary>
-		/// When displaying items in bag, do a foreach loop and filter by item category
-		/// </summary>
-		public Game.TrainerBag Bag { get { return new Game.TrainerBag(this); } }
-		public Game.TrainerPC PC { get { return new Game.TrainerPC(this, ActivePcBox); } }
+		public Trainer Trainer { get { return new Trainer(this, /*name: Name, gender: isMale,* / party: Party, tID: trainerId, sID: secretId); } }
+		///// <summary>
+		///// When displaying items in bag, do a foreach loop and filter by item category
+		///// </summary>
+		//public Game.TrainerBag Bag { get { return new Game.TrainerBag(this); } }
+		//public Game.TrainerPC PC { get { return new Game.TrainerPC(this, ActivePcBox); } }
 
 		#region UI/Game Engine
 		//public int mapName { get { return Game.Area; } }
@@ -228,7 +227,7 @@ namespace PokemonUnity
 			for (int i = 0; i < FirstDim; ++i)
 				for (int j = 0; j < SecondDim; ++j)
 					Pokedex[i, j] = trainerSaveData.Pokedex2[i][j];
-			//for (int i = 0; i < /*Game.Player.Trainer.*/Party.Length; i++)
+			//for (int i = 0; i < /*Game.Player.Trainer.* /Party.Length; i++)
 			//{
 			//	Party[i] = trainerSaveData.PlayerParty[i];
 			//}
@@ -250,18 +249,19 @@ namespace PokemonUnity
 				Party.PackParty();
 				return -1; //true
 			}
-			else
-				//attempt to add to the earliest available PC box. 
-				for (int i = 0, b = ActivePcBox; i < Game.PC_Poke.GetUpperBound(0); i++, b++)
-				{
-					bool added = this.PC[b % Core.STORAGEBOXES].addPokemon(pokemon);
-					if (added)
-					{
-						return b; //true
-					}
-				}
+			//else
+			//	//attempt to add to the earliest available PC box. 
+			//	//for (int i = 0, b = ActivePcBox; i < Game.PC_Poke.GetUpperBound(0); i++, b++)
+			//	for (int i = 0, b = ActivePcBox; i < Game.GameData.PC.AllBoxes.Length; i++, b++)
+			//	{
+			//		bool added = this.PC[b % Core.STORAGEBOXES].addPokemon(pokemon);
+			//		if (added)
+			//		{
+			//			return b; //true
+			//		}
+			//	}
 			return null;
 		}
 		#endregion
 	}
-}
+}*/

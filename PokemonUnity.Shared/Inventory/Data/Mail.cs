@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using PokemonUnity;
+using PokemonUnity.Character;
 using PokemonUnity.Inventory;
 
 namespace PokemonUnity.Inventory//.ItemData

@@ -29,15 +29,16 @@ namespace PokemonUnity.Character
 		private bool reverseOrder { get; set; }
 		//private Items[] Items { get; set; }
 		public Items[] Contents { get { return items.ToArray(); } }
-		public SortedList<Items, byte> this[ItemPockets pocket]  {
+		public SortedList<Items, byte> this[ItemPockets pocket]
+		{
 			get
 			{
 				//All items found in the bag
 				List<Items> bag = new List<Items>();
 				//List of items that belong in this pocket, with quantity found
 				SortedList<Items, byte> items = new SortedList<Items, byte>();
-				//foreach (KeyValuePair<Items, byte> Item in Game.Bag_Items)
-				foreach (Items Item in Game.Bag_Items)
+				//foreach (KeyValuePair<Items, byte> Item in Game.GameData.Bag_Items)
+				foreach (Items Item in this.items)
 				{
 					//Item item = global::Item.GetItem(Item.Key);
 					ItemData item = Game.ItemData[Item];
@@ -48,7 +49,7 @@ namespace PokemonUnity.Character
 							if(pocket == ItemPockets.MISC)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -56,7 +57,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.MEDICINE)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -64,7 +65,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.POKEBALL)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -72,7 +73,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.MACHINE)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -80,7 +81,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.BERRY)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -88,7 +89,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.MAIL)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -96,7 +97,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.BATTLE)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -104,7 +105,7 @@ namespace PokemonUnity.Character
 							if (pocket == ItemPockets.KEY)
 								if (!bag.Contains(Item))
 								{
-									items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+									items.Add(Item, (byte)this.items.Count(i => i == Item));
 									bag.Add(Item);
 								}
 							break;
@@ -125,7 +126,7 @@ namespace PokemonUnity.Character
 		{
 			get
 			{
-				return Game.ItemData[Game.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
+				return Game.ItemData[items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
 			}
 		}
 		#endregion
@@ -152,8 +153,8 @@ namespace PokemonUnity.Character
 		//	misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
 		//	//orderString = new string[ItemDatabaseOld.getItemsLength()];
 		//	quantity = new int[Bag_Items.Count];
-		//	//foreach (KeyValuePair<Items, byte> Item in Game.Bag_Items)
-		//	foreach (Items Item in Game.Bag_Items)
+		//	//foreach (KeyValuePair<Items, byte> Item in Game.GameData.Bag_Items)
+		//	foreach (Items Item in Game.GameData.Bag_Items)
 		//	{
 		//		//Item item = global::Item.GetItem(Item.Key);
 		//		Item item = PokemonUnity.Item.Item.GetItem(Item);
@@ -162,56 +163,56 @@ namespace PokemonUnity.Character
 		//			case ItemPockets.MISC:
 		//				if (!misc.Contains(Item))
 		//				{
-		//					Misc.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Misc.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					misc.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.MEDICINE:
 		//				if (!machine.Contains(Item))
 		//				{
-		//					Medicine.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Medicine.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					machine.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.POKEBALL:
 		//				if (!pokeball.Contains(Item))
 		//				{
-		//					Pokeball.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Pokeball.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					pokeball.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.MACHINE:
 		//				if (!machine.Contains(Item))
 		//				{
-		//					Machine.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Machine.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					machine.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.BERRY:
 		//				if (!berry.Contains(Item))
 		//				{
-		//					Berry.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Berry.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					berry.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.MAIL:
 		//				if (!mail.Contains(Item))
 		//				{
-		//					Mail.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Mail.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					mail.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.BATTLE:
 		//				if (!battle.Contains(Item))
 		//				{
-		//					Battle.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Battle.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					battle.Add(Item);
 		//				}
 		//				break;
 		//			case ItemPockets.KEY:
 		//				if (!key.Contains(Item))
 		//				{
-		//					Key.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+		//					Key.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 		//					key.Add(Item);
 		//				}
 		//				break;
@@ -403,10 +404,10 @@ namespace PokemonUnity.Character
 		/// <returns></returns>
 		public bool HasMegaBracelet()
 		{
-			//if (Game.Player.SandBoxMode || Game.IS_DEBUG_ACTIVE)
+			//if (Game.GameData.Player.SandBoxMode || Game.GameData.IS_DEBUG_ACTIVE)
 			//	return true;
 			//else {
-				if(Game.Bag_Items.Contains(Items.MEGA_BRACELET)) 
+				if(items.Contains(Items.MEGA_BRACELET)) 
 					return true;
 			//}
 
@@ -420,8 +421,8 @@ namespace PokemonUnity.Character
 		/// newer gens automatically give at start, so default is true...
 		public bool HasRunningShoes()
 		{
-			//ToDo: `Items.RUNNING_SHOES` Does not exist... Use => `Game.HasRunningShoes()` instead?
-			//if (Game.Bag_Items.Contains(Items.RUNNING_SHOES)) 
+			//ToDo: `Items.RUNNING_SHOES` Does not exist... Use => `Game.GameData.HasRunningShoes()` instead?
+			//if (Game.GameData.Bag_Items.Contains(Items.RUNNING_SHOES)) 
 			//	return true;
 
 			return true;
@@ -454,7 +455,7 @@ namespace PokemonUnity.Character
 			}
 			for (int i = 0; i < quantity; i++)
 			{
-				//Game.Bag_Items.Add(item);
+				//Game.GameData.Bag_Items.Add(item);
 				items.Add(item);
 			}
 		}
@@ -481,8 +482,8 @@ namespace PokemonUnity.Character
 			if(quantity > 0)
 				for (int i = 0; i < quantity; i++)
 				{
-					//if(Game.Bag_Items.Contains(item))
-					//	Game.Bag_Items.Remove(item);
+					//if(Game.GameData.Bag_Items.Contains(item))
+					//	Game.GameData.Bag_Items.Remove(item);
 					if(items.Contains(item))
 						items.Remove(item);
 				}
@@ -502,7 +503,7 @@ namespace PokemonUnity.Character
 			//Next
 			//
 			//Return 0
-			return Game.Bag_Items.Where(x => x == item).Count();
+			return items.Where(x => x == item).Count();
 		}
 		/// <summary>
 		/// Separates Items in Misc Pocket into groups of [slot limit]
@@ -539,9 +540,9 @@ namespace PokemonUnity.Character
 		{
 			string Message = "";
 			//if (quantity == 1)
-			//	Message = Game.Player.Name + " stored it in the~" + Game.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
+			//	Message = Game.GameData.Player.Name + " stored it in the~" + Game.GameData.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
 			//else
-			//	Message = Game.Player.Name + " stored them~in the " + Game.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
+			//	Message = Game.GameData.Player.Name + " stored them~in the " + Game.GameData.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
 			return Message;
 		}
 
@@ -556,8 +557,8 @@ namespace PokemonUnity.Character
 	}
 }
 
-namespace PokemonUnity
-{	
+/*namespace PokemonUnity
+{
 	public partial class Game
 	{
 		/// <summary>
@@ -574,8 +575,8 @@ namespace PokemonUnity
 		public class TrainerBag
 		{
 			private Player trainer { get; set; }
-			/*// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
-			/// <see cref="Items"/> stores quantity value*/
+			///// <remarks>if use <see cref="Items"/> might be less on memory</remarks>
+			///// <see cref="Items"/> stores quantity value
 			//public List<Item> Items { get { return trainer.Bag_Items; } }
 			//public SortedList<Item, byte> Misc { get; private set; }
 			//public SortedList<Item, byte> Medicine { get; private set; }
@@ -592,11 +593,11 @@ namespace PokemonUnity
 					List<Items> bag = new List<Items>();
 					//List of items that belong in this pocket, with quantity found
 					SortedList<Items, byte> items = new SortedList<Items, byte>();
-					//foreach (KeyValuePair<Items, byte> Item in Game.Bag_Items)
-					foreach (Items Item in Game.Bag_Items)
+					//foreach (KeyValuePair<Items, byte> Item in Game.GameData.Bag_Items)
+					foreach (Items Item in Game.GameData.Bag_Items)
 					{
 						//Item item = global::Item.GetItem(Item.Key);
-						ItemData item = Game.ItemData[Item];
+						ItemData item = Game.GameData.ItemData[Item];
 						if(Item != Items.NONE)
 						switch (item.Pocket)
 						{
@@ -604,7 +605,7 @@ namespace PokemonUnity
 								if(pocket == ItemPockets.MISC)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -612,7 +613,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.MEDICINE)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -620,7 +621,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.POKEBALL)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -628,7 +629,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.MACHINE)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -636,7 +637,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.BERRY)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -644,7 +645,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.MAIL)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -652,7 +653,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.BATTLE)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -660,7 +661,7 @@ namespace PokemonUnity
 								if (pocket == ItemPockets.KEY)
 									if (!bag.Contains(Item))
 									{
-										items.Add(Item, (byte)Game.Bag_Items.Count(i => i == Item));
+										items.Add(Item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 										bag.Add(Item);
 									}
 								break;
@@ -676,7 +677,6 @@ namespace PokemonUnity
 			private bool reverseOrder { get; set; }
 
 			/// <summary>
-			/// 
 			/// </summary>
 			/// <param name="item"></param>
 			/// <returns></returns>
@@ -685,7 +685,7 @@ namespace PokemonUnity
 			{
 				get
 				{
-					return Game.ItemData[Game.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
+					return Game.GameData.ItemData[Game.GameData.Bag_Items.DefaultIfEmpty(Items.NONE).FirstOrDefault(i => i == item)];
 				}
 			}
 
@@ -697,11 +697,11 @@ namespace PokemonUnity
 				}
 			}
 
-			public TrainerBag(Player t) //: this()
-			{
-				//quantity = new int[Bag_Items.Count];
-				trainer = t;
-			}
+			//public TrainerBag(Player t) //: this()
+			//{
+			//	//quantity = new int[Bag_Items.Count];
+			//	trainer = t;
+			//}
 
 			//public TrainerBag()
 			//{
@@ -716,8 +716,8 @@ namespace PokemonUnity
 			//	misc = medicine = pokeball = machine = berry = mail = battle = key = new List<Items>();
 			//	//orderString = new string[ItemDatabaseOld.getItemsLength()];
 			//	quantity = new int[Bag_Items.Count];
-			//	//foreach (KeyValuePair<Items, byte> Item in Game.Bag_Items)
-			//	foreach (Items Item in Game.Bag_Items)
+			//	//foreach (KeyValuePair<Items, byte> Item in Game.GameData.Bag_Items)
+			//	foreach (Items Item in Game.GameData.Bag_Items)
 			//	{
 			//		//Item item = global::Item.GetItem(Item.Key);
 			//		Item item = PokemonUnity.Item.Item.GetItem(Item);
@@ -726,56 +726,56 @@ namespace PokemonUnity
 			//			case ItemPockets.MISC:
 			//				if (!misc.Contains(Item))
 			//				{
-			//					Misc.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Misc.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					misc.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.MEDICINE:
 			//				if (!machine.Contains(Item))
 			//				{
-			//					Medicine.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Medicine.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					machine.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.POKEBALL:
 			//				if (!pokeball.Contains(Item))
 			//				{
-			//					Pokeball.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Pokeball.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					pokeball.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.MACHINE:
 			//				if (!machine.Contains(Item))
 			//				{
-			//					Machine.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Machine.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					machine.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.BERRY:
 			//				if (!berry.Contains(Item))
 			//				{
-			//					Berry.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Berry.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					berry.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.MAIL:
 			//				if (!mail.Contains(Item))
 			//				{
-			//					Mail.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Mail.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					mail.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.BATTLE:
 			//				if (!battle.Contains(Item))
 			//				{
-			//					Battle.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Battle.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					battle.Add(Item);
 			//				}
 			//				break;
 			//			case ItemPockets.KEY:
 			//				if (!key.Contains(Item))
 			//				{
-			//					Key.Add(item, (byte)Game.Bag_Items.Count(i => i == Item));
+			//					Key.Add(item, (byte)Game.GameData.Bag_Items.Count(i => i == Item));
 			//					key.Add(Item);
 			//				}
 			//				break;
@@ -936,7 +936,7 @@ namespace PokemonUnity
 					packOrder();
 				}
 				return true;
-			}*/
+			}* /
 
 			public KeyValuePair<Items, byte>[] Sort(Order by)
 			{
@@ -946,17 +946,17 @@ namespace PokemonUnity
 					case Order.Alphabet:
 						reverseOrder = !reverseOrder;
 						//ToDo: Connect to text and string localization
-						//return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Name).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Name).ToArray();
-						return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Id.ToString()).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Id.ToString()).ToArray();
+						//return this.reverseOrder? items.OrderBy(x => Game.GameData.ItemData[x.Key].Name).ToArray() : items.OrderByDescending(x => Game.GameData.ItemData[x.Key].Name).ToArray();
+						return this.reverseOrder? items.OrderBy(x => Game.GameData.ItemData[x.Key].Id.ToString()).ToArray() : items.OrderByDescending(x => Game.GameData.ItemData[x.Key].Id.ToString()).ToArray();
 					case Order.Quantity:
 						reverseOrder = !reverseOrder;
 						return this.reverseOrder? items.OrderBy(x => x.Value).ToArray() : items.OrderByDescending(x => x.Value).ToArray();
 					case Order.Price:
 						reverseOrder = !reverseOrder;
-						return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Price).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Price).ToArray();
+						return this.reverseOrder? items.OrderBy(x => Game.GameData.ItemData[x.Key].Price).ToArray() : items.OrderByDescending(x => Game.GameData.ItemData[x.Key].Price).ToArray();
 					case Order.Category:
 						reverseOrder = !reverseOrder;
-						return this.reverseOrder? items.OrderBy(x => Game.ItemData[x.Key].Category).ToArray() : items.OrderByDescending(x => Game.ItemData[x.Key].Category).ToArray();
+						return this.reverseOrder? items.OrderBy(x => Game.GameData.ItemData[x.Key].Category).ToArray() : items.OrderByDescending(x => Game.GameData.ItemData[x.Key].Category).ToArray();
 					default:
 						break;
 				}
@@ -969,10 +969,10 @@ namespace PokemonUnity
 			/// <returns></returns>
 			public bool HasMegaBracelet()
 			{
-				//if (Game.Player.SandBoxMode || Game.IS_DEBUG_ACTIVE)
+				//if (Game.GameData.Player.SandBoxMode || Game.GameData.IS_DEBUG_ACTIVE)
 				//	return true;
 				//else {
-					if(Game.Bag_Items.Contains(Items.MEGA_BRACELET)) 
+					if(Game.GameData.Bag_Items.Contains(Items.MEGA_BRACELET)) 
 						return true;
 				//}
 
@@ -986,7 +986,7 @@ namespace PokemonUnity
 			/// newer gens automatically give at start, so default is true...
 			public bool HasRunningShoes()
 			{
-				//if (Game.Bag_Items.Contains(Items.RUNNING_SHOES)) //ToDo: Does not exist?...
+				//if (Game.GameData.Bag_Items.Contains(Items.RUNNING_SHOES)) //ToDo: Does not exist?...
 				//	return true;
 
 				return true;
@@ -1011,7 +1011,7 @@ namespace PokemonUnity
 				//Me.Add(New ItemContainer(ID, Amount))
 				for (int i = 0; i < quantity; i++)
 				{
-					Game.Bag_Items.Add(item);
+					Game.GameData.Bag_Items.Add(item);
 				}
 			}
 
@@ -1037,8 +1037,8 @@ namespace PokemonUnity
 				if(quantity > 0)
 					for (int i = 0; i < quantity; i++)
 					{
-						if(Game.Bag_Items.Contains(item))
-							Game.Bag_Items.Remove(item);
+						if(Game.GameData.Bag_Items.Contains(item))
+							Game.GameData.Bag_Items.Remove(item);
 					}
 			}
 
@@ -1056,7 +1056,7 @@ namespace PokemonUnity
 				//Next
 				//
 				//Return 0
-				return Game.Bag_Items.Where(x => x == item).Count();
+				return Game.GameData.Bag_Items.Where(x => x == item).Count();
 			}
 
 			/// <summary>
@@ -1069,9 +1069,9 @@ namespace PokemonUnity
 			{
 				string Message = "";
 				//if (quantity == 1)
-				//	Message = Game.Player.Name + " stored it in the~" + Game.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
+				//	Message = Game.GameData.Player.Name + " stored it in the~" + Game.GameData.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
 				//else
-				//	Message = Game.Player.Name + " stored them~in the " + Game.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
+				//	Message = Game.GameData.Player.Name + " stored them~in the " + Game.GameData.Player.Inventory.GetItemPocketChar(item) + item.ItemPocket.ToString() + " pocket.";
 				return Message;
 			}
 
@@ -1084,4 +1084,4 @@ namespace PokemonUnity
 			}
 		}
 	}
-}
+}*/

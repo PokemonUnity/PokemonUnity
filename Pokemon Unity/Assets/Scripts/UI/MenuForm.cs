@@ -58,7 +58,7 @@ namespace PokemonUnity
                 return;
             }
 
-            m_QuitButton.SetActive(Application.platform != RuntimePlatform.IPhonePlayer);
+            m_QuitButton.SetActive(UnityEngine.Application.platform != RuntimePlatform.IPhonePlayer);
         }
 
 #if UNITY_2017_3_OR_NEWER

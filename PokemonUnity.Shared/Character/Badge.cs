@@ -8,6 +8,8 @@ namespace PokemonUnity.Character
 	/// </summary
 	public class Badge
 	{
+		//ToDo: public static Moves[] HMs
+		//ToDo: Move HMs to Machine class... Match TMs to MoveId?
 		public enum HMMoves
 		{
 			Surf,
@@ -27,29 +29,34 @@ namespace PokemonUnity.Character
 		/// <summary>
 		/// This describes one Badge loaded by a GameMode with ID, Name, Texture and Arguments.
 		/// </summary>
+		//ToDo: Rename to BadgeData
 		[System.Serializable]
-		private class BadgeDeclaration
+		private struct BadgeDeclaration
 		{
 			/// <summary>
 			/// Id of Trainer Badge
 			/// </summary>
 			/// ToDo: Use enum here
-			public int ID = 0;
-			public string Name = "";
-			public int LevelCap = -1;
-			public List<HMMoves> HMs = new List<HMMoves>();
+			public GymBadges ID { get; private set; } //= 0;
+			public string Name { get; private set; } //= "";
+			public byte LevelCap { get; private set; } //= -1;
+			public List<HMMoves> HMs { get; private set; } //= new List<HMMoves>();
 			//ToDo: Vector4 to SeriV4
 			//public UnityEngine.Vector4 TextureRectangle { get; set; }
-			public string TexturePath = @"GUI\Badges";
-			public string Region = "Johto";
+			public string TexturePath { get; private set; } //= @"GUI\Badges";
+			public Regions Region { get; private set; } //= "Johto";
 
 			public BadgeDeclaration(string inputData)
 			{
+				HMs = new List<HMMoves>();
 				//TextureRectangle = new UnityEngine.Vector4(0, 0, 50, 50);
 				string[] data = inputData.Split(System.Convert.ToChar("|"));
 
-				this.ID = System.Convert.ToInt32(data[0]);
+				this.ID = (GymBadges)System.Convert.ToInt32(data[0]);
 				this.Name = data[1];
+				this.LevelCap = 0;
+				this.Region = Regions.NOT_IN_OVERWORLD;
+				this.TexturePath = @"GUI\Badges";
 
 				if (data.Count() > 2)
 				{
@@ -62,7 +69,7 @@ namespace PokemonUnity.Character
 						{
 							case "level":
 								{
-									this.LevelCap = System.Convert.ToInt32(argData);
+									this.LevelCap = System.Convert.ToByte(argData);
 									break;
 								}
 							case "hm":
@@ -136,7 +143,8 @@ namespace PokemonUnity.Character
 								}
 							case "region":
 								{
-									this.Region = argData;
+									//this.Region = argData;
+									this.Region = (Regions)System.Convert.ToInt32(argData);
 									break;
 								}
 						}
@@ -163,6 +171,7 @@ namespace PokemonUnity.Character
 		}
 
 
+		/* ToDo: use XML
 		/// <summary>
 		/// Gets the Badge name.
 		/// </summary>
@@ -177,7 +186,6 @@ namespace PokemonUnity.Character
 			return "Plain";
 		}
 
-		/* ToDo: use XML
 		/// <summary>
 		/// Gets the badge texture.
 		/// </summary>
@@ -190,14 +198,14 @@ namespace PokemonUnity.Character
 					return TextureManager.GetTexture(b.TexturePath, b.TextureRectangle, "");
 			}
 			return TextureManager.GetTexture(@"GUI\Badges", new UnityEngine.Vector4(0, 0, 50, 50), "");
-		}*/
+		}
 
 		/// <summary>
 		/// Gets the highest level cap the player can use traded Pokémon on.
 		/// </summary>
 		public static int GetLevelCap()
 		{
-			int[] trainerBadges = Game.Player.Badges;
+			int[] trainerBadges = Game.GameData.Player.Badges;
 			int highestCap = 10;
 			foreach (BadgeDeclaration b in Badges)
 			{
@@ -213,7 +221,7 @@ namespace PokemonUnity.Character
 		/// <param name="HM">The Hidden Machine move the player tries to use.</param>
 		public static bool CanUseHMMove(HMMoves HM)
 		{
-			int[] trainerBadges = Game.Player.Badges;
+			int[] trainerBadges = Game.GameData.Player.Badges;
 			foreach (BadgeDeclaration b in Badges)
 			{
 				if (b.HMs.Contains(HM) & trainerBadges.Contains(b.ID) | b.ID == 0)
@@ -294,7 +302,7 @@ namespace PokemonUnity.Character
 		/// <param name="BadgeID">The Badge ID to check for.</param>
 		public static bool PlayerHasBadge(int BadgeID)
 		{
-			return Game.Player.Badges.Contains(BadgeID);
-		}
+			return Game.GameData.Player.Badges.Contains(BadgeID);
+		}*/
 	}
 }

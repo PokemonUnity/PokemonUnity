@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 
 namespace PokemonUnity.Utility
 {
+	[System.Serializable]
 	public struct Point
 	{
 		public float x { get; set; }

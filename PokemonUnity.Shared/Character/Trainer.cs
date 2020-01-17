@@ -4,6 +4,7 @@ using PokemonUnity.Monster;
 
 namespace PokemonUnity.Character
 {
+	//ToDo: MetaData struct for Secret,Trainer,Gender (use for pokemons)
 	public struct Trainer
 	{
 		#region Variables
@@ -67,7 +68,18 @@ namespace PokemonUnity.Character
 		/// <remarks>
 		/// only the last six digits are used so the Trainer Card will display an ID No.
 		/// </remarks>
-		public string PlayerID { get { return GetHashCode().ToString().Substring(GetHashCode().ToString().Length - 6, GetHashCode().ToString().Length); } }
+		public string PlayerID
+		{
+			get
+			{
+				ulong n = (ulong)(TrainerID + SecretID * 65536);
+				if (n == 0) return "0";
+				string x = n.ToString();
+				// = x.PadLeft(6,'0');
+				//return GetHashCode().ToString().Substring(GetHashCode().ToString().Length - 6, GetHashCode().ToString().Length);
+				return x.Substring(x.Length - 6, 6);
+			}
+		}
 		public int TrainerID { get; private set; }
 		public int SecretID { get; private set; }
 		#endregion
@@ -88,6 +100,37 @@ namespace PokemonUnity.Character
 		#endregion
 
 		#region Constructor
+		public Trainer(TrainerTypes trainer)
+		{
+			ID = trainer;
+			TrainerID = Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
+			SecretID = Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
+			Double = false;
+			Party = new Pokemon[]
+			{
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE)
+			};
+			Items = new Inventory.Items[0];
+			//ScriptIdle = idle
+			//ScriptBattleIntro = intro
+			//ScriptBattleEnd = end
+			//if(trainer != TrainerTypes.Player && string.IsNullOrEmpty(name)
+			//if(trainer != TrainerTypes.WildPokemon
+			Name = trainer.ToString();
+			Gender = 				trainer == TrainerTypes.PLAYER ? (bool?)null : Game.TrainerMetaData[trainer].Gender; //ToDo: if wild?...
+			Double = 				Game.TrainerMetaData[trainer].Double;
+			BaseMoney = 			Game.TrainerMetaData[trainer].BaseMoney;
+			AI = 					Game.TrainerMetaData[trainer].SkillLevel;
+			BattleBGM = 			Game.TrainerMetaData[trainer].BattleBGM;
+			VictoryBGM =			Game.TrainerMetaData[trainer].VictoryBGM;
+			IntroME =				Game.TrainerMetaData[trainer].IntroME;
+		}
+
 		public Trainer(TrainerTypes trainer, Pokemon[] party, string name = null, Inventory.Items[] items = null, bool? dub = null, bool? gender = null, 
 			int? tID = null, int? sID = null, int? intro = null, int? end = null, int? idle = null, byte? baseMoney = null, byte? skillLevel = null, 
 			int? battleMusic = null, int? victoryMusic = null, int? introMusic = null) //: this(TrainerTypes.PLAYER)
@@ -97,7 +140,8 @@ namespace PokemonUnity.Character
 			SecretID = sID				?? Core.Rand.Next(1000000); //random number between 0 and 999999, including 0
 			Party = party;
 			Items = items				?? new Inventory.Items[0];
-			Gender = gender				?? Game.TrainerMetaData[trainer].Gender;
+			Gender = gender				?? trainer == TrainerTypes.PLAYER ? true //Game.GameData.Player.IsMale 
+				: Game.TrainerMetaData[trainer].Gender; //ToDo: Gender = null?
 			Double = dub				?? Game.TrainerMetaData[trainer].Double;
 			BaseMoney = baseMoney		?? Game.TrainerMetaData[trainer].BaseMoney;
 			AI = skillLevel				?? Game.TrainerMetaData[trainer].SkillLevel;
@@ -109,30 +153,48 @@ namespace PokemonUnity.Character
 			//ScriptBattleEnd = end
 			//if(trainer != TrainerTypes.Player && string.IsNullOrEmpty(name)
 			//if(trainer != TrainerTypes.WildPokemon
-			Name = name				?? ID.ToString();
+			Name = name					?? ID.ToString();
+		}
+
+		public Trainer(Player trainer, Pokemon[] party = null, int? tID = null, int? sID = null) 
+			: this(TrainerTypes.PLAYER, name: trainer.Name, gender: trainer.IsMale, party: party ?? /*trainer.Trainer.Party*/new Pokemon[]
+			{
+				new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE),
+				new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE)
+			})
+		{
+			//if trainer is another player
+			//if (tID.HasValue) TrainerID = tID.Value; //trainer.Trainer.TrainerID;
+			//if (sID.HasValue) SecretID = sID.Value; //trainer.Trainer.SecretID;
+			TrainerID = tID ?? trainer.Trainer.TrainerID;
+			SecretID =  sID ?? trainer.Trainer.SecretID;
+			//Change name being loaded
+			//Name = trainer.Name; //name;
+			//Load player's gender as well
+			//Gender = trainer.IsMale; //gender;
 		}
 		#endregion
 
 		#region Explicit Operators
-		//public static bool operator ==(Trainer t1, Trainer t2)
-		//{
-		//	return ((t1.Gender == t2.Gender) && (t1.TrainerID == t2.TrainerID) && (t1.SecretID == t2.SecretID)) & (t1.Name == t2.Name);
-		//}
-		//public static bool operator !=(Trainer t1, Trainer t2)
-		//{
-		//	return ((t1.Gender != t2.Gender) || (t1.TrainerID != t2.TrainerID) || (t1.SecretID != t2.SecretID)) | (t1.Name == t2.Name);
-		//}
-		//public bool Equals(Player obj)
-		//{
-		//	return this == obj.Trainer; //Equals(obj.Trainer);
-		//}
+		public static bool operator ==(Trainer t1, Trainer t2)
+		{
+			return ((t1.Gender == t2.Gender) && (t1.TrainerID == t2.TrainerID) && (t1.SecretID == t2.SecretID)) & (t1.Name == t2.Name);
+		}
+		public static bool operator !=(Trainer t1, Trainer t2)
+		{
+			return ((t1.Gender != t2.Gender) || (t1.TrainerID != t2.TrainerID) || (t1.SecretID != t2.SecretID)) | (t1.Name == t2.Name);
+		}
+		public bool Equals(Character.Player obj)
+		{
+			return this == obj.Trainer; //Equals(obj.Trainer);
+		}
 		public override bool Equals(object obj)
 		{
 			return base.Equals(obj);
 		}
 		public override int GetHashCode()
 		{
-			return TrainerID + SecretID * 65536;
+			return (TrainerID + SecretID * 65536).GetHashCode();
 		}
 		#endregion
 	}
@@ -215,11 +277,11 @@ namespace PokemonUnity.Character
 
 namespace PokemonUnity
 {
-	/// <summary>
+	/*// <summary>
 	/// It is important to note that the player also has a trainer type, 
 	/// and it is defined in exactly the same way as any other trainer type. 
 	/// </summary>
-	public partial class Trainer
+		public partial class Trainer
 	{
 		#region Variables
 		public Pokemon[] Party { get; private set; }
@@ -370,8 +432,8 @@ namespace PokemonUnity
 			//ScriptBattleEnd = 
 		}
 
-		public Trainer(Player trainer, /*string name, bool gender,*/ Pokemon[] party = null, int? tID = null, int? sID = null) 
-			: this(TrainerTypes.PLAYER, /*trainer.Trainer.Party*/party ?? new Pokemon[]
+		public Trainer(Player trainer, /*string name, bool gender,* / Pokemon[] party = null, int? tID = null, int? sID = null) 
+			: this(TrainerTypes.PLAYER, /*trainer.Trainer.Party* /party ?? new Pokemon[]
 			{
 				new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE),
 				new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE), new Pokemon(Pokemons.NONE)
@@ -391,11 +453,11 @@ namespace PokemonUnity
 		{
 			//Using a switch class to make sure that no one is being left out
 			#region Attempt1
-			/*foreach (NPC trainer in Types)
-			{
-				if (trainer.ID == type)
-					return trainer;
-			}*/
+			//foreach (NPC trainer in Types)
+			//{
+			//	if (trainer.ID == type)
+			//		return trainer;
+			//}
 			#endregion
 			#region Gender & IsDouble
 			#endregion
@@ -580,15 +642,15 @@ namespace PokemonUnity
 			return TrainerID + SecretID * 65536;
 		}
 		#endregion
-	}
+	}*/
 
 	public static class PokemonPartyExtension
 	{
 		public static void PackParty(this Pokemon[] Party)
 		{
-			Pokemon[] packedArray = new Pokemon[6];
+			Pokemon[] packedArray = new Pokemon[Party.Length];
 			int i2 = 0; //counter for packed array
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < Party.Length; i++)
 			{
 				if (Party[i] != null || Party[i].Species != Pokemons.NONE)
 				{
@@ -599,9 +661,9 @@ namespace PokemonUnity
 			}
 			Party = packedArray;
 		}
-		public static bool HasSpace(this Pokemon[] partyOrPC, int capacity)
+		public static bool HasSpace(this Pokemon[] partyOrPC, int limit)
 		{
-			if (partyOrPC.GetCount().HasValue && partyOrPC.GetCount().Value < capacity) return true;
+			if (partyOrPC.GetCount().HasValue && partyOrPC.GetCount().Value < limit) return true;
 			else return false;
 		}
 
