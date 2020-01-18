@@ -12,9 +12,9 @@ namespace PokemonUnity
 	{
 		public int MapId;
 		public int[] ConnectedMaps;
-		private Dictionary<int, int[]> _areas;
+		//private Dictionary<int, int[]> _areas;
 		//ToDo: Make Arraychart below global, but still have instantiable variables
-		private static Dictionary<int, int[]> Areas;
+		private static KeyValuePair<int, int[]> Areas;
 		//public static int[] this[int map] { get { return Areas[map]; } }
 		//RoamingAreas = {
 		//	5  => [21,28,31,39,41,44,47,66,69],
@@ -47,6 +47,11 @@ namespace PokemonUnity
 		public int EncounterType;
 		public int BGM;
 		public RoamingAreas MapId;
+		public int LastSeenLocationId;
+		// ToDo: Add released pokemons to Roaming
+		// Use map released as roam map; shuffle moves
+		// Store roam to save file? (if win/defeat, dont spawn again)
+		// Store level as exp, and increase pokemon's level as it wins
 		//RoamingSpecies = [
 		//	[:LATIAS, 30, 53, 0, "Battle roaming"],
 		//	[:LATIOS, 30, 53, 0, "Battle roaming"],

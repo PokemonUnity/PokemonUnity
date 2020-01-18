@@ -803,6 +803,7 @@ namespace PokemonUnity
 			The maximum level. If the Pokemon should only appear at one level this number should be the same as ##5.
 	 */
 	#endregion
+#pragma warning disable 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 	namespace Samples
 	{
 		using UnityEngine;
@@ -1051,4 +1052,5 @@ namespace PokemonUnity
 			#endregion
 		}
 	}
+#pragma warning restore 0414, 0649 //Warning CS0414  ...is assigned but it's never used; 649 ...will always be null
 }

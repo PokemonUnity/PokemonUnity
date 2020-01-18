@@ -26,7 +26,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 			this.Visible = Visible;
 		}
 
-		public new void Initialize(bool hasSnow, bool IsIce, bool hasSand)
+		public void Initialize(bool hasSnow, bool IsIce, bool hasSand)
 		{
 			base.Initialize();
 

@@ -50,6 +50,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="StringTest.cs" />
+    <Compile Include="GameTest.cs" />
     <Compile Include="ItemTest.cs" />
     <Compile Include="BattleTest.cs" />
     <Compile Include="MapTest.cs" />
@@ -59,13 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pokemon Unity\Assembly-CSharp-Editor.csproj">
-      <Project>{f6278824-ef26-0b19-80ec-89090458c325}</Project>
-      <Name>Assembly-CSharp-Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pokemon Unity\Assembly-CSharp.csproj">
-      <Project>{10f42e31-4957-fd75-9899-6b6e9b1c9ea8}</Project>
-      <Name>Assembly-CSharp</Name>
+    <ProjectReference Include="..\PokemonUnity.Shared\PokemonUnity.Shared.csproj">
+      <Project>{c4bd7ac0-1333-4d62-a6cd-881a1806ffad}</Project>
+      <Name>PokemonUnity.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

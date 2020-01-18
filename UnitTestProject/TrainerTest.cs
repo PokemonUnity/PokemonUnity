@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokemonUnity;
+using PokemonUnity.Character;
 
 
 namespace Tests
@@ -8,17 +9,6 @@ namespace Tests
     [TestClass]
     public class TrainerTest
     {
-        #region Nicknames
-        [TestMethod]
-		public void Trainer_SetPokemon_Nickname()
-		{
-			Trainer trainer = new Trainer(TrainerTypes.PLAYER);// { Party = new Pokemon[] { } };
-			//Pokemon pokemon = new Pokemon(Pokemons.NONE);
-			//trainer.Party[0].Name
-			Assert.AreEqual("testname", trainer.Party[0].Name);
-		}
-        #endregion
-
         #region TrainerProperties
         //public void Trainer_() { 
         //	/*SaveDataOld.currentSave.playerName = name;
@@ -44,15 +34,15 @@ namespace Tests
 
         #region TrainerPokemon
         [TestMethod]
-        public void Trainer_Party_AddPokemon() {
+        public void Trainer_Party_AddPokemon()
+		{
+			//Assert.Inconclusive();
 			string playerName = "Red";
 			int trainerID = 55323;
 			int secretID = 64123;
 			bool isMale = false;
-			Player player = new Player(playerName, isMale/*, playerParty*/);
-			Trainer trainer = new Trainer(player, tID: trainerID, sID: secretID);
-			player = new Player(trainer);
-			//Trainer trainer = new Trainer(TrainerTypes.PLAYER);
+			TrainerId trainer = new TrainerId(playerName, isMale, tID: trainerID, sID: secretID);
+			Player player = new Player(trainer);
 			player.addPokemon(new PokemonUnity.Monster.Pokemon(Pokemons.CHARMANDER, trainer));
 
 			/*SaveDataOld.currentSave.PC.addPokemon(new PokemonOld(006, null, PokemonOld.Gender.CALCULATE, 3, true, "Poké Ball", "",
@@ -76,7 +66,10 @@ namespace Tests
 				"", name,
 				31, 31, 31, 31, 31, 31, 0, 252, 0, 0, 0, 252, "ADAMANT", 0,
 				new string[] {"Drill Peck", "Surf", "Growl", "Dragon Rage"}, new int[] {0, 0, 0, 3}));*/
-			CollectionAssert.AreNotEqual(new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, new Pokemons[] { trainer.Party[0].Species, trainer.Party[1].Species, trainer.Party[2].Species, trainer.Party[3].Species, trainer.Party[4].Species, trainer.Party[5].Species } );
+			CollectionAssert.AreNotEqual( //ToDo: Change to AreEqual, and use expected results with more precision...
+				new Pokemons[] { Pokemons.CHARMANDER, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE, Pokemons.NONE }, 
+				new Pokemons[] { player.Party[0].Species, player.Party[1].Species, player.Party[2].Species, player.Party[3].Species, player.Party[4].Species, player.Party[5].Species } 
+			);
 		}
 
         [TestMethod]
@@ -264,102 +257,5 @@ namespace Tests
 		//	Assert.Inconclusive();
 		//}
         #endregion        
-    }
-    
-    [TestClass]
-    /// <summary>
-    /// Database sample on how to write code for different componenets of your database.
-    /// </summary>
-    public class FrameworkTest
-    {
-		#region PokemonData
-		//private Pokemon.PokemonData[] Database = new Pokemon.PokemonData[] { Pokemon.PokemonData.Database[0]
-		//    new Pokemon.PokemonData( Id: Pokemons.NONE, regionalDex: new int[1], type1: Types.NONE, type2: Types.NONE, ability1: Abilities.NONE, ability2: Abilities.NONE, hiddenAbility: Abilities.NONE,
-		//                genderRatio: GenderRatio.AlwaysMale /*0f*/, catchRate: 100, eggGroup1: EggGroups.NONE, eggGroup2: EggGroups.NONE, hatchTime: 1000,
-		//                height: 10f, weight: 150f, baseExpYield: 15, levelingRate: LevelingRate.ERRATIC,                        
-		//                pokedexColor: Color.NONE, baseFriendship: 50,
-		//                baseStatsHP: 10, //baseStatsATK: 5, baseStatsDEF: 5, baseStatsSPA: 5, baseStatsSPD: 5, baseStatsSPE: 5,
-		//                luminance: 0f, movesetLevels: new int[] { 1,2,3 }, movesetMoves: new Moves[4], tmList: null, 
-		//                evolution: new IPokemonEvolution[] {  new Pokemon.PokemonData.PokemonEvolution(Pokemons.ABRA, EvolutionMethod.Deaths), new Pokemon.PokemonData.PokemonEvolution<int>(Pokemons.ABRA, EvolutionMethod.Deaths, 25) },
-		//                //evolutionID: null, evolutionLevel: null, evolutionMethod: null, forms: 4,
-		//                heldItem: null) 
-		//};
-		//[TestMethod]
-		//public void PokemonDatabase()
-		//{
-		//}
-		#endregion
-
-		#region PlayerMovement
-        [TestMethod]
-		public void Test_UseBike_While_SurfOrFly_Fails()
-		{
-			Assert.Inconclusive();
-		}
-        [TestMethod]
-		public void Test_UseBike_While_Surf_Fails()
-		{
-			Assert.Inconclusive();
-		}
-		#endregion
-
-		#region SaveData
-		private static string _SaveStateFromFile { get; set; }
-
-		/// <summary>
-		/// Create Dummy Data and Save to File
-		/// </summary>
-		static FrameworkTest()
-		{
-			//Create 3 SaveState of Dummy Data
-
-			//Save to File
-			//Game.Save();
-
-			//Delete one
-		}
-
-		/// <summary>
-		/// Test will confirm if saving content to file without error will pass or fail
-		/// Other test will confirm if data can be read without errors
-		/// </summary>
-		public void Save_GameState_Data()
-		{
-			//FrameworkTest creates a save file identical to this
-			//If this method's save file is equal to _SaveStateFromFile
-			//Confirm remaining 2 SaveState
-		}
-
-		public void Delete_Save_Data_From_SaveFile()
-		{
-
-		}
-
-		public void Load_Pokemon_Data_From_SaveFile()
-		{
-
-		}
-
-		public void Load_PC_Data_From_SaveFile()
-		{
-
-		}
-
-		public void Load_Party_Data_From_SaveFile()
-		{
-
-		}
-
-		public void Load_SaveStateVersion_Data_From_SaveFile()
-		{
-
-		}
-		#endregion
-
-        #region Misc
-
-
-
-        #endregion
     }
 }

@@ -20,7 +20,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 
 		private DateTime LastUpdateDate;
 
-		public new void Initialize(int BerryIndex, int BerriesYield, string Watered, string Time, bool FullGrown)
+		public void Initialize(int BerryIndex, int BerriesYield, string Watered, string Time, bool FullGrown)
 		{
 			this.Berry = (Inventory.Item.Berry)Inventory.Item.GetItem((Inventory.Items)BerryIndex + 2000);
 			this.Berries = BerriesYield;
@@ -223,7 +223,7 @@ namespace PokemonUnity.Overworld.Entity.Environment
 				{
 					case 0:
 						{
-							Game.Player.Bag.AddItem(this.Berry.ID, this.Berries);
+							Game.Player.Bag.AddItem(this.Berry.ItemId, this.Berries);
 							string Text = "";
 							if (this.Berries == 1)
 								Text = Game.Player.Name + " picked the~" + Berry.Name + " Berry.*" + Game.Player.Bag.GetMessageReceive(Berry, this.Berries);
