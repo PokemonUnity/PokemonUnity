@@ -8,23 +8,35 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 {
     public CanvasUI CurrentCanvas;
     public UICanvas ActiveCanvasUI { get; private set; }
+	/// <summary>
+	/// This is text-script meant to be rendered by front-end UI
+	/// </summary>
     private string DialogText { get; set; }
-    private static UnityEngine.UI.Text DialogUIText;// = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
-    private static UnityEngine.UI.Text DialogUITextDump;// = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
+	/// <summary>
+	/// This is the text that's displayed to user on front-end.
+	/// The text is properly formatted for real-time rendering display in Unity.
+	/// </summary>
+    private static UnityEngine.UI.Text DialogUIText { get; set; }// = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
+	/// <summary>
+	/// This is the text that's hidden from user, and is used in background processing.
+	/// The text is the final rendered display of the text properly formatted for UI in Unity
+	/// </summary>
+	private static UnityEngine.UI.Text DialogUITextDump { get; set; }// = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
     private static UnityEngine.UI.Text DialogUIScrollText;// = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
-    private static bool InstantLine;
+    private static bool InstantLine; //ToDo: Global Bool => Game.Instant, maybe?
     private static float secPerChar
     {
-        get { return secPerChar; }
-        set
+        get 
         {
-            int txtSpd = GameVariables.textSpeed + 1;
-            value = 1 / (16 + (txtSpd * txtSpd * 9));
+            int txtSpd = Game.textSpeed + 1;
+            return 1 / (16 + (txtSpd * txtSpd * 9));
         }
     }
 
-    void Awake()
+	#region Unity Stuff
+	void Awake()
     {
+		Game.SetCanvasManager(this);
         DialogUIText = UnityEngine.GameObject.Find("DialogText").GetComponent<UnityEngine.UI.Text>();
         DialogUITextDump = UnityEngine.GameObject.Find("DialogTextDump").GetComponent<UnityEngine.UI.Text>();
         DialogUIScrollText = UnityEngine.GameObject.Find("DialogScrollText").GetComponent<UnityEngine.UI.Text>();
@@ -41,7 +53,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     void Update()
     {
         //Test dialog skin
-        if (UnityEngine.Input.anyKeyDown) RefreshWindowSkin();
+        //if (UnityEngine.Input.anyKeyDown) RefreshWindowSkin();
     }
 
     public void ShowMenu(CanvasUI screen)
@@ -51,6 +63,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         CurrentCanvas = screen;
         CurrentCanvas.IsActive = true;
     }
+	#endregion
 
     #region Enumerator
     public enum UICanvas
@@ -73,19 +86,21 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
         /// </summary>
         SettingsMenu
     }
+	#endregion
 
-    /// <summary>
-    /// Reassigns all the <seealso cref="UnityEngine.Sprite"/> images 
-    /// for every <seealso cref="UnityEngine.GameObject"/> with the tag "DialogWindow"
-    /// </summary>
-    public static void RefreshWindowSkin()
+	#region Methods
+	/// <summary>
+	/// Reassigns all the <seealso cref="UnityEngine.Sprite"/> images 
+	/// for every <seealso cref="UnityEngine.GameObject"/> with the tag "DialogWindow"
+	/// </summary>
+	public static void RefreshWindowSkin()
     {
-        if (GameVariables.WindowSkinSprite != null)
+        if (Game.WindowSkinSprite != null)
         {
             UnityEngine.GameObject[] gos = UnityEngine.GameObject.FindGameObjectsWithTag("DialogWindow");
             foreach (UnityEngine.GameObject go in gos)
             {
-                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.WindowSkinSprite;
+                go.GetComponent<UnityEngine.UI.Image>().sprite = Game.WindowSkinSprite;
             }
         }
         else return;
@@ -97,17 +112,16 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     /// </summary>
     public static void RefreshDialogSkin()
     {
-        if (GameVariables.DialogSkinSprite != null)
+        if (Game.DialogSkinSprite != null)
         {
             UnityEngine.GameObject[] gos = UnityEngine.GameObject.FindGameObjectsWithTag("DialogWindow");
             foreach (UnityEngine.GameObject go in gos)
             {
-                go.GetComponent<UnityEngine.UI.Image>().sprite = GameVariables.DialogSkinSprite;
+                go.GetComponent<UnityEngine.UI.Image>().sprite = Game.DialogSkinSprite;
             }
         }
         else return;
     }
-    #endregion
 
     void ChangeScene(UICanvas scene)
     {
@@ -501,7 +515,7 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
     {
         DialogUIText.text = DialogUITextDump.text = DialogUIScrollText.text = DialogText = null; 
     }
-
+	#endregion
 
     public class CanvasUI : UnityEngine.MonoBehaviour
     {
@@ -541,9 +555,9 @@ public class CanvasUIHandler : UnityEngine.MonoBehaviour
 
         public void Update()
         {
-            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(""))
-                _canvasGroup.blocksRaycasts = _canvasGroup.interactable = false;
-            else _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
+            //if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(""))
+            //    _canvasGroup.blocksRaycasts = _canvasGroup.interactable = false;
+            //else _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
         }
     }
 }

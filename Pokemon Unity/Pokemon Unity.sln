@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{10F42E31-4957-FD75-9899-6B6E9B1C9EA8}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{F6278824-EF26-0B19-80EC-89090458C325}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitTestProject\UnitTestProject.csproj", "{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonUnity.Shared", "..\PokemonUnity.Shared\PokemonUnity.Shared.csproj", "{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameFramework.Runtime", "UnityGameFramework.Runtime.csproj", "{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,12 +37,20 @@ Global
 		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C20DCE1-E6DA-4E84-9CEC-93626D43CDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4BD7AC0-1333-4D62-A6CD-881A1806FFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCA2A453-28A6-271F-07AA-3D38AC10BFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B852DECB-F06A-4FE1-B11C-D987F3DA8A04}
+		SolutionGuid = {6B7CCC5A-5BDA-4295-A977-56ADC6BEEB57}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj

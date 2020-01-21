@@ -92,13 +92,13 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 	/// Red
 	/// </summary>
 	public Color hpzone2 = new Color32(208, 40, 40, 255);           // Red
-																	// <summary>
-																	// Orange
-																	// </summary>
-																	//public Color fade = new Color32(255, 113, 0, 255);				// Orange
+	// <summary>
+	// Orange
+	// </summary>
+	//public Color fade = new Color32(255, 113, 0, 255);			// Orange
 	#endregion
 	#region Pokemon Battler
-	//public PokemonUnity.Item.ItemCategory
+	//public PokemonUnity.Inventory.ItemCategory
 	public Sprite Pokemon, Shadow, Pokeball;
 	public AnimationClip BattlerAnim, PokeBallAnim;
 	#endregion
@@ -112,8 +112,8 @@ public class BattlePokemonHandler : UnityEngine.MonoBehaviour
 		//Adds a listener to the main slider and invokes a method when the value changes.
 		hpSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
-
-		if (BattleIndex > -1 && BattleIndex < GameVariables.battle.battlers.Length) GameVariables.battle.battlers[BattleIndex].BattlerUI(this);
+		//ToDo: Below cant be null, please review component
+		//if (BattleIndex > -1 && BattleIndex < Game.battle.battlers.Length) Game.battle.battlers[BattleIndex].BattlerUI(this);
 	}
 
     void OnEnable()
