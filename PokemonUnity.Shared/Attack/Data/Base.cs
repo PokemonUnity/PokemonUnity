@@ -87,8 +87,7 @@ namespace PokemonUnity.Attack.Data
 
 		public string ToString(TextScripts text)
 		{
-			//create a switch, and return Locale Name or Description
-			return base.ToString();
+			return ID.ToString(text);
 		}
 	}
 

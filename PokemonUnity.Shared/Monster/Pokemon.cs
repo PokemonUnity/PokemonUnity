@@ -2300,7 +2300,7 @@ namespace PokemonUnity.Monster
         /// Nickname; 
         /// Returns Pokemon species name if not nicknamed.
         /// </summary>
-        public virtual string Name { get { if (this.EggSteps > 0) return "Egg"; return IsNicknamed ? name : string.Empty;/*_base.Name;*/ } } //ToDo: Fix this
+        public virtual string Name { get { if (this.EggSteps > 0) return "Egg"; return IsNicknamed ? name : _base.Name; } } 
 
         /// <summary>
         ///	Used only for a few pokemon to specify what form it's in. 

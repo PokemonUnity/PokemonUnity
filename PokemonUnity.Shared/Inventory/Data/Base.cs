@@ -354,8 +354,7 @@ namespace PokemonUnity.Inventory
 
 		public string ToString(TextScripts text)
 		{
-			//create a switch, and return Locale Name, Plural, or Description
-			return base.ToString();
+			return Id.ToString(text);
 		}
 	}
 }
