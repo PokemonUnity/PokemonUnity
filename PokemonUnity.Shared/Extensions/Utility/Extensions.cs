@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 //using UnityEngine;
 
+namespace PokemonUnity.Utility
+{
+}
 static class Extensions
 {
     public static T ToEnum<T>(this string value, T defaultValue)
