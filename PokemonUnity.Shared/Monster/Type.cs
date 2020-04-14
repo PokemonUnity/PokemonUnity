@@ -78,6 +78,10 @@ public static class PBTypes
 	{
 		return false;
 	}
+	public static bool isPseudoType(PokemonUnity.Types type)
+	{
+		return false;
+	}
 }
 
 namespace PokemonUnity.Monster
