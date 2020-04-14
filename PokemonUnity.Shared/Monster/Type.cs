@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using PokemonUnity.Monster.Data;
 
 public static class PBTypes
 {
-    //public static string ToString(this PokemonUnity.Types type)
+	//public static string ToString(this PokemonUnity.Types type)
 	//{
 	//	switch (type)
 	//	{
@@ -53,7 +54,7 @@ public static class PBTypes
 	//	}
 	//	return string.Empty;
 	//}
-    public static string getName(PokemonUnity.Types type)
+	public static string getName(PokemonUnity.Types type)
 	{
 		return string.Empty;
 	}
@@ -81,13 +82,5 @@ public static class PBTypes
 	public static bool isPseudoType(PokemonUnity.Types type)
 	{
 		return false;
-	}
-}
-
-namespace PokemonUnity.Monster
-{
-	public class Type
-	{
-    
 	}
 }
