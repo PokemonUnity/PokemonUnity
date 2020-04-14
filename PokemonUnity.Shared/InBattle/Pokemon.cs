@@ -18,8 +18,7 @@ namespace PokemonUnity.Battle
 	/// to prevent changes from being permanent to original pokemon profile
 	/// </summary>
 	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
-	/// ToDo: Move entire class to Unity?...
-	public class Pokemon : PokemonUnity.Monster.Pokemon
+	public class Pokemon //: PokemonUnity.Monster.IPokemonBattle //PokemonUnity.Monster.Pokemon
 	{
 		#region Variables
 		public int turncount { get; private set; }
@@ -31,7 +30,7 @@ namespace PokemonUnity.Battle
 		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
 		/// ToDo: not implemented
-		public List<byte> lastAttacker { get; private set; }
+		public List<sbyte> lastAttacker { get; private set; }
 		#region Move to PokemonBattle Class
 		/// <summary>
 		/// Consumed held item (used in battle only)
@@ -53,10 +52,11 @@ namespace PokemonUnity.Battle
 		public bool tookDamage { get; set; }
 		public List<Moves> movesUsed { get; set; }
 		public Effects.Battler effects { get; private set; }
-		public Battle battle { get { return Game.battle; } }
+		public Battle battle { get; private set; }//{ return Game.battle; }
 		public bool captured { get; private set; }
-		//public bool Fainted { get { return isFainted(); } }
-		new public bool isFainted { get; private set; }
+		public bool Fainted { get; private set; }
+		public bool isFainted() { return true; } //HP == 0 || Status.FAINT || Fainted?
+		public bool isEgg { get { return pokemon.isEgg; } }
 		public Battle.DamageState damagestate { get; set; }
 		/// <summary>
 		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
@@ -75,59 +75,96 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
 		public sbyte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return Game.Player.Pokedex[_base.ArrayId, 1] == 1; } }
+		public bool IsOwned { get { return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; } }
 		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
 		public Moves currentMove { get; set; }
 		public Moves lastMoveUsed { get; private set; }
 		public Types lastMoveUsedType { get; private set; }
-		//ToDo: Types public get;set;
+		#region Inherit Base Pokemon Data
+		public int HP { get; set; }
+		public int TotalHP { get; private set; }
 		//ToDo: create private fields of stats
-		public override int ATK { get { return effects.PowerTrick ? DEF : base.ATK; } }
-		public override int DEF {
+		public int ATK { get { return effects.PowerTrick ? defense : attack; } }
+		public int attack { get; set; }
+		//private int attack { get; set; }
+		public int DEF {
 			get
 			{
-				if (effects.PowerTrick) return base.ATK;
-				return battle.field.WonderRoom > 0 ? base.SPD : base.DEF;
+				if (effects.PowerTrick) return attack;
+				return battle.field.WonderRoom > 0 ? spdef : defense;
 			}
 		}
-		public override int SPD { get { return battle.field.WonderRoom > 0 ? DEF : base.SPD; } }
-		public override string Name { get {
+		public int defense { get; set; }
+		//private int defense { get; set; }
+		public int SPD { get { return battle.field.WonderRoom > 0 ? defense : spdef; } }
+		public int spdef { get; set; }
+		//private int spdef { get; set; }
+		public int SPA { get; private set; }
+		public int SPE { get; private set; }
+		public int spatk { get; set; }
+		public int speed { get; set; }
+		public int pbSpeed { get; set; }
+		public byte[] baseStats { get; private set; }
+		public int Level { get { return pokemon.Level; } }
+		public int level { get; set; }
+		public int happiness { get { return pokemon.Happiness; } }
+		public string Name { get {
 				//if name is not nickname return illusion.name?
 				if (effects.Illusion != null)
 					return effects.Illusion.Name;
-				return base.Name; } }
-		public override bool? Gender { get {
+				return name; } }
+		private string name { get; set; }
+		public bool? Gender { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.Gender;
-				return base.Gender; } }
-		public override bool IsShiny { get {
+				return this.gender; } }
+		//public int gender { get; set; }
+		private bool? gender { get; set; }
+		public bool isHyperMode { get {
+				if (effects.Illusion != null)
+					return false; //effects.Illusion.IsShiny;
+				return pokemon.isHyperMode; }
+		}
+		public bool IsShiny { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.IsShiny;
-				return base.IsShiny; }
+				return isShiny; }
 		}
-		new public int Form { get { return _base.Form; } set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
-		new public Status Status
+		private bool isShiny { get; set; }
+		public Pokemons Species { get { return Game.PokemonFormsData[pokemon.Species][form].Base; } }//ToDo: What about Illusion?
+		public Monster.Data.Form Form { get { return Game.PokemonFormsData[Species][form]; } }// set { if (value >= 0 && value <= _base.Forms) _base.Form = value; } }
+		public int form { get; internal set; } //ToDo: private get
+		public int StatusCount { get; internal set; }
+		public Status Status
 		{
 			get
 			{
-				return base.Status;
+				return status;
 			}
-			set
+			internal set
 			{
-				if (base.Status == Status.SLEEP && value == 0)
+				if (status == Status.SLEEP && value == 0)
 					effects.Truant = false;
-				base.Status = value;
+				status = value;
 				if (value != Status.POISON)
 					effects.Toxic = 0;
 				if (value != Status.POISON && value != Status.SLEEP)
-					base.StatusCount = 0;
+					StatusCount = 0;
 			}
 		}
-		new public Move[] moves { get; set; }
+		private Status status { get; set; }
+		public Items Item { get; set; } //ToDo: Fix this
+		public Types Type1 { get; set; }
+		public Types Type2 { get; set; }
+		public byte[] IV { get; set; } //{ get { return pokemon.IV; } } //ToDo: Evasion?
+		public Abilities Ability { get { return ability; } }
+		internal Abilities ability { private get; set; }
+		public PokemonUnity.Attack.Move[] moves { get; set; }
+		#endregion
 
 		public int GetWeight(Pokemon attacker = null)
 		{
-			float w = _base.Weight;
+			float w = Game.PokemonData[Form.Pokemon].Weight;
 			if (attacker != null || !attacker.hasMoldBreaker())
 			{
 				if (hasWorkingAbility(Abilities.HEAVY_METAL)) w *= 2;
@@ -140,31 +177,25 @@ namespace PokemonUnity.Battle
 			return (int)w;
 		}
 
-		public bool IsMega { get; private set; }
+		public bool IsMega { get { return Game.PokemonFormsData[Species][form].IsMega; } }
 		//public override bool hasMegaForm { get { if (effects.Transform) return false; return base.hasMegaForm; } }
 		public bool IsPrimal { get; private set; }
 		//public override bool hasPrimalForm { get { if (effects.Transform) return false; return base.hasPrimalForm; } }
-		//ToDo: move to ui layer
-		//public BattlePokemonHandler playerHUD { get; private set; }
-		///// <summary>
-		///// UI for AI or Ally controlled Pokemons 
-		///// </summary>
-		//public BattlePokemonHandler nonplayerHUD { get; private set; }
 		#endregion
 
 		#region Constructors
-		/*public Pokemon(Pokemon replacingPkmn, bool batonpass)
-		{
-			return replacingPkmn;
-		}*/
+		//public Pokemon(PokemonUnity.Monster.Pokemon replacingPkmn, bool batonpass)
+		//{
+		//	Initialize(replacingPkmn, replacingPkmn.Index, batonpass);
+		//}
 		//[Obsolete("Don't think this is needed or should be used")]
-		public Pokemon() : base() //Battle btl, int idx
+		public Pokemon(Battle btl, sbyte idx) //: base() //
 		{
-			//battle		= btl;
-			//Index			= idx;
-			//HP			= 0;
-			//TotalHP		= 0;
-			isFainted		= true;
+			battle			= btl;
+			Index			= idx;
+			HP				= 0;
+			TotalHP			= 0;
+			Fainted			= true;
 			captured		= false;
 			stages			= new int[Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length];
 			effects			= new Effects.Battler(false);
@@ -280,7 +311,7 @@ namespace PokemonUnity.Battle
 				//stages[4]	= 0; // [SPDEF]   
 				//stages[5]	= 0; // [EVASION] 
 				//stages[6]	= 0; // [ACCURACY]
-				stages = new int[Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length];
+				stages = new int[7];//Enum.GetValues(typeof(PokemonUnity.Battle.Stats)).Length
 				lastMoveUsedSketch 	= Moves.NONE; //-1;
 				effects.AquaRing	= false;
 				effects.Confusion	= 0;
@@ -317,107 +348,108 @@ namespace PokemonUnity.Battle
 				else
 					effects.LockOn=0;
 				
-				if (effects.PowerTrick)
-				{
-					//int a = this.ATK;
-					//this.ATK = this.DEF;
-					//this.DEF = this.ATK;
-					//this.DEF = a;
-				}
+				//Moved to Property Getter
+				//if (effects.PowerTrick)
+				//{
+				//	int a = this.ATK;
+				//	this.ATK = this.DEF;
+				//	this.DEF = this.ATK;
+				//	this.DEF = a;
+				//}
 			}			
 			damagestate.Reset();
-			isFainted				 = false;
-			//battle.lastAttacker    = []
-			lastHPLost				 = 0;
-			tookDamage				 = false;
-			lastMoveUsed			 = Moves.NONE;
-			lastMoveUsedType		 = Types.NONE; //-1;
-			lastRoundMoved			 = -1;
-			movesUsed				 = new List<Moves>();
-			battle.turncount		 = 0;
-			effects.Attract          = -1;
-			effects.BatonPass        = false;
-			effects.Bide             = 0;
-			effects.BideDamage       = 0;
-			effects.BideTarget       = -1;
-			effects.Charge           = 0;
-			effects.ChoiceBand       = null;
-			effects.Counter          = -1;
-			effects.CounterTarget    = -1;
-			effects.DefenseCurl      = false;
-			effects.DestinyBond      = false;
-			effects.Disable          = 0;
-			effects.DisableMove      = 0;
-			effects.Electrify        = false;
-			effects.Encore           = 0;
-			effects.EncoreIndex      = 0;
-			effects.EncoreMove       = 0;
-			effects.Endure           = false;
-			effects.FirstPledge      = 0;
-			effects.FlashFire        = false;
-			effects.Flinch           = false;
-			effects.FollowMe         = 0;
-			effects.Foresight        = false;
-			effects.FuryCutter       = 0;
-			effects.Grudge           = false;
-			effects.HelpingHand      = false;
-			effects.HyperBeam        = 0;
-			effects.Illusion         = null;
-			effects.Imprison         = false;
-			effects.KingsShield      = false;
-			effects.LifeOrb          = false;
-			effects.MagicCoat        = false;
-			effects.MeanLook         = -1;
-			effects.MeFirst          = false;
-			effects.Metronome        = 0;
-			effects.MicleBerry       = false;
-			effects.Minimize         = false;
-			effects.MiracleEye       = false;
-			effects.MirrorCoat       = -1;
-			effects.MirrorCoatTarget = -1;
-			effects.MoveNext         = false;
-			effects.MudSport         = false;
-			effects.MultiTurn        = 0;
-			effects.MultiTurnAttack  = 0;
-			effects.MultiTurnUser    = -1;
-			effects.Nightmare        = false;
-			effects.Outrage          = 0;
-			effects.ParentalBond     = 0;
-			effects.PickupItem       = 0;
-			effects.PickupUse        = 0;
-			effects.Pinch            = false;
-			effects.Powder           = false;
-			effects.Protect          = false;
-			effects.ProtectNegation  = false;
-			effects.ProtectRate      = 1;
-			effects.Pursuit          = false;
-			effects.Quash            = false;
-			effects.Rage             = false;
-			effects.Revenge          = 0;
-			effects.Roar             = false;
-			effects.Rollout          = 0;
-			effects.Roost            = false;
-			effects.SkipTurn         = false;
-			effects.SkyDrop          = false;
-			effects.SmackDown        = false;
-			effects.Snatch           = false;
-			effects.SpikyShield      = false;
-			effects.Stockpile        = 0;
-			effects.StockpileDef     = 0;
-			effects.StockpileSpDef   = 0;
-			effects.Taunt            = 0;
-			effects.Torment          = false;
-			effects.Toxic            = 0;
-			effects.Transform        = false;
-			effects.Truant           = false;
-			effects.TwoTurnAttack    = 0;
-			effects.Type3            = Types.NONE; //-1;
-			effects.Unburden         = false;
-			effects.Uproar           = 0;
-			effects.Uturn            = false;
-			effects.WaterSport       = false;
-			effects.WeightChange     = 0;
-			effects.Yawn             = 0;
+			Fainted						= false;
+			//battle.lastAttacker		= new List<int>();
+			lastHPLost					= 0;
+			tookDamage					= false;
+			lastMoveUsed				= Moves.NONE;
+			lastMoveUsedType			= Types.NONE; //-1;
+			lastRoundMoved				= -1;
+			movesUsed					= new List<Moves>();
+			battle.turncount			= 0;
+			effects.Attract				= -1;
+			effects.BatonPass			= false;
+			effects.Bide				= 0;
+			effects.BideDamage			= 0;
+			effects.BideTarget			= -1;
+			effects.Charge				= 0;
+			effects.ChoiceBand			= null;
+			effects.Counter				= -1;
+			effects.CounterTarget		= -1;
+			effects.DefenseCurl			= false;
+			effects.DestinyBond			= false;
+			effects.Disable				= 0;
+			effects.DisableMove			= 0;
+			effects.Electrify			= false;
+			effects.Encore				= 0;
+			effects.EncoreIndex			= 0;
+			effects.EncoreMove			= 0;
+			effects.Endure				= false;
+			effects.FirstPledge			= 0;
+			effects.FlashFire			= false;
+			effects.Flinch				= false;
+			effects.FollowMe			= 0;
+			effects.Foresight			= false;
+			effects.FuryCutter			= 0;
+			effects.Grudge				= false;
+			effects.HelpingHand			= false;
+			effects.HyperBeam			= 0;
+			effects.Illusion			= null;
+			effects.Imprison			= false;
+			effects.KingsShield			= false;
+			effects.LifeOrb				= false;
+			effects.MagicCoat			= false;
+			effects.MeanLook			= -1;
+			effects.MeFirst				= false;
+			effects.Metronome			= 0;
+			effects.MicleBerry			= false;
+			effects.Minimize			= false;
+			effects.MiracleEye			= false;
+			effects.MirrorCoat			= -1;
+			effects.MirrorCoatTarget	= -1;
+			effects.MoveNext			= false;
+			effects.MudSport			= false;
+			effects.MultiTurn			= 0;
+			effects.MultiTurnAttack		= 0;
+			effects.MultiTurnUser		= -1;
+			effects.Nightmare			= false;
+			effects.Outrage				= 0;
+			effects.ParentalBond		= 0;
+			effects.PickupItem			= 0;
+			effects.PickupUse			= 0;
+			effects.Pinch				= false;
+			effects.Powder				= false;
+			effects.Protect				= false;
+			effects.ProtectNegation		= false;
+			effects.ProtectRate			= 1;
+			effects.Pursuit				= false;
+			effects.Quash				= false;
+			effects.Rage				= false;
+			effects.Revenge				= 0;
+			effects.Roar				= false;
+			effects.Rollout				= 0;
+			effects.Roost				= false;
+			effects.SkipTurn			= false;
+			effects.SkyDrop				= false;
+			effects.SmackDown			= false;
+			effects.Snatch				= false;
+			effects.SpikyShield			= false;
+			effects.Stockpile			= 0;
+			effects.StockpileDef		= 0;
+			effects.StockpileSpDef		= 0;
+			effects.Taunt				= 0;
+			effects.Torment				= false;
+			effects.Toxic				= 0;
+			effects.Transform			= false;
+			effects.Truant				= false;
+			effects.TwoTurnAttack		= 0;
+			effects.Type3				= Types.NONE; //-1;
+			effects.Unburden			= false;
+			effects.Uproar				= 0;
+			effects.Uturn				= false;
+			effects.WaterSport			= false;
+			effects.WeightChange		= 0;
+			effects.Yawn				= 0;
 			for (int i = 0; i < battle.battlers.Length; i++)
 			{
 				if (battle.battlers[i].Species == Pokemons.NONE) continue;
@@ -437,10 +469,11 @@ namespace PokemonUnity.Battle
 			}
 			if (this.hasWorkingAbility(Abilities.ILLUSION))
 			{
-				//int lastpoke = battle.GetLastPokeInTeam(index);
-				//if (lastpoke != pokemonIndex){
-				//	this.Illusion     = battle.Party(index)[lastpoke]
-				//}
+				//ToDo: Uncomment below
+				int lastpoke = 0; //battle.GetLastPokeInTeam(Index);
+				if (lastpoke != pokemonIndex){
+					effects.Illusion = battle.pbParty(Index)[lastpoke];
+				}
 			}
 		}
 		private void InitPermanentEffects()
@@ -463,35 +496,36 @@ namespace PokemonUnity.Battle
 				//Remove/Disable UI for Egg 
 				//Pause game to display error message?
 				//"An egg can't be an active Pokémon"
-				Game.Dialog(LanguageExtension.Translate(Text.Errors, "ActiveEgg").Value);
+				//Game.Dialog(LanguageExtension.Translate(Text.Errors, "ActiveEgg").Value);
 			}
 			else
 			{
-				//Name			= pkmn.Name
-				//Species		= pkmn.Species
-				//Level			= pkmn.Level
-				//HP			= pkmn.HP
-				//TotalHP		= pkmn.TotalHP
-				//Gender		= pkmn.Gender
-				//Ability		= pkmn.Ability
-				//Item			= pkmn.Item
-				//Type			= pkmn.Type
-				//Form			= pkmn.Form
-				//ATK			= pkmn.ATK
-				//DEF			= pkmn.DEF
-				//SPE			= pkmn.SPE
-				//SPA			= pkmn.SPA
-				//SPD			= pkmn.SPD
-				//Status		= pkmn.Status
-				//StatusCount	= pkmn.StatusCount
+				name			= pkmn.Name;
+				//Species		= pkmn.Species;
+				//Level			= pkmn.Level;
+				HP				= pkmn.HP;
+				TotalHP			= pkmn.TotalHP;
+				gender			= pkmn.Gender;
+				ability			= pkmn.Ability;
+				Item			= pkmn.Item;
+				Type1			= pkmn.Type1;
+				Type2			= pkmn.Type2;
+				form			= pkmn.Form;
+				attack			= pkmn.ATK;
+				defense			= pkmn.DEF;
+				speed			= pkmn.SPE;
+				spatk			= pkmn.SPA;
+				spdef			= pkmn.SPD;
+				Status			= pkmn.Status;
+				StatusCount		= pkmn.StatusCount;
 				pokemon			= pkmn;
 				Index			= pkmnIndex;
 				participants	= new List<byte>();
-				moves			= new Move[] {
-					(Move)base.moves[0],
-					(Move)base.moves[1],
-					(Move)base.moves[2],
-					(Move)base.moves[3]
+				moves			= new PokemonUnity.Attack.Move[] {
+					(PokemonUnity.Attack.Move)pkmn.moves[0],
+					(PokemonUnity.Attack.Move)pkmn.moves[1],
+					(PokemonUnity.Attack.Move)pkmn.moves[2],
+					(PokemonUnity.Attack.Move)pkmn.moves[3]
 				};
 			}
 //#if (DEBUG == false || UNITY_EDITOR)
@@ -505,20 +539,21 @@ namespace PokemonUnity.Battle
 				//calcStats(); //Not needed since fetching stats from base ( Pokemon => Battler )
 				//ToDo: Uncomment and fetch data from baseClass
 				//Level		= pokemon.Level;
-				//HP		= pokemon.HP;
-				//TotalHP	= pokemon.TotalHP;
-				//Pokemon	= Pokemon, so not all stats need to be handpicked
+				HP			= pokemon.HP;
+				TotalHP		= pokemon.TotalHP;
+				//Pokemon	= Pokemon; //so not all stats need to be handpicked
 				if (!effects.Transform) //Changed forms but did not transform?
 				{
-					//ATK		= pokemon.ATK;
-					//DEF		= pokemon.DEF;
-					//SPE		= pokemon.SPE;
-					//SPA		= pokemon.SPA;
-					//SPD		= pokemon.SPD;
+					attack		= pokemon.ATK;
+					defense		= pokemon.DEF;
+					speed		= pokemon.SPE;
+					spatk		= pokemon.SPA;
+					spdef		= pokemon.SPD;
 					if (fullchange)
 					{
-						//Ability	= pokemon.Ability;
-						//Type		= pokemon.Type;
+						ability		= pokemon.Ability;
+						Type1		= pokemon.Type1;
+						Type2		= pokemon.Type2;
 					}
 				}
 			}
@@ -529,13 +564,13 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		public Pokemon Reset()
 		{
-			pokemon		= new Pokemon();
+			pokemon		= new PokemonUnity.Monster.Pokemon();
 			Index		= -1;
 			InitEffects(false);
 			//reset status
 			Status		= Status.NONE; //ToDo: Status.FAINT?
 			StatusCount	= 0;
-			isFainted	= true;
+			Fainted		= true;
 			//reset choice
 			battle.choices[Index] = new Battle.Choice(ChoiceAction.NoAction);
 			return this;
@@ -600,7 +635,7 @@ namespace PokemonUnity.Battle
 			return this.Ability != ability;
 		}
 
-		public new bool hasType(Types type) {
+		public bool hasType(Types type) {
 			if (type == Types.NONE || type < 0) return false;
 			bool ret = (this.Type1 == type || this.Type2 == type);
 			if (effects.Type3 >= 0) ret |= (effects.Type3 == type);
@@ -616,32 +651,32 @@ namespace PokemonUnity.Battle
 			return false;
 		}
 
-		public bool HasMoveFunction(string code) {
-			if (string.IsNullOrEmpty(code)) return false;
-			for (int i = 0; i < moves.Length; i++)
-			{
-				if (moves[i].FunctionAsString == code) return true;
-			}
-			return false;
-		}
-
-		public bool HasMoveFunction(short code) {
-			//if (string.IsNullOrEmpty(code)) return false;
-			for (int i = 0; i < moves.Length; i++)
-			{
-				if ((short)moves[i].Function == code) return true;
-			}
-			return false;
-		}
-
-		public bool HasMoveFunction(Move.Effect code) {
-			//if (string.IsNullOrEmpty(code)) return false;
-			for (int i = 0; i < moves.Length; i++)
-			{
-				if ((Move.Effect)moves[i].Function == code) return true;
-			}
-			return false;
-		}
+		//public bool HasMoveFunction(string code) {
+		//	if (string.IsNullOrEmpty(code)) return false;
+		//	for (int i = 0; i < moves.Length; i++)
+		//	{
+		//		if (moves[i].FunctionAsString == code) return true;
+		//	}
+		//	return false;
+		//}
+		//
+		//public bool HasMoveFunction(short code) {
+		//	//if (string.IsNullOrEmpty(code)) return false;
+		//	for (int i = 0; i < moves.Length; i++)
+		//	{
+		//		if ((short)moves[i].Function == code) return true;
+		//	}
+		//	return false;
+		//}
+		//
+		//public bool HasMoveFunction(Move.Effect code) {
+		//	//if (string.IsNullOrEmpty(code)) return false;
+		//	for (int i = 0; i < moves.Length; i++)
+		//	{
+		//		if ((Move.Effect)moves[i].Function == code) return true;
+		//	}
+		//	return false;
+		//}
 
 		public bool HasMovedThisRound() {
 			if (!lastRoundMoved.HasValue) return false;
@@ -669,7 +704,7 @@ namespace PokemonUnity.Battle
 			if (effects.Embargo > 0) return false;
 			if (battle.field.MagicRoom > 0) return false;
 			if (this.hasWorkingAbility(Abilities.KLUTZ, ignorefainted)) return false;
-			return new PokemonUnity.Inventory.Item(this.Item).ItemPocket == ItemPockets.BERRY;//pbIsBerry?(@item)
+			return Game.ItemData[this.Item].IsBerry;//.Pocket == ItemPockets.BERRY;//pbIsBerry?(@item)
 		}
 
 		public bool isAirborne(bool ignoreability=false){
@@ -740,8 +775,8 @@ namespace PokemonUnity.Battle
 				Status == Status.PARALYSIS)
 				speedmult = (int)Math.Round(speedmult / 4f);
 			if (battle.internalbattle && 
-				//battle.OwnedByPlayer(Index) &&
-				Game.Player.BadgesCount >= Core.BADGESBOOSTSPEED)
+				battle.OwnedByPlayer(Index) &&
+				Game.GameData.Player.BadgesCount >= Core.BADGESBOOSTSPEED)
 				speedmult = (int)Math.Round(speedmult * 1.1f);
 			speed = (int)Math.Round(speed * speedmult * 1f/0x1000);
 			return Math.Max(speed, 1);
@@ -759,13 +794,15 @@ namespace PokemonUnity.Battle
 			HP -= amt;
 			if (HP < 0)
 				//"HP less than 0"
-				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+				battle.pbDisplay//Game.Dialog
+					(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
 			if (HP > TotalHP)
 				//"HP greater than total HP"
-				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+				battle.pbDisplay//Game.Dialog
+					(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
 			//ToDo: Pass to UnityEngine
-			//if (amt > 0)
-			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
+			if (amt > 0)
+				battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
 			if (amt > 0 && registerDamage)
 				tookDamage = true;
 			return amt;
@@ -782,13 +819,15 @@ namespace PokemonUnity.Battle
 			HP += amount;
 			if (HP < 0)
 				//"HP less than 0"
-				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
+				battle.pbDisplay//Game.Dialog
+					(LanguageExtension.Translate(Text.Errors, "HpLessThanZero").Value);
 			if (HP > TotalHP)
 				//"HP greater than total HP"
-				Game.Dialog(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
+				battle.pbDisplay//Game.Dialog
+					(LanguageExtension.Translate(Text.Errors, "HpGreaterThanTotal").Value);
 			//ToDo: Pass to UnityEngine
-			//if(amount > 0)
-			//	battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
+			if(amount > 0)
+				battle.scene.HPChanged(Index, oldhp, animate); //Unity takes over
 			//ToDo: Fix return
 			return amount;
 		}
@@ -797,31 +836,37 @@ namespace PokemonUnity.Battle
 		{
 			if(!isFainted() && HP > 0)
 			{
-				Game.DebugLog("Can't faint with HP greater than 0", true);
-				//return true;
+				GameDebug.LogWarning("Can't faint with HP greater than 0");
+				return; //true;
 			}
 			if(isFainted())
 			{
-				Game.DebugLog("Can't faint if already fainted", false);
-				//return true;
+				GameDebug.LogWarning("Can't faint if already fainted");
+				return; //true;
 			}
-			//battle.scene.Fainted(Index);
+			battle.scene.Fainted(Index);
 			InitEffects(false);
 			// Reset status
-			Status = 0;
+			//Status = 0;
 			StatusCount = 0;
 			if (pokemon != null && battle.internalbattle)
 				pokemon.ChangeHappiness(HappinessMethods.FAINT);
-			//if (IsMega)
-			//	pokemon.MakeUnmega;
-			//if (IsPrimal)
-			//	pokemon.MakeUnprimal;
+			if (IsMega)
+				//Change form to before transformation
+				//pokemon.MakeUnmega;
+				form = pokemon.Form;
+			if (IsPrimal)
+				//Change form to before transformation
+				//pokemon.MakeUnprimal;
+				form = pokemon.Form;
 			//Fainted = true;
+			Status = Status.FAINT;
 			//reset choice
 			battle.choices[Index] = new Battle.Choice(ChoiceAction.NoAction);
 			OwnSide.LastRoundFainted = battle.turncount;
 			if (showMessage)
-				Game.Dialog(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
+				battle.pbDisplay//Game.Dialog
+					(LanguageExtension.Translate(Text.Errors, "Fainted", new string[] { ToString() }).Value);
 			//return true;
 		}
 		#endregion
@@ -880,7 +925,6 @@ namespace PokemonUnity.Battle
 
 		#region Forms
 		/// <summary>
-		/// 
 		/// </summary>
 		/// ToDo: Changes stats on form changes here?
 		/// ToDo: Use PokemonUnity.Battle.Form to modify Pokemon._base, 
@@ -900,33 +944,33 @@ namespace PokemonUnity.Battle
 					{
 						case Weather.SUNNYDAY:
 						case Weather.HARSHSUN:
-							if(Form != 1)
+							if(Form.Id != Monster.Forms.CASTFORM_SUNNY)
 							{
-								Form = 1;
+								form = 1;
 								transformed = true;
 							}
 							break;
 						case Weather.RAINDANCE:
 						case Weather.HEAVYRAIN:
-							if(Form != 2)
+							if(Form.Id != Monster.Forms.CASTFORM_RAINY)
 							{
-								Form = 2;
+								form = 2;
 								transformed = true;
 							}
 							break;
 						case Weather.HAIL:
-							if(Form != 3)
+							if(Form.Id != Monster.Forms.CASTFORM_SNOWY)
 							{
-								Form = 3;
+								form = 3;
 								transformed = true;
 							}
 							break;
 						case Weather.NONE:
 						default:
-							if(Form != 0)
+							if(Form.Id != Monster.Forms.CASTFORM)
 							{
-								Form = 0;
-								transformed = true;
+								form = 0;
+								transformed = true; //Shouldn't normal be false?
 							}
 							break;
 					}
@@ -934,65 +978,65 @@ namespace PokemonUnity.Battle
 			}
 			if (Species == Pokemons.SHAYMIN)
 			{
-				if (Form != pokemon.Form)
+				if (form != pokemon.Form)
 				{
-					Form = pokemon.Form;
+					form = pokemon.Form;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.GIRATINA)
 			{
-				if (Form != pokemon.Form)
+				if (form != pokemon.Form)
 				{
-					Form = pokemon.Form;
+					form = pokemon.Form;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.ARCEUS && Ability == Abilities.MULTITYPE)
 			{
-				if (Form != pokemon.Form)
+				if (form != pokemon.Form)
 				{
-					Form = pokemon.Form;
+					form = pokemon.Form;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.DARMANITAN)
 			{
 				if(hasWorkingAbility(Abilities.ZEN_MODE) && HP <= Math.Floor(TotalHP/2f))
-					if (Form != 1)
+					if (Form.Id != Monster.Forms.DARMANITAN_ZEN)
 					{
-						Form = 1;
+						form = 1;
 						transformed = true;
 					}
 				else
-					if (Form != 0)
+					if (Form.Id != Monster.Forms.DARMANITAN_STANDARD)
 					{
-						Form = 0;
+						form = 0;
 						transformed = true;
 					}
 			}
 			if (Species == Pokemons.KELDEO)
 			{
-				if (Form != pokemon.Form)
+				if (form != pokemon.Form)
 				{
-					Form = pokemon.Form;
+					form = pokemon.Form;
 					transformed = true;
 				}
 			}
 			if (Species == Pokemons.GENESECT)
 			{
-				if (Form != pokemon.Form)
+				if (form != pokemon.Form)
 				{
-					Form = pokemon.Form;
+					form = pokemon.Form;
 					transformed = true;
 				}
 			}
 			if (transformed)
 			{
 				Update(true);
-				//battle.scene.ChangePokemon();
+				battle.scene.ChangePokemon();
 				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
-				Game.DebugLog(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form));
+				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form));
 			}
 		}
 		public void ResetForm()
@@ -1004,7 +1048,7 @@ namespace PokemonUnity.Battle
 					Species == Pokemons.MELOETTA ||
 					Species == Pokemons.AEGISLASH ||
 					Species == Pokemons.XERNEAS)
-					Form = 0;
+					form = 0;
 			}
 			Update(true);
 		}
@@ -1026,7 +1070,7 @@ namespace PokemonUnity.Battle
 					//battle.CommonAnimation("HeavyRain", null, null);
 					//"{1}'s {2} made a heavy rain begin to fall!"
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HeavyRainStart", ToString(), Ability.ToString().Translate().Value).Value);
-					Game.DebugLog(string.Format("[Ability triggered] {0}'s Primordial Sea made it rain heavily", ToString()));
+					GameDebug.Log(string.Format("[Ability triggered] {0}'s Primordial Sea made it rain heavily", ToString()));
 				}
 				if(hasWorkingAbility(Abilities.DESOLATE_LAND) && battle.Weather != Weather.HARSHSUN)
 				{
@@ -1035,7 +1079,7 @@ namespace PokemonUnity.Battle
 					//battle.CommonAnimation("HarshSun", null, null);
 					//"{1}'s {2} turned the sunlight extremely harsh!"
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HarshSunStart", ToString(), Ability.ToString().Translate().Value).Value);
-					Game.DebugLog(string.Format("[Ability triggered] {0}'s Desolate Land made the sun shine harshly", ToString()));
+					GameDebug.Log(string.Format("[Ability triggered] {0}'s Desolate Land made the sun shine harshly", ToString()));
 				}
 				if(hasWorkingAbility(Abilities.DELTA_STREAM) && battle.Weather != Weather.STRONGWINDS)
 				{
@@ -1044,7 +1088,7 @@ namespace PokemonUnity.Battle
 					//battle.CommonAnimation("StrongWinds", null, null);
 					//"{1}'s {2} caused a mysterious air current that protects Flying-type Pokémon!"
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "StrongWindsStart", ToString(), Ability.ToString().Translate().Value).Value);
-					Game.DebugLog(string.Format("[Ability triggered] {0}'s Delta Stream made an air current blow", ToString()));
+					GameDebug.Log(string.Format("[Ability triggered] {0}'s Delta Stream made an air current blow", ToString()));
 				}
 				if (battle.Weather != Weather.HEAVYRAIN &&
 					battle.Weather != Weather.HARSHSUN &&
@@ -1065,7 +1109,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Rain", null, null);
 						//"{1}'s {2} made it rain!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "RainStart", ToString(), Ability.ToString().Translate().Value).Value);
-						Game.DebugLog(string.Format("[Ability triggered] {0}'s Drizzle made it rain", ToString()));
+						GameDebug.Log(string.Format("[Ability triggered] {0}'s Drizzle made it rain", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.DROUGHT) && 
 						(battle.Weather != Weather.SUNNYDAY || battle.weatherduration != -1))
@@ -1082,7 +1126,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Sunny", null, null);
 						//"{1}'s {2} intensified the sun's rays!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SunnyStart", ToString(), Ability.ToString().Translate().Value).Value);
-						Game.DebugLog(string.Format("[Ability triggered] {0}'s Drought made it sunny", ToString()));
+						GameDebug.Log(string.Format("[Ability triggered] {0}'s Drought made it sunny", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.SAND_STREAM) && 
 						(battle.Weather != Weather.SANDSTORM || battle.weatherduration != -1))
@@ -1099,7 +1143,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Sandstorm", null, null);
 						//"{1}'s {2} whipped up a sandstorm!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SandstormStart", ToString(), Ability.ToString().Translate().Value).Value);
-						Game.DebugLog(string.Format("[Ability triggered] {0}'s Sand Stream made it sandstorm", ToString()));
+						GameDebug.Log(string.Format("[Ability triggered] {0}'s Sand Stream made it sandstorm", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.SNOW_WARNING) && 
 						(battle.Weather != Weather.HAIL || battle.weatherduration != -1))
@@ -1116,7 +1160,7 @@ namespace PokemonUnity.Battle
 						//battle.CommonAnimation("Hail", null, null);
 						//"{1}'s {2} madeit hail!"
 						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HailStart", ToString(), Ability.ToString().Translate().Value).Value);
-						Game.DebugLog(string.Format("[Ability triggered] {0}'s Snow Warning made it hail", ToString()));
+						GameDebug.Log(string.Format("[Ability triggered] {0}'s Snow Warning made it hail", ToString()));
 					}
 				}
 				if(hasWorkingAbility(Abilities.AIR_LOCK) || hasWorkingAbility(Abilities.CLOUD_NINE))
@@ -1127,7 +1171,7 @@ namespace PokemonUnity.Battle
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HasAbility", ToString(), Ability.ToString().Translate().Value).Value);
 					//"The effects of the weather disappeared."
 					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "WeatherNullified").Value);
-					Game.DebugLog(string.Format("[Ability nullified] {0}'s Ability cancelled weather effects", ToString()));
+					GameDebug.Log(string.Format("[Ability nullified] {0}'s Ability cancelled weather effects", ToString()));
 				}
 			}
 			#endregion Weather
@@ -1163,26 +1207,13 @@ namespace PokemonUnity.Battle
 		#endregion
 
 		#region ToDo: Everything here needs to be implemented
-		new public Items Item { get; set; } //ToDo: Fix this
-		new public Types Type1 { get; set; }
-		new public Types Type2 { get; set; }
-		public byte[] baseStats { get; set; }
-		public int gender { get; set; }
-		public int level { get; set; }
-		public int attack { get; set; }
-		public int defense { get; set; }
-		public int spatk { get; set; }
-		public int spdef { get; set; }
-		public int speed { get; set; }
-		public int pbSpeed { get; set; }
-		public int happiness { get; set; }
 		public Moves lastMoveUsedSketch { get; set; }
-		/// <summary>
-		/// Does faint animation 
-		/// (doesn't have to lower hp, as hp will be done by other set of code. 
-		/// But just to be safe... do it anyways)
-		/// </summary>
+		public void pbReduceHP(int amount) { }
+		public void pbHyperMode() { }
 		public void pbFaint() { }
+		/// <summary>
+		/// Set item to none, if it can only be used once
+		/// </summary>
 		public void pbConsumeItem() { }
 		public void pbConsumeItem(bool one, bool two) { }
 		public void pbBerryCureCheck() { }
@@ -1256,7 +1287,15 @@ namespace PokemonUnity.Battle
 		{
 			return false;
 		}
+		public bool pbCanIncreaseStatStage(Stats stat, Pokemon pkmn)
+		{
+			return false;
+		}
 		public bool pbCanIncreaseStatStage(Stats stat, Pokemon pkmn, bool animate, PokeBattle_Move atk)
+		{
+			return false;
+		}
+		public bool pbIncreaseStatWithCause(Stats stat, int amount, Pokemon pkmn, string name)
 		{
 			return false;
 		}
@@ -1271,6 +1310,10 @@ namespace PokemonUnity.Battle
 		public bool pbIncreaseStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk, bool animate)
 		{
 			return false;
+		}
+		public int pbReduceStat(Stats stat, int num, bool uh)
+		{
+			return 0;
 		}
 		public bool pbReduceStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk)
 		{
@@ -1312,12 +1355,14 @@ namespace PokemonUnity.Battle
 			return battlers;
 		}*/
 
-		public static Pokemon[] GetBattlers(PokemonUnity.Monster.Pokemon[] input)
+		public static Pokemon[] GetBattlers(PokemonUnity.Monster.Pokemon[] input, Battle btl)
 		{
 			Pokemon[] battlers = new Pokemon[input.Length];
 			for (int i = 0; i < input.Length; i++)
 			{
-				battlers[i] = (Pokemon)input[i];
+				//battlers[i] = (Pokemon)input[i];
+				battlers[i] = (Pokemon)new Pokemon(btl, (sbyte)i);
+				battlers[i].InitPokemon(input[i], (sbyte)i);
 			}
 			return battlers;
 		}
@@ -1343,6 +1388,137 @@ namespace PokemonUnity.Battle
 			playerHUD.Status 			= nonplayerHUD.Status 			= Status;
 			playerHUD.Item 				= nonplayerHUD.Item 			= Item != Items.NONE;
 		}*/
+
+		public static implicit operator Monster.Pokemon(PokemonUnity.Battle.Pokemon pkmn)
+		{
+			Monster.Pokemon pokemon = pkmn.pokemon;
+			//if (pokemon == null) return null;
+			if ((Pokemons)pokemon.Species == Pokemons.NONE) return new Monster.Pokemon(Pokemons.NONE);
+			Ribbon[] ribbons = new Ribbon[pokemon.Ribbons.Count];
+			for (int i = 0; i < ribbons.Length; i++)
+			{
+				ribbons[i] = (Ribbon)pokemon.Ribbons[i];
+			}
+
+			Attack.Move[] moves = new Attack.Move[pokemon.moves.Length];
+			for (int i = 0; i < moves.Length; i++)
+			{
+				moves[i] = pokemon.moves[i];
+			}
+
+			Monster.Pokemon normalPokemon = pokemon;
+				//new Monster.Pokemon
+				//(
+				//	(Pokemons)pokemon.Species, new Character.TrainerId(pokemon.TrainerName, pokemon.TrainerIsMale,
+				//	tID: pokemon.TrainerTrainerId, sID: pokemon.TrainerSecretId),
+				//	pokemon.NickName, pokemon.Form, (Abilities)pokemon.Ability,
+				//	(Monster.Natures)pokemon.Nature, pokemon.IsShiny, pokemon.Gender,
+				//	pokemon.Pokerus, pokemon.IsHyperMode, pokemon.ShadowLevel,
+				//	pokemon.CurrentHP, (Items)pokemon.Item, pokemon.IV, pokemon.EV,
+				//	pokemon.ObtainedLevel, /*pokemon.CurrentLevel,*/ pokemon.CurrentExp,
+				//	pokemon.Happines, (Status)pokemon.Status, pokemon.StatusCount,
+				//	pokemon.EggSteps, (Items)pokemon.BallUsed, pokemon.Mail.Message,
+				//	(Attack.Move[])moves, ribbons, pokemon.Markings, pokemon.PersonalId,
+				//	(Monster.Pokemon.ObtainedMethod)pokemon.ObtainedMethod,
+				//	pokemon.TimeReceived, pokemon.TimeEggHatched
+				//);
+			return normalPokemon;
+		}
+
+		//public static implicit operator PokemonUnity.Battle.Pokemon(Monster.Pokemon pokemon)
+		//{
+		//	Pokemon pkmn = new Pokemon();
+		//	if (pokemon == null) return pkmn;
+
+		//	if (pokemon != null && pokemon.Species != Pokemons.NONE)
+		//	{
+		//		pkmn.PersonalId				= pokemon.PersonalId;
+		//		//PublicId in pokemon is null, so Pokemon returns null
+		//		//pkmn.PublicId				= pokemon.PublicId;
+
+		//		if (!pokemon.OT.Equals((object)null))
+		//		{
+		//			pkmn.TrainerName		= pokemon.OT.Name;
+		//			pkmn.TrainerIsMale		= pokemon.OT.Gender;
+		//			pkmn.TrainerTrainerId	= pokemon.OT.TrainerID;
+		//			pkmn.TrainerSecretId	= pokemon.OT.SecretID;
+		//		}
+
+		//		pkmn.Species				= (int)pokemon.Species;
+		//		pkmn.Form					= pokemon.Form;
+		//		//Creates an error System OutOfBounds inside Pokemon
+		//		pkmn.NickName				= pokemon.Name;
+
+		//		pkmn.Ability				= (int)pokemon.Ability;
+
+		//		//pkmn.Nature				= pokemon.getNature();
+		//		pkmn.Nature					= (int)pokemon.Nature;
+		//		pkmn.IsShiny				= pokemon.IsShiny;
+		//		pkmn.Gender					= pokemon.Gender;
+
+		//		//pkmn.PokerusStage			= pokemon.PokerusStage;
+		//		pkmn.Pokerus				= pokemon.Pokerus;
+		//		//pkmn.PokerusStrain		= pokemon.PokerusStrain;
+
+		//		pkmn.IsHyperMode			= pokemon.isHyperMode;
+		//		//pkmn.IsShadow				= pokemon.isShadow;
+		//		pkmn.ShadowLevel			= pokemon.ShadowLevel;
+				
+		//		pkmn.CurrentHP				= pokemon.HP;
+		//		pkmn.Item					= (int)pokemon.Item;
+				
+		//		pkmn.IV						= pokemon.IV;
+		//		pkmn.EV						= pokemon.EV;
+				
+		//		pkmn.ObtainedLevel			= pokemon.ObtainLevel;
+		//		//pkmn.CurrentLevel			= pokemon.Level;
+		//		pkmn.CurrentExp				= pokemon.Exp.Current;
+				
+		//		pkmn.Happines				= pokemon.Happiness;
+				
+		//		pkmn.Status					= (int)pokemon.Status;
+		//		pkmn.StatusCount			= pokemon.StatusCount;
+				
+		//		pkmn.EggSteps				= pokemon.EggSteps;
+				
+		//		pkmn.BallUsed				= (int)pokemon.ballUsed;
+		//		if (pokemon.Item != Items.NONE && Game.ItemData[pokemon.Item].IsLetter)//PokemonUnity.Inventory.Mail.IsMail(pokemon.Item))
+		//		{
+		//			pkmn.Mail				= new SeriMail(pokemon.Item, pokemon.Mail);
+		//		}
+
+		//		pkmn.Moves					= new SeriMove[4];
+		//		for (int i = 0; i < 4; i++)
+		//		{
+		//			pkmn.Moves[i]			= pokemon.moves[i];
+		//		}
+
+		//		//Ribbons is also null, we add a null check
+		//		if (pokemon.Ribbons != null)
+		//		{
+		//			pkmn.Ribbons			= new int[pokemon.Ribbons.Count];
+		//			for (int i = 0; i < pkmn.Ribbons.Length; i++)
+		//			{
+		//				pkmn.Ribbons[i]		= (int)pokemon.Ribbons[i];
+		//			}
+		//		}
+		//		//else //Dont need else, should copy whatever value is given, even if null...
+		//		//{
+		//		//	pkmn.Ribbons			= new int[0];
+		//		//}
+		//		pkmn.Markings				= pokemon.Markings;
+				
+		//		pkmn.ObtainedMethod			= (int)pokemon.ObtainedMode;
+		//		pkmn.TimeReceived			= pokemon.TimeReceived;
+		//		//try
+		//		//{
+		//			pkmn.TimeEggHatched		= pokemon.TimeEggHatched;
+		//		//}
+		//		//catch (Exception) { seriPokemon.TimeEggHatched = new DateTimeOffset(); }
+		//	}
+
+		//	return pkmn;
+		//}
 	}
 #pragma warning restore 0162
 }

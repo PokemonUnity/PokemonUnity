@@ -31,7 +31,7 @@ namespace PokemonUnity.Battle
 			/// <summary>
 			/// Type effectiveness
 			/// </summary>
-			public int TypeMod { get; set; }
+			public double TypeMod { get; set; }
 			/// <summary>
 			/// A substitute took the damage
 			/// </summary>

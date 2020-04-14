@@ -11,10 +11,10 @@ using PokemonUnity.Monster.Data;
 
 namespace PokemonUnity.Monster
 {
-    public partial class Pokemon
+    public partial class Pokemon : IPokemon
     {
         #region Variables
-		private Pokemons pokemons { get; set; }
+        private Pokemons pokemons { get; set; }
         /// <summary>
         /// Current Total HP
         /// </summary>
@@ -22,7 +22,7 @@ namespace PokemonUnity.Monster
         {
             get
             {
-				//Shedinja can be affected by HP-Up
+                //Shedinja can be affected by HP-Up
                 if (_base.BaseStatsHP == 1) return 1 + (EV[(int)Stats.HP] / 4);
                 return //totalHP;
                     ((2 * _base.BaseStatsHP + IV[(int)Stats.HP] + (EV[(int)Stats.HP] / 4)) * Level) / 100 + Level + 10;
@@ -147,14 +147,14 @@ namespace PokemonUnity.Monster
                 if (eggSteps > 0 && value == 0)
                 {
                     this.Level = Core.EGGINITIALLEVEL;
-					//if hatching, generate new moves to include egg moves 
-					//and everything from current level to below
+                    //if hatching, generate new moves to include egg moves 
+                    //and everything from current level to below
                     this.GenerateMoveset(egg: true);
-					if (OT != null)
-					{
-						ObtainedMode = ObtainedMethod.EGG;
-						hatchedWhen = new DateTimeOffset(DateTime.UtcNow);
-					}
+                    if (OT != null)
+                    {
+                        ObtainedMode = ObtainedMethod.EGG;
+                        hatchedWhen = new DateTimeOffset(DateTime.UtcNow);
+                    }
                 }
                 eggSteps =
                     //if egg hatch counter is going up in positive count
@@ -182,7 +182,7 @@ namespace PokemonUnity.Monster
         //public int[] EvolveLevels { get { return _base.Evolutions.} }
         //public IPokemonEvolution[] Evolutions { get { return _base.Evolutions; } }
         //protected PokemonData _base { get; private set; }
-        protected Data.PokemonData _base { get { return Game.PokemonData[Game.PokemonFormsData[pokemons][form].Pokemon]; } } 
+        protected Data.PokemonData _base { get { return Game.PokemonData[Game.PokemonFormsData[pokemons][form].Pokemon]; } }
         /// <summary>
         /// Max total EVs
         /// </summary>
@@ -205,22 +205,22 @@ namespace PokemonUnity.Monster
         public Pokemon()
         {
             //_base = PokemonData.GetPokemon(Pokemons.NONE);
-			pokemons = Pokemons.NONE;
+            pokemons = Pokemons.NONE;
             PersonalId = Core.Rand.Next(256);
             PersonalId |= Core.Rand.Next(256) << 8;
             PersonalId |= Core.Rand.Next(256) << 16;
             PersonalId |= Core.Rand.Next(256) << 24;
             Ability = Abilities.NONE;
             Nature = (Natures)(Core.Rand.Next(Game.NatureData.Count));//Game.NatureData.Keys.ToArray()[Core.Rand.Next(Game.NatureData.Keys.Count) + 1];
-			//ToDo: Maybe add TrainerId = <int> here, before isShiny()?
-			shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
-			//Gender = isMale();
-			//IV = new int[] { 10, 10, 10, 10, 10, 10 };
+            //ToDo: Maybe add TrainerId = <int> here, before isShiny()?
+            shinyFlag = IsShiny; //isShiny(); ToDo: Fix WildPokemon.TrainerId
+            //Gender = isMale();
+            //IV = new int[] { 10, 10, 10, 10, 10, 10 };
             IV = new int[] { (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1), (int)(Core.Rand.Next(30) + 1) };
             EV = new byte[6];
             Contest = new byte[6];
             Exp = new Experience(GrowthRate);
-			TempLevel = Level;
+            TempLevel = Level;
             moves = new Move[4] { new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE), new Move(Moves.NONE) };
             pokerus = new int[2];
             Markings = new bool[6]; //{ false, false, false, false, false, false };
@@ -228,7 +228,7 @@ namespace PokemonUnity.Monster
             StatusCount = 0;
             ballUsed = Items.NONE;
             Item = Items.NONE;
-			ribbons = new List<Ribbon>();
+            ribbons = new List<Ribbon>();
             //calcStats();
         }
 
@@ -239,97 +239,97 @@ namespace PokemonUnity.Monster
         public Pokemon(Pokemons pokemon) : this()
         {
             //_base = PokemonData.GetPokemon(pokemon);
-			pokemons = pokemon;
+            pokemons = pokemon;
             Exp = new Experience(GrowthRate);
-			TempLevel = Level;
-			eggSteps = _base.HatchTime;
+            TempLevel = Level;
+            eggSteps = _base.HatchTime;
             Ability = abilityFlag;
             Gender = gender; //GenderRatio.//Pokemon.PokemonData.GetPokemon(pokemon).MaleRatio
-			if(Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
-			if(pokemon == Pokemons.UNOWN)
-				form = Core.Rand.Next(Game.PokemonFormsData[pokemon].Length);
-			//ToDo: Move to Trainer.Wild Pokemon
-			//Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
-			GenerateMoveset();
+            if (Core.Rand.Next(65356) < Core.POKERUSCHANCE) GivePokerus();//pokerus
+            if (pokemon == Pokemons.UNOWN)
+                form = Core.Rand.Next(Game.PokemonFormsData[pokemon].Length);
+            //ToDo: Move to Trainer.Wild Pokemon
+            //Item = (Items)_base.HeldItem[0,Core.pokemonGeneration];
+            GenerateMoveset();
 
             //calcStats();
         }
 
-		/// <summary>
-		/// Instializes a new Pokemon, with values at default. 
-		/// Pokemon is created at the lowest possible level, 
-		/// with all stats randomly generated/assigned (new roll)
-		/// </summary>
-		/// <param name="pkmn">Pokemon being generated</param>
-		/// <param name="isEgg">Whether or not this level 
-		/// <see cref="Settings.EGGINITIALLEVEL"/> pokemon is hatched.</param>
+        /// <summary>
+        /// Instializes a new Pokemon, with values at default. 
+        /// Pokemon is created at the lowest possible level, 
+        /// with all stats randomly generated/assigned (new roll)
+        /// </summary>
+        /// <param name="pkmn">Pokemon being generated</param>
+        /// <param name="isEgg">Whether or not this level 
+        /// <see cref="Settings.EGGINITIALLEVEL"/> pokemon is hatched.</param>
         public Pokemon(Pokemons pkmn, bool isEgg) : this(pkmn) { if (!isEgg) EggSteps = 0; }
 
-		/// <summary>
-		/// Instializes a new Pokemon, with values at default. 
-		/// Pokemon is created at the level assigned in parameter, 
-		/// with all stats randomly generated/assigned (new roll)
-		/// </summary>
-		/// <param name="pkmn">Pokemon being generated</param>
-		/// <param name="level">Level this pokemon start ats</param>
-		/// <param name="isEgg">Whether or not this pokemon is hatched; 
-		/// if pokemon <see cref="isEgg"/> is false, it loses benefits 
-		/// of learning egg moves</param>
-		public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); }
+        /// <summary>
+        /// Instializes a new Pokemon, with values at default. 
+        /// Pokemon is created at the level assigned in parameter, 
+        /// with all stats randomly generated/assigned (new roll)
+        /// </summary>
+        /// <param name="pkmn">Pokemon being generated</param>
+        /// <param name="level">Level this pokemon start ats</param>
+        /// <param name="isEgg">Whether or not this pokemon is hatched; 
+        /// if pokemon <see cref="isEgg"/> is false, it loses benefits 
+        /// of learning egg moves</param>
+        public Pokemon(Pokemons pkmn, byte level, bool isEgg = false) : this(pkmn, isEgg) { Level = level; GenerateMoveset(); }
 
-		/// <summary>
-		/// Use this constructor when creating battle pokemon
-		/// </summary>
-		/// <param name="pkmn"></param>
-		/// <param name="level"></param>
-		/// <param name="moves"></param>
-		/// <param name="ivs"></param>
-		/// <param name="pokeball"></param>
-		/// <param name="obtain"></param>
-		/// <param name="nickname"></param>
-		public Pokemon(Pokemons pkmn, byte level, Move[] moves, int ivs = 0, Items pokeball = Items.POKE_BALL, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null)
-			: this(pkmn, level: level, isEgg: false) 
-			//: this(
-			//species: pkmn.Species,
-			//original: Game.Player.Trainer,
-			//nickName: nickname, form: pkmn.Form,
-			//ability: pkmn.Ability, nature: pkmn.Nature,
-			//isShiny: pkmn.IsShiny, gender: pkmn.Gender,
-			//pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
-			//shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
-			//item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
-			//obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
-			//happiness: pkmn.Happiness, status: pkmn.Status,
-			//statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps,
-			//ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
-			//ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
-			//personalId: pkmn.PersonalId, obtainedMethod: obtain,
-			//timeReceived: DateTimeOffset.Now, timeEggHatched: null)
-		{
-			if (pokeball == Items.NONE
-				|| Game.ItemData[pokeball].Category == ItemCategory.STANDARD_BALLS
-				|| Game.ItemData[pokeball].Category == ItemCategory.SPECIAL_BALLS
-				|| Game.ItemData[pokeball].Category == ItemCategory.APRICORN_BALLS)
-				this.ballUsed = pokeball;
-			if (moves.Length == 4) this.moves = moves;
-			this.name = nickname;
-			IV = Utility.MathHelper.randSum(IV.Length, ivs);
-		}
+        /// <summary>
+        /// Use this constructor when creating battle pokemon
+        /// </summary>
+        /// <param name="pkmn"></param>
+        /// <param name="level"></param>
+        /// <param name="moves"></param>
+        /// <param name="ivs"></param>
+        /// <param name="pokeball"></param>
+        /// <param name="obtain"></param>
+        /// <param name="nickname"></param>
+        public Pokemon(Pokemons pkmn, byte level, Move[] moves, int ivs = 0, Items pokeball = Items.POKE_BALL, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null)
+            : this(pkmn, level: level, isEgg: false)
+        //: this(
+        //species: pkmn.Species,
+        //original: Game.Player.Trainer,
+        //nickName: nickname, form: pkmn.Form,
+        //ability: pkmn.Ability, nature: pkmn.Nature,
+        //isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+        //pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
+        //shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
+        //item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
+        //obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
+        //happiness: pkmn.Happiness, status: pkmn.Status,
+        //statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps,
+        //ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
+        //ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
+        //personalId: pkmn.PersonalId, obtainedMethod: obtain,
+        //timeReceived: DateTimeOffset.Now, timeEggHatched: null)
+        {
+            if (pokeball == Items.NONE
+                || Game.ItemData[pokeball].Category == ItemCategory.STANDARD_BALLS
+                || Game.ItemData[pokeball].Category == ItemCategory.SPECIAL_BALLS
+                || Game.ItemData[pokeball].Category == ItemCategory.APRICORN_BALLS)
+                this.ballUsed = pokeball;
+            if (moves.Length == 4) this.moves = moves;
+            this.name = nickname;
+            IV = Utility.MathHelper.randSum(IV.Length, ivs);
+        }
 
-		/// <summary>
-		/// Instializes a new Pokemon, with values at default. 
-		/// Pokemon is created at the level assigned in parameter, 
-		/// with all stats randomly generated/assigned (new roll).
-		/// </summary>
-		/// <param name="pkmn">Pokemon being generated</param>
-		/// <param name="original">Assigns original <see cref="TrainerId"/> 
-		/// of this pokemon. 
-		/// Affects ability to command pokemon, if player is not OT</param>
-		/// <param name="level">Level this pokemon start ats</param>
-		/// <remarks>
-		/// I think this is only need for tested, not sure of purpose inside framework
-		/// </remarks>
-		public Pokemon(Pokemons pkmn, TrainerId original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
+        /// <summary>
+        /// Instializes a new Pokemon, with values at default. 
+        /// Pokemon is created at the level assigned in parameter, 
+        /// with all stats randomly generated/assigned (new roll).
+        /// </summary>
+        /// <param name="pkmn">Pokemon being generated</param>
+        /// <param name="original">Assigns original <see cref="TrainerId"/> 
+        /// of this pokemon. 
+        /// Affects ability to command pokemon, if player is not OT</param>
+        /// <param name="level">Level this pokemon start ats</param>
+        /// <remarks>
+        /// I think this is only need for tested, not sure of purpose inside framework
+        /// </remarks>
+        public Pokemon(Pokemons pkmn, TrainerId original, byte level = Core.EGGINITIALLEVEL) : this(pkmn, level: level, isEgg: false) { OT = original; }
 
         public Pokemon(Pokemons TPSPECIES = Pokemons.NONE,
             byte TPLEVEL = 10,
@@ -343,7 +343,7 @@ namespace PokemonUnity.Monster
             int TPFORM = 0,
             bool TPSHINY = false,
             Natures TPNATURE = (Natures)0, //Natures.UNSET,
-			int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
+            int[] TPIV = null, //new int[6] { 10, 10, 10, 10, 10, 10 },
             int TPHAPPINESS = 70,
             string TPNAME = null,
             bool TPSHADOW = false,
@@ -354,89 +354,89 @@ namespace PokemonUnity.Monster
             IV = TPIV ?? IV;
             //EV = new int[6];
 
-			/*# Japanese Dream World Squirtle from http://projectpokemon.org/events
-			blob = base64.b64decode('J2ZqBgAAICQHAAAAkOaKyTACAABGLAABAAAAAAAAAAAAAAAAA'
+            /*# Japanese Dream World Squirtle from http://projectpokemon.org/events
+			blob = Convert.FromBase64String('J2ZqBgAAICQHAAAAkOaKyTACAABGLAABAAAAAAAAAAAAAAAAA'
 			'AAAACEAJwCRAG4AIx4eKAAAAAD171MHAAAAAAAAAQAAAAAAvDDLMKww4TD//wAAAAAAAA'
 			'AAAAD//wAVAAAAAAAAAAAw/zD/T/9S/0f///8AAAAAAAAACgoOAABLAAAZCgAAAA==')
-		{
-			'ability': {'id': 44, 'name': u'Rain Dish'},
-			'date met': '2010-10-14',
-			'gender': 'male',
-			'genes': {u'attack': 31,
-					u'defense': 27,
-					u'hp': 21,
-					u'special attack': 21,
-					u'special defense': 3,
-					u'speed': 7},
-			'happiness': 70,
-			'level': 10,
-			'met at level': 10,
-			'met location': {'id_dp': 75, 'name': u'Spring Path'},
-			'moves': [{'id': 33, 'name': u'Tackle', 'pp': 35},
-					{'id': 39, 'name': u'Tail Whip', 'pp': 30},
-					{'id': 145, 'name': u'Bubble', 'pp': 30},
-					{'id': 110, 'name': u'Withdraw', 'pp': 40}],
-			'nickname': u'ゼニガメ',
-			'nickname trash': 'vDDLMKww4TD//wAAAAAAAAAAAAD//w==',
-			'nicknamed': False,
-			'oiginal trainer': {'gender': 'male',
-								'id': 59024,
-								'name': u'ＰＰｏｒｇ',
-								'secret': 51594},
-			'original country': 'jp',
-			'original version': 21,
-			'personality': 107636263,
-			'pokeball': {'id_dppt': 25, 'name': u'Hyper Potion'},
-			'species': {'id': 7, 'name': u'Squirtle'}
-		}*/
+		    {
+			    'ability': {'id': 44, 'name': u'Rain Dish'},
+			    'date met': '2010-10-14',
+			    'gender': 'male',
+			    'genes': {u'attack': 31,
+					    u'defense': 27,
+					    u'hp': 21,
+					    u'special attack': 21,
+					    u'special defense': 3,
+					    u'speed': 7},
+			    'happiness': 70,
+			    'level': 10,
+			    'met at level': 10,
+			    'met location': {'id_dp': 75, 'name': u'Spring Path'},
+			    'moves': [{'id': 33, 'name': u'Tackle', 'pp': 35},
+					    {'id': 39, 'name': u'Tail Whip', 'pp': 30},
+					    {'id': 145, 'name': u'Bubble', 'pp': 30},
+					    {'id': 110, 'name': u'Withdraw', 'pp': 40}],
+			    'nickname': u'ゼニガメ',
+			    'nickname trash': 'vDDLMKww4TD//wAAAAAAAAAAAAD//w==',
+			    'nicknamed': False,
+			    'oiginal trainer': {'gender': 'male',
+								    'id': 59024,
+								    'name': u'ＰＰｏｒｇ',
+								    'secret': 51594},
+			    'original country': 'jp',
+			    'original version': 21,
+			    'personality': 107636263,
+			    'pokeball': {'id_dppt': 25, 'name': u'Hyper Potion'},
+			    'species': {'id': 7, 'name': u'Squirtle'}
+		    }*/
 
-			//calcStats();
-		}
+            //calcStats();
+        }
 
-		/// <summary>
-		/// This is used SPECIFICALLY for regenerating a pokemon from 
-		/// <see cref="PokemonUnity.Saving.SerializableClasses.SeriPokemon"/>
-		/// </summary>
-		/// <param name="species"></param>
-		/// <param name="original"></param>
-		/// <param name="nickName"></param>
-		/// <param name="form"></param>
-		/// <param name="ability"></param>
-		/// <param name="nature"></param>
-		/// <param name="isShiny"></param>
-		/// <param name="gender"></param>
-		/// <param name="pokerus"></param>
-		/// <param name="ishyper"></param>
-		/// <param name="shadowLevel"></param>
-		/// <param name="currentHp"></param>
-		/// <param name="item"></param>
-		/// <param name="iv"></param>
-		/// <param name="ev"></param>
-		/// <param name="obtainedLevel"></param>
-		/// <param name="currentExp"></param>
-		/// <param name="happiness"></param>
-		/// <param name="status"></param>
-		/// <param name="statusCount"></param>
-		/// <param name="eggSteps"></param>
-		/// <param name="ballUsed"></param>
-		/// <param name="mail"></param>
-		/// <param name="moves"></param>
-		/// <param name="ribbons"></param>
-		/// <param name="markings"></param>
-		/// <param name="personalId"></param>
-		/// <param name="obtainedMethod"></param>
-		/// <param name="timeReceived"></param>
-		/// <param name="timeEggHatched"></param>
-		/// ToDo: Maybe make this private? Move implicit convert to Pokemon class
-		public Pokemon(Pokemons species, 
-			TrainerId original,
-			string nickName, int form,
+        /// <summary>
+        /// This is used SPECIFICALLY for regenerating a pokemon from 
+        /// <see cref="PokemonUnity.Saving.SerializableClasses.SeriPokemon"/>
+        /// </summary>
+        /// <param name="species"></param>
+        /// <param name="original"></param>
+        /// <param name="nickName"></param>
+        /// <param name="form"></param>
+        /// <param name="ability"></param>
+        /// <param name="nature"></param>
+        /// <param name="isShiny"></param>
+        /// <param name="gender"></param>
+        /// <param name="pokerus"></param>
+        /// <param name="ishyper"></param>
+        /// <param name="shadowLevel"></param>
+        /// <param name="currentHp"></param>
+        /// <param name="item"></param>
+        /// <param name="iv"></param>
+        /// <param name="ev"></param>
+        /// <param name="obtainedLevel"></param>
+        /// <param name="currentExp"></param>
+        /// <param name="happiness"></param>
+        /// <param name="status"></param>
+        /// <param name="statusCount"></param>
+        /// <param name="eggSteps"></param>
+        /// <param name="ballUsed"></param>
+        /// <param name="mail"></param>
+        /// <param name="moves"></param>
+        /// <param name="ribbons"></param>
+        /// <param name="markings"></param>
+        /// <param name="personalId"></param>
+        /// <param name="obtainedMethod"></param>
+        /// <param name="timeReceived"></param>
+        /// <param name="timeEggHatched"></param>
+        /// ToDo: Maybe make this private? Move implicit convert to Pokemon class
+        public Pokemon(Pokemons species,
+            TrainerId original,
+            string nickName, int form,
             Abilities ability, Natures nature,
             bool isShiny, bool? gender,
             int[] pokerus, bool ishyper,
             int? shadowLevel,
             int currentHp, Items item,
-            int[] iv, byte[] ev, 
+            int[] iv, byte[] ev,
             int obtainedLevel, /*int currentLevel,*/ int currentExp,
             int happiness, Status status, int statusCount,
             int eggSteps, Items ballUsed,
@@ -447,15 +447,15 @@ namespace PokemonUnity.Monster
             DateTimeOffset timeReceived, DateTimeOffset? timeEggHatched) : this(species, original)
         {
             //Check to see if nickName is filled
-			//ToDo: Check if whitespace or empty, then assign it to name, even if null...
+            //ToDo: Check if whitespace or empty, then assign it to name, even if null...
             if (!string.IsNullOrEmpty(nickName))
                 name = nickName.Trim();
             else
                 name = null;
 
-			//_base = Pokemon.PokemonData.GetPokemon(species);
-			pokemons = species;
-			Form = form;
+            //_base = Pokemon.PokemonData.GetPokemon(species);
+            pokemons = species;
+            Form = form;
 
             Ability = ability;
             Nature = nature;
@@ -478,11 +478,11 @@ namespace PokemonUnity.Monster
 
             ObtainLevel = obtainedLevel;
             //Level = currentLevel;
-			//ToDo: Load exp without triggering a level-up scene
+            //ToDo: Load exp without triggering a level-up scene
             Exp.AddExperience(currentExp - Exp.Current);
-			TempLevel = Level;
+            TempLevel = Level;
 
-			Happiness = happiness;
+            Happiness = happiness;
 
             Status = status;
             StatusCount = statusCount;
@@ -506,57 +506,57 @@ namespace PokemonUnity.Monster
             hatchedWhen = timeEggHatched;
         }
 
-		/// <summary>
-		/// Use this constructor when capturing wild pokemons from a battle
-		/// </summary>
-		/// <param name="pkmn"></param>
-		/// <param name="pokeball"></param>
-		/// <param name="obtain"></param>
-		/// <param name="nickname"></param>
-		public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null) 
-			: this (
-			species: pkmn.Species,
-			original: Game.GameData.Player.Trainer,
-			nickName: nickname, form: pkmn.Form,
-			ability: pkmn.Ability, nature: pkmn.Nature,
-			isShiny: pkmn.IsShiny, gender: pkmn.Gender,
-			pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
-			shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP, 
-			item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV, 
-			obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
-			happiness: pkmn.Happiness, status: pkmn.Status, 
-			statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps, 
-			ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
-			ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
-			personalId: pkmn.PersonalId, obtainedMethod: obtain,
-			timeReceived: DateTimeOffset.Now, timeEggHatched: null)
-		{
-			//ToDo: What to do about timeEggHatched and OT
-			//Should make a new class for trading pokemons?
-		}
-		#endregion
+        /// <summary>
+        /// Use this constructor when capturing wild pokemons from a battle
+        /// </summary>
+        /// <param name="pkmn"></param>
+        /// <param name="pokeball"></param>
+        /// <param name="obtain"></param>
+        /// <param name="nickname"></param>
+        public Pokemon(Pokemon pkmn, Items pokeball, ObtainedMethod obtain = ObtainedMethod.MET, string nickname = null)
+            : this(
+            species: pkmn.Species,
+            original: Game.GameData.Player.Trainer,
+            nickName: nickname, form: pkmn.Form,
+            ability: pkmn.Ability, nature: pkmn.Nature,
+            isShiny: pkmn.IsShiny, gender: pkmn.Gender,
+            pokerus: pkmn.Pokerus, ishyper: pkmn.isHyperMode,
+            shadowLevel: pkmn.ShadowLevel, currentHp: pkmn.HP,
+            item: pkmn.Item, iv: pkmn.IV, ev: pkmn.EV,
+            obtainedLevel: pkmn.Level, currentExp: pkmn.Exp.Current,
+            happiness: pkmn.Happiness, status: pkmn.Status,
+            statusCount: pkmn.StatusCount, eggSteps: pkmn.EggSteps,
+            ballUsed: pokeball, mail: pkmn.Mail, moves: pkmn.moves,
+            ribbons: pkmn.Ribbons.ToArray(), markings: pkmn.Markings,
+            personalId: pkmn.PersonalId, obtainedMethod: obtain,
+            timeReceived: DateTimeOffset.Now, timeEggHatched: null)
+        {
+            //ToDo: What to do about timeEggHatched and OT
+            //Should make a new class for trading pokemons?
+        }
+        #endregion
 
-		#region Ownership, obtained information
-		/// <summary>
-		/// Manner Obtained:
-		/// </summary>
-		public ObtainedMethod ObtainedMode { get; private set; }
-		//ToDo: Change to EncounterType
+        #region Ownership, obtained information
+        /// <summary>
+        /// Manner Obtained:
+        /// </summary>
+        public ObtainedMethod ObtainedMode { get; private set; }
+        //ToDo: Change to EncounterType
         public enum ObtainedMethod
         {
             MET = 0,
             EGG = 1,
-			//If EncounterType == Gift, then it's Traded
+            //If EncounterType == Gift, then it's Traded
             TRADED = 2,
             /// <summary>
             /// NPC-Event?
             /// </summary>
             FATEFUL_ENCOUNTER = 4
         }
-		//ToDo: Nintendo has variable for location where egg hatched
+        //ToDo: Nintendo has variable for location where egg hatched
         /// <summary>
         /// Map where obtained (as egg, or in wild).
-		/// Return no results if Traded/Gift...
+        /// Return no results if Traded/Gift...
         /// </summary>
         /// <remarks>
         /// Doubles as "HatchedMap"
@@ -571,8 +571,8 @@ namespace PokemonUnity.Monster
 		/// Try: if (encounter == gift) return "got from player" (npcs too)
         private string obtainString { get; set; }
         //private int obtainLevel; // = 0;
-		//Should obtainWhen be used for hatchedWhen? Eggs dont mean anything...
-		//ToDo: Nintendo has date variable for when egg was received
+        //Should obtainWhen be used for hatchedWhen? Eggs dont mean anything...
+        //ToDo: Nintendo has date variable for when egg was received
         private System.DateTimeOffset obtainWhen { get; set; }
         private System.DateTimeOffset? hatchedWhen { get; set; }
         /// <summary>
@@ -595,7 +595,7 @@ namespace PokemonUnity.Monster
         /// <returns></returns>
         public bool isOutsider(Player trainer)
         {
-            return trainer.Trainer != this.OT; 
+            return trainer.Trainer != this.OT;
         }
 
         /// <summary>
@@ -691,40 +691,40 @@ namespace PokemonUnity.Monster
         {
             get
             {
-				if (this.ObtainedMode == ObtainedMethod.EGG)
-				{
-					//if (hatchedWhen == null) this.hatchedWhen = DateTimeOffset.UtcNow;
-					return this.hatchedWhen;
-				}
-				else
-					//return DateTimeOffset.UtcNow; //ToDo: Something else? Maybe error?
-					//throw new Exception("Trainer did not acquire Pokemon as an egg."); //No Exceptions...
-					return null;
+                if (this.ObtainedMode == ObtainedMethod.EGG)
+                {
+                    //if (hatchedWhen == null) this.hatchedWhen = DateTimeOffset.UtcNow;
+                    return this.hatchedWhen;
+                }
+                else
+                    //return DateTimeOffset.UtcNow; //ToDo: Something else? Maybe error?
+                    //throw new Exception("Trainer did not acquire Pokemon as an egg."); //No Exceptions...
+                    return null;
             }
-			//set { this.hatchedWhen = value; }
-		}
+            //set { this.hatchedWhen = value; }
+        }
 
-		/// <summary>
-		/// Sets the catch infos of the Pokémon. Uses the current map name and player name + OT.
-		/// </summary>
-		/// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
-		/// <param name="Method">The capture method.</param>
-		public void SetCatchInfos(TrainerId Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
-		{
-			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
-			//this.obtainMap = Game.GameData.Level.MapName;
-			//this.CatchTrainerName = Game.GameData.Player.Name;
-			//this.OT = Game.GameData.Player.Trainer;
-			this.OT = Trainer;
+        /// <summary>
+        /// Sets the catch infos of the Pokémon. Uses the current map name and player name + OT.
+        /// </summary>
+        /// <param name="Ball">The Pokéball this Pokémon got captured in.</param>
+        /// <param name="Method">The capture method.</param>
+        public void SetCatchInfos(TrainerId Trainer, Items Ball = Items.POKE_BALL, ObtainedMethod Method = ObtainedMethod.MET)
+        {
+            //ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
+            //this.obtainMap = Game.GameData.Level.MapName;
+            //this.CatchTrainerName = Game.GameData.Player.Name;
+            //this.OT = Game.GameData.Player.Trainer;
+            this.OT = Trainer;
 
-			this.ObtainedMode = Method;
-			if(Game.ItemData[Ball].Pocket == ItemPockets.POKEBALL)
-				this.ballUsed = Ball;
-		}
-		#endregion
+            this.ObtainedMode = Method;
+            if (Game.ItemData[Ball].Pocket == ItemPockets.POKEBALL)
+                this.ballUsed = Ball;
+        }
+        #endregion
 
-		#region Level
-		public int Level
+        #region Level
+        public int Level
         {
             get
             {
@@ -733,9 +733,11 @@ namespace PokemonUnity.Monster
             }
             private set
             {
-                if (value < 1 || value > 100) {//Experience.MAXLEVEL
+                if (value < 1 || value > 100)
+                {//Experience.MAXLEVEL
                     //Game.DebugLog(string.Format("The level number {0} is invalid", value), true);
-                } if (value > this.Level)
+                }
+                if (value > this.Level)
                     this.Exp.AddExperience(Experience.GetStartExperience(this.GrowthRate, value) - this.Exp.Current);
                 else
                 {
@@ -743,57 +745,57 @@ namespace PokemonUnity.Monster
                     //Game.DebugLog(string.Format("The level number {0} is invalid", value), true);
                 }
             }
-		}
-		/// <summary>
-		/// Actual pokemon level is calaculated with <see cref="this.Level"/>.
-		/// This is just a temp placeholder for Leveling-Up mechanic.
-		/// </summary>
-		/// For each level between temp and <see cref="Experience.GetLevelFromExperience(LevelingRate, int)"/>
-		/// perform stat increase difference (how much it went up, and total) and check to see if evolve is possible
-		/// ToDo: Move to platform engine or yield return ienumerable[int]
-		public int TempLevel { get; private set; } 
+        }
+        /// <summary>
+        /// Actual pokemon level is calaculated with <see cref="this.Level"/>.
+        /// This is just a temp placeholder for Leveling-Up mechanic.
+        /// </summary>
+        /// For each level between temp and <see cref="Experience.GetLevelFromExperience(LevelingRate, int)"/>
+        /// perform stat increase difference (how much it went up, and total) and check to see if evolve is possible
+        /// ToDo: Move to platform engine or yield return ienumerable[int]
+        public int TempLevel { get; private set; }
 
-		/// <summary>
-		/// Gives the Pokémon experience points and levels it up.
-		/// </summary>
-		/// <param name="Exp">The amount of EXP.</param>
-		/// <param name="LearnRandomAttack">If the Pokémon should learn an attack if it could learn one at level up.</param>
-		public void AddExperience(int exp, bool LearnRandomAttack)
-		{
-			//this.Experience += exp;
-			this.Exp.AddExperience(exp);
-			//while (this.Exp.Current >= this.Exp.NeedExperience(this.Level + 1))
-			//while (this.Exp.Current >= this.Exp.NextLevel)
-			while (Level > TempLevel)
-				this.LevelUp(LearnRandomAttack);
-			this.TempLevel = TempLevel < 1 ? 1 : (TempLevel > Core.MAXIMUMLEVEL ? Core.MAXIMUMLEVEL : TempLevel);
-			//this.TempLevel = Level.Clamp(1, Core.MAXIMUMLEVEL);
-		}
+        /// <summary>
+        /// Gives the Pokémon experience points and levels it up.
+        /// </summary>
+        /// <param name="Exp">The amount of EXP.</param>
+        /// <param name="LearnRandomAttack">If the Pokémon should learn an attack if it could learn one at level up.</param>
+        public void AddExperience(int exp, bool LearnRandomAttack)
+        {
+            //this.Experience += exp;
+            this.Exp.AddExperience(exp);
+            //while (this.Exp.Current >= this.Exp.NeedExperience(this.Level + 1))
+            //while (this.Exp.Current >= this.Exp.NextLevel)
+            while (Level > TempLevel)
+                this.LevelUp(LearnRandomAttack);
+            this.TempLevel = TempLevel < 1 ? 1 : (TempLevel > Core.MAXIMUMLEVEL ? Core.MAXIMUMLEVEL : TempLevel);
+            //this.TempLevel = Level.Clamp(1, Core.MAXIMUMLEVEL);
+        }
 
-		/// <summary>
-		/// Rasies the Pokémon's level by one.
-		/// </summary>
-		/// <param name="LearnRandomAttack">If one attack of the Pokémon should be replaced by an attack potentially learned on the new level.</param>
-		public void LevelUp(bool LearnRandomAttack)
-		{
-			this.TempLevel += 1;
-			int currentMaxHP = this.TotalHP;
-			bool success;
-			//this.CalculateStats();
+        /// <summary>
+        /// Rasies the Pokémon's level by one.
+        /// </summary>
+        /// <param name="LearnRandomAttack">If one attack of the Pokémon should be replaced by an attack potentially learned on the new level.</param>
+        public void LevelUp(bool LearnRandomAttack)
+        {
+            this.TempLevel += 1;
+            int currentMaxHP = this.TotalHP;
+            bool success;
+            //this.CalculateStats();
 
-			// Heals the Pokémon by the HP difference.
-			int HPDifference = this.TotalHP - currentMaxHP;
-			if (HPDifference > 0)
-				//this.Heal(HPDifference);
-				HP += HPDifference;
+            // Heals the Pokémon by the HP difference.
+            int HPDifference = this.TotalHP - currentMaxHP;
+            if (HPDifference > 0)
+                //this.Heal(HPDifference);
+                HP += HPDifference;
 
-			if (LearnRandomAttack)
-				//this.LearnAttack(this.Level);
-				LearnMove(GetMove(TempLevel), out success);
-			ChangeHappiness(HappinessMethods.LEVELUP);
-		}
+            if (LearnRandomAttack)
+                //this.LearnAttack(this.Level);
+                LearnMove(GetMove(TempLevel), out success);
+            ChangeHappiness(HappinessMethods.LEVELUP);
+        }
 
-		public bool isEgg
+        public bool isEgg
         {
             get
             {
@@ -805,20 +807,20 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                return _base.GrowthRate; 
+                return _base.GrowthRate;
             }
         }
 
-		///// <summary>
-		///// When this pokemon is defeated, this is the amount of experience points it offers
-		///// </summary>
-		//public int baseExp //ToDo: GetBattleExp()
-		//{
-		//    get
-		//    {
-		//        return _base.BaseExpYield; //Check Pokemon.Form too...
-		//    }
-		//}
+        ///// <summary>
+        ///// When this pokemon is defeated, this is the amount of experience points it offers
+        ///// </summary>
+        //public int baseExp //ToDo: GetBattleExp()
+        //{
+        //    get
+        //    {
+        //        return _base.BaseExpYield; //Check Pokemon.Form too...
+        //    }
+        //}
 
         public void AddSteps(byte steps = 1)
         {
@@ -827,7 +829,7 @@ namespace PokemonUnity.Monster
             EggSteps = i < 0 ? 0 : i;
             //then if we want to continue beyond 0 and into negative values, we may continue...
             if (i < 0) EggSteps = i;
-			ChangeHappiness(HappinessMethods.WALKING);
+            ChangeHappiness(HappinessMethods.WALKING);
         }
 
         public void HatchEgg()
@@ -841,7 +843,7 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Evolution
-		/// <summary>
+        /// <summary>
         /// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
         /// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
         /// </summary>
@@ -936,74 +938,74 @@ namespace PokemonUnity.Monster
             }
             return false;
         }
-		/// <summary>
-		/// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
-		/// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
-		/// </summary>
-		/// returns an array of all the species this pokemon can currently evolve into
-		public Pokemons[] CanEvolveAfter(EvolutionMethod method)
-		{
-			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
-			List<Pokemons> methods = new List<Pokemons>();
-			switch (method)
-			{
-				case EvolutionMethod.Ninjask:
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if (item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				default:
-					return new Pokemons[] { };
-			}
-		}
-		public Pokemons[] CanEvolveAfter(EvolutionMethod method, int level)
-		{
-			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
-			List<Pokemons> methods = new List<Pokemons>();
-			switch (method)
-			{
-				case EvolutionMethod.Level:
-				case EvolutionMethod.LevelMale:
-				case EvolutionMethod.LevelFemale:
-				//case EvolutionMethod.Ninjask:
-				case EvolutionMethod.Lycanroc:
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((int)item.EvolveValue < level && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				case EvolutionMethod.Beauty:            //param int = beauty, not level
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((int)item.EvolveValue < Contest[(int)Contests.Beauty] && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				case EvolutionMethod.Hatred:			//param int = happiness, not level
-				case EvolutionMethod.Happiness:			//param int = happiness, not level
-				case EvolutionMethod.HappinessDay:		//param int = happiness, not level
-				case EvolutionMethod.HappinessNight:	//param int = happiness, not level
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((int)item.EvolveValue < Happiness && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				default:
-					return new Pokemons[] { };
-			}
-		}
-		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Items itemUsed)
-		{
-			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
-			switch (method)
-			{
+        /// <summary>
+        /// Returns an array of all the levels this pokemons has to reach in order to evolve into species.
+        /// Best if used in combination with <see cref="CanEvolveDuringBattle"/>.
+        /// </summary>
+        /// returns an array of all the species this pokemon can currently evolve into
+        public Pokemons[] CanEvolveAfter(EvolutionMethod method)
+        {
+            if (!hasEvolveMethod(method))
+                return new Pokemons[] { };
+            List<Pokemons> methods = new List<Pokemons>();
+            switch (method)
+            {
+                case EvolutionMethod.Ninjask:
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if (item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                default:
+                    return new Pokemons[] { };
+            }
+        }
+        public Pokemons[] CanEvolveAfter(EvolutionMethod method, int level)
+        {
+            if (!hasEvolveMethod(method))
+                return new Pokemons[] { };
+            List<Pokemons> methods = new List<Pokemons>();
+            switch (method)
+            {
+                case EvolutionMethod.Level:
+                case EvolutionMethod.LevelMale:
+                case EvolutionMethod.LevelFemale:
+                //case EvolutionMethod.Ninjask:
+                case EvolutionMethod.Lycanroc:
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((int)item.EvolveValue < level && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                case EvolutionMethod.Beauty:            //param int = beauty, not level
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((int)item.EvolveValue < Contest[(int)Contests.Beauty] && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                case EvolutionMethod.Hatred:            //param int = happiness, not level
+                case EvolutionMethod.Happiness:         //param int = happiness, not level
+                case EvolutionMethod.HappinessDay:      //param int = happiness, not level
+                case EvolutionMethod.HappinessNight:    //param int = happiness, not level
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((int)item.EvolveValue < Happiness && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                default:
+                    return new Pokemons[] { };
+            }
+        }
+        public Pokemons[] CanEvolveAfter(EvolutionMethod method, Items itemUsed)
+        {
+            if (!hasEvolveMethod(method))
+                return new Pokemons[] { };
+            switch (method)
+            {
                 case EvolutionMethod.Item:
                 case EvolutionMethod.ItemMale:
                 case EvolutionMethod.ItemFemale:
@@ -1011,88 +1013,88 @@ namespace PokemonUnity.Monster
                 case EvolutionMethod.HoldItem:
                 case EvolutionMethod.HoldItemDay:
                 case EvolutionMethod.HoldItemNight:
-					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((Items)item.EvolveValue == itemUsed && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				default:
-					return new Pokemons[] { };
-			}
-		}
-		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Pokemons pkmn)
-		{
-			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
-			switch (method)
-			{
+                    List<Pokemons> methods = new List<Pokemons>();
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((Items)item.EvolveValue == itemUsed && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                default:
+                    return new Pokemons[] { };
+            }
+        }
+        public Pokemons[] CanEvolveAfter(EvolutionMethod method, Pokemons pkmn)
+        {
+            if (!hasEvolveMethod(method))
+                return new Pokemons[] { };
+            switch (method)
+            {
                 case EvolutionMethod.Party:
                 case EvolutionMethod.TradeSpecies:
                 case EvolutionMethod.Shedinja:
-					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((Pokemons)item.EvolveValue == pkmn && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				default:
-					return new Pokemons[] { };
-			}
-		}
-		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Moves move)
-		{
-			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
-			switch (method)
-			{
+                    List<Pokemons> methods = new List<Pokemons>();
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((Pokemons)item.EvolveValue == pkmn && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                default:
+                    return new Pokemons[] { };
+            }
+        }
+        public Pokemons[] CanEvolveAfter(EvolutionMethod method, Moves move)
+        {
+            if (!hasEvolveMethod(method))
+                return new Pokemons[] { };
+            switch (method)
+            {
                 case EvolutionMethod.Move:
-					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((Moves)item.EvolveValue == move && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				default:
-					return new Pokemons[] { };
-			}
-		}
-		public Pokemons[] CanEvolveAfter(EvolutionMethod method, Types type)
-		{
-			if (!hasEvolveMethod(method))
-				return new Pokemons[] { };
-			switch (method)
-			{
+                    List<Pokemons> methods = new List<Pokemons>();
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((Moves)item.EvolveValue == move && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                default:
+                    return new Pokemons[] { };
+            }
+        }
+        public Pokemons[] CanEvolveAfter(EvolutionMethod method, Types type)
+        {
+            if (!hasEvolveMethod(method))
+                return new Pokemons[] { };
+            switch (method)
+            {
                 case EvolutionMethod.Type:
                 case EvolutionMethod.Affection:
-					List<Pokemons> methods = new List<Pokemons>();
-					foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
-					{
-						if ((Types)item.EvolveValue == type && item.EvolveMethod == method)
-							methods.Add(item.Species);
-					}
-					return methods.ToArray();
-				default:
-					return new Pokemons[] { };
-			}
-		}
-		#endregion
+                    List<Pokemons> methods = new List<Pokemons>();
+                    foreach (PokemonEvolution item in Game.PokemonEvolutionsData[pokemons])
+                    {
+                        if ((Types)item.EvolveValue == type && item.EvolveMethod == method)
+                            methods.Add(item.Species);
+                    }
+                    return methods.ToArray();
+                default:
+                    return new Pokemons[] { };
+            }
+        }
+        #endregion
 
-		#region Gender
-		//private bool? gender;
-		/// <summary>
-		/// Returns this Pokemons gender.
-		/// Sets this Pokemon's gender to a particular gender (if possible)
-		/// True is Male; False is Female; Null is Genderless.
-		/// </summary>
-		/// <remarks>
-		/// Should consider gender as byte? bool takes up same amount of space
-		/// </remarks>
-		/// isMale; null = genderless?
-		public virtual bool? Gender { get; private set; }
+        #region Gender
+        //private bool? gender;
+        /// <summary>
+        /// Returns this Pokemons gender.
+        /// Sets this Pokemon's gender to a particular gender (if possible)
+        /// True is Male; False is Female; Null is Genderless.
+        /// </summary>
+        /// <remarks>
+        /// Should consider gender as byte? bool takes up same amount of space
+        /// </remarks>
+        /// isMale; null = genderless?
+        public virtual bool? Gender { get; private set; }
 
         /// <summary>
         /// Helper function that determines whether the input values would make a female. 
@@ -1134,7 +1136,7 @@ namespace PokemonUnity.Monster
                 default:
                     //byte n = (byte)(Core.Rand.Next(0, 100) + 1);
                     double n = (Core.Rand.NextDouble() * 100) + 1;
-                    if		(_base.GenderEnum == GenderRatio.AlwaysFemale && n > 0f && n < 12.5f) return false;
+                    if (_base.GenderEnum == GenderRatio.AlwaysFemale && n > 0f && n < 12.5f) return false;
                     else if (_base.GenderEnum == GenderRatio.FemaleSevenEighths && n >= 12.5f && n < 25f) return false;
                     else if (_base.GenderEnum == GenderRatio.Female75Percent && n >= 25f && n < 37.5f) return false;
                     else if (_base.GenderEnum == GenderRatio.Female75Percent && n >= 37.5f && n < 50f) return false;
@@ -1160,7 +1162,7 @@ namespace PokemonUnity.Monster
                 {
                     if (_base.Ability[1] != Abilities.NONE)
                     {
-                        return _base.Ability[Core.Rand.Next(0, 3)];                            
+                        return _base.Ability[Core.Rand.Next(0, 3)];
                     }
                     else
                     {
@@ -1170,7 +1172,7 @@ namespace PokemonUnity.Monster
                 else
                 {
                     return _base.Ability[Core.Rand.Next(0, 2)];
-                }                
+                }
             }
         }
         /// <summary>
@@ -1210,7 +1212,7 @@ namespace PokemonUnity.Monster
             //foreach(){ list.add() }
             //Abilities[] abilities = abilList.ToArray();
             //return abilities;
-            return this._base.Ability; 
+            return this._base.Ability;
         }
         #endregion
 
@@ -1239,7 +1241,7 @@ namespace PokemonUnity.Monster
         ///// Returns the Nature for the SeriPokemon class to serialize Nature
         ///// </summary>
         ///// <returns></returns>
-		///// Could've just made the Game.NatureData[Nature] public if you needed access to it...
+        ///// Could've just made the Game.NatureData[Nature] public if you needed access to it...
         //public Nature getNature()
         //{
         //    return Game.NatureData[Nature];
@@ -1251,33 +1253,33 @@ namespace PokemonUnity.Monster
         /// Returns whether this Pokemon is shiny (differently colored)
         /// </summary>
         public virtual bool IsShiny
-        { 
-			//Uses math to determine if Pokemon is shiny.
+        {
+            //Uses math to determine if Pokemon is shiny.
             get
-			{
-				//Don't bother to generate math for a null value; skip the process...
-				if (Species == Pokemons.NONE) return false;
-				//return shinyFlag ?? isShiny();
-				if (shinyFlag.HasValue) return shinyFlag.Value;
-				if (Core.SHINY_WILD_POKEMON_SWITCH) return true;
-				// Use this when rolling for shiny...
-				// Honestly, without this math, i probably would've done something a lot more primative.
-				// Look forward to primative math on wild pokemon encounter chances...
-				//int a = OT == null? this.PersonalId : this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
-				//int b = a & 0xFFFF;
-				//int c = (a >> 16) & 0xFFFF;
-				//int d = b ^ c;
-				//New Math Equation from Bulbapedia, gen 2 to 6...
-				//int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
-				//int d = (Game.GameData.Player.Trainer.TrainerID ^ Game.GameData.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
-				//If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
-				int d = ((!OT.Equals((object)null)? OT.TrainerID : Game.GameData.Player.Trainer.TrainerID) 
-					^ (!OT.Equals((object)null) ? OT.SecretID : Game.GameData.Player.Trainer.SecretID)) 
-					^ ((Game.GameData.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536) 
-					^ (PersonalId % 65536);
-				shinyFlag = d < _base.ShinyChance;
-				return shinyFlag.Value;
-			}
+            {
+                //Don't bother to generate math for a null value; skip the process...
+                if (Species == Pokemons.NONE) return false;
+                //return shinyFlag ?? isShiny();
+                if (shinyFlag.HasValue) return shinyFlag.Value;
+                if (Core.SHINY_WILD_POKEMON_SWITCH) return true;
+                // Use this when rolling for shiny...
+                // Honestly, without this math, i probably would've done something a lot more primative.
+                // Look forward to primative math on wild pokemon encounter chances...
+                //int a = OT == null? this.PersonalId : this.PersonalId ^ int.Parse(this.OT.PlayerID);//this.TrainerId; //Wild Pokemon TrainerId?
+                //int b = a & 0xFFFF;
+                //int c = (a >> 16) & 0xFFFF;
+                //int d = b ^ c;
+                //New Math Equation from Bulbapedia, gen 2 to 6...
+                //int d = (OT.TrainerID ^ OT.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+                //int d = (Game.GameData.Player.Trainer.TrainerID ^ Game.GameData.Player.Trainer.SecretID) ^ (PersonalId / 65536) ^ (PersonalId % 65536);
+                //If Pokemons are caught already `OT` -> the math should be set, else generate new values from current player
+                int d = ((!OT.Equals((object)null) ? OT.TrainerID : Game.GameData.Player.Trainer.TrainerID)
+                    ^ (!OT.Equals((object)null) ? OT.SecretID : Game.GameData.Player.Trainer.SecretID))
+                    ^ ((Game.GameData.Player.Bag.GetItemAmount(Items.SHINY_CHARM) > 0 ? /*PersonalId*/Core.SHINYPOKEMONCHANCE * 3 : /*PersonalId*/Core.SHINYPOKEMONCHANCE) / 65536)
+                    ^ (PersonalId % 65536);
+                shinyFlag = d < _base.ShinyChance;
+                return shinyFlag.Value;
+            }
             //set { shinyFlag = value; }
         }
         /// <summary>
@@ -1400,7 +1402,8 @@ namespace PokemonUnity.Monster
         public byte countMoves()
         {
             byte ret = 0;
-            for (int i = 0; i < 4; i++){//foreach(var move in this.moves){ 
+            for (int i = 0; i < 4; i++)
+            {//foreach(var move in this.moves){ 
                 if (this.moves[i].MoveId != Moves.NONE) ret += 1;//move.id
             }
             return ret;
@@ -1449,7 +1452,7 @@ namespace PokemonUnity.Monster
                     list.AddRange(Game.PokemonMovesData[pokemons].Machine.Where(x => !list.Contains(x)).Select(x => x));
                     list.AddRange(Game.PokemonMovesData[pokemons].Tutor.Where(x => !list.Contains(x)).Select(x => x));
                     list.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => !list.Contains(x.Key))//(x => x.Value <= this.Level)
-						.Select(x => x.Key));
+                        .Select(x => x.Key));
                     return list.ToArray();
             }
         }
@@ -1466,12 +1469,12 @@ namespace PokemonUnity.Monster
             //if (!level.HasValue)
             //	level = -1;
             ClearFirstMoves();
-			resetMoves();
-            int numMove = Core.Rand.Next(4)+1; //number of moves pokemon will have, between 0 and 3
+            resetMoves();
+            int numMove = Core.Rand.Next(4) + 1; //number of moves pokemon will have, between 0 and 3
             List<Moves> movelist = new List<Moves>();
-            if (isEgg || egg || Game.GameData.Features.CatchPokemonsWithEggMoves) 
-				movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
-			int?[] rejected = new int?[movelist.Count];
+            if (isEgg || egg || Game.GameData.Features.CatchPokemonsWithEggMoves)
+                movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+            int?[] rejected = new int?[movelist.Count];
             switch (level)
             {
                 #region sample from alpha version
@@ -1525,21 +1528,21 @@ namespace PokemonUnity.Monster
                 case null:
                     //case -1:
                     movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= this.Level).Select(x => x.Key));
-					rejected = new int?[movelist.Count];
+                    rejected = new int?[movelist.Count];
                     for (int n = 0; n < movelist.Count; n++)
                     {
-						bool err = false;
+                        bool err = false;
                         if (this.countMoves() < numMove)
                         {
-							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Core.Rand.Next(movelist.Count);
-							while(rejected.Contains(x))
-								x = Core.Rand.Next(movelist.Count);
-							rejected[n] = x;
-							if (Convert.ToBoolean(Core.Rand.Next(2)))
-							{
-								LearnMove((Moves)movelist[x], out err);
-							}
+                            //For a truly random approach, instead of just adding moves in the order they're listed
+                            int x = Core.Rand.Next(movelist.Count);
+                            while (rejected.Contains(x))
+                                x = Core.Rand.Next(movelist.Count);
+                            rejected[n] = x;
+                            if (Convert.ToBoolean(Core.Rand.Next(2)))
+                            {
+                                LearnMove((Moves)movelist[x], out err);
+                            }
                         }
                         else
                             break;
@@ -1548,27 +1551,27 @@ namespace PokemonUnity.Monster
                 default:
                     //if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
                     movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value <= level.Value).Select(x => x.Key));
-					rejected = new int?[movelist.Count];
+                    rejected = new int?[movelist.Count];
                     //int listend = movelist.Count - 4;
                     //listend = listend < 0 ? 0 : listend + 4;
                     //int j = 0; 
                     for (int n = 0; n < movelist.Count; n++)
                     {
-						bool err = false;
+                        bool err = false;
                         if (this.countMoves() < numMove) //j
                         {
-							//For a truly random approach, instead of just adding moves in the order they're listed
-							int x = Core.Rand.Next(movelist.Count);
-							while(rejected.Contains(x))
-								x = Core.Rand.Next(movelist.Count);
-							rejected[n] = x;
-							if (Convert.ToBoolean(Core.Rand.Next(2)))
-							{
-								//this.moves[j] = new Move(movelist[n]);
-								//j += 1;
-								LearnMove((Moves)movelist[x], out err);
-								//j += this.countMoves() < numMove ? 0 : 1;
-							}
+                            //For a truly random approach, instead of just adding moves in the order they're listed
+                            int x = Core.Rand.Next(movelist.Count);
+                            while (rejected.Contains(x))
+                                x = Core.Rand.Next(movelist.Count);
+                            rejected[n] = x;
+                            if (Convert.ToBoolean(Core.Rand.Next(2)))
+                            {
+                                //this.moves[j] = new Move(movelist[n]);
+                                //j += 1;
+                                LearnMove((Moves)movelist[x], out err);
+                                //j += this.countMoves() < numMove ? 0 : 1;
+                            }
                         }
                         else
                             break;
@@ -1595,18 +1598,18 @@ namespace PokemonUnity.Monster
             }
         }
 
-		/// <summary>
-		/// Teaches new move to pokemon. Will fail if pokemon is unable to learn.
-		/// </summary>
-		/// <param name="move"></param>
-		/// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
-		/// <returns></returns>
-		/// Silently learns the given move. Will erase the first known move if it has to.
-		//ToDo: Change void to string, return errors as in-game prompts; 
-		//remove `out bool success` or replace with `out string error`
+        /// <summary>
+        /// Teaches new move to pokemon. Will fail if pokemon is unable to learn.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <param name="silently">Forces move to be learned by pokemon by overriding fourth regardless of player's choice</param>
+        /// <returns></returns>
+        /// Silently learns the given move. Will erase the first known move if it has to.
+        //ToDo: Change void to string, return errors as in-game prompts; 
+        //remove `out bool success` or replace with `out string error`
         public void LearnMove(Moves move, out bool success, bool silently = false)
         {
-			success = false;
+            success = false;
             if ((int)move <= 0) return;
             if (!getMoveList().Contains(move))
             {
@@ -1636,63 +1639,63 @@ namespace PokemonUnity.Monster
                 if (moves[i].MoveId == Moves.NONE)
                 {
                     moves[i] = new Move(move);
-					success = true;
+                    success = true;
                     return;
                 }
             }
             if (!silently)
-			{
+            {
                 //Game.DebugLog("Cannot learn move, pokmeon moveset is full", false);
-			}
+            }
             else
             {
                 moves[0] = moves[1];
                 moves[1] = moves[2];
                 moves[2] = moves[3];
                 moves[3] = new Move(move);
-				success = true;
+                success = true;
             }
         }
 
-		/// <summary>
-		/// Gets a random move of the Pokémon by one that it learns on a given level.
-		/// </summary>
-		/// <param name="level">The level the Pokémon learns the desired move on.</param>
-		public Moves GetMove(int level, bool egg = false)
-		{
-			bool moveLearned = false;
-			List<Moves> movelist = new List<Moves>();
-			if (isEgg || egg) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
-			int?[] rejected = new int?[movelist.Count];
-			//if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
-			movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value == level).Select(x => x.Key));
-			rejected = new int?[movelist.Count];
-			//int listend = movelist.Count - 4;
-			//listend = listend < 0 ? 0 : listend + 4;
-			//int j = 0; 
-			for (int n = 0; n < movelist.Count; n++)
-			{
-				if (!moveLearned) //j
-				{
-					//For a truly random approach, instead of just adding moves in the order they're listed
-					int x = Core.Rand.Next(movelist.Count);
-					while (rejected.Contains(x))
-						x = Core.Rand.Next(movelist.Count);
-					rejected[n] = x;
-					if (Convert.ToBoolean(Core.Rand.Next(2)))
-					{
-						//this.moves[j] = new Move(movelist[n]);
-						//j += 1;
-						//j += this.countMoves() < numMove ? 0 : 1;
-						//LearnMove((Moves)movelist[x], out moveLearned);
-						return (Moves)movelist[x];
-					}
-				}
-				else
-					break;
-			}
-			return Moves.NONE;
-		}
+        /// <summary>
+        /// Gets a random move of the Pokémon by one that it learns on a given level.
+        /// </summary>
+        /// <param name="level">The level the Pokémon learns the desired move on.</param>
+        public Moves GetMove(int level, bool egg = false)
+        {
+            bool moveLearned = false;
+            List<Moves> movelist = new List<Moves>();
+            if (isEgg || egg) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+            int?[] rejected = new int?[movelist.Count];
+            //if (isEgg || Core.CatchPokemonsWithEggMoves) movelist.AddRange(Game.PokemonMovesData[pokemons].Egg);
+            movelist.AddRange(Game.PokemonMovesData[pokemons].LevelUp.Where(x => x.Value == level).Select(x => x.Key));
+            rejected = new int?[movelist.Count];
+            //int listend = movelist.Count - 4;
+            //listend = listend < 0 ? 0 : listend + 4;
+            //int j = 0; 
+            for (int n = 0; n < movelist.Count; n++)
+            {
+                if (!moveLearned) //j
+                {
+                    //For a truly random approach, instead of just adding moves in the order they're listed
+                    int x = Core.Rand.Next(movelist.Count);
+                    while (rejected.Contains(x))
+                        x = Core.Rand.Next(movelist.Count);
+                    rejected[n] = x;
+                    if (Convert.ToBoolean(Core.Rand.Next(2)))
+                    {
+                        //this.moves[j] = new Move(movelist[n]);
+                        //j += 1;
+                        //j += this.countMoves() < numMove ? 0 : 1;
+                        //LearnMove((Moves)movelist[x], out moveLearned);
+                        return (Moves)movelist[x];
+                    }
+                }
+                else
+                    break;
+            }
+            return Moves.NONE;
+        }
 
         /// <summary>
         /// Deletes the given move from the Pokémon.
@@ -1779,22 +1782,22 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Contest attributes, ribbons
-		//ToDo: This is actually a hashset, and not list, because only store one of each
-        private List<Ribbon> ribbons { get; set; } 
+        //ToDo: This is actually a hashset, and not list, because only store one of each
+        private List<Ribbon> ribbons { get; set; }
         /// <summary>
         /// Each region/ribbon sprite should have it's own Ribbon.EnumId
         /// </summary>
         /// <example>Pokemon acquired beauty ribbon in region 1 AND 2?</example>
         /// Make each ribbon into sets, where next number up is upgrade.
         /// Does it make a difference if pokemon won contest in different regions? 
-		/// Yes -- ribbons are named after region; Do not need to record region data
-		/// ToDo: Dictionary(Ribbon,struct[DateTime/Bool])
-		//ToDo: Change to array, to keep list immutable
-        public List<Ribbon> Ribbons { get { return this.ribbons; } } 
+        /// Yes -- ribbons are named after region; Do not need to record region data
+        /// ToDo: Dictionary(Ribbon,struct[DateTime/Bool])
+        //ToDo: Change to array, to keep list immutable
+        public List<Ribbon> Ribbons { get { return this.ribbons; } }
         /// <summary>
         /// Contest stats; Max value is 255
         /// </summary>
-		public byte[] Contest { get; private set; }
+        public byte[] Contest { get; private set; }
         //public int Cool, Beauty, Cute, Smart, Tough, Sheen;
         /// <summary>
         /// Returns whether this Pokémon has the specified ribbon.
@@ -1831,9 +1834,9 @@ namespace PokemonUnity.Monster
             //        break;
             //    }
             //}
-			////ribbons.Remove(Ribbon.NONE); 
-			//ribbons.RemoveAll(r => r == Ribbon.NONE);
-			ribbons.RemoveAll(r => r == ribbon);
+            ////ribbons.Remove(Ribbon.NONE); 
+            //ribbons.RemoveAll(r => r == Ribbon.NONE);
+            ribbons.RemoveAll(r => r == ribbon);
         }
         /// <summary>
         /// Removes all ribbons from this Pokémon.
@@ -1845,14 +1848,14 @@ namespace PokemonUnity.Monster
         #endregion
 
         #region Items
-		public Items SwapItem(Items item)
-		{
-			Items old = Item;
-			Item = item;
-			return old;
-		}
+        public Items SwapItem(Items item)
+        {
+            Items old = Item;
+            Item = item;
+            return old;
+        }
 
-		#region Mail
+        #region Mail
         /// <summary>
         /// Mail?...
         /// </summary>
@@ -1866,17 +1869,17 @@ namespace PokemonUnity.Monster
             get
             {
                 if (this.mail == null || !PokemonUnity.Inventory.Mail.IsMail(this.Item)) return null; //If empty return null
-				//if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
-				//{
-				//    //mail = null;
-				//	return null;
-				//}
-				//ToDo: Return the string or class?
+                                                                                                      //if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
+                                                                                                      //{
+                                                                                                      //    //mail = null;
+                                                                                                      //	return null;
+                                                                                                      //}
+                                                                                                      //ToDo: Return the string or class?
                 return mail.Message;
             }
             //set { mail = value; }
         }
-		/*public void pbMoveToMailbox(pokemon)
+        /*public void pbMoveToMailbox(pokemon)
 		{
 			//PokemonGlobal.mailbox = [] if !$PokemonGlobal.mailbox;
 			PokemonGlobal.mailbox = !PokemonGlobal.mailbox ?? [];
@@ -2007,16 +2010,16 @@ namespace PokemonUnity.Monster
 			}
 			return false
 		}*/
-		#endregion Mail
-		#endregion
+        #endregion Mail
+        #endregion
 
-		#region Shadow
-		/// <summary>
-		/// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead.
-		/// </summary>
-		/// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
-		/// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
-		public bool isHyperMode { get; private set; }
+        #region Shadow
+        /// <summary>
+        /// Shadow Pokémon in the first game sometimes enter Hyper Mode, but in XD they enter Reverse Mode instead.
+        /// </summary>
+        /// In Hyper Mode, a Pokémon may attack its Trainer, but in Reverse Mode, they will not.
+        /// While in Reverse Mode, a Pokémon hurts itself after every turn, whereas a Pokémon in Hyper Mode incurs no self-damage
+        public bool isHyperMode { get; private set; }
         /// <summary>
         /// Shadow Pokémon don't have a set Nature or a set gender, but once encountered, the personality value, 
         /// Nature and IVs are saved to the memory for the Shadow Monitor to be able to keep track of their exact status and location. 
@@ -2336,18 +2339,18 @@ namespace PokemonUnity.Monster
         //public Form Form { get { return Game.PokemonFormsData[pokemons][form]; } }
         //public bool SetForm (int value) { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) { form = value; return true; } else return false; } }
         public int Form { get { return form; } set { if (value >= 0 && value <= Game.PokemonFormsData[pokemons].Length) form = value; } }
-		private int form { get; set; }
+        private int form { get; set; }
 
-		/*// <summary>
+        /*// <summary>
         /// Returns the species name of this Pokemon
         /// </summary>
         public string SpeciesName { get { return this._base.Species; } }*/
 
-		/// <summary>
-		/// Returns the markings this Pokemon has checked
-		/// </summary>
-		/// <returns>●, ▲, ■, ♥︎, ★, and ♦︎.</returns>
-		public bool[] Markings { get; set; }
+        /// <summary>
+        /// Returns the markings this Pokemon has checked
+        /// </summary>
+        /// <returns>●, ▲, ■, ♥︎, ★, and ♦︎.</returns>
+        public bool[] Markings { get; set; }
 
         /// <summary>
         /// Returns a string stating the Unown form of this Pokemon
@@ -2355,9 +2358,9 @@ namespace PokemonUnity.Monster
         /// <returns></returns>
         public char UnknownShape()
         {
-			if (this.pokemons == Pokemons.UNOWN)
-				return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[Form];
-			else return '*';
+            if (this.pokemons == Pokemons.UNOWN)
+                return "ABCDEFGHIJKLMNOPQRSTUVWXYZ?!".ToCharArray()[Form];
+            else return '*';
         }
 
         /// <summary>
@@ -2368,10 +2371,10 @@ namespace PokemonUnity.Monster
         {
             get { return this.hp; } //ToDo: If greater than totalHP throw error?
             set
-			{
-				this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
-				//this.hp = (this.HP + value).Clamp(0, this.TotalHP);
-				if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; ChangeHappiness(HappinessMethods.FAINT); } 
+            {
+                this.hp = value < 0 ? 0 : (value > this.TotalHP ? TotalHP : value);
+                //this.hp = (this.HP + value).Clamp(0, this.TotalHP);
+                if (isFainted()) { this.Status = Status.FAINT; StatusCount = 0; ChangeHappiness(HappinessMethods.FAINT); }
             }
         }
 
@@ -2387,9 +2390,9 @@ namespace PokemonUnity.Monster
         public bool HealHP()
         {
             if (this.isEgg)
-				return false;     
+                return false;
             this.HP = TotalHP;
-			return true;
+            return true;
         }
 
         /// <summary>
@@ -2398,9 +2401,9 @@ namespace PokemonUnity.Monster
         public bool HealStatus()
         {
             if (this.isEgg)
-				return false;
+                return false;
             this.Status = 0; StatusCount = 0; //remove status ailments
-			return true;
+            return true;
         }
 
         /// <summary>
@@ -2410,18 +2413,18 @@ namespace PokemonUnity.Monster
         public bool HealPP(int index = -1)
         {
             if (this.isEgg)
-				return false;
+                return false;
             //if (index >= 0) moves[index] = new Move(moves[index].MoveId, moves[index].PPups, moves[index].TotalPP);
             if (index >= 0) moves[index].PP = moves[index].TotalPP;
             else
             {
                 for (int i = 0; i < 4; i++)
                 {
-					//moves[i] = new Move(moves[i].MoveId, moves[i].PPups, moves[i].TotalPP);
+                    //moves[i] = new Move(moves[i].MoveId, moves[i].PPups, moves[i].TotalPP);
                     moves[i].PP = moves[i].TotalPP;
                 }
             }
-			return true;
+            return true;
         }
 
         /// <summary>
@@ -2430,11 +2433,11 @@ namespace PokemonUnity.Monster
         public bool Heal()
         {
             if (this.isEgg)
-				return false;
-			return 
-				HealHP() &&
-				HealStatus() &&
-				HealPP();
+                return false;
+            return
+                HealHP() &&
+                HealStatus() &&
+                HealPP();
         }
 
         /// <summary>
@@ -2449,7 +2452,7 @@ namespace PokemonUnity.Monster
                 case HappinessMethods.WALKING:
                     gain = 1;
                     gain += Happiness < 200 ? 1 : 0;
-					//ToDo: if trainer is on map pkmn was captured on, add more happiness on walk
+                    //ToDo: if trainer is on map pkmn was captured on, add more happiness on walk
                     //gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
                     break;
                 case HappinessMethods.LEVELUP:
@@ -2489,385 +2492,385 @@ namespace PokemonUnity.Monster
                     if (Happiness < 200) gain = -15;
                     break;
                 default:
-					//break;
-					//If not listed above, then stop
-					//Otherwise rest of code will add points
-					return;
+                    //break;
+                    //If not listed above, then stop
+                    //Otherwise rest of code will add points
+                    return;
             }
             gain += luxury && this.ballUsed == Items.LUXURY_BALL ? 1 : 0;
             if (this.Item == Items.SOOTHE_BELL && gain > 0)
                 gain = (int)Math.Floor(gain * 1.5f);
             Happiness += gain;
             Happiness = //Max 255, Min 0
-				Happiness > 255 ?	//if 
-					255 
-				: Happiness < 0 ?	//if else
-					0 
-				: Happiness;		//else
+                Happiness > 255 ?   //if 
+                    255
+                : Happiness < 0 ?   //if else
+                    0
+                : Happiness;		//else
         }
-		#endregion
+        #endregion
 
-		#region Stat calculations, Pokemon creation
-		/// <summary>
-		/// Adds Effort values (EV) to this Pokémon after defeated another Pokémon, if possible.
-		/// </summary>
-		/// <param name="DefeatedPokemon">The defeated Pokémon.</param>
-		/// <param name="SoS">Gen7 SoS Battle, where wild pokemon calls for reinforcements. Only `true` for the additional pokemon.</param>
-		public void GainEffort(Pokemons DefeatedPokemon, bool SoS = false)
-		{
-			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
-			if (allEV >= EVLIMIT || isShadow) //Shadow Pkmns dont earn EV from battles?...
-				return;
+        #region Stat calculations, Pokemon creation
+        /// <summary>
+        /// Adds Effort values (EV) to this Pokémon after defeated another Pokémon, if possible.
+        /// </summary>
+        /// <param name="DefeatedPokemon">The defeated Pokémon.</param>
+        /// <param name="SoS">Gen7 SoS Battle, where wild pokemon calls for reinforcements. Only `true` for the additional pokemon.</param>
+        public void GainEffort(Pokemons DefeatedPokemon, bool SoS = false)
+        {
+            int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
+            if (allEV >= EVLIMIT || isShadow) //Shadow Pkmns dont earn EV from battles?...
+                return;
 
-			int maxEVgain = EVLIMIT - allEV;
-			int totalEVgain = 0;
+            int maxEVgain = EVLIMIT - allEV;
+            int totalEVgain = 0;
 
-			// EV gains
-			int gainEVHP = Game.PokemonData[DefeatedPokemon].evYieldHP;
-			int gainEVAttack = Game.PokemonData[DefeatedPokemon].evYieldATK;
-			int gainEVDefense = Game.PokemonData[DefeatedPokemon].evYieldDEF;
-			int gainEVSpAttack = Game.PokemonData[DefeatedPokemon].evYieldSPA;
-			int gainEVSpDefense = Game.PokemonData[DefeatedPokemon].evYieldSPD;
-			int gainEVSpeed = Game.PokemonData[DefeatedPokemon].evYieldSPE;
+            // EV gains
+            int gainEVHP = Game.PokemonData[DefeatedPokemon].evYieldHP;
+            int gainEVAttack = Game.PokemonData[DefeatedPokemon].evYieldATK;
+            int gainEVDefense = Game.PokemonData[DefeatedPokemon].evYieldDEF;
+            int gainEVSpAttack = Game.PokemonData[DefeatedPokemon].evYieldSPA;
+            int gainEVSpDefense = Game.PokemonData[DefeatedPokemon].evYieldSPD;
+            int gainEVSpeed = Game.PokemonData[DefeatedPokemon].evYieldSPE;
 
-			int EVfactor = PokerusStage.HasValue && PokerusStage.Value ? 2 : 1; //if pokerus, ev values are doubled
-			if(SoS) //If the SoS-Ally Pokemon is defeated, double EV gain
-				EVfactor *= 2;
+            int EVfactor = PokerusStage.HasValue && PokerusStage.Value ? 2 : 1; //if pokerus, ev values are doubled
+            if (SoS) //If the SoS-Ally Pokemon is defeated, double EV gain
+                EVfactor *= 2;
 
-			//var itemNumber = 0;
-			//if (Item != Items.NONE)
-			//	itemNumber = (int)Item;
+            //var itemNumber = 0;
+            //if (Item != Items.NONE)
+            //	itemNumber = (int)Item;
 
-			switch (Item)
-			{
-				case Items.MACHO_BRACE:
-					{
-						EVfactor *= 2; //with pokerus, should be up to x4
-						break;
-					}
-				case Items.POWER_WEIGHT:
-					{
-						gainEVHP += 8; 
-						break;
-					}
-				case Items.POWER_BRACER:
-					{
-						gainEVAttack += 8;
-						break;
-					}
-				case Items.POWER_BELT:
-					{
-						gainEVDefense += 8;
-						break;
-					}
-				case Items.POWER_LENS:
-					{
-						gainEVSpAttack += 8;
-						break;
-					}
-				case Items.POWER_BAND:
-					{
-						gainEVSpDefense += 8;
-						break;
-					}
-				case Items.POWER_ANKLET:
-					{
-						gainEVSpeed += 8;
-						break;
-					}
-			}
+            switch (Item)
+            {
+                case Items.MACHO_BRACE:
+                    {
+                        EVfactor *= 2; //with pokerus, should be up to x4
+                        break;
+                    }
+                case Items.POWER_WEIGHT:
+                    {
+                        gainEVHP += 8;
+                        break;
+                    }
+                case Items.POWER_BRACER:
+                    {
+                        gainEVAttack += 8;
+                        break;
+                    }
+                case Items.POWER_BELT:
+                    {
+                        gainEVDefense += 8;
+                        break;
+                    }
+                case Items.POWER_LENS:
+                    {
+                        gainEVSpAttack += 8;
+                        break;
+                    }
+                case Items.POWER_BAND:
+                    {
+                        gainEVSpDefense += 8;
+                        break;
+                    }
+                case Items.POWER_ANKLET:
+                    {
+                        gainEVSpeed += 8;
+                        break;
+                    }
+            }
 
-			// HP gain
-			if ((gainEVHP > 0 && EV[(int)Stats.HP] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVHP *= EVfactor;
-				gainEVHP = gainEVHP < 0 ? 0 : (gainEVHP > EVSTATLIMIT - EV[(int)Stats.HP] ? EVSTATLIMIT - EV[(int)Stats.HP] : gainEVHP);
-				gainEVHP = gainEVHP < 0 ? 0 : (gainEVHP > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVHP);
-				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, EVSTATLIMIT - EV[(int)Stats.HP]);
-				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.HP] += (byte)gainEVHP;
-				totalEVgain += gainEVHP;
-			}
+            // HP gain
+            if ((gainEVHP > 0 && EV[(int)Stats.HP] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVHP *= EVfactor;
+                gainEVHP = gainEVHP < 0 ? 0 : (gainEVHP > EVSTATLIMIT - EV[(int)Stats.HP] ? EVSTATLIMIT - EV[(int)Stats.HP] : gainEVHP);
+                gainEVHP = gainEVHP < 0 ? 0 : (gainEVHP > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVHP);
+                //gainEVHP = MathHelper.Clamp(gainEVHP, 0, EVSTATLIMIT - EV[(int)Stats.HP]);
+                //gainEVHP = MathHelper.Clamp(gainEVHP, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.HP] += (byte)gainEVHP;
+                totalEVgain += gainEVHP;
+            }
 
-			// Attack gain
-			if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVAttack *= EVfactor;
-				gainEVAttack = gainEVAttack < 0 ? 0 : (gainEVAttack > EVSTATLIMIT - EV[(int)Stats.ATTACK] ? EVSTATLIMIT - EV[(int)Stats.ATTACK] : gainEVAttack);
-				gainEVAttack = gainEVAttack < 0 ? 0 : (gainEVAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVAttack);
-				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, EVSTATLIMIT - EV[(int)Stats.ATTACK]);
-				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
-				totalEVgain += gainEVAttack;
-			}
+            // Attack gain
+            if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVAttack *= EVfactor;
+                gainEVAttack = gainEVAttack < 0 ? 0 : (gainEVAttack > EVSTATLIMIT - EV[(int)Stats.ATTACK] ? EVSTATLIMIT - EV[(int)Stats.ATTACK] : gainEVAttack);
+                gainEVAttack = gainEVAttack < 0 ? 0 : (gainEVAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVAttack);
+                //gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, EVSTATLIMIT - EV[(int)Stats.ATTACK]);
+                //gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
+                totalEVgain += gainEVAttack;
+            }
 
-			// Defense gain
-			if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVDefense *= EVfactor;
-				gainEVDefense = gainEVDefense < 0 ? 0 : (gainEVDefense > EVSTATLIMIT - EV[(int)Stats.DEFENSE] ? EVSTATLIMIT - EV[(int)Stats.DEFENSE] : gainEVDefense);
-				gainEVDefense = gainEVDefense < 0 ? 0 : (gainEVDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVDefense);
-				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, EVSTATLIMIT - EV[(int)Stats.DEFENSE]);
-				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
-				totalEVgain += gainEVDefense;
-			}
+            // Defense gain
+            if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVDefense *= EVfactor;
+                gainEVDefense = gainEVDefense < 0 ? 0 : (gainEVDefense > EVSTATLIMIT - EV[(int)Stats.DEFENSE] ? EVSTATLIMIT - EV[(int)Stats.DEFENSE] : gainEVDefense);
+                gainEVDefense = gainEVDefense < 0 ? 0 : (gainEVDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVDefense);
+                //gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, EVSTATLIMIT - EV[(int)Stats.DEFENSE]);
+                //gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
+                totalEVgain += gainEVDefense;
+            }
 
-			// SpAttack gain
-			if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVSpAttack *= EVfactor;
-				gainEVSpAttack = gainEVSpAttack < 0 ? 0 : (gainEVSpAttack > EVSTATLIMIT - EV[(int)Stats.SPATK] ? EVSTATLIMIT - EV[(int)Stats.SPATK] : gainEVSpAttack);
-				gainEVSpAttack = gainEVSpAttack < 0 ? 0 : (gainEVSpAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpAttack);
-				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, EVSTATLIMIT - EV[(int)Stats.SPATK]);
-				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
-				totalEVgain += gainEVSpAttack;
-			}
+            // SpAttack gain
+            if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVSpAttack *= EVfactor;
+                gainEVSpAttack = gainEVSpAttack < 0 ? 0 : (gainEVSpAttack > EVSTATLIMIT - EV[(int)Stats.SPATK] ? EVSTATLIMIT - EV[(int)Stats.SPATK] : gainEVSpAttack);
+                gainEVSpAttack = gainEVSpAttack < 0 ? 0 : (gainEVSpAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpAttack);
+                //gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, EVSTATLIMIT - EV[(int)Stats.SPATK]);
+                //gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
+                totalEVgain += gainEVSpAttack;
+            }
 
-			// SpDefense gain
-			if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVSpDefense *= EVfactor;
-				gainEVSpDefense = gainEVSpDefense < 0 ? 0 : (gainEVSpDefense > EVSTATLIMIT - EV[(int)Stats.SPDEF] ? EVSTATLIMIT - EV[(int)Stats.SPDEF] : gainEVSpDefense);
-				gainEVSpDefense = gainEVSpDefense < 0 ? 0 : (gainEVSpDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpDefense);
-				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, EVSTATLIMIT - EV[(int)Stats.SPDEF]);
-				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
-				totalEVgain += gainEVSpDefense;
-			}
+            // SpDefense gain
+            if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVSpDefense *= EVfactor;
+                gainEVSpDefense = gainEVSpDefense < 0 ? 0 : (gainEVSpDefense > EVSTATLIMIT - EV[(int)Stats.SPDEF] ? EVSTATLIMIT - EV[(int)Stats.SPDEF] : gainEVSpDefense);
+                gainEVSpDefense = gainEVSpDefense < 0 ? 0 : (gainEVSpDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpDefense);
+                //gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, EVSTATLIMIT - EV[(int)Stats.SPDEF]);
+                //gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
+                totalEVgain += gainEVSpDefense;
+            }
 
-			// Speed gain
-			if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVSpeed *= EVfactor;
-				gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
-				gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
-				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
-				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
-				totalEVgain += gainEVSpeed;
-			}
-		}
+            // Speed gain
+            if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVSpeed *= EVfactor;
+                gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
+                gainEVSpeed = gainEVSpeed < 0 ? 0 : (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
+                //gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
+                //gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
+                totalEVgain += gainEVSpeed;
+            }
+        }
 
-		/// <summary>
-		/// Adds Effort values (EV) to this Pokémon after using an Item, if possible.
-		/// </summary>
-		/// <param name="UsedItem">The item used on Pokémon.</param>
-		/// ToDo: Test Function... Add Method for other Item usage
-		private void GainEffort(Items UsedItem)
-		{
-			int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
-			if (allEV >= EVLIMIT) 
-				return;
+        /// <summary>
+        /// Adds Effort values (EV) to this Pokémon after using an Item, if possible.
+        /// </summary>
+        /// <param name="UsedItem">The item used on Pokémon.</param>
+        /// ToDo: Test Function... Add Method for other Item usage
+        private void GainEffort(Items UsedItem)
+        {
+            int allEV = EV[(int)Stats.HP] + EV[(int)Stats.ATTACK] + EV[(int)Stats.DEFENSE] + EV[(int)Stats.SPATK] + EV[(int)Stats.SPDEF] + EV[(int)Stats.SPEED];
+            if (allEV >= EVLIMIT)
+                return;
 
-			int maxEVgain = EVLIMIT - allEV;
-			int totalEVgain = 0;
+            int maxEVgain = EVLIMIT - allEV;
+            int totalEVgain = 0;
 
-			// EV gains
-			int gainEVHP		= 0; //Game.PokemonData[UsedItem].evYieldHP;
-			int gainEVAttack	= 0; //Game.PokemonData[UsedItem].evYieldATK;
-			int gainEVDefense	= 0; //Game.PokemonData[UsedItem].evYieldDEF;
-			int gainEVSpAttack	= 0; //Game.PokemonData[UsedItem].evYieldSPA;
-			int gainEVSpDefense	= 0; //Game.PokemonData[UsedItem].evYieldSPD;
-			int gainEVSpeed		= 0; //Game.PokemonData[UsedItem].evYieldSPE;
+            // EV gains
+            int gainEVHP = 0; //Game.PokemonData[UsedItem].evYieldHP;
+            int gainEVAttack = 0; //Game.PokemonData[UsedItem].evYieldATK;
+            int gainEVDefense = 0; //Game.PokemonData[UsedItem].evYieldDEF;
+            int gainEVSpAttack = 0; //Game.PokemonData[UsedItem].evYieldSPA;
+            int gainEVSpDefense = 0; //Game.PokemonData[UsedItem].evYieldSPD;
+            int gainEVSpeed = 0; //Game.PokemonData[UsedItem].evYieldSPE;
 
-			int EVfactor = 1; 
-			
-			switch (UsedItem) 
-			{
-				case Items.HP_UP:
-					{
-						if (EV[(int)Stats.HP] < 100) gainEVHP += 10;
-						ChangeHappiness(HappinessMethods.VITAMIN);
-						break;
-					}
-				case Items.PROTEIN:
-					{
-						if (EV[(int)Stats.ATTACK] < 100) gainEVAttack += 10;
-						ChangeHappiness(HappinessMethods.VITAMIN);
-						break;
-					}
-				case Items.IRON:
-					{
-						if (EV[(int)Stats.DEFENSE] < 100) gainEVDefense += 10;
-						ChangeHappiness(HappinessMethods.VITAMIN);
-						break;
-					}
-				case Items.CALCIUM:
-					{
-						if (EV[(int)Stats.SPATK] < 100) gainEVSpAttack += 10;
-						ChangeHappiness(HappinessMethods.VITAMIN);
-						break;
-					}
-				case Items.ZINC:
-					{
-						if (EV[(int)Stats.SPDEF] < 100) gainEVSpDefense += 10;
-						ChangeHappiness(HappinessMethods.VITAMIN);
-						break;
-					}
-				case Items.CARBOS:
-					{
-						if (EV[(int)Stats.SPEED] < 100) gainEVSpeed += 10;
-						ChangeHappiness(HappinessMethods.VITAMIN);
-						break;
-					}
-				case Items.POMEG_BERRY:
-					{
-						gainEVHP -= 10;
-						ChangeHappiness(HappinessMethods.EVBERRY);
-						break;
-					}
-				case Items.KELPSY_BERRY:
-					{
-						gainEVAttack -= 10;
-						ChangeHappiness(HappinessMethods.EVBERRY);
-						break;
-					}
-				case Items.QUALOT_BERRY:
-					{
-						gainEVDefense -= 10;
-						ChangeHappiness(HappinessMethods.EVBERRY);
-						break;
-					}
-				case Items.HONDEW_BERRY:
-					{
-						gainEVSpAttack -= 10;
-						ChangeHappiness(HappinessMethods.EVBERRY);
-						break;
-					}
-				case Items.GREPA_BERRY:
-					{
-						gainEVSpDefense -= 10;
-						ChangeHappiness(HappinessMethods.EVBERRY);
-						break;
-					}
-				case Items.TAMATO_BERRY:
-					{
-						gainEVSpeed -= 10;
-						ChangeHappiness(HappinessMethods.EVBERRY);
-						break;
-					}
-				case Items.HEALTH_WING:
-					{
-						gainEVHP += 1; 
-						break;
-					}
-				case Items.MUSCLE_WING:
-					{
-						gainEVAttack += 1;
-						break;
-					}
-				case Items.RESIST_WING:
-					{
-						gainEVDefense += 1;
-						break;
-					}
-				case Items.GENIUS_WING:
-					{
-						gainEVSpAttack += 1;
-						break;
-					}
-				case Items.CLEVER_WING:
-					{
-						gainEVSpDefense += 1;
-						break;
-					}
-				case Items.SWIFT_WING:
-					{
-						gainEVSpeed += 1;
-						break;
-					}
-			}
+            int EVfactor = 1;
 
-			// HP gain
-			if ((gainEVHP > 0 && EV[(int)Stats.HP] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVHP *= EVfactor;
-				gainEVHP = gainEVHP < 0 ? (0 > gainEVHP + EV[(int)Stats.HP] ? 0 - EV[(int)Stats.HP] : gainEVHP)
-					: (gainEVHP > EVSTATLIMIT - EV[(int)Stats.HP] ? EVSTATLIMIT - EV[(int)Stats.HP] : gainEVHP);
-				gainEVHP = gainEVHP < 0 ? (0 > gainEVHP + totalEVgain ? 0 - totalEVgain : gainEVHP)
-					: (gainEVHP > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVHP);
-				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, EVSTATLIMIT - EV[(int)Stats.HP]);
-				//gainEVHP = MathHelper.Clamp(gainEVHP, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.HP] += (byte)gainEVHP;
-				totalEVgain += gainEVHP;
-			}
+            switch (UsedItem)
+            {
+                case Items.HP_UP:
+                    {
+                        if (EV[(int)Stats.HP] < 100) gainEVHP += 10;
+                        ChangeHappiness(HappinessMethods.VITAMIN);
+                        break;
+                    }
+                case Items.PROTEIN:
+                    {
+                        if (EV[(int)Stats.ATTACK] < 100) gainEVAttack += 10;
+                        ChangeHappiness(HappinessMethods.VITAMIN);
+                        break;
+                    }
+                case Items.IRON:
+                    {
+                        if (EV[(int)Stats.DEFENSE] < 100) gainEVDefense += 10;
+                        ChangeHappiness(HappinessMethods.VITAMIN);
+                        break;
+                    }
+                case Items.CALCIUM:
+                    {
+                        if (EV[(int)Stats.SPATK] < 100) gainEVSpAttack += 10;
+                        ChangeHappiness(HappinessMethods.VITAMIN);
+                        break;
+                    }
+                case Items.ZINC:
+                    {
+                        if (EV[(int)Stats.SPDEF] < 100) gainEVSpDefense += 10;
+                        ChangeHappiness(HappinessMethods.VITAMIN);
+                        break;
+                    }
+                case Items.CARBOS:
+                    {
+                        if (EV[(int)Stats.SPEED] < 100) gainEVSpeed += 10;
+                        ChangeHappiness(HappinessMethods.VITAMIN);
+                        break;
+                    }
+                case Items.POMEG_BERRY:
+                    {
+                        gainEVHP -= 10;
+                        ChangeHappiness(HappinessMethods.EVBERRY);
+                        break;
+                    }
+                case Items.KELPSY_BERRY:
+                    {
+                        gainEVAttack -= 10;
+                        ChangeHappiness(HappinessMethods.EVBERRY);
+                        break;
+                    }
+                case Items.QUALOT_BERRY:
+                    {
+                        gainEVDefense -= 10;
+                        ChangeHappiness(HappinessMethods.EVBERRY);
+                        break;
+                    }
+                case Items.HONDEW_BERRY:
+                    {
+                        gainEVSpAttack -= 10;
+                        ChangeHappiness(HappinessMethods.EVBERRY);
+                        break;
+                    }
+                case Items.GREPA_BERRY:
+                    {
+                        gainEVSpDefense -= 10;
+                        ChangeHappiness(HappinessMethods.EVBERRY);
+                        break;
+                    }
+                case Items.TAMATO_BERRY:
+                    {
+                        gainEVSpeed -= 10;
+                        ChangeHappiness(HappinessMethods.EVBERRY);
+                        break;
+                    }
+                case Items.HEALTH_WING:
+                    {
+                        gainEVHP += 1;
+                        break;
+                    }
+                case Items.MUSCLE_WING:
+                    {
+                        gainEVAttack += 1;
+                        break;
+                    }
+                case Items.RESIST_WING:
+                    {
+                        gainEVDefense += 1;
+                        break;
+                    }
+                case Items.GENIUS_WING:
+                    {
+                        gainEVSpAttack += 1;
+                        break;
+                    }
+                case Items.CLEVER_WING:
+                    {
+                        gainEVSpDefense += 1;
+                        break;
+                    }
+                case Items.SWIFT_WING:
+                    {
+                        gainEVSpeed += 1;
+                        break;
+                    }
+            }
 
-			// Attack gain
-			if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVAttack *= EVfactor;
-				gainEVAttack = gainEVAttack < 0 ? (0 > gainEVAttack + EV[(int)Stats.ATTACK] ? 0 - EV[(int)Stats.ATTACK] : gainEVAttack)
-					: (gainEVAttack > EVSTATLIMIT - EV[(int)Stats.ATTACK] ? EVSTATLIMIT - EV[(int)Stats.ATTACK] : gainEVAttack);
-				gainEVAttack = gainEVAttack < 0 ? (0 > gainEVAttack + totalEVgain ? 0 - totalEVgain : gainEVAttack)
-					: (gainEVAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVAttack);
-				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, EVSTATLIMIT - EV[(int)Stats.ATTACK]);
-				//gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
-				totalEVgain += gainEVAttack;
-			}
+            // HP gain
+            if ((gainEVHP > 0 && EV[(int)Stats.HP] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVHP *= EVfactor;
+                gainEVHP = gainEVHP < 0 ? (0 > gainEVHP + EV[(int)Stats.HP] ? 0 - EV[(int)Stats.HP] : gainEVHP)
+                    : (gainEVHP > EVSTATLIMIT - EV[(int)Stats.HP] ? EVSTATLIMIT - EV[(int)Stats.HP] : gainEVHP);
+                gainEVHP = gainEVHP < 0 ? (0 > gainEVHP + totalEVgain ? 0 - totalEVgain : gainEVHP)
+                    : (gainEVHP > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVHP);
+                //gainEVHP = MathHelper.Clamp(gainEVHP, 0, EVSTATLIMIT - EV[(int)Stats.HP]);
+                //gainEVHP = MathHelper.Clamp(gainEVHP, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.HP] += (byte)gainEVHP;
+                totalEVgain += gainEVHP;
+            }
 
-			// Defense gain
-			if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVDefense *= EVfactor;
-				gainEVDefense = gainEVDefense < 0 ? (0 > gainEVDefense + EV[(int)Stats.DEFENSE] ? 0 - EV[(int)Stats.DEFENSE] : gainEVDefense)
-					: (gainEVDefense > EVSTATLIMIT - EV[(int)Stats.DEFENSE] ? EVSTATLIMIT - EV[(int)Stats.DEFENSE] : gainEVDefense);
-				gainEVDefense = gainEVDefense < 0 ? (0 > gainEVDefense + totalEVgain ? 0 - totalEVgain : gainEVDefense)
-					: (gainEVDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVDefense);
-				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, EVSTATLIMIT - EV[(int)Stats.DEFENSE]);
-				//gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
-				totalEVgain += gainEVDefense;
-			}
+            // Attack gain
+            if ((gainEVAttack > 0 && EV[(int)Stats.ATTACK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVAttack *= EVfactor;
+                gainEVAttack = gainEVAttack < 0 ? (0 > gainEVAttack + EV[(int)Stats.ATTACK] ? 0 - EV[(int)Stats.ATTACK] : gainEVAttack)
+                    : (gainEVAttack > EVSTATLIMIT - EV[(int)Stats.ATTACK] ? EVSTATLIMIT - EV[(int)Stats.ATTACK] : gainEVAttack);
+                gainEVAttack = gainEVAttack < 0 ? (0 > gainEVAttack + totalEVgain ? 0 - totalEVgain : gainEVAttack)
+                    : (gainEVAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVAttack);
+                //gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, EVSTATLIMIT - EV[(int)Stats.ATTACK]);
+                //gainEVAttack = MathHelper.Clamp(gainEVAttack, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.ATTACK] += (byte)gainEVAttack;
+                totalEVgain += gainEVAttack;
+            }
 
-			// SpAttack gain
-			if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVSpAttack *= EVfactor;
-				gainEVSpAttack = gainEVSpAttack < 0 ? (0 > gainEVSpAttack + EV[(int)Stats.SPATK] ? 0 - EV[(int)Stats.SPATK] : gainEVSpAttack)
-					: (gainEVSpAttack > EVSTATLIMIT - EV[(int)Stats.SPATK] ? EVSTATLIMIT - EV[(int)Stats.SPATK] : gainEVSpAttack);
-				gainEVSpAttack = gainEVSpAttack < 0 ? (0 > gainEVSpAttack + totalEVgain ? 0 - totalEVgain : gainEVSpAttack)
-					: (gainEVSpAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpAttack);
-				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, EVSTATLIMIT - EV[(int)Stats.SPATK]);
-				//gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
-				totalEVgain += gainEVSpAttack;
-			}
+            // Defense gain
+            if ((gainEVDefense > 0 && EV[(int)Stats.DEFENSE] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVDefense *= EVfactor;
+                gainEVDefense = gainEVDefense < 0 ? (0 > gainEVDefense + EV[(int)Stats.DEFENSE] ? 0 - EV[(int)Stats.DEFENSE] : gainEVDefense)
+                    : (gainEVDefense > EVSTATLIMIT - EV[(int)Stats.DEFENSE] ? EVSTATLIMIT - EV[(int)Stats.DEFENSE] : gainEVDefense);
+                gainEVDefense = gainEVDefense < 0 ? (0 > gainEVDefense + totalEVgain ? 0 - totalEVgain : gainEVDefense)
+                    : (gainEVDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVDefense);
+                //gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, EVSTATLIMIT - EV[(int)Stats.DEFENSE]);
+                //gainEVDefense = MathHelper.Clamp(gainEVDefense, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.DEFENSE] += (byte)gainEVDefense;
+                totalEVgain += gainEVDefense;
+            }
 
-			// SpDefense gain
-			if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVSpDefense *= EVfactor;
-				gainEVSpDefense = gainEVSpDefense < 0 ? (0 > gainEVSpDefense + EV[(int)Stats.SPDEF] ? 0 - EV[(int)Stats.SPDEF] : gainEVSpDefense)
-					: (gainEVSpDefense > EVSTATLIMIT - EV[(int)Stats.SPDEF] ? EVSTATLIMIT - EV[(int)Stats.SPDEF] : gainEVSpDefense);
-				gainEVSpDefense = gainEVSpDefense < 0 ? (0 > gainEVSpDefense + totalEVgain ? 0 - totalEVgain : gainEVSpDefense)
-					: (gainEVSpDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpDefense);
-				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, EVSTATLIMIT - EV[(int)Stats.SPDEF]);
-				//gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
-				totalEVgain += gainEVSpDefense;
-			}
+            // SpAttack gain
+            if ((gainEVSpAttack > 0 && EV[(int)Stats.SPATK] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVSpAttack *= EVfactor;
+                gainEVSpAttack = gainEVSpAttack < 0 ? (0 > gainEVSpAttack + EV[(int)Stats.SPATK] ? 0 - EV[(int)Stats.SPATK] : gainEVSpAttack)
+                    : (gainEVSpAttack > EVSTATLIMIT - EV[(int)Stats.SPATK] ? EVSTATLIMIT - EV[(int)Stats.SPATK] : gainEVSpAttack);
+                gainEVSpAttack = gainEVSpAttack < 0 ? (0 > gainEVSpAttack + totalEVgain ? 0 - totalEVgain : gainEVSpAttack)
+                    : (gainEVSpAttack > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpAttack);
+                //gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, EVSTATLIMIT - EV[(int)Stats.SPATK]);
+                //gainEVSpAttack = MathHelper.Clamp(gainEVSpAttack, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.SPATK] += (byte)gainEVSpAttack;
+                totalEVgain += gainEVSpAttack;
+            }
 
-			// Speed gain
-			if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
-			{
-				gainEVSpeed *= EVfactor;
-				gainEVSpeed = gainEVSpeed < 0 ? (0 > gainEVSpeed + EV[(int)Stats.SPEED] ? 0 - EV[(int)Stats.SPEED] : gainEVSpeed)
-					: (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
-				gainEVSpeed = gainEVSpeed < 0 ? (0 > gainEVSpeed + totalEVgain ? 0 - totalEVgain : gainEVSpeed)
-					: (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
-				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
-				//gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
-				EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
-				totalEVgain += gainEVSpeed;
-			}
-		}
-		#endregion
+            // SpDefense gain
+            if ((gainEVSpDefense > 0 && EV[(int)Stats.SPDEF] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVSpDefense *= EVfactor;
+                gainEVSpDefense = gainEVSpDefense < 0 ? (0 > gainEVSpDefense + EV[(int)Stats.SPDEF] ? 0 - EV[(int)Stats.SPDEF] : gainEVSpDefense)
+                    : (gainEVSpDefense > EVSTATLIMIT - EV[(int)Stats.SPDEF] ? EVSTATLIMIT - EV[(int)Stats.SPDEF] : gainEVSpDefense);
+                gainEVSpDefense = gainEVSpDefense < 0 ? (0 > gainEVSpDefense + totalEVgain ? 0 - totalEVgain : gainEVSpDefense)
+                    : (gainEVSpDefense > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpDefense);
+                //gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, EVSTATLIMIT - EV[(int)Stats.SPDEF]);
+                //gainEVSpDefense = MathHelper.Clamp(gainEVSpDefense, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.SPDEF] += (byte)gainEVSpDefense;
+                totalEVgain += gainEVSpDefense;
+            }
 
-		#region Unity Engine Stuff...
-		/*ToDo: Move to unity...
+            // Speed gain
+            if ((gainEVSpeed > 0 && EV[(int)Stats.SPEED] < EVSTATLIMIT && maxEVgain - totalEVgain > 0))
+            {
+                gainEVSpeed *= EVfactor;
+                gainEVSpeed = gainEVSpeed < 0 ? (0 > gainEVSpeed + EV[(int)Stats.SPEED] ? 0 - EV[(int)Stats.SPEED] : gainEVSpeed)
+                    : (gainEVSpeed > EVSTATLIMIT - EV[(int)Stats.SPEED] ? EVSTATLIMIT - EV[(int)Stats.SPEED] : gainEVSpeed);
+                gainEVSpeed = gainEVSpeed < 0 ? (0 > gainEVSpeed + totalEVgain ? 0 - totalEVgain : gainEVSpeed)
+                    : (gainEVSpeed > maxEVgain - totalEVgain ? maxEVgain - totalEVgain : gainEVSpeed);
+                //gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, EVSTATLIMIT - EV[(int)Stats.SPEED]);
+                //gainEVSpeed = MathHelper.Clamp(gainEVSpeed, 0, maxEVgain - totalEVgain);
+                EV[(int)Stats.SPEED] += (byte)gainEVSpeed;
+                totalEVgain += gainEVSpeed;
+            }
+        }
+        #endregion
+
+        #region Unity Engine Stuff...
+        /*ToDo: Move to unity...
 		/// <summary>
 		/// Plays the cry of this Pokémon.
 		/// </summary>
@@ -2887,6 +2890,6 @@ namespace PokemonUnity.Monster
 
 			//SoundManager.PlayPokemonCry(this.Species, Pitch, 0F);
 		}*/
-		#endregion
+        #endregion
     }
 }

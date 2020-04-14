@@ -3,6 +3,7 @@
 using PokemonUnity.Inventory;
 //using PokemonUnity.Attack;
 using PokemonUnity.Battle;
+using PokemonUnity.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,7 +131,7 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Player trainer
 		/// </summary>
-		public Trainer player { get; private set; }
+		public Character.Player player { get; private set; }
 		/// <summary>
 		/// Opponent trainer
 		/// </summary>
@@ -225,7 +226,11 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// The Struggle move
 		/// </summary>
-		public Move struggle { get; private set; }
+		/// <remarks>
+		/// Execute whaatever move/function is stored in this variable
+		/// </remarks>
+		/// Func<PokeBattle>
+		public Move struggle { get; private set; } 
 		/// <summary>
 		/// Choices made by each Pokémon this round
 		/// </summary>
@@ -245,7 +250,7 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Battle index of each trainer's Pokémon to Mega Evolve
 		/// </summary>
-        /// Instead of reflecting entire party, it displays for active on field?
+		/// Instead of reflecting entire party, it displays for active on field?
 		public bool?[][] megaEvolution { get; private set; }
 		/// <summary>
 		/// Whether Amulet Coin's effect applies
@@ -262,7 +267,8 @@ namespace PokemonUnity.Battle
 		/// <summary>
 		/// Speech by opponent when player wins
 		/// </summary>
-		public string endspeech { get { return opponent.ScriptBattleEnd; } }
+		//ToDo: opponent.ScriptBattleEnd
+		public string endspeech { get { return string.Empty; } }
 		/// <summary>
 		/// Speech by opponent when player wins
 		/// </summary>
@@ -294,15 +300,28 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		public byte nextPickupUse { get; private set; }
 		//attr_accessor :controlPlayer
-		private Player Player { get; set; }
+		//private Player Player { get; set; }
 
 		//ToDo: Fix here... maybe new scene variable?...
 		//public BattleAnimationHandler BattleScene { get; private set; }
-		new public string Display
+		//ToDo: Implement Display Text on Screen function
+		/// <summary>
+		/// Displays a message on screen, and wait for player input
+		/// </summary>
+		/// <param name="text"></param>
+		public void pbDisplay(string text) { }
+		/// <summary>
+		/// Displays a message on screen, 
+		/// but will continue without player input after short delay
+		/// </summary>
+		/// <param name="text"></param>
+		public void pbDisplayBrief(string text) { }
+		public void pbDisplayPaused(string text) { }
+		public string Display
 		{
 			/* Don't need a get, since value is not being stored/logged
 			 * there's no method or caller that's going to fetch value
-			get
+			private get
 			{
 				return display;
 			}*/
@@ -342,11 +361,18 @@ namespace PokemonUnity.Battle
 				if ((int)species > 0) player.playerPokedex[(int)species] = true; 
 			}
 		}*/
+		/// <summary>
+		/// Match history for each pokemon action stored as a log 
+		/// </summary>
+		/// In order to create Replay; Need to store:
+		/// Action Pokemon/Player took
+		/// Result of Action (sucessful?/amount+-)
+		/// State of Pokemons (status)
+		public IList<Choice[]> Log { get; private set; }
 		#endregion
-		
+
 		#region Constructor
 		/// <summary>
-		/// 
 		/// </summary>
 		/// ToDo: Make a constructor to pass P1/P2 variables
 		/// Cant have a battle without first establishing who you're battling
@@ -356,19 +382,19 @@ namespace PokemonUnity.Battle
 			PokemonUnity.Monster.Pokemon[] p2 = opponent.Party;
 			if (p1.Length == 0) {
 				//raise ArgumentError.new(_INTL("Party 1 has no Pokémon."))
-				Game.DebugLog("Party 1 has no Pokémon.", true);
+				GameDebug.LogError("Party 1 has no Pokémon.");
 				return;
 			}
 		
 			if (p2.Length == 0) { 
 				//raise ArgumentError.new(_INTL("Party 2 has no Pokémon."))
-				Game.DebugLog("Party 2 has no Pokémon.", true);
+				GameDebug.LogError("Party 2 has no Pokémon.");
 				return;
 			}
 		
 			if (p2.Length > 2 && opponent.ID == TrainerTypes.WildPokemon) { //opponent == null
 				//raise ArgumentError.new(_INTL("Wild battles with more than two Pokémon are not allowed."))
-				Game.DebugLog("Wild battles with more than two Pokémon are not allowed.", true);
+				GameDebug.LogError("Wild battles with more than two Pokémon are not allowed.");
 				return;
 			}
 
@@ -382,16 +408,16 @@ namespace PokemonUnity.Battle
 			debug = false;
 			//debugupdate = 0;
 
-			//if (opponent != null && player.is_a ? (Array) && player.Party.Length == 0)
-			//	this.player = player[0]; //Why zero if empty?
+			//if (opponent != null && player.Length == 1) 
+			//	this.player = player[0]; 
 
-			//if (opponent != null && opponent.is_a ? (Array) && opponent.Length == 0)
+			//if (opponent != null && opponent.Length == 1)
 			//	this.opponent = opponent[0];
 
-			this.player = player;
+			this.player = Game.GameData.Player; //player;
 			this.opponent = opponent;
-			party1 = Pokemon.GetBattlers(p1);
-			party2 = Pokemon.GetBattlers(p2);
+			party1 = Pokemon.GetBattlers(p1, this); //ToDo: Redo this...
+			party2 = Pokemon.GetBattlers(p2, this); //ToDo: Redo this...
 
 			party1order = new List<int>();
 
@@ -454,6 +480,8 @@ namespace PokemonUnity.Battle
 				megaEvolution[1] = new bool?[this.opponent.Party.Length]; 	//[-1] * opponent.Length;
 			else
 				megaEvolution[1] = new bool?[]{ null }; 					//[-1];
+			//megaEvolution = new bool?[player.Length + opponent.Length][]; 	
+			//for(int i = 0; i <)
 
 			amuletcoin = false;
 
@@ -474,22 +502,22 @@ namespace PokemonUnity.Battle
 
 			priority = new int[4];
 
-			//usepriority = false
+			//usepriority = false; //False is already default value; redundant.
 
 			snaggedpokemon = new List<byte>();
 
 			runCommand = 0;
 
-			if (Moves.STRUGGLE.GetType() == typeof(Moves))
-				struggle = new Move(Moves.STRUGGLE);//PokeBattle_Move.pbFromPBMove(Moves.STRUGGLE);
-			else
-				struggle = null;//PokeBattle_Struggle.new(self, nil)
+			//if (Moves.STRUGGLE.GetType() == typeof(Moves))
+			//	struggle = new Move(Moves.STRUGGLE);//new PokeBattle_Move(this, new Attack.Move(Moves.STRUGGLE)).pbFromPBMove(Moves.STRUGGLE);
+			//else
+				struggle = new PokeBattle_Struggle(this, new Attack.Move(Moves.NONE));
 
 			//struggle.PP = -1;
 
 			for (byte i = 0; i < 4; i++)
 			{
-				this.battlers[i] = new Pokemon().Initialize(new PokemonUnity.Monster.Pokemon(), (sbyte)i);
+				this.battlers[i] = new Pokemon(this, (sbyte)i).Initialize(new PokemonUnity.Monster.Pokemon(), (sbyte)i);
 			}
 
 			foreach (var i in party1)
@@ -508,28 +536,27 @@ namespace PokemonUnity.Battle
 				i.belch = false;
 			}
 		}
-		public Battle(Player player, Trainer opponent) : this(player.Trainer, opponent)
-		{
-			Player = player;
-		}
+		//public Battle(Player player, Trainer opponent) : this(player.Trainer, opponent)
+		//{
+		//	player = player;
+		//}
 		//public Battle(UnityEngine.GameObject battleScene) //: this(player.Trainer, opponent)
 		//{
 		//	//ToDo: Register Unity UI instance to variables
 		//	//BattlePokemonHandler
 		//	//Player = player;
 		//}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="p1"></param>
-		/// <param name="p2"></param>
-		/// <param name="pvpMultiPlayer"></param>
-		/// ToDo: Wacky idea for double battles, 1 v 2 or 2 v 2.
-		/// Should be able to support both player v ai, and player v player
-		public Battle(Trainer[] p1, Trainer[] p2, bool pvpMultiPlayer = false)
-		{
-
-		}
+		///// <summary>
+		///// </summary>
+		///// <param name="p1"></param>
+		///// <param name="p2"></param>
+		///// <param name="pvpMultiPlayer"></param>
+		///// ToDo: Wacky idea for double battles, 1 v 2 or 2 v 2.
+		///// Should be able to support both player v ai, and player v player
+		//public Battle(Trainer[] p1, Trainer[] p2, bool pvpMultiPlayer = false)
+		//{
+		//
+		//}
 		#endregion
 
 		#region Method
@@ -538,13 +565,14 @@ namespace PokemonUnity.Battle
 		//	//return this;
 		//	Game.battle = this;
 		//}
-		public IEnumerator<BattleResults> StartBattle(bool canlose)
+		public IEnumerator<Choice[]> StartBattle(bool canlose)
 		{
 			//return this;
-			Game.battle = this;
+			//Game.battle = this;
 			while (this.decision == BattleResults.InProgress)
 			{
-				yield return BattleResults.InProgress;
+				if(choices != null && choices.Length == battlers.Length)
+				yield return choices;
 			}
 		}
 		public IEnumerator<Battle> AfterBattle()
@@ -592,7 +620,7 @@ namespace PokemonUnity.Battle
 		}
 		public Pokemon pbCheckGlobalAbility(Abilities index)
 		{
-			//return none, not null
+			//ToDo: return none, not null
 			return null;
 		}
 		public bool pbAllFainted(Pokemon[] party)
@@ -653,7 +681,6 @@ namespace PokemonUnity.Battle
 			//	DisplayPaused("It was stored in box \"{1}\".", boxname)
 			//}		
 		}
-		//ToDo: Maybe an abstract?... or move method to mono layer...
 		public void ThrowPokeball(int idxPokemon, Items ball, int? rareness = null, bool showplayer = false)
 		{
 			//ToDo: Repair Text Translation Dictionary
@@ -701,15 +728,15 @@ namespace PokemonUnity.Battle
 				else if (battler.Status != Status.NONE)
 					x = (int)Math.Floor(x * 1.5f);
 				int c = 0;
-				if (Game.Player.PokedexCaught > 600)
+				if (Game.GameData.Player.PokedexCaught > 600)
 					c = (int)Math.Floor(x * 2.5f / 6);
-				else if (Game.Player.PokedexCaught > 450)
+				else if (Game.GameData.Player.PokedexCaught > 450)
 					c = (int)Math.Floor(x * 2f / 6);
-				else if (Game.Player.PokedexCaught > 300)
+				else if (Game.GameData.Player.PokedexCaught > 300)
 					c = (int)Math.Floor(x * 1.5f / 6);
-				else if (Game.Player.PokedexCaught > 150)
+				else if (Game.GameData.Player.PokedexCaught > 150)
 					c = (int)Math.Floor(x * 1f / 6);
-				else if (Game.Player.PokedexCaught > 30)
+				else if (Game.GameData.Player.PokedexCaught > 30)
 					c = (int)Math.Floor(x * .5 / 6);
 			}
 		}
@@ -778,7 +805,8 @@ namespace PokemonUnity.Battle
 		bool CanChooseMove(int idxPokemon, int idxMove, bool showMessages, bool sleeptalk = false)
 		{
 			Pokemon thispkmn = battlers[idxPokemon];
-			Move thismove = thispkmn.moves[idxMove];
+			Attack.Move thismove = //new Move(this, 
+				thispkmn.moves[idxMove];
 
 			//ToDo: Array for opposing pokemons, [i] changes based on if double battle
 			Pokemon opp1 = thispkmn.pbOpposing1;
@@ -818,8 +846,8 @@ namespace PokemonUnity.Battle
 					thismove.MoveId == opp1.moves[2].MoveId ||
 					thismove.MoveId == opp1.moves[3].MoveId)
 				{
-					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-					Game.DebugLog("[CanChoose][//{opp1.pbThis} has: //{opp1.moves[0].name}, //{opp1.moves[1].name},//{opp1.moves[2].name},//{opp1.moves[3].name}]");
+					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.ToString(), thismove.name))
+					GameDebug.Log("[CanChoose][#{opp1.ToString()} has: #{opp1.moves[0].name}, #{opp1.moves[1].name}, #{opp1.moves[2].name}, #{opp1.moves[3].name}]");
 					return false;
 				}
 			}
@@ -830,28 +858,28 @@ namespace PokemonUnity.Battle
 					 thismove.MoveId == opp2.moves[2].MoveId ||
 					 thismove.MoveId == opp2.moves[3].MoveId)
 				{
-					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.pbThis, thismove.name))
-					Game.DebugLog("[CanChoose][//{opp2.pbThis} has: //{opp2.moves[0].name}, //{opp2.moves[1].name},//{opp2.moves[2].name},//{opp2.moves[3].name}]");
+					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the sealed {2}!", thispkmn.ToString(), thismove.name))
+					GameDebug.Log("[CanChoose][#{opp2.ToString()} has: #{opp2.moves[0].name}, #{opp2.moves[1].name}, #{opp2.moves[2].name}, #{opp2.moves[3].name}]");
 					return false;
 				}
 			}
-			if (thispkmn.effects.Taunt > 0 && thismove.BaseDamage == 0) {
-				//if (showMessages)pbDisplayPaused(_INTL("{1} can't use {2} after the taunt!", thispkmn.pbThis, thismove.name))
+			if (thispkmn.effects.Taunt > 0 && thismove.Power == 0) {//.BaseDamage
+				//if (showMessages)pbDisplayPaused(_INTL("{1} can't use {2} after the taunt!", thispkmn.ToString(), thismove.name))
 				return false;
 			}
 			if (thispkmn.effects.Torment){
 				if (thismove.MoveId==thispkmn.lastMoveUsed){
-					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the same move twice in a row due to the torment!", thispkmn.pbThis))
+					//if (showMessages) pbDisplayPaused(_INTL("{1} can't use the same move twice in a row due to the torment!", thispkmn.ToString()))
 					return false;
 				}
 			}
 			if (thismove.MoveId==thispkmn.effects.DisableMove && !sleeptalk){
-				//if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} is disabled!", thispkmn.pbThis, thismove.name))
+				//if (showMessages) pbDisplayPaused(_INTL("{1}'s {2} is disabled!", thispkmn.ToString(), thismove.name))
 				return false;
 			}
-			if (thismove.Function==(Move.Effect)0x158 && // Belch
+			if (thismove.Effect==(Attack.Data.Effects)0x158 && // ToDo: Belch; Confirm value is correct
 			   (thispkmn.Species != Pokemons.NONE || !thispkmn.belch)){
-				//if (showMessages) pbDisplayPaused(_INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.pbThis))
+				//if (showMessages) pbDisplayPaused(_INTL("{1} hasn't eaten any held berry, so it can't possibly belch!", thispkmn.ToString()))
 				return false;
 			}
 			if (thispkmn.effects.Encore>0 && idxMove!=thispkmn.effects.EncoreIndex){
@@ -867,6 +895,13 @@ namespace PokemonUnity.Battle
 		public bool pbCanRun(int index)
 		{
 			return false;
+		}
+		public void pbAnimation(Moves id, Pokemon attacker, Pokemon opponent, int hitnum)
+		{
+		}
+		public Trainer pbGetOwner(int index)
+		{
+			return opponent;
 		}
 
 		//void MoveEffects(int who, int move)

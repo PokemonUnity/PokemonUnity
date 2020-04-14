@@ -13,127 +13,127 @@ namespace PokemonUnity.Battle
 		/// These effects apply to a battler
 		/// </summary>
 		public class Battler { 
-			public bool AquaRing          { get; set; }
-			public int Attract            { get; set; }
-			public bool BatonPass          { get; set; }
-			public int Bide               { get; set; }
-			public int BideDamage         { get; set; }
-			public int BideTarget         { get; set; }
-			public int Charge             { get; set; }
-			public Moves? ChoiceBand         { get; set; }
-			public int Confusion          { get; set; }
-			public int Counter            { get; set; }
-			public sbyte CounterTarget      { get; set; } //ToDo: maybe `byte?` and do `.HasValue`?
-			public bool Curse              { get; set; }
-			public bool DefenseCurl        { get; set; }
-			public bool DestinyBond        { get; set; }
-			public int Disable            { get; set; }
-			public Moves DisableMove        { get; set; }
-			public bool Electrify          { get; set; }
-			public int Embargo            { get; set; }
-			public int Encore             { get; set; }
-			public int EncoreIndex        { get; set; }
-			public Moves EncoreMove         { get; set; }
-			public bool Endure             { get; set; }
-			public PokemonUnity.Attack.Move.Effect FirstPledge	{ get; set; }
-			public bool FlashFire          { get; set; }
-			public bool Flinch             { get; set; }
-			public int FocusEnergy        { get; set; }
-			public int FollowMe           { get; set; }
-			public bool Foresight          { get; set; }
-			public int FuryCutter         { get; set; }
-			public int FutureSight        { get; set; }
-			public Moves FutureSightMove    { get; set; }
-			public int FutureSightUser    { get; set; }
-			public int FutureSightUserPos { get; set; }
-			public bool GastroAcid         { get; set; }
-			public bool Grudge             { get; set; }
-			public int HealBlock          { get; set; }
-			public bool HealingWish        { get; set; }
-			public bool HelpingHand        { get; set; }
-			public int HyperBeam          { get; set; }
+			public bool AquaRing			{ get; set; }
+			public int Attract				{ get; set; }
+			public bool BatonPass			{ get; set; }
+			public int Bide					{ get; set; }
+			public int BideDamage			{ get; set; }
+			public int BideTarget			{ get; set; }
+			public int Charge				{ get; set; }
+			public Moves? ChoiceBand		{ get; set; }
+			public int Confusion			{ get; set; }
+			public int Counter				{ get; set; }
+			public sbyte CounterTarget		{ get; set; } //ToDo: maybe `byte?` and do `.HasValue`?
+			public bool Curse				{ get; set; }
+			public bool DefenseCurl			{ get; set; }
+			public bool DestinyBond			{ get; set; }
+			public int Disable				{ get; set; }
+			public Moves DisableMove		{ get; set; }
+			public bool Electrify			{ get; set; }
+			public int Embargo				{ get; set; }
+			public int Encore				{ get; set; }
+			public int EncoreIndex			{ get; set; }
+			public Moves EncoreMove			{ get; set; }
+			public bool Endure				{ get; set; }
+			public PokemonUnity.Attack.Data.Effects FirstPledge	{ get; set; }
+			public bool FlashFire			{ get; set; }
+			public bool Flinch				{ get; set; }
+			public int FocusEnergy			{ get; set; }
+			public int FollowMe				{ get; set; }
+			public bool Foresight			{ get; set; }
+			public int FuryCutter			{ get; set; }
+			public int FutureSight			{ get; set; }
+			public Moves FutureSightMove	{ get; set; }
+			public int FutureSightUser		{ get; set; }
+			public int FutureSightUserPos	{ get; set; }
+			public bool GastroAcid			{ get; set; }
+			public bool Grudge				{ get; set; }
+			public int HealBlock			{ get; set; }
+			public bool HealingWish			{ get; set; }
+			public bool HelpingHand			{ get; set; }
+			public int HyperBeam			{ get; set; }
 			/// <summary>
 			/// Takes image of last person on team
 			/// </summary>
 			public PokemonUnity.Battle.Pokemon Illusion		{ get; set; }
-			public bool Imprison           { get; set; }
-			public bool Ingrain            { get; set; }
-			public bool KingsShield        { get; set; }
-			public int LeechSeed          { get; set; }
-			public bool LifeOrb            { get; set; }
-			public int LockOn             { get; set; }
-			public int LockOnPos          { get; set; }
-			public bool LunarDance         { get; set; }
-			public bool MagicCoat          { get; set; }
-			public int MagnetRise         { get; set; }
-			public int MeanLook           { get; set; }
-			public bool MeFirst            { get; set; }
-			public int Metronome          { get; set; }
-			public bool MicleBerry         { get; set; }
-			public bool Minimize           { get; set; }
-			public bool MiracleEye         { get; set; }
-			public int MirrorCoat         { get; set; }
-			public int MirrorCoatTarget   { get; set; }
-			public bool MoveNext           { get; set; }
-			public bool MudSport           { get; set; }
+			public bool Imprison			{ get; set; }
+			public bool Ingrain				{ get; set; }
+			public bool KingsShield			{ get; set; }
+			public int LeechSeed			{ get; set; }
+			public bool LifeOrb				{ get; set; }
+			public int LockOn				{ get; set; }
+			public int LockOnPos			{ get; set; }
+			public bool LunarDance			{ get; set; }
+			public bool MagicCoat			{ get; set; }
+			public int MagnetRise			{ get; set; }
+			public int MeanLook				{ get; set; }
+			public bool MeFirst				{ get; set; }
+			public int Metronome			{ get; set; }
+			public bool MicleBerry			{ get; set; }
+			public bool Minimize			{ get; set; }
+			public bool MiracleEye			{ get; set; }
+			public int MirrorCoat			{ get; set; }
+			public int MirrorCoatTarget		{ get; set; }
+			public bool MoveNext			{ get; set; }
+			public bool MudSport			{ get; set; }
 			/// <summary>
 			/// Trapping move
 			/// </summary>
-			public int MultiTurn          { get; set; } 
-			public Moves MultiTurnAttack    { get; set; }
-			public int MultiTurnUser      { get; set; }
-			public bool Nightmare          { get; set; }
-			public int Outrage            { get; set; }
-			public int ParentalBond       { get; set; }
-			public int PerishSong         { get; set; }
-			public int PerishSongUser     { get; set; }
-			public int PickupItem         { get; set; }
-			public int PickupUse          { get; set; }
+			public int MultiTurn			{ get; set; } 
+			public Moves MultiTurnAttack	{ get; set; }
+			public int MultiTurnUser		{ get; set; }
+			public bool Nightmare			{ get; set; }
+			public int Outrage				{ get; set; }
+			public int ParentalBond			{ get; set; }
+			public int PerishSong			{ get; set; }
+			public int PerishSongUser		{ get; set; }
+			public int PickupItem			{ get; set; }
+			public int PickupUse			{ get; set; }
 			/// <summary>
 			/// Battle Palace only
 			/// </summary>
-			public bool Pinch              { get; set; }
-			public bool Powder             { get; set; }
-			public bool PowerTrick         { get; set; }
-			public bool Protect            { get; set; }
-			public bool ProtectNegation    { get; set; }
-			public short ProtectRate        { get; set; }
-			public bool Pursuit            { get; set; }
-			public bool Quash              { get; set; }
-			public bool Rage               { get; set; }
-			public int Revenge            { get; set; }
-			public bool Roar               { get; set; }
-			public byte Rollout            { get; set; }
-			public bool Roost              { get; set; }
+			public bool Pinch				{ get; set; }
+			public bool Powder				{ get; set; }
+			public bool PowerTrick			{ get; set; }
+			public bool Protect				{ get; set; }
+			public bool ProtectNegation		{ get; set; }
+			public short ProtectRate		{ get; set; }
+			public bool Pursuit				{ get; set; }
+			public bool Quash				{ get; set; }
+			public bool Rage				{ get; set; }
+			public int Revenge				{ get; set; }
+			public bool Roar				{ get; set; }
+			public byte Rollout				{ get; set; }
+			public bool Roost				{ get; set; }
 			/// <summary>
 			/// For when using Poké Balls/Poké Dolls
 			/// </summary>
-			public bool SkipTurn           { get; set; }
-			public bool SkyDrop            { get; set; }
-			public bool SmackDown          { get; set; }
-			public bool Snatch             { get; set; }
-			public bool SpikyShield        { get; set; }
-			public int Stockpile          { get; set; }
-			public int StockpileDef       { get; set; }
-			public int StockpileSpDef     { get; set; }
-			public int Substitute         { get; set; }
-			public int Taunt              { get; set; }
-			public int Telekinesis        { get; set; }
-			public bool Torment            { get; set; }
-			public int Toxic              { get; set; }
-			public bool Transform          { get; set; }
-			public bool Truant             { get; set; }
-			public int TwoTurnAttack      { get; set; }
+			public bool SkipTurn			{ get; set; }
+			public bool SkyDrop				{ get; set; }
+			public bool SmackDown			{ get; set; }
+			public bool Snatch				{ get; set; }
+			public bool SpikyShield			{ get; set; }
+			public int Stockpile			{ get; set; }
+			public int StockpileDef			{ get; set; }
+			public int StockpileSpDef		{ get; set; }
+			public int Substitute			{ get; set; }
+			public int Taunt				{ get; set; }
+			public int Telekinesis			{ get; set; }
+			public bool Torment				{ get; set; }
+			public int Toxic				{ get; set; }
+			public bool Transform			{ get; set; }
+			public bool Truant				{ get; set; }
+			public Moves TwoTurnAttack		{ get; set; }
 			public PokemonUnity.Types Type3	{ get; set; }
-			public bool Unburden           { get; set; }
-			public int Uproar             { get; set; }
-			public bool Uturn              { get; set; }
-			public bool WaterSport         { get; set; }
-			public int WeightChange       { get; set; }
-			public int Wish               { get; set; }
-			public int WishAmount         { get; set; }
-			public int WishMaker          { get; set; }
-			public int Yawn               { get; set; }
+			public bool Unburden			{ get; set; }
+			public int Uproar				{ get; set; }
+			public bool Uturn				{ get; set; }
+			public bool WaterSport			{ get; set; }
+			public int WeightChange			{ get; set; }
+			public int Wish					{ get; set; }
+			public int WishAmount			{ get; set; }
+			public int WishMaker			{ get; set; }
+			public int Yawn					{ get; set; }
 
 			public Battler() : this (false) { }
 			public Battler(bool batonpass)
@@ -297,8 +297,8 @@ namespace PokemonUnity.Battle
 				this.Toxic            = 0;
 				this.Transform        = false;
 				this.Truant           = false;
-				this.TwoTurnAttack    = 0;
-				this.Type3            = PokemonUnity.Types.NONE;//-1; ToDo: What's difference between "None" and "null"?
+				this.TwoTurnAttack    = Moves.NONE;
+				this.Type3            = PokemonUnity.Types.NONE;//-1;
 				this.Unburden         = false;
 				this.Uproar           = 0;
 				this.Uturn            = false;

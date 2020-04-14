@@ -116,10 +116,11 @@ namespace PokemonUnity.Character
 		//ToDo: Add variable for "Shiny"?...
 		//ToDo: switch from byte to Pokemons.Enum:short, value [1,2] = Pokemon.Form, other array values remain same.
 		public byte[,] Pokedex { get; private set; }
+		//ToDo: Fix Player Pokdex Below... 
 		//public int PokedexCaught { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 1] == 1 select Pokedex[index, 1]).Count(); } }
 		//public int PokedexSeen { get { return (from int index in Enumerable.Range(0, Pokedex.GetUpperBound(0)) where Pokedex[index, 0] == 1 select Pokedex[index, 0]).Count(); } }
-		//public int PokedexCaught { get { return Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 1] == 1).ToArray().Length; } }//.Select( y => Pokedex[y, 1])
-		//public int PokedexSeen { get { return Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 0] == 1).ToArray().Length; } }//.Where(x => Pokedex[x, 0] == 1)
+		public int PokedexCaught { get { return 0; } }//Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 1] == 1).ToArray().Length; } }//.Select( y => Pokedex[y, 1])
+		public int PokedexSeen { get { return 0; } }//Enumerable.Range(0, Pokedex.GetUpperBound(0)).Where(x => Pokedex[x, 0] == 1).ToArray().Length; } }//.Where(x => Pokedex[x, 0] == 1)
 		//ToDo: Adventure Start Date; Use date of save file (game saves after player is made)
 		public System.TimeSpan PlayTime { get; private set; }
 

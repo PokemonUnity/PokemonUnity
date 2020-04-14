@@ -261,7 +261,8 @@ namespace PokemonUnity.Battle
 		HARSHSUN,
 		SANDSTORM,
 		STRONGWINDS,
-		HAIL
+		HAIL,
+		SHADOWSKY
 	}
 	/// <summary>
 	/// Terrain Tags or Tiles a player can be stepping on;
