@@ -10253,28 +10253,23 @@ namespace PokemonUnity.Battle
 			{
 				Pokemon poke = this.battle.battlers[i];
 				if (poke.Species == Pokemons.NONE) continue; //next
+				if ((int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xC9 || // Fly
 				   (int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xCC ||	// Bounce
 				   (int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xCE)	// Sky Drop
-				if ((int)Game.MoveData[(Moves)poke.effects.TwoTurnAttack].Effect == 0xC9 || // Fly
 				{
 					poke.effects.TwoTurnAttack = 0;
 				}
 				if (poke.effects.SkyDrop)
 				{
 					poke.effects.SkyDrop = false;
-
 				}
 				if (poke.effects.MagnetRise > 0)
 				{
-
 					poke.effects.MagnetRise = 0;
-
 				}
 				if (poke.effects.Telekinesis > 0)
 				{
-
 					poke.effects.Telekinesis = 0;
-
 				}
 			}
 
