@@ -1602,7 +1602,14 @@ namespace PokemonUnity
     {
         public enum Translations.Languages { get; set; } 
     }*/
-
+	/// <summary>
+	/// Scripted Text stored and available for Locale translations
+	/// </summary>
+	public enum TextScripts
+	{
+		Name,
+		Description
+	}
 	public enum Generation
 	{
 		All = 0,

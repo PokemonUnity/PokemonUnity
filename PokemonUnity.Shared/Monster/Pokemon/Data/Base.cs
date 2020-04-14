@@ -127,11 +127,6 @@ namespace PokemonUnity.Monster.Data
         public int evYieldSPA { get; private set; }
         public int evYieldSPD { get; private set; }
         public int evYieldSPE { get; private set; }
-        /*// <summary>
-        /// </summary>
-        /// Not quite sure what this is for...
-        public float Luminance { get; private set; }
-
         /// <summary>
         /// Returns the items this species can be found holding in the wild.
         /// [item id,% chance]
@@ -145,6 +140,11 @@ namespace PokemonUnity.Monster.Data
         /// </remarks>
         /// ToDo: Consider [itemcommon || 0,itemuncommon || 0,itemrare || 0]
         public int[,] HeldItem { get; private set; }
+
+        /*// <summary>
+        /// </summary>
+        /// Not quite sure what this is for...
+        public float Luminance { get; private set; }
         /// <summary>
         /// All the moves this pokemon species can learn, and the methods by which they learn them
         /// </summary>
@@ -161,6 +161,8 @@ namespace PokemonUnity.Monster.Data
         /// Not all baby species need this line.
         /// </summary>
         public Items Incense { get; private set; }
+        public string Name { get { return ToString(TextScripts.Name); } }
+        public string Description { get { return ToString(TextScripts.Description); } }
         #endregion
 
         #region Constructors
@@ -220,11 +222,11 @@ namespace PokemonUnity.Monster.Data
             this.Rarity = rarity;
             //this.lightColor = lightColor;
             this.PokedexColor = pokedexColor | Color.NONE;
-            /*this.Luminance = luminance;
 
             //ToDo: wild pokemon held items not yet implemented
             this.HeldItem = heldItem; //[item id,% chance]
 
+            /*this.Luminance = luminance;
 			//if(movesetmoves != null)
 			this.MoveTree = new PokemonMoveTree(movesetmoves);
             //this.MovesetLevels = movesetLevels;
@@ -292,7 +294,12 @@ namespace PokemonUnity.Monster.Data
 		public override int GetHashCode()
 		{
 			return (int)ID;
-		}
-		#endregion
-	}
+        }
+        public string ToString(TextScripts text)
+        {
+            //create a switch, and return Locale Name or Description
+            return base.ToString();
+        }
+        #endregion
+    }
 }

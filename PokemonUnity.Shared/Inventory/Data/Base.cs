@@ -236,6 +236,10 @@ namespace PokemonUnity.Inventory
 				}
 			} 
 		}
+
+		public string Name { get { return ToString(TextScripts.Name); } }
+		public string Description { get { return ToString(TextScripts.Description); } }
+		public string Plural { get { return ToString(TextScripts.Name); } }
 		#endregion
 
 		#region Constructor
@@ -274,5 +278,11 @@ namespace PokemonUnity.Inventory
 			Generations = gens ?? new int[] { };
 		}
 		#endregion
+
+		public string ToString(TextScripts text)
+		{
+			//create a switch, and return Locale Name, Plural, or Description
+			return base.ToString();
+		}
 	}
 }

@@ -52,6 +52,8 @@ namespace PokemonUnity.Attack.Data
 		public int? SuperAppeal { get; private set; }
 		public int? Appeal { get; private set; }
 		public int? Jamming { get; private set; }
+		public string Name { get { return ToString(TextScripts.Name); } }
+		public string Description { get { return ToString(TextScripts.Description); } }
 		#endregion
 
 		public MoveData(Moves id = Moves.NONE, Category category = Category.STATUS, int generationId = 0, 
@@ -81,6 +83,12 @@ namespace PokemonUnity.Attack.Data
 			Appeal = appeal;
 			SuperAppeal = superAppeal;
 			Jamming = jamming;
+		}
+
+		public string ToString(TextScripts text)
+		{
+			//create a switch, and return Locale Name or Description
+			return base.ToString();
 		}
 	}
 
