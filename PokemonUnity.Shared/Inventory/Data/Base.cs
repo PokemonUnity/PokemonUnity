@@ -234,7 +234,80 @@ namespace PokemonUnity.Inventory
 					default:
 						return false;
 				}
-			} 
+			}
+		}
+		public bool IsMegaStone
+		{
+			get
+			{
+				return Id == Items.ABOMASITE
+					|| Id == Items.ABSOLITE
+					|| Id == Items.AERODACTYLITE
+					|| Id == Items.AGGRONITE
+					|| Id == Items.ALAKAZITE
+					|| Id == Items.ALTARIANITE
+					|| Id == Items.AMPHAROSITE
+					|| Id == Items.AUDINITE
+					|| Id == Items.BANETTITE
+					|| Id == Items.BEEDRILLITE
+					|| Id == Items.BLASTOISINITE
+					|| Id == Items.BLAZIKENITE
+					|| Id == Items.CAMERUPTITE
+					|| Id == Items.CHARIZARDITE_X
+					|| Id == Items.CHARIZARDITE_Y
+					|| Id == Items.DIANCITE
+					|| Id == Items.GLALITITE
+					|| Id == Items.GYARADOSITE
+					|| Id == Items.HERACRONITE
+					|| Id == Items.HOUNDOOMINITE
+					|| Id == Items.KANGASKHANITE
+					|| Id == Items.LATIASITE
+					|| Id == Items.LATIOSITE
+					|| Id == Items.LOPUNNITE
+					|| Id == Items.LUCARIONITE
+					|| Id == Items.MANECTITE
+					|| Id == Items.MAWILITE
+					|| Id == Items.MEDICHAMITE
+					|| Id == Items.METAGROSSITE
+					|| Id == Items.MEWTWONITE_X
+					|| Id == Items.MEWTWONITE_Y
+					|| Id == Items.PIDGEOTITE
+					|| Id == Items.PINSIRITE
+					|| Id == Items.SABLENITE
+					|| Id == Items.SALAMENCITE
+					|| Id == Items.SCEPTILITE
+					|| Id == Items.SCIZORITE
+					|| Id == Items.SHARPEDONITE
+					|| Id == Items.SLOWBRONITE
+					|| Id == Items.STEELIXITE
+					|| Id == Items.SWAMPERTITE
+					|| Id == Items.TYRANITARITE
+					|| Id == Items.VENUSAURITE;
+			}
+		}
+		public bool IsGem
+		{
+			get
+			{
+				return Id == Items.FIRE_GEM
+					|| Id == Items.WATER_GEM
+					|| Id == Items.ELECTRIC_GEM
+					|| Id == Items.GRASS_GEM
+					|| Id == Items.ICE_GEM
+					|| Id == Items.FIGHTING_GEM
+					|| Id == Items.POISON_GEM
+					|| Id == Items.GROUND_GEM
+					|| Id == Items.FLYING_GEM
+					|| Id == Items.PSYCHIC_GEM
+					|| Id == Items.BUG_GEM
+					|| Id == Items.ROCK_GEM
+					|| Id == Items.GHOST_GEM
+					|| Id == Items.DRAGON_GEM
+					|| Id == Items.DARK_GEM
+					|| Id == Items.STEEL_GEM
+					|| Id == Items.NORMAL_GEM
+					|| Id == Items.FAIRY_GEM;
+			}
 		}
 
 		public string Name { get { return ToString(TextScripts.Name); } }
