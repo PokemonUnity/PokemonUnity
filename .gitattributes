@@ -6,7 +6,7 @@
 * text=auto
 
 # Custom for Visual Studio
-#*.cs		diff=csharp
+*.cs		diff=csharp text
 *.sln		merge=union
 *.csproj	merge=union
 *.vbproj	merge=union
@@ -43,24 +43,24 @@
 /.gitignore export-ignore
 /.github export-ignore 
 /UnitTestProject export-ignore
-/readme.md export-ignore
+#/readme.md export-ignore # Give users readme with download
 /code_of_conduct.md export-ignore
 
 ## Unity ##
 
-*.cs diff=csharp text
 *.cginc text
 *.shader text
 
-*.mat merge=unityyamlmerge eol=lf
-*.anim merge=unityyamlmerge eol=lf
-*.unity merge=unityyamlmerge eol=lf
-*.prefab merge=unityyamlmerge eol=lf
+*.mat				merge=unityyamlmerge eol=lf
+*.anim				merge=unityyamlmerge eol=lf
+*.unity				merge=unityyamlmerge eol=lf
+*.prefab			merge=unityyamlmerge eol=lf
 *.physicsMaterial2D merge=unityyamlmerge eol=lf
-*.physicsMaterial merge=unityyamlmerge eol=lf
-*.asset merge=unityyamlmerge eol=lf
-*.meta merge=unityyamlmerge eol=lf
-*.controller merge=unityyamlmerge eol=lf
+*.physicsMaterial	merge=unityyamlmerge eol=lf
+*.asset				merge=unityyamlmerge eol=lf
+*.meta				merge=unityyamlmerge eol=lf
+*.controller		merge=unityyamlmerge eol=lf
+*.unitypackage		merge=unityyamlmerge eol=lf
 
 
 ## git-lfs ##
