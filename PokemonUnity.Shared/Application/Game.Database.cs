@@ -402,9 +402,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -460,9 +460,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -562,9 +562,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -866,9 +866,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -919,9 +919,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -960,9 +960,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1029,9 +1029,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1216,9 +1216,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1294,9 +1294,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1362,9 +1362,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1423,9 +1423,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1503,9 +1503,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1592,9 +1592,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1656,9 +1656,9 @@ namespace PokemonUnity
 				}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
@@ -1981,9 +1981,9 @@ namespace PokemonUnity
 				//}
 				return true;
 			} catch (SQLiteException e) {
-				//Debug.Log("SQL Exception Message:" + e.Message);
-				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
-				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				GameDebug.LogError("SQL Exception Message:" + e.Message);
+				GameDebug.LogError("SQL Exception Code:" + e.ErrorCode.ToString());
+				GameDebug.LogError("SQL Exception Help:" + e.HelpLink);
 				return false;
 			}
 		}
