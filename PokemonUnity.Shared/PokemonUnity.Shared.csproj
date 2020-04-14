@@ -120,6 +120,8 @@
   <ItemGroup>
     <Content Include="Translations\PokemonUnity.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
