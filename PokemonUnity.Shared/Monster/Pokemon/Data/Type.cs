@@ -16,6 +16,7 @@ namespace PokemonUnity.Monster.Data
 		#region Variables
 		private Dictionary<Types,byte> Table { get; set; }
 		private Types Base { get; set; }
+		public PokemonUnity.Attack.Category? Category { get; private set; }
 		public float this[Types target]
 		{
 			get { return Table[target] * 0.01f; }
@@ -60,7 +61,7 @@ namespace PokemonUnity.Monster.Data
 		}
 		#endregion
 
-		public Type(Types atk, IDictionary<Types,byte> table)//Types target, int factor
+		public Type(Types atk, IDictionary<Types,byte> table, PokemonUnity.Attack.Category? category = null)//Types target, int factor
 		{
 			Base = atk;
 			Table = (Dictionary<Types,byte>)table;

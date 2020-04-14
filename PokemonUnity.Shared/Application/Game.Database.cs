@@ -20,7 +20,7 @@ using PokemonUnity.Inventory.Plants;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Character;
 //using System.Data.SqlClient;
-//using System.Security.Cryptography.MD5;
+//using System.Security.Cryptography;
 
 namespace PokemonUnity
 {
@@ -40,7 +40,8 @@ namespace PokemonUnity
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.Form[]> PokemonFormsData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonMoveTree> PokemonMovesData { get; private set; }
 		public static Dictionary<Pokemons, PokemonUnity.Monster.Data.PokemonData> PokemonData { get; private set; }
-		public static Dictionary<Natures,Nature> NatureData { get; private set; }
+		public static Dictionary<Natures,PokemonUnity.Monster.Nature> NatureData { get; private set; }
+		public static Dictionary<Types,PokemonUnity.Monster.Data.Type> TypeData { get; private set; }
 		public static Dictionary<Moves,Attack.Data.MoveData> MoveData { get; private set; }
 		public static Dictionary<Moves,Attack.Data.MetaData> MoveMetaData { get; private set; }
 		public static Dictionary<Items,ItemData> ItemData { get; private set; }
@@ -119,6 +120,13 @@ namespace PokemonUnity
 			NatureData = new Dictionary<Natures, Nature>();
 			if (sql) //using (con)
 				return GetNaturesFromSQL(con);
+			else return GetPokemonsFromXML();
+		}
+		public static bool InitTypes(bool sql = true)
+		{
+			TypeData = new Dictionary<Types, PokemonUnity.Monster.Data.Type>();
+			if (sql) //using (con)
+				return GetTypesFromSQL(con);
 			else return GetPokemonsFromXML();
 		}
 		public static bool InitMoves(bool sql = true)
@@ -958,6 +966,75 @@ namespace PokemonUnity
 				return false;
 			}
 		}
+		static bool GetTypesFromSQL(SQLiteConnection con)
+		{
+			try
+			{
+				//Step 3: Running a Command
+				SQLiteCommand stmt = con.CreateCommand();
+
+				#region DataReader
+				stmt.CommandText = @"select a.id, a.damage_class_id, t.damage_type_id, t.target_type_id, t.damage_factor from types as a
+					left join type_efficacy as t on a.id = t.damage_type_id 
+					order by a.id ASC";
+				//	@"";
+				SQLiteDataReader reader = stmt.ExecuteReader();
+
+				//Step 4: Read the results
+				using(reader)
+				{
+					Dictionary<Types, Category?> t = new Dictionary<Types, Category?>();
+					Dictionary<Types, List<KeyValuePair<Types, int>>> a = new Dictionary<Types, List<KeyValuePair<Types, int>>>();
+					//NatureData.Add(Natures.UNSET, new Nature());
+					while (reader.Read()) //if(reader.Read())
+					{
+						if (!t.ContainsKey((Types)int.Parse((string)reader["id"].ToString())))
+							t.Add((Types)int.Parse((string)reader["id"].ToString()), 
+								string.IsNullOrEmpty(reader["damage_factor"].ToString()) ? 
+								(Category?)null : (Category?)int.Parse((string)reader["damage_factor"].ToString()));
+						//if (!a[(Types)int.Parse((string)reader["id"].ToString())]
+						//	.Contains(int.Parse((string)reader["damage_type_id"].ToString())))
+						//	t[(Locations)int.Parse((string)reader["id"].ToString())]
+						//		.Add(int.Parse((string)reader["damage_type_id"].ToString()));
+						
+						if (!string.IsNullOrEmpty(reader["id"].ToString()))
+						{
+							if (!a.ContainsKey((Types)int.Parse((string)reader["id"].ToString())))
+								a.Add((Types)int.Parse((string)reader["id"].ToString()), new List<KeyValuePair<Types, int>>());
+							a[(Types)int.Parse((string)reader["id"].ToString())]
+								.Add(new KeyValuePair<Types, int>(
+								key: (Types)int.Parse((string)reader["target_type_id"].ToString())
+								,value: int.Parse((string)reader["damage_factor"].ToString())
+							));
+						}
+					}
+					//Step 5: Closing up
+					reader.Close();
+					reader.Dispose();
+					#endregion
+					foreach (var area in a)
+					{
+						Dictionary<Types, byte> x = new Dictionary<Types, byte>();
+						foreach (KeyValuePair<Types, int> y in area.Value)
+							x.Add(key: y.Key, value: (byte)y.Value);
+						TypeData.Add(area.Key,
+							new Monster.Data.Type(
+								atk: area.Key
+								//,table: a.Where(x => x.Key == area.Key).Select<KeyValuePair<Method, int>>(n => n.Value).ToArray()
+								, table: x//.Single(x => x.Key == area.Key).Value.ToDictionary<Types, byte>(x => x.Key == area.Key)
+								, category: t[area.Key]
+							)
+						); 
+					}
+				}
+				return true;
+			} catch (SQLiteException e) {
+				//Debug.Log("SQL Exception Message:" + e.Message);
+				//Debug.Log("SQL Exception Code:" + e.ErrorCode.ToString());
+				//Debug.Log("SQL Exception Help:" + e.HelpLink);
+				return false;
+			}
+		}
 		static bool GetMovesFromSQL(SQLiteConnection con)
 		{
 			try
@@ -1421,7 +1498,7 @@ namespace PokemonUnity
 								//,rate: a.Where(x => x.Key == area.Key).Select<KeyValuePair<Method, int>>(n => n.Value).ToArray()
 								,rate: a.Single(x => x.Key == area.Key).Value.ToArray()
 							)
-						); ;
+						); 
 					}
 				}
 				return true;

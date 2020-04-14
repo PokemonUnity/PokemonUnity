@@ -16,9 +16,9 @@ namespace PokemonUnity.Attack
 	/// </summary>
 	public enum Category
 	{
-		PHYSICAL= 1,
-		SPECIAL	= 2,
-		STATUS	= 3
+		PHYSICAL= 2,
+		SPECIAL	= 3,
+		STATUS	= 1
 	};
 	public enum MetaCategory
 	{
