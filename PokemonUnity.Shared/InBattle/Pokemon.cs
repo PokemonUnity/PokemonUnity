@@ -1445,7 +1445,7 @@ namespace PokemonUnity.Battle
 		//		}
 
 		//		pkmn.Species				= (int)pokemon.Species;
-		//		pkmn.Form					= pokemon.Form;
+		//		pkmn.form					= pokemon.Form;
 		//		//Creates an error System OutOfBounds inside Pokemon
 		//		pkmn.NickName				= pokemon.Name;
 

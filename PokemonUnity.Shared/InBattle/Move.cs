@@ -636,11 +636,10 @@ public virtual int TotalPP { get {
 	  if (pbIsDamaging() && !pbTargetsMultiple(attacker) &&
 		 !pbIsMultiHit() && !pbTwoTurnAttack(attacker)){
 		List<Attack.Effect> exceptions= new List<Attack.Effect>(){
-			//ToDo: Replace Pokemon Essential Effect's with Veekun's GameFreak rip
-			//Attack.Effect.0x6E,	// Endeavor
-			//Attack.Effect.0xE0,	// Selfdestruct/Explosion
-			//Attack.Effect.0xE1,	// Final Gambit
-			//Attack.Effect.0xF7	// Fling
+			(Attack.Effect)0x6E,	// Endeavor
+			(Attack.Effect)0xE0,	// Selfdestruct/Explosion
+			(Attack.Effect)0xE1,	// Final Gambit
+			(Attack.Effect)0xF7		// Fling
 		};
 		if (!exceptions.Contains ((Attack.Effect)function)){
 		   attacker.effects.ParentalBond= 3;

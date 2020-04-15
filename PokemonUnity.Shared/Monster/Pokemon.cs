@@ -490,7 +490,7 @@ namespace PokemonUnity.Monster
             EggSteps = eggSteps;
 
             this.ballUsed = ballUsed;
-            if (PokemonUnity.Inventory.Mail.IsMail(item))
+            if (Game.ItemData[item].IsLetter)
             {
                 this.mail = new Inventory.Mail((Items)item);
                 this.mail.Message = mail;
@@ -1868,28 +1868,25 @@ namespace PokemonUnity.Monster
         {
             get
             {
-                if (this.mail == null || !PokemonUnity.Inventory.Mail.IsMail(this.Item)) return null; //If empty return null
-                                                                                                      //if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
-                                                                                                      //{
-                                                                                                      //    //mail = null;
-                                                                                                      //	return null;
-                                                                                                      //}
-                                                                                                      //ToDo: Return the string or class?
+                if (this.mail == null || !Game.ItemData[this.Item].IsLetter) return null; //If empty return null
+                //if (mail.Message.Length == 0 || this.Inventory == 0)//|| this.item.Category != Items.Category.Mail )
+                //{
+                //    //mail = null;
+                //	return null;
+                //}
+                //ToDo: Return the string or class?
                 return mail.Message;
             }
             //set { mail = value; }
         }
-        /*public void pbMoveToMailbox(pokemon)
+        /*public bool pbMoveToMailbox(pokemon)
 		{
-			//PokemonGlobal.mailbox = [] if !$PokemonGlobal.mailbox;
-			PokemonGlobal.mailbox = !PokemonGlobal.mailbox ?? [];
-			//return false if $PokemonGlobal.mailbox.length>=10
-			return PokemonGlobal.mailbox.length >= 10 ?? false
-				//return false if !pokemon.mail
-			return !pokemon.mail ?? false
-				PokemonGlobal.mailbox.push(pokemon.mail);
+			if (PokemonGlobal.mailbox == null) PokemonGlobal.mailbox = [];
+			if (PokemonGlobal.mailbox.length>=10) return false;
+			if (pokemon.mail == null) return false;
+				PokemonGlobal.mailbox.Add(pokemon.mail);
 			pokemon.mail = null;
-			return true
+			return true;
 		}
 
 		public void pbStoreMail(pkmn, item, message, poke1= nil, poke2= nil, poke3= nil)
@@ -1903,11 +1900,11 @@ namespace PokemonUnity.Monster
 		{
 			if (!pkmn.hasItem)
 			{
-				//pbDisplay(_INTL("{1} isn't holding anything.",pkmn.name))
+				pbDisplay(_INTL("{1} isn't holding anything.",pkmn.name))
 			}
 			else if (!PokemonBag.pbCanStore(pkmn.item))
 			{
-				//pbDisplay(_INTL("The Bag is full.  The Pokémon's item could not be removed."))
+				pbDisplay(_INTL("The Bag is full.  The Pokémon's item could not be removed."))
 			}
 			elsif pkmn.mail
 			{

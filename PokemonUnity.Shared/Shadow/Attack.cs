@@ -31,8 +31,6 @@ namespace PokemonUnity.Battle
 		}
 	}
 
-
-
 	/// <summary>
 	/// Paralyzes the target. (Shadow Bolt)
 	/// </summary>
@@ -46,8 +44,6 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 	}
-
-
 
 	/// <summary>
 	/// Burns the target. (Shadow Fire)
@@ -63,8 +59,6 @@ namespace PokemonUnity.Battle
 		}
 	}
 
-
-
 	/// <summary>
 	/// Freezes the target. (Shadow Chill)
 	/// </summary>
@@ -78,8 +72,6 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 	}
-
-
 
 	/// <summary>
 	/// Confuses the target. (Shadow Panic)
@@ -95,8 +87,6 @@ namespace PokemonUnity.Battle
 		}
 	}
 
-
-
 	/// <summary>
 	/// Decreases the target's Defense by 2 stages. (Shadow Down)
 	/// </summary>
@@ -110,8 +100,6 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 	}
-
-
 
 	/// <summary>
 	/// Decreases the target's evasion by 2 stages. (Shadow Mist)
@@ -129,8 +117,6 @@ namespace PokemonUnity.Battle
 		}
 	}
 
-
-
 	/// <summary>
 	/// Power is doubled if the target is using Dive. (Shadow Storm)
 	/// </summary>
@@ -144,8 +130,6 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 	}
-
-
 
 	/// <summary>
 	/// Two turn attack.  On first turn, halves the HP of all active Pokémon.
@@ -178,8 +162,6 @@ namespace PokemonUnity.Battle
 		}
 	}
 
-
-
 	/// <summary>
 	/// Target can no longer switch out or flee, as long as the user remains active.
 	/// (Shadow Hold)
@@ -194,8 +176,6 @@ namespace PokemonUnity.Battle
 			return ret;
 		}
 	}
-
-
 
 	/// <summary>
 	/// User takes recoil damage equal to 1/2 of its current HP. (Shadow End)
@@ -219,8 +199,6 @@ namespace PokemonUnity.Battle
 			}
 		}
 	}
-
-
 
 	/// <summary>
 	/// Starts shadow weather. (Shadow Sky)
@@ -250,8 +228,6 @@ namespace PokemonUnity.Battle
 			return 0;
 		}
 	}
-
-
 
 	/// <summary>
 	/// Ends the effects of Light Screen, Reflect and Safeguard on both sides.

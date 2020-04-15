@@ -10,65 +10,20 @@ namespace PokemonUnity.Inventory//.ItemData
 	/// </summary>
 	public class Mail
 	{
-		public int Background { get; private set; }
+		public Items Background { get; private set; }
 		public string Message { get; set; }
 		/// <summary>
 		/// Used when displaying in UI, one character at a time.
 		/// </summary>
-		public char[] Display { get { return Message.ToCharArray(); } }
+		public char[] Display { get { return Message == null? null: Message.ToCharArray(); } }
 		public string Sender { get { return sender.Name; } }
-		private TrainerId sender { get; set; }
-		public bool IsLetter { get; private set; }
-
-		public static bool IsMail(Items item) { return Game.ItemData[item].IsLetter; }//{ return new Item(item).IsMail; }
+		private TrainerId sender { get; set; }//ToDO: Only need name and message..
+		//public bool IsLetter { get { return Game.ItemData[item].IsLetter; } }
+		//public static bool IsMail(Items item) { return Game.ItemData[item].IsLetter; }//{ return new Item(item).IsMail; }
 
 		public Mail(Items letter)
 		{
-			IsLetter = true;
-			//assign background art of letter based on item
-			switch (letter)
-			{
-				case Items.AIR_MAIL:
-				case Items.BEAD_MAIL:
-				case Items.BLOOM_MAIL:
-				case Items.BRICK_MAIL:
-				case Items.BRIDGE_MAIL_D:
-				case Items.BRIDGE_MAIL_M:
-				case Items.BRIDGE_MAIL_S:
-				case Items.BRIDGE_MAIL_T:
-				case Items.BRIDGE_MAIL_V:
-				case Items.BUBBLE_MAIL:
-				case Items.DREAM_MAIL:
-				case Items.FAB_MAIL:
-				case Items.FAVORED_MAIL:
-				case Items.FLAME_MAIL:
-				case Items.GLITTER_MAIL:
-				case Items.GRASS_MAIL:
-				case Items.GREET_MAIL:
-				case Items.HARBOR_MAIL:
-				case Items.HEART_MAIL:
-				case Items.INQUIRY_MAIL:
-				case Items.LIKE_MAIL:
-				case Items.MECH_MAIL:
-				case Items.MOSAIC_MAIL:
-				case Items.ORANGE_MAIL:
-				case Items.REPLY_MAIL:
-				case Items.RETRO_MAIL:
-				case Items.RSVP_MAIL:
-				case Items.SHADOW_MAIL:
-				case Items.SNOW_MAIL:
-				case Items.SPACE_MAIL:
-				case Items.STEEL_MAIL:
-				case Items.THANKS_MAIL:
-				case Items.TROPIC_MAIL:
-				case Items.TUNNEL_MAIL:
-				case Items.WAVE_MAIL:
-				case Items.WOOD_MAIL:
-					break;
-				default:
-					IsLetter = false;
-					break;
-			}
+			Background = Game.ItemData[letter].IsLetter ? letter : Items.NONE;
 		}
 
 		/// <summary>

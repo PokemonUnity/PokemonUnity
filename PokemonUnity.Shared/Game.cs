@@ -142,6 +142,7 @@ namespace PokemonUnity
 			//	Scan for save files and previous game progress
 			// Load Player/Character/Overworld THEN Encounter
 			con.Open();
+			InitTypes();
 			InitNatures();
 			InitPokemons();
 			InitPokemonForms();

@@ -59,7 +59,6 @@
     <Compile Include="Character\Gear\Phone.cs" />
     <Compile Include="Character\Gear\Pokedex.cs" />
     <Compile Include="Character\Gear\PokeRadar.cs" />
-    <Compile Include="Character\P3D.Player.cs" />
     <Compile Include="Character\PC.cs" />
     <Compile Include="Character\Player\Base.cs" />
     <Compile Include="Character\Trainer\TrainerId.cs" />
