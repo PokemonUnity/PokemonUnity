@@ -18,7 +18,7 @@ namespace PokemonUnity.Battle
 	/// to prevent changes from being permanent to original pokemon profile
 	/// </summary>
 	/// ToDo: Create a SaveResults() after battle has ended, to make changes permanent.
-	public class Pokemon //: PokemonUnity.Monster.IPokemonBattle //PokemonUnity.Monster.Pokemon
+	public partial class Pokemon //: PokemonUnity.Monster.IPokemonBattle //PokemonUnity.Monster.Pokemon
 	{
 		#region Variables
 		public int turncount { get; private set; }
@@ -1207,121 +1207,25 @@ namespace PokemonUnity.Battle
 		#endregion
 
 		#region ToDo: Everything here needs to be implemented
-		public Moves lastMoveUsedSketch { get; set; }
-		public void pbReduceHP(int amount) { }
-		public void pbHyperMode() { }
-		public void pbFaint() { }
 		/// <summary>
 		/// Set item to none, if it can only be used once
 		/// </summary>
 		public void pbConsumeItem() { }
 		public void pbConsumeItem(bool one, bool two) { }
-		public void pbBerryCureCheck() { }
+		public void pbCancelMoves() { }
+		public void pbHyperMode() { }
+		public void pbFaint() { }
 		public void pbAbilityCureCheck() { }
+		public Moves lastMoveUsedSketch { get; set; }
+		public void pbReduceHP(int amount) { }
+		public void pbBerryCureCheck() { }
 		public void pbActivateBerryEffect(Items item, bool something) { }
-		public void pbConfuse() { }
-		public void pbSleep() { }
-		public void pbSleepSelf(int turns) { }
-		public void pbFreeze() { }
-		public void pbAttract(Pokemon pkmn, byte? uh = null, bool animate = false) { }
-		public void pbFlinch(Pokemon pkmn, byte? uh = null, bool animate = false) { }
-		public void pbPoison(Pokemon pkmn, byte? uh = null, bool animate = false) { }
-		public void pbParalyze(Pokemon pkmn, byte? uh = null, bool animate = false) { }
-		public void pbBurn(Pokemon pkmn, byte? uh = null, bool animate = false) { }
-		public void pbCureStatus(bool animate = false) { }
-		public void pbCureAttract(bool animate = false) { }
 		public void pbAbilitiesOnSwitchIn(bool animate = false) { }
 		public void pbUseMoveSimple(Moves move) { }
-		public Pokemon pbOppositeOpposing { get; set; }
-		public float weight { get; set; }
 		public float Weight(Pokemon pkmn)
 		{
 			return pkmn.weight;
 			//return 0f;
-		}
-		public bool pbHasType(Types type)
-		{
-			return false;
-		}
-		public bool pbIsStatus()
-		{
-			return false;
-		}
-		public bool pbTooLow(Stats stat)
-		{
-			return false;
-		}
-		public bool pbCanAttract(Pokemon pkmn)
-		{
-			return false;
-		}
-		public bool pbCanConfuseSelf(bool pkmn)
-		{
-			return false;
-		}
-		public bool pbCanConfuse(Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbCanSleep(Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbCanSleep(Pokemon pkmn, bool animate, PokeBattle_Move atk, bool uh)
-		{
-			return false;
-		}
-		public bool pbCanFreeze(Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbCanPoison(Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbCanParalyze(Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbCanBurn(Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbCanIncreaseStatStage(Stats stat, Pokemon pkmn)
-		{
-			return false;
-		}
-		public bool pbCanIncreaseStatStage(Stats stat, Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbIncreaseStatWithCause(Stats stat, int amount, Pokemon pkmn, string name)
-		{
-			return false;
-		}
-		public bool pbCanReduceStatStage(Stats stat, Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbIncreaseStat(Stats stat, int num, Pokemon pkmn, bool animate, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbIncreaseStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk, bool animate)
-		{
-			return false;
-		}
-		public int pbReduceStat(Stats stat, int num, bool uh)
-		{
-			return 0;
-		}
-		public bool pbReduceStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk)
-		{
-			return false;
-		}
-		public bool pbReduceStat(Stats stat, int num, Pokemon pkmn, bool uh, PokeBattle_Move atk, bool animate)
-		{
-			return false;
 		}
 		public void pbUseMoveSimple(Moves pkmn, int uhh, int index)
 		{
@@ -1339,6 +1243,8 @@ namespace PokemonUnity.Battle
 		{
 			//return false;
 		}
+		public Pokemon pbOppositeOpposing { get; set; }
+		public float weight { get; set; }
 		public Pokemon pbOpposing1 { get; set; }
 		public Pokemon pbOpposing2 { get; set; }
 		#endregion

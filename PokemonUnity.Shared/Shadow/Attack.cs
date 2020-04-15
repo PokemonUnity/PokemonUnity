@@ -111,9 +111,9 @@ namespace PokemonUnity.Battle
 		{
 			if (!opponent.pbCanReduceStatStage(Stats.EVASION, attacker, true, this)) return -1;
 			pbShowAnimation(MoveId, attacker, opponent, hitnum, alltargets, showanimation);
-			int? ret = opponent.pbReduceStat(Stats.EVASION, 2, false);
-			if (ret.HasValue) attacker.pbHyperMode();
-			return ret.HasValue ? 0 : -1;
+			bool ret = opponent.pbReduceStat(Stats.EVASION, increment: 2, attacker: attacker, showMessages: false);
+			if (ret) attacker.pbHyperMode();
+			return ret ? 0 : -1;
 		}
 	}
 

@@ -891,7 +891,7 @@ public virtual int TotalPP { get {
 
   public virtual float pbTypeModifier(Types type, Pokemon attacker, Pokemon opponent){
 	if (type<0) return 8; 
-	if (opponent.pbHasType(Types.FLYING) && type == Types.GROUND && 
+	if (opponent.hasType(Types.FLYING) && type == Types.GROUND && 
 				opponent.hasWorkingItem(Items.IRON_BALL) && !Core.USENEWBATTLEMECHANICS) return 8; 
 	Types atype = type; //# attack type
 	Types otype1= opponent.Type1;
@@ -1394,7 +1394,7 @@ public virtual int TotalPP { get {
 	  defense=(int)Math.Floor(defense*1.0*stagemul[defstage]/stagediv[defstage]);
 	}
 	if (Battle.Weather==Weather.SANDSTORM &&
-	   opponent.pbHasType(Types.ROCK) && applysandstorm)
+	   opponent.hasType(Types.ROCK) && applysandstorm)
 	   defense = (int)Math.Round(defense * 1.5);
 	double defmult = 0x1000;
 	if (Battle.internalbattle){
@@ -1470,7 +1470,7 @@ public virtual int TotalPP { get {
 	  damage=(int)Math.Floor(damage* random/100.0);
 	 //}
 	// STAB
-	if (attacker.pbHasType(type) && !IGNOREPKMNTYPES)
+	if (attacker.hasType(type) && !IGNOREPKMNTYPES)
 	  if (attacker.hasWorkingAbility(Abilities.ADAPTABILITY))
 		damage= (int)Math.Round(damage*2d);
 	  else

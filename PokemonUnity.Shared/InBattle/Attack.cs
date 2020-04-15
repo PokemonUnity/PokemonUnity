@@ -3260,7 +3260,7 @@ namespace PokemonUnity.Battle
 			{
 				if (i.MoveId == this.id) continue; //next
 				//if (PBTypes.isPseudoType(i.Type)) continue; //ToDo: Can Remove...
-				if (attacker.pbHasType(i.Type)) continue; //next
+				if (attacker.hasType(i.Type)) continue; //next
 				if (!types.Contains(i.Type))
 				{
 					types.Add(i.Type);
@@ -3326,7 +3326,7 @@ namespace PokemonUnity.Battle
 			for (int i = 0; i < Game.TypeData.Count; i++)
 			{
 				//if (PBTypes.isPseudoType((Types)i)) continue; //ToDo: Can Remove...
-				if (attacker.pbHasType((Types)i)) continue; //next
+				if (attacker.hasType((Types)i)) continue; //next
 				if (atype.GetEffectiveness((Types)i) < 2) types.Add((Types)i);
 			}
 			if (types.Count == 0)
@@ -3394,7 +3394,7 @@ namespace PokemonUnity.Battle
 			{
 				type = Types.FAIRY;
 			}
-			if (attacker.pbHasType(type))
+			if (attacker.hasType(type))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -3464,12 +3464,12 @@ namespace PokemonUnity.Battle
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
 			}
-			if (attacker.pbHasType(opponent.Type1) &&
-			   attacker.pbHasType(opponent.Type2) &&
-			   attacker.pbHasType(opponent.effects.Type3) &&
-			   opponent.pbHasType(attacker.Type1) &&
-			   opponent.pbHasType(attacker.Type2) &&
-			   opponent.pbHasType(attacker.effects.Type3))
+			if (attacker.hasType(opponent.Type1) &&
+			   attacker.hasType(opponent.Type2) &&
+			   attacker.hasType(opponent.effects.Type3) &&
+			   opponent.hasType(attacker.Type1) &&
+			   opponent.hasType(attacker.Type2) &&
+			   opponent.hasType(attacker.effects.Type3))
 			{
 				battle.pbDisplay(_INTL("But it failed!"));
 				return -1;
@@ -3699,9 +3699,9 @@ namespace PokemonUnity.Battle
 			attacker.ability = opponent.Ability;
 			opponent.ability = tmp;
 
-			//battle.pbDisplay(_INTL("{1} swapped its {2} Ability with its target's {3} Ability!",
-			//   attacker.ToString(), opponent.Ability.ToString(TextScripts.Name),
-			//   attacker.Ability.ToString(TextScripts.Name)))
+			battle.pbDisplay(_INTL("{1} swapped its {2} Ability with its target's {3} Ability!",
+			   attacker.ToString(), opponent.Ability.ToString(TextScripts.Name),
+			   attacker.Ability.ToString(TextScripts.Name)));
 			attacker.pbAbilitiesOnSwitchIn(true);
 			opponent.pbAbilitiesOnSwitchIn(true);
 			return 0;
@@ -10553,9 +10553,9 @@ namespace PokemonUnity.Battle
 		public PokeBattle_Move_123(Battle battle, Attack.Move move) : base(battle, move) { }
 		public override object pbEffect(Pokemon attacker, Pokemon opponent, byte hitnum = 0, byte? alltargets = null, bool showanimation = true)
 		{
-			if (!opponent.pbHasType(attacker.Type1) &&
-			   !opponent.pbHasType(attacker.Type2) &&
-			   !opponent.pbHasType(attacker.effects.Type3))
+			if (!opponent.hasType(attacker.Type1) &&
+			   !opponent.hasType(attacker.Type2) &&
+			   !opponent.hasType(attacker.effects.Type3))
 			{
 				battle.pbDisplay(_INTL("{1} was unaffected!", opponent.ToString()));
 				return -1;

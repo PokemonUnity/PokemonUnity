@@ -96,6 +96,7 @@
     <Compile Include="InBattle\Effects\Move.cs" />
     <Compile Include="InBattle\Effects\Side.cs" />
     <Compile Include="InBattle\Move.cs" />
+    <Compile Include="InBattle\Pokemon.Effect.cs" />
     <Compile Include="InBattle\Pokemon.cs" />
     <Compile Include="Inventory\Data\Base.cs" />
     <Compile Include="Inventory\Data\Berry.cs" />
