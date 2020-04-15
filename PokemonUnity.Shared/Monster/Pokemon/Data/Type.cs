@@ -5,13 +5,14 @@ using System.Text;
 using PokemonUnity;
 using PokemonUnity.Monster;
 using PokemonUnity.Attack;
+using PokemonUnity.Battle;
 using PokemonUnity.Inventory;
 
 namespace PokemonUnity.Monster.Data
 {
 	/// <summary>
 	/// </summary>
-	public class Type
+	public struct Type
 	{
 		#region Variables
 		private Dictionary<Types,byte> Table { get; set; }
@@ -41,22 +42,21 @@ namespace PokemonUnity.Monster.Data
 				mod3 = GetEffectiveness(atk, target2);
 			return mod1 * mod2 * mod3;
 		}
-		public static TypeEffective GetCombinedEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
+		public static Battle.TypeEffective GetCombinedEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
 		{
 			float e = GetCombinedEffectivenessModifier(atk, target1, target2, target3);
 			if (e == 0)
-				return TypeEffective.Ineffective;
+				return Battle.TypeEffective.Ineffective;
 			else if (e > 0 && e < 8)
-				return TypeEffective.NotVeryEffective;
+				return Battle.TypeEffective.NotVeryEffective;
 			else if (e == 8)
-				return TypeEffective.NormalEffective;
+				return Battle.TypeEffective.NormalEffective;
 			else //if (e > 8)
-				return TypeEffective.SuperEffective;
+				return Battle.TypeEffective.SuperEffective;
 			//return TypeEffective.Broken;
 		}
 		public string ToString(TextScripts text)
 		{
-			//create a switch, and return Locale Name or Description
 			return Base.ToString(text);
 		}
 		#endregion
@@ -65,15 +65,7 @@ namespace PokemonUnity.Monster.Data
 		{
 			Base = atk;
 			Table = (Dictionary<Types,byte>)table;
-		}
-
-		public enum TypeEffective
-		{
-			//Broken,
-			Ineffective,
-			NotVeryEffective,
-			NormalEffective,
-			SuperEffective
+			Category = category;
 		}
 	}
 }

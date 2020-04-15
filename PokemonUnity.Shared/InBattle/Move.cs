@@ -587,17 +587,17 @@ public virtual int TotalPP { get {
   }
 
   public virtual bool pbIsPhysical(Types type){
-	//if (Core.USEMOVECATEGORY)
+	if (Core.USEMOVECATEGORY)
 		return Category == Attack.Category.PHYSICAL;
-	//else
-	//	return !PBTypes.isSpecialType(type);     
+	else
+		return Game.TypeData[type].Category == Attack.Category.PHYSICAL;     
   }
 
   public virtual bool pbIsSpecial(Types type){
-	//if (Core.USEMOVECATEGORY)
+	if (Core.USEMOVECATEGORY)
 	  return Category == Attack.Category.SPECIAL;
-	//else
-	//  return PBTypes.isSpecialType(type);     
+	else
+	  return Game.TypeData[type].Category == Attack.Category.SPECIAL;     
   }
 
   public virtual bool pbIsStatus{ get{
@@ -825,42 +825,42 @@ public virtual int TotalPP { get {
 	if (opponent.hasWorkingAbility(Abilities.SAP_SIPPER) && type == Types.GRASS){
 	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Sap Sipper (made #{Game.MoveData[MoveId].Name} ineffective)");
 	  if (opponent.pbCanIncreaseStatStage(Stats.ATTACK, opponent))
-		 opponent.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, PBAbilities.getName(opponent.Ability));
+		 opponent.pbIncreaseStatWithCause(Stats.ATTACK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 	  else
 		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-		   opponent.ToString(),PBAbilities.getName(opponent.Ability),Game.MoveData[MoveId].Name));
+		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	if ((opponent.hasWorkingAbility(Abilities.STORM_DRAIN) && type == Types.WATER) ||
 	   (opponent.hasWorkingAbility(Abilities.LIGHTNING_ROD) && type == Types.ELECTRIC)){
-	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{PBAbilities.getName(opponent.Ability)} (made #{Game.MoveData[MoveId].Name} ineffective)");
+	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{Game.MoveData[MoveId].Name} ineffective)");
 	  if (opponent.pbCanIncreaseStatStage(Stats.SPATK, opponent))
-		 opponent.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, PBAbilities.getName(opponent.Ability));
+		 opponent.pbIncreaseStatWithCause(Stats.SPATK,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 	  else
 		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-		   opponent.ToString(),PBAbilities.getName(opponent.Ability),Game.MoveData[MoveId].Name));
+		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	if (opponent.hasWorkingAbility(Abilities.MOTOR_DRIVE) && type == Types.ELECTRIC){
 	  GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Motor Drive (made #{Game.MoveData[MoveId].Name} ineffective)");
 	  if (opponent.pbCanIncreaseStatStage (Stats.SPEED, opponent))
-		 opponent.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, PBAbilities.getName(opponent.Ability));
+		 opponent.pbIncreaseStatWithCause(Stats.SPEED,1, opponent, opponent.Ability.ToString(TextScripts.Name));
 	  else
 		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-		   opponent.ToString(),PBAbilities.getName(opponent.Ability),Game.MoveData[MoveId].Name));
+		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	if ((opponent.hasWorkingAbility(Abilities.DRY_SKIN) && type == Types.WATER) ||
 	   (opponent.hasWorkingAbility(Abilities.VOLT_ABSORB) && type == Types.ELECTRIC) ||
 	   (opponent.hasWorkingAbility(Abilities.WATER_ABSORB) && type == Types.WATER)){
-	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s #{PBAbilities.getName(opponent.Ability)} (made #{@name} ineffective)");
+	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s #{opponent.Ability.ToString(TextScripts.Name)} (made #{@name} ineffective)");
 	  if (opponent.effects.HealBlock==0){
 		if (opponent.RecoverHP((int)Math.Floor(opponent.TotalHP/4d),true)>0)
 		  Battle.pbDisplay(_INTL("{1}'s {2} restored its HP!",
-			 opponent.ToString(),PBAbilities.getName(opponent.Ability)));
+			 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name)));
 		else
 		  Battle.pbDisplay(_INTL("{1}'s {2} made {3} useless!",
-			 opponent.ToString(),PBAbilities.getName(opponent.Ability),Game.MoveData[MoveId].Name));
+			 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 		return true;
 	  }
 	}
@@ -869,10 +869,10 @@ public virtual int TotalPP { get {
 	  if (!opponent.effects.FlashFire){
 		opponent.effects.FlashFire= true;
 		Battle.pbDisplay(_INTL("{1}'s {2} raised its Fire power!",
-		   opponent.ToString(), PBAbilities.getName(opponent.Ability)));}
+		   opponent.ToString(), opponent.Ability.ToString(TextScripts.Name)));}
 	  else
 		Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-		   opponent.ToString(),PBAbilities.getName(opponent.Ability),Game.MoveData[MoveId].Name));
+		   opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	if (opponent.hasWorkingAbility(Abilities.TELEPATHY) && pbIsDamaging() &&
@@ -884,13 +884,13 @@ public virtual int TotalPP { get {
 	if (opponent.hasWorkingAbility(Abilities.BULLETPROOF) && isBombMove){
 	  GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Bulletproof (made #{@name} ineffective)");
 	  Battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-		 opponent.ToString(),PBAbilities.getName(opponent.Ability),Game.MoveData[MoveId].Name));
+		 opponent.ToString(),opponent.Ability.ToString(TextScripts.Name),Game.MoveData[MoveId].Name));
 	  return true;
 	}
 	return false;
   }
 
-  public virtual int pbTypeModifier(Types type, Pokemon attacker, Pokemon opponent){
+  public virtual float pbTypeModifier(Types type, Pokemon attacker, Pokemon opponent){
 	if (type<0) return 8; 
 	if (opponent.pbHasType(Types.FLYING) && type == Types.GROUND && 
 				opponent.hasWorkingItem(Items.IRON_BALL) && !Core.USENEWBATTLEMECHANICS) return 8; 
@@ -909,9 +909,9 @@ public virtual int TotalPP { get {
 		otype2 = otype1;
 	}
 // Get effectivenesses
-	int mod1 = PBTypes.getEffectiveness(atype, otype1); 
-	int mod2=(otype1==otype2) ? 2 : PBTypes.getEffectiveness(atype, otype2);
-	int mod3 = (otype3 < 0 || otype1 == otype3 || otype2 == otype3) ? 2 : PBTypes.getEffectiveness(atype, otype3);
+	float mod1 = atype.GetEffectiveness(otype1); 
+	float mod2=(otype1==otype2) ? 2 : atype.GetEffectiveness(otype2);
+	float mod3 = (otype3 < 0 || otype1 == otype3 || otype2 == otype3) ? 2 : atype.GetEffectiveness(otype3);
 	if (opponent.hasWorkingItem(Items.RING_TARGET)){
 	  if (mod1==0)mod1=2; 
 	  if (mod2==0)mod2=2; 
@@ -919,21 +919,21 @@ public virtual int TotalPP { get {
 	}
 	// Foresight
 	if (attacker.hasWorkingAbility(Abilities.SCRAPPY) || opponent.effects.Foresight) { 
-	  if (otype1 == Types.GHOST && PBTypes.isIneffective(atype, otype1))mod1 = 2; //
-		   if (otype2 == Types.GHOST && PBTypes.isIneffective(atype, otype2))mod2 = 2; //
-				if (otype3 == Types.GHOST && PBTypes.isIneffective(atype, otype3))mod3 = 2; //
+	  if (otype1 == Types.GHOST && atype.GetCombinedEffectiveness(otype1) == TypeEffective.Ineffective)mod1 = 2; //
+		   if (otype2 == Types.GHOST && atype.GetCombinedEffectiveness(otype2) == TypeEffective.Ineffective)mod2 = 2; //
+				if (otype3 == Types.GHOST && atype.GetCombinedEffectiveness(otype3) == TypeEffective.Ineffective)mod3 = 2; //
 			}
 	// Miracle Eye
 	if (opponent.effects.MiracleEye) { 
-	  if (otype1 == Types.DARK && PBTypes.isIneffective (atype, otype1))mod1 = 2; //
-		   if (otype2 == Types.DARK && PBTypes.isIneffective (atype, otype2))mod2 = 2; //
-				if (otype3 == Types.DARK && PBTypes.isIneffective (atype, otype3))mod3 = 2; //
+	  if (otype1 == Types.DARK && atype.GetCombinedEffectiveness(otype1) == TypeEffective.Ineffective)mod1 = 2; //
+		   if (otype2 == Types.DARK && atype.GetCombinedEffectiveness(otype2) == TypeEffective.Ineffective)mod2 = 2; //
+				if (otype3 == Types.DARK && atype.GetCombinedEffectiveness(otype3) == TypeEffective.Ineffective)mod3 = 2; //
 			}
 	// Delta Stream's weather
 	if (Battle.Weather==Weather.STRONGWINDS) { 
-	  if (otype1 == Types.FLYING && PBTypes.isSuperEffective (atype, otype1))mod1 = 2; //
-		   if (otype2 == Types.FLYING && PBTypes.isSuperEffective (atype, otype2))mod2 = 2; //
-				if (otype3 == Types.FLYING && PBTypes.isSuperEffective (atype, otype3))mod3 = 2; //
+	  if (otype1 == Types.FLYING && atype.GetCombinedEffectiveness(otype1) == TypeEffective.SuperEffective)mod1 = 2; //
+		   if (otype2 == Types.FLYING && atype.GetCombinedEffectiveness(otype2) == TypeEffective.SuperEffective)mod2 = 2; //
+				if (otype3 == Types.FLYING && atype.GetCombinedEffectiveness(otype3) == TypeEffective.SuperEffective)mod3 = 2; //
 			}
 	// Smack Down makes Ground moves work against fliers
 	if (!opponent.isAirborne(attacker.hasMoldBreaker()) || function==(Attack.Effect)0x11C // Smack Down

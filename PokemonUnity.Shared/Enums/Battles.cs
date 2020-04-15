@@ -23,6 +23,14 @@ namespace PokemonUnity.Battle
 		/// </summary>
 		,EVASION	= 7
 	}
+	public enum TypeEffective
+	{
+		//Broken,
+		Ineffective,
+		NotVeryEffective,
+		NormalEffective,
+		SuperEffective
+	}
 	#region Battle
 	public enum ChoiceAction
 	{

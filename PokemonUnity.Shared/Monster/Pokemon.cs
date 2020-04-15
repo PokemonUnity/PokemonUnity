@@ -1933,7 +1933,7 @@ namespace PokemonUnity.Monster
 			else
 			{
 				$PokemonBag.pbStoreItem(pkmn.item)
-				itemname=PBItems.getName(pkmn.item)
+				itemname=pkmn.item.ToString(TextScripts.Name)
 
 				pbDisplay(_INTL("Received the {1} from {2}.", itemname, pkmn.name))
 				pkmn.setItem(0)
@@ -1942,7 +1942,7 @@ namespace PokemonUnity.Monster
 
 		public bool pbGiveMail(item, pkmn, pkmnid= 0)
 		{
-			thisitemname=PBItems.getName(item)
+			thisitemname=item.ToString(TextScripts.Name)
 			if pkmn.isEgg?
 			{
 				pbDisplay(_INTL("Eggs can't hold items."))
@@ -1955,7 +1955,7 @@ namespace PokemonUnity.Monster
 			}
 			if pkmn.item!=0
 			{
-				itemname=PBItems.getName(pkmn.item)
+				itemname=pkmn.item.ToString(TextScripts.Name)
 
 				pbDisplay(_INTL("{1} is already holding one {2}.\1", pkmn.name, itemname))
 				if pbConfirm(_INTL("Would you like to switch the two items?"))

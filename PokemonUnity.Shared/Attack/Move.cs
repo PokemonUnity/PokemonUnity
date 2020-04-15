@@ -7,15 +7,6 @@ using PokemonUnity.Monster;
 using PokemonUnity.Attack;
 using PokemonUnity.Attack.Data;
 
-public class PBMoves
-{
-	public static string getName(PokemonUnity.Moves move)
-	{
-		return string.Empty;
-	}
-	//public static int MaxValue { get { return MoveData.Count; } }
-}
-
 namespace PokemonUnity.Attack
 {
 	/// <summary>

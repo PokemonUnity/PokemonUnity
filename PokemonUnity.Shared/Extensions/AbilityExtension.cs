@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace PokemonUnity.Monster
+namespace PokemonUnity
 {
 	public static class AbilityExtension
 	{

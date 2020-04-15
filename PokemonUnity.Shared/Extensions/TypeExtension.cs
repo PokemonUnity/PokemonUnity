@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using PokemonUnity.Monster.Data;
 
-namespace PokemonUnity.Monster
+namespace PokemonUnity
 {
 	public static class TypeExtension
 	{		
@@ -18,7 +18,7 @@ namespace PokemonUnity.Monster
 		{
 			return PokemonUnity.Monster.Data.Type.GetCombinedEffectivenessModifier(atk, target1, target2, target3);
 		}
-		public static PokemonUnity.Monster.Data.Type.TypeEffective GetCombinedEffectiveness(this PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
+		public static PokemonUnity.Battle.TypeEffective GetCombinedEffectiveness(this PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)
 		{
 			return PokemonUnity.Monster.Data.Type.GetCombinedEffectiveness(atk, target1, target2, target3);
 		}

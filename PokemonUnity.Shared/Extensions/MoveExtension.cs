@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace PokemonUnity.Attack
+namespace PokemonUnity
 {
 	public static class MoveExtension
 	{

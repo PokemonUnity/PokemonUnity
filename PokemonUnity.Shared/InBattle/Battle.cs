@@ -817,7 +817,7 @@ namespace PokemonUnity.Battle
 				return false;
 			}
 			if (thispkmn.Item == Items.ASSAULT_VEST) {// && thismove.IsStatus?
-				//if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", PBItems.getName(thispkmn.item)))
+				//if (showMessages) pbDisplayPaused(_INTL("The effects of the {1} prevent status moves from being used!", thispkmn.item.ToString(TextScripts.Name)))
 				return false;
 			}
 			if ((int)thispkmn.effects.ChoiceBand >= 0 &&
@@ -834,8 +834,8 @@ namespace PokemonUnity.Battle
 				if (hasmove && thismove.MoveId != thispkmn.effects.ChoiceBand) {
 					//if (showMessages)
 					//	pbDisplayPaused(_INTL("{1} allows the use of only {2}!",
-					//		PBItems.getName(thispkmn.item),
-					//		PBMoves.getName(thispkmn.effects.ChoiceBand)))
+					//		thispkmn.item.ToString(TextScripts.Name),
+					//		thispkmn.effects.ChoiceBand.ToString(TextScripts.Name)))
 					return false;
 				}
 			}
