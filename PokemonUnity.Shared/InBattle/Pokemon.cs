@@ -21,72 +21,47 @@ namespace PokemonUnity.Battle
 	public partial class Pokemon //: PokemonUnity.Monster.IPokemonBattle //PokemonUnity.Monster.Pokemon
 	{
 		#region Variables
-		public int turncount { get; private set; }
-		/// <summary>
-		/// Participants will earn Exp. Points if this battler is defeated
-		/// </summary>
-		public List<byte> participants { get; private set; }
-		/// <summary>
-		/// Index list of all pokemons who attacked this battler on this/previous turn
-		/// </summary>
-		/// ToDo: not implemented
-		public List<sbyte> lastAttacker { get; private set; }
-		#region Move to PokemonBattle Class
-		/// <summary>
-		/// Consumed held item (used in battle only)
-		/// </summary>
-		/// ToDo: Is it an int or a bool?
-		public Items itemRecycle { get; set; }
-		/// <summary>
-		/// Resulting held item (used in battle only)
-		/// </summary>
-		public Items itemInitial { get; set; }
-		/// <summary>
-		/// Where Pokemon can use Belch (used in battle only)
-		/// </summary>
-		/// ToDo: Move to pkemonBattle class
-		public bool belch { get; set; }
-		#endregion
-		private int? lastRoundMoved { get; set; }
-		public int lastHPLost { get; set; }
-		public bool tookDamage { get; set; }
-		public List<Moves> movesUsed { get; set; }
-		public Effects.Battler effects { get; private set; }
-		public Battle battle { get; private set; }//{ return Game.battle; }
-		public bool captured { get; private set; }
-		public bool Fainted { get; private set; }
-		public bool isFainted() { return true; } //HP == 0 || Status.FAINT || Fainted?
-		public bool isEgg { get { return pokemon.isEgg; } }
-		public Battle.DamageState damagestate { get; set; }
-		/// <summary>
-		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
-		/// 0: Attack, 1: Defense, 2: Speed, 3: SpAtk, 4: SpDef, 5: Evasion, 6: Accuracy
-		/// </summary>
-		public int[] stages { get; private set; }//ToDo: sbyte?
+		#region Battle Related
+		public Battle battle					{ get; private set; }//{ return Game.battle; }
 		/// <summary>
 		/// Returns the position of this pkmn in battle lineup
 		/// </summary>
 		/// ToDo: Where this.pkmn.index == battle.party[this.pkmn.index]
-		public sbyte Index { get; private set; }
-		//[Obsolete]
-		//private int Index { get { return this.battle.battlers.Length; } }
+		public sbyte Index						{ get; private set; }
 		/// <summary>
-		/// Returns the position of this pkmn in party lineup
+		/// Index list of all pokemons who attacked this battler on this/previous turn
 		/// </summary>
-		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
-		public sbyte pokemonIndex { get; private set; }
-		public bool IsOwned { get { return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; } }
-		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
-		public Moves currentMove { get; set; }
-		public Moves lastMoveUsed { get; private set; }
-		public Types lastMoveUsedType { get; private set; }
+		public List<sbyte> lastAttacker			{ get; private set; }
+		public int turncount					{ get; private set; }
+		public Effects.Battler effects			{ get; private set; }
+		/// <summary>
+		/// Int Buffs and debuffs (gains and loss) affecting this pkmn.
+		/// </summary>
+		/// <remarks>
+		/// 0: Attack, 1: Defense, 2: Speed, 3: SpAtk, 4: SpDef, 5: Evasion, 6: Accuracy
+		/// </remarks>
+		public int[] stages						{ get; private set; }//ToDo: sbyte?
+		/// <summary>
+		/// Participants will earn Exp. Points if this battler is defeated
+		/// </summary>
+		public List<byte> participants			{ get; private set; }
+		public bool tookDamage					{ get; set; }
+		public int lastHPLost					{ get; set; }
+		public Moves lastMoveUsed				{ get; private set; }
+		public Types lastMoveUsedType			{ get; private set; }
+		public Moves lastMoveUsedSketch			{ get; private set; }
+		public Moves lastRegularMoveUsed		{ get; private set; }
+		private int? lastRoundMoved				{ get; set; }
+		public List<Moves> movesUsed			{ get; set; }
+		public Moves currentMove				{ get; set; }
+		public Battle.DamageState damagestate	{ get; set; }
+		public bool captured					{ get; private set; }
+		#endregion
 		#region Inherit Base Pokemon Data
-		public int HP { get; set; }
-		public int TotalHP { get; private set; }
-		//ToDo: create private fields of stats
-		public int ATK { get { return effects.PowerTrick ? defense : attack; } }
-		public int attack { get; set; }
-		//private int attack { get; set; }
+		public int HP							{ get; set; }
+		public int TotalHP						{ get; private set; }
+		public int ATK							{ get { return effects.PowerTrick ? defense : attack; } }
+		public int attack						{ get; set; }
 		public int DEF {
 			get
 			{
@@ -94,31 +69,28 @@ namespace PokemonUnity.Battle
 				return battle.field.WonderRoom > 0 ? spdef : defense;
 			}
 		}
-		public int defense { get; set; }
-		//private int defense { get; set; }
-		public int SPD { get { return battle.field.WonderRoom > 0 ? defense : spdef; } }
-		public int spdef { get; set; }
-		//private int spdef { get; set; }
-		public int SPA { get; private set; }
-		public int SPE { get; private set; }
-		public int spatk { get; set; }
-		public int speed { get; set; }
-		public int pbSpeed { get; set; }
-		public byte[] baseStats { get; private set; }
-		public int Level { get { return pokemon.Level; } }
-		public int level { get; set; }
-		public int happiness { get { return pokemon.Happiness; } }
+		public int defense						{ get; set; }
+		public int SPD							{ get { return battle.field.WonderRoom > 0 ? defense : spdef; } }
+		public int spdef						{ get; set; }
+		public int SPA							{ get; private set; }
+		public int SPE							{ get; private set; }
+		public int spatk						{ get; set; }
+		public int speed						{ get; set; }
+		public int pbSpeed						{ get; set; }
+		public byte[] baseStats					{ get; private set; }
+		public int Level						{ get { return pokemon.Level; } }
+		public int level						{ get; set; }
+		public int happiness					{ get { return pokemon.Happiness; } }
 		public string Name { get {
 				//if name is not nickname return illusion.name?
 				if (effects.Illusion != null)
 					return effects.Illusion.Name;
 				return name; } }
-		private string name { get; set; }
+		private string name						{ get { return pokemon.Name; } }
 		public bool? Gender { get {
 				if (effects.Illusion != null)
 					return effects.Illusion.Gender;
 				return this.gender; } }
-		//public int gender { get; set; }
 		private bool? gender { get; set; }
 		public bool isHyperMode { get {
 				if (effects.Illusion != null)
@@ -139,10 +111,11 @@ namespace PokemonUnity.Battle
 		{
 			get
 			{
-				return status;
+				return status; //ToDo: pokemon.Status
 			}
 			internal set
 			{
+				//ToDo: pokemon.Status = value
 				if (status == Status.SLEEP && value == 0)
 					effects.Truant = false;
 				status = value;
@@ -161,6 +134,32 @@ namespace PokemonUnity.Battle
 		internal Abilities ability { private get; set; }
 		public PokemonUnity.Attack.Move[] moves { get; set; }
 		#endregion
+		#region Move to PokemonBattle Class
+		/// <summary>
+		/// Consumed held item (used in battle only)
+		/// </summary>
+		/// ToDo: Is it an int or a bool?
+		public Items itemRecycle { get; set; }
+		/// <summary>
+		/// Resulting held item (used in battle only)
+		/// </summary>
+		public Items itemInitial { get; set; }
+		/// <summary>
+		/// Where Pokemon can use Belch (used in battle only)
+		/// </summary>
+		/// ToDo: Move to pkemonBattle class
+		public bool belch { get; set; }
+		#endregion
+		public bool Fainted { get; private set; }
+		public bool isFainted() { return true; } //HP == 0 || Status.FAINT || Fainted?
+		public bool isEgg { get { return pokemon.isEgg; } }
+		/// <summary>
+		/// Returns the position of this pkmn in party lineup
+		/// </summary>
+		/// ToDo: Where this.pkmn.index == party[this.pkmn.index]
+		public sbyte pokemonIndex { get; private set; }
+		public bool IsOwned { get { return Game.GameData.Player.Pokedex[(byte)Species, 1] == 1; } }
+		private PokemonUnity.Monster.Pokemon pokemon { get; set; }
 
 		public int GetWeight(Pokemon attacker = null)
 		{
@@ -189,7 +188,7 @@ namespace PokemonUnity.Battle
 		//	Initialize(replacingPkmn, replacingPkmn.Index, batonpass);
 		//}
 		//[Obsolete("Don't think this is needed or should be used")]
-		public Pokemon(Battle btl, sbyte idx) //: base() //
+		public Pokemon(Battle btl, sbyte idx) //: base() 
 		{
 			battle			= btl;
 			Index			= idx;
@@ -220,76 +219,6 @@ namespace PokemonUnity.Battle
 				this.RecoverHP((int)Math.Floor((decimal)this.TotalHP / 3));
 			InitPokemon(pkmn, index);
 			InitEffects(batonpass);
-			#region Moved Below into InitEffects
-			/*effects = new Effects.Pokemon(batonpass);
-			effects = new Effects.Pokemon(batonpass);
-			if (!batonpass)
-			{
-				//These effects are retained if Baton Pass is used
-				//stages[PokemonUnity.Battle.Stats.ATTACK]   = 0;
-				//stages[PokemonUnity.Battle.Stats.DEFENSE]  = 0;
-				//stages[PokemonUnity.Battle.Stats.SPEED]    = 0;
-				//stages[PokemonUnity.Battle.Stats.SPATK]    = 0;
-				//stages[PokemonUnity.Battle.Stats.SPDEF]    = 0;
-				//stages[PokemonUnity.Battle.Stats.EVASION]  = 0;
-				//stages[PokemonUnity.Battle.Stats.ACCURACY] = 0;
-				stages = new int[7];
-				//lastMoveUsedSketch        = -1;
-				
-				for (int i = 0; i < battle.battlers.Length; i++)
-				{
-					if (battle.battlers[i].Species == Pokemons.NONE) continue;
-					if (battle.battlers[i].effects.LockOnPos==index &&
-						battle.battlers[i].effects.LockOn > 0)
-					{
-						battle.battlers[i].effects.LockOn = 0;
-						battle.battlers[i].effects.LockOnPos = -1;
-					}
-				}
-			}
-			else
-			{
-				if (this.effects.PowerTrick){
-					//this.ATK = this.DEF;
-					//this.DEF = this.ATK;
-				}
-			}
-			damagestate.Reset();
-			//isFainted				= false;
-			//battle.lastAttacker     = []
-			lastHPLost				= 0;
-			tookDamage				= false;
-			lastMoveUsed			= Moves.NONE;
-			lastMoveUsedType		= -1;
-			lastRoundMoved			= -1;
-			movesUsed				= new List<Moves>();
-			battle.turncount		= 0;
-			
-			for (int i = 0; i < battle.battlers.Length; i++)
-			{
-				if (battle.battlers[i].Species == Pokemons.NONE) continue;
-				if (battle.battlers[i].effects.Attract == index)
-				{
-					battle.battlers[i].effects.Attract = -1;
-				}
-				if (battle.battlers[i].effects.MeanLook == index)
-				{
-					battle.battlers[i].effects.MeanLook = -1;
-				}
-				if (battle.battlers[i].effects.MultiTurnUser == index)
-				{
-					battle.battlers[i].effects.MultiTurn = 0;
-					battle.battlers[i].effects.MultiTurnUser = -1;
-				}
-			}
-
-			if (this.hasWorkingAbility(Abilities.ILLUSION)){
-				//lastpoke = battle.GetLastPokeInTeam(index);
-				//if (lastpoke!=pokemonIndex){
-				//	this.Illusion     = battle.Party(index)[lastpoke]
-				//}
-			}*/
-			#endregion InitEffects
 			return this;
 		}
 		private void InitBlank()
@@ -359,7 +288,7 @@ namespace PokemonUnity.Battle
 			}			
 			damagestate.Reset();
 			Fainted						= false;
-			//battle.lastAttacker		= new List<int>();
+			lastAttacker				= new List<sbyte>();
 			lastHPLost					= 0;
 			tookDamage					= false;
 			lastMoveUsed				= Moves.NONE;
@@ -500,7 +429,7 @@ namespace PokemonUnity.Battle
 			}
 			else
 			{
-				name			= pkmn.Name;
+				//name			= pkmn.Name;
 				//Species		= pkmn.Species;
 				//Level			= pkmn.Level;
 				HP				= pkmn.HP;
@@ -528,11 +457,8 @@ namespace PokemonUnity.Battle
 					(PokemonUnity.Attack.Move)pkmn.moves[3]
 				};
 			}
-//#if (DEBUG == false || UNITY_EDITOR)
-//			UpdateUI();
-//#endif
 		}
-		public Pokemon Update(bool fullchange = false)
+		public void Update(bool fullchange = false)
 		{
 			if(Species != Pokemons.NONE)
 			{
@@ -557,7 +483,7 @@ namespace PokemonUnity.Battle
 					}
 				}
 			}
-			return this;
+			//return this;
 		}
 		/// <summary>
 		/// Used only to erase the battler of a Shadow Pokémon that has been snagged.
@@ -974,7 +900,12 @@ namespace PokemonUnity.Battle
 							}
 							break;
 					}
-				}
+				} else
+					if(Form.Id != Monster.Forms.CASTFORM)
+					{
+						form = 0;
+						transformed = true; //Shouldn't normal be false?
+					}
 			}
 			if (Species == Pokemons.SHAYMIN)
 			{
@@ -1035,8 +966,8 @@ namespace PokemonUnity.Battle
 			{
 				Update(true);
 				battle.scene.ChangePokemon();
-				//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
-				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form));
+				battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "Transformed", ToString()).Value);
+				GameDebug.Log(string.Format("[Form changed] {0} changed to form {1}", ToString(), Form.Id.ToString(TextScripts.Name)));
 			}
 		}
 		public void ResetForm()
@@ -1067,27 +998,27 @@ namespace PokemonUnity.Battle
 				{
 					battle.SetWeather(Weather.HEAVYRAIN);
 					battle.weatherduration = -1;
-					//battle.CommonAnimation("HeavyRain", null, null);
-					//"{1}'s {2} made a heavy rain begin to fall!"
-					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HeavyRainStart", ToString(), Ability.ToString().Translate().Value).Value);
+					battle.pbCommonAnimation("HeavyRain", null, null);
+					//Output Below: "{1}'s {2} made a heavy rain begin to fall!"
+					battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HeavyRainStart", ToString(), Ability.ToString().Translate().Value).Value);
 					GameDebug.Log(string.Format("[Ability triggered] {0}'s Primordial Sea made it rain heavily", ToString()));
 				}
 				if(hasWorkingAbility(Abilities.DESOLATE_LAND) && battle.Weather != Weather.HARSHSUN)
 				{
 					battle.SetWeather(Weather.HARSHSUN);
 					battle.weatherduration = -1;
-					//battle.CommonAnimation("HarshSun", null, null);
-					//"{1}'s {2} turned the sunlight extremely harsh!"
-					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HarshSunStart", ToString(), Ability.ToString().Translate().Value).Value);
+					battle.pbCommonAnimation("HarshSun", null, null);
+					//Output Below: "{1}'s {2} turned the sunlight extremely harsh!"
+					battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HarshSunStart", ToString(), Ability.ToString().Translate().Value).Value);
 					GameDebug.Log(string.Format("[Ability triggered] {0}'s Desolate Land made the sun shine harshly", ToString()));
 				}
 				if(hasWorkingAbility(Abilities.DELTA_STREAM) && battle.Weather != Weather.STRONGWINDS)
 				{
 					battle.SetWeather(Weather.STRONGWINDS);
 					battle.weatherduration = -1;
-					//battle.CommonAnimation("StrongWinds", null, null);
-					//"{1}'s {2} caused a mysterious air current that protects Flying-type Pokémon!"
-					//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "StrongWindsStart", ToString(), Ability.ToString().Translate().Value).Value);
+					battle.pbCommonAnimation("StrongWinds", null, null);
+					//Output Below: "{1}'s {2} caused a mysterious air current that protects Flying-type Pokémon!"
+					battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "StrongWindsStart", ToString(), Ability.ToString().Translate().Value).Value);
 					GameDebug.Log(string.Format("[Ability triggered] {0}'s Delta Stream made an air current blow", ToString()));
 				}
 				if (battle.Weather != Weather.HEAVYRAIN &&
@@ -1106,9 +1037,9 @@ namespace PokemonUnity.Battle
 						}
 						else
 							battle.weatherduration = -1;
-						//battle.CommonAnimation("Rain", null, null);
-						//"{1}'s {2} made it rain!"
-						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "RainStart", ToString(), Ability.ToString().Translate().Value).Value);
+						battle.pbCommonAnimation("Rain", null, null);
+						//Output Below: "{1}'s {2} made it rain!"
+						battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "RainStart", ToString(), Ability.ToString().Translate().Value).Value);
 						GameDebug.Log(string.Format("[Ability triggered] {0}'s Drizzle made it rain", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.DROUGHT) && 
@@ -1123,9 +1054,9 @@ namespace PokemonUnity.Battle
 						}
 						else
 							battle.weatherduration = -1;
-						//battle.CommonAnimation("Sunny", null, null);
-						//"{1}'s {2} intensified the sun's rays!"
-						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SunnyStart", ToString(), Ability.ToString().Translate().Value).Value);
+						battle.pbCommonAnimation("Sunny", null, null);
+						//Output Below: "{1}'s {2} intensified the sun's rays!"
+						battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SunnyStart", ToString(), Ability.ToString().Translate().Value).Value);
 						GameDebug.Log(string.Format("[Ability triggered] {0}'s Drought made it sunny", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.SAND_STREAM) && 
@@ -1140,9 +1071,9 @@ namespace PokemonUnity.Battle
 						}
 						else
 							battle.weatherduration = -1;
-						//battle.CommonAnimation("Sandstorm", null, null);
-						//"{1}'s {2} whipped up a sandstorm!"
-						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SandstormStart", ToString(), Ability.ToString().Translate().Value).Value);
+						battle.pbCommonAnimation("Sandstorm", null, null);
+						//Output Below: "{1}'s {2} whipped up a sandstorm!"
+						battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "SandstormStart", ToString(), Ability.ToString().Translate().Value).Value);
 						GameDebug.Log(string.Format("[Ability triggered] {0}'s Sand Stream made it sandstorm", ToString()));
 					}
 					if (hasWorkingAbility(Abilities.SNOW_WARNING) && 
@@ -1157,9 +1088,9 @@ namespace PokemonUnity.Battle
 						}
 						else
 							battle.weatherduration = -1;
-						//battle.CommonAnimation("Hail", null, null);
-						//"{1}'s {2} madeit hail!"
-						//battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HailStart", ToString(), Ability.ToString().Translate().Value).Value);
+						battle.pbCommonAnimation("Hail", null, null);
+						//Output Below: "{1}'s {2} madeit hail!"
+						battle.pbDisplay(LanguageExtension.Translate(Text.ScriptTexts, "HailStart", ToString(), Ability.ToString().Translate().Value).Value);
 						GameDebug.Log(string.Format("[Ability triggered] {0}'s Snow Warning made it hail", ToString()));
 					}
 				}
@@ -1199,7 +1130,13 @@ namespace PokemonUnity.Battle
 				}
 				if (choices.Count > 0)
 				{
-					//ToDo: WIP; Finish from here...
+					int choice = choices[@battle.pbRandom(choices.Count)];
+					string battlername = @battle.battlers[choice].ToString(true);
+					Abilities battlerability = @battle.battlers[choice].ability;
+					@ability = battlerability;
+					string abilityname = battlerability.ToString();
+					@battle.pbDisplay(_INTL("{1} traced {2}'s {3}!", ToString(), battlername, abilityname));
+					GameDebug.Log($"[Ability triggered] #{ToString()}'s Trace turned into #{abilityname} from #{battlername}");
 				}
 			}
 			#endregion Trace
@@ -1216,7 +1153,6 @@ namespace PokemonUnity.Battle
 		public void pbHyperMode() { }
 		public void pbFaint() { }
 		public void pbAbilityCureCheck() { }
-		public Moves lastMoveUsedSketch { get; set; }
 		public void pbReduceHP(int amount) { }
 		public void pbBerryCureCheck() { }
 		public void pbActivateBerryEffect(Items item, bool something) { }
