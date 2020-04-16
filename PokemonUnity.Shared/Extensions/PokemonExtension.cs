@@ -22,6 +22,11 @@ namespace PokemonUnity
 			//create a switch, and return Locale Name or Description
 			return stat.ToString();
 		}
+		public static string ToString(this PokemonUnity.Monster.Forms form, TextScripts text)
+		{
+			//create an operator and return Locale Name
+			return form.ToString();
+		}
 		public static string ToString(this PokemonUnity.Pokemons pokemon, TextScripts text)
 		{
 			//create a switch, and return Locale Name or Description
