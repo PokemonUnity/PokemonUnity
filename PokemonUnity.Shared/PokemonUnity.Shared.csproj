@@ -102,7 +102,6 @@
     <Compile Include="Inventory\Data\Berry.cs" />
     <Compile Include="Inventory\Data\ItemFlags.cs" />
     <Compile Include="Inventory\Data\Mail.cs" />
-    <Compile Include="Monster\Ability.cs" />
     <Compile Include="Monster\Interface\IPokemon.cs" />
     <Compile Include="Monster\Nature.cs" />
     <Compile Include="Monster\Pokemon.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="Monster\Pokemon\PokemonData\Evolution.cs" />
     <Compile Include="Monster\Pokemon\PokemonData\Moveset.cs" />
     <Compile Include="Monster\Pokemon\PokemonData\MoveTree.cs" />
-    <Compile Include="Monster\Type.cs" />
     <Compile Include="Overworld\Wild\Encounter.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
