@@ -1695,7 +1695,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	return damage;   // The HP lost by the opponent due to this attack
   }
 
-  public virtual void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, bool turneffects){
+  public virtual void pbEffectAfterHit(Pokemon attacker, Pokemon opponent, Effects.Move turneffects){
   }
 #endregion
 
@@ -1704,7 +1704,7 @@ finaldamagemult = Math.Round(finaldamagemult * met);
 	return true;
   }
 
-  public virtual void pbAddTarget(int[] targets, Pokemon attacker){
+  public virtual void pbAddTarget(Pokemon[] targets, Pokemon attacker){
   }
 
 /// <summary>

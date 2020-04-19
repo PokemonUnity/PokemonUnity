@@ -398,7 +398,7 @@ namespace PokemonUnity.Battle
 				{
 					attacker.form = (attacker.form + 1) % 2;
 					attacker.Update(true);
-					this.battle.scene.pbChangePokemon(attacker, attacker.Species);
+					this.battle.scene.pbChangePokemon(attacker, attacker.Form.Id);//.Species);
 					battle.pbDisplay(_INTL("{1} transformed!", attacker.ToString()));
 					GameDebug.Log("[Form changed] #{attacker.ToString()} changed to form #{attacker.Form}");
 				}
@@ -3516,7 +3516,7 @@ namespace PokemonUnity.Battle
 			{
 				GameDebug.Log($"[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
+				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
 
 				battle.pbDisplay(_INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3556,7 +3556,7 @@ namespace PokemonUnity.Battle
 			{
 				GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
+				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
 
 				battle.pbDisplay(_INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3605,7 +3605,7 @@ namespace PokemonUnity.Battle
 			{
 				GameDebug.Log("[Ability triggered] #{attacker.ToString()}'s Illusion ended");
 				attacker.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(attacker, attacker.Species);
+				this.battle.scene.pbChangePokemon(attacker, attacker.Form.Id);//Species);
 
 				battle.pbDisplay(_INTL("{1}'s {2} wore off!", attacker.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3663,7 +3663,7 @@ namespace PokemonUnity.Battle
 			{
 				GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
+				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
 
 				battle.pbDisplay(_INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}
@@ -3739,7 +3739,7 @@ namespace PokemonUnity.Battle
 			{
 				GameDebug.Log("[Ability triggered] #{opponent.ToString()}'s Illusion ended");
 				opponent.effects.Illusion = null;
-				this.battle.scene.pbChangePokemon(opponent, opponent.Species);
+				this.battle.scene.pbChangePokemon(opponent, opponent.Form.Id);//Species);
 
 				battle.pbDisplay(_INTL("{1}'s {2} wore off!", opponent.ToString(), oldabil.ToString(TextScripts.Name)));
 			}

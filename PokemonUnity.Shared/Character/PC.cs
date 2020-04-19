@@ -44,7 +44,7 @@ namespace PokemonUnity.Character
 				return pkmns;
 			}
 		}
-		public byte ActiveBox { get; private set; }
+		public byte ActiveBox { get; private set; } //Rename to CurrentBox?
 		public string[] BoxNames { get; private set; }
 		public int[] BoxTextures { get; private set; }
 		public string Name { get { return BoxNames[ActiveBox] ?? "Box " + (ActiveBox + 1).ToString(); } }

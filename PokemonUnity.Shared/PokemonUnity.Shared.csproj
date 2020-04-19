@@ -64,6 +64,7 @@
     <Compile Include="Character\Trainer\TrainerId.cs" />
     <Compile Include="Character\Trainer.cs" />
     <Compile Include="Extensions\ItemExtension.cs" />
+    <Compile Include="Extensions\TrainerExtension.cs" />
     <Compile Include="Extensions\PokemonExtension.cs" />
     <Compile Include="Extensions\AbilityExtension.cs" />
     <Compile Include="Extensions\MoveExtension.cs" />

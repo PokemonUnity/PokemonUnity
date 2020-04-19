@@ -28,7 +28,7 @@ namespace PokemonUnity.Monster.Data
 		public static float GetEffectiveness(PokemonUnity.Types atk, PokemonUnity.Types target)
 		{
 			if (target == Types.NONE)
-				return 1;
+				return 2;//return 1?
 			return Game.TypeData[atk][target];
 		}
 		public static float GetCombinedEffectivenessModifier(PokemonUnity.Types atk, PokemonUnity.Types target1, PokemonUnity.Types target2 = Types.NONE, PokemonUnity.Types target3 = Types.NONE)

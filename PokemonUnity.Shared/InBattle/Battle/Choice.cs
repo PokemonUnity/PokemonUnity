@@ -42,6 +42,20 @@ namespace PokemonUnity.Battle
 				Move = move;
 				Target = target;
 			}
+			/// <summary>
+			/// If action you're choosing to take is to Attack with a Move
+			/// </summary>
+			/// <param name="action"></param>
+			/// <param name="move"></param>
+			/// <param name="target"></param>
+			//ToDo: Attack.Move <= (Implicit/Explicit) => Battle.Move
+			public Choice (ChoiceAction action, int moveIndex, Attack.Move move, int target = -1)
+			{
+				Action = action;
+				Index = moveIndex;
+				//Move = move;
+				Target = target;
+			}
 
 			/// <summary>
 			/// If action you're choosing to take is to Switch Pkmns

@@ -20,7 +20,7 @@ namespace PokemonUnity.Battle
 			public void HPChanged(int index, int oldhp, bool animate) { }
 			public void pbHPChanged(Pokemon pkmn, int _new) { }
 			public void ChangePokemon() { }
-			public void pbChangePokemon(Pokemon pkmn, Pokemons _new) { }
+			public void pbChangePokemon(Pokemon pkmn, Monster.Forms _new) { }
 			public void pDamageAnimation(Pokemon pkmn, int _new) { }
 			public void pbDamageAnimation(Pokemon pkmn, int _new) { }
 			public void pbAnimation(Moves id, Pokemon attacker, Pokemon opponent, int hitnum) { }

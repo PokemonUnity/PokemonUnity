@@ -13,10 +13,10 @@ namespace PokemonUnity.Battle
 		/// These effects apply to the usage of a move
 		/// </summary>
 		public class Move { 
-			public int SkipAccuracyCheck { get; set; }
-			public int SpecialUsage      { get; set; }
-			public int PassedTrying      { get; set; }
-			public int TotalDamage       { get; set; }
+			public bool SkipAccuracyCheck	{ get; set; }
+			public bool SpecialUsage		{ get; set; }
+			public bool PassedTrying		{ get; set; }
+			public int TotalDamage			{ get; set; }
 		}
 	}
 }

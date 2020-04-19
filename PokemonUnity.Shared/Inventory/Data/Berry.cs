@@ -517,6 +517,15 @@ namespace PokemonUnity.Inventory//.ItemData
 			return true;
 		}
 
+		public bool ConfusionBerry()
+		{
+			return	Id == Items.AGUAV_BERRY		|| 
+					Id == Items.FIGY_BERRY		||
+					Id == Items.IAPAPA_BERRY	||
+					Id == Items.MAGO_BERRY		||
+					Id == Items.WIKI_BERRY;
+		}
+
 		//public Berry ToGenIV()
 		//{
 		//	return this;

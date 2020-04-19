@@ -20,7 +20,7 @@ namespace PokemonUnity.Battle
 			/// <summary>
 			/// Type effectiveness
 			/// </summary>
-			public int TypeMod { get; set; }
+			public double TypeMod { get; set; }
 			/// <summary>
 			/// null - not used, 0 - failed, 1 - succeeded
 			/// </summary>
