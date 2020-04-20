@@ -95,63 +95,63 @@ namespace PokemonUnity.Attack.Data
 	{
 		NONE = 0,
 		/// <summary>
-		/// Inflicts regular damage with no additional effect.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage with no additional effect.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// </summary>	
 		/// <remarks>
 		/// POUND,MEGA-PUNCH,SCRATCH,VICE-GRIP,CUT,WING-ATTACK,SLAM,VINE-WHIP,MEGA-KICK,HORN-ATTACK,TACKLE,WATER-GUN,HYDRO-PUMP,PECK,DRILL-PECK,STRENGTH,ROCK-THROW,EGG-BOMB,MEGAHORN,HYPER-VOICE,DRAGON-CLAW,AQUA-TAIL,SEED-BOMB,X-SCISSOR,DRAGON-PULSE,POWER-GEM,POWER-WHIP,FAIRY-WIND,DAZZLING-GLEAM,LANDS-WRATH,ORIGIN-PULSE,PRECIPICE-BLADES,BREAKNECK-BLITZ--PHYSICAL,BREAKNECK-BLITZ--SPECIAL,ALL-OUT-PUMMELING--PHYSICAL,ALL-OUT-PUMMELING--SPECIAL,SUPERSONIC-SKYSTRIKE--PHYSICAL,SUPERSONIC-SKYSTRIKE--SPECIAL,ACID-DOWNPOUR--PHYSICAL,ACID-DOWNPOUR--SPECIAL,TECTONIC-RAGE--PHYSICAL,TECTONIC-RAGE--SPECIAL,CONTINENTAL-CRUSH--PHYSICAL,CONTINENTAL-CRUSH--SPECIAL,SAVAGE-SPIN-OUT--PHYSICAL,SAVAGE-SPIN-OUT--SPECIAL,NEVER-ENDING-NIGHTMARE--PHYSICAL,NEVER-ENDING-NIGHTMARE--SPECIAL,CORKSCREW-CRASH--PHYSICAL,CORKSCREW-CRASH--SPECIAL,INFERNO-OVERDRIVE--PHYSICAL,INFERNO-OVERDRIVE--SPECIAL,HYDRO-VORTEX--PHYSICAL,HYDRO-VORTEX--SPECIAL,BLOOM-DOOM--PHYSICAL,BLOOM-DOOM--SPECIAL,GIGAVOLT-HAVOC--PHYSICAL,GIGAVOLT-HAVOC--SPECIAL,SHATTERED-PSYCHE--PHYSICAL,SHATTERED-PSYCHE--SPECIAL,SUBZERO-SLAMMER--PHYSICAL,SUBZERO-SLAMMER--SPECIAL,DEVASTATING-DRAKE--PHYSICAL,DEVASTATING-DRAKE--SPECIAL,BLACK-HOLE-ECLIPSE--PHYSICAL,BLACK-HOLE-ECLIPSE--SPECIAL,TWINKLE-TACKLE--PHYSICAL,TWINKLE-TACKLE--SPECIAL,CATASTROPIKA,HIGH-HORSEPOWER,LEAFAGE,DRAGON-HAMMER,SINISTER-ARROW-RAID,MALICIOUS-MOONSAULT,OCEANIC-OPERETTA,SOUL-STEALING-7-STAR-STRIKE,PULVERIZING-PANCAKE,10-000-000-VOLT-THUNDERBOLT,PLASMA-FISTS,PHOTON-GEYSER,SHADOW-BLITZ,SHADOW-BREAK,SHADOW-RAVE,SHADOW-STORM,SHADOW-WAVE
 		/// </remarks>	
 		x001 = 1,
 		/// <summary>
-		/// Puts the target to sleep.<para></para> Puts the target to [sleep]{mechanic:sleep}.
+		/// Puts the target to sleep.<para></para> Puts the target to <see cref="Attack.MoveMetaAilments.SLEEP"/>.
 		/// </summary>	
 		/// <remarks>
 		/// SING,SLEEP-POWDER,HYPNOSIS,LOVELY-KISS,SPORE,GRASS-WHISTLE,DARK-VOID
 		/// </remarks>	
 		x002 = 2,
 		/// <summary>
-		/// Has a $effect_chance% chance to [poison]{mechanic:poison} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to  <see cref="Attack.MoveMetaAilments.POISON"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.POISON"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// POISON-STING,SMOG,SLUDGE,SLUDGE-BOMB,POISON-JAB,GUNK-SHOT,SLUDGE-WAVE
 		/// </remarks>	
 		x003 = 3,
 		/// <summary>
-		/// Drains half the damage inflicted to heal the user.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  [Drains]{mechanic:drain} half the damage inflicted to heal the user.
+		/// Drains half the damage inflicted to heal the user.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  [Drains]{mechanic:drain} half the damage inflicted to heal the user.
 		/// </summary>	
 		/// <remarks>
 		/// ABSORB,MEGA-DRAIN,LEECH-LIFE,GIGA-DRAIN,DRAIN-PUNCH,HORN-LEECH
 		/// </remarks>	
 		x004 = 4,
 		/// <summary>
-		/// Has a $effect_chance% chance to [burn]{mechanic:burn} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// FIRE-PUNCH,EMBER,FLAMETHROWER,FIRE-BLAST,HEAT-WAVE,LAVA-PLUME,SCALD,INFERNO,SEARING-SHOT,BLUE-FLARE,STEAM-ERUPTION,SHADOW-FIRE
 		/// </remarks>	
 		x005 = 5,
 		/// <summary>
-		/// Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.FREEZE"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.FREEZE"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// ICE-PUNCH,ICE-BEAM,POWDER-SNOW,SHADOW-CHILL
 		/// </remarks>	
 		x006 = 6,
 		/// <summary>
-		/// Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [paralyze]{mechanic:paralyze} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.PARALYSIS"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [paralyze]{mechanic:paralyze} the target.
 		/// </summary>	
 		/// <remarks>
 		/// THUNDER-PUNCH,BODY-SLAM,THUNDER-SHOCK,THUNDERBOLT,LICK,ZAP-CANNON,SPARK,DRAGON-BREATH,FORCE-PALM,DISCHARGE,BOLT-STRIKE,STOKED-SPARKSURFER,SHADOW-BOLT
 		/// </remarks>	
 		x007 = 7,
 		/// <summary>
-		/// User faints.<para></para> User [faint]{mechanic:faint}s, even if the attack [fail]{mechanic:fail}s or [miss]{mechanic:miss}es.  Inflicts [regular damage]{mechanic:regular-damage}.
+		/// User faints.<para></para> User [faint]{mechanic:faint}s, even if the attack [fail]{mechanic:fail}s or [miss]{mechanic:miss}es.  Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// </summary>	
 		/// <remarks>
 		/// SELF-DESTRUCT,EXPLOSION
 		/// </remarks>	
 		x008 = 8,
 		/// <summary>
-		/// Only works on sleeping Pokémon.  Drains half the damage inflicted to heal the user.<para></para> [Fails]{mechanic:fail} if not used on a [sleep]{mechanic:sleep}ing Pokémon.  Inflicts [regular damage]{mechanic:regular-damage}.  [Drains]{mechanic:drain} half the damage inflicted to heal the user.
+		/// Only works on sleeping Pokémon.  Drains half the damage inflicted to heal the user.<para></para> [Fails]{mechanic:fail} if not used on a <see cref="Attack.MoveMetaAilments.SLEEP"/>ing Pokémon.  Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  [Drains]{mechanic:drain} half the damage inflicted to heal the user.
 		/// </summary>	
 		/// <remarks>
 		/// DREAM-EATER
@@ -196,7 +196,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x011 = 17,
 		/// <summary>
-		/// Never misses.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
+		/// Never misses.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
 		/// </summary>	
 		/// <remarks>
 		/// SWIFT,FEINT-ATTACK,SHADOW-PUNCH,AERIAL-ACE,MAGICAL-LEAF,SHOCK-WAVE,AURA-SPHERE,MAGNET-BOMB,SMART-STRIKE
@@ -256,9 +256,9 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x01B = 27,
 		/// <summary>
-		/// Hits every turn for 2-3 turns, then confuses the user.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User is forced to attack with this move for 2–3 turns,selected at random.  After the last hit, the user becomes [confused]{mechanic:confused}.
+		/// Hits every turn for 2-3 turns, then confuses the user.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User is forced to attack with this move for 2–3 turns,selected at random.  After the last hit, the user becomes [confused]{mechanic:confused}.
 		/// 
-		/// <seealso cref="Moves.SAFEGUARD"/> does not protect against the [confusion]{mechanic:confusion} from this move.
+		/// <seealso cref="Moves.SAFEGUARD"/> does not protect against the <see cref="Attack.MoveMetaAilments.CONFUSION"/> from this move.
 		/// </summary>
 		/// <remarks>
 		/// THRASH,PETAL-DANCE,OUTRAGE
@@ -274,7 +274,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x01D = 29,
 		/// <summary>
-		/// Hits 2-5 times in one turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Hits 2–5 times in one turn.
+		/// Hits 2-5 times in one turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Hits 2–5 times in one turn.
 		/// 
 		/// Has a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.
 		/// </summary>
@@ -290,7 +290,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x01F = 31,
 		/// <summary>
-		/// Has a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to make the target <seealso cref="Mechanics.FLINCH"/>.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target <seealso cref="Battle.BattlerEffects.Flinch"/>.
 		/// </summary>
 		/// <remarks>
 		/// ROLLING-KICK,HEADBUTT,BITE,BONE-CLUB,WATERFALL,ROCK-SLIDE,HYPER-FANG,NEEDLE-ARM,ASTONISH,EXTRASENSORY,DARK-PULSE,AIR-SLASH,DRAGON-RUSH,ZEN-HEADBUTT,IRON-HEAD,HEART-STAMP,ICICLE-CRASH,ZING-ZAP
@@ -311,7 +311,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x022 = 34,
 		/// <summary>
-		/// Scatters money on the ground worth five times the user's level.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  After the battle ends, the winner receives five times the user's level in extra money for each time this move was used.
+		/// Scatters money on the ground worth five times the user's level.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  After the battle ends, the winner receives five times the user's level in extra money for each time this move was used.
 		/// </summary>	
 		/// <remarks>
 		/// PAY-DAY
@@ -329,14 +329,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x024 = 36,
 		/// <summary>
-		/// Has a $effect_chance% chance to [burn]{mechanic:burn}, [freeze]{mechanic:freeze}, or [paralyze]{mechanic:paralysis} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [burn]{mechanic:burn}, [freeze]{mechanic:freeze}, or [paralyze]{mechanic:paralyze} the target.  One of these effects is selected at random; they do not each have independent chances to occur.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/>, <see cref="Attack.MoveMetaAilments.FREEZE"/>, or <see cref="Attack.MoveMetaAilments.PARALYSIS"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/>, <see cref="Attack.MoveMetaAilments.FREEZE"/>, or [paralyze]{mechanic:paralyze} the target.  One of these effects is selected at random; they do not each have independent chances to occur.
 		/// </summary>	
 		/// <remarks>
 		/// TRI-ATTACK
 		/// </remarks>	
 		x025 = 37,
 		/// <summary>
-		/// User sleeps for two turns, completely healing itself.<para></para> User falls to [sleep]{mechanic:sleep} and immediately regains all its [HP]{mechanic:hp}.  If the user has another [major status effect]{mechanic:major-status-effect}, [sleep]{mechanic:sleep} will replace it.  The user will always wake up after two turns, or one turn with <seealso cref="Abilities.EARLY_BIRD"/>.
+		/// User sleeps for two turns, completely healing itself.<para></para> User falls to <see cref="Attack.MoveMetaAilments.SLEEP"/> and immediately regains all its [HP]{mechanic:hp}.  If the user has another [major status effect]{mechanic:major-status-effect}, <see cref="Attack.MoveMetaAilments.SLEEP"/> will replace it.  The user will always wake up after two turns, or one turn with <seealso cref="Abilities.EARLY_BIRD"/>.
 		/// 
 		/// This move [fail]{mechanic:fail}s if the Pokémon cannot fall asleep due to <seealso cref="Moves.UPROAR"/>, <seealso cref="Abilities.INSOMNIA"/>, or <seealso cref="Abilities.VITAL_SPIRIT"/>.  It also fails if the Pokémon is at full health or is already asleep.
 		/// </summary>
@@ -356,7 +356,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x027 = 39,
 		/// <summary>
-		/// Requires a turn to charge before attacking.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move.  User charges for one turn before attacking.
+		/// Requires a turn to charge before attacking.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move.  User charges for one turn before attacking.
 		/// 
 		/// This move cannot be selected by <seealso cref="Moves.SLEEP_TALK"/>.
 		/// </summary>
@@ -379,7 +379,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x02A = 42,
 		/// <summary>
-		/// Prevents the target from fleeing and inflicts damage for 2-5 turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the [field]{mechanic:field}, this effect ends.
+		/// Prevents the target from fleeing and inflicts damage for 2-5 turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the [field]{mechanic:field}, this effect ends.
 		/// 
 		/// Has a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.
 		/// 
@@ -390,21 +390,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x02B = 43,
 		/// <summary>
-		/// Has an increased chance for a critical hit.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move.
+		/// Has an increased chance for a critical hit.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move.
 		/// </summary>	
 		/// <remarks>
 		/// KARATE-CHOP,RAZOR-LEAF,CRABHAMMER,SLASH,AEROBLAST,CROSS-CHOP,AIR-CUTTER,LEAF-BLADE,NIGHT-SLASH,SHADOW-CLAW,PSYCHO-CUT,STONE-EDGE,ATTACK-ORDER,SPACIAL-REND,DRILL-RUN,SHADOW-BLAST
 		/// </remarks>	
 		x02C = 44,
 		/// <summary>
-		/// Hits twice in one turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Hits twice in one turn.
+		/// Hits twice in one turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Hits twice in one turn.
 		/// </summary>	
 		/// <remarks>
 		/// DOUBLE-KICK,BONEMERANG,DOUBLE-HIT,DUAL-CHOP,GEAR-GRIND
 		/// </remarks>	
 		x02D = 45,
 		/// <summary>
-		/// If the user misses, it takes half the damage it would have inflicted in recoil.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If this move misses, is blocked by <seealso cref="Moves.PROTECT"/> or <seealso cref="Moves.DETECT"/>, or has no effect, the user takes half the damage it would have inflicted in recoil.  This recoil damage will not exceed half the user's max HP.
+		/// If the user misses, it takes half the damage it would have inflicted in recoil.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If this move misses, is blocked by <seealso cref="Moves.PROTECT"/> or <seealso cref="Moves.DETECT"/>, or has no effect, the user takes half the damage it would have inflicted in recoil.  This recoil damage will not exceed half the user's max HP.
 		/// 
 		/// This move cannot be used while <seealso cref="Moves.GRAVITY"/> is in effect.
 		/// </summary>
@@ -433,7 +433,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x030 = 48,
 		/// <summary>
-		/// User receives 1/4 the damage it inflicts in recoil.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User takes 1/4 the damage it inflicts in recoil.
+		/// User receives 1/4 the damage it inflicts in recoil.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/4 the damage it inflicts in recoil.
 		/// </summary>	
 		/// <remarks>
 		/// TAKE-DOWN,SUBMISSION,WILD-CHARGE,HEAD-CHARGE
@@ -553,42 +553,42 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x044 = 68,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's Attack by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [Attack]{mechanic:attack} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's Attack by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [Attack]{mechanic:attack} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// AURORA-BEAM,PLAY-ROUGH
 		/// </remarks>	
 		x045 = 69,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's Defense by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's Defense by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// IRON-TAIL,CRUNCH,ROCK-SMASH,CRUSH-CLAW,RAZOR-SHELL,SHADOW-BONE,LIQUIDATION
 		/// </remarks>	
 		x046 = 70,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's Speed by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's Speed by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// BUBBLE-BEAM,CONSTRICT,BUBBLE,ICY-WIND,ROCK-TOMB,MUD-SHOT,BULLDOZE
 		/// </remarks>	
 		x047 = 71,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's Special Attack by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [Special Attack]{mechanic:special-attack} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's Special Attack by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [Special Attack]{mechanic:special-attack} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// MIST-BALL,STRUGGLE-BUG,SNARL,MOONBLAST,MYSTICAL-FIRE
 		/// </remarks>	
 		x048 = 72,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's Special Defense by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [Special Defense]{mechanic:special-defense} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's Special Defense by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [Special Defense]{mechanic:special-defense} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// ACID,PSYCHIC,SHADOW-BALL,LUSTER-PURGE,BUG-BUZZ,FOCUS-BLAST,ENERGY-BALL,EARTH-POWER,FLASH-CANNON
 		/// </remarks>	
 		x049 = 73,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's accuracy by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [accuracy]{mechanic:accuracy} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's accuracy by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [accuracy]{mechanic:accuracy} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// MUD-SLAP,OCTAZOOKA,MUDDY-WATER,MUD-BOMB,MIRROR-SHOT,LEAF-TORNADO,NIGHT-DAZE
@@ -599,7 +599,7 @@ namespace PokemonUnity.Attack.Data
 		/// </summary>
 		x04B = 75,
 		/// <summary>
-		/// User charges for one turn before attacking.  Has a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User charges for one turn before attacking.  [Critical hit chance]{mechanic:critical-hit-chance} is one level higher than normal.  Has a $effect_chance% chance to make the target [flinch]{mechanic:flinch}.
+		/// User charges for one turn before attacking.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User charges for one turn before attacking.  [Critical hit chance]{mechanic:critical-hit-chance} is one level higher than normal.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target [flinch]{mechanic:flinch}.
 		/// 
 		/// This move cannot be selected by <seealso cref="Moves.SLEEP_TALK"/>.
 		/// </summary>
@@ -608,21 +608,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x04C = 76,
 		/// <summary>
-		/// Has a $effect_chance% chance to confuse the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [confuse]{mechanic:confuse} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to confuse the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [confuse]{mechanic:confuse} the target.
 		/// </summary>	
 		/// <remarks>
 		/// PSYBEAM,CONFUSION,DIZZY-PUNCH,DYNAMIC-PUNCH,SIGNAL-BEAM,WATER-PULSE,ROCK-CLIMB
 		/// </remarks>	
 		x04D = 77,
 		/// <summary>
-		/// Hits twice in the same turn.  Has a $effect_chance% chance to poison the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Hits twice in the same turn.  Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
+		/// Hits twice in the same turn.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to poison the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Hits twice in the same turn.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.POISON"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// TWINEEDLE
 		/// </remarks>	
 		x04E = 78,
 		/// <summary>
-		/// Never misses.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
+		/// Never misses.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
 		/// </summary>	
 		/// <remarks>
 		/// VITAL-THROW
@@ -631,19 +631,19 @@ namespace PokemonUnity.Attack.Data
 		/// <summary>
 		/// Transfers 1/4 of the user's max HP into a doll, protecting the user from further damage or status changes until it breaks.<para></para> Transfers 1/4 the user's max [HP]{mechanic:hp} into a doll that absorbs damage and causes most negative move effects to [fail]{mechanic:fail}.  If the user leaves the [field]{mechanic:field}, the doll will vanish.  If the user cannot pay the [HP]{mechanic:hp} cost, this move will fail.
 		/// 
-		/// The doll takes damage as normal, using the user's stats and types, and will break when its [HP]{mechanic:hp} reaches zero.  Self-inflicted damage from [confusion]{mechanic:confusion} or recoil is not absorbed.  Healing effects from opponents ignore the doll and heal the user as normal.  Moves that work based on the user's [HP]{mechanic:hp} still do so; the doll's [HP]{mechanic:hp} does not influence any move.
+		/// The doll takes damage as normal, using the user's stats and types, and will break when its [HP]{mechanic:hp} reaches zero.  Self-inflicted damage from <see cref="Attack.MoveMetaAilments.CONFUSION"/> or recoil is not absorbed.  Healing effects from opponents ignore the doll and heal the user as normal.  Moves that work based on the user's [HP]{mechanic:hp} still do so; the doll's [HP]{mechanic:hp} does not influence any move.
 		/// 
-		/// The doll will block [major status effect]{mechanic:major-status-effect}s, [confusion]{mechanic:confusion}, and [flinch]{mechanic:flinch}ing.  The effects of <seealso cref="Moves.SMELLING_SALTS"/> and <seealso cref="Moves.WAKE_UP-SLAP"/> do not trigger against a doll, even if the Pokémon behind the doll has the appropriate [major status effect]{mechanic:major-status-effect}.  Multi-turn trapping moves like <seealso cref="Moves.WRAP"/> will hit the doll for their [regular damage]{mechanic:regular-damage}, but the multi-turn trapping and damage effects will not activate.
+		/// The doll will block [major status effect]{mechanic:major-status-effect}s, <see cref="Attack.MoveMetaAilments.CONFUSION"/>, and [flinch]{mechanic:flinch}ing.  The effects of <seealso cref="Moves.SMELLING_SALTS"/> and <seealso cref="Moves.WAKE_UP-SLAP"/> do not trigger against a doll, even if the Pokémon behind the doll has the appropriate [major status effect]{mechanic:major-status-effect}.  Multi-turn trapping moves like <seealso cref="Moves.WRAP"/> will hit the doll for their <seealso cref="Attack.MetaCategory.DAMAGE"/>, but the multi-turn trapping and damage effects will not activate.
 		/// 
 		/// Moves blocked or damage absorbed by the doll do not count as hitting the user or inflicting damage for any effects that respond to such, e.g., <seealso cref="Moves.AVALANCHE"/>, <seealso cref="Moves.COUNTER"/>, or a <seealso cref="Items.ROWAP_BERRY"/>.  <seealso cref="Moves.MAGIC_COAT"/> still works as normal, even against moves the doll would block.  Opposing Pokémon that damage the doll with a leech move like <seealso cref="Moves.ABSORB"/> are healed as normal.
 		/// 
-		/// It will also block <seealso cref="Moves.ACUPRESSURE"/>, <seealso cref="Moves.BLOCK"/>, the curse effect of <seealso cref="Moves.CURSE"/>, <seealso cref="Moves.DREAM_EATER"/>, <seealso cref="Moves.EMBARGO"/>, <seealso cref="Moves.FLATTER"/>, <seealso cref="Moves.GASTRO_ACID"/>, <seealso cref="Moves.GRUDGE"/>, <seealso cref="Moves.HEAL_BLOCK"/>, <seealso cref="Moves.LEECH_SEED"/>, <seealso cref="Moves.LOCK_ON"/>, <seealso cref="Moves.MEAN_LOOK"/>, <seealso cref="Moves.MIMIC"/>, <seealso cref="Moves.MIND_READER"/>, <seealso cref="Moves.NIGHTMARE"/>, <seealso cref="Moves.PAIN_SPLIT"/>, <seealso cref="Moves.PSYCHO_SHIFT"/>, <seealso cref="Moves.SPIDER_WEB"/>, <seealso cref="Moves.SKETCH"/>, <seealso cref="Moves.SWAGGER"/>, <seealso cref="Moves.SWITCHEROO"/>, <seealso cref="Moves.TRICK"/>, <seealso cref="Moves.WORRY_SEED"/>, and <seealso cref="Moves.YAWN"/>.  A Pokémon affected by <seealso cref="Moves.YAWN"/> before summoning the doll will still fall to [sleep]{mechanic:sleep}.
+		/// It will also block <seealso cref="Moves.ACUPRESSURE"/>, <seealso cref="Moves.BLOCK"/>, the curse effect of <seealso cref="Moves.CURSE"/>, <seealso cref="Moves.DREAM_EATER"/>, <seealso cref="Moves.EMBARGO"/>, <seealso cref="Moves.FLATTER"/>, <seealso cref="Moves.GASTRO_ACID"/>, <seealso cref="Moves.GRUDGE"/>, <seealso cref="Moves.HEAL_BLOCK"/>, <seealso cref="Moves.LEECH_SEED"/>, <seealso cref="Moves.LOCK_ON"/>, <seealso cref="Moves.MEAN_LOOK"/>, <seealso cref="Moves.MIMIC"/>, <seealso cref="Moves.MIND_READER"/>, <seealso cref="Moves.NIGHTMARE"/>, <seealso cref="Moves.PAIN_SPLIT"/>, <seealso cref="Moves.PSYCHO_SHIFT"/>, <seealso cref="Moves.SPIDER_WEB"/>, <seealso cref="Moves.SKETCH"/>, <seealso cref="Moves.SWAGGER"/>, <seealso cref="Moves.SWITCHEROO"/>, <seealso cref="Moves.TRICK"/>, <seealso cref="Moves.WORRY_SEED"/>, and <seealso cref="Moves.YAWN"/>.  A Pokémon affected by <seealso cref="Moves.YAWN"/> before summoning the doll will still fall to <see cref="Attack.MoveMetaAilments.SLEEP"/>.
 		/// 
 		/// The doll blocks <seealso cref="Abilities.INTIMIDATE"/>, but all other abilities act as though the doll did not exist.  If the user has an ability that absorbs moves of a certain type for [HP]{mechanic:hp} (such as <seealso cref="Abilities.VOLT_ABSORB"/> absorbing <seealso cref="Moves.THUNDER_WAVE"/>), such moves will not be blocked.
 		/// 
-		/// <seealso cref="Items.LIFE_ORB"/> and berries that cause [confusion]{mechanic:confusion} still work as normal, but their respective [HP]{mechanic:hp} loss and [confusion]{mechanic:confusion} are absorbed/blocked by the doll.
+		/// <seealso cref="Items.LIFE_ORB"/> and berries that cause <see cref="Attack.MoveMetaAilments.CONFUSION"/> still work as normal, but their respective [HP]{mechanic:hp} loss and <see cref="Attack.MoveMetaAilments.CONFUSION"/> are absorbed/blocked by the doll.
 		/// 
-		/// The user is still vulnerable to damage inflicted when entering or leaving the [field]{mechanic:field}, such as by <seealso cref="Moves.PURSUIT"/> or <seealso cref="Moves.SPIKES"/>; however, the doll will block the [poison]{mechanic:poison} effect of <seealso cref="Moves.TOXIC_SPIKES"/>.
+		/// The user is still vulnerable to damage inflicted when entering or leaving the [field]{mechanic:field}, such as by <seealso cref="Moves.PURSUIT"/> or <seealso cref="Moves.SPIKES"/>; however, the doll will block the <see cref="Attack.MoveMetaAilments.POISON"/> effect of <seealso cref="Moves.TOXIC_SPIKES"/>.
 		/// 
 		/// The doll is passed on by <seealso cref="Moves.BATON_PASS"/>.  It keeps its existing [HP]{mechanic:hp}, but uses the replacement Pokémon's stats and types for damage calculation.
 		/// 
@@ -654,14 +654,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x050 = 80,
 		/// <summary>
-		/// User foregoes its next turn to recharge.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User loses its next turn to "recharge", and cannot attack or [switch]{mechanic:switch} out during that turn.
+		/// User foregoes its next turn to recharge.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User loses its next turn to "recharge", and cannot attack or [switch]{mechanic:switch} out during that turn.
 		/// </summary>	
 		/// <remarks>
 		/// HYPER-BEAM,BLAST-BURN,HYDRO-CANNON,FRENZY-PLANT,GIGA-IMPACT,ROCK-WRECKER,ROAR-OF-TIME,PRISMATIC-LASER
 		/// </remarks>	
 		x051 = 81,
 		/// <summary>
-		/// If the user is hit after using this move, its Attack rises by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Every time the user is hit after it uses this move but before its next action, its [Attack]{mechanic:attack} raises by one [stage]{mechanic:stage}.
+		/// If the user is hit after using this move, its Attack rises by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Every time the user is hit after it uses this move but before its next action, its [Attack]{mechanic:attack} raises by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// RAGE
@@ -758,7 +758,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x05C = 92,
 		/// <summary>
-		/// Has a $effect_chance% chance to make the target flinch.  Only works if the user is sleeping.<para></para> Only usable if the user is [sleep]{mechanic:sleep}ing.  Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to make the target <seealso cref="Mechanics.FLINCH"/>.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.  Only works if the user is sleeping.<para></para> Only usable if the user is <see cref="Attack.MoveMetaAilments.SLEEP"/>ing.  Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target <seealso cref="Mechanics.FLINCH"/>.
 		/// </summary>
 		/// <remarks>
 		/// SNORE
@@ -794,11 +794,11 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x060 = 96,
 		/// <summary>
-		/// Randomly uses one of the user's other three moves.  Only works if the user is sleeping.<para></para> Only usable if the user is [sleep]{mechanic:sleep}ing.  Randomly selects and uses one of the user's other three moves.  Use of the selected move requires and costs 0 [PP]{mechanic:pp}.
+		/// Randomly uses one of the user's other three moves.  Only works if the user is sleeping.<para></para> Only usable if the user is <see cref="Attack.MoveMetaAilments.SLEEP"/>ing.  Randomly selects and uses one of the user's other three moves.  Use of the selected move requires and costs 0 [PP]{mechanic:pp}.
 		/// 
 		/// This move will not select <seealso cref="Moves.ASSIST"/>, <seealso cref="Moves.BIDE"/>, <seealso cref="Moves.BOUNCE"/>, <seealso cref="Moves.CHATTER"/>, <seealso cref="Moves.COPYCAT"/>, <seealso cref="Moves.DIG"/>, <seealso cref="Moves.DIVE"/>, <seealso cref="Moves.FLY"/>, <seealso cref="Moves.FOCUS_PUNCH"/>, <seealso cref="Moves.ME_FIRST"/>, <seealso cref="Moves.METRONOME"/>, <seealso cref="Moves.MIRROR_MOVE"/>, <seealso cref="Moves.SHADOW_FORCE"/>, <seealso cref="Moves.SKULL_BASH"/>, <seealso cref="Moves.SKY_ATTACK"/>, <seealso cref="Moves.SKY_DROP"/>, <seealso cref="Moves.SLEEP_TALK"/>, <seealso cref="Moves.SOLAR_BEAM"/>, <seealso cref="Moves.RAZOR_WIND"/>, or <seealso cref="Moves.UPROAR"/>.
 		/// 
-		/// If the selected move requires a recharge turn—i.e., one of <seealso cref="Moves.BLAST_BURN"/>, <seealso cref="Moves.FRENZY_PLANT"/>, <seealso cref="Moves.GIGA_IMPACT"/>, <seealso cref="Moves.HYDRO_CANNON"/>, <seealso cref="Moves.HYPER_BEAM"/>, <seealso cref="Moves.ROAR_OF-TIME"/>, or <seealso cref="Moves.ROCK_WRECKER"/>—and the user is still [sleep]{mechanic:sleep}ing next turn, then it's forced to use this move again and pay another [PP]{mechanic:pp} for the recharge turn.
+		/// If the selected move requires a recharge turn—i.e., one of <seealso cref="Moves.BLAST_BURN"/>, <seealso cref="Moves.FRENZY_PLANT"/>, <seealso cref="Moves.GIGA_IMPACT"/>, <seealso cref="Moves.HYDRO_CANNON"/>, <seealso cref="Moves.HYPER_BEAM"/>, <seealso cref="Moves.ROAR_OF-TIME"/>, or <seealso cref="Moves.ROCK_WRECKER"/>—and the user is still <see cref="Attack.MoveMetaAilments.SLEEP"/>ing next turn, then it's forced to use this move again and pay another [PP]{mechanic:pp} for the recharge turn.
 		/// 
 		/// This move cannot be copied by <seealso cref="Moves.MIRROR_MOVE"/>, nor selected by <seealso cref="Moves.ASSIST"/>, <seealso cref="Moves.METRONOME"/>, or <seealso cref="Moves.SLEEP_TALK"/>.
 		/// </summary>
@@ -816,7 +816,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x063 = 99,
 		/// <summary>
-		/// Inflicts more damage when the user has less HP remaining, with a maximum of 200 power.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power varies inversely with the user's proportional remaining [HP]{mechanic:hp}.
+		/// Inflicts more damage when the user has less HP remaining, with a maximum of 200 power.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power varies inversely with the user's proportional remaining [HP]{mechanic:hp}.
 		/// 
 		/// 64 * current HP / max HP | Power
 		/// -----------------------: | ----:
@@ -839,28 +839,28 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x065 = 101,
 		/// <summary>
-		/// Cannot lower the target's HP below 1.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Will not reduce the target's [HP]{mechanic:hp} below 1.
+		/// Cannot lower the target's HP below 1.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Will not reduce the target's [HP]{mechanic:hp} below 1.
 		/// </summary>	
 		/// <remarks>
 		/// FALSE-SWIPE,HOLD-BACK
 		/// </remarks>	
 		x066 = 102,
 		/// <summary>
-		/// Cures the entire party of major status effects.<para></para> Removes [major status effects]{mechanic:major-status-effects} and [confusion]{mechanic:confusion} from every Pokémon in the user's party.
+		/// Cures the entire party of major status effects.<para></para> Removes [major status effects]{mechanic:major-status-effects} and <see cref="Attack.MoveMetaAilments.CONFUSION"/> from every Pokémon in the user's party.
 		/// </summary>	
 		/// <remarks>
 		/// HEAL-BELL,AROMATHERAPY
 		/// </remarks>	
 		x067 = 103,
 		/// <summary>
-		/// Inflicts regular damage with no additional effect.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage with no additional effect.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// </summary>	
 		/// <remarks>
 		/// QUICK-ATTACK,MACH-PUNCH,EXTREME-SPEED,VACUUM-WAVE,BULLET-PUNCH,ICE-SHARD,SHADOW-SNEAK,AQUA-JET,ACCELEROCK
 		/// </remarks>	
 		x068 = 104,
 		/// <summary>
-		/// Hits three times, increasing power by 100% with each successful hit.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Hits three times in the same turn.  The second hit has double power, and the third hit has triple power.  Each hit has a separate [accuracy]{mechanic:accuracy} check, and this move stops if a hit misses.
+		/// Hits three times, increasing power by 100% with each successful hit.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Hits three times in the same turn.  The second hit has double power, and the third hit has triple power.  Each hit has a separate [accuracy]{mechanic:accuracy} check, and this move stops if a hit misses.
 		/// 
 		/// <seealso cref="Abilities.SKILL_LINK"/> does not apply.
 		/// </summary>
@@ -869,7 +869,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x069 = 105,
 		/// <summary>
-		/// Takes the target's item.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target is holding an item and the user is not, the user will permanently take the item.  Damage is still inflicted if an item cannot be taken.
+		/// Takes the target's item.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is holding an item and the user is not, the user will permanently take the item.  Damage is still inflicted if an item cannot be taken.
 		/// 
 		/// Pokémon with <seealso cref="Abilities.STICKY_HOLD"/> or <seealso cref="Abilities.MULTITYPE"/> are immune to the item theft effect.
 		/// 
@@ -893,7 +893,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x06B = 107,
 		/// <summary>
-		/// Target loses 1/4 its max HP every turn as long as it's asleep.<para></para> Only works on [sleep]{mechanic:sleep}ing Pokémon.  Gives the target a nightmare, damaging it for 1/4 its max [HP]{mechanic:hp} every turn.  If the target wakes up or leaves the [field]{mechanic:field}, this effect ends.
+		/// Target loses 1/4 its max HP every turn as long as it's asleep.<para></para> Only works on <see cref="Attack.MoveMetaAilments.SLEEP"/>ing Pokémon.  Gives the target a nightmare, damaging it for 1/4 its max [HP]{mechanic:hp} every turn.  If the target wakes up or leaves the [field]{mechanic:field}, this effect ends.
 		/// </summary>	
 		/// <remarks>
 		/// NIGHTMARE
@@ -998,7 +998,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x075 = 117,
 		/// <summary>
-		/// Power doubles every turn this move is used in succession after the first, resetting after five turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User is forced to use this move for five turns.  Power doubles every time this move is used in succession to a maximum of 16x, and resets to normal after the lock-in ends.  If this move misses or becomes unusable, the lock-in ends.
+		/// Power doubles every turn this move is used in succession after the first, resetting after five turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User is forced to use this move for five turns.  Power doubles every time this move is used in succession to a maximum of 16x, and resets to normal after the lock-in ends.  If this move misses or becomes unusable, the lock-in ends.
 		/// 
 		/// If the user has used <seealso cref="Moves.DEFENSE_CURL"/> since entering the field, this move has double power.
 		/// </summary>
@@ -1007,14 +1007,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x076 = 118,
 		/// <summary>
-		/// Raises the target's Attack by two stages and confuses the target.<para></para> Raises the target's [Attack]{mechanic:attack} by two [stages]{mechanic:stage}, then [confuses]{mechanic:confuses} it.  If the target's [Attack]{mechanic:attack} cannot be [raised]{mechanic:raised} by two [stages]{mechanic:stage}, the [confusion]{mechanic:confusion} is not applied.
+		/// Raises the target's Attack by two stages and confuses the target.<para></para> Raises the target's [Attack]{mechanic:attack} by two [stages]{mechanic:stage}, then [confuses]{mechanic:confuses} it.  If the target's [Attack]{mechanic:attack} cannot be [raised]{mechanic:raised} by two [stages]{mechanic:stage}, the <see cref="Attack.MoveMetaAilments.CONFUSION"/> is not applied.
 		/// </summary>	
 		/// <remarks>
 		/// SWAGGER
 		/// </remarks>	
 		x077 = 119,
 		/// <summary>
-		/// Power doubles every turn this move is used in succession after the first, maxing out after five turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power doubles after every time this move is used, whether consecutively or not, maxing out at 16x.  If this move misses or the user leaves the [field]{mechanic:field}, power resets.
+		/// Power doubles every turn this move is used in succession after the first, maxing out after five turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power doubles after every time this move is used, whether consecutively or not, maxing out at 16x.  If this move misses or the user leaves the [field]{mechanic:field}, power resets.
 		/// </summary>	
 		/// <remarks>
 		/// FURY-CUTTER
@@ -1028,7 +1028,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x079 = 121,
 		/// <summary>
-		/// Power increases with happiness, up to a maximum of 102.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power increases with [happiness]{mechanic:happiness}, given by `happiness * 2 / 5`, to a maximum of 102.  Power bottoms out at 1.
+		/// Power increases with happiness, up to a maximum of 102.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power increases with [happiness]{mechanic:happiness}, given by `happiness * 2 / 5`, to a maximum of 102.  Power bottoms out at 1.
 		/// </summary>	
 		/// <remarks>
 		/// RETURN
@@ -1039,46 +1039,46 @@ namespace PokemonUnity.Attack.Data
 		/// 
 		/// Effect                                             | Chance
 		/// -------------------------------------------------- | -----:
-		/// Inflicts [regular damage]{mechanic:regular-damage} with 40 power  |    40%
-		/// Inflicts [regular damage]{mechanic:regular-damage} with 80 power  |    30%
-		/// Inflicts [regular damage]{mechanic:regular-damage} with 120 power |    10%
+		/// Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/> with 40 power  |    40%
+		/// Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/> with 80 power  |    30%
+		/// Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/> with 120 power |    10%
 		/// Heals the target for 1/4 its max [HP]{mechanic:hp}    |    20%
 		/// 
-		/// On average, this move inflicts [regular damage]{mechanic:regular-damage} with 52 power and heals the target for 1/20 its max [HP]{mechanic:hp}.
+		/// On average, this move inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/> with 52 power and heals the target for 1/20 its max [HP]{mechanic:hp}.
 		/// </summary>
 		/// <remarks>
 		/// PRESENT
 		/// </remarks>	
 		x07B = 123,
 		/// <summary>
-		/// Power increases as happiness decreases, up to a maximum of 102.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power increases inversely with [happiness]{mechanic:happiness}, given by `(255 - happiness) * 2 / 5`, to a maximum of 102.  Power bottoms out at 1.
+		/// Power increases as happiness decreases, up to a maximum of 102.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power increases inversely with [happiness]{mechanic:happiness}, given by `(255 - happiness) * 2 / 5`, to a maximum of 102.  Power bottoms out at 1.
 		/// </summary>	
 		/// <remarks>
 		/// FRUSTRATION
 		/// </remarks>	
 		x07C = 124,
 		/// <summary>
-		/// Protects the user's field from major status ailments and confusion for five turns.<para></para> Protects Pokémon on the user's side of the [field]{mechanic:field} from [major status]{mechanic:major-status} effects and [confusion]{mechanic:confusion} for five turns.  Does not cancel existing ailments.  This effect remains even if the user leaves the [field]{mechanic:field}.
+		/// Protects the user's field from major status ailments and confusion for five turns.<para></para> Protects Pokémon on the user's side of the [field]{mechanic:field} from [major status]{mechanic:major-status} effects and <see cref="Attack.MoveMetaAilments.CONFUSION"/> for five turns.  Does not cancel existing ailments.  This effect remains even if the user leaves the [field]{mechanic:field}.
 		/// 
 		/// If <seealso cref="Moves.YAWN"/> is used while this move is in effect, it will immediately [fail]{mechanic:fail}.
 		/// 
 		/// <seealso cref="Moves.DEFOG"/> used by an opponent will end this effect.
 		/// 
-		/// This effect does not prevent the [confusion]{mechanic:confusion} caused by <seealso cref="Moves.OUTRAGE"/>, <seealso cref="Moves.PETAL_DANCE"/>, or <seealso cref="Moves.THRASH"/>.
+		/// This effect does not prevent the <see cref="Attack.MoveMetaAilments.CONFUSION"/> caused by <seealso cref="Moves.OUTRAGE"/>, <seealso cref="Moves.PETAL_DANCE"/>, or <seealso cref="Moves.THRASH"/>.
 		/// </summary>	
 		/// <remarks>
 		/// SAFEGUARD
 		/// </remarks>	
 		x07D = 125,
 		/// <summary>
-		/// Has a $effect_chance% chance to [burn]{mechanic:burn} the target.  Lets frozen Pokémon thaw themselves.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target.  [Frozen]{mechanic:frozen} Pokémon may use this move, in which case they will thaw.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.  Lets frozen Pokémon thaw themselves.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.  [Frozen]{mechanic:frozen} Pokémon may use this move, in which case they will thaw.
 		/// </summary>	
 		/// <remarks>
 		/// FLAME-WHEEL,SACRED-FIRE
 		/// </remarks>	
 		x07E = 126,
 		/// <summary>
-		/// Power varies randomly from 10 to 150.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power is selected at random between 10 and 150, with an average of 71:
+		/// Power varies randomly from 10 to 150.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power is selected at random between 10 and 150, with an average of 71:
 		/// 
 		/// Magnitude | Power | Chance
 		/// --------: | ----: | -----:
@@ -1097,7 +1097,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x07F = 127,
 		/// <summary>
-		/// Allows the trainer to switch out the user and pass effects along to its replacement.<para></para> User [switches out]{mechanic:switches-out}, and the trainer selects a replacement Pokémon from the party.  [Stat]{mechanic:stat} changes, [confusion]{mechanic:confusion}, and persistent move effects are passed along to the replacement Pokémon.
+		/// Allows the trainer to switch out the user and pass effects along to its replacement.<para></para> User [switches out]{mechanic:switches-out}, and the trainer selects a replacement Pokémon from the party.  [Stat]{mechanic:stat} changes, <see cref="Attack.MoveMetaAilments.CONFUSION"/>, and persistent move effects are passed along to the replacement Pokémon.
 		/// 
 		/// The following move effects are passed:
 		/// 
@@ -1122,7 +1122,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x080 = 128,
 		/// <summary>
-		/// Has double power against, and can hit, Pokémon attempting to switch out.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target attempts to [switch out]{mechanic:switch-out} this turn before the user acts, this move hits the target before it leaves and has double power.
+		/// Has double power against, and can hit, Pokémon attempting to switch out.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target attempts to [switch out]{mechanic:switch-out} this turn before the user acts, this move hits the target before it leaves and has double power.
 		/// 
 		/// This effect can still hit a Pokémon that [switches out]{mechanic:switches-out} when it has a <seealso cref="Moves.SUBSTITUTE"/> up or when an ally has used <seealso cref="Moves.FOLLOW_ME"/>.
 		/// </summary>
@@ -1131,7 +1131,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x081 = 129,
 		/// <summary>
-		/// Frees the user from binding moves, removes Leech Seed, and blows away Spikes.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Removes <seealso cref="Moves.LEECH_SEED"/> from the user, frees the user from <seealso cref="Moves.BIND"/>, <seealso cref="Moves.CLAMP"/>, <seealso cref="Moves.FIRE_SPIN"/>, <seealso cref="Moves.MAGMA_STORM"/>, <seealso cref="Moves.SAND_TOMB"/>, <seealso cref="Moves.WHIRLPOOL"/>, and <seealso cref="Moves.WRAP"/>, and clears <seealso cref="Moves.SPIKES"/>, <seealso cref="Moves.STEALTH_ROCK"/>, and <seealso cref="Moves.TOXIC_SPIKES"/> from the user's side of the [field]{mechanic:field}.  If this move misses or has [no effect]{mechanic:no-effect}, its effect doesn't activate.
+		/// Frees the user from binding moves, removes Leech Seed, and blows away Spikes.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Removes <seealso cref="Moves.LEECH_SEED"/> from the user, frees the user from <seealso cref="Moves.BIND"/>, <seealso cref="Moves.CLAMP"/>, <seealso cref="Moves.FIRE_SPIN"/>, <seealso cref="Moves.MAGMA_STORM"/>, <seealso cref="Moves.SAND_TOMB"/>, <seealso cref="Moves.WHIRLPOOL"/>, and <seealso cref="Moves.WRAP"/>, and clears <seealso cref="Moves.SPIKES"/>, <seealso cref="Moves.STEALTH_ROCK"/>, and <seealso cref="Moves.TOXIC_SPIKES"/> from the user's side of the [field]{mechanic:field}.  If this move misses or has [no effect]{mechanic:no-effect}, its effect doesn't activate.
 		/// </summary>
 		/// <remarks>
 		/// RAPID-SPIN
@@ -1156,7 +1156,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x085 = 133,
 		/// <summary>
-		/// Power and type depend upon user's IVs.  Power can range from 30 to 70.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power and type are determined by the user's [IV]{mechanic:iv}s.
+		/// Power and type depend upon user's IVs.  Power can range from 30 to 70.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power and type are determined by the user's [IV]{mechanic:iv}s.
 		/// 
 		/// Power is given by `x * 40 / 63 + 30`.  `x` is obtained by arranging bit 1 from the [IV]{mechanic:iv} for each of [Special Defense]{mechanic:special-defense}, [Special Attack]{mechanic:special-attack}, [Speed]{mechanic:speed}, [Defense]{mechanic:defense}, [Attack]{mechanic:attack}, and [HP]{mechanic:hp} in that order.  (Bit 1 is 1 if the [IV]{mechanic:iv} is of the form `4n + 2` or `4n + 3`.  `x` is then 64 * [Special Defense]{mechanic:special-defense} [IV]{mechanic:iv} bit 1, plus 32 * [Special Attack]{mechanic:special-attack} [IV]{mechanic:iv} bit 1, etc.)
 		/// 
@@ -1240,21 +1240,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x08A = 138,
 		/// <summary>
-		/// Has a $effect_chance% chance to raise the user's Defense by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}. Has a $effect_chance% chance to raise the user's [Defense]{mechanic:defense} one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's Defense by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>. Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's [Defense]{mechanic:defense} one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// STEEL-WING
 		/// </remarks>	
 		x08B = 139,
 		/// <summary>
-		/// Has a $effect_chance% chance to raise the user's Attack by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}. Has a $effect_chance% chance to raise the user's [Attack]{mechanic:attack} one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's Attack by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>. Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's [Attack]{mechanic:attack} one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// METAL-CLAW,METEOR-MASH
 		/// </remarks>	
 		x08C = 140,
 		/// <summary>
-		/// Has a $effect_chance% chance to raise all of the user's stats by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}. Has a $effect_chance% chance to raise all of the user's stats one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise all of the user's stats by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>. Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise all of the user's stats one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// ANCIENT-POWER,SILVER-WIND,OMINOUS-WIND
@@ -1286,7 +1286,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x091 = 145,
 		/// <summary>
-		/// Raises the user's Defense by one stage.  User charges for one turn before attacking.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Raises the user's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.  User then charges for one turn before attacking.
+		/// Raises the user's Defense by one stage.  User charges for one turn before attacking.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Raises the user's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.  User then charges for one turn before attacking.
 		/// 
 		/// This move cannot be selected by <seealso cref="Moves.SLEEP_TALK"/>.
 		/// </summary>	
@@ -1295,7 +1295,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x092 = 146,
 		/// <summary>
-		/// Has a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to make each target [flinch]{mechanic:flinch}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make each target [flinch]{mechanic:flinch}.
 		/// 
 		/// If the target is under the effect of <seealso cref="Moves.BOUNCE"/>, <seealso cref="Moves.FLY"/>, or <seealso cref="Moves.SKY_DROP"/>, this move will hit with double power.
 		/// </summary>
@@ -1304,7 +1304,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x093 = 147,
 		/// <summary>
-		/// Inflicts regular damage and can hit Dig users.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage and can hit Dig users.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// 
 		/// If the target is in the first turn of <seealso cref="Moves.DIG"/>, this move will hit with double power.
 		/// </summary>
@@ -1313,7 +1313,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x094 = 148,
 		/// <summary>
-		/// Hits the target two turns later.<para></para> Inflicts [typeless]{mechanic:typeless} [regular damage]{mechanic:regular-damage} at the end of the third turn, starting with this one.  This move cannot score a [critical hit]{mechanic:critical-hit}.  If the target [switches out]{mechanic:switches-out}, its replacement will be hit instead.  Damage is calculated at the time this move is used; [stat changes]{mechanic:stat-changes} and [switching out]{mechanic:switching-out} during the delay won't change the damage inflicted.  No move with this effect can be used against the same target again until after the end of the third turn.
+		/// Hits the target two turns later.<para></para> Inflicts [typeless]{mechanic:typeless} <seealso cref="Attack.MetaCategory.DAMAGE"/> at the end of the third turn, starting with this one.  This move cannot score a [critical hit]{mechanic:critical-hit}.  If the target [switches out]{mechanic:switches-out}, its replacement will be hit instead.  Damage is calculated at the time this move is used; [stat changes]{mechanic:stat-changes} and [switching out]{mechanic:switching-out} during the delay won't change the damage inflicted.  No move with this effect can be used against the same target again until after the end of the third turn.
 		/// 
 		/// This effect breaks through <seealso cref="Abilities.WONDER_GUARD"/>.
 		/// 
@@ -1328,7 +1328,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x095 = 149,
 		/// <summary>
-		/// Inflicts regular damage and can hit Pokémon in the air.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage and can hit Pokémon in the air.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// 
 		/// If the target is under the effect of <seealso cref="Moves.BOUNCE"/>, <seealso cref="Moves.FLY"/>, or <seealso cref="Moves.SKY_DROP"/>, this move will hit with double power.
 		/// </summary>
@@ -1337,7 +1337,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x096 = 150,
 		/// <summary>
-		/// Has a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to make the target [flinch]{mechanic:flinch}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target [flinch]{mechanic:flinch}.
 		/// 
 		/// Power is doubled against Pokémon that have used <seealso cref="Moves.MINIMIZE"/> since entering the [field]{mechanic:field}.
 		/// </summary>
@@ -1346,7 +1346,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x097 = 151,
 		/// <summary>
-		/// Requires a turn to charge before attacking.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User charges for one turn before attacking.
+		/// Requires a turn to charge before attacking.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User charges for one turn before attacking.
 		/// 
 		/// During <seealso cref="Moves.SUNNY_DAY"/>, the charge turn is skipped.
 		/// 
@@ -1359,7 +1359,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x098 = 152,
 		/// <summary>
-		/// Has a $effect_chance% chance to paralyze the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [paralyze]{mechanic:paralyze} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to paralyze the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [paralyze]{mechanic:paralyze} the target.
 		/// 
 		/// During <seealso cref="Moves.RAIN_DANCE"/>, this move has 100% accuracy.  It also has a (100 - accuracy)% chance to break through the protection of <seealso cref="Moves.PROTECT"/> and <seealso cref="Moves.DETECT"/>.
 		/// 
@@ -1377,7 +1377,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x09A = 154,
 		/// <summary>
-		/// Hits once for every conscious Pokémon the trainer has.<para></para> Inflicts [typeless]{mechanic:typeless} [regular damage]{mechanic:regular-damage}.  Every Pokémon in the user's party, excepting those that have fainted or have a [major status effect]{mechanic:major-status-effect}, attacks the target.  Calculated stats are ignored; the base stats for the target and assorted attackers are used instead.  The random factor in the damage formula is not used.  <seealso cref="Types.DARK"/> Pokémon still get [STAB]{mechanic:stab}.
+		/// Hits once for every conscious Pokémon the trainer has.<para></para> Inflicts [typeless]{mechanic:typeless} <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Every Pokémon in the user's party, excepting those that have fainted or have a [major status effect]{mechanic:major-status-effect}, attacks the target.  Calculated stats are ignored; the base stats for the target and assorted attackers are used instead.  The random factor in the damage formula is not used.  <seealso cref="Types.DARK"/> Pokémon still get [STAB]{mechanic:stab}.
 		/// 
 		/// This effect breaks through <seealso cref="Abilities.WONDER_GUARD"/>.
 		/// </summary>	
@@ -1386,7 +1386,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x09B = 155,
 		/// <summary>
-		/// User flies high into the air, dodging all attacks, and hits next turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User flies high into the air for one turn, becoming immune to attack, and hits on the second turn.
+		/// User flies high into the air, dodging all attacks, and hits next turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User flies high into the air for one turn, becoming immune to attack, and hits on the second turn.
 		/// 
 		/// During the immune turn, <seealso cref="Moves.GUST"/>, <seealso cref="Moves.HURRICANE"/>, <seealso cref="Moves.SKY_UPPERCUT"/>, <seealso cref="Moves.SMACK_DOWN"/>, <seealso cref="Moves.THUNDER"/>, <seealso cref="Moves.TWISTER"/>, and <seealso cref="Moves.WHIRLWIND"/> still hit the user normally.  <seealso cref="Moves.GUST"/> and <seealso cref="Moves.TWISTER"/> also have double power against the user.
 		/// 
@@ -1412,14 +1412,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x09D = 157,
 		/// <summary>
-		/// Can only be used as the first move after the user enters battle.  Causes the target to flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Causes the target to <seealso cref="Mechanics.FLINCH"/>.  Can only be used on the user's first turn after entering the [field]{mechanic:field}.
+		/// Can only be used as the first move after the user enters battle.  Causes the target to flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Causes the target to <seealso cref="Mechanics.FLINCH"/>.  Can only be used on the user's first turn after entering the [field]{mechanic:field}.
 		/// </summary>
 		/// <remarks>
 		/// FAKE-OUT
 		/// </remarks>	
 		x09F = 159,
 		/// <summary>
-		/// Forced to use this move for several turns.  Pokémon cannot fall asleep in that time.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User is forced to use this move for 2–5 turns, selected at random.  All Pokémon on the [field]{mechanic:field} wake up, and none can fall to [sleep]{mechanic:sleep} until the lock-in ends.
+		/// Forced to use this move for several turns.  Pokémon cannot fall asleep in that time.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User is forced to use this move for 2–5 turns, selected at random.  All Pokémon on the [field]{mechanic:field} wake up, and none can fall to <see cref="Attack.MoveMetaAilments.SLEEP"/> until the lock-in ends.
 		/// 
 		/// Pokémon cannot use <seealso cref="Moves.REST"/> during this effect.
 		/// 
@@ -1439,7 +1439,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0A1 = 161,
 		/// <summary>
-		/// Power is 100 times the amount of energy Stockpiled.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power is equal to 100 times the amount of energy stored by <seealso cref="Moves.STOCKPILE"/>.  Ignores the random factor in the damage formula.  Stored energy is consumed, and the user's [Defense]{mechanic:defense} and [Special Defense]{mechanic:special-defense} are reset to what they would be if <seealso cref="Moves.STOCKPILE"/> had not been used.  If the user has no energy stored, this move will [fail]{mechanic:fail}.
+		/// Power is 100 times the amount of energy Stockpiled.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power is equal to 100 times the amount of energy stored by <seealso cref="Moves.STOCKPILE"/>.  Ignores the random factor in the damage formula.  Stored energy is consumed, and the user's [Defense]{mechanic:defense} and [Special Defense]{mechanic:special-defense} are reset to what they would be if <seealso cref="Moves.STOCKPILE"/> had not been used.  If the user has no energy stored, this move will [fail]{mechanic:fail}.
 		/// 
 		/// This move cannot be copied by <seealso cref="Moves.MIRROR_MOVE"/>.
 		/// </summary>
@@ -1500,14 +1500,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0A9 = 169,
 		/// <summary>
-		/// Power doubles if user is burned, paralyzed, or poisoned.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the user is [burned]{mechanic:burned}, [paralyzed]{mechanic:paralyzed}, or [poisoned]{mechanic:poisoned}, this move has double power.
+		/// Power doubles if user is burned, paralyzed, or poisoned.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the user is [burned]{mechanic:burned}, [paralyzed]{mechanic:paralyzed}, or [poisoned]{mechanic:poisoned}, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// FACADE
 		/// </remarks>	
 		x0AA = 170,
 		/// <summary>
-		/// If the user takes damage before attacking, the attack is canceled.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the user takes damage this turn before hitting, this move will [fail]{mechanic:fail}.
+		/// If the user takes damage before attacking, the attack is canceled.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the user takes damage this turn before hitting, this move will [fail]{mechanic:fail}.
 		/// 
 		/// This move cannot be copied by <seealso cref="Moves.MIRROR_MOVE"/>, nor selected by <seealso cref="Moves.ASSIST"/>, <seealso cref="Moves.METRONOME"/>, or <seealso cref="Moves.SLEEP_TALK"/>.
 		/// </summary>
@@ -1516,7 +1516,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0AB = 171,
 		/// <summary>
-		/// If the target is paralyzed, inflicts double damage and cures the paralysis.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target is [paralyzed]{mechanic:paralyzed}, this move has double power, and the target is cured of its [paralysis]{mechanic:paralysis}.
+		/// If the target is paralyzed, inflicts double damage and cures the paralysis.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is [paralyzed]{mechanic:paralyzed}, this move has double power, and the target is cured of its <see cref="Attack.MoveMetaAilments.PARALYSIS"/>.
 		/// </summary>	
 		/// <remarks>
 		/// SMELLING-SALTS
@@ -1660,7 +1660,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0B6 = 182,
 		/// <summary>
-		/// Lowers the user's Attack and Defense by one stage after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then lowers the user's [Attack]{mechanic:attack} and [Defense]{mechanic:defense} by one [stage]{mechanic:stage} each.
+		/// Lowers the user's Attack and Defense by one stage after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then lowers the user's [Attack]{mechanic:attack} and [Defense]{mechanic:defense} by one [stage]{mechanic:stage} each.
 		/// </summary>	
 		/// <remarks>
 		/// SUPERPOWER
@@ -1689,7 +1689,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0B9 = 185,
 		/// <summary>
-		/// Inflicts double damage if the user takes damage before attacking this turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target damaged the user this turn and was the last to do so, this move has double power.
+		/// Inflicts double damage if the user takes damage before attacking this turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target damaged the user this turn and was the last to do so, this move has double power.
 		/// 
 		/// <seealso cref="Moves.PAIN_SPLIT"/> does not count as damaging the user.
 		/// </summary>
@@ -1698,25 +1698,25 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0BA = 186,
 		/// <summary>
-		/// Destroys Reflect and Light Screen.<para></para> Destroys any <seealso cref="Moves.LIGHT_SCREEN"/> or <seealso cref="Moves.REFLECT"/> on the target's side of the [field]{mechanic:field}, then inflicts [regular damage]{mechanic:regular-damage}.
+		/// Destroys Reflect and Light Screen.<para></para> Destroys any <seealso cref="Moves.LIGHT_SCREEN"/> or <seealso cref="Moves.REFLECT"/> on the target's side of the [field]{mechanic:field}, then inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// </summary>
 		/// <remarks>
 		/// BRICK-BREAK,PSYCHIC-FANGS
 		/// </remarks>	
 		x0BB = 187,
 		/// <summary>
-		/// Target sleeps at the end of the next turn.<para></para> Puts the target to [sleep]{mechanic:sleep} at the end of the next turn.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.  If the target leaves the [field]{mechanic:field}, this effect is canceled.  If the target has a status effect when this move is used, this move will [fail]{mechanic:fail}.
+		/// Target sleeps at the end of the next turn.<para></para> Puts the target to <see cref="Attack.MoveMetaAilments.SLEEP"/> at the end of the next turn.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.  If the target leaves the [field]{mechanic:field}, this effect is canceled.  If the target has a status effect when this move is used, this move will [fail]{mechanic:fail}.
 		/// 
 		/// If the target is protected by <seealso cref="Moves.SAFEGUARD"/> when this move is used, this move will [fail]{mechanic:fail}.
 		/// 
-		/// <seealso cref="Abilities.INSOMNIA"/> and <seealso cref="Abilities.VITAL_SPIRIT"/> prevent the [sleep]{mechanic:sleep} if the target has either at the end of the next turn, but will not cause this move to [fail]{mechanic:fail} on use.
+		/// <seealso cref="Abilities.INSOMNIA"/> and <seealso cref="Abilities.VITAL_SPIRIT"/> prevent the <see cref="Attack.MoveMetaAilments.SLEEP"/> if the target has either at the end of the next turn, but will not cause this move to [fail]{mechanic:fail} on use.
 		/// </summary>
 		/// <remarks>
 		/// YAWN
 		/// </remarks>	
 		x0BC = 188,
 		/// <summary>
-		/// Target drops its held item.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Target loses its [held item]{mechanic:held-item}.
+		/// Target drops its held item.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Target loses its [held item]{mechanic:held-item}.
 		/// 
 		/// Neither the user nor the target can recover its item with <seealso cref="Moves.RECYCLE"/>.
 		/// 
@@ -1734,7 +1734,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0BE = 190,
 		/// <summary>
-		/// Inflicts more damage when the user has more HP remaining, with a maximum of 150 power.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power increases with the user's remaining [HP]{mechanic:hp} and is given by `150 * HP / max HP`, to a maximum of 150 when the user has full HP.
+		/// Inflicts more damage when the user has more HP remaining, with a maximum of 150 power.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power increases with the user's remaining [HP]{mechanic:hp} and is given by `150 * HP / max HP`, to a maximum of 150 when the user has full HP.
 		/// </summary>	
 		/// <remarks>
 		/// ERUPTION,WATER-SPOUT
@@ -1757,7 +1757,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0C1 = 193,
 		/// <summary>
-		/// Cleanses the user of a burn, paralysis, or poison.<para></para> Removes a [burn]{mechanic:burn}, [paralysis]{mechanic:paralysis}, or [poison]{mechanic:poison} from the user.
+		/// Cleanses the user of a burn, paralysis, or poison.<para></para> Removes a <see cref="Attack.MoveMetaAilments.BURN"/>, <see cref="Attack.MoveMetaAilments.PARALYSIS"/>, or <see cref="Attack.MoveMetaAilments.POISON"/> from the user.
 		/// </summary>	
 		/// <remarks>
 		/// REFRESH
@@ -1784,7 +1784,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0C4 = 196,
 		/// <summary>
-		/// Inflicts more damage to heavier targets, with a maximum of 120 power.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power increases with the target's weight in kilograms, to a maximum of 120.
+		/// Inflicts more damage to heavier targets, with a maximum of 120 power.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power increases with the target's weight in kilograms, to a maximum of 120.
 		/// 
 		/// Target's weight | Power
 		/// --------------- | ----:
@@ -1800,7 +1800,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0C5 = 197,
 		/// <summary>
-		/// Has a $effect_chance% chance to inflict a status effect which depends upon the terrain.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to inflict an effect chosen according to the terrain.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to inflict a status effect which depends upon the terrain.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to inflict an effect chosen according to the terrain.
 		/// 
 		/// Terrain        | Effect
 		/// -------------- | -------------------------------------------------------------
@@ -1808,12 +1808,12 @@ namespace PokemonUnity.Attack.Data
 		/// Cave           | Makes target [flinch]{mechanic:flinch}
 		/// Deep water     | Lowers target's [Attack]{mechanic:attack} by one [stage]{mechanic:stage}
 		/// Desert         | Lowers target's [accuracy]{mechanic:accuracy} by one [stage]{mechanic:stage}
-		/// Grass          | Puts target to [sleep]{mechanic:sleep}
+		/// Grass          | Puts target to <see cref="Attack.MoveMetaAilments.SLEEP"/>
 		/// Mountain       | Makes target [flinch]{mechanic:flinch}
 		/// Road           | Lowers target's [accuracy]{mechanic:accuracy} by one [stage]{mechanic:stage}
 		/// Shallow water  | Lowers target's [Attack]{mechanic:attack} by one [stage]{mechanic:stage}
 		/// Snow           | [Freezes]{mechanic:freezes} target
-		/// Tall grass     | Puts target to [sleep]{mechanic:sleep}
+		/// Tall grass     | Puts target to <see cref="Attack.MoveMetaAilments.SLEEP"/>
 		/// 
 		/// In Pokémon Battle Revolution:
 		/// 
@@ -1826,16 +1826,16 @@ namespace PokemonUnity.Attack.Data
 		/// Main Street    | [Paralyze]{mechanic:paralyze}s target
 		/// Neon           | [Paralyze]{mechanic:paralyze}s target
 		/// Stargazer      | Makes target [flinch]{mechanic:flinch}
-		/// Sunny Park     | Puts target to [sleep]{mechanic:sleep}
+		/// Sunny Park     | Puts target to <see cref="Attack.MoveMetaAilments.SLEEP"/>
 		/// Sunset         | Lowers target's [accuracy]{mechanic:accuracy} by one [stage]{mechanic:stage}
-		/// Waterfall      | Puts target to [sleep]{mechanic:sleep}
+		/// Waterfall      | Puts target to <see cref="Attack.MoveMetaAilments.SLEEP"/>
 		/// </summary>
 		/// <remarks>
 		/// SECRET-POWER
 		/// </remarks>	
 		x0C6 = 198,
 		/// <summary>
-		/// User receives 1/3 the damage inflicted in recoil.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User takes 1/3 the damage it inflicts in recoil.
+		/// User receives 1/3 the damage inflicted in recoil.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/3 the damage it inflicts in recoil.
 		/// </summary>	
 		/// <remarks>
 		/// DOUBLE-EDGE,BRAVE-BIRD,WOOD-HAMMER
@@ -1849,7 +1849,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0C8 = 200,
 		/// <summary>
-		/// Has an increased chance for a critical hit and a $effect_chance% chance to [burn]{mechanic:burn} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move. Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
+		/// Has an increased chance for a critical hit and a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move. Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// BLAZE-KICK
@@ -1863,21 +1863,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0CA = 202,
 		/// <summary>
-		/// Has a $effect_chance% chance to badly poison the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [badly poison]{mechanic:badly-poison} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to badly poison the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [badly poison]{mechanic:badly-poison} the target.
 		/// </summary>	
 		/// <remarks>
 		/// POISON-FANG
 		/// </remarks>	
 		x0CB = 203,
 		/// <summary>
-		/// If there be weather, this move has doubled power and the weather's type.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a weather move is active, this move has double power, and its type becomes the type of the weather move.  <seealso cref="Moves.SHADOW_SKY"/> is typeless for the purposes of this move.
+		/// If there be weather, this move has doubled power and the weather's type.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a weather move is active, this move has double power, and its type becomes the type of the weather move.  <seealso cref="Moves.SHADOW_SKY"/> is typeless for the purposes of this move.
 		/// </summary>
 		/// <remarks>
 		/// WEATHER-BALL
 		/// </remarks>	
 		x0CC = 204,
 		/// <summary>
-		/// Lowers the user's Special Attack by two stages after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then lowers the user's [Special Attack]{mechanic:special-attack} by two [stages]{mechanic:stage}.
+		/// Lowers the user's Special Attack by two stages after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then lowers the user's [Special Attack]{mechanic:special-attack} by two [stages]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// OVERHEAT,PSYCHO-BOOST,DRACO-METEOR,LEAF-STORM,FLEUR-CANNON
@@ -1898,7 +1898,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0CF = 207,
 		/// <summary>
-		/// Inflicts regular damage and can hit Bounce and Fly users.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage and can hit Bounce and Fly users.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// 
 		/// This move can hit Pokémon under the effect of <seealso cref="Moves.BOUNCE"/>, <seealso cref="Moves.FLY"/>, or <seealso cref="Moves.SKY_DROP"/>.
 		/// </summary>
@@ -1914,7 +1914,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0D1 = 209,
 		/// <summary>
-		/// Has an increased chance for a critical hit and a $effect_chance% chance to poison the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move. Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
+		/// Has an increased chance for a critical hit and a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to poison the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move. Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.POISON"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// POISON-TAIL,CROSS-POISON
@@ -2004,21 +2004,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0D9 = 217,
 		/// <summary>
-		/// If the target is asleep, has double power and wakes it up.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target is [sleep]{mechanic:sleep}ing, this move has double power, and the target wakes up.
+		/// If the target is asleep, has double power and wakes it up.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is <see cref="Attack.MoveMetaAilments.SLEEP"/>ing, this move has double power, and the target wakes up.
 		/// </summary>	
 		/// <remarks>
 		/// WAKE-UP-SLAP
 		/// </remarks>	
 		x0DA = 218,
 		/// <summary>
-		/// Lowers user's Speed by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then lowers the user's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
+		/// Lowers user's Speed by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then lowers the user's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// HAMMER-ARM,ICE-HAMMER
 		/// </remarks>	
 		x0DB = 219,
 		/// <summary>
-		/// Power raises when the user has lower Speed, up to a maximum of 150.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power increases with the target's current [Speed]{mechanic:speed} compared to the user, given by `1 + 25 * target Speed / user Speed`, capped at 150.
+		/// Power raises when the user has lower Speed, up to a maximum of 150.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power increases with the target's current [Speed]{mechanic:speed} compared to the user, given by `1 + 25 * target Speed / user Speed`, capped at 150.
 		/// </summary>	
 		/// <remarks>
 		/// GYRO-BALL
@@ -2032,21 +2032,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0DD = 221,
 		/// <summary>
-		/// Has double power against Pokémon that have less than half their max HP remaining.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target has less than half its max [HP]{mechanic:hp} remaining, this move has double power.
+		/// Has double power against Pokémon that have less than half their max HP remaining.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target has less than half its max [HP]{mechanic:hp} remaining, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// BRINE
 		/// </remarks>	
 		x0DE = 222,
 		/// <summary>
-		/// Power and type depend on the held berry.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power and type are determined by the user's held berry.  The berry is consumed.  If the user is not holding a berry, this move will [fail]{mechanic:fail}.
+		/// Power and type depend on the held berry.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power and type are determined by the user's held berry.  The berry is consumed.  If the user is not holding a berry, this move will [fail]{mechanic:fail}.
 		/// </summary>	
 		/// <remarks>
 		/// NATURAL-GIFT
 		/// </remarks>	
 		x0DF = 223,
 		/// <summary>
-		/// Hits through Protect and Detect.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Removes the effects of <seealso cref="Moves.DETECT"/> or <seealso cref="Moves.PROTECT"/> from the target before hitting.
+		/// Hits through Protect and Detect.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Removes the effects of <seealso cref="Moves.DETECT"/> or <seealso cref="Moves.PROTECT"/> from the target before hitting.
 		/// 
 		/// This move cannot be copied by <seealso cref="Moves.MIRROR_MOVE"/>, nor selected by <seealso cref="Moves.ASSIST"/> or <seealso cref="Moves.METRONOME"/>.
 		/// </summary>
@@ -2055,7 +2055,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0E0 = 224,
 		/// <summary>
-		/// If target has a berry, inflicts double damage and uses the berry.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target is holding a berry, this move has double power, and the user takes the berry and uses it immediately.
+		/// If target has a berry, inflicts double damage and uses the berry.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is holding a berry, this move has double power, and the user takes the berry and uses it immediately.
 		/// 
 		/// If the target is holding a <seealso cref="Items.JABOCA_BERRY"/> or <seealso cref="Items.ROWAP_BERRY"/>, the berry is still removed, but has no effect.
 		/// 
@@ -2091,7 +2091,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0E4 = 228,
 		/// <summary>
-		/// User must switch out after attacking.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then the user immediately [switches out]{mechanic:switches-out}, and the trainer selects a replacement Pokémon from the party.  If the target [faint]{mechanic:faint}s from this attack, the user's trainer selects the new Pokémon to send out first.  If the user is the last Pokémon in its party that can battle, it will not [switch out]{mechanic:switch-out}.
+		/// User must switch out after attacking.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then the user immediately [switches out]{mechanic:switches-out}, and the trainer selects a replacement Pokémon from the party.  If the target [faint]{mechanic:faint}s from this attack, the user's trainer selects the new Pokémon to send out first.  If the user is the last Pokémon in its party that can battle, it will not [switch out]{mechanic:switch-out}.
 		/// 
 		/// The user may be hit by <seealso cref="Moves.PURSUIT"/> when it [switches out]{mechanic:switches-out}, if it has been targeted and <seealso cref="Moves.PURSUIT"/> has not yet been used.
 		/// 
@@ -2102,21 +2102,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0E5 = 229,
 		/// <summary>
-		/// Lowers the user's Defense and Special Defense by one stage after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then lowers the user's [Defense]{mechanic:defense} and [Special Defense]{mechanic:special-defense} by one [stage]{mechanic:stage} each.
+		/// Lowers the user's Defense and Special Defense by one stage after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then lowers the user's [Defense]{mechanic:defense} and [Special Defense]{mechanic:special-defense} by one [stage]{mechanic:stage} each.
 		/// </summary>	
 		/// <remarks>
 		/// CLOSE-COMBAT,DRAGON-ASCENT
 		/// </remarks>	
 		x0E6 = 230,
 		/// <summary>
-		/// Power is doubled if the target has already moved this turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target uses a move or [switches out]{mechanic:switches-out} this turn before this move is used, this move has double power.
+		/// Power is doubled if the target has already moved this turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target uses a move or [switches out]{mechanic:switches-out} this turn before this move is used, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// PAYBACK
 		/// </remarks>	
 		x0E7 = 231,
 		/// <summary>
-		/// Power is doubled if the target has already received damage this turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target takes damage this turn for any reason before this move is used, this move has double power.
+		/// Power is doubled if the target has already received damage this turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target takes damage this turn for any reason before this move is used, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// ASSURANCE
@@ -2134,7 +2134,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0E9 = 233,
 		/// <summary>
-		/// Throws held item at the target; power depends on the item.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power and type are determined by the user's [held item]{mechanic:held-item}.  The item is consumed.  If the user is not holding an item, or its item has no set type and power, this move will [fail]{mechanic:fail}.
+		/// Throws held item at the target; power depends on the item.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power and type are determined by the user's [held item]{mechanic:held-item}.  The item is consumed.  If the user is not holding an item, or its item has no set type and power, this move will [fail]{mechanic:fail}.
 		/// 
 		/// This move ignores <seealso cref="Abilities.STICKY_HOLD"/>.
 		/// 
@@ -2152,7 +2152,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0EB = 235,
 		/// <summary>
-		/// Power increases when this move has less PP, up to a maximum of 200.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power is determined by the [PP]{mechanic:pp} remaining for this move, after its [PP]{mechanic:pp} cost is deducted.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
+		/// Power increases when this move has less PP, up to a maximum of 200.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power is determined by the [PP]{mechanic:pp} remaining for this move, after its [PP]{mechanic:pp} cost is deducted.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
 		/// 
 		/// PP remaining | Power
 		/// ------------ | ----:
@@ -2176,7 +2176,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0ED = 237,
 		/// <summary>
-		/// Power increases against targets with more HP remaining, up to a maximum of 121 power.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power directly relates to the target's relative remaining [HP]{mechanic:hp}, given by `1 + 120 * current HP / max HP`, to a maximum of 121.
+		/// Power increases against targets with more HP remaining, up to a maximum of 121 power.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power directly relates to the target's relative remaining [HP]{mechanic:hp}, given by `1 + 120 * current HP / max HP`, to a maximum of 121.
 		/// </summary>	
 		/// <remarks>
 		/// WRING-OUT,CRUSH-GRIP
@@ -2244,14 +2244,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0F5 = 245,
 		/// <summary>
-		/// Power increases against targets with more raised stats, up to a maximum of 200.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power starts at 60 and is increased by 20 for every [stage]{mechanic:stage} any of the target's stats has been raised, capping at 200.  [Accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers do not increase this move's power.
+		/// Power increases against targets with more raised stats, up to a maximum of 200.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power starts at 60 and is increased by 20 for every [stage]{mechanic:stage} any of the target's stats has been raised, capping at 200.  [Accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers do not increase this move's power.
 		/// </summary>	
 		/// <remarks>
 		/// PUNISHMENT
 		/// </remarks>	
 		x0F6 = 246,
 		/// <summary>
-		/// Can only be used after all of the user's other moves have been used.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  This move can only be used if each of the user's other moves has been used at least once since the user entered the [field]{mechanic:field}.  If this is the user's only move, this move will [fail]{mechanic:fail}.
+		/// Can only be used after all of the user's other moves have been used.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  This move can only be used if each of the user's other moves has been used at least once since the user entered the [field]{mechanic:field}.  If this is the user's only move, this move will [fail]{mechanic:fail}.
 		/// </summary>	
 		/// <remarks>
 		/// LAST-RESORT
@@ -2267,7 +2267,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0F8 = 248,
 		/// <summary>
-		/// Only works if the target is about to use a damaging move.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target has not selected a damaging move this turn, or if the target has already acted this turn, this move will [fail]{mechanic:fail}.
+		/// Only works if the target is about to use a damaging move.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target has not selected a damaging move this turn, or if the target has already acted this turn, this move will [fail]{mechanic:fail}.
 		/// 
 		/// This move is not affected by <seealso cref="Abilities.IRON_FIST"/>.
 		/// </summary>
@@ -2276,7 +2276,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0F9 = 249,
 		/// <summary>
-		/// Scatters poisoned spikes, poisoning opposing Pokémon that switch in.<para></para> Scatters poisoned spikes around the opposing [field]{mechanic:field}, which [poison]{mechanic:poison} opposing Pokémon that enter the [field]{mechanic:field}.  A second layer of these spikes may be laid down, in which case Pokémon will be [badly poison]{mechanic:badly-poison}ed instead.  Pokémon immune to either <seealso cref="Types.GROUND"/> moves or being [poison]{mechanic:poison}ed are immune to this effect.  Pokémon otherwise immune to <seealso cref="Types.GROUND"/> moves are affected during <seealso cref="Moves.GRAVITY"/>.
+		/// Scatters poisoned spikes, poisoning opposing Pokémon that switch in.<para></para> Scatters poisoned spikes around the opposing [field]{mechanic:field}, which <see cref="Attack.MoveMetaAilments.POISON"/> opposing Pokémon that enter the [field]{mechanic:field}.  A second layer of these spikes may be laid down, in which case Pokémon will be [badly poison]{mechanic:badly-poison}ed instead.  Pokémon immune to either <seealso cref="Types.GROUND"/> moves or being <see cref="Attack.MoveMetaAilments.POISON"/>ed are immune to this effect.  Pokémon otherwise immune to <seealso cref="Types.GROUND"/> moves are affected during <seealso cref="Moves.GRAVITY"/>.
 		/// 
 		/// If a <seealso cref="Types.POISON"/> Pokémon not immune to <seealso cref="Types.GROUND"/> moves enters a [field]{mechanic:field} covered with poisoned spikes, the spikes are removed.
 		/// 
@@ -2320,14 +2320,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0FD = 253,
 		/// <summary>
-		/// User takes 1/3 the damage inflicted in recoil.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User takes 1/3 the damage it inflicts in recoil.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target.  [Frozen]{mechanic:frozen} Pokémon may use this move, in which case they will thaw.
+		/// User takes 1/3 the damage inflicted in recoil.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/3 the damage it inflicts in recoil.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.  [Frozen]{mechanic:frozen} Pokémon may use this move, in which case they will thaw.
 		/// </summary>	
 		/// <remarks>
 		/// FLARE-BLITZ
 		/// </remarks>	
 		x0FE = 254,
 		/// <summary>
-		/// User takes 1/4 its max HP in recoil.<para></para> Inflicts [typeless]{mechanic:typeless} [regular damage]{mechanic:regular-damage}.  User takes 1/4 its max [HP]{mechanic:hp} in recoil.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
+		/// User takes 1/4 its max HP in recoil.<para></para> Inflicts [typeless]{mechanic:typeless} <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/4 its max [HP]{mechanic:hp} in recoil.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion} modifiers.
 		/// 
 		/// This move is used automatically when a Pokémon cannot use any other move legally, e.g., due to having no [PP]{mechanic:pp} remaining or being under the effect of both <seealso cref="Moves.ENCORE"/> and <seealso cref="Moves.TORMENT"/> at the same time.
 		/// 
@@ -2340,7 +2340,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x0FF = 255,
 		/// <summary>
-		/// User dives underwater, dodging all attacks, and hits next turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User dives underwater for one turn, becoming immune to attack, and hits on the second turn.
+		/// User dives underwater, dodging all attacks, and hits next turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User dives underwater for one turn, becoming immune to attack, and hits on the second turn.
 		/// 
 		/// During the immune turn, <seealso cref="Moves.SURF"/>, and <seealso cref="Moves.WHIRLPOOL"/> still hit the user normally, and their power is doubled if appropriate.
 		/// 
@@ -2353,7 +2353,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x100 = 256,
 		/// <summary>
-		/// User digs underground, dodging all attacks, and hits next turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User digs underground for one turn, becoming immune to attack, and hits on the second turn.
+		/// User digs underground, dodging all attacks, and hits next turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User digs underground for one turn, becoming immune to attack, and hits on the second turn.
 		/// 
 		/// During the immune turn, <seealso cref="Moves.EARTHQUAKE"/>, <seealso cref="Moves.FISSURE"/>, and <seealso cref="Moves.MAGNITUDE"/> still hit the user normally, and their power is doubled if appropriate.
 		/// 
@@ -2366,7 +2366,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x101 = 257,
 		/// <summary>
-		/// Inflicts regular damage and can hit Dive users.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage and can hit Dive users.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// 
 		/// If the target is in the first turn of <seealso cref="Moves.DIVE"/>, this move will hit with double power.
 		/// </summary>
@@ -2393,7 +2393,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x104 = 260,
 		/// <summary>
-		/// Has a $effect_chance% chance to freeze the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to freeze the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.FREEZE"/> the target.
 		/// 
 		/// During <seealso cref="Moves.HAIL"/>, this move has 100% accuracy.  It also has a (100 - accuracy)% chance to break through the protection of <seealso cref="Moves.PROTECT"/> and <seealso cref="Moves.DETECT"/>.
 		/// </summary>
@@ -2402,7 +2402,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x105 = 261,
 		/// <summary>
-		/// Prevents the target from leaving battle and inflicts 1/16 its max HP in damage for 2-5 turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the [field]{mechanic:field}, this effect ends.
+		/// Prevents the target from leaving battle and inflicts 1/16 its max HP in damage for 2-5 turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  For the next 2–5 turns, the target cannot leave the field and is damaged for 1/16 its max HP at the end of each turn.  The user continues to use other moves during this time.  If the user leaves the [field]{mechanic:field}, this effect ends.
 		/// 
 		/// Has a 3/8 chance each to hit 2 or 3 times, and a 1/8 chance each to hit 4 or 5 times.  Averages to 3 hits per use.
 		/// 
@@ -2413,14 +2413,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x106 = 262,
 		/// <summary>
-		/// User takes 1/3 the damage inflicted in recoil.  Has a $effect_chance% chance to paralyze the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User takes 1/3 the damage it inflicts in recoil.  Has a $effect_chance% chance to [paralyze]{mechanic:paralyze} the target.
+		/// User takes 1/3 the damage inflicted in recoil.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to paralyze the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/3 the damage it inflicts in recoil.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [paralyze]{mechanic:paralyze} the target.
 		/// </summary>	
 		/// <remarks>
 		/// VOLT-TACKLE
 		/// </remarks>	
 		x107 = 263,
 		/// <summary>
-		/// User bounces high into the air, dodging all attacks, and hits next turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User bounces high into the air for one turn, becoming immune to attack, and hits on the second turn.  Has a $effect_chance% chance to [paralyze]{mechanic:paralyze} the target.
+		/// User bounces high into the air, dodging all attacks, and hits next turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User bounces high into the air for one turn, becoming immune to attack, and hits on the second turn.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [paralyze]{mechanic:paralyze} the target.
 		/// 
 		/// During the immune turn, <seealso cref="Moves.GUST"/>, <seealso cref="Moves.HURRICANE"/>, <seealso cref="Moves.SKY_UPPERCUT"/>, <seealso cref="Moves.SMACK_DOWN"/>, <seealso cref="Moves.THUNDER"/>, and <seealso cref="Moves.TWISTER"/> still hit the user normally.  <seealso cref="Moves.GUST"/> and <seealso cref="Moves.TWISTER"/> also have double power against the user.
 		/// 
@@ -2453,7 +2453,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x10B = 267,
 		/// <summary>
-		/// Has a higher chance to confuse the target when the recorded sound is louder.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has either a 1%, 11%, or 31% chance to [confuse]{mechanic:confuse} the target, based on the volume of the recording made for this move; louder recordings increase the chance of [confusion]{mechanic:confusion}.  If the user is not a <seealso cref="Pokemons.CHATOT"/>, this move will not cause [confusion]{mechanic:confusion}.
+		/// Has a higher chance to confuse the target when the recorded sound is louder.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has either a 1%, 11%, or 31% chance to [confuse]{mechanic:confuse} the target, based on the volume of the recording made for this move; louder recordings increase the chance of <see cref="Attack.MoveMetaAilments.CONFUSION"/>.  If the user is not a <seealso cref="Pokemons.CHATOT"/>, this move will not cause <see cref="Attack.MoveMetaAilments.CONFUSION"/>.
 		/// 
 		/// This move cannot be copied by <seealso cref="Moves.MIMIC"/>, <seealso cref="Moves.MIRROR_MOVE"/>, or <seealso cref="Moves.SKETCH"/>, nor selected by <seealso cref="Moves.ASSIST"/>, <seealso cref="Moves.METRONOME"/>, or <seealso cref="Moves.SLEEP_TALK"/>.
 		/// </summary>
@@ -2462,7 +2462,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x10C = 268,
 		/// <summary>
-		/// If the user is holding a appropriate plate or drive, the damage inflicted will match it.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the user is holding a plate or a drive, this move's type is the type corresponding to that item.
+		/// If the user is holding a appropriate plate or drive, the damage inflicted will match it.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the user is holding a plate or a drive, this move's type is the type corresponding to that item.
 		/// 
 		/// Note: This effect is technically shared by both <seealso cref="Moves.TECHNO_BLAST"/> and <seealso cref="Moves.JUDGMENT"/>; however, Techno Blast is only affected by drives, and Judgment is only affected by plates.
 		/// </summary>
@@ -2471,7 +2471,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x10D = 269,
 		/// <summary>
-		/// User receives 1/2 the damage inflicted in recoil.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User takes 1/2 the damage it inflicts in recoil.
+		/// User receives 1/2 the damage inflicted in recoil.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/2 the damage it inflicts in recoil.
 		/// </summary>	
 		/// <remarks>
 		/// HEAD-SMASH,LIGHT-OF-RUIN
@@ -2485,14 +2485,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x10F = 271,
 		/// <summary>
-		/// Has a $effect_chance% chance to lower the target's Special Defense by two stages.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to lower the target's [Special Defense]{mechanic:special-defense} by two [stages]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's Special Defense by two stages.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to lower the target's [Special Defense]{mechanic:special-defense} by two [stages]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// SEED-FLARE
 		/// </remarks>	
 		x110 = 272,
 		/// <summary>
-		/// User vanishes, dodging all attacks, and hits next turn.  Hits through Protect and Detect.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User vanishes for one turn, becoming immune to attack, and hits on the second turn.
+		/// User vanishes, dodging all attacks, and hits next turn.  Hits through Protect and Detect.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User vanishes for one turn, becoming immune to attack, and hits on the second turn.
 		/// 
 		/// This move ignores the effects of <seealso cref="Moves.DETECT"/> and <seealso cref="Moves.PROTECT"/>.
 		/// 
@@ -2503,28 +2503,28 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x111 = 273,
 		/// <summary>
-		/// Has a $effect_chance% chance to [burn]{mechanic:burn} the target and a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target and a separate $effect_chance% chance to make the target [flinch]{mechanic:flinch}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target and a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target and a separate <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target [flinch]{mechanic:flinch}.
 		/// </summary>	
 		/// <remarks>
 		/// FIRE-FANG
 		/// </remarks>	
 		x112 = 274,
 		/// <summary>
-		/// Has a $effect_chance% chance to freeze the target and a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target and a separate $effect_chance% chance to make the target [flinch]{mechanic:flinch}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to freeze the target and a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.FREEZE"/> the target and a separate <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target [flinch]{mechanic:flinch}.
 		/// </summary>	
 		/// <remarks>
 		/// ICE-FANG
 		/// </remarks>	
 		x113 = 275,
 		/// <summary>
-		/// Has a $effect_chance% chance to paralyze the target and a $effect_chance% chance to make the target flinch.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [paralyze]{mechanic:paralyze} the target and a separate $effect_chance% chance to make the target [flinch]{mechanic:flinch}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to paralyze the target and a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target flinch.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [paralyze]{mechanic:paralyze} the target and a separate <see cref="Attack.Data.MetaData.AilmentChance"/> chance to make the target [flinch]{mechanic:flinch}.
 		/// </summary>	
 		/// <remarks>
 		/// THUNDER-FANG
 		/// </remarks>	
 		x114 = 276,
 		/// <summary>
-		/// Has a $effect_chance% chance to raise the user's Special Attack by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to raise the user's [Special Attack]{mechanic:special-attack} by one [stage]{mechanic:stage}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's Special Attack by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's [Special Attack]{mechanic:special-attack} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// CHARGE-BEAM,FIERY-DANCE
@@ -2570,14 +2570,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x11A = 282,
 		/// <summary>
-		/// Inflicts damage based on the target's Defense, not Special Defense.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Damage calculation always uses the target's [Defense]{mechanic:defense}, regardless of this move's damage class.
+		/// Inflicts damage based on the target's Defense, not Special Defense.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Damage calculation always uses the target's [Defense]{mechanic:defense}, regardless of this move's damage class.
 		/// </summary>	
 		/// <remarks>
 		/// PSYSHOCK,PSYSTRIKE,SECRET-SWORD
 		/// </remarks>	
 		x11B = 283,
 		/// <summary>
-		/// Inflicts double damage if the target is Poisoned.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target is [poisoned]{mechanic:poisoned}, this move has double power.
+		/// Inflicts double damage if the target is Poisoned.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is [poisoned]{mechanic:poisoned}, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// VENOSHOCK
@@ -2607,7 +2607,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x11F = 287,
 		/// <summary>
-		/// Removes any immunity to Ground damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Removes the target's [immunity]{mechanic:immune} to <seealso cref="Types.GROUND"/>-type damage.  This effect removes any existing Ground immunity due to <seealso cref="Abilities.LEVITATE"/>, <seealso cref="Moves.MAGNET_RISE"/>, or <seealso cref="Moves.TELEKINESIS"/>, and causes the target's <seealso cref="Types.FLYING"/> type to be ignored when it takes Ground damage.
+		/// Removes any immunity to Ground damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Removes the target's [immunity]{mechanic:immune} to <seealso cref="Types.GROUND"/>-type damage.  This effect removes any existing Ground immunity due to <seealso cref="Abilities.LEVITATE"/>, <seealso cref="Moves.MAGNET_RISE"/>, or <seealso cref="Moves.TELEKINESIS"/>, and causes the target's <seealso cref="Types.FLYING"/> type to be ignored when it takes Ground damage.
 		/// 
 		/// If the target isn't immune to Ground damage, this move will [fail]{mechanic:fail}.
 		/// 
@@ -2618,14 +2618,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x120 = 288,
 		/// <summary>
-		/// Always scores a critical hit.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Always scores a [critical hit]{mechanic:critical-hit}.
+		/// Always scores a critical hit.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Always scores a [critical hit]{mechanic:critical-hit}.
 		/// </summary>	
 		/// <remarks>
 		/// STORM-THROW,FROST-BREATH
 		/// </remarks>	
 		x121 = 289,
 		/// <summary>
-		/// Deals splash damage to Pokémon next to the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If this move successfully hits the target, any Pokémon adjacent to the target are damaged for 1/16 their max [HP]{mechanic:hp}.
+		/// Deals splash damage to Pokémon next to the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If this move successfully hits the target, any Pokémon adjacent to the target are damaged for 1/16 their max [HP]{mechanic:hp}.
 		/// </summary>	
 		/// <remarks>
 		/// FLAME-BURST
@@ -2639,7 +2639,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x123 = 291,
 		/// <summary>
-		/// Power is higher when the user weighs more than the target, up to a maximum of 120.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  The greater the user's weight compared to the target's, the higher power this move has, to a maximum of 120.
+		/// Power is higher when the user weighs more than the target, up to a maximum of 120.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  The greater the user's weight compared to the target's, the higher power this move has, to a maximum of 120.
 		/// 
 		/// User's weight                    | Power
 		/// -------------------------------- | ----:
@@ -2654,14 +2654,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x124 = 292,
 		/// <summary>
-		/// Hits any Pokémon that shares a type with the user.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Only Pokémon that share a type with the user will take damage from this move.
+		/// Hits any Pokémon that shares a type with the user.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Only Pokémon that share a type with the user will take damage from this move.
 		/// </summary>	
 		/// <remarks>
 		/// SYNCHRONOISE
 		/// </remarks>	
 		x125 = 293,
 		/// <summary>
-		/// Power is higher when the user has greater Speed than the target, up to a maximum of 150.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  The greater the user's [Speed]{mechanic:speed} compared to the target's, the higher power this move has, to a maximum of 150.
+		/// Power is higher when the user has greater Speed than the target, up to a maximum of 150.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  The greater the user's [Speed]{mechanic:speed} compared to the target's, the higher power this move has, to a maximum of 150.
 		/// 
 		/// User's Speed                     | Power
 		/// -------------------------------- | ----:
@@ -2682,21 +2682,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x127 = 295,
 		/// <summary>
-		/// Inflicts regular damage.  Raises the user's Speed by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Raises the user's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
+		/// Inflicts regular damage.  Raises the user's Speed by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Raises the user's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// FLAME-CHARGE
 		/// </remarks>	
 		x128 = 296,
 		/// <summary>
-		/// Lowers the target's Special Defense by two stages.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Lowers the target's [Special Defense]{mechanic:special-defense} by two [stages]{mechanic:stage}.
+		/// Lowers the target's Special Defense by two stages.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Lowers the target's [Special Defense]{mechanic:special-defense} by two [stages]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// ACID-SPRAY
 		/// </remarks>	
 		x129 = 297,
 		/// <summary>
-		/// Calculates damage with the target's attacking stat.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Damage is calculated using the target's attacking stat rather than the user's.
+		/// Calculates damage with the target's attacking stat.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Damage is calculated using the target's attacking stat rather than the user's.
 		/// </summary>	
 		/// <remarks>
 		/// FOUL-PLAY
@@ -2725,35 +2725,35 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x12D = 301,
 		/// <summary>
-		/// Has double power if it's used more than once per turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If <seealso cref="Moves.ROUND"/> has already been used this turn, this move's power is doubled.  After this move is used, any other Pokémon using it this turn will immediately do so (in the order they would otherwise act), regardless of [Speed]{mechanic:speed} or priority.  Pokémon using other moves will then continue to act as usual.
+		/// Has double power if it's used more than once per turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If <seealso cref="Moves.ROUND"/> has already been used this turn, this move's power is doubled.  After this move is used, any other Pokémon using it this turn will immediately do so (in the order they would otherwise act), regardless of [Speed]{mechanic:speed} or priority.  Pokémon using other moves will then continue to act as usual.
 		/// </summary>
 		/// <remarks>
 		/// ROUND
 		/// </remarks>	
 		x12E = 302,
 		/// <summary>
-		/// Power increases by 100% for each consecutive use by any friendly Pokémon, to a maximum of 200.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If any friendly Pokémon used this move earlier this turn or on the previous turn, that use's power is added to this move's power, to a maximum of 200.
+		/// Power increases by 100% for each consecutive use by any friendly Pokémon, to a maximum of 200.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If any friendly Pokémon used this move earlier this turn or on the previous turn, that use's power is added to this move's power, to a maximum of 200.
 		/// </summary>	
 		/// <remarks>
 		/// ECHOED-VOICE
 		/// </remarks>	
 		x12F = 303,
 		/// <summary>
-		/// Ignores the target's stat modifiers.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Damage calculation ignores the target's [stat modifiers]{mechanic:stat-modifiers}, including [evasion]{mechanic:evasion}.
+		/// Ignores the target's stat modifiers.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Damage calculation ignores the target's [stat modifiers]{mechanic:stat-modifiers}, including [evasion]{mechanic:evasion}.
 		/// </summary>	
 		/// <remarks>
 		/// CHIP-AWAY,SACRED-SWORD,DARKEST-LARIAT
 		/// </remarks>	
 		x130 = 304,
 		/// <summary>
-		/// Removes all of the target's stat modifiers.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  All of the target's [stat modifiers]{mechanic:stat-modifiers} are reset to zero.
+		/// Removes all of the target's stat modifiers.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  All of the target's [stat modifiers]{mechanic:stat-modifiers} are reset to zero.
 		/// </summary>	
 		/// <remarks>
 		/// CLEAR-SMOG
 		/// </remarks>	
 		x131 = 305,
 		/// <summary>
-		/// Power is higher the more the user's stats have been raised, to a maximum of 31×.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power is increased by 100% its original value for every [stage]{mechanic:stage} any of the user's stats have been raised.  [Accuracy]{mechanic:accuracy}, [evasion]{mechanic:evasion}, and lowered stats do not affect this move's power.  For a Pokémon with all five stats modified to +6, this move's power is 31×.
+		/// Power is higher the more the user's stats have been raised, to a maximum of 31×.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power is increased by 100% its original value for every [stage]{mechanic:stage} any of the user's stats have been raised.  [Accuracy]{mechanic:accuracy}, [evasion]{mechanic:evasion}, and lowered stats do not affect this move's power.  For a Pokémon with all five stats modified to +6, this move's power is 31×.
 		/// </summary>	
 		/// <remarks>
 		/// STORED-POWER,POWER-TRIP
@@ -2790,14 +2790,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x136 = 310,
 		/// <summary>
-		/// Has double power if the target has a major status ailment.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target has a [major status ailment]{mechanic:major-status-ailment}, this move has double power.
+		/// Has double power if the target has a major status ailment.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target has a [major status ailment]{mechanic:major-status-ailment}, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// HEX
 		/// </remarks>	
 		x137 = 311,
 		/// <summary>
-		/// Carries the target high into the air, dodging all attacks against either, and drops it next turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User carries the target high into the air for one turn, during which no moves will hit either Pokémon and neither can act.  On the following turn, the user drops the target, inflicting damage and ending the effect.
+		/// Carries the target high into the air, dodging all attacks against either, and drops it next turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User carries the target high into the air for one turn, during which no moves will hit either Pokémon and neither can act.  On the following turn, the user drops the target, inflicting damage and ending the effect.
 		/// 
 		/// If the target is <seealso cref="Types.FLYING"/>-type, this move will function as normal but inflict no damage.
 		/// 
@@ -2825,7 +2825,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x139 = 313,
 		/// <summary>
-		/// Ends wild battles.  Forces trainers to switch Pokémon.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then [switches]{mechanic:switch-out} the target out for another of its trainer's Pokémon, selected at random.
+		/// Ends wild battles.  Forces trainers to switch Pokémon.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then [switches]{mechanic:switch-out} the target out for another of its trainer's Pokémon, selected at random.
 		/// 
 		/// If the target is under the effect of <seealso cref="Moves.INGRAIN"/> or <seealso cref="Abilities.SUCTION_CUPS"/>, or it has a <seealso cref="Moves.SUBSTITUTE"/>, or its Trainer has no more usable Pokémon, it will not be switched out.  If the target is a wild Pokémon, the battle ends instead.
 		/// </summary>
@@ -2834,7 +2834,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x13A = 314,
 		/// <summary>
-		/// Destroys the target's held berry.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target is [holding]{mechanic:held-item} a [berry]{mechanic:berry}, it's destroyed and cannot be used in response to this move.
+		/// Destroys the target's held berry.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is [holding]{mechanic:held-item} a [berry]{mechanic:berry}, it's destroyed and cannot be used in response to this move.
 		/// </summary>	
 		/// <remarks>
 		/// INCINERATE
@@ -2855,7 +2855,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x13D = 317,
 		/// <summary>
-		/// Has double power if the user has no held item.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the user has no [held item]{mechanic:held-item}, this move has double power.
+		/// Has double power if the user has no held item.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the user has no [held item]{mechanic:held-item}, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// ACROBATICS
@@ -2869,7 +2869,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x13F = 319,
 		/// <summary>
-		/// Has double power if a friendly Pokémon fainted last turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a friendly Pokémon fainted on the previous turn, this move has double power.
+		/// Has double power if a friendly Pokémon fainted last turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a friendly Pokémon fainted on the previous turn, this move has double power.
 		/// </summary>	
 		/// <remarks>
 		/// RETALIATE
@@ -2904,21 +2904,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x144 = 324,
 		/// <summary>
-		/// With <seealso cref="Moves.GRASS_PLEDGE"/>, halves opposing Pokémon's Speed for four turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a friendly Pokémon used <seealso cref="Moves.GRASS_PLEDGE"/> earlier this turn, all opposing Pokémon have halved [Speed]{mechanic:speed} for four turns (including this one).
+		/// With <seealso cref="Moves.GRASS_PLEDGE"/>, halves opposing Pokémon's Speed for four turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a friendly Pokémon used <seealso cref="Moves.GRASS_PLEDGE"/> earlier this turn, all opposing Pokémon have halved [Speed]{mechanic:speed} for four turns (including this one).
 		/// </summary>
 		/// <remarks>
 		/// WATER-PLEDGE
 		/// </remarks>	
 		x145 = 325,
 		/// <summary>
-		/// With <seealso cref="Moves.WATER_PLEDGE"/>, doubles the effect chance of friendly Pokémon's moves for four turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a friendly Pokémon used <seealso cref="Moves.WATER_PLEDGE"/> earlier this turn, moves used by any friendly Pokémon have doubled effect chance for four turns (including this one).
+		/// With <seealso cref="Moves.WATER_PLEDGE"/>, doubles the effect chance of friendly Pokémon's moves for four turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a friendly Pokémon used <seealso cref="Moves.WATER_PLEDGE"/> earlier this turn, moves used by any friendly Pokémon have doubled effect chance for four turns (including this one).
 		/// </summary>
 		/// <remarks>
 		/// FIRE-PLEDGE
 		/// </remarks>	
 		x146 = 326,
 		/// <summary>
-		/// With <seealso cref="Moves.FIRE_PLEDGE"/>, damages opposing Pokémon for 1/8 their max HP every turn for four turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a friendly Pokémon used <seealso cref="Moves.FIRE_PLEDGE"/> earlier this turn, all opposing Pokémon will take 1/8 their max [HP]{mechanic:hp} in damage at the end of every turn for four turns (including this one).
+		/// With <seealso cref="Moves.FIRE_PLEDGE"/>, damages opposing Pokémon for 1/8 their max HP every turn for four turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a friendly Pokémon used <seealso cref="Moves.FIRE_PLEDGE"/> earlier this turn, all opposing Pokémon will take 1/8 their max [HP]{mechanic:hp} in damage at the end of every turn for four turns (including this one).
 		/// </summary>
 		/// <remarks>
 		/// GRASS-PLEDGE
@@ -2939,7 +2939,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x149 = 329,
 		/// <summary>
-		/// Has a $effect_chance% chance to put the target to sleep.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to put the target to [sleep]{mechanic:sleep}.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to put the target to sleep.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to put the target to <see cref="Attack.MoveMetaAilments.SLEEP"/>.
 		/// If the user is a <seealso cref="Pokemons.MELOETTA"/>, it will toggle between Aria and Pirouette Forme.
 		/// </summary>
 		/// <remarks>
@@ -2947,28 +2947,28 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x14A = 330,
 		/// <summary>
-		/// Lowers the target's Speed by one stage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Lowers the target's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
+		/// Lowers the target's Speed by one stage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Lowers the target's [Speed]{mechanic:speed} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// GLACIATE
 		/// </remarks>	
 		x14B = 331,
 		/// <summary>
-		/// Requires a turn to charge before attacking.  Has a $effect_chance% chance to paralyze the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.  User charges for one turn before attacking.
+		/// Requires a turn to charge before attacking.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to paralyze the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.PARALYSIS"/> the target.  User charges for one turn before attacking.
 		/// </summary>	
 		/// <remarks>
 		/// FREEZE-SHOCK
 		/// </remarks>	
 		x14C = 332,
 		/// <summary>
-		/// Requires a turn to charge before attacking.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [burn]{mechanic:burn} the target.  User charges for one turn before attacking.
+		/// Requires a turn to charge before attacking.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.BURN"/> the target.  User charges for one turn before attacking.
 		/// </summary>	
 		/// <remarks>
 		/// ICE-BURN
 		/// </remarks>	
 		x14D = 333,
 		/// <summary>
-		/// Has a $effect_chance% chance to confuse the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [confuse]{mechanic:confuse} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to confuse the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to [confuse]{mechanic:confuse} the target.
 		/// 
 		/// This move can hit Pokémon under the effect of <seealso cref="Moves.BOUNCE"/>, <seealso cref="Moves.FLY"/>, or <seealso cref="Moves.SKY_DROP"/>.
 		/// 
@@ -2979,21 +2979,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x14E = 334,
 		/// <summary>
-		/// Lowers the user's Defense, Special Defense, and Speed by one stage each.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Lowers the user's [Defense]{mechanic:defense}, [Special Defense]{mechanic:special-defense}, and [Speed]{mechanic:speed} by one [stage]{mechanic:stage} each.
+		/// Lowers the user's Defense, Special Defense, and Speed by one stage each.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Lowers the user's [Defense]{mechanic:defense}, [Special Defense]{mechanic:special-defense}, and [Speed]{mechanic:speed} by one [stage]{mechanic:stage} each.
 		/// </summary>	
 		/// <remarks>
 		/// V-CREATE
 		/// </remarks>	
 		x14F = 335,
 		/// <summary>
-		/// With <seealso cref="Moves.FUSION_BOLT"/>, inflicts double damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a friendly Pokémon used <seealso cref="Moves.FUSION_BOLT"/> earlier this turn, this move has double power.
+		/// With <seealso cref="Moves.FUSION_BOLT"/>, inflicts double damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a friendly Pokémon used <seealso cref="Moves.FUSION_BOLT"/> earlier this turn, this move has double power.
 		/// </summary>
 		/// <remarks>
 		/// FUSION-FLARE
 		/// </remarks>	
 		x150 = 336,
 		/// <summary>
-		/// With <seealso cref="Moves.FUSION_FLARE"/>, inflicts double damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If a friendly Pokémon used <seealso cref="Moves.FUSION_FLARE"/> earlier this turn, this move has double power.
+		/// With <seealso cref="Moves.FUSION_FLARE"/>, inflicts double damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If a friendly Pokémon used <seealso cref="Moves.FUSION_FLARE"/> earlier this turn, this move has double power.
 		/// </summary>
 		/// <remarks>
 		/// FUSION-BOLT
@@ -3163,14 +3163,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x166 = 358,
 		/// <summary>
-		/// Has a $effect_chance% chance to raise the user's Defense by two stages for each target hit.<para></para> Inflicts regular damage.  Has a $effect_chance% chance to raise the user's Defense by two stages for each target hit.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's Defense by two stages for each target hit.<para></para> Inflicts regular damage.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to raise the user's Defense by two stages for each target hit.
 		/// </summary>	
 		/// <remarks>
 		/// DIAMOND-STORM
 		/// </remarks>	
 		x167 = 359,
 		/// <summary>
-		/// Ignores and destroys protection effects.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Bypasses and removes any protection effect on the target.
+		/// Ignores and destroys protection effects.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Bypasses and removes any protection effect on the target.
 		/// </summary>	
 		/// <remarks>
 		/// HYPERSPACE-HOLE,HYPERSPACE-FURY
@@ -3258,7 +3258,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x173 = 371,
 		/// <summary>
-		/// Has a $effect_chance% chance to paralyze the target.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
+		/// Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to paralyze the target.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Has a <see cref="Attack.Data.MetaData.AilmentChance"/> chance to <see cref="Attack.MoveMetaAilments.PARALYSIS"/> the target.
 		/// </summary>	
 		/// <remarks>
 		/// NUZZLE
@@ -3307,14 +3307,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x17A = 378,
 		/// <summary>
-		/// Inflicts regular damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// </summary>	
 		/// <remarks>
 		/// PETAL-BLIZZARD,BOOMBURST
 		/// </remarks>	
 		x17B = 379,
 		/// <summary>
-		/// Super-effective against <seealso cref="Types.WATER"/>.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  This move is super-effective against the <seealso cref="Types.WATER"/> type.
+		/// Super-effective against <seealso cref="Types.WATER"/>.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  This move is super-effective against the <seealso cref="Types.WATER"/> type.
 		/// 
 		/// The target's other type will affect damage as usual.  If this move's type is changed, it remains super-effective against Water regardless of its type.
 		/// </summary>
@@ -3323,7 +3323,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x17C = 380,
 		/// <summary>
-		/// Never misses.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion}.
+		/// Never misses.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Ignores [accuracy]{mechanic:accuracy} and [evasion]{mechanic:evasion}.
 		/// </summary>	
 		/// <remarks>
 		/// DISARMING-VOICE
@@ -3409,14 +3409,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x188 = 392,
 		/// <summary>
-		/// Prevents the target from using sound-based moves for two turns.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Silences the target for two turns, preventing it from using any sound-based moves.
+		/// Prevents the target from using sound-based moves for two turns.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Silences the target for two turns, preventing it from using any sound-based moves.
 		/// </summary>	
 		/// <remarks>
 		/// THROAT-CHOP
 		/// </remarks>	
 		x189 = 393,
 		/// <summary>
-		/// Damages opponents, but heals allies for 50% of their max HP.<para></para> If the target is an opponent, inflicts [regular damage]{mechanic:regular-damage}.  If the target is an ally, heals the target for 50% of its max HP.
+		/// Damages opponents, but heals allies for 50% of their max HP.<para></para> If the target is an opponent, inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target is an ally, heals the target for 50% of its max HP.
 		/// </summary>	
 		/// <remarks>
 		/// POLLEN-PUFF
@@ -3434,21 +3434,21 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x18B = 395,
 		/// <summary>
-		/// Lowers the target's Attack by one stage after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Lowers the target's [Attack]{mechanic:attack} by one [stage]{mechanic:stage}.
+		/// Lowers the target's Attack by one stage after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Lowers the target's [Attack]{mechanic:attack} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// LUNGE,TROP-KICK
 		/// </remarks>	
 		x18C = 396,
 		/// <summary>
-		/// Lowers the target's Defense by one stage after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Lowers the target's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.
+		/// Lowers the target's Defense by one stage after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Lowers the target's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// FIRE-LASH
 		/// </remarks>	
 		x18D = 397,
 		/// <summary>
-		/// Removes the user's <seealso cref="Types.FIRE"/> type after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Removes the user's <seealso cref="Types.FIRE"/> type after damage calculation.  If the user is not <seealso cref="Types.FIRE"/>-type, this move will fail.
+		/// Removes the user's <seealso cref="Types.FIRE"/> type after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Removes the user's <seealso cref="Types.FIRE"/> type after damage calculation.  If the user is not <seealso cref="Types.FIRE"/>-type, this move will fail.
 		/// </summary>
 		/// <remarks>
 		/// BURN-UP
@@ -3469,14 +3469,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x190 = 400,
 		/// <summary>
-		/// Has the same type as the user.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  This move's type matches the user's first type, if any; otherwise, it's typeless.
+		/// Has the same type as the user.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  This move's type matches the user's first type, if any; otherwise, it's typeless.
 		/// </summary>	
 		/// <remarks>
 		/// REVELATION-DANCE
 		/// </remarks>	
 		x191 = 401,
 		/// <summary>
-		/// Nullifies the target's ability if it moves earlier.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the target has already moved this turn, its ability is nullified.
+		/// Nullifies the target's ability if it moves earlier.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the target has already moved this turn, its ability is nullified.
 		/// </summary>	
 		/// <remarks>
 		/// CORE-ENFORCER
@@ -3497,14 +3497,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x194 = 404,
 		/// <summary>
-		/// Lowers the user's Defense by one stage after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Lowers the user's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.
+		/// Lowers the user's Defense by one stage after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Lowers the user's [Defense]{mechanic:defense} by one [stage]{mechanic:stage}.
 		/// </summary>	
 		/// <remarks>
 		/// CLANGING-SCALES
 		/// </remarks>	
 		x195 = 405,
 		/// <summary>
-		/// Inflicts regular damage with no additional effect.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.
+		/// Inflicts regular damage with no additional effect.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.
 		/// </summary>	
 		/// <remarks>
 		/// BRUTAL-SWING
@@ -3513,35 +3513,35 @@ namespace PokemonUnity.Attack.Data
 		/// <summary>
 		/// Reduces damage five turns, but must be used during hail.<para></para> Places the Aurora Veil effect on the user's side of the field for the next 5 turns.  If the weather is not <seealso cref="Moves.HAIL"/>, or the weather is disabled by the effects of <seealso cref="Abilities.CLOUD_NINE"/> or <seealso cref="Abilities.AIR_LOCK"/>, this move will fail.
 		/// 
-		/// Any [regular damage]{mechanic:regular-damage} dealt to an affected Pokémon is reduced by ½.  (If there are multiple Pokémon on the affected field, the reduction is ⅓.)
+		/// Any <seealso cref="Attack.MetaCategory.DAMAGE"/> dealt to an affected Pokémon is reduced by ½.  (If there are multiple Pokémon on the affected field, the reduction is ⅓.)
 		/// </summary>
 		/// <remarks>
 		/// AURORA-VEIL
 		/// </remarks>	
 		x197 = 407,
 		/// <summary>
-		/// Only inflicts damage if the user was hit by a physical move this turn.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  If the user was not yet hit by an opponent's physical move this turn, this move will fail.
+		/// Only inflicts damage if the user was hit by a physical move this turn.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  If the user was not yet hit by an opponent's physical move this turn, this move will fail.
 		/// </summary>	
 		/// <remarks>
 		/// SHELL-TRAP
 		/// </remarks>	
 		x198 = 408,
 		/// <summary>
-		/// Has double power if the user's last move failed.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Power is doubled if the user's last move failed for any reason (i.e., produced the message "But it failed!") or was ineffective due to types.
+		/// Has double power if the user's last move failed.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Power is doubled if the user's last move failed for any reason (i.e., produced the message "But it failed!") or was ineffective due to types.
 		/// </summary>	
 		/// <remarks>
 		/// STOMPING-TANTRUM
 		/// </remarks>	
 		x199 = 409,
 		/// <summary>
-		/// Steals the target's stat increases, then inflicts damage.<para></para> Steals the target's stat increases, then inflicts [regular damage]{mechanic:regular-damage}.  Will not steal stat increases that would put any of the user's stats at more than +6; any excess is left on the target.  Stolen increases are affected by abilities as normal.
+		/// Steals the target's stat increases, then inflicts damage.<para></para> Steals the target's stat increases, then inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Will not steal stat increases that would put any of the user's stats at more than +6; any excess is left on the target.  Stolen increases are affected by abilities as normal.
 		/// </summary>	
 		/// <remarks>
 		/// SPECTRAL-THIEF
 		/// </remarks>	
 		x19A = 410,
 		/// <summary>
-		/// Cannot be disrupted by abilities.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  Other Pokémon's abilities cannot activate in response to this move.  In particular, it hits through <seealso cref="Abilities.DISGUISE"/>
+		/// Cannot be disrupted by abilities.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  Other Pokémon's abilities cannot activate in response to this move.  In particular, it hits through <seealso cref="Abilities.DISGUISE"/>
 		/// </summary>
 		/// <remarks>
 		/// SUNSTEEL-STRIKE,MOONGEIST-BEAM,SEARING-SUNRAZE-SMASH,MENACING-MOONRAZE-MAELSTROM
@@ -3569,7 +3569,7 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x19E = 414,
 		/// <summary>
-		/// Changes the terrain to Psychic Terrain after inflicting damage.<para></para> Inflicts [regular damage]{mechanic:regular-damage}, then (if successful) changes the terrain to <seealso cref="Moves.PSYCHIC_TERRAIN"/>.
+		/// Changes the terrain to Psychic Terrain after inflicting damage.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>, then (if successful) changes the terrain to <seealso cref="Moves.PSYCHIC_TERRAIN"/>.
 		/// </summary>
 		/// <remarks>
 		/// GENESIS-SUPERNOVA
@@ -3611,14 +3611,14 @@ namespace PokemonUnity.Attack.Data
 		/// </remarks>	
 		x1A4 = 420,
 		/// <summary>
-		/// Has an increased chance for a critical hit in Hyper Mode.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move while in [hyper mode]{mechanic:hyper-mode}.
+		/// Has an increased chance for a critical hit in Hyper Mode.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User's [critical hit]{mechanic:critical-hit} rate is one level higher when using this move while in [hyper mode]{mechanic:hyper-mode}.
 		/// </summary>	
 		/// <remarks>
 		/// SHADOW-RUSH
 		/// </remarks>	
 		x711 = 10001,
 		/// <summary>
-		/// User receives 1/2 its HP in recoil.<para></para> Inflicts [regular damage]{mechanic:regular-damage}.  User takes 1/2 of its current [HP]{mechanic:hp} in recoil.
+		/// User receives 1/2 its HP in recoil.<para></para> Inflicts <seealso cref="Attack.MetaCategory.DAMAGE"/>.  User takes 1/2 of its current [HP]{mechanic:hp} in recoil.
 		/// </summary>	
 		/// <remarks>
 		/// SHADOW-END
