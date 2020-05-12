@@ -775,8 +775,8 @@ namespace PokemonUnity.Battle
 			//		}
 			//		//BallHandlers.onCatch(ball,this,pokemon);
 			//		pokemon.ballused = pbGetBallType(ball);
-			//		pokemon.makeUnmega(); //rescue nil
-			//		pokemon.makeUnprimal(); //rescue nil
+			//		pokemon.makeUnmega(); //rescue null
+			//		pokemon.makeUnprimal(); //rescue null
 			//		pokemon.pbRecordFirstMoves();
 			//		if (Core.GAINEXPFORCAPTURE)
 			//		{
@@ -796,7 +796,7 @@ namespace PokemonUnity.Battle
 			//		@scene.pbHideCaptureBall();
 			//		if (pbIsSnagBall(ball) && @opponent)
 			//		{
-			//			pokemon.pbUpdateShadowMoves(); //rescue nil
+			//			pokemon.pbUpdateShadowMoves(); //rescue null
 			//			@snaggedpokemon.Add(pokemon);
 			//		}
 			//		else
@@ -899,7 +899,7 @@ namespace PokemonUnity.Battle
                Items.INSECTPLATE, Items.SPOOKYPLATE, Items.IRONPLATE, Items.FLAMEPLATE, Items.SPLASHPLATE,
                Items.MEADOWPLATE, Items.ZAPPLATE, Items.MINDPLATE, Items.ICICLEPLATE, Items.DRACOPLATE,
                Items.DREADPLATE, Items.PIXIEPLATE };
-      for i in plates
+      foreach (var i in plates) {
         return true if item == i
       end
     end
@@ -960,7 +960,7 @@ namespace PokemonUnity.Battle
             [:KYOGRE,:BLUEORB],
             [:GROUDON,:REDORB]
            ]
-    for i in combos
+    foreach (var i in combos) {
       if (pkmn.Species == (Pokemons)i[0] && item == (Items)i[1])
         return true
       end
@@ -974,7 +974,7 @@ namespace PokemonUnity.Battle
         return @battlers[i]
       end
     end
-    return nil
+    return null
   end
 
   def nextPickupUse
@@ -1015,7 +1015,7 @@ namespace PokemonUnity.Battle
 
   def pbGetMegaRingName(battlerIndex)
     if pbBelongsToPlayer?(battlerIndex)
-      for i in MEGARINGS
+      foreach (var i in MEGARINGS) {
         next if !hasConst?(PBItems,i)
         return i.ToString(TextScripts.Name) if $PokemonBag.pbQuantity(i)>0
       end
@@ -1029,7 +1029,7 @@ namespace PokemonUnity.Battle
 
   def pbHasMegaRing(battlerIndex)
     return true if !pbBelongsToPlayer?(battlerIndex)
-    for i in MEGARINGS
+    foreach (var i in MEGARINGS) {
       next if !hasConst?(PBItems,i)
       return true if $PokemonBag.pbQuantity(i)>0
     end
@@ -1064,7 +1064,7 @@ namespace PokemonUnity.Battle
 		}
 			def pbPokemonCount(party)
     count=0
-    for i in party
+    foreach (var i in party) {
       next if !i
       count+=1 if i.hp>0 && !i.isEgg?
     end
@@ -1077,7 +1077,7 @@ namespace PokemonUnity.Battle
 
   def pbMaxLevel(party)
     lv=0
-    for i in party
+    foreach (var i in party) {
       next if !i
       lv=i.level if lv<i.level
     end
@@ -1097,7 +1097,7 @@ namespace PokemonUnity.Battle
         maxlevel=party[i].level if maxlevel<party[i].level
       end
     else
-      for i in party
+      foreach (var i in party) {
         next if !i
         maxlevel=i.level if maxlevel<i.level
       end
@@ -1153,7 +1153,7 @@ namespace PokemonUnity.Battle
   end
 
   def pbFindPlayerBattler(pkmnIndex)
-    battler=nil
+    battler=null
     for (int k = 0; k < 4; k++) {
       if !pbIsOpposing?(k) && @battlers[k].pokemonIndex==pkmnIndex
         battler=@battlers[k]
@@ -1246,7 +1246,7 @@ namespace PokemonUnity.Battle
     side=(pbIsOpposing?(battlerIndex)) ? @opponent : @player
     order=(pbIsOpposing?(battlerIndex)) ? @party2order : @party1order
     secondpartybegin=pbSecondPartyBegin(battlerIndex)
-    party[partyIndex]=nil
+    party[partyIndex]=null
     if !side || !side.is_a?(Array) // Wild or single opponent
       party.compact!
       for (int i = partyIndex; i < party.length+1; i++) {
@@ -1265,7 +1265,7 @@ namespace PokemonUnity.Battle
       if partyIndex<secondpartybegin-1
         for (int i = partyIndex; i < secondpartybegin; i++) {
           if i>=secondpartybegin-1
-            party[i]=nil
+            party[i]=null
           else
             party[i]=party[i+1]
           end
@@ -1277,7 +1277,7 @@ namespace PokemonUnity.Battle
       else
         for (int i = partyIndex; i < secondpartybegin+pbPartyLength; i++) {(battlerIndex)
           if i>=party.length-1
-            party[i]=nil
+            party[i]=null
           else
             party[i]=party[i+1]
           end
@@ -1416,7 +1416,7 @@ namespace PokemonUnity.Battle
     if thispkmn.isFainted?
       @choices[idxPokemon][0]=0
       @choices[idxPokemon][1]=0
-      @choices[idxPokemon][2]=nil
+      @choices[idxPokemon][2]=null
       return
     end
     if thispkmn.effects.Encore>0 && 
@@ -1429,10 +1429,10 @@ namespace PokemonUnity.Battle
       if @doublebattle
         thismove=thispkmn.moves[thispkmn.effects.EncoreIndex]
         target=thispkmn.pbTarget(thismove)
-        if target==PBTargets::SingleNonUser
+        if target==Targets.SingleNonUser
           target=@scene.pbChooseTarget(idxPokemon,target)
           pbRegisterTarget(idxPokemon,target) if target>=0
-        elsif target==PBTargets::UserOrPartner
+        elsif target==Targets.UserOrPartner
           target=@scene.pbChooseTarget(idxPokemon,target)
           pbRegisterTarget(idxPokemon,target) if target>=0 && (target&1)==(idxPokemon&1)
         end
@@ -1501,7 +1501,7 @@ namespace PokemonUnity.Battle
            !@battlers[i].pbOpposing2.Ability == Abilities.UNNERVE
           if (@battlers[i].Ability == Abilities.GLUTTONY && @battlers[i].hp<=(@battlers[i].totalhp/2).floor) ||
              @battlers[i].hp<=(@battlers[i].totalhp/4).floor
-            pbCommonAnimation("UseItem",@battlers[i],nil)
+            pbCommonAnimation("UseItem",@battlers[i],null)
             quickclaw[i]=true
             pbDisplayBrief(_INTL("{1}'s {2} let it move first!",
                @battlers[i].pbThis,@battlers[i].item.ToString(TextScripts.Name))
@@ -1510,7 +1510,7 @@ namespace PokemonUnity.Battle
         end
         if !quickclaw[i] && @battlers[i].Item == Items.QUICKCLAW
           if pbRandom(10)<2
-            pbCommonAnimation("UseItem",@battlers[i],nil)
+            pbCommonAnimation("UseItem",@battlers[i],null)
             quickclaw[i]=true
             pbDisplayBrief(_INTL("{1}'s {2} let it move first!",
                @battlers[i].pbThis,@battlers[i].item.ToString(TextScripts.Name))
@@ -1601,7 +1601,7 @@ namespace PokemonUnity.Battle
           end
         end
         // Battlers in this bracket are properly sorted, so add them to @priority
-        for i in temp
+        foreach (var i in temp) {
           @priority[@priority.length]=@battlers[i]
         end
       end
@@ -1693,7 +1693,7 @@ namespace PokemonUnity.Battle
     end
     opp1=thispkmn.pbOpposing1
     opp2=thispkmn.pbOpposing2
-    opp=nil
+    opp=null
     if thispkmn.pbHasType?(:STEEL)
       opp=opp1 if opp1.Ability == Abilities.MAGNETPULL
       opp=opp2 if opp2.Ability == Abilities.MAGNETPULL
@@ -1718,7 +1718,7 @@ namespace PokemonUnity.Battle
     return false if !pbCanSwitch?(idxPokemon,idxOther,false)
     @choices[idxPokemon][0]=2          // "Switch Pokémon"
     @choices[idxPokemon][1]=idxOther   // Index of other Pokémon to switch with
-    @choices[idxPokemon][2]=nil
+    @choices[idxPokemon][2]=null
     side=(pbIsOpposing?(idxPokemon)) ? 1 : 0
     owner=pbGetOwnerIndex(idxPokemon)
     if @megaEvolution[side][owner]==idxPokemon
@@ -1805,7 +1805,7 @@ namespace PokemonUnity.Battle
     end
     if switched.length>0
       priority=pbPriority
-      for i in priority
+      foreach (var i in priority) {
         i.pbAbilitiesOnSwitchIn(true) if switched.include?(i.index)
       end
     end
@@ -1909,16 +1909,16 @@ namespace PokemonUnity.Battle
 /// Uses an item on a Pokémon in the player's party.
   def pbUseItemOnPokemon(item,pkmnIndex,userPkmn,scene)
     pokemon=@party1[pkmnIndex]
-    battler=nil
+    battler=null
     name=pbGetOwner(userPkmn.index).fullname
     name=pbGetOwner(userPkmn.index).name if pbBelongsToPlayer?(userPkmn.index)
     pbDisplayBrief(_INTL("{1} used the\r\n{2}.",name,PBItems.getName(item)))
-    PBDebug.log("[Use item] Player used #{PBItems.getName(item)} on #{pokemon.name}")
+    GameDebug.Log($"[Use item] Player used #{PBItems.getName(item)} on #{pokemon.name}")
     ret=false
     if pokemon.isEgg?
       pbDisplay(_INTL("But it had no effect!"))
     else
-      for i in 0...4
+      for (int i = 0; i < 4; i++) {
         if !pbIsOpposing?(i) && @battlers[i].pokemonIndex==pkmnIndex
           battler=@battlers[i]
         end
@@ -1937,7 +1937,7 @@ namespace PokemonUnity.Battle
 
 /// Uses an item on an active Pokémon.
   def pbUseItemOnBattler(item,index,userPkmn,scene)
-    PBDebug.log("[Use item] Player used #{PBItems.getName(item)} on #{@battlers[index].pbThis(true)}")
+    GameDebug.Log($"[Use item] Player used #{PBItems.getName(item)} on #{@battlers[index].pbThis(true)}")
     ret=ItemHandlers.triggerBattleUseOnBattler(item,@battlers[index],scene)
     if !ret && pbBelongsToPlayer?(userPkmn.index)
       if $PokemonBag.pbCanStore?(item)
@@ -1949,12 +1949,12 @@ namespace PokemonUnity.Battle
     return ret
   end
 
-  def pbRegisterItem(idxPokemon,idxItem,idxTarget=nil)
-    if idxTarget!=nil && idxTarget>=0
-      for i in 0...4
+  def pbRegisterItem(idxPokemon,idxItem,idxTarget=null)
+    if idxTarget!=null && idxTarget>=0
+      for (int i = 0; i < 4; i++) {
         if !@battlers[i].pbIsOpposing?(idxPokemon) &&
            @battlers[i].pokemonIndex==idxTarget &&
-           @battlers[i].effects[PBEffects::Embargo]>0
+           @battlers[i].effects.Embargo>0
           pbDisplay(_INTL("Embargo's effect prevents the item's use on {1}!",@battlers[i].pbThis(true)))
           if pbBelongsToPlayer?(@battlers[i].index)
             if $PokemonBag.pbCanStore?(idxItem)
@@ -1973,7 +1973,7 @@ namespace PokemonUnity.Battle
           // Using Poké Balls or Poké Doll only
           ItemHandlers.triggerUseInBattle(idxItem,@battlers[idxPokemon],self)
           if @doublebattle
-            @battlers[idxPokemon+2].effects[PBEffects::SkipTurn]=true
+            @battlers[idxPokemon+2].effects.SkipTurn=true
           end
         else
           if $PokemonBag.pbCanStore?(idxItem)
@@ -2006,7 +2006,7 @@ namespace PokemonUnity.Battle
     items=pbGetOwnerItems(battler.index)
     return if !items
     opponent=pbGetOwner(battler.index)
-    for i in 0...items.length
+    for (int i = 0; i < items.length; i++) {
       if items[i]==item
         items.delete_at(i)
         break
@@ -2014,56 +2014,56 @@ namespace PokemonUnity.Battle
     end
     itemname=PBItems.getName(item)
     pbDisplayBrief(_INTL("{1} used the\r\n{2}!",opponent.fullname,itemname))
-    PBDebug.log("[Use item] Opponent used #{itemname} on #{battler.pbThis(true)}")
-    if isConst?(item,PBItems,:POTION)
+    GameDebug.Log($"[Use item] Opponent used #{itemname} on #{battler.pbThis(true)}")
+    if item == Items.POTION
       battler.pbRecoverHP(20,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
-    elsif isConst?(item,PBItems,:SUPERPOTION)
+    elsif item == Items.SUPERPOTION
       battler.pbRecoverHP(50,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
-    elsif isConst?(item,PBItems,:HYPERPOTION)
+    elsif item == Items.HYPERPOTION
       battler.pbRecoverHP(200,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
-    elsif isConst?(item,PBItems,:MAXPOTION)
+    elsif item == Items.MAXPOTION
       battler.pbRecoverHP(battler.totalhp-battler.hp,true)
       pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
-    elsif isConst?(item,PBItems,:FULLRESTORE)
+    elsif item == Items.FULLRESTORE
       fullhp=(battler.hp==battler.totalhp)
       battler.pbRecoverHP(battler.totalhp-battler.hp,true)
       battler.status=0; battler.statusCount=0
-      battler.effects[PBEffects::Confusion]=0
+      battler.effects.Confusion=0
       if fullhp
         pbDisplay(_INTL("{1} became healthy!",battler.pbThis))
       else
         pbDisplay(_INTL("{1}'s HP was restored.",battler.pbThis))
       end
-    elsif isConst?(item,PBItems,:FULLHEAL)
+    elsif item == Items.FULLHEAL
       battler.status=0; battler.statusCount=0
-      battler.effects[PBEffects::Confusion]=0
+      battler.effects.Confusion=0
       pbDisplay(_INTL("{1} became healthy!",battler.pbThis))
-    elsif isConst?(item,PBItems,:XATTACK)
-      if battler.pbCanIncreaseStatStage?(PBStats::ATTACK,battler)
-        battler.pbIncreaseStat(PBStats::ATTACK,1,battler,true)
+    elsif item == Items.XATTACK
+      if battler.pbCanIncreaseStatStage?(Stats.ATTACK,battler)
+        battler.pbIncreaseStat(Stats.ATTACK,1,battler,true)
       end
-    elsif isConst?(item,PBItems,:XDEFEND)
-      if battler.pbCanIncreaseStatStage?(PBStats::DEFENSE,battler)
-        battler.pbIncreaseStat(PBStats::DEFENSE,1,battler,true)
+    elsif item == Items.XDEFEND
+      if battler.pbCanIncreaseStatStage?(Stats.DEFENSE,battler)
+        battler.pbIncreaseStat(Stats.DEFENSE,1,battler,true)
       end
-    elsif isConst?(item,PBItems,:XSPEED)
-      if battler.pbCanIncreaseStatStage?(PBStats::SPEED,battler)
-        battler.pbIncreaseStat(PBStats::SPEED,1,battler,true)
+    elsif item == Items.XSPEED
+      if battler.pbCanIncreaseStatStage?(Stats.SPEED,battler)
+        battler.pbIncreaseStat(Stats.SPEED,1,battler,true)
       end
-    elsif isConst?(item,PBItems,:XSPECIAL)
-      if battler.pbCanIncreaseStatStage?(PBStats::SPATK,battler)
-        battler.pbIncreaseStat(PBStats::SPATK,1,battler,true)
+    elsif item == Items.XSPECIAL
+      if battler.pbCanIncreaseStatStage?(Stats.SPATK,battler)
+        battler.pbIncreaseStat(Stats.SPATK,1,battler,true)
       end
-    elsif isConst?(item,PBItems,:XSPDEF)
-      if battler.pbCanIncreaseStatStage?(PBStats::SPDEF,battler)
-        battler.pbIncreaseStat(PBStats::SPDEF,1,battler,true)
+    elsif item == Items.XSPDEF
+      if battler.pbCanIncreaseStatStage?(Stats.SPDEF,battler)
+        battler.pbIncreaseStat(Stats.SPDEF,1,battler,true)
       end
-    elsif isConst?(item,PBItems,:XACCURACY)
-      if battler.pbCanIncreaseStatStage?(PBStats::ACCURACY,battler)
-        battler.pbIncreaseStat(PBStats::ACCURACY,1,battler,true)
+    elsif item == Items.XACCURACY
+      if battler.pbCanIncreaseStatStage?(Stats.ACCURACY,battler)
+        battler.pbIncreaseStat(Stats.ACCURACY,1,battler,true)
       end
     end
   end
@@ -2076,8 +2076,8 @@ namespace PokemonUnity.Battle
     return false if @cantescape && !pbIsOpposing?(idsPokemon)
     thispkmn=@battlers[idxPokemon]
     return true if thispkmn.pbHasType?(:GHOST) && USENEWBATTLEMECHANICS
-    return true if thispkmn.hasWorkingItem(:SMOKEBALL)
-    return true if thispkmn.hasWorkingAbility(:RUNAWAY)
+    return true if thispkmn.Item == Items.SMOKEBALL
+    return true if thispkmn.Ability == Abilities.RUNAWAY
     return pbCanSwitch?(idxPokemon,-1,false)
 		}
 
@@ -2087,7 +2087,7 @@ namespace PokemonUnity.Battle
       return 0 if @opponent
       @choices[i][0]=5 // run
       @choices[i][1]=0 
-      @choices[i][2]=nil
+      @choices[i][2]=null
       return -1
     end
     if @opponent
@@ -2122,7 +2122,7 @@ namespace PokemonUnity.Battle
       @decision=3
       return 1
     end
-    if thispkmn.hasWorkingAbility(:RUNAWAY)
+    if thispkmn.Ability == Abilities.RUNAWAY
       if duringBattle
         pbDisplayPaused(_INTL("Got away safely!"))
       else
@@ -2131,7 +2131,7 @@ namespace PokemonUnity.Battle
       @decision=3
       return 1
     end
-    if thispkmn.hasWorkingItem(:SMOKEBALL)
+    if thispkmn.Item == Items.SMOKEBALL
       if duringBattle
         pbDisplayPaused(_INTL("Got away safely!"))
       else
@@ -2184,7 +2184,7 @@ namespace PokemonUnity.Battle
     side=(pbIsOpposing?(index)) ? 1 : 0
     owner=pbGetOwnerIndex(index)
     return false if @megaEvolution[side][owner]!=-1
-    return false if @battlers[index].effects[PBEffects::SkyDrop]
+    return false if @battlers[index].effects.SkyDrop
     return true
   end
 
@@ -2208,18 +2208,18 @@ namespace PokemonUnity.Battle
          @battlers[index].pbThis,PBItems.getName(@battlers[index].item),
          ownername,pbGetMegaRingName(index)))
     end
-    pbCommonAnimation("MegaEvolution",@battlers[index],nil)
+    pbCommonAnimation("MegaEvolution",@battlers[index],null)
     @battlers[index].pokemon.makeMega
     @battlers[index].form=@battlers[index].pokemon.form
     @battlers[index].pbUpdate(true)
     @scene.pbChangePokemon(@battlers[index],@battlers[index].pokemon)
-    pbCommonAnimation("MegaEvolution2",@battlers[index],nil)
-    meganame=(@battlers[index].pokemon.megaName rescue nil)
+    pbCommonAnimation("MegaEvolution2",@battlers[index],null)
+    meganame=(@battlers[index].pokemon.megaName rescue null)
     if !meganame || meganame==""
       meganame=_INTL("Mega {1}",PBSpecies.getName(@battlers[index].pokemon.species))
     end
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!",@battlers[index].pbThis,meganame))
-    PBDebug.log("[Mega Evolution] #{@battlers[index].pbThis} Mega Evolved")
+    GameDebug.Log($"[Mega Evolution] #{@battlers[index].pbThis} Mega Evolved")
     side=(pbIsOpposing?(index)) ? 1 : 0
     owner=pbGetOwnerIndex(index)
     @megaEvolution[side][owner]=-2
@@ -2231,22 +2231,22 @@ namespace PokemonUnity.Battle
     return if !@battlers[index] || !@battlers[index].pokemon
     return if !(@battlers[index].hasPrimal? rescue false)
     return if (@battlers[index].isPrimal? rescue true)
-    if isConst?(@battlers[index].pokemon.species,PBSpecies,:KYOGRE)
-      pbCommonAnimation("PrimalKyogre",@battlers[index],nil)
-    elsif isConst?(@battlers[index].pokemon.species,PBSpecies,:GROUDON)
-      pbCommonAnimation("PrimalGroudon",@battlers[index],nil)
+    if @battlers[index].pokemon.species == Pokemons.KYOGRE
+      pbCommonAnimation("PrimalKyogre",@battlers[index],null)
+    elsif @battlers[index].pokemon.species == Pokemons.GROUDON
+      pbCommonAnimation("PrimalGroudon",@battlers[index],null)
     end
     @battlers[index].pokemon.makePrimal
     @battlers[index].form=@battlers[index].pokemon.form
     @battlers[index].pbUpdate(true)
     @scene.pbChangePokemon(@battlers[index],@battlers[index].pokemon)
-    if isConst?(@battlers[index].pokemon.species,PBSpecies,:KYOGRE)
-      pbCommonAnimation("PrimalKyogre2",@battlers[index],nil)
-    elsif isConst?(@battlers[index].pokemon.species,PBSpecies,:GROUDON)
-      pbCommonAnimation("PrimalGroudon2",@battlers[index],nil)
+    if @battlers[index].pokemon.species == Pokemons.KYOGRE
+      pbCommonAnimation("PrimalKyogre2",@battlers[index],null)
+    elsif @battlers[index].pokemon.species == Pokemons.GROUDON
+      pbCommonAnimation("PrimalGroudon2",@battlers[index],null)
     end
     pbDisplay(_INTL("{1}'s Primal Reversion!\nIt reverted to its primal form!",@battlers[index].pbThis))
-    PBDebug.log("[Primal Reversion] #{@battlers[index].pbThis} Primal Reverted")
+    GameDebug.Log($"[Primal Reversion] #{@battlers[index].pbThis} Primal Reverted")
   end
 		#endregion
 
@@ -2255,7 +2255,7 @@ namespace PokemonUnity.Battle
     owner=pbGetOwner(index)
     pbDisplay(_INTL("{1} called {2}!",owner.name,@battlers[index].name))
     pbDisplay(_INTL("{1}!",@battlers[index].name))
-    PBDebug.log("[Call to Pokémon] #{owner.name} called to #{@battlers[index].pbThis(true)}")
+    GameDebug.Log($"[Call to Pokémon] #{owner.name} called to #{@battlers[index].pbThis(true)}")
     if @battlers[index].isShadow?
       if @battlers[index].inHyperMode?
         @battlers[index].pokemon.hypermode=false
@@ -2264,9 +2264,9 @@ namespace PokemonUnity.Battle
       else
         pbDisplay(_INTL("But nothing happened!"))
       end
-    elsif @battlers[index].status!=PBStatuses::SLEEP &&
-          @battlers[index].pbCanIncreaseStatStage?(PBStats::ACCURACY,@battlers[index])
-      @battlers[index].pbIncreaseStat(PBStats::ACCURACY,1,@battlers[index],true)
+    elsif @battlers[index].status!=Statuses.SLEEP &&
+          @battlers[index].pbCanIncreaseStatStage?(Stats.ACCURACY,@battlers[index])
+      @battlers[index].pbIncreaseStat(Stats.ACCURACY,1,@battlers[index],true)
     else
       pbDisplay(_INTL("But nothing happened!"))
     end
@@ -2277,7 +2277,7 @@ namespace PokemonUnity.Battle
   def pbGainEXP
     return if !@internalbattle
     successbegin=true
-    for i in 0...4 // Not ordered by priority
+    for (int i = 0; i < 4; i++) { // Not ordered by priority
       if !@doublebattle && pbIsDoubleBattler?(i)
         @battlers[i].participants=[]
         next
@@ -2288,16 +2288,16 @@ namespace PokemonUnity.Battle
         // First count the number of participants
         partic=0
         expshare=0
-        for j in @battlers[i].participants
+        foreach (var j in @battlers[i].participants) {
           next if !@party1[j] || !pbIsOwner?(0,j)
           partic+=1 if @party1[j].hp>0 && !@party1[j].isEgg?
         end
         if !haveexpall
-          for j in 0...@party1.length
+          for (int j = 0; j < @party1.length; j++) {
             next if !@party1[j] || !pbIsOwner?(0,j)
             expshare+=1 if @party1[j].hp>0 && !@party1[j].isEgg? && 
-                           (isConst?(@party1[j].item,PBItems,:EXPSHARE) ||
-                           isConst?(@party1[j].itemInitial,PBItems,:EXPSHARE))
+                           (@party1[j].item == Items.EXPSHARE ||
+                           @party1[j].itemInitial == Items.EXPSHARE)
           end
         end
         // Now calculate EXP for the participants
@@ -2306,21 +2306,21 @@ namespace PokemonUnity.Battle
             @scene.pbWildBattleSuccess
             successbegin=false
           end
-          for j in 0...@party1.length
+          for (int j = 0; j < @party1.length; j++) {
             next if !@party1[j] || !pbIsOwner?(0,j)
             next if @party1[j].hp<=0 || @party1[j].isEgg?
-            haveexpshare=(isConst?(@party1[j].item,PBItems,:EXPSHARE) ||
-                          isConst?(@party1[j].itemInitial,PBItems,:EXPSHARE))
+            haveexpshare=(@party1[j].item == Items.EXPSHARE ||
+                          @party1[j].itemInitial == Items.EXPSHARE)
             next if !haveexpshare && !@battlers[i].participants.include?(j)
             pbGainExpOne(j,@battlers[i],partic,expshare,haveexpall)
           end
           if haveexpall
             showmessage=true
-            for j in 0...@party1.length
+            for (int j = 0; j < @party1.length; j++) {
               next if !@party1[j] || !pbIsOwner?(0,j)
               next if @party1[j].hp<=0 || @party1[j].isEgg?
-              next if isConst?(@party1[j].item,PBItems,:EXPSHARE) ||
-                      isConst?(@party1[j].itemInitial,PBItems,:EXPSHARE)
+              next if @party1[j].item == Items.EXPSHARE ||
+                      @party1[j].itemInitial == Items.EXPSHARE
               next if @battlers[i].participants.include?(j)
               pbDisplayPaused(_INTL("The rest of your team gained Exp. Points thanks to the {1}!",
                  PBItems.getName(getConst(PBItems,:EXPALL)))) if showmessage
@@ -2343,32 +2343,32 @@ namespace PokemonUnity.Battle
     evyield=defeated.pokemon.evYield
     // Gain effort value points, using RS effort values
     totalev=0
-    for k in 0...6
+    for (int k = 0; k < 6; k++) {
       totalev+=thispoke.ev[k]
     end
-    for k in 0...6
+    for (int k = 0; k < 6; k++) {
       evgain=evyield[k]
-      evgain*=2 if isConst?(thispoke.item,PBItems,:MACHOBRACE) ||
-                   isConst?(thispoke.itemInitial,PBItems,:MACHOBRACE)
+      evgain*=2 if thispoke.item == Items.MACHOBRACE ||
+                   thispoke.itemInitial == Items.MACHOBRACE
       case k
-      when PBStats::HP
-        evgain+=4 if isConst?(thispoke.item,PBItems,:POWERWEIGHT) ||
-                     isConst?(thispoke.itemInitial,PBItems,:POWERWEIGHT)
-      when PBStats::ATTACK
-        evgain+=4 if isConst?(thispoke.item,PBItems,:POWERBRACER) ||
-                     isConst?(thispoke.itemInitial,PBItems,:POWERBRACER)
-      when PBStats::DEFENSE
-        evgain+=4 if isConst?(thispoke.item,PBItems,:POWERBELT) ||
-                     isConst?(thispoke.itemInitial,PBItems,:POWERBELT)
-      when PBStats::SPATK
-        evgain+=4 if isConst?(thispoke.item,PBItems,:POWERLENS) ||
-                     isConst?(thispoke.itemInitial,PBItems,:POWERLENS)
-      when PBStats::SPDEF
-        evgain+=4 if isConst?(thispoke.item,PBItems,:POWERBAND) ||
-                     isConst?(thispoke.itemInitial,PBItems,:POWERBAND)
-      when PBStats::SPEED
-        evgain+=4 if isConst?(thispoke.item,PBItems,:POWERANKLET) ||
-                     isConst?(thispoke.itemInitial,PBItems,:POWERANKLET)
+      when Stats.HP
+        evgain+=4 if thispoke.item == Items.POWERWEIGHT ||
+                     thispoke.itemInitial == Items.POWERWEIGHT
+      when Stats.ATTACK
+        evgain+=4 if thispoke.item == Items.POWERBRACER ||
+                     thispoke.itemInitial == Items.POWERBRACER
+      when Stats.DEFENSE
+        evgain+=4 if thispoke.item == Items.POWERBELT ||
+                     thispoke.itemInitial == Items.POWERBELT
+      when Stats.SPATK
+        evgain+=4 if thispoke.item == Items.POWERLENS ||
+                     thispoke.itemInitial == Items.POWERLENS
+      when Stats.SPDEF
+        evgain+=4 if thispoke.item == Items.POWERBAND ||
+                     thispoke.itemInitial == Items.POWERBAND
+      when Stats.SPEED
+        evgain+=4 if thispoke.item == Items.POWERANKLET ||
+                     thispoke.itemInitial == Items.POWERANKLET
       end
       evgain*=2 if thispoke.pokerusStage>=1 // Infected or cured
       if evgain>0
@@ -2391,8 +2391,8 @@ namespace PokemonUnity.Battle
     // Gain experience
     ispartic=0
     ispartic=1 if defeated.participants.include?(index)
-    haveexpshare=(isConst?(thispoke.item,PBItems,:EXPSHARE) ||
-                  isConst?(thispoke.itemInitial,PBItems,:EXPSHARE)) ? 1 : 0
+    haveexpshare=(thispoke.item == Items.EXPSHARE ||
+                  thispoke.itemInitial == Items.EXPSHARE) ? 1 : 0
     exp=0
     if expshare>0
       if partic==0 // No participants, all Exp goes to Exp Share holders
@@ -2433,8 +2433,8 @@ namespace PokemonUnity.Battle
         exp=(exp*3/2).floor
       end
     end
-    exp=(exp*3/2).floor if isConst?(thispoke.item,PBItems,:LUCKYEGG) ||
-                           isConst?(thispoke.itemInitial,PBItems,:LUCKYEGG)
+    exp=(exp*3/2).floor if thispoke.item == Items.LUCKYEGG ||
+                           thispoke.itemInitial == Items.LUCKYEGG
     growthrate=thispoke.growthrate
     newexp=PBExperience.pbAddExperience(thispoke.exp,exp,growthrate)
     exp=newexp-thispoke.exp
@@ -2494,7 +2494,7 @@ namespace PokemonUnity.Battle
                            olddefense,oldspeed,oldspatk,oldspdef)
           // Finding all moves learned at this level
           movelist=thispoke.getMoveList
-          for k in movelist
+          foreach (var k in movelist) {
             if k[0]==thispoke.level   // Learned a new move
               pbLearnMove(index,k[1])
             end
@@ -2512,13 +2512,13 @@ namespace PokemonUnity.Battle
     pkmnname=pokemon.name
     battler=pbFindPlayerBattler(pkmnIndex)
     movename=PBMoves.getName(move)
-    for i in 0...4
+    for (int i = 0; i < 4; i++) {
       return if pokemon.moves[i].id==move
       if pokemon.moves[i].id==0
         pokemon.moves[i]=PBMove.new(move)
         battler.moves[i]=PokeBattle_Move.pbFromPBMove(self,pokemon.moves[i]) if battler
         pbDisplayPaused(_INTL("{1} learned {2}!",pkmnname,movename))
-        PBDebug.log("[Learn move] #{pkmnname} learned #{movename}")
+        GameDebug.Log($"[Learn move] #{pkmnname} learned #{movename}")
         return
       end
     end
@@ -2537,7 +2537,7 @@ namespace PokemonUnity.Battle
           pbDisplayPaused(_INTL("{1} forgot {2}.",pkmnname,oldmovename))
           pbDisplayPaused(_INTL("And..."))
           pbDisplayPaused(_INTL("{1} learned {2}!",pkmnname,movename))
-          PBDebug.log("[Learn move] #{pkmnname} forgot #{oldmovename} and learned #{movename}")
+          GameDebug.Log($"[Learn move] #{pkmnname} forgot #{oldmovename} and learned #{movename}")
           return
         elsif pbDisplayConfirm(_INTL("Should {1} stop learning {2}?",pkmnname,movename))
           pbDisplayPaused(_INTL("{1} did not learn {2}.",pkmnname,movename))
@@ -2553,16 +2553,16 @@ namespace PokemonUnity.Battle
 
 		#region Abilities.
   def pbOnActiveAll
-    for i in 0...4 // Currently unfainted participants will earn EXP even if they faint afterwards
+    for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
       @battlers[i].pbUpdateParticipants if pbIsOpposing?(i)
       @amuletcoin=true if !pbIsOpposing?(i) &&
-                          (isConst?(@battlers[i].item,PBItems,:AMULETCOIN) ||
-                           isConst?(@battlers[i].item,PBItems,:LUCKINCENSE))
+                          (@battlers[i].item == Items.AMULETCOIN ||
+                           @battlers[i].item == Items.LUCKINCENSE)
     end
-    for i in 0...4
+    for (int i = 0; i < 4; i++) {
       if !@battlers[i].isFainted?
         if @battlers[i].isShadow? && pbIsOpposing?(i)
-          pbCommonAnimation("Shadow",@battlers[i],nil)
+          pbCommonAnimation("Shadow",@battlers[i],null)
           pbDisplay(_INTL("Oh!\nA Shadow Pokémon!"))
         end
       end
@@ -2570,11 +2570,11 @@ namespace PokemonUnity.Battle
     // Weather-inducing abilities, Trace, Imposter, etc.
     @usepriority=false
     priority=pbPriority
-    for i in priority
+    foreach (var i in priority) {
       i.pbAbilitiesOnSwitchIn(true)
     end
     // Check forms are correct
-    for i in 0...4
+    for (int i = 0; i < 4; i++) {
       next if @battlers[i].isFainted?
       @battlers[i].pbCheckForm
     end
@@ -2583,42 +2583,42 @@ namespace PokemonUnity.Battle
   def pbOnActiveOne(pkmn,onlyabilities=false,moldbreaker=false)
     return false if pkmn.isFainted?
     if !onlyabilities
-      for i in 0...4 // Currently unfainted participants will earn EXP even if they faint afterwards
+      for (int i = 0; i < 4; i++) { // Currently unfainted participants will earn EXP even if they faint afterwards
         @battlers[i].pbUpdateParticipants if pbIsOpposing?(i)
         @amuletcoin=true if !pbIsOpposing?(i) &&
-                            (isConst?(@battlers[i].item,PBItems,:AMULETCOIN) ||
-                             isConst?(@battlers[i].item,PBItems,:LUCKINCENSE))
+                            (@battlers[i].item == Items.AMULETCOIN ||
+                             @battlers[i].item == Items.LUCKINCENSE)
       end
       if pkmn.isShadow? && pbIsOpposing?(pkmn.index)
-        pbCommonAnimation("Shadow",pkmn,nil)
+        pbCommonAnimation("Shadow",pkmn,null)
         pbDisplay(_INTL("Oh!\nA Shadow Pokémon!"))
       end
       // Healing Wish
-      if pkmn.effects[PBEffects::HealingWish]
-        PBDebug.log("[Lingering effect triggered] #{pkmn.pbThis}'s Healing Wish")
-        pbCommonAnimation("HealingWish",pkmn,nil)
+      if pkmn.effects.HealingWish
+        GameDebug.Log($"[Lingering effect triggered] #{pkmn.pbThis}'s Healing Wish")
+        pbCommonAnimation("HealingWish",pkmn,null)
         pbDisplayPaused(_INTL("The healing wish came true for {1}!",pkmn.pbThis(true)))
         pkmn.pbRecoverHP(pkmn.totalhp,true)
         pkmn.pbCureStatus(false)
-        pkmn.effects[PBEffects::HealingWish]=false
+        pkmn.effects.HealingWish=false
       end
       // Lunar Dance
-      if pkmn.effects[PBEffects::LunarDance]
-        PBDebug.log("[Lingering effect triggered] #{pkmn.pbThis}'s Lunar Dance")
-        pbCommonAnimation("LunarDance",pkmn,nil)
+      if pkmn.effects.LunarDance
+        GameDebug.Log($"[Lingering effect triggered] #{pkmn.pbThis}'s Lunar Dance")
+        pbCommonAnimation("LunarDance",pkmn,null)
         pbDisplayPaused(_INTL("{1} became cloaked in mystical moonlight!",pkmn.pbThis))
         pkmn.pbRecoverHP(pkmn.totalhp,true)
         pkmn.pbCureStatus(false)
-        for i in 0...4
+        for (int i = 0; i < 4; i++) {
           pkmn.moves[i].pp=pkmn.moves[i].totalpp
         end
-        pkmn.effects[PBEffects::LunarDance]=false
+        pkmn.effects.LunarDance=false
       end
       // Spikes
-      if pkmn.pbOwnSide.effects[PBEffects::Spikes]>0 && !pkmn.isAirborne?(moldbreaker)
-        if !pkmn.hasWorkingAbility(:MAGICGUARD)
-          PBDebug.log("[Entry hazard] #{pkmn.pbThis} triggered Spikes")
-          spikesdiv=[8,6,4][pkmn.pbOwnSide.effects[PBEffects::Spikes]-1]
+      if pkmn.pbOwnSide.effects.Spikes>0 && !pkmn.isAirborne?(moldbreaker)
+        if !pkmn.Ability == Abilities.MAGICGUARD
+          GameDebug.Log($"[Entry hazard] #{pkmn.pbThis} triggered Spikes")
+          spikesdiv=[8,6,4][pkmn.pbOwnSide.effects.Spikes-1]
           @scene.pbDamageAnimation(pkmn,0)
           pkmn.pbReduceHP((pkmn.totalhp/spikesdiv).floor)
           pbDisplayPaused(_INTL("{1} is hurt by the spikes!",pkmn.pbThis))
@@ -2626,12 +2626,12 @@ namespace PokemonUnity.Battle
       end
       pkmn.pbFaint if pkmn.isFainted?
       // Stealth Rock
-      if pkmn.pbOwnSide.effects[PBEffects::StealthRock] && !pkmn.isFainted?
-        if !pkmn.hasWorkingAbility(:MAGICGUARD)
+      if pkmn.pbOwnSide.effects.StealthRock && !pkmn.isFainted?
+        if !pkmn.Ability == Abilities.MAGICGUARD
           atype=getConst(PBTypes,:ROCK) || 0
-          eff=PBTypes.getCombinedEffectiveness(atype,pkmn.type1,pkmn.type2,pkmn.effects[PBEffects::Type3])
+          eff=PBTypes.getCombinedEffectiveness(atype,pkmn.type1,pkmn.type2,pkmn.effects.Type3)
           if eff>0
-            PBDebug.log("[Entry hazard] #{pkmn.pbThis} triggered Stealth Rock")
+            GameDebug.Log($"[Entry hazard] #{pkmn.pbThis} triggered Stealth Rock")
             @scene.pbDamageAnimation(pkmn,0)
             pkmn.pbReduceHP(((pkmn.totalhp*eff)/64).floor)
             pbDisplayPaused(_INTL("Pointed stones dug into {1}!",pkmn.pbThis))
@@ -2640,29 +2640,29 @@ namespace PokemonUnity.Battle
       end
       pkmn.pbFaint if pkmn.isFainted?
       // Toxic Spikes
-      if pkmn.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 && !pkmn.isFainted?
+      if pkmn.pbOwnSide.effects.ToxicSpikes>0 && !pkmn.isFainted?
         if !pkmn.isAirborne?(moldbreaker)
           if pkmn.pbHasType?(:POISON)
-            PBDebug.log("[Entry hazard] #{pkmn.pbThis} absorbed Toxic Spikes")
-            pkmn.pbOwnSide.effects[PBEffects::ToxicSpikes]=0
+            GameDebug.Log($"[Entry hazard] #{pkmn.pbThis} absorbed Toxic Spikes")
+            pkmn.pbOwnSide.effects.ToxicSpikes=0
             pbDisplayPaused(_INTL("{1} absorbed the poison spikes!",pkmn.pbThis))
           elsif pkmn.pbCanPoisonSpikes?(moldbreaker)
-            PBDebug.log("[Entry hazard] #{pkmn.pbThis} triggered Toxic Spikes")
-            if pkmn.pbOwnSide.effects[PBEffects::ToxicSpikes]==2
-              pkmn.pbPoison(nil,_INTL("{1} was badly poisoned by the poison spikes!",pkmn.pbThis,true))
+            GameDebug.Log($"[Entry hazard] #{pkmn.pbThis} triggered Toxic Spikes")
+            if pkmn.pbOwnSide.effects.ToxicSpikes==2
+              pkmn.pbPoison(null,_INTL("{1} was badly poisoned by the poison spikes!",pkmn.pbThis,true))
             else
-              pkmn.pbPoison(nil,_INTL("{1} was poisoned by the poison spikes!",pkmn.pbThis))
+              pkmn.pbPoison(null,_INTL("{1} was poisoned by the poison spikes!",pkmn.pbThis))
             end
           end
         end
       end
       // Sticky Web
-      if pkmn.pbOwnSide.effects[PBEffects::StickyWeb] && !pkmn.isFainted? &&
+      if pkmn.pbOwnSide.effects.StickyWeb && !pkmn.isFainted? &&
          !pkmn.isAirborne?(moldbreaker)
-        if pkmn.pbCanReduceStatStage?(PBStats::SPEED,nil,false,nil,moldbreaker)
-          PBDebug.log("[Entry hazard] #{pkmn.pbThis} triggered Sticky Web")
+        if pkmn.pbCanReduceStatStage?(Stats.SPEED,null,false,null,moldbreaker)
+          GameDebug.Log($"[Entry hazard] #{pkmn.pbThis} triggered Sticky Web")
           pbDisplayPaused(_INTL("{1} was caught in a sticky web!",pkmn.pbThis))
-          pkmn.pbReduceStat(PBStats::SPEED,1,nil,false,nil,true,moldbreaker)
+          pkmn.pbReduceStat(Stats.SPEED,1,null,false,null,true,moldbreaker)
         end
       end
     end
@@ -2684,9 +2684,9 @@ namespace PokemonUnity.Battle
     // End Primordial Sea, Desolate Land, Delta Stream
     hasabil=false
     case @weather
-    when PBWeather::HEAVYRAIN
-      for i in 0...4
-        if isConst?(@battlers[i].ability,PBAbilities,:PRIMORDIALSEA) &&
+    when Weather.HEAVYRAIN
+      for (int i = 0; i < 4; i++) {
+        if @battlers[i].ability == Abilities.PRIMORDIALSEA &&
            !@battlers[i].isFainted?
           hasabil=true; break
         end
@@ -2695,9 +2695,9 @@ namespace PokemonUnity.Battle
           pbDisplayBrief("The heavy rain has lifted!")
         end
       end
-    when PBWeather::HARSHSUN
-      for i in 0...4
-        if isConst?(@battlers[i].ability,PBAbilities,:DESOLATELAND) &&
+    when Weather.HARSHSUN
+      for (int i = 0; i < 4; i++) {
+        if @battlers[i].ability == Abilities.DESOLATELAND &&
            !@battlers[i].isFainted?
           hasabil=true; break
         end
@@ -2706,9 +2706,9 @@ namespace PokemonUnity.Battle
           pbDisplayBrief("The harsh sunlight faded!")
         end
       end
-    when PBWeather::STRONGWINDS
-      for i in 0...4
-        if isConst?(@battlers[i].ability,PBAbilities,:DELTASTREAM) &&
+    when Weather.STRONGWINDS
+      for (int i = 0; i < 4; i++) {
+        if @battlers[i].ability == Abilities.DELTASTREAM &&
            !@battlers[i].isFainted?
           hasabil=true; break
         end
@@ -2730,14 +2730,14 @@ namespace PokemonUnity.Battle
     count2=0
     hptotal1=0
     hptotal2=0
-    for i in @party1
+    foreach (var i in @party1) {
       next if !i
       if i.hp>0 && !i.isEgg?
         count1+=1
         hptotal1+=i.hp
       end
     end
-    for i in @party2
+    foreach (var i in @party2) {
       next if !i
       if i.hp>0 && !i.isEgg?
         count2+=1
@@ -2756,7 +2756,7 @@ namespace PokemonUnity.Battle
     count2=0
     hptotal1=0
     hptotal2=0
-    for i in @party1
+    foreach (var i in @party1) {
       next if !i
       if i.hp>0 && !i.isEgg?
         count1+=1
@@ -2764,7 +2764,7 @@ namespace PokemonUnity.Battle
       end
     end
     hptotal1/=count1 if count1>0
-    for i in @party2
+    foreach (var i in @party2) {
       next if !i
       if i.hp>0 && !i.isEgg?
         count2+=1
@@ -2784,7 +2784,7 @@ namespace PokemonUnity.Battle
   end
 
   def pbJudge
-   PBDebug.log("[Counts: #{pbPokemonCount(@party1)}/#{pbPokemonCount(@party2)}]")
+   GameDebug.Log($"[Counts: #{pbPokemonCount(@party1)}/#{pbPokemonCount(@party2)}]")
     if pbAllFainted?(@party1) && pbAllFainted?(@party2)
       @decision=pbDecisionOnDraw() // Draw
       return
@@ -2836,8 +2836,8 @@ namespace PokemonUnity.Battle
 
 		#region Battle Core.
   def pbStartBattle(canlose=false)
-    PBDebug.log("")
-    PBDebug.log("******************************************")
+    GameDebug.Log($"")
+    GameDebug.Log($"******************************************")
     begin
       pbStartBattleCore(canlose)
     rescue BattleAbortedException
@@ -2985,37 +2985,37 @@ namespace PokemonUnity.Battle
     end
 #endregion
 #region Initialize battle
-    if @weather==PBWeather::SUNNYDAY
-      pbCommonAnimation("Sunny",nil,nil)
+    if @weather==Weather.SUNNYDAY
+      pbCommonAnimation("Sunny",null,null)
       pbDisplay(_INTL("The sunlight is strong."))
-    elsif @weather==PBWeather::RAINDANCE
-      pbCommonAnimation("Rain",nil,nil)
+    elsif @weather==Weather.RAINDANCE
+      pbCommonAnimation("Rain",null,null)
       pbDisplay(_INTL("It is raining."))
-    elsif @weather==PBWeather::SANDSTORM
-      pbCommonAnimation("Sandstorm",nil,nil)
+    elsif @weather==Weather.SANDSTORM
+      pbCommonAnimation("Sandstorm",null,null)
       pbDisplay(_INTL("A sandstorm is raging."))
-    elsif @weather==PBWeather::HAIL
-      pbCommonAnimation("Hail",nil,nil)
+    elsif @weather==Weather.HAIL
+      pbCommonAnimation("Hail",null,null)
       pbDisplay(_INTL("Hail is falling."))
-    elsif @weather==PBWeather::HEAVYRAIN
-      pbCommonAnimation("HeavyRain",nil,nil)
+    elsif @weather==Weather.HEAVYRAIN
+      pbCommonAnimation("HeavyRain",null,null)
       pbDisplay(_INTL("It is raining heavily."))
-    elsif @weather==PBWeather::HARSHSUN
-      pbCommonAnimation("HarshSun",nil,nil)
+    elsif @weather==Weather.HARSHSUN
+      pbCommonAnimation("HarshSun",null,null)
       pbDisplay(_INTL("The sunlight is extremely harsh."))
-    elsif @weather==PBWeather::STRONGWINDS
-      pbCommonAnimation("StrongWinds",nil,nil)
+    elsif @weather==Weather.STRONGWINDS
+      pbCommonAnimation("StrongWinds",null,null)
       pbDisplay(_INTL("The wind is strong."))
     end
     pbOnActiveAll   // Abilities
     @turncount=0
     loop do   // Now begin the battle loop
-      PBDebug.log("")
-      PBDebug.log("***Round #{@turncount+1}***")
+      GameDebug.Log($"")
+      GameDebug.Log($"***Round #{@turncount+1}***")
       if @debug && @turncount>=100
         @decision=pbDecisionOnTime()
-        PBDebug.log("")
-        PBDebug.log("***Undecided after 100 rounds, aborting***")
+        GameDebug.Log($"")
+        GameDebug.Log($"***Undecided after 100 rounds, aborting***")
         pbAbort
         break
       end
@@ -3054,26 +3054,26 @@ namespace PokemonUnity.Battle
   def pbCommandPhase
     @scene.pbBeginCommandPhase
     @scene.pbResetCommandIndices
-    for i in 0...4   // Reset choices if commands can be shown
-      @battlers[i].effects[PBEffects::SkipTurn]=false
+    for (int i = 0; i < 4; i++) {   // Reset choices if commands can be shown
+      @battlers[i].effects.SkipTurn=false
       if pbCanShowCommands?(i) || @battlers[i].isFainted?
         @choices[i][0]=0
         @choices[i][1]=0
-        @choices[i][2]=nil
+        @choices[i][2]=null
         @choices[i][3]=-1
       else
         unless !@doublebattle && pbIsDoubleBattler?(i)
-          PBDebug.log("[Reusing commands] #{@battlers[i].pbThis(true)}")
+          GameDebug.Log($"[Reusing commands] #{@battlers[i].pbThis(true)}")
         end
       end
     end
     // Reset choices to perform Mega Evolution if it wasn't done somehow
-    for i in 0...2
-      for j in 0...@megaEvolution[i].length
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < @megaEvolution[i].length; j++) {
         @megaEvolution[i][j]=-1 if @megaEvolution[i][j]>=0
       end
     end
-    for i in 0...4
+    for (int i = 0; i < 4; i++) {
       break if @decision!=0
       next if @choices[i][0]!=0
       if !pbOwnedByPlayer?(i) || @controlPlayer
@@ -3103,11 +3103,11 @@ namespace PokemonUnity.Battle
                   if @doublebattle
                     thismove=@battlers[i].moves[index]
                     target=@battlers[i].pbTarget(thismove)
-                    if target==PBTargets::SingleNonUser // single non-user
+                    if target==Targets.SingleNonUser // single non-user
                       target=@scene.pbChooseTarget(i,target)
                       next if target<0
                       pbRegisterTarget(i,target)
-                    elsif target==PBTargets::UserOrPartner // Acupressure
+                    elsif target==Targets.UserOrPartner // Acupressure
                       target=@scene.pbChooseTarget(i,target)
                       next if target<0 || (target&1)==1
                       pbRegisterTarget(i,target)
@@ -3119,7 +3119,7 @@ namespace PokemonUnity.Battle
                 pbAutoChooseMove(i)
                 commandDone=true
               end
-            elsif cmd!=0 && @battlers[i].effects[PBEffects::SkyDrop]
+            elsif cmd!=0 && @battlers[i].effects.SkyDrop
               pbDisplay(_INTL("Sky Drop won't let {1} go!",@battlers[i].pbThis(true)))
             elsif cmd==1 // Bag
               if !@internalbattle
@@ -3156,7 +3156,7 @@ namespace PokemonUnity.Battle
               thispkmn=@battlers[i]
               @choices[i][0]=4   // "Call Pokémon"
               @choices[i][1]=0
-              @choices[i][2]=nil
+              @choices[i][2]=null
               side=(pbIsOpposing?(i)) ? 1 : 0
               owner=pbGetOwnerIndex(i)
               if @megaEvolution[side][owner]==i
@@ -3184,22 +3184,22 @@ namespace PokemonUnity.Battle
 		#region Attack phase.
   def pbAttackPhase
     @scene.pbBeginAttackPhase
-    for i in 0...4
+    for (int i = 0; i < 4; i++) {
       @successStates[i].clear
       if @choices[i][0]!=1 && @choices[i][0]!=2
-        @battlers[i].effects[PBEffects::DestinyBond]=false
-        @battlers[i].effects[PBEffects::Grudge]=false
+        @battlers[i].effects.DestinyBond=false
+        @battlers[i].effects.Grudge=false
       end
       @battlers[i].turncount+=1 if !@battlers[i].isFainted?
-      @battlers[i].effects[PBEffects::Rage]=false if !pbChoseMove?(i,:RAGE)
+      @battlers[i].effects.Rage=false if !pbChoseMove?(i,:RAGE)
     end
     // Calculate priority at this time
     @usepriority=false
     priority=pbPriority(false,true)
     // Mega Evolution
     megaevolved=[]
-    for i in priority
-      if @choices[i.index][0]==1 && !i.effects[PBEffects::SkipTurn]
+    foreach (var i in priority) {
+      if @choices[i.index][0]==1 && !i.effects.SkipTurn
         side=(pbIsOpposing?(i.index)) ? 1 : 0
         owner=pbGetOwnerIndex(i.index)
         if @megaEvolution[side][owner]==i.index
@@ -3209,46 +3209,46 @@ namespace PokemonUnity.Battle
       end
     end
     if megaevolved.length>0
-      for i in priority
+      foreach (var i in priority) {
         i.pbAbilitiesOnSwitchIn(true) if megaevolved.include?(i.index)
       end
     end
     // Call at Pokémon
-    for i in priority
-      if @choices[i.index][0]==4 && !i.effects[PBEffects::SkipTurn]
+    foreach (var i in priority) {
+      if @choices[i.index][0]==4 && !i.effects.SkipTurn
         pbCall(i.index)
       end
     end
     // Switch out Pokémon
     @switching=true
     switched=[]
-    for i in priority
-      if @choices[i.index][0]==2 && !i.effects[PBEffects::SkipTurn]
+    foreach (var i in priority) {
+      if @choices[i.index][0]==2 && !i.effects.SkipTurn
         index=@choices[i.index][1] // party position of Pokémon to switch to
         newpokename=index
-        if isConst?(pbParty(i.index)[index].ability,PBAbilities,:ILLUSION)
+        if pbParty(i.index)[index].ability == Abilities.ILLUSION
           newpokename=pbGetLastPokeInTeam(i.index)
         end
         self.lastMoveUser=i.index
         if !pbOwnedByPlayer?(i.index)
           owner=pbGetOwner(i.index)
           pbDisplayBrief(_INTL("{1} withdrew {2}!",owner.fullname,i.name))
-          PBDebug.log("[Withdrew Pokémon] Opponent withdrew #{i.pbThis(true)}")
+          GameDebug.Log($"[Withdrew Pokémon] Opponent withdrew #{i.pbThis(true)}")
         else
           pbDisplayBrief(_INTL("{1}, that's enough!\r\nCome back!",i.name))
-          PBDebug.log("[Withdrew Pokémon] Player withdrew #{i.pbThis(true)}")
+          GameDebug.Log($"[Withdrew Pokémon] Player withdrew #{i.pbThis(true)}")
         end
-        for j in priority
+        foreach (var j in priority) {
           next if !i.pbIsOpposing?(j.index)
           // if Pursuit and this target ("i") was chosen
           if pbChoseMoveFunctionCode?(j.index,0x88) && // Pursuit
              !j.hasMovedThisRound?
-            if j.status!=PBStatuses::SLEEP && j.status!=PBStatuses::FROZEN &&
-               !j.effects[PBEffects::SkyDrop] &&
-               (!j.hasWorkingAbility(:TRUANT) || !j.effects[PBEffects::Truant])
+            if j.status!=Statuses.SLEEP && j.status!=Statuses.FROZEN &&
+               !j.effects.SkyDrop &&
+               (!j.Ability == Abilities.TRUANT || !j.effects.Truant)
               @choices[j.index][3]=i.index // Make sure to target the switching Pokémon
               j.pbUseMove(@choices[j.index]) // This calls pbGainEXP as appropriate
-              j.effects[PBEffects::Pursuit]=true
+              j.effects.Pursuit=true
               @switching=false
               return if @decision>0
             end
@@ -3268,14 +3268,14 @@ namespace PokemonUnity.Battle
       end
     end
     if switched.length>0
-      for i in priority
+      foreach (var i in priority) {
         i.pbAbilitiesOnSwitchIn(true) if switched.include?(i.index)
       end
     end
     @switching=false
     // Use items
-    for i in priority
-      if @choices[i.index][0]==3 && !i.effects[PBEffects::SkipTurn]
+    foreach (var i in priority) {
+      if @choices[i.index][0]==3 && !i.effects.SkipTurn
         if pbIsOpposing?(i.index)
           // Opponent use item
           pbEnemyUseItem(@choices[i.index][1],i)
@@ -3298,46 +3298,46 @@ namespace PokemonUnity.Battle
       end
     end
     // Use attacks
-    for i in priority
-      next if i.effects[PBEffects::SkipTurn]
+    foreach (var i in priority) {
+      next if i.effects.SkipTurn
       if pbChoseMoveFunctionCode?(i.index,0x115) // Focus Punch
-        pbCommonAnimation("FocusPunch",i,nil)
+        pbCommonAnimation("FocusPunch",i,null)
         pbDisplay(_INTL("{1} is tightening its focus!",i.pbThis))
       end
     end
     10.times do
       // Forced to go next
       advance=false
-      for i in priority
-        next if !i.effects[PBEffects::MoveNext]
-        next if i.hasMovedThisRound? || i.effects[PBEffects::SkipTurn]
+      foreach (var i in priority) {
+        next if !i.effects.MoveNext
+        next if i.hasMovedThisRound? || i.effects.SkipTurn
         advance=i.pbProcessTurn(@choices[i.index])
         break if advance
       end
       return if @decision>0
       next if advance
       // Regular priority order
-      for i in priority
-        next if i.effects[PBEffects::Quash]
-        next if i.hasMovedThisRound? || i.effects[PBEffects::SkipTurn]
+      foreach (var i in priority) {
+        next if i.effects.Quash
+        next if i.hasMovedThisRound? || i.effects.SkipTurn
         advance=i.pbProcessTurn(@choices[i.index])
         break if advance
       end
       return if @decision>0
       next if advance
       // Quashed
-      for i in priority
-        next if !i.effects[PBEffects::Quash]
-        next if i.hasMovedThisRound? || i.effects[PBEffects::SkipTurn]
+      foreach (var i in priority) {
+        next if !i.effects.Quash
+        next if i.hasMovedThisRound? || i.effects.SkipTurn
         advance=i.pbProcessTurn(@choices[i.index])
         break if advance
       end
       return if @decision>0
       next if advance
       // Check for all done
-      for i in priority
+      foreach (var i in priority) {
         advance=true if @choices[i.index][0]==1 && !i.hasMovedThisRound? &&
-                        !i.effects[PBEffects::SkipTurn]
+                        !i.effects.SkipTurn
         break if advance
       end
       next if advance
@@ -3349,39 +3349,39 @@ namespace PokemonUnity.Battle
 
 		#region End of round.
   def pbEndOfRoundPhase
-    PBDebug.log("[End of round]")
-    for i in 0...4
-      @battlers[i].effects[PBEffects::Electrify]=false
-      @battlers[i].effects[PBEffects::Endure]=false
-      @battlers[i].effects[PBEffects::FirstPledge]=0
-      @battlers[i].effects[PBEffects::HyperBeam]-=1 if @battlers[i].effects[PBEffects::HyperBeam]>0
-      @battlers[i].effects[PBEffects::KingsShield]=false
-      @battlers[i].effects[PBEffects::LifeOrb]=false
-      @battlers[i].effects[PBEffects::MoveNext]=false
-      @battlers[i].effects[PBEffects::Powder]=false
-      @battlers[i].effects[PBEffects::Protect]=false
-      @battlers[i].effects[PBEffects::ProtectNegation]=false
-      @battlers[i].effects[PBEffects::Quash]=false
-      @battlers[i].effects[PBEffects::Roost]=false
-      @battlers[i].effects[PBEffects::SpikyShield]=false
+    GameDebug.Log($"[End of round]")
+    for (int i = 0; i < 4; i++) {
+      @battlers[i].effects.Electrify=false
+      @battlers[i].effects.Endure=false
+      @battlers[i].effects.FirstPledge=0
+      @battlers[i].effects.HyperBeam-=1 if @battlers[i].effects.HyperBeam>0
+      @battlers[i].effects.KingsShield=false
+      @battlers[i].effects.LifeOrb=false
+      @battlers[i].effects.MoveNext=false
+      @battlers[i].effects.Powder=false
+      @battlers[i].effects.Protect=false
+      @battlers[i].effects.ProtectNegation=false
+      @battlers[i].effects.Quash=false
+      @battlers[i].effects.Roost=false
+      @battlers[i].effects.SpikyShield=false
     end
     @usepriority=false  // recalculate priority
     priority=pbPriority(true) // Ignoring Quick Claw here
     // Weather
     case @weather
-    when PBWeather::SUNNYDAY
+    when Weather.SUNNYDAY
       @weatherduration=@weatherduration-1 if @weatherduration>0
       if @weatherduration==0
         pbDisplay(_INTL("The sunlight faded."))
         @weather=0
-        PBDebug.log("[End of effect] Sunlight weather ended")
+        GameDebug.Log($"[End of effect] Sunlight weather ended")
       else
-        pbCommonAnimation("Sunny",nil,nil)
+        pbCommonAnimation("Sunny",null,null)
         pbDisplay(_INTL("The sunlight is strong."))
-        if pbWeather==PBWeather::SUNNYDAY
-          for i in priority
-            if i.hasWorkingAbility(:SOLARPOWER)
-              PBDebug.log("[Ability triggered] #{i.pbThis}'s Solar Power")
+        if pbWeather==Weather.SUNNYDAY
+          foreach (var i in priority) {
+            if i.Ability == Abilities.SOLARPOWER
+              GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Solar Power")
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((i.totalhp/8).floor)
               pbDisplay(_INTL("{1} was hurt by the sunlight!",i.pbThis))
@@ -3392,37 +3392,37 @@ namespace PokemonUnity.Battle
           end
         end
       end
-    when PBWeather::RAINDANCE
+    when Weather.RAINDANCE
       @weatherduration=@weatherduration-1 if @weatherduration>0
       if @weatherduration==0
         pbDisplay(_INTL("The rain stopped."))
         @weather=0
-        PBDebug.log("[End of effect] Rain weather ended")
+        GameDebug.Log($"[End of effect] Rain weather ended")
       else
-        pbCommonAnimation("Rain",nil,nil)
+        pbCommonAnimation("Rain",null,null)
         pbDisplay(_INTL("Rain continues to fall."))
       end
-    when PBWeather::SANDSTORM
+    when Weather.SANDSTORM
       @weatherduration=@weatherduration-1 if @weatherduration>0
       if @weatherduration==0
         pbDisplay(_INTL("The sandstorm subsided."))
         @weather=0
-        PBDebug.log("[End of effect] Sandstorm weather ended")
+        GameDebug.Log($"[End of effect] Sandstorm weather ended")
       else
-        pbCommonAnimation("Sandstorm",nil,nil)
+        pbCommonAnimation("Sandstorm",null,null)
         pbDisplay(_INTL("The sandstorm rages."))
-        if pbWeather==PBWeather::SANDSTORM
-          PBDebug.log("[Lingering effect triggered] Sandstorm weather damage")
-          for i in priority
+        if pbWeather==Weather.SANDSTORM
+          GameDebug.Log($"[Lingering effect triggered] Sandstorm weather damage")
+          foreach (var i in priority) {
             next if i.isFainted?
             if !i.pbHasType?(:GROUND) && !i.pbHasType?(:ROCK) && !i.pbHasType?(:STEEL) &&
-               !i.hasWorkingAbility(:SANDVEIL) &&
-               !i.hasWorkingAbility(:SANDRUSH) &&
-               !i.hasWorkingAbility(:SANDFORCE) &&
-               !i.hasWorkingAbility(:MAGICGUARD) &&
-               !i.hasWorkingAbility(:OVERCOAT) &&
-               !i.hasWorkingItem(:SAFETYGOGGLES) &&
-               ![0xCA,0xCB].include?(PBMoveData.new(i.effects[PBEffects::TwoTurnAttack]).function) // Dig, Dive
+               !i.Ability == Abilities.SANDVEIL &&
+               !i.Ability == Abilities.SANDRUSH &&
+               !i.Ability == Abilities.SANDFORCE &&
+               !i.Ability == Abilities.MAGICGUARD &&
+               !i.Ability == Abilities.OVERCOAT &&
+               !i.Item == Items.SAFETYGOGGLES &&
+               ![0xCA,0xCB].include?(PBMoveData.new(i.effects.TwoTurnAttack).function) // Dig, Dive
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((i.totalhp/16).floor)
               pbDisplay(_INTL("{1} is buffeted by the sandstorm!",i.pbThis))
@@ -3433,26 +3433,26 @@ namespace PokemonUnity.Battle
           end
         end
       end
-    when PBWeather::HAIL
+    when Weather.HAIL
       @weatherduration=@weatherduration-1 if @weatherduration>0
       if @weatherduration==0
         pbDisplay(_INTL("The hail stopped."))
         @weather=0
-        PBDebug.log("[End of effect] Hail weather ended")
+        GameDebug.Log($"[End of effect] Hail weather ended")
       else
-        pbCommonAnimation("Hail",nil,nil)
+        pbCommonAnimation("Hail",null,null)
         pbDisplay(_INTL("Hail continues to fall."))
-        if pbWeather==PBWeather::HAIL
-          PBDebug.log("[Lingering effect triggered] Hail weather damage")
-          for i in priority
+        if pbWeather==Weather.HAIL
+          GameDebug.Log($"[Lingering effect triggered] Hail weather damage")
+          foreach (var i in priority) {
             next if i.isFainted?
             if !i.pbHasType?(:ICE) &&
-               !i.hasWorkingAbility(:ICEBODY) &&
-               !i.hasWorkingAbility(:SNOWCLOAK) &&
-               !i.hasWorkingAbility(:MAGICGUARD) &&
-               !i.hasWorkingAbility(:OVERCOAT) &&
-               !i.hasWorkingItem(:SAFETYGOGGLES) &&
-               ![0xCA,0xCB].include?(PBMoveData.new(i.effects[PBEffects::TwoTurnAttack]).function) // Dig, Dive
+               !i.Ability == Abilities.ICEBODY &&
+               !i.Ability == Abilities.SNOWCLOAK &&
+               !i.Ability == Abilities.MAGICGUARD &&
+               !i.Ability == Abilities.OVERCOAT &&
+               !i.Item == Items.SAFETYGOGGLES &&
+               ![0xCA,0xCB].include?(PBMoveData.new(i.effects.TwoTurnAttack).function) // Dig, Dive
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((i.totalhp/16).floor)
               pbDisplay(_INTL("{1} is buffeted by the hail!",i.pbThis))
@@ -3463,10 +3463,10 @@ namespace PokemonUnity.Battle
           end
         end
       end
-    when PBWeather::HEAVYRAIN
+    when Weather.HEAVYRAIN
       hasabil=false
-      for i in 0...4
-        if isConst?(@battlers[i].ability,PBAbilities,:PRIMORDIALSEA) && !@battlers[i].isFainted?
+      for (int i = 0; i < 4; i++) {
+        if @battlers[i].ability == Abilities.PRIMORDIALSEA && !@battlers[i].isFainted?
           hasabil=true; break
         end
       end
@@ -3474,15 +3474,15 @@ namespace PokemonUnity.Battle
       if @weatherduration==0
         pbDisplay(_INTL("The heavy rain stopped."))
         @weather=0
-        PBDebug.log("[End of effect] Primordial Sea's rain weather ended")
+        GameDebug.Log($"[End of effect] Primordial Sea's rain weather ended")
       else
-        pbCommonAnimation("HeavyRain",nil,nil)
+        pbCommonAnimation("HeavyRain",null,null)
         pbDisplay(_INTL("It is raining heavily."))
       end
-    when PBWeather::HARSHSUN
+    when Weather.HARSHSUN
       hasabil=false
-      for i in 0...4
-        if isConst?(@battlers[i].ability,PBAbilities,:DESOLATELAND) && !@battlers[i].isFainted?
+      for (int i = 0; i < 4; i++) {
+        if @battlers[i].ability == Abilities.DESOLATELAND && !@battlers[i].isFainted?
           hasabil=true; break
         end
       end
@@ -3490,14 +3490,14 @@ namespace PokemonUnity.Battle
       if @weatherduration==0
         pbDisplay(_INTL("The harsh sunlight faded."))
         @weather=0
-        PBDebug.log("[End of effect] Desolate Land's sunlight weather ended")
+        GameDebug.Log($"[End of effect] Desolate Land's sunlight weather ended")
       else
-        pbCommonAnimation("HarshSun",nil,nil)
+        pbCommonAnimation("HarshSun",null,null)
         pbDisplay(_INTL("The sunlight is extremely harsh."))
-        if pbWeather==PBWeather::HARSHSUN
-          for i in priority
-            if i.hasWorkingAbility(:SOLARPOWER)
-              PBDebug.log("[Ability triggered] #{i.pbThis}'s Solar Power")
+        if pbWeather==Weather.HARSHSUN
+          foreach (var i in priority) {
+            if i.Ability == Abilities.SOLARPOWER
+              GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Solar Power")
               @scene.pbDamageAnimation(i,0)
               i.pbReduceHP((i.totalhp/8).floor)
               pbDisplay(_INTL("{1} was hurt by the sunlight!",i.pbThis))
@@ -3508,10 +3508,10 @@ namespace PokemonUnity.Battle
           end
         end
       end
-    when PBWeather::STRONGWINDS
+    when Weather.STRONGWINDS
       hasabil=false
-      for i in 0...4
-        if isConst?(@battlers[i].ability,PBAbilities,:DELTASTREAM) && !@battlers[i].isFainted?
+      for (int i = 0; i < 4; i++) {
+        if @battlers[i].ability == Abilities.DELTASTREAM && !@battlers[i].isFainted?
           hasabil=true; break
         end
       end
@@ -3519,25 +3519,25 @@ namespace PokemonUnity.Battle
       if @weatherduration==0
         pbDisplay(_INTL("The air current subsided."))
         @weather=0
-        PBDebug.log("[End of effect] Delta Stream's wind weather ended")
+        GameDebug.Log($"[End of effect] Delta Stream's wind weather ended")
       else
-        pbCommonAnimation("StrongWinds",nil,nil)
+        pbCommonAnimation("StrongWinds",null,null)
         pbDisplay(_INTL("The wind is strong."))
       end
     end
     // Shadow Sky weather
-    if isConst?(@weather,PBWeather,:SHADOWSKY)
+    if @weather == Weather.SHADOWSKY
       @weatherduration=@weatherduration-1 if @weatherduration>0
       if @weatherduration==0
         pbDisplay(_INTL("The shadow sky faded."))
         @weather=0
-        PBDebug.log("[End of effect] Shadow Sky weather ended")
+        GameDebug.Log($"[End of effect] Shadow Sky weather ended")
       else
-        pbCommonAnimation("ShadowSky",nil,nil)
+        pbCommonAnimation("ShadowSky",null,null)
         pbDisplay(_INTL("The shadow sky continues."));
-        if isConst?(pbWeather,PBWeather,:SHADOWSKY)
-          PBDebug.log("[Lingering effect triggered] Shadow Sky weather damage")
-          for i in priority
+        if pbWeather == Weather.SHADOWSKY
+          GameDebug.Log($"[Lingering effect triggered] Shadow Sky weather damage")
+          foreach (var i in priority) {
             next if i.isFainted?
             if !i.isShadow?
               @scene.pbDamageAnimation(i,0)
@@ -3552,27 +3552,27 @@ namespace PokemonUnity.Battle
       end
     end
     // Future Sight/Doom Desire
-    for i in battlers   // not priority
+    foreach (var i in battlers) {   // not priority
       next if i.isFainted?
-      if i.effects[PBEffects::FutureSight]>0
-        i.effects[PBEffects::FutureSight]-=1
-        if i.effects[PBEffects::FutureSight]==0
-          move=i.effects[PBEffects::FutureSightMove]
-          PBDebug.log("[Lingering effect triggered] #{PBMoves.getName(move)} struck #{i.pbThis(true)}")
+      if i.effects.FutureSight>0
+        i.effects.FutureSight-=1
+        if i.effects.FutureSight==0
+          move=i.effects.FutureSightMove
+          GameDebug.Log($"[Lingering effect triggered] #{PBMoves.getName(move)} struck #{i.pbThis(true)}")
           pbDisplay(_INTL("{1} took the {2} attack!",i.pbThis,PBMoves.getName(move)))
-          moveuser=nil
-          for j in battlers
-            next if j.pbIsOpposing?(i.effects[PBEffects::FutureSightUserPos])
-            if j.pokemonIndex==i.effects[PBEffects::FutureSightUser] && !j.isFainted?
+          moveuser=null
+          foreach (var j in battlers) {
+            next if j.pbIsOpposing?(i.effects.FutureSightUserPos)
+            if j.pokemonIndex==i.effects.FutureSightUser && !j.isFainted?
               moveuser=j; break
             end
           end
           if !moveuser
-            party=pbParty(i.effects[PBEffects::FutureSightUserPos])
-            if party[i.effects[PBEffects::FutureSightUser]].hp>0
-              moveuser=PokeBattle_Battler.new(self,i.effects[PBEffects::FutureSightUserPos])
-              moveuser.pbInitDummyPokemon(party[i.effects[PBEffects::FutureSightUser]],
-                                          i.effects[PBEffects::FutureSightUser])
+            party=pbParty(i.effects.FutureSightUserPos)
+            if party[i.effects.FutureSightUser].hp>0
+              moveuser=PokeBattle_Battler.new(self,i.effects.FutureSightUserPos)
+              moveuser.pbInitDummyPokemon(party[i.effects.FutureSightUser],
+                                          i.effects.FutureSightUser)
             end
           end
           if !moveuser
@@ -3582,10 +3582,10 @@ namespace PokemonUnity.Battle
             moveuser.pbUseMoveSimple(move,-1,i.index)
             @futuresight=false
           end
-          i.effects[PBEffects::FutureSight]=0
-          i.effects[PBEffects::FutureSightMove]=0
-          i.effects[PBEffects::FutureSightUser]=-1
-          i.effects[PBEffects::FutureSightUserPos]=-1
+          i.effects.FutureSight=0
+          i.effects.FutureSightMove=0
+          i.effects.FutureSightUser=-1
+          i.effects.FutureSightUserPos=-1
           if i.isFainted?
             return if !i.pbFaint
             next
@@ -3593,34 +3593,34 @@ namespace PokemonUnity.Battle
         end
       end
     end
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       // Rain Dish
-      if i.hasWorkingAbility(:RAINDISH) &&
-         (pbWeather==PBWeather::RAINDANCE ||
-         pbWeather==PBWeather::HEAVYRAIN)
-        PBDebug.log("[Ability triggered] #{i.pbThis}'s Rain Dish")
+      if i.Ability == Abilities.RAINDISH &&
+         (pbWeather==Weather.RAINDANCE ||
+         pbWeather==Weather.HEAVYRAIN)
+        GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Rain Dish")
         hpgain=i.pbRecoverHP((i.totalhp/16).floor,true)
         pbDisplay(_INTL("{1}'s {2} restored its HP a little!",i.pbThis,PBAbilities.getName(i.ability))) if hpgain>0
       end
       // Dry Skin
-      if i.hasWorkingAbility(:DRYSKIN)
-        if pbWeather==PBWeather::RAINDANCE ||
-           pbWeather==PBWeather::HEAVYRAIN
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s Dry Skin (in rain)")
+      if i.Ability == Abilities.DRYSKIN
+        if pbWeather==Weather.RAINDANCE ||
+           pbWeather==Weather.HEAVYRAIN
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Dry Skin (in rain)")
           hpgain=i.pbRecoverHP((i.totalhp/8).floor,true)
           pbDisplay(_INTL("{1}'s {2} was healed by the rain!",i.pbThis,PBAbilities.getName(i.ability))) if hpgain>0
-        elsif pbWeather==PBWeather::SUNNYDAY ||
-              pbWeather==PBWeather::HARSHSUN
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s Dry Skin (in sun)")
+        elsif pbWeather==Weather.SUNNYDAY ||
+              pbWeather==Weather.HARSHSUN
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Dry Skin (in sun)")
           @scene.pbDamageAnimation(i,0)
           hploss=i.pbReduceHP((i.totalhp/8).floor)
           pbDisplay(_INTL("{1}'s {2} was hurt by the sunlight!",i.pbThis,PBAbilities.getName(i.ability))) if hploss>0
         end
       end
       // Ice Body
-      if i.hasWorkingAbility(:ICEBODY) && pbWeather==PBWeather::HAIL
-        PBDebug.log("[Ability triggered] #{i.pbThis}'s Ice Body")
+      if i.Ability == Abilities.ICEBODY && pbWeather==Weather.HAIL
+        GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Ice Body")
         hpgain=i.pbRecoverHP((i.totalhp/16).floor,true)
         pbDisplay(_INTL("{1}'s {2} restored its HP a little!",i.pbThis,PBAbilities.getName(i.ability))) if hpgain>0
       end
@@ -3629,30 +3629,30 @@ namespace PokemonUnity.Battle
       end
     end
     // Wish
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Wish]>0
-        i.effects[PBEffects::Wish]-=1
-        if i.effects[PBEffects::Wish]==0
-          PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s Wish")
-          hpgain=i.pbRecoverHP(i.effects[PBEffects::WishAmount],true)
+      if i.effects.Wish>0
+        i.effects.Wish-=1
+        if i.effects.Wish==0
+          GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s Wish")
+          hpgain=i.pbRecoverHP(i.effects.WishAmount,true)
           if hpgain>0
-            wishmaker=pbThisEx(i.index,i.effects[PBEffects::WishMaker])
+            wishmaker=pbThisEx(i.index,i.effects.WishMaker)
             pbDisplay(_INTL("{1}'s wish came true!",wishmaker))
           end
         end
       end
     end
     // Fire Pledge + Grass Pledge combination damage
-    for i in 0...2
-      if sides[i].effects[PBEffects::SeaOfFire]>0 &&
-         pbWeather!=PBWeather::RAINDANCE &&
-         pbWeather!=PBWeather::HEAVYRAIN
-        @battle.pbCommonAnimation("SeaOfFire",nil,nil) if i==0
-        @battle.pbCommonAnimation("SeaOfFireOpp",nil,nil) if i==1
-        for j in priority
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.SeaOfFire>0 &&
+         pbWeather!=Weather.RAINDANCE &&
+         pbWeather!=Weather.HEAVYRAIN
+        @battle.pbCommonAnimation("SeaOfFire",null,null) if i==0
+        @battle.pbCommonAnimation("SeaOfFireOpp",null,null) if i==1
+        foreach (var j in priority) {
           next if (j.index&1)!=i
-          next if j.pbHasType?(:FIRE) || j.hasWorkingAbility(:MAGICGUARD)
+          next if j.pbHasType?(:FIRE) || j.Ability == Abilities.MAGICGUARD
           @scene.pbDamageAnimation(j,0)
           hploss=j.pbReduceHP((j.totalhp/8).floor)
           pbDisplay(_INTL("{1} is hurt by the sea of fire!",j.pbThis)) if hploss>0
@@ -3662,56 +3662,56 @@ namespace PokemonUnity.Battle
         end
       end
     end
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       // Shed Skin, Hydration
-      if (i.hasWorkingAbility(:SHEDSKIN) && pbRandom(10)<3) ||
-         (i.hasWorkingAbility(:HYDRATION) && (pbWeather==PBWeather::RAINDANCE ||
-                                              pbWeather==PBWeather::HEAVYRAIN))
+      if (i.Ability == Abilities.SHEDSKIN && pbRandom(10)<3) ||
+         (i.Ability == Abilities.HYDRATION && (pbWeather==Weather.RAINDANCE ||
+                                              pbWeather==Weather.HEAVYRAIN))
         if i.status>0
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s #{PBAbilities.getName(i.ability)}")
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s #{PBAbilities.getName(i.ability)}")
           s=i.status
           i.pbCureStatus(false)
           case s
-          when PBStatuses::SLEEP
+          when Statuses.SLEEP
             pbDisplay(_INTL("{1}'s {2} cured its sleep problem!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::POISON
+          when Statuses.POISON
             pbDisplay(_INTL("{1}'s {2} cured its poison problem!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::BURN
+          when Statuses.BURN
             pbDisplay(_INTL("{1}'s {2} healed its burn!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::PARALYSIS
+          when Statuses.PARALYSIS
             pbDisplay(_INTL("{1}'s {2} cured its paralysis!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::FROZEN
+          when Statuses.FROZEN
             pbDisplay(_INTL("{1}'s {2} thawed it out!",i.pbThis,PBAbilities.getName(i.ability)))
           end
         end
       end
       // Healer
-      if i.hasWorkingAbility(:HEALER) && pbRandom(10)<3
+      if i.Ability == Abilities.HEALER && pbRandom(10)<3
         partner=i.pbPartner
         if partner && partner.status>0
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s #{PBAbilities.getName(i.ability)}")
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s #{PBAbilities.getName(i.ability)}")
           s=partner.status
           partner.pbCureStatus(false)
           case s
-          when PBStatuses::SLEEP
+          when Statuses.SLEEP
             pbDisplay(_INTL("{1}'s {2} cured its partner's sleep problem!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::POISON
+          when Statuses.POISON
             pbDisplay(_INTL("{1}'s {2} cured its partner's poison problem!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::BURN
+          when Statuses.BURN
             pbDisplay(_INTL("{1}'s {2} healed its partner's burn!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::PARALYSIS
+          when Statuses.PARALYSIS
             pbDisplay(_INTL("{1}'s {2} cured its partner's paralysis!",i.pbThis,PBAbilities.getName(i.ability)))
-          when PBStatuses::FROZEN
+          when Statuses.FROZEN
             pbDisplay(_INTL("{1}'s {2} thawed its partner out!",i.pbThis,PBAbilities.getName(i.ability)))
           end
         end
       end
     end
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       // Grassy Terrain (healing)
-      if @field.effects[PBEffects::GrassyTerrain]>0 && !i.isAirborne?
+      if @field.effects.GrassyTerrain>0 && !i.isAirborne?
         hpgain=i.pbRecoverHP((i.totalhp/16).floor,true)
         pbDisplay(_INTL("{1}'s HP was restored.",i.pbThis)) if hpgain>0
       end
@@ -3722,42 +3722,42 @@ namespace PokemonUnity.Battle
       end
     end
     // Aqua Ring
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::AquaRing]
-        PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s Aqua Ring")
+      if i.effects.AquaRing
+        GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s Aqua Ring")
         hpgain=(i.totalhp/16).floor
-        hpgain=(hpgain*1.3).floor if i.hasWorkingItem(:BIGROOT)
+        hpgain=(hpgain*1.3).floor if i.Item == Items.BIGROOT
         hpgain=i.pbRecoverHP(hpgain,true)
         pbDisplay(_INTL("Aqua Ring restored {1}'s HP!",i.pbThis)) if hpgain>0
       end
     end
     // Ingrain
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Ingrain]
-        PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s Ingrain")
+      if i.effects.Ingrain
+        GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s Ingrain")
         hpgain=(i.totalhp/16).floor
-        hpgain=(hpgain*1.3).floor if i.hasWorkingItem(:BIGROOT)
+        hpgain=(hpgain*1.3).floor if i.Item == Items.BIGROOT
         hpgain=i.pbRecoverHP(hpgain,true)
         pbDisplay(_INTL("{1} absorbed nutrients with its roots!",i.pbThis)) if hpgain>0
       end
     end
     // Leech Seed
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::LeechSeed]>=0 && !i.hasWorkingAbility(:MAGICGUARD)
-        recipient=@battlers[i.effects[PBEffects::LeechSeed]]
+      if i.effects.LeechSeed>=0 && !i.Ability == Abilities.MAGICGUARD
+        recipient=@battlers[i.effects.LeechSeed]
         if recipient && !recipient.isFainted?
-          PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s Leech Seed")
+          GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s Leech Seed")
           pbCommonAnimation("LeechSeed",recipient,i)
           hploss=i.pbReduceHP((i.totalhp/8).floor,true)
-          if i.hasWorkingAbility(:LIQUIDOOZE)
+          if i.Ability == Abilities.LIQUIDOOZE
             recipient.pbReduceHP(hploss,true)
             pbDisplay(_INTL("{1} sucked up the liquid ooze!",recipient.pbThis))
           else
-            if recipient.effects[PBEffects::HealBlock]==0
-              hploss=(hploss*1.3).floor if recipient.hasWorkingItem(:BIGROOT)
+            if recipient.effects.HealBlock==0
+              hploss=(hploss*1.3).floor if recipient.Item == Items.BIGROOT
               recipient.pbRecoverHP(hploss,true)
             end
             pbDisplay(_INTL("{1}'s health was sapped by Leech Seed!",i.pbThis))
@@ -3771,39 +3771,39 @@ namespace PokemonUnity.Battle
         end
       end
     end
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       // Poison/Bad poison
-      if i.status==PBStatuses::POISON
+      if i.status==Statuses.POISON
         if i.statusCount>0
-          i.effects[PBEffects::Toxic]+=1
-          i.effects[PBEffects::Toxic]=[15,i.effects[PBEffects::Toxic]].min
+          i.effects.Toxic+=1
+          i.effects.Toxic=[15,i.effects.Toxic].min
         end
-        if i.hasWorkingAbility(:POISONHEAL)
-          pbCommonAnimation("Poison",i,nil)
-          if i.effects[PBEffects::HealBlock]==0 && i.hp<i.totalhp
-            PBDebug.log("[Ability triggered] #{i.pbThis}'s Poison Heal")
+        if i.Ability == Abilities.POISONHEAL
+          pbCommonAnimation("Poison",i,null)
+          if i.effects.HealBlock==0 && i.hp<i.totalhp
+            GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Poison Heal")
             i.pbRecoverHP((i.totalhp/8).floor,true)
             pbDisplay(_INTL("{1} is healed by poison!",i.pbThis))
           end
         else
-          if !i.hasWorkingAbility(:MAGICGUARD)
-            PBDebug.log("[Status damage] #{i.pbThis} took damage from poison/toxic")
+          if !i.Ability == Abilities.MAGICGUARD
+            GameDebug.Log($"[Status damage] #{i.pbThis} took damage from poison/toxic")
             if i.statusCount==0
               i.pbReduceHP((i.totalhp/8).floor)
             else
-              i.pbReduceHP(((i.totalhp*i.effects[PBEffects::Toxic])/16).floor)
+              i.pbReduceHP(((i.totalhp*i.effects.Toxic)/16).floor)
             end
             i.pbContinueStatus
           end
         end
       end
       // Burn
-      if i.status==PBStatuses::BURN
-        if !i.hasWorkingAbility(:MAGICGUARD)
-          PBDebug.log("[Status damage] #{i.pbThis} took damage from burn")
-          if i.hasWorkingAbility(:HEATPROOF)
-            PBDebug.log("[Ability triggered] #{i.pbThis}'s Heatproof")
+      if i.status==Statuses.BURN
+        if !i.Ability == Abilities.MAGICGUARD
+          GameDebug.Log($"[Status damage] #{i.pbThis} took damage from burn")
+          if i.Ability == Abilities.HEATPROOF
+            GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Heatproof")
             i.pbReduceHP((i.totalhp/16).floor)
           else
             i.pbReduceHP((i.totalhp/8).floor)
@@ -3812,15 +3812,15 @@ namespace PokemonUnity.Battle
         i.pbContinueStatus
       end
       // Nightmare
-      if i.effects[PBEffects::Nightmare]
-        if i.status==PBStatuses::SLEEP
-          if !i.hasWorkingAbility(:MAGICGUARD)
-            PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s nightmare")
+      if i.effects.Nightmare
+        if i.status==Statuses.SLEEP
+          if !i.Ability == Abilities.MAGICGUARD
+            GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s nightmare")
             i.pbReduceHP((i.totalhp/4).floor,true)
             pbDisplay(_INTL("{1} is locked in a nightmare!",i.pbThis))
           end
         else
-          i.effects[PBEffects::Nightmare]=false
+          i.effects.Nightmare=false
         end
       end
       if i.isFainted?
@@ -3829,10 +3829,10 @@ namespace PokemonUnity.Battle
       end
     end
     // Curse
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Curse] && !i.hasWorkingAbility(:MAGICGUARD)
-        PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s curse")
+      if i.effects.Curse && !i.Ability == Abilities.MAGICGUARD
+        GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s curse")
         i.pbReduceHP((i.totalhp/4).floor,true)
         pbDisplay(_INTL("{1} is afflicted by the curse!",i.pbThis))
       end
@@ -3842,37 +3842,37 @@ namespace PokemonUnity.Battle
       end
     end
     // Multi-turn attacks (Bind/Clamp/Fire Spin/Magma Storm/Sand Tomb/Whirlpool/Wrap)
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::MultiTurn]>0
-        i.effects[PBEffects::MultiTurn]-=1
-        movename=PBMoves.getName(i.effects[PBEffects::MultiTurnAttack])
-        if i.effects[PBEffects::MultiTurn]==0
-          PBDebug.log("[End of effect] Trapping move #{movename} affecting #{i.pbThis} ended")
+      if i.effects.MultiTurn>0
+        i.effects.MultiTurn-=1
+        movename=PBMoves.getName(i.effects.MultiTurnAttack)
+        if i.effects.MultiTurn==0
+          GameDebug.Log($"[End of effect] Trapping move #{movename} affecting #{i.pbThis} ended")
           pbDisplay(_INTL("{1} was freed from {2}!",i.pbThis,movename))
         else
-          if isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:BIND)
-            pbCommonAnimation("Bind",i,nil)
-          elsif isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:CLAMP)
-            pbCommonAnimation("Clamp",i,nil)
-          elsif isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:FIRESPIN)
-            pbCommonAnimation("FireSpin",i,nil)
-          elsif isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:MAGMASTORM)
-            pbCommonAnimation("MagmaStorm",i,nil)
-          elsif isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:SANDTOMB)
-            pbCommonAnimation("SandTomb",i,nil)
-          elsif isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:WRAP)
-            pbCommonAnimation("Wrap",i,nil)
-          elsif isConst?(i.effects[PBEffects::MultiTurnAttack],PBMoves,:INFESTATION)
-            pbCommonAnimation("Infestation",i,nil)
+          if i.effects.MultiTurnAttack == Moves.BIND
+            pbCommonAnimation("Bind",i,null)
+          elsif i.effects.MultiTurnAttack == Moves.CLAMP
+            pbCommonAnimation("Clamp",i,null)
+          elsif i.effects.MultiTurnAttack == Moves.FIRESPIN
+            pbCommonAnimation("FireSpin",i,null)
+          elsif i.effects.MultiTurnAttack == Moves.MAGMASTORM
+            pbCommonAnimation("MagmaStorm",i,null)
+          elsif i.effects.MultiTurnAttack == Moves.SANDTOMB
+            pbCommonAnimation("SandTomb",i,null)
+          elsif i.effects.MultiTurnAttack == Moves.WRAP
+            pbCommonAnimation("Wrap",i,null)
+          elsif i.effects.MultiTurnAttack == Moves.INFESTATION
+            pbCommonAnimation("Infestation",i,null)
           else
-            pbCommonAnimation("Wrap",i,nil)
+            pbCommonAnimation("Wrap",i,null)
           end
-          if !i.hasWorkingAbility(:MAGICGUARD)
-            PBDebug.log("[Lingering effect triggered] #{i.pbThis} took damage from trapping move #{movename}")
+          if !i.Ability == Abilities.MAGICGUARD
+            GameDebug.Log($"[Lingering effect triggered] #{i.pbThis} took damage from trapping move #{movename}")
             @scene.pbDamageAnimation(i,0)
             amt=(USENEWBATTLEMECHANICS) ? (i.totalhp/8).floor : (i.totalhp/16).floor
-            if @battlers[i.effects[PBEffects::MultiTurnUser]].hasWorkingItem(:BINDINGBAND)
+            if @battlers[i.effects.MultiTurnUser].Item == Items.BINDINGBAND
               amt=(USENEWBATTLEMECHANICS) ? (i.totalhp/6).floor : (i.totalhp/8).floor
             end
             i.pbReduceHP(amt)
@@ -3885,112 +3885,112 @@ namespace PokemonUnity.Battle
       end
     end
     // Taunt
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Taunt]>0
-        i.effects[PBEffects::Taunt]-=1
-        if i.effects[PBEffects::Taunt]==0
+      if i.effects.Taunt>0
+        i.effects.Taunt-=1
+        if i.effects.Taunt==0
           pbDisplay(_INTL("{1}'s taunt wore off!",i.pbThis))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer taunted")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer taunted")
         end 
       end
     end
     // Encore
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Encore]>0
-        if i.moves[i.effects[PBEffects::EncoreIndex]].id!=i.effects[PBEffects::EncoreMove]
-          i.effects[PBEffects::Encore]=0
-          i.effects[PBEffects::EncoreIndex]=0
-          i.effects[PBEffects::EncoreMove]=0
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer encored (encored move was lost)")
+      if i.effects.Encore>0
+        if i.moves[i.effects.EncoreIndex].id!=i.effects.EncoreMove
+          i.effects.Encore=0
+          i.effects.EncoreIndex=0
+          i.effects.EncoreMove=0
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer encored (encored move was lost)")
         else
-          i.effects[PBEffects::Encore]-=1
-          if i.effects[PBEffects::Encore]==0 || i.moves[i.effects[PBEffects::EncoreIndex]].pp==0
-            i.effects[PBEffects::Encore]=0
+          i.effects.Encore-=1
+          if i.effects.Encore==0 || i.moves[i.effects.EncoreIndex].pp==0
+            i.effects.Encore=0
             pbDisplay(_INTL("{1}'s encore ended!",i.pbThis))
-            PBDebug.log("[End of effect] #{i.pbThis} is no longer encored")
+            GameDebug.Log($"[End of effect] #{i.pbThis} is no longer encored")
           end 
         end
       end
     end
     // Disable/Cursed Body
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Disable]>0
-        i.effects[PBEffects::Disable]-=1
-        if i.effects[PBEffects::Disable]==0
-          i.effects[PBEffects::DisableMove]=0
+      if i.effects.Disable>0
+        i.effects.Disable-=1
+        if i.effects.Disable==0
+          i.effects.DisableMove=0
           pbDisplay(_INTL("{1} is no longer disabled!",i.pbThis))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer disabled")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer disabled")
         end
       end
     end
     // Magnet Rise
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::MagnetRise]>0
-        i.effects[PBEffects::MagnetRise]-=1
-        if i.effects[PBEffects::MagnetRise]==0
+      if i.effects.MagnetRise>0
+        i.effects.MagnetRise-=1
+        if i.effects.MagnetRise==0
           pbDisplay(_INTL("{1} stopped levitating.",i.pbThis))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer levitating by Magnet Rise")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer levitating by Magnet Rise")
         end
       end
     end
     // Telekinesis
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Telekinesis]>0
-        i.effects[PBEffects::Telekinesis]-=1
-        if i.effects[PBEffects::Telekinesis]==0
+      if i.effects.Telekinesis>0
+        i.effects.Telekinesis-=1
+        if i.effects.Telekinesis==0
           pbDisplay(_INTL("{1} stopped levitating.",i.pbThis))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer levitating by Telekinesis")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer levitating by Telekinesis")
         end
       end
     end
     // Heal Block
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::HealBlock]>0
-        i.effects[PBEffects::HealBlock]-=1
-        if i.effects[PBEffects::HealBlock]==0
+      if i.effects.HealBlock>0
+        i.effects.HealBlock-=1
+        if i.effects.HealBlock==0
           pbDisplay(_INTL("{1}'s Heal Block wore off!",i.pbThis))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer Heal Blocked")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer Heal Blocked")
         end
       end
     end
     // Embargo
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Embargo]>0
-        i.effects[PBEffects::Embargo]-=1
-        if i.effects[PBEffects::Embargo]==0
+      if i.effects.Embargo>0
+        i.effects.Embargo-=1
+        if i.effects.Embargo==0
           pbDisplay(_INTL("{1} can use items again!",i.pbThis(true)))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer affected by an embargo")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer affected by an embargo")
         end
       end
     end
     // Yawn
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Yawn]>0
-        i.effects[PBEffects::Yawn]-=1
-        if i.effects[PBEffects::Yawn]==0 && i.pbCanSleepYawn?
-          PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s Yawn")
+      if i.effects.Yawn>0
+        i.effects.Yawn-=1
+        if i.effects.Yawn==0 && i.pbCanSleepYawn?
+          GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s Yawn")
           i.pbSleep
         end
       end
     end
     // Perish Song
     perishSongUsers=[]
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::PerishSong]>0
-        i.effects[PBEffects::PerishSong]-=1
-        pbDisplay(_INTL("{1}'s perish count fell to {2}!",i.pbThis,i.effects[PBEffects::PerishSong]))
-        PBDebug.log("[Lingering effect triggered] #{i.pbThis}'s Perish Song count dropped to #{i.effects[PBEffects::PerishSong]}")
-        if i.effects[PBEffects::PerishSong]==0
-          perishSongUsers.push(i.effects[PBEffects::PerishSongUser])
+      if i.effects.PerishSong>0
+        i.effects.PerishSong-=1
+        pbDisplay(_INTL("{1}'s perish count fell to {2}!",i.pbThis,i.effects.PerishSong))
+        GameDebug.Log($"[Lingering effect triggered] #{i.pbThis}'s Perish Song count dropped to #{i.effects.PerishSong}")
+        if i.effects.PerishSong==0
+          perishSongUsers.push(i.effects.PerishSongUser)
           i.pbReduceHP(i.hp,true)
         end
       end
@@ -4010,213 +4010,213 @@ namespace PokemonUnity.Battle
       return
     end
     // Reflect
-    for i in 0...2
-      if sides[i].effects[PBEffects::Reflect]>0
-        sides[i].effects[PBEffects::Reflect]-=1
-        if sides[i].effects[PBEffects::Reflect]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.Reflect>0
+        sides[i].effects.Reflect-=1
+        if sides[i].effects.Reflect==0
           pbDisplay(_INTL("Your team's Reflect faded!")) if i==0
           pbDisplay(_INTL("The opposing team's Reflect faded!")) if i==1
-          PBDebug.log("[End of effect] Reflect ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Reflect ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Reflect ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Reflect ended on the opponent's side") if i==1
         end
       end
     end
     // Light Screen
-    for i in 0...2
-      if sides[i].effects[PBEffects::LightScreen]>0
-        sides[i].effects[PBEffects::LightScreen]-=1
-        if sides[i].effects[PBEffects::LightScreen]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.LightScreen>0
+        sides[i].effects.LightScreen-=1
+        if sides[i].effects.LightScreen==0
           pbDisplay(_INTL("Your team's Light Screen faded!")) if i==0
           pbDisplay(_INTL("The opposing team's Light Screen faded!")) if i==1
-          PBDebug.log("[End of effect] Light Screen ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Light Screen ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Light Screen ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Light Screen ended on the opponent's side") if i==1
         end
       end
     end
     // Safeguard
-    for i in 0...2
-      if sides[i].effects[PBEffects::Safeguard]>0
-        sides[i].effects[PBEffects::Safeguard]-=1
-        if sides[i].effects[PBEffects::Safeguard]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.Safeguard>0
+        sides[i].effects.Safeguard-=1
+        if sides[i].effects.Safeguard==0
           pbDisplay(_INTL("Your team is no longer protected by Safeguard!")) if i==0
           pbDisplay(_INTL("The opposing team is no longer protected by Safeguard!")) if i==1
-          PBDebug.log("[End of effect] Safeguard ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Safeguard ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Safeguard ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Safeguard ended on the opponent's side") if i==1
         end
       end
     end
     // Mist
-    for i in 0...2
-      if sides[i].effects[PBEffects::Mist]>0
-        sides[i].effects[PBEffects::Mist]-=1
-        if sides[i].effects[PBEffects::Mist]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.Mist>0
+        sides[i].effects.Mist-=1
+        if sides[i].effects.Mist==0
           pbDisplay(_INTL("Your team's Mist faded!")) if i==0
           pbDisplay(_INTL("The opposing team's Mist faded!")) if i==1
-          PBDebug.log("[End of effect] Mist ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Mist ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Mist ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Mist ended on the opponent's side") if i==1
         end
       end
     end
     // Tailwind
-    for i in 0...2
-      if sides[i].effects[PBEffects::Tailwind]>0
-        sides[i].effects[PBEffects::Tailwind]-=1
-        if sides[i].effects[PBEffects::Tailwind]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.Tailwind>0
+        sides[i].effects.Tailwind-=1
+        if sides[i].effects.Tailwind==0
           pbDisplay(_INTL("Your team's Tailwind petered out!")) if i==0
           pbDisplay(_INTL("The opposing team's Tailwind petered out!")) if i==1
-          PBDebug.log("[End of effect] Tailwind ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Tailwind ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Tailwind ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Tailwind ended on the opponent's side") if i==1
         end
       end
     end
     // Lucky Chant
-    for i in 0...2
-      if sides[i].effects[PBEffects::LuckyChant]>0
-        sides[i].effects[PBEffects::LuckyChant]-=1
-        if sides[i].effects[PBEffects::LuckyChant]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.LuckyChant>0
+        sides[i].effects.LuckyChant-=1
+        if sides[i].effects.LuckyChant==0
           pbDisplay(_INTL("Your team's Lucky Chant faded!")) if i==0
           pbDisplay(_INTL("The opposing team's Lucky Chant faded!")) if i==1
-          PBDebug.log("[End of effect] Lucky Chant ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Lucky Chant ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Lucky Chant ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Lucky Chant ended on the opponent's side") if i==1
         end
       end
     end
     // End of Pledge move combinations
-    for i in 0...2
-      if sides[i].effects[PBEffects::Swamp]>0
-        sides[i].effects[PBEffects::Swamp]-=1
-        if sides[i].effects[PBEffects::Swamp]==0
+    for (int i = 0; i < 2; i++) {
+      if sides[i].effects.Swamp>0
+        sides[i].effects.Swamp-=1
+        if sides[i].effects.Swamp==0
           pbDisplay(_INTL("The swamp around your team disappeared!")) if i==0
           pbDisplay(_INTL("The swamp around the opposing team disappeared!")) if i==1
-          PBDebug.log("[End of effect] Grass Pledge's swamp ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Grass Pledge's swamp ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Grass Pledge's swamp ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Grass Pledge's swamp ended on the opponent's side") if i==1
         end
       end
-      if sides[i].effects[PBEffects::SeaOfFire]>0
-        sides[i].effects[PBEffects::SeaOfFire]-=1
-        if sides[i].effects[PBEffects::SeaOfFire]==0
+      if sides[i].effects.SeaOfFire>0
+        sides[i].effects.SeaOfFire-=1
+        if sides[i].effects.SeaOfFire==0
           pbDisplay(_INTL("The sea of fire around your team disappeared!")) if i==0
           pbDisplay(_INTL("The sea of fire around the opposing team disappeared!")) if i==1
-          PBDebug.log("[End of effect] Fire Pledge's sea of fire ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Fire Pledge's sea of fire ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Fire Pledge's sea of fire ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Fire Pledge's sea of fire ended on the opponent's side") if i==1
         end
       end
-      if sides[i].effects[PBEffects::Rainbow]>0
-        sides[i].effects[PBEffects::Rainbow]-=1
-        if sides[i].effects[PBEffects::Rainbow]==0
+      if sides[i].effects.Rainbow>0
+        sides[i].effects.Rainbow-=1
+        if sides[i].effects.Rainbow==0
           pbDisplay(_INTL("The rainbow around your team disappeared!")) if i==0
           pbDisplay(_INTL("The rainbow around the opposing team disappeared!")) if i==1
-          PBDebug.log("[End of effect] Water Pledge's rainbow ended on the player's side") if i==0
-          PBDebug.log("[End of effect] Water Pledge's rainbow ended on the opponent's side") if i==1
+          GameDebug.Log($"[End of effect] Water Pledge's rainbow ended on the player's side") if i==0
+          GameDebug.Log($"[End of effect] Water Pledge's rainbow ended on the opponent's side") if i==1
         end
       end
     end
     // Gravity
-    if @field.effects[PBEffects::Gravity]>0
-      @field.effects[PBEffects::Gravity]-=1
-      if @field.effects[PBEffects::Gravity]==0
+    if @field.effects.Gravity>0
+      @field.effects.Gravity-=1
+      if @field.effects.Gravity==0
         pbDisplay(_INTL("Gravity returned to normal."))
-        PBDebug.log("[End of effect] Strong gravity ended")
+        GameDebug.Log($"[End of effect] Strong gravity ended")
       end
     end
     // Trick Room
-    if @field.effects[PBEffects::TrickRoom]>0
-      @field.effects[PBEffects::TrickRoom]-=1
-      if @field.effects[PBEffects::TrickRoom]==0
+    if @field.effects.TrickRoom>0
+      @field.effects.TrickRoom-=1
+      if @field.effects.TrickRoom==0
         pbDisplay(_INTL("The twisted dimensions returned to normal."))
-        PBDebug.log("[End of effect] Trick Room ended")
+        GameDebug.Log($"[End of effect] Trick Room ended")
       end
     end
     // Wonder Room
-    if @field.effects[PBEffects::WonderRoom]>0
-      @field.effects[PBEffects::WonderRoom]-=1
-      if @field.effects[PBEffects::WonderRoom]==0
+    if @field.effects.WonderRoom>0
+      @field.effects.WonderRoom-=1
+      if @field.effects.WonderRoom==0
         pbDisplay(_INTL("Wonder Room wore off, and the Defense and Sp. Def stats returned to normal!"))
-        PBDebug.log("[End of effect] Wonder Room ended")
+        GameDebug.Log($"[End of effect] Wonder Room ended")
       end
     end
     // Magic Room
-    if @field.effects[PBEffects::MagicRoom]>0
-      @field.effects[PBEffects::MagicRoom]-=1
-      if @field.effects[PBEffects::MagicRoom]==0
+    if @field.effects.MagicRoom>0
+      @field.effects.MagicRoom-=1
+      if @field.effects.MagicRoom==0
         pbDisplay(_INTL("The area returned to normal."))
-        PBDebug.log("[End of effect] Magic Room ended")
+        GameDebug.Log($"[End of effect] Magic Room ended")
       end
     end
     // Mud Sport
-    if @field.effects[PBEffects::MudSportField]>0
-      @field.effects[PBEffects::MudSportField]-=1
-      if @field.effects[PBEffects::MudSportField]==0
+    if @field.effects.MudSportField>0
+      @field.effects.MudSportField-=1
+      if @field.effects.MudSportField==0
         pbDisplay(_INTL("The effects of Mud Sport have faded."))
-        PBDebug.log("[End of effect] Mud Sport ended")
+        GameDebug.Log($"[End of effect] Mud Sport ended")
       end
     end
     // Water Sport
-    if @field.effects[PBEffects::WaterSportField]>0
-      @field.effects[PBEffects::WaterSportField]-=1
-      if @field.effects[PBEffects::WaterSportField]==0
+    if @field.effects.WaterSportField>0
+      @field.effects.WaterSportField-=1
+      if @field.effects.WaterSportField==0
         pbDisplay(_INTL("The effects of Water Sport have faded."))
-        PBDebug.log("[End of effect] Water Sport ended")
+        GameDebug.Log($"[End of effect] Water Sport ended")
       end
     end
     // Electric Terrain
-    if @field.effects[PBEffects::ElectricTerrain]>0
-      @field.effects[PBEffects::ElectricTerrain]-=1
-      if @field.effects[PBEffects::ElectricTerrain]==0
+    if @field.effects.ElectricTerrain>0
+      @field.effects.ElectricTerrain-=1
+      if @field.effects.ElectricTerrain==0
         pbDisplay(_INTL("The electric current disappeared from the battlefield."))
-        PBDebug.log("[End of effect] Electric Terrain ended")
+        GameDebug.Log($"[End of effect] Electric Terrain ended")
       end
     end
     // Grassy Terrain (counting down)
-    if @field.effects[PBEffects::GrassyTerrain]>0
-      @field.effects[PBEffects::GrassyTerrain]-=1
-      if @field.effects[PBEffects::GrassyTerrain]==0
+    if @field.effects.GrassyTerrain>0
+      @field.effects.GrassyTerrain-=1
+      if @field.effects.GrassyTerrain==0
         pbDisplay(_INTL("The grass disappeared from the battlefield."))
-        PBDebug.log("[End of effect] Grassy Terrain ended")
+        GameDebug.Log($"[End of effect] Grassy Terrain ended")
       end
     end
     // Misty Terrain
-    if @field.effects[PBEffects::MistyTerrain]>0
-      @field.effects[PBEffects::MistyTerrain]-=1
-      if @field.effects[PBEffects::MistyTerrain]==0
+    if @field.effects.MistyTerrain>0
+      @field.effects.MistyTerrain-=1
+      if @field.effects.MistyTerrain==0
         pbDisplay(_INTL("The mist disappeared from the battlefield."))
-        PBDebug.log("[End of effect] Misty Terrain ended")
+        GameDebug.Log($"[End of effect] Misty Terrain ended")
       end
     end
     // Uproar
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
-      if i.effects[PBEffects::Uproar]>0
-        for j in priority
-          if !j.isFainted? && j.status==PBStatuses::SLEEP && !j.hasWorkingAbility(:SOUNDPROOF)
-            PBDebug.log("[Lingering effect triggered] Uproar woke up #{j.pbThis(true)}")
+      if i.effects.Uproar>0
+        foreach (var j in priority) {
+          if !j.isFainted? && j.status==Statuses.SLEEP && !j.Ability == Abilities.SOUNDPROOF
+            GameDebug.Log($"[Lingering effect triggered] Uproar woke up #{j.pbThis(true)}")
             j.pbCureStatus(false)
             pbDisplay(_INTL("{1} woke up in the uproar!",j.pbThis))
           end
         end
-        i.effects[PBEffects::Uproar]-=1
-        if i.effects[PBEffects::Uproar]==0
+        i.effects.Uproar-=1
+        if i.effects.Uproar==0
           pbDisplay(_INTL("{1} calmed down.",i.pbThis))
-          PBDebug.log("[End of effect] #{i.pbThis} is no longer uproaring")
+          GameDebug.Log($"[End of effect] #{i.pbThis} is no longer uproaring")
         else
           pbDisplay(_INTL("{1} is making an uproar!",i.pbThis)) 
         end
       end
     end
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       // Speed Boost
       // A Pokémon's turncount is 0 if it became active after the beginning of a round
-      if i.turncount>0 && i.hasWorkingAbility(:SPEEDBOOST)
-        if i.pbIncreaseStatWithCause(PBStats::SPEED,1,i,PBAbilities.getName(i.ability))
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s #{PBAbilities.getName(i.ability)}")
+      if i.turncount>0 && i.Ability == Abilities.SPEEDBOOST
+        if i.pbIncreaseStatWithCause(Stats.SPEED,1,i,PBAbilities.getName(i.ability))
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s #{PBAbilities.getName(i.ability)}")
         end
       end
       // Bad Dreams
-      if i.status==PBStatuses::SLEEP && !i.hasWorkingAbility(:MAGICGUARD)
-        if i.pbOpposing1.hasWorkingAbility(:BADDREAMS) ||
-           i.pbOpposing2.hasWorkingAbility(:BADDREAMS)
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s opponent's Bad Dreams")
+      if i.status==Statuses.SLEEP && !i.Ability == Abilities.MAGICGUARD
+        if i.pbOpposing1.Ability == Abilities.BADDREAMS ||
+           i.pbOpposing2.Ability == Abilities.BADDREAMS
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s opponent's Bad Dreams")
           hploss=i.pbReduceHP((i.totalhp/8).floor,true)
           pbDisplay(_INTL("{1} is having a bad dream!",i.pbThis)) if hploss>0
         end
@@ -4226,20 +4226,20 @@ namespace PokemonUnity.Battle
         next
       end
       // Pickup
-      if i.hasWorkingAbility(:PICKUP) && i.item<=0
+      if i.Ability == Abilities.PICKUP && i.item<=0
         item=0; index=-1; use=0
-        for j in 0...4
+        for (int j = 0; j < 4; j++) {
           next if j==i.index
-          if @battlers[j].effects[PBEffects::PickupUse]>use
-            item=@battlers[j].effects[PBEffects::PickupItem]
+          if @battlers[j].effects.PickupUse>use
+            item=@battlers[j].effects.PickupItem
             index=j
-            use=@battlers[j].effects[PBEffects::PickupUse]
+            use=@battlers[j].effects.PickupUse
           end
         end
         if item>0
           i.item=item
-          @battlers[index].effects[PBEffects::PickupItem]=0
-          @battlers[index].effects[PBEffects::PickupUse]=0
+          @battlers[index].effects.PickupItem=0
+          @battlers[index].effects.PickupUse=0
           @battlers[index].pokemon.itemRecycle=0 if @battlers[index].pokemon.itemRecycle==item
           if !@opponent && // In a wild battle
              i.pokemon.itemInitial==0 &&
@@ -4252,10 +4252,10 @@ namespace PokemonUnity.Battle
         end
       end
       // Harvest
-      if i.hasWorkingAbility(:HARVEST) && i.item<=0 && i.pokemon.itemRecycle>0
+      if i.Ability == Abilities.HARVEST && i.item<=0 && i.pokemon.itemRecycle>0
         if pbIsBerry?(i.pokemon.itemRecycle) &&
-           (pbWeather==PBWeather::SUNNYDAY || 
-           pbWeather==PBWeather::HARSHSUN || pbRandom(10)<5)
+           (pbWeather==Weather.SUNNYDAY || 
+           pbWeather==Weather.HARSHSUN || pbRandom(10)<5)
           i.item=i.pokemon.itemRecycle
           i.pokemon.itemRecycle=0
           i.pokemon.itemInitial=item if i.pokemon.itemInitial==0
@@ -4264,47 +4264,47 @@ namespace PokemonUnity.Battle
         end
       end
       // Moody
-      if i.hasWorkingAbility(:MOODY)
+      if i.Ability == Abilities.MOODY
         randomup=[]; randomdown=[]
-        for j in [PBStats::ATTACK,PBStats::DEFENSE,PBStats::SPEED,PBStats::SPATK,
-                  PBStats::SPDEF,PBStats::ACCURACY,PBStats::EVASION]
+        foreeach (varj in new [] { Stats.ATTACK,Stats.DEFENSE,Stats.SPEED,Stats.SPATK,
+                  Stats.SPDEF,Stats.ACCURACY,Stats.EVASION }) {
           randomup.push(j) if i.pbCanIncreaseStatStage?(j,i)
           randomdown.push(j) if i.pbCanReduceStatStage?(j,i)
         end
         if randomup.length>0
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s Moody (raise stat)")
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Moody (raise stat)")
           r=pbRandom(randomup.length)
           i.pbIncreaseStatWithCause(randomup[r],2,i,PBAbilities.getName(i.ability))
-          for j in 0...randomdown.length
+          for (int j = 0; j < randomdown.length; j++) {
             if randomdown[j]==randomup[r]
-              randomdown[j]=nil; randomdown.compact!
+              randomdown[j]=null; randomdown.compact!
               break
             end
           end
         end
         if randomdown.length>0
-          PBDebug.log("[Ability triggered] #{i.pbThis}'s Moody (lower stat)")
+          GameDebug.Log($"[Ability triggered] #{i.pbThis}'s Moody (lower stat)")
           r=pbRandom(randomdown.length)
           i.pbReduceStatWithCause(randomdown[r],1,i,PBAbilities.getName(i.ability))
         end
       end
     end
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       // Toxic Orb
-      if i.hasWorkingItem(:TOXICORB) && i.status==0 && i.pbCanPoison?(nil,false)
-        PBDebug.log("[Item triggered] #{i.pbThis}'s Toxic Orb")
-        i.pbPoison(nil,_INTL("{1} was badly poisoned by its {2}!",i.pbThis,
+      if i.Item == Items.TOXICORB && i.status==0 && i.pbCanPoison?(null,false)
+        GameDebug.Log($"[Item triggered] #{i.pbThis}'s Toxic Orb")
+        i.pbPoison(null,_INTL("{1} was badly poisoned by its {2}!",i.pbThis,
            PBItems.getName(i.item)),true)
       end
       // Flame Orb
-      if i.hasWorkingItem(:FLAMEORB) && i.status==0 && i.pbCanBurn?(nil,false)
-        PBDebug.log("[Item triggered] #{i.pbThis}'s Flame Orb")
-        i.pbBurn(nil,_INTL("{1} was burned by its {2}!",i.pbThis,PBItems.getName(i.item)))
+      if i.Item == Items.FLAMEORB && i.status==0 && i.pbCanBurn?(null,false)
+        GameDebug.Log($"[Item triggered] #{i.pbThis}'s Flame Orb")
+        i.pbBurn(null,_INTL("{1} was burned by its {2}!",i.pbThis,PBItems.getName(i.item)))
       end
       // Sticky Barb
-      if i.hasWorkingItem(:STICKYBARB) && !i.hasWorkingAbility(:MAGICGUARD)
-        PBDebug.log("[Item triggered] #{i.pbThis}'s Sticky Barb")
+      if i.Item == Items.STICKYBARB && !i.Ability == Abilities.MAGICGUARD
+        GameDebug.Log($"[Item triggered] #{i.pbThis}'s Sticky Barb")
         @scene.pbDamageAnimation(i,0)
         i.pbReduceHP((i.totalhp/8).floor)
         pbDisplay(_INTL("{1} is hurt by its {2}!",i.pbThis,PBItems.getName(i.item)))
@@ -4314,55 +4314,55 @@ namespace PokemonUnity.Battle
       end
     end
     // Form checks
-    for i in 0...4
+    for (int i = 0; i < 4; i++) {
       next if @battlers[i].isFainted?
       @battlers[i].pbCheckForm
     end
     pbGainEXP
     pbSwitch
     return if @decision>0
-    for i in priority
+    foreach (var i in priority) {
       next if i.isFainted?
       i.pbAbilitiesOnSwitchIn(false)
     end
     // Healing Wish/Lunar Dance - should go here
     // Spikes/Toxic Spikes/Stealth Rock - should go here (in order of their 1st use)
-    for i in 0...4
-      if @battlers[i].turncount>0 && @battlers[i].hasWorkingAbility(:TRUANT)
-        @battlers[i].effects[PBEffects::Truant]=!@battlers[i].effects[PBEffects::Truant]
+    for (int i = 0; i < 4; i++) {
+      if @battlers[i].turncount>0 && @battlers[i].Ability == Abilities.TRUANT
+        @battlers[i].effects.Truant=!@battlers[i].effects.Truant
       end
-      if @battlers[i].effects[PBEffects::LockOn]>0   // Also Mind Reader
-        @battlers[i].effects[PBEffects::LockOn]-=1
-        @battlers[i].effects[PBEffects::LockOnPos]=-1 if @battlers[i].effects[PBEffects::LockOn]==0
+      if @battlers[i].effects.LockOn>0   // Also Mind Reader
+        @battlers[i].effects.LockOn-=1
+        @battlers[i].effects.LockOnPos=-1 if @battlers[i].effects.LockOn==0
       end
-      @battlers[i].effects[PBEffects::Flinch]=false
-      @battlers[i].effects[PBEffects::FollowMe]=0
-      @battlers[i].effects[PBEffects::HelpingHand]=false
-      @battlers[i].effects[PBEffects::MagicCoat]=false
-      @battlers[i].effects[PBEffects::Snatch]=false
-      @battlers[i].effects[PBEffects::Charge]-=1 if @battlers[i].effects[PBEffects::Charge]>0
+      @battlers[i].effects.Flinch=false
+      @battlers[i].effects.FollowMe=0
+      @battlers[i].effects.HelpingHand=false
+      @battlers[i].effects.MagicCoat=false
+      @battlers[i].effects.Snatch=false
+      @battlers[i].effects.Charge-=1 if @battlers[i].effects.Charge>0
       @battlers[i].lastHPLost=0
       @battlers[i].tookDamage=false
       @battlers[i].lastAttacker.clear
-      @battlers[i].effects[PBEffects::Counter]=-1
-      @battlers[i].effects[PBEffects::CounterTarget]=-1
-      @battlers[i].effects[PBEffects::MirrorCoat]=-1
-      @battlers[i].effects[PBEffects::MirrorCoatTarget]=-1
+      @battlers[i].effects.Counter=-1
+      @battlers[i].effects.CounterTarget=-1
+      @battlers[i].effects.MirrorCoat=-1
+      @battlers[i].effects.MirrorCoatTarget=-1
     end
-    for i in 0...2
-      if !@sides[i].effects[PBEffects::EchoedVoiceUsed]
-        @sides[i].effects[PBEffects::EchoedVoiceCounter]=0
+    for (int i = 0; i < 2; i++) {
+      if !@sides[i].effects.EchoedVoiceUsed
+        @sides[i].effects.EchoedVoiceCounter=0
       end
-      @sides[i].effects[PBEffects::EchoedVoiceUsed]=false
-      @sides[i].effects[PBEffects::QuickGuard]=false
-      @sides[i].effects[PBEffects::WideGuard]=false
-      @sides[i].effects[PBEffects::CraftyShield]=false
-      @sides[i].effects[PBEffects::Round]=0
+      @sides[i].effects.EchoedVoiceUsed=false
+      @sides[i].effects.QuickGuard=false
+      @sides[i].effects.WideGuard=false
+      @sides[i].effects.CraftyShield=false
+      @sides[i].effects.Round=0
     end
-    @field.effects[PBEffects::FusionBolt]=false
-    @field.effects[PBEffects::FusionFlare]=false
-    @field.effects[PBEffects::IonDeluge]=false
-    @field.effects[PBEffects::FairyLock]-=1 if @field.effects[PBEffects::FairyLock]>0
+    @field.effects.FusionBolt=false
+    @field.effects.FusionFlare=false
+    @field.effects.IonDeluge=false
+    @field.effects.FairyLock-=1 if @field.effects.FairyLock>0
     // invalidate stored priority
     @usepriority=false
   end
@@ -4373,8 +4373,8 @@ namespace PokemonUnity.Battle
     case @decision
     //#### WIN ####//
     when 1
-      PBDebug.log("")
-      PBDebug.log("***Player won***")
+      GameDebug.Log($"")
+      GameDebug.Log($"***Player won***")
       if @opponent
         @scene.pbTrainerBattleSuccess
         if @opponent.is_a?(Array)
@@ -4394,7 +4394,7 @@ namespace PokemonUnity.Battle
           tmoney=0
           if @opponent.is_a?(Array)   // Double battles
             maxlevel1=0; maxlevel2=0; limit=pbSecondPartyBegin(1)
-            for i in 0...limit
+            for (int i = 0; i < limit; i++) {
               if @party2[i]
                 maxlevel1=@party2[i].level if maxlevel1<@party2[i].level
               end
@@ -4406,7 +4406,7 @@ namespace PokemonUnity.Battle
             tmoney+=maxlevel2*@opponent[1].moneyEarned
           else
             maxlevel=0
-            for i in @party2
+            foreach (var i in @party2) {
               next if !i
               maxlevel=i.level if maxlevel<i.level
             end
@@ -4434,7 +4434,7 @@ namespace PokemonUnity.Battle
           pbDisplayPaused(_INTL("{1} picked up ${2}!",self.pbPlayer.name,@extramoney))
         end
       end
-      for pkmn in @snaggedpokemon
+      foreach (var pkmn in @snaggedpokemon) {
         pbStorePokemon(pkmn)
         self.pbPlayer.shadowcaught=[] if !self.pbPlayer.shadowcaught
         self.pbPlayer.shadowcaught[pkmn.species]=true
@@ -4442,9 +4442,9 @@ namespace PokemonUnity.Battle
       @snaggedpokemon.clear
     //#### LOSE, DRAW ####// 
     when 2, 5
-      PBDebug.log("")
-      PBDebug.log("***Player lost***") if @decision==2
-      PBDebug.log("***Player drew with opponent***") if @decision==5
+      GameDebug.Log($"")
+      GameDebug.Log($"***Player lost***") if @decision==2
+      GameDebug.Log($"***Player drew with opponent***") if @decision==5
       if @internalbattle
         pbDisplayPaused(_INTL("{1} is out of usable Pokémon!",self.pbPlayer.name))
         moneylost=pbMaxLevelFromIndex(0)   // Player's Pokémon only, not partner's
@@ -4484,13 +4484,13 @@ namespace PokemonUnity.Battle
     end
     // Pass on Pokérus within the party
     infected=[]
-    for i in 0...$Trainer.party.length
+    for (int i = 0; i < $Trainer.party.length; i++) {
       if $Trainer.party[i].pokerusStage==1
         infected.push(i)
       end
     end
     if infected.length>=1
-      for i in infected
+      foreach (var i in infected) {
         strain=$Trainer.party[i].pokerus/16
         if i>0 && $Trainer.party[i-1].pokerusStage==0
           $Trainer.party[i-1].givePokerus(strain) if rand(3)==0
@@ -4501,13 +4501,13 @@ namespace PokemonUnity.Battle
       end
     end
     @scene.pbEndBattle(@decision)
-    for i in @battlers
+    foreach (var i in @battlers) {
       i.pbResetForm
-      if i.hasWorkingAbility(:NATURALCURE)
+      if i.Ability == Abilities.NATURALCURE
         i.status=0
       end
     end
-    for i in $Trainer.party
+    foreach (var i in $Trainer.party) {
       i.setItem(i.itemInitial)
       i.itemInitial=i.itemRecycle=0
       i.belch=false
